@@ -499,7 +499,7 @@
     <message>
         <location filename="../src/symbol_combined.cpp" line="414"/>
         <source>Edit private symbol...</source>
-        <translation>Muokkaa yksityistä symbolia...</translation>
+        <translation>Muokkaa yksityistä symbolia…</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="434"/>
@@ -542,7 +542,7 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="57"/>
         <source>Choose...</source>
-        <translation>Valitse...</translation>
+        <translation>Valitse…</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="60"/>
@@ -1014,7 +1014,7 @@
     <message>
         <location filename="../src/tool_draw_point.cpp" line="324"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Create an object and set its orientation.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Vedä&lt;/b&gt;: Piirrä kohde ja aseta suunta.</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="330"/>
@@ -1458,7 +1458,7 @@
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="130"/>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="281"/>
         <source>More...</source>
-        <translation>Lisää...</translation>
+        <translation>Lisää…</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="116"/>
@@ -1487,7 +1487,7 @@
     </message>
     <message>
         <source>Use translation file...</source>
-        <translation type="vanished">Käytä käännöstiedostoa...</translation>
+        <translation>Käytä käännöstiedostoa…</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="323"/>
@@ -1641,7 +1641,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="166"/>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="497"/>
         <source>Lookup...</source>
-        <translation>Etsi...</translation>
+        <translation>Etsi…</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="126"/>
@@ -1842,7 +1842,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="497"/>
         <source>Loading...</source>
-        <translation>Lataa...</translation>
+        <translation>Lataa…</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="504"/>
@@ -1901,11 +1901,11 @@
     </message>
     <message>
         <source>Create a new map ...</source>
-        <translation type="vanished">Luo uusi kartta ...</translation>
+        <translation>Luo uusi kartta …</translation>
     </message>
     <message>
         <source>Open map ...</source>
-        <translation type="vanished">Avaa kartta ...</translation>
+        <translation>Avaa kartta …</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -1967,12 +1967,12 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="149"/>
         <source>Create a new map ...</source>
-        <translation>Luo uusi kartta ...</translation>
+        <translation>Luo uusi kartta …</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="152"/>
         <source>Open map ...</source>
-        <translation>Avaa kartta ...</translation>
+        <translation>Avaa kartta …</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="158"/>
@@ -2146,8 +2146,8 @@
     <message numerus="yes">
         <location filename="../src/file_import_export.cpp" line="93"/>
         <source>Dropped %n irregular object(s).</source>
-        <translation type="unfinished"><numerusform>Pudottu %n epäsäännöllinen kohde</numerusform>
-        <numerusform>Pudottu %n epäsäännöllistä kohdetta</numerusform>
+        <translation><numerusform>Pudottu %n epäsäännöllinen kohde.</numerusform>
+        <numerusform>Pudottu %n epäsäännöllistä kohdetta.</numerusform>
         </translation></message>
     <message>
         <location filename="../src/file_import_export.cpp" line="100"/>
@@ -2605,7 +2605,7 @@ löytääksesi taustakarttatiedoston nimen.</translation>
     </message>
     <message>
         <source>Preferences...</source>
-        <translation type="vanished">Asetukset...</translation>
+        <translation>Asetukset…</translation>
     </message>
     <message>
         <source>Quit %1</source>
@@ -2631,7 +2631,7 @@ löytääksesi taustakarttatiedoston nimen.</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="227"/>
         <source>&amp;Open...</source>
-        <translation>&amp;Avaa...</translation>
+        <translation>&amp;Avaa…</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="229"/>
@@ -2651,7 +2651,7 @@ löytääksesi taustakarttatiedoston nimen.</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="249"/>
         <source>Save &amp;as...</source>
-        <translation>Tallenna &amp;nimellä...</translation>
+        <translation>Tallenna &amp;nimellä…</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="251"/>
@@ -2661,7 +2661,7 @@ löytääksesi taustakarttatiedoston nimen.</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="257"/>
         <source>Settings...</source>
-        <translation>Asetukset...</translation>
+        <translation>Asetukset…</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="262"/>
@@ -3069,7 +3069,7 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="818"/>
         <source>Set custom zoom factor...</source>
-        <translation>Aseta zoom-kerroin...</translation>
+        <translation>Aseta zoom-kerroin…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="825"/>
@@ -3099,7 +3099,7 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="830"/>
         <source>Scale all symbols...</source>
-        <translation>Skaalaa symbolit...</translation>
+        <translation>Skaalaa symbolit…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="830"/>
@@ -3109,7 +3109,7 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="832"/>
         <source>Change map scale...</source>
-        <translation>Muuta mittakaavaa...</translation>
+        <translation>Muuta mittakaavaa…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="832"/>
@@ -3119,7 +3119,7 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="834"/>
         <source>Map notes...</source>
-        <translation>Huomioita kartasta...</translation>
+        <translation>Huomioita kartasta…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="836"/>
@@ -3134,7 +3134,7 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="839"/>
         <source>Open template...</source>
-        <translation>Avaa taustakartta...</translation>
+        <translation>Avaa taustakartta…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="816"/>
@@ -3209,19 +3209,19 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="881"/>
         <source>Cut away from area</source>
-        <translation type="unfinished">Leikkaa pois alueelta</translation>
+        <translation>Leikkaa pois alueelta</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="918"/>
         <location filename="../src/map_editor.cpp" line="3446"/>
         <source>Add new part...</source>
-        <translation>Lisää uusi osa...</translation>
+        <translation>Lisää uusi osa…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="919"/>
         <location filename="../src/map_editor.cpp" line="3506"/>
         <source>Rename current part...</source>
-        <translation>Nimeä uudelleen nykyinen osa...</translation>
+        <translation>Nimeä nykyinen osa uudelleen…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="920"/>
@@ -3237,7 +3237,7 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="923"/>
         <source>Import...</source>
-        <translation>Tuo...</translation>
+        <translation>Tuo…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="975"/>
@@ -3300,7 +3300,7 @@ Skaalataanko tuotu tieto?</translation>
         <location filename="../src/map_editor.cpp" line="809"/>
         <location filename="../src/map_editor.cpp" line="1116"/>
         <source>Configure grid...</source>
-        <translation>Ruudukon asetukset...</translation>
+        <translation>Ruudukon asetukset…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="820"/>
@@ -3321,17 +3321,17 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="827"/>
         <source>Replace symbol set...</source>
-        <translation>Korvaa symbolit...</translation>
+        <translation>Korvaa symbolit…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="831"/>
         <source>Georeferencing...</source>
-        <translation>Georeferointi...</translation>
+        <translation>Georeferointi…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="833"/>
         <source>Rotate map...</source>
-        <translation>Kierrä karttaa...</translation>
+        <translation>Kierrä karttaa…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="833"/>
@@ -3341,7 +3341,7 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="840"/>
         <source>Reopen template...</source>
-        <translation>Avaa taustakartta uudelleen...</translation>
+        <translation>Avaa taustakartta uudelleen…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="849"/>
@@ -3430,7 +3430,7 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="1007"/>
         <source>Display coordinates as...</source>
-        <translation>Näytä koordinaatit...</translation>
+        <translation>Näytä koordinaatit…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="869"/>
@@ -3457,7 +3457,7 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="1159"/>
         <source>Select template...</source>
-        <translation>Valitse taustakartta...</translation>
+        <translation>Valitse taustakartta…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1165"/>
@@ -3712,7 +3712,7 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="784"/>
         <source>Print...</source>
-        <translation>Tulosta...</translation>
+        <translation>Tulosta…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="786"/>
@@ -3762,7 +3762,7 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="967"/>
         <source>&amp;Export as...</source>
-        <translation>&amp;Vie tiedostona...</translation>
+        <translation>&amp;Vie tiedostona…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2068"/>
@@ -4401,12 +4401,12 @@ valittu</translation>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1215"/>
         <source>Processing separations of page %1...</source>
-        <translation>Käsitellään sivujen erotuksia %1...</translation>
+        <translation>Käsitellään sivujen erotuksia %1…</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1216"/>
         <source>Processing page %1...</source>
-        <translation>Käsitellään sivua %1...</translation>
+        <translation>Käsitellään sivua %1…</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1266"/>
@@ -4488,7 +4488,7 @@ Templates -&gt; Open template...</source>
 
 Aloita piirtäminen tai lataa
 taustakartta:
-Taustakartat -&gt; Avaa taustakartta...</translation>
+Taustakartat -&gt; Avaa taustakartta…</translation>
     </message>
     <message>
         <location filename="../src/map_widget.cpp" line="837"/>
@@ -4638,7 +4638,7 @@ zoomaa hiiren rullalla.</translation>
         <location filename="../src/map_dialog_new.cpp" line="186"/>
         <location filename="../src/map_dialog_new.cpp" line="241"/>
         <source>Load symbol set from a file...</source>
-        <translation>Lataa symbolijoukko tiedostosta...</translation>
+        <translation>Lataa symbolijoukko tiedostosta…</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="237"/>
@@ -5389,7 +5389,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="259"/>
         <source>Preview...</source>
-        <translation>Esikatselu...</translation>
+        <translation>Esikatselu…</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="148"/>
@@ -5468,7 +5468,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="236"/>
         <source>Device CMYK (experimental)</source>
-        <translation type="unfinished"></translation>
+        <translation>Laitteen CMYK (kokeellinen)</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="237"/>
@@ -5484,7 +5484,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="265"/>
         <source>Export...</source>
-        <translation>Vie...</translation>
+        <translation>Vie…</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="371"/>
@@ -5574,7 +5574,7 @@ zoomaa hiiren rullalla.</translation>
         <location filename="../src/gui/print_widget.cpp" line="1201"/>
         <location filename="../src/gui/print_widget.cpp" line="1213"/>
         <source>Export map ...</source>
-        <translation>Vie kartta ...</translation>
+        <translation>Vie kartta …</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1136"/>
@@ -6225,7 +6225,7 @@ erottelut</translation>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="249"/>
         <source>Scale...</source>
-        <translation>Skaalaa...</translation>
+        <translation>Skaalaa…</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="251"/>
@@ -6431,12 +6431,12 @@ erottelut</translation>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="106"/>
         <source>Open...</source>
-        <translation>Avaa...</translation>
+        <translation>Avaa…</translation>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="109"/>
         <source>Center template...</source>
-        <translation>Keskitä malli...</translation>
+        <translation>Keskitä malli…</translation>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="114"/>
@@ -6817,7 +6817,7 @@ Jos et aio piirtää taustakartalle, tämä ei ole ongelma.</translation>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="200"/>
         <source>Open...</source>
-        <translation>Avaa...</translation>
+        <translation>Avaa…</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="231"/>
@@ -6841,7 +6841,7 @@ Jos et aio piirtää taustakartalle, tämä ei ole ongelma.</translation>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="211"/>
         <source>Add template...</source>
-        <translation>Lisää taustakartta...</translation>
+        <translation>Lisää taustakartta…</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="215"/>
@@ -6881,7 +6881,7 @@ Jos et aio piirtää taustakartalle, tämä ei ole ongelma.</translation>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="244"/>
         <source>Positioning...</source>
-        <translation>Asemointi...</translation>
+        <translation>Asemointi…</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="390"/>
@@ -6896,7 +6896,7 @@ Jos et aio piirtää taustakartalle, tämä ei ole ongelma.</translation>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="240"/>
         <source>Adjust...</source>
-        <translation>Säädä...</translation>
+        <translation>Säädä…</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="403"/>
@@ -7018,7 +7018,7 @@ Jos et aio piirtää taustakartalle, tämä ei ole ongelma.</translation>
     <message>
         <location filename="../src/template_track.cpp" line="163"/>
         <source>Opening track ...</source>
-        <translation>Avataan vektoritiedosto...</translation>
+        <translation>Avataan vektoritiedosto…</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="164"/>
@@ -7203,7 +7203,7 @@ Tuetaan vain versioon %2 asti.</translation>
     </message>
     <message>
         <source>Determine size...</source>
-        <translation type="vanished">Määrittele koko...</translation>
+        <translation>Määrittele koko…</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="558"/>
@@ -7435,7 +7435,7 @@ Tuetaan vain versioon %2 asti.</translation>
         <location filename="../src/util.cpp" line="313"/>
         <source>See more...</source>
         <extracomment>This "See more" is displayed as a link to the manual in What's-this tooltips.</extracomment>
-        <translation>Katso lisää...</translation>
+        <translation>Katso lisää…</translation>
     </message>
 </context>
 <context>
