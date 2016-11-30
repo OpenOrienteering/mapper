@@ -7081,11 +7081,9 @@ Jos et aio piirtää taustakartalle, tämä ei ole ongelma.</translation>
     <message numerus="yes">
         <location filename="../src/template_track.cpp" line="479"/>
         <source>%n path object(s) could not be imported (reason: missing coordinates).</source>
-        <translation>
-            <numerusform>%n viivakohdetta ei voitu tuoda (syy: koordinaatit puuttuvat).</numerusform>
-            <numerusform>%n viivakohdetta ei voitu tuoda (syy: koordinaatit puuttuvat).</numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n viivakohde ei voitu tuoda (syy: koordinaatit puuttuvat).</numerusform>
+        <numerusform>%n viivakohdetta ei voitu tuoda (syy: koordinaatit puuttuvat).</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/gps_track.cpp" line="423"/>
         <source>Error reading</source>
