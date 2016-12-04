@@ -17,7 +17,8 @@
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  
 set(Mapper_TEST_DATA
-  issue-513-coords-outside-printable.xmap
+  issue-513-coords-outside-printable.xmap # verbose XML coordinates
+  issue-513-coords-outside-printable.omap # dense text coordinates
   issue-513-coords-outside-qint32.omap
   spotcolor_overprint.xmap
   test_map.omap
