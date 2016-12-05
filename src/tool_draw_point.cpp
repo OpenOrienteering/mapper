@@ -289,9 +289,9 @@ int DrawPointTool::updateDirtyRectImpl(QRectF& rect)
 	rectIncludeSafe(rect, preview_object->getExtent());
 	if (isDragging() && preview_object->getSymbol()->asPoint()->isRotatable())
 	{
-		rectInclude(rect, click_pos_map);
+		rectInclude(rect, constrained_click_pos_map);
 		rectInclude(rect, constrained_pos_map);
-		result = qMax(1, angle_helper->getDisplayRadius());
+		result = qMax(3, angle_helper->getDisplayRadius());
 	}
 	
 	return result;
