@@ -100,7 +100,7 @@ void MapEditorToolBase::mousePositionEvent(QMouseEvent* event, MapCoordF map_coo
 	cur_pos = event->pos();
 	cur_pos_map = map_coord;
 	cur_map_widget = widget;
-	calcConstrainedPositions(cur_map_widget);
+	updateConstrainedPositions();
 }
 
 
@@ -455,7 +455,7 @@ void MapEditorToolBase::finishEditing(bool delete_objects, bool create_undo_step
 
 void MapEditorToolBase::reapplyConstraintHelpers()
 {
-	calcConstrainedPositions(cur_map_widget);
+	updateConstrainedPositions();
 	if (dragging)
 		dragMove();
 	else
@@ -476,13 +476,13 @@ void MapEditorToolBase::activateSnapHelperWhileEditing(bool enable)
 	reapplyConstraintHelpers();
 }
 
-void MapEditorToolBase::calcConstrainedPositions(MapWidget* widget)
+void MapEditorToolBase::updateConstrainedPositions()
 {
 	if (snap_helper->getFilter() != SnappingToolHelper::NoSnapping)
 	{
 		SnappingToolHelperSnapInfo info;
-		constrained_pos_map = MapCoordF(snap_helper->snapToObject(cur_pos_map, widget, &info, snap_exclude_object));
-		constrained_pos = widget->mapToViewport(constrained_pos_map);
+		constrained_pos_map = MapCoordF(snap_helper->snapToObject(cur_pos_map, cur_map_widget, &info, snap_exclude_object));
+		constrained_pos = cur_map_widget->mapToViewport(constrained_pos_map);
 		snapped_to_pos = info.type != SnappingToolHelper::NoSnapping;
 	}
 	else
@@ -494,6 +494,6 @@ void MapEditorToolBase::calcConstrainedPositions(MapWidget* widget)
 	
 	if (angle_helper->isActive())
 	{
-		angle_helper->getConstrainedCursorPositions(constrained_pos_map, constrained_pos_map, constrained_pos, widget);
+		angle_helper->getConstrainedCursorPositions(constrained_pos_map, constrained_pos_map, constrained_pos, cur_map_widget);
 	}
 }

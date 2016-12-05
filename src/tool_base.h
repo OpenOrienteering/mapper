@@ -171,10 +171,17 @@ protected:
 	/// and calls mouseMove() or dragMove() to update the tool.
 	void activateSnapHelperWhileEditing(bool enable = true);
 	
-	/// Calculates the constrained cursor position from the current position.
-	/// Normally it is not needed to call this yourself, as it is called by the mouse handling methods,
-	/// only in case a constrain tool helper is activated it is useful to get instant feedback.
-	void calcConstrainedPositions(MapWidget* widget);
+	/**
+	 * Calculates the constrained cursor position for the current position and map widget.
+	 * 
+	 * Key event handlers which change constraint helper activation must call
+	 * this to be able to visualize the effect of the change. Overrides of
+	 * mouse*Event handlers shall call mousePositionEvent() instead. This is
+	 * also done by the default implementation of these handlers. Thus it is not
+	 * neccessary to call this explicitly from clickPress(), clickRelease(),
+	 * mouseMove(), dragStart(), dragMove(), or dragFinish() handlers.
+	 */
+	void updateConstrainedPositions();
 	
 	// Mouse handling
 	

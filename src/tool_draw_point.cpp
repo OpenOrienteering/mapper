@@ -164,7 +164,7 @@ void DrawPointTool::dragMove()
 		if (angle_helper->isActive() != enable_angle_helper)
 		{
 			angle_helper->setActive(enable_angle_helper, preview_object->getCoordF());
-			calcConstrainedPositions(cur_map_widget);
+			updateConstrainedPositions();
 		}
 		
 		renderables->removeRenderablesOfObject(preview_object.get(), false);
