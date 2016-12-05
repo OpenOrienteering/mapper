@@ -46,10 +46,12 @@ class MapEditorToolBase : public MapEditorTool
 Q_OBJECT
 public:
 	MapEditorToolBase(const QCursor& cursor, MapEditorTool::Type tool_type, MapEditorController* editor, QAction* tool_action);
-	virtual ~MapEditorToolBase();
+	~MapEditorToolBase() override;
 	
 	void init() override;
 	const QCursor& getCursor() const override;
+	
+	Qt::KeyboardModifiers keyButtonBarModifiers() const;
 	
 	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
 	bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
@@ -75,7 +77,7 @@ protected:
 	// to get the position constrained by the snap and angle tool helpers, if activated.
 	
 	/// Can do additional initializations at a time where no other tool is active (in contrast to the constructor)
-	virtual void initImpl() {}
+	virtual void initImpl();
 	/// Must include the area of all custom drawings into the rect,
 	/// which aleady contains the area of the selection preview and activated tool helpers when this method is called.
 	/// Must return the size of the pixel border, or -1 to clear the drawing.

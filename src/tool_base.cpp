@@ -44,9 +44,9 @@ MapEditorToolBase::MapEditorToolBase(const QCursor& cursor, MapEditorTool::Type 
   start_drag_distance(Settings::getInstance().getStartDragDistancePx()),
   angle_helper(new ConstrainAngleToolHelper()),
   snap_helper(new SnappingToolHelper(this)),
-  snap_exclude_object(NULL),
+  snap_exclude_object(nullptr),
   cur_map_widget(editor->getMainWidget()),
-  key_button_bar(NULL),
+  key_button_bar(nullptr),
   cursor(scaledToScreen(cursor)),
   preview_update_triggered(false),
   dragging(false),
@@ -66,8 +66,8 @@ MapEditorToolBase::~MapEditorToolBase()
 
 void MapEditorToolBase::init()
 {
-	connect(map(), SIGNAL(objectSelectionChanged()), this, SLOT(objectSelectionChanged()));
-	connect(map(), SIGNAL(selectedObjectEdited()), this, SLOT(updateDirtyRect()));
+	connect(map(), &Map::objectSelectionChanged, this, &MapEditorToolBase::objectSelectionChanged);
+	connect(map(), &Map::selectedObjectEdited, this, &MapEditorToolBase::updateDirtyRect);
 	initImpl();
 	updateDirtyRect();
 	updateStatusText();
@@ -75,14 +75,28 @@ void MapEditorToolBase::init()
 	MapEditorTool::init();
 }
 
+void MapEditorToolBase::initImpl()
+{
+	// nothing
+}
+
 const QCursor& MapEditorToolBase::getCursor() const
 {
 	return cursor;
 }
 
+
+
+Qt::KeyboardModifiers MapEditorToolBase::keyButtonBarModifiers() const
+{
+	return Qt::KeyboardModifiers(key_button_bar ? key_button_bar->activeModifiers() : 0);
+}
+
+
+
 bool MapEditorToolBase::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
-	active_modifiers = Qt::KeyboardModifiers(event->modifiers() | (key_button_bar ? key_button_bar->activeModifiers() : 0));
+	active_modifiers = event->modifiers() | keyButtonBarModifiers();
 	if (event->button() == Qt::LeftButton)
 	{
 		cur_map_widget = widget;
@@ -113,7 +127,7 @@ bool MapEditorToolBase::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, 
 	auto old_constrained_pos     = constrained_pos;
 	auto old_constrained_pos_map = constrained_pos_map;
 	
-	active_modifiers = Qt::KeyboardModifiers(event->modifiers() | (key_button_bar ? key_button_bar->activeModifiers() : 0));
+	active_modifiers = event->modifiers() | keyButtonBarModifiers();
 	cur_pos = event->pos();
 	cur_pos_map = map_coord;
 	calcConstrainedPositions(widget);
@@ -150,7 +164,7 @@ bool MapEditorToolBase::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, 
 
 bool MapEditorToolBase::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
-	active_modifiers = Qt::KeyboardModifiers(event->modifiers() | (key_button_bar ? key_button_bar->activeModifiers() : 0));
+	active_modifiers = event->modifiers() | keyButtonBarModifiers();
 	cur_pos = event->pos();
 	cur_pos_map = map_coord;
 	calcConstrainedPositions(widget);
@@ -180,7 +194,7 @@ bool MapEditorToolBase::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coor
 
 bool MapEditorToolBase::keyPressEvent(QKeyEvent* event)
 {
-	active_modifiers = Qt::KeyboardModifiers(event->modifiers() | (key_button_bar ? key_button_bar->activeModifiers() : 0));
+	active_modifiers = event->modifiers() | keyButtonBarModifiers();
 #if defined(Q_OS_MAC)
 	// FIXME: On Mac, QKeyEvent::modifiers() seems to return the keyboard 
 	// modifier flags that existed immediately before the event occurred.
@@ -210,7 +224,7 @@ bool MapEditorToolBase::keyPressEvent(QKeyEvent* event)
 
 bool MapEditorToolBase::keyReleaseEvent(QKeyEvent* event)
 {
-	active_modifiers = Qt::KeyboardModifiers(event->modifiers() | (key_button_bar ? key_button_bar->activeModifiers() : 0));
+	active_modifiers = event->modifiers() | keyButtonBarModifiers();
 #if defined(Q_OS_MAC)
 	// FIXME: On Mac, QKeyEvent::modifiers() seems to return the keyboard 
 	// modifier flags that existed immediately before the event occurred.
@@ -406,7 +420,7 @@ void MapEditorToolBase::updatePreviewObjectsAsynchronously()
 
 void MapEditorToolBase::drawSelectionOrPreviewObjects(QPainter* painter, MapWidget* widget, bool draw_opaque)
 {
-	map()->drawSelection(painter, true, widget, renderables->empty() ? NULL : renderables.data(), draw_opaque);
+	map()->drawSelection(painter, true, widget, renderables->empty() ? nullptr : renderables.data(), draw_opaque);
 }
 
 void MapEditorToolBase::startEditing()
