@@ -174,13 +174,13 @@ protected:
 	QPoint click_pos;
 	MapCoordF click_pos_map;
 	/// Position where the left mouse button was pressed, constrained by tool helpers, if active.
-	QPoint constrained_click_pos;
+	QPointF constrained_click_pos;
 	MapCoordF constrained_click_pos_map;
 	/// Position where the cursor is currently
 	QPoint cur_pos;
 	MapCoordF cur_pos_map;
 	/// Position where the cursor is currently, constrained by tool helpers, if active
-	QPoint constrained_pos;
+	QPointF constrained_pos;
 	MapCoordF constrained_pos_map;
 	/// This is set to true when constrained_pos(_map) is a snapped position
 	bool snapped_to_pos;

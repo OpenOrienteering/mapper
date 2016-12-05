@@ -483,7 +483,7 @@ void MapEditorToolBase::calcConstrainedPositions(MapWidget* widget)
 	{
 		SnappingToolHelperSnapInfo info;
 		constrained_pos_map = MapCoordF(snap_helper->snapToObject(cur_pos_map, widget, &info, snap_exclude_object));
-		constrained_pos = widget->mapToViewport(constrained_pos_map).toPoint();
+		constrained_pos = widget->mapToViewport(constrained_pos_map);
 		snapped_to_pos = info.type != SnappingToolHelper::NoSnapping;
 	}
 	else
@@ -492,10 +492,9 @@ void MapEditorToolBase::calcConstrainedPositions(MapWidget* widget)
 		constrained_pos = cur_pos;
 		snapped_to_pos = false;
 	}
+	
 	if (angle_helper->isActive())
 	{
-		QPointF temp_pos;
-		angle_helper->getConstrainedCursorPositions(constrained_pos_map, constrained_pos_map, temp_pos, widget);
-		constrained_pos = temp_pos.toPoint();
+		angle_helper->getConstrainedCursorPositions(constrained_pos_map, constrained_pos_map, constrained_pos, widget);
 	}
 }
