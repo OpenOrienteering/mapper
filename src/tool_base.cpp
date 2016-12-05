@@ -94,19 +94,24 @@ Qt::KeyboardModifiers MapEditorToolBase::keyButtonBarModifiers() const
 
 
 
-bool MapEditorToolBase::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+void MapEditorToolBase::mousePositionEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
 	active_modifiers = event->modifiers() | keyButtonBarModifiers();
+	cur_pos = event->pos();
+	cur_pos_map = map_coord;
+	cur_map_widget = widget;
+	calcConstrainedPositions(cur_map_widget);
+}
+
+
+bool MapEditorToolBase::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+{
+	mousePositionEvent(event, map_coord, widget);
+	
 	if (event->button() == Qt::LeftButton)
 	{
-		cur_map_widget = widget;
-		
-		click_pos = event->pos();
-		click_pos_map = map_coord;
-		
-		cur_pos = click_pos;
-		cur_pos_map = click_pos_map;
-		calcConstrainedPositions(widget);
+		click_pos = cur_pos;
+		click_pos_map = cur_pos_map;
 		
 		constrained_click_pos = constrained_pos;
 		constrained_click_pos_map = constrained_pos_map;
@@ -127,10 +132,7 @@ bool MapEditorToolBase::mousePressEvent(QMouseEvent* event, MapCoordF map_coord,
 
 bool MapEditorToolBase::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
-	active_modifiers = event->modifiers() | keyButtonBarModifiers();
-	cur_pos = event->pos();
-	cur_pos_map = map_coord;
-	calcConstrainedPositions(widget);
+	mousePositionEvent(event, map_coord, widget);
 	
 	if (event->buttons().testFlag(Qt::LeftButton))
 	{
@@ -161,10 +163,7 @@ bool MapEditorToolBase::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, 
 
 bool MapEditorToolBase::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
-	active_modifiers = event->modifiers() | keyButtonBarModifiers();
-	cur_pos = event->pos();
-	cur_pos_map = map_coord;
-	calcConstrainedPositions(widget);
+	mousePositionEvent(event, map_coord, widget);
 	
 	if (event->button() == Qt::LeftButton)
 	{

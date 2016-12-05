@@ -53,6 +53,14 @@ public:
 	
 	Qt::KeyboardModifiers keyButtonBarModifiers() const;
 	
+	/**
+	 * Updates the saved current position (raw and constrained), map widget, and modifiers.
+	 * 
+	 * This function is called by the other mouse*Event handlers of this class.
+	 * Derived classes which override the handlers may wish to call this, too.
+	 */
+	void mousePositionEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	
 	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
 	bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
 	bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
