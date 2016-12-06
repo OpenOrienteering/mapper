@@ -5696,17 +5696,17 @@ separations</source>
 <context>
     <name>RotatePatternTool</name>
     <message>
-        <location filename="../src/tool_rotate_pattern.cpp" line="157"/>
+        <location filename="../src/tool_rotate_pattern.cpp" line="73"/>
         <source>&lt;b&gt;Angle:&lt;/b&gt; %1° </source>
         <translation>&lt;b&gt;Кут:&lt;/b&gt; %1° </translation>
     </message>
     <message>
-        <location filename="../src/tool_rotate_pattern.cpp" line="158"/>
+        <location filename="../src/tool_rotate_pattern.cpp" line="83"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
         <translation>&lt;b&gt;%1&lt;/b&gt;: Фіксовані кути. </translation>
     </message>
     <message>
-        <location filename="../src/tool_rotate_pattern.cpp" line="162"/>
+        <location filename="../src/tool_rotate_pattern.cpp" line="77"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Set the direction of area fill patterns or point objects. </source>
         <translation>&lt;b&gt;Потягніть&lt;/b&gt; щоб задати напрямок візерунку заповнення, або повернути точковий об'єкт. </translation>
     </message>

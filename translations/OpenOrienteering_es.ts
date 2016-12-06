@@ -5982,17 +5982,17 @@ de color</translation>
 <context>
     <name>RotatePatternTool</name>
     <message>
-        <location filename="../src/tool_rotate_pattern.cpp" line="157"/>
+        <location filename="../src/tool_rotate_pattern.cpp" line="73"/>
         <source>&lt;b&gt;Angle:&lt;/b&gt; %1° </source>
         <translation>&lt;b&gt;Ángulo:&lt;/b&gt; %1º </translation>
     </message>
     <message>
-        <location filename="../src/tool_rotate_pattern.cpp" line="158"/>
+        <location filename="../src/tool_rotate_pattern.cpp" line="83"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
         <translation>&lt;b&gt;%1&lt;/b&gt;: Ángulos fijos. </translation>
     </message>
     <message>
-        <location filename="../src/tool_rotate_pattern.cpp" line="162"/>
+        <location filename="../src/tool_rotate_pattern.cpp" line="77"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Set the direction of area fill patterns or point objects. </source>
         <translation>&lt;b&gt;Arrastrar&lt;/b&gt;: Configurar la dirección de los patrones de relleno de áreas u objetos de tipo punto. </translation>
     </message>

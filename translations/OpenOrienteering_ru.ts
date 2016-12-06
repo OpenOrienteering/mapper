@@ -488,7 +488,7 @@
     <message>
         <location filename="../src/symbol_combined.cpp" line="414"/>
         <source>Edit private symbol...</source>
-        <translation>Редактировать отдельный символ...</translation>
+        <translation>Редактировать отдельный символ…</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="434"/>
@@ -531,7 +531,7 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="57"/>
         <source>Choose...</source>
-        <translation>Выбрать...</translation>
+        <translation>Выбрать…</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="60"/>
@@ -1435,7 +1435,7 @@
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="130"/>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="281"/>
         <source>More...</source>
-        <translation>Ещё...</translation>
+        <translation>Ещё…</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="116"/>
@@ -1464,7 +1464,7 @@
     </message>
     <message>
         <source>Use translation file...</source>
-        <translation type="vanished">Использовать файл перевода...</translation>
+        <translation type="vanished">Использовать файл перевода…</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="323"/>
@@ -1606,7 +1606,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="166"/>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="497"/>
         <source>Lookup...</source>
-        <translation>Просмотр...</translation>
+        <translation>Просмотр…</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="126"/>
@@ -1789,7 +1789,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="497"/>
         <source>Loading...</source>
-        <translation>Загрузка...</translation>
+        <translation>Загрузка…</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="504"/>
@@ -1846,12 +1846,12 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="149"/>
         <source>Create a new map ...</source>
-        <translation>Создать новую карту...</translation>
+        <translation>Создать новую карту …</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="152"/>
         <source>Open map ...</source>
-        <translation>Открыть карту...</translation>
+        <translation>Открыть карту …</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="158"/>
@@ -2483,7 +2483,7 @@
     </message>
     <message>
         <source>Preferences...</source>
-        <translation type="vanished">Параметры...</translation>
+        <translation type="vanished">Параметры…</translation>
     </message>
     <message>
         <source>Quit %1</source>
@@ -2509,7 +2509,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="227"/>
         <source>&amp;Open...</source>
-        <translation>&amp;Открыть...</translation>
+        <translation>&amp;Открыть…</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="229"/>
@@ -2529,7 +2529,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="249"/>
         <source>Save &amp;as...</source>
-        <translation>Сохранить &amp;как...</translation>
+        <translation>Сохранить &amp;как…</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="251"/>
@@ -2539,7 +2539,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="257"/>
         <source>Settings...</source>
-        <translation>Параметры...</translation>
+        <translation>Параметры…</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="262"/>
@@ -2653,7 +2653,7 @@ Do you want to scale the symbols to the selected scale?</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="876"/>
         <source>Autosaving...</source>
-        <translation>Автосохранение...</translation>
+        <translation>Автосохранение…</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="886"/>
@@ -2737,7 +2737,7 @@ Press No to choose a different format.</source>
     </message>
     <message>
         <source>Loading %1...</source>
-        <translation type="vanished">Загрузка %1...</translation>
+        <translation type="vanished">Загрузка %1…</translation>
     </message>
 </context>
 <context>
@@ -2931,7 +2931,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="818"/>
         <source>Set custom zoom factor...</source>
-        <translation>Задать коэффициент увеличения...</translation>
+        <translation>Задать коэффициент увеличения…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="825"/>
@@ -2961,7 +2961,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="830"/>
         <source>Scale all symbols...</source>
-        <translation>Масштабировать все символы...</translation>
+        <translation>Масштабировать все символы…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="830"/>
@@ -2971,7 +2971,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="832"/>
         <source>Change map scale...</source>
-        <translation>Изменить масштаб карты...</translation>
+        <translation>Изменить масштаб карты…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="832"/>
@@ -2981,7 +2981,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="834"/>
         <source>Map notes...</source>
-        <translation>Описание карты...</translation>
+        <translation>Описание карты…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="836"/>
@@ -2996,7 +2996,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="839"/>
         <source>Open template...</source>
-        <translation>Открыть подложку...</translation>
+        <translation>Открыть подложку…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="816"/>
@@ -3132,13 +3132,13 @@ Rescale the imported data?</source>
         <location filename="../src/map_editor.cpp" line="918"/>
         <location filename="../src/map_editor.cpp" line="3446"/>
         <source>Add new part...</source>
-        <translation>Добавить новый слой...</translation>
+        <translation>Добавить новый слой…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="919"/>
         <location filename="../src/map_editor.cpp" line="3506"/>
         <source>Rename current part...</source>
-        <translation>Переименовать текущий слой...</translation>
+        <translation>Переименовать текущий слой…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="920"/>
@@ -3154,7 +3154,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="923"/>
         <source>Import...</source>
-        <translation>Импорт...</translation>
+        <translation>Импорт…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="975"/>
@@ -3222,7 +3222,7 @@ Rescale the imported data?</source>
         <location filename="../src/map_editor.cpp" line="809"/>
         <location filename="../src/map_editor.cpp" line="1116"/>
         <source>Configure grid...</source>
-        <translation>Параметры сетки...</translation>
+        <translation>Параметры сетки…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="820"/>
@@ -3243,17 +3243,17 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="827"/>
         <source>Replace symbol set...</source>
-        <translation>Заменить набор символов...</translation>
+        <translation>Заменить набор символов…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="831"/>
         <source>Georeferencing...</source>
-        <translation>Геопривязка...</translation>
+        <translation>Геопривязка…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="833"/>
         <source>Rotate map...</source>
-        <translation>Поворот карты...</translation>
+        <translation>Поворот карты…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="833"/>
@@ -3263,7 +3263,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="840"/>
         <source>Reopen template...</source>
-        <translation>Повторно открыть подложку...</translation>
+        <translation>Повторно открыть подложку…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="842"/>
@@ -3373,7 +3373,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1007"/>
         <source>Display coordinates as...</source>
-        <translation>Отображать координаты как...</translation>
+        <translation>Отображать координаты как…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="869"/>
@@ -3546,7 +3546,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1159"/>
         <source>Select template...</source>
-        <translation>Выбрать подложку...</translation>
+        <translation>Выбрать подложку…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1165"/>
@@ -3886,7 +3886,7 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="784"/>
         <source>Print...</source>
-        <translation>Печать...</translation>
+        <translation>Печать…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="786"/>
@@ -3936,7 +3936,7 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="967"/>
         <source>&amp;Export as...</source>
-        <translation>&amp;Экспортировать как...</translation>
+        <translation>&amp;Экспортировать как…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2068"/>
@@ -4258,12 +4258,12 @@ selected</source>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1215"/>
         <source>Processing separations of page %1...</source>
-        <translation>Обработка разделения на страницы %1...</translation>
+        <translation>Обработка разделения на страницы %1…</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1216"/>
         <source>Processing page %1...</source>
-        <translation>Обработка страницы %1...</translation>
+        <translation>Обработка страницы %1…</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1266"/>
@@ -4346,7 +4346,7 @@ Templates -&gt; Open template...</source>
 
 Начните рисовать или загрузите базовую карту.
 Для загрузки базовой карты, нажмите
-Подложки -&gt; Открыть подложку...</translation>
+Подложки -&gt; Открыть подложку…</translation>
     </message>
     <message>
         <location filename="../src/map_widget.cpp" line="837"/>
@@ -4496,7 +4496,7 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/map_dialog_new.cpp" line="186"/>
         <location filename="../src/map_dialog_new.cpp" line="241"/>
         <source>Load symbol set from a file...</source>
-        <translation>Загрузить набор символов из файла...</translation>
+        <translation>Загрузить набор символов из файла…</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="237"/>
@@ -5248,7 +5248,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="259"/>
         <source>Preview...</source>
-        <translation>Просмотр...</translation>
+        <translation>Просмотр…</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="148"/>
@@ -5324,7 +5324,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="236"/>
         <source>Device CMYK (experimental)</source>
-        <translation>Device CMYK (экспериментально)</translation>
+        <translation>Устройство поддерживает CMYK (экспериментально)</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="237"/>
@@ -5340,7 +5340,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="265"/>
         <source>Export...</source>
-        <translation>Экспорт...</translation>
+        <translation>Экспорт…</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="371"/>
@@ -5430,7 +5430,7 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/print_widget.cpp" line="1201"/>
         <location filename="../src/gui/print_widget.cpp" line="1213"/>
         <source>Export map ...</source>
-        <translation>Экспорт карты...</translation>
+        <translation>Экспорт карты…</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1136"/>
@@ -5741,17 +5741,17 @@ separations</source>
 <context>
     <name>RotatePatternTool</name>
     <message>
-        <location filename="../src/tool_rotate_pattern.cpp" line="157"/>
+        <location filename="../src/tool_rotate_pattern.cpp" line="73"/>
         <source>&lt;b&gt;Angle:&lt;/b&gt; %1° </source>
         <translation>&lt;b&gt;Угол:&lt;/b&gt; %1° </translation>
     </message>
     <message>
-        <location filename="../src/tool_rotate_pattern.cpp" line="158"/>
+        <location filename="../src/tool_rotate_pattern.cpp" line="83"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
         <translation>&lt;b&gt;%1&lt;/b&gt;: Фиксированные углы. </translation>
     </message>
     <message>
-        <location filename="../src/tool_rotate_pattern.cpp" line="162"/>
+        <location filename="../src/tool_rotate_pattern.cpp" line="77"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Set the direction of area fill patterns or point objects. </source>
         <translation>&lt;b&gt;Перетаскивание&lt;/b&gt;: Задать направление штриховки области или точечных объектов. </translation>
     </message>
@@ -6045,7 +6045,7 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="249"/>
         <source>Scale...</source>
-        <translation>Масштаб...</translation>
+        <translation>Масштаб…</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="251"/>
@@ -6251,12 +6251,12 @@ separations</source>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="106"/>
         <source>Open...</source>
-        <translation>Открыть...</translation>
+        <translation>Открыть…</translation>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="109"/>
         <source>Center template...</source>
-        <translation>Центрировать подложку...</translation>
+        <translation>Центрировать подложку…</translation>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="114"/>
@@ -6592,7 +6592,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="200"/>
         <source>Open...</source>
-        <translation>Открыть...</translation>
+        <translation>Открыть…</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="203"/>
@@ -6614,7 +6614,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="211"/>
         <source>Add template...</source>
-        <translation>Добавить подложку...</translation>
+        <translation>Добавить подложку…</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="215"/>
@@ -6649,12 +6649,12 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="240"/>
         <source>Adjust...</source>
-        <translation>Совместить...</translation>
+        <translation>Совместить…</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="244"/>
         <source>Positioning...</source>
-        <translation>Позиционирование...</translation>
+        <translation>Позиционирование…</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="246"/>
@@ -6801,7 +6801,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/template_track.cpp" line="163"/>
         <source>Opening track ...</source>
-        <translation>Открыть трек ...</translation>
+        <translation>Открыть трек …</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="164"/>
@@ -6987,7 +6987,7 @@ The maximum supported version is %2.</source>
     </message>
     <message>
         <source>Determine size...</source>
-        <translation type="vanished">Определить размер...</translation>
+        <translation type="vanished">Определить размер…</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="558"/>
@@ -7232,7 +7232,7 @@ The maximum supported version is %2.</source>
         <location filename="../src/util.cpp" line="313"/>
         <source>See more...</source>
         <extracomment>This "See more" is displayed as a link to the manual in What's-this tooltips.</extracomment>
-        <translation>Подробнее...</translation>
+        <translation>Подробнее…</translation>
     </message>
 </context>
 <context>
