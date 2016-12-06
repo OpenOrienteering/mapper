@@ -162,17 +162,17 @@ void TagSelectWidget::addRowItems(int row)
 	query_table->setItem(row, 3, item);
 
 	QComboBox* compare_op = new QComboBox();
-	compare_op->addItem(tr("is"), QVariant::fromValue(IS_OP));
-	compare_op->addItem(tr("contains"), QVariant::fromValue(CONTAINS_OP));
-	compare_op->addItem(tr("is not"), QVariant::fromValue(NOT_OP));
+	compare_op->addItem(tr("is"), QVariant::fromValue(QueryOperation::IS_OP));
+	compare_op->addItem(tr("contains"), QVariant::fromValue(QueryOperation::CONTAINS_OP));
+	compare_op->addItem(tr("is not"), QVariant::fromValue(QueryOperation::NOT_OP));
 	query_table->setCellWidget(row, 2, compare_op);
 
 	// Special case to handle the first logical operator which is grayed out
 	if (row != 0)
 	{
 		QComboBox* logical_op = new QComboBox();
-		logical_op->addItem(tr("or"), QVariant::fromValue(OR_OP));
-		logical_op->addItem(tr("and"), QVariant::fromValue(AND_OP));
+		logical_op->addItem(tr("or"), QVariant::fromValue(QueryOperation::OR_OP));
+		logical_op->addItem(tr("and"), QVariant::fromValue(QueryOperation::AND_OP));
 		query_table->setCellWidget(row, 0, logical_op);
 	}
 	else
@@ -284,17 +284,17 @@ void TagSelectWidget::makeSelection()
 {
 	std::unique_ptr<QueryOperation> query;
 	int rowCount = query_table->rowCount();
-	enum Operation logical_op = INVALID_OP;
+	auto logical_op = QueryOperation::INVALID_OP;
 
 	for (int row = 0; row < rowCount; ++row)
 	{
 		const QString key = query_table->item(row, 1)->text().trimmed();
-		enum Operation compare_op = qobject_cast<QComboBox*>(query_table->cellWidget(row, 2))->currentData().value<enum Operation>();
+		QueryOperation::Operation compare_op = qobject_cast<QComboBox*>(query_table->cellWidget(row, 2))->currentData().value<QueryOperation::Operation>();
 		const QString value = query_table->item(row, 3)->text().trimmed();
 
 		std::unique_ptr<QueryOperation> comparison = std::unique_ptr<QueryOperation>(new QueryOperation(key, compare_op, value));
 
-		if (comparison->getOp() == INVALID_OP)
+		if (comparison->getOp() == QueryOperation::INVALID_OP)
 		{
 			selection_info->setText(tr("Invalid query"));
 			return;
@@ -302,7 +302,7 @@ void TagSelectWidget::makeSelection()
 
 		if (row != 0)
 		{
-			logical_op = qobject_cast<QComboBox*>(query_table->cellWidget(row, 0))->currentData().value<enum Operation>();
+			logical_op = qobject_cast<QComboBox*>(query_table->cellWidget(row, 0))->currentData().value<QueryOperation::Operation>();
 			query = std::unique_ptr<QueryOperation>(new QueryOperation(std::move(query), logical_op, std::move(comparison)));
 		}
 		else
@@ -310,7 +310,7 @@ void TagSelectWidget::makeSelection()
 			query = std::move(comparison);
 		}
 
-		if (query->getOp() == INVALID_OP)
+		if (query->getOp() == QueryOperation::INVALID_OP)
 		{
 			selection_info->setText(tr("Invalid query"));
 			return;
@@ -364,7 +364,7 @@ QueryOperation::QueryOperation()
 	; // Nothing
 }
 
-QueryOperation::QueryOperation(const QString& key, enum Operation op, const QString& value)
+QueryOperation::QueryOperation(const QString& key, QueryOperation::Operation op, const QString& value)
 : op(op)
 , key_arg(key)
 , value_arg(value)
@@ -378,7 +378,7 @@ QueryOperation::QueryOperation(const QString& key, enum Operation op, const QStr
 		this->op = INVALID_OP;
 }
 
-QueryOperation::QueryOperation(std::unique_ptr<QueryOperation> left, enum Operation op, std::unique_ptr<QueryOperation> right)
+QueryOperation::QueryOperation(std::unique_ptr<QueryOperation> left, QueryOperation::Operation op, std::unique_ptr<QueryOperation> right)
 : op(op)
 , left_arg(std::move(left))
 , right_arg(std::move(right))
@@ -392,7 +392,7 @@ QueryOperation::QueryOperation(std::unique_ptr<QueryOperation> left, enum Operat
 		this->op = INVALID_OP;
 }
 
-enum Operation QueryOperation::getOp()
+QueryOperation::Operation QueryOperation::getOp()
 {
 	return op;
 }

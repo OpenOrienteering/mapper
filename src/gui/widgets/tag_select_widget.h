@@ -43,7 +43,7 @@ class TagSelectWidget : public QWidget
 Q_OBJECT
 public:
 	TagSelectWidget(Map* map, MapView* main_view, MapEditorController* controller, QWidget* parent = nullptr);
-	virtual ~TagSelectWidget();
+	virtual ~TagSelectWidget() override;
 	
 protected:
 	/**
@@ -78,22 +78,21 @@ private:
 	QLabel* selection_info;
 };
 
-enum Operation {
-	IS_OP, // These operate on string
-	CONTAINS_OP,
-	NOT_OP,
-	OR_OP, // These operate on other queries
-	AND_OP,
-	INVALID_OP // To signal something is invalid
-};
-Q_DECLARE_METATYPE(Operation)
-
 class QueryOperation
 {
 public:
+	enum Operation {
+		IS_OP, // These operate on string
+		CONTAINS_OP,
+		NOT_OP,
+		OR_OP, // These operate on other queries
+		AND_OP,
+		INVALID_OP // To signal something is invalid
+	};
+
 	QueryOperation();
-	QueryOperation(const QString& key, enum Operation op, const QString& value);
-	QueryOperation(std::unique_ptr<QueryOperation> left, enum Operation op, std::unique_ptr<QueryOperation> right);
+	QueryOperation(const QString& key, Operation op, const QString& value);
+	QueryOperation(std::unique_ptr<QueryOperation> left, Operation op, std::unique_ptr<QueryOperation> right);
 
 	/**
 	 * Evaluates this query on obj - returns whether the query is true or false
@@ -114,5 +113,6 @@ private:
 	std::unique_ptr<QueryOperation> right_arg;
 };
 
+Q_DECLARE_METATYPE(QueryOperation::Operation)
 
 #endif
