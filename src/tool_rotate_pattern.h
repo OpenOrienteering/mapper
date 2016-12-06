@@ -22,11 +22,7 @@
 #ifndef OPENORIENTEERING_TOOL_ROTATE_PATTERN_H
 #define OPENORIENTEERING_TOOL_ROTATE_PATTERN_H
 
-#include <QScopedPointer>
-
 #include "tool_base.h"
-
-class ConstrainAngleToolHelper;
 
 /**
  * Tool to rotate patterns of area objects, or to set the direction of rotatable point objects.
@@ -38,23 +34,21 @@ public:
 	RotatePatternTool(MapEditorController* editor, QAction* tool_action);
 	~RotatePatternTool() override;
 	
-	void draw(QPainter* painter, MapWidget* widget) override;
-	
 	bool keyPressEvent(QKeyEvent* event) override;
 	bool keyReleaseEvent(QKeyEvent* event) override;
 	
 protected:
+	void clickPress() override;
+	void clickRelease() override;
 	void dragStart() override;
 	void dragMove() override;
 	void dragFinish() override;
 	
+	void initImpl() override;
+	void drawImpl(QPainter* painter, MapWidget* widget) override;
 	int updateDirtyRectImpl(QRectF& rect) override;
 	void updateStatusText() override;
 	void objectSelectionChangedImpl() override;
-	
-	QScopedPointer<ConstrainAngleToolHelper> angle_helper;
-	QPointF constrained_pos;
-	MapCoordF constrained_pos_map;
 };
 
 #endif
