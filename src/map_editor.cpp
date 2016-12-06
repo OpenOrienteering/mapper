@@ -80,6 +80,7 @@
 #include "gui/print_widget.h"
 #include "gui/widgets/key_button_bar.h"
 #include "gui/widgets/measure_widget.h"
+#include "gui/widgets/tag_select_widget.h"
 #include "gui/widgets/tags_widget.h"
 #include "object_operations.h"
 #include "object_text.h"
@@ -252,6 +253,8 @@ MapEditorController::~MapEditorController()
 		delete template_dock_widget;
 	if (tags_dock_widget)
 		delete tags_dock_widget;
+	if (tag_select_dock_widget)
+		delete tag_select_dock_widget;
 	delete cut_hole_menu;
 	delete mappart_merge_act;
 	delete mappart_merge_menu;
@@ -661,6 +664,7 @@ void MapEditorController::attach(MainWindow* window)
 			createColorWindow();
 			createTemplateWindow();
 			createTagEditor();
+			createTagSelector();
 			
 			if (map->getNumColors() == 0)
 				QTimer::singleShot(0, color_dock_widget, SLOT(show()));
@@ -746,6 +750,7 @@ void MapEditorController::assignKeyboardShortcuts()
 	findAction("hidealltemplates")->setShortcut(QKeySequence(Qt::Key_F10));
 	findAction("overprintsimulation")->setShortcut(QKeySequence(Qt::Key_F4));
 	findAction("fullscreen")->setShortcut(QKeySequence(Qt::Key_F11));
+	tag_select_window_act->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_5));
 	tags_window_act->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_6));
 	color_window_act->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_7));
 	symbol_window_act->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_8));
@@ -840,6 +845,8 @@ void MapEditorController::createActions()
 	reopen_template_act = newAction("reopentemplate", tr("Reopen template..."), this, SLOT(reopenTemplateClicked()), NULL, QString{}, "templates_menu.html");
 	
 	tags_window_act = newCheckAction("tagswindow", tr("Tag editor"), this, SLOT(showTagsWindow(bool)), "window-new", tr("Show/Hide the tag editor window"), "tag_editor.html");
+
+	tag_select_window_act = newCheckAction("tagselectwindow", tr("Tag Selection"), this, SLOT(showTagSelectWindow(bool)), "tag-selector", tr("Show/Hide the tag selection window"), "tag_selector.html");
 	
 	edit_tool_act = newToolAction("editobjects", tr("Edit objects"), this, SLOT(editToolClicked()), "tool-edit.png", QString{}, "toolbars.html#tool_edit_point");
 	edit_line_tool_act = newToolAction("editlines", tr("Edit lines"), this, SLOT(editLineToolClicked()), "tool-edit-line.png", QString{}, "toolbars.html#tool_edit_line");
@@ -1013,6 +1020,7 @@ void MapEditorController::createMenuAndToolbars()
 	view_menu->addSeparator();
 	view_menu->addAction(fullscreen_act);
 	view_menu->addSeparator();
+	view_menu->addAction(tag_select_window_act);
 	view_menu->addAction(tags_window_act);
 	view_menu->addAction(color_window_act);
 	view_menu->addAction(symbol_window_act);
@@ -1931,6 +1939,29 @@ void MapEditorController::showTagsWindow(bool show)
 	
 	tags_window_act->setChecked(show);
 	tags_dock_widget->setVisible(show);
+}
+
+void MapEditorController::createTagSelector()
+{
+	Q_ASSERT(!tag_select_dock_widget);
+
+	TagSelectWidget* tag_widget = new TagSelectWidget(map, main_view, this);
+	tag_select_dock_widget = new EditorDockWidget(tr("Tag Selector"), tag_select_window_act, this, window);
+	tag_select_dock_widget->setWidget(tag_widget);
+	tag_select_dock_widget->setObjectName(QString::fromLatin1("Tag selection dock widget"));
+	if (!window->restoreDockWidget(tag_select_dock_widget))
+		window->addDockWidget(Qt::RightDockWidgetArea, tag_select_dock_widget, Qt::Vertical);
+	tag_select_dock_widget->setVisible(false);
+}
+
+
+void MapEditorController::showTagSelectWindow(bool show)
+{
+	if (!tag_select_dock_widget)
+		createTagSelector();
+
+	tag_select_window_act->setChecked(show);
+	tag_select_dock_widget->setVisible(show);
 }
 
 void MapEditorController::editGeoreferencing()

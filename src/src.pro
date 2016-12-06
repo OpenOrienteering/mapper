@@ -137,6 +137,7 @@ HEADERS += \
   gui/widgets/symbol_render_widget.h \
   gui/widgets/symbol_tooltip.h \
   gui/widgets/symbol_widget.h \
+  gui/widgets/tag_select_widget.h \
   gui/widgets/tags_widget.h \
   gui/widgets/template_list_widget.h \
   gui/widgets/text_alignment_widget.h \
@@ -306,6 +307,7 @@ SOURCES += \
   gui/widgets/symbol_render_widget.cpp \
   gui/widgets/symbol_tooltip.cpp \
   gui/widgets/symbol_widget.cpp \
+  gui/widgets/tag_select_widget.cpp \
   gui/widgets/tags_widget.cpp \
   gui/widgets/template_list_widget.cpp \
   gui/widgets/text_alignment_widget.cpp \

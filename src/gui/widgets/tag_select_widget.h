@@ -1,0 +1,118 @@
+/*
+ *    Copyright 2016 Mitchell Krome
+ *
+ *    This file is part of OpenOrienteering.
+ *
+ *    OpenOrienteering is free software: you can redistribute it and/or modify
+ *    it under the terms of the GNU General Public License as published by
+ *    the Free Software Foundation, either version 3 of the License, or
+ *    (at your option) any later version.
+ *
+ *    OpenOrienteering is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU General Public License for more details.
+ *
+ *    You should have received a copy of the GNU General Public License
+ *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+
+#ifndef OPENORIENTEERING_TAG_SELECT_WIDGET_H
+#define OPENORIENTEERING_TAG_SELECT_WIDGET_H
+
+#include <memory>
+
+#include <QWidget>
+
+class QBoxLayout;
+class QLabel;
+class QTableWidget;
+class QToolButton;
+
+class Map;
+class MapEditorController;
+class MapView;
+class Object;
+
+/**
+ * This widget allows the user to make selections based on an objects tags.
+ */
+class TagSelectWidget : public QWidget
+{
+Q_OBJECT
+public:
+	TagSelectWidget(Map* map, MapView* main_view, MapEditorController* controller, QWidget* parent = nullptr);
+	virtual ~TagSelectWidget();
+	
+protected:
+	/**
+	 * Returns a new QToolButton with a unified appearance.
+	 */
+	QToolButton* newToolButton(const QIcon& icon, const QString& text);
+	
+protected slots:
+	void showHelp();
+	void addRow();
+	void deleteRow();
+	void makeSelection();
+
+private:
+	void addRowItems(int row);
+	void moveRow(bool up);
+	
+	Map* map;
+	MapView* main_view;
+	MapEditorController* controller;
+	
+	QTableWidget* query_table;
+	QBoxLayout* all_query_layout;
+	
+	// Buttons
+	QWidget* list_buttons_group;
+	QToolButton* add_button;
+	QToolButton* delete_button;
+	QToolButton* move_up_button;
+	QToolButton* move_down_button;
+	QToolButton* select_button;
+	QLabel* selection_info;
+};
+
+enum Operation {
+	IS_OP, // These operate on string
+	CONTAINS_OP,
+	NOT_OP,
+	OR_OP, // These operate on other queries
+	AND_OP,
+	INVALID_OP // To signal something is invalid
+};
+Q_DECLARE_METATYPE(Operation)
+
+class QueryOperation
+{
+public:
+	QueryOperation();
+	QueryOperation(const QString& key, enum Operation op, const QString& value);
+	QueryOperation(std::unique_ptr<QueryOperation> left, enum Operation op, std::unique_ptr<QueryOperation> right);
+
+	/**
+	 * Evaluates this query on obj - returns whether the query is true or false
+	 * for obj
+	 */
+	bool evaluate(Object* obj);
+
+	enum Operation getOp();
+private:
+	enum Operation op;
+
+	// For compare ops
+	QString key_arg;
+	QString value_arg;
+
+	// For logical ops
+	std::unique_ptr<QueryOperation> left_arg;
+	std::unique_ptr<QueryOperation> right_arg;
+};
+
+
+#endif
