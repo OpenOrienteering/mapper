@@ -48,7 +48,7 @@ The .xmap format is nearly identical but more verbose, even suitable for direct 
 If you want to keep you data in a line-based version control system such as git, you must use the .xmap format.
 
 ### Can Mapper read and write .ocd files?
-Yes, Mapper reads .ocd files from different version (8 .. 11). But currently only version 8 .ocd files can be written. Beware that some details are neither loaded from nor saved to .ocd files, and some additional inaccuracies might occur.
+Yes, Mapper reads .ocd files from different version (8 .. 12). But currently only version 8 .ocd files can be written. Beware that some details are neither loaded from nor saved to .ocd files, and some additional inaccuracies might occur.
 
 
 ## Mobile devices
