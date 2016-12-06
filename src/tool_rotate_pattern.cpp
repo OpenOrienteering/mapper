@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2015 Kai Pastor
+ *    Copyright 2013-2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -38,18 +38,68 @@
 
 
 RotatePatternTool::RotatePatternTool(MapEditorController* editor, QAction* tool_button)
-: MapEditorToolBase(QCursor(QPixmap(QString::fromLatin1(":/images/cursor-rotate.png")), 1, 1), Other, editor, tool_button),
-  angle_helper(new ConstrainAngleToolHelper())
+: MapEditorToolBase(QCursor(QPixmap(QString::fromLatin1(":/images/cursor-rotate.png")), 1, 1), Other, editor, tool_button)
+, angle_helper(new ConstrainAngleToolHelper())
 {
 	angle_helper->addDefaultAnglesDeg(0);
 	angle_helper->setActive(false);
 	connect(angle_helper.data(), SIGNAL(displayChanged()), this, SLOT(updateDirtyRect()));
 }
 
+
 RotatePatternTool::~RotatePatternTool()
 {
 	// nothing, not inlined!
 }
+
+
+
+// This function contains translations. Keep it close to the top of the file so
+// that line numbers remain stable here when changing other parts of the file.
+void RotatePatternTool::updateStatusText()
+{
+	if (isDragging())
+	{
+		constexpr auto pi_x_1_5 = M_PI * 1.5;
+		constexpr auto pi_x_2 = M_PI * 2.0;
+		constexpr auto to_deg = 180.0 / M_PI;
+		const auto rotation = fmod(-(constrained_pos_map - click_pos_map).angle() + pi_x_1_5, pi_x_2) * to_deg;
+		setStatusBarText( trUtf8("<b>Angle:</b> %1° ").arg(QLocale().toString(rotation, 'f', 1)) + QLatin1String("| ") +
+		                  tr("<b>%1</b>: Fixed angles. ").arg(ModifierKey::control()) );
+	}
+	else
+	{
+		setStatusBarText(tr("<b>Drag</b>: Set the direction of area fill patterns or point objects. "));
+	}
+}
+
+
+
+bool RotatePatternTool::keyPressEvent(QKeyEvent* event)
+{
+    if (event->key() == Qt::Key_Control)
+	{
+		angle_helper->setActive(true, click_pos_map);
+		if (isDragging())
+			dragMove();
+	}
+	return false;
+}
+
+
+bool RotatePatternTool::keyReleaseEvent(QKeyEvent* event)
+{
+	if (event->key() == Qt::Key_Control && angle_helper->isActive())
+	{
+		angle_helper->setActive(false);
+		if (isDragging())
+			dragMove();
+		return true;
+	}
+	return false;
+}
+
+
 
 void RotatePatternTool::dragStart()
 {
@@ -57,16 +107,16 @@ void RotatePatternTool::dragStart()
 	if (angle_helper->isActive())
 		angle_helper->setActive(true, click_pos_map);
 }
+
+
 void RotatePatternTool::dragMove()
 {
 	angle_helper->getConstrainedCursorPositions(cur_pos_map, constrained_pos_map, constrained_pos, cur_map_widget);
-	double rotation = -M_PI / 2 - (constrained_pos_map - click_pos_map).angle();
+	const auto rotation = -M_PI / 2 - (constrained_pos_map - click_pos_map).angle();
 	
-	Map::ObjectSelection::const_iterator it_end = map()->selectedObjectsEnd();
-	for (Map::ObjectSelection::const_iterator it = map()->selectedObjectsBegin(); it != it_end; ++it)
+	for (auto object : map()->selectedObjects())
 	{
-		Object* object = *it;
-		// TODO: Refactor, provided unified interface for rotation in Object
+		/// \todo Refactor, provide a unified interface for rotation in Object
 		if (object->getType() == Object::Point)
 		{
 			if (object->getSymbol()->asPoint()->isRotatable())
@@ -82,12 +132,16 @@ void RotatePatternTool::dragMove()
 	updatePreviewObjects();
 	updateStatusText();
 }
+
+
 void RotatePatternTool::dragFinish()
 {
 	finishEditing();
 	updateDirtyRect();
 	updateStatusText();
 }
+
+
 
 void RotatePatternTool::draw(QPainter* painter, MapWidget* widget)
 {
@@ -104,27 +158,7 @@ void RotatePatternTool::draw(QPainter* painter, MapWidget* widget)
 	}
 }
 
-bool RotatePatternTool::keyPressEvent(QKeyEvent* event)
-{
-    if (event->key() == Qt::Key_Control)
-	{
-		angle_helper->setActive(true, click_pos_map);
-		if (isDragging())
-			dragMove();
-	}
-	return false;
-}
-bool RotatePatternTool::keyReleaseEvent(QKeyEvent* event)
-{
-	if (event->key() == Qt::Key_Control && angle_helper->isActive())
-	{
-		angle_helper->setActive(false);
-		if (isDragging())
-			dragMove();
-		return true;
-	}
-	return false;
-}
+
 
 int RotatePatternTool::updateDirtyRectImpl(QRectF& rect)
 {
@@ -138,27 +172,12 @@ int RotatePatternTool::updateDirtyRectImpl(QRectF& rect)
 	return rect.isValid() ? angle_helper->getDisplayRadius() : -1;
 }
 
+
+
 void RotatePatternTool::objectSelectionChangedImpl()
 {
 	if (map()->getNumSelectedObjects() == 0)
 		deactivate();
 	else
 		updateDirtyRect();
-}
-
-void RotatePatternTool::updateStatusText()
-{
-	if (isDragging())
-	{
-		static const double pi_x_1_5 = M_PI * 1.5;
-		static const double pi_x_2 = M_PI * 2.0;
-		static const double to_deg = 180.0 / M_PI;
-		double rotation = fmod(-(constrained_pos_map - click_pos_map).angle() + pi_x_1_5, pi_x_2) * to_deg;
-		setStatusBarText( trUtf8("<b>Angle:</b> %1° ").arg(QLocale().toString(rotation, 'f', 1)) + QLatin1String("| ") +
-		                  tr("<b>%1</b>: Fixed angles. ").arg(ModifierKey::control()) );
-	}
-	else
-	{
-		setStatusBarText(tr("<b>Drag</b>: Set the direction of area fill patterns or point objects. "));
-	}
 }

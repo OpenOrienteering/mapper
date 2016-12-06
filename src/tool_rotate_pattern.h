@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2014, 2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -18,8 +19,8 @@
  */
 
 
-#ifndef _OPENORIENTEERING_TOOL_ROTATE_PATTERN_H_
-#define _OPENORIENTEERING_TOOL_ROTATE_PATTERN_H_
+#ifndef OPENORIENTEERING_TOOL_ROTATE_PATTERN_H
+#define OPENORIENTEERING_TOOL_ROTATE_PATTERN_H
 
 #include <QScopedPointer>
 
@@ -28,29 +29,28 @@
 class ConstrainAngleToolHelper;
 
 /**
- * Tool to rotate patterns of area objects or
- * set the direction of rotatable point objects.
+ * Tool to rotate patterns of area objects, or to set the direction of rotatable point objects.
  */
 class RotatePatternTool : public MapEditorToolBase
 {
 Q_OBJECT
 public:
 	RotatePatternTool(MapEditorController* editor, QAction* tool_action);
-	virtual ~RotatePatternTool();
+	~RotatePatternTool() override;
 	
-	virtual void draw(QPainter* painter, MapWidget* widget);
+	void draw(QPainter* painter, MapWidget* widget) override;
 	
-	virtual bool keyPressEvent(QKeyEvent* event);
-	virtual bool keyReleaseEvent(QKeyEvent* event);
+	bool keyPressEvent(QKeyEvent* event) override;
+	bool keyReleaseEvent(QKeyEvent* event) override;
 	
 protected:
-	virtual int updateDirtyRectImpl(QRectF& rect);
-	virtual void updateStatusText();
-	virtual void objectSelectionChangedImpl();
+	void dragStart() override;
+	void dragMove() override;
+	void dragFinish() override;
 	
-	virtual void dragStart();
-	virtual void dragMove();
-	virtual void dragFinish();
+	int updateDirtyRectImpl(QRectF& rect) override;
+	void updateStatusText() override;
+	void objectSelectionChangedImpl() override;
 	
 	QScopedPointer<ConstrainAngleToolHelper> angle_helper;
 	QPointF constrained_pos;
