@@ -139,6 +139,7 @@ add_unit_test(georeferencing_t ../src/core/georeferencing
 add_unit_test(locale_t ../src/util_translation ../src/mapper_resource)
 add_unit_test(map_color_t ../src/core/map_color)
 add_unit_test(qpainter_t)
+add_unit_test(util_t ../src/util ../src/settings ../src/mapper_resource)
 
 # Benchmarks
 add_system_test(coord_xml_t MANUAL)

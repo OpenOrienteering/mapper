@@ -99,21 +99,45 @@ inline double fmod_pos(double x, double y)
 	return x - y * floor(x / y);
 }
 
-/** Enlarges the rect to include the given point.
- *  WARNING, does not work if rect is an invalid rect before! */
+/**
+ * Enlarges the rect to include the given point.
+ * 
+ * The given rect must be valid.
+ * 
+ * \see QRectF::isValid()
+ */
 void rectInclude(QRectF& rect, QPointF point);
 
-/** Enlarges the rect to include the given point. */
+/**
+ * Enlarges the rect to include the given point.
+ * 
+ * If the given rect isn't valid, width and height are set to a small positive value.
+ */
 void rectIncludeSafe(QRectF& rect, QPointF point);
 
-/** Enlarges the rect to include the given rect.
- *  WARNING, does not work if rect is an invalid rect before! */
+/**
+ * Enlarges the rect to include the given other_rect.
+ * 
+ * Both rectangles must be valid.
+ * 
+ * \see QRectF::isValid()
+ */
 void rectInclude(QRectF& rect, const QRectF& other_rect);
 
-/** Enlarges the rect to include the given rect. */
+/**
+ * Enlarges the rect to include the given other_rect.
+ * 
+ * At least one rectangle must be valid.
+ */
 void rectIncludeSafe(QRectF& rect, const QRectF& other_rect);
 
-/** Enlarges the rect to include the given rect. */
+/**
+ * Enlarges the rect to include the given other_rect.
+ * 
+ * At least one rectangle must be valid.
+ * 
+ * \todo Check if QRegion could be used instead.
+ */
 void rectIncludeSafe(QRect& rect, const QRect& other_rect);
 
 
