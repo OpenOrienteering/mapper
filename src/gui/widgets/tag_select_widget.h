@@ -34,6 +34,7 @@ class Map;
 class MapEditorController;
 class MapView;
 class Object;
+class QueryOperation;
 
 /**
  * This widget allows the user to make selections based on an objects tags.
@@ -60,6 +61,12 @@ protected slots:
 private:
 	void addRowItems(int row);
 	void moveRow(bool up);
+
+	/**
+	 * Builds a query based on the current state of the query table.
+	 * On error the unqiue_ptr contains nullptr and the status text is updated.
+	 */
+	std::unique_ptr<QueryOperation> makeQuery() const;
 	
 	Map* map;
 	MapView* main_view;

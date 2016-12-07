@@ -21,6 +21,7 @@
 #include "tag_select_widget.h"
 
 #include <QComboBox>
+#include <QGuiApplication>
 #include <QHeaderView>
 #include <QLabel>
 #include <QMessageBox>
@@ -179,25 +180,25 @@ void TagSelectWidget::addRowItems(int row)
 	{
 		item = new QTableWidgetItem();
 		item->setFlags(Qt::NoItemFlags);
-		item->setBackground(QBrush(Qt::darkGray));
+		item->setBackground(QBrush(QGuiApplication::palette().window()));
 		query_table->setItem(row, 0, item);
 	}
 }
 
 void TagSelectWidget::addRow()
 {
-	int row = query_table->currentRow();
+	int row = query_table->currentRow() + 1;
 
-	// When nothing is selected, currentRow is -1
-	if (row == -1)
-		row = 0;
+	// When nothing is selected, add to the end
+	if (row == 0)
+		row = query_table->rowCount();
 
-	query_table->insertRow(row + 1);
-	addRowItems(row + 1);
+	query_table->insertRow(row);
+	addRowItems(row);
 
 	// Move the selection to the new row
 	int col = query_table->currentColumn();
-	query_table->setCurrentCell(row + 1, col);
+	query_table->setCurrentCell(row, col);
 }
 
 void TagSelectWidget::deleteRow()
@@ -208,9 +209,9 @@ void TagSelectWidget::deleteRow()
 
 	int row = query_table->currentRow();
 
-	// When nothing is selected, currentRow is -1
+	// When nothing is selected, delete from the end
 	if (row == -1)
-		row = 0;
+		row = query_table->rowCount() - 1;
 
 	query_table->removeRow(row);
 
@@ -220,7 +221,7 @@ void TagSelectWidget::deleteRow()
 		query_table->removeCellWidget(row, 0);
 		QTableWidgetItem* item = new QTableWidgetItem();
 		item->setFlags(Qt::NoItemFlags);
-		item->setBackground(QBrush(Qt::darkGray));
+		item->setBackground(QBrush(QGuiApplication::palette().window()));
 		query_table->setItem(row, 0, item);
 	}
 }
@@ -230,9 +231,9 @@ void TagSelectWidget::moveRow(bool up)
 	int row = query_table->currentRow();
 	int max_row = query_table->rowCount();
 
-	// When nothing is selected, currentRow is -1
+	// When nothing is selected, move the last row
 	if (row == -1)
-		row = 0;
+		row = max_row - 1;
 
 	// Cant move first row up or last row down
 	if ((up && row < 1) || (!up && row == max_row - 1))
@@ -282,40 +283,11 @@ void TagSelectWidget::moveRow(bool up)
 
 void TagSelectWidget::makeSelection()
 {
-	std::unique_ptr<QueryOperation> query;
-	int rowCount = query_table->rowCount();
-	auto logical_op = QueryOperation::INVALID_OP;
+	std::unique_ptr<QueryOperation> query = makeQuery();
 
-	for (int row = 0; row < rowCount; ++row)
-	{
-		const QString key = query_table->item(row, 1)->text().trimmed();
-		QueryOperation::Operation compare_op = qobject_cast<QComboBox*>(query_table->cellWidget(row, 2))->currentData().value<QueryOperation::Operation>();
-		const QString value = query_table->item(row, 3)->text().trimmed();
-
-		std::unique_ptr<QueryOperation> comparison = std::unique_ptr<QueryOperation>(new QueryOperation(key, compare_op, value));
-
-		if (comparison->getOp() == QueryOperation::INVALID_OP)
-		{
-			selection_info->setText(tr("Invalid query"));
-			return;
-		}
-
-		if (row != 0)
-		{
-			logical_op = qobject_cast<QComboBox*>(query_table->cellWidget(row, 0))->currentData().value<QueryOperation::Operation>();
-			query = std::unique_ptr<QueryOperation>(new QueryOperation(std::move(query), logical_op, std::move(comparison)));
-		}
-		else
-		{
-			query = std::move(comparison);
-		}
-
-		if (query->getOp() == QueryOperation::INVALID_OP)
-		{
-			selection_info->setText(tr("Invalid query"));
-			return;
-		}
-	}
+	// Did it work?
+	if (query.get() == nullptr)
+		return;
 
 	MapPart *part = map->getCurrentPart();
 	int num_objects = part->getNumObjects();
@@ -352,8 +324,48 @@ void TagSelectWidget::makeSelection()
 			controller->setEditTool();
 	}
 
-	QString msg = QString::number(matches.size()) + QLatin1String(" ") + tr("objects selected");
-	selection_info->setText(msg);
+	selection_info->setText(tr("%n object(s) selected", "", map->selectedObjects().size()));
+}
+
+std::unique_ptr<QueryOperation> TagSelectWidget::makeQuery() const
+{
+	std::unique_ptr<QueryOperation> query;
+	int rowCount = query_table->rowCount();
+	auto logical_op = QueryOperation::INVALID_OP;
+
+	for (int row = 0; row < rowCount; ++row)
+	{
+		auto key = query_table->item(row, 1)->text().trimmed();
+		auto compare_op = qobject_cast<QComboBox*>(query_table->cellWidget(row, 2))->currentData().value<QueryOperation::Operation>();
+		auto value = query_table->item(row, 3)->text().trimmed();
+
+		std::unique_ptr<QueryOperation> comparison = std::unique_ptr<QueryOperation>(new QueryOperation(key, compare_op, value));
+
+		if (comparison->getOp() == QueryOperation::INVALID_OP)
+		{
+			selection_info->setText(tr("Invalid query"));
+			return std::unique_ptr<QueryOperation>(nullptr);
+		}
+
+		// First row we just copy the query
+		if (row != 0)
+		{
+			logical_op = qobject_cast<QComboBox*>(query_table->cellWidget(row, 0))->currentData().value<QueryOperation::Operation>();
+			query = std::unique_ptr<QueryOperation>(new QueryOperation(std::move(query), logical_op, std::move(comparison)));
+		}
+		else
+		{
+			query = std::move(comparison);
+		}
+
+		if (query->getOp() == QueryOperation::INVALID_OP)
+		{
+			selection_info->setText(tr("Invalid query"));
+			return std::unique_ptr<QueryOperation>(nullptr);
+		}
+	}
+
+	return query;
 }
 
 // ### QueryOperation ###
@@ -400,35 +412,20 @@ QueryOperation::Operation QueryOperation::getOp()
 bool QueryOperation::evaluate(Object* obj)
 {
 	const auto tags = obj->tags();
-	bool left, right;
 
 	switch(op)
 	{
 	case IS_OP:
-		if (!tags.contains(key_arg))
-			return false;
-		return tags.value(key_arg) == value_arg;
+		return tags.contains(key_arg) && tags.value(key_arg) == value_arg;
 	case CONTAINS_OP:
-		if (!tags.contains(key_arg))
-			return false;
-		return tags.value(key_arg).contains(value_arg);
+		return tags.contains(key_arg) && tags.value(key_arg).contains(value_arg);
 	case NOT_OP:
 		// If the object does have the tag, not is true
-		if (!tags.contains(key_arg))
-			return true;
-		return tags.value(key_arg) != value_arg;
+		return !tags.contains(key_arg) || tags.value(key_arg) != value_arg;
 	case OR_OP:
-		left = left_arg->evaluate(obj);
-		if (left)
-			return true;
-		right = right_arg->evaluate(obj);
-		return right;
+		return left_arg->evaluate(obj) || right_arg->evaluate(obj);
 	case AND_OP:
-		left = left_arg->evaluate(obj);
-		if (!left)
-			return false;
-		right = right_arg->evaluate(obj);
-		return right;
+		return left_arg->evaluate(obj) && right_arg->evaluate(obj);
 	case INVALID_OP:
 		return false;
 	}
