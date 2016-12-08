@@ -72,7 +72,7 @@ EditPointTool::EditPointTool(MapEditorController* editor, QAction* tool_button)
  , hover_object { nullptr }
  , hover_point { 0 }
  , box_selection { false }
- , no_more_effect_on_click { false }
+ , waiting_for_mouse_release { false }
  , space_pressed { false }
  , text_editor { nullptr }
 {
@@ -97,40 +97,48 @@ bool EditPointTool::addDashPointDefault() const
 bool EditPointTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
 	// TODO: port TextObjectEditorHelper to MapEditorToolBase
-	if (text_editor)
-	{
-		if (!text_editor->mousePressEvent(event, map_coord, widget))
-			finishEditing();
+	if (text_editor && text_editor->mousePressEvent(event, map_coord, widget))
 		return true;
+	
+	if (waiting_for_mouse_release)
+	{
+		if (event->buttons() & ~event->button())
+			return true;
+		waiting_for_mouse_release = false;
 	}
-	else
-		return MapEditorToolBase::mousePressEvent(event, map_coord, widget);
+	
+	return MapEditorToolBase::mousePressEvent(event, map_coord, widget);
 }
 
 bool EditPointTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
 	// TODO: port TextObjectEditorHelper to MapEditorToolBase
-	if (text_editor)
-		return text_editor->mouseMoveEvent(event, map_coord, widget);
-	else
-		return MapEditorToolBase::mouseMoveEvent(event, map_coord, widget);
+	if (text_editor && text_editor->mouseMoveEvent(event, map_coord, widget))
+		return true;
+	
+	if (waiting_for_mouse_release)
+	{
+		if (event->buttons())
+			return true;
+		waiting_for_mouse_release = false;
+	}
+	
+	return MapEditorToolBase::mouseMoveEvent(event, map_coord, widget);
 }
 
 bool EditPointTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
 	// TODO: port TextObjectEditorHelper to MapEditorToolBase
-	if (text_editor)
+	if (text_editor && text_editor->mouseReleaseEvent(event, map_coord, widget))
+		return true;
+	
+	if (waiting_for_mouse_release)
 	{
-		if (event->button() == Qt::LeftButton)
-		{
-			box_selection = false;
-		}
-		if (!text_editor->mouseReleaseEvent(event, map_coord, widget))
-			finishEditing();
+		waiting_for_mouse_release = !event->buttons();
 		return true;
 	}
-	else
-		return MapEditorToolBase::mouseReleaseEvent(event, map_coord, widget);
+	
+	return MapEditorToolBase::mouseReleaseEvent(event, map_coord, widget);
 }
 
 void EditPointTool::mouseMove()
@@ -165,9 +173,6 @@ void EditPointTool::clickPress()
 		
 		if (distance_sq <= click_tolerance_map_sq)
 		{
-			startEditing();
-			QScopedValueRollback<bool> no_effect_rollback(no_more_effect_on_click);
-			no_more_effect_on_click = true;
 			startDragging();
 			hover_state = OverObjectNode;
 			hover_point = path->subdivide(path_coord);
@@ -179,6 +184,7 @@ void EditPointTool::clickPress()
 				map()->emitSelectionEdited();
 			}
 			startEditingSetup();
+			angle_helper->setActive(false);
 			updatePreviewObjects();
 		}
 	}
@@ -198,7 +204,7 @@ void EditPointTool::clickPress()
 			hover_coord.setDashPoint(!hover_coord.isDashPoint());
 			hover_object->update();
 			updateDirtyRect();
-			no_more_effect_on_click = true;
+			waiting_for_mouse_release = true;
 		}
 		else if (active_modifiers & Qt::ControlModifier)
 		{
@@ -214,7 +220,7 @@ void EditPointTool::clickPress()
 				map()->emitSelectionEdited();
 				updateHoverState(cur_pos_map);
 				updateDirtyRect();
-				no_more_effect_on_click = true;
+				waiting_for_mouse_release = true;
 			}
 			else
 			{
@@ -247,7 +253,7 @@ void EditPointTool::clickPress()
 						updateHoverState(cur_pos_map);
 						updateDirtyRect();
 					}
-					no_more_effect_on_click = true;
+					waiting_for_mouse_release = true;
 				}
 				else
 				{
@@ -263,33 +269,31 @@ void EditPointTool::clickPress()
 					map()->emitSelectionEdited();
 					updateHoverState(cur_pos_map);
 					updateDirtyRect();
-					no_more_effect_on_click = true;
+					waiting_for_mouse_release = true;
 				}
 			}
 		}
 	}
 	else if (hoveringOverSingleText())
 	{
+		box_selection = false;
+		
 		TextObject* hover_object = map()->getFirstSelectedObject()->asText();
 		startEditing();
 		
 		// Don't show the original text while editing
 		map()->removeRenderablesOfObject(hover_object, true);
 		
-		// Make sure that the TextObjectEditorHelper remembers the correct standard cursor
-		cur_map_widget->setCursor(getCursor());
-		
 		old_text = hover_object->getText();
 		old_horz_alignment = (int)hover_object->getHorizontalAlignment();
 		old_vert_alignment = (int)hover_object->getVerticalAlignment();
 		text_editor = new TextObjectEditorHelper(hover_object, editor);
-		connect(text_editor, SIGNAL(selectionChanged(bool)), this, SLOT(textSelectionChanged(bool)));
+		connect(text_editor, &TextObjectEditorHelper::stateChanged, this, &EditPointTool::updatePreviewObjects);
+		connect(text_editor, &TextObjectEditorHelper::finished, this, &EditPointTool::finishEditing);
 		
-		// Select clicked position
-		int pos = hover_object->calcTextPositionAt(cur_pos_map, false);
-		text_editor->setSelection(pos, pos);
-		
-		updatePreviewObjects();
+		// Send clicked position
+		QMouseEvent event { QEvent::MouseButtonPress, click_pos, Qt::LeftButton, Qt::LeftButton, active_modifiers };
+		text_editor->mousePressEvent(&event, click_pos_map, cur_map_widget);
 	}
 	
 	click_timer.restart();
@@ -303,11 +307,6 @@ void EditPointTool::clickRelease()
 	// wanted to move the objects instead and no selection change is done.
 	const int selection_click_time_threshold = 150;
 	
-	if (no_more_effect_on_click)
-	{
-		no_more_effect_on_click = false;
-		return;
-	}
 	if (hover_state != OverNothing &&
 	    click_timer.elapsed() >= selection_click_time_threshold)
 	{
@@ -320,9 +319,6 @@ void EditPointTool::clickRelease()
 
 void EditPointTool::dragStart()
 {
-	if (no_more_effect_on_click)
-		return;
-	
 	updateHoverState(click_pos_map);
 	
 	if (hover_state == OverNothing)
@@ -343,9 +339,6 @@ void EditPointTool::dragStart()
 
 void EditPointTool::dragMove()
 {
-	if (no_more_effect_on_click)
-		return;
-	
 	if (editingInProgress())
 	{
 		if (snapped_to_pos && handle_offset != MapCoordF(0, 0))
@@ -368,9 +361,6 @@ void EditPointTool::dragMove()
 
 void EditPointTool::dragFinish()
 {
-	if (no_more_effect_on_click)
-		no_more_effect_on_click = false;
-	
 	if (editingInProgress())
 	{
 		finishEditing();
@@ -403,7 +393,10 @@ bool EditPointTool::keyPress(QKeyEvent* event)
 			finishEditing(); 
 			return true;
 		}
-		return text_editor->keyPressEvent(event);
+		else if (text_editor->keyPressEvent(event))
+		{
+			return true;
+		}
 	}
 	
 	int num_selected_objects = map()->getNumSelectedObjects();
@@ -448,8 +441,8 @@ bool EditPointTool::keyPress(QKeyEvent* event)
 
 bool EditPointTool::keyRelease(QKeyEvent* event)
 {
-	if (text_editor)
-		return text_editor->keyReleaseEvent(event);
+	if (text_editor && text_editor->keyReleaseEvent(event))
+		return true;
 	
 	if (event->key() == Qt::Key_Control)
 	{
@@ -502,7 +495,7 @@ void EditPointTool::objectSelectionChangedImpl()
 		// This case can be reproduced by using "select all objects of symbol" for any symbol while editing a text.
 		// Revert selection to text object in order to be able to finish editing. Not optimal, but better than crashing.
 		map()->clearObjectSelection(false);
-		map()->addObjectToSelection(text_editor->getObject(), false);
+		map()->addObjectToSelection(text_editor->object(), false);
 		finishEditing();
 		map()->emitSelectionChanged();
 		return;
@@ -592,12 +585,6 @@ void EditPointTool::drawImpl(QPainter* painter, MapWidget* widget)
 		drawSelectionBox(painter, widget, click_pos_map, cur_pos_map);
 }
 
-void EditPointTool::textSelectionChanged(bool text_change)
-{
-	Q_UNUSED(text_change);
-	updatePreviewObjects();
-}
-
 void EditPointTool::finishEditing()
 {
 	bool create_undo_step = true;
@@ -619,6 +606,8 @@ void EditPointTool::finishEditing()
 		}
 		else if (text_object->getText() == old_text && (int)text_object->getHorizontalAlignment() == old_horz_alignment && (int)text_object->getVerticalAlignment() == old_vert_alignment)
 			create_undo_step = false;
+		
+		waiting_for_mouse_release = true;
 	}
 	
 	MapEditorToolBase::finishEditing(delete_objects, create_undo_step);

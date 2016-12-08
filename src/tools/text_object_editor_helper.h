@@ -22,13 +22,15 @@
 #ifndef OPENORIENTEERING_TEXT_OBJECT_EDITOR_HELPER_H
 #define OPENORIENTEERING_TEXT_OBJECT_EDITOR_HELPER_H
 
+#include <functional>
+
 #include <QObject>
 
 #include "../tool.h"
 
 QT_BEGIN_NAMESPACE
-class QMouseEvent;
 class QKeyEvent;
+class QMouseEvent;
 class QPainter;
 class QTimer;
 QT_END_NAMESPACE
@@ -39,18 +41,61 @@ class TextObjectAlignmentDockWidget;
 
 
 /**
- * Helper class to enable text editing (using the DrawTextTool and the EditTool).
+ * Helper class editing the text of TextObject.
  * 
- * To use it, after constructing an instance for the TextObject to edit, you must
- * pass through all mouse and key events to it and call draw() & includeDirtyRect().
- * If mousePressEvent() or mouseReleaseEvent() returns false, editing is finished.
+ * This class is meant to be used by tools (DrawTextTool, EditPointTool) in the
+ * following way:
+ * 
+ *  - When text editing starts, the tool must construct an object of this class.
+ *    The constructor takes care of modifying the state of the main window.
+ *  - Then the tool must pass all mouse and key events through this object,
+ *    call draw() etc. The object will emit a signal for state changes which
+ *    need a redraw of the output and another signal when editing is finished.
+ *  - When editing is finished, the tool must destroy the object. The destructor
+ *    will restore the original state of the main window.
  */
 class TextObjectEditorHelper : public QObject
 {
 Q_OBJECT
 public:
-	TextObjectEditorHelper(TextObject* object, MapEditorController* editor);
-	~TextObjectEditorHelper();
+	TextObjectEditorHelper(TextObject* text_object, MapEditorController* editor);
+	
+	~TextObjectEditorHelper() override;
+	
+	
+	/**
+	 * Returns the text object which is edited by this object.
+	 */
+	TextObject* object() const;
+	
+	
+	/**
+	 * Sets the position of the selection anchor and of the cursor.
+	 * 
+	 * The text between the anchor position and the cursor position is the
+	 * current selection. Setting both parameters to the same value results
+	 * in an empty selection.
+	 * 
+	 * The reference position for linewise selection is set to the cursor
+	 * position.
+	 * 
+	 * @return True iff there actually was a change.
+	 */
+	bool setSelection(int anchor, int cursor);
+	
+	/**
+	 * Returns the text of the current selection.
+	 */
+	QString selectionText() const;
+	
+	/**
+	 * Inserts text in place of the current selection.
+	 * 
+	 * After this, the selection will be empty, and the cursor will be at the
+	 * end of the replacement text.
+	 */
+	void replaceSelectionText(const QString& replacement);
+	
 	
 	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
@@ -60,35 +105,84 @@ public:
 	bool keyReleaseEvent(QKeyEvent* event);
 	
 	void draw(QPainter* painter, MapWidget* widget);
-	void includeDirtyRect(QRectF& rect);
 	
-	inline void setSelection(int start, int end) {selection_start = start; selection_end = end; click_position = start;}
-	inline TextObject* getObject() const {return object;}
-	
-public slots:
-	void alignmentChanged(int horz, int vert);
-	void setFocus();
+	void includeDirtyRect(QRectF& rect) const;
 	
 signals:
-	/// Emitted when a user action changes the selection (not called by setSelection()), or the text alignment. If the text is also changed, text_change is true.
-	void selectionChanged(bool text_change);
+	/**
+	 * Emitted when the text object or the selection is modified.
+	 * 
+	 * This includes movements of the cursor when the selection is empty.
+	 */
+	void stateChanged();
+	
+	/**
+	 * Emitted when editing is finished.
+	 */
+	void finished();
+	
+private slots:
+	/**
+	 * Claims focus for the editor's main map widget.
+	 * 
+	 * This is required for proper input event handling.
+	 */
+	void claimFocus();
 	
 private:
-	void insertText(QString text);
-	void updateDragging(MapCoordF map_coord);
-	bool getNextLinesSelectionRect(int& line, QRectF& out);
+	/**
+	 * Sets the position of the selection anchor, the cursor, and the reference
+	 * position for linewise selection.
+	 * 
+	 * @return True iff there actually was a change.
+	 */
+	bool setSelection(int anchor, int cursor, int line_position);
 	
-	bool dragging;
-	int click_position;
-	int selection_start;
-	int selection_end;
-	TextObject* object;
+	/**
+	 * Sets the horizontal and vertical alignment of the text object.
+	 * 
+	 * This methods acts as a slot for messages from TextObjectAlignmentDockWidget.
+	 */
+	void setTextAlignment(int h_alignment, int v_alignment);
+	
+	/**
+	 * Switches between the text editing cursor and the default cursor.
+	 */
+	void updateCursor(QWidget* widget, int position);
+	
+	/**
+	 * Adjusts the selection while dragging.
+	 */
+	void updateDragging(MapCoordF map_coord);
+	
+	/**
+	 * Calls the worker function for the selection rectangle of each line.
+	 */
+	void foreachLineSelectionRect(std::function<void(const QRectF&)> worker) const;
+	
+	
+	TextObject* text_object;
 	MapEditorController* editor;
 	TextObjectAlignmentDockWidget* dock_widget;
-	QCursor original_cursor;
-	bool original_cursor_retrieved;
-	QTimer* timer;
+	int anchor_position;
+	int cursor_position;
+	int line_selection_position;
+	bool dragging;
+	bool text_cursor_active;
 };
+
+
+inline
+TextObject* TextObjectEditorHelper::object() const
+{
+	return text_object;
+}
+
+inline
+bool TextObjectEditorHelper::setSelection(int anchor, int cursor)
+{
+	return setSelection(anchor, cursor, cursor);
+}
 
 
 #endif

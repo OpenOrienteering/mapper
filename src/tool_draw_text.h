@@ -52,7 +52,6 @@ protected:
 	void objectSelectionChangedImpl() override;
 	
 	void startEditing();
-	void selectionChanged();
 	void abortEditing();
 	void finishEditing() override;
 	
@@ -74,7 +73,8 @@ protected:
 	
 	void leaveEvent(QEvent* event) override;
 	
-	void setPreviewLetter();
+	void resetWaitingForMouseRelease();
+	void updatePreview();
 	void updatePreviewText();
 	int updateDirtyRectImpl(QRectF& rect) override;
 	void drawImpl(QPainter* painter, MapWidget* widget) override;
@@ -84,6 +84,7 @@ protected:
 	MapRenderables renderables;
 	std::unique_ptr<TextObject, MapRenderables::ObjectDeleter> preview_text;
 	std::unique_ptr<TextObjectEditorHelper> text_editor;
+	bool waiting_for_mouse_release;
 };
 
 #endif

@@ -74,9 +74,6 @@ public:
 	 */
 	void finishEditing() override;
 	
-public slots:
-	void textSelectionChanged(bool text_change);
-	
 protected:
 	bool keyPress(QKeyEvent* event) override;
 	bool keyRelease(QKeyEvent* event) override;
@@ -147,7 +144,7 @@ protected:
 	QScopedPointer<ObjectMover> object_mover;
 	
 	// Mouse / key handling
-	bool no_more_effect_on_click;
+	bool waiting_for_mouse_release;
 	bool space_pressed;
 	
 	/**

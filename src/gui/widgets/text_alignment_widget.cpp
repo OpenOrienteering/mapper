@@ -60,8 +60,8 @@ const AlignmentOption vertical_options[] = {
 TextObjectAlignmentDockWidget::TextObjectAlignmentDockWidget(TextObjectEditorHelper* text_editor, QWidget* parent)
 : QDockWidget { tr("Alignment"), parent }
 , text_editor { text_editor }
-, horizontal_alignment { text_editor->getObject()->getHorizontalAlignment() }
-, vertical_alignment   { text_editor->getObject()->getVerticalAlignment() }
+, horizontal_alignment { text_editor->object()->getHorizontalAlignment() }
+, vertical_alignment   { text_editor->object()->getVerticalAlignment() }
 {
 	setFocusPolicy(Qt::NoFocus);
 	setFeatures(features() & ~QDockWidget::DockWidgetClosable);

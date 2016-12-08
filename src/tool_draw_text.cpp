@@ -21,6 +21,7 @@
 
 #include "tool_draw_text.h"
 
+#include <QGuiApplication>
 #include <QKeyEvent>
 #include <QMouseEvent>
 #include <QPainter>
@@ -52,6 +53,7 @@ DrawTextTool::DrawTextTool(MapEditorController* editor, QAction* tool_button)
 , drawing_symbol { editor->activeSymbol() }
 , renderables    { map() }
 , preview_text   { new TextObject(), { renderables } }
+, waiting_for_mouse_release { false }
 {
 	connect(editor, &MapEditorController::activeSymbolChanged, this, &DrawTextTool::setDrawingSymbol);
 }
@@ -106,18 +108,13 @@ void DrawTextTool::startEditing()
 
 	// Create the TextObjectEditor
 	text_editor.reset(new TextObjectEditorHelper(preview_text.get(), editor));
-	connect(text_editor.get(), &TextObjectEditorHelper::selectionChanged, this, &DrawTextTool::selectionChanged);
+	connect(text_editor.get(), &TextObjectEditorHelper::stateChanged, this, &DrawTextTool::updatePreviewText);
+	connect(text_editor.get(), &TextObjectEditorHelper::finished, this, &DrawTextTool::finishEditing);
 	
 	editor->setEditingInProgress(true);
 	
 	updatePreviewText();
 	updateStatusText();
-}
-
-void DrawTextTool::selectionChanged()
-{
-	preview_text->setOutputDirty();
-	updatePreviewText();
 }
 
 void DrawTextTool::abortEditing()
@@ -128,10 +125,7 @@ void DrawTextTool::abortEditing()
 	map()->clearDrawingBoundingBox();
 	
 	editor->setEditingInProgress(false);
-	
-	preview_text->setAnchorPosition(cur_pos_map);
-	setPreviewLetter();
-	updateStatusText();
+	resetWaitingForMouseRelease();
 }
 
 void DrawTextTool::finishEditing()
@@ -157,32 +151,60 @@ void DrawTextTool::finishEditing()
 	}
 	
 	editor->setEditingInProgress(false);
-	updateStatusText();
+	
+	if (QGuiApplication::mouseButtons())
+	{
+		waiting_for_mouse_release = true;
+		cur_map_widget->setCursor({});
+		updateStatusText();
+	}
+	else
+	{
+		resetWaitingForMouseRelease();
+	}
 }
-
 
 bool DrawTextTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
-	if (text_editor)
-		return text_editor->mousePressEvent(event, map_coord, widget);
+	mousePositionEvent(event, map_coord, widget);
+	
+	if (text_editor && text_editor->mousePressEvent(event, map_coord, widget))
+		return true;
+	
+	if (waiting_for_mouse_release)
+	{
+		if (event->buttons() & ~event->button())
+			return true;
+		resetWaitingForMouseRelease();
+	}
 	
 	return MapEditorToolBase::mousePressEvent(event, map_coord, widget);
 }
 
 bool DrawTextTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
-	if (text_editor)
-		return text_editor->mouseMoveEvent(event, map_coord, widget);
+	mousePositionEvent(event, map_coord, widget);
+	
+	if (text_editor && text_editor->mouseMoveEvent(event, map_coord, widget))
+		return true;
+	
+	if (waiting_for_mouse_release)
+		resetWaitingForMouseRelease();
 	
 	return MapEditorToolBase::mouseMoveEvent(event, map_coord, widget);
 }
 
 bool DrawTextTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
-	if (text_editor)
+	mousePositionEvent(event, map_coord, widget);
+	
+	if (text_editor && text_editor->mouseReleaseEvent(event, map_coord, widget))
+		return true;
+	
+	if (waiting_for_mouse_release)
 	{
-		if (!text_editor->mouseReleaseEvent(event, map_coord, widget))
-			finishEditing();
+		if (!event->buttons())
+			resetWaitingForMouseRelease();
 		return true;
 	}
 	
@@ -196,7 +218,10 @@ bool DrawTextTool::keyPressEvent(QKeyEvent* event)
 	{
 		if (event->key() == Qt::Key_Escape)
 		{
-			finishEditing();
+			if (event->modifiers() & Qt::ControlModifier)
+				abortEditing();
+			else
+				finishEditing();
 			return true;
 		}
 		else if (text_editor->keyPressEvent(event))
@@ -210,10 +235,9 @@ bool DrawTextTool::keyPressEvent(QKeyEvent* event)
 
 bool DrawTextTool::keyReleaseEvent(QKeyEvent* event)
 {
-	if (text_editor)
+	if (text_editor && text_editor->keyReleaseEvent(event))
 	{
-		if (text_editor->keyReleaseEvent(event))
-			return true;
+		return true;
 	}
 	
 	return MapEditorToolBase::keyReleaseEvent(event);
@@ -222,14 +246,13 @@ bool DrawTextTool::keyReleaseEvent(QKeyEvent* event)
 
 void DrawTextTool::mouseMove()
 {
-	preview_text->setAnchorPosition(constrained_pos_map);
-	setPreviewLetter();
+	if (!text_editor)
+		updatePreview();
 }
 
 void DrawTextTool::clickPress()
 {
-	preview_text->setAnchorPosition(constrained_pos_map);
-	setPreviewLetter();
+	updatePreview();
 }
 
 void DrawTextTool::clickRelease()
@@ -246,6 +269,7 @@ void DrawTextTool::dragMove()
 	auto midpoint = MapCoord { (p1 + p2) / 2 };
 	preview_text->setBox(midpoint.nativeX(), midpoint.nativeY(), width, height);
 	updatePreviewText();
+	updateStatusText();
 }
 
 void DrawTextTool::dragFinish()
@@ -305,8 +329,18 @@ void DrawTextTool::leaveEvent(QEvent*)
 }
 
 
-void DrawTextTool::setPreviewLetter()
+void DrawTextTool::resetWaitingForMouseRelease()
 {
+	waiting_for_mouse_release = false;
+	cur_map_widget->setCursor(getCursor());
+	updatePreview();
+	updateStatusText();
+}
+
+
+void DrawTextTool::updatePreview()
+{
+	preview_text->setAnchorPosition(constrained_pos_map);
 	if (auto symbol = preview_text->getSymbol())
 	{
 		preview_text->setText(static_cast<const TextSymbol*>(symbol)->getIconText());
@@ -335,6 +369,14 @@ int DrawTextTool::updateDirtyRectImpl(QRectF& rect)
 	else if (text_editor)
 	{
 		text_editor->includeDirtyRect(rect);
+		if (!preview_text->hasSingleAnchor())
+		{
+			const auto center = preview_text->getAnchorCoordF();
+			const auto width = preview_text->getBoxWidth();
+			const auto height = preview_text->getBoxHeight();
+			rectIncludeSafe(rect, {center.x()-width/2, center.y()-height/2});
+			rectIncludeSafe(rect, {center.x()+width/2, center.y()+height/2});
+		}
 	}
 	
 	return 1;
@@ -349,7 +391,19 @@ void DrawTextTool::drawImpl(QPainter* painter, MapWidget* widget)
 		painter->setPen(active_color);
 		painter->setBrush(Qt::NoBrush);
 		
-		auto rect = widget->mapToViewport(QRectF(constrained_click_pos_map, constrained_pos_map));
+		// Default is what is fast (and stable!) while dragging.
+		auto map_rect = QRectF { click_pos_map, constrained_pos_map };
+		if (!isDragging())
+		{
+			// This is the actual frame, but it would be shaky while dragging,
+			// because of discretization in non-antialiased drawing.
+			const auto center = preview_text->getAnchorCoordF();
+			const auto width = preview_text->getBoxWidth();
+			const auto height = preview_text->getBoxHeight();
+			map_rect = QRectF { center.x()-width/2, center.y()-height/2, width, height };
+		}
+		auto rect = widget->mapToViewport(map_rect);
+		
 		painter->drawRect(rect);
 		rect.adjust(1, 1, -1, -1);
 		painter->setPen(qRgb(255, 255, 255));
@@ -373,11 +427,13 @@ void DrawTextTool::updateStatusText()
 	QString text;
 	if (text_editor)
 	{
-		text = tr("<b>%1</b>: Finish editing. ").arg(ModifierKey::escape());
+		text = tr("<b>%1</b>: Finish editing. ").arg(ModifierKey::escape()) +
+		       tr("<b>%1+%2</b>: Cancel editing. ").arg(ModifierKey::control(), ModifierKey::escape());
 	}
-	else
+	else if (!waiting_for_mouse_release)
 	{
-		text = tr("<b>Click</b>: Create a text object with a single anchor. <b>Drag</b>: Create a text box. ");
+		if (!isDragging())
+			text = tr("<b>Click</b>: Create a text object with a single anchor. <b>Drag</b>: Create a text box. ");
 		if (!(active_modifiers & Qt::ShiftModifier))
 			text += EditTool::tr("<b>%1</b>: Snap to existing objects. ").arg(ModifierKey::shift());
 	}
