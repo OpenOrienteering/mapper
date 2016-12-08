@@ -102,14 +102,18 @@ public:
 	QueryOperation(std::unique_ptr<QueryOperation> left, Operation op, std::unique_ptr<QueryOperation> right);
 
 	/**
-	 * Evaluates this query on obj - returns whether the query is true or false
-	 * for obj
+	 * Evaluates this query on object - returns whether the query is true or false
 	 */
-	bool evaluate(Object* obj);
+	bool operator()(Object* object) const;
 
-	enum Operation getOp();
+	/**
+	 * Select the objects in the current part which match to this query
+	 */
+	void selectMatchingObjects(Map* map, MapEditorController* controller) const;
+
+	Operation getOp() const;
 private:
-	enum Operation op;
+	Operation op;
 
 	// For compare ops
 	QString key_arg;

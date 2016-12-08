@@ -283,48 +283,15 @@ void TagSelectWidget::moveRow(bool up)
 
 void TagSelectWidget::makeSelection()
 {
-	std::unique_ptr<QueryOperation> query = makeQuery();
+	auto query = makeQuery();
 
 	// Did it work?
 	if (query.get() == nullptr)
 		return;
 
-	MapPart *part = map->getCurrentPart();
-	int num_objects = part->getNumObjects();
-	std::vector<Object*> matches;
-
-	for (int i = 0; i < num_objects; ++i)
-	{
-		Object* obj = part->getObject(i);
-		bool ret = query->evaluate(obj);
-		if (ret)
-			matches.push_back(obj);
-	}
-
-	bool selection_changed = false;
-	if (map->getNumSelectedObjects() > 0)
-		selection_changed = true;
-	map->clearObjectSelection(false);
-
-	bool object_selected = false;	
-	for (auto obj : matches)
-	{
-		map->addObjectToSelection(obj, false);
-		object_selected = true;
-	}
-
-	selection_changed |= object_selected;
-	if (selection_changed)
-		map->emitSelectionChanged();
+	query->selectMatchingObjects(map, controller);
 	
-	if (object_selected)
-	{
-		auto current_tool = controller->getTool();
-		if (current_tool && current_tool->isDrawTool())
-			controller->setEditTool();
-	}
-
-	selection_info->setText(tr("%n object(s) selected", "", map->selectedObjects().size()));
+	selection_info->setText(tr("%n object(s) selected", "", map->getNumSelectedObjects()));
 }
 
 std::unique_ptr<QueryOperation> TagSelectWidget::makeQuery() const
@@ -339,7 +306,7 @@ std::unique_ptr<QueryOperation> TagSelectWidget::makeQuery() const
 		auto compare_op = qobject_cast<QComboBox*>(query_table->cellWidget(row, 2))->currentData().value<QueryOperation::Operation>();
 		auto value = query_table->item(row, 3)->text().trimmed();
 
-		std::unique_ptr<QueryOperation> comparison = std::unique_ptr<QueryOperation>(new QueryOperation(key, compare_op, value));
+		auto comparison = std::unique_ptr<QueryOperation>(new QueryOperation(key, compare_op, value));
 
 		if (comparison->getOp() == QueryOperation::INVALID_OP)
 		{
@@ -404,14 +371,14 @@ QueryOperation::QueryOperation(std::unique_ptr<QueryOperation> left, QueryOperat
 		this->op = INVALID_OP;
 }
 
-QueryOperation::Operation QueryOperation::getOp()
+QueryOperation::Operation QueryOperation::getOp() const
 {
 	return op;
 }
 
-bool QueryOperation::evaluate(Object* obj)
+bool QueryOperation::operator()(Object* object) const
 {
-	const auto tags = obj->tags();
+	const auto tags = object->tags();
 
 	switch(op)
 	{
@@ -423,12 +390,45 @@ bool QueryOperation::evaluate(Object* obj)
 		// If the object does have the tag, not is true
 		return !tags.contains(key_arg) || tags.value(key_arg) != value_arg;
 	case OR_OP:
-		return left_arg->evaluate(obj) || right_arg->evaluate(obj);
+		return (*left_arg)(object) || (*right_arg)(object);
 	case AND_OP:
-		return left_arg->evaluate(obj) && right_arg->evaluate(obj);
+		return (*left_arg)(object) && (*right_arg)(object);
 	case INVALID_OP:
 		return false;
 	}
 
 	return false;
+}
+
+void QueryOperation::selectMatchingObjects(Map* map, MapEditorController* controller) const
+{
+	bool selection_changed = false;
+	if (map->getNumSelectedObjects() > 0)
+		selection_changed = true;
+	map->clearObjectSelection(false);
+
+	// Lambda to add objects to the selection
+	auto select_object = [map](Object* const object, MapPart *part, int object_index)
+	{
+		Q_UNUSED(part);
+		Q_UNUSED(object_index);
+		map->addObjectToSelection(object, false);
+		return false; // applyOnMatchingObjects tells us if this op fails, so if we fail we made a selection
+	};
+
+	MapPart *part = map->getCurrentPart();
+
+	// This reports failure if we made a selection
+	auto object_selected = !part->applyOnMatchingObjects(select_object, *this);
+
+	selection_changed |= object_selected;
+	if (selection_changed)
+		map->emitSelectionChanged();
+
+	if (object_selected)
+	{
+		auto current_tool = controller->getTool();
+		if (current_tool && current_tool->isDrawTool())
+			controller->setEditTool();
+	}
 }
