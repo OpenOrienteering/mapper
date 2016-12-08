@@ -19,11 +19,11 @@
  */
 
 
-#ifndef _OPENORIENTEERING_EDIT_POINT_TOOL_H_
-#define _OPENORIENTEERING_EDIT_POINT_TOOL_H_
+#ifndef OPENORIENTEERING_EDIT_POINT_TOOL_H
+#define OPENORIENTEERING_EDIT_POINT_TOOL_H
 
-#include <QScopedPointer>
 #include <QElapsedTimer>
+#include <QScopedPointer>
 
 #include "edit_tool.h"
 
@@ -78,6 +78,8 @@ public:
 protected:
 	bool keyPress(QKeyEvent* event) override;
 	bool keyRelease(QKeyEvent* event) override;
+	bool inputMethodEvent(QInputMethodEvent* event) override;
+	QVariant inputMethodQuery(Qt::InputMethodQuery property, QVariant argument) const override;
 	
 	void initImpl() override;
 	void objectSelectionChangedImpl() override;

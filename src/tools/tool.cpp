@@ -21,21 +21,21 @@
 
 #include "tool.h"
 
-#include <QApplication>
 #include <QAction>
-#include <QPainter>
+#include <QApplication>
 #include <QMouseEvent>
+#include <QPainter>
 #include <QTimer>
 
-#include "gui/main_window.h"
+#include "settings.h"
 #include "core/map.h"
-#include "gui/map/map_editor.h"
-#include "undo/object_undo.h"
-#include "gui/map/map_widget.h"
 #include "core/objects/object.h"
 #include "core/objects/text_object.h"
-#include "settings.h"
+#include "gui/main_window.h"
+#include "gui/map/map_editor.h"
+#include "gui/map/map_widget.h"
 #include "tool_helpers.h"
+#include "undo/object_undo.h"
 #include "util/util.h"
 
 
@@ -159,6 +159,16 @@ bool MapEditorTool::keyReleaseEvent(QKeyEvent*)
 void MapEditorTool::focusOutEvent(QFocusEvent*)
 {
 	// nothing
+}
+
+bool MapEditorTool::inputMethodEvent(QInputMethodEvent*)
+{
+	return false;
+}
+
+QVariant MapEditorTool::inputMethodQuery(Qt::InputMethodQuery, QVariant) const
+{
+	return {};
 }
 
 bool MapEditorTool::gestureEvent(QGestureEvent*, MapWidget*)

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2016 Kai Pastor
+ *    Copyright 2013-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,30 +21,79 @@
 
 #include "text_object_editor_helper.h"
 
-#include <QApplication>
+#include <QGuiApplication>
 #include <QKeyEvent>
 #include <QMimeData>
 #include <QMouseEvent>
 #include <QPainter>
+#include <QStyle>
 #include <QTimer>
 
+#include "core/objects/text_object.h"
+#include "gui/main_window.h"
 #include "gui/map/map_editor.h"
 #include "gui/map/map_widget.h"
-#include "core/objects/text_object.h"
+#include "gui/widgets/text_alignment_widget.h"
 #include "util/util.h"
-#include "../gui/main_window.h"
-#include "../gui/widgets/text_alignment_widget.h"
 
 
-TextObjectEditorHelper::TextObjectEditorHelper(TextObject* text_object, MapEditorController* editor)
+#ifdef MAPPER_DEVELOPMENT_BUILD
+#  ifdef ANDROID
+#    define DEBUG_INPUT_METHOD_SUPPORT
+#  endif
+#endif
+//#  define INPUT_METHOD_BUGS_RESOLVED
+
+// ### TextObjectEditorHelper::BatchEdit ###
+
+TextObjectEditorHelper::BatchEdit::BatchEdit(not_null<TextObjectEditorHelper*> editor, int actions)
+: editor { editor }
+{
+	Q_ASSERT(editor);
+	Q_ASSERT(editor->batch_editing >= 0);
+	Q_ASSERT(editor->batch_editing < 5);
+	
+	++editor->batch_editing;
+	if (editor->batch_editing == 1)
+	{
+		editor->state_change_action = actions;
+		if (actions & CommitPreedit)
+			editor->commitPreedit();
+	}
+}
+
+
+TextObjectEditorHelper::BatchEdit::~BatchEdit()
+{
+	Q_ASSERT(editor->batch_editing);
+	
+	--editor->batch_editing;
+	if (editor->batch_editing == 0 && editor->dirty)
+	{
+		editor->commitStateChange();
+	}
+}
+
+
+
+// ### TextObjectEditorHelper ###
+
+TextObjectEditorHelper::TextObjectEditorHelper(not_null<TextObject*> text_object, not_null<MapEditorController*> editor)
 : text_object { text_object }
 , editor { editor }
 , dock_widget { nullptr }
+, pristine_text { text_object->getText() }
+, block_start { -1 }
 , anchor_position { 0 }
 , cursor_position { 0 }
 , line_selection_position { 0 }
+, preedit_cursor { 0 }
+, batch_editing { 0 }
+, state_change_action { NoInputMethodAction }
+, dirty { true }
 , dragging { false }
 , text_cursor_active { false }
+, update_input_method_enabled { true }
 {
 	Q_ASSERT(text_object);
 	Q_ASSERT(editor);
@@ -56,15 +105,26 @@ TextObjectEditorHelper::TextObjectEditorHelper(TextObject* text_object, MapEdito
 	dock_widget = new TextObjectAlignmentDockWidget(this, window);
 	dock_widget->setFocusProxy(window); // Re-route input events
 	dock_widget->setFloating(true);
-	dock_widget->show();
 	dock_widget->resize(0, 0);
-	dock_widget->setGeometry({editor->getMainWidget()->mapTo(window, {}), dock_widget->size()});
+	dock_widget->window()->setGeometry({editor->getMainWidget()->mapToGlobal({}), dock_widget->size()});
+	dock_widget->show();
 	connect(dock_widget, &TextObjectAlignmentDockWidget::alignmentChanged, this, &TextObjectEditorHelper::setTextAlignment);
 	connect(this, &QObject::destroyed, dock_widget, &QObject::deleteLater);
 	
+	// When the app is activated again, re-activate the input method.
+	connect(qApp, &QGuiApplication::applicationStateChanged, this, &TextObjectEditorHelper::claimFocus, Qt::QueuedConnection);
+	
+	auto widget = editor->getMainWidget();
+	widget->setAttribute(Qt::WA_InputMethodEnabled, true);
+	//updateCursor(widget, 0);
+	
+#ifdef Q_OS_ANDROID
+	claimFocus();
+#else
 	// Workaround to set the focus to the map widget again after it was lost
 	// to the new dock widget (on X11, at least)
 	QTimer::singleShot(20, this, SLOT(claimFocus()));
+#endif
 }
 
 
@@ -73,29 +133,142 @@ TextObjectEditorHelper::~TextObjectEditorHelper()
 	dock_widget->hide();
 	dock_widget->deleteLater();
 	
-	editor->getWindow()->setShortcutsBlocked(false);
+	QGuiApplication::inputMethod()->hide();
+	if (auto widget = editor->getMainWidget())
+		widget->setAttribute(Qt::WA_InputMethodEnabled, false);
+	if (auto window = editor->getWindow())
+		window->setShortcutsBlocked(false);
 }
 
 
 void TextObjectEditorHelper::claimFocus()
 {
-	auto widget = editor->getMainWidget();
-	widget->activateWindow();
-	widget->setFocus();
-	updateCursor(widget, 0);
+	if (qApp->applicationState() == Qt::ApplicationActive)
+	{
+		auto widget = editor->getMainWidget();
+		widget->activateWindow();
+		widget->setFocus();
+	}
 }
 
 
 
+inline
+bool TextObjectEditorHelper::isPreediting() const
+{
+	return !preedit_string.isEmpty();
+}
+
+
+void TextObjectEditorHelper::commitPreedit()
+{
+	if (isPreediting())
+	{
+#ifdef DEBUG_INPUT_METHOD_SUPPORT
+		qDebug("\n>>> inputMethod()->commit()");	
+#endif
+		QGuiApplication::inputMethod()->commit();
+		if (Q_UNLIKELY(isPreediting()))
+		{
+			preedit_string.clear();
+			preedit_cursor = 0;
+			text_object->setText(pristine_text);
+			dirty = true;
+		}
+	}
+}
+
+
+void TextObjectEditorHelper::commitStateChange()
+{
+	Q_ASSERT(anchor_position == qBound(0, anchor_position, pristine_text.length()));
+	Q_ASSERT(cursor_position == qBound(0, cursor_position, pristine_text.length()));
+	Q_ASSERT(line_selection_position == qBound(0, line_selection_position, pristine_text.length()));
+	Q_ASSERT(preedit_cursor == qBound(0, preedit_cursor, preedit_string.length()));
+	
+#ifdef DEBUG_INPUT_METHOD_SUPPORT
+	{
+		auto surrounding_text = pristine_text.mid(blockStart(), blockEnd() - blockStart());
+		qDebug("\n*** @%d:\"%s[%s|%s]%s\"\n    a..c: @+%d..%d, p: c+%d\n    action: %d", blockStart(),
+		       qPrintable(pristine_text.mid(blockStart(), cursor_position - blockStart())),
+		       qPrintable(preedit_string.left(preedit_cursor)),
+		       qPrintable(preedit_string.mid(preedit_cursor)),
+		       qPrintable(pristine_text.mid(cursor_position, blockEnd() - blockStart())),
+		       anchor_position - blockStart(), cursor_position - blockStart(), preedit_cursor,
+		       state_change_action & 0x03);
+	}
+#endif
+	
+	dirty = false;
+	updateDisplayText();
+	if (QGuiApplication::inputMethod()->isVisible())
+	{
+		auto im_query = Qt::ImQueryAll;
+		switch (state_change_action & 0x03)
+		{
+		case ResetInputMethod:
+#ifdef DEBUG_INPUT_METHOD_SUPPORT
+			qDebug("\n>>> inputMethod()->reset()");	
+#endif
+			QGuiApplication::inputMethod()->reset();
+			break;
+		case UpdateInputProperties:
+			im_query = Qt::ImQueryInput;
+			// fall through
+		case UpdateAllProperties:
+#ifdef DEBUG_INPUT_METHOD_SUPPORT
+			qDebug("\n>>> inputMethod()->update(%d)", im_query);	
+#endif
+			QGuiApplication::inputMethod()->update(im_query);
+#ifdef Q_OS_ANDROID
+			// QTBUG-58013
+			Q_UNUSED(im_query)
+#  ifdef DEBUG_INPUT_METHOD_SUPPORT
+			qDebug("\n>>> cursorPositionChanged");	
+#  endif
+			editor->getMainWidget()->cursorPositionChanged();
+#endif
+			break;
+		case NoInputMethodAction:
+			;
+		}
+	}
+	emit stateChanged();
+}
+
+
+void TextObjectEditorHelper::updateDisplayText()
+{
+	// Insert the preedit string into the displayed text.
+	auto displayed_text = pristine_text;
+	displayed_text.insert(cursor_position, preedit_string);
+	if (text_object->getText() != displayed_text)
+	{
+		text_object->setText(displayed_text);
+	}
+}
+
+
+
+bool TextObjectEditorHelper::setSelection(int anchor, int cursor)
+{
+	return setSelection(anchor, cursor, cursor);
+}
+
+
 bool TextObjectEditorHelper::setSelection(int anchor, int cursor, int line_position)
 {
+	Q_ASSERT(batch_editing);
 	if (anchor != anchor_position
 	    || cursor != cursor_position
 	    || line_position != line_selection_position)
 	{
+		if (cursor <= block_start || cursor > cursor_position)
+			block_start = -1;
 		anchor_position = anchor;
 		cursor_position = cursor;
 		line_selection_position = line_position;
+		dirty = true;
 		return true;
 	}
 	return false;
@@ -106,49 +279,257 @@ QString TextObjectEditorHelper::selectionText() const
 {
 	const auto start = qMin(anchor_position, cursor_position);
 	const auto length = qAbs(anchor_position - cursor_position);
-	return text_object->getText().mid(start, length);
+	return pristine_text.mid(start, length);
 }
 
 
 void TextObjectEditorHelper::replaceSelectionText(const QString& replacement)
 {
-	const auto selection_start = qMin(anchor_position, cursor_position);
+	Q_ASSERT(batch_editing);
+	
+	auto const old_text = pristine_text;
+	
+	auto selection_start = qMin(anchor_position, cursor_position);
 	const auto selection_length = qAbs(anchor_position - cursor_position);
+	pristine_text.replace(selection_start, selection_length, replacement);
 	
-	const auto new_pos = selection_start + replacement.length();
-	auto selection_changed = setSelection(new_pos, new_pos);
+	selection_start += replacement.length();
+	setSelection(selection_start, selection_start);
 	
-	auto text = text_object->getText();
-	text.replace(selection_start, selection_length, replacement);
-	if (text != text_object->getText()
-	    || selection_changed)
+	if (text_object->getText() != pristine_text
+	    || old_text != pristine_text)
 	{
-		text_object->setText(text);
-		emit stateChanged();
+		dirty = true;
 	}
 }
 
+
+int TextObjectEditorHelper::blockStart() const
+{
+	if (block_start == -1)
+	{
+#ifndef INPUT_METHOD_BUGS_RESOLVED
+		// There are strange input events when working with block_start > 0.
+		block_start = 0;
+#else
+		for (int line = 0, num_lines = text_object->getNumLines(); line != num_lines; ++line)
+		{
+			auto line_start = text_object->getLineInfo(line)->start_index;
+			if (line_start < cursor_position)
+				block_start = line_start;
+			else
+				break;
+		}
+		qDebug("\n*** nblock_start: %d", block_start);
+#endif
+	}
+	return block_start;
+}
+
+
+int TextObjectEditorHelper::blockEnd() const
+{
+	return qMin(pristine_text.length(), qMax(anchor_position, cursor_position) + 200);
+}
+
+
+QVariant TextObjectEditorHelper::inputMethodQuery(Qt::InputMethodQuery property, QVariant argument) const
+{
+	switch (property)
+	{
+	case Qt::ImHints:
+		return { Qt::ImhMultiLine };
+	case Qt::ImAnchorPosition:
+		return { anchor_position - blockStart() };
+	case Qt::ImCursorPosition:
+		{
+			const auto point = argument.toPointF();
+			if (!point.isNull())
+			{
+				auto map_coord = editor->getMainWidget()->viewportToMapF(point);
+				return { text_object->calcTextPositionAt(map_coord, false) - blockStart() };
+			}
+		}
+		return { cursor_position - blockStart() };
+	case Qt::ImCursorRectangle:
+		return { cursorRectangle() };
+	case Qt::ImSurroundingText:
+		return pristine_text.mid(blockStart(), blockEnd() - blockStart());
+	case Qt::ImCurrentSelection:
+		return { selectionText() };
+	case Qt::ImMaximumTextLength:
+		return { }; // No limit.
+#if QT_VERSION >= 0x050300
+	case Qt::ImAbsolutePosition:
+		{
+			const auto point = argument.toPointF();
+			if (!point.isNull())
+			{
+				auto map_coord = editor->getMainWidget()->viewportToMapF(point);
+				return { text_object->calcTextPositionAt(map_coord, false) };
+			}
+		}
+		return { cursor_position };
+	case Qt::ImTextBeforeCursor:
+		return pristine_text.mid(blockStart(), cursor_position - blockStart());
+	case Qt::ImTextAfterCursor:
+		return pristine_text.mid(cursor_position, blockEnd() - cursor_position);
+#endif
+	default:
+		return { };
+	}
+}
+
+
+bool TextObjectEditorHelper::inputMethodEvent(QInputMethodEvent* event)
+{
+#ifdef DEBUG_INPUT_METHOD_SUPPORT
+	QString a;
+	const auto att = event->attributes();
+	for (const auto& attribute : att)
+	{
+		a += QString::fromLatin1("\n   att   %1: %2,%3").arg(attribute.type).arg(attribute.start).arg(attribute.length);
+	}
+	qDebug("\n>>> ime \"%s\" @ %d,%d [%s]%s", 
+	       qPrintable(event->commitString()), event->replacementStart(), event->replacementLength(),
+	       qPrintable(event->preeditString()),
+	       qPrintable(a));
+#endif
+	
+	// This method updates the editor to match the input method,
+	// so it must not modify the input method.
+	TextObjectEditorHelper::BatchEdit transaction(this, NoInputMethodAction);
+	
+	auto position = cursor_position;
+	auto length = anchor_position - cursor_position;
+	auto old_pristine_text = pristine_text;
+	
+	// Remove the current non-empty selection 
+	// if we are not only moving the selection.
+	if (length != 0)
+	{
+		if (event->replacementLength() > 0
+		    || !event->commitString().isEmpty()
+		    || !event->preeditString().isEmpty())
+		{
+			if (length < 0)
+			{
+				// Swap for QString operations
+				position = anchor_position;
+				length = -length;
+			}
+			pristine_text.remove(position, length);
+		}
+		length = 0;
+	}
+	
+	// Insert the commit string for the given replacement length
+	position += event->replacementStart();
+	length = event->replacementLength();
+	if (position < 0)
+	{
+		length = qMax(0, length + position);
+		position = 0;
+	}
+	pristine_text.replace(position, length, event->commitString());
+	position += event->commitString().length();
+	length = 0;
+	
+	if (old_pristine_text != pristine_text)
+	{
+		dirty = true;
+	}
+	
+	// Get the preedit string
+	preedit_string = event->preeditString();
+	auto new_preedit_cursor = preedit_string.length();
+	
+	// Before applying the new preedit string, we must handle the Selection attribute.
+	// At the same occasion, we store the preedit cursor position.
+	const auto attributes = event->attributes();
+	for (const auto& attribute : attributes)
+	{
+		switch (attribute.type)
+		{
+		case QInputMethodEvent::Cursor:
+			//if (attribute.length != 0)
+			new_preedit_cursor = attribute.start;
+			break;
+		case QInputMethodEvent::Selection:
+			// Selection refers to the text WITHOUT the preedit string.
+			position = qBound(0, blockStart() + attribute.start, pristine_text.length());
+			length = qBound(-position, attribute.length, pristine_text.length() - position);
+			break;
+		default:
+			; // ignored
+		}
+	}
+	
+	// Update the selection and preedit cursor
+	setSelection(position, position + length);
+	if (preedit_cursor != new_preedit_cursor)
+	{
+		preedit_cursor = new_preedit_cursor;
+		dirty = true;
+	}
+	
+#ifdef DEBUG_INPUT_METHOD_SUPPORT
+	qDebug("\n<<< ime");
+#endif
+	
+	event->accept();
+	return true;
+}
+
+
+bool TextObjectEditorHelper::sendMouseEventToInputContext(QEvent* event, const MapCoordF &map_coord)
+{
+	if (isPreediting()) {
+		auto click_position = text_object->calcTextPositionAt(map_coord, false) - cursor_position;
+		if (click_position >= 0 && click_position <= preedit_string.length())
+		{
+			if (event->type() == QEvent::MouseButtonRelease)
+				QGuiApplication::inputMethod()->invokeAction(QInputMethod::Click, click_position);
+			event->setAccepted(true);
+			return true;
+		}
+	}
+	return false;
+}
 
 
 bool TextObjectEditorHelper::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
 	Q_UNUSED(widget)
 	
+	if (sendMouseEventToInputContext(event, map_coord))
+		return true;
+	
 	if (event->button() == Qt::LeftButton)
 	{
-		auto click_pos = text_object->calcTextPositionAt(map_coord, false);
-		if (click_pos >= 0)
+		const auto mouse_press_position = text_object->calcTextPositionAt(map_coord, false);
+		
+		if (mouse_press_position < 0)
 		{
-			auto anchor_pos = click_pos;
-			if (event->modifiers() & Qt::ShiftModifier)
-				anchor_pos = this->anchor_position;
-			if (setSelection(anchor_pos, click_pos))
-				emit stateChanged();
-			dragging = false;
+			// Click outside the text: Commit, done
+			{
+				commitPreedit();
+				editor->getMainWidget()->setAttribute(Qt::WA_InputMethodEnabled, false);
+				QGuiApplication::inputMethod()->hide();
+			}
+			emit finished();
+		}
+		else if (event->modifiers() & Qt::ShiftModifier)
+		{
+			// Click with Shift: Move the end of the selection
+			TextObjectEditorHelper::BatchEdit transaction(this);
+			setSelection(anchor_position, mouse_press_position);
 		}
 		else
 		{
-			emit finished();
+			// Other click: Commit, move the cursor
+			TextObjectEditorHelper::BatchEdit transaction(this);
+			setSelection(mouse_press_position, mouse_press_position);
 		}
 		return true;
 	}
@@ -163,10 +544,14 @@ bool TextObjectEditorHelper::mouseMoveEvent(QMouseEvent* event, MapCoordF map_co
 	
 	if (event->buttons() & Qt::LeftButton)
 	{
+		TextObjectEditorHelper::BatchEdit transaction(this);
 		dragging = true;
 		updateDragging(map_coord);
 		return true;
 	}
+	
+	if (sendMouseEventToInputContext(event, map_coord))
+		return true;
 	
 	return false;
 }
@@ -176,13 +561,37 @@ bool TextObjectEditorHelper::mouseReleaseEvent(QMouseEvent* event, MapCoordF map
 {
 	Q_UNUSED(widget)
 	
+	if (sendMouseEventToInputContext(event, map_coord))
+		return true;
+	
 	if (event->button() == Qt::LeftButton)
 	{
+		TextObjectEditorHelper::BatchEdit transaction(this);
 		if (dragging)
 		{
 			updateDragging(map_coord);
 			dragging = false;
 		}
+		
+		if (qApp->focusObject() == widget
+		    && !QGuiApplication::inputMethod()->isVisible()
+		    && widget->style()->styleHint(QStyle::SH_RequestSoftwareInputPanel) == QStyle::RSIP_OnMouseClick)
+		{
+#ifdef Q_OS_ANDROID
+			// Workaround for QTBUG-58063: Move to the end of the word
+			if (!isPreediting() && cursor_position == anchor_position)
+			{
+				while (cursor_position < pristine_text.length()
+					   && pristine_text.at(cursor_position).isLetterOrNumber())
+				{
+					++cursor_position;
+				}
+				setSelection(cursor_position, cursor_position);
+			}
+#endif
+			QGuiApplication::inputMethod()->show();
+		}
+		
 		return true;
 	}
 	
@@ -193,55 +602,42 @@ bool TextObjectEditorHelper::mouseReleaseEvent(QMouseEvent* event, MapCoordF map
 
 bool TextObjectEditorHelper::keyPressEvent(QKeyEvent* event)
 {
-	const auto text = text_object->getText();
-	
+	TextObjectEditorHelper::BatchEdit transaction(this);
 	if (event->key() == Qt::Key_Backspace)
 	{
-		if (cursor_position != anchor_position)
-		{
-			replaceSelectionText({});
-		}
-		else if (cursor_position > 0)
+		if (cursor_position > 0 && cursor_position == anchor_position)
 		{
 			setSelection(cursor_position-1, cursor_position);
-			replaceSelectionText({});
 		}
+		replaceSelectionText({});
 	}
 	else if (event->key() == Qt::Key_Delete)
 	{
-		if (cursor_position != anchor_position)
-		{
-			replaceSelectionText({});
-		}
-		else if (cursor_position < text.size())
+		if (cursor_position < pristine_text.size() && cursor_position == anchor_position)
 		{
 			setSelection(cursor_position+1, cursor_position);
-			replaceSelectionText({});
 		}
+		replaceSelectionText({});
 	}
 	else if (event->matches(QKeySequence::MoveToPreviousChar))
 	{
 		const auto new_pos = qMax(0, cursor_position - 1);
-		if (setSelection(new_pos, new_pos))
-			emit stateChanged();
+		setSelection(new_pos, new_pos);
 	}
 	else if (event->matches(QKeySequence::SelectPreviousChar))
 	{
 		const auto new_pos = qMax(0, cursor_position - 1);
-		if (setSelection(anchor_position, new_pos))
-			emit stateChanged();
+		setSelection(anchor_position, new_pos);
 	}
 	else if (event->matches(QKeySequence::MoveToNextChar))
 	{
-		const auto new_pos = qMin(text.length(), cursor_position + 1);
-		if (setSelection(new_pos, new_pos))
-			emit stateChanged();
+		const auto new_pos = qMin(pristine_text.length(), cursor_position + 1);
+		setSelection(new_pos, new_pos);
 	}
 	else if (event->matches(QKeySequence::SelectNextChar))
 	{
-		const auto new_pos = qMin(text.length(), cursor_position + 1);
-		if (setSelection(anchor_position, new_pos))
-			emit stateChanged();
+		const auto new_pos = qMin(pristine_text.length(), cursor_position + 1);
+		setSelection(anchor_position, new_pos);
 	}
 	else if (event->matches(QKeySequence::MoveToPreviousLine)
 	         || event->matches(QKeySequence::SelectPreviousLine))
@@ -261,8 +657,7 @@ bool TextObjectEditorHelper::keyPressEvent(QKeyEvent* event)
 		};
 		const auto new_pos = text_object->calcTextPositionAt(point, false);
 		const auto new_anchor = event->matches(QKeySequence::SelectPreviousLine) ? anchor_position : new_pos;
-		if (setSelection(new_anchor, new_pos, line_selection_position))
-			emit stateChanged();
+		setSelection(new_anchor, new_pos, line_selection_position);
 	}
 	else if (event->matches(QKeySequence::MoveToNextLine)
 	         || event->matches(QKeySequence::SelectNextLine))
@@ -282,57 +677,47 @@ bool TextObjectEditorHelper::keyPressEvent(QKeyEvent* event)
 		};
 		const auto new_pos = text_object->calcTextPositionAt(point, false);
 		const auto new_anchor = event->matches(QKeySequence::SelectNextLine) ? anchor_position : new_pos;
-		if (setSelection(new_anchor, new_pos, line_selection_position))
-			emit stateChanged();
+		setSelection(new_anchor, new_pos, line_selection_position);
 	}
 	else if (event->matches(QKeySequence::MoveToStartOfLine))
 	{
 		auto new_pos = text_object->findLineInfoForIndex(cursor_position).start_index;
-		if (setSelection(new_pos, new_pos))
-			emit stateChanged();
+		setSelection(new_pos, new_pos);
 	}
 	else if (event->matches(QKeySequence::SelectStartOfLine))
 	{
 		auto new_pos = text_object->findLineInfoForIndex(cursor_position).start_index;
-		if (setSelection(anchor_position, new_pos))
-			emit stateChanged();
+		setSelection(anchor_position, new_pos);
 	}
 	else if (event->matches(QKeySequence::MoveToStartOfDocument))
 	{
-		if (setSelection(0, 0))
-			emit stateChanged();
+		setSelection(0, 0);
 	}
 	else if (event->matches(QKeySequence::SelectStartOfDocument))
 	{
-		if (setSelection(anchor_position, 0))
-			emit stateChanged();
+		setSelection(anchor_position, 0);
 	}
 	else if (event->matches(QKeySequence::MoveToEndOfLine))
 	{
 		auto new_pos = text_object->findLineInfoForIndex(cursor_position).end_index;
-		if (setSelection(new_pos, new_pos))
-			emit stateChanged();
+		setSelection(new_pos, new_pos);
 	}
 	else if (event->matches(QKeySequence::SelectEndOfLine))
 	{
 		auto new_pos = text_object->findLineInfoForIndex(cursor_position).end_index;
-		if (setSelection(anchor_position, new_pos))
-			emit stateChanged();
+		setSelection(anchor_position, new_pos);
 	}
 	else if (event->matches(QKeySequence::MoveToEndOfDocument))
 	{
-		if (setSelection(text.length(), text.length()))
-			emit stateChanged();
+		setSelection(pristine_text.length(), pristine_text.length());
 	}
 	else if (event->matches(QKeySequence::SelectEndOfDocument))
 	{
-		if (setSelection(anchor_position, text.length()))
-			emit stateChanged();
+		setSelection(anchor_position, pristine_text.length());
 	}
 	else if (event->matches(QKeySequence::SelectAll))
 	{
-		if (setSelection(0, text.length()))
-			emit stateChanged();
+		setSelection(0, pristine_text.length());
 	}
 	else if (event->matches(QKeySequence::Copy)
 	         || event->matches(QKeySequence::Cut))
@@ -340,7 +725,7 @@ bool TextObjectEditorHelper::keyPressEvent(QKeyEvent* event)
 		auto selection = selectionText();
 		if (!selection.isEmpty())
 		{
-			QClipboard* clipboard = QApplication::clipboard();
+			QClipboard* clipboard = QGuiApplication::clipboard();
 			clipboard->setText(selection);
 			
 			if (event->matches(QKeySequence::Cut))
@@ -349,7 +734,7 @@ bool TextObjectEditorHelper::keyPressEvent(QKeyEvent* event)
 	}
 	else if (event->matches(QKeySequence::Paste))
 	{
-		const auto clipboard = QApplication::clipboard();
+		const auto clipboard = QGuiApplication::clipboard();
 		const auto mime_data = clipboard->mimeData();
 		
 		if (mime_data->hasText())
@@ -386,22 +771,36 @@ void TextObjectEditorHelper::draw(QPainter* painter, MapWidget* widget)
 {
 	Q_UNUSED(widget)
 	
-	// Draw selection overlay
 	painter->setPen(Qt::NoPen);
 	painter->setBrush(QBrush(qRgb(0, 0, 255)));
-	painter->setOpacity(0.55);
 	painter->setTransform(text_object->calcTextToMapTransform(), true);
 	
-	foreachLineSelectionRect([painter](const QRectF& selection_rect) { 
+	auto drawRect = [painter](const QRectF& selection_rect) { 
 		painter->drawRect(selection_rect);
-	});
+	};
+	
+	// Draw preedit area or selection
+	auto begin = qMin(anchor_position, cursor_position);
+	auto end   = qMax(anchor_position, cursor_position) + preedit_string.length();
+	if (begin != end)
+	{
+		painter->setOpacity(isPreediting() ? 0.3 : 0.55);
+		foreachLineRect(begin, end, drawRect);
+	}
+	
+	// Draw cursor
+	painter->setOpacity(0.55);
+	begin = cursor_position + preedit_cursor;
+	foreachLineRect(begin, begin, drawRect);
 }
 
 
 void TextObjectEditorHelper::includeDirtyRect(QRectF& rect) const
 {
 	const auto transform = text_object->calcTextToMapTransform();
-	foreachLineSelectionRect([&transform, &rect](const QRectF& selection_rect) {
+	const auto begin = qMin(anchor_position, cursor_position);
+	const auto end   = qMax(anchor_position, cursor_position) + preedit_string.length();
+	foreachLineRect(begin, end, [&transform, &rect](const QRectF& selection_rect) {
 		rectIncludeSafe(rect, transform.mapRect(selection_rect));
 	});
 }
@@ -439,30 +838,39 @@ void TextObjectEditorHelper::updateCursor(QWidget* widget, int position)
 
 void TextObjectEditorHelper::updateDragging(MapCoordF map_coord)
 {
+	Q_ASSERT(batch_editing);
 	const auto drag_position = text_object->calcTextPositionAt(map_coord, false);
-	if (drag_position >= 0 && setSelection(anchor_position, drag_position))
-	{
-		emit stateChanged();
-	}
+	if (drag_position >= 0)
+		setSelection(anchor_position, drag_position);
 }
 
 
 
-void TextObjectEditorHelper::foreachLineSelectionRect(std::function<void(const QRectF&)> worker) const
+QRectF TextObjectEditorHelper::cursorRectangle() const
 {
-	const auto selection_start = qMin(anchor_position, cursor_position);
-	const auto selection_end   = qMax(anchor_position, cursor_position);
-	for (int line = 0, end = text_object->getNumLines(); line != end; ++line)
+	const auto cursor_pos = cursor_position + preedit_cursor;
+	QRectF rect;
+	foreachLineRect(cursor_pos, cursor_pos, [&rect](const QRectF& selection_rect) {
+		rect = selection_rect;
+	});
+	return editor->getMainWidget()->mapToViewport(text_object->calcTextToMapTransform().mapRect(rect));
+}
+
+
+void TextObjectEditorHelper::foreachLineRect(int begin, int end, std::function<void (const QRectF&)> worker) const
+{
+	Q_ASSERT(begin <= end);
+	for (int line = 0, num_lines = text_object->getNumLines(); line != num_lines; ++line)
 	{
 		const auto line_info = text_object->getLineInfo(line);
-		if (line_info->end_index + 1 < selection_start)
+		if (line_info->end_index + 1 < begin)
 			continue;
-		if (selection_end < line_info->start_index)
+		if (end < line_info->start_index)
 			break;
 		
-		const auto start_index = qMax(selection_start, line_info->start_index);
+		const auto start_index = qMax(begin, line_info->start_index);
 		/// \todo Check for simplification, qMin(selection_end, line_info->end_index)
-		const auto end_index = qMax(qMin(line_info->end_index, selection_end), line_info->start_index);
+		const auto end_index = qMax(qMin(line_info->end_index, end), line_info->start_index);
 		
 		const auto delta = 0.045 * line_info->ascent;
 		auto left = line_info->getX(start_index);
@@ -481,4 +889,3 @@ void TextObjectEditorHelper::foreachLineSelectionRect(std::function<void(const Q
 		worker({left, line_info->line_y - line_info->ascent, width, line_info->ascent + line_info->descent});
 	}
 }
-

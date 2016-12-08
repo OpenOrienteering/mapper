@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Thomas Schöps
- *    Copyright 2013-2016 Kai Pastor
+ *    Copyright 2013-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -29,24 +29,25 @@
 #include <QPinchGesture>
 #include <QTimer>
 #include <QTouchEvent>
+#include <QVariant>
 
+#include "settings.h"
 #include "core/georeferencing.h"
+#include "core/map.h"
 #include "core/map_color.h"
+#include "core/objects/object.h"
+#include "gui/touch_cursor.h"
+#include "gui/map/map_editor_activity.h"
 #include "gui/widgets/action_grid_bar.h"
 #include "gui/widgets/key_button_bar.h"
-#include "core/map.h"
-#include "map_editor_activity.h"
-#include "settings.h"
-#include "templates/template.h"
-#include "tools/tool.h"
-#include "core/objects/object.h"
-#include "tools/edit_tool.h"
-#include "gui/touch_cursor.h"
-#include "util/util.h"
-#include "util/backports.h"
+#include "gui/widgets/pie_menu.h"
 #include "sensors/gps_display.h"
 #include "sensors/gps_temporary_markers.h"
-#include "gui/widgets/pie_menu.h"
+#include "templates/template.h"
+#include "tools/edit_tool.h"
+#include "tools/tool.h"
+#include "util/backports.h"
+#include "util/util.h"
 
 
 MapWidget::MapWidget(bool show_help, bool force_antialiasing, QWidget* parent)
@@ -1127,6 +1128,27 @@ bool MapWidget::keyReleaseEventFilter(QKeyEvent* event)
 	}
 	
 	return false;
+}
+
+QVariant MapWidget::inputMethodQuery(Qt::InputMethodQuery property) const
+{
+	return inputMethodQuery(property, {});
+}
+
+QVariant MapWidget::inputMethodQuery(Qt::InputMethodQuery property, QVariant argument) const
+{
+	QVariant result;
+	if (tool)
+		result = tool->inputMethodQuery(property, argument);
+	if (!result.isValid())
+		result = QWidget::inputMethodQuery(property);
+	return result;
+}
+
+void MapWidget::inputMethodEvent(QInputMethodEvent* event)
+{
+	if (tool)
+		tool->inputMethodEvent(event);
 }
 
 void MapWidget::enableTouchCursor(bool enabled)

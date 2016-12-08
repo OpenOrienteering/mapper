@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2016 Kai Pastor
+ *    Copyright 2013-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -26,20 +26,21 @@
 #include <QMouseEvent>
 #include <QPainter>
 
-#include "gui/modifier_key.h"
-#include "core/map.h"
-#include "gui/map/map_editor.h"
-#include "gui/map/map_widget.h"
-#include "core/objects/text_object.h"
-#include "undo/object_undo.h"
-#include "core/renderables/renderable.h"
 #include "settings.h"
+#include "core/map.h"
+#include "core/objects/text_object.h"
+#include "core/renderables/renderable.h"
 #include "core/symbols/symbol.h"
 #include "core/symbols/text_symbol.h"
-#include "edit_tool.h"
-#include "tool_helpers.h"
-#include "util/util.h"
+#include "gui/modifier_key.h"
+#include "gui/map/map_editor.h"
+#include "gui/map/map_widget.h"
+#include "gui/widgets/key_button_bar.h"
+#include "tools/edit_tool.h"
 #include "tools/text_object_editor_helper.h"
+#include "tools/tool_helpers.h"
+#include "undo/object_undo.h"
+#include "util/util.h"
 
 
 #if defined(__MINGW32__) and defined(DrawText)
@@ -92,6 +93,15 @@ void DrawTextTool::setDrawingSymbol(const Symbol* symbol)
 void DrawTextTool::initImpl()
 {
 	preview_text->setSymbol(drawing_symbol, false);
+	
+	if (editor->isInMobileMode())
+	{
+		// Create key replacement bar
+		key_button_bar = new KeyButtonBar(this, editor->getMainWidget());
+		//: Snap to existing objects
+		key_button_bar->addModifierKey(Qt::Key_Shift, Qt::ShiftModifier, tr("Snap"));
+		editor->showPopupWidget(key_button_bar, QString{});
+	}
 }
 
 
@@ -130,6 +140,7 @@ void DrawTextTool::abortEditing()
 
 void DrawTextTool::finishEditing()
 {
+	updateDirtyRect();
 	text_editor.reset(nullptr);
 	
 	renderables.removeRenderablesOfObject(preview_text.get(), false);
@@ -243,6 +254,22 @@ bool DrawTextTool::keyReleaseEvent(QKeyEvent* event)
 	return MapEditorToolBase::keyReleaseEvent(event);
 }
 
+bool DrawTextTool::inputMethodEvent(QInputMethodEvent* event)
+{
+	if (text_editor && text_editor->inputMethodEvent(event))
+		return true;
+	
+	return MapEditorTool::inputMethodEvent(event);
+}
+
+QVariant DrawTextTool::inputMethodQuery(Qt::InputMethodQuery property, QVariant argument) const
+{
+	auto result = QVariant { };
+	if (text_editor)
+		result = text_editor->inputMethodQuery(property, argument);
+	return result;
+}
+
 
 void DrawTextTool::mouseMove()
 {
@@ -343,7 +370,15 @@ void DrawTextTool::updatePreview()
 	preview_text->setAnchorPosition(constrained_pos_map);
 	if (auto symbol = preview_text->getSymbol())
 	{
-		preview_text->setText(static_cast<const TextSymbol*>(symbol)->getIconText());
+		if (editor->isInMobileMode())
+		{
+			// Expecting touch screen instead of mouse
+			preview_text->setText({});
+		}
+		else
+		{
+			preview_text->setText(static_cast<const TextSymbol*>(symbol)->getIconText());
+		}
 		updatePreviewText();
 	}
 }

@@ -28,24 +28,24 @@
 #include <QPainter>
 #include <QScopedValueRollback>
 
-#include "util/util.h"
-#include "core/symbols/symbol.h"
+#include "settings.h"
+#include "core/map.h"
 #include "core/objects/object.h"
 #include "core/objects/text_object.h"
-#include "core/map.h"
-#include "gui/map/map_widget.h"
-#include "undo/object_undo.h"
-#include "draw_text_tool.h"
-#include "tool_helpers.h"
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/text_symbol.h"
 #include "core/renderables/renderable.h"
-#include "settings.h"
-#include "gui/map/map_editor.h"
+#include "core/symbols/symbol.h"
 #include "gui/main_window.h"
 #include "gui/modifier_key.h"
+#include "gui/map/map_editor.h"
+#include "gui/map/map_widget.h"
 #include "gui/widgets/key_button_bar.h"
+#include "tools/tool_helpers.h"
+#include "tools/draw_text_tool.h"
 #include "tools/text_object_editor_helper.h"
+#include "undo/object_undo.h"
+#include "util/util.h"
 
 class SymbolWidget;
 
@@ -494,6 +494,22 @@ bool EditPointTool::keyRelease(QKeyEvent* event)
 	return true;
 }
 
+bool EditPointTool::inputMethodEvent(QInputMethodEvent* event)
+{
+	if (text_editor && text_editor->inputMethodEvent(event))
+		return true;
+	
+	return MapEditorTool::inputMethodEvent(event);
+}
+
+QVariant EditPointTool::inputMethodQuery(Qt::InputMethodQuery property, QVariant argument) const
+{
+	auto result = QVariant { };
+	if (text_editor)
+		result = text_editor->inputMethodQuery(property, argument);
+	return result;
+}
+
 void EditPointTool::initImpl()
 {
 	objectSelectionChanged();
@@ -617,6 +633,7 @@ void EditPointTool::finishEditing()
 {
 	if (text_editor)
 	{
+		updateDirtyRect();
 		auto text_object = text_editor->object();
 		
 		delete text_editor;

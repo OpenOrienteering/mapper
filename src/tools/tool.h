@@ -157,6 +157,10 @@ public:
 	virtual bool keyReleaseEvent(QKeyEvent* event);
 	virtual void focusOutEvent(QFocusEvent* event);
 	
+	// Input method support
+	virtual bool inputMethodEvent(QInputMethodEvent *event);
+	virtual QVariant inputMethodQuery(Qt::InputMethodQuery, QVariant) const;
+	
 	// Gesture input
 	virtual bool gestureEvent(QGestureEvent* event, MapWidget* widget);
 	

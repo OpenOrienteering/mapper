@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Thomas Schöps
- *    Copyright 2013-2015 Kai Pastor
+ *    Copyright 2013-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,18 +19,19 @@
  */
 
 
-#ifndef _OPENORIENTEERING_MAP_WIDGET_H_
-#define _OPENORIENTEERING_MAP_WIDGET_H_
+#ifndef OPENORIENTEERING_MAP_WIDGET_H
+#define OPENORIENTEERING_MAP_WIDGET_H
 
 #include <type_traits>
 
 #include <QImage>
 #include <QPixmap>
 #include <QTime>
+#include <QVariant>
 #include <QWidget>
 
-#include "core/map_view.h"
 #include "core/map.h"
+#include "core/map_view.h"
 
 QT_BEGIN_NAMESPACE
 class QGestureEvent;
@@ -312,11 +313,30 @@ public:
 	 * Delegates the keyRelease to the active tool.
 	 */
 	bool keyReleaseEventFilter(QKeyEvent* event);
-
+	
+	/**
+	 * Support function for input methods.
+	 */
+	QVariant inputMethodQuery(Qt::InputMethodQuery property) const override;
+	
 public slots:
+	/**
+	 * Support function for input methods.
+	 * 
+	 * This two-argument form is undocumented but attempted to call in
+	 * QInputMethod::queryFocusObject before doing the query via an event.
+	 */
+	QVariant inputMethodQuery(Qt::InputMethodQuery property, QVariant argument) const;
+	
 	/** Enables or disables the touch cursor. */
 	void enableTouchCursor(bool enabled);
-
+	
+signals:
+	/**
+	 * Support function for input methods.
+	 */
+	void cursorPositionChanged();
+	
 private slots:
 	void updateObjectTagLabel();
 	void updateDrawingLaterSlot();
@@ -342,6 +362,7 @@ protected:
 	virtual void leaveEvent(QEvent* event);
 	
 	// Key input (see also slots)
+	virtual void inputMethodEvent(QInputMethodEvent *event);
 	virtual void focusOutEvent(QFocusEvent* event);
 	
 	virtual void contextMenuEvent(QContextMenuEvent* event);
