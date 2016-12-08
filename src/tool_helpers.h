@@ -25,79 +25,21 @@
 #include <memory>
 #include <set>
 
-#include <QCursor>
 #include <QObject>
-#include <QRectF>
 
 #include "core/path_coord.h"
 #include "tool.h"
 
 QT_BEGIN_NAMESPACE
-class QMouseEvent;
-class QKeyEvent;
 class QPainter;
-class QTimer;
+class QRectF;
 QT_END_NAMESPACE
 
 class Map;
 class MapWidget;
 class MapEditorController;
-class TextObject;
-class TextObjectAlignmentDockWidget;
 class Object;
 class PathObject;
-
-/**
- * Helper class to enable text editing (using the DrawTextTool and the EditTool).
- * 
- * To use it, after constructing an instance for the TextObject to edit, you must
- * pass through all mouse and key events to it and call draw() & includeDirtyRect().
- * If mousePressEvent() or mouseReleaseEvent() returns false, editing is finished.
- */
-class TextObjectEditorHelper : public QObject
-{
-Q_OBJECT
-public:
-	TextObjectEditorHelper(TextObject* object, MapEditorController* editor);
-	~TextObjectEditorHelper();
-	
-	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	
-	bool keyPressEvent(QKeyEvent* event);
-	bool keyReleaseEvent(QKeyEvent* event);
-	
-	void draw(QPainter* painter, MapWidget* widget);
-	void includeDirtyRect(QRectF& rect);
-	
-	inline void setSelection(int start, int end) {selection_start = start; selection_end = end; click_position = start;}
-	inline TextObject* getObject() const {return object;}
-	
-public slots:
-	void alignmentChanged(int horz, int vert);
-	void setFocus();
-	
-signals:
-	/// Emitted when a user action changes the selection (not called by setSelection()), or the text alignment. If the text is also changed, text_change is true.
-	void selectionChanged(bool text_change);
-	
-private:
-	void insertText(QString text);
-	void updateDragging(MapCoordF map_coord);
-	bool getNextLinesSelectionRect(int& line, QRectF& out);
-	
-	bool dragging;
-	int click_position;
-	int selection_start;
-	int selection_end;
-	TextObject* object;
-	MapEditorController* editor;
-	TextObjectAlignmentDockWidget* dock_widget;
-	QCursor original_cursor;
-	bool original_cursor_retrieved;
-	QTimer* timer;
-};
 
 
 /**

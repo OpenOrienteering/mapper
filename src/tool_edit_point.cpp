@@ -45,6 +45,7 @@
 #include "gui/main_window.h"
 #include "gui/modifier_key.h"
 #include "gui/widgets/key_button_bar.h"
+#include "tools/text_object_editor_helper.h"
 
 class SymbolWidget;
 

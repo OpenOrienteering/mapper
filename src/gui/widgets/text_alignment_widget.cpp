@@ -28,7 +28,7 @@
 #include <QSignalMapper>
 
 #include "../../object_text.h"
-#include "../../tool_helpers.h"
+#include "../../tools/text_object_editor_helper.h"
 
 
 namespace

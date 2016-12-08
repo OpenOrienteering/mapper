@@ -141,6 +141,7 @@ HEADERS += \
   gui/widgets/tags_widget.h \
   gui/widgets/template_list_widget.h \
   gui/widgets/text_alignment_widget.h \
+  tools/text_object_editor_helper.h \
   util/item_delegates.h \
   util/overriding_shortcut.h \
   util/recording_translator.h \
@@ -313,6 +314,7 @@ SOURCES += \
   gui/widgets/tags_widget.cpp \
   gui/widgets/template_list_widget.cpp \
   gui/widgets/text_alignment_widget.cpp \
+  tools/text_object_editor_helper.cpp \
   util/encoding.cpp \
   util/item_delegates.cpp \
   util/overriding_shortcut.cpp \
