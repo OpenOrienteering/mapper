@@ -1295,7 +1295,7 @@ void MapEditorController::createMobileGUI()
 	bottom_action_bar->addActionAtEnd(draw_circle_act, 1, col++);
 	
 	//bottom_action_bar->addActionAtEnd(draw_fill_act, 0, col);
-	//bottom_action_bar->addActionAtEnd(draw_text_act, 1, col++);
+	bottom_action_bar->addActionAtEnd(draw_text_act, 1, col++);
 	
 	
 	// Create top action bar
