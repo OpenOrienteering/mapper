@@ -101,6 +101,22 @@ void MapEditorToolBase::mousePositionEvent(QMouseEvent* event, MapCoordF map_coo
 	cur_pos_map = map_coord;
 	cur_map_widget = widget;
 	updateConstrainedPositions();
+	
+	if (event->button() == Qt::LeftButton && event->type() == QEvent::MouseButtonPress)
+	{
+		click_pos = cur_pos;
+		click_pos_map = cur_pos_map;
+		constrained_click_pos = constrained_pos;
+		constrained_click_pos_map = constrained_pos_map;
+	}
+	else if (dragging_canceled)
+	{
+		click_pos = cur_pos;
+		click_pos_map = cur_pos_map;
+		constrained_click_pos = constrained_pos;
+		constrained_click_pos_map = constrained_pos_map;
+		dragging_canceled = false;
+	}
 }
 
 
@@ -110,12 +126,6 @@ bool MapEditorToolBase::mousePressEvent(QMouseEvent* event, MapCoordF map_coord,
 	
 	if (event->button() == Qt::LeftButton)
 	{
-		click_pos = cur_pos;
-		click_pos_map = cur_pos_map;
-		
-		constrained_click_pos = constrained_pos;
-		constrained_click_pos_map = constrained_pos_map;
-		
 		clickPress();
 		return true;
 	}
@@ -139,14 +149,6 @@ bool MapEditorToolBase::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, 
 		if (dragging)
 		{
 			updateDragging();
-		}
-		else if (dragging_canceled)
-		{
-			click_pos = cur_pos;
-			click_pos_map = cur_pos_map;
-			constrained_click_pos = constrained_pos;
-			constrained_click_pos_map = constrained_pos_map;
-			dragging_canceled = false;
 		}
 		else if ((cur_pos - click_pos).manhattanLength() >= start_drag_distance)
 		{
