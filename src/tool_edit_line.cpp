@@ -464,17 +464,12 @@ void EditLineTool::updateStatusText()
 		         QLocale().toString(0.001 * map()->getScaleDenominator() * drag_vector.length(), 'f', 1))
 		       + QLatin1String("| ");
 		
+		if (angle_helper->isActive())
+			text += tr("<b>%1</b>: Free movement. ").arg(ModifierKey::control());
 		if (!(active_modifiers & Qt::ShiftModifier))
-		{
-			if ( ((active_modifiers & Qt::ControlModifier) > 0) ^ angle_helper->isActive() )
-				text += tr("<b>%1</b>: Free movement. ").arg(ModifierKey::control());
-			else
-				text += EditTool::tr("<b>%1</b>: Fixed angles. ").arg(ModifierKey::control());
-		}
-		if (!(active_modifiers & Qt::ControlModifier))
-		{
 			text += EditTool::tr("<b>%1</b>: Snap to existing objects. ").arg(ModifierKey::shift());
-		}
+		else
+			text.chop(2); // Remove "| "
 	}
 	else
 	{
