@@ -464,6 +464,7 @@ void MapEditorToolBase::reapplyConstraintHelpers()
 		mouseMove();
 }
 
+
 void MapEditorToolBase::activateAngleHelperWhileEditing(bool enable)
 {
 	angle_helper->setActive(enable);
@@ -472,11 +473,10 @@ void MapEditorToolBase::activateAngleHelperWhileEditing(bool enable)
 
 void MapEditorToolBase::activateSnapHelperWhileEditing(bool enable)
 {
-	Q_UNUSED(enable);
-	
-	snap_helper->setFilter(SnappingToolHelper::AllTypes);
+	snap_helper->setFilter(enable ? SnappingToolHelper::AllTypes : SnappingToolHelper::NoSnapping);
 	reapplyConstraintHelpers();
 }
+
 
 void MapEditorToolBase::updateConstrainedPositions()
 {
