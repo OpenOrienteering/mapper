@@ -254,9 +254,9 @@ void EditLineTool::dragStart()
 				angle_helper->addAngles(-tangent.angle(), M_PI/2);
 		}
 		
-		// Activate tool helpers if modifier pressed
-		if (active_modifiers & Qt::ControlModifier)
-			toggleAngleHelper();
+		// Apply modifier keys to tool helpers
+		// using inverted logic for angle helper
+		activateAngleHelperWhileEditing(!(active_modifiers & Qt::ControlModifier));
 		if (active_modifiers & Qt::ShiftModifier)
 			activateSnapHelperWhileEditing();
 	}
@@ -309,44 +309,84 @@ void EditLineTool::dragFinish()
 	}
 }
 
+void EditLineTool::dragCanceled()
+{
+	if (editingInProgress())
+	{
+		updateDirtyRect(); // Catch the selection extent including the highlight_object
+		abortEditing();
+		angle_helper->setActive(false);
+		snap_helper->setFilter(SnappingToolHelper::NoSnapping);
+		hover_state = OverNothing;
+		deleteHighlightObject();
+	}
+	waiting_for_mouse_release = true;
+	box_selection = false;
+	updateDirtyRect(); // Catch the changed selection extent
+}
+
 bool EditLineTool::keyPress(QKeyEvent* event)
 {
-	int num_selected_objects = map()->getNumSelectedObjects();
-	
-	if (num_selected_objects > 0 && event->key() == delete_object_key)
-		deleteSelectedObjects();
-	else if (num_selected_objects > 0 && event->key() == Qt::Key_Escape)
-		map()->clearObjectSelection(true);
-	else if (event->key() == Qt::Key_Control)
+	if (event->key() == Qt::Key_Escape)
 	{
-		if (editingInProgress())
-			toggleAngleHelper();
+		if (isDragging())
+		{
+			cancelDragging();
+		}
+		else if (!waiting_for_mouse_release)
+		{
+			map()->clearObjectSelection(true);
+		}
 	}
-	else if (event->key() == Qt::Key_Shift && editingInProgress())
-		activateSnapHelperWhileEditing();
+	else if (editingInProgress())
+	{
+		if (event->key() == Qt::Key_Control)
+		{
+			// This tool uses inverted logic.
+			activateAngleHelperWhileEditing(false);
+		}
+		else if (event->key() == Qt::Key_Shift)
+		{
+			activateSnapHelperWhileEditing();
+		}
+	}
+	else if (map()->getNumSelectedObjects() > 0)
+	{
+		if (event->key() == delete_object_key)
+		{
+			deleteSelectedObjects();
+		}
+		else if (event->key() == Qt::Key_Escape && !waiting_for_mouse_release)
+		{
+			map()->clearObjectSelection(true);
+		}
+	}
 	else
+	{
 		return false;
+	}
 	updateStatusText();
 	return true;
 }
 
 bool EditLineTool::keyRelease(QKeyEvent* event)
 {
-	if (event->key() == Qt::Key_Control)
+	if (editingInProgress())
 	{
-		toggleAngleHelper();
-	}
-	else if (event->key() == Qt::Key_Shift)
-	{
-		snap_helper->setFilter(SnappingToolHelper::NoSnapping);
-		if (editingInProgress())
+		if (event->key() == Qt::Key_Control)
 		{
-			dragMove();
-			updateConstrainedPositions();
+			// This tool uses inverted logic.
+			activateAngleHelperWhileEditing(true);
+		}
+		else if (event->key() == Qt::Key_Shift)
+		{
+			activateSnapHelperWhileEditing(false);
 		}
 	}
 	else
+	{
 		return false;
+	}
 	updateStatusText();
 	return true;
 }
@@ -573,12 +613,4 @@ void EditLineTool::updateHoverState(MapCoordF cursor_pos)
 		start_drag_distance = (hover_state != OverNothing) ? 0 : Settings::getInstance().getStartDragDistancePx();
 		updateDirtyRect();
 	}
-}
-
-void EditLineTool::toggleAngleHelper()
-{
-	if (!editingInProgress())
-		angle_helper->setActive(false);
-	else
-		activateAngleHelperWhileEditing(!angle_helper->isActive());
 }

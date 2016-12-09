@@ -55,6 +55,7 @@ public:
 	void dragStart() override;
 	void dragMove() override;
 	void dragFinish() override;
+	void dragCanceled() override;
 	
 protected:
 	bool keyPress(QKeyEvent* event) override;
@@ -75,8 +76,6 @@ protected:
 	
 	/** Recalculates hover_line. */
 	void updateHoverState(MapCoordF cursor_pos);
-	
-	void toggleAngleHelper();
 	
 	bool hoveringOverFrame() const;
 	
