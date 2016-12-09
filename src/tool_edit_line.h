@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2015 Kai Pastor
+ *    Copyright 2013-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -43,6 +43,10 @@ Q_OBJECT
 public:
 	EditLineTool(MapEditorController* editor, QAction* tool_action);
 	virtual ~EditLineTool();
+	
+	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
 	
 	void mouseMove() override;
 	void clickPress() override;
@@ -108,7 +112,7 @@ private:
 	/** Is a box selection in progress? */
 	bool box_selection;
 	
-	bool no_more_effect_on_click;
+	bool waiting_for_mouse_release;
 	
 	/**
 	 * Offset from cursor position to drag handle of moved element.

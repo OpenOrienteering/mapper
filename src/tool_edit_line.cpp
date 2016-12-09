@@ -62,7 +62,7 @@ EditLineTool::EditLineTool(MapEditorController* editor, QAction* tool_button)
  , hover_object(nullptr)
  , highlight_object(nullptr)
  , box_selection(false)
- , no_more_effect_on_click(false)
+ , waiting_for_mouse_release(false)
  , highlight_renderables(new MapRenderables(map()))
 {
 	// nothing
@@ -73,6 +73,41 @@ EditLineTool::~EditLineTool()
 	if (highlight_object)
 		highlight_renderables->removeRenderablesOfObject(highlight_object, false);
 	delete highlight_object;
+}
+
+bool EditLineTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+{
+	if (waiting_for_mouse_release)
+	{
+		if (event->buttons() & ~event->button())
+			return true;
+		waiting_for_mouse_release = false;
+	}
+	
+	return MapEditorToolBase::mousePressEvent(event, map_coord, widget);
+}
+
+bool EditLineTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+{
+	if (waiting_for_mouse_release)
+	{
+		if (event->buttons())
+			return true;
+		waiting_for_mouse_release = false;
+	}
+	
+	return MapEditorToolBase::mouseMoveEvent(event, map_coord, widget);
+}
+
+bool EditLineTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+{
+	if (waiting_for_mouse_release)
+	{
+		waiting_for_mouse_release = !event->buttons();
+		return true;
+	}
+	
+	return MapEditorToolBase::mouseReleaseEvent(event, map_coord, widget);
 }
 
 void EditLineTool::mouseMove()
@@ -136,7 +171,7 @@ void EditLineTool::clickPress()
 		// Make sure that the highlight object is recreated
 		deleteHighlightObject();
 		updateHoverState(cur_pos_map);
-		no_more_effect_on_click = true;
+		waiting_for_mouse_release = true;
 	}
 	
 	click_timer.restart();
@@ -150,12 +185,6 @@ void EditLineTool::clickRelease()
 	// wanted to move the objects instead and no selection change is done.
 	const int selection_click_time_threshold = 150;
 	
-	if (no_more_effect_on_click)
-	{
-		no_more_effect_on_click = false;
-		return;
-	}
-	
 	if (hover_state != OverNothing &&
 		click_timer.elapsed() >= selection_click_time_threshold)
 	{
@@ -168,9 +197,6 @@ void EditLineTool::clickRelease()
 
 void EditLineTool::dragStart()
 {
-	if (no_more_effect_on_click)
-		return;
-	
 	updateHoverState(click_pos_map);
 	
 	Map* map = this->map();
@@ -238,9 +264,6 @@ void EditLineTool::dragStart()
 
 void EditLineTool::dragMove()
 {
-	if (no_more_effect_on_click)
-		return;
-	
 	if (editingInProgress())
 	{
 		if (snapped_to_pos && handle_offset != MapCoordF(0, 0))
@@ -272,12 +295,6 @@ void EditLineTool::dragMove()
 
 void EditLineTool::dragFinish()
 {
-	if (no_more_effect_on_click)
-	{
-		no_more_effect_on_click = false;
-		return;
-	}
-	
 	if (editingInProgress())
 	{
 		finishEditing();
