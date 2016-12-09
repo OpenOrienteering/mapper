@@ -374,6 +374,19 @@ void EditPointTool::dragFinish()
 	box_selection = false;
 }
 
+void EditPointTool::dragCanceled()
+{
+	if (editingInProgress())
+	{
+		abortEditing();
+		angle_helper->setActive(false);
+		snap_helper->setFilter(SnappingToolHelper::NoSnapping);
+	}
+	waiting_for_mouse_release = true;
+	box_selection = false;
+	updateDirtyRect();
+}
+
 void EditPointTool::focusOutEvent(QFocusEvent* event)
 {
 	Q_UNUSED(event);
@@ -399,36 +412,44 @@ bool EditPointTool::keyPress(QKeyEvent* event)
 		}
 	}
 	
-	int num_selected_objects = map()->getNumSelectedObjects();
-	
-	if (num_selected_objects > 0 && event->key() == delete_object_key)
-	{
-		deleteSelectedObjects();
-	}
-	else if (num_selected_objects > 0 && event->key() == Qt::Key_Escape)
-	{
-		map()->clearObjectSelection(true);
-	}
-	else if (event->key() == Qt::Key_Control)
-	{
-		if (editingInProgress())
-			activateAngleHelperWhileEditing();
-	}
-	else if (event->key() == Qt::Key_Shift && editingInProgress())
-	{
-		if (hover_state == OverObjectNode &&
-			hover_object->getType() == Object::Path &&
-			hover_object->asPath()->isCurveHandle(hover_point))
-		{
-			// In this case, Shift just activates deactivates
-			// the opposite curve handle constraints
-			return true;
-		}
-		activateSnapHelperWhileEditing();
-	}
-	else if (event->key() == Qt::Key_Space)
+	if (event->key() == Qt::Key_Space)
 	{
 		space_pressed = true;
+	}
+	else if (isDragging())
+	{
+		if (event->key() == Qt::Key_Escape)
+			cancelDragging();
+	}
+	else if (editingInProgress())
+	{
+		if (event->key() == Qt::Key_Control)
+		{
+			activateAngleHelperWhileEditing();
+		}
+		else if (event->key() == Qt::Key_Shift)
+		{
+			if (hover_state == OverObjectNode &&
+				hover_object->getType() == Object::Path &&
+				hover_object->asPath()->isCurveHandle(hover_point))
+			{
+				// In this case, Shift just activates deactivates
+				// the opposite curve handle constraints
+				return true;
+			}
+			activateSnapHelperWhileEditing();
+		}
+	}
+	else if (map()->getNumSelectedObjects() > 0)
+	{
+		if (event->key() == delete_object_key)
+		{
+			deleteSelectedObjects();
+		}
+		else if (event->key() == Qt::Key_Escape && !waiting_for_mouse_release)
+		{
+			map()->clearObjectSelection(true);
+		}
 	}
 	else
 	{

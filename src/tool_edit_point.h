@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2015 Kai Pastor
+ *    Copyright 2013-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -66,6 +66,7 @@ public:
 	void dragStart() override;
 	void dragMove() override;
 	void dragFinish() override;
+	void dragCanceled() override;
 	
 	void focusOutEvent(QFocusEvent* event) override;
 	
