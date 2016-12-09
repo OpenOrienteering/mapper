@@ -387,17 +387,20 @@ void MainWindow::setCurrentPath(const QString& path)
 {
 	Q_ASSERT(has_opened_file || path.isEmpty());
 	
-	QString window_file_path;
-	current_path.clear();
-	if (has_opened_file)
+	if (path != current_path)
 	{
-		window_file_path = QFileInfo(path).canonicalFilePath();
-		if (window_file_path.isEmpty())
-			window_file_path = tr("Unsaved file");
-		else
-			current_path = window_file_path;
+		QString window_file_path;
+		current_path.clear();
+		if (has_opened_file)
+		{
+			window_file_path = QFileInfo(path).canonicalFilePath();
+			if (window_file_path.isEmpty())
+				window_file_path = tr("Unsaved file");
+			else
+				current_path = window_file_path;
+		}
+		setWindowFilePath(window_file_path);
 	}
-	setWindowFilePath(window_file_path);
 }
 
 void MainWindow::setMostRecentlyUsedFile(const QString& path)
