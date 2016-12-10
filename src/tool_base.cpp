@@ -441,10 +441,10 @@ void MapEditorToolBase::abortEditing()
 // virtual
 void MapEditorToolBase::finishEditing()
 {
-	finishEditing(false, true);
+	finishEditing(true, false);
 }
 
-void MapEditorToolBase::finishEditing(bool delete_objects, bool create_undo_step)
+void MapEditorToolBase::finishEditing(bool create_undo_step, bool delete_objects)
 {
 	Q_ASSERT(editingInProgress());
 	

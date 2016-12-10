@@ -150,7 +150,7 @@ protected:
 	/// Takes care of the preview renderables handling, map dirty flag, and objects edited signal.
 	void startEditing();
 	void abortEditing();
-	void finishEditing(bool delete_objects, bool create_undo_step);
+	void finishEditing(bool create_undo_step, bool delete_objects);
 	
 	/// Call this to display changes to the preview objects between startEditing() and finish/abortEditing().
 	virtual void updatePreviewObjects();

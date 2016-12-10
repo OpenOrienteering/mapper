@@ -610,7 +610,7 @@ void EditPointTool::finishEditing()
 		waiting_for_mouse_release = true;
 	}
 	
-	MapEditorToolBase::finishEditing(delete_objects, create_undo_step);
+	MapEditorToolBase::finishEditing(create_undo_step, delete_objects);
 	
 	if (delete_objects)
 		deleteSelectedObjects();
