@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2014-2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -18,54 +19,40 @@
  */
 
 
-#ifndef _OPENORIENTEERING_TOOL_SCALE_H_
-#define _OPENORIENTEERING_TOOL_SCALE_H_
+#ifndef OPENORIENTEERING_SCALE_TOOL_H
+#define OPENORIENTEERING_SCALE_TOOL_H
 
-#include "tool.h"
+#include "tool_base.h"
 
-#include <QScopedPointer>
 
-class MapRenderables;
-
-/** Tool to scale objects. */
-class ScaleTool : public MapEditorTool
+/**
+ * Tool to scale objects.
+ */
+class ScaleTool : public MapEditorToolBase
 {
 Q_OBJECT
 public:
 	ScaleTool(MapEditorController* editor, QAction* tool_action);
-	virtual ~ScaleTool();
-	
-    virtual void init();
-    virtual const QCursor& getCursor() const;
-	
-    virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-    virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	
-    virtual void draw(QPainter* painter, MapWidget* widget);
-	
-protected slots:
-	void updateDirtyRect();
-	void objectSelectionChanged();
+	~ScaleTool() override;
 	
 protected:
-	void updateStatusText();
-	void updatePreviewObjects();
+	void initImpl() override;
 	
-	/** Updates the preview object to the cursor pos (while dragging). */
-	void updateDragging(const MapCoordF cursor_pos_map);
+	void updateStatusText() override;
 	
-	// Mouse handling
-	QPoint click_pos;
+	void clickRelease() override;
+	void dragStart() override;
+	void dragMove() override;
+	void dragFinish() override;
 	
-	bool scaling_center_set;
+	void drawImpl(QPainter* painter, MapWidget* widget) override;
+	
+	int updateDirtyRectImpl(QRectF& rect) override;
+	void objectSelectionChangedImpl() override;
+	
 	MapCoordF scaling_center;
-	bool scaling;
-	double original_scale;
+	double reference_length;
 	double scaling_factor;
-	
-	QScopedPointer<MapRenderables> old_renderables;
-	QScopedPointer<MapRenderables> renderables;
 };
 
 #endif

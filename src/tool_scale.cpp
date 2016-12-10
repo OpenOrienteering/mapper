@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2015 Kai Pastor
+ *    Copyright 2013-2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,185 +22,137 @@
 #include "tool_scale.h"
 
 #include <qmath.h>
-#include <QApplication>
-#include <QMouseEvent>
 #include <QPainter>
 
 #include "map.h"
 #include "map_widget.h"
 #include "object.h"
 #include "renderable.h"
-#include "settings.h"
 #include "util.h"
 
 
 ScaleTool::ScaleTool(MapEditorController* editor, QAction* tool_button)
-: MapEditorTool(editor, Other, tool_button),
-  old_renderables(new MapRenderables(map())), 
-  renderables(new MapRenderables(map()))
+: MapEditorToolBase { scaledToScreen(QCursor{ QPixmap(QString::fromLatin1(":/images/cursor-scale.png")), 1, 1 }), Other, editor, tool_button }
+, reference_length  { 0 }
+, scaling_factor    { 1 }
 {
-	scaling_center_set = false;
-	scaling = false;
-	scaling_factor = 1;
+	// nothing else
 }
 
-void ScaleTool::init()
-{
-	// Set initial scaling center to the center of the bounding box of the selected objects
-	if (map()->getNumSelectedObjects() > 0)
-	{
-		QRectF rect;
-		map()->includeSelectionRect(rect);
-		scaling_center = MapCoordF(rect.center());
-		scaling_center_set = true;
-	}
-	
-	connect(map(), SIGNAL(objectSelectionChanged()), this, SLOT(objectSelectionChanged()));
-	connect(map(), SIGNAL(selectedObjectEdited()), this, SLOT(updateDirtyRect()));
-	updateDirtyRect();
-	updateStatusText();
-	
-	MapEditorTool::init();
-}
-
-const QCursor& ScaleTool::getCursor() const
-{
-	static auto const cursor = scaledToScreen(QCursor{ QPixmap(QString::fromLatin1(":/images/cursor-scale.png")), 1, 1 });
-	return cursor;
-}
 
 ScaleTool::~ScaleTool()
 {
-	deleteOldSelectionRenderables(*old_renderables, false);
+	// nothing, not inlined
 }
 
-bool ScaleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+
+
+void ScaleTool::initImpl()
 {
-	Q_UNUSED(map_coord);
-	Q_UNUSED(widget);
-	
-	if (!(event->buttons() & Qt::LeftButton))
-		return false;
-	
-	click_pos = event->pos();
-	return true;
+	objectSelectionChangedImpl();
 }
 
-bool ScaleTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
-{
-	Q_UNUSED(widget);
-	
-	if (!(event->buttons() & Qt::LeftButton))
-		return false;
-	
-	if (scaling)
-		updateDragging(map_coord);
-	else if ( !scaling && scaling_center_set &&
-			  (event->pos() - click_pos).manhattanLength() >= Settings::getInstance().getStartDragDistancePx() )
-	{
-		// Start scaling
-		scaling = true;
-		original_scale = (map_coord - scaling_center).length();
-		startEditingSelection(*old_renderables);
-	}
-	return true;
-}
 
-bool ScaleTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
-{
-	Q_UNUSED(widget);
-	
-	if (event->button() != Qt::LeftButton)
-		return false;
-	
-	if (!scaling)
-	{
-		scaling_center = map_coord;
-		scaling_center_set = true;
-	}
-	else
-	{
-		scaling = false;
-		updateDragging(map_coord);
-		finishEditingSelection(*renderables, *old_renderables, true);
-		map()->setObjectsDirty();
-		map()->emitSelectionEdited();
-	}
-	
-	updateDirtyRect();
-	updateStatusText();
-	return true;
-}
 
-void ScaleTool::draw(QPainter* painter, MapWidget* widget)
-{
-	map()->drawSelection(painter, true, widget, renderables->empty() ? NULL : renderables.data());
-	
-	if (scaling_center_set)
-	{
-		painter->setPen(Qt::white);
-		painter->setBrush(Qt::NoBrush);
-		
-		QPoint center = widget->mapToViewport(scaling_center).toPoint();
-		painter->drawEllipse(center, 3, 3);
-		painter->setPen(Qt::black);
-		painter->drawEllipse(center, 4, 4);
-	}
-}
-
-void ScaleTool::updateDirtyRect()
-{
-	QRectF rect;
-	map()->includeSelectionRect(rect);
-	
-	if (scaling_center_set)
-	{
-		rectIncludeSafe(rect, scaling_center);
-		map()->setDrawingBoundingBox(rect, 5, true);
-	}
-	else if (rect.isValid())
-		map()->setDrawingBoundingBox(rect, 0, true);
-	else
-		map()->clearDrawingBoundingBox();
-}
-
-void ScaleTool::objectSelectionChanged()
-{
-	if (map()->getNumSelectedObjects() == 0)
-		deactivate();
-	else
-		updateDirtyRect();
-}
-
-void ScaleTool::updateDragging(const MapCoordF cursor_pos_map)
-{
-	if (scaling)
-	{
-		double scaling = (cursor_pos_map - scaling_center).length();
-		scaling_factor = scaling / qMax(1e-7, original_scale);
-		
-		resetEditedObjects();
-		Map::ObjectSelection::const_iterator it_end = map()->selectedObjectsEnd();
-		for (Map::ObjectSelection::const_iterator it = map()->selectedObjectsBegin(); it != it_end; ++it)
-			(*it)->scale(scaling_center, scaling_factor);
-		updatePreviewObjects();
-		updateStatusText();
-	}
-}
-
-void ScaleTool::updatePreviewObjects()
-{
-	updateSelectionEditPreview(*renderables);
-	updateDirtyRect();
-}
-
+// This function contains translations. Keep it close to the top of the file so
+// that line numbers remain stable here when changing other parts of the file.
 void ScaleTool::updateStatusText()
 {
-	if (scaling)
+	if (editingInProgress())
 		setStatusBarText(tr("<b>Scaling:</b> %1%").arg(QLocale().toString(scaling_factor * 100, 'f', 1)));
-	else if (!scaling_center_set)
-		setStatusBarText(tr("<b>Click</b>: Set the scaling center. "));
 	else
 		setStatusBarText(tr("<b>Click</b>: Set the scaling center. ") +
 		                 tr("<b>Drag</b>: Scale the selected objects. "));
 }
+
+
+
+void ScaleTool::clickRelease()
+{
+	scaling_center = cur_pos_map;
+	updateDirtyRect();
+	updateStatusText();
+}
+
+
+
+void ScaleTool::dragStart()
+{
+	// WARNING: reference_length may become 0.
+	reference_length = (click_pos_map - scaling_center).length();
+	startEditing();
+}
+
+
+void ScaleTool::dragMove()
+{
+	resetEditedObjects();
+	
+	// minimum_length will replace any shorter length, 
+	// in order to avoid extreme values and division by zero.
+	auto minimum_length = 1.0 / cur_map_widget->getMapView()->getZoom();
+	
+	auto scaling_length = (cur_pos_map - scaling_center).length();
+	scaling_factor = qMax(minimum_length, scaling_length) / qMax(minimum_length, reference_length);
+	for (auto object : map()->selectedObjects())
+		object->scale(scaling_center, scaling_factor);
+	
+	updatePreviewObjects();
+	updateStatusText();
+}
+
+
+void ScaleTool::dragFinish()
+{
+	finishEditing();
+	updateStatusText();
+}
+
+
+
+void ScaleTool::drawImpl(QPainter* painter, MapWidget* widget)
+{
+	drawSelectionOrPreviewObjects(painter, widget);
+	
+	painter->setPen(Qt::white);
+	painter->setBrush(Qt::NoBrush);
+	
+	QPoint center = widget->mapToViewport(scaling_center).toPoint();
+	painter->drawEllipse(center, 3, 3);
+	painter->setPen(Qt::black);
+	painter->drawEllipse(center, 4, 4);
+}
+
+
+int ScaleTool::updateDirtyRectImpl(QRectF& rect)
+{
+	rectIncludeSafe(rect, scaling_center);
+	return 5;
+}
+
+
+
+void ScaleTool::objectSelectionChangedImpl()
+{
+	if (editingInProgress())
+	{
+		abortEditing();
+		cancelDragging();
+	}
+	
+	if (map()->getNumSelectedObjects() == 0)
+	{
+		deactivate();
+	}
+	else
+	{
+		// Set initial scaling center to the center of the bounding box of the selected objects
+		QRectF rect;
+		map()->includeSelectionRect(rect);
+		scaling_center = rect.center();
+		
+		updateDirtyRect();
+	}
+}
+
+
