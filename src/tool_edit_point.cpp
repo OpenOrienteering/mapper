@@ -608,34 +608,54 @@ void EditPointTool::drawImpl(QPainter* painter, MapWidget* widget)
 
 void EditPointTool::finishEditing()
 {
-	bool create_undo_step = true;
-	bool delete_objects = false;
-	
 	if (text_editor)
 	{
+		auto text_object = text_editor->object();
+		
 		delete text_editor;
 		text_editor = nullptr;
 		
-		TextObject* text_object = reinterpret_cast<TextObject*>(*map()->selectedObjectsBegin());
-		if (text_object->getText().isEmpty())
-		{
-			text_object->setText(old_text);
-			text_object->setHorizontalAlignment((TextObject::HorizontalAlignment)old_horz_alignment);
-			text_object->setVerticalAlignment((TextObject::VerticalAlignment)old_vert_alignment);
-			create_undo_step = false;
-			delete_objects = true;
-		}
-		else if (text_object->getText() == old_text && (int)text_object->getHorizontalAlignment() == old_horz_alignment && (int)text_object->getVerticalAlignment() == old_vert_alignment)
-			create_undo_step = false;
-		
 		waiting_for_mouse_release = true;
+		
+		if (!editedObjectsModified())
+		{
+			abortEditing();
+			updateStatusText();
+			return;
+		}
+		else if (text_object->getText().isEmpty())
+		{
+			abortEditing();
+			updateStatusText();
+			
+			auto map = this->map();
+			auto num_selected_objects = map->selectedObjects().size();
+			map->removeObjectFromSelection(text_object, false);
+			
+			MapPart* part = map->getCurrentPart();
+			int index = part->findObjectIndex(text_object);
+			if (index >= 0)
+			{
+				part->deleteObject(index, true);
+				
+				AddObjectsUndoStep* undo_step = new AddObjectsUndoStep(map);
+				undo_step->addObject(index, text_object);
+				map->push(undo_step);
+				map->setObjectsDirty();
+			}
+			else
+			{
+				qDebug("text_object not found in current map part.");
+			}
+			
+			if (map->selectedObjects().size() != num_selected_objects)
+				emit map->objectSelectionChanged();
+			
+			return;
+		}
 	}
 	
-	MapEditorToolBase::finishEditing(create_undo_step, delete_objects);
-	
-	if (delete_objects)
-		deleteSelectedObjects();
-	
+	MapEditorToolBase::finishEditing();
 	updateStatusText();
 }
 
