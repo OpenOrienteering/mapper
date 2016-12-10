@@ -522,9 +522,16 @@ void EditPointTool::objectSelectionChangedImpl()
 		return;
 	}
 	
-	updateHoverState(cur_pos_map);
-	updateDirtyRect();
-	updateStatusText();
+	if (isDragging())
+	{
+		cancelDragging();
+	}
+	else
+	{
+		updateHoverState(cur_pos_map);
+		updateDirtyRect();
+		updateStatusText();
+	}
 }
 
 int EditPointTool::updateDirtyRectImpl(QRectF& rect)

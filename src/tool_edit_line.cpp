@@ -407,9 +407,16 @@ void EditLineTool::initImpl()
 
 void EditLineTool::objectSelectionChangedImpl()
 {
-	updateHoverState(cur_pos_map);
-	updateDirtyRect();
-	updateStatusText();
+	if (isDragging())
+	{
+		cancelDragging();
+	}
+	else
+	{
+		updateHoverState(cur_pos_map);
+		updateDirtyRect();
+		updateStatusText();
+	}
 }
 
 int EditLineTool::updateDirtyRectImpl(QRectF& rect)
