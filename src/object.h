@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2015 Kai Pastor
+ *    Copyright 2013-2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,8 +19,8 @@
  */
 
 
-#ifndef _OPENORIENTEERING_OBJECT_H_
-#define _OPENORIENTEERING_OBJECT_H_
+#ifndef OPENORIENTEERING_OBJECT_H
+#define OPENORIENTEERING_OBJECT_H
 
 #include <limits>
 #include <vector>
@@ -997,6 +997,47 @@ private:
 
 
 
+/**
+ * A single PathCoord together with the object it belongs to.
+ * 
+ * This is a convenient structure for passing around as parameter and return value.
+ */
+struct ObjectPathCoord : public PathCoord
+{
+	PathObject* object;
+	
+	constexpr ObjectPathCoord() noexcept;
+	constexpr ObjectPathCoord(PathObject* object) noexcept;
+	constexpr ObjectPathCoord(PathObject* object, const PathCoord& coord) noexcept;
+	constexpr ObjectPathCoord(PathObject* object, const PathCoord&& coord) noexcept;
+	constexpr ObjectPathCoord(const ObjectPathCoord&) noexcept = default;
+	constexpr ObjectPathCoord(ObjectPathCoord&&) noexcept = default;
+	ObjectPathCoord& operator=(const ObjectPathCoord&) noexcept = default;
+	ObjectPathCoord& operator=(ObjectPathCoord&&) noexcept = default;
+	
+	/**
+	 * This constructor sets the PathCoord members according to the given coordinate index.
+	 */
+	ObjectPathCoord(PathObject* object, MapCoordVector::size_type index);
+	
+	/**
+	 * Returns true iff the object is not null.
+	 */
+	constexpr operator bool() const;
+	
+	/**
+	 * Sets this PathCoord to the point on this path which is the closest to the
+	 * given coordinate.
+	 * 
+	 * \return The squared distance of these points.
+	 * 
+	 * \see PathObject::calcClosestPointOnPath
+	 */
+	float findClosestPointTo(MapCoordF map_coord);
+};
+
+
+
 //### Object inline code ###
 
 inline
@@ -1158,6 +1199,69 @@ inline
 float PointObject::getRotation() const
 {
 	return rotation;
+}
+
+
+
+//### ObjectPathCoord inline code ###
+
+inline
+constexpr ObjectPathCoord::ObjectPathCoord() noexcept
+: ObjectPathCoord { nullptr }
+{
+	// nothing else
+}
+
+
+inline
+constexpr ObjectPathCoord::ObjectPathCoord(PathObject* object) noexcept
+: object { object }
+{
+	// nothing else
+}
+
+
+inline
+constexpr ObjectPathCoord::ObjectPathCoord(PathObject* object, const PathCoord& coord) noexcept
+: PathCoord { coord }
+, object    { object }
+{
+	// nothing else
+}
+
+
+inline
+constexpr ObjectPathCoord::ObjectPathCoord(PathObject* object, const PathCoord&& coord) noexcept
+: PathCoord { std::move(coord) }
+, object    { object }
+{
+	// nothing else
+}
+
+
+inline
+ObjectPathCoord::ObjectPathCoord(PathObject* object, MapCoordVector::size_type index)
+: PathCoord { object->findPathCoordForIndex(index) }
+, object    { object }
+{
+	// nothing else
+}
+
+
+inline
+float ObjectPathCoord::findClosestPointTo(MapCoordF map_coord)
+{
+	float distance_sq;
+	object->calcClosestPointOnPath(map_coord, distance_sq, *this);
+	return distance_sq;
+	
+}
+
+
+inline
+constexpr ObjectPathCoord::operator bool() const
+{
+	return bool { object };
 }
 
 
