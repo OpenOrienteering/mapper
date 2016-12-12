@@ -3776,17 +3776,18 @@ void MapEditorController::importClicked()
 		importMapFile(filename, true); // Error reporting in Map::loadFrom()
 		return;
 	}
-	else if (importMapFile(filename, false))
-	{
-		// Map format recognized by try-and-error
-		success = true;
-	}
 	else if (filename.endsWith(QLatin1String(".dxf"), Qt::CaseInsensitive)
 	         || filename.endsWith(QLatin1String(".gpx"), Qt::CaseInsensitive)
 	         || filename.endsWith(QLatin1String(".osm"), Qt::CaseInsensitive))
 	{
+		// Fallback: Legacy geo file import
 		importGeoFile(filename);
 		return; // Error reporting in Track::import()
+	}
+	else if (importMapFile(filename, false))
+	{
+		// Last resort: Map format recognition by try-and-error
+		success = true;
 	}
 	else
 	{
