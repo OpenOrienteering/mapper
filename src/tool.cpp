@@ -283,7 +283,8 @@ void MapEditorTool::resetEditedObjects()
 
 void MapEditorTool::finishEditingSelection(MapRenderables& renderables, MapRenderables& old_renderables, bool create_undo_step, bool delete_objects)
 {
-	Q_ASSERT(undo_duplicates.size() == map()->selectedObjects().size());
+	Q_ASSERT(undo_duplicates.size() == map()->selectedObjects().size()
+	         || !create_undo_step);
 	
 	ReplaceObjectsUndoStep* undo_step = create_undo_step ? new ReplaceObjectsUndoStep(map()) : nullptr;
 	
@@ -298,9 +299,12 @@ void MapEditorTool::finishEditingSelection(MapRenderables& renderables, MapRende
 		
 		if (create_undo_step)
 			undo_step->addObject(object, undo_duplicates[i]);
-		else
-			delete undo_duplicates[i];
 		++i;
+	}
+	if (!create_undo_step)
+	{
+		for (auto object : undo_duplicates)
+			delete object;
 	}
 	renderables.clear();
 	deleteOldSelectionRenderables(old_renderables, true);

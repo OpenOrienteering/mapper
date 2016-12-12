@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,73 +19,75 @@
  */
 
 
-#ifndef _OPENORIENTEERING_TOOL_CUT_H_
-#define _OPENORIENTEERING_TOOL_CUT_H_
+#ifndef OPENORIENTEERING_CUT_TOOL_H
+#define OPENORIENTEERING_CUT_TOOL_H
 
-#include <QScopedPointer>
+#include "tool_base.h"
 
-#include "core/path_coord.h"
-#include "tool.h"
 #include "tool_edit.h"
+#include "object.h"
 
 class DrawPathTool;
-class PathObject;
-class MapRenderables;
+
 
 /**
- * A tool to cut objects into smaller pieces.
- * 
- * May cut lines and areas.
- * 
- * \todo This tool has some similarities with EditPointTool and maybe should use
- *       the same base class (EditTool).
+ * A tool to cut (split) lines and areas into smaller pieces.
  */
-class CutTool : public MapEditorTool
+class CutTool : public MapEditorToolBase
 {
-public:
-	using HoverFlag  = EditTool::HoverFlag;
-	using HoverState = EditTool::HoverState;
-	
 Q_OBJECT
 public:
+	using length_type = PathCoord::length_type;
+	using HoverFlag   = EditTool::HoverFlag;
+	using HoverState  = EditTool::HoverState;
+	
 	CutTool(MapEditorController* editor, QAction* tool_action);
-	virtual ~CutTool();
-	
-	virtual void init();
-	virtual const QCursor& getCursor() const;
-	
-	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual void leaveEvent(QEvent* event);
-	
-	virtual bool keyPressEvent(QKeyEvent* event);
-	virtual bool keyReleaseEvent(QKeyEvent* event);
-	virtual void focusOutEvent(QFocusEvent* event);
-	
-	virtual void draw(QPainter* painter, MapWidget* widget);
-	
-public slots:
-	void objectSelectionChanged();
-	void pathDirtyRectChanged(const QRectF& rect);
-	void pathAborted();
-	void pathFinished(PathObject* split_path);
+	~CutTool() override;
 	
 protected:
-	/**
-	 * Splits the given path object, removing the section between begin and end.
-	 * 
-	 * This may remove the object from the map and add new objects instead.
-	 */
-	void splitLine(PathObject* object, std::size_t part_index, qreal begin, qreal end) const;
+	void initImpl() override;
 	
-	/**
-	 * Splits the path object at the given position.
-	 * 
-	 * This may remove the object from the map and add new objects instead.
-	 */
-	void splitLine(PathObject* object, const PathCoord& split_pos) const;
+	void updateStatusText() override;
+	
+	void objectSelectionChangedImpl() override;
+	
+	// MapEditorTool input event handlers
+	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	void leaveEvent(QEvent* event) override;
+	void focusOutEvent(QFocusEvent* event) override;
+	
+	// MapEditorToolBase input event handlers
+	void mouseMove() override;
+	void clickPress() override;
+	void clickRelease() override;
+	void dragStart() override;
+	void dragMove() override;
+	void dragFinish() override;
+	bool keyPress(QKeyEvent* event) override;
+	bool keyRelease(QKeyEvent* event) override;
+	
+	// Functions for splitting lines
+	void startCuttingLine(const ObjectPathCoord& point);
+	void updateCuttingLine(MapCoordF cursor_pos);
+	void finishCuttingLine();
+	
+	// Functions for splitting areas
+	bool startCuttingArea(const ObjectPathCoord& point);
+	void abortCuttingArea();
+	void finishCuttingArea(PathObject* split_path);
+	
+	// Drawing
+	void updatePreviewObjects() override;
+	void deletePreviewObject();
+	int updateDirtyRectImpl(QRectF& path_rect) override;
+	void drawImpl(QPainter* painter, MapWidget* widget) override;
+	
+	// State 
+	void updateHoverState(MapCoordF cursor_pos);
+	ObjectPathCoord findEditPoint(MapCoordF cursor_pos_map, int with_type, int without_type) const;
 	
 	/**
 	 * Replaces the given object in the map with the replacement objects.
@@ -95,44 +97,34 @@ protected:
 	 * 
 	 * @todo Consider moving this to a more general class (Map, MapPart).
 	 */
-	void replaceObject(PathObject* object, const std::vector<PathObject*>& replacement) const;
+	void replaceObject(Object* object, const std::vector<PathObject*>& replacement) const;
 	
-	void updateStatusText();
-	void updatePreviewObjects();
-	void deletePreviewPath();
-	void updateDirtyRect(const QRectF* path_rect = nullptr) const;
-	void updateDragging(MapCoordF cursor_pos_map, MapWidget* widget);
-	void updateHoverState(QPointF cursor_pos_screen, MapWidget* widget);
-	bool findEditPoint(PathCoord& out_edit_point, PathObject*& out_edit_object, MapCoordF cursor_pos_map, int with_type, int without_type, MapWidget* widget);
-	
-	void startCuttingArea(const PathCoord& coord, MapWidget* widget);
-	
-	// Mouse handling
-	QPoint click_pos;
-	MapCoordF click_pos_map;
-	QPoint cur_pos;
-	MapCoordF cur_pos_map;
-	bool dragging;
-	
-	HoverState hover_state;
-	Object* hover_object;
+	// Basic state
+	bool waiting_for_mouse_release;
+	HoverState  hover_state;
+	PathObject* hover_object;
 	MapCoordVector::size_type hover_point;
+	
+	// The object which is about to be split
 	PathObject* edit_object;
 	
-	// For removing segments from lines
-	quint32 drag_part_index; // PathPartVector::size_type
-	float drag_start_len;
-	float drag_end_len;
-	bool drag_forward;		// true if [drag_start_len; drag_end_len] is the drag range, else [drag_end_len; drag_start_len]
-	bool dragging_on_line;
+	// State for splitting lines
+	PathPartVector::size_type drag_part_index;
+	length_type drag_start_len;
+	length_type drag_end_len;
+	bool reverse_drag; // if true, the effective drag range is [drag_end_len; drag_start_len]
 	
-	// For cutting areas
-	bool cutting_area;
+	// State for cutting areas
 	DrawPathTool* path_tool;
-	MapWidget* edit_widget;
+	QRectF path_tool_rect;
 	
 	// Preview objects for dragging
 	PathObject* preview_path;
+	/**
+	 * The renderables member in MapEditorToolBase contains the selection at the moment,
+	 * but the path of cutting a line needs to be drawn separately.
+	 * \todo Rewrite renderables handling in MapEditorToolBase so that we can remove it here.
+	 */
 	QScopedPointer<MapRenderables> renderables;
 };
 
