@@ -34,6 +34,7 @@
 #include "../../map_editor.h"
 #include "../../map_part.h"
 #include "../../object.h"
+#include "../../object_query.h"
 #include "../../tool.h"
 #include "../../util.h"
 
@@ -163,17 +164,17 @@ void TagSelectWidget::addRowItems(int row)
 	query_table->setItem(row, 3, item);
 
 	QComboBox* compare_op = new QComboBox();
-	compare_op->addItem(tr("is"), QVariant::fromValue(QueryOperation::IS_OP));
-	compare_op->addItem(tr("contains"), QVariant::fromValue(QueryOperation::CONTAINS_OP));
-	compare_op->addItem(tr("is not"), QVariant::fromValue(QueryOperation::NOT_OP));
+	compare_op->addItem(tr("is"), QVariant::fromValue(ObjectQuery::IS_OP));
+	compare_op->addItem(tr("contains"), QVariant::fromValue(ObjectQuery::CONTAINS_OP));
+	compare_op->addItem(tr("is not"), QVariant::fromValue(ObjectQuery::NOT_OP));
 	query_table->setCellWidget(row, 2, compare_op);
 
 	// Special case to handle the first logical operator which is grayed out
 	if (row != 0)
 	{
 		QComboBox* logical_op = new QComboBox();
-		logical_op->addItem(tr("or"), QVariant::fromValue(QueryOperation::OR_OP));
-		logical_op->addItem(tr("and"), QVariant::fromValue(QueryOperation::AND_OP));
+		logical_op->addItem(tr("or"), QVariant::fromValue(ObjectQuery::OR_OP));
+		logical_op->addItem(tr("and"), QVariant::fromValue(ObjectQuery::AND_OP));
 		query_table->setCellWidget(row, 0, logical_op);
 	}
 	else
@@ -294,141 +295,43 @@ void TagSelectWidget::makeSelection()
 	selection_info->setText(tr("%n object(s) selected", "", map->getNumSelectedObjects()));
 }
 
-std::unique_ptr<QueryOperation> TagSelectWidget::makeQuery() const
+std::unique_ptr<ObjectQuery> TagSelectWidget::makeQuery() const
 {
-	std::unique_ptr<QueryOperation> query;
+	std::unique_ptr<ObjectQuery> query;
 	int rowCount = query_table->rowCount();
-	auto logical_op = QueryOperation::INVALID_OP;
+	auto logical_op = ObjectQuery::INVALID_OP;
 
 	for (int row = 0; row < rowCount; ++row)
 	{
 		auto key = query_table->item(row, 1)->text().trimmed();
-		auto compare_op = qobject_cast<QComboBox*>(query_table->cellWidget(row, 2))->currentData().value<QueryOperation::Operation>();
+		auto compare_op = qobject_cast<QComboBox*>(query_table->cellWidget(row, 2))->currentData().value<ObjectQuery::Operation>();
 		auto value = query_table->item(row, 3)->text().trimmed();
 
-		auto comparison = std::unique_ptr<QueryOperation>(new QueryOperation(key, compare_op, value));
+		auto comparison = std::unique_ptr<ObjectQuery>(new ObjectQuery(key, compare_op, value));
 
-		if (comparison->getOp() == QueryOperation::INVALID_OP)
+		if (comparison->getOp() == ObjectQuery::INVALID_OP)
 		{
 			selection_info->setText(tr("Invalid query"));
-			return std::unique_ptr<QueryOperation>(nullptr);
+			return std::unique_ptr<ObjectQuery>(nullptr);
 		}
 
 		// First row we just copy the query
 		if (row != 0)
 		{
-			logical_op = qobject_cast<QComboBox*>(query_table->cellWidget(row, 0))->currentData().value<QueryOperation::Operation>();
-			query = std::unique_ptr<QueryOperation>(new QueryOperation(std::move(query), logical_op, std::move(comparison)));
+			logical_op = qobject_cast<QComboBox*>(query_table->cellWidget(row, 0))->currentData().value<ObjectQuery::Operation>();
+			query = std::unique_ptr<ObjectQuery>(new ObjectQuery(std::move(query), logical_op, std::move(comparison)));
 		}
 		else
 		{
 			query = std::move(comparison);
 		}
 
-		if (query->getOp() == QueryOperation::INVALID_OP)
+		if (query->getOp() == ObjectQuery::INVALID_OP)
 		{
 			selection_info->setText(tr("Invalid query"));
-			return std::unique_ptr<QueryOperation>(nullptr);
+			return std::unique_ptr<ObjectQuery>(nullptr);
 		}
 	}
 
 	return query;
-}
-
-// ### QueryOperation ###
-
-QueryOperation::QueryOperation()
-: op(INVALID_OP)
-{
-	; // Nothing
-}
-
-QueryOperation::QueryOperation(const QString& key, QueryOperation::Operation op, const QString& value)
-: op(op)
-, key_arg(key)
-, value_arg(value)
-{
-	// Must be a comparison op
-	if (op != IS_OP && op != CONTAINS_OP && op != NOT_OP)
-		this->op = INVALID_OP;
-
-	// Can't have an empty key (can have empty value but)
-	if (key.length() == 0)
-		this->op = INVALID_OP;
-}
-
-QueryOperation::QueryOperation(std::unique_ptr<QueryOperation> left, QueryOperation::Operation op, std::unique_ptr<QueryOperation> right)
-: op(op)
-, left_arg(std::move(left))
-, right_arg(std::move(right))
-{
-	// Must be a logical op
-	if (op != OR_OP && op != AND_OP)
-		this->op = INVALID_OP;
-
-	// Can't have null queries
-	if (left_arg.get() == nullptr || right_arg.get() == nullptr)
-		this->op = INVALID_OP;
-}
-
-QueryOperation::Operation QueryOperation::getOp() const
-{
-	return op;
-}
-
-bool QueryOperation::operator()(Object* object) const
-{
-	const auto tags = object->tags();
-
-	switch(op)
-	{
-	case IS_OP:
-		return tags.contains(key_arg) && tags.value(key_arg) == value_arg;
-	case CONTAINS_OP:
-		return tags.contains(key_arg) && tags.value(key_arg).contains(value_arg);
-	case NOT_OP:
-		// If the object does have the tag, not is true
-		return !tags.contains(key_arg) || tags.value(key_arg) != value_arg;
-	case OR_OP:
-		return (*left_arg)(object) || (*right_arg)(object);
-	case AND_OP:
-		return (*left_arg)(object) && (*right_arg)(object);
-	case INVALID_OP:
-		return false;
-	}
-
-	return false;
-}
-
-void QueryOperation::selectMatchingObjects(Map* map, MapEditorController* controller) const
-{
-	bool selection_changed = false;
-	if (map->getNumSelectedObjects() > 0)
-		selection_changed = true;
-	map->clearObjectSelection(false);
-
-	// Lambda to add objects to the selection
-	auto select_object = [map](Object* const object, MapPart *part, int object_index)
-	{
-		Q_UNUSED(part);
-		Q_UNUSED(object_index);
-		map->addObjectToSelection(object, false);
-		return false; // applyOnMatchingObjects tells us if this op fails, so if we fail we made a selection
-	};
-
-	MapPart *part = map->getCurrentPart();
-
-	// This reports failure if we made a selection
-	auto object_selected = !part->applyOnMatchingObjects(select_object, *this);
-
-	selection_changed |= object_selected;
-	if (selection_changed)
-		map->emitSelectionChanged();
-
-	if (object_selected)
-	{
-		auto current_tool = controller->getTool();
-		if (current_tool && current_tool->isDrawTool())
-			controller->setEditTool();
-	}
 }

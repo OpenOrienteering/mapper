@@ -90,6 +90,7 @@ set(Mapper_Common_SRCS
  renderable.cpp
  renderable_implementation.cpp
  object.cpp
+ object_query.cpp
  object_text.cpp
 
  template.cpp

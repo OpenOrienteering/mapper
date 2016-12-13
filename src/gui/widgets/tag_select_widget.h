@@ -34,7 +34,7 @@ class Map;
 class MapEditorController;
 class MapView;
 class Object;
-class QueryOperation;
+class ObjectQuery;
 
 /**
  * This widget allows the user to make selections based on an objects tags.
@@ -66,7 +66,7 @@ private:
 	 * Builds a query based on the current state of the query table.
 	 * On error the unqiue_ptr contains nullptr and the status text is updated.
 	 */
-	std::unique_ptr<QueryOperation> makeQuery() const;
+	std::unique_ptr<ObjectQuery> makeQuery() const;
 	
 	Map* map;
 	MapView* main_view;
@@ -84,46 +84,5 @@ private:
 	QToolButton* select_button;
 	QLabel* selection_info;
 };
-
-class QueryOperation
-{
-public:
-	enum Operation {
-		IS_OP, // These operate on string
-		CONTAINS_OP,
-		NOT_OP,
-		OR_OP, // These operate on other queries
-		AND_OP,
-		INVALID_OP // To signal something is invalid
-	};
-
-	QueryOperation();
-	QueryOperation(const QString& key, Operation op, const QString& value);
-	QueryOperation(std::unique_ptr<QueryOperation> left, Operation op, std::unique_ptr<QueryOperation> right);
-
-	/**
-	 * Evaluates this query on object - returns whether the query is true or false
-	 */
-	bool operator()(Object* object) const;
-
-	/**
-	 * Select the objects in the current part which match to this query
-	 */
-	void selectMatchingObjects(Map* map, MapEditorController* controller) const;
-
-	Operation getOp() const;
-private:
-	Operation op;
-
-	// For compare ops
-	QString key_arg;
-	QString value_arg;
-
-	// For logical ops
-	std::unique_ptr<QueryOperation> left_arg;
-	std::unique_ptr<QueryOperation> right_arg;
-};
-
-Q_DECLARE_METATYPE(QueryOperation::Operation)
 
 #endif
