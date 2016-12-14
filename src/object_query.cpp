@@ -25,85 +25,88 @@
 #include "map_part.h"
 #include "object.h"
 #include "tool.h"
-#include "util.h"
+
 
 // ### ObjectQuery ###
 
-ObjectQuery::ObjectQuery()
-: op(INVALID_OP)
+ObjectQuery::ObjectQuery(const QString& key, ObjectQuery::Operator op, const QString& value)
+: op        { op }
+, key_arg   { key }
+, value_arg { value }
 {
-	; // Nothing
-}
-
-ObjectQuery::ObjectQuery(const QString& key, ObjectQuery::Operation op, const QString& value)
-: op(op)
-, key_arg(key)
-, value_arg(value)
-{
-	// Must be a comparison op
-	if (op != IS_OP && op != CONTAINS_OP && op != NOT_OP)
-		this->op = INVALID_OP;
+	// Must be a key/value operator
+	Q_ASSERT(op >= 16);
+	Q_ASSERT(op <= 18);
+	if (op < 16 || op > 18)
+		this->op = OperatorInvalid;
 
 	// Can't have an empty key (can have empty value but)
 	if (key.length() == 0)
-		this->op = INVALID_OP;
+		this->op = OperatorInvalid;
 }
 
-ObjectQuery::ObjectQuery(std::unique_ptr<ObjectQuery> left, ObjectQuery::Operation op, std::unique_ptr<ObjectQuery> right)
-: op(op)
-, left_arg(std::move(left))
-, right_arg(std::move(right))
+
+ObjectQuery::ObjectQuery(std::unique_ptr<ObjectQuery> left, ObjectQuery::Operator op, std::unique_ptr<ObjectQuery> right)
+: op        { op }
+, left_arg  { std::move(left) }
+, right_arg { std::move(right) }
 {
-	// Must be a logical op
-	if (op != OR_OP && op != AND_OP)
-		this->op = INVALID_OP;
+	// Must be a logical operator
+	Q_ASSERT(op >= 1);
+	Q_ASSERT(op <= 2);
+	if (op < 1 || op > 2)
+		this->op = OperatorInvalid;
 
 	// Can't have null queries
-	if (left_arg.get() == nullptr || right_arg.get() == nullptr)
-		this->op = INVALID_OP;
+	if (!left_arg || !right_arg)
+		this->op = OperatorInvalid;
 }
 
-ObjectQuery::Operation ObjectQuery::getOp() const
+
+
+ObjectQuery::Operator ObjectQuery::getOperator() const
 {
 	return op;
 }
 
-bool ObjectQuery::operator()(Object* object) const
+
+
+bool ObjectQuery::operator()(const Object* object) const
 {
 	const auto tags = object->tags();
 
 	switch(op)
 	{
-	case IS_OP:
+	case OperatorIs:
 		return tags.contains(key_arg) && tags.value(key_arg) == value_arg;
-	case CONTAINS_OP:
-		return tags.contains(key_arg) && tags.value(key_arg).contains(value_arg);
-	case NOT_OP:
+	case OperatorIsNot:
 		// If the object does have the tag, not is true
 		return !tags.contains(key_arg) || tags.value(key_arg) != value_arg;
-	case OR_OP:
-		return (*left_arg)(object) || (*right_arg)(object);
-	case AND_OP:
+	case OperatorContains:
+		return tags.contains(key_arg) && tags.value(key_arg).contains(value_arg);
+		
+	case OperatorAnd:
 		return (*left_arg)(object) && (*right_arg)(object);
-	case INVALID_OP:
+	case OperatorOr:
+		return (*left_arg)(object) || (*right_arg)(object);
+		
+	case OperatorInvalid:
 		return false;
 	}
-
-	return false;
+	
+	Q_UNREACHABLE();
 }
+
+
 
 void ObjectQuery::selectMatchingObjects(Map* map, MapEditorController* controller) const
 {
-	bool selection_changed = false;
-	if (map->getNumSelectedObjects() > 0)
-		selection_changed = true;
+	bool had_selection = !map->selectedObjects().empty();
 	map->clearObjectSelection(false);
 
 	// Lambda to add objects to the selection
-	auto select_object = [map](Object* const object, MapPart *part, int object_index)
+	auto select_object = [map](Object* const object, MapPart*, int)
 	{
-		Q_UNUSED(part);
-		Q_UNUSED(object_index);
 		map->addObjectToSelection(object, false);
 		return false; // applyOnMatchingObjects tells us if this op fails, so if we fail we made a selection
 	};
@@ -113,8 +116,7 @@ void ObjectQuery::selectMatchingObjects(Map* map, MapEditorController* controlle
 	// This reports failure if we made a selection
 	auto object_selected = !part->applyOnMatchingObjects(select_object, *this);
 
-	selection_changed |= object_selected;
-	if (selection_changed)
+	if (object_selected || had_selection)
 		map->emitSelectionChanged();
 
 	if (object_selected)

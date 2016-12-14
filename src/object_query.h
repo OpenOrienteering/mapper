@@ -29,45 +29,67 @@ class Map;
 class MapEditorController;
 class Object;
 
+
+/**
+ * Utility to match objects based on tag values.
+ */
 class ObjectQuery
 {
 public:
-	enum Operation {
-		IS_OP, // These operate on string
-		CONTAINS_OP,
-		NOT_OP,
-		OR_OP, // These operate on other queries
-		AND_OP,
-		INVALID_OP // To signal something is invalid
+	enum Operator {
+		// Operators 1 .. 15 operate on other queries
+		OperatorAnd      = 1,  ///< And-chains two object queries
+		OperatorOr       = 2,  ///< Or-chains two object queries
+		
+		// Operators 16 .. 18 operate on object tags
+		OperatorIs       = 16, ///< Tests an existing tag for equality with the given value
+		OperatorIsNot    = 17, ///< Tests an existing tag for inequality with the given value
+		OperatorContains = 18, ///< Tests an existing tag for containing the given value
+		
+		OperatorInvalid  = 0   ///< Marks an invalid query
 	};
-
-	ObjectQuery();
-	ObjectQuery(const QString& key, Operation op, const QString& value);
-	ObjectQuery(std::unique_ptr<ObjectQuery> left, Operation op, std::unique_ptr<ObjectQuery> right);
-
+	
 	/**
-	 * Evaluates this query on object - returns whether the query is true or false
+	 * Constructs a query for a key and value.
 	 */
-	bool operator()(Object* object) const;
-
+	ObjectQuery(const QString& key, Operator op, const QString& value);
+	
 	/**
-	 * Select the objects in the current part which match to this query
+	 * Constructs a query which connects two sub-queries.
+	 */
+	ObjectQuery(std::unique_ptr<ObjectQuery> left, Operator op, std::unique_ptr<ObjectQuery> right);
+	
+	
+	/**
+	 * Returns the underlying operator.
+	 */
+	Operator getOperator() const;
+	
+	
+	/**
+	 * Evaluates this query on the given object and returns whether it matches.
+	 */
+	bool operator()(const Object* object) const;
+	
+	
+	/**
+	 * Select the objects in the current part which match to this query.
 	 */
 	void selectMatchingObjects(Map* map, MapEditorController* controller) const;
-
-	Operation getOp() const;
+	
+	
 private:
-	Operation op;
-
+	Operator op;
+	
 	// For compare ops
 	QString key_arg;
 	QString value_arg;
-
+	
 	// For logical ops
 	std::unique_ptr<ObjectQuery> left_arg;
 	std::unique_ptr<ObjectQuery> right_arg;
 };
 
-Q_DECLARE_METATYPE(ObjectQuery::Operation)
+Q_DECLARE_METATYPE(ObjectQuery::Operator)
 
 #endif

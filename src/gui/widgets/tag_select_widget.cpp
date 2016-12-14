@@ -164,17 +164,17 @@ void TagSelectWidget::addRowItems(int row)
 	query_table->setItem(row, 3, item);
 
 	QComboBox* compare_op = new QComboBox();
-	compare_op->addItem(tr("is"), QVariant::fromValue(ObjectQuery::IS_OP));
-	compare_op->addItem(tr("contains"), QVariant::fromValue(ObjectQuery::CONTAINS_OP));
-	compare_op->addItem(tr("is not"), QVariant::fromValue(ObjectQuery::NOT_OP));
+	compare_op->addItem(tr("is"), QVariant::fromValue(ObjectQuery::OperatorIs));
+	compare_op->addItem(tr("contains"), QVariant::fromValue(ObjectQuery::OperatorContains));
+	compare_op->addItem(tr("is not"), QVariant::fromValue(ObjectQuery::OperatorIsNot));
 	query_table->setCellWidget(row, 2, compare_op);
 
 	// Special case to handle the first logical operator which is grayed out
 	if (row != 0)
 	{
 		QComboBox* logical_op = new QComboBox();
-		logical_op->addItem(tr("or"), QVariant::fromValue(ObjectQuery::OR_OP));
-		logical_op->addItem(tr("and"), QVariant::fromValue(ObjectQuery::AND_OP));
+		logical_op->addItem(tr("or"), QVariant::fromValue(ObjectQuery::OperatorOr));
+		logical_op->addItem(tr("and"), QVariant::fromValue(ObjectQuery::OperatorAnd));
 		query_table->setCellWidget(row, 0, logical_op);
 	}
 	else
@@ -299,17 +299,17 @@ std::unique_ptr<ObjectQuery> TagSelectWidget::makeQuery() const
 {
 	std::unique_ptr<ObjectQuery> query;
 	int rowCount = query_table->rowCount();
-	auto logical_op = ObjectQuery::INVALID_OP;
+	auto logical_op = ObjectQuery::OperatorInvalid;
 
 	for (int row = 0; row < rowCount; ++row)
 	{
 		auto key = query_table->item(row, 1)->text().trimmed();
-		auto compare_op = qobject_cast<QComboBox*>(query_table->cellWidget(row, 2))->currentData().value<ObjectQuery::Operation>();
+		auto compare_op = qobject_cast<QComboBox*>(query_table->cellWidget(row, 2))->currentData().value<ObjectQuery::Operator>();
 		auto value = query_table->item(row, 3)->text().trimmed();
 
 		auto comparison = std::unique_ptr<ObjectQuery>(new ObjectQuery(key, compare_op, value));
 
-		if (comparison->getOp() == ObjectQuery::INVALID_OP)
+		if (comparison->getOperator() == ObjectQuery::OperatorInvalid)
 		{
 			selection_info->setText(tr("Invalid query"));
 			return std::unique_ptr<ObjectQuery>(nullptr);
@@ -318,7 +318,7 @@ std::unique_ptr<ObjectQuery> TagSelectWidget::makeQuery() const
 		// First row we just copy the query
 		if (row != 0)
 		{
-			logical_op = qobject_cast<QComboBox*>(query_table->cellWidget(row, 0))->currentData().value<ObjectQuery::Operation>();
+			logical_op = qobject_cast<QComboBox*>(query_table->cellWidget(row, 0))->currentData().value<ObjectQuery::Operator>();
 			query = std::unique_ptr<ObjectQuery>(new ObjectQuery(std::move(query), logical_op, std::move(comparison)));
 		}
 		else
@@ -326,7 +326,7 @@ std::unique_ptr<ObjectQuery> TagSelectWidget::makeQuery() const
 			query = std::move(comparison);
 		}
 
-		if (query->getOp() == ObjectQuery::INVALID_OP)
+		if (query->getOperator() == ObjectQuery::OperatorInvalid)
 		{
 			selection_info->setText(tr("Invalid query"));
 			return std::unique_ptr<ObjectQuery>(nullptr);
