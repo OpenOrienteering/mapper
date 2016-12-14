@@ -22,6 +22,7 @@
 
 #include <memory>
 
+#include <QCoreApplication>
 #include <QMetaType>
 #include <QString>
 
@@ -35,6 +36,8 @@ class Object;
  */
 class ObjectQuery
 {
+	Q_DECLARE_TR_FUNCTIONS(ObjectQuery)
+	
 public:
 	enum Operator {
 		// Operators 1 .. 15 operate on other queries
@@ -64,6 +67,11 @@ public:
 	 * Returns the underlying operator.
 	 */
 	Operator getOperator() const;
+	
+	/**
+	 * Returns a short label for the operator which can be used in the user interface.
+	 */
+	static QString labelFor(Operator op);
 	
 	
 	/**

@@ -71,6 +71,38 @@ ObjectQuery::Operator ObjectQuery::getOperator() const
 
 
 
+// static
+QString ObjectQuery::labelFor(ObjectQuery::Operator op)
+{
+	switch (op)
+	{
+	case OperatorIs:
+		//: Very short label
+		return tr("is");
+	case OperatorIsNot:
+		//: Very short label
+		return tr("is not");
+	case OperatorContains:
+		//: Very short label
+		return tr("contains");
+		
+	case OperatorAnd:
+		//: Very short label
+		return tr("and");
+	case OperatorOr:
+		//: Very short label
+		return tr("or");
+		
+	case OperatorInvalid:
+		//: Very short label
+		return tr("invalid");
+	}
+	
+	Q_UNREACHABLE();
+}
+
+
+
 bool ObjectQuery::operator()(const Object* object) const
 {
 	const auto tags = object->tags();
