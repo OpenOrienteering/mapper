@@ -181,6 +181,7 @@ void TagSelectWidget::addRowItems(int row)
 	for (auto op : { ObjectQuery::OperatorIs, ObjectQuery::OperatorIsNot, ObjectQuery::OperatorContains })
 		compare_op->addItem(ObjectQuery::labelFor(op), QVariant::fromValue(op));
 	query_table->setCellWidget(row, 2, compare_op);
+	connect(compare_op, &QComboBox::currentTextChanged, this, &TagSelectWidget::resetSelectionInfo);
 
 	if (row == 0)
 	{
@@ -196,6 +197,7 @@ void TagSelectWidget::addRowItems(int row)
 		for (auto op : { ObjectQuery::OperatorAnd, ObjectQuery::OperatorOr })
 			logical_op->addItem(ObjectQuery::labelFor(op), QVariant::fromValue(op));
 		query_table->setCellWidget(row, 0, logical_op);
+		connect(logical_op, &QComboBox::currentTextChanged, this, &TagSelectWidget::resetSelectionInfo);
 	}
 }
 
