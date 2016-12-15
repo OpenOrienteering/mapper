@@ -333,6 +333,7 @@ set(Mapper_Common_HEADERS
   gui/point_handles.h
 
   util/backports.h
+  util/memory.h
   util/scoped_signals_blocker.h
 
   map_part.h
