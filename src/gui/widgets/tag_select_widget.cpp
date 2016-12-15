@@ -37,21 +37,21 @@
 #include "../../object_query.h"
 #include "../../tool.h"
 #include "../../util.h"
+#include "../../util/memory.h"
+
 
 // ### TagSelectWidget ###
 
 TagSelectWidget::TagSelectWidget(Map* map, MapView* main_view, MapEditorController* controller, QWidget* parent)
-: QWidget(parent)
-, map(map)
-, main_view(main_view)
-, controller(controller)
+: QWidget    { parent }
+, map        { map }
+, main_view  { main_view }
+, controller { controller }
 {
 	Q_ASSERT(main_view);
 	Q_ASSERT(controller);
 	
 	setWhatsThis(Util::makeWhatThis("tag_selector.html"));
-	
-	QStyleOption style_option(QStyleOption::Version, QStyleOption::SO_DockWidget);
 	
 	query_table = new QTableWidget(1, 4);
 	query_table->setEditTriggers(QAbstractItemView::AllEditTriggers);
@@ -108,6 +108,7 @@ TagSelectWidget::TagSelectWidget(Map* map, MapView* main_view, MapEditorControll
 	list_buttons_group->setLayout(list_buttons_layout);
 	
 	QBoxLayout* all_buttons_layout = new QHBoxLayout();
+	QStyleOption style_option(QStyleOption::Version, QStyleOption::SO_DockWidget);
 	all_buttons_layout->setContentsMargins(
 		style()->pixelMetric(QStyle::PM_LayoutLeftMargin, &style_option) / 2,
 		0, // Covered by the main layout's spacing.
@@ -125,20 +126,29 @@ TagSelectWidget::TagSelectWidget(Map* map, MapView* main_view, MapEditorControll
 	// Connections
 	connect(add_button, &QAbstractButton::clicked, this, &TagSelectWidget::addRow);
 	connect(delete_button, &QAbstractButton::clicked, this, &TagSelectWidget::deleteRow);
-
-	// Call moveRow using lambda with up true or false. 
 	connect(move_up_button, &QAbstractButton::clicked, this, [this]{ moveRow(true); });
 	connect(move_down_button, &QAbstractButton::clicked, this, [this]{ moveRow(false); });
-
 	connect(select_button, &QAbstractButton::clicked, this, &TagSelectWidget::makeSelection);
-
 	connect(help_button, &QAbstractButton::clicked, this, &TagSelectWidget::showHelp);
+	
+	connect(query_table, &QTableWidget::cellChanged, this, &TagSelectWidget::cellChanged);
+	connect(map, &Map::objectSelectionChanged, this, &TagSelectWidget::resetSelectionInfo);
 }
+
 
 TagSelectWidget::~TagSelectWidget()
 {
 	; // Nothing
 }
+
+
+
+void TagSelectWidget::resetSelectionInfo()
+{
+	selection_info->setText({});
+}
+
+
 
 QToolButton* TagSelectWidget::newToolButton(const QIcon& icon, const QString& text)
 {
@@ -151,10 +161,14 @@ QToolButton* TagSelectWidget::newToolButton(const QIcon& icon, const QString& te
 	return button;
 }
 
+
+
 void TagSelectWidget::showHelp()
 {
 	Util::showHelp(controller->getWindow(), "tag_selector.html");
 }
+
+
 
 void TagSelectWidget::addRowItems(int row)
 {
@@ -164,27 +178,47 @@ void TagSelectWidget::addRowItems(int row)
 	query_table->setItem(row, 3, item);
 
 	QComboBox* compare_op = new QComboBox();
-	compare_op->addItem(tr("is"), QVariant::fromValue(ObjectQuery::OperatorIs));
-	compare_op->addItem(tr("contains"), QVariant::fromValue(ObjectQuery::OperatorContains));
-	compare_op->addItem(tr("is not"), QVariant::fromValue(ObjectQuery::OperatorIsNot));
+	for (auto op : { ObjectQuery::OperatorIs, ObjectQuery::OperatorIsNot, ObjectQuery::OperatorContains })
+		compare_op->addItem(ObjectQuery::labelFor(op), QVariant::fromValue(op));
 	query_table->setCellWidget(row, 2, compare_op);
 
-	// Special case to handle the first logical operator which is grayed out
-	if (row != 0)
+	if (row == 0)
 	{
-		QComboBox* logical_op = new QComboBox();
-		logical_op->addItem(tr("or"), QVariant::fromValue(ObjectQuery::OperatorOr));
-		logical_op->addItem(tr("and"), QVariant::fromValue(ObjectQuery::OperatorAnd));
-		query_table->setCellWidget(row, 0, logical_op);
-	}
-	else
-	{
+		// The first row doesn't use a logical operator
 		item = new QTableWidgetItem();
 		item->setFlags(Qt::NoItemFlags);
 		item->setBackground(QBrush(QGuiApplication::palette().window()));
 		query_table->setItem(row, 0, item);
 	}
+	else
+	{
+		QComboBox* logical_op = new QComboBox();
+		for (auto op : { ObjectQuery::OperatorAnd, ObjectQuery::OperatorOr })
+			logical_op->addItem(ObjectQuery::labelFor(op), QVariant::fromValue(op));
+		query_table->setCellWidget(row, 0, logical_op);
+	}
 }
+
+
+
+void TagSelectWidget::cellChanged(int row, int column)
+{
+	resetSelectionInfo();
+	switch(column)
+	{
+	case 1:
+	case 3:
+		{
+			auto item = query_table->item(row, column);
+			item->setText(item->text().trimmed());
+			break;
+		}
+	default:
+		; // nothing
+	}
+}
+
+
 
 void TagSelectWidget::addRow()
 {
@@ -201,6 +235,7 @@ void TagSelectWidget::addRow()
 	int col = query_table->currentColumn();
 	query_table->setCurrentCell(row, col);
 }
+
 
 void TagSelectWidget::deleteRow()
 {
@@ -226,6 +261,7 @@ void TagSelectWidget::deleteRow()
 		query_table->setItem(row, 0, item);
 	}
 }
+
 
 void TagSelectWidget::moveRow(bool up)
 {
@@ -282,54 +318,53 @@ void TagSelectWidget::moveRow(bool up)
 	query_table->setCurrentCell(row, col);
 }
 
+
+
 void TagSelectWidget::makeSelection()
 {
-	auto query = makeQuery();
-
-	// Did it work?
-	if (query.get() == nullptr)
-		return;
-
-	query->selectMatchingObjects(map, controller);
-	
-	selection_info->setText(tr("%n object(s) selected", "", map->getNumSelectedObjects()));
+	if (auto query = makeQuery())
+	{
+		query->selectMatchingObjects(map, controller);
+		selection_info->setText(tr("%n object(s) selected", nullptr, map->getNumSelectedObjects()));
+	}
+	else
+	{
+		selection_info->setText(tr("Invalid query"));
+	}
 }
+
+
 
 std::unique_ptr<ObjectQuery> TagSelectWidget::makeQuery() const
 {
 	std::unique_ptr<ObjectQuery> query;
-	int rowCount = query_table->rowCount();
-	auto logical_op = ObjectQuery::OperatorInvalid;
 
+	int rowCount = query_table->rowCount();
 	for (int row = 0; row < rowCount; ++row)
 	{
-		auto key = query_table->item(row, 1)->text().trimmed();
+		auto key = query_table->item(row, 1)->text();
 		auto compare_op = qobject_cast<QComboBox*>(query_table->cellWidget(row, 2))->currentData().value<ObjectQuery::Operator>();
-		auto value = query_table->item(row, 3)->text().trimmed();
+		auto value = query_table->item(row, 3)->text();
 
-		auto comparison = std::unique_ptr<ObjectQuery>(new ObjectQuery(key, compare_op, value));
-
+		auto comparison = make_unique<ObjectQuery>(key, compare_op, value);
 		if (comparison->getOperator() == ObjectQuery::OperatorInvalid)
 		{
-			selection_info->setText(tr("Invalid query"));
-			return std::unique_ptr<ObjectQuery>(nullptr);
+			query.reset();
+			break;
 		}
-
-		// First row we just copy the query
-		if (row != 0)
-		{
-			logical_op = qobject_cast<QComboBox*>(query_table->cellWidget(row, 0))->currentData().value<ObjectQuery::Operator>();
-			query = std::unique_ptr<ObjectQuery>(new ObjectQuery(std::move(query), logical_op, std::move(comparison)));
-		}
-		else
+		else if (row == 0)
 		{
 			query = std::move(comparison);
 		}
-
-		if (query->getOperator() == ObjectQuery::OperatorInvalid)
+		else
 		{
-			selection_info->setText(tr("Invalid query"));
-			return std::unique_ptr<ObjectQuery>(nullptr);
+			auto logical_op = qobject_cast<QComboBox*>(query_table->cellWidget(row, 0))->currentData().value<ObjectQuery::Operator>();
+			query = make_unique<ObjectQuery>(std::move(query), logical_op, std::move(comparison));
+			if (query->getOperator() == ObjectQuery::OperatorInvalid)
+			{
+				query.reset();
+				break;
+			}
 		}
 	}
 

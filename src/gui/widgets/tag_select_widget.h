@@ -44,7 +44,9 @@ class TagSelectWidget : public QWidget
 Q_OBJECT
 public:
 	TagSelectWidget(Map* map, MapView* main_view, MapEditorController* controller, QWidget* parent = nullptr);
-	virtual ~TagSelectWidget() override;
+	~TagSelectWidget() override;
+	
+	void resetSelectionInfo();
 	
 protected:
 	/**
@@ -52,19 +54,20 @@ protected:
 	 */
 	QToolButton* newToolButton(const QIcon& icon, const QString& text);
 	
-protected slots:
 	void showHelp();
 	void addRow();
 	void deleteRow();
+	void moveRow(bool up);
 	void makeSelection();
 
 private:
 	void addRowItems(int row);
-	void moveRow(bool up);
+	void cellChanged(int row, int column);
 
 	/**
 	 * Builds a query based on the current state of the query table.
-	 * On error the unqiue_ptr contains nullptr and the status text is updated.
+	 * 
+	 * On error the unique_ptr contains nullptr.
 	 */
 	std::unique_ptr<ObjectQuery> makeQuery() const;
 	
