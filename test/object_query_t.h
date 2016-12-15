@@ -31,17 +31,17 @@ class ObjectQueryTest : public QObject
 {
 Q_OBJECT
 public:
-	explicit ObjectQueryTest(QObject* parent = NULL);
+	explicit ObjectQueryTest(QObject* parent = nullptr);
 	
 private slots:
 	void testIsQuery();
-	void testNotQuery();
+	void testIsNotQuery();
 	void testContainsQuery();
 	void testOrQuery();
 	void testAndQuery();
 
 private:
-	Object* makeTestObject();
+	const Object* testObject();
 };
 
 #endif

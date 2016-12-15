@@ -20,10 +20,11 @@
 #include "object_query_t.h"
 
 #include <QString>
-#include <QtTest/QtTest>
 
 #include "../src/object.h"
 #include "../src/object_query.h"
+#include "../src/util/memory.h"
+
 
 ObjectQueryTest::ObjectQueryTest(QObject* parent)
 : QObject(parent)
@@ -31,55 +32,59 @@ ObjectQueryTest::ObjectQueryTest(QObject* parent)
 	// nothing
 }
 
-Object* ObjectQueryTest::makeTestObject()
+const Object* ObjectQueryTest::testObject()
 {
-	Object* object = new PathObject();
-	QHash<QString, QString> tags{
-		{QLatin1String("a"), QLatin1String("a")}
-		,{QLatin1String("b"), QLatin1String("b")}
-		,{QLatin1String("c"), QLatin1String("c")}
-		,{QLatin1String("abc"), QLatin1String("abc")}
-	};
-
-	object->setTags(tags);
-	return object;
+	static PathObject obj;
+	if (obj.tags().isEmpty())
+	{
+		obj.setTags( {
+		  { QLatin1String("a"), QLatin1String("1") },
+		  { QLatin1String("b"), QLatin1String("2") },
+		  { QLatin1String("c"), QLatin1String("3") },
+		  { QLatin1String("abc"), QLatin1String("123") }
+		});
+	}
+	Q_ASSERT(!obj.tags().contains(QLatin1String("d")));
+	return &obj;
 }
 
 void ObjectQueryTest::testIsQuery()
 {
-	Object* object = makeTestObject();
+	auto object = testObject();
 
-	ObjectQuery single_query_is_true{QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("a")};
+	ObjectQuery single_query_is_true{QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("1")};
 	QVERIFY(single_query_is_true(object) == true);
-	ObjectQuery single_query_is_false{QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("b")};
-	QVERIFY(single_query_is_false(object) == false);
+	ObjectQuery single_query_is_false_1{QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("2")};
+	QVERIFY(single_query_is_false_1(object) == false);
+	ObjectQuery single_query_is_false_2{QLatin1String("d"), ObjectQuery::OperatorIs, QLatin1String("1")}; // key d doesn't exist
+	QVERIFY(single_query_is_false_2(object) == false);
 }
 
-void ObjectQueryTest::testNotQuery()
+void ObjectQueryTest::testIsNotQuery()
 {
-	Object* object = makeTestObject();
+	auto object = testObject();
 
-	ObjectQuery single_query_is_not_true_1{QLatin1String("a"), ObjectQuery::OperatorIsNot, QLatin1String("b")};
+	ObjectQuery single_query_is_not_true_1{QLatin1String("a"), ObjectQuery::OperatorIsNot, QLatin1String("2")};
 	QVERIFY(single_query_is_not_true_1(object) == true);
-	ObjectQuery single_query_is_not_true_2{QLatin1String("d"), ObjectQuery::OperatorIsNot, QLatin1String("a")}; // key d doesn't exist
+	ObjectQuery single_query_is_not_true_2{QLatin1String("d"), ObjectQuery::OperatorIsNot, QLatin1String("1")}; // key d doesn't exist
 	QVERIFY(single_query_is_not_true_2(object) == true);
-	ObjectQuery single_query_is_not_false{QLatin1String("a"), ObjectQuery::OperatorIsNot, QLatin1String("a")};
+	ObjectQuery single_query_is_not_false{QLatin1String("a"), ObjectQuery::OperatorIsNot, QLatin1String("1")};
 	QVERIFY(single_query_is_not_false(object) == false);
 }
 
 void ObjectQueryTest::testContainsQuery()
 {
-	Object* object = makeTestObject();
+	auto object = testObject();
 
-	ObjectQuery single_query_contains_true_1{QLatin1String("abc"), ObjectQuery::OperatorContains, QLatin1String("c")};
+	ObjectQuery single_query_contains_true_0{QLatin1String("abc"), ObjectQuery::OperatorContains, QLatin1String("")};
+	QVERIFY(single_query_contains_true_0(object) == true);
+	ObjectQuery single_query_contains_true_1{QLatin1String("abc"), ObjectQuery::OperatorContains, QLatin1String("3")};
 	QVERIFY(single_query_contains_true_1(object) == true);
-	ObjectQuery single_query_contains_true_2{QLatin1String("abc"), ObjectQuery::OperatorContains, QLatin1String("bc")};
+	ObjectQuery single_query_contains_true_2{QLatin1String("abc"), ObjectQuery::OperatorContains, QLatin1String("12")};
 	QVERIFY(single_query_contains_true_2(object) == true);
-	ObjectQuery single_query_contains_true_3{QLatin1String("abc"), ObjectQuery::OperatorContains, QLatin1String("abc")};
+	ObjectQuery single_query_contains_true_3{QLatin1String("abc"), ObjectQuery::OperatorContains, QLatin1String("123")};
 	QVERIFY(single_query_contains_true_3(object) == true);
-	ObjectQuery single_query_contains_true_4{QLatin1String("abc"), ObjectQuery::OperatorContains, QLatin1String("")}; // check for space used to check if tag exists
-	QVERIFY(single_query_contains_true_4(object) == true);
-	ObjectQuery single_query_contains_false_1{QLatin1String("abc"), ObjectQuery::OperatorContains, QLatin1String("abcd")};
+	ObjectQuery single_query_contains_false_1{QLatin1String("abc"), ObjectQuery::OperatorContains, QLatin1String("1234")};
 	QVERIFY(single_query_contains_false_1(object) == false);
 	ObjectQuery single_query_contains_false_2{QLatin1String("d"), ObjectQuery::OperatorContains, QLatin1String("")}; // key d doesn't exist
 	QVERIFY(single_query_contains_false_2(object) == false);
@@ -87,50 +92,50 @@ void ObjectQueryTest::testContainsQuery()
 
 void ObjectQueryTest::testOrQuery()
 {
-	Object* object = makeTestObject();
+	auto object = testObject();
 
-	auto true_1 = std::unique_ptr<ObjectQuery>(new ObjectQuery(QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("a")));
-	auto true_2 = std::unique_ptr<ObjectQuery>(new ObjectQuery(QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("a")));
+	auto true_1 = make_unique<ObjectQuery>(QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("1"));
+	auto true_2 = make_unique<ObjectQuery>(QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("1"));
 	ObjectQuery single_query_or_both_true{std::move(true_1), ObjectQuery::OperatorOr, std::move(true_2)};
 	QVERIFY(single_query_or_both_true(object) == true);
 
-	true_1 = std::unique_ptr<ObjectQuery>(new ObjectQuery(QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("a")));
-	auto false_1 = std::unique_ptr<ObjectQuery>(new ObjectQuery(QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("b")));
+	true_1 = make_unique<ObjectQuery>(QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("1"));
+	auto false_1 = make_unique<ObjectQuery>(QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("2"));
 	ObjectQuery single_query_or_left_true_right_false{std::move(true_1), ObjectQuery::OperatorOr, std::move(false_1)};
 	QVERIFY(single_query_or_left_true_right_false(object) == true);
 
-	true_1 = std::unique_ptr<ObjectQuery>(new ObjectQuery(QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("a")));
-	false_1 = std::unique_ptr<ObjectQuery>(new ObjectQuery(QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("b")));
+	true_1 = make_unique<ObjectQuery>(QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("1"));
+	false_1 = make_unique<ObjectQuery>(QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("2"));
 	ObjectQuery single_query_or_right_true_left_false{std::move(false_1), ObjectQuery::OperatorOr, std::move(true_1)};
 	QVERIFY(single_query_or_right_true_left_false(object) == true);
 
-	false_1 = std::unique_ptr<ObjectQuery>(new ObjectQuery(QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("b")));
-	auto false_2 = std::unique_ptr<ObjectQuery>(new ObjectQuery(QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("b")));
+	false_1 = make_unique<ObjectQuery>(QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("2"));
+	auto false_2 = make_unique<ObjectQuery>(QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("2"));
 	ObjectQuery single_query_or_both_false{std::move(false_1), ObjectQuery::OperatorOr, std::move(false_2)};
 	QVERIFY(single_query_or_both_false(object) == false);
 }
 
 void ObjectQueryTest::testAndQuery()
 {
-	Object* object = makeTestObject();
+	auto object = testObject();
 
-	auto true_1 = std::unique_ptr<ObjectQuery>(new ObjectQuery(QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("a")));
-	auto true_2 = std::unique_ptr<ObjectQuery>(new ObjectQuery(QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("a")));
+	auto true_1 = make_unique<ObjectQuery>(QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("1"));
+	auto true_2 = make_unique<ObjectQuery>(QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("1"));
 	ObjectQuery single_query_and_both_true{std::move(true_1), ObjectQuery::OperatorAnd, std::move(true_2)};
 	QVERIFY(single_query_and_both_true(object) == true);
 
-	true_1 = std::unique_ptr<ObjectQuery>(new ObjectQuery(QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("a")));
-	auto false_1 = std::unique_ptr<ObjectQuery>(new ObjectQuery(QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("b")));
+	true_1 = make_unique<ObjectQuery>(QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("1"));
+	auto false_1 = make_unique<ObjectQuery>(QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("2"));
 	ObjectQuery single_query_and_left_true_right_false{std::move(true_1), ObjectQuery::OperatorAnd, std::move(false_1)};
 	QVERIFY(single_query_and_left_true_right_false(object) == false);
 
-	true_1 = std::unique_ptr<ObjectQuery>(new ObjectQuery(QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("a")));
-	false_1 = std::unique_ptr<ObjectQuery>(new ObjectQuery(QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("b")));
+	true_1 = make_unique<ObjectQuery>(QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("1"));
+	false_1 = make_unique<ObjectQuery>(QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("2"));
 	ObjectQuery single_query_and_right_true_left_false{std::move(false_1), ObjectQuery::OperatorAnd, std::move(true_1)};
 	QVERIFY(single_query_and_right_true_left_false(object) == false);
 
-	false_1 = std::unique_ptr<ObjectQuery>(new ObjectQuery(QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("b")));
-	auto false_2 = std::unique_ptr<ObjectQuery>(new ObjectQuery(QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("b")));
+	false_1 = make_unique<ObjectQuery>(QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("2"));
+	auto false_2 = make_unique<ObjectQuery>(QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("2"));
 	ObjectQuery single_query_and_both_false{std::move(false_1), ObjectQuery::OperatorAnd, std::move(false_2)};
 	QVERIFY(single_query_and_both_false(object) == false);
 }
