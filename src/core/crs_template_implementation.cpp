@@ -30,21 +30,12 @@
 #include "../gui/widgets/crs_param_widgets.h"
 #include "../gui/georeferencing_dialog.h"
 #include "../util_gui.h"
+#include "../util/memory.h"
 #include "../util/scoped_signals_blocker.h"
 
 
 namespace CRSTemplates
 {
-
-/// \todo Replace local definition by C++14 std::make_unique.
-///       For gcc, this requires at least version 4.9.
-template <class T, class... Args>
-std::unique_ptr<T> make_unique(Args&&... args)
-{
-	return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
-}
-
-
 
 CRSTemplateRegistry::TemplateList defaultList()
 {
