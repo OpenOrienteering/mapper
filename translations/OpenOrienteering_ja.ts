@@ -8248,7 +8248,7 @@ The maximum supported version is %2.</source>
         <location filename="../src/file_format_xml.cpp" line="524"/>
         <location filename="../src/file_format_xml.cpp" line="773"/>
         <source>Some invalid characters had to be removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>いくつかの無効な文字を削除する必要がありました。</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="542"/>
