@@ -37,6 +37,11 @@ class Object;
  * This class can be used with value semantics. It can be move-constructed and
  * move-assigned in O(1). Normal copy-construction and assignment may involve
  * expensive copying of the expression tree.
+ * 
+ * OperatorAnd and OperatorOr evaluate the left argument first. When constructing
+ * complex queries, left sub-query chains should be kept short in order to
+ * benefit from short circuiting the evaluation of these logical operators after
+ * evaluation of the left argument.
  */
 class ObjectQuery
 {
