@@ -52,6 +52,8 @@ protected:
 	 */
 	QToolButton* newToolButton(const QIcon& icon, const QString& text);
 	
+	void showEvent(QShowEvent* event) override;
+	
 	void showHelp();
 	void addRow();
 	void deleteRow();

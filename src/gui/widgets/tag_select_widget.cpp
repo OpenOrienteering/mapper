@@ -25,6 +25,7 @@
 #include <QHeaderView>
 #include <QLabel>
 #include <QMessageBox>
+#include <QShowEvent>
 #include <QTableWidget>
 #include <QToolButton>
 
@@ -158,6 +159,20 @@ QToolButton* TagSelectWidget::newToolButton(const QIcon& icon, const QString& te
 	button->setText(text);
 	button->setWhatsThis(Util::makeWhatThis("tag_selector.html"));
 	return button;
+}
+
+
+
+void TagSelectWidget::showEvent(QShowEvent* event)
+{
+	if (!event->spontaneous())
+	{
+		auto last_row = query_table->rowCount() - 1;
+		query_table->setCurrentCell(last_row, 1);
+		if (!query_table->currentItem()->text().isEmpty())
+			query_table->setCurrentCell(last_row, 3);
+		query_table->editItem(query_table->currentItem());
+	}
 }
 
 
@@ -324,6 +339,7 @@ void TagSelectWidget::moveRow(bool up)
 
 void TagSelectWidget::makeSelection()
 {
+	query_table->setCurrentItem(nullptr);
 	if (auto query = makeQuery())
 	{
 		query.selectMatchingObjects(map, controller);
