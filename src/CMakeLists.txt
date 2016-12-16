@@ -90,6 +90,7 @@ set(Mapper_Common_SRCS
  renderable.cpp
  renderable_implementation.cpp
  object.cpp
+ object_query.cpp
  object_text.cpp
 
  template.cpp
@@ -182,6 +183,7 @@ set(Mapper_Common_SRCS
  gui/widgets/symbol_render_widget.cpp
  gui/widgets/symbol_tooltip.cpp
  gui/widgets/symbol_widget.cpp
+ gui/widgets/tag_select_widget.cpp
  gui/widgets/tags_widget.cpp
  gui/widgets/template_list_widget.cpp
  gui/widgets/text_alignment_widget.cpp
@@ -298,6 +300,7 @@ set(Mapper_Common_MOC_INPUT
  gui/widgets/symbol_render_widget.h
  gui/widgets/symbol_tooltip.h
  gui/widgets/symbol_widget.h
+ gui/widgets/tag_select_widget.h
  gui/widgets/tags_widget.h
  gui/widgets/template_list_widget.h
  gui/widgets/text_alignment_widget.h
