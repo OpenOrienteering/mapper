@@ -4019,7 +4019,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1949"/>
         <source>Tag Selector</source>
-        <translation type="unfinished"></translation>
+        <translation>タグ セレクター</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2010"/>
@@ -4362,12 +4362,12 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="849"/>
         <source>Tag Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>タグ選択</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="849"/>
         <source>Show/Hide the tag selection window</source>
-        <translation type="unfinished"></translation>
+        <translation>タグ選択ウィンドウの表示/非表示</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1135"/>
@@ -5244,37 +5244,37 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/object_query.cpp" line="146"/>
         <source>is</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>＝</translation>
     </message>
     <message>
         <location filename="../src/object_query.cpp" line="149"/>
         <source>is not</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>≠</translation>
     </message>
     <message>
         <location filename="../src/object_query.cpp" line="152"/>
         <source>contains</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>含む</translation>
     </message>
     <message>
         <location filename="../src/object_query.cpp" line="156"/>
         <source>and</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>かつ</translation>
     </message>
     <message>
         <location filename="../src/object_query.cpp" line="159"/>
         <source>or</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>または</translation>
     </message>
     <message>
         <location filename="../src/object_query.cpp" line="163"/>
         <source>invalid</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>無効</translation>
     </message>
 </context>
 <context>
@@ -7055,64 +7055,62 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="60"/>
         <source>Relation</source>
-        <translation type="unfinished"></translation>
+        <translation>関係</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="60"/>
         <source>Key</source>
-        <translation type="unfinished">キー</translation>
+        <translation>キー</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="60"/>
         <source>Comparison</source>
-        <translation type="unfinished"></translation>
+        <translation>比較</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="60"/>
         <source>Value</source>
-        <translation type="unfinished">値</translation>
+        <translation>値</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="76"/>
         <source>Add Row</source>
-        <translation type="unfinished"></translation>
+        <translation>行を追加</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="77"/>
         <source>Remove Row</source>
-        <translation type="unfinished"></translation>
+        <translation>行を削除</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="83"/>
         <source>Move Up</source>
-        <translation type="unfinished">上へ移動</translation>
+        <translation>上へ移動</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="85"/>
         <source>Move Down</source>
-        <translation type="unfinished">下へ移動</translation>
+        <translation>下へ移動</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="92"/>
         <source>Select</source>
-        <translation type="unfinished"></translation>
+        <translation>選択</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="97"/>
         <source>Help</source>
-        <translation type="unfinished">ヘルプ</translation>
+        <translation>ヘルプ</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="346"/>
         <source>%n object(s) selected</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n オブジェクト選択済</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="350"/>
         <source>Invalid query</source>
-        <translation type="unfinished"></translation>
+        <translation>無効なクエリ</translation>
     </message>
 </context>
 <context>
