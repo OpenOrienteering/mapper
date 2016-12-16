@@ -37,7 +37,6 @@
 #include "../../object_query.h"
 #include "../../tool.h"
 #include "../../util.h"
-#include "../../util/memory.h"
 
 
 // ### TagSelectWidget ###
@@ -326,7 +325,7 @@ void TagSelectWidget::makeSelection()
 {
 	if (auto query = makeQuery())
 	{
-		query->selectMatchingObjects(map, controller);
+		query.selectMatchingObjects(map, controller);
 		selection_info->setText(tr("%n object(s) selected", nullptr, map->getNumSelectedObjects()));
 	}
 	else
@@ -337,9 +336,9 @@ void TagSelectWidget::makeSelection()
 
 
 
-std::unique_ptr<ObjectQuery> TagSelectWidget::makeQuery() const
+ObjectQuery TagSelectWidget::makeQuery() const
 {
-	std::unique_ptr<ObjectQuery> query;
+	ObjectQuery query;
 
 	int rowCount = query_table->rowCount();
 	for (int row = 0; row < rowCount; ++row)
@@ -348,25 +347,20 @@ std::unique_ptr<ObjectQuery> TagSelectWidget::makeQuery() const
 		auto compare_op = qobject_cast<QComboBox*>(query_table->cellWidget(row, 2))->currentData().value<ObjectQuery::Operator>();
 		auto value = query_table->item(row, 3)->text();
 
-		auto comparison = make_unique<ObjectQuery>(key, compare_op, value);
-		if (comparison->getOperator() == ObjectQuery::OperatorInvalid)
-		{
-			query.reset();
-			break;
-		}
-		else if (row == 0)
+		auto comparison = ObjectQuery(key, compare_op, value);
+		if (row == 0)
 		{
 			query = std::move(comparison);
 		}
 		else
 		{
 			auto logical_op = qobject_cast<QComboBox*>(query_table->cellWidget(row, 0))->currentData().value<ObjectQuery::Operator>();
-			query = make_unique<ObjectQuery>(std::move(query), logical_op, std::move(comparison));
-			if (query->getOperator() == ObjectQuery::OperatorInvalid)
-			{
-				query.reset();
-				break;
-			}
+			query = ObjectQuery(std::move(query), logical_op, std::move(comparison));
+		}
+		
+		if (!query)
+		{
+			break;
 		}
 	}
 

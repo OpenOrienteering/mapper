@@ -21,8 +21,6 @@
 #ifndef OPENORIENTEERING_TAG_SELECT_WIDGET_H
 #define OPENORIENTEERING_TAG_SELECT_WIDGET_H
 
-#include <memory>
-
 #include <QWidget>
 
 class QBoxLayout;
@@ -67,9 +65,9 @@ private:
 	/**
 	 * Builds a query based on the current state of the query table.
 	 * 
-	 * On error the unique_ptr contains nullptr.
+	 * Returns an invalid query on error.
 	 */
-	std::unique_ptr<ObjectQuery> makeQuery() const;
+	ObjectQuery makeQuery() const;
 	
 	Map* map;
 	MapView* main_view;

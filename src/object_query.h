@@ -33,6 +33,10 @@ class Object;
 
 /**
  * Utility to match objects based on tag values.
+ * 
+ * This class can be used with value semantics. It can be move-constructed and
+ * move-assigned in O(1). Normal copy-construction and assignment may involve
+ * expensive copying of the expression tree.
  */
 class ObjectQuery
 {
@@ -52,6 +56,17 @@ public:
 		OperatorInvalid  = 0   ///< Marks an invalid query
 	};
 	
+	ObjectQuery() noexcept;
+	ObjectQuery(const ObjectQuery& query);
+	ObjectQuery(ObjectQuery&& query) noexcept;
+	ObjectQuery& operator=(const ObjectQuery& query);
+	ObjectQuery& operator=(ObjectQuery&& query) noexcept;
+	
+	/**
+	 * Returns true if the query is valid.
+	 */
+	operator bool() const noexcept { return op != OperatorInvalid; }
+	
 	/**
 	 * Constructs a query for a key and value.
 	 */
@@ -59,14 +74,22 @@ public:
 	
 	/**
 	 * Constructs a query which connects two sub-queries.
+	 * 
+	 * The sub-queries are copied.
 	 */
-	ObjectQuery(std::unique_ptr<ObjectQuery> left, Operator op, std::unique_ptr<ObjectQuery> right);
+	ObjectQuery(const ObjectQuery& left, Operator op, const ObjectQuery& right);
+	
+	/**
+	 * Constructs a query which connects two sub-queries.
+	 */
+	ObjectQuery(ObjectQuery&& left, Operator op, ObjectQuery&& right) noexcept;
 	
 	
 	/**
 	 * Returns the underlying operator.
 	 */
-	Operator getOperator() const;
+	Operator getOperator() const noexcept { return op; }
+	
 	
 	/**
 	 * Returns a short label for the operator which can be used in the user interface.

@@ -25,9 +25,64 @@
 #include "map_part.h"
 #include "object.h"
 #include "tool.h"
+#include "util/memory.h"
 
 
 // ### ObjectQuery ###
+
+ObjectQuery::ObjectQuery() noexcept
+: op { ObjectQuery::OperatorInvalid }
+{
+	// nothing else
+}
+
+
+ObjectQuery::ObjectQuery(const ObjectQuery& query)
+: op        { query.op }
+, key_arg   { query.key_arg }
+, value_arg { query.value_arg }
+, left_arg  { query.left_arg ? make_unique<ObjectQuery>(*query.left_arg) : make_unique<ObjectQuery>() }
+, right_arg { query.right_arg ? make_unique<ObjectQuery>(*query.right_arg) : make_unique<ObjectQuery>() }
+{
+	// nothing else
+}
+
+
+ObjectQuery::ObjectQuery(ObjectQuery&& query) noexcept
+: op        { query.op }
+, key_arg   { std::move(query.key_arg) }
+, value_arg { std::move(query.value_arg) }
+, left_arg  { std::move(query.left_arg) }
+, right_arg { std::move(query.right_arg) }
+{
+	query.op = ObjectQuery::OperatorInvalid;
+}
+
+
+ObjectQuery& ObjectQuery::operator=(const ObjectQuery& query)
+{
+	op = query.op;
+	key_arg = query.key_arg;
+	value_arg = query.value_arg;
+	if (query.left_arg)
+		left_arg = make_unique<ObjectQuery>(*query.left_arg);
+	if (query.right_arg)
+		right_arg = make_unique<ObjectQuery>(*query.right_arg);
+	return *this;
+}
+
+
+ObjectQuery& ObjectQuery::operator=(ObjectQuery&& query) noexcept
+{
+	op = query.op;
+	key_arg = std::move(query.key_arg);
+	value_arg = std::move(query.value_arg);
+	left_arg = std::move(query.left_arg);
+	right_arg = std::move(query.right_arg);
+	query.op = ObjectQuery::OperatorInvalid;
+	return *this;
+}
+
 
 ObjectQuery::ObjectQuery(const QString& key, ObjectQuery::Operator op, const QString& value)
 : op        { op }
@@ -46,27 +101,37 @@ ObjectQuery::ObjectQuery(const QString& key, ObjectQuery::Operator op, const QSt
 }
 
 
-ObjectQuery::ObjectQuery(std::unique_ptr<ObjectQuery> left, ObjectQuery::Operator op, std::unique_ptr<ObjectQuery> right)
+ObjectQuery::ObjectQuery(const ObjectQuery& left, ObjectQuery::Operator op, const ObjectQuery& right)
 : op        { op }
-, left_arg  { std::move(left) }
-, right_arg { std::move(right) }
+, left_arg  { make_unique<ObjectQuery>(left) }
+, right_arg { make_unique<ObjectQuery>(right) }
 {
 	// Must be a logical operator
 	Q_ASSERT(op >= 1);
 	Q_ASSERT(op <= 2);
 	if (op < 1 || op > 2)
 		this->op = OperatorInvalid;
-
-	// Can't have null queries
-	if (!left_arg || !right_arg)
+	
+	// Both sub-queries must be valid.
+	if (!*left_arg || !*right_arg)
 		this->op = OperatorInvalid;
 }
 
 
-
-ObjectQuery::Operator ObjectQuery::getOperator() const
+ObjectQuery::ObjectQuery(ObjectQuery&& left, ObjectQuery::Operator op, ObjectQuery&& right) noexcept
+: op        { op }
+, left_arg  { make_unique<ObjectQuery>(std::move(left)) }
+, right_arg { make_unique<ObjectQuery>(std::move(right)) }
 {
-	return op;
+	// Must be a logical operator
+	Q_ASSERT(op >= 1);
+	Q_ASSERT(op <= 2);
+	if (op < 1 || op > 2)
+		this->op = OperatorInvalid;
+	
+	// Both sub-queries must be valid.
+	if (!*left_arg || !*right_arg)
+		this->op = OperatorInvalid;
 }
 
 
