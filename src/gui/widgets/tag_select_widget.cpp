@@ -193,8 +193,9 @@ void TagSelectWidget::addRowItems(int row)
 	else
 	{
 		QComboBox* logical_op = new QComboBox();
-		for (auto op : { ObjectQuery::OperatorAnd, ObjectQuery::OperatorOr })
-			logical_op->addItem(ObjectQuery::labelFor(op), QVariant::fromValue(op));
+		auto and_label = QString { QLatin1String("  ") + ObjectQuery::labelFor(ObjectQuery::OperatorAnd) };
+		logical_op->addItem(and_label, QVariant::fromValue(ObjectQuery::OperatorAnd));
+		logical_op->addItem(ObjectQuery::labelFor(ObjectQuery::OperatorOr), QVariant::fromValue(ObjectQuery::OperatorOr));
 		query_table->setCellWidget(row, 0, logical_op);
 		connect(logical_op, &QComboBox::currentTextChanged, this, &TagSelectWidget::resetSelectionInfo);
 	}
@@ -338,7 +339,10 @@ void TagSelectWidget::makeSelection()
 
 ObjectQuery TagSelectWidget::makeQuery() const
 {
+	// If there is at least one OR, query will become an OR expression.
 	ObjectQuery query;
+	// AND has precedence over OR, so its terms are collected separately.
+	ObjectQuery and_expression;
 
 	int rowCount = query_table->rowCount();
 	for (int row = 0; row < rowCount; ++row)
@@ -350,18 +354,49 @@ ObjectQuery TagSelectWidget::makeQuery() const
 		auto comparison = ObjectQuery(key, compare_op, value);
 		if (row == 0)
 		{
-			query = std::move(comparison);
+			// The first term at all
+			and_expression = std::move(comparison);
 		}
 		else
 		{
 			auto logical_op = qobject_cast<QComboBox*>(query_table->cellWidget(row, 0))->currentData().value<ObjectQuery::Operator>();
-			query = ObjectQuery(std::move(query), logical_op, std::move(comparison));
+			if (logical_op == ObjectQuery::OperatorAnd)
+			{
+				// Add another term to the AND expression
+				and_expression = ObjectQuery(std::move(comparison), ObjectQuery::OperatorAnd, std::move(and_expression));
+			}
+			else if (logical_op == ObjectQuery::OperatorOr)
+			{
+				if (query)
+					// Add another term to the OR expression
+					query = ObjectQuery(std::move(and_expression), ObjectQuery::OperatorOr, std::move(query));
+				else
+					// The first term of an OR expression
+					query = std::move(and_expression);
+				
+				// The first term of the next AND expression
+				and_expression = std::move(comparison);
+			}
+			else
+			{
+				Q_UNREACHABLE();
+			}
 		}
 		
-		if (!query)
-		{
+		// The validness of and_expression is determined by the current line.
+		if (!and_expression)
 			break;
-		}
+	}
+	
+	if (query && and_expression)
+	{
+		// Add the last AND expression to the OR expression
+		query = ObjectQuery(std::move(and_expression), ObjectQuery::OperatorOr, std::move(query));
+	}
+	else
+	{
+		// There was no OR, or the last visited row was not a valid expression.
+		query = std::move(and_expression);
 	}
 
 	return query;
