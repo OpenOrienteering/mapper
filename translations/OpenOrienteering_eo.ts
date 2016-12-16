@@ -1597,7 +1597,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="151"/>
         <source>Projected coordinates</source>
-        <translation type="unfinished">Projekciaj koordinatoj</translation>
+        <translation>Projekciaj koordinatoj</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="98"/>
@@ -4501,7 +4501,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="118"/>
         <source>libocad returned %1</source>
-        <translation type="unfinished"></translation>
+        <translation>libocad redonis %1</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="121"/>
@@ -4529,7 +4529,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="274"/>
         <source>Unable to import symbol "%3" (%1.%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne eblas importi simbolon "%3" (%1.%2)</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="287"/>
@@ -4604,7 +4604,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="956"/>
         <source>Unable to import rectangle object</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne eblas importi ortangulan objekton</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1003"/>
@@ -4654,7 +4654,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="557"/>
         <source>Unable to import symbol %1.%2 "%3": %4</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne eblas importi simbolon %1.%2 "%3": %4</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="561"/>
@@ -4772,7 +4772,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1568"/>
         <source>Unable to import rectangle object</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne eblas importi ortangulan objekton</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1609"/>
@@ -4950,18 +4950,18 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="129"/>
         <source>flat</source>
-        <translation type="unfinished">plata</translation>
+        <translation>plata</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="130"/>
         <location filename="../src/symbol_point_editor.cpp" line="137"/>
         <source>round</source>
-        <translation type="unfinished">ronda</translation>
+        <translation>ronda</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="131"/>
         <source>square</source>
-        <translation type="unfinished">kvadrata</translation>
+        <translation>kvadrata</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="134"/>
@@ -4986,7 +4986,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="160"/>
         <source>Area color:</source>
-        <translation type="unfinished">Koloro de areo:</translation>
+        <translation>Koloro de areo:</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="173"/>
@@ -6042,7 +6042,7 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="271"/>
         <source>Invert selection</source>
-        <translation type="unfinished">Inversigi elektaĵon</translation>
+        <translation>Inversigi elektaĵon</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="228"/>
