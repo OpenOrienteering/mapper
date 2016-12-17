@@ -9813,8 +9813,8 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="206" code="14.2" name="Tape Route from finish funnel to Finish">
-            <description>The competitor has to navigate from the last control to finish funnel, and the follow tapes. Gives the distance from the last control to Finish.</description>
+        <symbol type="1" id="206" code="14.2" name="Taped Route from finish funnel to Finish">
+            <description>The competitor has to navigate from the last control to finish funnel, and then follow tapes. Gives the distance from the last control to Finish.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="13">
                 <element>
                     <symbol type="4" code="">
@@ -10223,7 +10223,7 @@ The orientation of the symbol indicates the direction in which the corner points
                     </coords>
                     <text>100</text>
                 </object>
-                <object type="0" symbol="200">
+                <object type="0" symbol="205">
                     <coords count="1">
                         <coord x="30000" y="24000"/>
                     </coords>
