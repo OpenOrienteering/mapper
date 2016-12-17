@@ -2973,7 +2973,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="864"/>
         <source>Connect paths</source>
-        <translation type="unfinished"></translation>
+        <translation>Konekti vojojn</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="866"/>
@@ -3868,7 +3868,7 @@ elektitaj</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="892"/>
         <source>Simplify path</source>
-        <translation type="unfinished"></translation>
+        <translation>Simpligi vojon</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="974"/>
@@ -4649,37 +4649,37 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/object_query.cpp" line="146"/>
         <source>is</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>estas</translation>
     </message>
     <message>
         <location filename="../src/object_query.cpp" line="149"/>
         <source>is not</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ne estas</translation>
     </message>
     <message>
         <location filename="../src/object_query.cpp" line="152"/>
         <source>contains</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>enhavas</translation>
     </message>
     <message>
         <location filename="../src/object_query.cpp" line="156"/>
         <source>and</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>kaj</translation>
     </message>
     <message>
         <location filename="../src/object_query.cpp" line="159"/>
         <source>or</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>aŭ</translation>
     </message>
     <message>
         <location filename="../src/object_query.cpp" line="163"/>
         <source>invalid</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>nevalida</translation>
     </message>
 </context>
 <context>
@@ -5645,7 +5645,7 @@ separations</source>
         <location filename="../src/map_dialog_rotate.cpp" line="57"/>
         <source>Other point,</source>
         <comment>Rotation center point</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alia punkto,</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="58"/>
@@ -5709,7 +5709,7 @@ separations</source>
     <message>
         <location filename="../src/tool_rotate.cpp" line="196"/>
         <source>&lt;b&gt;Rotation:&lt;/b&gt; %1° </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Turno:&lt;/b&gt; %1° </translation>
     </message>
     <message>
         <location filename="../src/tool_rotate.cpp" line="208"/>
@@ -5765,7 +5765,7 @@ separations</source>
         <location filename="../src/map_dialog_scale.cpp" line="57"/>
         <source>Other point,</source>
         <comment>Scaling center point</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alia punkto,</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="58"/>
@@ -5816,7 +5816,7 @@ separations</source>
     <message>
         <location filename="../src/tool_scale.cpp" line="200"/>
         <source>&lt;b&gt;Scaling:&lt;/b&gt; %1%</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Skalado:&lt;/b&gt; %1%</translation>
     </message>
     <message>
         <location filename="../src/tool_scale.cpp" line="202"/>
