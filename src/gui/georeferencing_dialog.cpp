@@ -33,12 +33,12 @@
 #include <QMouseEvent>
 #include <QPushButton>
 #include <QRadioButton>
+#include <QUrlQuery>
 #include <QXmlStreamReader>
 
 #if defined(QT_NETWORK_LIB)
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
-#include <QUrlQuery>
 #endif
 
 #include "../core/crs_template.h"
