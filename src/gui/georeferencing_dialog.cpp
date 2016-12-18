@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -356,9 +356,9 @@ void GeoreferencingDialog::requestDeclination(bool no_confirm)
 	if (georef->isLocal())
 		return;
 	
-	// TODO: Move to resources or preferences. Assess security risks of url distinction.
-	QString user_url(QString::fromLatin1("http://www.ngdc.noaa.gov/geomag-web/"));
-	QUrl service_url(QString::fromLatin1("http://www.ngdc.noaa.gov/geomag-web/calculators/calculateDeclination"));
+	/// \todo Move URL (template) to settings.
+	QString user_url(QString::fromLatin1("https://www.ngdc.noaa.gov/geomag-web/"));
+	QUrl service_url(user_url + QLatin1String("calculators/calculateDeclination"));
 	LatLon latlon(georef->getGeographicRefPoint());
 	
 	if (!no_confirm)

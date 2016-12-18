@@ -493,7 +493,7 @@
     <message>
         <location filename="../src/symbol_combined.cpp" line="434"/>
         <source>Combination settings</source>
-        <translatorcomment>Replace original with &quot;Composition&quot;</translatorcomment>
+        <translatorcomment>Replace original with "Composition"</translatorcomment>
         <translation>Zusammensetzung</translation>
     </message>
     <message>
@@ -755,7 +755,7 @@
     <message>
         <location filename="../src/symbol_text.cpp" line="621"/>
         <source>A</source>
-        <extracomment>&quot;A&quot; is the default letter which is used for determining letter height.</extracomment>
+        <extracomment>"A" is the default letter which is used for determining letter height.</extracomment>
         <translation>A</translation>
     </message>
     <message>
@@ -1520,8 +1520,8 @@
         <translation>UTM-Koordinaten</translation>
     </message>
     <message>
-        <source>UTM Zone (number north/south, e.g. &quot;32 N&quot;, &quot;24 S&quot;)</source>
-        <translation type="vanished">UTM-Zone (Zahl Nord/Süd, z.B. &quot;32 N&quot;, &quot;24 S&quot;)</translation>
+        <source>UTM Zone (number north/south, e.g. "32 N", "24 S")</source>
+        <translation type="vanished">UTM-Zone (Zahl Nord/Süd, z.B. "32 N", "24 S")</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="52"/>
@@ -1554,7 +1554,7 @@
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="73"/>
         <source>EPSG @code@ coordinates</source>
-        <extracomment>Don&apos;t translate @code@. It is placeholder.</extracomment>
+        <extracomment>Don't translate @code@. It is placeholder.</extracomment>
         <translation>EPSG-@code@-Koordinaten</translation>
     </message>
     <message>
@@ -1673,8 +1673,8 @@
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="334"/>
-        <source>&lt;a href=&quot;%1&quot;&gt;OpenStreetMap&lt;/a&gt; | &lt;a href=&quot;%2&quot;&gt;World of O Maps&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;%1&quot;&gt;OpenStreetMap&lt;/a&gt; | &lt;a href=&quot;%2&quot;&gt;World of O Maps&lt;/a&gt;</translation>
+        <source>&lt;a href="%1"&gt;OpenStreetMap&lt;/a&gt; | &lt;a href="%2"&gt;World of O Maps&lt;/a&gt;</source>
+        <translation>&lt;a href="%1"&gt;OpenStreetMap&lt;/a&gt; | &lt;a href="%2"&gt;World of O Maps&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="366"/>
@@ -1801,8 +1801,8 @@
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="367"/>
-        <source>The magnetic declination for the reference point %1° %2° will now be retrieved from &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Do you want to continue?</source>
-        <translation>Die magnetische Deklination des Referenzpunkts %1° %2° wird nun online von &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt; abgerufen. Wollen Sie fortfahren?</translation>
+        <source>The magnetic declination for the reference point %1° %2° will now be retrieved from &lt;a href="%3"&gt;%3&lt;/a&gt;. Do you want to continue?</source>
+        <translation>Die magnetische Deklination des Referenzpunkts %1° %2° wird nun online von &lt;a href="%3"&gt;%3&lt;/a&gt; abgerufen. Wollen Sie fortfahren?</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="440"/>
@@ -1903,7 +1903,7 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="161"/>
         <source>About %1</source>
-        <comment>As in &apos;About OpenOrienteering Mapper&apos;</comment>
+        <comment>As in 'About OpenOrienteering Mapper'</comment>
         <translation>Über %1</translation>
     </message>
     <message>
@@ -1976,8 +1976,8 @@
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="541"/>
-        <source>No map files found!&lt;br/&gt;&lt;br/&gt;Copy map files to a top-level folder named &apos;OOMapper&apos; on the device or a memory card.</source>
-        <translation>Keine Kartendateien gefunden!&lt;br/&gt;&lt;br/&gt;Kopieren Sie Kartendateien in ein &apos;OOMapper&apos; genanntes Verzeichnis auf dem Gerät oder einer Speicherkarte.</translation>
+        <source>No map files found!&lt;br/&gt;&lt;br/&gt;Copy map files to a top-level folder named 'OOMapper' on the device or a memory card.</source>
+        <translation>Keine Kartendateien gefunden!&lt;br/&gt;&lt;br/&gt;Kopieren Sie Kartendateien in ein 'OOMapper' genanntes Verzeichnis auf dem Gerät oder einer Speicherkarte.</translation>
     </message>
     <message>
         <source>No map files found!&lt;br/&gt;&lt;br/&gt;Copy a map file to /OOMapper or /sdcard/OOMapper to list it here.</source>
@@ -1993,8 +1993,8 @@
     </message>
     <message>
         <location filename="../src/symbol.cpp" line="236"/>
-        <source>Symbol ID &apos;%1&apos; not unique at line %2 column %3.</source>
-        <translation>Symbol-ID &apos;%1&apos; nicht eindeutig in Zeile %2 Spalte %3.</translation>
+        <source>Symbol ID '%1' not unique at line %2 column %3.</source>
+        <translation>Symbol-ID '%1' nicht eindeutig in Zeile %2 Spalte %3.</translation>
     </message>
     <message>
         <location filename="../src/symbol.cpp" line="284"/>
@@ -2090,19 +2090,19 @@
     </message>
     <message>
         <location filename="../src/file_import_export.cpp" line="114"/>
-        <source>Template &quot;%1&quot; has been loaded from the map&apos;s directory instead of the relative location to the map file where it was previously.</source>
-        <translation>Die Vorlage &quot;%1&quot; wurde aus dem Verzeichnis der Karte geladen anstatt vom relativen Pfad zur Kartendatei, wo sie zuvor war.</translation>
+        <source>Template "%1" has been loaded from the map's directory instead of the relative location to the map file where it was previously.</source>
+        <translation>Die Vorlage "%1" wurde aus dem Verzeichnis der Karte geladen anstatt vom relativen Pfad zur Kartendatei, wo sie zuvor war.</translation>
     </message>
     <message>
         <location filename="../src/file_import_export.cpp" line="120"/>
-        <source>Failed to load template &apos;%1&apos;, reason: %2</source>
-        <translation>Vorlage &apos;%1&apos; konnte nicht geladen werden, Grund: %2</translation>
+        <source>Failed to load template '%1', reason: %2</source>
+        <translation>Vorlage '%1' konnte nicht geladen werden, Grund: %2</translation>
     </message>
     <message>
         <location filename="../src/file_import_export.cpp" line="125"/>
-        <source>Warnings when loading template &apos;%1&apos;:
+        <source>Warnings when loading template '%1':
 %2</source>
-        <translation>Warnung beim Laden der Vorlage &apos;%1&apos;:
+        <translation>Warnung beim Laden der Vorlage '%1':
 %2</translation>
     </message>
     <message>
@@ -2144,8 +2144,8 @@
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="200"/>
-        <source>The geographic coordinate reference system of the map was &quot;%1&quot;. This CRS is not supported. Using &quot;%2&quot;.</source>
-        <translation>Das geographische Koordinatensystem dieser Datei war &quot;%1&quot;. Dieses Koordinatenbezugssystem wird nicht unterstützt. Es wird &quot;%2&quot; verwendet.</translation>
+        <source>The geographic coordinate reference system of the map was "%1". This CRS is not supported. Using "%2".</source>
+        <translation>Das geographische Koordinatensystem dieser Datei war "%1". Dieses Koordinatenbezugssystem wird nicht unterstützt. Es wird "%2" verwendet.</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="319"/>
@@ -2795,7 +2795,7 @@ Wollen Sie diese Änderungen verwerfen?</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="908"/>
-        <source>This map is being saved as a &quot;%1&quot; file. Information may be lost.
+        <source>This map is being saved as a "%1" file. Information may be lost.
 
 Press Yes to save in this format.
 Press No to choose a different format.</source>
@@ -2821,19 +2821,19 @@ Wählen Sie Nein, um ein anderes Dateiformat auszusuchen.</translation>
     <message>
         <location filename="../src/map.cpp" line="614"/>
         <source>Cannot export the map as
-&quot;%1&quot;
+"%1"
 because saving as %2 (.%3) is not supported.</source>
         <translation>Kann die Karte nicht als
-&quot;%1&quot;
+"%1"
 exportieren, weil das Speichern als %2 (.%3) nicht unterstützt wird.</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="609"/>
         <source>Cannot export the map as
-&quot;%1&quot;
+"%1"
 because the format is unknown.</source>
         <translation>Kann die Karte nicht als
-&quot;%1&quot;
+"%1"
 exportieren, weil das Format unbekannt ist.</translation>
     </message>
     <message>
@@ -2911,7 +2911,7 @@ Datei kann nicht zum Lesen geöffnet werden.</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="815"/>
-        <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
+        <source>The scale of the imported data is 1:%1 which is different from this map's scale of 1:%2.
 
 Rescale the imported data?</source>
         <translation>Der Maßstab der importierten Daten ist 1:%1, doch der Kartenmaßstab ist 1:%2.
@@ -3955,8 +3955,8 @@ gewählt</translation>
         <translation>Name des Kartenteils eingeben:</translation>
     </message>
     <message>
-        <source>Do you want to remove map part &quot;%1&quot; and all its objects? This cannot be undone.</source>
-        <translation type="vanished">Wollen Sie Kartenteil &quot;%1&quot; mit allen seinen Objekten entfernen? Das kann nicht rückgangig gemacht werden.</translation>
+        <source>Do you want to remove map part "%1" and all its objects? This cannot be undone.</source>
+        <translation type="vanished">Wollen Sie Kartenteil "%1" mit allen seinen Objekten entfernen? Das kann nicht rückgangig gemacht werden.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3576"/>
@@ -3966,13 +3966,13 @@ gewählt</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3577"/>
-        <source>Do you want to move all objects from map part &quot;%1&quot; to &quot;%2&quot;, and to remove &quot;%1&quot;?</source>
-        <translation>Wollen Sie alle Objekte von Kartenteil &quot;%1&quot; nach &quot;%2&quot; verschieben und &quot;%1&quot; entfernen?</translation>
+        <source>Do you want to move all objects from map part "%1" to "%2", and to remove "%1"?</source>
+        <translation>Wollen Sie alle Objekte von Kartenteil "%1" nach "%2" verschieben und "%1" entfernen?</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3607"/>
-        <source>Do you want to move all objects to map part &quot;%1&quot;, and to remove all other map parts?</source>
-        <translation>Wollen Sie alle Objekte nach Kartenteil &quot;%1&quot; verschieben und alle anderen Teile entfernen?</translation>
+        <source>Do you want to move all objects to map part "%1", and to remove all other map parts?</source>
+        <translation>Wollen Sie alle Objekte nach Kartenteil "%1" verschieben und alle anderen Teile entfernen?</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3832"/>
@@ -4177,13 +4177,13 @@ gewählt</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3499"/>
-        <source>Do you want to remove map part &quot;%1&quot; and all its objects?</source>
-        <translation>Wollen Sie Kartenteil &quot;%1&quot; und alle seine Objekte entfernen?</translation>
+        <source>Do you want to remove map part "%1" and all its objects?</source>
+        <translation>Wollen Sie Kartenteil "%1" und alle seine Objekte entfernen?</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3554"/>
-        <source>Switched to map part &apos;%1&apos;.</source>
-        <translation>Zum Kartenteil &apos;%1&apos; gewechselt.</translation>
+        <source>Switched to map part '%1'.</source>
+        <translation>Zum Kartenteil '%1' gewechselt.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3661"/>
@@ -4219,13 +4219,13 @@ gewählt</translation>
     <message>
         <location filename="future_translations.cpp" line="31"/>
         <source>Rotate objects</source>
-        <extracomment>To replace existing translation which uses &quot;object(s)&quot;.</extracomment>
+        <extracomment>To replace existing translation which uses "object(s)".</extracomment>
         <translation>Objekte rotieren</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="34"/>
         <source>Scale objects</source>
-        <extracomment>To replace existing translation which uses &quot;object(s)&quot;.</extracomment>
+        <extracomment>To replace existing translation which uses "object(s)".</extracomment>
         <translation>Objekte skalieren</translation>
     </message>
     <message numerus="yes">
@@ -4240,7 +4240,7 @@ gewählt</translation>
     <message numerus="yes">
         <location filename="future_translations.cpp" line="40"/>
         <source>Copied %n object(s)</source>
-        <extracomment>To replace existing translation which doesn&apos;t use plural correctly</extracomment>
+        <extracomment>To replace existing translation which doesn't use plural correctly</extracomment>
         <translation>
             <numerusform>Ein Objekt kopiert</numerusform>
             <numerusform>%n Objekte kopiert</numerusform>
@@ -4249,7 +4249,7 @@ gewählt</translation>
     <message numerus="yes">
         <location filename="future_translations.cpp" line="43"/>
         <source>Pasted %n object(s)</source>
-        <extracomment>To replace existing translation which doesn&apos;t use plural correctly</extracomment>
+        <extracomment>To replace existing translation which doesn't use plural correctly</extracomment>
         <translation>
             <numerusform>Ein Objekt eingefügt</numerusform>
             <numerusform>%1 Objekte eingefügt</numerusform>
@@ -4258,49 +4258,49 @@ gewählt</translation>
     <message>
         <location filename="future_translations.cpp" line="46"/>
         <source>Deletes the selected objects.</source>
-        <extracomment>To replace existing translation which uses &quot;object(s)&quot;.</extracomment>
+        <extracomment>To replace existing translation which uses "object(s)".</extracomment>
         <translation></translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="49"/>
         <source>Duplicate the selected objects.</source>
-        <extracomment>To replace existing translation which uses &quot;object(s)&quot;.</extracomment>
+        <extracomment>To replace existing translation which uses "object(s)".</extracomment>
         <translation>Die ausgewählten Objekte duplizieren.</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="52"/>
         <source>Rotate the selected objects.</source>
-        <extracomment>To replace existing translation which uses &quot;object(s)&quot;.</extracomment>
+        <extracomment>To replace existing translation which uses "object(s)".</extracomment>
         <translation>Die ausgewählten Objekten drehen.</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="55"/>
         <source>Scale the selected objects.</source>
-        <extracomment>To replace existing translation which uses &quot;object(s)&quot;.</extracomment>
+        <extracomment>To replace existing translation which uses "object(s)".</extracomment>
         <translation>Die ausgewählten Objekte skalieren.</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="58"/>
         <source>Cut the selected objects into smaller parts.</source>
-        <extracomment>To replace existing translation which uses &quot;object(s)&quot;.</extracomment>
+        <extracomment>To replace existing translation which uses "object(s)".</extracomment>
         <translation>Gewählte Objekte in kleinere Teile zerschneiden.</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="61"/>
         <source>Switches the symbol of the selected objects to the selected symbol.</source>
-        <extracomment>To replace existing translation which uses &quot;object(s)&quot;.</extracomment>
+        <extracomment>To replace existing translation which uses "object(s)".</extracomment>
         <translation>Den ausgewählten Objekten das ausgewählte Symbol zuweisen.</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="64"/>
         <source>Fill the selected lines or create a border for the selected areas.</source>
-        <extracomment>To replace existing translation which uses &quot;line(s)&quot; and &quot;area(s)&quot;.</extracomment>
+        <extracomment>To replace existing translation which uses "line(s)" and "area(s)".</extracomment>
         <translation>Ausgewählte Linienobjekte ausfüllen oder eine Randlinie um ausgewählte Flächen erstellen.</translation>
     </message>
     <message numerus="yes">
         <location filename="future_translations.cpp" line="67"/>
         <source>Duplicated %n object(s)</source>
-        <extracomment>To replace existing translation which doesn&apos;t use plural correctly</extracomment>
+        <extracomment>To replace existing translation which doesn't use plural correctly</extracomment>
         <translation>
             <numerusform>Ein Objekt dupliziert</numerusform>
             <numerusform>%n Objekte dupliziert</numerusform>
@@ -4309,7 +4309,7 @@ gewählt</translation>
     <message>
         <location filename="future_translations.cpp" line="70"/>
         <source>No objects were selected because there are no objects with the selected symbols.</source>
-        <extracomment>To replace existing translation which uses &quot;symbol(s)&quot;.</extracomment>
+        <extracomment>To replace existing translation which uses "symbol(s)".</extracomment>
         <translation>Es wurden keine Objekte ausgewählt, weil es keine Objekte mit dem ausgewählten Symbol gibt.</translation>
     </message>
 </context>
@@ -4424,14 +4424,14 @@ Symbole &gt; Farben.</translation>
 
 Now define some symbols:
 Right-click in the symbol bar
-and select &quot;New symbol&quot;
+and select "New symbol"
 to create one.</source>
         <translation>Leerer Symbolsatz
 
 Um Symbole zu definieren,
 klicken Sie mit der rechten Maustaste 
 in die Symbolleiste und wählen Sie
-&quot;Neues Symbol&quot;.</translation>
+"Neues Symbol".</translation>
     </message>
     <message>
         <location filename="../src/map_widget.cpp" line="837"/>
@@ -4639,58 +4639,58 @@ Zoomen ist mit dem Mausrad möglich.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1843"/>
-        <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
-        <translation>Kann Vorlage nicht exportieren: der Dateityp von &quot;%1&quot; wird noch nicht unterstützt</translation>
+        <source>Unable to export template: file type of "%1" is not supported yet</source>
+        <translation>Kann Vorlage nicht exportieren: der Dateityp von "%1" wird noch nicht unterstützt</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2061"/>
-        <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation>Im Liniensymbol &quot;%1&quot; kann die Kombination der Linienenden/ecken nicht repräsentiert werden.</translation>
+        <source>In line symbol "%1", cannot represent cap/join combination.</source>
+        <translation>Im Liniensymbol "%1" kann die Kombination der Linienenden/ecken nicht repräsentiert werden.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2085"/>
-        <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation>Im Liniensymbol &quot;%1&quot; wird die Gruppierung der Strichelungen verworfen.</translation>
+        <source>In line symbol "%1", neglecting the dash grouping.</source>
+        <translation>Im Liniensymbol "%1" wird die Gruppierung der Strichelungen verworfen.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2096"/>
-        <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation>Im Liniensymbol &quot;%1&quot; wird die Anzahl der Striche in einer Gruppe auf 2 reduziert.</translation>
+        <source>In line symbol "%1", the number of dashes in a group has been reduced to 2.</source>
+        <translation>Im Liniensymbol "%1" wird die Anzahl der Striche in einer Gruppe auf 2 reduziert.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2152"/>
-        <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
-        <translation>Im Liniensymbol &quot;%1&quot; können die Ränder nicht korrekt exportiert werden.</translation>
+        <source>In line symbol "%1", cannot export the borders correctly.</source>
+        <translation>Im Liniensymbol "%1" können die Ränder nicht korrekt exportiert werden.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2211"/>
-        <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation>Im Flächensymbol &quot;%1&quot; wird ein Füllmuster verworfen.</translation>
+        <source>In area symbol "%1", skipping a fill pattern.</source>
+        <translation>Im Flächensymbol "%1" wird ein Füllmuster verworfen.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2258"/>
-        <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
-        <translation>Im Flächensymbol &quot;%1&quot; wird ein Punktmuster mit gegeneinander versetzten Reihen angenommen. Dies könnte stimmen, aber auch falsch sein.</translation>
+        <source>In area symbol "%1", assuming a "shifted rows" point pattern. This might be correct as well as incorrect.</source>
+        <translation>Im Flächensymbol "%1" wird ein Punktmuster mit gegeneinander versetzten Reihen angenommen. Dies könnte stimmen, aber auch falsch sein.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2297"/>
-        <source>In text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation>Im Textsymbol &quot;%1&quot; ist der Zeichenabstand geändert. Dies wird von diesem Programm und OCAD verschieden interpretiert</translation>
+        <source>In text symbol %1: custom character spacing is set, its implementation does not match OCAD's behavior yet</source>
+        <translation>Im Textsymbol "%1" ist der Zeichenabstand geändert. Dies wird von diesem Programm und OCAD verschieden interpretiert</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2304"/>
         <source>In text symbol %1: ignoring underlining</source>
-        <translation>Im Textsymbol &quot;%1&quot; wird das Unterstreichen verworfen</translation>
+        <translation>Im Textsymbol "%1" wird das Unterstreichen verworfen</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2306"/>
         <source>In text symbol %1: ignoring kerning</source>
-        <translation>Im Textsymbol &quot;%1&quot; wird das Kerning verworfen</translation>
+        <translation>Im Textsymbol "%1" wird das Kerning verworfen</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2721"/>
-        <source>String truncated (truncation marked with three &apos;|&apos;): %1</source>
-        <translation>Zeichenkette verkürzt (Abbruchstelle mit drei &apos;|&apos; markiert): %1</translation>
+        <source>String truncated (truncation marked with three '|'): %1</source>
+        <translation>Zeichenkette verkürzt (Abbruchstelle mit drei '|' markiert): %1</translation>
     </message>
 </context>
 <context>
@@ -4725,13 +4725,13 @@ Zoomen ist mit dem Mausrad möglich.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="210"/>
-        <source>Color &quot;Registration black&quot; is imported as a special color.</source>
-        <translation>Farbe &quot;Registration black&quot; (Passfarbe) wurde als spezielle Farbe importiert.</translation>
+        <source>Color "Registration black" is imported as a special color.</source>
+        <translation>Farbe "Registration black" (Passfarbe) wurde als spezielle Farbe importiert.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="274"/>
-        <source>Unable to import symbol &quot;%3&quot; (%1.%2)</source>
-        <translation>Kann Symbol &quot;%3&quot; (%1.%2) nicht importieren</translation>
+        <source>Unable to import symbol "%3" (%1.%2)</source>
+        <translation>Kann Symbol "%3" (%1.%2) nicht importieren</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="287"/>
@@ -4780,7 +4780,7 @@ Zoomen ist mit dem Mausrad möglich.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="764"/>
-        <source>During import of text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
+        <source>During import of text symbol %1: custom character spacing is set, its implementation does not match OCAD's behavior yet</source>
         <translation>Vom Original abweichende Zeichenabstände bei Textsymbol %1</translation>
     </message>
     <message>
@@ -4810,14 +4810,14 @@ Zoomen ist mit dem Mausrad möglich.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1003"/>
-        <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
+        <source>Not importing text symbol, couldn't figure out path' (npts=%1): %2</source>
         <translation>Textsymbol nicht importiert: Konnte Pfad nicht ermitteln (npts=%1): %2</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1195"/>
         <location filename="../src/file_format_ocad8.cpp" line="1302"/>
-        <source>Unable to import template: background &quot;%1&quot; doesn&apos;t seem to be a raster image</source>
-        <translation>Kann Vorlage nicht importieren: Hintegrund &quot;%1&quot; scheint kein Rasterbild zu sein</translation>
+        <source>Unable to import template: background "%1" doesn't seem to be a raster image</source>
+        <translation>Kann Vorlage nicht importieren: Hintegrund "%1" scheint kein Rasterbild zu sein</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1407"/>
@@ -4873,18 +4873,18 @@ Zoomen ist mit dem Mausrad möglich.</translation>
     <name>OcdFileImport</name>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="125"/>
-        <source>In line symbol %1 &apos;%2&apos;: %3</source>
-        <translation>Bei Liniensymbol %1 &apos;%2&apos;: %3</translation>
+        <source>In line symbol %1 '%2': %3</source>
+        <translation>Bei Liniensymbol %1 '%2': %3</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="131"/>
-        <source>In text symbol %1 &apos;%2&apos;: %3</source>
-        <translation>Bei Textsymbol %1 &apos;%2&apos;: %3</translation>
+        <source>In text symbol %1 '%2': %3</source>
+        <translation>Bei Textsymbol %1 '%2': %3</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="388"/>
-        <source>Could not load the coordinate reference system &apos;%1&apos;.</source>
-        <translation>Das Koordinatenreferenzsystem &apos;%1&apos; konnte nicht geladen werden.</translation>
+        <source>Could not load the coordinate reference system '%1'.</source>
+        <translation>Das Koordinatenreferenzsystem '%1' konnte nicht geladen werden.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="422"/>
@@ -4894,23 +4894,23 @@ Zoomen ist mit dem Mausrad möglich.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="557"/>
-        <source>Unable to import symbol %1.%2 &quot;%3&quot;: %4</source>
-        <translation>Kann Symbol %1.%2 &quot;%3&quot; nicht importieren: %4</translation>
+        <source>Unable to import symbol %1.%2 "%3": %4</source>
+        <translation>Kann Symbol %1.%2 "%3" nicht importieren: %4</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="561"/>
-        <source>Unsupported type &quot;%1&quot;.</source>
-        <translation>Nicht unterstützter Typ &quot;%1&quot;.</translation>
+        <source>Unsupported type "%1".</source>
+        <translation>Nicht unterstützter Typ "%1".</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="654"/>
-        <source>Unable to import template: &quot;%1&quot; is not a supported template type.</source>
-        <translation>Kann Vorlage nicht importieren: &quot;%1&quot; ist kein unterstützer Vorlagentyp.</translation>
+        <source>Unable to import template: "%1" is not a supported template type.</source>
+        <translation>Kann Vorlage nicht importieren: "%1" ist kein unterstützer Vorlagentyp.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="958"/>
-        <source>Unsupported line style &apos;%1&apos;.</source>
-        <translation>Nicht unterstützter Linienstil &apos;%1&apos;.</translation>
+        <source>Unsupported line style '%1'.</source>
+        <translation>Nicht unterstützter Linienstil '%1'.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="995"/>
@@ -4925,19 +4925,19 @@ Zoomen ist mit dem Mausrad möglich.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1026"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1058"/>
-        <source>The dash pattern&apos;s end length (%1 mm) cannot be imported correctly. Using %2 mm.</source>
+        <source>The dash pattern's end length (%1 mm) cannot be imported correctly. Using %2 mm.</source>
         <translation>Die Länge des Endstücks des Strichelungsmusters (%1 mm) kann nicht korrekt importiert werden. Benutze %2 mm.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1033"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1073"/>
-        <source>The dash pattern&apos;s end gap (%1 mm) cannot be imported correctly. Using %2 mm.</source>
+        <source>The dash pattern's end gap (%1 mm) cannot be imported correctly. Using %2 mm.</source>
         <translation>Die Länge des Endunterbrechung des Strichelungsmusters (%1 mm) kann nicht korrekt importiert werden. Benutze %2 mm.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1115"/>
-        <source>Unsupported framing line style &apos;%1&apos;.</source>
-        <translation>Rahmenlinienstil &apos;%1&apos; ist nicht unterstützt.</translation>
+        <source>Unsupported framing line style '%1'.</source>
+        <translation>Rahmenlinienstil '%1' ist nicht unterstützt.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1187"/>
@@ -4962,8 +4962,8 @@ Zoomen ist mit dem Mausrad möglich.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1950"/>
-        <source>Vertical alignment &apos;%1&apos; is not supported.</source>
-        <translation>Vertikale Ausrichtung &apos;%1&apos; wird nicht unterstützt.</translation>
+        <source>Vertical alignment '%1' is not supported.</source>
+        <translation>Vertikale Ausrichtung '%1' wird nicht unterstützt.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1922"/>
@@ -4997,13 +4997,13 @@ Zoomen ist mit dem Mausrad möglich.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="82"/>
-        <source>Encoding &apos;%1&apos; is not available. Check the settings.</source>
-        <translation>Kodierung &apos;%1&apos; ist nicht verfügbar. Prüfen Sie die Einstellungen.</translation>
+        <source>Encoding '%1' is not available. Check the settings.</source>
+        <translation>Kodierung '%1' ist nicht verfügbar. Prüfen Sie die Einstellungen.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="119"/>
-        <source>In area symbol %1 &apos;%2&apos;: %3</source>
-        <translation>Bei Flächensymbol %1 &apos;%2&apos;: %3</translation>
+        <source>In area symbol %1 '%2': %3</source>
+        <translation>Bei Flächensymbol %1 '%2': %3</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1558"/>
@@ -5017,7 +5017,7 @@ Zoomen ist mit dem Mausrad möglich.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1609"/>
-        <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
+        <source>Not importing text symbol, couldn't figure out path' (npts=%1): %2</source>
         <translation>Textsymbol nicht importiert: Konnte Pfad nicht ermitteln (npts=%1): %2</translation>
     </message>
     <message>
@@ -5297,7 +5297,7 @@ Zoomen ist mit dem Mausrad möglich.</translation>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="57"/>
         <location filename="../src/gui/print_tool.cpp" line="369"/>
-        <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map, the print area or the area&apos;s borders. </source>
+        <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map, the print area or the area's borders. </source>
         <translation>&lt;b&gt;Ziehen&lt;/b&gt;: Karte, Druckbereich oder Bereichsränder verschieben. </translation>
     </message>
     <message>
@@ -5313,13 +5313,13 @@ Zoomen ist mit dem Mausrad möglich.</translation>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="350"/>
         <location filename="../src/gui/print_tool.cpp" line="355"/>
-        <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area&apos;s border. </source>
+        <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area's border. </source>
         <translation>&lt;b&gt;Ziehen&lt;/b&gt;: Rand des Druckbereichs verschieben. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="360"/>
         <location filename="../src/gui/print_tool.cpp" line="365"/>
-        <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area&apos;s borders. </source>
+        <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area's borders. </source>
         <translation>&lt;b&gt;Ziehen&lt;/b&gt;: Ränder des Druckbereichs verschieben. </translation>
     </message>
 </context>
@@ -5768,7 +5768,7 @@ rationen</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="56"/>
-        <source>Keep the symbols&apos; hidden / protected states of the old symbol set</source>
+        <source>Keep the symbols' hidden / protected states of the old symbol set</source>
         <translation>Verborgen-/Geschützt-Status des alten Symbolsatz erhalten</translation>
     </message>
     <message>
@@ -6054,7 +6054,7 @@ rationen</translation>
         <translation>Koordinatenbezugssystem wählen</translation>
     </message>
     <message>
-        <source>Same as map&apos;s</source>
+        <source>Same as map's</source>
         <translation type="vanished">Gleiches wie das der Karte</translation>
     </message>
     <message>
@@ -6111,23 +6111,23 @@ rationen</translation>
     <name>StorageLocation</name>
     <message>
         <location filename="../src/core/storage_location.cpp" line="278"/>
-        <source>&apos;%1&apos; is stored in a regular location.</source>
-        <translation>&apos;%1&apos; befindet sich an einem normalen Speicherort.</translation>
+        <source>'%1' is stored in a regular location.</source>
+        <translation>'%1' befindet sich an einem normalen Speicherort.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="281"/>
-        <source>&apos;%1&apos; is located in app storage. The files will be removed when uninstalling the app.</source>
-        <translation>&apos;%1&apos; befindet sich im App-Speicher. Die Dateien werden gelöscht, wenn die App deinstalliert wird.</translation>
+        <source>'%1' is located in app storage. The files will be removed when uninstalling the app.</source>
+        <translation>'%1' befindet sich im App-Speicher. Die Dateien werden gelöscht, wenn die App deinstalliert wird.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="284"/>
-        <source>&apos;%1&apos; is not writable. Changes cannot be saved.</source>
-        <translation>&apos;%1&apos; ist nicht schreibbar. Änderungen können nicht gespeichert werden.</translation>
+        <source>'%1' is not writable. Changes cannot be saved.</source>
+        <translation>'%1' ist nicht schreibbar. Änderungen können nicht gespeichert werden.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="287"/>
-        <source>&apos;%1&apos; is not a valid storage location.</source>
-        <translation>&apos;%1&apos; ist kein gültiger Speicherort.</translation>
+        <source>'%1' is not a valid storage location.</source>
+        <translation>'%1' ist kein gültiger Speicherort.</translation>
     </message>
 </context>
 <context>
@@ -6333,7 +6333,7 @@ rationen</translation>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="228"/>
         <source>F1</source>
-        <comment>Shortcut for displaying the symbol&apos;s description</comment>
+        <comment>Shortcut for displaying the symbol's description</comment>
         <translation>F1</translation>
     </message>
     <message>
@@ -6378,8 +6378,8 @@ rationen</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="937"/>
-        <source>The map contains objects with the symbol &quot;%1&quot;. Deleting it will delete those objects and clear the undo history! Do you really want to do that?</source>
-        <translation>Die Karte enthält Objekte mit dem Symbol &quot;%1&quot;. Beim Löschen des Symbols werden diese Objekte aus der Karte und dem Protokoll entfernt. Wollen Sie das wirklich?</translation>
+        <source>The map contains objects with the symbol "%1". Deleting it will delete those objects and clear the undo history! Do you really want to do that?</source>
+        <translation>Die Karte enthält Objekte mit dem Symbol "%1". Beim Löschen des Symbols werden diese Objekte aus der Karte und dem Protokoll entfernt. Wollen Sie das wirklich?</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="810"/>
@@ -6395,19 +6395,19 @@ rationen</translation>
     <message>
         <location filename="future_translations.cpp" line="73"/>
         <source>Switch symbol of selected objects</source>
-        <extracomment>To replace existing translation which uses &quot;object(s)&quot;.</extracomment>
+        <extracomment>To replace existing translation which uses "object(s)".</extracomment>
         <translation>Symbol der ausgewählten Objekte austauschen</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="76"/>
         <source>Fill / Create border for selected objects</source>
-        <extracomment>To replace existing translation which uses &quot;object(s)&quot;.</extracomment>
+        <extracomment>To replace existing translation which uses "object(s)".</extracomment>
         <translation>Ausgewählte Objekte ausfüllen / Rand erzeugen</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="79"/>
         <source>Scale symbols</source>
-        <extracomment>To replace existing translation which uses &quot;symbol(s)&quot;.</extracomment>
+        <extracomment>To replace existing translation which uses "symbol(s)".</extracomment>
         <translation>Symbole skalieren</translation>
     </message>
 </context>
@@ -6431,7 +6431,7 @@ rationen</translation>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="105"/>
         <source>(none)</source>
-        <translatorcomment>Standardize &quot;(none)&quot; vs &quot;- none -&quot;</translatorcomment>
+        <translatorcomment>Standardize "(none)" vs "- none -"</translatorcomment>
         <translation>(keine)</translation>
     </message>
     <message>
@@ -6575,8 +6575,8 @@ verwahrlosten Taxi quer durch Bayern
     </message>
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="234"/>
-        <source>The key &quot;%1&quot; already exists and must not be used twice.</source>
-        <translation>Der Schlüssel &quot;%1&quot; existiert bereits und darf nicht zweimal verwendet werden.</translation>
+        <source>The key "%1" already exists and must not be used twice.</source>
+        <translation>Der Schlüssel "%1" existiert bereits und darf nicht zweimal verwendet werden.</translation>
     </message>
 </context>
 <context>
@@ -6742,7 +6742,7 @@ verwahrlosten Taxi quer durch Bayern
     <message>
         <location filename="../src/template_image.cpp" line="169"/>
         <source>Loading a GIF image template.
-Saving GIF files is not supported. This means that drawings on this template won&apos;t be saved!
+Saving GIF files is not supported. This means that drawings on this template won't be saved!
 If you do not intend to draw on this template however, that is no problem.</source>
         <translation>Eine Vorlage im GIF-Format laden.
 Speichern im GIF-Format wird nicht unterstützt. Zeichnungen auf solchen Vorlagen können nicht gespeichert werden.</translation>
@@ -6974,7 +6974,7 @@ Speichern im GIF-Format wird nicht unterstützt. Zeichnungen auf solchen Vorlage
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="972"/>
-        <source>Don&apos;t scale</source>
+        <source>Don't scale</source>
         <translation>Nicht skalieren</translation>
     </message>
     <message>
@@ -7069,13 +7069,13 @@ Speichern im GIF-Format wird nicht unterstützt. Zeichnungen auf solchen Vorlage
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="166"/>
-        <source>Positions the track according to the map&apos;s georeferencing settings.</source>
+        <source>Positions the track according to the map's georeferencing settings.</source>
         <translation>Positioniert den Pfad mithilfe der Georeferenzierung der Karte.</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="168"/>
         <source>These are not configured yet, so they will be shown as the next step.</source>
-        <translatorcomment>Add explanation for &quot;these&quot;.</translatorcomment>
+        <translatorcomment>Add explanation for "these".</translatorcomment>
         <translation>Diese ist nicht nicht konfiguriert, daher werden die Einstellungen dazu als nächster Schritt angezeigt.</translation>
     </message>
     <message>
@@ -7090,7 +7090,7 @@ Speichern im GIF-Format wird nicht unterstützt. Zeichnungen auf solchen Vorlage
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="170"/>
-        <source>Projects the track using an orthographic projection with center at the track&apos;s coordinate average. Allows adjustment of the transformation and setting the map georeferencing using the adjusted track position.</source>
+        <source>Projects the track using an orthographic projection with center at the track's coordinate average. Allows adjustment of the transformation and setting the map georeferencing using the adjusted track position.</source>
         <translation>Projiziert den Pfad mithilfe einer orthographischen Projektion mit Zentrum am Mittelpunkt der Pfadkoordinaten. Ermöglicht die Anpassung der Transformation, und die Georeferenzierung der Karte mithilfe der angepassten Pfadposition zu setzen.</translation>
     </message>
     <message>
@@ -7288,7 +7288,7 @@ Die höchste unterstütze Version ist %2.</translation>
     <message>
         <location filename="../src/symbol_text.cpp" line="643"/>
         <source>underlined</source>
-        <translatorcomment>or &quot;underline&quot;/&quot;unterstreichen&quot;</translatorcomment>
+        <translatorcomment>or "underline"/"unterstreichen"</translatorcomment>
         <translation>unterstrichen</translation>
     </message>
     <message>
@@ -7468,18 +7468,18 @@ Die höchste unterstütze Version ist %2.</translation>
     </message>
     <message>
         <location filename="../src/util.cpp" line="263"/>
-        <source>Failed to locate the help browser (&quot;Qt Assistant&quot;).</source>
-        <translation>Das Handbuchprogramm (&quot;Qt Assistant&quot;) konnte nicht gefunden werden.</translation>
+        <source>Failed to locate the help browser ("Qt Assistant").</source>
+        <translation>Das Handbuchprogramm ("Qt Assistant") konnte nicht gefunden werden.</translation>
     </message>
     <message>
         <location filename="../src/util.cpp" line="297"/>
-        <source>Failed to launch the help browser (&quot;Qt Assistant&quot;).</source>
-        <translation>Das Handbuchprogramm (&quot;Qt Assistant&quot;) konnte nicht gestartet werden.</translation>
+        <source>Failed to launch the help browser ("Qt Assistant").</source>
+        <translation>Das Handbuchprogramm ("Qt Assistant") konnte nicht gestartet werden.</translation>
     </message>
     <message>
         <location filename="../src/util.cpp" line="313"/>
         <source>See more...</source>
-        <extracomment>This &quot;See more&quot; is displayed as a link to the manual in What&apos;s-this tooltips.</extracomment>
+        <extracomment>This "See more" is displayed as a link to the manual in What's-this tooltips.</extracomment>
         <translation>Mehr...</translation>
     </message>
 </context>
@@ -7530,14 +7530,14 @@ Die höchste unterstütze Version ist %2.</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="543"/>
-        <source>Unsupported or invalid georeferencing specification &apos;%1&apos;: %2</source>
-        <translation>Nicht unterstützte oder ungültige Georeferenzierungsspezifikation &apos;%1&apos;: %2</translation>
+        <source>Unsupported or invalid georeferencing specification '%1': %2</source>
+        <translation>Nicht unterstützte oder ungültige Georeferenzierungsspezifikation '%1': %2</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="661"/>
         <location filename="../src/file_format_xml.cpp" line="720"/>
-        <source>Could not set knockout property of color &apos;%1&apos;.</source>
-        <translation>Knockout-Attribut der Farbe &apos;%1&apos; konnte nicht gesetzt werden.</translation>
+        <source>Could not set knockout property of color '%1'.</source>
+        <translation>Knockout-Attribut der Farbe '%1' konnte nicht gesetzt werden.</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="680"/>
