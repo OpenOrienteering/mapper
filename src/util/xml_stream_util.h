@@ -71,7 +71,7 @@ public:
 	 * 
 	 * Captures the current position in the XML stream (QXmlStreamReader::characterOffset()).
 	 */
-	XmlRecoveryHelper(QXmlStreamReader& xml) : xml {xml}, recovery_start {xml.characterOffset()} {}
+	XmlRecoveryHelper(QXmlStreamReader& xml) : xml (xml), recovery_start {xml.characterOffset()} {}
 	
 	/**
 	 * Checks the stream for an error which this utility can handle,
