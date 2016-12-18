@@ -2159,24 +2159,24 @@
         <translation type="vanished">Imposible analizar los datos.</translation>
     </message>
     <message>
-        <location filename="../src/util/xml_stream_util.cpp" line="72"/>
-        <location filename="../src/util/xml_stream_util.cpp" line="88"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="176"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="192"/>
         <source>Could not parse the coordinates.</source>
         <translation>Imposible analizar las coordenadas.</translation>
     </message>
     <message>
-        <location filename="../src/util/xml_stream_util.cpp" line="112"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="216"/>
         <source>Expected %1 coordinates, found %2.</source>
         <translation>Se esperaban %1 coordenadas, se encontraron %2.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="891"/>
+        <location filename="../src/file_format_xml.cpp" line="877"/>
         <source>Error while loading the printing configuration at %1:%2: %3</source>
         <translation>Error al cargar la configuración de impresión en %1: %2: %3</translation>
     </message>
     <message>
+        <location filename="../src/file_format_xml.cpp" line="890"/>
         <location filename="../src/file_format_xml.cpp" line="904"/>
-        <location filename="../src/file_format_xml.cpp" line="918"/>
         <source>Error while loading the undo/redo steps at %1:%2: %3</source>
         <translation>Error al cargar los pasos de deshacer/rehacer en %1: %2: %3</translation>
     </message>
@@ -7691,43 +7691,48 @@ La máxima versión soportada es %2.</translation>
         <translation>Error en línea %1 columna %2: %3</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="523"/>
         <source>The map notes could not be read.</source>
-        <translation>Las notas del mapa no se pudieron leer.</translation>
+        <translation type="vanished">Las notas del mapa no se pudieron leer.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="564"/>
+        <location filename="../src/file_format_xml.cpp" line="524"/>
+        <location filename="../src/file_format_xml.cpp" line="773"/>
+        <source>Some invalid characters had to be removed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/file_format_xml.cpp" line="542"/>
         <source>Unknown error</source>
         <translation>Error desconocido</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="565"/>
+        <location filename="../src/file_format_xml.cpp" line="543"/>
         <source>Unsupported or invalid georeferencing specification '%1': %2</source>
         <translation>Especificación de georreferencia no soportada o inválida '%1':%2</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="683"/>
-        <location filename="../src/file_format_xml.cpp" line="742"/>
+        <location filename="../src/file_format_xml.cpp" line="661"/>
+        <location filename="../src/file_format_xml.cpp" line="720"/>
         <source>Could not set knockout property of color '%1'.</source>
         <translation>No se pudo establecer la propiedad knockout del color '%1'.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="702"/>
+        <location filename="../src/file_format_xml.cpp" line="680"/>
         <source>Expected %1 colors, found %2.</source>
         <translation>Se esperaban %1 colores, se encontraron %2.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="718"/>
+        <location filename="../src/file_format_xml.cpp" line="696"/>
         <source>Spot color %1 not found while processing %2 (%3).</source>
         <translation>El color spot %1 no se ha encontrado mientras se procesaba %2 (%3).</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="773"/>
+        <location filename="../src/file_format_xml.cpp" line="751"/>
         <source>Expected %1 symbols, found %2.</source>
         <translation>Se esperaban %1 símbolos, se encontraron %2.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="804"/>
+        <location filename="../src/file_format_xml.cpp" line="790"/>
         <source>Expected %1 map parts, found %2.</source>
         <translation>Se esperaban %1 partes de mapa, se encontraron %2.</translation>
     </message>

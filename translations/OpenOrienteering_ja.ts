@@ -2334,24 +2334,24 @@
         <translation>OCAD</translation>
     </message>
     <message>
-        <location filename="../src/util/xml_stream_util.cpp" line="72"/>
-        <location filename="../src/util/xml_stream_util.cpp" line="88"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="176"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="192"/>
         <source>Could not parse the coordinates.</source>
         <translation>座標を解析できませんでした。</translation>
     </message>
     <message>
-        <location filename="../src/util/xml_stream_util.cpp" line="112"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="216"/>
         <source>Expected %1 coordinates, found %2.</source>
         <translation>%1 の座標が必要ですが、%2 が見つかりました。</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="891"/>
+        <location filename="../src/file_format_xml.cpp" line="877"/>
         <source>Error while loading the printing configuration at %1:%2: %3</source>
         <translation>%1:%2 で、印刷の設定を読み込み中にエラー: %3</translation>
     </message>
     <message>
+        <location filename="../src/file_format_xml.cpp" line="890"/>
         <location filename="../src/file_format_xml.cpp" line="904"/>
-        <location filename="../src/file_format_xml.cpp" line="918"/>
         <source>Error while loading the undo/redo steps at %1:%2: %3</source>
         <translation>%1:%2 で、ステップを元に戻す/繰り返しを読み込み中にエラー: %3</translation>
     </message>
@@ -7105,8 +7105,10 @@ to jump over the lazy dog
     <message numerus="yes">
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="346"/>
         <source>%n object(s) selected</source>
-        <translation><numerusform>%n オブジェクト選択済</numerusform>
-        </translation></message>
+        <translation>
+            <numerusform>%n オブジェクト選択済</numerusform>
+        </translation>
+    </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="350"/>
         <source>Invalid query</source>
@@ -8239,43 +8241,48 @@ The maximum supported version is %2.</source>
         <translation>%1 行目 %2 列目でエラー: %3</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="523"/>
         <source>The map notes could not be read.</source>
-        <translation>ノートを読み取ることができません。</translation>
+        <translation type="vanished">ノートを読み取ることができません。</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="564"/>
+        <location filename="../src/file_format_xml.cpp" line="524"/>
+        <location filename="../src/file_format_xml.cpp" line="773"/>
+        <source>Some invalid characters had to be removed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/file_format_xml.cpp" line="542"/>
         <source>Unknown error</source>
         <translation>不明なエラー</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="565"/>
+        <location filename="../src/file_format_xml.cpp" line="543"/>
         <source>Unsupported or invalid georeferencing specification '%1': %2</source>
         <translation>サポートされていないか無効なジオリファレンス仕様 '%1': %2</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="683"/>
-        <location filename="../src/file_format_xml.cpp" line="742"/>
+        <location filename="../src/file_format_xml.cpp" line="661"/>
+        <location filename="../src/file_format_xml.cpp" line="720"/>
         <source>Could not set knockout property of color '%1'.</source>
         <translation>色 '%1' のノックアウト プロパティを設定できませんでした。</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="702"/>
+        <location filename="../src/file_format_xml.cpp" line="680"/>
         <source>Expected %1 colors, found %2.</source>
         <translation>%1 の色が必要ですが、%2 が見つかりました。</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="718"/>
+        <location filename="../src/file_format_xml.cpp" line="696"/>
         <source>Spot color %1 not found while processing %2 (%3).</source>
         <translation>%2 (%3) の処理中に、スポット カラー %1 が見つかりませんでした。</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="773"/>
+        <location filename="../src/file_format_xml.cpp" line="751"/>
         <source>Expected %1 symbols, found %2.</source>
         <translation>%1 の記号を予期しましたが、%2 が見つかりました。</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="804"/>
+        <location filename="../src/file_format_xml.cpp" line="790"/>
         <source>Expected %1 map parts, found %2.</source>
         <translation>%1 の地図の要素が必要ですが、%2 が見つかりました。</translation>
     </message>

@@ -2221,24 +2221,24 @@
         <translation type="obsolete">Konnte die Daten Niet auswerten.</translation>
     </message>
     <message>
-        <location filename="../src/util/xml_stream_util.cpp" line="72"/>
-        <location filename="../src/util/xml_stream_util.cpp" line="88"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="176"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="192"/>
         <source>Could not parse the coordinates.</source>
         <translation>Doorgeven van de coördinaten mislukt.</translation>
     </message>
     <message>
-        <location filename="../src/util/xml_stream_util.cpp" line="112"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="216"/>
         <source>Expected %1 coordinates, found %2.</source>
         <translation>%1 Coördinaten verwacht, %2 gevonden.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="891"/>
+        <location filename="../src/file_format_xml.cpp" line="877"/>
         <source>Error while loading the printing configuration at %1:%2: %3</source>
         <translation>Fout bij het laden van de afdrukinstellingen op %1:%2: %3</translation>
     </message>
     <message>
+        <location filename="../src/file_format_xml.cpp" line="890"/>
         <location filename="../src/file_format_xml.cpp" line="904"/>
-        <location filename="../src/file_format_xml.cpp" line="918"/>
         <source>Error while loading the undo/redo steps at %1:%2: %3</source>
         <translation>Fout bij het laden van de herstel-stappen op %1:%2: %3</translation>
     </message>
@@ -8404,9 +8404,11 @@ van de wijs
     <message numerus="yes">
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="346"/>
         <source>%n object(s) selected</source>
-        <translation><numerusform>%n object geselecteerd</numerusform>
-        <numerusform>%n objecten geselecteerd</numerusform>
-        </translation></message>
+        <translation>
+            <numerusform>%n object geselecteerd</numerusform>
+            <numerusform>%n objecten geselecteerd</numerusform>
+        </translation>
+    </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="350"/>
         <source>Invalid query</source>
@@ -9515,43 +9517,48 @@ Vorlage konnte Niet geladen werden. Existiert deze Gegevens?</translation>
         <translation>Fout in regel %1, kolom %2: %3</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="523"/>
         <source>The map notes could not be read.</source>
-        <translation>De aantekeningen van de kaart konden niet worden ingelezen.</translation>
+        <translation type="vanished">De aantekeningen van de kaart konden niet worden ingelezen.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="564"/>
+        <location filename="../src/file_format_xml.cpp" line="524"/>
+        <location filename="../src/file_format_xml.cpp" line="773"/>
+        <source>Some invalid characters had to be removed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/file_format_xml.cpp" line="542"/>
         <source>Unknown error</source>
         <translation>Onbekende fout</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="565"/>
+        <location filename="../src/file_format_xml.cpp" line="543"/>
         <source>Unsupported or invalid georeferencing specification '%1': %2</source>
         <translation>Niet-ondersteunde of ongeldige geografische uitlijning '%1': %2</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="683"/>
-        <location filename="../src/file_format_xml.cpp" line="742"/>
+        <location filename="../src/file_format_xml.cpp" line="661"/>
+        <location filename="../src/file_format_xml.cpp" line="720"/>
         <source>Could not set knockout property of color '%1'.</source>
         <translation>Uitspaar-eigenschap van kleur '%1' kon niet worden ingesteld.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="702"/>
+        <location filename="../src/file_format_xml.cpp" line="680"/>
         <source>Expected %1 colors, found %2.</source>
         <translation>%1 kleuren veracht, maar %2 gevonden.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="718"/>
+        <location filename="../src/file_format_xml.cpp" line="696"/>
         <source>Spot color %1 not found while processing %2 (%3).</source>
         <translation>Steunkleur %1 niet gevonden bij bewerking van %2 (%3).</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="773"/>
+        <location filename="../src/file_format_xml.cpp" line="751"/>
         <source>Expected %1 symbols, found %2.</source>
         <translation>%1 symbolen verwacht, maar %2 gevonden.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="804"/>
+        <location filename="../src/file_format_xml.cpp" line="790"/>
         <source>Expected %1 map parts, found %2.</source>
         <translation>%1 kaart-delen verwacht, %2 gevonden.</translation>
     </message>

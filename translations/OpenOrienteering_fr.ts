@@ -2128,24 +2128,24 @@
         <translation>OCAD</translation>
     </message>
     <message>
-        <location filename="../src/util/xml_stream_util.cpp" line="72"/>
-        <location filename="../src/util/xml_stream_util.cpp" line="88"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="176"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="192"/>
         <source>Could not parse the coordinates.</source>
         <translation>Impossible de lire et d'analyser les coordonnées.</translation>
     </message>
     <message>
-        <location filename="../src/util/xml_stream_util.cpp" line="112"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="216"/>
         <source>Expected %1 coordinates, found %2.</source>
         <translation>%1 coordonnées attendues, %2 trouvées.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="891"/>
+        <location filename="../src/file_format_xml.cpp" line="877"/>
         <source>Error while loading the printing configuration at %1:%2: %3</source>
         <translation>Erreur lors du chargement de la configuration de l'imprimante en %1:%2: %3</translation>
     </message>
     <message>
+        <location filename="../src/file_format_xml.cpp" line="890"/>
         <location filename="../src/file_format_xml.cpp" line="904"/>
-        <location filename="../src/file_format_xml.cpp" line="918"/>
         <source>Error while loading the undo/redo steps at %1:%2: %3</source>
         <translation>Erreur lors du chargement des scripts 'undo/redo' à %1:%2: %3</translation>
     </message>
@@ -7634,43 +7634,44 @@ La version maximale supportée est la version %2.</translation>
         <translation>Erreur à la ligne %1 colonne %2: %3</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="523"/>
-        <source>The map notes could not be read.</source>
+        <location filename="../src/file_format_xml.cpp" line="524"/>
+        <location filename="../src/file_format_xml.cpp" line="773"/>
+        <source>Some invalid characters had to be removed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="564"/>
+        <location filename="../src/file_format_xml.cpp" line="542"/>
         <source>Unknown error</source>
         <translation>Erreur inconnu</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="565"/>
+        <location filename="../src/file_format_xml.cpp" line="543"/>
         <source>Unsupported or invalid georeferencing specification '%1': %2</source>
         <translation>Spécification de géoréférencement '%1' ,non supportée ou inconnue: %2</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="683"/>
-        <location filename="../src/file_format_xml.cpp" line="742"/>
+        <location filename="../src/file_format_xml.cpp" line="661"/>
+        <location filename="../src/file_format_xml.cpp" line="720"/>
         <source>Could not set knockout property of color '%1'.</source>
         <translation>Impossible de définir la propriété "knockout" pour la couleur '%1'.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="702"/>
+        <location filename="../src/file_format_xml.cpp" line="680"/>
         <source>Expected %1 colors, found %2.</source>
         <translation>%1 couleurs attendues, %2 trouvées.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="718"/>
+        <location filename="../src/file_format_xml.cpp" line="696"/>
         <source>Spot color %1 not found while processing %2 (%3).</source>
         <translation>Ton direct %1 non trouvé lors du calcul %2 (%3).</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="773"/>
+        <location filename="../src/file_format_xml.cpp" line="751"/>
         <source>Expected %1 symbols, found %2.</source>
         <translation>%1 symboles attendus, %2 trouvés.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="804"/>
+        <location filename="../src/file_format_xml.cpp" line="790"/>
         <source>Expected %1 map parts, found %2.</source>
         <translation>%1 parties de carte attendues, %2 trouvées.</translation>
     </message>

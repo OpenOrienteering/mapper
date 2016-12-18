@@ -2114,24 +2114,24 @@
         <translation>OCAD</translation>
     </message>
     <message>
-        <location filename="../src/util/xml_stream_util.cpp" line="72"/>
-        <location filename="../src/util/xml_stream_util.cpp" line="88"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="176"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="192"/>
         <source>Could not parse the coordinates.</source>
         <translation>Koordinaattien tulkitseminen ei onnistu.</translation>
     </message>
     <message>
-        <location filename="../src/util/xml_stream_util.cpp" line="112"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="216"/>
         <source>Expected %1 coordinates, found %2.</source>
         <translation>Vaaditaan %1 koordinaatteja, löydetty %2.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="891"/>
+        <location filename="../src/file_format_xml.cpp" line="877"/>
         <source>Error while loading the printing configuration at %1:%2: %3</source>
         <translation>Virhe ladattaessa tulostus asetuksia %1:%2: %3</translation>
     </message>
     <message>
+        <location filename="../src/file_format_xml.cpp" line="890"/>
         <location filename="../src/file_format_xml.cpp" line="904"/>
-        <location filename="../src/file_format_xml.cpp" line="918"/>
         <source>Error while loading the undo/redo steps at %1:%2: %3</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7604,43 +7604,48 @@ Tuetaan vain versioon %2 asti.</translation>
         <translation>Virhe rivillä %1 sarakkeessa %2: %3</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="523"/>
         <source>The map notes could not be read.</source>
-        <translation>Kartan muistiinpanoja ei voitu lukea.</translation>
+        <translation type="vanished">Kartan muistiinpanoja ei voitu lukea.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="564"/>
+        <location filename="../src/file_format_xml.cpp" line="524"/>
+        <location filename="../src/file_format_xml.cpp" line="773"/>
+        <source>Some invalid characters had to be removed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/file_format_xml.cpp" line="542"/>
         <source>Unknown error</source>
         <translation>Tuntematon virhe</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="565"/>
+        <location filename="../src/file_format_xml.cpp" line="543"/>
         <source>Unsupported or invalid georeferencing specification '%1': %2</source>
         <translation>Georeferoinnin määrittelyä '%1' ei tueta tai ei kelpaa: %2</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="683"/>
-        <location filename="../src/file_format_xml.cpp" line="742"/>
+        <location filename="../src/file_format_xml.cpp" line="661"/>
+        <location filename="../src/file_format_xml.cpp" line="720"/>
         <source>Could not set knockout property of color '%1'.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="702"/>
+        <location filename="../src/file_format_xml.cpp" line="680"/>
         <source>Expected %1 colors, found %2.</source>
         <translation>Oletettiin %1 väriä, löydetty %2.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="718"/>
+        <location filename="../src/file_format_xml.cpp" line="696"/>
         <source>Spot color %1 not found while processing %2 (%3).</source>
         <translation>Spottiväriä %1 ei löytynyt käsiteltäessä %2 (%3).</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="773"/>
+        <location filename="../src/file_format_xml.cpp" line="751"/>
         <source>Expected %1 symbols, found %2.</source>
         <translation>Oletettiin %1 symbolia, löydetty %2.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="804"/>
+        <location filename="../src/file_format_xml.cpp" line="790"/>
         <source>Expected %1 map parts, found %2.</source>
         <translation>Oletettiin %1 karttaosaa, löydetty %2.</translation>
     </message>

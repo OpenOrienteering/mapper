@@ -38,7 +38,7 @@
     <message numerus="yes">
         <location filename="future_translations.cpp" line="40"/>
         <source>Copied %n object(s)</source>
-        <extracomment>To replace existing translation which doesn&apos;t use plural correctly</extracomment>
+        <extracomment>To replace existing translation which doesn't use plural correctly</extracomment>
         <translation>
             <numerusform>Copied one object</numerusform>
             <numerusform>Copied %n objects</numerusform>
@@ -47,7 +47,7 @@
     <message numerus="yes">
         <location filename="future_translations.cpp" line="43"/>
         <source>Pasted %n object(s)</source>
-        <extracomment>To replace existing translation which doesn&apos;t use plural correctly</extracomment>
+        <extracomment>To replace existing translation which doesn't use plural correctly</extracomment>
         <translation>
             <numerusform>Pasted one object</numerusform>
             <numerusform>Pasted %n objects</numerusform>
@@ -56,7 +56,7 @@
     <message numerus="yes">
         <location filename="future_translations.cpp" line="67"/>
         <source>Duplicated %n object(s)</source>
-        <extracomment>To replace existing translation which doesn&apos;t use plural correctly</extracomment>
+        <extracomment>To replace existing translation which doesn't use plural correctly</extracomment>
         <translation>
             <numerusform>Duplicated one object</numerusform>
             <numerusform>Duplicated %n objects</numerusform>
