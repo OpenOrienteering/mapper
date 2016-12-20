@@ -2434,190 +2434,200 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="221"/>
+        <location filename="../src/gui/main_window.cpp" line="270"/>
         <source>&amp;New</source>
         <translation>&amp;Nova</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="223"/>
+        <location filename="../src/gui/main_window.cpp" line="272"/>
         <source>Create a new map</source>
         <translation>Krei novan mapon</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="227"/>
+        <location filename="../src/gui/main_window.cpp" line="276"/>
         <source>&amp;Open...</source>
         <translation>&amp;Malfermi…</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="229"/>
+        <location filename="../src/gui/main_window.cpp" line="278"/>
         <source>Open an existing file</source>
         <translation>Malfermi ekzistantan dosieron</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="233"/>
+        <location filename="../src/gui/main_window.cpp" line="282"/>
         <source>Open &amp;recent</source>
         <translation>Malfermi &amp;lastan</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="244"/>
+        <location filename="../src/gui/main_window.cpp" line="293"/>
         <source>&amp;Save</source>
         <translation>&amp;Konservi</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="249"/>
+        <location filename="../src/gui/main_window.cpp" line="298"/>
         <source>Save &amp;as...</source>
         <translation>Kon&amp;servi kiel…</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="251"/>
+        <location filename="../src/gui/main_window.cpp" line="300"/>
         <source>Ctrl+Shift+S</source>
         <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="257"/>
+        <location filename="../src/gui/main_window.cpp" line="306"/>
         <source>Settings...</source>
         <translation>Agordoj…</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="262"/>
+        <location filename="../src/gui/main_window.cpp" line="311"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="115"/>
         <source>Close</source>
         <translation>Fermi</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="264"/>
+        <location filename="../src/gui/main_window.cpp" line="313"/>
         <source>Close this file</source>
         <translation>Fermi la dosieron</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="268"/>
+        <location filename="../src/gui/main_window.cpp" line="317"/>
         <source>E&amp;xit</source>
         <translation>Eli&amp;ri</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="270"/>
+        <location filename="../src/gui/main_window.cpp" line="319"/>
         <source>Exit the application</source>
         <translation>Eliri la aplikaĵon</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="277"/>
+        <location filename="../src/gui/main_window.cpp" line="326"/>
         <source>&amp;File</source>
         <translation>&amp;Dosiero</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="296"/>
+        <location filename="../src/gui/main_window.cpp" line="345"/>
         <source>General</source>
         <translation>Ĝenerala</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="311"/>
+        <location filename="../src/gui/main_window.cpp" line="360"/>
         <source>Open &amp;Manual</source>
         <translation>Malfermi &amp;Manlibron</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="312"/>
+        <location filename="../src/gui/main_window.cpp" line="361"/>
         <source>Show the help file for this application</source>
         <translation>Montri helpdosieron por la aplikaĵo</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="316"/>
+        <location filename="../src/gui/main_window.cpp" line="365"/>
         <source>&amp;About %1</source>
         <translation>&amp;Pri %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="317"/>
+        <location filename="../src/gui/main_window.cpp" line="366"/>
         <source>Show information about this application</source>
         <translation>Montri informon pri la aplikaĵo</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="321"/>
+        <location filename="../src/gui/main_window.cpp" line="370"/>
         <source>About &amp;Qt</source>
         <translation>Pri &amp;Qt</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="322"/>
+        <location filename="../src/gui/main_window.cpp" line="371"/>
         <source>Show information about Qt</source>
         <translation>Montri informon pri Qt</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="328"/>
+        <location filename="../src/gui/main_window.cpp" line="377"/>
         <source>&amp;Help</source>
         <translation>&amp;Helpo</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="501"/>
+        <location filename="../src/gui/main_window.cpp" line="550"/>
         <source>Do you want to remove the autosaved version?</source>
         <translation>Ĉu vi volas forigi la aŭtokonservitan version?</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="507"/>
+        <location filename="../src/gui/main_window.cpp" line="556"/>
         <source>The file has been modified.
 Do you want to save your changes?</source>
         <translation>La dosiero estis modifita.
 Ĉu vi volas konservi viajn ŝanĝojn?</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="347"/>
+        <location filename="../src/gui/main_window.cpp" line="396"/>
         <source>Unsaved file</source>
         <translation>Nekonservita dosiero</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="620"/>
-        <location filename="../src/gui/main_window.cpp" line="909"/>
+        <location filename="../src/gui/main_window.cpp" line="669"/>
+        <location filename="../src/gui/main_window.cpp" line="960"/>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="445"/>
         <source>Warning</source>
         <translation>Averto</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="620"/>
+        <location filename="../src/gui/main_window.cpp" line="669"/>
         <source>The selected map scale is 1:%1, but the chosen symbol set has a nominal scale of 1:%2.
 
 Do you want to scale the symbols to the selected scale?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="687"/>
+        <location filename="../src/gui/main_window.cpp" line="738"/>
         <source>Crash warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="688"/>
+        <location filename="../src/gui/main_window.cpp" line="739"/>
         <source>It seems that %1 crashed the last time this file was opened:&lt;br /&gt;&lt;tt&gt;%2&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Really retry to open it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="876"/>
+        <location filename="../src/gui/main_window.cpp" line="927"/>
         <source>Autosaving...</source>
         <translation>Aŭtokonservado…</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="886"/>
+        <location filename="../src/gui/main_window.cpp" line="937"/>
         <source>Autosaving failed!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="961"/>
+        <location filename="../src/gui/main_window.cpp" line="1012"/>
         <source>All maps</source>
         <translation>Ĉiuj mapoj</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="965"/>
+        <location filename="../src/gui/main_window.cpp" line="1016"/>
         <source>All files</source>
         <translation>Ĉiuj dosieroj</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="658"/>
+        <location filename="../src/gui/main_window.cpp" line="707"/>
         <source>Open file</source>
         <translation>Malfermi dosieron</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="701"/>
-        <location filename="../src/gui/main_window.cpp" line="1021"/>
+        <location filename="../src/gui/main_window.cpp" line="152"/>
+        <source>You must close the current file before you can open another one.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/main_window.cpp" line="719"/>
+        <source>Opening %1</source>
+        <translation>Malfermo de %1</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/main_window.cpp" line="752"/>
+        <location filename="../src/gui/main_window.cpp" line="1072"/>
         <source>Error</source>
         <translation>Eraro</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="701"/>
+        <location filename="../src/gui/main_window.cpp" line="752"/>
         <source>Cannot open file:
 %1
 
@@ -2628,19 +2638,19 @@ File format not recognized.</source>
 Dosierformo ne rekonita.</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="778"/>
+        <location filename="../src/gui/main_window.cpp" line="829"/>
         <source>The file has been modified.
 Do you want to discard your changes?</source>
         <translation>La dosiero estis modifita.
 Ĉu vi volas forĵeti viajn ŝanĝojn?</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="829"/>
+        <location filename="../src/gui/main_window.cpp" line="880"/>
         <source>&amp;%1 %2</source>
         <translation>&amp;%1 %2</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="908"/>
+        <location filename="../src/gui/main_window.cpp" line="959"/>
         <source>This map is being saved as a "%1" file. Information may be lost.
 
 Press Yes to save in this format.
@@ -2648,22 +2658,22 @@ Press No to choose a different format.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1001"/>
+        <location filename="../src/gui/main_window.cpp" line="1052"/>
         <source>Save file</source>
         <translation>Konservi dosieron</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1022"/>
+        <location filename="../src/gui/main_window.cpp" line="1073"/>
         <source>File could not be saved:</source>
         <translation>Dosiero ne povis esti konservita:</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1023"/>
+        <location filename="../src/gui/main_window.cpp" line="1074"/>
         <source>There was a problem in determining the file format.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1024"/>
+        <location filename="../src/gui/main_window.cpp" line="1075"/>
         <source>Please report this as a bug.</source>
         <translation>Bonvolu raporti tion kiel cimon.</translation>
     </message>

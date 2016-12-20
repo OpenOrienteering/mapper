@@ -2831,52 +2831,52 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="221"/>
+        <location filename="../src/gui/main_window.cpp" line="270"/>
         <source>&amp;New</source>
         <translation>新規(&amp;N)</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="223"/>
+        <location filename="../src/gui/main_window.cpp" line="272"/>
         <source>Create a new map</source>
         <translation>新しい地図を作成</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="227"/>
+        <location filename="../src/gui/main_window.cpp" line="276"/>
         <source>&amp;Open...</source>
         <translation>開く(&amp;O)...</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="229"/>
+        <location filename="../src/gui/main_window.cpp" line="278"/>
         <source>Open an existing file</source>
         <translation>既存のファイルを開く</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="233"/>
+        <location filename="../src/gui/main_window.cpp" line="282"/>
         <source>Open &amp;recent</source>
         <translation>最近開いたファイル(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="244"/>
+        <location filename="../src/gui/main_window.cpp" line="293"/>
         <source>&amp;Save</source>
         <translation>上書き保存(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="249"/>
+        <location filename="../src/gui/main_window.cpp" line="298"/>
         <source>Save &amp;as...</source>
         <translation>名前を付けて保存(&amp;A)...</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="251"/>
+        <location filename="../src/gui/main_window.cpp" line="300"/>
         <source>Ctrl+Shift+S</source>
         <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="257"/>
+        <location filename="../src/gui/main_window.cpp" line="306"/>
         <source>Settings...</source>
         <translation>設定...</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="262"/>
+        <location filename="../src/gui/main_window.cpp" line="311"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="115"/>
         <source>Close</source>
         <translation>閉じる</translation>
@@ -2886,91 +2886,91 @@
         <translation type="obsolete">Ctrl+W</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="264"/>
+        <location filename="../src/gui/main_window.cpp" line="313"/>
         <source>Close this file</source>
         <translation>ファイルを閉じる</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="268"/>
+        <location filename="../src/gui/main_window.cpp" line="317"/>
         <source>E&amp;xit</source>
         <translation>終了(&amp;X)</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="270"/>
+        <location filename="../src/gui/main_window.cpp" line="319"/>
         <source>Exit the application</source>
         <translation>アプリケーションを終了</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="277"/>
+        <location filename="../src/gui/main_window.cpp" line="326"/>
         <source>&amp;File</source>
         <translation>ファイル(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="296"/>
+        <location filename="../src/gui/main_window.cpp" line="345"/>
         <source>General</source>
         <translation>一般</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="311"/>
+        <location filename="../src/gui/main_window.cpp" line="360"/>
         <source>Open &amp;Manual</source>
         <translation>マニュアルを開く(&amp;M)</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="312"/>
+        <location filename="../src/gui/main_window.cpp" line="361"/>
         <source>Show the help file for this application</source>
         <translation>このアプリケーションのヘルプファイルを表示</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="316"/>
+        <location filename="../src/gui/main_window.cpp" line="365"/>
         <source>&amp;About %1</source>
         <translation>%1 について(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="317"/>
+        <location filename="../src/gui/main_window.cpp" line="366"/>
         <source>Show information about this application</source>
         <translation>このアプリケーションについての情報を表示</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="321"/>
+        <location filename="../src/gui/main_window.cpp" line="370"/>
         <source>About &amp;Qt</source>
         <translation>QT について(&amp;Q)</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="322"/>
+        <location filename="../src/gui/main_window.cpp" line="371"/>
         <source>Show information about Qt</source>
         <translation>Qtについての情報を表示</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="328"/>
+        <location filename="../src/gui/main_window.cpp" line="377"/>
         <source>&amp;Help</source>
         <translation>ヘルプ(&amp;H)</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="501"/>
+        <location filename="../src/gui/main_window.cpp" line="550"/>
         <source>Do you want to remove the autosaved version?</source>
         <translation>自動保存したバージョンを削除しますか?</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="507"/>
+        <location filename="../src/gui/main_window.cpp" line="556"/>
         <source>The file has been modified.
 Do you want to save your changes?</source>
         <translation>ファイルが変更されています。
 変更を保存しますか?</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="347"/>
+        <location filename="../src/gui/main_window.cpp" line="396"/>
         <source>Unsaved file</source>
         <translation>未保存のファイル</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="620"/>
-        <location filename="../src/gui/main_window.cpp" line="909"/>
+        <location filename="../src/gui/main_window.cpp" line="669"/>
+        <location filename="../src/gui/main_window.cpp" line="960"/>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="445"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="620"/>
+        <location filename="../src/gui/main_window.cpp" line="669"/>
         <source>The selected map scale is 1:%1, but the chosen symbol set has a nominal scale of 1:%2.
 
 Do you want to scale the symbols to the selected scale?</source>
@@ -2978,48 +2978,58 @@ Do you want to scale the symbols to the selected scale?</source>
 記号の縮尺を地図の縮尺に合わせますか?</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="687"/>
+        <location filename="../src/gui/main_window.cpp" line="738"/>
         <source>Crash warning</source>
         <translation>クラッシュ警告</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="688"/>
+        <location filename="../src/gui/main_window.cpp" line="739"/>
         <source>It seems that %1 crashed the last time this file was opened:&lt;br /&gt;&lt;tt&gt;%2&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Really retry to open it?</source>
         <translation>最後にこのファイルを開いた時に %1 はクラッシュしたようです:&lt;br /&gt;&lt;tt&gt;%2&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;もう一度開いてもよろしいですか?</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="876"/>
+        <location filename="../src/gui/main_window.cpp" line="927"/>
         <source>Autosaving...</source>
         <translation>自動保存中...</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="886"/>
+        <location filename="../src/gui/main_window.cpp" line="937"/>
         <source>Autosaving failed!</source>
         <translation>自動保存に失敗しました!</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="961"/>
+        <location filename="../src/gui/main_window.cpp" line="1012"/>
         <source>All maps</source>
         <translation>すべての地図ファイル</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="965"/>
+        <location filename="../src/gui/main_window.cpp" line="1016"/>
         <source>All files</source>
         <translation>すべてのファイル</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="658"/>
+        <location filename="../src/gui/main_window.cpp" line="707"/>
         <source>Open file</source>
         <translation>ファイルを開く</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="701"/>
-        <location filename="../src/gui/main_window.cpp" line="1021"/>
+        <location filename="../src/gui/main_window.cpp" line="152"/>
+        <source>You must close the current file before you can open another one.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/main_window.cpp" line="719"/>
+        <source>Opening %1</source>
+        <translation>%1 を開きます</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/main_window.cpp" line="752"/>
+        <location filename="../src/gui/main_window.cpp" line="1072"/>
         <source>Error</source>
         <translation>エラー</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="701"/>
+        <location filename="../src/gui/main_window.cpp" line="752"/>
         <source>Cannot open file:
 %1
 
@@ -3030,19 +3040,19 @@ File format not recognized.</source>
 ファイル形式を認識できません。</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="778"/>
+        <location filename="../src/gui/main_window.cpp" line="829"/>
         <source>The file has been modified.
 Do you want to discard your changes?</source>
         <translation>ファイルが変更されています。
 変更を破棄しますか?</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="829"/>
+        <location filename="../src/gui/main_window.cpp" line="880"/>
         <source>&amp;%1 %2</source>
         <translation>&amp;%1 %2</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="908"/>
+        <location filename="../src/gui/main_window.cpp" line="959"/>
         <source>This map is being saved as a "%1" file. Information may be lost.
 
 Press Yes to save in this format.
@@ -3053,22 +3063,22 @@ Yesを押してこの形式で保存します。
 Noを押して形式を変更します。</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1001"/>
+        <location filename="../src/gui/main_window.cpp" line="1052"/>
         <source>Save file</source>
         <translation>ファイルを保存</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1022"/>
+        <location filename="../src/gui/main_window.cpp" line="1073"/>
         <source>File could not be saved:</source>
         <translation>ファイルを保存することができません:</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1023"/>
+        <location filename="../src/gui/main_window.cpp" line="1074"/>
         <source>There was a problem in determining the file format.</source>
         <translation>ファイル形式を決定するときに問題が発生しました。</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1024"/>
+        <location filename="../src/gui/main_window.cpp" line="1075"/>
         <source>Please report this as a bug.</source>
         <translation>この問題をバグとして報告してください。</translation>
     </message>
