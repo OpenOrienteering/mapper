@@ -224,6 +224,20 @@ public:
 	
 public slots:
 	/**
+	 * Reacts to application state changes.
+	 * 
+	 * On Android, when the application state becomes Qt::ApplicationActive,
+	 * this method looks for the Android activity's current intent and triggers
+	 * the loading of a given file (if there is not already another file loaded).
+	 * 
+	 * In general, when called for the first time after application start, it
+	 * opens the most recently used file, unless this feature is disabled in the
+	 * settings, and unless other files are registered for opening (i.e. files
+	 * given as command line parameters.)
+	 */
+	void applicationStateChanged();
+	
+	/**
 	 * Show a wizard for creating new maps.
 	 * 
 	 * May open a new main window.

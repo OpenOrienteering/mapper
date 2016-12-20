@@ -37,7 +37,9 @@
 #include <QWhatsThis>
 
 #if defined(Q_OS_ANDROID)
-#  include <QtAndroidExtras/QAndroidJniObject>
+#  include <QtAndroid>
+#  include <QAndroidJniObject>
+#  include <QUrl>
 #endif
 
 #include <mapper_config.h>
@@ -108,7 +110,10 @@ MainWindow::MainWindow(bool as_main_window, QWidget* parent, Qt::WindowFlags fla
 #endif
 	
 	connect(&Settings::getInstance(), &Settings::settingsChanged, this, &MainWindow::settingsChanged);
+	connect(qApp, &QGuiApplication::applicationStateChanged, this, &MainWindow::applicationStateChanged);
 }
+
+
 
 MainWindow::~MainWindow()
 {
@@ -124,6 +129,50 @@ void MainWindow::settingsChanged()
 {
 	updateRecentFileActions();
 }
+
+
+
+void MainWindow::applicationStateChanged()
+{
+#ifdef Q_OS_ANDROID
+	// The Android app may be started or resumed when the user triggers a suitable "intent".
+	if (QGuiApplication::applicationState() == Qt::ApplicationActive)
+	{
+		auto activity = QtAndroid::androidActivity();
+		auto intent_path = activity.callObjectMethod<jstring>("takeIntentPath").toString();
+		if (!intent_path.isEmpty())
+		{
+			const auto local_file = QUrl(intent_path).toLocalFile();
+			if (!hasOpenedFile())
+			{
+				openPathLater(local_file);
+			}
+			else if (currentPath() != local_file)
+			{
+				showStatusBarMessage(tr("You must close the current file before you can open another one."));
+			}
+			return;
+		}
+	}
+#endif
+	
+	// Only on startup, we may need to load the most recently used file.
+	static bool starting_up = true;
+	if (starting_up)
+	{
+		starting_up = false;
+		QSettings settings;
+		if (path_backlog.isEmpty()
+		    && settings.value(QLatin1String("openMRUFile")).toBool())
+		{
+			const auto files = settings.value(QLatin1String("recentFileList")).toStringList();
+			if (!files.isEmpty())
+				openPathLater(files[0]);
+		}
+	}
+}
+
+
 
 QString MainWindow::appName() const
 {
@@ -662,11 +711,13 @@ void MainWindow::showOpenDialog()
 
 bool MainWindow::openPath(const QString &path)
 {
-#ifndef Q_OS_ANDROID
 	// Empty path does nothing. This also helps with the single instance application code.
 	if (path.isEmpty())
 		return true;
 	
+#ifdef Q_OS_ANDROID
+	showStatusBarMessage(tr("Opening %1").arg(QFileInfo(path).fileName()));
+#else
 	MainWindow* const existing = findMainWindow(path);
 	if (existing)
 	{
@@ -799,7 +850,7 @@ void MainWindow::switchActualPath(const QString& path)
 void MainWindow::openPathLater(const QString& path)
 {
 	path_backlog.push_back(path);
-	QTimer::singleShot(0, this, SLOT(openPathBacklog()));
+	QTimer::singleShot(10, this, SLOT(openPathBacklog()));
 }
 
 void MainWindow::openPathBacklog()
