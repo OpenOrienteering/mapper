@@ -2678,7 +2678,7 @@ Do you want to scale the symbols to the selected scale?</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="152"/>
         <source>You must close the current file before you can open another one.</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы должны закрыть текущий файл перед тем, как открыть другой.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="719"/>
@@ -7409,7 +7409,7 @@ The maximum supported version is %2.</source>
         <location filename="../src/file_format_xml.cpp" line="524"/>
         <location filename="../src/file_format_xml.cpp" line="773"/>
         <source>Some invalid characters had to be removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Некоторые недопустимые символы должны были быть удалены.</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="542"/>
