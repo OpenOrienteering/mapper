@@ -229,7 +229,7 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="49"/>
         <source>File saved by the user</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosiero estas konservita por la uzanto</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="56"/>
@@ -853,7 +853,7 @@
         <location filename="../src/tool_draw_rectangle.cpp" line="711"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="735"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap to existing objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+Klaki&lt;/b&gt;: Kapti per ekzistantaj objektoj. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1095"/>
@@ -926,7 +926,7 @@
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1100"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Draw a straight line. &lt;b&gt;Drag&lt;/b&gt;: Draw a curve. &lt;b&gt;Right or double click&lt;/b&gt;: Finish the path. &lt;b&gt;%1&lt;/b&gt;: Close the path. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Klaki&lt;/b&gt;: Desegni rektan linion. &lt;b&gt;Treni&lt;/b&gt;: Desegni kurbon. &lt;b&gt;Dekstra aŭ duobla klako&lt;/b&gt;: Fini la vojon. &lt;b&gt;%1&lt;/b&gt;: Fermi la vojon. </translation>
     </message>
 </context>
 <context>
@@ -1229,7 +1229,7 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="67"/>
         <source>Edit tool:</source>
-        <translation type="unfinished"></translation>
+        <translation>Redaktilo:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="70"/>
@@ -1258,7 +1258,7 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="82"/>
         <source>Rectangle tool:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ortangulilo:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="85"/>
@@ -1321,7 +1321,7 @@
     <message>
         <location filename="../src/tool_fill.cpp" line="168"/>
         <source>Failed to create the fill object.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fiaskis krei la plenigan objekton.</translation>
     </message>
     <message>
         <location filename="../src/tool_fill.cpp" line="179"/>
@@ -1367,7 +1367,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="80"/>
         <source>Pixels per inch:</source>
-        <translation>Pikseloj en colo:</translation>
+        <translation>Bilderoj en colo:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="90"/>
@@ -1465,12 +1465,12 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="361"/>
         <source>Primary screen resolution in pixels:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ĉefa ekrandistingivo en bilderoj:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="365"/>
         <source>Primary screen size in inches (diagonal):</source>
-        <translation type="unfinished"></translation>
+        <translation>Ĉefa ekrangrando en coloj (diagonalo):</translation>
     </message>
 </context>
 <context>
@@ -1779,7 +1779,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="669"/>
         <source>Declination value not found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Inklinacia valoro ne trovita.</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="674"/>
@@ -6559,7 +6559,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/template_image.cpp" line="620"/>
         <source>Meters per pixel:</source>
-        <translation type="unfinished"></translation>
+        <translation>Metroj en bildero:</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="624"/>
@@ -7064,12 +7064,12 @@ La maksimuma subtenata versio estas %2.</translation>
     <message>
         <location filename="../src/symbol_text.cpp" line="654"/>
         <source>Paragraph spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>Alineinterspaco:</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="657"/>
         <source>Character spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>Interspaco:</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="659"/>
