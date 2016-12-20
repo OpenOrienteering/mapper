@@ -24,7 +24,11 @@
 #include <memory>
 
 
-#if defined(__cpp_lib_make_unique) && __cpp_lib_make_unique >= 201304 // C++14
+#if defined(__cpp_lib_make_unique) && __cpp_lib_make_unique >= 201304 // C++14, gcc
+
+using std::make_unique;
+
+#elif defined(_LIBCPP_STD_VER) &&  _LIBCPP_STD_VER > 11 // C++14, llvm
 
 using std::make_unique;
 
