@@ -2759,7 +2759,7 @@ Onbekend bestandsformaat.</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="152"/>
         <source>You must close the current file before you can open another one.</source>
-        <translation type="unfinished"></translation>
+        <translation>U dient het huidige bestand af te sluiten alvorens een andere te openen.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="272"/>
@@ -8369,7 +8369,7 @@ van de wijs
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="60"/>
         <source>Key</source>
-        <translation type="unfinished">Naam</translation>
+        <translation>Naam</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="60"/>
@@ -9534,7 +9534,7 @@ Vorlage konnte Niet geladen werden. Existiert deze Gegevens?</translation>
         <location filename="../src/file_format_xml.cpp" line="524"/>
         <location filename="../src/file_format_xml.cpp" line="773"/>
         <source>Some invalid characters had to be removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sommige ongeldige karakters zijn verwijderd.</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="542"/>

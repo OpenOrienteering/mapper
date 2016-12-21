@@ -2698,7 +2698,7 @@ Sollen alle Symbole auf den gewählten Maßstab skaliert werden?</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="719"/>
         <source>Opening %1</source>
-        <translation>%1 öffnen</translation>
+        <translation>%1 wird geöffnet</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="738"/>

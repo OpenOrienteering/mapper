@@ -3015,7 +3015,7 @@ Do you want to scale the symbols to the selected scale?</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="152"/>
         <source>You must close the current file before you can open another one.</source>
-        <translation type="unfinished"></translation>
+        <translation>別のファイルを開く前に、現在のファイルを閉じる必要があります。</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="719"/>
@@ -8258,7 +8258,7 @@ The maximum supported version is %2.</source>
         <location filename="../src/file_format_xml.cpp" line="524"/>
         <location filename="../src/file_format_xml.cpp" line="773"/>
         <source>Some invalid characters had to be removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>いくつかの無効な文字を削除する必要がありました。</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="542"/>
