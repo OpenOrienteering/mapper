@@ -44,9 +44,9 @@ MapEditorToolBase::MapEditorToolBase(const QCursor& cursor, MapEditorTool::Type 
   start_drag_distance(Settings::getInstance().getStartDragDistancePx()),
   angle_helper(new ConstrainAngleToolHelper()),
   snap_helper(new SnappingToolHelper(this)),
-  snap_exclude_object(NULL),
+  snap_exclude_object(nullptr),
   cur_map_widget(editor->getMainWidget()),
-  key_button_bar(NULL),
+  key_button_bar(nullptr),
   cursor(scaledToScreen(cursor)),
   preview_update_triggered(false),
   dragging(false),
@@ -66,8 +66,8 @@ MapEditorToolBase::~MapEditorToolBase()
 
 void MapEditorToolBase::init()
 {
-	connect(map(), SIGNAL(objectSelectionChanged()), this, SLOT(objectSelectionChanged()));
-	connect(map(), SIGNAL(selectedObjectEdited()), this, SLOT(updateDirtyRect()));
+	connect(map(), &Map::objectSelectionChanged, this, &MapEditorToolBase::objectSelectionChanged);
+	connect(map(), &Map::selectedObjectEdited, this, &MapEditorToolBase::updateDirtyRect);
 	initImpl();
 	updateDirtyRect();
 	updateStatusText();
@@ -75,24 +75,46 @@ void MapEditorToolBase::init()
 	MapEditorTool::init();
 }
 
+void MapEditorToolBase::initImpl()
+{
+	// nothing
+}
+
 const QCursor& MapEditorToolBase::getCursor() const
 {
 	return cursor;
 }
 
+
+
+Qt::KeyboardModifiers MapEditorToolBase::keyButtonBarModifiers() const
+{
+	return Qt::KeyboardModifiers(key_button_bar ? key_button_bar->activeModifiers() : 0);
+}
+
+
+
+void MapEditorToolBase::mousePositionEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+{
+	active_modifiers = event->modifiers() | keyButtonBarModifiers();
+	cur_pos = event->pos();
+	cur_pos_map = map_coord;
+	cur_map_widget = widget;
+	updateConstrainedPositions();
+}
+
+
 bool MapEditorToolBase::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
-	active_modifiers = Qt::KeyboardModifiers(event->modifiers() | (key_button_bar ? key_button_bar->activeModifiers() : 0));
+	mousePositionEvent(event, map_coord, widget);
+	
 	if (event->button() == Qt::LeftButton)
 	{
-		cur_map_widget = widget;
+		click_pos = cur_pos;
+		click_pos_map = cur_pos_map;
 		
-		click_pos = event->pos();
-		click_pos_map = map_coord;
-		
-		cur_pos = click_pos;
-		cur_pos_map = click_pos_map;
-		calcConstrainedPositions(widget);
+		constrained_click_pos = constrained_pos;
+		constrained_click_pos_map = constrained_pos_map;
 		
 		clickPress();
 		return true;
@@ -110,13 +132,7 @@ bool MapEditorToolBase::mousePressEvent(QMouseEvent* event, MapCoordF map_coord,
 
 bool MapEditorToolBase::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
-	auto old_constrained_pos     = constrained_pos;
-	auto old_constrained_pos_map = constrained_pos_map;
-	
-	active_modifiers = Qt::KeyboardModifiers(event->modifiers() | (key_button_bar ? key_button_bar->activeModifiers() : 0));
-	cur_pos = event->pos();
-	cur_pos_map = map_coord;
-	calcConstrainedPositions(widget);
+	mousePositionEvent(event, map_coord, widget);
 	
 	if (event->buttons().testFlag(Qt::LeftButton))
 	{
@@ -128,15 +144,12 @@ bool MapEditorToolBase::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, 
 		{
 			click_pos = cur_pos;
 			click_pos_map = cur_pos_map;
+			constrained_click_pos = constrained_pos;
+			constrained_click_pos_map = constrained_pos_map;
 			dragging_canceled = false;
 		}
 		else if ((cur_pos - click_pos).manhattanLength() >= start_drag_distance)
 		{
-			// Use the actual click and current position to detect dragging, but
-			// use the constrained variant of the click position as start of the
-			// dragging operation.
-			click_pos     = old_constrained_pos;
-			click_pos_map = old_constrained_pos_map;
 			startDragging();
 		}
 		return true;
@@ -150,10 +163,7 @@ bool MapEditorToolBase::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, 
 
 bool MapEditorToolBase::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
-	active_modifiers = Qt::KeyboardModifiers(event->modifiers() | (key_button_bar ? key_button_bar->activeModifiers() : 0));
-	cur_pos = event->pos();
-	cur_pos_map = map_coord;
-	calcConstrainedPositions(widget);
+	mousePositionEvent(event, map_coord, widget);
 	
 	if (event->button() == Qt::LeftButton)
 	{
@@ -180,7 +190,7 @@ bool MapEditorToolBase::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coor
 
 bool MapEditorToolBase::keyPressEvent(QKeyEvent* event)
 {
-	active_modifiers = Qt::KeyboardModifiers(event->modifiers() | (key_button_bar ? key_button_bar->activeModifiers() : 0));
+	active_modifiers = event->modifiers() | keyButtonBarModifiers();
 #if defined(Q_OS_MAC)
 	// FIXME: On Mac, QKeyEvent::modifiers() seems to return the keyboard 
 	// modifier flags that existed immediately before the event occurred.
@@ -210,7 +220,7 @@ bool MapEditorToolBase::keyPressEvent(QKeyEvent* event)
 
 bool MapEditorToolBase::keyReleaseEvent(QKeyEvent* event)
 {
-	active_modifiers = Qt::KeyboardModifiers(event->modifiers() | (key_button_bar ? key_button_bar->activeModifiers() : 0));
+	active_modifiers = event->modifiers() | keyButtonBarModifiers();
 #if defined(Q_OS_MAC)
 	// FIXME: On Mac, QKeyEvent::modifiers() seems to return the keyboard 
 	// modifier flags that existed immediately before the event occurred.
@@ -406,7 +416,7 @@ void MapEditorToolBase::updatePreviewObjectsAsynchronously()
 
 void MapEditorToolBase::drawSelectionOrPreviewObjects(QPainter* painter, MapWidget* widget, bool draw_opaque)
 {
-	map()->drawSelection(painter, true, widget, renderables->empty() ? NULL : renderables.data(), draw_opaque);
+	map()->drawSelection(painter, true, widget, renderables->empty() ? nullptr : renderables.data(), draw_opaque);
 }
 
 void MapEditorToolBase::startEditing()
@@ -445,7 +455,7 @@ void MapEditorToolBase::finishEditing(bool delete_objects, bool create_undo_step
 
 void MapEditorToolBase::reapplyConstraintHelpers()
 {
-	calcConstrainedPositions(cur_map_widget);
+	updateConstrainedPositions();
 	if (dragging)
 		dragMove();
 	else
@@ -466,13 +476,13 @@ void MapEditorToolBase::activateSnapHelperWhileEditing(bool enable)
 	reapplyConstraintHelpers();
 }
 
-void MapEditorToolBase::calcConstrainedPositions(MapWidget* widget)
+void MapEditorToolBase::updateConstrainedPositions()
 {
 	if (snap_helper->getFilter() != SnappingToolHelper::NoSnapping)
 	{
 		SnappingToolHelperSnapInfo info;
-		constrained_pos_map = MapCoordF(snap_helper->snapToObject(cur_pos_map, widget, &info, snap_exclude_object));
-		constrained_pos = widget->mapToViewport(constrained_pos_map).toPoint();
+		constrained_pos_map = MapCoordF(snap_helper->snapToObject(cur_pos_map, cur_map_widget, &info, snap_exclude_object));
+		constrained_pos = cur_map_widget->mapToViewport(constrained_pos_map);
 		snapped_to_pos = info.type != SnappingToolHelper::NoSnapping;
 	}
 	else
@@ -481,10 +491,9 @@ void MapEditorToolBase::calcConstrainedPositions(MapWidget* widget)
 		constrained_pos = cur_pos;
 		snapped_to_pos = false;
 	}
+	
 	if (angle_helper->isActive())
 	{
-		QPointF temp_pos;
-		angle_helper->getConstrainedCursorPositions(constrained_pos_map, constrained_pos_map, temp_pos, widget);
-		constrained_pos = temp_pos.toPoint();
+		angle_helper->getConstrainedCursorPositions(constrained_pos_map, constrained_pos_map, constrained_pos, cur_map_widget);
 	}
 }

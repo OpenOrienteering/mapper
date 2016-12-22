@@ -238,7 +238,7 @@ void DrawTextTool::clickRelease()
 
 void DrawTextTool::dragMove()
 {
-	auto p1 = click_pos_map;
+	auto p1 = constrained_click_pos_map;
 	auto p2 = constrained_pos_map;
 	auto width = qAbs(p1.x() - p2.x());
 	auto height = qAbs(p1.y() - p2.y());
@@ -328,7 +328,7 @@ int DrawTextTool::updateDirtyRectImpl(QRectF& rect)
 	
 	if (isDragging())
 	{
-		rectIncludeSafe(rect, click_pos_map);
+		rectIncludeSafe(rect, constrained_click_pos_map);
 		rectIncludeSafe(rect, constrained_pos_map);
 	}
 	else if (text_editor)
@@ -348,7 +348,7 @@ void DrawTextTool::drawImpl(QPainter* painter, MapWidget* widget)
 		painter->setPen(active_color);
 		painter->setBrush(Qt::NoBrush);
 		
-		auto rect = widget->mapToViewport(QRectF(click_pos_map, constrained_pos_map));
+		auto rect = widget->mapToViewport(QRectF(constrained_click_pos_map, constrained_pos_map));
 		painter->drawRect(rect);
 		rect.adjust(1, 1, -1, -1);
 		painter->setPen(qRgb(255, 255, 255));

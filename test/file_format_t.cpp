@@ -89,6 +89,7 @@ void FileFormatTest::initTestCase()
 	
 	map_filenames
 	  << QString::fromLatin1("COPY_OF_issue-513-coords-outside-printable.xmap")
+	  << QString::fromLatin1("COPY_OF_issue-513-coords-outside-printable.omap")
 	  << QString::fromLatin1("COPY_OF_issue-513-coords-outside-qint32.omap")
 	  << QString::fromLatin1("COPY_OF_spotcolor_overprint.xmap")
 	  << QString::fromLatin1("COPY_OF_test_map.omap");
@@ -133,6 +134,10 @@ void FileFormatTest::issue_513_high_coordinates()
 	// Load the test map
 	Map map {};
 	QVERIFY(map.loadFrom(filename, nullptr, nullptr, false, false));
+	
+	// The map's single object must exist. Otherwise it may have been deleted
+	// for being irregular, indicating failure to handle high coordinates.
+	QCOMPARE(map.getNumObjects(), 1);
 	
 	for (int i = 0; i < map.getNumParts(); ++i)
 	{

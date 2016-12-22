@@ -46,10 +46,20 @@ class MapEditorToolBase : public MapEditorTool
 Q_OBJECT
 public:
 	MapEditorToolBase(const QCursor& cursor, MapEditorTool::Type tool_type, MapEditorController* editor, QAction* tool_action);
-	virtual ~MapEditorToolBase();
+	~MapEditorToolBase() override;
 	
 	void init() override;
 	const QCursor& getCursor() const override;
+	
+	Qt::KeyboardModifiers keyButtonBarModifiers() const;
+	
+	/**
+	 * Updates the saved current position (raw and constrained), map widget, and modifiers.
+	 * 
+	 * This function is called by the other mouse*Event handlers of this class.
+	 * Derived classes which override the handlers may wish to call this, too.
+	 */
+	void mousePositionEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	
 	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
 	bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
@@ -75,7 +85,7 @@ protected:
 	// to get the position constrained by the snap and angle tool helpers, if activated.
 	
 	/// Can do additional initializations at a time where no other tool is active (in contrast to the constructor)
-	virtual void initImpl() {}
+	virtual void initImpl();
 	/// Must include the area of all custom drawings into the rect,
 	/// which aleady contains the area of the selection preview and activated tool helpers when this method is called.
 	/// Must return the size of the pixel border, or -1 to clear the drawing.
@@ -161,21 +171,31 @@ protected:
 	/// and calls mouseMove() or dragMove() to update the tool.
 	void activateSnapHelperWhileEditing(bool enable = true);
 	
-	/// Calculates the constrained cursor position from the current position.
-	/// Normally it is not needed to call this yourself, as it is called by the mouse handling methods,
-	/// only in case a constrain tool helper is activated it is useful to get instant feedback.
-	void calcConstrainedPositions(MapWidget* widget);
+	/**
+	 * Calculates the constrained cursor position for the current position and map widget.
+	 * 
+	 * Key event handlers which change constraint helper activation must call
+	 * this to be able to visualize the effect of the change. Overrides of
+	 * mouse*Event handlers shall call mousePositionEvent() instead. This is
+	 * also done by the default implementation of these handlers. Thus it is not
+	 * neccessary to call this explicitly from clickPress(), clickRelease(),
+	 * mouseMove(), dragStart(), dragMove(), or dragFinish() handlers.
+	 */
+	void updateConstrainedPositions();
 	
 	// Mouse handling
 	
-	/// Position where the left mouse button was pressed
+	/// Position where the left mouse button was pressed, with no constraints applied.
 	QPoint click_pos;
 	MapCoordF click_pos_map;
+	/// Position where the left mouse button was pressed, constrained by tool helpers, if active.
+	QPointF constrained_click_pos;
+	MapCoordF constrained_click_pos_map;
 	/// Position where the cursor is currently
 	QPoint cur_pos;
 	MapCoordF cur_pos_map;
 	/// Position where the cursor is currently, constrained by tool helpers, if active
-	QPoint constrained_pos;
+	QPointF constrained_pos;
 	MapCoordF constrained_pos_map;
 	/// This is set to true when constrained_pos(_map) is a snapped position
 	bool snapped_to_pos;

@@ -71,6 +71,8 @@ protected:
 	
 	void setTemplateMap(std::unique_ptr<Map>&& map);
 	
+	void calculateTransformation();
+	
 private:
 	std::unique_ptr<Map> template_map;
 	

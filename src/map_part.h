@@ -30,6 +30,7 @@
 
 QT_BEGIN_NAMESPACE
 class QIODevice;
+class QTransform;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 QT_END_NAMESPACE
@@ -173,7 +174,7 @@ public:
 	 * No replacement is done for symbols which are not in the symbol_map.
 	 */
 	void importPart(MapPart* other, QHash<const Symbol*, Symbol*>& symbol_map,
-		bool select_new_objects);
+		const QTransform& transform, bool select_new_objects);
 	
 	
 	/**

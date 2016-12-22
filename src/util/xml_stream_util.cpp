@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013-2015 Kai Pastor
+ *    Copyright 2013-2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,12 +20,113 @@
 
 #include "xml_stream_util.h"
 
+#include <QBuffer>
+#include <QTextCodec>
 #include <QTextStream>
 
 #include "../core/map_coord.h"
 #include "../file_format_xml.h"
 #include "../file_import_export.h"
 
+
+//### XmlRecoveryHelper ###
+
+bool XmlRecoveryHelper::operator() ()
+{
+	auto offending_index_64 = xml.characterOffset();
+	auto offending_message = xml.errorString();
+	auto stream = xml.device();
+	
+	if (xml.hasError()
+	    && offending_index_64 <= std::numeric_limits<int>::max()
+	    && offending_index_64 > recovery_start
+	    && stream
+	    && stream->seek(0))
+	{
+		// Get the whole input
+		auto raw_data = stream->readAll();
+		
+		// Determine the encoding
+		QTextCodec* codec = nullptr;
+		for (QXmlStreamReader probe(raw_data); !probe.atEnd(); probe.readNext())
+		{
+			if (probe.tokenType() == QXmlStreamReader::StartDocument)
+			{
+				codec = QTextCodec::codecForName(probe.documentEncoding().toLatin1());
+				break;
+			}
+		}
+		if (Q_UNLIKELY(!codec))
+		{
+			return false;
+		}
+		
+		// Convert to QString, and release the raw data
+		auto data = codec->toUnicode(raw_data);
+		raw_data = {};
+		
+		// Loop until the current element is fixed
+		for (auto index = int(offending_index_64 - 1); xml.hasError(); index = int(xml.characterOffset() - 1))
+		{
+			// Cf. https://www.w3.org/TR/2008/REC-xml-20081126/#NT-Char
+			// and QXmlStreamReaderPrivate::scanUntil,
+			// http://code.qt.io/cgit/qt/qtbase.git/tree/src/corelib/xml/qxmlstream.cpp?h=5.6.2#n961
+			auto offending_char = static_cast<unsigned int>(data.at(index).unicode());
+			if (xml.error() != QXmlStreamReader::NotWellFormedError
+			    || offending_char == 0x9     // horizontal tab
+			    || offending_char == 0xa  // line feed
+			    || offending_char == 0xd  // carriage return
+			    || (offending_char >= 0x20 && offending_char <= 0xfffd)
+			    || offending_char > QChar::LastValidCodePoint)
+			{
+				// Another error than an invalid character
+				break;
+			}
+			
+			// Remove the offending character
+			data.remove(index, 1);
+			
+			// Read again to the element start
+			xml.clear();
+			xml.addData(data);
+			while (!xml.hasError() && xml.characterOffset() < recovery_start)
+			{
+				xml.readNext();
+			}
+			Q_ASSERT(!xml.hasError());
+			
+			// Read the current element completely
+			xml.skipCurrentElement();
+		}
+		
+		// Restore the XML stream state with the modified data.
+		// We must use a QIODevice again, for later recovery attemts.
+		auto buffer = new QBuffer(stream); // buffer will live as long as the original stream
+		buffer->setData(codec->fromUnicode(data));
+		buffer->open(QIODevice::ReadOnly);
+		
+		xml.clear();
+		xml.setDevice(buffer);
+		while (!xml.atEnd() && xml.characterOffset() < recovery_start)
+		{
+			xml.readNext();
+		}
+		
+		if (xml.characterOffset() == recovery_start)
+		{
+			return true;
+		}
+		else if (!xml.hasError())
+		{
+			xml.raiseError(offending_message);
+		}
+	}
+	return false;
+}
+
+
+
+//### XmlElementWriter ###
 
 void XmlElementWriter::write(const MapCoordVector& coords)
 {
@@ -52,6 +153,9 @@ void XmlElementWriter::write(const MapCoordVector& coords)
 	}
 }
 
+
+
+//### XmlElementReader ###
 
 void XmlElementReader::read(MapCoordVector& coords)
 {

@@ -133,28 +133,15 @@ configure_file(proj-postinstall.in ${CMAKE_CURRENT_BINARY_DIR}/proj-postinstall)
 
 # Exported configuration
 
-# The following will not succeed during the initial configuration
-# but on repeated configuration after an successful build.
+set(PROJ4_ROOT "${INSTALL_DIR}" PARENT_SCOPE)
 
-find_path(PROJ_INCLUDE_DIR NAMES proj_api.h PATHS
-  "${INSTALL_DIR}/include"
-  NO_DEFAULT_PATH
-  NO_CMAKE_FIND_ROOT_PATH
-)
-mark_as_advanced(PROJ_INCLUDE_DIR)
+# Remove any left-over cache entries
+unset(PROJ4_ROOT CACHE)
+unset(PROJ4_INCLUDE_DIR CACHE)
+unset(PROJ4_LIBRARY CACHE)
+unset(PROJ4_LIBRARY_DEBUG CACHE)
+unset(PROJ4_LIBRARY_RELEASE CACHE)
 
-find_library(PROJ_LIBRARY NAMES proj proj_i PATHS
-  "${INSTALL_DIR}/lib"
-  NO_DEFAULT_PATH
-  NO_CMAKE_FIND_ROOT_PATH
-)
-mark_as_advanced(PROJ_LIBRARY)
-
-if(PROJ_INCLUDE_DIR AND PROJ_LIBRARY)
-	set(PROJ_BINARY_DIR "${INSTALL_DIR}/bin" PARENT_SCOPE)
-	mark_as_advanced(PROJ_BINARY_DIR)
-	set(PROJ_FOUND TRUE PARENT_SCOPE)
-endif()
 
 # Don't let Xcode re-root the install
 set_target_properties(Proj PROPERTIES XCODE_ATTRIBUTE_INSTALL_ROOT "")

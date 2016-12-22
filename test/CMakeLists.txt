@@ -35,7 +35,58 @@ add_definitions(
   -DQT_USE_QSTRINGBUILDER
 )
 
-# This macro defines a unit test from a list of source file names 
+# This function defines a test from a list of source file names 
+# (without ending). For each filename, a .cpp file and .h must exist.
+# The .h file is processed with Qt's moc.
+# The first filename is also used as the name of the executable file and
+# as the name of the test.
+#
+# The test executable is linked only to external libraries by default. 
+# It only needs to be rebuild and run when one of its components was modified.
+# Additional link libraries may be added to the executable target as usual.
+#
+# The autorun parameter controls whether the test will be run automatically
+# when executing Mapper-with-test.
+#
+function(add_test_helper testname autorun)
+	unset(TEST_${testname}_SRCS)
+	unset(TEST_${testname}_HDRS)
+	set(manual_test 0)
+	foreach(arg ${ARGN})
+		if("${arg}" STREQUAL "MANUAL")
+			set(manual_test 1)
+		else()
+			list(APPEND TEST_${testname}_SRCS ${arg}.cpp)
+			list(APPEND TEST_${testname}_HDRS ${arg}.h)
+			if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${arg}_p.h)
+				list(APPEND TEST_${testname}_HDRS ${arg}_p.h)
+			endif()
+		endif()
+	endforeach()
+	qt5_wrap_cpp(TEST_${testname}_MOC ${testname}.h)
+	qt5_wrap_cpp(TEST_${testname}_XTRA_MOC ${TEST_${testname}_HDRS} OPTIONS -nw)
+	add_executable(${testname} ${testname}.cpp ${TEST_${testname}_SRCS} ${TEST_${testname}_MOC} ${TEST_${testname}_XTRA_MOC})
+	target_link_libraries(${testname}
+	  PROJ4::proj
+	  Qt5::Test
+	  Qt5::Widgets
+	  Polyclipping::Polyclipping
+	)
+	if(NOT manual_test)
+		configure_file(TESTNAME-RUN.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/${testname}-RUN.cmake @ONLY)
+		add_test(${testname} ${CMAKE_COMMAND} -P ${testname}-RUN.cmake)
+		add_custom_command(OUTPUT ${testname}-RUN.stamp
+		  COMMAND ${CMAKE_COMMAND} -P ${testname}-RUN.cmake
+		  DEPENDS ${testname}
+		)
+		if(autorun)
+			set_property(DIRECTORY APPEND PROPERTY Mapper_AUTORUN_TESTS ${testname})
+		endif()
+	endif()
+endfunction()
+
+
+# This function defines a unit test from a list of source file names 
 # (without ending). For each filename, a .cpp file and .h must exist.
 # The .h file is processed with Qt's moc.
 # The first filename is also used as the name of the executable file and
@@ -45,33 +96,12 @@ add_definitions(
 # It only needs to be rebuild and run when one of its components was modified.
 # Additional link libraries may be added to the executable target as usual.
 #
-macro(add_unit_test testname)
-	unset(TEST_${testname}_SRCS)
-	unset(TEST_${testname}_HDRS)
-	foreach(arg ${ARGN})
-		list(APPEND TEST_${testname}_SRCS ${arg}.cpp)
-		list(APPEND TEST_${testname}_HDRS ${arg}.h)
-		if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${arg}_p.h)
-			list(APPEND TEST_${testname}_HDRS ${arg}_p.h)
-		endif()
-	endforeach(arg)
-	qt5_wrap_cpp(TEST_${testname}_MOC ${testname}.h)
-	qt5_wrap_cpp(TEST_${testname}_XTRA_MOC ${TEST_${testname}_HDRS} OPTIONS -nw)
-	add_executable(${testname} ${testname}.cpp ${TEST_${testname}_SRCS} ${TEST_${testname}_MOC} ${TEST_${testname}_XTRA_MOC})
-	target_link_libraries(${testname} libocad ${PROJ_LIBRARY} Qt5::Test Qt5::Widgets polyclipping)
-	set(TESTNAME ${testname}) # required for configure_file
-	configure_file(TESTNAME-RUN.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/${testname}-RUN.cmake @ONLY)
-	add_test(${testname} ${CMAKE_COMMAND} -P ${testname}-RUN.cmake)
-	add_custom_command(OUTPUT ${testname}-RUN.stamp
-	  COMMAND ${CMAKE_COMMAND} -P ${testname}-RUN.cmake
-	  DEPENDS ${testname}
-	)
-	list(APPEND Mapper_UNIT_TESTS ${testname})
-endmacro(add_unit_test)
-unset(Mapper_UNIT_TESTS)
+function(add_unit_test testname)
+	add_test_helper("${testname}" 1 ${ARGN})
+endfunction()
 
 
-# This macro defines a system test from a list of source file names 
+# This function defines a system test from a list of source file names 
 # (without ending). For each filename, a .cpp file and .h must exist.
 # The .h file is processed with Qt's moc.
 # The first filename is also used as the name of the executable file and
@@ -80,30 +110,13 @@ unset(Mapper_UNIT_TESTS)
 # A system test executable is linked to the full Mapper runtime. 
 # That is why it will be rebuild and run very often.
 #
-macro(add_system_test testname)
-	unset(TEST_${testname}_SRCS)
-	unset(TEST_${testname}_HDRS)
-	foreach(arg ${ARGN})
-		list(APPEND TEST_${testname}_SRCS ${arg}.cpp)
-		list(APPEND TEST_${testname}_HDRS ${arg}.h)
-		if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${arg}_p.h)
-			list(APPEND TEST_${testname}_HDRS ${arg}_p.h)
-		endif()
-	endforeach(arg)
-	qt5_wrap_cpp(TEST_${testname}_MOC ${testname}.h)
-	qt5_wrap_cpp(TEST_${testname}_XTRA_MOC ${TEST_${testname}_HDRS} OPTIONS -nw)
-	add_executable(${testname} ${testname}.cpp ${TEST_${testname}_SRCS} ${TEST_${testname}_MOC} ${TEST_${testname}_XTRA_MOC})
-	target_link_libraries(${testname} Mapper_Common libocad ${PROJ_LIBRARY} Qt5::Test Qt5::Widgets polyclipping)
-	set(TESTNAME ${testname}) # required for configure_file
-	configure_file(TESTNAME-RUN.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/${testname}-RUN.cmake @ONLY)
-	add_test(${testname} ${CMAKE_COMMAND} -P ${testname}-RUN.cmake)
-	add_custom_command(OUTPUT ${testname}-RUN.stamp
-	  COMMAND ${CMAKE_COMMAND} -P ${testname}-RUN.cmake
-	  DEPENDS ${testname}
+function(add_system_test testname)
+	add_test_helper("${testname}" ${Mapper_AUTORUN_SYSTEM_TESTS} ${ARGN})
+	target_link_libraries(${testname}
+	  Mapper_Common
+	  libocad
 	)
-	list(APPEND Mapper_SYSTEM_TESTS ${testname})
-endmacro(add_system_test)
-unset(Mapper_SYSTEM_TESTS)
+endfunction()
 
 
 # Include generated files (moc ouput, build configuration)
@@ -113,7 +126,8 @@ include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
 # Unit tests
 add_unit_test(tst_qglobal)
-add_unit_test(autosave_t ../src/core/autosave ../src/settings ../src/util ../src/mapper_resource)
+add_unit_test(autosave_t MANUAL ../src/core/autosave ../src/settings ../src/util ../src/mapper_resource)
+add_unit_test(encoding_t ../src/util/encoding)
 add_unit_test(georeferencing_t ../src/core/georeferencing
 	../src/core/latlon
 	../src/core/crs_template
@@ -122,11 +136,12 @@ add_unit_test(georeferencing_t ../src/core/georeferencing
 	../src/mapper_resource
 	../src/file_format
 )
+add_unit_test(locale_t ../src/util_translation ../src/mapper_resource)
 add_unit_test(map_color_t ../src/core/map_color)
 add_unit_test(qpainter_t)
 
 # Benchmarks
-add_system_test(coord_xml_t)
+add_system_test(coord_xml_t MANUAL)
 
 # System tests
 add_system_test(map_t)
@@ -134,32 +149,28 @@ add_system_test(file_format_t)
 add_dependencies(file_format_t Mapper_test_data)
 add_system_test(duplicate_equals_t)
 add_dependencies(duplicate_equals_t Mapper_test_data)
+add_system_test(object_query_t)
 add_system_test(tools_t)
+add_system_test(transform_t)
 add_system_test(path_object_t)
 add_system_test(undo_manager_t)
 add_system_test(symbol_set_t)
 
 
 # Collect the AUTORUN_TESTS
-set(Mapper_AUTORUN_TESTS ${Mapper_UNIT_TESTS})
-if(Mapper_AUTORUN_SYSTEM_TESTS)
-	list(APPEND Mapper_AUTORUN_TESTS ${Mapper_SYSTEM_TESTS})
-endif()
-if(NOT Mapper_AUTORUN_MANUAL_TESTS)
-	list(REMOVE_ITEM Mapper_AUTORUN_TESTS autosave_t coord_xml_t symbol_set_t)
-endif()
+get_property(Mapper_AUTORUN_TESTS DIRECTORY PROPERTY Mapper_AUTORUN_TESTS)
 configure_file(AUTORUN_TESTS.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/AUTORUN_TESTS.cmake @ONLY)
 
 
 # This executable first runs all tests which are marked for auto-run. If the
-# tests don't fail, it start the Mapper executable. Unlike the default "test"
+# tests don't fail, it starts the Mapper executable. Unlike the default "test"
 # target, it is displayed in Qt Creator's project view, and when run, it prints
 # the output of failed tests.
-add_executable(Mapper_Test mapper_t.cpp)
-add_dependencies(Mapper_Test Mapper_prerequisites)
-target_link_libraries(Mapper_Test Qt5::Core)
+add_executable(Mapper-with-test mapper_t.cpp)
+add_dependencies(Mapper-with-test Mapper_prerequisites)
+target_link_libraries(Mapper-with-test Qt5::Core)
 get_target_property(mapper_location Mapper LOCATION)
-target_compile_definitions(Mapper_Test PRIVATE -DCMAKE_COMMAND="${CMAKE_COMMAND}" -DMAPPER_LOCATION="${mapper_location}")
+target_compile_definitions(Mapper-with-test PRIVATE -DCMAKE_COMMAND="${CMAKE_COMMAND}" -DMAPPER_LOCATION="${mapper_location}")
 
 
 if(Mapper_BUILD_QT)

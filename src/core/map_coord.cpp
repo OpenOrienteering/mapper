@@ -418,8 +418,8 @@ MapCoord::MapCoord(QStringRef& text)
 		}
 	}
 	
-	handleBoundsOffset(y64, y64);
-	ensureBoundsForQint32(y64, y64);
+	handleBoundsOffset(x64, y64);
+	ensureBoundsForQint32(x64, y64);
 	xp = static_cast<qint32>(x64);
 	yp = static_cast<qint32>(y64);
 	

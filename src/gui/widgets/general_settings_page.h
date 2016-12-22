@@ -48,7 +48,7 @@ protected:
 	 * Adds the available languages to the language combo box,
 	 * and sets the current element.
 	 */
-	void updateLanguageBox(QVariant language);
+	void updateLanguageBox(QVariant code);
 	
 	void updateWidgets();
 	
@@ -62,10 +62,12 @@ private slots:
 	
 	void openPPICalculationDialog();
 	
-	void encodingChanged(const QString& name);
+	void encodingChanged(const QString& input);
 	
 private:
 	QString    translation_file;
+	QString    last_encoding_input;
+	QString    last_matching_completition;
 	
 	QComboBox* language_box;
 	

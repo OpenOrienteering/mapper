@@ -261,8 +261,11 @@ elseif(MINGW)
 endif()
 
 if(Mapper_PACKAGE_PROJ)
+	if(NOT PROJ4_ROOT)
+		message(FATAL_ERROR "PROJ4_ROOT must be set when Mapper_PACKAGE_PROJ is enabled.")
+	endif()
 	install(
-	  DIRECTORY "${PROJ_BINARY_DIR}/../share/proj"
+	  DIRECTORY "${PROJ4_ROOT}/share/proj"
 	  DESTINATION "${MAPPER_DATA_DESTINATION}")
 	if(WIN32)
 		set(PROJ_LIB_SUFFIX -9)
@@ -270,7 +273,7 @@ if(Mapper_PACKAGE_PROJ)
 		set(PROJ_LIB_SUFFIX "")
 	endif()
 	list(APPEND MAPPER_LIBS      proj${PROJ_LIB_SUFFIX})
-	list(APPEND MAPPER_LIB_HINTS ${PROJ_BINARY_DIR})
+	list(APPEND MAPPER_LIB_HINTS ${PROJ4_ROOT}/bin)
 endif()
 
 if(Mapper_PACKAGE_GDAL)

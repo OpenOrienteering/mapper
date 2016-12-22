@@ -33,7 +33,6 @@ else {
 	DEFINES += APP_VERSION=\"'\\"$${Mapper_VERSION_MAJOR}.$${Mapper_VERSION_MINOR}.$${Mapper_VERSION_PATCH}\\"'\" \
 	           QT_NO_DEBUG QT_NO_DEBUG_OUTPUT
 }
-DEFINES += \"CLIPPER_VERSION='\\"@CLIPPER_VERSION@\\"'\"
 DEFINES += \"MAPPER_HELP_NAMESPACE='\\"openorienteering.mapper-$${Mapper_VERSION_MAJOR}.$${Mapper_VERSION_MINOR}.$${Mapper_VERSION_PATCH}.help\\"'\"
 
 # Input

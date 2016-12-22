@@ -50,6 +50,7 @@
 #include "template_image.h"
 #include "template_map.h"
 #include "util.h"
+#include "util/encoding.h"
 
 // ### OCAD8FileFormat ###
 
@@ -77,15 +78,14 @@ Exporter* OCAD8FileFormat::createExporter(QIODevice* stream, Map* map, MapView* 
     return new OCAD8FileExport(stream, map, view);
 }
 
-
 // ### OCAD8FileImport ###
 
 OCAD8FileImport::OCAD8FileImport(QIODevice* stream, Map* map, MapView* view) : Importer(stream, map, view), file(NULL)
 {
     ocad_init();
     const QByteArray enc_name = Settings::getInstance().getSetting(Settings::General_Local8BitEncoding).toByteArray();
-    encoding_1byte = (enc_name == "System") ? QTextCodec::codecForLocale()
-                                            : QTextCodec::codecForName(enc_name);
+    encoding_1byte = Util::codecForName(enc_name);
+    if (!encoding_1byte) encoding_1byte = QTextCodec::codecForLocale();
     encoding_2byte = QTextCodec::codecForName("UTF-16LE");
     offset_x = offset_y = 0;
 }
@@ -1586,7 +1586,7 @@ void OCAD8FileExport::doExport()
 	// Scale and georeferencing parameters
 	const Georeferencing& georef = map->getGeoreferencing();
 	setup->scale = georef.getScaleDenominator();
-	const QPointF offset(georef.getProjectedRefPoint());
+	const QPointF offset(georef.toProjectedCoords(MapCoord {0, 0}));
 	setup->offsetx = offset.x();
 	setup->offsety = offset.y();
 	setup->angle = georef.getGrivation();

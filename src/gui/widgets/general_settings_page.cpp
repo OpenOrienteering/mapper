@@ -28,6 +28,7 @@
 #include <QDialogButtonBox>
 #include <QFileDialog>
 #include <QFormLayout>
+#include <QLineEdit>
 #include <QMessageBox>
 #include <QScreen>
 #include <QSettings>
@@ -38,6 +39,8 @@
 #include "../main_window.h"
 #include "../../util_gui.h"
 #include "../../util_translation.h"
+#include "../../util/backports.h"
+#include "../../util/encoding.h"
 #include "../../util/scoped_signals_blocker.h"
 
 
@@ -109,26 +112,27 @@ GeneralSettingsPage::GeneralSettingsPage(QWidget* parent)
 	layout->addItem(Util::SpacerItem::create(this));
 	layout->addRow(Util::Headline::create(tr("File import and export")));
 	
+	QStringList available_codecs;
+	available_codecs.append(tr("Default"));
 	encoding_box = new QComboBox();
-	encoding_box->addItem(QLatin1String("System"));
-	encoding_box->addItem(QLatin1String("Windows-1250"));
-	encoding_box->addItem(QLatin1String("Windows-1252"));
-	encoding_box->addItem(QLatin1String("ISO-8859-1"));
-	encoding_box->addItem(QLatin1String("ISO-8859-15"));
 	encoding_box->setEditable(true);
-	QStringList availableCodecs;
-	for (const QByteArray& item : QTextCodec::availableCodecs())
+	encoding_box->addItem(available_codecs.first());
+	encoding_box->addItem(QString::fromLatin1("Windows-1252")); // Serves as an example, not translated.
+	const auto available_codecs_raw = QTextCodec::availableCodecs();
+	for (const QByteArray& item : available_codecs_raw)
 	{
-		availableCodecs.append(QString::fromUtf8(item));
+		available_codecs.append(QString::fromUtf8(item));
 	}
-	if (!availableCodecs.empty())
+	if (available_codecs.size() > 1)
 	{
-		availableCodecs.sort(Qt::CaseInsensitive);
-		availableCodecs.removeDuplicates();
+		available_codecs.sort(Qt::CaseInsensitive);
+		available_codecs.removeDuplicates();
 		encoding_box->addItem(tr("More..."));
 	}
-	QCompleter* completer = new QCompleter(availableCodecs, this);
+	QCompleter* completer = new QCompleter(available_codecs, this);
+	completer->setModelSorting(QCompleter::CaseInsensitivelySortedModel);
 	completer->setCaseSensitivity(Qt::CaseInsensitive);
+	completer->setCompletionMode(QCompleter::UnfilteredPopupCompletion);
 	encoding_box->setCompleter(completer);
 	layout->addRow(tr("8-bit encoding:"), encoding_box);
 	
@@ -157,13 +161,13 @@ QString GeneralSettingsPage::title() const
 
 void GeneralSettingsPage::apply()
 {
-	auto language = language_box->currentData();
-	if (language != getSetting(Settings::General_Language)
+	auto language = language_box->currentData().toString();
+	if (language != getSetting(Settings::General_Language).toString()
 	    || translation_file != getSetting(Settings::General_TranslationFile).toString())
 	{
 		// Show an message box in the new language.
-		TranslationUtil translation((QLocale::Language)language.toInt(), translation_file);
-		auto new_language = translation.getLocale().language();
+		TranslationUtil translation(language, translation_file);
+		auto new_language = QLocale(translation.code()).language();
 		switch (new_language)
 		{
 		case QLocale::AnyLanguage:
@@ -182,13 +186,13 @@ void GeneralSettingsPage::apply()
 			qApp->removeEventFilter(this);
 		}
 		
-		setSetting(Settings::General_Language, new_language);
+		setSetting(Settings::General_Language, translation.code());
 		setSetting(Settings::General_TranslationFile, translation_file);
 #if defined(Q_OS_MAC)
 		// The native [file] dialogs will use the first element of the
 		// AppleLanguages array in the application's .plist file -
 		// and this file is also the one used by QSettings.
-		QSettings().setValue(QString::fromLatin1("AppleLanguages"), translation.getLocale().uiLanguages());
+		QSettings().setValue(QString::fromLatin1("AppleLanguages"), QStringList{ translation.code() });
 #endif
 	}
 	
@@ -198,12 +202,13 @@ void GeneralSettingsPage::apply()
 	setSetting(Settings::General_RetainCompatiblity, compatibility_check->isChecked());
 	setSetting(Settings::General_PixelsPerInch, ppi_edit->value());
 	
-	auto name_latin1 = encoding_box->currentText().toLatin1();
-	if (name_latin1 == "System"
-	    || QTextCodec::codecForName(name_latin1))
+	auto encoding = encoding_box->currentText().toLatin1();
+	if (QLatin1String(encoding) == encoding_box->itemText(0)
+	    || !QTextCodec::codecForName(encoding))
 	{
-		setSetting(Settings::General_Local8BitEncoding, name_latin1);
+		encoding = "Default";
 	}
+	setSetting(Settings::General_Local8BitEncoding, encoding);
 	
 	int interval = autosave_interval_edit->value();
 	if (!autosave_check->isChecked())
@@ -217,33 +222,31 @@ void GeneralSettingsPage::reset()
 	updateWidgets();
 }
 
-void GeneralSettingsPage::updateLanguageBox(QVariant language)
+void GeneralSettingsPage::updateLanguageBox(QVariant code)
 {
-	LanguageCollection language_map = TranslationUtil::getAvailableLanguages();
+	auto languages = TranslationUtil::availableLanguages();
+	std::sort(begin(languages), end(languages));
 	
-	// If there is an explicit translation file, use its locale
-	QString locale_name = TranslationUtil::localeNameForFile(translation_file);
-	if (!locale_name.isEmpty())
-	{
-		QLocale file_locale(locale_name);
-		QString language_name = file_locale.nativeLanguageName();
-		if (!language_map.contains(language_name))
-			language_map.insert(language_name, file_locale.language());
-	}
-	
-	// Update the language box
 	const QSignalBlocker block(language_box);
 	language_box->clear();
+	for (const auto& language : languages)
+		language_box->addItem(language.displayName, language.code);
 	
-	for (auto it = language_map.constBegin(),end = language_map.constEnd(); it != end; ++it)
-		language_box->addItem(it.key(), (int)it.value());
+	// If there is an explicit translation file, make sure it is in the box.
+	auto language = TranslationUtil::languageFromFilename(translation_file);
+	if (language.isValid())
+	{
+		auto index = language_box->findData(language.code);
+		if (index < 0)
+			language_box->addItem(language.displayName, language.code);
+	}		
 	
 	// Select current language
-	int index = language_box->findData(language);
+	auto index = language_box->findData(code);
 	if (index < 0)
 	{
-		language = QLocale::English;
-		index = language_box->findData(language);
+		code = QString::fromLatin1("en");
+		index = language_box->findData(code);
 	}
 	language_box->setCurrentIndex(index);
 }
@@ -252,7 +255,7 @@ void GeneralSettingsPage::updateWidgets()
 {
 	updateLanguageBox(getSetting(Settings::General_Language));
 	
-	ppi_edit->setValue(getSetting(Settings::General_PixelsPerInch).toFloat());
+	ppi_edit->setValue(getSetting(Settings::General_PixelsPerInch).toDouble());
 	open_mru_check->setChecked(getSetting(Settings::General_OpenMRUFile).toBool());
 	tips_visible_check->setChecked(getSetting(Settings::HomeScreen_TipsVisible).toBool());
 	compatibility_check->setChecked(getSetting(Settings::General_RetainCompatiblity).toBool());
@@ -262,30 +265,50 @@ void GeneralSettingsPage::updateWidgets()
 	autosave_interval_edit->setEnabled(autosave_interval > 0);
 	autosave_interval_edit->setValue(qAbs(autosave_interval));
 	
-	encoding_box->setCurrentText(getSetting(Settings::General_Local8BitEncoding).toString());
+	auto encoding = getSetting(Settings::General_Local8BitEncoding).toByteArray();
+	if (encoding != "Default"
+	    && QTextCodec::codecForName(encoding))
+	{
+		encoding_box->setCurrentText(QString::fromLatin1(encoding));
+	}
+	
 	ocd_importer_check->setChecked(getSetting(Settings::General_NewOcd8Implementation).toBool());
 }
 
 // slot
-void GeneralSettingsPage::encodingChanged(const QString& name)
+void GeneralSettingsPage::encodingChanged(const QString& input)
 {
-	const QSignalBlocker block(encoding_box);
-	
-	if (name == tr("More..."))
+	if (input == tr("More..."))
 	{
-		encoding_box->setCurrentText(QString());
-		encoding_box->completer()->setCompletionPrefix(QString());
+		const QSignalBlocker block(encoding_box);
+		encoding_box->setCurrentText(last_encoding_input);
+		encoding_box->completer()->setCompletionPrefix(last_encoding_input);
 		encoding_box->completer()->complete();
-		return;
 	}
-	
-	auto name_latin1 = name.toLatin1();
-	QTextCodec* codec = (name_latin1 == "System")
-	                    ? QTextCodec::codecForLocale()
-	                    : QTextCodec::codecForName(name_latin1);
-	if (codec)
+	else
 	{
-		encoding_box->setCurrentText(name);
+		// Inline completition, in addition to UnfilteredPopupCompletition
+		// Don't complete after pressing Backspace or Del
+		if (!last_encoding_input.startsWith(input))
+		{
+			if (last_matching_completition.startsWith(input))
+				encoding_box->completer()->setCompletionPrefix(last_matching_completition);
+			
+			auto text = encoding_box->completer()->currentCompletion();
+			auto line_edit = encoding_box->lineEdit();
+			if (text.startsWith(input)
+			    && line_edit)
+			{
+				const QSignalBlocker block(encoding_box);
+				auto pos = line_edit->cursorPosition();
+				line_edit->setText(text);
+				line_edit->setSelection(text.length(), pos - text.length());
+				last_encoding_input = input.left(pos);
+				last_matching_completition = text;
+				return;
+			}
+		}
+		last_encoding_input = input;
 	}
 }
 
@@ -300,8 +323,8 @@ void GeneralSettingsPage::openTranslationFileDialog()
 	  tr("Open translation"), filename, tr("Translation files (*.qm)"));
 	if (!filename.isNull())
 	{
-		QString locale_name(TranslationUtil::localeNameForFile(filename));
-		if (locale_name.isEmpty())
+		auto language = TranslationUtil::languageFromFilename(filename);
+		if (!language.isValid())
 		{
 			QMessageBox::critical(this, tr("Open translation"),
 			  tr("The selected file is not a valid translation.") );
@@ -309,7 +332,7 @@ void GeneralSettingsPage::openTranslationFileDialog()
 		else
 		{
 			translation_file = filename;
-			updateLanguageBox(QLocale(locale_name).language());
+			updateLanguageBox(language.code);
 		}
 	}
 }
@@ -319,10 +342,10 @@ void GeneralSettingsPage::openPPICalculationDialog()
 {
 	int primary_screen_width = QApplication::primaryScreen()->size().width();
 	int primary_screen_height = QApplication::primaryScreen()->size().height();
-	float screen_diagonal_pixels = qSqrt(primary_screen_width*primary_screen_width + primary_screen_height*primary_screen_height);
+	double screen_diagonal_pixels = double(qSqrt(primary_screen_width*primary_screen_width + primary_screen_height*primary_screen_height));
 	
-	float old_ppi = ppi_edit->value();
-	float old_screen_diagonal_inches = screen_diagonal_pixels / old_ppi;
+	double old_ppi = ppi_edit->value();
+	double old_screen_diagonal_inches = screen_diagonal_pixels / old_ppi;
 	
 	QDialog* dialog = new QDialog(window(), Qt::WindowSystemMenuHint | Qt::WindowTitleHint);
 	if (MainWindow::mobileMode())

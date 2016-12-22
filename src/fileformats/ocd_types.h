@@ -89,6 +89,15 @@ namespace Ocd
 		char data[N];
 	};
 	
+	/** 
+	 * A UTF-16LE-encoded string of max. N characters, zero-terminated.
+	 */
+	template< std::size_t N >
+	struct Utf16PascalString
+	{
+		QChar data[N];
+	};
+	
 	/**
 	 * The generic header at the beginning of all supported OCD file formats.
 	 * 

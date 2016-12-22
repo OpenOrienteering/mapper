@@ -22,13 +22,17 @@ find_package(Qt5LinguistTools REQUIRED)
 
 set(Mapper_TRANS
  OpenOrienteering_cs.ts
+ OpenOrienteering_da.ts
  OpenOrienteering_de.ts
  OpenOrienteering_en.ts
+ OpenOrienteering_eo.ts
  OpenOrienteering_es.ts
  OpenOrienteering_et.ts
  OpenOrienteering_fi.ts
  OpenOrienteering_fr.ts
+ OpenOrienteering_he.ts
  OpenOrienteering_hu.ts
+ OpenOrienteering_id.ts
  OpenOrienteering_it.ts
  OpenOrienteering_ja.ts
  OpenOrienteering_lv.ts
@@ -113,6 +117,7 @@ add_custom_target(${PROJECT_NAME}_translations_update)
 set(${PROJECT_NAME}_TRANSLATIONS_LISTFILE ${CMAKE_CURRENT_BINARY_DIR}/translations_sourcefiles.txt
 	CACHE INTERNAL "A temporary file which lists the source files to be translated")
 file(WRITE "${${PROJECT_NAME}_TRANSLATIONS_LISTFILE}"
+  "${PROJECT_SOURCE_DIR}/translations/future_translations.cpp\n"
   "${PROJECT_SOURCE_DIR}/packaging/translations.cpp\n"
 )
 
@@ -158,7 +163,7 @@ macro(QT5_TRANSLATIONS_SOURCES)
 			if("${_ts_filename}" STREQUAL "OpenOrienteering_template")
 				list(APPEND LUPDATE_OPTIONS -no-obsolete)
 			endif()
-			if("${_ts_filename}" MATCHES "OpenOrienteering_(et|lv|nb|nl|template)")
+			if("${_ts_filename}" MATCHES "OpenOrienteering_(et|id|lv|nb|nl)")
 				# Qt translations which are not yet available from upstream, as of Qt 5.5.1.
 				# Inserted from qt_template.ts into the OpenOrienteering .ts file by
 				#   lconvert -sort-contexts -o OpenOrienteering_XX.ts 
@@ -180,12 +185,13 @@ macro(QT5_TRANSLATIONS_SOURCES)
 				)
 			endif()
 			add_custom_target(${PROJECT_NAME}_${_ts_filename}_update
+			  # SOURCES are displayed in Qt Creator
+			  SOURCES "${PROJECT_SOURCE_DIR}/translations/future_translations.cpp"
+			          "${PROJECT_SOURCE_DIR}/packaging/translations.cpp"
 			  ${PRE_LUPDATE_ACTION}
 			  COMMAND "${Qt5_LUPDATE_EXECUTABLE}" ${LUPDATE_OPTIONS} @${${PROJECT_NAME}_TRANSLATIONS_LISTFILE} -ts ${Mapper_TRANS_DIR}/${_arg}
 			  ${POST_LUPDATE_ACTION}
 			  # Reformat for Weblate to minimize git noise
-			  COMMAND sed -i -e "1s/\"/'/g" ${Mapper_TRANS_DIR}/${_arg}
-			  COMMAND sed -i -e "/<location/s/\\/>$/><\\/location>/" ${Mapper_TRANS_DIR}/${_arg}
 			  COMMAND sed -i -e "/<source\\|<translation\\|<[a-z]*comment/,/\\/source>\\|\\/translation>\\|\\/[a-z]*comment>/{s/&apos;/'/g;s/&quot;/\"/g}" ${Mapper_TRANS_DIR}/${_arg}
 			  DEPENDS ${${PROJECT_NAME}_TRANSLATIONS_LISTFILE}
 			  VERBATIM)

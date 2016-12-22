@@ -753,6 +753,10 @@ bool Map::loadFrom(const QString& path, QWidget* dialog_parent, MapView* view, b
 
 				import_complete = true;
 			}
+			catch (FileFormatException &e)
+			{
+				error_msg = e.message();
+			}
 			catch (std::exception &e)
 			{
 				qDebug() << "Exception:" << e.what();
@@ -813,6 +817,7 @@ void Map::importMap(
 										   .arg(QLocale().toString(getScaleDenominator())), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 		if (answer == QMessageBox::Yes)
 		{
+			/// \todo No need to clone iff the other map is discarded after import.
 			Map clone;
 			clone.setGeoreferencing(other->getGeoreferencing());
 			clone.importMap(other, mode, dialog_parent, filter, -1, false, out_symbol_map);
@@ -833,7 +838,29 @@ void Map::importMap(
 		}
 	}
 	
-	// TODO: As a special case if both maps are georeferenced, the location of the imported objects could be corrected
+	/// \todo Test and review import of georeferenced and non-georeferenced maps, in all combinations.
+	/// \todo Handle rotation of patterns and text, cf. QObject::transform.
+	const auto& georef = getGeoreferencing();
+	const auto& other_georef = other->getGeoreferencing();
+	const auto src_origin = MapCoordF { other_georef.getMapRefPoint() };
+	
+	bool ok0, ok1, ok2;
+	QTransform q_transform;
+	PassPointList passpoints;
+	passpoints.resize(3);
+	passpoints[0].src_coords  = src_origin;
+	passpoints[0].dest_coords = georef.toMapCoordF(&other_georef, passpoints[0].src_coords, &ok0);
+	passpoints[1].src_coords  = src_origin + MapCoordF { 128.0, 0.0 }; // 128 mm off horizontally
+	passpoints[1].dest_coords = georef.toMapCoordF(&other_georef, passpoints[1].src_coords, &ok1);
+	passpoints[2].src_coords  = src_origin + MapCoordF { 0.0, 128.0 }; // 128 mm off vertically
+	passpoints[2].dest_coords = georef.toMapCoordF(&other_georef, passpoints[2].src_coords, &ok2);
+	if (ok0 && ok1 && ok2
+	    && !passpoints.estimateNonIsometricSimilarityTransform(&q_transform))
+	{
+		/// \todo proper error message
+		qDebug("Failed to calculate transformation");
+		q_transform.reset();
+	}
 	
 	// Determine which symbols to import
 	std::vector<bool> symbol_filter;
@@ -916,7 +943,7 @@ void Map::importMap(
 			current_part_index = findPartIndex(dest_part);
 			
 			bool select_and_center_objects = dest_part == temp_current_part;
-			dest_part->importPart(part_to_import, symbol_map, select_and_center_objects);
+			dest_part->importPart(part_to_import, symbol_map, q_transform, select_and_center_objects);
 			if (select_and_center_objects)
 				ensureVisibilityOfSelectedObjects(Map::FullVisibility);
 			

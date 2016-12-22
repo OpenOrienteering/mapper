@@ -80,6 +80,7 @@
 #include "gui/print_widget.h"
 #include "gui/widgets/key_button_bar.h"
 #include "gui/widgets/measure_widget.h"
+#include "gui/widgets/tag_select_widget.h"
 #include "gui/widgets/tags_widget.h"
 #include "object_operations.h"
 #include "object_text.h"
@@ -252,6 +253,8 @@ MapEditorController::~MapEditorController()
 		delete template_dock_widget;
 	if (tags_dock_widget)
 		delete tags_dock_widget;
+	if (tag_select_dock_widget)
+		delete tag_select_dock_widget;
 	delete cut_hole_menu;
 	delete mappart_merge_act;
 	delete mappart_merge_menu;
@@ -661,6 +664,7 @@ void MapEditorController::attach(MainWindow* window)
 			createColorWindow();
 			createTemplateWindow();
 			createTagEditor();
+			createTagSelector();
 			
 			if (map->getNumColors() == 0)
 				QTimer::singleShot(0, color_dock_widget, SLOT(show()));
@@ -746,6 +750,7 @@ void MapEditorController::assignKeyboardShortcuts()
 	findAction("hidealltemplates")->setShortcut(QKeySequence(Qt::Key_F10));
 	findAction("overprintsimulation")->setShortcut(QKeySequence(Qt::Key_F4));
 	findAction("fullscreen")->setShortcut(QKeySequence(Qt::Key_F11));
+	tag_select_window_act->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_5));
 	tags_window_act->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_6));
 	color_window_act->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_7));
 	symbol_window_act->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_8));
@@ -840,6 +845,8 @@ void MapEditorController::createActions()
 	reopen_template_act = newAction("reopentemplate", tr("Reopen template..."), this, SLOT(reopenTemplateClicked()), NULL, QString{}, "templates_menu.html");
 	
 	tags_window_act = newCheckAction("tagswindow", tr("Tag editor"), this, SLOT(showTagsWindow(bool)), "window-new", tr("Show/Hide the tag editor window"), "tag_editor.html");
+
+	tag_select_window_act = newCheckAction("tagselectwindow", tr("Tag Selection"), this, SLOT(showTagSelectWindow(bool)), "tag-selector", tr("Show/Hide the tag selection window"), "tag_selector.html");
 	
 	edit_tool_act = newToolAction("editobjects", tr("Edit objects"), this, SLOT(editToolClicked()), "tool-edit.png", QString{}, "toolbars.html#tool_edit_point");
 	edit_line_tool_act = newToolAction("editlines", tr("Edit lines"), this, SLOT(editLineToolClicked()), "tool-edit-line.png", QString{}, "toolbars.html#tool_edit_line");
@@ -1013,6 +1020,7 @@ void MapEditorController::createMenuAndToolbars()
 	view_menu->addSeparator();
 	view_menu->addAction(fullscreen_act);
 	view_menu->addSeparator();
+	view_menu->addAction(tag_select_window_act);
 	view_menu->addAction(tags_window_act);
 	view_menu->addAction(color_window_act);
 	view_menu->addAction(symbol_window_act);
@@ -1515,6 +1523,7 @@ void MapEditorController::doUndo(bool redo)
 void MapEditorController::cut()
 {
 	copy();
+	//: Past tense. Displayed when an Edit > Cut operation is completed.
 	window->showStatusBarMessage(tr("Cut %1 object(s)").arg(map->getNumSelectedObjects()), 2000);
 	map->deleteSelectedObjects();
 }
@@ -1525,8 +1534,8 @@ void MapEditorController::copy()
 		return;
 	
 	// Create map containing required objects and their symbol and color dependencies
-	Map* copy_map = new Map();
-	copy_map->setScaleDenominator(map->getScaleDenominator());
+	Map copy_map;
+	copy_map.setScaleDenominator(map->getScaleDenominator());
 	
 	std::vector<bool> symbol_filter;
 	symbol_filter.assign(map->getNumSymbols(), false);
@@ -1538,11 +1547,11 @@ void MapEditorController::copy()
 	}
 	
 	// Copy all colors. This improves preservation of relative order during paste.
-	copy_map->importMap(map, Map::ColorImport, window);
+	copy_map.importMap(map, Map::ColorImport, window);
 	
 	// Export symbols and colors into copy_map
 	QHash<const Symbol*, Symbol*> symbol_map;
-	copy_map->importMap(map, Map::MinimalSymbolImport, window, &symbol_filter, -1, true, &symbol_map);
+	copy_map.importMap(map, Map::MinimalSymbolImport, window, &symbol_filter, -1, true, &symbol_map);
 	
 	// Duplicate all selected objects into copy map
 	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(), end = map->selectedObjectsEnd(); it != end; ++it)
@@ -1551,18 +1560,16 @@ void MapEditorController::copy()
 		if (symbol_map.contains(new_object->getSymbol()))
 			new_object->setSymbol(symbol_map.value(new_object->getSymbol()), true);
 		
-		copy_map->addObject(new_object);
+		copy_map.addObject(new_object);
 	}
 	
 	// Save map to memory
 	QBuffer buffer;
-	if (!copy_map->exportToIODevice(&buffer))
+	if (!copy_map.exportToIODevice(&buffer))
 	{
-		delete copy_map;
 		QMessageBox::warning(NULL, tr("Error"), tr("An internal error occurred, sorry!"));
 		return;
 	}
-	delete copy_map;
 	
 	// Put buffer into clipboard
 	QMimeData* mime_data = new QMimeData();
@@ -1572,6 +1579,7 @@ void MapEditorController::copy()
 	// Show message
 	window->showStatusBarMessage(tr("Copied %1 object(s)").arg(map->getNumSelectedObjects()), 2000);
 }
+
 
 void MapEditorController::paste()
 {
@@ -1589,8 +1597,8 @@ void MapEditorController::paste()
 	buffer.open(QIODevice::ReadOnly);
 	
 	// Create map from buffer
-	Map* paste_map = new Map();
-	if (!paste_map->importFromIODevice(&buffer))
+	Map paste_map;
+	if (!paste_map.importFromIODevice(&buffer))
 	{
 		QMessageBox::warning(NULL, tr("Error"), tr("An internal error occurred, sorry!"));
 		return;
@@ -1598,20 +1606,20 @@ void MapEditorController::paste()
 	
 	// Move objects in paste_map so their bounding box center is at this map's viewport center.
 	// This makes the pasted objects appear at the center of the viewport.
-	QRectF paste_extent = paste_map->calculateExtent(true, false, NULL);
+	QRectF paste_extent = paste_map.calculateExtent(true, false, NULL);
 	auto offset = main_view->center() - paste_extent.center();
 	
-	MapPart* part = paste_map->getCurrentPart();
+	MapPart* part = paste_map.getCurrentPart();
 	for (int i = 0; i < part->getNumObjects(); ++i)
 		part->getObject(i)->move(offset);
 	
 	// Import pasted map. Do not blindly import all colors.
-	map->importMap(paste_map, Map::MinimalObjectImport, window);
+	map->importMap(&paste_map, Map::MinimalObjectImport, window);
 	
 	// Show message
-	window->showStatusBarMessage(tr("Pasted %1 object(s)").arg(paste_map->getNumObjects()), 2000);
-	delete paste_map;
+	window->showStatusBarMessage(tr("Pasted %1 object(s)").arg(paste_map.getNumObjects()), 2000);
 }
+
 
 void MapEditorController::clearUndoRedoHistory()
 {
@@ -1931,6 +1939,29 @@ void MapEditorController::showTagsWindow(bool show)
 	
 	tags_window_act->setChecked(show);
 	tags_dock_widget->setVisible(show);
+}
+
+void MapEditorController::createTagSelector()
+{
+	Q_ASSERT(!tag_select_dock_widget);
+
+	TagSelectWidget* tag_widget = new TagSelectWidget(map, main_view, this);
+	tag_select_dock_widget = new EditorDockWidget(tr("Tag Selector"), tag_select_window_act, this, window);
+	tag_select_dock_widget->setWidget(tag_widget);
+	tag_select_dock_widget->setObjectName(QString::fromLatin1("Tag selection dock widget"));
+	if (!window->restoreDockWidget(tag_select_dock_widget))
+		window->addDockWidget(Qt::RightDockWidgetArea, tag_select_dock_widget, Qt::Vertical);
+	tag_select_dock_widget->setVisible(false);
+}
+
+
+void MapEditorController::showTagSelectWindow(bool show)
+{
+	if (!tag_select_dock_widget)
+		createTagSelector();
+
+	tag_select_window_act->setChecked(show);
+	tag_select_dock_widget->setVisible(show);
 }
 
 void MapEditorController::editGeoreferencing()
@@ -3776,17 +3807,18 @@ void MapEditorController::importClicked()
 		importMapFile(filename, true); // Error reporting in Map::loadFrom()
 		return;
 	}
-	else if (importMapFile(filename, false))
-	{
-		// Map format recognized by try-and-error
-		success = true;
-	}
 	else if (filename.endsWith(QLatin1String(".dxf"), Qt::CaseInsensitive)
 	         || filename.endsWith(QLatin1String(".gpx"), Qt::CaseInsensitive)
 	         || filename.endsWith(QLatin1String(".osm"), Qt::CaseInsensitive))
 	{
+		// Fallback: Legacy geo file import
 		importGeoFile(filename);
 		return; // Error reporting in Track::import()
+	}
+	else if (importMapFile(filename, false))
+	{
+		// Last resort: Map format recognition by try-and-error
+		success = true;
 	}
 	else
 	{

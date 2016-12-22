@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -113,7 +113,7 @@ PassPoint PassPoint::load(QXmlStreamReader& xml)
 
 bool PassPointList::estimateSimilarityTransformation(TemplateTransform* transform)
 {
-	int num_pass_points = (int)size();
+	auto num_pass_points = int(size());
 	if (num_pass_points == 1)
 	{
 		PassPoint* point = &at(0);
@@ -209,18 +209,16 @@ bool PassPointList::estimateSimilarityTransformation(TemplateTransform* transfor
 		transform->template_scale_x *= scale;
 		transform->template_scale_y *= scale;
 		transform->template_rotation -= rotation;
-		qint64 temp_x = qRound64(1000.0 * (trans_change.get(0, 0) * (transform->template_x/1000.0) + trans_change.get(0, 1) * (transform->template_y/1000.0) + trans_change.get(0, 2)));
-		transform->template_y = qRound64(1000.0 * (trans_change.get(1, 0) * (transform->template_x/1000.0) + trans_change.get(1, 1) * (transform->template_y/1000.0) + trans_change.get(1, 2)));
+		auto temp_x = qRound(1000.0 * (trans_change.get(0, 0) * (transform->template_x/1000.0) + trans_change.get(0, 1) * (transform->template_y/1000.0) + trans_change.get(0, 2)));
+		transform->template_y = qRound(1000.0 * (trans_change.get(1, 0) * (transform->template_x/1000.0) + trans_change.get(1, 1) * (transform->template_y/1000.0) + trans_change.get(1, 2)));
 		transform->template_x = temp_x;
 		
 		// Transform the pass points and calculate error
-		for (int i = 0; i < num_pass_points; ++i)
+		for (auto& point : *this)
 		{
-			PassPoint* point = &at(i);
-			
-			point->calculated_coords = MapCoordF(trans_change.get(0, 0) * point->src_coords.x() + trans_change.get(0, 1) * point->src_coords.y() + trans_change.get(0, 2),
-												 trans_change.get(1, 0) * point->src_coords.x() + trans_change.get(1, 1) * point->src_coords.y() + trans_change.get(1, 2));
-			point->error = point->calculated_coords.distanceTo(point->dest_coords);
+			point.calculated_coords = MapCoordF(trans_change.get(0, 0) * point.src_coords.x() + trans_change.get(0, 1) * point.src_coords.y() + trans_change.get(0, 2),
+			                                    trans_change.get(1, 0) * point.src_coords.x() + trans_change.get(1, 1) * point.src_coords.y() + trans_change.get(1, 2));
+			point.error = point.calculated_coords.distanceTo(point.dest_coords);
 		}
 	}
 	
@@ -229,7 +227,7 @@ bool PassPointList::estimateSimilarityTransformation(TemplateTransform* transfor
 
 bool PassPointList::estimateNonIsometricSimilarityTransform(QTransform* out)
 {
-	int num_pass_points = (int)size();
+	auto num_pass_points = int(size());
 	Q_ASSERT(num_pass_points >= 3);
 	
 	// Create linear equation system and solve using the pseuo inverse
@@ -281,17 +279,17 @@ bool PassPointList::estimateNonIsometricSimilarityTransform(QTransform* out)
 	pseudo_inverse.multiply(values, output);
 	
 	out->setMatrix(
-		output.get(0, 0), output.get(1, 0), output.get(2, 0),
-		output.get(3, 0), output.get(4, 0), output.get(5, 0),
-		0, 0, 1);
+		output.get(0, 0), output.get(1, 0), 0,
+		output.get(3, 0), output.get(4, 0), 0,
+		output.get(2, 0), output.get(5, 0), 1);
 	return true;
 }
 
 
 void qTransformToTemplateTransform(const QTransform& in, TemplateTransform* out)
 {
-	out->template_x = qRound64(1000 * in.m13());
-	out->template_y = qRound64(1000 * in.m23());
+	out->template_x = qRound(1000 * in.m31());
+	out->template_y = qRound(1000 * in.m32());
 	
 	out->template_rotation = qAtan2(-in.m21(), in.m11());
 	

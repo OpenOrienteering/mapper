@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -23,6 +23,7 @@
 
 #include <QPainter>
 
+#include "core/georeferencing.h"
 #include "map_widget.h"
 #include "renderable.h"
 #include "settings.h"
@@ -84,15 +85,16 @@ bool TemplateMap::loadTemplateFileImpl(bool configuring)
 	return new_template_valid;
 }
 
-bool TemplateMap::postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view)
+bool TemplateMap::postLoadConfiguration(QWidget* /* dialog_parent */, bool& out_center_in_view)
 {
-	Q_UNUSED(dialog_parent);
-	
-	// TODO: recursive template loading dialog
-	
-	// TODO: it would be possible to load maps as georeferenced if both maps are georeferenced
+	// Instead of dealing with the map as being (possibly) georeferenced,
+	// we simply use the both georeferencings to calculate a transformation
+	// between the coordinate systems.
 	is_georeferenced = false;
 	out_center_in_view = false;
+	calculateTransformation();
+	
+	/// \todo recursive template loading dialog
 	
 	return true;
 }
@@ -126,7 +128,7 @@ void TemplateMap::drawTemplate(QPainter* painter, QRectF& clip_rect, double scal
 	RenderConfig::Options options;
 	if (on_screen)
 		options |= RenderConfig::Screen;
-	RenderConfig config = { *(template_map.get()), transformed_clip_rect, scale, options, opacity };
+	RenderConfig config = { *(template_map.get()), transformed_clip_rect, scale, options, qreal(opacity) };
 	// TODO: introduce template-specific options, adjustable by the user, to allow changing some of these parameters
 	template_map->draw(painter, config);
 }
@@ -161,4 +163,32 @@ Map* TemplateMap::templateMap()
 void TemplateMap::setTemplateMap(std::unique_ptr<Map>&& map)
 {
 	template_map = std::move(map);
+}
+
+void TemplateMap::calculateTransformation()
+{
+	const auto& georef = template_map->getGeoreferencing();
+	const auto src_origin = MapCoordF { georef.getMapRefPoint() };
+	
+	bool ok0, ok1, ok2;
+	QTransform q_transform;
+	PassPointList passpoints;
+	passpoints.resize(3);
+	passpoints[0].src_coords  = src_origin;
+	passpoints[0].dest_coords = map->getGeoreferencing().toMapCoordF(&georef, passpoints[0].src_coords, &ok0);
+	passpoints[1].src_coords  = src_origin + MapCoordF { 128.0, 0.0 }; // 128 mm off horizontally
+	passpoints[1].dest_coords = map->getGeoreferencing().toMapCoordF(&georef, passpoints[1].src_coords, &ok1);
+	passpoints[2].src_coords  = src_origin + MapCoordF { 0.0, 128.0 }; // 128 mm off vertically
+	passpoints[2].dest_coords = map->getGeoreferencing().toMapCoordF(&georef, passpoints[2].src_coords, &ok2);
+	if (ok0 && ok1 && ok2
+	    && passpoints.estimateNonIsometricSimilarityTransform(&q_transform))
+	{
+		qTransformToTemplateTransform(q_transform, &transform);
+		updateTransformationMatrices();
+	}
+	else
+	{
+		qDebug("updateTransform() failed");
+		/// \todo proper error message
+	}
 }

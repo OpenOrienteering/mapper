@@ -28,13 +28,6 @@
 #include <QStyleFactory>
 #include <QTranslator>
 
-#ifdef Q_OS_ANDROID
-#include <QtAndroid>
-#include <QAndroidJniObject>
-#include <QLabel>
-#include <QUrl>
-#endif
-
 #include <mapper_config.h>
 
 #if defined(QT_NETWORK_LIB)
@@ -51,6 +44,7 @@
 #include "gui/widgets/mapper_proxystyle.h"
 #include "settings.h"
 #include "util_translation.h"
+#include "util/backports.h"
 #include "util/recording_translator.h"
 
 int main(int argc, char** argv)
@@ -90,16 +84,16 @@ int main(int argc, char** argv)
 #endif
 	
 	// Localization
-	TranslationUtil::setBaseName(QString::fromLatin1("OpenOrienteering"));
-	QLocale::Language lang = (QLocale::Language)settings.getSetting(Settings::General_Language).toInt();
-	QString translation_file = settings.getSetting(Settings::General_TranslationFile).toString();
-	TranslationUtil translation(lang, translation_file);
-	QLocale::setDefault(translation.getLocale());
+	TranslationUtil::setBaseName(QLatin1String("OpenOrienteering"));
+	auto language = settings.getSetting(Settings::General_Language).toString();
+	auto translation_file = settings.getSetting(Settings::General_TranslationFile).toString();
+	TranslationUtil translation(language, translation_file);
+	QLocale::setDefault(QLocale(translation.code()));
 #if defined(Q_OS_MAC)
 	// Normally this is done in Settings::apply() because it is too late here.
 	// But Mapper 0.6.2/0.6.3 accidently wrote a string instead of a list. This
 	// error caused crashes when opening native dialogs (i.e. the open-file dialog!).
-	QSettings().setValue(QString::fromLatin1("AppleLanguages"), translation.getLocale().uiLanguages());
+	QSettings().setValue(QString::fromLatin1("AppleLanguages"), QStringList{ translation.code() });
 #endif
 #if defined(Mapper_DEBUG_TRANSLATIONS)
 	if (!translation.getAppTranslator().isEmpty())
@@ -136,31 +130,6 @@ int main(int argc, char** argv)
 	first_window.setAttribute(Qt::WA_DeleteOnClose, false);
 	first_window.setController(new HomeScreenController());
 	
-	bool no_files_given = true;
-#ifdef Q_OS_ANDROID
-	QAndroidJniObject activity = QtAndroid::androidActivity();
-	QAndroidJniObject intent = activity.callObjectMethod("getIntent", "()Landroid/content/Intent;");
-	const QString action = intent.callObjectMethod<jstring>("getAction").toString();
-	static const QString action_edit =
-	  QAndroidJniObject::getStaticObjectField<jstring>("android/content/Intent", "ACTION_EDIT").toString();
-	static const QString action_view =
-	  QAndroidJniObject::getStaticObjectField<jstring>("android/content/Intent", "ACTION_VIEW").toString();
-	if (action == action_edit || action == action_view)
-	{
-		const QString data_string = intent.callObjectMethod<jstring>("getDataString").toString();
-		const QString local_file  = QUrl(data_string).toLocalFile();
-		first_window.setHomeScreenDisabled(true);
-		first_window.setCentralWidget(new QLabel(MainWindow::tr("Loading %1...").arg(local_file)));
-		first_window.setVisible(true);
-		first_window.raise();
-		// Empircal tested: We need to process the loop twice.
-		QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
-		QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
-		if (!first_window.openPath(local_file))
-			return -1;
-		return qapp.exec();
-	}
-#else
 	// Open given files later, i.e. after the initial home screen has been
 	// displayed. In this way, error messages for missing files will show on 
 	// top of a regular main window (home screen or other file).
@@ -168,28 +137,17 @@ int main(int argc, char** argv)
 	// Treat all program parameters as files to be opened
 	QStringList args(qapp.arguments());
 	args.removeFirst(); // the program name
-	for (auto&& arg : args)
+	for (const auto& arg : qAsConst(args))
 	{
-		if (arg[0] != QLatin1Char{'-'})
-		{
-			first_window.openPathLater(arg);
-			no_files_given = false;
-		}
+		first_window.openPathLater(arg);
 	}
-#endif
 	
-	// Optionally open most recently used file on startup
-	if (no_files_given && settings.getSettingCached(Settings::General_OpenMRUFile).toBool())
-	{
-		QStringList files(settings.getSettingCached(Settings::General_RecentFilesList).toStringList());
-		if (!files.isEmpty())
-			first_window.openPathLater(files[0]);
-	}
+	first_window.applicationStateChanged();
 	
 #if MAPPER_USE_QTSINGLEAPPLICATION
 	// If we need to respond to a second app launch, do so, but also accept a file open request.
 	qapp.setActivationWindow(&first_window);
-	QObject::connect(&qapp, SIGNAL(messageReceived(const QString&)), &first_window, SLOT(openPath(const QString &)));
+	QObject::connect(&qapp, &QtSingleApplication::messageReceived, &first_window, &MainWindow::openPath);
 #endif
 	
 	// Let application run

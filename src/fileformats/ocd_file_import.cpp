@@ -22,6 +22,8 @@
 
 #include "ocd_file_import.h"
 
+#include <memory>
+
 #include <QBuffer>
 #include <QDebug>
 #include <QDir>
@@ -50,6 +52,7 @@
 #include "../template_image.h"
 #include "../template_map.h"
 #include "../util.h"
+#include "../util/encoding.h"
 
 
 namespace {
@@ -58,9 +61,8 @@ static QTextCodec* codecFromSettings()
 {
 	const auto& settings = Settings::getInstance();
 	const auto name = settings.getSetting(Settings::General_Local8BitEncoding).toByteArray();
-	return (name == "System") ? QTextCodec::codecForLocale()
-	                          : QTextCodec::codecForName(name);
-}
+	return Util::codecForName(name);
+}	
 
 } // namespace
 
@@ -75,7 +77,11 @@ OcdFileImport::OcdFileImport(QIODevice* stream, Map* map, MapView* view)
  , delegate { nullptr }
  , custom_8bit_encoding { codecFromSettings() }
 {
-    // nothing else
+	if (!custom_8bit_encoding)
+	{
+		addWarning(tr("Encoding '%1' is not available. Check the settings."));
+		custom_8bit_encoding = QTextCodec::codecForLocale();
+	}
 }
 
 OcdFileImport::~OcdFileImport()
@@ -87,6 +93,24 @@ OcdFileImport::~OcdFileImport()
 void OcdFileImport::setCustom8BitEncoding(QTextCodec* encoding)
 {
 	custom_8bit_encoding = encoding;
+}
+
+
+QString OcdFileImport::convertOcdString(const QChar* input, uint maxlen) const
+{
+	auto last = input;
+	if (input)
+	{
+		while (maxlen && *last != 0)
+		{
+			last ++;
+			--maxlen;
+		}
+	}
+	QTextCodec* utf16 = QTextCodec::codecForName("UTF-16LE");
+	Q_ASSERT(utf16);
+	auto decoder = std::unique_ptr<QTextDecoder>(utf16->makeDecoder(QTextCodec::ConvertInvalidToNull));
+	return decoder->toUnicode(reinterpret_cast<const char*>(input), 2*int(last - input));
 }
 
 
@@ -1607,15 +1631,16 @@ Object* OcdFileImport::importObject(const O& ocd_object, MapPart* part, int ocd_
 
 QString OcdFileImport::getObjectText(const Ocd::ObjectV8& ocd_object, int ocd_version) const
 {
+	auto input  = ocd_object.coords + ocd_object.num_items;
+	auto maxlen = uint(sizeof(Ocd::OcdPoint32) * ocd_object.num_text);
 	QString object_text;
 	if (ocd_object.unicode && ocd_version >= 8)
 	{
-		object_text = convertOcdString(reinterpret_cast<const QChar*>(ocd_object.coords + ocd_object.num_items));
+		object_text = convertOcdString(reinterpret_cast<const QChar*>(input), maxlen/2);
 	}
 	else
 	{
-		auto len = uint(qMax(size_t(std::numeric_limits<uint>::max()), sizeof(Ocd::OcdPoint32) * ocd_object.num_text));
-		object_text = convertOcdString<Ocd::Custom8BitEncoding>(reinterpret_cast<const char*>(ocd_object.coords + ocd_object.num_items), len);
+		object_text = convertOcdString<Ocd::Custom8BitEncoding>(reinterpret_cast<const char*>(input), maxlen);
 	}
 	
 	// Remove leading "\r\n"

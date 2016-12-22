@@ -1,7 +1,7 @@
 /*
  *    Copyright 2012 Pete Curtis
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015  Kai Pastor
+ *    Copyright 2012-2016  Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -517,34 +517,12 @@ void XMLFileImporter::importElements(bool load_symbols_only)
 
 void XMLFileImporter::importMapNotes()
 {
+	auto recovery = XmlRecoveryHelper(xml);
 	map->setMapNotes(xml.readElementText());
-	if (xml.error() == QXmlStreamReader::NotWellFormedError)
+	if (xml.hasError() && recovery())
 	{
-		addWarning(tr("The map notes could not be read."));
-		
-		// Try to recover from not well-formed map notes
-		if (stream->seek(0))
-		{
-			auto buffer = new QBuffer(this);
-			auto& data = buffer->buffer();
-			data = stream->readAll();
-			const auto start = data.indexOf("<notes>") + 7;
-			const auto end = data.indexOf("</notes>", start);
-			if (start > 7 && end > 0)
-			{
-				data.remove(start, end - start);
-				stream = buffer;
-				stream->open(QIODevice::ReadOnly);
-				xml.clear();
-				xml.setDevice(stream);
-				while (!xml.atEnd()
-				       && xml.name() != literal::notes)
-				{
-					xml.readNextStartElement();
-				}
-				xml.skipCurrentElement();
-			}
-		}
+		addWarning(tr("Some invalid characters had to be removed."));
+		map->setMapNotes(xml.readElementText());
 	}
 }
 
@@ -788,7 +766,15 @@ void XMLFileImporter::importMapParts()
 	{
 		if (xml.name() == literal::part)
 		{
-			map->parts.push_back(MapPart::load(xml, *map, symbol_dict));
+			auto recovery = XmlRecoveryHelper(xml);
+			auto part = MapPart::load(xml, *map, symbol_dict);
+			if (xml.hasError() && recovery())
+			{
+				addWarning(tr("Some invalid characters had to be removed."));
+				delete part;
+				part = MapPart::load(xml, *map, symbol_dict);
+			}
+			map->parts.push_back(part);
 		}
 		else
 		{

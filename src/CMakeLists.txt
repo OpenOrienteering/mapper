@@ -90,6 +90,7 @@ set(Mapper_Common_SRCS
  renderable.cpp
  renderable_implementation.cpp
  object.cpp
+ object_query.cpp
  object_text.cpp
 
  template.cpp
@@ -182,10 +183,12 @@ set(Mapper_Common_SRCS
  gui/widgets/symbol_render_widget.cpp
  gui/widgets/symbol_tooltip.cpp
  gui/widgets/symbol_widget.cpp
+ gui/widgets/tag_select_widget.cpp
  gui/widgets/tags_widget.cpp
  gui/widgets/template_list_widget.cpp
  gui/widgets/text_alignment_widget.cpp
  
+ util/encoding.cpp
  util/item_delegates.cpp
  util/overriding_shortcut.cpp
  util/recording_translator.cpp
@@ -297,6 +300,7 @@ set(Mapper_Common_MOC_INPUT
  gui/widgets/symbol_render_widget.h
  gui/widgets/symbol_tooltip.h
  gui/widgets/symbol_widget.h
+ gui/widgets/tag_select_widget.h
  gui/widgets/tags_widget.h
  gui/widgets/template_list_widget.h
  gui/widgets/text_alignment_widget.h
@@ -329,6 +333,7 @@ set(Mapper_Common_HEADERS
   gui/point_handles.h
 
   util/backports.h
+  util/memory.h
   util/scoped_signals_blocker.h
 
   map_part.h
@@ -367,9 +372,9 @@ add_dependencies(Mapper_Common
 )
 target_link_libraries(Mapper_Common
   libocad
-  polyclipping
+  Polyclipping::Polyclipping
   printsupport
-  ${PROJ_LIBRARY}
+  PROJ4::proj
   Qt5::Widgets
   Qt5::Xml
 )

@@ -325,7 +325,7 @@ bool EditLineTool::keyRelease(QKeyEvent* event)
 		if (editingInProgress())
 		{
 			dragMove();
-			calcConstrainedPositions(cur_map_widget);
+			updateConstrainedPositions();
 		}
 	}
 	else

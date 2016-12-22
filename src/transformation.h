@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012, 2014 Kai Pastor
+ *    Copyright 2012, 2014, 2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,8 +19,8 @@
  */
 
 
-#ifndef _OPENORIENTEERING_TRANSFORMATION_H_
-#define _OPENORIENTEERING_TRANSFORMATION_H_
+#ifndef OPENORIENTEERING_TRANSFORMATION_H
+#define OPENORIENTEERING_TRANSFORMATION_H
 
 #include <vector>
 

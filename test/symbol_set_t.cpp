@@ -26,6 +26,7 @@
 #include "../src/map.h"
 #include "../src/symbol_area.h"
 #include "../src/settings.h"
+#include "../src/template.h"
 #include "../src/undo_manager.h"
 
 
@@ -81,6 +82,8 @@ void SymbolSetTool::initTestCase()
 	
 	examples_dir.cd(QFileInfo(QString::fromUtf8(__FILE__)).dir().absoluteFilePath(QString::fromLatin1("../examples")));
 	QVERIFY(examples_dir.exists());
+	
+	Template::pathForSaving = &Template::getTemplateRelativePath;
 }
 
 
@@ -324,6 +327,9 @@ void SymbolSetTool::processSymbolSet()
 		printer_config.options.show_templates = true;
 		printer_config.single_page_print_area = true;
 		printer_config.center_print_area = true;
+		printer_config.page_format = { { 200.0, 287.0 }, 5.0 };
+		printer_config.page_format.paper_size = QPrinter::A4; 
+		printer_config.print_area = printer_config.page_format.page_rect;
 		map.setPrinterConfig(printer_config);
 	}
 	else

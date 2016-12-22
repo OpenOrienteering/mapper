@@ -18,19 +18,15 @@
  */
 
 
-#ifndef _OPENORIENTEERING_UTIL_TRANSLATION_H_
-#define _OPENORIENTEERING_UTIL_TRANSLATION_H_
+#ifndef OPENORIENTEERING_UTIL_TRANSLATION_H
+#define OPENORIENTEERING_UTIL_TRANSLATION_H
+
+#include <vector>
 
 #include <QLocale>
 #include <QMap>
 #include <QStringList>
 #include <QTranslator>
-
-
-/**
- * A colllection of language names and the corresponding IDs.
- */
-typedef QMap<QString, QLocale::Language> LanguageCollection;
 
 
 /**
@@ -40,64 +36,112 @@ class TranslationUtil
 {
 public:
 	/**
+	 * A struct for representing the language of a translation.
+	 * 
+	 * This struct is independent of QLocale limitations for languages
+	 * like Esperanto.
+	 */
+	struct Language
+	{
+		/** 
+		 * The code defining the language. \see QLocale::name()
+		 */
+		QString code;
+		
+		/**
+		 * The display name of the language.
+		 */
+		QString displayName;
+		
+		/**
+		 * Returns true when the object holds valid data.
+		 */
+		bool isValid() const { return !code.isEmpty(); }
+	};
+	
+	
+	/**
+	 * A collection of languages.
+	 */
+	using LanguageList = std::vector<Language>;
+	
+	
+	/**
 	 * Creates a new translation utility for the given language.
-	 * The base name of the translation files should be set in advance.
+	 * 
+	 * The base name of the translation files must be set in advance.
 	 */
-	TranslationUtil(QLocale::Language lang, QString translation_file = QString());
+	TranslationUtil(const QString& code, QString translation_file = {});
 	
 	/**
-	 * Returns the locale.
+	 * Returns the code of the language.
 	 */
-	const QLocale& getLocale() const { return locale; };
+	QString code() const { return language.code; }
 	
 	/**
-	 * Returns a translation for Qt.
+	 * Returns the display name of the language.
 	 */
-	QTranslator& getQtTranslator() { return qt_translator; };
+	QString displayName() const { return language.displayName; }
 	
 	/**
-	 * Returns a translation for the application.
+	 * Returns a translator for Qt strings.
 	 */
-	QTranslator& getAppTranslator() { return app_translator; };
+	QTranslator& getQtTranslator() { return qt_translator; }
+	
+	/**
+	 * Returns a translator for application strings.
+	 */
+	QTranslator& getAppTranslator() { return app_translator; }
+	
+	
+	/**
+	 * Sets the common base name of the application's translation files.
+	 */
+	static void setBaseName(const QLatin1String& name);
 	
 	/**
 	 * Returns a collection of available languages for this application.
 	 */
-	static LanguageCollection getAvailableLanguages();
+	static LanguageList availableLanguages();
 	
-	/** Sets the common base name of the application's translation files. */
-	static void setBaseName(const QString& name);
-	
-	/** Returns the locale name for a given translation file,
-	 *  or returns an empty string if the file is not a valid translation.
-	 * 
-	 *  In order to be valid, the file must exist, and the file name
-	 *  (without directory) must be composed of the base name, an underscore,
-	 *  the locale name and the suffix ".qm".
+	/**
+	 * Returns the Translation for a given translation file.
 	 */
-	static QString localeNameForFile(const QString& filename);
+	static Language languageFromFilename(const QString& path);
+	
+	/**
+	 * Returns the Translation for a language name.
+	 */
+	static Language languageFromCode(const QString& code);
+	
 	
 protected:
-	/**
-	 * Initializes the search path.
-	 */
-	static void init_search_path();
-	
 	/**
 	 * Finds a named translation from the search path and loads it
 	 * to the translator.
 	 */
-	bool load(QTranslator& translator, QString translation_name);
+	bool load(QTranslator& translator, QString translation_name) const;
+	
+	
+	/**
+	 * Returns the search path for translations.
+	 */
+	static const QStringList& searchPath();
 	
 	static QString base_name;
 	
-	static QStringList search_path;
-	
-	QLocale locale;
+	Language language;
 	
 	QTranslator qt_translator;
 	
 	QTranslator app_translator;
 };
+
+
+inline
+bool operator<(const TranslationUtil::Language& first, const TranslationUtil::Language& second) {
+	return first.code < second.code;
+}
+
 
 #endif

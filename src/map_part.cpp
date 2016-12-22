@@ -24,6 +24,7 @@
 #include <algorithm>
 
 #include <qmath.h>
+#include <QTransform>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
@@ -207,7 +208,7 @@ bool MapPart::deleteObject(Object* object, bool remove_only)
 	return false;
 }
 
-void MapPart::importPart(MapPart* other, QHash<const Symbol*, Symbol*>& symbol_map, bool select_new_objects)
+void MapPart::importPart(MapPart* other, QHash<const Symbol*, Symbol*>& symbol_map, const QTransform& transform, bool select_new_objects)
 {
 	if (other->getNumObjects() == 0)
 		return;
@@ -223,6 +224,7 @@ void MapPart::importPart(MapPart* other, QHash<const Symbol*, Symbol*>& symbol_m
 		Object* new_object = object->duplicate();
 		if (symbol_map.contains(new_object->getSymbol()))
 			new_object->setSymbol(symbol_map.value(new_object->getSymbol()), true);
+		new_object->transform(transform);
 		
 		objects.push_back(new_object);
 		new_object->setMap(map);

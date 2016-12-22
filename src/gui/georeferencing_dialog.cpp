@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -24,6 +24,7 @@
 #include <QComboBox>
 #include <QDate>
 #include <QDebug>
+#include <QDesktopServices>
 #include <QDialogButtonBox>
 #include <QHBoxLayout>
 #include <QFormLayout>
@@ -32,12 +33,12 @@
 #include <QMouseEvent>
 #include <QPushButton>
 #include <QRadioButton>
+#include <QUrlQuery>
 #include <QXmlStreamReader>
 
 #if defined(QT_NETWORK_LIB)
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
-#include <QUrlQuery>
 #endif
 
 #include "../core/crs_template.h"
@@ -166,11 +167,7 @@ GeoreferencingDialog::GeoreferencingDialog(
 	declination_button = new QPushButton(tr("Lookup..."));
 	QHBoxLayout* declination_layout = new QHBoxLayout();
 	declination_layout->addWidget(declination_edit, 1);
-#if defined(QT_NETWORK_LIB)
 	declination_layout->addWidget(declination_button, 0);
-#else
-	connect(this, &QObject::destroyed, declination_button, &QObject::deleteLater);
-#endif
 	
 	grivation_label = new QLabel();
 	
@@ -352,13 +349,12 @@ void GeoreferencingDialog::declinationChanged()
 
 void GeoreferencingDialog::requestDeclination(bool no_confirm)
 {
-#if defined(QT_NETWORK_LIB)
 	if (georef->isLocal())
 		return;
 	
-	// TODO: Move to resources or preferences. Assess security risks of url distinction.
-	QString user_url(QString::fromLatin1("http://www.ngdc.noaa.gov/geomag-web/"));
-	QUrl service_url(QString::fromLatin1("http://www.ngdc.noaa.gov/geomag-web/calculators/calculateDeclination"));
+	/// \todo Move URL (template) to settings.
+	QString user_url(QString::fromLatin1("https://www.ngdc.noaa.gov/geomag-web/"));
+	QUrl service_url(user_url + QLatin1String("calculators/calculateDeclination"));
 	LatLon latlon(georef->getGeographicRefPoint());
 	
 	if (!no_confirm)
@@ -372,12 +368,6 @@ void GeoreferencingDialog::requestDeclination(bool no_confirm)
 			return;
 	}
 	
-	declination_query_in_progress = true;
-	updateDeclinationButton();
-	
-	QNetworkAccessManager *network = new QNetworkAccessManager(this);
-	connect(network, &QNetworkAccessManager::finished, this, &GeoreferencingDialog::declinationReplyFinished);
-	
 	QUrlQuery query;
 	QDate today = QDate::currentDate();
 	query.addQueryItem(QString::fromLatin1("lat1"), QString::number(latlon.latitude()));
@@ -385,11 +375,23 @@ void GeoreferencingDialog::requestDeclination(bool no_confirm)
 	query.addQueryItem(QString::fromLatin1("startYear"), QString::number(today.year()));
 	query.addQueryItem(QString::fromLatin1("startMonth"), QString::number(today.month()));
 	query.addQueryItem(QString::fromLatin1("startDay"), QString::number(today.day()));
+	
+#if defined(Q_OS_WIN) || defined(Q_OS_MAC) || defined(Q_OS_ANDROID) || !defined(QT_NETWORK_LIB)
+	// No QtNetwork or no OpenSSL: open result in system browser.
+	query.addQueryItem(QString::fromLatin1("resultFormat"), QString::fromLatin1("html"));
+	service_url.setQuery(query);
+	QDesktopServices::openUrl(service_url);
+#else
+	// Use result directly
 	query.addQueryItem(QString::fromLatin1("resultFormat"), QString::fromLatin1("xml"));
 	service_url.setQuery(query);
+	
+	declination_query_in_progress = true;
+	updateDeclinationButton();
+	
+	QNetworkAccessManager *network = new QNetworkAccessManager(this);
+	connect(network, &QNetworkAccessManager::finished, this, &GeoreferencingDialog::declinationReplyFinished);
 	network->get(QNetworkRequest(service_url));
-#else
-	Q_UNUSED(no_confirm)
 #endif
 }
 

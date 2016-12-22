@@ -114,7 +114,10 @@ public:
 	QString convertOcdString(const Ocd::PascalString<N>& src) const;
 	
 	template< std::size_t N >
-	QString convertOcdString(const Ocd::Utf8PascalString< N >& src) const;
+	QString convertOcdString(const Ocd::Utf8PascalString<N>& src) const;
+	
+	template< std::size_t N >
+	QString convertOcdString(const Ocd::Utf16PascalString<N>& src) const;
 	
 	template< class E >
 	QString convertOcdString(const char* src, uint len) const;
@@ -122,7 +125,7 @@ public:
 	template< class E >
 	QString convertOcdString(const QByteArray& data) const;
 	
-	QString convertOcdString(const QChar* src) const;
+	QString convertOcdString(const QChar* src, uint maxlen) const;
 	
 	MapCoord convertOcdPoint(const Ocd::OcdPoint32& ocd_point) const;
 	
@@ -344,6 +347,13 @@ QString OcdFileImport::convertOcdString(const Ocd::Utf8PascalString<N>& src) con
 	return QString::fromUtf8(src.data, src.length);
 }
 
+template< std::size_t N >
+QString OcdFileImport::convertOcdString(const Ocd::Utf16PascalString<N>& src) const
+{
+	Q_STATIC_ASSERT(N <= std::numeric_limits<unsigned int>::max() / 2);
+	return convertOcdString(src.data, N);
+}
+
 template< >
 inline
 QString OcdFileImport::convertOcdString< Ocd::Custom8BitEncoding >(const char* src, uint len) const
@@ -364,12 +374,6 @@ template< class E >
 QString OcdFileImport::convertOcdString(const QByteArray& data) const
 {
 	return OcdFileImport::convertOcdString< E >(data.constData(), data.length());
-}
-
-inline
-QString OcdFileImport::convertOcdString(const QChar* src) const
-{
-	return QString(src);
 }
 
 inline

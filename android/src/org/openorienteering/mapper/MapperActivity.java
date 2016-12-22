@@ -58,6 +58,30 @@ public class MapperActivity extends org.qtproject.qt5.android.bindings.QtActivit
 		instance = this;
 	}
 	
+	/** Call setIntent, as recommended for singleTask launch mode. */
+	@Override
+	public void onNewIntent(Intent intent)
+	{
+		setIntent(intent);
+	}
+	
+	/** Returns the data string from the intent, and resets the intent. */
+	public String takeIntentPath()
+	{
+		String result = "";
+		Intent intent = getIntent();
+		if (intent != null)
+		{
+			String action = intent.getAction();
+			if (action == Intent.ACTION_EDIT || action == Intent.ACTION_VIEW)
+			{
+				result = intent.getDataString();
+				}
+			setIntent(null);
+		}
+		return result;
+	}
+	
 	// Static methods to be called from C++
 	
 	/** Checks if GPS is enabled in the Android settings and if not, prompts the user to enable it.

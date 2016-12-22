@@ -33,7 +33,6 @@ else {
 	DEFINES += APP_VERSION=\"'\\"$${Mapper_VERSION_MAJOR}.$${Mapper_VERSION_MINOR}.$${Mapper_VERSION_PATCH}\\"'\" \
 	           QT_NO_DEBUG QT_NO_DEBUG_OUTPUT
 }
-DEFINES += \"CLIPPER_VERSION='\\"6.1.3a\\"'\"
 DEFINES += \"MAPPER_HELP_NAMESPACE='\\"openorienteering.mapper-$${Mapper_VERSION_MAJOR}.$${Mapper_VERSION_MINOR}.$${Mapper_VERSION_PATCH}.help\\"'\"
 
 # Input
@@ -138,6 +137,7 @@ HEADERS += \
   gui/widgets/symbol_render_widget.h \
   gui/widgets/symbol_tooltip.h \
   gui/widgets/symbol_widget.h \
+  gui/widgets/tag_select_widget.h \
   gui/widgets/tags_widget.h \
   gui/widgets/template_list_widget.h \
   gui/widgets/text_alignment_widget.h \
@@ -162,6 +162,7 @@ HEADERS += \
   fileformats/ocd_types_v12.h \
   gui/point_handles.h \
   util/backports.h \
+  util/memory.h \
   util/scoped_signals_blocker.h \
   map_part.h \
   map_part_undo.h \
@@ -223,6 +224,7 @@ SOURCES += \
   renderable.cpp \
   renderable_implementation.cpp \
   object.cpp \
+  object_query.cpp \
   object_text.cpp \
   template.cpp \
   template_image.cpp \
@@ -307,9 +309,11 @@ SOURCES += \
   gui/widgets/symbol_render_widget.cpp \
   gui/widgets/symbol_tooltip.cpp \
   gui/widgets/symbol_widget.cpp \
+  gui/widgets/tag_select_widget.cpp \
   gui/widgets/tags_widget.cpp \
   gui/widgets/template_list_widget.cpp \
   gui/widgets/text_alignment_widget.cpp \
+  util/encoding.cpp \
   util/item_delegates.cpp \
   util/overriding_shortcut.cpp \
   util/recording_translator.cpp \
