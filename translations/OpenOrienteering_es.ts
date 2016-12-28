@@ -2854,7 +2854,7 @@ Do you want to scale the symbols to the selected scale?</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="152"/>
         <source>You must close the current file before you can open another one.</source>
-        <translation type="unfinished"></translation>
+        <translation>Debe cerrar el archivo actual para poder abrir otro distinto.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="719"/>
@@ -3334,12 +3334,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="849"/>
         <source>Tag Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Selección de pestaña</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="849"/>
         <source>Show/Hide the tag selection window</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar/Ocultar la ventana de selección de pestañas</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="851"/>
@@ -3884,7 +3884,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1949"/>
         <source>Tag Selector</source>
-        <translation type="unfinished"></translation>
+        <translation>Selector de pestañas</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2010"/>
@@ -4373,29 +4373,23 @@ selecc</translation>
         <location filename="future_translations.cpp" line="37"/>
         <source>Cut %n object(s)</source>
         <extracomment>Past tense. Displayed when an Edit &gt; Cut operator is completed.</extracomment>
-        <translation type="unfinished">
-            <numerusform>Cortado(s) %n objeto(s)</numerusform>
-            <numerusform>Cortado(s) %n objeto(s)</numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n objeto(s) cortado(s)</numerusform>
+        <numerusform>%n objetos cortados</numerusform>
+        </translation></message>
     <message numerus="yes">
         <location filename="future_translations.cpp" line="40"/>
         <source>Copied %n object(s)</source>
         <extracomment>To replace existing translation which doesn't use plural correctly</extracomment>
-        <translation type="unfinished">
-            <numerusform>Copiado(s) %n objeto(s)</numerusform>
-            <numerusform>Copiado(s) %n objeto(s)</numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n objeto(s) cortado(s)</numerusform>
+        <numerusform>%n objetos cortados</numerusform>
+        </translation></message>
     <message numerus="yes">
         <location filename="future_translations.cpp" line="43"/>
         <source>Pasted %n object(s)</source>
         <extracomment>To replace existing translation which doesn't use plural correctly</extracomment>
-        <translation type="unfinished">
-            <numerusform>Pegado(s) %n objeto(s)</numerusform>
-            <numerusform>Pegado(s) %n objeto(s)</numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n objeto(s) pegado(s)</numerusform>
+        <numerusform>%n objetos pegados</numerusform>
+        </translation></message>
     <message>
         <location filename="future_translations.cpp" line="46"/>
         <source>Deletes the selected objects.</source>
@@ -4442,11 +4436,9 @@ selecc</translation>
         <location filename="future_translations.cpp" line="67"/>
         <source>Duplicated %n object(s)</source>
         <extracomment>To replace existing translation which doesn't use plural correctly</extracomment>
-        <translation type="unfinished">
-            <numerusform>Duplicado(s) %n objeto(s)</numerusform>
-            <numerusform>Duplicado(s) %n objeto(s)</numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n objeto(s) duplicado(s)</numerusform>
+        <numerusform>%n objetos duplicados</numerusform>
+        </translation></message>
     <message>
         <location filename="future_translations.cpp" line="70"/>
         <source>No objects were selected because there are no objects with the selected symbols.</source>
@@ -4974,37 +4966,37 @@ zoom usando la rueda del ratón, si dispone de esos elementos.</translation>
         <location filename="../src/object_query.cpp" line="146"/>
         <source>is</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>es</translation>
     </message>
     <message>
         <location filename="../src/object_query.cpp" line="149"/>
         <source>is not</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>no es</translation>
     </message>
     <message>
         <location filename="../src/object_query.cpp" line="152"/>
         <source>contains</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>contiene</translation>
     </message>
     <message>
         <location filename="../src/object_query.cpp" line="156"/>
         <source>and</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>y</translation>
     </message>
     <message>
         <location filename="../src/object_query.cpp" line="159"/>
         <source>or</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>o</translation>
     </message>
     <message>
         <location filename="../src/object_query.cpp" line="163"/>
         <source>invalid</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>inválido</translation>
     </message>
 </context>
 <context>
@@ -6632,65 +6624,63 @@ para saltar sobre el perro perezoso
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="60"/>
         <source>Relation</source>
-        <translation type="unfinished"></translation>
+        <translation>Relación</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="60"/>
         <source>Key</source>
-        <translation type="unfinished">Clave</translation>
+        <translation>Clave</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="60"/>
         <source>Comparison</source>
-        <translation type="unfinished"></translation>
+        <translation>Comparación</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="60"/>
         <source>Value</source>
-        <translation type="unfinished">Valor</translation>
+        <translation>Valor</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="76"/>
         <source>Add Row</source>
-        <translation type="unfinished"></translation>
+        <translation>Añadir fila</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="77"/>
         <source>Remove Row</source>
-        <translation type="unfinished"></translation>
+        <translation>Eliminar fila</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="83"/>
         <source>Move Up</source>
-        <translation type="unfinished">Mover arriba</translation>
+        <translation>Mover arriba</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="85"/>
         <source>Move Down</source>
-        <translation type="unfinished">Mover abajo</translation>
+        <translation>Mover abajo</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="92"/>
         <source>Select</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="97"/>
         <source>Help</source>
-        <translation type="unfinished">Ayuda</translation>
+        <translation>Ayuda</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="346"/>
         <source>%n object(s) selected</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n objeto seleccionado</numerusform>
+        <numerusform>%n objetos seleccionados</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="350"/>
         <source>Invalid query</source>
-        <translation type="unfinished"></translation>
+        <translation>Consulta incorrecta</translation>
     </message>
 </context>
 <context>
@@ -7708,7 +7698,7 @@ La máxima versión soportada es %2.</translation>
         <location filename="../src/file_format_xml.cpp" line="524"/>
         <location filename="../src/file_format_xml.cpp" line="773"/>
         <source>Some invalid characters had to be removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Deben eliminarse algunos caracteres no válidos.</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="542"/>
