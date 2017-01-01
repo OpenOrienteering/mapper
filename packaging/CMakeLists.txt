@@ -1,5 +1,5 @@
 #
-#    Copyright 2012-2015 Kai Pastor
+#    Copyright 2012-2017 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -238,27 +238,12 @@ else()
 endif()
 
 
-if(WIN32)
-	set(CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS_SKIP TRUE)
-endif()
-include(InstallRequiredSystemLibraries)
-
-
 # Cleanup obsolete cache items
 unset(MAPPER_LIBS CACHE)
 unset(MAPPER_QT_PLUGINS CACHE)
 
 unset(MAPPER_LIB_HINTS)
 unset(MAPPER_LIBS)
-
-if(TOOLCHAIN_SHARED_LIBS)
-	list(APPEND MAPPER_LIBS ${TOOLCHAIN_SHARED_LIBS})
-elseif(MINGW)
-	list(APPEND MAPPER_LIBS libgcc_s_dw2-1 mingwm10)
-	list(APPEND MAPPER_LIBS libgcc_s_sjlj-1 libwinpthread-1 libstdc++-6)
-	list(APPEND MAPPER_LIBS libgcc_s_seh-1)
-	list(APPEND MAPPER_LIBS zlib1)
-endif()
 
 if(Mapper_PACKAGE_PROJ)
 	if(NOT PROJ4_ROOT)
@@ -267,12 +252,6 @@ if(Mapper_PACKAGE_PROJ)
 	install(
 	  DIRECTORY "${PROJ4_ROOT}/share/proj"
 	  DESTINATION "${MAPPER_DATA_DESTINATION}")
-	if(WIN32)
-		set(PROJ_LIB_SUFFIX -9)
-	else()
-		set(PROJ_LIB_SUFFIX "")
-	endif()
-	list(APPEND MAPPER_LIBS      proj${PROJ_LIB_SUFFIX})
 	list(APPEND MAPPER_LIB_HINTS ${PROJ4_ROOT}/bin)
 endif()
 
@@ -280,36 +259,18 @@ if(Mapper_PACKAGE_GDAL)
 	install(
 	  DIRECTORY "${GDAL_BINARY_DIR}/../share/gdal"
 	  DESTINATION "${MAPPER_DATA_DESTINATION}")
-	if(WIN32)
-		set(GDAL_LIB_SUFFIX -20)
-	else()
-		set(GDAL_LIB_SUFFIX "")
-	endif()
-	list(APPEND MAPPER_LIBS      gdal${GDAL_LIB_SUFFIX})
 	list(APPEND MAPPER_LIB_HINTS ${GDAL_BINARY_DIR})
-	if(WIN32)
-		list(APPEND MAPPER_LIBS  tiff-5 lzma-5)
-	endif()
 endif()
 
 unset(MAPPER_QT_PLUGINS)
 if(Mapper_PACKAGE_QT)
 	set(QT_LIB_SUFFIX "")
 	list(APPEND MAPPER_LIB_HINTS ${QT_BINARY_DIR})
-	if(WIN32)
+	if(WIN32 AND EXISTS "${PROJECT_BINARY_DIR}/3rd-party/qt5/qt.conf")
 		install(
 		  FILES "${PROJECT_BINARY_DIR}/3rd-party/qt5/qt.conf"
 		  DESTINATION "${MAPPER_RUNTIME_DESTINATION}")
 	endif()
-	list(APPEND MAPPER_LIBS 
-	  Qt5Core
-	  Qt5DBus
-	  Qt5Gui
-	  Qt5Network
-	  Qt5PrintSupport
-	  Qt5Widgets
-	  Qt5Xml
-	)
 	set(MAPPER_QT_PLUGINS
 	  generic/qevdevkeyboardplugin
 	  generic/qevdevmouseplugin
@@ -356,11 +317,6 @@ if(Mapper_PACKAGE_ASSISTANT)
 		  FILES "${PROJECT_BINARY_DIR}/3rd-party/qt5/qt.conf"
 		  DESTINATION "${MAPPER_LIBRARY_DESTINATION}/bin")
 	endif()
-	if(NOT APPLE)
-		list(APPEND MAPPER_LIBS 
-		  Qt5Help Qt5CLucene Qt5Sql
-		)
-	endif()
 	if(APPLE)
 		set(FIXUP_ASSISTANT "Mapper.app/Contents/MacOS/Assistant")
 	endif()
@@ -384,35 +340,7 @@ if(CMAKE_CROSSCOMPILING AND MINGW)
 	string(REPLACE : \; MINGW_SEARCH_DIRS "${MINGW_SEARCH_DIRS}")
 	list(APPEND MAPPER_LIB_HINTS ${MINGW_SEARCH_DIRS})
 endif()
-
-# Install all libs
-foreach(_mapper_lib ${MAPPER_LIBS})
-	set(_mapper_lib_id "MAPPER_${_mapper_lib}_LIB")
-	find_library(${_mapper_lib_id} ${_mapper_lib}
-	  HINTS ${MAPPER_LIB_HINTS}
-	  PATH_SUFFIXES "../bin" ${TOOLCHAIN_PATH_SUFFIXES}
-	  NO_CMAKE_FIND_ROOT_PATH)
-	get_filename_component(_mapper_lib_ext "${${_mapper_lib_id}}" EXT)
-	if(_mapper_lib_ext STREQUAL ${CMAKE_SHARED_LIBRARY_SUFFIX})
-		message("   ${_mapper_lib} shared library - found")
-		list(APPEND CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS "${${_mapper_lib_id}}")
-		if(IS_SYMLINK "${${_mapper_lib_id}}")
-			get_filename_component(_mapper_lib_real "${${_mapper_lib_id}}" REALPATH)
-			list(APPEND CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS "${_mapper_lib_real}")
-		endif()
-	else()
-		message("   ${_mapper_lib} shared library - not found")
-	endif()
-endforeach(_mapper_lib)
-if(WIN32)
-	install(
-	  FILES ${CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS} 
-	  DESTINATION "${MAPPER_LIBRARY_DESTINATION}")
-elseif(UNIX AND NOT APPLE) # Libs on OSX will be handled by fixup_bundle.
-	install(
-	  FILES ${CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS} 
-	  DESTINATION "${MAPPER_LIBRARY_DESTINATION}/lib")
-endif()
+	
 
 # Install all plugins
 unset(MAPPER_QT_PLUGINS_FOUND)
@@ -436,6 +364,7 @@ foreach(_qt_plugin ${MAPPER_QT_PLUGINS})
 		message("   ${_qt_plugin} plugin library - not found")
 	endif()
 endforeach(_qt_plugin)
+
 
 if(APPLE)
 	include(${PROJECT_SOURCE_DIR}/cmake/DeployQt5.cmake)
@@ -482,4 +411,8 @@ if(UNIX AND NOT APPLE)
 		)
 	endforeach()
 endif()
+
+# By exanding all @VAR, custom_install.cmake makes the install more traceable.
+configure_file("custom_install.cmake.in" "custom_install.cmake" @ONLY)
+install(CODE "include(\"${CMAKE_CURRENT_BINARY_DIR}/custom_install.cmake\")")
 

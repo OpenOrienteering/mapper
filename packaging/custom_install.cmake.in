@@ -1,0 +1,80 @@
+#
+#    Copyright 2017 Kai Pastor
+#    
+#    This file is part of OpenOrienteering.
+# 
+#    OpenOrienteering is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+# 
+#    OpenOrienteering is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+# 
+#    You should have received a copy of the GNU General Public License
+#    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
+
+
+# This macro sets CMAKE_CROSSCOMPILING, and when actually cross-compiling,
+# it also sets other CMAKE_... variables which describe the target system.
+macro(handle_crosscompiling)
+	set(CMAKE_CROSSCOMPILING @CMAKE_CROSSCOMPILING@)
+	if(CMAKE_CROSSCOMPILING)
+		# These variables must describe the target system
+		set(APPLE @APPLE@)
+		set(MINGW @MINGW@)
+		set(UNIX  @UNIX@)
+		set(WIN32 @WIN32@)
+	endif()
+endmacro()
+
+
+# This function wraps BundleUtilities' fixup_bundle()
+# to make it work for cross-builds.
+function(fixup_bundle_portable runtime dirs)
+	handle_crosscompiling()
+	if(MINGW)
+		# gp_tool and gp_cmd are needed for module GetPrerequisites.
+		set(gp_tool "objdump")
+		string(REGEX REPLACE "gcc$" "${gp_tool}" gp_cmd "@CMAKE_C_COMPILER@")
+		# This function resolves all unknown items as 'system' libraries,
+		# thus catching the system libraries in the MinGW context.
+		function(gp_resolve_item_override context item exepath dirs resolved_item_var resolved_var)
+			if(NOT ${resolved_var})
+				set(${resolved_item_var} "/system/${item}" PARENT_SCOPE)
+				set(${resolved_var} 1 PARENT_SCOPE)
+			endif()
+		endfunction()
+	endif()
+	
+	include(BundleUtilities)
+	if(WIN32)
+		file(GLOB_RECURSE plugins "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/plugins/*.dll")
+		list(APPEND runtime ${plugins})
+		fixup_bundle("$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/Mapper.exe" "${runtime}" "${dirs}")
+	elseif(APPLE)
+		fixup_bundle("$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/Mapper.app" "${runtime}" "${dirs}")
+	endif()
+endfunction()
+
+
+# Write a minimal qt.conf if needed.
+function(handle_qt_conf)
+	handle_crosscompiling()
+	set(qt_conf "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/qt.conf")
+	if(EXISTS "${qt_conf}")
+		return()
+	elseif(WIN32)
+		file(WRITE "${qt_conf}" "\
+[Paths]
+Plugins=./plugins
+Translations=./translations
+")
+	endif()
+endfunction()
+
+
+fixup_bundle_portable("" "@MAPPER_LIB_HINTS@")
+handle_qt_conf()
