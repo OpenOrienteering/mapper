@@ -19,7 +19,6 @@
 
 find_package(Qt5Core 5.2 REQUIRED)
 find_package(Qt5Widgets REQUIRED)
-find_package(Qt5Xml REQUIRED)
 find_package(Qt5Network)
 find_package(Qt5PrintSupport)
 
@@ -376,7 +375,6 @@ target_link_libraries(Mapper_Common
   printsupport
   PROJ4::proj
   Qt5::Widgets
-  Qt5::Xml
 )
 if(Qt5Network_FOUND)
 	target_link_libraries(Mapper_Common
