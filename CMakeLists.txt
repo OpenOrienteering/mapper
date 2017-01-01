@@ -130,8 +130,7 @@ option(Mapper_PACKAGE_PROJ      "Include all required Proj components in the pac
 option(Mapper_PACKAGE_GDAL      "Include all required GDAL components in the packages" ${Mapper_BUILD_GDAL})
 option(Mapper_PACKAGE_QT        "Include all required Qt components in the packages"   ${Mapper_BUILD_QT})
 option(Mapper_PACKAGE_ASSISTANT "Include Qt Assistant in the packages"                 ${Mapper_BUILD_QT})
-option(Mapper_PACKAGE_LINGUIST  "Build a Qt Linguist package"                          ${Mapper_BUILD_PACKAGE_DEFAULT})
-mark_as_advanced(Mapper_BUILD_PACKAGE Mapper_PACKAGE_QT Mapper_PACKAGE_ASSISTANT Mapper_PACKAGE_PROJ Mapper_PACKAGE_LINGUIST)
+mark_as_advanced(Mapper_BUILD_PACKAGE Mapper_PACKAGE_QT Mapper_PACKAGE_ASSISTANT Mapper_PACKAGE_PROJ)
 
 unset(Mapper_PACKAGE_LIBRARIES CACHE) # Legacy
 
