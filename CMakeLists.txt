@@ -315,7 +315,7 @@ else()
 	add_subdirectory("test")
 endif()
 
-foreach(qt5_module Core Gui Network PrintSupport Test Widgets Xml)
+foreach(qt5_module Core Gui Network PrintSupport Test Widgets)
 	if (TARGET Qt5::${qt5_module} AND TARGET Qt5)
 		add_dependencies(Qt5::${qt5_module} Qt5)
 	endif()
