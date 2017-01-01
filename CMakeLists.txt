@@ -1,6 +1,6 @@
 #
 #    Copyright 2012, 2013, 2014 Thomas Schöps
-#    Copyright 2012-2016 Kai Pastor
+#    Copyright 2012-2017 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -31,7 +31,7 @@ include(FeatureSummary)
 
 project(Mapper)
 
-set(Mapper_COPYRIGHT "(C) 2012-2016 OpenOrienteering developers")
+set(Mapper_COPYRIGHT "(C) 2012-2017 The OpenOrienteering developers")
 
 # All version components must be integers.
 # We use Mapper_VERSION_PATCH >= 99 to mark development builds.
