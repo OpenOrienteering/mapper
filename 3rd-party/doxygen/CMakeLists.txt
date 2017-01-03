@@ -23,7 +23,7 @@ cmake_minimum_required(VERSION 2.8.3)
 
 # Configuration options
 
-set(DOXYGEN_VERSION_DEFAULT 1.8.8)
+set(DOXYGEN_VERSION_DEFAULT 1.8.13)
 set(DOXYGEN_VERSION ${DOXYGEN_VERSION_DEFAULT} CACHE STRING
   "Version number of the doxygen library")
 mark_as_advanced(DOXYGEN_VERSION)
@@ -31,14 +31,14 @@ mark_as_advanced(DOXYGEN_VERSION)
 message(STATUS "Configuring doxygen ${DOXYGEN_VERSION}")
 
 if (NOT ${DOXYGEN_VERSION} STREQUAL ${DOXYGEN_VERSION_DEFAULT})
-	message(WARNING 
+	message(WARNING
 	  "The doxygen library version is different from the current recommended version "
 	  "(${DOXYGEN_VERSION} vs. ${DOXYGEN_VERSION_DEFAULT}).")
 endif()
 
 set(DOXYGEN_MD5SUMS
   # Schema: VERSION:MD5
-  1.8.8:453892def7b378df387585a9358c23d4
+  1.8.13:0fa414975f8cd6d30e126c28327c1f7c
 )
 foreach(line ${DOXYGEN_MD5SUMS})
 	if(${line} MATCHES "^${DOXYGEN_VERSION}:")
@@ -80,7 +80,7 @@ ExternalProject_Add(
     # Check that the license hasn't changed.
     ${CMAKE_COMMAND} -E compare_files <SOURCE_DIR>/LICENSE "${DOXYGEN_LICENSE_FILE}"
   COMMAND
-    "<SOURCE_DIR>/configure" "--release" "--prefix" "<INSTALL_DIR>"
+    ${CMAKE_COMMAND} "<SOURCE_DIR>" "-DCMAKE_BUILD_TYPE=RELEASE" "-DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>"
   BUILD_IN_SOURCE 1
 )
 ExternalProject_Get_Property(doxygen-project INSTALL_DIR)
