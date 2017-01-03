@@ -187,6 +187,8 @@ set(Mapper_Common_SRCS
  gui/widgets/template_list_widget.cpp
  gui/widgets/text_alignment_widget.cpp
  
+ tools/text_object_editor_helper.cpp
+ 
  util/encoding.cpp
  util/item_delegates.cpp
  util/overriding_shortcut.cpp
@@ -303,6 +305,8 @@ set(Mapper_Common_MOC_INPUT
  gui/widgets/tags_widget.h
  gui/widgets/template_list_widget.h
  gui/widgets/text_alignment_widget.h
+ 
+ tools/text_object_editor_helper.h
  
  util/item_delegates.h
  util/overriding_shortcut.h
