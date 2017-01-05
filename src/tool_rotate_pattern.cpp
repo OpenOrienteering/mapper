@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2016 Kai Pastor
+ *    Copyright 2013-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -156,7 +156,7 @@ void RotatePatternTool::clickRelease()
 
 void RotatePatternTool::dragStart()
 {
-	startEditing();
+	startEditing(map()->selectedObjects());
 	updateStatusText();
 }
 
@@ -165,7 +165,7 @@ void RotatePatternTool::dragMove()
 {
 	const auto rotation = -M_PI / 2 - (constrained_pos_map - click_pos_map).angle();
 	
-	for (auto object : map()->selectedObjects())
+	for (auto object : editedObjects())
 	{
 		/// \todo Refactor, provide a unified interface for rotation in Object
 		if (object->getType() == Object::Point)

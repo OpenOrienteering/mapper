@@ -22,6 +22,8 @@
 #ifndef OPENORIENTEERING_MAP_EDITOR_TOOL_BASE_H
 #define OPENORIENTEERING_MAP_EDITOR_TOOL_BASE_H
 
+#include <memory>
+#include <set>
 #include <vector>
 
 #include <QAction>
@@ -44,7 +46,65 @@ class SnappingToolHelper;
 class MapEditorToolBase : public MapEditorTool
 {
 Q_OBJECT
+	
+	/**
+	 * An edited item consist of an active object and a corresponding duplicate.
+	 * 
+	 * The active object is owned by the map.
+	 * The duplicate is owned by this item.
+	 * The duplicate may be used when for restoring the active's object's data
+	 * when aborting editing,
+	 * or it can be transfered to an undo step when committing the changes.
+	 */
+	struct EditedItem
+	{
+		Object* active_object;
+		std::unique_ptr<Object> duplicate;
+		
+		// Convenience constructor
+		EditedItem(Object* active_object);
+		
+		// All methods which are needed for efficient containers
+		EditedItem() noexcept = default;
+		EditedItem(const EditedItem& prototype);
+		EditedItem(EditedItem&& prototype) noexcept;
+		EditedItem& operator=(const EditedItem& prototype);
+		EditedItem& operator=(EditedItem&& prototype) noexcept;
+		
+		bool isModified() const;
+	};
+	
 public:
+	/**
+	 * An accessor to the active objects in a std::vector<EditedItem>.
+	 * 
+	 * This makes the edited objects available in range-for loops
+	 * by providing forward iteration, but hides the implementation details.
+	 */
+	class ObjectsRange
+	{
+	private:
+		using container = std::vector<EditedItem>;
+		container::iterator range_begin;
+		container::iterator range_end;
+		
+	public:
+		explicit ObjectsRange(container& items) : range_begin { items.begin() }, range_end { items.end() } {}
+		struct iterator : private container::iterator
+		{
+			explicit iterator(const container::iterator& it) noexcept : container::iterator { it } {}
+			explicit iterator(container::iterator&& it) noexcept : container::iterator { std::move(it) } {}
+			Object* operator*() noexcept  { return container::iterator::operator*().active_object; }
+			Object* operator->() noexcept { return operator*(); }
+			iterator& operator++() noexcept { container::iterator::operator++(); return *this; }
+			bool operator==(const iterator& rhs) noexcept { return static_cast<container::iterator>(*this)==static_cast<container::iterator>(rhs); }
+			bool operator!=(const iterator& rhs) noexcept { return !operator==(rhs); }
+		};
+		iterator begin() noexcept { return iterator { range_begin }; }
+		iterator end() noexcept { return iterator { range_end }; }
+	};
+	
+	
 	MapEditorToolBase(const QCursor& cursor, MapEditorTool::Type tool_type, MapEditorController* editor, QAction* tool_action);
 	~MapEditorToolBase() override;
 	
@@ -149,9 +209,13 @@ protected:
 	/// Call this before editing the selected objects, and finish/abortEditing() afterwards.
 	/// Takes care of the preview renderables handling, map dirty flag, and objects edited signal.
 	void startEditing();
+	void startEditing(Object* object);
+	void startEditing(const std::set<Object*>& objects);
 	void abortEditing();
 	void finishEditing(bool create_undo_step, bool delete_objects);
 	
+	ObjectsRange editedObjects();
+	bool editedObjectsModified() const;
 	void resetEditedObjects();
 	
 	/// Call this to display changes to the preview objects between startEditing() and finish/abortEditing().
@@ -234,7 +298,7 @@ private:
 	bool dragging_canceled;
 	QScopedPointer<MapRenderables> renderables;
 	QScopedPointer<MapRenderables> old_renderables;
-	std::vector<Object*> undo_duplicates;
+	std::vector<EditedItem> edited_items;
 };
 
 inline
@@ -242,5 +306,13 @@ bool MapEditorToolBase::isDragging() const
 {
 	return dragging;
 }
+
+
+inline
+MapEditorToolBase::ObjectsRange MapEditorToolBase::editedObjects()
+{
+	return ObjectsRange { edited_items };
+}
+
 
 #endif

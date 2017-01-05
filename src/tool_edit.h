@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2015 Kai Pastor
+ *    Copyright 2015-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -210,11 +210,11 @@ protected:
 	static MapCoordF closestPointOnRect(MapCoordF point, const QRectF& rect);
 	
 	/**
-	 * Configures the angle helper from the primary directions of the selected objects.
+	 * Configures the angle helper from the primary directions of the edited objects.
 	 * 
 	 * If no primary directions are found, the default directions are set.
 	 */
-	void setupAngleHelperFromSelectedObjects();
+	void setupAngleHelperFromEditedObjects();
 	
 	/**
 	 * Draws a bounding box with a dashed line of the given color.

@@ -39,6 +39,65 @@
 #include "util.h"
 
 
+// ### MapEditorToolBase::EditedItem ###
+
+MapEditorToolBase::EditedItem::EditedItem(Object* original)
+: active_object { original }
+, duplicate     { original ? original->duplicate() : nullptr }
+{
+	// nothing else
+	
+	// These assertion must be within namespace MapEditorToolBase,
+	// because EditedItem is a private member of this namespace.
+	static_assert(std::is_nothrow_move_constructible<MapEditorToolBase::EditedItem>::value,
+	              "MapEditorToolBase::EditedItem must be nothrow move constructible.");
+	static_assert(std::is_nothrow_move_assignable<MapEditorToolBase::EditedItem>::value,
+	              "MapEditorToolBase::EditedItem must be nothrow move assignable.");
+}
+
+
+MapEditorToolBase::EditedItem::EditedItem(const EditedItem& prototype)
+: MapEditorToolBase::EditedItem::EditedItem { prototype.active_object }
+{
+	// nothing else
+}
+
+
+MapEditorToolBase::EditedItem::EditedItem(EditedItem&& prototype) noexcept
+: active_object { prototype.active_object }
+, duplicate     { std::move(prototype.duplicate) }
+{
+	// nothing else
+}
+
+
+
+MapEditorToolBase::EditedItem& MapEditorToolBase::EditedItem::operator=(const EditedItem& prototype)
+{
+	active_object = prototype.active_object;
+	duplicate.reset(active_object ? active_object->duplicate() : nullptr);
+	return *this;
+}
+
+
+MapEditorToolBase::EditedItem& MapEditorToolBase::EditedItem::operator=(EditedItem&& prototype) noexcept
+{
+	active_object = prototype.active_object;
+	duplicate = std::move(prototype.duplicate);
+	return *this;
+}
+
+
+
+bool MapEditorToolBase::EditedItem::isModified() const
+{
+	return !duplicate->equals(active_object, false);
+}
+
+
+
+// ### MapEditorToolBase ###
+
 MapEditorToolBase::MapEditorToolBase(const QCursor& cursor, MapEditorTool::Type type, MapEditorController* editor, QAction* tool_button)
 : MapEditorTool(editor, type, tool_button),
   start_drag_distance(Settings::getInstance().getStartDragDistancePx()),
@@ -397,10 +456,10 @@ void MapEditorToolBase::updatePreviewObjects()
 		qWarning("MapEditorToolBase::updatePreviewObjects() called but editing == false");
 		return;
 	}
-	for (auto object : map()->selectedObjects())
+	for (auto object : editedObjects())
 	{
 		object->forceUpdate(); /// @todo get rid of force if possible;
-		// NOTE: only necessary because of setMap(nullptr) in startEditingSelection(..)
+		// NOTE: only necessary because of setMap(nullptr) in startEditing(..)
 		renderables->insertRenderablesOfObject(object);
 	}
 	updateDirtyRect();
@@ -426,17 +485,48 @@ void MapEditorToolBase::drawSelectionOrPreviewObjects(QPainter* painter, MapWidg
 	map()->drawSelection(painter, true, widget, renderables->empty() ? nullptr : renderables.data(), draw_opaque);
 }
 
+
 void MapEditorToolBase::startEditing()
 {
 	Q_ASSERT(!editingInProgress());
 	setEditingInProgress(true);
+}
+
+
+void MapEditorToolBase::startEditing(Object* object)
+{
+	Q_ASSERT(!editingInProgress());
+	setEditingInProgress(true);
 	
-	Q_ASSERT(undo_duplicates.empty());
-	const auto& selected_objects = map()->selectedObjects();
-	undo_duplicates.reserve(selected_objects.size());
-	for (auto object : selected_objects)
+	Q_ASSERT(object);
+	if (Q_UNLIKELY(!object))
 	{
-		undo_duplicates.push_back(object->duplicate());
+		qWarning("MapEditorToolBase::startEditing(Object* object) called with object == nullptr");
+		return;
+	}
+	
+	Q_ASSERT(edited_items.empty());
+	edited_items.reserve(1);
+	edited_items.emplace_back(object);
+	
+	object->setMap(nullptr); // This is to keep the renderables out of the normal map.
+	
+	// Cache old renderables until the object is inserted into the map again
+	old_renderables->insertRenderablesOfObject(object);
+	object->takeRenderables();
+}
+
+
+void MapEditorToolBase::startEditing(const std::set<Object*>& objects)
+{
+	Q_ASSERT(!editingInProgress());
+	setEditingInProgress(true);
+	
+	Q_ASSERT(edited_items.empty());
+	edited_items.reserve(objects.size());
+	for (auto object : objects)
+	{
+		edited_items.emplace_back(object);
 		
 		object->setMap(nullptr); // This is to keep the renderables out of the normal map.
 		
@@ -450,15 +540,14 @@ void MapEditorToolBase::abortEditing()
 {
 	Q_ASSERT(editingInProgress());
 	
-	resetEditedObjects();
-	for (Object* object : map()->selectedObjects())
+	for (auto& edited_item : edited_items)
 	{
+		auto object = edited_item.active_object;
+		*object = *edited_item.duplicate;
 		object->setMap(map());
 		object->update();
 	}
-	for (auto object : undo_duplicates)
-		delete object;
-	undo_duplicates.clear();
+	edited_items.clear();
 	renderables->clear();
 	old_renderables->clear(true);
 	MapEditorTool::setEditingInProgress(false);
@@ -473,14 +562,12 @@ void MapEditorToolBase::finishEditing()
 void MapEditorToolBase::finishEditing(bool create_undo_step, bool delete_objects)
 {
 	Q_ASSERT(editingInProgress());
-	Q_ASSERT(undo_duplicates.size() == map()->selectedObjects().size()
-	         || !create_undo_step);
 	
 	ReplaceObjectsUndoStep* undo_step = create_undo_step ? new ReplaceObjectsUndoStep(map()) : nullptr;
 	
-	std::size_t i = 0;
-	for (Object* object : map()->selectedObjects())
+	for (auto& edited_item : edited_items)
 	{
+		auto object = edited_item.active_object;
 		if (!delete_objects)
 		{
 			object->setMap(map());
@@ -488,15 +575,9 @@ void MapEditorToolBase::finishEditing(bool create_undo_step, bool delete_objects
 		}
 		
 		if (create_undo_step)
-			undo_step->addObject(object, undo_duplicates[i]);
-		++i;
+			undo_step->addObject(object, edited_item.duplicate.release());
 	}
-	if (!create_undo_step)
-	{
-		for (auto object : undo_duplicates)
-			delete object;
-	}
-	undo_duplicates.clear();
+	edited_items.clear();
 	renderables->clear();
 	old_renderables->clear(true);
 	
@@ -509,16 +590,25 @@ void MapEditorToolBase::finishEditing(bool create_undo_step, bool delete_objects
 }
 
 
+bool MapEditorToolBase::editedObjectsModified() const
+{
+	Q_ASSERT(editingInProgress());
+	
+	return std::any_of(begin(edited_items), end(edited_items), [](const EditedItem& item) {
+		return item.isModified(); 
+	});
+}
+
+
 void MapEditorToolBase::resetEditedObjects()
 {
-	Q_ASSERT(undo_duplicates.size() == map()->selectedObjects().size());
+	Q_ASSERT(editingInProgress());
 	
-	std::size_t i = 0;
-	for (Object* object : map()->selectedObjects())
+	for (auto& edited_item : edited_items)
 	{
-		*object = *undo_duplicates[i];
+		auto object = edited_item.active_object;
+		*object = *edited_item.duplicate;
 		object->setMap(nullptr); // This is to keep the renderables out of the normal map.
-		++i;
 	}
 }
 

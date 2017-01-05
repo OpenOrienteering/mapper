@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2015 Kai Pastor
+ *    Copyright 2013-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -180,7 +180,7 @@ void EditLineTool::dragStart()
 	}
 	else
 	{
-		startEditing();
+		startEditing(map->selectedObjects());
 		snap_exclude_object = hover_object;
 		
 		// Collect elements to move
@@ -204,7 +204,7 @@ void EditLineTool::dragStart()
 		angle_helper->setCenter(click_pos_map);
 		if (hoveringOverFrame())
 		{
-			setupAngleHelperFromSelectedObjects();
+			setupAngleHelperFromEditedObjects();
 		}
 		else if (hover_object->getType() == Object::Path)
 		{

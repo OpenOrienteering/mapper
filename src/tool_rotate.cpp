@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2016 Kai Pastor
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -81,7 +81,7 @@ void RotateTool::clickRelease()
 void RotateTool::dragStart()
 {
 	original_rotation = (click_pos_map - rotation_center).angle();
-	startEditing();
+	startEditing(map()->selectedObjects());
 }
 
 void RotateTool::dragMove()
@@ -95,7 +95,7 @@ void RotateTool::dragFinish()
 {
 	if (qAbs(current_rotation) > 0.0001)
 	{
-		for (auto object : map()->selectedObjects())
+		for (auto object : editedObjects())
 			object->rotateAround(rotation_center, -current_rotation);
 	}
 	original_rotation = current_rotation = 0;

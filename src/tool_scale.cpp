@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2016 Kai Pastor
+ *    Copyright 2013-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -80,7 +80,7 @@ void ScaleTool::dragStart()
 {
 	// WARNING: reference_length may become 0.
 	reference_length = (click_pos_map - scaling_center).length();
-	startEditing();
+	startEditing(map()->selectedObjects());
 }
 
 
@@ -94,7 +94,7 @@ void ScaleTool::dragMove()
 	
 	auto scaling_length = (cur_pos_map - scaling_center).length();
 	scaling_factor = qMax(minimum_length, scaling_length) / qMax(minimum_length, reference_length);
-	for (auto object : map()->selectedObjects())
+	for (auto object : editedObjects())
 		object->scale(scaling_center, scaling_factor);
 	
 	updatePreviewObjects();

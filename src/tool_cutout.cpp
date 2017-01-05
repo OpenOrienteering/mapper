@@ -1,6 +1,6 @@
 /*
  *    Copyright 2013 Thomas Schöps
- *    Copyright 2013-2015 Kai Pastor
+ *    Copyright 2013-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -67,7 +67,7 @@ void CutoutTool::initImpl()
 	Q_ASSERT(map()->getNumSelectedObjects() == 1);
 	cutout_object = (*(map()->selectedObjectsBegin()))->asPath();
 	
-	startEditing();
+	startEditing(cutout_object);
 	cutout_object->setSymbol(Map::getCoveringCombinedLine(), true);
 	updatePreviewObjects();
 	

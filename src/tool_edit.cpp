@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2015 Kai Pastor
+ *    Copyright 2013-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -523,7 +523,7 @@ MapCoordF EditTool::closestPointOnRect(MapCoordF point, const QRectF& rect)
 	return result;
 }
 
-void EditTool::setupAngleHelperFromSelectedObjects()
+void EditTool::setupAngleHelperFromEditedObjects()
 {
 	const std::size_t max_num_primary_directions = 5;
 	const float angle_window = (2 * M_PI) * 2 / 360.0f;
@@ -534,7 +534,7 @@ void EditTool::setupAngleHelperFromSelectedObjects()
 	angle_helper->clearAngles();
 	
 	std::set< float > primary_directions;
-	for (const auto object : map()->selectedObjects())
+	for (const Object* object : editedObjects())
 	{
 		if (object->getType() == Object::Point)
 		{

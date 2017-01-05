@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Thomas Schöps
- *    Copyright 2013-2016 Kai Pastor
+ *    Copyright 2013-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -279,7 +279,7 @@ void EditPointTool::clickPress()
 		box_selection = false;
 		
 		TextObject* hover_object = map()->getFirstSelectedObject()->asText();
-		startEditing();
+		startEditing(hover_object);
 		
 		// Don't show the original text while editing
 		map()->removeRenderablesOfObject(hover_object, true);
@@ -327,7 +327,7 @@ void EditPointTool::dragStart()
 	}
 	else
 	{
-		startEditing();
+		startEditing(map()->selectedObjects());
 		startEditingSetup();
 		
 		if (active_modifiers & Qt::ControlModifier)
@@ -806,6 +806,9 @@ void EditPointTool::setupAngleHelperFromHoverObject()
 
 void EditPointTool::startEditingSetup()
 {
+	// This method operates on MapEditorToolBase::editedItems().
+	Q_ASSERT(editingInProgress());
+	
 	snap_exclude_object = hover_object;
 	
 	// Collect elements to move
@@ -816,7 +819,7 @@ void EditPointTool::startEditingSetup()
 		{
 		case Object::Point:
 			object_mover->addObject(hover_object);
-			setupAngleHelperFromSelectedObjects();
+			setupAngleHelperFromEditedObjects();
 			break;
 			
 		case Object::Path:
@@ -829,7 +832,7 @@ void EditPointTool::startEditingSetup()
 				object_mover->addObject(hover_object);
 			else
 				object_mover->addTextHandle(hover_object->asText(), hover_point);
-			setupAngleHelperFromSelectedObjects();
+			setupAngleHelperFromEditedObjects();
 			break;
 			
 		default:
@@ -839,9 +842,9 @@ void EditPointTool::startEditingSetup()
 	}
 	else if (hover_state.testFlag(OverFrame))
 	{
-		for (auto object : map()->selectedObjects())
+		for (auto object : editedObjects())
 			object_mover->addObject(object);
-		setupAngleHelperFromSelectedObjects();
+		setupAngleHelperFromEditedObjects();
 		angle_helper->setCenter(click_pos_map);
 	}
 }
