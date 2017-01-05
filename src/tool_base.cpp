@@ -563,7 +563,8 @@ void MapEditorToolBase::finishEditing(bool create_undo_step)
 {
 	Q_ASSERT(editingInProgress());
 	
-	ReplaceObjectsUndoStep* undo_step = create_undo_step ? new ReplaceObjectsUndoStep(map()) : nullptr;
+	create_undo_step &= !edited_items.empty();
+	auto undo_step = create_undo_step ? new ReplaceObjectsUndoStep(map()) : nullptr;
 	
 	for (auto& edited_item : edited_items)
 	{
