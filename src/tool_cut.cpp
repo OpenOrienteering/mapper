@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2016 Kai Pastor
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -338,7 +338,7 @@ void CutTool::finishCuttingLine()
 	auto split_objects = edit_object->removeFromLine(drag_part_index, qreal(drag_start_len), qreal(drag_end_len));
 	replaceObject(edit_object, split_objects);
 	
-	finishEditing(false, false);
+	finishEditing(false);
 	updatePreviewObjects();
 }
 
@@ -511,7 +511,7 @@ void CutTool::finishCuttingArea(PathObject* split_path)
 	
 	path_tool->deleteLater();
 	path_tool = nullptr;
-	finishEditing(false, false);
+	finishEditing(false);
 	updateDirtyRect();
 	waiting_for_mouse_release = true;
 }

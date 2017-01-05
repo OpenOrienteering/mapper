@@ -556,10 +556,10 @@ void MapEditorToolBase::abortEditing()
 // virtual
 void MapEditorToolBase::finishEditing()
 {
-	finishEditing(true, false);
+	finishEditing(true);
 }
 
-void MapEditorToolBase::finishEditing(bool create_undo_step, bool delete_objects)
+void MapEditorToolBase::finishEditing(bool create_undo_step)
 {
 	Q_ASSERT(editingInProgress());
 	
@@ -568,11 +568,8 @@ void MapEditorToolBase::finishEditing(bool create_undo_step, bool delete_objects
 	for (auto& edited_item : edited_items)
 	{
 		auto object = edited_item.active_object;
-		if (!delete_objects)
-		{
-			object->setMap(map());
-			object->update();
-		}
+		object->setMap(map());
+		object->update();
 		
 		if (create_undo_step)
 			undo_step->addObject(object, edited_item.duplicate.release());

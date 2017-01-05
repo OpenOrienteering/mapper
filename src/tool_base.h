@@ -212,7 +212,7 @@ protected:
 	void startEditing(Object* object);
 	void startEditing(const std::set<Object*>& objects);
 	void abortEditing();
-	void finishEditing(bool create_undo_step, bool delete_objects);
+	void finishEditing(bool create_undo_step);
 	
 	ObjectsRange editedObjects();
 	bool editedObjectsModified() const;
