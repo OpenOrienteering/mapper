@@ -338,7 +338,7 @@ void CutTool::finishCuttingLine()
 	auto split_objects = edit_object->removeFromLine(drag_part_index, qreal(drag_start_len), qreal(drag_end_len));
 	replaceObject(edit_object, split_objects);
 	
-	finishEditing(false);
+	finishEditing();
 	updatePreviewObjects();
 }
 
@@ -511,7 +511,7 @@ void CutTool::finishCuttingArea(PathObject* split_path)
 	
 	path_tool->deleteLater();
 	path_tool = nullptr;
-	finishEditing(false);
+	finishEditing();
 	updateDirtyRect();
 	waiting_for_mouse_release = true;
 }

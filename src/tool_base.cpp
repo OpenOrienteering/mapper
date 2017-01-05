@@ -556,35 +556,27 @@ void MapEditorToolBase::abortEditing()
 // virtual
 void MapEditorToolBase::finishEditing()
 {
-	finishEditing(true);
-}
-
-void MapEditorToolBase::finishEditing(bool create_undo_step)
-{
 	Q_ASSERT(editingInProgress());
 	
-	create_undo_step &= !edited_items.empty();
-	auto undo_step = create_undo_step ? new ReplaceObjectsUndoStep(map()) : nullptr;
-	
-	for (auto& edited_item : edited_items)
+	if (!edited_items.empty())
 	{
-		auto object = edited_item.active_object;
-		object->setMap(map());
-		object->update();
-		
-		if (create_undo_step)
+		auto undo_step = new ReplaceObjectsUndoStep(map());
+		for (auto& edited_item : edited_items)
+		{
+			auto object = edited_item.active_object;
+			object->setMap(map());
+			object->update();
 			undo_step->addObject(object, edited_item.duplicate.release());
+		}
+		edited_items.clear();
+		map()->push(undo_step);
 	}
-	edited_items.clear();
 	renderables->clear();
 	old_renderables->clear(true);
 	
-	if (create_undo_step)
-		map()->push(undo_step);
-	
+	MapEditorTool::finishEditing();
 	map()->setObjectsDirty();
 	map()->emitSelectionEdited();
-	MapEditorTool::finishEditing();
 }
 
 
