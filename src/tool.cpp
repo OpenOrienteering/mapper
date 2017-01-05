@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2015 Kai Pastor
+ *    Copyright 2013-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -38,7 +38,10 @@
 #include "tool_helpers.h"
 #include "util.h"
 
-// Utility function for MapEditorTool::findHoverPoint
+
+namespace {
+
+/// Utility function for MapEditorTool::findHoverPoint
 inline
 qreal distanceSquared(QPointF a, const QPointF& b)
 {
@@ -46,6 +49,7 @@ qreal distanceSquared(QPointF a, const QPointF& b)
 	return QPointF::dotProduct(a, a); // introduced in Qt 5.1
 }
 
+} // namespace
 
 const QRgb MapEditorTool::inactive_color = qRgb(0, 0, 255);
 const QRgb MapEditorTool::active_color = qRgb(255, 150, 0);
@@ -248,88 +252,7 @@ void MapEditorTool::drawSelectionBox(QPainter* painter, MapWidget* widget, const
 	painter->drawRect(QRect(top_left + QPoint(1, 1), bottom_right - QPoint(2, 2)));
 }
 
-void MapEditorTool::startEditingSelection(MapRenderables& old_renderables)
-{
-	Q_ASSERT(undo_duplicates.empty());
-	
-	const Map::ObjectSelection& selectedObjects { map()->selectedObjects() };
-	undo_duplicates.reserve(selectedObjects.size());
-	for (Object* object : selectedObjects)
-	{
-		undo_duplicates.push_back(object->duplicate());
-		
-		object->setMap(nullptr); // This is to keep the renderables out of the normal map.
-		
-		// Cache old renderables until the object is inserted into the map again
-		old_renderables.insertRenderablesOfObject(object);
- 		object->takeRenderables();
-	}
-	
-	editor->setEditingInProgress(true);
-}
 
-void MapEditorTool::resetEditedObjects()
-{
-	Q_ASSERT(undo_duplicates.size() == map()->selectedObjects().size());
-	
-	std::size_t i = 0;
-	for (Object* object : map()->selectedObjects())
-	{
-		*object = *undo_duplicates[i];
-		object->setMap(nullptr); // This is to keep the renderables out of the normal map.
-		++i;
-	}
-}
-
-void MapEditorTool::finishEditingSelection(MapRenderables& renderables, MapRenderables& old_renderables, bool create_undo_step, bool delete_objects)
-{
-	Q_ASSERT(undo_duplicates.size() == map()->selectedObjects().size()
-	         || !create_undo_step);
-	
-	ReplaceObjectsUndoStep* undo_step = create_undo_step ? new ReplaceObjectsUndoStep(map()) : nullptr;
-	
-	std::size_t i = 0;
-	for (Object* object : map()->selectedObjects())
-	{
-		if (!delete_objects)
-		{
-			object->setMap(map());
-			object->update();
-		}
-		
-		if (create_undo_step)
-			undo_step->addObject(object, undo_duplicates[i]);
-		++i;
-	}
-	if (!create_undo_step)
-	{
-		for (auto object : undo_duplicates)
-			delete object;
-	}
-	renderables.clear();
-	deleteOldSelectionRenderables(old_renderables, true);
-	
-	undo_duplicates.clear();
-	if (create_undo_step)
-		map()->push(undo_step);
-	
-	editor->setEditingInProgress(false);
-}
-
-void MapEditorTool::updateSelectionEditPreview(MapRenderables& renderables)
-{
-	for (Object* object : map()->selectedObjects())
-	{
-		object->forceUpdate(); /// @todo get rid of force if possible;
-		// NOTE: only necessary because of setMap(nullptr) in startEditingSelection(..)
-		renderables.insertRenderablesOfObject(object);
-	}
-}
-
-void MapEditorTool::deleteOldSelectionRenderables(MapRenderables& old_renderables, bool set_area_dirty)
-{
-	old_renderables.clear(set_area_dirty);
-}
 
 MapCoordVector::size_type MapEditorTool::findHoverPoint(QPointF cursor, const MapWidget* widget, const Object* object, bool include_curve_handles, MapCoordF* out_handle_pos) const
 {
@@ -431,3 +354,4 @@ void MapEditorTool::settingsChanged()
 	point_handles = PointHandles(scale_factor);
 	draw_on_right_click = Settings::getInstance().getSettingCached(Settings::MapEditor_DrawLastPointOnRightClick).toBool();
 }
+

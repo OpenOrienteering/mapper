@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2015 Kai Pastor
+ *    Copyright 2013-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,10 +19,8 @@
  */
 
 
-#ifndef _OPENORIENTEERING_TOOL_H_
-#define _OPENORIENTEERING_TOOL_H_
-
-#include <vector>
+#ifndef OPENORIENTEERING_MAP_EDITOR_TOOL_H
+#define OPENORIENTEERING_MAP_EDITOR_TOOL_H
 
 #include <QAction>
 #include <QPointer>
@@ -312,13 +310,6 @@ protected:
 	void drawSelectionBox(QPainter* painter, MapWidget* widget, const MapCoordF& corner1, const MapCoordF& corner2) const;
 	
 	
-	// Helper methods for editing the selected objects with preview
-	void startEditingSelection(MapRenderables& old_renderables);
-	void resetEditedObjects();
-	void finishEditingSelection(MapRenderables& renderables, MapRenderables& old_renderables, bool create_undo_step, bool delete_objects = false);
-	void updateSelectionEditPreview(MapRenderables& renderables);
-	void deleteOldSelectionRenderables(MapRenderables& old_renderables, bool set_area_dirty);
-	
 	/**
 	 * @brief Finds and returns the point of the given object over which the cursor hovers.
 	 * 
@@ -368,7 +359,6 @@ private:
 	bool uses_touch_cursor;
 	bool draw_on_right_click;
 	PointHandles point_handles;
-	std::vector<Object*> undo_duplicates;
 };
 
 

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2014 Thomas Schöps
- *    Copyright 2013-2016 Kai Pastor
+ *    Copyright 2013-2017 Kai Pastor
  *    
  *    This file is part of OpenOrienteering.
  * 
@@ -19,8 +19,8 @@
  */
 
 
-#ifndef OPENORIENTEERING_TOOL_BASE_H
-#define OPENORIENTEERING_TOOL_BASE_H
+#ifndef OPENORIENTEERING_MAP_EDITOR_TOOL_BASE_H
+#define OPENORIENTEERING_MAP_EDITOR_TOOL_BASE_H
 
 #include <vector>
 
@@ -152,6 +152,8 @@ protected:
 	void abortEditing();
 	void finishEditing(bool create_undo_step, bool delete_objects);
 	
+	void resetEditedObjects();
+	
 	/// Call this to display changes to the preview objects between startEditing() and finish/abortEditing().
 	virtual void updatePreviewObjects();
 	
@@ -232,6 +234,7 @@ private:
 	bool dragging_canceled;
 	QScopedPointer<MapRenderables> renderables;
 	QScopedPointer<MapRenderables> old_renderables;
+	std::vector<Object*> undo_duplicates;
 };
 
 inline

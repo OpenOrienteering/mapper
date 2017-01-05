@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Thomas Schöps
- *    Copyright 2013-2016 Kai Pastor
+ *    Copyright 2013-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -59,7 +59,7 @@ MapEditorToolBase::MapEditorToolBase(const QCursor& cursor, MapEditorTool::Type 
 
 MapEditorToolBase::~MapEditorToolBase()
 {
-	deleteOldSelectionRenderables(*old_renderables, false);
+	old_renderables->clear(false);
 	if (key_button_bar)
 		editor->deletePopupWidget(key_button_bar);
 }
@@ -397,7 +397,12 @@ void MapEditorToolBase::updatePreviewObjects()
 		qWarning("MapEditorToolBase::updatePreviewObjects() called but editing == false");
 		return;
 	}
-	updateSelectionEditPreview(*renderables);
+	for (auto object : map()->selectedObjects())
+	{
+		object->forceUpdate(); /// @todo get rid of force if possible;
+		// NOTE: only necessary because of setMap(nullptr) in startEditingSelection(..)
+		renderables->insertRenderablesOfObject(object);
+	}
 	updateDirtyRect();
 }
 
@@ -424,9 +429,21 @@ void MapEditorToolBase::drawSelectionOrPreviewObjects(QPainter* painter, MapWidg
 void MapEditorToolBase::startEditing()
 {
 	Q_ASSERT(!editingInProgress());
-	
 	setEditingInProgress(true);
-	startEditingSelection(*old_renderables);
+	
+	Q_ASSERT(undo_duplicates.empty());
+	const auto& selected_objects = map()->selectedObjects();
+	undo_duplicates.reserve(selected_objects.size());
+	for (auto object : selected_objects)
+	{
+		undo_duplicates.push_back(object->duplicate());
+		
+		object->setMap(nullptr); // This is to keep the renderables out of the normal map.
+		
+		// Cache old renderables until the object is inserted into the map again
+		old_renderables->insertRenderablesOfObject(object);
+		object->takeRenderables();
+	}
 }
 
 void MapEditorToolBase::abortEditing()
@@ -434,8 +451,17 @@ void MapEditorToolBase::abortEditing()
 	Q_ASSERT(editingInProgress());
 	
 	resetEditedObjects();
-	finishEditingSelection(*renderables, *old_renderables, false);
-	setEditingInProgress(false);
+	for (Object* object : map()->selectedObjects())
+	{
+		object->setMap(map());
+		object->update();
+	}
+	for (auto object : undo_duplicates)
+		delete object;
+	undo_duplicates.clear();
+	renderables->clear();
+	old_renderables->clear(true);
+	MapEditorTool::setEditingInProgress(false);
 }
 
 // virtual
@@ -447,11 +473,53 @@ void MapEditorToolBase::finishEditing()
 void MapEditorToolBase::finishEditing(bool create_undo_step, bool delete_objects)
 {
 	Q_ASSERT(editingInProgress());
+	Q_ASSERT(undo_duplicates.size() == map()->selectedObjects().size()
+	         || !create_undo_step);
 	
-	finishEditingSelection(*renderables, *old_renderables, create_undo_step, delete_objects);
+	ReplaceObjectsUndoStep* undo_step = create_undo_step ? new ReplaceObjectsUndoStep(map()) : nullptr;
+	
+	std::size_t i = 0;
+	for (Object* object : map()->selectedObjects())
+	{
+		if (!delete_objects)
+		{
+			object->setMap(map());
+			object->update();
+		}
+		
+		if (create_undo_step)
+			undo_step->addObject(object, undo_duplicates[i]);
+		++i;
+	}
+	if (!create_undo_step)
+	{
+		for (auto object : undo_duplicates)
+			delete object;
+	}
+	undo_duplicates.clear();
+	renderables->clear();
+	old_renderables->clear(true);
+	
+	if (create_undo_step)
+		map()->push(undo_step);
+	
 	map()->setObjectsDirty();
 	map()->emitSelectionEdited();
 	MapEditorTool::finishEditing();
+}
+
+
+void MapEditorToolBase::resetEditedObjects()
+{
+	Q_ASSERT(undo_duplicates.size() == map()->selectedObjects().size());
+	
+	std::size_t i = 0;
+	for (Object* object : map()->selectedObjects())
+	{
+		*object = *undo_duplicates[i];
+		object->setMap(nullptr); // This is to keep the renderables out of the normal map.
+		++i;
+	}
 }
 
 
