@@ -46,7 +46,7 @@ The comparison defines how the actual value of the tag is compared to the value 
 | Comparison | Description |
 | ---------- | ----------- |
 | is         | The tag specified must exist for the object, and that tag's value must exactly match the specified value. |
-| is not     | If the tag specified exists for the object, then its value must not much the specified value. If the tag doesn't exist, the condition is true.
+| is not     | If the tag specified exists for the object, then its value must not much the specified value. If the tag doesn't exist, the condition is true. |
 | contains   | The tag specified must exist for the object, and its value must contain the specified value. If an empty value is specified, any value of the tag will match. This can be used to test for the existence of a particular tag. |
 
 ## Buttons
