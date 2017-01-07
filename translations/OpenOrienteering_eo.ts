@@ -88,7 +88,7 @@
     <message>
         <location filename="../src/symbol_area.cpp" line="773"/>
         <source>Line fill</source>
-        <translation type="unfinished"></translation>
+        <translation>Linia plenigo</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="774"/>
@@ -132,7 +132,7 @@
     <message>
         <location filename="../src/symbol_area.cpp" line="853"/>
         <source>Pattern offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Modela deŝovo:</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="858"/>
@@ -182,7 +182,7 @@
     <message>
         <location filename="../src/symbol_area.cpp" line="979"/>
         <source>Line fill %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Linia plenigo %1</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="996"/>
@@ -229,7 +229,7 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="49"/>
         <source>File saved by the user</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosiero estas konservita por la uzanto</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="56"/>
@@ -239,7 +239,7 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="58"/>
         <source>File %1 was not properly closed. At the moment, there are two versions:</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosiero %1 ne estis fermita ĝuste. Ĉi-momente ekzistas du versioj:</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="72"/>
@@ -547,17 +547,17 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="64"/>
         <source>Align with magnetic north</source>
-        <translation type="unfinished"></translation>
+        <translation>Ĝisrandigi kun magneta nordo</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="65"/>
         <source>Align with grid north</source>
-        <translation type="unfinished"></translation>
+        <translation>Ĝisrandigi kun krada nordo</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="66"/>
         <source>Align with true north</source>
-        <translation type="unfinished"></translation>
+        <translation>Ĝisrandigi kun vera nordo</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="68"/>
@@ -577,12 +577,12 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="74"/>
         <source>meters in terrain</source>
-        <translation type="unfinished"></translation>
+        <translation>metroj sur tereno</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="75"/>
         <source>millimeters on map</source>
-        <translation type="unfinished"></translation>
+        <translation>milimetroj sur la mapo</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="77"/>
@@ -658,7 +658,7 @@
     <message>
         <location filename="../src/tool_cut_hole.cpp" line="241"/>
         <source>&lt;b&gt;Click or drag&lt;/b&gt;: Start drawing the hole. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Klaki aŭ treni&lt;/b&gt;: Komenci desegni truon. </translation>
     </message>
 </context>
 <context>
@@ -840,20 +840,20 @@
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1071"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap or append to existing objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+Klaki&lt;/b&gt;: Kapti aŭ postglui al ekzistantaj objektoj. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1076"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="706"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Pick direction from existing objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+Klaki&lt;/b&gt;: Elekti direkton el ekzistantaj objektoj. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1089"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="711"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="735"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap to existing objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+Klaki&lt;/b&gt;: Kapti per ekzistantaj objektoj. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1095"/>
@@ -916,17 +916,17 @@
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1081"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Start a straight line. &lt;b&gt;Drag&lt;/b&gt;: Start a curve. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Klaki&lt;/b&gt;: Komenci rektan linion. &lt;b&gt;Treni&lt;/b&gt;: Komenci kurbon. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1090"/>
         <source>&lt;b&gt;%1+Drag&lt;/b&gt;: Follow existing objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+Treni&lt;/b&gt;: Daŭrigi ekzistantajn objektojn. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1100"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Draw a straight line. &lt;b&gt;Drag&lt;/b&gt;: Draw a curve. &lt;b&gt;Right or double click&lt;/b&gt;: Finish the path. &lt;b&gt;%1&lt;/b&gt;: Close the path. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Klaki&lt;/b&gt;: Desegni rektan linion. &lt;b&gt;Treni&lt;/b&gt;: Desegni kurbon. &lt;b&gt;Dekstra aŭ duobla klako&lt;/b&gt;: Fini la vojon. &lt;b&gt;%1&lt;/b&gt;: Fermi la vojon. </translation>
     </message>
 </context>
 <context>
@@ -1007,7 +1007,7 @@
         <location filename="../src/tool_draw_rectangle.cpp" line="80"/>
         <source>Line snap</source>
         <comment>Snap to previous lines</comment>
-        <translation type="unfinished"></translation>
+        <translation>Linia kapto</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="81"/>
@@ -1028,7 +1028,7 @@
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="716"/>
         <source>&lt;b&gt;Click or Drag&lt;/b&gt;: Start drawing a rectangle. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Klaki aŭ Treni&lt;/b&gt;: Komenci desegni rektangulon. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="729"/>
@@ -1224,12 +1224,12 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="62"/>
         <source>Templates: keep settings of closed templates</source>
-        <translation type="unfinished"></translation>
+        <translation>Ŝablonoj: konservi agordojn de fermitaj ŝablonoj</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="67"/>
         <source>Edit tool:</source>
-        <translation type="unfinished"></translation>
+        <translation>Redaktilo:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="70"/>
@@ -1258,7 +1258,7 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="82"/>
         <source>Rectangle tool:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ortangulilo:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="85"/>
@@ -1321,7 +1321,7 @@
     <message>
         <location filename="../src/tool_fill.cpp" line="168"/>
         <source>Failed to create the fill object.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fiaskis krei la plenigan objekton.</translation>
     </message>
     <message>
         <location filename="../src/tool_fill.cpp" line="179"/>
@@ -1367,7 +1367,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="80"/>
         <source>Pixels per inch:</source>
-        <translation>Pikseloj en colo:</translation>
+        <translation>Bilderoj en colo:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="90"/>
@@ -1387,7 +1387,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="106"/>
         <source>Save information for automatic recovery</source>
-        <translation type="unfinished"></translation>
+        <translation>Konservi informon por aŭtomata riparado</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="110"/>
@@ -1403,7 +1403,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="113"/>
         <source>File import and export</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosiera importo kaj eksporto</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="137"/>
@@ -1465,12 +1465,12 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="361"/>
         <source>Primary screen resolution in pixels:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ĉefa ekrandistingivo en bilderoj:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="365"/>
         <source>Primary screen size in inches (diagonal):</source>
-        <translation type="unfinished"></translation>
+        <translation>Ĉefa ekrangrando en coloj (diagonalo):</translation>
     </message>
 </context>
 <context>
@@ -1713,7 +1713,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="163"/>
         <source>Map north</source>
-        <translation type="unfinished"></translation>
+        <translation>Mapa nordo</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="187"/>
@@ -1779,7 +1779,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="669"/>
         <source>Declination value not found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Inklinacia valoro ne trovita.</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="674"/>
@@ -1939,7 +1939,7 @@
     <message>
         <location filename="../src/object.cpp" line="428"/>
         <source>Unable to find symbol for object at %1:%2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne eblas trovi simbolon por objekto ĉe %1:%2.</translation>
     </message>
     <message>
         <location filename="../src/object.cpp" line="440"/>
@@ -2013,7 +2013,7 @@
     <message>
         <location filename="../src/file_import_export.cpp" line="120"/>
         <source>Failed to load template '%1', reason: %2</source>
-        <translation>Malsukcesis ŝargi ŝablonon '%1', kialo: %2</translation>
+        <translation>Fiaskis ŝargi ŝablonon '%1', kialo: %2</translation>
     </message>
     <message>
         <location filename="../src/file_import_export.cpp" line="125"/>
@@ -2026,7 +2026,7 @@
         <location filename="../src/file_import_export.cpp" line="132"/>
         <location filename="../src/file_import_export.cpp" line="134"/>
         <source>At least one template file could not be found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Almenaŭ unu ŝablona dosiero ne povis esti trovita.</translation>
     </message>
     <message>
         <location filename="../src/file_import_export.cpp" line="135"/>
@@ -2109,7 +2109,7 @@
     <message>
         <location filename="../src/file_format.cpp" line="79"/>
         <source>Format (%1) does not support import</source>
-        <translation type="unfinished"></translation>
+        <translation>Formo (%1) ne subtenas importon</translation>
     </message>
 </context>
 <context>
@@ -2154,7 +2154,7 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2056"/>
         <source>Line cap:</source>
-        <translation type="unfinished"></translation>
+        <translation>Linia fino:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2058"/>
@@ -2205,7 +2205,7 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2180"/>
         <source>Show at least one mid symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Montri almenaŭ unun mezsimbolon</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2183"/>
@@ -2369,7 +2369,7 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2490"/>
         <source>Border shift:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bordera ŝovo:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2493"/>
@@ -2593,7 +2593,7 @@ Do you want to scale the symbols to the selected scale?</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="937"/>
         <source>Autosaving failed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Aŭtokonservado fiaskis!</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1012"/>
@@ -3143,7 +3143,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="490"/>
         <source>Map saved</source>
-        <translation type="unfinished"></translation>
+        <translation>Mapo estis konservita</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="813"/>
@@ -3175,7 +3175,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="832"/>
         <source>Replace symbol set...</source>
-        <translation type="unfinished"></translation>
+        <translation>Anstataŭigi simbolaron…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="836"/>
@@ -3235,7 +3235,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="868"/>
         <source>Cut round hole</source>
-        <translation type="unfinished"></translation>
+        <translation>Eltondi rondan truon</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="872"/>
@@ -3545,7 +3545,7 @@ Rescale the imported data?</source>
         <location filename="../src/map_editor.cpp" line="1527"/>
         <source>Cut %1 object(s)</source>
         <extracomment>Past tense. Displayed when an Edit &gt; Cut operation is completed.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Eltondi %1 objekto(j)n</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1570"/>
@@ -3771,17 +3771,17 @@ elektitaj</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="3015"/>
         <source>Merging holes failed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunfando de la truoj fiaskis.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3304"/>
         <source>Clear temporary markers</source>
-        <translation type="unfinished"></translation>
+        <translation>Vakigi provizorajn markojn</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3304"/>
         <source>Are you sure you want to delete all temporary GPS markers? This cannot be undone.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ĉu vi estas certa, ke vi volas forigi ĉiujn provizorajn GPS-markojn? Tio ne povas esti malfarita.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3418"/>
@@ -3823,7 +3823,7 @@ elektitaj</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="3832"/>
         <source>Cannot import the selected map file because it could not be loaded.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne eblas importi la elektitan mapodosieron, ĉar ĝi ne povis esti ŝargita.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2093"/>
@@ -3873,7 +3873,7 @@ elektitaj</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="891"/>
         <source>Convert to curves</source>
-        <translation type="unfinished"></translation>
+        <translation>Konverti en kurbojn</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="892"/>
@@ -3994,7 +3994,7 @@ elektitaj</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="2612"/>
         <source>Object selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Objekta elekto</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2612"/>
@@ -4009,22 +4009,22 @@ elektitaj</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="2988"/>
         <source>Unification failed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Unuiĝo fiaskis.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2994"/>
         <source>Intersection failed.</source>
-        <translation>Sekco malsukcesis.</translation>
+        <translation>Intersekco fiaskis.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3000"/>
         <source>Difference failed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Diferenco fiaskis.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3006"/>
         <source>XOr failed.</source>
-        <translation type="unfinished"></translation>
+        <translation>XOr fiaskis.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3499"/>
@@ -4059,7 +4059,7 @@ elektitaj</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="3825"/>
         <source>Cannot import the selected file because its file format is not supported.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne eblas importi la elektitan dosieron, ĉar ĝia dosierformo estas nesubtenata.</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="31"/>
@@ -4077,29 +4077,23 @@ elektitaj</translation>
         <location filename="future_translations.cpp" line="37"/>
         <source>Cut %n object(s)</source>
         <extracomment>Past tense. Displayed when an Edit &gt; Cut operator is completed.</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>Eltondita %n objekto</numerusform>
+        <numerusform>Eltondita %n objektoj</numerusform>
+        </translation></message>
     <message numerus="yes">
         <location filename="future_translations.cpp" line="40"/>
         <source>Copied %n object(s)</source>
         <extracomment>To replace existing translation which doesn't use plural correctly</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>Kopiita %n objekto</numerusform>
+        <numerusform>Kopiita %n objektoj</numerusform>
+        </translation></message>
     <message numerus="yes">
         <location filename="future_translations.cpp" line="43"/>
         <source>Pasted %n object(s)</source>
         <extracomment>To replace existing translation which doesn't use plural correctly</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>Algluita %n objekto</numerusform>
+        <numerusform>Algluita %n objektoj</numerusform>
+        </translation></message>
     <message>
         <location filename="future_translations.cpp" line="46"/>
         <source>Deletes the selected objects.</source>
@@ -4315,7 +4309,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="75"/>
         <source>The selected object is not a path.</source>
-        <translation type="unfinished"></translation>
+        <translation>Elektita objekto ne estas vojo.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="99"/>
@@ -4419,18 +4413,18 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="148"/>
         <source>Empty symbol set</source>
-        <translation type="unfinished"></translation>
+        <translation>Malplena simbolaro</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="186"/>
         <location filename="../src/map_dialog_new.cpp" line="241"/>
         <source>Load symbol set from a file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ŝargi simbolaron el dosiero…</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="237"/>
         <source>All symbol set files</source>
-        <translation type="unfinished"></translation>
+        <translation>Ĉiuj simbolaraj dosieroj</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="239"/>
@@ -4650,7 +4644,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1518"/>
         <source>Color id not found: %1, ignoring this color</source>
-        <translation type="unfinished"></translation>
+        <translation>Kolora id ne trovita: %1, malatentas tiun koloron</translation>
     </message>
 </context>
 <context>
@@ -4697,12 +4691,12 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="125"/>
         <source>In line symbol %1 '%2': %3</source>
-        <translation type="unfinished"></translation>
+        <translation>En linia simbolo %1 '%2': %3</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="131"/>
         <source>In text symbol %1 '%2': %3</source>
-        <translation type="unfinished"></translation>
+        <translation>En teksta simbolo %1 '%2': %3</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="388"/>
@@ -4857,7 +4851,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2062"/>
         <source>OCD files of version %1 are not supported!</source>
-        <translation type="unfinished"></translation>
+        <translation>Versio %1 de OCD-dosieroj ne estas subtenata!</translation>
     </message>
 </context>
 <context>
@@ -4878,7 +4872,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/template_tool_paint.cpp" line="327"/>
         <source>Select template to draw onto</source>
-        <translation type="unfinished"></translation>
+        <translation>Elekti ŝablonon por desegni sur ĝin</translation>
     </message>
     <message>
         <location filename="../src/template_tool_paint.cpp" line="341"/>
@@ -4896,7 +4890,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/template_tool_paint.cpp" line="58"/>
         <source>&lt;b&gt;Click and drag&lt;/b&gt;: Paint. &lt;b&gt;Right click and drag&lt;/b&gt;: Erase. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Klaki kaj treni&lt;/b&gt;: Desegni. &lt;b&gt;Dekstre klaki kaj treni&lt;/b&gt;: Viŝi. </translation>
     </message>
     <message>
         <location filename="../src/template_tool_paint.cpp" line="61"/>
@@ -4984,7 +4978,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="90"/>
         <source>Inner color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Interna koloro:</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="93"/>
@@ -4994,7 +4988,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="96"/>
         <source>Outer color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekstera koloro:</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="121"/>
@@ -5040,7 +5034,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="138"/>
         <source>bevel</source>
-        <translation type="unfinished"></translation>
+        <translation>bevelo</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="140"/>
@@ -5070,7 +5064,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="178"/>
         <source>Curve start</source>
-        <translation type="unfinished"></translation>
+        <translation>Kurba komenco</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="189"/>
@@ -5080,7 +5074,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="371"/>
         <source>[Midpoint]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Mezo]</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="936"/>
@@ -5093,7 +5087,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/symbol_point.cpp" line="436"/>
         <source>Point symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Punktosimbolo</translation>
     </message>
 </context>
 <context>
@@ -5102,7 +5096,7 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/print_progress_dialog.cpp" line="56"/>
         <source>Printing</source>
         <comment>PrintWidget</comment>
-        <translation type="unfinished"></translation>
+        <translation>Presado</translation>
     </message>
     <message>
         <location filename="../src/gui/print_progress_dialog.cpp" line="57"/>
@@ -5157,7 +5151,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="140"/>
         <source>Page orientation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Orientiĝo de paĝo:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="100"/>
@@ -5177,17 +5171,17 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="114"/>
         <source>Page format:</source>
-        <translation type="unfinished"></translation>
+        <translation>Paĝa formato:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="143"/>
         <source>Copies:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopioj:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="156"/>
         <source>Left:</source>
-        <translation type="unfinished"></translation>
+        <translation>Maldekstra:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="159"/>
@@ -5212,7 +5206,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="148"/>
         <source>Single page</source>
-        <translation type="unfinished"></translation>
+        <translation>Unuopa paĝo</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="149"/>
@@ -5243,12 +5237,12 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="105"/>
         <source>Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Atributoj</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="168"/>
         <source>Page overlap:</source>
-        <translation type="unfinished"></translation>
+        <translation>Paĝa surmeteco:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="172"/>
@@ -5263,7 +5257,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="202"/>
         <source>Print in different scale:</source>
-        <translation type="unfinished"></translation>
+        <translation>Presi en alia skalo:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="223"/>
@@ -5288,7 +5282,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="237"/>
         <source>Color mode:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kolora reĝimo:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="261"/>
@@ -5304,7 +5298,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="371"/>
         <source>PDF export</source>
-        <translation type="unfinished"></translation>
+        <translation>PDF eksporto</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="382"/>
@@ -5314,7 +5308,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="488"/>
         <source>Save to PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>Konservi al PDF</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="198"/>
@@ -5331,7 +5325,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1086"/>
         <source>Failed to prepare the preview.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fiaskis pretigi antaŭrigardon.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1097"/>
@@ -5371,7 +5365,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1189"/>
         <source>Failed to prepare the PDF export.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fiaskis pretigi PDF-eksporton.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1199"/>
@@ -5400,7 +5394,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1238"/>
         <source>Failed to prepare the printing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fiaskis pretigi presadon.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1247"/>
@@ -5439,33 +5433,34 @@ bildo</translation>
         <location filename="../src/gui/print_widget.cpp" line="181"/>
         <source>Color
 separations</source>
-        <translation type="unfinished"></translation>
+        <translation>Kolor
+apartigoj</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="194"/>
         <source>Mode:</source>
-        <translation type="unfinished"></translation>
+        <translation>Reĝimo:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1155"/>
         <source>Failed to prepare the image. Not enough memory.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fiaskis pretigi bildon. Ne estas sufiĉe da memoro.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1174"/>
         <source>Failed to save the image. Does the path exist? Do you have sufficient rights?</source>
-        <translation type="unfinished"></translation>
+        <translation>Fiaskis konservi la bildon. Ĉu la vojo ekzistas? Ĉu vi havas sufiĉaj rajtoj?</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1178"/>
         <location filename="../src/gui/print_widget.cpp" line="1223"/>
         <source>Exported successfully to %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Sukcese eksportita al %1</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1219"/>
         <source>Failed to finish the PDF export.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fiaskis fini PDF-eksporton.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1229"/>
@@ -5476,12 +5471,12 @@ separations</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1265"/>
         <source>The print job could not be stopped.</source>
-        <translation type="unfinished"></translation>
+        <translation>La presa tasko ne povis esti ĉesita.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1256"/>
         <source>Successfully created print job</source>
-        <translation type="unfinished"></translation>
+        <translation>Sukcese kreita prestasko</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1313"/>
@@ -5511,7 +5506,7 @@ separations</source>
     <message>
         <location filename="../src/template_dialog_reopen.cpp" line="43"/>
         <source>Closed templates:</source>
-        <translation type="unfinished"></translation>
+        <translation>Fermitaj ŝablonoj:</translation>
     </message>
     <message>
         <location filename="../src/template_dialog_reopen.cpp" line="46"/>
@@ -5534,7 +5529,7 @@ separations</source>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="44"/>
         <source>Replace symbol set</source>
-        <translation type="unfinished"></translation>
+        <translation>Anstataŭigi simbolaron</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="46"/>
@@ -5559,7 +5554,7 @@ separations</source>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="55"/>
         <source>Symbol mapping:</source>
-        <translation type="unfinished"></translation>
+        <translation>Simbolomapigo:</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="56"/>
@@ -5579,7 +5574,7 @@ separations</source>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="64"/>
         <source>Replacement</source>
-        <translation type="unfinished"></translation>
+        <translation>Anstataŭigo</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="295"/>
@@ -5622,7 +5617,7 @@ separations</source>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="44"/>
         <source>Angle (counter-clockwise):</source>
-        <translation type="unfinished"></translation>
+        <translation>Angulo (maldekstrume):</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="42"/>
@@ -5632,12 +5627,12 @@ separations</source>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="40"/>
         <source>Rotation parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Turnaj parametroj</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="46"/>
         <source>Rotate around:</source>
-        <translation type="unfinished"></translation>
+        <translation>Turni ĉirkaŭ:</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="48"/>
@@ -5747,7 +5742,7 @@ separations</source>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="40"/>
         <source>Scaling parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Skaligaj parametroj</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="44"/>
@@ -5757,7 +5752,7 @@ separations</source>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="46"/>
         <source>Scaling center:</source>
-        <translation type="unfinished"></translation>
+        <translation>Skaliga centro:</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="48"/>
@@ -5850,7 +5845,7 @@ separations</source>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="62"/>
         <source>Same as map</source>
-        <translation type="unfinished"></translation>
+        <translation>Same kiel sur la mapo</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="68"/>
@@ -5983,7 +5978,7 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="243"/>
         <source>Combined</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunigita</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="246"/>
@@ -6033,7 +6028,7 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="278"/>
         <source>Enable drag and drop</source>
-        <translation type="unfinished"></translation>
+        <translation>Ŝalti "ŝovi kaj demeti"</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="906"/>
@@ -6061,47 +6056,47 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1159"/>
         <source>Select all objects with this symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Elekti ĉiujn objektojn kun tiu simbolo</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1160"/>
         <source>Add all objects with this symbol to selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Elekti ĉiujn objektojn kun tiu simbolo al elekto</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1161"/>
         <source>Remove all objects with this symbol from selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Forigi ĉiujn objektojn kun tiu simbolo el elekto</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1162"/>
         <source>Hide objects with this symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaŝi objektojn kun tiu simbolo</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1163"/>
         <source>Protect objects with this symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Protekti objektojn kun tiu simbolo</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1168"/>
         <source>Add all objects with selected symbols to selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Aldoni ĉiujn objektojn kun elektitaj simboloj al elekto</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1169"/>
         <source>Remove all objects with selected symbols from selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Forigi ĉiujn objektojn kun elektitaj simboloj el elekto</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1170"/>
         <source>Hide objects with selected symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaŝi objektojn kun elektitaj simboloj</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1171"/>
         <source>Protect objects with selected symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Protekti objektojn kun elektitaj simboloj</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="271"/>
@@ -6122,27 +6117,27 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="269"/>
         <source>Select unused</source>
-        <translation type="unfinished"></translation>
+        <translation>Elekti neuzatajn</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="274"/>
         <source>Sort symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Ordigi simbolojn</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="275"/>
         <source>Sort by number</source>
-        <translation type="unfinished"></translation>
+        <translation>Ordigi laŭ numero</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="276"/>
         <source>Sort by primary color</source>
-        <translation type="unfinished"></translation>
+        <translation>Ordigi laŭ ĉefkoloro</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="277"/>
         <source>Sort by primary color priority</source>
-        <translation type="unfinished"></translation>
+        <translation>Ordigi laŭ ĉefkolora prioritato</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="906"/>
@@ -6163,7 +6158,7 @@ separations</source>
         <location filename="../src/map_editor.cpp" line="810"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1167"/>
         <source>Select all objects with selected symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Elekti ĉiujn objektojn kun elektitaj simboloj</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="73"/>
@@ -6229,7 +6224,7 @@ separations</source>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="233"/>
         <source>Select background color</source>
-        <translation type="unfinished"></translation>
+        <translation>Elekti fonan koloron</translation>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="418"/>
@@ -6261,17 +6256,17 @@ manĝaĵo kun spicoj
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="60"/>
         <source>Relation</source>
-        <translation type="unfinished"></translation>
+        <translation>Rilato</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="60"/>
         <source>Key</source>
-        <translation type="unfinished"></translation>
+        <translation>Ŝlosilo</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="60"/>
         <source>Comparison</source>
-        <translation type="unfinished"></translation>
+        <translation>Komparo</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="60"/>
@@ -6281,12 +6276,12 @@ manĝaĵo kun spicoj
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="76"/>
         <source>Add Row</source>
-        <translation type="unfinished"></translation>
+        <translation>Aldoni vicon</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="77"/>
         <source>Remove Row</source>
-        <translation type="unfinished"></translation>
+        <translation>Forigi vicon</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="83"/>
@@ -6301,7 +6296,7 @@ manĝaĵo kun spicoj
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="92"/>
         <source>Select</source>
-        <translation type="unfinished"></translation>
+        <translation>Elekti</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="97"/>
@@ -6311,15 +6306,13 @@ manĝaĵo kun spicoj
     <message numerus="yes">
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="346"/>
         <source>%n object(s) selected</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n objekto estis elektita</numerusform>
+        <numerusform>%n objektoj estis elektita</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="350"/>
         <source>Invalid query</source>
-        <translation type="unfinished"></translation>
+        <translation>Nevalida informpeto</translation>
     </message>
 </context>
 <context>
@@ -6327,7 +6320,7 @@ manĝaĵo kun spicoj
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="53"/>
         <source>Key</source>
-        <translation type="unfinished"></translation>
+        <translation>Ŝlosilo</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="53"/>
@@ -6342,7 +6335,7 @@ manĝaĵo kun spicoj
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="233"/>
         <source>Key exists</source>
-        <translation type="unfinished"></translation>
+        <translation>Ŝlosilo ekzistas</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="234"/>
@@ -6371,7 +6364,7 @@ manĝaĵo kun spicoj
         <location filename="../src/template.cpp" line="502"/>
         <location filename="../src/template.cpp" line="521"/>
         <source>No such file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tia dosiero ne ekzistas.</translation>
     </message>
     <message>
         <location filename="../src/template.cpp" line="539"/>
@@ -6394,7 +6387,7 @@ manĝaĵo kun spicoj
     <message>
         <location filename="../src/template_adjust.cpp" line="140"/>
         <source>Failed to calculate adjustment!</source>
-        <translation type="unfinished"></translation>
+        <translation>Fiaskis kalkuli ĝustigon!</translation>
     </message>
 </context>
 <context>
@@ -6451,12 +6444,12 @@ manĝaĵo kun spicoj
     <message>
         <location filename="../src/template_adjust.cpp" line="210"/>
         <source>Template X</source>
-        <translation>Ŝablono X</translation>
+        <translation>Ŝablona X</translation>
     </message>
     <message>
         <location filename="../src/template_adjust.cpp" line="210"/>
         <source>Template Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Ŝablona Y</translation>
     </message>
     <message>
         <location filename="../src/template_adjust.cpp" line="210"/>
@@ -6486,7 +6479,7 @@ manĝaĵo kun spicoj
     <message>
         <location filename="../src/template_adjust.cpp" line="224"/>
         <source>Apply &amp;&amp; clear all</source>
-        <translation type="unfinished"></translation>
+        <translation>Apliki &amp;&amp; vakigi ĉiujn</translation>
     </message>
     <message>
         <location filename="../src/template_adjust.cpp" line="225"/>
@@ -6559,12 +6552,12 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/template_image.cpp" line="620"/>
         <source>Meters per pixel:</source>
-        <translation type="unfinished"></translation>
+        <translation>Metroj en bildero:</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="624"/>
         <source>Scanned with</source>
-        <translation type="unfinished"></translation>
+        <translation>Skanita kun</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="627"/>
@@ -6613,7 +6606,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="205"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="477"/>
         <source>Sketch</source>
-        <translation type="unfinished"></translation>
+        <translation>Skizo</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="207"/>
@@ -6674,7 +6667,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="236"/>
         <source>Move by hand</source>
-        <translation type="unfinished"></translation>
+        <translation>Movi permane</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="387"/>
@@ -6736,12 +6729,12 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="403"/>
         <source>File format not recognized.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosierformo ne rekonita.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="413"/>
         <source>Failed to load template. Does the file exist and is it valid?</source>
-        <translation type="unfinished"></translation>
+        <translation>Fiaskis ŝargi ŝablonon. Ĉu la dosiero ekzistas kaj ĉu tio estas valida?</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="969"/>
@@ -6752,7 +6745,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="974"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1009"/>
         <source>Template import</source>
-        <translation type="unfinished"></translation>
+        <translation>Ŝablona importo</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="975"/>
@@ -6775,7 +6768,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/template_tool_move.cpp" line="36"/>
         <source>&lt;b&gt;Drag&lt;/b&gt; to move the current template</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Treni&lt;/b&gt; por movi la aktualan ŝablonon</translation>
     </message>
 </context>
 <context>
@@ -6864,7 +6857,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/template_track.cpp" line="398"/>
         <source>The path is empty, there is nothing to import!</source>
-        <translation type="unfinished"></translation>
+        <translation>La vojo estas malplena, estas nenio por importi!</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="411"/>
@@ -6879,7 +6872,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/template_track.cpp" line="478"/>
         <source>Import problems</source>
-        <translation type="unfinished"></translation>
+        <translation>Importaj problemoj</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/template_track.cpp" line="479"/>
@@ -6914,7 +6907,8 @@ Ne estas OSM-dosiero.</translation>
         <location filename="../src/gps_track.cpp" line="511"/>
         <source>The OSM file has version %1.
 The minimum supported version is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>La OSM-dosiero havas versio %1.
+Minimuma subtenata versio estas %2.</translation>
     </message>
     <message>
         <location filename="../src/gps_track.cpp" line="518"/>
@@ -6931,7 +6925,7 @@ La maksimuma subtenata versio estas %2.</translation>
     <message>
         <location filename="../src/gps_track.cpp" line="618"/>
         <source>%1 nodes could not be processed correctly.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 nodoj ne povis esti traktita ĝuste.</translation>
     </message>
 </context>
 <context>
@@ -7064,12 +7058,12 @@ La maksimuma subtenata versio estas %2.</translation>
     <message>
         <location filename="../src/symbol_text.cpp" line="654"/>
         <source>Paragraph spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>Alineinterspaco:</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="657"/>
         <source>Character spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>Interspaco:</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="659"/>
@@ -7217,17 +7211,17 @@ La maksimuma subtenata versio estas %2.</translation>
     <message>
         <location filename="../src/util.cpp" line="256"/>
         <source>Failed to locate the help files.</source>
-        <translation>Malsukcesis serĉi la helpdosierojn.</translation>
+        <translation>Fiaskis serĉi la helpdosierojn.</translation>
     </message>
     <message>
         <location filename="../src/util.cpp" line="263"/>
         <source>Failed to locate the help browser ("Qt Assistant").</source>
-        <translation type="unfinished"></translation>
+        <translation>Fiaskis trovi la helpofoliumilon ("Qt Assistant").</translation>
     </message>
     <message>
         <location filename="../src/util.cpp" line="297"/>
         <source>Failed to launch the help browser ("Qt Assistant").</source>
-        <translation>Malsukcesis lanĉi la retumilo ("Qt Assistant").</translation>
+        <translation>Fiaskis lanĉi la helpofoliumilon ("Qt Assistant").</translation>
     </message>
     <message>
         <location filename="../src/util.cpp" line="313"/>
@@ -7275,7 +7269,7 @@ La maksimuma subtenata versio estas %2.</translation>
         <location filename="../src/file_format_xml.cpp" line="524"/>
         <location filename="../src/file_format_xml.cpp" line="773"/>
         <source>Some invalid characters had to be removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kelkaj nevalidaj simboloj devis esti forigita.</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="542"/>
