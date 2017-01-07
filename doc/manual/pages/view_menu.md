@@ -45,6 +45,9 @@ Note that key F6 starts panning immediately.</td></tr>
 <tr><td></td><td><a name="fullscreen"><h4>Toggle fullscreen mode</h4></a></td><td><h4>F11</h4></td><td>
 <p>This toggle switches the display to full-screen mode and back.</p></td></tr>
 
+<tr><td><img class="small" src="../mapper-images/tag-selector.png" width="32" height="32" border="0" alt="" /></td><td><h4>Tag selector</h4></td><td><h4>Ctrl+Shift+5</h4></td><td>
+<p>This toggle shows or hides the <a href="tag_selector.md">tag selector</a>.</p></td></tr>
+
 <tr><td><img class="small" src="../mapper-images/window-new.png" width="32" height="32" border="0" alt="" /></td><td><h4>Tag editor</h4></td><td><h4>Ctrl+Shift+6</h4></td><td>
 <p>This toggle shows or hides the <a href="tag_editor.md">tag editor</a>.</p></td></tr>
 
