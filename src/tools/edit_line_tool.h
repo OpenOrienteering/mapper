@@ -19,41 +19,30 @@
  */
 
 
-#ifndef _OPENORIENTEERING_EDIT_POINT_TOOL_H_
-#define _OPENORIENTEERING_EDIT_POINT_TOOL_H_
+#ifndef _OPENORIENTEERING_EDIT_LINE_TOOL_H_
+#define _OPENORIENTEERING_EDIT_LINE_TOOL_H_
 
 #include <QScopedPointer>
 #include <QElapsedTimer>
 
-#include "tool_edit.h"
+#include "edit_tool.h"
 
 class MapWidget;
 class CombinedSymbol;
 class PointObject;
+class PathObject;
 class Symbol;
-class TextObjectEditorHelper;
 
 
 /**
- * Standard tool to edit all types of objects.
- * 
- * \todo See tool_edit_line.cpp for a number of todos.
+ * A tool to edit lines of PathObjects.
  */
-class EditPointTool : public EditTool
+class EditLineTool : public EditTool
 {
 Q_OBJECT
 public:
-	EditPointTool(MapEditorController* editor, QAction* tool_action);
-	virtual ~EditPointTool();
-	
-	/**
-	 * Returns true if new points shall be added as dash points by default.
-	 * 
-	 * This depends only on the symbol of the selected element.
-	 * 
-	 * \todo Test/fix for combined symbols.
-	 */
-	bool addDashPointDefault() const;
+	EditLineTool(MapEditorController* editor, QAction* tool_action);
+	virtual ~EditLineTool();
 	
 	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
 	bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
@@ -68,13 +57,6 @@ public:
 	void dragFinish() override;
 	void dragCanceled() override;
 	
-	void focusOutEvent(QFocusEvent* event) override;
-	
-	/**
-	 * Contains special treatment for text objects.
-	 */
-	void finishEditing() override;
-	
 protected:
 	bool keyPress(QKeyEvent* event) override;
 	bool keyRelease(QKeyEvent* event) override;
@@ -87,35 +69,17 @@ protected:
 	/** In addition to the base class implementation, updates the status text. */
 	void updatePreviewObjects() override;
 	
+	/** Deletes the highlight object if it exists and correctly removes its renderables. */
+	void deleteHighlightObject();
+	
 	void updateStatusText() override;
 	
-	/** 
-	 * Updates hover_state, hover_object and hover_point.
-	 */
+	/** Recalculates hover_line. */
 	void updateHoverState(MapCoordF cursor_pos);
 	
-	/**
-	 * Sets up the angle tool helper for the object currently hovered over.
-	 * 
-	 * The object must be of type Object::Path.
-	 */
-	void setupAngleHelperFromHoverObject();
-	
-	/** Does additional editing setup required after calling startEditing(). */
-	void startEditingSetup();
-	
-	/**
-	 * Checks if a single text object is the only selected object and the
-	 * cursor hovers over it.
-	 */
-	bool hoveringOverSingleText() const;
-	
-	/**
-	 * Checks if the cursor hovers over the selection frame.
-	 */
 	bool hoveringOverFrame() const;
 	
-	
+private:
 	/** Measures the time a click takes to decide whether to do selection. */
 	QElapsedTimer click_timer;
 	
@@ -131,22 +95,23 @@ protected:
 	/**
 	 * Object which is hovered over (if any).
 	 */
-	Object* hover_object;
+	PathObject* hover_object;
 	
 	/**
-	 * Index of the object's coordinate which is hovered over.
+	 * Coordinate identifying the hover_object's line which is hovered over.
 	 */
-	MapCoordVector::size_type hover_point;
+	MapCoordVector::size_type hover_line;
+	
+	/**
+	 * An object created for the current hover_line.
+	 */
+	PathObject* highlight_object;
 	
 	
 	/** Is a box selection in progress? */
 	bool box_selection;
 	
-	QScopedPointer<ObjectMover> object_mover;
-	
-	// Mouse / key handling
 	bool waiting_for_mouse_release;
-	bool space_pressed;
 	
 	/**
 	 * Offset from cursor position to drag handle of moved element.
@@ -154,26 +119,16 @@ protected:
 	 */
 	MapCoordF handle_offset;
 	
-	/** Text editor tool helper */
-	TextObjectEditorHelper* text_editor;
-	
-	/**
-	 * To prevent creating an undo step if text edit mode is entered and
-	 * finished, but no text was changed
-	 */
-	QString old_text;
-	/** See old_text */
-	int old_horz_alignment;
-	/** See old_text */
-	int old_vert_alignment;
+	QScopedPointer<ObjectMover> object_mover;
+	QScopedPointer<MapRenderables> highlight_renderables;
 };
 
 
 
-// ### EditPointTool inline code ###
+// ### EditLineTool inline code ###
 
 inline
-bool EditPointTool::hoveringOverFrame() const
+bool EditLineTool::hoveringOverFrame() const
 {
 	return hover_state == OverFrame;
 }

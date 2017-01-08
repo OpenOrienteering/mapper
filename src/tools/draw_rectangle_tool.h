@@ -22,7 +22,7 @@
 #ifndef _OPENORIENTEERING_DRAW_RECTANGLE_H_
 #define _OPENORIENTEERING_DRAW_RECTANGLE_H_
 
-#include "tool_draw_line_and_area.h"
+#include "draw_line_and_area_tool.h"
 
 #include <QPointer>
 #include <QScopedPointer>

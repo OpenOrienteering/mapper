@@ -27,7 +27,7 @@
 #include "map_widget.h"
 #include "object.h"
 #include "settings.h"
-#include "tool_draw_text.h"
+#include "draw_text_tool.h"
 #include "util.h"
 
 

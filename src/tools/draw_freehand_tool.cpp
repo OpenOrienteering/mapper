@@ -19,7 +19,7 @@
  */
 
 
-#include "tool_draw_freehand.h"
+#include "draw_freehand_tool.h"
 
 #include <QKeyEvent>
 #include <QMouseEvent>

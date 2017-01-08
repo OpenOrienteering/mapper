@@ -33,7 +33,7 @@
 #include "../src/symbol.h"
 #include "../src/symbol_line.h"
 #include "../src/templates/template.h"
-#include "../src/tool_edit_point.h"
+#include "tools/edit_point_tool.h"
 
 #include "../src/gui/main_window.h"
 

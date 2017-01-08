@@ -19,7 +19,7 @@
  */
 
 
-#include "tool_rotate_pattern.h"
+#include "rotate_pattern_tool.h"
 
 #include <qmath.h>
 #include <QGuiApplication>

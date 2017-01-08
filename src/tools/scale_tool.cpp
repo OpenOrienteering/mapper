@@ -19,7 +19,7 @@
  */
 
 
-#include "tool_scale.h"
+#include "scale_tool.h"
 
 #include <qmath.h>
 #include <QPainter>

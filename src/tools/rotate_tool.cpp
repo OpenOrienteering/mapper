@@ -19,7 +19,7 @@
  */
 
 
-#include "tool_rotate.h"
+#include "rotate_tool.h"
 
 #include <qmath.h>
 #include <QKeyEvent>

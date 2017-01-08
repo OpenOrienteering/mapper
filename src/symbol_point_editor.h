@@ -23,7 +23,7 @@
 
 #include <QWidget>
 
-#include "tool.h"
+#include "tools/tool.h"
 #include "map_editor_activity.h"
 
 class QCheckBox;

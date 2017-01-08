@@ -19,7 +19,7 @@
  */
 
 
-#include "tool_draw_circle.h"
+#include "draw_circle_tool.h"
 
 #include <QKeyEvent>
 #include <QMouseEvent>

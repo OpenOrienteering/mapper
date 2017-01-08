@@ -19,7 +19,7 @@
  */
 
 
-#include "tool_edit_point.h"
+#include "edit_point_tool.h"
 
 #include <limits>
 
@@ -35,7 +35,7 @@
 #include "map.h"
 #include "map_widget.h"
 #include "object_undo.h"
-#include "tool_draw_text.h"
+#include "draw_text_tool.h"
 #include "tool_helpers.h"
 #include "symbol_line.h"
 #include "symbol_text.h"

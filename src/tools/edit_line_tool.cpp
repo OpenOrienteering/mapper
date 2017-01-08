@@ -19,7 +19,7 @@
  */
 
 
-#include "tool_edit_line.h"
+#include "edit_line_tool.h"
 
 #include <algorithm>
 #include <limits>

@@ -19,7 +19,7 @@
  */
 
 
-#include "tool_draw_line_and_area.h"
+#include "draw_line_and_area_tool.h"
 
 #include <QPainter>
 

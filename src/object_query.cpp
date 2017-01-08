@@ -24,7 +24,7 @@
 #include "map_editor.h"
 #include "map_part.h"
 #include "object.h"
-#include "tool.h"
+#include "tools/tool.h"
 #include "util/memory.h"
 
 

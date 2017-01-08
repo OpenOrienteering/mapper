@@ -19,7 +19,7 @@
  */
 
 
-#include "tool_pan.h"
+#include "pan_tool.h"
 
 #include "map_widget.h"
 

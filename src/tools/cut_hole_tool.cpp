@@ -19,7 +19,7 @@
  */
 
 
-#include "tool_cut_hole.h"
+#include "cut_hole_tool.h"
 
 #include <QApplication>
 #include <QMouseEvent>
@@ -31,10 +31,10 @@
 #include "object.h"
 #include "symbol.h"
 #include "symbol_combined.h"
-#include "tool_boolean.h"
-#include "tool_draw_circle.h"
-#include "tool_draw_path.h"
-#include "tool_draw_rectangle.h"
+#include "boolean_tool.h"
+#include "draw_circle_tool.h"
+#include "draw_path_tool.h"
+#include "draw_rectangle_tool.h"
 #include "util.h"
 #include "gui/modifier_key.h"
 

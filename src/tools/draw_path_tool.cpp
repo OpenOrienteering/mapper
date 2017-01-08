@@ -19,7 +19,7 @@
  */
 
 
-#include "tool_draw_path.h"
+#include "draw_path_tool.h"
 
 #include <QKeyEvent>
 #include <QMouseEvent>

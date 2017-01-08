@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2014 Thomas Schöps
  *
  *    This file is part of OpenOrienteering.
  *
@@ -18,23 +18,19 @@
  */
 
 
-#ifndef _OPENORIENTEERING_DRAW_CIRCLE_H_
-#define _OPENORIENTEERING_DRAW_CIRCLE_H_
+#ifndef _OPENORIENTEERING_DRAW_FREEHAND_H_
+#define _OPENORIENTEERING_DRAW_FREEHAND_H_
 
-#include <QPointer>
-
-#include "tool_draw_line_and_area.h"
-
-class KeyButtonBar;
+#include "draw_line_and_area_tool.h"
 
 
-/** Tool to draw circles and ellipses. */
-class DrawCircleTool : public DrawLineAndAreaTool
+/** Tool for free-hand drawing. */
+class DrawFreehandTool : public DrawLineAndAreaTool
 {
 Q_OBJECT
 public:
-	DrawCircleTool(MapEditorController* editor, QAction* tool_action, bool is_helper_tool);
-	virtual ~DrawCircleTool();
+	DrawFreehandTool(MapEditorController* editor, QAction* tool_action, bool is_helper_tool);
+	virtual ~DrawFreehandTool();
 	
 	virtual void init();
 	virtual const QCursor& getCursor() const;
@@ -51,20 +47,17 @@ protected:
 	virtual void finishDrawing();
 	virtual void abortDrawing();
 	
-	void updateCircle();
+	void updatePath();
 	void setDirtyRect();
 	void updateStatusText();
 	
+	void checkLineSegment(int a, int b, std::vector<bool>& point_mask);
+	
 	QPoint click_pos;
-	MapCoordF circle_start_pos_map;
+	MapCoordF last_pos_map;
 	QPoint cur_pos;
 	MapCoordF cur_pos_map;
-	MapCoordF opposite_pos_map;		// position on cirlce/ellipse opposite to click_pos_map
 	bool dragging;
-	bool start_from_center;
-	bool first_point_set;
-	bool second_point_set;
-	QPointer<KeyButtonBar> key_button_bar;
 };
 
 #endif

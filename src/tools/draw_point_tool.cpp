@@ -19,7 +19,7 @@
  */
 
 
-#include "tool_draw_point.h"
+#include "draw_point_tool.h"
 
 #include <QKeyEvent>
 #include <QPainter>

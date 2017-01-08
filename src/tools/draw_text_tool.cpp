@@ -19,7 +19,7 @@
  */
 
 
-#include "tool_draw_text.h"
+#include "draw_text_tool.h"
 
 #include <QGuiApplication>
 #include <QKeyEvent>
@@ -36,7 +36,7 @@
 #include "settings.h"
 #include "symbol.h"
 #include "symbol_text.h"
-#include "tool_edit.h"
+#include "edit_tool.h"
 #include "tool_helpers.h"
 #include "util.h"
 #include "tools/text_object_editor_helper.h"

@@ -26,7 +26,7 @@
 
 #include <QWidget>
 
-#include "../tool.h"
+#include "tools/tool.h"
 
 class MapPrinter;
 

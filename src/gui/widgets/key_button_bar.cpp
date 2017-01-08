@@ -25,7 +25,7 @@
 #include <QCoreApplication>
 #include <QKeyEvent>
 
-#include "../../tool.h"
+#include "tools/tool.h"
 #include "../../map_editor.h"
 #include "../../map_widget.h"
 

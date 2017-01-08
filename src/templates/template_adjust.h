@@ -26,7 +26,7 @@
 
 #include "map_editor_activity.h"
 #include "template.h"
-#include "tool.h"
+#include "tools/tool.h"
 
 QT_BEGIN_NAMESPACE
 class QGridLayout;

@@ -19,7 +19,7 @@
  */
 
 
-#include "tool_distribute_points.h"
+#include "distribute_points_tool.h"
 
 #include <qmath.h>
 #include <QDialogButtonBox>

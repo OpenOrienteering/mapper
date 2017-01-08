@@ -19,7 +19,7 @@
  */
 
 
-#include "tool_cut.h"
+#include "cut_tool.h"
 
 #include <QApplication>
 #include <QMessageBox>
@@ -33,8 +33,8 @@
 #include "settings.h"
 #include "symbol.h"
 #include "symbol_combined.h"
-#include "tool_boolean.h"
-#include "tool_draw_path.h"
+#include "boolean_tool.h"
+#include "draw_path_tool.h"
 #include "util.h"
 
 

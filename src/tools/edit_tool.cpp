@@ -18,7 +18,7 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "tool_edit.h"
+#include "edit_tool.h"
 
 #include <limits>
 

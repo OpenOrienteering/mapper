@@ -36,7 +36,7 @@
 #include "../../map_part.h"
 #include "../../object.h"
 #include "../../object_query.h"
-#include "../../tool.h"
+#include "tools/tool.h"
 #include "../../util.h"
 
 

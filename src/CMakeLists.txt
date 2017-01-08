@@ -102,30 +102,30 @@ set(Mapper_Common_SRCS
  templates/template_tool_move.cpp
  templates/template_tool_paint.cpp
 
- tool.cpp
- tool_base.cpp
- tool_helpers.cpp
- tool_pan.cpp
- tool_edit.cpp
- tool_edit_point.cpp
- tool_edit_line.cpp
- tool_distribute_points.cpp
- tool_draw_line_and_area.cpp
- tool_draw_point.cpp
- tool_draw_point_gps.cpp
- tool_draw_path.cpp
- tool_draw_circle.cpp
- tool_draw_rectangle.cpp
- tool_draw_freehand.cpp
- tool_draw_text.cpp
- tool_cut.cpp
- tool_cut_hole.cpp
- tool_cutout.cpp
- tool_rotate.cpp
- tool_rotate_pattern.cpp
- tool_scale.cpp
- tool_boolean.cpp
- tool_fill.cpp
+ tools/tool.cpp
+ tools/tool_base.cpp
+ tools/tool_helpers.cpp
+ tools/pan_tool.cpp
+ tools/edit_tool.cpp
+ tools/edit_point_tool.cpp
+ tools/edit_line_tool.cpp
+ tools/distribute_points_tool.cpp
+ tools/draw_line_and_area_tool.cpp
+ tools/draw_point_tool.cpp
+ tools/draw_point_gps_tool.cpp
+ tools/draw_path_tool.cpp
+ tools/draw_circle_tool.cpp
+ tools/draw_rectangle_tool.cpp
+ tools/draw_freehand_tool.cpp
+ tools/draw_text_tool.cpp
+ tools/cut_tool.cpp
+ tools/cut_hole_tool.cpp
+ tools/cutout_tool.cpp
+ tools/rotate_tool.cpp
+ tools/rotate_pattern_tool.cpp
+ tools/scale_tool.cpp
+ tools/boolean_tool.cpp
+ tools/fill_tool.cpp
 
  gps_track.cpp
  gps_display.cpp
@@ -233,29 +233,29 @@ set(Mapper_Common_MOC_INPUT
  templates/template_position_dock_widget.h
  templates/template_tool_move.h
  templates/template_tool_paint.h
- tool.h
- tool_base.h
- tool_cut.h
- tool_cut_hole.h
- tool_cutout.h
- tool_distribute_points.h
- tool_draw_circle.h
- tool_draw_freehand.h
- tool_draw_line_and_area.h
- tool_draw_path.h
- tool_draw_point.h
- tool_draw_point_gps.h
- tool_draw_rectangle.h
- tool_draw_text.h
- tool_edit.h
- tool_edit_point.h
- tool_edit_line.h
- tool_fill.h
- tool_helpers.h
- tool_pan.h
- tool_rotate.h
- tool_rotate_pattern.h
- tool_scale.h
+ tools/tool.h
+ tools/tool_base.h
+ tools/cut_tool.h
+ tools/cut_hole_tool.h
+ tools/cutout_tool.h
+ tools/distribute_points_tool.h
+ tools/draw_circle_tool.h
+ tools/draw_freehand_tool.h
+ tools/draw_line_and_area_tool.h
+ tools/draw_path_tool.h
+ tools/draw_point_tool.h
+ tools/draw_point_gps_tool.h
+ tools/draw_rectangle_tool.h
+ tools/draw_text_tool.h
+ tools/edit_tool.h
+ tools/edit_point_tool.h
+ tools/edit_line_tool.h
+ tools/fill_tool.h
+ tools/tool_helpers.h
+ tools/pan_tool.h
+ tools/rotate_tool.h
+ tools/rotate_pattern_tool.h
+ tools/scale_tool.h
  undo_manager.h
  util_task_dialog.h
  

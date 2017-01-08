@@ -24,7 +24,7 @@
 #include <QDialog>
 #include <QPointer>
 
-#include "tool.h"
+#include "tools/tool.h"
 
 QT_BEGIN_NAMESPACE
 class QListWidgetItem;

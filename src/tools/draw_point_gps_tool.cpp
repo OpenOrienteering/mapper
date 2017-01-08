@@ -19,7 +19,7 @@
  */
 
 
-#include "tool_draw_point_gps.h"
+#include "draw_point_gps_tool.h"
 
 #include <QKeyEvent>
 #include <QLabel>

@@ -19,7 +19,7 @@
  */
 
 
-#include "tool_draw_rectangle.h"
+#include "draw_rectangle_tool.h"
 
 #include <limits>
 

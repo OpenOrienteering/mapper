@@ -25,7 +25,7 @@
 
 #include "map_widget.h"
 #include "gps_display.h"
-#include "tool.h"
+#include "tools/tool.h"
 #include "util.h"
 
 
