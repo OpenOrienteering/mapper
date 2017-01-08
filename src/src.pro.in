@@ -14,8 +14,8 @@ LIBS *= -lpolyclipping -lqtsingleapplication -locd
 win32: LIBS *= -lproj-9
 else:  LIBS *= -lproj
 
-DEPENDPATH  += qmake
-INCLUDEPATH += qmake
+DEPENDPATH  += qmake "$$PWD"
+INCLUDEPATH += qmake "$$PWD"
 
 QT += core gui widgets printsupport network xml
 android: QT += core-private gui-private
