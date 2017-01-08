@@ -33,7 +33,7 @@
 #include "core/symbols/combined_symbol.h"
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/point_symbol.h"
-#include "util.h"
+#include "util/util.h"
 
 DrawLineAndAreaTool::DrawLineAndAreaTool(MapEditorController* editor, Type type, QAction* tool_action, bool is_helper_tool)
 : MapEditorTool(editor, type, tool_action)

@@ -54,7 +54,7 @@
 #include "core/symbols/text_symbol.h"
 #include "templates/template.h"
 #include "undo/undo_manager.h"
-#include "util.h"
+#include "util/util.h"
 
 // ### Misc ###
 

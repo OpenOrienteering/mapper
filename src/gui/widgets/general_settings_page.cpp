@@ -37,8 +37,8 @@
 
 #include "home_screen_widget.h"
 #include "../main_window.h"
-#include "../../util_gui.h"
-#include "../../util_translation.h"
+#include "gui/util_gui.h"
+#include "util/translation_util.h"
 #include "../../util/backports.h"
 #include "../../util/encoding.h"
 #include "../../util/scoped_signals_blocker.h"

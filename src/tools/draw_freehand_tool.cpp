@@ -26,7 +26,7 @@
 
 #include "core/map.h"
 #include "core/objects/object.h"
-#include "util.h"
+#include "util/util.h"
 #include "gui/modifier_key.h"
 #include "gui/widgets/key_button_bar.h"
 #include "gui/map/map_editor.h"

@@ -29,7 +29,7 @@
 #include "core/georeferencing.h"
 #include "core/map.h"
 #include "templates/template.h"
-#include "util_gui.h"
+#include "gui/util_gui.h"
 
 RotateMapDialog::RotateMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), map(map)
 {

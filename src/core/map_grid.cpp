@@ -31,7 +31,7 @@
 #include "core/georeferencing.h"
 #include "map.h"
 #include "map_coord.h"
-#include "util.h"
+#include "util/util.h"
 #include "util/xml_stream_util.h"
 
 struct ProcessLine

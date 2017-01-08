@@ -38,8 +38,8 @@
 
 #include "../core/georeferencing.h"
 #include "core/map.h"
-#include "../util.h"
-#include "../util_gui.h"
+#include "util/util.h"
+#include "util_gui.h"
 
 
 ConfigureGridDialog::ConfigureGridDialog(QWidget* parent, const Map& map, bool grid_visible)

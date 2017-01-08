@@ -53,23 +53,18 @@ set(Mapper_Common_SRCS
   core/virtual_coord_vector.cpp
  
  global.cpp
- util.cpp
- util_task_dialog.cpp
- util_translation.cpp
+ util/util.cpp
+ util/translation_util.cpp
  mapper_resource.cpp
- matrix.cpp
- transformation.cpp
+ util/matrix.cpp
+ util/transformation.cpp
 
  settings.cpp
-
- touch_cursor.cpp
 
  undo/undo.cpp
  undo/undo_manager.cpp
  undo/object_undo.cpp
  undo/map_part_undo.cpp
-
- color_dock_widget.cpp
 
  core/symbols/symbol.cpp
  core/symbols/point_symbol.cpp
@@ -122,7 +117,8 @@ set(Mapper_Common_SRCS
  sensors/gps_display.cpp
  sensors/gps_temporary_markers.cpp
  sensors/gps_track_recorder.cpp
- dxfparser.cpp
+
+ util/dxfparser.cpp
 
  sensors/compass.cpp
 
@@ -153,6 +149,9 @@ set(Mapper_Common_SRCS
  gui/select_crs_dialog.cpp
  gui/settings_dialog.cpp
  gui/text_browser_dialog.cpp
+ gui/task_dialog.cpp
+ gui/color_dock_widget.cpp
+ gui/touch_cursor.cpp
 
  gui/map/map_widget.cpp
  gui/map/map_editor.cpp
@@ -200,7 +199,6 @@ set(Mapper_Common_SRCS
 )
 
 set(Mapper_Common_MOC_INPUT
- color_dock_widget.h
  sensors/compass.h
  fileformats/ocad8_file_format_p.h
  fileformats/xml_file_format_p.h
@@ -247,7 +245,6 @@ set(Mapper_Common_MOC_INPUT
  tools/rotate_tool.h
  tools/rotate_pattern_tool.h
  tools/scale_tool.h
- util_task_dialog.h
 
  undo/undo_manager.h
  undo/object_undo.h
@@ -274,6 +271,8 @@ set(Mapper_Common_MOC_INPUT
  gui/select_crs_dialog.h
  gui/settings_dialog.h
  gui/text_browser_dialog.h
+ gui/task_dialog.h
+ gui/color_dock_widget.h
 
  gui/map/map_dialog_new.h
  gui/map/map_dialog_scale.h
@@ -351,7 +350,7 @@ set(Mapper_Common_HEADERS
   core/symbols/symbol.h
   undo/map_part_undo.h
   undo/undo.h
-  util_gui.h
+  gui/util_gui.h
 )
 
 qt5_wrap_cpp(Mapper_Common_MOC ${Mapper_Common_MOC_INPUT} TARGET Mapper_Common)

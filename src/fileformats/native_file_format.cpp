@@ -35,7 +35,7 @@
 #include "../templates/template.h"
 #include "../templates/template_image.h"
 #include "undo/undo_manager.h"
-#include "../util.h"
+#include "util/util.h"
 
 
 // ### NativeFileImport declaration ###

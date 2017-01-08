@@ -38,8 +38,8 @@
 #include "core/symbols/point_symbol.h"
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/area_symbol.h"
-#include "util.h"
-#include "util_gui.h"
+#include "util/util.h"
+#include "gui/util_gui.h"
 #include "gui/modifier_key.h"
 #include "gui/widgets/color_dropdown.h"
 

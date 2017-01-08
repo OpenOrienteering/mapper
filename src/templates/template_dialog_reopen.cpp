@@ -29,7 +29,7 @@
 
 #include "core/map.h"
 #include "template.h"
-#include "util_gui.h"
+#include "gui/util_gui.h"
 
 ReopenTemplateDialog::ReopenTemplateDialog(QWidget* parent, Map* map, const QString& map_directory)
 : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)

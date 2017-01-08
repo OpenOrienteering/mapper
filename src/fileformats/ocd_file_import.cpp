@@ -51,7 +51,7 @@
 #include "../templates/template.h"
 #include "../templates/template_image.h"
 #include "../templates/template_map.h"
-#include "../util.h"
+#include "util/util.h"
 #include "../util/encoding.h"
 
 

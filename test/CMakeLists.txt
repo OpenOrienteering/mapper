@@ -127,7 +127,7 @@ include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
 # Unit tests
 add_unit_test(tst_qglobal)
-add_unit_test(autosave_t MANUAL ../src/core/autosave ../src/settings ../src/util ../src/mapper_resource)
+add_unit_test(autosave_t MANUAL ../src/core/autosave ../src/settings ../src/util/util ../src/mapper_resource)
 add_unit_test(encoding_t ../src/util/encoding)
 add_unit_test(georeferencing_t ../src/core/georeferencing
 	../src/core/latlon
@@ -137,10 +137,10 @@ add_unit_test(georeferencing_t ../src/core/georeferencing
 	../src/mapper_resource
 	../src/fileformats/file_format
 )
-add_unit_test(locale_t ../src/util_translation ../src/mapper_resource)
+add_unit_test(locale_t ../src/util/translation_util ../src/mapper_resource)
 add_unit_test(map_color_t ../src/core/map_color)
 add_unit_test(qpainter_t)
-add_unit_test(util_t ../src/util ../src/settings ../src/mapper_resource)
+add_unit_test(util_t ../src/util/util ../src/settings ../src/mapper_resource)
 
 # Benchmarks
 add_system_test(coord_xml_t MANUAL)

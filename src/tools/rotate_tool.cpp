@@ -30,7 +30,7 @@
 #include "core/objects/object.h"
 #include "core/renderables/renderable.h"
 #include "tool_helpers.h"
-#include "util.h"
+#include "util/util.h"
 #include "gui/modifier_key.h"
 
 

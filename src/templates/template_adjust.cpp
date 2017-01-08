@@ -38,8 +38,8 @@
 #include "gui/map/map_editor.h"
 #include "gui/map/map_widget.h"
 #include "template.h"
-#include "transformation.h"
-#include "util.h"
+#include "util/transformation.h"
+#include "util/util.h"
 #include "gui/modifier_key.h"
 
 float TemplateAdjustActivity::cross_radius = 4;

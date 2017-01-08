@@ -18,7 +18,7 @@
  */
 
 
-#include "util_translation.h"
+#include "translation_util.h"
 
 #include <QDir>
 #include <QFileInfo>

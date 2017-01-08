@@ -37,7 +37,7 @@
 #include "settings.h"
 #include "core/symbols/symbol.h"
 #include "tool_helpers.h"
-#include "util.h"
+#include "util/util.h"
 #include "gui/map/map_editor.h"
 #include "gui/main_window.h"
 #include "gui/modifier_key.h"

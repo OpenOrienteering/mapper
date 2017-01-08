@@ -25,7 +25,7 @@
 #include <QFormLayout>
 
 #include "../modifier_key.h"
-#include "../../util_gui.h"
+#include "gui/util_gui.h"
 
 
 EditorSettingsPage::EditorSettingsPage(QWidget* parent)

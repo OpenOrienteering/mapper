@@ -22,7 +22,7 @@
 
 #include <QtTest/QtTest>
 
-#include "../src/util_translation.h"
+#include "util/translation_util.h"
 
 
 inline

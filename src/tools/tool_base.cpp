@@ -36,7 +36,7 @@
 #include "core/objects/text_object.h"
 #include "settings.h"
 #include "tool_helpers.h"
-#include "util.h"
+#include "util/util.h"
 
 
 // ### MapEditorToolBase::EditedItem ###

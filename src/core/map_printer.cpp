@@ -47,7 +47,7 @@
 #include "core/renderables/renderable.h"
 #include "../settings.h"
 #include "../templates/template.h"
-#include "../util.h"
+#include "util/util.h"
 #include "../util/xml_stream_util.h"
 
 

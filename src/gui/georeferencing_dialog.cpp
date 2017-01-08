@@ -47,8 +47,8 @@
 #include "core/map.h"
 #include "gui/map/map_editor.h"
 #include "gui/map/map_dialog_rotate.h"
-#include "../util_gui.h"
-#include "../util.h"
+#include "util_gui.h"
+#include "util/util.h"
 #include "../util/scoped_signals_blocker.h"
 #include "widgets/crs_selector.h"
 

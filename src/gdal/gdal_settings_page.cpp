@@ -28,7 +28,7 @@
 
 #include "gdal_manager.h"
 #include "ogr_file_format.h"
-#include "../util_gui.h"
+#include "../gui/util_gui.h"
 #include "../fileformats/file_format_registry.h"
 #include "../util/scoped_signals_blocker.h"
 

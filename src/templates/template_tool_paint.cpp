@@ -31,7 +31,7 @@
 
 #include "gui/map/map_widget.h"
 #include "template.h"
-#include "util.h"
+#include "util/util.h"
 #include "gui/map/map_editor.h"
 
 

@@ -35,7 +35,7 @@
 #include "draw_circle_tool.h"
 #include "draw_path_tool.h"
 #include "draw_rectangle_tool.h"
-#include "util.h"
+#include "util/util.h"
 #include "gui/modifier_key.h"
 
 

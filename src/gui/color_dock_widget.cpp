@@ -31,7 +31,7 @@
 
 #include "core/map_color.h"
 #include "core/map.h"
-#include "util.h"
+#include "util/util.h"
 #include "util_gui.h"
 #include "util/item_delegates.h"
 #include "gui/color_dialog.h"

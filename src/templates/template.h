@@ -24,8 +24,8 @@
 
 #include <memory>
 
-#include "matrix.h"
-#include "transformation.h"
+#include "util/matrix.h"
+#include "util/transformation.h"
 
 QT_BEGIN_NAMESPACE
 class QIODevice;

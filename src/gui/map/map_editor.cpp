@@ -63,7 +63,7 @@
 #include "gui/widgets/compass_display.h"
 #include "gui/widgets/symbol_widget.h"
 #include "gui/widgets/template_list_widget.h"
-#include "color_dock_widget.h"
+#include "gui/color_dock_widget.h"
 #include "sensors/compass.h"
 #include "fileformats/file_format_registry.h"
 #include "core/map.h"
@@ -116,7 +116,7 @@
 #include "tools/rotate_pattern_tool.h"
 #include "tools/scale_tool.h"
 #include "undo/undo_manager.h"
-#include "util.h"
+#include "util/util.h"
 #include "util/backports.h"
 #include "util/scoped_signals_blocker.h"
 

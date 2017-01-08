@@ -56,8 +56,8 @@
 #include "gui/map/map_widget.h"
 #include "../settings.h"
 #include "../templates/template.h"
-#include "../util.h"
-#include "../util_gui.h"
+#include "util/util.h"
+#include "util_gui.h"
 #include "../util/backports.h"
 #include "../util/scoped_signals_blocker.h"
 

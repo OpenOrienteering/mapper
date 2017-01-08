@@ -37,7 +37,7 @@
 #include "template_map.h"
 #include "template_track.h"
 #include "gdal/ogr_template.h"
-#include "util.h"
+#include "util/util.h"
 #include "util/xml_stream_util.h"
 
 // ### TemplateTransform ###

@@ -32,7 +32,7 @@
 #include "gui/map/map_editor.h"
 #include "undo/object_undo.h"
 #include "core/objects/object.h"
-#include "../../util.h"
+#include "util/util.h"
 
 
 TagsWidget::TagsWidget(Map* map, MapView* main_view, MapEditorController* controller, QWidget* parent)

@@ -31,8 +31,8 @@
 #include "gui/symbols/symbol_properties_widget.h"
 #include "gui/symbols/point_symbol_editor_widget.h"
 #include "core/renderables/renderable_implementation.h"
-#include "util.h"
-#include "util_gui.h"
+#include "util/util.h"
+#include "gui/util_gui.h"
 
 PointSymbol::PointSymbol() : Symbol(Symbol::Point)
 {

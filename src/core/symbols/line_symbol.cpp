@@ -40,8 +40,8 @@
 #include "point_symbol.h"
 #include "gui/symbols/point_symbol_editor_widget.h"
 #include "gui/symbols/symbol_setting_dialog.h"
-#include "util.h"
-#include "util_gui.h"
+#include "util/util.h"
+#include "gui/util_gui.h"
 #include "gui/widgets/color_dropdown.h"
 
 

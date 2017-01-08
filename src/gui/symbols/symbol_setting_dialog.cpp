@@ -49,7 +49,7 @@
 #include "point_symbol_editor_widget.h"
 #include "core/symbols/combined_symbol.h"
 #include "symbol_properties_widget.h"
-#include "util.h"
+#include "util/util.h"
 
 SymbolSettingDialog::SymbolSettingDialog(Symbol* source_symbol, Map* source_map, QWidget* parent)
 : QDialog(parent, Qt::CustomizeWindowHint | Qt::WindowTitleHint | Qt::WindowMaximizeButtonHint),

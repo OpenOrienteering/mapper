@@ -26,7 +26,7 @@
 #include "gui/map/map_widget.h"
 #include "gps_display.h"
 #include "tools/tool.h"
-#include "util.h"
+#include "util/util.h"
 
 
 GPSTemporaryMarkers::GPSTemporaryMarkers(MapWidget* widget, GPSDisplay* gps_display): QObject()

@@ -38,7 +38,7 @@
 #include "core/symbols/text_symbol.h"
 #include "edit_tool.h"
 #include "tool_helpers.h"
-#include "util.h"
+#include "util/util.h"
 #include "tools/text_object_editor_helper.h"
 
 

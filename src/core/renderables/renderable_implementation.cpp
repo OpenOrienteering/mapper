@@ -31,7 +31,7 @@
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/point_symbol.h"
 #include "core/symbols/text_symbol.h"
-#include "util.h"
+#include "util/util.h"
 
 #ifdef QT_PRINTSUPPORT_LIB
 #  include "advanced_pdf_printer.h"

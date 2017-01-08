@@ -30,8 +30,8 @@
 
 #include "core/map_color.h"
 #include "core/map.h"
-#include "../util.h"
-#include "../util_gui.h"
+#include "util/util.h"
+#include "util_gui.h"
 #include "widgets/color_dropdown.h"
 
 ColorDialog::ColorDialog(const Map& map, const MapColor& source_color, QWidget* parent, Qt::WindowFlags f)

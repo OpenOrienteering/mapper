@@ -23,7 +23,7 @@
 #include <QtTest/QtTest>
 #include <QTransform>
 
-#include "../src/transformation.h"
+#include "util/transformation.h"
 #include "../src/templates/template.h"
 
 

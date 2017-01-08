@@ -30,7 +30,7 @@
 #include "gui/main_window.h"
 #include "gui/map/map_editor.h"
 #include "template.h"
-#include "util.h"
+#include "util/util.h"
 
 TemplatePositionDockWidget::TemplatePositionDockWidget(Template* temp, MapEditorController* controller, QWidget* parent)
  : QDockWidget(tr("Positioning"), parent), temp(temp), controller(controller)

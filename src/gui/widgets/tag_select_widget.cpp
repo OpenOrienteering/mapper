@@ -37,7 +37,7 @@
 #include "core/objects/object.h"
 #include "core/objects/object_query.h"
 #include "tools/tool.h"
-#include "../../util.h"
+#include "util/util.h"
 
 
 // ### TagSelectWidget ###

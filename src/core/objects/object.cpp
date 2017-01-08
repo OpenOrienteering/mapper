@@ -33,7 +33,7 @@
 
 #include <private/qbezier_p.h>
 
-#include "util.h"
+#include "util/util.h"
 #include "fileformats/file_import_export.h"
 #include "core/symbols/symbol.h"
 #include "core/symbols/point_symbol.h"

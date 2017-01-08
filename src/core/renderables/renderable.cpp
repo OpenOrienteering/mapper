@@ -28,7 +28,7 @@
 #include "core/map.h"
 #include "core/objects/object.h"
 #include "core/symbols/symbol.h"
-#include "util.h"
+#include "util/util.h"
 
 #if defined(Q_OS_ANDROID) && defined(QT_PRINTSUPPORT_LIB)
 static_assert(false, "This file needs to be modified for correct printing on Android");

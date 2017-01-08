@@ -27,7 +27,7 @@
 #include "gui/map/map_widget.h"
 #include "core/renderables/renderable.h"
 #include "settings.h"
-#include "util.h"
+#include "util/util.h"
 
 QStringList TemplateMap::locked_maps;
 

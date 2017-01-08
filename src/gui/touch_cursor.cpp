@@ -27,7 +27,7 @@
 #include <QScreen>
 
 #include "gui/map/map_widget.h"
-#include "util.h"
+#include "util/util.h"
 
 
 // TODO: convert these to settings

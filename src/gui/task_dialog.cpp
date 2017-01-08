@@ -17,7 +17,7 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "util_task_dialog.h"
+#include "task_dialog.h"
 
 #include <QCommandLinkButton>
 #include <QLabel>

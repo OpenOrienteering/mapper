@@ -38,9 +38,9 @@
 #include "core/objects/object.h"
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/point_symbol.h"
-#include "util.h"
-#include "util_task_dialog.h"
-#include "util_gui.h"
+#include "util/util.h"
+#include "gui/task_dialog.h"
+#include "gui/util_gui.h"
 
 const std::vector<QByteArray>& TemplateTrack::supportedExtensions()
 {

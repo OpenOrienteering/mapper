@@ -35,7 +35,7 @@
 #include "core/symbols/combined_symbol.h"
 #include "boolean_tool.h"
 #include "draw_path_tool.h"
-#include "util.h"
+#include "util/util.h"
 
 
 namespace

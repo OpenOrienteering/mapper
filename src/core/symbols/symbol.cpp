@@ -43,7 +43,7 @@
 #include "gui/symbols/symbol_properties_widget.h"
 #include "gui/symbols/symbol_setting_dialog.h"
 #include "text_symbol.h"
-#include "util.h"
+#include "util/util.h"
 #include "settings.h"
 
 Symbol::Symbol(Type type)

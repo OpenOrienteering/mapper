@@ -30,7 +30,7 @@
 #include "core/symbols/symbol.h"
 #include "core/objects/object.h"
 #include "undo/object_undo.h"
-#include "util.h"
+#include "util/util.h"
 
 
 //### Local helper functions

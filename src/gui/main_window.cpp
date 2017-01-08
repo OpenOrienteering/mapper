@@ -59,7 +59,7 @@
 #include "../settings.h"
 #include "core/symbols/symbol.h"
 #include "undo/undo_manager.h"
-#include "../util.h"
+#include "util/util.h"
 #include "../util/backports.h"
 
 

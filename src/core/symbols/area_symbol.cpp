@@ -43,8 +43,8 @@
 #include "gui/symbols/symbol_properties_widget.h"
 #include "gui/symbols/symbol_setting_dialog.h"
 #include "gui/widgets/color_dropdown.h"
-#include "util_gui.h"
-#include "util.h"
+#include "gui/util_gui.h"
+#include "util/util.h"
 
 // ### FillPattern ###
 

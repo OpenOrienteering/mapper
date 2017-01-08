@@ -35,7 +35,7 @@
 #include "core/map.h"
 #include "core/objects/object.h"
 #include "undo/undo_manager.h"
-#include "util.h"
+#include "util/util.h"
 
 
 ReplaceSymbolSetDialog::ReplaceSymbolSetDialog(QWidget* parent, Map* map, Map* symbol_map)

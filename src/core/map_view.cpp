@@ -25,7 +25,7 @@
 
 #include "map.h"
 #include "../templates/template.h"
-#include "../util.h"
+#include "util/util.h"
 #include "../util/xml_stream_util.h"
 
 

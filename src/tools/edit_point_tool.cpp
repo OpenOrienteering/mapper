@@ -28,7 +28,7 @@
 #include <QPainter>
 #include <QScopedValueRollback>
 
-#include "util.h"
+#include "util/util.h"
 #include "core/symbols/symbol.h"
 #include "core/objects/object.h"
 #include "core/objects/text_object.h"

@@ -28,7 +28,7 @@
 #include "gui/map/map_widget.h"
 #include "core/objects/object.h"
 #include "core/renderables/renderable.h"
-#include "util.h"
+#include "util/util.h"
 
 
 ScaleTool::ScaleTool(MapEditorController* editor, QAction* tool_button)

@@ -34,7 +34,7 @@
 #include "core/georeferencing.h"
 #include "compass.h"
 #include "gui/map/map_widget.h"
-#include "util.h"
+#include "util/util.h"
 #include "util/backports.h"
 
 GPSDisplay::GPSDisplay(MapWidget* widget, const Georeferencing& georeferencing, QObject* parent)

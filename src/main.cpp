@@ -43,7 +43,7 @@
 #include "gui/main_window.h"
 #include "gui/widgets/mapper_proxystyle.h"
 #include "settings.h"
-#include "util_translation.h"
+#include "util/translation_util.h"
 #include "util/backports.h"
 #include "util/recording_translator.h"
 

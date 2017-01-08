@@ -28,7 +28,7 @@
 #include <QSettings>
 #include <QStringList>
 
-#include "util.h"
+#include "util/util.h"
 
 
 Settings::Settings()

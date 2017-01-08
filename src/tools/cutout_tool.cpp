@@ -29,7 +29,7 @@
 #include "settings.h"
 #include "core/symbols/combined_symbol.h"
 #include "edit_tool.h"
-#include "util.h"
+#include "util/util.h"
 #include "undo/object_undo.h"
 #include "boolean_tool.h"
 #include "gui/map/map_editor.h"
