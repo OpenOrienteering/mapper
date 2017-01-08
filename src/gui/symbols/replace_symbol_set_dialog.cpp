@@ -34,7 +34,7 @@
 #include "gui/widgets/symbol_dropdown.h"
 #include "core/map.h"
 #include "core/objects/object.h"
-#include "undo_manager.h"
+#include "undo/undo_manager.h"
 #include "util.h"
 
 

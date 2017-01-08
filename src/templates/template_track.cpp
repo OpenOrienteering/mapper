@@ -34,7 +34,7 @@
 #include "gui/georeferencing_dialog.h"
 #include "gui/select_crs_dialog.h"
 #include "gui/map/map_widget.h"
-#include "object_undo.h"
+#include "undo/object_undo.h"
 #include "core/objects/object.h"
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/point_symbol.h"

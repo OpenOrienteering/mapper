@@ -34,7 +34,7 @@
 #include "core/objects/text_object.h"
 #include "core/map.h"
 #include "gui/map/map_widget.h"
-#include "object_undo.h"
+#include "undo/object_undo.h"
 #include "draw_text_tool.h"
 #include "tool_helpers.h"
 #include "core/symbols/line_symbol.h"

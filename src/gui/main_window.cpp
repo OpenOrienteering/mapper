@@ -58,7 +58,7 @@
 #include "../fileformats/file_format.h"
 #include "../settings.h"
 #include "core/symbols/symbol.h"
-#include "../undo_manager.h"
+#include "undo/undo_manager.h"
 #include "../util.h"
 #include "../util/backports.h"
 

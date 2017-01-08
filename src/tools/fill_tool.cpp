@@ -31,7 +31,7 @@
 #include "gui/map/map_widget.h"
 #include "core/objects/object.h"
 #include "tool_helpers.h"
-#include "object_undo.h"
+#include "undo/object_undo.h"
 
 
 FillTool::FillTool(MapEditorController* editor, QAction* tool_button)

@@ -32,7 +32,7 @@
 #include "core/objects/object.h"
 #include "../src/settings.h"
 #include "../src/templates/template.h"
-#include "../src/undo_manager.h"
+#include "undo/undo_manager.h"
 
 
 

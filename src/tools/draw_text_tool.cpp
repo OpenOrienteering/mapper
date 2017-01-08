@@ -31,7 +31,7 @@
 #include "gui/map/map_editor.h"
 #include "gui/map/map_widget.h"
 #include "core/objects/text_object.h"
-#include "object_undo.h"
+#include "undo/object_undo.h"
 #include "core/renderables/renderable.h"
 #include "settings.h"
 #include "core/symbols/symbol.h"

@@ -42,7 +42,7 @@
 #include "fileformats/file_import_export.h"
 #include "gui/map/map_editor.h"
 #include "map_part.h"
-#include "object_undo.h"
+#include "undo/object_undo.h"
 #include "gui/map/map_widget.h"
 #include "core/objects/object.h"
 #include "core/objects/object_operations.h"
@@ -53,7 +53,7 @@
 #include "core/symbols/point_symbol.h"
 #include "core/symbols/text_symbol.h"
 #include "templates/template.h"
-#include "undo_manager.h"
+#include "undo/undo_manager.h"
 #include "util.h"
 
 // ### Misc ###

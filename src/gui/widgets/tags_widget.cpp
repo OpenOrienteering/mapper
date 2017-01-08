@@ -30,7 +30,7 @@
 #include "../main_window.h"
 #include "core/map.h"
 #include "gui/map/map_editor.h"
-#include "../../object_undo.h"
+#include "undo/object_undo.h"
 #include "core/objects/object.h"
 #include "../../util.h"
 

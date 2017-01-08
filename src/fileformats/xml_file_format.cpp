@@ -49,7 +49,7 @@
 #include "core/symbols/point_symbol.h"
 #include "core/symbols/text_symbol.h"
 #include "../templates/template.h"
-#include "../undo_manager.h"
+#include "undo/undo_manager.h"
 #include "../util/xml_stream_util.h"
 
 // ### XMLFileFormat definition ###

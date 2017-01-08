@@ -34,7 +34,7 @@
 #include "core/symbols/symbol.h"
 #include "../templates/template.h"
 #include "../templates/template_image.h"
-#include "../undo_manager.h"
+#include "undo/undo_manager.h"
 #include "../util.h"
 
 

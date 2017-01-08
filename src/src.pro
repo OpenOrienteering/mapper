@@ -47,7 +47,6 @@ HEADERS += \
   sensors/gps_temporary_markers.h \
   sensors/gps_track_recorder.h \
   core/map.h \
-  object_undo.h \
   settings.h \
   core/symbols/area_symbol.h \
   core/symbols/combined_symbol.h \
@@ -86,8 +85,9 @@ HEADERS += \
   tools/rotate_tool.h \
   tools/rotate_pattern_tool.h \
   tools/scale_tool.h \
-  undo_manager.h \
   util_task_dialog.h \
+  undo/undo_manager.h \
+  undo/object_undo.h \
   core/autosave_p.h \
   core/georeferencing.h \
   core/map_printer.h \
@@ -166,12 +166,12 @@ HEADERS += \
   util/memory.h \
   util/scoped_signals_blocker.h \
   core/map_part.h \
-  map_part_undo.h \
   core/objects/object_operations.h \
   core/renderables/renderable.h \
   core/renderables/renderable_implementation.h \
   core/symbols/symbol.h \
-  undo.h \
+  undo/map_part_undo.h \
+  undo/undo.h \
   util_gui.h
 
 SOURCES += \
@@ -197,14 +197,14 @@ SOURCES += \
   util_task_dialog.cpp \
   util_translation.cpp \
   mapper_resource.cpp \
-  undo.cpp \
-  undo_manager.cpp \
   matrix.cpp \
   transformation.cpp \
   settings.cpp \
   touch_cursor.cpp \
-  object_undo.cpp \
-  map_part_undo.cpp \
+  undo/undo.cpp \
+  undo/undo_manager.cpp \
+  undo/object_undo.cpp \
+  undo/map_part_undo.cpp \
   color_dock_widget.cpp \
   core/symbols/symbol.cpp \
   core/symbols/point_symbol.cpp \

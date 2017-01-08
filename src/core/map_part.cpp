@@ -32,7 +32,7 @@
 #include "map.h"
 #include "core/objects/object.h"
 #include "core/objects/object_operations.h"
-#include "object_undo.h"
+#include "undo/object_undo.h"
 #include "core/renderables/renderable.h"
 #include "util.h"
 #include "util/xml_stream_util.h"

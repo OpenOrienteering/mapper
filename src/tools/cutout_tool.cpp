@@ -30,7 +30,7 @@
 #include "core/symbols/combined_symbol.h"
 #include "edit_tool.h"
 #include "util.h"
-#include "object_undo.h"
+#include "undo/object_undo.h"
 #include "boolean_tool.h"
 #include "gui/map/map_editor.h"
 #include "gui/modifier_key.h"

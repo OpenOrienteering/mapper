@@ -27,7 +27,7 @@
 
 #include "core/map.h"
 #include "gui/map/map_widget.h"
-#include "object_undo.h"
+#include "undo/object_undo.h"
 #include "core/objects/object.h"
 #include "settings.h"
 #include "tool_helpers.h"
