@@ -23,9 +23,9 @@
 
 #include <mapper_config.h>
 
-#include "file_format_registry.h"
-#include "file_format_native.h"
-#include "file_format_xml.h"
+#include "fileformats/file_format_registry.h"
+#include "fileformats/native_file_format.h"
+#include "fileformats/xml_file_format.h"
 #include "fileformats/ocd_file_format.h"
 #include "gdal/ogr_file_format.h"
 

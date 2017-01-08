@@ -40,9 +40,9 @@ HEADERS += \
   qmake\mapper_config.h \
   color_dock_widget.h \
   compass.h \
-  file_format_ocad8_p.h \
-  file_format_xml_p.h \
-  file_import_export.h \
+  fileformats/ocad8_file_format_p.h \
+  fileformats/xml_file_format_p.h \
+  fileformats/file_import_export.h \
   gps_display.h \
   gps_temporary_markers.h \
   gps_track_recorder.h \
@@ -266,12 +266,12 @@ SOURCES += \
   gps_track_recorder.cpp \
   dxfparser.cpp \
   compass.cpp \
-  file_format.cpp \
-  file_format_registry.cpp \
-  file_import_export.cpp \
-  file_format_native.cpp \
-  file_format_ocad8.cpp \
-  file_format_xml.cpp \
+  fileformats/file_format.cpp \
+  fileformats/file_format_registry.cpp \
+  fileformats/file_import_export.cpp \
+  fileformats/native_file_format.cpp \
+  fileformats/ocad8_file_format.cpp \
+  fileformats/xml_file_format.cpp \
   fileformats/ocd_file_export.cpp \
   fileformats/ocd_file_format.cpp \
   fileformats/ocd_file_import.cpp \

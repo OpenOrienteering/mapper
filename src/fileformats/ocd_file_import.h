@@ -23,7 +23,7 @@
 #ifndef OPENORIENTEERING_OCD_FILE_IMPORT
 #define OPENORIENTEERING_OCD_FILE_IMPORT
 
-#include "../file_import_export.h"
+#include "file_import_export.h"
 
 #include <cmath>
 
@@ -32,13 +32,13 @@
 
 #include "ocd_types.h"
 #include "ocd_types_v8.h"
-#include "../object.h"
-#include "../object_text.h"
-#include "../symbol.h"
-#include "../symbol_area.h"
-#include "../symbol_line.h"
-#include "../symbol_point.h"
-#include "../symbol_text.h"
+#include "object.h"
+#include "object_text.h"
+#include "symbol.h"
+#include "symbol_area.h"
+#include "symbol_line.h"
+#include "symbol_point.h"
+#include "symbol_text.h"
 
 class Georeferencing;
 class MapColor;

@@ -29,7 +29,7 @@
 #include <QTableWidget>
 #include <QVBoxLayout>
 
-#include "file_format.h"
+#include "fileformats/file_format.h"
 #include "gui/main_window.h"
 #include "gui/widgets/symbol_dropdown.h"
 #include "map.h"

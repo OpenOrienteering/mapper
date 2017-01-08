@@ -24,8 +24,8 @@
 #include <QKeyEvent>
 
 #include "../map_editor.h"
-#include "../file_format.h"
-#include "../file_format_registry.h"
+#include "../fileformats/file_format.h"
+#include "../fileformats/file_format_registry.h"
 
 
 MainWindowController::~MainWindowController()

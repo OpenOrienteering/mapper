@@ -34,8 +34,8 @@
 #include <QSettings>
 #include <QVBoxLayout>
 
-#include "file_format.h"
-#include "file_format_registry.h"
+#include "fileformats/file_format.h"
+#include "fileformats/file_format_registry.h"
 #include "mapper_resource.h"
 #include "util.h"
 

@@ -31,7 +31,7 @@
 
 #include "core/map_color.h"
 #include "core/map_view.h"
-#include "file_import_export.h"
+#include "fileformats/file_import_export.h"
 #include "map.h"
 #include "object.h"
 #include "object_text.h"

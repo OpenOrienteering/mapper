@@ -31,7 +31,7 @@
 #include "core/map_coord.h"
 #include "core/path_coord.h"
 #include "core/virtual_path.h"
-#include "file_format.h"
+#include "fileformats/file_format.h"
 #include "renderable.h"
 #include "symbol.h"
 

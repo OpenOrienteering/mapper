@@ -28,7 +28,7 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
-#include "file_format.h"
+#include "fileformats/file_format.h"
 #include "map.h"
 #include "object.h"
 #include "object_operations.h"

@@ -20,7 +20,7 @@
 #ifndef OPENORIENTEERING_OCD_FILE_FORMAT
 #define OPENORIENTEERING_OCD_FILE_FORMAT
 
-#include "../file_format.h"
+#include "file_format.h"
 
 /**
  * The map file format known as OC*D.

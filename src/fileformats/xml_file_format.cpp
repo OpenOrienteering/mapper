@@ -19,8 +19,8 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "file_format_xml.h"
-#include "file_format_xml_p.h"
+#include "xml_file_format.h"
+#include "xml_file_format_p.h"
 
 #include <QBuffer>
 #include <QDebug>

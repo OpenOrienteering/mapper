@@ -27,7 +27,7 @@
 #include <QXmlStreamWriter>
 
 #include "core/map_coord.h"
-#include "file_format.h"
+#include "fileformats/file_format.h"
 #include "matrix.h"
 #include "template.h"
 #include "util/xml_stream_util.h"

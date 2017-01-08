@@ -27,7 +27,7 @@
 
 #include "latlon.h"
 #include "../core/map_coord.h"
-#include "../file_format.h"
+#include "../fileformats/file_format.h"
 
 class QDebug;
 class QXmlStreamReader;

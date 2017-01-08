@@ -18,8 +18,8 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "file_format_ocad8.h"
-#include "file_format_ocad8_p.h"
+#include "ocad8_file_format.h"
+#include "ocad8_file_format_p.h"
 
 #include <qmath.h>
 #include <QDateTime>
@@ -33,7 +33,7 @@
 #include "core/map_color.h"
 #include "core/map_coord.h"
 #include "core/map_view.h"
-#include "file_format_xml.h"
+#include "xml_file_format.h"
 #include "file_import_export.h"
 #include "map.h"
 #include "map_part.h"

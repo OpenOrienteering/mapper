@@ -65,7 +65,7 @@
 #include "gui/widgets/template_list_widget.h"
 #include "color_dock_widget.h"
 #include "compass.h"
-#include "file_format_registry.h"
+#include "fileformats/file_format_registry.h"
 #include "map.h"
 #include "map_dialog_rotate.h"
 #include "map_dialog_scale.h"

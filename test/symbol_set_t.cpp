@@ -22,7 +22,7 @@
 #include "../src/core/map_color.h"
 #include "../src/core/map_printer.h"
 #include "../src/core/map_view.h"
-#include "../src/file_format_xml_p.h"
+#include "../src/fileformats/xml_file_format_p.h"
 #include "../src/map.h"
 #include "../src/symbol_area.h"
 #include "../src/settings.h"

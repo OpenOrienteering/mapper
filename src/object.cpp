@@ -34,7 +34,7 @@
 #include <private/qbezier_p.h>
 
 #include "util.h"
-#include "file_import_export.h"
+#include "fileformats/file_import_export.h"
 #include "symbol.h"
 #include "symbol_point.h"
 #include "symbol_line.h"

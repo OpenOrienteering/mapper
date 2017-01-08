@@ -19,7 +19,7 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "file_format_native.h"
+#include "native_file_format.h"
 
 #include <QFile>
 #include <QScopedValueRollback>

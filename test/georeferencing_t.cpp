@@ -22,7 +22,7 @@
 #include <proj_api.h>
 
 #include "../src/core/crs_template.h"
-#include "../src/file_format_xml.h"
+#include "../src/fileformats/xml_file_format.h"
 
 
 int XMLFileFormat::active_version = 6;

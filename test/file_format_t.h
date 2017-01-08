@@ -24,7 +24,7 @@
 #include <QtTest/QtTest>
 
 #include "../src/map.h"
-#include "../src/file_format.h"
+#include "../src/fileformats/file_format.h"
 
 
 /**

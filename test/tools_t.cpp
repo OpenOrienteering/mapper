@@ -23,7 +23,7 @@
 
 #include "../src/core/georeferencing.h"
 #include "../src/core/map_color.h"
-#include "../src/file_format.h"
+#include "../src/fileformats/file_format.h"
 #include "../src/global.h"
 #include "../src/map_editor.h"
 #include "../src/core/map_grid.h"

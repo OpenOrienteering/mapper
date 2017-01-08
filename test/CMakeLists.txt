@@ -135,7 +135,7 @@ add_unit_test(georeferencing_t ../src/core/georeferencing
 	../src/core/crs_template_implementation
 	../src/gui/widgets/crs_param_widgets
 	../src/mapper_resource
-	../src/file_format
+	../src/fileformats/file_format
 )
 add_unit_test(locale_t ../src/util_translation ../src/mapper_resource)
 add_unit_test(map_color_t ../src/core/map_color)

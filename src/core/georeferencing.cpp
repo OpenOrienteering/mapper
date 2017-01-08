@@ -35,8 +35,8 @@
 #include <proj_api.h>
 
 #include "crs_template.h"
-#include "../file_format.h"
-#include "../file_format_xml.h"
+#include "../fileformats/file_format.h"
+#include "../fileformats/xml_file_format.h"
 #include "../mapper_resource.h"
 #include "../util_gui.h"
 #include "../util/xml_stream_util.h"

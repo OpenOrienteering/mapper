@@ -35,7 +35,7 @@
 #include "global.h"
 #include "core/map_coord.h"
 #include "core/map_grid.h"
-#include "file_format.h"
+#include "fileformats/file_format.h"
 #include "map_part.h"
 
 QT_BEGIN_NAMESPACE
