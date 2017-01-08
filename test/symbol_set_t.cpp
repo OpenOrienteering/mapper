@@ -26,7 +26,7 @@
 #include "../src/map.h"
 #include "../src/symbol_area.h"
 #include "../src/settings.h"
-#include "../src/template.h"
+#include "../src/templates/template.h"
 #include "../src/undo_manager.h"
 
 

@@ -32,7 +32,7 @@
 #include <mapper_config.h> // TODO: Replace APP_NAME by runtime function to remove this dependency
 
 #include "dxfparser.h"
-#include "template_track.h"
+#include "templates/template_track.h"
 
 
 namespace

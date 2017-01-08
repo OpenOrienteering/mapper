@@ -37,7 +37,7 @@
 #include "map.h"
 #include "map_editor_activity.h"
 #include "settings.h"
-#include "template.h"
+#include "templates/template.h"
 #include "tool.h"
 #include "object.h"
 #include "tool_edit.h"

@@ -28,7 +28,7 @@
 
 #include "core/georeferencing.h"
 #include "map.h"
-#include "template.h"
+#include "templates/template.h"
 #include "util_gui.h"
 
 ScaleMapDialog::ScaleMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), map(map)

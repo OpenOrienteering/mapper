@@ -21,7 +21,7 @@
 #include "gps_track_recorder.h"
 
 #include "gps_display.h"
-#include "template_track.h"
+#include "templates/template_track.h"
 #include "map.h"
 #include "map_widget.h"
 

@@ -30,12 +30,12 @@
 #include "core/map_printer.h"
 #include "core/map_view.h"
 #include "file_import_export.h"
-#include "map.h"
-#include "symbol.h"
-#include "template.h"
-#include "template_image.h"
-#include "undo_manager.h"
-#include "util.h"
+#include "../map.h"
+#include "../symbol.h"
+#include "../templates/template.h"
+#include "../templates/template_image.h"
+#include "../undo_manager.h"
+#include "../util.h"
 
 
 // ### NativeFileImport declaration ###

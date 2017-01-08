@@ -52,7 +52,7 @@
 #include "symbol_line.h"
 #include "symbol_point.h"
 #include "symbol_text.h"
-#include "template.h"
+#include "templates/template.h"
 #include "undo_manager.h"
 #include "util.h"
 

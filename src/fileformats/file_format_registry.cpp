@@ -22,10 +22,10 @@
 
 #include <QFileInfo>
 
-#include "map.h"
-#include "symbol.h"
-#include "template.h"
-#include "object.h"
+#include "../map.h"
+#include "../symbol.h"
+#include "../templates/template.h"
+#include "../object.h"
 
 
 FileFormatRegistry FileFormats;

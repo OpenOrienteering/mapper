@@ -55,7 +55,7 @@
 #include "../map_editor.h"
 #include "../map_widget.h"
 #include "../settings.h"
-#include "../template.h"
+#include "../templates/template.h"
 #include "../util.h"
 #include "../util_gui.h"
 #include "../util/backports.h"

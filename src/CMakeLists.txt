@@ -92,15 +92,15 @@ set(Mapper_Common_SRCS
  object_query.cpp
  object_text.cpp
 
- template.cpp
- template_image.cpp
- template_track.cpp
- template_map.cpp
- template_dialog_reopen.cpp
- template_position_dock_widget.cpp
- template_adjust.cpp
- template_tool_move.cpp
- template_tool_paint.cpp
+ templates/template.cpp
+ templates/template_image.cpp
+ templates/template_track.cpp
+ templates/template_map.cpp
+ templates/template_dialog_reopen.cpp
+ templates/template_position_dock_widget.cpp
+ templates/template_adjust.cpp
+ templates/template_tool_move.cpp
+ templates/template_tool_paint.cpp
 
  tool.cpp
  tool_base.cpp
@@ -224,15 +224,15 @@ set(Mapper_Common_MOC_INPUT
  symbol_properties_widget.h
  symbol_setting_dialog.h
  symbol_text.h
- template.h
- template_adjust.h
- template_dialog_reopen.h
- template_track.h
- template_image.h
- template_map.h
- template_position_dock_widget.h
- template_tool_move.h
- template_tool_paint.h
+ templates/template.h
+ templates/template_adjust.h
+ templates/template_dialog_reopen.h
+ templates/template_track.h
+ templates/template_image.h
+ templates/template_map.h
+ templates/template_position_dock_widget.h
+ templates/template_tool_move.h
+ templates/template_tool_paint.h
  tool.h
  tool_base.h
  tool_cut.h

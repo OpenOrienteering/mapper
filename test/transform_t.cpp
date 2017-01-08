@@ -24,7 +24,7 @@
 #include <QTransform>
 
 #include "../src/transformation.h"
-#include "../src/template.h"
+#include "../src/templates/template.h"
 
 
 TransformTest::TransformTest(QObject* parent)

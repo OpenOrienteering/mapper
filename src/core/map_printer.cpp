@@ -46,7 +46,7 @@
 #include "../map.h"
 #include "../renderable.h"
 #include "../settings.h"
-#include "../template.h"
+#include "../templates/template.h"
 #include "../util.h"
 #include "../util/xml_stream_util.h"
 

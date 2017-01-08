@@ -32,7 +32,7 @@
 #include "../src/object.h"
 #include "../src/symbol.h"
 #include "../src/symbol_line.h"
-#include "../src/template.h"
+#include "../src/templates/template.h"
 #include "../src/tool_edit_point.h"
 
 #include "../src/gui/main_window.h"
