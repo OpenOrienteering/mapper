@@ -118,13 +118,13 @@ set(Mapper_Common_SRCS
  tools/boolean_tool.cpp
  tools/fill_tool.cpp
 
- gps_track.cpp
- gps_display.cpp
- gps_temporary_markers.cpp
- gps_track_recorder.cpp
+ sensors/gps_track.cpp
+ sensors/gps_display.cpp
+ sensors/gps_temporary_markers.cpp
+ sensors/gps_track_recorder.cpp
  dxfparser.cpp
- 
- compass.cpp
+
+ sensors/compass.cpp
 
  fileformats/file_format.cpp
  fileformats/file_format_registry.cpp
@@ -201,13 +201,13 @@ set(Mapper_Common_SRCS
 
 set(Mapper_Common_MOC_INPUT
  color_dock_widget.h
- compass.h
+ sensors/compass.h
  fileformats/ocad8_file_format_p.h
  fileformats/xml_file_format_p.h
  fileformats/file_import_export.h
- gps_display.h
- gps_temporary_markers.h
- gps_track_recorder.h
+ sensors/gps_display.h
+ sensors/gps_temporary_markers.h
+ sensors/gps_track_recorder.h
  core/map.h
  object_undo.h
  settings.h

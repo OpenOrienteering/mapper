@@ -35,7 +35,7 @@
 #include "core/symbols/point_symbol.h"
 #include "tool_helpers.h"
 #include "util.h"
-#include "gps_display.h"
+#include "sensors/gps_display.h"
 #include "gui/map/map_editor.h"
 
 

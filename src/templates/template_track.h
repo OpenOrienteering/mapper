@@ -25,7 +25,7 @@
 
 #include <QDialog>
 
-#include "gps_track.h"
+#include "sensors/gps_track.h"
 
 QT_BEGIN_NAMESPACE
 class QComboBox;

@@ -44,8 +44,8 @@
 #include "touch_cursor.h"
 #include "util.h"
 #include "util/backports.h"
-#include "gps_display.h"
-#include "gps_temporary_markers.h"
+#include "sensors/gps_display.h"
+#include "sensors/gps_temporary_markers.h"
 #include "gui/widgets/pie_menu.h"
 
 
