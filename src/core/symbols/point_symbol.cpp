@@ -19,7 +19,7 @@
  */
 
 
-#include "symbol_point.h"
+#include "point_symbol.h"
 
 #include <QVBoxLayout>
 #include <QXmlStreamAttributes>
@@ -27,9 +27,9 @@
 #include "core/map_color.h"
 #include "core/map.h"
 #include "core/objects/object.h"
-#include "symbol_setting_dialog.h"
-#include "symbol_properties_widget.h"
-#include "symbol_point_editor.h"
+#include "gui/symbols/symbol_setting_dialog.h"
+#include "gui/symbols/symbol_properties_widget.h"
+#include "gui/symbols/point_symbol_editor_widget.h"
 #include "core/renderables/renderable_implementation.h"
 #include "util.h"
 #include "util_gui.h"

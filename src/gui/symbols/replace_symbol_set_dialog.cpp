@@ -18,7 +18,7 @@
  */
 
 
-#include "symbol_dialog_replace.h"
+#include "replace_symbol_set_dialog.h"
 
 #include <QCheckBox>
 #include <QDialogButtonBox>

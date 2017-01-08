@@ -26,7 +26,7 @@
 #include <QFormLayout>
 
 #include "core/map.h"
-#include "symbol_point.h"
+#include "core/symbols/point_symbol.h"
 #include "core/objects/object.h"
 #include "object_undo.h"
 #include "util.h"

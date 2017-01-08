@@ -27,7 +27,7 @@
 #include <QDebug>
 
 #include "core/map.h"
-#include "symbol.h"
+#include "core/symbols/symbol.h"
 #include "core/objects/object.h"
 #include "object_undo.h"
 #include "util.h"

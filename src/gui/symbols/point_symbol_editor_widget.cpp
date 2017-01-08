@@ -19,7 +19,7 @@
  */
 
 
-#include "symbol_point_editor.h"
+#include "point_symbol_editor_widget.h"
 
 #include <QGridLayout>
 #include <QHeaderView>
@@ -35,9 +35,9 @@
 #include "gui/map/map_editor.h"
 #include "gui/map/map_widget.h"
 #include "core/objects/object.h"
-#include "symbol_point.h"
-#include "symbol_line.h"
-#include "symbol_area.h"
+#include "core/symbols/point_symbol.h"
+#include "core/symbols/line_symbol.h"
+#include "core/symbols/area_symbol.h"
 #include "util.h"
 #include "util_gui.h"
 #include "gui/modifier_key.h"

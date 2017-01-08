@@ -29,7 +29,7 @@
 #include <QScopedValueRollback>
 
 #include "util.h"
-#include "symbol.h"
+#include "core/symbols/symbol.h"
 #include "core/objects/object.h"
 #include "core/objects/text_object.h"
 #include "core/map.h"
@@ -37,8 +37,8 @@
 #include "object_undo.h"
 #include "draw_text_tool.h"
 #include "tool_helpers.h"
-#include "symbol_line.h"
-#include "symbol_text.h"
+#include "core/symbols/line_symbol.h"
+#include "core/symbols/text_symbol.h"
 #include "core/renderables/renderable.h"
 #include "settings.h"
 #include "gui/map/map_editor.h"

@@ -27,7 +27,7 @@
 #include "core/map.h"
 #include "gui/map/map_widget.h"
 #include "settings.h"
-#include "symbol_combined.h"
+#include "core/symbols/combined_symbol.h"
 #include "edit_tool.h"
 #include "util.h"
 #include "object_undo.h"

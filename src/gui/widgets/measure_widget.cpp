@@ -26,9 +26,9 @@
 
 #include "core/map.h"
 #include "core/objects/object.h"
-#include "../../symbol.h"
-#include "../../symbol_area.h"
-#include "../../symbol_line.h"
+#include "core/symbols/symbol.h"
+#include "core/symbols/area_symbol.h"
+#include "core/symbols/line_symbol.h"
 
 
 MeasureWidget::MeasureWidget(Map* map, QWidget* parent)

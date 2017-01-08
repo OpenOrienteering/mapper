@@ -19,7 +19,7 @@
  */
 
 
-#include "symbol_line.h"
+#include "line_symbol.h"
 
 #include <QtNumeric>
 #include <QGridLayout>
@@ -36,10 +36,10 @@
 #include "core/map.h"
 #include "core/objects/object.h"
 #include "core/renderables/renderable_implementation.h"
-#include "symbol_area.h"
-#include "symbol_point.h"
-#include "symbol_point_editor.h"
-#include "symbol_setting_dialog.h"
+#include "area_symbol.h"
+#include "point_symbol.h"
+#include "gui/symbols/point_symbol_editor_widget.h"
+#include "gui/symbols/symbol_setting_dialog.h"
 #include "util.h"
 #include "util_gui.h"
 #include "gui/widgets/color_dropdown.h"

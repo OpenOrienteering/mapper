@@ -29,10 +29,10 @@
 #include "gui/map/map_widget.h"
 #include "core/objects/object.h"
 #include "core/renderables/renderable.h"
-#include "symbol.h"
-#include "symbol_combined.h"
-#include "symbol_line.h"
-#include "symbol_point.h"
+#include "core/symbols/symbol.h"
+#include "core/symbols/combined_symbol.h"
+#include "core/symbols/line_symbol.h"
+#include "core/symbols/point_symbol.h"
 #include "util.h"
 
 DrawLineAndAreaTool::DrawLineAndAreaTool(MapEditorController* editor, Type type, QAction* tool_action, bool is_helper_tool)

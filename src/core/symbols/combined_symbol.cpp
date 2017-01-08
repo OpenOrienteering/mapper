@@ -19,7 +19,7 @@
  */
 
 
-#include "symbol_combined.h"
+#include "combined_symbol.h"
 
 #include <QDebug>
 #include <QDialogButtonBox>
@@ -38,8 +38,8 @@
 #include "gui/widgets/symbol_dropdown.h"
 #include "core/map.h"
 #include "core/objects/object.h"
-#include "symbol_setting_dialog.h"
-#include "symbol_properties_widget.h"
+#include "gui/symbols/symbol_setting_dialog.h"
+#include "gui/symbols/symbol_properties_widget.h"
 
 CombinedSymbol::CombinedSymbol() : Symbol(Symbol::Combined)
 {

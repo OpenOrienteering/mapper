@@ -23,7 +23,7 @@
 
 #include <QTabWidget>
 
-#include "symbol.h"
+#include "core/symbols/symbol.h"
 
 class QLineEdit;
 class QTextEdit;

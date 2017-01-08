@@ -24,7 +24,7 @@
 #include "../src/core/map_view.h"
 #include "../src/fileformats/xml_file_format_p.h"
 #include "core/map.h"
-#include "../src/symbol_area.h"
+#include "core/symbols/area_symbol.h"
 #include "../src/settings.h"
 #include "../src/templates/template.h"
 #include "../src/undo_manager.h"

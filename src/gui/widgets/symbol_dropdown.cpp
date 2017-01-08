@@ -29,7 +29,7 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
-#include "../../symbol_combined.h"
+#include "core/symbols/combined_symbol.h"
 #include "core/map.h"
 
 // ### SymbolDropDown ###

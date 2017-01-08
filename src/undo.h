@@ -22,7 +22,7 @@
 #ifndef _OPENORIENTEERING_UNDO_H_
 #define _OPENORIENTEERING_UNDO_H_
 
-#include "symbol.h" // provides SymbolDictionary typedef
+#include "core/symbols/symbol.h"
 
 #include <set>
 #include <vector>

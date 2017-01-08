@@ -71,16 +71,12 @@ set(Mapper_Common_SRCS
 
  color_dock_widget.cpp
 
- symbol.cpp
- symbol_dialog_replace.cpp
- symbol_setting_dialog.cpp
- symbol_properties_widget.cpp
- symbol_point_editor.cpp
- symbol_point.cpp
- symbol_line.cpp
- symbol_area.cpp
- symbol_text.cpp
- symbol_combined.cpp
+ core/symbols/symbol.cpp
+ core/symbols/point_symbol.cpp
+ core/symbols/line_symbol.cpp
+ core/symbols/area_symbol.cpp
+ core/symbols/text_symbol.cpp
+ core/symbols/combined_symbol.cpp
  core/renderables/renderable.cpp
  core/renderables/renderable_implementation.cpp
  core/objects/object.cpp
@@ -164,6 +160,11 @@ set(Mapper_Common_SRCS
  gui/map/map_dialog_new.cpp
  gui/map/map_dialog_scale.cpp
  gui/map/map_dialog_rotate.cpp
+
+ gui/symbols/replace_symbol_set_dialog.cpp
+ gui/symbols/symbol_setting_dialog.cpp
+ gui/symbols/symbol_properties_widget.cpp
+ gui/symbols/point_symbol_editor_widget.cpp
  
  gui/widgets/action_grid_bar.cpp
  gui/widgets/color_dropdown.cpp
@@ -210,15 +211,11 @@ set(Mapper_Common_MOC_INPUT
  core/map.h
  object_undo.h
  settings.h
- symbol_area.h
- symbol_combined.h
- symbol_dialog_replace.h
- symbol_line.h
- symbol_point.h
- symbol_point_editor.h
- symbol_properties_widget.h
- symbol_setting_dialog.h
- symbol_text.h
+ core/symbols/area_symbol.h
+ core/symbols/combined_symbol.h
+ core/symbols/line_symbol.h
+ core/symbols/point_symbol.h
+ core/symbols/text_symbol.h
  templates/template.h
  templates/template_adjust.h
  templates/template_dialog_reopen.h
@@ -284,6 +281,11 @@ set(Mapper_Common_MOC_INPUT
  gui/map/map_editor_p.h
  gui/map/map_editor_activity.h
  gui/map/map_widget.h
+
+ gui/symbols/replace_symbol_set_dialog.h
+ gui/symbols/point_symbol_editor_widget.h
+ gui/symbols/symbol_properties_widget.h
+ gui/symbols/symbol_setting_dialog.h
  
  gui/widgets/action_grid_bar.h
  gui/widgets/color_dropdown.h
@@ -346,7 +348,7 @@ set(Mapper_Common_HEADERS
   core/objects/object_operations.h
   core/renderables/renderable.h
   core/renderables/renderable_implementation.h
-  symbol.h
+  core/symbols/symbol.h
   undo.h
   util_gui.h
 )

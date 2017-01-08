@@ -35,10 +35,10 @@
 #include "../core/georeferencing.h"
 #include "../core/map.h"
 #include "../core/objects/text_object.h"
-#include "../symbol_area.h"
-#include "../symbol_line.h"
-#include "../symbol_point.h"
-#include "../symbol_text.h"
+#include "../core/symbols/area_symbol.h"
+#include "../core/symbols/line_symbol.h"
+#include "../core/symbols/point_symbol.h"
+#include "../core/symbols/text_symbol.h"
 
 
 namespace ogr

@@ -30,8 +30,8 @@
 #include "gui/map/map_widget.h"
 #include "../src/mapper_resource.h"
 #include "core/objects/object.h"
-#include "../src/symbol.h"
-#include "../src/symbol_line.h"
+#include "core/symbols/symbol.h"
+#include "core/symbols/line_symbol.h"
 #include "../src/templates/template.h"
 #include "tools/edit_point_tool.h"
 

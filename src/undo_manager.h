@@ -26,7 +26,7 @@
 
 #include <deque>
 
-#include "symbol.h"
+#include "core/symbols/symbol.h"
 #include "undo.h"
 
 QT_BEGIN_NAMESPACE

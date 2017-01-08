@@ -26,7 +26,7 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
-#include "symbol.h"
+#include "core/symbols/symbol.h"
 
 /** Map exporter for the xml based map format. */
 class XMLFileExporter : public Exporter

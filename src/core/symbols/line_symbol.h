@@ -24,7 +24,7 @@
 
 #include "core/objects/object.h"
 #include "symbol.h"
-#include "symbol_properties_widget.h"
+#include "gui/symbols/symbol_properties_widget.h"
 
 QT_BEGIN_NAMESPACE
 class QCheckBox;

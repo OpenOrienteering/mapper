@@ -19,7 +19,7 @@
  */
 
 
-#include "symbol_text.h"
+#include "text_symbol.h"
 
 #include <QComboBox>
 #include <QDialogButtonBox>
@@ -39,9 +39,9 @@
 #include "core/map.h"
 #include "core/objects/text_object.h"
 #include "core/renderables/renderable_implementation.h"
-#include "symbol_area.h"
-#include "symbol_line.h"
-#include "symbol_setting_dialog.h"
+#include "area_symbol.h"
+#include "line_symbol.h"
+#include "gui/symbols/symbol_setting_dialog.h"
 #include "util.h"
 #include "util_gui.h"
 #include "gui/widgets/color_dropdown.h"

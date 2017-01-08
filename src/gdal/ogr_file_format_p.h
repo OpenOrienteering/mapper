@@ -31,7 +31,7 @@
 
 #include "../core/map_coord.h"
 #include "../fileformats/file_import_export.h"
-#include "../symbol.h"
+#include "../core/symbols/symbol.h"
 
 class AreaSymbol;
 class LineSymbol;

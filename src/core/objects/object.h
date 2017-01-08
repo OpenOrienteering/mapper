@@ -33,7 +33,7 @@
 #include "core/virtual_path.h"
 #include "fileformats/file_format.h"
 #include "core/renderables/renderable.h"
-#include "symbol.h"
+#include "core/symbols/symbol.h"
 
 QT_BEGIN_NAMESPACE
 class QIODevice;

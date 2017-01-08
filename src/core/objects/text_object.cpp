@@ -23,8 +23,8 @@
 
 #include <qmath.h>
 
-#include "symbol.h"
-#include "symbol_text.h"
+#include "core/symbols/symbol.h"
+#include "core/symbols/text_symbol.h"
 #include "settings.h"
 
 // ### TextObjectPartInfo ###

@@ -32,7 +32,7 @@
 #include "settings.h"
 #include "tool_helpers.h"
 #include "core/objects/text_object.h"
-#include "symbol_text.h"
+#include "core/symbols/text_symbol.h"
 #include "util.h"
 
 class SymbolWidget;

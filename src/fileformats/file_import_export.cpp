@@ -24,11 +24,11 @@
 #include <QFileInfo>
 
 #include "core/map.h"
-#include "../symbol.h"
+#include "core/symbols/symbol.h"
 #include "../templates/template.h"
 #include "core/objects/object.h"
-#include "../symbol_line.h"
-#include "../symbol_point.h"
+#include "core/symbols/line_symbol.h"
+#include "core/symbols/point_symbol.h"
 
 
 // ### ImportExport ###

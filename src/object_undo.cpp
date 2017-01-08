@@ -27,7 +27,7 @@
 
 #include "core/map.h"
 #include "core/objects/object.h"
-#include "symbol.h"
+#include "core/symbols/symbol.h"
 #include "util/xml_stream_util.h"
 
 namespace literal

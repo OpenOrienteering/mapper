@@ -21,7 +21,7 @@
 #ifndef _OPENORIENTEERING_OBJECT_OPERATIONS_H_
 #define _OPENORIENTEERING_OBJECT_OPERATIONS_H_
 
-#include "symbol.h"
+#include "core/symbols/symbol.h"
 #include "object.h"
 #include "core/map.h"
 

@@ -31,7 +31,7 @@
 #include "core/map_view.h"
 #include "file_import_export.h"
 #include "core/map.h"
-#include "../symbol.h"
+#include "core/symbols/symbol.h"
 #include "../templates/template.h"
 #include "../templates/template_image.h"
 #include "../undo_manager.h"

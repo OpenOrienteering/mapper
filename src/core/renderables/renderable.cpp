@@ -27,7 +27,7 @@
 #include "core/map_color.h"
 #include "core/map.h"
 #include "core/objects/object.h"
-#include "symbol.h"
+#include "core/symbols/symbol.h"
 #include "util.h"
 
 #if defined(Q_OS_ANDROID) && defined(QT_PRINTSUPPORT_LIB)

@@ -27,7 +27,7 @@
 #include <QGroupBox>
 #include <QDialog>
 
-#include "symbol_properties_widget.h"
+#include "gui/symbols/symbol_properties_widget.h"
 
 QT_BEGIN_NAMESPACE
 class QCheckBox;
