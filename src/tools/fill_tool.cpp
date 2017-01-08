@@ -27,9 +27,9 @@
 #include <QLabel>
 #include <QPainter>
 
-#include "map_editor.h"
-#include "map_widget.h"
-#include "object.h"
+#include "gui/map/map_editor.h"
+#include "gui/map/map_widget.h"
+#include "core/objects/object.h"
 #include "tool_helpers.h"
 #include "object_undo.h"
 

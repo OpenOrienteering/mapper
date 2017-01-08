@@ -24,7 +24,7 @@
 #include <QWidget>
 #include <QDockWidget>
 
-#include "map_editor_activity.h"
+#include "gui/map/map_editor_activity.h"
 #include "template.h"
 #include "tools/tool.h"
 

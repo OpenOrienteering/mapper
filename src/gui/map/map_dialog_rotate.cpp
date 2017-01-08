@@ -27,7 +27,7 @@
 #include <QRadioButton>
 
 #include "core/georeferencing.h"
-#include "map.h"
+#include "core/map.h"
 #include "templates/template.h"
 #include "util_gui.h"
 

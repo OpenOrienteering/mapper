@@ -23,9 +23,9 @@
 #include <qmath.h>
 
 #include "core/map_color.h"
-#include "map.h"
-#include "object.h"
-#include "object_text.h"
+#include "core/map.h"
+#include "core/objects/object.h"
+#include "core/objects/text_object.h"
 #include "settings.h"
 #include "symbol_area.h"
 #include "symbol_line.h"

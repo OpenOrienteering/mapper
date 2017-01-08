@@ -26,7 +26,7 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
-#include "map.h"
+#include "core/map.h"
 #include "object_undo.h"
 #include "map_part_undo.h"
 #include "util/xml_stream_util.h"

@@ -32,9 +32,9 @@
 #include <QTableWidget>
 #include <QToolButton>
 
-#include "map_editor.h"
-#include "map_widget.h"
-#include "object.h"
+#include "gui/map/map_editor.h"
+#include "gui/map/map_widget.h"
+#include "core/objects/object.h"
 #include "symbol_point.h"
 #include "symbol_line.h"
 #include "symbol_area.h"

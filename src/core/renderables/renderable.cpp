@@ -25,8 +25,8 @@
 
 #include "core/image_transparency_fixup.h"
 #include "core/map_color.h"
-#include "map.h"
-#include "object.h"
+#include "core/map.h"
+#include "core/objects/object.h"
 #include "symbol.h"
 #include "util.h"
 

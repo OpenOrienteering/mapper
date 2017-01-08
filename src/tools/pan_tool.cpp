@@ -21,7 +21,7 @@
 
 #include "pan_tool.h"
 
-#include "map_widget.h"
+#include "gui/map/map_widget.h"
 
 PanTool::PanTool(MapEditorController* editor, QAction* tool_button)
  : MapEditorToolBase(QCursor(Qt::OpenHandCursor), Pan, editor, tool_button)

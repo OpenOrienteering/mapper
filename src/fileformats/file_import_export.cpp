@@ -23,10 +23,10 @@
 
 #include <QFileInfo>
 
-#include "../map.h"
+#include "core/map.h"
 #include "../symbol.h"
 #include "../templates/template.h"
-#include "../object.h"
+#include "core/objects/object.h"
 #include "../symbol_line.h"
 #include "../symbol_point.h"
 

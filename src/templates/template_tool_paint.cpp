@@ -29,10 +29,10 @@
 #include <QSettings>
 #include <QVBoxLayout>
 
-#include "map_widget.h"
+#include "gui/map/map_widget.h"
 #include "template.h"
 #include "util.h"
-#include "map_editor.h"
+#include "gui/map/map_editor.h"
 
 
 // ### PaintOnTemplateTool ###

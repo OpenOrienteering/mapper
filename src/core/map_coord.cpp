@@ -27,7 +27,7 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
-#include "../util/xml_stream_util.h"
+#include "util/xml_stream_util.h"
 
 
 static_assert(sizeof(qint32) <= sizeof(int), 

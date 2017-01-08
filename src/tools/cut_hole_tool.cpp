@@ -25,10 +25,10 @@
 #include <QMouseEvent>
 #include <QMessageBox>
 
-#include "map.h"
+#include "core/map.h"
 #include "object_undo.h"
-#include "map_widget.h"
-#include "object.h"
+#include "gui/map/map_widget.h"
+#include "core/objects/object.h"
 #include "symbol.h"
 #include "symbol_combined.h"
 #include "boolean_tool.h"

@@ -30,7 +30,7 @@
 #include <QWidget>
 
 #include "core/map_view.h"
-#include "map.h"
+#include "core/map.h"
 
 QT_BEGIN_NAMESPACE
 class QGestureEvent;

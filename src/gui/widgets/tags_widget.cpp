@@ -28,10 +28,10 @@
 #include <QVBoxLayout>
 
 #include "../main_window.h"
-#include "../../map.h"
-#include "../../map_editor.h"
+#include "core/map.h"
+#include "gui/map/map_editor.h"
 #include "../../object_undo.h"
-#include "../../object.h"
+#include "core/objects/object.h"
 #include "../../util.h"
 
 

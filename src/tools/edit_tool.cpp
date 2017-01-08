@@ -25,13 +25,13 @@
 #include <qmath.h>
 #include <QPainter>
 
-#include "map.h"
-#include "map_widget.h"
+#include "core/map.h"
+#include "gui/map/map_widget.h"
 #include "object_undo.h"
-#include "object.h"
+#include "core/objects/object.h"
 #include "settings.h"
 #include "tool_helpers.h"
-#include "object_text.h"
+#include "core/objects/text_object.h"
 #include "symbol_text.h"
 #include "util.h"
 

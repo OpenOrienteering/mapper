@@ -23,7 +23,7 @@
 
 #include "symbol.h"
 #include "object.h"
-#include "map.h"
+#include "core/map.h"
 
 /**
  * Object conditions and processors,

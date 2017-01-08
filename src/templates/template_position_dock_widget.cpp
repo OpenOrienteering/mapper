@@ -28,7 +28,7 @@
 #include <QLineEdit>
 
 #include "gui/main_window.h"
-#include "map_editor.h"
+#include "gui/map/map_editor.h"
 #include "template.h"
 #include "util.h"
 

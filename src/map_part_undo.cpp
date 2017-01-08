@@ -21,8 +21,8 @@
 
 #include <vector>
 
-#include "map.h"
-#include "map_part.h"
+#include "core/map.h"
+#include "core/map_part.h"
 #include "util/xml_stream_util.h"
 
 namespace literal

@@ -34,9 +34,9 @@
 #include <QResizeEvent>
 #include <QScopedValueRollback>
 
-#include "../../core/map_color.h"
-#include "../../map.h"
-#include "../../object.h"
+#include "core/map_color.h"
+#include "core/map.h"
+#include "core/objects/object.h"
 #include "../../settings.h"
 #include "../../symbol.h"
 #include "../../symbol_area.h"

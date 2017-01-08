@@ -28,7 +28,7 @@
 #include <QRectF>
 #include <QTransform>
 
-#include "../core/map_coord.h"
+#include "map_coord.h"
 
 class Map;
 class Template;

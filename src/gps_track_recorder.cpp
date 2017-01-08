@@ -22,8 +22,8 @@
 
 #include "gps_display.h"
 #include "templates/template_track.h"
-#include "map.h"
-#include "map_widget.h"
+#include "core/map.h"
+#include "gui/map/map_widget.h"
 
 
 GPSTrackRecorder::GPSTrackRecorder(GPSDisplay* gps_display, TemplateTrack* target_template, int draw_update_interval_milliseconds, MapWidget* widget)

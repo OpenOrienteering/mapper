@@ -23,16 +23,16 @@
 
 #include <QKeyEvent>
 
-#include "object.h"
-#include "map.h"
-#include "map_widget.h"
+#include "core/objects/object.h"
+#include "core/map.h"
+#include "gui/map/map_widget.h"
 #include "settings.h"
 #include "symbol_combined.h"
 #include "edit_tool.h"
 #include "util.h"
 #include "object_undo.h"
 #include "boolean_tool.h"
-#include "map_editor.h"
+#include "gui/map/map_editor.h"
 #include "gui/modifier_key.h"
 
 CutoutTool::CutoutTool(MapEditorController* editor, QAction* tool_button, bool cut_away)

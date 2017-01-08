@@ -26,7 +26,7 @@
 #include <QTransform>
 
 #include "latlon.h"
-#include "../core/map_coord.h"
+#include "map_coord.h"
 #include "../fileformats/file_format.h"
 
 class QDebug;

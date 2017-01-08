@@ -32,8 +32,8 @@
 #include "fileformats/file_format.h"
 #include "gui/main_window.h"
 #include "gui/widgets/symbol_dropdown.h"
-#include "map.h"
-#include "object.h"
+#include "core/map.h"
+#include "core/objects/object.h"
 #include "undo_manager.h"
 #include "util.h"
 

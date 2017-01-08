@@ -23,7 +23,7 @@
 
 #include <QMouseEvent>
 
-#include "map.h"
+#include "core/map.h"
 #include "template.h"
 
 TemplateMoveTool::TemplateMoveTool(Template* templ, MapEditorController* editor, QAction* action) : MapEditorTool(editor, Other, action), templ(templ)

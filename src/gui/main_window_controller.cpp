@@ -23,7 +23,7 @@
 
 #include <QKeyEvent>
 
-#include "../map_editor.h"
+#include "gui/map/map_editor.h"
 #include "../fileformats/file_format.h"
 #include "../fileformats/file_format_registry.h"
 

@@ -28,8 +28,8 @@
 #include <QRadioButton>
 #include <QSettings>
 
-#include "../core/map_color.h"
-#include "../map.h"
+#include "core/map_color.h"
+#include "core/map.h"
 #include "../util.h"
 #include "../util_gui.h"
 #include "widgets/color_dropdown.h"

@@ -24,7 +24,7 @@
 #include <QTextCodec>
 #include <QTextStream>
 
-#include "../core/map_coord.h"
+#include "core/map_coord.h"
 #include "../fileformats/xml_file_format.h"
 #include "../fileformats/file_import_export.h"
 

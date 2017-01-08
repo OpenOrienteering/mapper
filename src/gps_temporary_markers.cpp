@@ -23,7 +23,7 @@
 
 #include <QPainter>
 
-#include "map_widget.h"
+#include "gui/map/map_widget.h"
 #include "gps_display.h"
 #include "tools/tool.h"
 #include "util.h"

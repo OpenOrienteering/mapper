@@ -25,7 +25,7 @@
 #include "tool_base.h"
 
 #include "edit_tool.h"
-#include "object.h"
+#include "core/objects/object.h"
 
 class DrawPathTool;
 

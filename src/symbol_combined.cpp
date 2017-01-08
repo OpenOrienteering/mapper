@@ -36,8 +36,8 @@
 
 #include "core/map_color.h"
 #include "gui/widgets/symbol_dropdown.h"
-#include "map.h"
-#include "object.h"
+#include "core/map.h"
+#include "core/objects/object.h"
 #include "symbol_setting_dialog.h"
 #include "symbol_properties_widget.h"
 

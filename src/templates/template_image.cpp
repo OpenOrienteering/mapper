@@ -37,7 +37,7 @@
 #include "core/georeferencing.h"
 #include "gui/georeferencing_dialog.h"
 #include "gui/select_crs_dialog.h"
-#include "map.h"
+#include "core/map.h"
 #include "util.h"
 
 const std::vector<QByteArray>& TemplateImage::supportedExtensions()

@@ -20,7 +20,7 @@
 
 #include "path_object_t.h"
 
-#include "../src/map.h"
+#include "core/map.h"
 #include "../src/symbol_line.h"
 
 class DummyPathObject : public PathObject

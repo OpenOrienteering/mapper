@@ -33,7 +33,7 @@
 
 #include "core/georeferencing.h"
 #include "compass.h"
-#include "map_widget.h"
+#include "gui/map/map_widget.h"
 #include "util.h"
 #include "util/backports.h"
 

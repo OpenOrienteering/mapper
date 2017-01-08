@@ -23,7 +23,7 @@
 
 #include <QtTest/QtTest>
 
-#include "../src/object.h"
+#include "core/objects/object.h"
 
 
 /**

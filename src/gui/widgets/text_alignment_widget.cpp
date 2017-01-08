@@ -27,7 +27,7 @@
 #include <QPushButton>
 #include <QSignalMapper>
 
-#include "../../object_text.h"
+#include "core/objects/text_object.h"
 #include "../../tools/text_object_editor_helper.h"
 
 

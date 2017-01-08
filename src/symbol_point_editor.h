@@ -24,7 +24,7 @@
 #include <QWidget>
 
 #include "tools/tool.h"
-#include "map_editor_activity.h"
+#include "gui/map/map_editor_activity.h"
 
 class QCheckBox;
 class QComboBox;

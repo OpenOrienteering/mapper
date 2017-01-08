@@ -31,11 +31,11 @@
 
 #include "segmented_button_layout.h"
 #include "../main_window.h"
-#include "../../map.h"
-#include "../../map_editor.h"
-#include "../../map_part.h"
-#include "../../object.h"
-#include "../../object_query.h"
+#include "core/map.h"
+#include "gui/map/map_editor.h"
+#include "core/map_part.h"
+#include "core/objects/object.h"
+#include "core/objects/object_query.h"
 #include "tools/tool.h"
 #include "../../util.h"
 

@@ -27,12 +27,12 @@
 #include <QPainter>
 
 #include "gui/modifier_key.h"
-#include "map.h"
-#include "map_editor.h"
-#include "map_widget.h"
-#include "object_text.h"
+#include "core/map.h"
+#include "gui/map/map_editor.h"
+#include "gui/map/map_widget.h"
+#include "core/objects/text_object.h"
 #include "object_undo.h"
-#include "renderable.h"
+#include "core/renderables/renderable.h"
 #include "settings.h"
 #include "symbol.h"
 #include "symbol_text.h"

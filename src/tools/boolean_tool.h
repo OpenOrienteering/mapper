@@ -27,7 +27,7 @@
 #include <QHash>
 
 #include <clipper.hpp>
-#include "object.h"
+#include "core/objects/object.h"
 
 class CombinedUndoStep;
 class PathCoord;

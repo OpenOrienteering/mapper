@@ -26,10 +26,10 @@
 #include <QMouseEvent>
 #include <QPainter>
 
-#include "map.h"
-#include "map_widget.h"
+#include "core/map.h"
+#include "gui/map/map_widget.h"
 #include "object_undo.h"
-#include "renderable.h"
+#include "core/renderables/renderable.h"
 #include "settings.h"
 #include "symbol.h"
 #include "symbol_combined.h"

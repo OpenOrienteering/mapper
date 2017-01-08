@@ -24,10 +24,10 @@
 #include <qmath.h>
 #include <QPainter>
 
-#include "map.h"
-#include "map_widget.h"
-#include "object.h"
-#include "renderable.h"
+#include "core/map.h"
+#include "gui/map/map_widget.h"
+#include "core/objects/object.h"
+#include "core/renderables/renderable.h"
 #include "util.h"
 
 

@@ -27,7 +27,7 @@
 #include <QLabel>
 #include <QPushButton>
 
-#include "map.h"
+#include "core/map.h"
 #include "template.h"
 #include "util_gui.h"
 

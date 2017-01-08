@@ -25,12 +25,12 @@
 #include <QMouseEvent>
 #include <QPainter>
 
-#include "map.h"
-#include "map_editor.h"
+#include "core/map.h"
+#include "gui/map/map_editor.h"
 #include "object_undo.h"
-#include "map_widget.h"
-#include "object.h"
-#include "renderable.h"
+#include "gui/map/map_widget.h"
+#include "core/objects/object.h"
+#include "core/renderables/renderable.h"
 #include "settings.h"
 #include "symbol.h"
 #include "symbol_line.h"
@@ -38,7 +38,7 @@
 #include "util.h"
 #include "gui/modifier_key.h"
 #include "gui/widgets/key_button_bar.h"
-#include "map_editor.h"
+#include "gui/map/map_editor.h"
 
 
 DrawPathTool::DrawPathTool(MapEditorController* editor, QAction* tool_button, bool is_helper_tool, bool allow_closing_paths)

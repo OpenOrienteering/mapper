@@ -32,8 +32,8 @@
 
 #include "ocd_types.h"
 #include "ocd_types_v8.h"
-#include "object.h"
-#include "object_text.h"
+#include "core/objects/object.h"
+#include "core/objects/text_object.h"
 #include "symbol.h"
 #include "symbol_area.h"
 #include "symbol_line.h"

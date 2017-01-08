@@ -22,7 +22,7 @@
 #ifndef _OPENORIENTEERING_SYMBOL_LINE_H_
 #define _OPENORIENTEERING_SYMBOL_LINE_H_
 
-#include "object.h"
+#include "core/objects/object.h"
 #include "symbol.h"
 #include "symbol_properties_widget.h"
 

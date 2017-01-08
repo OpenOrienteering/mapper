@@ -26,7 +26,7 @@
 #include <QPainter>
 #include <QScreen>
 
-#include "map_widget.h"
+#include "gui/map/map_widget.h"
 #include "util.h"
 
 

@@ -19,8 +19,8 @@
 
 #include "map_t.h"
 
-#include "../src/map.h"
-#include "../src/core/map_color.h"
+#include "core/map.h"
+#include "core/map_color.h"
 #include "../src/core/map_printer.h"
 #include "../src/core/map_view.h"
 

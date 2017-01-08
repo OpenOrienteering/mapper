@@ -28,12 +28,12 @@
 #include <QTimer>
 
 #include "gui/main_window.h"
-#include "map.h"
-#include "map_editor.h"
+#include "core/map.h"
+#include "gui/map/map_editor.h"
 #include "object_undo.h"
-#include "map_widget.h"
-#include "object.h"
-#include "object_text.h"
+#include "gui/map/map_widget.h"
+#include "core/objects/object.h"
+#include "core/objects/text_object.h"
 #include "settings.h"
 #include "tool_helpers.h"
 #include "util.h"

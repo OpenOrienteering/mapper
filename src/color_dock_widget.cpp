@@ -30,7 +30,7 @@
 #include <QToolButton>
 
 #include "core/map_color.h"
-#include "map.h"
+#include "core/map.h"
 #include "util.h"
 #include "util_gui.h"
 #include "util/item_delegates.h"

@@ -46,15 +46,8 @@ HEADERS += \
   gps_display.h \
   gps_temporary_markers.h \
   gps_track_recorder.h \
-  map.h \
-  map_dialog_new.h \
-  map_dialog_scale.h \
-  map_dialog_rotate.h \
-  map_editor.h \
-  map_editor_p.h \
-  map_editor_activity.h \
+  core/map.h \
   object_undo.h \
-  map_widget.h \
   settings.h \
   symbol_area.h \
   symbol_combined.h \
@@ -119,6 +112,13 @@ HEADERS += \
   gui/select_crs_dialog.h \
   gui/settings_dialog.h \
   gui/text_browser_dialog.h \
+  gui/map/map_dialog_new.h \
+  gui/map/map_dialog_scale.h \
+  gui/map/map_dialog_rotate.h \
+  gui/map/map_editor.h \
+  gui/map/map_editor_p.h \
+  gui/map/map_editor_activity.h \
+  gui/map/map_widget.h \
   gui/widgets/action_grid_bar.h \
   gui/widgets/color_dropdown.h \
   gui/widgets/compass_display.h \
@@ -165,11 +165,11 @@ HEADERS += \
   util/backports.h \
   util/memory.h \
   util/scoped_signals_blocker.h \
-  map_part.h \
+  core/map_part.h \
   map_part_undo.h \
-  object_operations.h \
-  renderable.h \
-  renderable_implementation.h \
+  core/objects/object_operations.h \
+  core/renderables/renderable.h \
+  core/renderables/renderable_implementation.h \
   symbol.h \
   undo.h \
   util_gui.h
@@ -181,6 +181,8 @@ SOURCES += \
   core/crs_template_implementation.cpp \
   core/georeferencing.cpp \
   core/latlon.cpp \
+  core/map.cpp \
+  core/map_part.cpp \
   core/map_color.cpp \
   core/map_coord.cpp \
   core/map_grid.cpp \
@@ -200,17 +202,9 @@ SOURCES += \
   matrix.cpp \
   transformation.cpp \
   settings.cpp \
-  map.cpp \
-  map_part.cpp \
-  map_part_undo.cpp \
-  map_widget.cpp \
   touch_cursor.cpp \
-  map_editor.cpp \
-  map_editor_activity.cpp \
   object_undo.cpp \
-  map_dialog_new.cpp \
-  map_dialog_scale.cpp \
-  map_dialog_rotate.cpp \
+  map_part_undo.cpp \
   color_dock_widget.cpp \
   symbol.cpp \
   symbol_dialog_replace.cpp \
@@ -222,11 +216,11 @@ SOURCES += \
   symbol_area.cpp \
   symbol_text.cpp \
   symbol_combined.cpp \
-  renderable.cpp \
-  renderable_implementation.cpp \
-  object.cpp \
-  object_query.cpp \
-  object_text.cpp \
+  core/renderables/renderable.cpp \
+  core/renderables/renderable_implementation.cpp \
+  core/objects/object.cpp \
+  core/objects/object_query.cpp \
+  core/objects/text_object.cpp \
   templates/template.cpp \
   templates/template_image.cpp \
   templates/template_track.cpp \
@@ -292,6 +286,12 @@ SOURCES += \
   gui/select_crs_dialog.cpp \
   gui/settings_dialog.cpp \
   gui/text_browser_dialog.cpp \
+  gui/map/map_widget.cpp \
+  gui/map/map_editor.cpp \
+  gui/map/map_editor_activity.cpp \
+  gui/map/map_dialog_new.cpp \
+  gui/map/map_dialog_scale.cpp \
+  gui/map/map_dialog_rotate.cpp \
   gui/widgets/action_grid_bar.cpp \
   gui/widgets/color_dropdown.cpp \
   gui/widgets/compass_display.cpp \

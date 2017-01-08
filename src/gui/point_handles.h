@@ -24,7 +24,7 @@
 #include <QImage>
 #include <QPointF>
 
-#include "../core/map_coord.h"
+#include "core/map_coord.h"
 
 class MapWidget;
 class Object;

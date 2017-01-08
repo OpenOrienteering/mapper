@@ -22,7 +22,7 @@
 
 #include <QtTest/QtTest>
 
-#include "../src/core/map_color.h"
+#include "core/map_color.h"
 
 
 /**

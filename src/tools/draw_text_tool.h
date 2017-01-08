@@ -26,7 +26,7 @@
 
 #include <memory>
 
-#include "renderable.h"
+#include "core/renderables/renderable.h"
 
 
 class TextObject;

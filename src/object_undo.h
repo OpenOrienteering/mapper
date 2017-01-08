@@ -24,7 +24,7 @@
 
 #include <map>
 
-#include "object.h"
+#include "core/objects/object.h"
 #include "symbol.h"
 #include "undo.h"
 

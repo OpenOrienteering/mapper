@@ -24,7 +24,7 @@
 
 #include <QPainter>
 
-#include "object.h"
+#include "core/objects/object.h"
 #include "renderable.h"
 
 class QPainterPath;

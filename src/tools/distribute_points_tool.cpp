@@ -25,9 +25,9 @@
 #include <QDialogButtonBox>
 #include <QFormLayout>
 
-#include "map.h"
+#include "core/map.h"
 #include "symbol_point.h"
-#include "object.h"
+#include "core/objects/object.h"
 #include "object_undo.h"
 #include "util.h"
 #include "util_gui.h"

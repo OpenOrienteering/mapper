@@ -33,8 +33,8 @@
 #include <QString>
 
 #include "global.h"
-#include "core/map_coord.h"
-#include "core/map_grid.h"
+#include "map_coord.h"
+#include "map_grid.h"
 #include "fileformats/file_format.h"
 #include "map_part.h"
 

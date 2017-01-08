@@ -28,13 +28,13 @@
 #include <QPainter>
 
 #include "util.h"
-#include "object.h"
-#include "map_widget.h"
+#include "core/objects/object.h"
+#include "gui/map/map_widget.h"
 #include "settings.h"
 #include "tool_helpers.h"
 #include "gui/modifier_key.h"
 #include "gui/widgets/key_button_bar.h"
-#include "map_editor.h"
+#include "gui/map/map_editor.h"
 
 class SymbolWidget;
 

@@ -19,7 +19,7 @@
  */
 
 
-#include "object_text.h"
+#include "text_object.h"
 
 #include <qmath.h>
 

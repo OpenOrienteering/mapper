@@ -24,8 +24,8 @@
 #include <QPainter>
 
 #include "core/georeferencing.h"
-#include "map_widget.h"
-#include "renderable.h"
+#include "gui/map/map_widget.h"
+#include "core/renderables/renderable.h"
 #include "settings.h"
 #include "util.h"
 

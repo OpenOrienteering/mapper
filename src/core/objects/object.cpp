@@ -39,9 +39,9 @@
 #include "symbol_point.h"
 #include "symbol_line.h"
 #include "symbol_text.h"
-#include "map.h"
-#include "object_text.h"
-#include "renderable.h"
+#include "core/map.h"
+#include "text_object.h"
+#include "core/renderables/renderable.h"
 #include "settings.h"
 #include "util/xml_stream_util.h"
 

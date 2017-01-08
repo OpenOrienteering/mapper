@@ -35,8 +35,8 @@
 #include <QVBoxLayout>
 
 #include "gui/main_window.h"
-#include "map_editor.h"
-#include "map_widget.h"
+#include "gui/map/map_editor.h"
+#include "gui/map/map_widget.h"
 #include "template.h"
 #include "transformation.h"
 #include "util.h"

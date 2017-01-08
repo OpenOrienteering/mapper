@@ -25,8 +25,8 @@
 
 #include <QIODevice>
 
-#include "map.h"
-#include "object.h"
+#include "core/map.h"
+#include "core/objects/object.h"
 #include "symbol.h"
 #include "util/xml_stream_util.h"
 

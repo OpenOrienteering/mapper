@@ -32,7 +32,7 @@
 #include "core/path_coord.h"
 #include "core/virtual_path.h"
 #include "fileformats/file_format.h"
-#include "renderable.h"
+#include "core/renderables/renderable.h"
 #include "symbol.h"
 
 QT_BEGIN_NAMESPACE

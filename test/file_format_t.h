@@ -23,7 +23,7 @@
 
 #include <QtTest/QtTest>
 
-#include "../src/map.h"
+#include "core/map.h"
 #include "../src/fileformats/file_format.h"
 
 

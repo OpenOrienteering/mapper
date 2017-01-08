@@ -30,7 +30,7 @@
 #include <QTimer>
 
 #include "gui/main_window_controller.h"
-#include "map.h"
+#include "core/map.h"
 
 QT_BEGIN_NAMESPACE
 class QComboBox;

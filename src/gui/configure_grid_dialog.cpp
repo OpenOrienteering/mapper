@@ -37,7 +37,7 @@
 #include <QXmlStreamWriter>
 
 #include "../core/georeferencing.h"
-#include "../map.h"
+#include "core/map.h"
 #include "../util.h"
 #include "../util_gui.h"
 

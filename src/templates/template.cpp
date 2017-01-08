@@ -32,7 +32,7 @@
 #include <QXmlStreamWriter>
 
 #include "core/map_view.h"
-#include "map.h"
+#include "core/map.h"
 #include "template_image.h"
 #include "template_map.h"
 #include "template_track.h"

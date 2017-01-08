@@ -33,9 +33,9 @@
 #include <private/qbezier_p.h>
 
 #include "core/map_color.h"
-#include "map.h"
-#include "object.h"
-#include "renderable_implementation.h"
+#include "core/map.h"
+#include "core/objects/object.h"
+#include "core/renderables/renderable_implementation.h"
 #include "symbol_area.h"
 #include "symbol_point.h"
 #include "symbol_point_editor.h"

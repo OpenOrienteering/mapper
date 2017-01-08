@@ -36,9 +36,9 @@
 #include <QXmlStreamWriter>
 
 #include "core/map_color.h"
-#include "map.h"
-#include "object_text.h"
-#include "renderable_implementation.h"
+#include "core/map.h"
+#include "core/objects/text_object.h"
+#include "core/renderables/renderable_implementation.h"
 #include "symbol_area.h"
 #include "symbol_line.h"
 #include "symbol_setting_dialog.h"

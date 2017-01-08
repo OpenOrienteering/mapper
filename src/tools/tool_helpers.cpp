@@ -24,8 +24,8 @@
 #include <QPainter>
 
 #include "core/map_grid.h"
-#include "map_widget.h"
-#include "object.h"
+#include "gui/map/map_widget.h"
+#include "core/objects/object.h"
 #include "settings.h"
 #include "draw_text_tool.h"
 #include "util.h"

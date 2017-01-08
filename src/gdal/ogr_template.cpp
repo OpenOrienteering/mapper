@@ -24,8 +24,8 @@
 
 #include "gdal_manager.h"
 #include "ogr_file_format_p.h"
-#include "../map.h"
-#include "../object.h"
+#include "../core/map.h"
+#include "../core/objects/object.h"
 
 
 const std::vector<QByteArray>& OgrTemplate::supportedExtensions()

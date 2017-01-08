@@ -24,13 +24,13 @@
 #include <QKeyEvent>
 #include <QMouseEvent>
 
-#include "map.h"
-#include "object.h"
+#include "core/map.h"
+#include "core/objects/object.h"
 #include "settings.h"
 #include "util.h"
 #include "gui/modifier_key.h"
 #include "gui/widgets/key_button_bar.h"
-#include "map_editor.h"
+#include "gui/map/map_editor.h"
 
 
 DrawCircleTool::DrawCircleTool(MapEditorController* editor, QAction* tool_button, bool is_helper_tool)
