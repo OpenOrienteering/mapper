@@ -2845,7 +2845,7 @@ Vil du tilpasse symbolemene til den valgte målestokken?</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="152"/>
         <source>You must close the current file before you can open another one.</source>
-        <translation type="unfinished"></translation>
+        <translation>Du må lukke gjeldende fil før du kan åpne en ny.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="719"/>
