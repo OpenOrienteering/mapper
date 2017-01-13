@@ -43,7 +43,7 @@
 #include "../main_window.h"
 #include "../settings_dialog.h"
 #include "../../core/storage_location.h"
-#include "../../file_format_registry.h"
+#include "../../fileformats/file_format_registry.h"
 #include "../../mapper_resource.h"
 
 

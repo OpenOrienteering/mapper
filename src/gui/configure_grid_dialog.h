@@ -24,7 +24,7 @@
 
 #include <QDialog>
 
-#include "../core/map_grid.h"
+#include "core/map_grid.h"
 
 QT_BEGIN_NAMESPACE
 class QCheckBox;

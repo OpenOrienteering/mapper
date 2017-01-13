@@ -41,13 +41,13 @@
 #endif
 
 #include "../core/georeferencing.h"
-#include "../core/map_color.h"
+#include "map_color.h"
 #include "../core/map_view.h"
-#include "../map.h"
-#include "../renderable.h"
+#include "map.h"
+#include "core/renderables/renderable.h"
 #include "../settings.h"
-#include "../template.h"
-#include "../util.h"
+#include "../templates/template.h"
+#include "util/util.h"
 #include "../util/xml_stream_util.h"
 
 

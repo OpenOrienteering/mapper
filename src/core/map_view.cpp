@@ -23,9 +23,9 @@
 
 #include <QRectF>
 
-#include "../map.h"
-#include "../template.h"
-#include "../util.h"
+#include "map.h"
+#include "../templates/template.h"
+#include "util/util.h"
 #include "../util/xml_stream_util.h"
 
 

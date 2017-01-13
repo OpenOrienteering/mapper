@@ -20,7 +20,7 @@
 #include "undo_manager_t.h"
 
 
-#include "../src/undo_manager.h"
+#include "undo/undo_manager.h"
 
 
 // test

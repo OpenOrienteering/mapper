@@ -20,7 +20,7 @@
 
 #include "util_t.h"
 
-#include "../src/util.h"
+#include "util/util.h"
 
 
 UtilTest::UtilTest(QObject* parent)

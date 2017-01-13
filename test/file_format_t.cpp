@@ -21,18 +21,18 @@
 #include "file_format_t.h"
 
 #include "../src/core/georeferencing.h"
-#include "../src/core/map_color.h"
-#include "../src/core/map_grid.h"
+#include "core/map_color.h"
+#include "core/map_grid.h"
 #include "../src/core/map_printer.h"
-#include "../src/file_import_export.h"
-#include "../src/file_format_ocad8.h"
-#include "../src/file_format_registry.h"
+#include "../src/fileformats/file_import_export.h"
+#include "../src/fileformats/ocad8_file_format.h"
+#include "../src/fileformats/file_format_registry.h"
 #include "../src/global.h"
 #include "../src/mapper_resource.h"
-#include "../src/object.h"
+#include "core/objects/object.h"
 #include "../src/settings.h"
-#include "../src/template.h"
-#include "../src/undo_manager.h"
+#include "../src/templates/template.h"
+#include "undo/undo_manager.h"
 
 
 

@@ -30,8 +30,8 @@
 #include <ogr_srs_api.h>
 
 #include "../core/map_coord.h"
-#include "../file_import_export.h"
-#include "../symbol.h"
+#include "../fileformats/file_import_export.h"
+#include "../core/symbols/symbol.h"
 
 class AreaSymbol;
 class LineSymbol;

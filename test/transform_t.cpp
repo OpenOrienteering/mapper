@@ -23,8 +23,8 @@
 #include <QtTest/QtTest>
 #include <QTransform>
 
-#include "../src/transformation.h"
-#include "../src/template.h"
+#include "util/transformation.h"
+#include "../src/templates/template.h"
 
 
 TransformTest::TransformTest(QObject* parent)

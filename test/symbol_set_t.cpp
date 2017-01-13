@@ -19,15 +19,15 @@
 
 #include "symbol_set_t.h"
 
-#include "../src/core/map_color.h"
+#include "core/map_color.h"
 #include "../src/core/map_printer.h"
 #include "../src/core/map_view.h"
-#include "../src/file_format_xml_p.h"
-#include "../src/map.h"
-#include "../src/symbol_area.h"
+#include "../src/fileformats/xml_file_format_p.h"
+#include "core/map.h"
+#include "core/symbols/area_symbol.h"
 #include "../src/settings.h"
-#include "../src/template.h"
-#include "../src/undo_manager.h"
+#include "../src/templates/template.h"
+#include "undo/undo_manager.h"
 
 
 /**

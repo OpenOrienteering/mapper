@@ -29,7 +29,7 @@
 #include "georeferencing.h"
 #include "../gui/widgets/crs_param_widgets.h"
 #include "../gui/georeferencing_dialog.h"
-#include "../util_gui.h"
+#include "gui/util_gui.h"
 #include "../util/memory.h"
 #include "../util/scoped_signals_blocker.h"
 

@@ -14,8 +14,8 @@ LIBS *= -lpolyclipping -lqtsingleapplication -locd
 win32: LIBS *= -lproj-9
 else:  LIBS *= -lproj
 
-DEPENDPATH  += qmake
-INCLUDEPATH += qmake
+DEPENDPATH  += qmake "$$PWD"
+INCLUDEPATH += qmake "$$PWD"
 
 QT += core gui widgets printsupport network xml
 android: QT += core-private gui-private
@@ -110,6 +110,6 @@ android {
   
   # Remove legacy code
   DEFINES += NO_NATIVE_FILE_FORMAT
-  HEADERS -= file_format_native.h
-  SOURCES -= file_format_native.cpp
+  HEADERS -= fileformats/native_file_format.h
+  SOURCES -= fileformats/native_file_format.cpp
 }

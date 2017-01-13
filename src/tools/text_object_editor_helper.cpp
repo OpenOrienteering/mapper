@@ -28,10 +28,10 @@
 #include <QPainter>
 #include <QTimer>
 
-#include "../map_editor.h"
-#include "../map_widget.h"
-#include "../object_text.h"
-#include "../util.h"
+#include "gui/map/map_editor.h"
+#include "gui/map/map_widget.h"
+#include "core/objects/text_object.h"
+#include "util/util.h"
 #include "../gui/main_window.h"
 #include "../gui/widgets/text_alignment_widget.h"
 

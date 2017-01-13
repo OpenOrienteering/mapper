@@ -28,11 +28,11 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
-#include "georeferencing.h"
-#include "../map.h"
-#include "../core/map_coord.h"
-#include "../util.h"
-#include "../util/xml_stream_util.h"
+#include "core/georeferencing.h"
+#include "map.h"
+#include "map_coord.h"
+#include "util/util.h"
+#include "util/xml_stream_util.h"
 
 struct ProcessLine
 {

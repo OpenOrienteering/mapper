@@ -28,7 +28,7 @@
 #include <QVBoxLayout>
 
 #include "../core/georeferencing.h"
-#include "../util_gui.h"
+#include "util_gui.h"
 #include "widgets/crs_selector.h"
 
 

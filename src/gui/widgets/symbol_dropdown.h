@@ -25,7 +25,7 @@
 #include <QComboBox>
 #include <QItemDelegate>
 
-#include "../../symbol.h"
+#include "core/symbols/symbol.h"
 
 
 /**

@@ -31,7 +31,7 @@
 #include <QDebug>
 #include <QMenu>
 
-#include "../../util.h"
+#include "util/util.h"
 #include "../../settings.h"
 
 ActionGridBar::ActionGridBar(Direction direction, int rows, QWidget* parent)

@@ -34,7 +34,7 @@
 #include <QToolBar>
 #include <QVBoxLayout>
 
-#include "../util.h"
+#include "util/util.h"
 #include "../util/backports.h"
 
 #include "main_window.h"

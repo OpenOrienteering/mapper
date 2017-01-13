@@ -31,7 +31,7 @@ execute_process(
   COMMAND "${CMAKE_COMMAND}" -E copy_if_different mapper_config.h.tmp mapper_config.h
   WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
 )
-include_directories("${CMAKE_CURRENT_BINARY_DIR}")
+include_directories("${CMAKE_CURRENT_BINARY_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}")
 include_directories(AFTER "../3rd-party/qbezier/src") # Always, last
 
 set(Mapper_Common_SRCS
@@ -40,6 +40,8 @@ set(Mapper_Common_SRCS
   core/crs_template_implementation.cpp
   core/georeferencing.cpp
   core/latlon.cpp
+  core/map.cpp
+  core/map_part.cpp
   core/map_color.cpp
   core/map_coord.cpp
   core/map_grid.cpp
@@ -51,97 +53,81 @@ set(Mapper_Common_SRCS
   core/virtual_coord_vector.cpp
  
  global.cpp
- util.cpp
- util_task_dialog.cpp
- util_translation.cpp
+ util/util.cpp
+ util/translation_util.cpp
  mapper_resource.cpp
- undo.cpp
- undo_manager.cpp
- matrix.cpp
- transformation.cpp
+ util/matrix.cpp
+ util/transformation.cpp
 
  settings.cpp
 
- map.cpp
- map_part.cpp
- map_part_undo.cpp
- map_widget.cpp
- touch_cursor.cpp
- map_editor.cpp
- map_editor_activity.cpp
- object_undo.cpp
- map_dialog_new.cpp
- map_dialog_scale.cpp
- map_dialog_rotate.cpp
+ undo/undo.cpp
+ undo/undo_manager.cpp
+ undo/object_undo.cpp
+ undo/map_part_undo.cpp
 
- color_dock_widget.cpp
+ core/symbols/symbol.cpp
+ core/symbols/point_symbol.cpp
+ core/symbols/line_symbol.cpp
+ core/symbols/area_symbol.cpp
+ core/symbols/text_symbol.cpp
+ core/symbols/combined_symbol.cpp
+ core/renderables/renderable.cpp
+ core/renderables/renderable_implementation.cpp
+ core/objects/object.cpp
+ core/objects/object_query.cpp
+ core/objects/text_object.cpp
 
- symbol.cpp
- symbol_dialog_replace.cpp
- symbol_setting_dialog.cpp
- symbol_properties_widget.cpp
- symbol_point_editor.cpp
- symbol_point.cpp
- symbol_line.cpp
- symbol_area.cpp
- symbol_text.cpp
- symbol_combined.cpp
- renderable.cpp
- renderable_implementation.cpp
- object.cpp
- object_query.cpp
- object_text.cpp
+ templates/template.cpp
+ templates/template_image.cpp
+ templates/template_track.cpp
+ templates/template_map.cpp
+ templates/template_dialog_reopen.cpp
+ templates/template_position_dock_widget.cpp
+ templates/template_adjust.cpp
+ templates/template_tool_move.cpp
+ templates/template_tool_paint.cpp
 
- template.cpp
- template_image.cpp
- template_track.cpp
- template_map.cpp
- template_dialog_reopen.cpp
- template_position_dock_widget.cpp
- template_adjust.cpp
- template_tool_move.cpp
- template_tool_paint.cpp
+ tools/tool.cpp
+ tools/tool_base.cpp
+ tools/tool_helpers.cpp
+ tools/pan_tool.cpp
+ tools/edit_tool.cpp
+ tools/edit_point_tool.cpp
+ tools/edit_line_tool.cpp
+ tools/distribute_points_tool.cpp
+ tools/draw_line_and_area_tool.cpp
+ tools/draw_point_tool.cpp
+ tools/draw_point_gps_tool.cpp
+ tools/draw_path_tool.cpp
+ tools/draw_circle_tool.cpp
+ tools/draw_rectangle_tool.cpp
+ tools/draw_freehand_tool.cpp
+ tools/draw_text_tool.cpp
+ tools/cut_tool.cpp
+ tools/cut_hole_tool.cpp
+ tools/cutout_tool.cpp
+ tools/rotate_tool.cpp
+ tools/rotate_pattern_tool.cpp
+ tools/scale_tool.cpp
+ tools/boolean_tool.cpp
+ tools/fill_tool.cpp
 
- tool.cpp
- tool_base.cpp
- tool_helpers.cpp
- tool_pan.cpp
- tool_edit.cpp
- tool_edit_point.cpp
- tool_edit_line.cpp
- tool_distribute_points.cpp
- tool_draw_line_and_area.cpp
- tool_draw_point.cpp
- tool_draw_point_gps.cpp
- tool_draw_path.cpp
- tool_draw_circle.cpp
- tool_draw_rectangle.cpp
- tool_draw_freehand.cpp
- tool_draw_text.cpp
- tool_cut.cpp
- tool_cut_hole.cpp
- tool_cutout.cpp
- tool_rotate.cpp
- tool_rotate_pattern.cpp
- tool_scale.cpp
- tool_boolean.cpp
- tool_fill.cpp
+ sensors/gps_track.cpp
+ sensors/gps_display.cpp
+ sensors/gps_temporary_markers.cpp
+ sensors/gps_track_recorder.cpp
 
- gps_track.cpp
- gps_display.cpp
- gps_temporary_markers.cpp
- gps_track_recorder.cpp
- dxfparser.cpp
- 
- compass.cpp
+ util/dxfparser.cpp
 
- file_format.cpp
- file_format_registry.cpp
- file_import_export.cpp
- file_format_native.cpp
- file_format_ocad8.cpp
- file_format_xml.cpp
- 
+ sensors/compass.cpp
+
+ fileformats/file_format.cpp
+ fileformats/file_format_registry.cpp
+ fileformats/file_import_export.cpp
+ fileformats/native_file_format.cpp
+ fileformats/ocad8_file_format.cpp
+ fileformats/xml_file_format.cpp
  fileformats/ocd_file_export.cpp
  fileformats/ocd_file_format.cpp
  fileformats/ocd_file_import.cpp
@@ -163,6 +149,21 @@ set(Mapper_Common_SRCS
  gui/select_crs_dialog.cpp
  gui/settings_dialog.cpp
  gui/text_browser_dialog.cpp
+ gui/task_dialog.cpp
+ gui/color_dock_widget.cpp
+ gui/touch_cursor.cpp
+
+ gui/map/map_widget.cpp
+ gui/map/map_editor.cpp
+ gui/map/map_editor_activity.cpp
+ gui/map/map_dialog_new.cpp
+ gui/map/map_dialog_scale.cpp
+ gui/map/map_dialog_rotate.cpp
+
+ gui/symbols/replace_symbol_set_dialog.cpp
+ gui/symbols/symbol_setting_dialog.cpp
+ gui/symbols/symbol_properties_widget.cpp
+ gui/symbols/point_symbol_editor_widget.cpp
  
  gui/widgets/action_grid_bar.cpp
  gui/widgets/color_dropdown.cpp
@@ -198,67 +199,55 @@ set(Mapper_Common_SRCS
 )
 
 set(Mapper_Common_MOC_INPUT
- color_dock_widget.h
- compass.h
- file_format_ocad8_p.h
- file_format_xml_p.h
- file_import_export.h
- gps_display.h
- gps_temporary_markers.h
- gps_track_recorder.h
- map.h
- map_dialog_new.h
- map_dialog_scale.h
- map_dialog_rotate.h
- map_editor.h
- map_editor_p.h
- map_editor_activity.h
- object_undo.h
- map_widget.h
+ sensors/compass.h
+ fileformats/ocad8_file_format_p.h
+ fileformats/xml_file_format_p.h
+ fileformats/file_import_export.h
+ sensors/gps_display.h
+ sensors/gps_temporary_markers.h
+ sensors/gps_track_recorder.h
+ core/map.h
  settings.h
- symbol_area.h
- symbol_combined.h
- symbol_dialog_replace.h
- symbol_line.h
- symbol_point.h
- symbol_point_editor.h
- symbol_properties_widget.h
- symbol_setting_dialog.h
- symbol_text.h
- template.h
- template_adjust.h
- template_dialog_reopen.h
- template_track.h
- template_image.h
- template_map.h
- template_position_dock_widget.h
- template_tool_move.h
- template_tool_paint.h
- tool.h
- tool_base.h
- tool_cut.h
- tool_cut_hole.h
- tool_cutout.h
- tool_distribute_points.h
- tool_draw_circle.h
- tool_draw_freehand.h
- tool_draw_line_and_area.h
- tool_draw_path.h
- tool_draw_point.h
- tool_draw_point_gps.h
- tool_draw_rectangle.h
- tool_draw_text.h
- tool_edit.h
- tool_edit_point.h
- tool_edit_line.h
- tool_fill.h
- tool_helpers.h
- tool_pan.h
- tool_rotate.h
- tool_rotate_pattern.h
- tool_scale.h
- undo_manager.h
- util_task_dialog.h
+ core/symbols/area_symbol.h
+ core/symbols/combined_symbol.h
+ core/symbols/line_symbol.h
+ core/symbols/point_symbol.h
+ core/symbols/text_symbol.h
+ templates/template.h
+ templates/template_adjust.h
+ templates/template_dialog_reopen.h
+ templates/template_track.h
+ templates/template_image.h
+ templates/template_map.h
+ templates/template_position_dock_widget.h
+ templates/template_tool_move.h
+ templates/template_tool_paint.h
+ tools/tool.h
+ tools/tool_base.h
+ tools/cut_tool.h
+ tools/cut_hole_tool.h
+ tools/cutout_tool.h
+ tools/distribute_points_tool.h
+ tools/draw_circle_tool.h
+ tools/draw_freehand_tool.h
+ tools/draw_line_and_area_tool.h
+ tools/draw_path_tool.h
+ tools/draw_point_tool.h
+ tools/draw_point_gps_tool.h
+ tools/draw_rectangle_tool.h
+ tools/draw_text_tool.h
+ tools/edit_tool.h
+ tools/edit_point_tool.h
+ tools/edit_line_tool.h
+ tools/fill_tool.h
+ tools/tool_helpers.h
+ tools/pan_tool.h
+ tools/rotate_tool.h
+ tools/rotate_pattern_tool.h
+ tools/scale_tool.h
+
+ undo/undo_manager.h
+ undo/object_undo.h
  
  core/autosave_p.h
  core/georeferencing.h
@@ -282,6 +271,21 @@ set(Mapper_Common_MOC_INPUT
  gui/select_crs_dialog.h
  gui/settings_dialog.h
  gui/text_browser_dialog.h
+ gui/task_dialog.h
+ gui/color_dock_widget.h
+
+ gui/map/map_dialog_new.h
+ gui/map/map_dialog_scale.h
+ gui/map/map_dialog_rotate.h
+ gui/map/map_editor.h
+ gui/map/map_editor_p.h
+ gui/map/map_editor_activity.h
+ gui/map/map_widget.h
+
+ gui/symbols/replace_symbol_set_dialog.h
+ gui/symbols/point_symbol_editor_widget.h
+ gui/symbols/symbol_properties_widget.h
+ gui/symbols/symbol_setting_dialog.h
  
  gui/widgets/action_grid_bar.h
  gui/widgets/color_dropdown.h
@@ -339,14 +343,14 @@ set(Mapper_Common_HEADERS
   util/memory.h
   util/scoped_signals_blocker.h
 
-  map_part.h
-  map_part_undo.h
-  object_operations.h
-  renderable.h
-  renderable_implementation.h
-  symbol.h
-  undo.h
-  util_gui.h
+  core/map_part.h
+  core/objects/object_operations.h
+  core/renderables/renderable.h
+  core/renderables/renderable_implementation.h
+  core/symbols/symbol.h
+  undo/map_part_undo.h
+  undo/undo.h
+  gui/util_gui.h
 )
 
 qt5_wrap_cpp(Mapper_Common_MOC ${Mapper_Common_MOC_INPUT} TARGET Mapper_Common)

@@ -25,9 +25,9 @@
 #include <QCoreApplication>
 #include <QKeyEvent>
 
-#include "../../tool.h"
-#include "../../map_editor.h"
-#include "../../map_widget.h"
+#include "tools/tool.h"
+#include "gui/map/map_editor.h"
+#include "gui/map/map_widget.h"
 
 
 KeyButtonBar::KeyButtonBar(MapEditorTool* tool, MapWidget* map_widget, QWidget* parent)

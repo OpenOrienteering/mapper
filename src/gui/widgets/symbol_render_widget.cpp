@@ -34,17 +34,17 @@
 #include <QResizeEvent>
 #include <QScopedValueRollback>
 
-#include "../../core/map_color.h"
-#include "../../map.h"
-#include "../../object.h"
+#include "core/map_color.h"
+#include "core/map.h"
+#include "core/objects/object.h"
 #include "../../settings.h"
-#include "../../symbol.h"
-#include "../../symbol_area.h"
-#include "../../symbol_combined.h"
-#include "../../symbol_line.h"
-#include "../../symbol_point.h"
-#include "../../symbol_setting_dialog.h"
-#include "../../symbol_text.h"
+#include "core/symbols/symbol.h"
+#include "core/symbols/area_symbol.h"
+#include "core/symbols/combined_symbol.h"
+#include "core/symbols/line_symbol.h"
+#include "core/symbols/point_symbol.h"
+#include "gui/symbols/symbol_setting_dialog.h"
+#include "core/symbols/text_symbol.h"
 #include "../../util/overriding_shortcut.h"
 #include "symbol_tooltip.h"
 

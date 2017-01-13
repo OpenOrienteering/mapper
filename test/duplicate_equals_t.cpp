@@ -20,9 +20,9 @@
 #include "duplicate_equals_t.h"
 
 #include "../src/global.h"
-#include "../src/map.h"
+#include "core/map.h"
 #include "../src/mapper_resource.h"
-#include "../src/object.h"
+#include "core/objects/object.h"
 
 
 void DuplicateEqualsTest::initTestCase()

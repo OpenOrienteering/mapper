@@ -20,7 +20,7 @@
 #ifndef OPENORIENTEERING_OGR_TEMPLATE_H
 #define OPENORIENTEERING_OGR_TEMPLATE_H
 
-#include "../template_map.h"
+#include "../templates/template_map.h"
 
 #include "../core/georeferencing.h"
 

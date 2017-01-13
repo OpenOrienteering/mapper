@@ -28,7 +28,7 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
-#include "../file_format.h"
+#include "fileformats/file_format.h"
 
 
 // Originally defined in map_coord.h, but we want to avoid the depedency.

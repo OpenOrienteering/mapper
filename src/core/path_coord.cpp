@@ -21,9 +21,8 @@
 
 #include "path_coord.h"
 
-#include "../symbol_line.h"
-#include "../util.h"
-
+#include "core/symbols/line_symbol.h"
+#include "util/util.h"
 
 
 // ### PathCoord ###

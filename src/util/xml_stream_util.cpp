@@ -24,9 +24,9 @@
 #include <QTextCodec>
 #include <QTextStream>
 
-#include "../core/map_coord.h"
-#include "../file_format_xml.h"
-#include "../file_import_export.h"
+#include "core/map_coord.h"
+#include "fileformats/xml_file_format.h"
+#include "fileformats/file_import_export.h"
 
 
 //### XmlRecoveryHelper ###

@@ -31,7 +31,7 @@
 #include <QStyleOption>
 #include <QVBoxLayout>
 
-#include "../../symbol.h"
+#include "core/symbols/symbol.h"
 
 
 SymbolToolTip::SymbolToolTip(QWidget* parent, QShortcut* shortcut)

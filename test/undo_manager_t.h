@@ -22,7 +22,7 @@
 
 #include <QtTest/QtTest>
 
-#include "../src/undo_manager.h"
+#include "undo/undo_manager.h"
 
 
 /**

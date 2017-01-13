@@ -21,8 +21,8 @@
 
 #include <QString>
 
-#include "../src/object.h"
-#include "../src/object_query.h"
+#include "core/objects/object.h"
+#include "core/objects/object_query.h"
 
 
 ObjectQueryTest::ObjectQueryTest(QObject* parent)
