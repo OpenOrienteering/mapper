@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016 Kai Pastor
+ *    Copyright 2016-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -25,7 +25,7 @@
 #include <QByteArray>
 #include <QSettings>
 
-#include "../mapper_resource.h"
+#include "mapper_resource.h"
 
 
 

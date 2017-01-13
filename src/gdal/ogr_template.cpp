@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016 Kai Pastor
+ *    Copyright 2016-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -24,8 +24,8 @@
 
 #include "gdal_manager.h"
 #include "ogr_file_format_p.h"
-#include "../core/map.h"
-#include "../core/objects/object.h"
+#include "core/map.h"
+#include "core/objects/object.h"
 
 
 const std::vector<QByteArray>& OgrTemplate::supportedExtensions()

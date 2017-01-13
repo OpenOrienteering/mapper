@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016 Kai Pastor
+ *    Copyright 2016-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -32,13 +32,13 @@
 #include <QtMath>
 
 #include "gdal_manager.h"
-#include "../core/georeferencing.h"
-#include "../core/map.h"
-#include "../core/objects/text_object.h"
-#include "../core/symbols/area_symbol.h"
-#include "../core/symbols/line_symbol.h"
-#include "../core/symbols/point_symbol.h"
-#include "../core/symbols/text_symbol.h"
+#include "core/georeferencing.h"
+#include "core/map.h"
+#include "core/objects/text_object.h"
+#include "core/symbols/area_symbol.h"
+#include "core/symbols/line_symbol.h"
+#include "core/symbols/point_symbol.h"
+#include "core/symbols/text_symbol.h"
 
 
 namespace ogr

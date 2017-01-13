@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016 Kai Pastor
+ *    Copyright 2016-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -29,9 +29,9 @@
 #include <ogr_api.h>
 #include <ogr_srs_api.h>
 
-#include "../core/map_coord.h"
-#include "../fileformats/file_import_export.h"
-#include "../core/symbols/symbol.h"
+#include "core/map_coord.h"
+#include "fileformats/file_import_export.h"
+#include "core/symbols/symbol.h"
 
 class AreaSymbol;
 class LineSymbol;

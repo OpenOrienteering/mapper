@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016 Kai Pastor
+ *    Copyright 2016-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,7 +20,7 @@
 #ifndef OPENORIENTEERING_OGR_FILE_FORMAT_H
 #define OPENORIENTEERING_OGR_FILE_FORMAT_H
 
-#include "../fileformats/file_format.h"
+#include "fileformats/file_format.h"
 
 /**
  * A FileFormat for geospatial vector data supported by OGR.

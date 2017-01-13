@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016 Kai Pastor
+ *    Copyright 2016-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,9 +20,9 @@
 #ifndef OPENORIENTEERING_OGR_TEMPLATE_H
 #define OPENORIENTEERING_OGR_TEMPLATE_H
 
-#include "../templates/template_map.h"
+#include "templates/template_map.h"
 
-#include "../core/georeferencing.h"
+#include "core/georeferencing.h"
 
 
 /**

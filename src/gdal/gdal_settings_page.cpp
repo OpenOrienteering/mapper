@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016 Kai Pastor
+ *    Copyright 2016-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -28,9 +28,9 @@
 
 #include "gdal_manager.h"
 #include "ogr_file_format.h"
-#include "../gui/util_gui.h"
-#include "../fileformats/file_format_registry.h"
-#include "../util/scoped_signals_blocker.h"
+#include "gui/util_gui.h"
+#include "fileformats/file_format_registry.h"
+#include "util/scoped_signals_blocker.h"
 
 
 GdalSettingsPage::GdalSettingsPage(QWidget* parent)
