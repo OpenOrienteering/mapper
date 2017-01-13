@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2014-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -28,8 +28,6 @@
 #include <QMessageBox>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
-
-#include <mapper_config.h> // TODO: Replace APP_NAME by runtime function to remove this dependency
 
 #include "util/dxfparser.h"
 #include "templates/template_track.h"
@@ -192,7 +190,7 @@ bool Track::saveTo(const QString& path) const
 	stream.writeStartDocument();
 	stream.writeStartElement(QString::fromLatin1("gpx"));
 	stream.writeAttribute(QString::fromLatin1("version"), QString::fromLatin1("1.1"));
-	stream.writeAttribute(QString::fromLatin1("creator"), APP_NAME);
+	stream.writeAttribute(QString::fromLatin1("creator"), qApp->applicationDisplayName());
 	
 	int size = getNumWaypoints();
 	for (int i = 0; i < size; ++i)
