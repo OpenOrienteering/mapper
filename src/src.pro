@@ -17,7 +17,7 @@ else:  LIBS *= -lproj
 DEPENDPATH  += qmake "$$PWD"
 INCLUDEPATH += qmake "$$PWD"
 
-QT += core gui widgets printsupport network xml
+QT += core gui widgets printsupport network
 android: QT += core-private gui-private
 win32:   QT += core-private gui-private printsupport-private
 
@@ -361,7 +361,6 @@ android {
     plugins/imageformats/libqtiff.so \
     plugins/imageformats/libqwebp.so \
     lib/libQt5Widgets.so \
-    lib/libQt5Xml.so \
     lib/libQt5Sensors.so \
     lib/libQt5Positioning.so \
     lib/libQt5AndroidExtras.so \
