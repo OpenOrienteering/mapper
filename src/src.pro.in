@@ -110,6 +110,6 @@ android {
   
   # Remove legacy code
   DEFINES += NO_NATIVE_FILE_FORMAT
-  HEADERS -= file_format_native.h
-  SOURCES -= file_format_native.cpp
+  HEADERS -= fileformats/native_file_format.h
+  SOURCES -= fileformats/native_file_format.cpp
 }
