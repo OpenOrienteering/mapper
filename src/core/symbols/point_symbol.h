@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,25 +19,11 @@
  */
 
 
-#ifndef _OPENORIENTEERING_SYMBOL_POINT_H_
-#define _OPENORIENTEERING_SYMBOL_POINT_H_
+#ifndef OPENORIENTEERING_POINT_SYMBOL_H
+#define OPENORIENTEERING_POINT_SYMBOL_H
 
 #include "symbol.h"
-#include "gui/symbols/symbol_properties_widget.h"
 
-QT_BEGIN_NAMESPACE
-class QCheckBox;
-class QVBoxLayout;
-class QWidget;
-QT_END_NAMESPACE
-
-class Map;
-class MapColor;
-class MapEditorController;
-class SymbolSettingDialog;
-class PointObject;
-class PointSymbolEditorWidget;
-class ColorDropDown;
 
 /**
  * Symbol for PointObjects.
@@ -134,27 +120,6 @@ protected:
 	const MapColor* inner_color;
 	int outer_width;		// in 1/1000 mm
 	const MapColor* outer_color;
-};
-
-
-
-class PointSymbolSettings : public SymbolPropertiesWidget
-{
-Q_OBJECT
-public:
-	PointSymbolSettings(PointSymbol* symbol, SymbolSettingDialog* dialog);
-	
-	virtual void reset(Symbol* symbol);
-	
-public slots:
-	void tabChanged(int index);
-	
-private:
-	PointSymbol* symbol;
-	PointSymbolEditorWidget* symbol_editor;
-	QVBoxLayout* layout;
-	QWidget* point_tab;
-	
 };
 
 #endif

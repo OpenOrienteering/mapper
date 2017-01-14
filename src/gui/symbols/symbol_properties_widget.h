@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -18,8 +19,8 @@
  */
 
 
-#ifndef _OPENORIENTEERING_SYMBOL_PROPERTIES_WIDGET_H_
-#define _OPENORIENTEERING_SYMBOL_PROPERTIES_WIDGET_H_
+#ifndef OPENORIENTEERING_SYMBOL_PROPERTIES_WIDGET_H
+#define OPENORIENTEERING_SYMBOL_PROPERTIES_WIDGET_H
 
 #include <QTabWidget>
 
@@ -28,6 +29,7 @@
 class QLineEdit;
 class QTextEdit;
 class QCheckBox;
+
 
 /**
  *  A widget for editing groups of properties of a symbol.
@@ -88,4 +90,4 @@ protected:
 	QCheckBox* helper_symbol_check;
 };
 
-#endif // _OPENORIENTEERING_SYMBOL_PROPERTIES_WIDGET_H_
+#endif // OPENORIENTEERING_SYMBOL_PROPERTIES_WIDGET_H

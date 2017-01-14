@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2016 Kai Pastor
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,30 +19,16 @@
  */
 
 
-#ifndef OPENORIENTEERING_SYMBOL_TEXT_H
-#define OPENORIENTEERING_SYMBOL_TEXT_H
+#ifndef OPENORIENTEERING_TEXT_SYMBOL_H
+#define OPENORIENTEERING_TEXT_SYMBOL_H
 
 #include "symbol.h"
 
-#include <QGroupBox>
-#include <QDialog>
+#include <QFontMetricsF>
 
-#include "gui/symbols/symbol_properties_widget.h"
-
-QT_BEGIN_NAMESPACE
-class QCheckBox;
-class QComboBox;
-class QDoubleSpinBox;
-class QFontComboBox;
-class QLineEdit;
-class QListWidget;
-class QPushButton;
-class QRadioButton;
-QT_END_NAMESPACE
-
-class ColorDropDown;
 class SymbolSettingDialog;
 class TextObject;
+
 
 /** Symbol for text, can be applied to TextObjects.
  * 
@@ -179,89 +165,6 @@ protected:
 	std::vector<int> custom_tabs;
 	
 	double tab_interval;		/// default tab interval length in text coordinates
-};
-
-class TextSymbolSettings : public SymbolPropertiesWidget
-{
-Q_OBJECT
-public:
-	TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* dialog);
-    virtual ~TextSymbolSettings();
-	
-	virtual void reset(Symbol* symbol);
-	
-	void updateGeneralContents();
-	
-	void updateFramingContents();
-	
-	void updateCompatibilityCheckEnabled();
-	
-	void updateCompatibilityContents();
-	
-protected slots:
-	void fontChanged(QFont font);
-	void fontSizeChanged(double value);
-	void letterSizeChanged();
-	void colorChanged();
-	void checkToggled(bool checked);
-	void spacingChanged(double value);
-	void iconTextEdited(const QString& text);
-	
-	void framingCheckClicked(bool checked);
-	void framingColorChanged();
-	void framingModeChanged();
-	void framingSettingChanged();
-	
-	void ocadCompatibilityButtonClicked(bool checked);
-	void lineBelowCheckClicked(bool checked);
-	void lineBelowSettingChanged();
-	void customTabRowChanged(int row);
-	void addCustomTabClicked();
-	void removeCustomTabClicked();
-	
-protected:
-	void updateFontSizeEdit();
-	void updateLetterSizeEdit();
-	qreal calculateLetterHeight() const;
-	
-private:
-	TextSymbol* symbol;
-	SymbolSettingDialog* dialog;
-	
-	ColorDropDown*  color_edit;
-	QFontComboBox*  font_edit;
-	QDoubleSpinBox* font_size_edit;
-	QLineEdit*      letter_edit;
-	QDoubleSpinBox* letter_size_edit;
-	QCheckBox*      bold_check;
-	QCheckBox*      italic_check;
-	QCheckBox*      underline_check;
-	QDoubleSpinBox* line_spacing_edit;
-	QDoubleSpinBox* paragraph_spacing_edit;
-	QDoubleSpinBox* character_spacing_edit;
-	QCheckBox*      kerning_check;
-	QLineEdit*      icon_text_edit;
-	QCheckBox*      framing_check;
-	QCheckBox*      ocad_compat_check;
-	
-	QWidget*        framing_widget;
-	ColorDropDown*  framing_color_edit;
-	QRadioButton*   framing_line_radio;
-	QDoubleSpinBox* framing_line_half_width_edit;
-	QRadioButton*   framing_shadow_radio;
-	QDoubleSpinBox* framing_shadow_x_offset_edit;
-	QDoubleSpinBox* framing_shadow_y_offset_edit;
-	
-	QWidget*        ocad_compat_widget;
-	QCheckBox*      line_below_check;
-	QDoubleSpinBox* line_below_width_edit;
-	ColorDropDown*  line_below_color_edit;
-	QDoubleSpinBox* line_below_distance_edit;
-	QListWidget*    custom_tab_list;
-	QPushButton*    custom_tab_add;
-	QPushButton*    custom_tab_remove;
-	
-	bool react_to_changes;
 };
 
 #endif

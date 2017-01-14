@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,25 +19,11 @@
  */
 
 
-#ifndef _OPENORIENTEERING_SYMBOL_COMBINED_H_
-#define _OPENORIENTEERING_SYMBOL_COMBINED_H_
-
-#include <QGroupBox>
+#ifndef OPENORIENTEERING_COMBINED_SYMBOL_H
+#define OPENORIENTEERING_COMBINED_SYMBOL_H
 
 #include "symbol.h"
-#include "gui/symbols/symbol_properties_widget.h"
 
-QT_BEGIN_NAMESPACE
-class QComboBox;
-class QLabel;
-class QSpinBox;
-class QPushButton;
-class QXmlStreamReader;
-class QXmlStreamWriter;
-QT_END_NAMESPACE
-
-class SymbolDropDown;
-class SymbolSettingDialog;
 
 /**
  * Symbol which can combine other line and area symbols,
@@ -104,36 +90,6 @@ protected:
 	std::vector<const Symbol*> parts;
 	std::vector<bool> private_parts;
 	std::vector<int> temp_part_indices;	// temporary vector of the indices of the 'parts' symbols, used just for loading
-};
-
-class CombinedSymbolSettings : public SymbolPropertiesWidget
-{
-Q_OBJECT
-public:
-	CombinedSymbolSettings(CombinedSymbol* symbol, SymbolSettingDialog* dialog);
-	virtual ~CombinedSymbolSettings();
-	
-	void reset(Symbol* symbol);
-	
-	/**
-	 * Updates the content and state of all input fields.
-	 */
-	void updateContents();
-	
-	static const int max_count;	// maximum number of symbols in a combined symbol
-	
-protected slots:
-	void numberChanged(int value);
-	void symbolChanged(int index);
-	void editClicked(int index);
-	
-private:
-	CombinedSymbol* symbol;
-	
-	QSpinBox* number_edit;
-	QLabel** symbol_labels;
-	SymbolDropDown** symbol_edits;
-	QPushButton** edit_buttons;
 };
 
 #endif

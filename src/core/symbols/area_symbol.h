@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,34 +19,13 @@
  */
 
 
-#ifndef _OPENORIENTEERING_SYMBOL_AREA_H_
-#define _OPENORIENTEERING_SYMBOL_AREA_H_
+#ifndef OPENORIENTEERING_AREA_SYMBOL_H
+#define OPENORIENTEERING_AREA_SYMBOL_H
 
 #include "symbol.h"
-#include "gui/symbols/symbol_properties_widget.h"
 
-QT_BEGIN_NAMESPACE
-class QCheckBox;
-class QDoubleSpinBox;
-class QLabel;
-class QListWidget;
-class QPushButton;
-class QSpinBox;
-class QToolButton;
-class QXmlStreamReader;
-class QXmlStreamWriter;
-QT_END_NAMESPACE
-
-class ColorDropDown;
-class SymbolSettingDialog;
-class PointSymbolEditorWidget;
-class PathObject;
 class PointObject;
-class LineSymbol;
-class PointSymbol;
-class SymbolPropertiesWidget;
-class SymbolSettingDialog;
-class MapEditorController;
+
 
 /**
  * Symbol for PathObjects where the enclosed area is filled with a solid color
@@ -199,73 +178,6 @@ protected:
 	const MapColor* color;
 	int minimum_area;	// in mm^2 // FIXME: unit (factor) wrong
 	std::vector<FillPattern> patterns;
-};
-
-class AreaSymbolSettings : public SymbolPropertiesWidget
-{
-Q_OBJECT
-public:
-	AreaSymbolSettings(AreaSymbol* symbol, SymbolSettingDialog* dialog);
-	
-	virtual void reset(Symbol* symbol);
-	
-	/**
-	 * Updates the general area fields (not related to patterns)
-	 */
-	void updateAreaGeneral();
-	
-	void addPattern(AreaSymbol::FillPattern::Type type);
-	
-signals:
-	void switchPatternEdits(int layer);
-	
-public slots:
-	void selectPattern(int index);
-	void addLinePattern();
-	void addPointPattern();
-	void deleteActivePattern();
-	
-protected:
-	void clearPatterns();
-	void loadPatterns();
-	void updatePatternNames();
-	void updatePatternWidgets();
-	
-protected slots:
-	void colorChanged();
-	void minimumSizeChanged(double value);
-	void patternAngleChanged(double value);
-	void patternRotatableClicked(bool checked);
-	void patternSpacingChanged(double value);
-	void patternLineOffsetChanged(double value);
-	void patternOffsetAlongLineChanged(double value);
-	void patternColorChanged();
-	void patternLineWidthChanged(double value);
-	void patternPointDistChanged(double value);
-	
-private:
-	AreaSymbol* symbol;
-	Map* map;
-	MapEditorController* controller;
-	std::vector<AreaSymbol::FillPattern>::iterator active_pattern;
-	
-	ColorDropDown*  color_edit;
-	QDoubleSpinBox* minimum_size_edit;
-	
-	QListWidget*    pattern_list;
-	QToolButton*    add_pattern_button;
-	QPushButton*    del_pattern_button;
-	
-	QLabel*         pattern_name_edit;
-	QDoubleSpinBox* pattern_angle_edit;
-	QCheckBox*      pattern_rotatable_check;
-	QDoubleSpinBox* pattern_spacing_edit;
-	QDoubleSpinBox* pattern_line_offset_edit;
-	QDoubleSpinBox* pattern_offset_along_line_edit;
-	
-	ColorDropDown*  pattern_color_edit;
-	QDoubleSpinBox* pattern_linewidth_edit;
-	QDoubleSpinBox* pattern_pointdist_edit;
 };
 
 #endif

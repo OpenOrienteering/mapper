@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -28,6 +29,18 @@
 #include <QTextEdit>
 
 #include "symbol_setting_dialog.h"
+
+
+// ### Symbol ###
+
+SymbolPropertiesWidget* Symbol::createPropertiesWidget(SymbolSettingDialog* dialog)
+{
+	return new SymbolPropertiesWidget(this, dialog);
+}
+
+
+
+// ### SymbolPropertiesWidget ###
 
 SymbolPropertiesWidget::SymbolPropertiesWidget(Symbol* symbol, SymbolSettingDialog* dialog)
 : QTabWidget(), dialog(dialog)

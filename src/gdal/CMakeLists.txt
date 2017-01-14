@@ -19,7 +19,7 @@
 find_package(GDAL REQUIRED)
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Gui REQUIRED)
-find_package(Qt5Widgets REQUIRED) # TODO: Remove, once Symbol headers don't need it.
+find_package(Qt5Widgets REQUIRED)
  
 qt_wrap_cpp(mapper-gdal MAPPER_GDAL_MOC
   gdal_settings_page.h

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,30 +21,28 @@
 
 #include "symbol.h"
 
-#include <QDebug>
-#include <QFile>
+#include <qmath.h>
+#include <QIODevice>
 #include <QPainter>
 #include <QTextDocument>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
-#include <qmath.h>
 
+#include "core/map.h"
 #include "core/map_color.h"
 #include "core/map_view.h"
-#include "fileformats/file_import_export.h"
-#include "core/map.h"
 #include "core/objects/object.h"
 #include "core/objects/text_object.h"
 #include "core/renderables/renderable_implementation.h"
-#include "area_symbol.h"
-#include "combined_symbol.h"
-#include "line_symbol.h"
-#include "point_symbol.h"
-#include "gui/symbols/symbol_properties_widget.h"
-#include "gui/symbols/symbol_setting_dialog.h"
-#include "text_symbol.h"
+#include "core/symbols/area_symbol.h"
+#include "core/symbols/combined_symbol.h"
+#include "core/symbols/line_symbol.h"
+#include "core/symbols/point_symbol.h"
+#include "core/symbols/text_symbol.h"
+#include "fileformats/file_import_export.h"
 #include "util/util.h"
 #include "settings.h"
+
 
 Symbol::Symbol(Type type)
  : type(type)
@@ -599,11 +597,6 @@ void Symbol::duplicateImplCommon(const Symbol* other)
 	is_helper_symbol = other->is_helper_symbol;
 	is_hidden = other->is_hidden;
 	icon = other->icon;
-}
-
-SymbolPropertiesWidget* Symbol::createPropertiesWidget(SymbolSettingDialog* dialog)
-{
-	return new SymbolPropertiesWidget(this, dialog);
 }
 
 

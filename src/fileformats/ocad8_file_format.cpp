@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Pete Curtis
- *    Copyright 2013-2016  Kai Pastor
+ *    Copyright 2013-2017  Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,6 +22,7 @@
 #include "ocad8_file_format_p.h"
 
 #include <qmath.h>
+#include <QCoreApplication>
 #include <QDateTime>
 #include <QDebug>
 #include <QDir>
@@ -587,13 +588,13 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
     if( ocad_symbol->scnpts > 0 )
     {
 		symbol_line->dash_symbol = importPattern( ocad_symbol->scnpts, symbolptr);
-        symbol_line->dash_symbol->setName(LineSymbolSettings::tr("Dash symbol"));
+        symbol_line->dash_symbol->setName(QCoreApplication::translate("LineSymbolSettings", "Dash symbol"));
         symbolptr += ocad_symbol->scnpts; 
     }
     if( ocad_symbol->sbnpts > 0 )
     {
 		symbol_line->start_symbol = importPattern( ocad_symbol->sbnpts, symbolptr);
-        symbol_line->start_symbol->setName(LineSymbolSettings::tr("Start symbol"));
+        symbol_line->start_symbol->setName(QCoreApplication::translate("LineSymbolSettings", "Start symbol"));
         symbolptr += ocad_symbol->sbnpts;
     }
     if( ocad_symbol->senpts > 0 )

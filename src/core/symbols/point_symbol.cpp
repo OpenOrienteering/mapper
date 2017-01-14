@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,18 +21,13 @@
 
 #include "point_symbol.h"
 
-#include <QVBoxLayout>
-#include <QXmlStreamAttributes>
+#include <QIODevice>
+#include <QXmlStreamReader>
+#include <QXmlStreamWriter>
 
-#include "core/map_color.h"
 #include "core/map.h"
-#include "core/objects/object.h"
-#include "gui/symbols/symbol_setting_dialog.h"
-#include "gui/symbols/symbol_properties_widget.h"
-#include "gui/symbols/point_symbol_editor_widget.h"
 #include "core/renderables/renderable_implementation.h"
-#include "util/util.h"
-#include "gui/util_gui.h"
+
 
 PointSymbol::PointSymbol() : Symbol(Symbol::Point)
 {
@@ -411,50 +406,4 @@ bool PointSymbol::equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensi
 	}
 	
 	return true;
-}
-
-SymbolPropertiesWidget* PointSymbol::createPropertiesWidget(SymbolSettingDialog* dialog)
-{
-	return new PointSymbolSettings(this, dialog);
-}
-
-
-// ### PointSymbolSettings ###
-
-PointSymbolSettings::PointSymbolSettings(PointSymbol* symbol, SymbolSettingDialog* dialog)
-: SymbolPropertiesWidget(symbol, dialog), 
-  symbol(symbol)
-{
-	symbol_editor = new PointSymbolEditorWidget(dialog->getPreviewController(), symbol, 0, true);
-	connect(symbol_editor, SIGNAL(symbolEdited()), this, SIGNAL(propertiesModified()) );
-	
-	layout = new QVBoxLayout();
-	layout->addWidget(symbol_editor);
-	
-	point_tab = new QWidget();
-	point_tab->setLayout(layout);
-	addPropertiesGroup(tr("Point symbol"), point_tab);
-	
-	connect(this, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)));
-}
-
-void PointSymbolSettings::reset(Symbol* symbol)
-{
-	Q_ASSERT(symbol->getType() == Symbol::Point);
-	
-	SymbolPropertiesWidget::reset(symbol);
-	this->symbol = reinterpret_cast<PointSymbol*>(symbol);
-	
-	layout->removeWidget(symbol_editor);
-	delete(symbol_editor);
-	
-	symbol_editor = new PointSymbolEditorWidget(dialog->getPreviewController(), this->symbol, 0, true);
-	connect(symbol_editor, SIGNAL(symbolEdited()), this, SIGNAL(propertiesModified()) );
-	layout->addWidget(symbol_editor);
-}
-
-void PointSymbolSettings::tabChanged(int index)
-{
-	Q_UNUSED(index);
-	symbol_editor->setEditorActive( currentWidget()==point_tab );
 }

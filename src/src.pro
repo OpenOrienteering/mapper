@@ -44,11 +44,6 @@ HEADERS += \
   core/map.h \
   core/map_printer.h \
   core/map_view.h \
-  core/symbols/area_symbol.h \
-  core/symbols/combined_symbol.h \
-  core/symbols/line_symbol.h \
-  core/symbols/point_symbol.h \
-  core/symbols/text_symbol.h \
   fileformats/ocad8_file_format_p.h \
   fileformats/xml_file_format_p.h \
   fileformats/file_import_export.h \
@@ -77,10 +72,15 @@ HEADERS += \
   gui/map/map_editor_activity.h \
   gui/map/map_editor_p.h \
   gui/map/map_widget.h \
+  gui/symbols/area_symbol_settings.h \
+  gui/symbols/combined_symbol_settings.h \
+  gui/symbols/line_symbol_settings.h \
   gui/symbols/point_symbol_editor_widget.h \
+  gui/symbols/point_symbol_settings.h \
   gui/symbols/replace_symbol_set_dialog.h \
   gui/symbols/symbol_properties_widget.h \
   gui/symbols/symbol_setting_dialog.h \
+  gui/symbols/text_symbol_settings.h \
   gui/widgets/action_grid_bar.h \
   gui/widgets/color_dropdown.h \
   gui/widgets/compass_display.h \
@@ -158,7 +158,12 @@ HEADERS += \
   core/objects/object_operations.h \
   core/renderables/renderable.h \
   core/renderables/renderable_implementation.h \
+  core/symbols/area_symbol.h \
+  core/symbols/combined_symbol.h \
+  core/symbols/line_symbol.h \
+  core/symbols/point_symbol.h \
   core/symbols/symbol.h \
+  core/symbols/text_symbol.h \
   fileformats/ocd_file_format.h \
   fileformats/ocd_types.h \
   fileformats/ocd_types_v8.h \
@@ -241,10 +246,15 @@ SOURCES += \
   gui/map/map_editor.cpp \
   gui/map/map_editor_activity.cpp \
   gui/map/map_widget.cpp \
+  gui/symbols/area_symbol_settings.cpp \
+  gui/symbols/combined_symbol_settings.cpp \
+  gui/symbols/line_symbol_settings.cpp \
   gui/symbols/point_symbol_editor_widget.cpp \
+  gui/symbols/point_symbol_settings.cpp \
   gui/symbols/replace_symbol_set_dialog.cpp \
   gui/symbols/symbol_properties_widget.cpp \
   gui/symbols/symbol_setting_dialog.cpp \
+  gui/symbols/text_symbol_settings.cpp \
   gui/widgets/action_grid_bar.cpp \
   gui/widgets/color_dropdown.cpp \
   gui/widgets/compass_display.cpp \

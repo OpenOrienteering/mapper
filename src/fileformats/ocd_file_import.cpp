@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013-2016 Kai Pastor
+ *    Copyright 2013-2017 Kai Pastor
  *
  *    Some parts taken from file_format_oc*d8{.h,_p.h,cpp} which are
  *    Copyright 2012 Pete Curtis
@@ -25,6 +25,7 @@
 #include <memory>
 
 #include <QBuffer>
+#include <QCoreApplication>
 #include <QDebug>
 #include <QDir>
 #include <QFileInfo>
@@ -1190,21 +1191,21 @@ void OcdFileImport::setupLineSymbolPointSymbol(OcdFileImport::OcdImportedLineSym
 	{
 		line_symbol->dash_symbol = new OcdImportedPointSymbol();
 		setupPointSymbolPattern(line_symbol->dash_symbol, attributes.corner_data_size, reinterpret_cast<const Ocd::PointSymbolElementV8*>(coords), ocd_version);
-		line_symbol->dash_symbol->setName(LineSymbolSettings::tr("Dash symbol"));
+		line_symbol->dash_symbol->setName(QCoreApplication::translate("LineSymbolSettings", "Dash symbol"));
 		coords += attributes.corner_data_size;
 	}
 	if (attributes.start_data_size > 0)
 	{
 		line_symbol->start_symbol = new OcdImportedPointSymbol();
 		setupPointSymbolPattern(line_symbol->start_symbol, attributes.start_data_size, reinterpret_cast<const Ocd::PointSymbolElementV8*>(coords), ocd_version);
-		line_symbol->start_symbol->setName(LineSymbolSettings::tr("Start symbol"));
+		line_symbol->start_symbol->setName(QCoreApplication::translate("LineSymbolSettings", "Start symbol"));
 		coords += attributes.start_data_size;
 	}
 	if (attributes.end_data_size > 0)
 	{
 		line_symbol->end_symbol = new OcdImportedPointSymbol();
 		setupPointSymbolPattern(line_symbol->end_symbol, attributes.end_data_size, reinterpret_cast<const Ocd::PointSymbolElementV8*>(coords), ocd_version);
-		line_symbol->end_symbol->setName(LineSymbolSettings::tr("End symbol"));
+		line_symbol->end_symbol->setName(QCoreApplication::translate("LineSymbolSettings", "End symbol"));
 	}
 	
 	// FIXME: not really sure how this translates... need test cases

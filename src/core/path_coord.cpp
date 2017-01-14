@@ -21,7 +21,7 @@
 
 #include "path_coord.h"
 
-#include "core/symbols/line_symbol.h"
+#include "virtual_path.h"
 #include "util/util.h"
 
 
