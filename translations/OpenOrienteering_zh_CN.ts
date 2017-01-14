@@ -7,7 +7,7 @@
         <location filename="../src/gui/about_dialog.cpp" line="94"/>
         <location filename="../src/gui/about_dialog.cpp" line="161"/>
         <source>About %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">关于 %1</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="175"/>
@@ -29,7 +29,7 @@
         <location filename="../src/gui/about_dialog.cpp" line="163"/>
         <source>A free software for drawing orienteering maps</source>
         <extracomment>For the moment, we use this existing translation instead of the previous one.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>用于绘制定向越野地图的免费开源软件</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="165"/>

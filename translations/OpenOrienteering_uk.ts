@@ -450,17 +450,17 @@
     </message>
     <message>
         <source>Error</source>
-        <translation type="vanished">Помилка</translation>
+        <translation>Помилка</translation>
     </message>
     <message>
         <source>Please enter a percentage from 0% to 100%!</source>
-        <translation type="vanished">Введіть будь-ласка значення від 0% до 100%!</translation>
+        <translation>Введіть будь-ласка значення від 0% до 100%!</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="364"/>
         <location filename="../src/color_dock_widget.cpp" line="411"/>
         <source>Double click to define the color</source>
-        <translation>Зробіть подвійний клік щоб задати кольір</translation>
+        <translation>Двічі клікніть щоб задати колір</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="371"/>
@@ -742,7 +742,7 @@
     <name>DetermineFontSizeDialog</name>
     <message>
         <source>Determine font size</source>
-        <translation type="vanished">Встановити розмір шрифту</translation>
+        <translation>Встановити розмір шрифту</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="619"/>
@@ -757,11 +757,11 @@
     </message>
     <message>
         <source>This dialog allows to choose a font size which results in a given exact height for a specific letter.</source>
-        <translation type="vanished">Цей діалог дозволяє встановити розмір шрифту рівний висоті визначеного символу (літери).</translation>
+        <translation>Цей діалог дозволяє встановити розмір шрифту рівний висоті визначеного символу (літери).</translation>
     </message>
     <message>
         <source>mm</source>
-        <translation type="vanished">мм</translation>
+        <translation>мм</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="627"/>
@@ -1225,7 +1225,7 @@
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="50"/>
         <source>°</source>
         <comment>Degree sign for angles</comment>
-        <translation></translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="53"/>
@@ -1262,7 +1262,7 @@
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="71"/>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="77"/>
         <source>Reset outer curve handles</source>
-        <translation type="unfinished">Підігнати напрямні у зовнішніх точках кривої</translation>
+        <translation>Скинути налаштування напрямних у зовнішніх точках кривої</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="72"/>
@@ -1289,7 +1289,7 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="87"/>
         <source>Preview the width of lines with helper cross</source>
-        <translation>Попередній перегляд ширини лінії разом з допоміжним перехрестям</translation>
+        <translation>Попередній перегляд ширини лінії разом з допоміжним хрестиком</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="103"/>
@@ -1440,7 +1440,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="116"/>
         <source>Default</source>
-        <translation type="unfinished">За замовченням</translation>
+        <translation>Стандартно</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="139"/>
@@ -2638,7 +2638,7 @@ Do you want to scale the symbols to the selected scale?</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="152"/>
         <source>You must close the current file before you can open another one.</source>
-        <translation type="unfinished"></translation>
+        <translation>Потрібно закрити поточний файл перед тим як відкрити інший.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="719"/>
@@ -2992,7 +2992,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="855"/>
         <source>Draw circles and ellipses</source>
-        <translation>Креслити кола та еліпси</translation>
+        <translation>Накреслити кола чи еліпси</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="859"/>
@@ -3259,7 +3259,7 @@ Rescale the imported data?</source>
         <location filename="../src/map_editor.cpp" line="1570"/>
         <location filename="../src/map_editor.cpp" line="1603"/>
         <source>An internal error occurred, sorry!</source>
-        <translation>Внутрішня непередбачена помилка, вибачте!</translation>
+        <translation>Сталася внутрішня помилка, вибачте!</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1580"/>
@@ -3274,7 +3274,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1620"/>
         <source>Pasted %1 object(s)</source>
-        <translation>Вставлено %1 об’єкт(-ів)</translation>
+        <translation>Вставлено %1 об’єкт(ів)</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1678"/>
@@ -3373,7 +3373,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="2093"/>
         <source>Draw rectangles.</source>
-        <translation>Накресліть прямокутник.</translation>
+        <translation>Накреслити прямокутники.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="485"/>
@@ -3443,12 +3443,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="857"/>
         <source>Draw free-handedly</source>
-        <translation>Малювати від руки</translation>
+        <translation>Креслити від руки</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="858"/>
         <source>Fill bounded areas</source>
-        <translation>Залити замкнені ділянки</translation>
+        <translation>Заповнити замкнені площі</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="806"/>
@@ -3607,9 +3607,9 @@ Rescale the imported data?</source>
 symbol
 selected</source>
         <comment>Keep it short. Should not be much longer per line than the longest word in the original.</comment>
-        <translation>Знак
-не
-вибраний</translation>
+        <translation>Не
+виділено
+знаків</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2011"/>
@@ -3624,12 +3624,12 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="2095"/>
         <source>Draw paths free-handedly.</source>
-        <translation>Намалювати лінію від руки.</translation>
+        <translation>Накреслити контури від руки.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2097"/>
         <source>Fill bounded areas.</source>
-        <translation>Заповнити замкнену площу.</translation>
+        <translation>Заповнити замкнену площину.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2099"/>
@@ -3848,12 +3848,12 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="849"/>
         <source>Tag Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Виділення по тегам</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="849"/>
         <source>Show/Hide the tag selection window</source>
-        <translation type="unfinished"></translation>
+        <translation>Показати/Сховати вікно виділення по тегам</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="950"/>
@@ -3868,7 +3868,7 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1949"/>
         <source>Tag Selector</source>
-        <translation type="unfinished"></translation>
+        <translation>Виділення по тегам</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2198"/>
@@ -3976,7 +3976,7 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="2400"/>
         <source>%1 object(s) duplicated</source>
-        <translation>%1 об’єкт(ів) дубльовано</translation>
+        <translation>%1 об’єкт(ів) продубльовано</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2612"/>
@@ -4047,7 +4047,7 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="3554"/>
         <source>Switched to map part '%1'.</source>
-        <translation type="unfinished"></translation>
+        <translation>Переключено на частину карти '%1'.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3576"/>
@@ -4099,101 +4099,93 @@ selected</source>
         <location filename="future_translations.cpp" line="31"/>
         <source>Rotate objects</source>
         <extracomment>To replace existing translation which uses "object(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Обертати об'єкти</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="34"/>
         <source>Scale objects</source>
         <extracomment>To replace existing translation which uses "object(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Масштабувати об'єкти</translation>
     </message>
     <message numerus="yes">
         <location filename="future_translations.cpp" line="37"/>
         <source>Cut %n object(s)</source>
         <extracomment>Past tense. Displayed when an Edit &gt; Cut operator is completed.</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>Вирізати %n об'єкт</numerusform>
+        <numerusform>Вирізати %n об'єкти</numerusform>
+        <numerusform>Вирізати %n об'єктів</numerusform>
+        </translation></message>
     <message numerus="yes">
         <location filename="future_translations.cpp" line="40"/>
         <source>Copied %n object(s)</source>
         <extracomment>To replace existing translation which doesn't use plural correctly</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>Скопійовано %n об'єкт</numerusform>
+        <numerusform>Скопійовано %n об'єкти</numerusform>
+        <numerusform>Скопійовано %n об'єктів</numerusform>
+        </translation></message>
     <message numerus="yes">
         <location filename="future_translations.cpp" line="43"/>
         <source>Pasted %n object(s)</source>
         <extracomment>To replace existing translation which doesn't use plural correctly</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>Вставлено %n об'єкт</numerusform>
+        <numerusform>Вставлено %n об'єкти</numerusform>
+        <numerusform>Вставлено %n об'єктів</numerusform>
+        </translation></message>
     <message>
         <location filename="future_translations.cpp" line="46"/>
         <source>Deletes the selected objects.</source>
         <extracomment>To replace existing translation which uses "object(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Видалити виділені об'єкти.</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="49"/>
         <source>Duplicate the selected objects.</source>
         <extracomment>To replace existing translation which uses "object(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Дублювати виділені об'єкти.</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="52"/>
         <source>Rotate the selected objects.</source>
         <extracomment>To replace existing translation which uses "object(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Обертати виділені об'єкти.</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="55"/>
         <source>Scale the selected objects.</source>
         <extracomment>To replace existing translation which uses "object(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Масштабувати виділені об'єкти.</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="58"/>
         <source>Cut the selected objects into smaller parts.</source>
         <extracomment>To replace existing translation which uses "object(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Обрізати виділені об'єкти на менші частини.</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="61"/>
         <source>Switches the symbol of the selected objects to the selected symbol.</source>
         <extracomment>To replace existing translation which uses "object(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Замінити знак виділених об'єктів на виділений умовний знак.</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="64"/>
         <source>Fill the selected lines or create a border for the selected areas.</source>
         <extracomment>To replace existing translation which uses "line(s)" and "area(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Заповнити виділені лінії або створити межу для виділених площ.</translation>
     </message>
     <message numerus="yes">
         <location filename="future_translations.cpp" line="67"/>
         <source>Duplicated %n object(s)</source>
         <extracomment>To replace existing translation which doesn't use plural correctly</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>Продубльовано %n об'єкт</numerusform>
+        <numerusform>Продубльовано %n об'єкти</numerusform>
+        <numerusform>Продубльовано %n об'єктів</numerusform>
+        </translation></message>
     <message>
         <location filename="future_translations.cpp" line="70"/>
         <source>No objects were selected because there are no objects with the selected symbols.</source>
         <extracomment>To replace existing translation which uses "symbol(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Не було виділено жодних об'єктів, бо немає об'єктів з виділеним знаком.</translation>
     </message>
 </context>
 <context>
@@ -4527,7 +4519,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2061"/>
         <source>In line symbol "%1", cannot represent cap/join combination.</source>
-        <translation type="unfinished">Для лінійного знаку "%1", неможливо відобразити комбінацію закінчення/з’єднання.</translation>
+        <translation>Для лінійного знаку "%1", неможливо відобразити комбінацію закінчення/з’єднання.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2085"/>
@@ -4719,37 +4711,37 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/object_query.cpp" line="146"/>
         <source>is</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>є</translation>
     </message>
     <message>
         <location filename="../src/object_query.cpp" line="149"/>
         <source>is not</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>не є</translation>
     </message>
     <message>
         <location filename="../src/object_query.cpp" line="152"/>
         <source>contains</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>містить</translation>
     </message>
     <message>
         <location filename="../src/object_query.cpp" line="156"/>
         <source>and</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>та</translation>
     </message>
     <message>
         <location filename="../src/object_query.cpp" line="159"/>
         <source>or</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>або</translation>
     </message>
     <message>
         <location filename="../src/object_query.cpp" line="163"/>
         <source>invalid</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>нечинний</translation>
     </message>
 </context>
 <context>
@@ -4881,12 +4873,12 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="82"/>
         <source>Encoding '%1' is not available. Check the settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>Кодування '%1' не доступне. Перевірте налаштування.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="119"/>
         <source>In area symbol %1 '%2': %3</source>
-        <translation type="unfinished">У площадному знаку %1 '%2': %3</translation>
+        <translation>У площадному знакові %1 '%2': %3</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1558"/>
@@ -4930,7 +4922,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../packaging/translations.cpp" line="11"/>
         <source>Software for drawing orienteering maps</source>
-        <translation type="unfinished"></translation>
+        <translation>Програма для креслення спортивних карт</translation>
     </message>
 </context>
 <context>
@@ -5947,22 +5939,22 @@ separations</source>
     <message>
         <location filename="../src/core/storage_location.cpp" line="278"/>
         <source>'%1' is stored in a regular location.</source>
-        <translation type="unfinished"></translation>
+        <translation>'%1' збережено у звичайній папці.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="281"/>
         <source>'%1' is located in app storage. The files will be removed when uninstalling the app.</source>
-        <translation type="unfinished"></translation>
+        <translation>'%1' розміщено у папці програми. Файли будуть видалені після видалення програми.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="284"/>
         <source>'%1' is not writable. Changes cannot be saved.</source>
-        <translation type="unfinished"></translation>
+        <translation>'%1' захищено від запису. Зміни не будуть збережені.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="287"/>
         <source>'%1' is not a valid storage location.</source>
-        <translation type="unfinished"></translation>
+        <translation>'%1' не дійсне місце збереження.</translation>
     </message>
 </context>
 <context>
@@ -6230,19 +6222,19 @@ separations</source>
         <location filename="future_translations.cpp" line="73"/>
         <source>Switch symbol of selected objects</source>
         <extracomment>To replace existing translation which uses "object(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Замінити умовний знак для виділених об'єктів</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="76"/>
         <source>Fill / Create border for selected objects</source>
         <extracomment>To replace existing translation which uses "object(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Встановити / Створити межу для виділених об'єктів</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="79"/>
         <source>Scale symbols</source>
         <extracomment>To replace existing translation which uses "symbol(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Масштабувати умовні знаки</translation>
     </message>
 </context>
 <context>
@@ -6327,66 +6319,64 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="60"/>
         <source>Relation</source>
-        <translation type="unfinished"></translation>
+        <translation>Відношення</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="60"/>
         <source>Key</source>
-        <translation type="unfinished">Ключ</translation>
+        <translation>Ключ</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="60"/>
         <source>Comparison</source>
-        <translation type="unfinished"></translation>
+        <translation>Умова</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="60"/>
         <source>Value</source>
-        <translation type="unfinished">Значення</translation>
+        <translation>Значення</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="76"/>
         <source>Add Row</source>
-        <translation type="unfinished"></translation>
+        <translation>Додати рядок</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="77"/>
         <source>Remove Row</source>
-        <translation type="unfinished"></translation>
+        <translation>Видалити рядок</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="83"/>
         <source>Move Up</source>
-        <translation type="unfinished">Підняти</translation>
+        <translation>Підняти</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="85"/>
         <source>Move Down</source>
-        <translation type="unfinished">Опустити</translation>
+        <translation>Опустити</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="92"/>
         <source>Select</source>
-        <translation type="unfinished"></translation>
+        <translation>Виділити</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="97"/>
         <source>Help</source>
-        <translation type="unfinished">Довідка</translation>
+        <translation>Довідка</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="346"/>
         <source>%n object(s) selected</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n об'єкт виділено</numerusform>
+        <numerusform>%n об'єкти виділено</numerusform>
+        <numerusform>%n об'єктів виділено</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="350"/>
         <source>Invalid query</source>
-        <translation type="unfinished"></translation>
+        <translation>Помилковий запит</translation>
     </message>
 </context>
 <context>
@@ -7076,7 +7066,7 @@ The maximum supported version is %2.</source>
     </message>
     <message>
         <source>Determine size...</source>
-        <translation type="vanished">Задати розмір...</translation>
+        <translation>Задати розмір...</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="558"/>
@@ -7350,7 +7340,7 @@ The maximum supported version is %2.</source>
         <location filename="../src/file_format_xml.cpp" line="524"/>
         <location filename="../src/file_format_xml.cpp" line="773"/>
         <source>Some invalid characters had to be removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Деякі помилкові текстові символи були видалені.</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="542"/>

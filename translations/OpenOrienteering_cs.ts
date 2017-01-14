@@ -2680,7 +2680,7 @@ Neznámý souborový formát.</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="152"/>
         <source>You must close the current file before you can open another one.</source>
-        <translation type="unfinished"></translation>
+        <translation>Musíte zavřít současný soubor abyste mohli otevřít další.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="272"/>
@@ -3333,12 +3333,12 @@ Změnit měřítko importovaných dat na měřítko mapy?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="849"/>
         <source>Tag Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Výběr tagů</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="849"/>
         <source>Show/Hide the tag selection window</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobrazit/Skrýt okno s výběrem tagů</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="851"/>
@@ -3611,12 +3611,12 @@ Změnit měřítko importovaných dat na měřítko mapy?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="847"/>
         <source>Tag editor</source>
-        <translation>Editor značek</translation>
+        <translation>Editor tagů</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="847"/>
         <source>Show/Hide the tag editor window</source>
-        <translation>Ukázat/Skrýt okno s editorem značek</translation>
+        <translation>Ukázat/Skrýt okno s editorem tagů</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="856"/>
@@ -3881,12 +3881,12 @@ Změnit měřítko importovaných dat na měřítko mapy?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="1927"/>
         <source>Tag Editor</source>
-        <translation>Editor značek</translation>
+        <translation>Editor tagů</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1949"/>
         <source>Tag Selector</source>
-        <translation type="unfinished"></translation>
+        <translation>Výběr tagů</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2010"/>
@@ -4980,37 +4980,37 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
         <location filename="../src/object_query.cpp" line="146"/>
         <source>is</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>je</translation>
     </message>
     <message>
         <location filename="../src/object_query.cpp" line="149"/>
         <source>is not</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>není</translation>
     </message>
     <message>
         <location filename="../src/object_query.cpp" line="152"/>
         <source>contains</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>obsahuje</translation>
     </message>
     <message>
         <location filename="../src/object_query.cpp" line="156"/>
         <source>and</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>a</translation>
     </message>
     <message>
         <location filename="../src/object_query.cpp" line="159"/>
         <source>or</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>nebo</translation>
     </message>
     <message>
         <location filename="../src/object_query.cpp" line="163"/>
         <source>invalid</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>neplatný</translation>
     </message>
 </context>
 <context>
@@ -6673,66 +6673,64 @@ před chvílí, víme, vypadla z kabiny svého létadla.
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="60"/>
         <source>Relation</source>
-        <translation type="unfinished"></translation>
+        <translation>Relace</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="60"/>
         <source>Key</source>
-        <translation type="unfinished">Klíč</translation>
+        <translation>Klíč</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="60"/>
         <source>Comparison</source>
-        <translation type="unfinished"></translation>
+        <translation>Porovnání</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="60"/>
         <source>Value</source>
-        <translation type="unfinished">Hodnota</translation>
+        <translation>Hodnota</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="76"/>
         <source>Add Row</source>
-        <translation type="unfinished"></translation>
+        <translation>Přidat řádek</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="77"/>
         <source>Remove Row</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstranit řádek</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="83"/>
         <source>Move Up</source>
-        <translation type="unfinished">Posunout nahoru</translation>
+        <translation>Posunout nahoru</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="85"/>
         <source>Move Down</source>
-        <translation type="unfinished">Posunout dolů</translation>
+        <translation>Posunout dolů</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="92"/>
         <source>Select</source>
-        <translation type="unfinished"></translation>
+        <translation>Vybrat</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="97"/>
         <source>Help</source>
-        <translation type="unfinished">Nápověda</translation>
+        <translation>Nápověda</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="346"/>
         <source>%n object(s) selected</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n objekt vybrán</numerusform>
+        <numerusform>%n objekty vybrány</numerusform>
+        <numerusform>%n objektů vybráno</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="350"/>
         <source>Invalid query</source>
-        <translation type="unfinished"></translation>
+        <translation>Neplatný dotaz</translation>
     </message>
 </context>
 <context>
@@ -7780,7 +7778,7 @@ Nejvyšší podporovaná verze je %2.</translation>
         <location filename="../src/file_format_xml.cpp" line="524"/>
         <location filename="../src/file_format_xml.cpp" line="773"/>
         <source>Some invalid characters had to be removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Některé neplatné znaky musejí být odstraněny.</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="542"/>

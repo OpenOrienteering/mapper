@@ -22,7 +22,7 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="175"/>
         <source>&lt;a %1&gt;All about licenses, copyright notices, conditions and disclaimers.&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;a %1&gt;Tietoa lisensseistä, kopiosuojasta, ehdoista ja vastuuvapauslausekkeista.&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="177"/>
@@ -77,7 +77,7 @@
     <message>
         <location filename="../src/gui/widgets/action_grid_bar.cpp" line="53"/>
         <source>Show remaining items</source>
-        <translation type="unfinished">Näytä jäljellä olevat kohteet</translation>
+        <translation>Näytä jäljellä olevat kohteet</translation>
     </message>
 </context>
 <context>
@@ -840,7 +840,7 @@
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="297"/>
         <source>Hold %1 to start drawing from the center.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pidä näppäintä %1 pohjassa aloittaaksesi piirtämisen keskeltä.</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="301"/>
@@ -916,7 +916,7 @@
         <location filename="../src/tool_draw_path.cpp" line="89"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation type="unfinished">Napsahda</translation>
+        <translation>Napsahda</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="90"/>
@@ -966,12 +966,12 @@
     <message>
         <location filename="../src/tool_draw_point_gps.cpp" line="73"/>
         <source>Touch the map to finish averaging</source>
-        <translation type="unfinished"></translation>
+        <translation>Lopeta keskiarvojen laskeminen koskettamalla karttaa</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point_gps.cpp" line="182"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Finish setting the object. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Kilkkaus&lt;/b&gt;: Lopeta objektin asettelu. </translation>
     </message>
 </context>
 <context>
@@ -980,7 +980,7 @@
         <location filename="../src/tool_draw_point.cpp" line="60"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation type="unfinished">Napsahda</translation>
+        <translation>Napsahda</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="61"/>
@@ -1037,13 +1037,13 @@
         <location filename="../src/tool_draw_rectangle.cpp" line="79"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation type="unfinished">Napsahda</translation>
+        <translation>Napsahda</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="80"/>
         <source>Line snap</source>
         <comment>Snap to previous lines</comment>
-        <translation type="unfinished"></translation>
+        <translation>Linjan kiinnitys</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="81"/>
@@ -1100,13 +1100,13 @@
         <location filename="../src/tool_edit_line.cpp" line="345"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation type="unfinished">Napsahdus</translation>
+        <translation>Napsahda</translation>
     </message>
     <message>
         <location filename="../src/tool_edit_line.cpp" line="346"/>
         <source>Toggle curve</source>
         <comment>Toggle between curved and flat segment</comment>
-        <translation type="unfinished"></translation>
+        <translation>Aseta käyrä</translation>
     </message>
     <message>
         <location filename="../src/tool_edit_line.cpp" line="453"/>
@@ -1125,7 +1125,7 @@
         <location filename="../src/tool_edit_point.cpp" line="490"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation type="unfinished">Napsahdus</translation>
+        <translation>Napsahda</translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="491"/>
@@ -1137,7 +1137,7 @@
         <location filename="../src/tool_edit_point.cpp" line="492"/>
         <source>Toggle dash</source>
         <comment>Toggle dash points</comment>
-        <translation type="unfinished"></translation>
+        <translation>Aseta ajatusviiva</translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="642"/>
@@ -1330,7 +1330,7 @@
     <message>
         <location filename="../src/file_format.cpp" line="87"/>
         <source>Format (%1) does not support export</source>
-        <translation type="unfinished"></translation>
+        <translation>Formaatti %1 ei tue vientiä</translation>
     </message>
 </context>
 <context>
@@ -1343,7 +1343,7 @@
     <message>
         <location filename="../src/tool_fill.cpp" line="100"/>
         <source>The map area is large. Use of the fill tool may be very slow. Do you want to use it anyway?</source>
-        <translation type="unfinished"></translation>
+        <translation>Kartan alue on suuri. Täyttötyökalun käyttö voi olla todella hidasta. Käytetäänkö siitä huolimatta?</translation>
     </message>
     <message>
         <location filename="../src/tool_fill.cpp" line="85"/>
@@ -1355,7 +1355,7 @@
     <message>
         <location filename="../src/tool_fill.cpp" line="86"/>
         <source>The clicked area is not bounded by lines or areas, cannot fill this area.</source>
-        <translation type="unfinished"></translation>
+        <translation>Valittu alue ei ole suljettu viivoilla tai alueilla, aluetta ei voida täyttää.</translation>
     </message>
     <message>
         <location filename="../src/tool_fill.cpp" line="120"/>
@@ -1365,7 +1365,7 @@
     <message>
         <location filename="../src/tool_fill.cpp" line="168"/>
         <source>Failed to create the fill object.</source>
-        <translation type="unfinished"></translation>
+        <translation>Täyttöobjektin luonti epäonnistui.</translation>
     </message>
     <message>
         <location filename="../src/tool_fill.cpp" line="179"/>
@@ -1431,7 +1431,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="106"/>
         <source>Save information for automatic recovery</source>
-        <translation type="unfinished">Tallenna tietoja automaattisen palauttamiselle</translation>
+        <translation>Tallenna tiedot automaattista palauttamista varten</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="110"/>
@@ -2085,7 +2085,7 @@
     <message>
         <location filename="../src/object.cpp" line="460"/>
         <source>Error while loading an object of type %1 at %2:%3: %4</source>
-        <translation type="unfinished">Virhe lastaus %1-tyyppinen objekti: %2:%3: %4</translation>
+        <translation>Virhe ladatessa %1-tyypin objektia kohteessa %2:%3: %4</translation>
     </message>
     <message>
         <location filename="../src/object.cpp" line="428"/>
@@ -2734,7 +2734,7 @@ löytääksesi taustakarttatiedoston nimen.</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="550"/>
         <source>Do you want to remove the autosaved version?</source>
-        <translation type="unfinished">Haluatko poistaa automaattisesti tallennettu version?</translation>
+        <translation>Haluatko poistaa automaattisesti tallennettu version?</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="556"/>
@@ -5590,7 +5590,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1086"/>
         <source>Failed to prepare the preview.</source>
-        <translation type="unfinished">Esikatselu epäonnistui valmistamaan.</translation>
+        <translation>Esikastelun valmistelu epäonnistui.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1097"/>
@@ -5630,7 +5630,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1189"/>
         <source>Failed to prepare the PDF export.</source>
-        <translation type="unfinished">PDF-vienti epäonnistui valmistamaan.</translation>
+        <translation>PDF-viennin valmistelu epäonnistui.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1199"/>
@@ -5730,7 +5730,7 @@ erottelut</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1219"/>
         <source>Failed to finish the PDF export.</source>
-        <translation type="unfinished">PDF-vienti epäonnistui loppumaan.</translation>
+        <translation>PDF-viennin viimeistely epäonnistui.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1229"/>
@@ -6562,7 +6562,7 @@ jokapäiväinen ilmiö
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="60"/>
         <source>Key</source>
-        <translation type="unfinished">Avain</translation>
+        <translation>Avain</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="60"/>
@@ -6572,7 +6572,7 @@ jokapäiväinen ilmiö
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="60"/>
         <source>Value</source>
-        <translation type="unfinished">Arvo</translation>
+        <translation>Arvo</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="76"/>
@@ -6587,12 +6587,12 @@ jokapäiväinen ilmiö
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="83"/>
         <source>Move Up</source>
-        <translation type="unfinished">Siirrä ylös</translation>
+        <translation>Siirrä ylös</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="85"/>
         <source>Move Down</source>
-        <translation type="unfinished">Siirrä alas</translation>
+        <translation>Siirrä alas</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="92"/>
@@ -6602,7 +6602,7 @@ jokapäiväinen ilmiö
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="97"/>
         <source>Help</source>
-        <translation type="unfinished">Ohje</translation>
+        <translation>Ohje</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="346"/>
