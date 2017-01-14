@@ -1,5 +1,6 @@
 #
-#    Copyright 2012, 2013, 2014 Thomas Schöps, Kai Pastor
+#    Copyright 2012, 2013 Thomas Schöps
+#    Copyright 2012-2017 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -21,36 +22,36 @@ message(STATUS "Configuring ${PROJECT_NAME} translations")
 find_package(Qt5LinguistTools REQUIRED)
 
 set(Mapper_TRANS
- OpenOrienteering_cs.ts
- OpenOrienteering_da.ts
- OpenOrienteering_de.ts
- OpenOrienteering_en.ts
- OpenOrienteering_eo.ts
- OpenOrienteering_es.ts
- OpenOrienteering_et.ts
- OpenOrienteering_fi.ts
- OpenOrienteering_fr.ts
- OpenOrienteering_he.ts
- OpenOrienteering_hu.ts
- OpenOrienteering_id.ts
- OpenOrienteering_it.ts
- OpenOrienteering_ja.ts
- OpenOrienteering_lv.ts
- OpenOrienteering_nb.ts
- OpenOrienteering_nl.ts
- OpenOrienteering_pl.ts
- OpenOrienteering_pt_BR.ts
- OpenOrienteering_ru.ts
- OpenOrienteering_sv.ts
- OpenOrienteering_uk.ts
- OpenOrienteering_zh_CN.ts
- CACHE INTERNAL "Translation files"
+  OpenOrienteering_cs.ts
+  OpenOrienteering_da.ts
+  OpenOrienteering_de.ts
+  OpenOrienteering_en.ts
+  OpenOrienteering_eo.ts
+  OpenOrienteering_es.ts
+  OpenOrienteering_fi.ts
+  OpenOrienteering_fr.ts
+  OpenOrienteering_hu.ts
+  OpenOrienteering_id.ts
+  OpenOrienteering_it.ts
+  OpenOrienteering_ja.ts
+  OpenOrienteering_lv.ts
+  OpenOrienteering_nb.ts
+  OpenOrienteering_nl.ts
+  OpenOrienteering_pl.ts
+  OpenOrienteering_pt_BR.ts
+  OpenOrienteering_ru.ts
+  OpenOrienteering_sv.ts
+  OpenOrienteering_uk.ts
+  CACHE INTERNAL "Translation files"
 )
 qt5_add_translation(Mapper_QM ${Mapper_TRANS})
 
 set(Mapper_TRANS_TEMPLATE
- OpenOrienteering_template.ts
- CACHE INTERNAL "Translation template file"
+  OpenOrienteering_et.ts
+  OpenOrienteering_he.ts
+  OpenOrienteering_zh_CN.ts
+  OpenOrienteering_template.ts
+  CACHE INTERNAL "Translation files which are not deployed"
 )
 
 set(Mapper_TRANS_DIR
