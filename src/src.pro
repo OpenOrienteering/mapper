@@ -67,7 +67,6 @@ HEADERS += \
   core/symbols/symbol.h \
   core/symbols/text_symbol.h \
   core/virtual_coord_vector.h \
-  core/virtual_path.cpp \
   core/virtual_path.h \
   fileformats/file_format.h \
   fileformats/file_format_registry.h \

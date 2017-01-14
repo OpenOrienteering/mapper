@@ -1,5 +1,5 @@
 #
-#    Copyright 2012-2016 Kai Pastor
+#    Copyright 2012-2017 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -23,6 +23,7 @@ add_subdirectory(data)
 find_package(Qt5PrintSupport REQUIRED)
 find_package(Qt5Test REQUIRED)
 find_package(Qt5Widgets REQUIRED)
+set(CMAKE_AUTOMOC ON)
 
 if(Mapper_DEVELOPMENT_BUILD)
 	include(EnableSanitize)
@@ -50,22 +51,15 @@ add_definitions(
 #
 function(add_test_helper testname autorun)
 	unset(TEST_${testname}_SRCS)
-	unset(TEST_${testname}_HDRS)
 	set(manual_test 0)
 	foreach(arg ${ARGN})
 		if("${arg}" STREQUAL "MANUAL")
 			set(manual_test 1)
 		else()
 			list(APPEND TEST_${testname}_SRCS ${arg}.cpp)
-			list(APPEND TEST_${testname}_HDRS ${arg}.h)
-			if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${arg}_p.h)
-				list(APPEND TEST_${testname}_HDRS ${arg}_p.h)
-			endif()
 		endif()
 	endforeach()
-	qt5_wrap_cpp(TEST_${testname}_MOC ${testname}.h)
-	qt5_wrap_cpp(TEST_${testname}_XTRA_MOC ${TEST_${testname}_HDRS} OPTIONS -nw)
-	add_executable(${testname} ${testname}.cpp ${TEST_${testname}_SRCS} ${TEST_${testname}_MOC} ${TEST_${testname}_XTRA_MOC})
+	add_executable(${testname} ${testname}.cpp ${TEST_${testname}_SRCS})
 	target_link_libraries(${testname}
 	  PROJ4::proj
 	  Qt5::Test

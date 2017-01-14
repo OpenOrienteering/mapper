@@ -20,23 +20,18 @@ find_package(GDAL REQUIRED)
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
+set(CMAKE_AUTOMOC ON)
  
-qt_wrap_cpp(mapper-gdal MAPPER_GDAL_MOC
-  gdal_settings_page.h
+# Extra header to be shown in the IDE or to be translated
+set(MAPPER_GDAL_HEADERS
   ogr_file_format_p.h
-  ogr_template.h
 )
-
+	
 add_library(mapper-gdal STATIC
-  ${MAPPER_GDAL_MOC}
-  gdal_manager.h
+  ${MAPPER_GDAL_HEADERS}
   gdal_manager.cpp
-  gdal_settings_page.h
   gdal_settings_page.cpp
-  ogr_file_format.h
-  ogr_file_format_p.h
   ogr_file_format.cpp
-  ogr_template.h
   ogr_template.cpp
 )
 

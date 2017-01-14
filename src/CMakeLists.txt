@@ -21,6 +21,7 @@ find_package(Qt5Core 5.2 REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Network)
 find_package(Qt5PrintSupport)
+set(CMAKE_AUTOMOC ON)
 
 if(Mapper_PACKAGE_QT AND UNIX AND NOT APPLE AND NOT Mapper_DEVELOPMENT_BUILD)
 	set(MAPPER_USE_QT_CONF_QRC 1)
@@ -201,169 +202,32 @@ set(Mapper_Common_SRCS
   util/xml_stream_util.cpp
 )
 
-set(Mapper_Common_MOC_INPUT
-  settings.h
-  
-  core/autosave_p.h
-  core/georeferencing.h
-  core/map.h
-  core/map_printer.h
-  core/map_view.h
-  
-  fileformats/ocad8_file_format_p.h
-  fileformats/xml_file_format_p.h
-  fileformats/file_import_export.h
-  fileformats/ocd_file_export.h
-  fileformats/ocd_file_import.h
-  
-  gui/about_dialog.h
-  gui/autosave_dialog.h
-  gui/color_dialog.h
-  gui/color_dock_widget.h
-  gui/configure_grid_dialog.h
-  gui/georeferencing_dialog.h
-  gui/home_screen_controller.h
-  gui/main_window.h
-  gui/main_window_controller.h
-  gui/print_progress_dialog.h
-  gui/print_tool.h
-  gui/print_widget.h
-  gui/select_crs_dialog.h
-  gui/settings_dialog.h
-  gui/task_dialog.h
-  gui/text_browser_dialog.h
-  
-  gui/map/map_dialog_new.h
-  gui/map/map_dialog_rotate.h
-  gui/map/map_dialog_scale.h
-  gui/map/map_editor.h
-  gui/map/map_editor_activity.h
-  gui/map/map_editor_p.h
-  gui/map/map_widget.h
-  
-  gui/symbols/area_symbol_settings.h
-  gui/symbols/combined_symbol_settings.h
-  gui/symbols/line_symbol_settings.h
-  gui/symbols/point_symbol_editor_widget.h
-  gui/symbols/point_symbol_settings.h
-  gui/symbols/replace_symbol_set_dialog.h
-  gui/symbols/symbol_properties_widget.h
-  gui/symbols/symbol_setting_dialog.h
-  gui/symbols/text_symbol_settings.h
-  
-  gui/widgets/action_grid_bar.h
-  gui/widgets/color_dropdown.h
-  gui/widgets/compass_display.h
-  gui/widgets/crs_param_widgets.h
-  gui/widgets/crs_selector.h
-  gui/widgets/editor_settings_page.h
-  gui/widgets/general_settings_page.h
-  gui/widgets/home_screen_widget.h
-  gui/widgets/key_button_bar.h
-  gui/widgets/mapper_proxystyle.h
-  gui/widgets/measure_widget.h
-  gui/widgets/pie_menu.h
-  gui/widgets/segmented_button_layout.h
-  gui/widgets/settings_page.h
-  gui/widgets/symbol_dropdown.h
-  gui/widgets/symbol_render_widget.h
-  gui/widgets/symbol_tooltip.h
-  gui/widgets/symbol_widget.h
-  gui/widgets/tag_select_widget.h
-  gui/widgets/tags_widget.h
-  gui/widgets/template_list_widget.h
-  gui/widgets/text_alignment_widget.h
-  
-  sensors/compass.h
-  sensors/gps_display.h
-  sensors/gps_temporary_markers.h
-  sensors/gps_track_recorder.h
-  
-  templates/template.h
-  templates/template_adjust.h
-  templates/template_dialog_reopen.h
-  templates/template_image.h
-  templates/template_map.h
-  templates/template_position_dock_widget.h
-  templates/template_tool_move.h
-  templates/template_tool_paint.h
-  templates/template_track.h
-  
-  tools/cut_hole_tool.h
-  tools/cut_tool.h
-  tools/cutout_tool.h
-  tools/distribute_points_tool.h
-  tools/draw_circle_tool.h
-  tools/draw_freehand_tool.h
-  tools/draw_line_and_area_tool.h
-  tools/draw_path_tool.h
-  tools/draw_point_tool.h
-  tools/draw_point_gps_tool.h
-  tools/draw_rectangle_tool.h
-  tools/draw_text_tool.h
-  tools/edit_line_tool.h
-  tools/edit_point_tool.h
-  tools/edit_tool.h
-  tools/fill_tool.h
-  tools/pan_tool.h
-  tools/rotate_tool.h
-  tools/rotate_pattern_tool.h
-  tools/scale_tool.h
-  tools/text_object_editor_helper.h
-  tools/tool.h
-  tools/tool_base.h
-  tools/tool_helpers.h
-  
-  undo/object_undo.h
-  undo/undo_manager.h
-  
-  util/item_delegates.h
-  util/overriding_shortcut.h
-  util/recording_translator.h
-)
-
-# Extra header to show in the IDE, but not be written to src.pro
+# Extra header to be shown in the IDE or to be translated
 set(Mapper_Common_HEADERS
-  core/crs_template.h
-  core/crs_template_implementation.h
+  core/autosave_p.h
   core/image_transparency_fixup.h
-  core/latlon.h
-  core/map_coord.h
-  core/map_grid.h
-  core/map_part.h
-  core/path_coord.h
-  core/virtual_coord_vector.h
-  core/virtual_path.cpp
   core/objects/object_operations.h
   core/renderables/renderable.h
   core/renderables/renderable_implementation.h
-  core/symbols/area_symbol.h
-  core/symbols/combined_symbol.h
-  core/symbols/line_symbol.h
-  core/symbols/point_symbol.h
-  core/symbols/symbol.h
-  core/symbols/text_symbol.h
   
-  fileformats/ocd_file_format.h
+  fileformats/file_import_export.h  # translations
+  fileformats/ocad8_file_format_p.h
+  fileformats/ocd_file_import.h     # translations
   fileformats/ocd_types.h
   fileformats/ocd_types_v8.h
   fileformats/ocd_types_v9.h
   fileformats/ocd_types_v10.h
   fileformats/ocd_types_v11.h
   fileformats/ocd_types_v12.h
+  fileformats/xml_file_format_p.h
   
-  gui/point_handles.h
   gui/util_gui.h
-  
-  undo/map_part_undo.h
-  undo/undo.h
+  gui/map/map_editor_p.h
   
   util/backports.h
   util/memory.h
-  util/scoped_signals_blocker.h
 )
 
-qt5_wrap_cpp(Mapper_Common_MOC ${Mapper_Common_MOC_INPUT} TARGET Mapper_Common)
 
 # Resources (from project root)
 
@@ -379,8 +243,6 @@ qt5_add_resources(Mapper_RESOURCES_RCC ${Mapper_RESOURCES} OPTIONS -no-compress)
 
 add_library(Mapper_Common STATIC
   ${Mapper_Common_SRCS}
-  ${Mapper_Common_MOC}
-  ${Mapper_Common_MOC_INPUT} # for IDE
   ${Mapper_Common_HEADERS}   # for IDE
   ${Mapper_RESOURCES_RCC}
 )
@@ -414,7 +276,7 @@ target_compile_definitions(Mapper_Common PRIVATE
 )
 
 qt5_translations_sources(
-  SOURCES ${Mapper_Common_SRCS} ${Mapper_COMMON_MOC_INPUT}
+  SOURCES ${Mapper_Common_SRCS} ${Mapper_Common_HEADERS}
 )
 
 
@@ -499,7 +361,6 @@ foreach(cpp_file ${Mapper_Common_SRCS})
 		list(APPEND Mapper_Common_HEADERS "${h_file}")
 	endif()
 endforeach()
-list(APPEND Mapper_Common_HEADERS ${Mapper_Common_MOC_INPUT})
 list(REMOVE_DUPLICATES Mapper_Common_HEADERS)
 list(SORT Mapper_Common_HEADERS)
 list(SORT Mapper_Common_SRCS)
