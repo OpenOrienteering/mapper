@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016 Kai Pastor
+ *    Copyright 2016, 2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -18,16 +18,23 @@
  */
 
 
-#include "util_t.h"
+#include <QtTest/QtTest>
 
 #include "util/util.h"
 
 
-UtilTest::UtilTest(QObject* parent)
-: QObject(parent)
+/**
+ * @test Tests utility functions and structures.
+ */
+class UtilTest : public QObject
 {
-	// nothing else
-}
+Q_OBJECT
+private slots:
+	void initTestCase();
+	void rectIncludeTest();
+	void rectIncludeSafeTest();
+};
+
 
 
 void UtilTest::initTestCase()
@@ -109,3 +116,4 @@ void UtilTest::rectIncludeSafeTest()
 
 
 QTEST_APPLESS_MAIN(UtilTest)
+#include "util_t.moc"
