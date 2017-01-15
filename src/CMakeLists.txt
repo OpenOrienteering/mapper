@@ -1,6 +1,6 @@
 #
 #    Copyright 2012-2014 Thomas Schöps
-#    Copyright 2012-2016 Kai Pastor
+#    Copyright 2012-2017 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -493,8 +493,19 @@ endforeach()
 
 # qmake configuration
 
+foreach(cpp_file ${Mapper_Common_SRCS})
+	string(REPLACE ".cpp" ".h" h_file "${cpp_file}")
+	if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${h_file}")
+		list(APPEND Mapper_Common_HEADERS "${h_file}")
+	endif()
+endforeach()
+list(APPEND Mapper_Common_HEADERS ${Mapper_Common_MOC_INPUT})
+list(REMOVE_DUPLICATES Mapper_Common_HEADERS)
+list(SORT Mapper_Common_HEADERS)
+list(SORT Mapper_Common_SRCS)
+
 set(MAPPER_PRO_GENERATOR "Generated in CMakeLists.txt from src.pro.in")
-string(REPLACE ";" " \\\n  " MAPPER_PRO_HEADERS "${Mapper_Common_MOC_INPUT};${Mapper_Common_HEADERS}")
+string(REPLACE ";" " \\\n  " MAPPER_PRO_HEADERS "${Mapper_Common_HEADERS}")
 string(REPLACE ";" " \\\n  " MAPPER_PRO_SOURCES "${Mapper_Common_SRCS}")
 configure_file(src.pro.in src.pro.tmp @ONLY)
 execute_process(COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${CMAKE_CURRENT_BINARY_DIR}/src.pro.tmp" "${CMAKE_CURRENT_SOURCE_DIR}/src.pro")

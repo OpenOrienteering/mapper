@@ -37,7 +37,7 @@ DEFINES += \"MAPPER_HELP_NAMESPACE='\\"openorienteering.mapper-$${Mapper_VERSION
 
 # Input
 HEADERS += \
-  qmake\mapper_config.h \
+  qmake/mapper_config.h \
   @MAPPER_PRO_HEADERS@
 
 SOURCES += \

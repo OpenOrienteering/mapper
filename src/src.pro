@@ -37,18 +37,56 @@ DEFINES += \"MAPPER_HELP_NAMESPACE='\\"openorienteering.mapper-$${Mapper_VERSION
 
 # Input
 HEADERS += \
-  qmake\mapper_config.h \
-  settings.h \
+  qmake/mapper_config.h \
+  core/autosave.h \
   core/autosave_p.h \
+  core/crs_template.h \
+  core/crs_template_implementation.h \
   core/georeferencing.h \
+  core/image_transparency_fixup.h \
+  core/latlon.h \
   core/map.h \
+  core/map_color.h \
+  core/map_coord.h \
+  core/map_grid.h \
+  core/map_part.h \
   core/map_printer.h \
   core/map_view.h \
-  fileformats/ocad8_file_format_p.h \
-  fileformats/xml_file_format_p.h \
+  core/objects/object.h \
+  core/objects/object_operations.h \
+  core/objects/object_query.h \
+  core/objects/text_object.h \
+  core/path_coord.h \
+  core/renderables/renderable.h \
+  core/renderables/renderable_implementation.h \
+  core/storage_location.h \
+  core/symbols/area_symbol.h \
+  core/symbols/combined_symbol.h \
+  core/symbols/line_symbol.h \
+  core/symbols/point_symbol.h \
+  core/symbols/symbol.h \
+  core/symbols/text_symbol.h \
+  core/virtual_coord_vector.h \
+  core/virtual_path.cpp \
+  core/virtual_path.h \
+  fileformats/file_format.h \
+  fileformats/file_format_registry.h \
   fileformats/file_import_export.h \
+  fileformats/native_file_format.h \
+  fileformats/ocad8_file_format.h \
+  fileformats/ocad8_file_format_p.h \
   fileformats/ocd_file_export.h \
+  fileformats/ocd_file_format.h \
   fileformats/ocd_file_import.h \
+  fileformats/ocd_types.h \
+  fileformats/ocd_types_v10.h \
+  fileformats/ocd_types_v11.h \
+  fileformats/ocd_types_v12.h \
+  fileformats/ocd_types_v8.h \
+  fileformats/ocd_types_v9.h \
+  fileformats/xml_file_format.h \
+  fileformats/xml_file_format_p.h \
+  global.h \
   gui/about_dialog.h \
   gui/autosave_dialog.h \
   gui/color_dialog.h \
@@ -58,13 +96,6 @@ HEADERS += \
   gui/home_screen_controller.h \
   gui/main_window.h \
   gui/main_window_controller.h \
-  gui/print_progress_dialog.h \
-  gui/print_tool.h \
-  gui/print_widget.h \
-  gui/select_crs_dialog.h \
-  gui/settings_dialog.h \
-  gui/task_dialog.h \
-  gui/text_browser_dialog.h \
   gui/map/map_dialog_new.h \
   gui/map/map_dialog_rotate.h \
   gui/map/map_dialog_scale.h \
@@ -72,6 +103,13 @@ HEADERS += \
   gui/map/map_editor_activity.h \
   gui/map/map_editor_p.h \
   gui/map/map_widget.h \
+  gui/modifier_key.h \
+  gui/point_handles.h \
+  gui/print_progress_dialog.h \
+  gui/print_tool.h \
+  gui/print_widget.h \
+  gui/select_crs_dialog.h \
+  gui/settings_dialog.h \
   gui/symbols/area_symbol_settings.h \
   gui/symbols/combined_symbol_settings.h \
   gui/symbols/line_symbol_settings.h \
@@ -81,6 +119,10 @@ HEADERS += \
   gui/symbols/symbol_properties_widget.h \
   gui/symbols/symbol_setting_dialog.h \
   gui/symbols/text_symbol_settings.h \
+  gui/task_dialog.h \
+  gui/text_browser_dialog.h \
+  gui/touch_cursor.h \
+  gui/util_gui.h \
   gui/widgets/action_grid_bar.h \
   gui/widgets/color_dropdown.h \
   gui/widgets/compass_display.h \
@@ -103,10 +145,13 @@ HEADERS += \
   gui/widgets/tags_widget.h \
   gui/widgets/template_list_widget.h \
   gui/widgets/text_alignment_widget.h \
+  mapper_resource.h \
   sensors/compass.h \
   sensors/gps_display.h \
   sensors/gps_temporary_markers.h \
+  sensors/gps_track.h \
   sensors/gps_track_recorder.h \
+  settings.h \
   templates/template.h \
   templates/template_adjust.h \
   templates/template_dialog_reopen.h \
@@ -116,6 +161,7 @@ HEADERS += \
   templates/template_tool_move.h \
   templates/template_tool_paint.h \
   templates/template_track.h \
+  tools/boolean_tool.h \
   tools/cut_hole_tool.h \
   tools/cut_tool.h \
   tools/cutout_tool.h \
@@ -124,8 +170,8 @@ HEADERS += \
   tools/draw_freehand_tool.h \
   tools/draw_line_and_area_tool.h \
   tools/draw_path_tool.h \
-  tools/draw_point_tool.h \
   tools/draw_point_gps_tool.h \
+  tools/draw_point_tool.h \
   tools/draw_rectangle_tool.h \
   tools/draw_text_tool.h \
   tools/edit_line_tool.h \
@@ -133,57 +179,33 @@ HEADERS += \
   tools/edit_tool.h \
   tools/fill_tool.h \
   tools/pan_tool.h \
-  tools/rotate_tool.h \
   tools/rotate_pattern_tool.h \
+  tools/rotate_tool.h \
   tools/scale_tool.h \
   tools/text_object_editor_helper.h \
   tools/tool.h \
   tools/tool_base.h \
   tools/tool_helpers.h \
+  undo/map_part_undo.h \
   undo/object_undo.h \
+  undo/undo.h \
   undo/undo_manager.h \
+  util/backports.h \
+  util/dxfparser.h \
+  util/encoding.h \
   util/item_delegates.h \
+  util/matrix.h \
+  util/memory.h \
   util/overriding_shortcut.h \
   util/recording_translator.h \
-  core/crs_template.h \
-  core/crs_template_implementation.h \
-  core/image_transparency_fixup.h \
-  core/latlon.h \
-  core/map_coord.h \
-  core/map_grid.h \
-  core/map_part.h \
-  core/path_coord.h \
-  core/virtual_coord_vector.h \
-  core/virtual_path.cpp \
-  core/objects/object_operations.h \
-  core/renderables/renderable.h \
-  core/renderables/renderable_implementation.h \
-  core/symbols/area_symbol.h \
-  core/symbols/combined_symbol.h \
-  core/symbols/line_symbol.h \
-  core/symbols/point_symbol.h \
-  core/symbols/symbol.h \
-  core/symbols/text_symbol.h \
-  fileformats/ocd_file_format.h \
-  fileformats/ocd_types.h \
-  fileformats/ocd_types_v8.h \
-  fileformats/ocd_types_v9.h \
-  fileformats/ocd_types_v10.h \
-  fileformats/ocd_types_v11.h \
-  fileformats/ocd_types_v12.h \
-  gui/point_handles.h \
-  gui/util_gui.h \
-  undo/map_part_undo.h \
-  undo/undo.h \
-  util/backports.h \
-  util/memory.h \
-  util/scoped_signals_blocker.h
+  util/scoped_signals_blocker.h \
+  util/transformation.h \
+  util/translation_util.h \
+  util/util.h \
+  util/xml_stream_util.h
 
 SOURCES += \
   main.cpp \
-  global.cpp \
-  mapper_resource.cpp \
-  settings.cpp \
   core/autosave.cpp \
   core/crs_template.cpp \
   core/crs_template_implementation.cpp \
@@ -196,21 +218,21 @@ SOURCES += \
   core/map_part.cpp \
   core/map_printer.cpp \
   core/map_view.cpp \
-  core/path_coord.cpp \
-  core/storage_location.cpp \
-  core/virtual_coord_vector.cpp \
-  core/virtual_path.cpp \
   core/objects/object.cpp \
   core/objects/object_query.cpp \
   core/objects/text_object.cpp \
+  core/path_coord.cpp \
   core/renderables/renderable.cpp \
   core/renderables/renderable_implementation.cpp \
+  core/storage_location.cpp \
   core/symbols/area_symbol.cpp \
   core/symbols/combined_symbol.cpp \
   core/symbols/line_symbol.cpp \
   core/symbols/point_symbol.cpp \
   core/symbols/symbol.cpp \
   core/symbols/text_symbol.cpp \
+  core/virtual_coord_vector.cpp \
+  core/virtual_path.cpp \
   fileformats/file_format.cpp \
   fileformats/file_format_registry.cpp \
   fileformats/file_import_export.cpp \
@@ -221,6 +243,7 @@ SOURCES += \
   fileformats/ocd_file_import.cpp \
   fileformats/ocd_types.cpp \
   fileformats/xml_file_format.cpp \
+  global.cpp \
   gui/about_dialog.cpp \
   gui/autosave_dialog.cpp \
   gui/color_dialog.cpp \
@@ -230,6 +253,12 @@ SOURCES += \
   gui/home_screen_controller.cpp \
   gui/main_window.cpp \
   gui/main_window_controller.cpp \
+  gui/map/map_dialog_new.cpp \
+  gui/map/map_dialog_rotate.cpp \
+  gui/map/map_dialog_scale.cpp \
+  gui/map/map_editor.cpp \
+  gui/map/map_editor_activity.cpp \
+  gui/map/map_widget.cpp \
   gui/modifier_key.cpp \
   gui/point_handles.cpp \
   gui/print_progress_dialog.cpp \
@@ -237,15 +266,6 @@ SOURCES += \
   gui/print_widget.cpp \
   gui/select_crs_dialog.cpp \
   gui/settings_dialog.cpp \
-  gui/task_dialog.cpp \
-  gui/text_browser_dialog.cpp \
-  gui/touch_cursor.cpp \
-  gui/map/map_dialog_new.cpp \
-  gui/map/map_dialog_rotate.cpp \
-  gui/map/map_dialog_scale.cpp \
-  gui/map/map_editor.cpp \
-  gui/map/map_editor_activity.cpp \
-  gui/map/map_widget.cpp \
   gui/symbols/area_symbol_settings.cpp \
   gui/symbols/combined_symbol_settings.cpp \
   gui/symbols/line_symbol_settings.cpp \
@@ -255,6 +275,9 @@ SOURCES += \
   gui/symbols/symbol_properties_widget.cpp \
   gui/symbols/symbol_setting_dialog.cpp \
   gui/symbols/text_symbol_settings.cpp \
+  gui/task_dialog.cpp \
+  gui/text_browser_dialog.cpp \
+  gui/touch_cursor.cpp \
   gui/widgets/action_grid_bar.cpp \
   gui/widgets/color_dropdown.cpp \
   gui/widgets/compass_display.cpp \
@@ -277,11 +300,13 @@ SOURCES += \
   gui/widgets/tags_widget.cpp \
   gui/widgets/template_list_widget.cpp \
   gui/widgets/text_alignment_widget.cpp \
+  mapper_resource.cpp \
   sensors/compass.cpp \
   sensors/gps_display.cpp \
   sensors/gps_temporary_markers.cpp \
   sensors/gps_track.cpp \
   sensors/gps_track_recorder.cpp \
+  settings.cpp \
   templates/template.cpp \
   templates/template_adjust.cpp \
   templates/template_dialog_reopen.cpp \
@@ -292,25 +317,25 @@ SOURCES += \
   templates/template_tool_paint.cpp \
   templates/template_track.cpp \
   tools/boolean_tool.cpp \
-  tools/cut_tool.cpp \
   tools/cut_hole_tool.cpp \
+  tools/cut_tool.cpp \
   tools/cutout_tool.cpp \
   tools/distribute_points_tool.cpp \
-  tools/draw_line_and_area_tool.cpp \
-  tools/draw_point_tool.cpp \
-  tools/draw_point_gps_tool.cpp \
-  tools/draw_path_tool.cpp \
   tools/draw_circle_tool.cpp \
-  tools/draw_rectangle_tool.cpp \
   tools/draw_freehand_tool.cpp \
+  tools/draw_line_and_area_tool.cpp \
+  tools/draw_path_tool.cpp \
+  tools/draw_point_gps_tool.cpp \
+  tools/draw_point_tool.cpp \
+  tools/draw_rectangle_tool.cpp \
   tools/draw_text_tool.cpp \
-  tools/edit_tool.cpp \
-  tools/edit_point_tool.cpp \
   tools/edit_line_tool.cpp \
+  tools/edit_point_tool.cpp \
+  tools/edit_tool.cpp \
   tools/fill_tool.cpp \
   tools/pan_tool.cpp \
-  tools/rotate_tool.cpp \
   tools/rotate_pattern_tool.cpp \
+  tools/rotate_tool.cpp \
   tools/scale_tool.cpp \
   tools/text_object_editor_helper.cpp \
   tools/tool.cpp \
