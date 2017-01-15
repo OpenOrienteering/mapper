@@ -73,7 +73,7 @@ class AutosaveTest : public QObject
 Q_OBJECT
 public:
 	/** @brief Constructor */
-	explicit AutosaveTest(QObject* parent = NULL);
+	explicit AutosaveTest(QObject* parent = nullptr);
 	
 private slots:
 	/** @brief Check the AutosaveTestDocument implementation of autosave(). */
