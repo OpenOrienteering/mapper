@@ -1,5 +1,5 @@
 /*
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2014, 2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -17,8 +17,8 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_AUTOSAVE_H
-#define _OPENORIENTEERING_AUTOSAVE_H
+#ifndef OPENORIENTEERING_AUTOSAVE_H
+#define OPENORIENTEERING_AUTOSAVE_H
 
 #include <QScopedPointer>
 
@@ -73,7 +73,7 @@ protected:
 	Autosave();
 	
 	/** @brief Destructs the autosave feature. */
-	~Autosave();
+	virtual ~Autosave();
 	
 private:
 	friend class AutosavePrivate;
