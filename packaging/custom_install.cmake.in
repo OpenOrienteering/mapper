@@ -51,11 +51,11 @@ function(fixup_bundle_portable runtime dirs)
 	
 	include(BundleUtilities)
 	if(WIN32)
-		file(GLOB_RECURSE plugins "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/plugins/*.dll")
+		file(GLOB_RECURSE plugins "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}${runtime_destination}/plugins/*.dll")
 		list(APPEND runtime ${plugins})
-		fixup_bundle("$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/Mapper.exe" "${runtime}" "${dirs}")
+		fixup_bundle("$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}${runtime_destination}/Mapper.exe" "${runtime}" "${dirs}")
 	elseif(APPLE)
-		fixup_bundle("$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/Mapper.app" "${runtime}" "${dirs}")
+		fixup_bundle("$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}${runtime_destination}/Mapper.app" "${runtime}" "${dirs}")
 	endif()
 endfunction()
 
@@ -63,18 +63,30 @@ endfunction()
 # Write a minimal qt.conf if needed.
 function(handle_qt_conf)
 	handle_crosscompiling()
-	set(qt_conf "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/qt.conf")
+	set(qt_conf "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}${runtime_destination}/qt.conf")
 	if(EXISTS "${qt_conf}")
 		return()
 	elseif(WIN32)
+		file(RELATIVE_PATH rel_path
+		  "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/@MAPPER_RUNTIME_DESTINATION@"
+		  "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/@MAPPER_LIBRARY_DESTINATION@")
+		if(rel_path STREQUAL "")
+			set(rel_path ".")
+		endif()
 		file(WRITE "${qt_conf}" "\
 [Paths]
-Plugins=./plugins
-Translations=./translations
+Plugins=${rel_path}/plugins
+Translations=${rel_path}/translations
 ")
 	endif()
 endfunction()
 
+
+# BundleUtilities stumples upon "/."
+set(runtime_destination "/@MAPPER_RUNTIME_DESTINATION@")
+if(runtime_destination STREQUAL "/.")
+	set(runtime_destination "")
+endif()
 
 fixup_bundle_portable("" "@MAPPER_LIB_HINTS@")
 handle_qt_conf()
