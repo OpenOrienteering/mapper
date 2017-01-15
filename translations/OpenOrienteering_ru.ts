@@ -1068,7 +1068,7 @@
         <location filename="../src/tools/draw_text_tool.cpp" line="102"/>
         <source>Snap</source>
         <extracomment>Snap to existing objects</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Привязка</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="465"/>
@@ -1078,7 +1078,7 @@
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="466"/>
         <source>&lt;b&gt;%1+%2&lt;/b&gt;: Cancel editing. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+%2&lt;/b&gt;: Отмена изменений. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="471"/>
