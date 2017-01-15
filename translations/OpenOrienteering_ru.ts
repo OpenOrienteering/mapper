@@ -4758,7 +4758,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1519"/>
         <source>Color id not found: %1, ignoring this color</source>
-        <translation>Идентификатор цвета не найдет: %1, цвет игнорируется</translation>
+        <translation>Идентификатор цвета не найден: %1, цвет игнорируется</translation>
     </message>
 </context>
 <context>
