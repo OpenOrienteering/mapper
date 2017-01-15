@@ -16,7 +16,7 @@
 <context>
     <name>Importer</name>
     <message numerus="yes">
-        <location filename="../src/file_import_export.cpp" line="93"/>
+        <location filename="../src/fileformats/file_import_export.cpp" line="93"/>
         <source>Dropped %n irregular object(s).</source>
         <translation>
             <numerusform>Dropped one irregular object.</numerusform>
@@ -66,7 +66,7 @@
 <context>
     <name>OCAD8FileImport</name>
     <message numerus="yes">
-        <location filename="../src/file_format_ocad8.cpp" line="145"/>
+        <location filename="../src/fileformats/ocad8_file_format.cpp" line="146"/>
         <source>%n color separation(s) were skipped, reason: Import disabled.</source>
         <translation>
             <numerusform>One color separation was skipped, reason: Import disabled.</numerusform>
@@ -88,7 +88,7 @@
 <context>
     <name>TemplateTrack</name>
     <message numerus="yes">
-        <location filename="../src/template_track.cpp" line="479"/>
+        <location filename="../src/templates/template_track.cpp" line="479"/>
         <source>%n path object(s) could not be imported (reason: missing coordinates).</source>
         <translation>
             <numerusform>One path object could not be imported (reason: missing coordinates).</numerusform>
