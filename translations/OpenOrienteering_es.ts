@@ -1109,7 +1109,7 @@
         <location filename="../src/tools/draw_text_tool.cpp" line="102"/>
         <source>Snap</source>
         <extracomment>Snap to existing objects</extracomment>
-        <translation type="unfinished">Ajustar</translation>
+        <translation>Acoplar</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="465"/>
@@ -1119,7 +1119,7 @@
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="466"/>
         <source>&lt;b&gt;%1+%2&lt;/b&gt;: Cancel editing. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+%2&lt;/b&gt;: Cancelar edición. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="471"/>
@@ -2194,7 +2194,7 @@
         <location filename="../src/fileformats/file_import_export.h" line="230"/>
         <source>No such option: %1</source>
         <comment>No such import / export option</comment>
-        <translation type="unfinished"></translation>
+        <translation>No existe la opción: %1</translation>
     </message>
 </context>
 <context>
@@ -5197,7 +5197,7 @@ zoom usando la rueda del ratón, si dispone de esos elementos.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.h" line="433"/>
         <source>Color id not found: %1, ignoring this color</source>
-        <translation type="unfinished">Id de color no encontrado: %1, se ignora este color</translation>
+        <translation>Código de color no encontrado: %1, se ignora este color</translation>
     </message>
 </context>
 <context>
@@ -7660,13 +7660,13 @@ La máxima versión soportada es %2.</translation>
         <location filename="../src/gui/util_gui.h" line="79"/>
         <source>mm</source>
         <comment>millimeters</comment>
-        <translation type="unfinished">mm</translation>
+        <translation>mm</translation>
     </message>
     <message>
         <location filename="../src/gui/util_gui.h" line="114"/>
         <source>m</source>
         <comment>meters</comment>
-        <translation type="unfinished">m</translation>
+        <translation>m</translation>
     </message>
 </context>
 <context>
