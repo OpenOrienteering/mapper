@@ -1440,7 +1440,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="116"/>
         <source>Default</source>
-        <translation>Стандартно</translation>
+        <translation>За замовчуванням</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="139"/>
@@ -2987,7 +2987,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="854"/>
         <source>Draw paths</source>
-        <translation>Накреслити контури</translation>
+        <translation>Накреслити лінії</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="855"/>
@@ -3022,7 +3022,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="864"/>
         <source>Connect paths</source>
-        <translation>З’єднати контури</translation>
+        <translation>З’єднати лінії</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="866"/>
@@ -3624,12 +3624,12 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="2095"/>
         <source>Draw paths free-handedly.</source>
-        <translation>Накреслити контури від руки.</translation>
+        <translation>Накреслити лінії від руки.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2097"/>
         <source>Fill bounded areas.</source>
-        <translation>Заповнити замкнену площину.</translation>
+        <translation>Заповнити замкнені площі.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2099"/>
@@ -4111,9 +4111,9 @@ selected</source>
         <location filename="future_translations.cpp" line="37"/>
         <source>Cut %n object(s)</source>
         <extracomment>Past tense. Displayed when an Edit &gt; Cut operator is completed.</extracomment>
-        <translation><numerusform>Вирізати %n об'єкт</numerusform>
-        <numerusform>Вирізати %n об'єкти</numerusform>
-        <numerusform>Вирізати %n об'єктів</numerusform>
+        <translation><numerusform>Вирізано %n об'єкт</numerusform>
+        <numerusform>Вирізано %n об'єкти</numerusform>
+        <numerusform>Вирізано %n об'єктів</numerusform>
         </translation></message>
     <message numerus="yes">
         <location filename="future_translations.cpp" line="40"/>
@@ -4878,7 +4878,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="119"/>
         <source>In area symbol %1 '%2': %3</source>
-        <translation>У площадному знакові %1 '%2': %3</translation>
+        <translation>У площадному знаку %1 '%2': %3</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1558"/>
@@ -6228,13 +6228,13 @@ separations</source>
         <location filename="future_translations.cpp" line="76"/>
         <source>Fill / Create border for selected objects</source>
         <extracomment>To replace existing translation which uses "object(s)".</extracomment>
-        <translation>Встановити / Створити межу для виділених об'єктів</translation>
+        <translation>Заповнити / Створити межу для виділених об'єктів</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="79"/>
         <source>Scale symbols</source>
         <extracomment>To replace existing translation which uses "symbol(s)".</extracomment>
-        <translation>Масштабувати умовні знаки</translation>
+        <translation>Масштабувати знаки</translation>
     </message>
 </context>
 <context>
