@@ -1075,7 +1075,7 @@
         <location filename="../src/tools/draw_text_tool.cpp" line="102"/>
         <source>Snap</source>
         <extracomment>Snap to existing objects</extracomment>
-        <translation type="unfinished">Einrasten</translation>
+        <translation>Einrasten</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="465"/>
@@ -5069,7 +5069,7 @@ Zoomen ist mit dem Mausrad möglich.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.h" line="433"/>
         <source>Color id not found: %1, ignoring this color</source>
-        <translation type="unfinished">Farb-ID nicht gefunden: %1, ignoriere diese Farbe</translation>
+        <translation>Farb-ID nicht gefunden: %1, ignoriere diese Farbe</translation>
     </message>
 </context>
 <context>
@@ -7488,13 +7488,13 @@ Die höchste unterstütze Version ist %2.</translation>
         <location filename="../src/gui/util_gui.h" line="79"/>
         <source>mm</source>
         <comment>millimeters</comment>
-        <translation type="unfinished">mm</translation>
+        <translation>mm</translation>
     </message>
     <message>
         <location filename="../src/gui/util_gui.h" line="114"/>
         <source>m</source>
         <comment>meters</comment>
-        <translation type="unfinished">m</translation>
+        <translation>m</translation>
     </message>
 </context>
 <context>
