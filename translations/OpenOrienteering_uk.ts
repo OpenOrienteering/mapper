@@ -2020,7 +2020,7 @@
         <location filename="../src/fileformats/file_import_export.h" line="230"/>
         <source>No such option: %1</source>
         <comment>No such import / export option</comment>
-        <translation type="unfinished">Опція %1 відсутня</translation>
+        <translation>Опція %1 відсутня</translation>
     </message>
 </context>
 <context>
