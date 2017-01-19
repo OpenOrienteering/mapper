@@ -191,7 +191,9 @@ bool PassPointList::estimateSimilarityTransformation(TemplateTransform* transfor
 		double move_x = output.get(2, 0);
 		double move_y = output.get(3, 0);
 		double rotation = qAtan2((-1) * output.get(1, 0), output.get(0, 0));
-		double scale = output.get(0, 0) / qCos(rotation);
+		// Avoid division by (values close to) zero
+		bool use_cos = (qAbs(rotation) < 0.34 * M_PI || qAbs(rotation) > 0.66 * M_PI);
+		double scale = use_cos ? (output.get(0, 0) / qCos(rotation)) : (output.get(1, 0) / -qSin(rotation));
 		
 		// Calculate transformation matrix
 		double cosr = cos(rotation);
