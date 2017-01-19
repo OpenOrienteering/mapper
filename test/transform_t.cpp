@@ -127,5 +127,76 @@ void TransformTest::testEstimateNonIsometric()
 	QVERIFY(t.template_rotation < 0.000001);
 }
 
+void TransformTest::testEstimateSimilarityTransformation()
+{
+	const auto min_distance = MapCoordF{0,0}.distanceTo({0.001,0});
+	
+	PassPointList passpoints;
+	passpoints.reserve(3);
+	
+	TemplateTransform t0;
+	QVERIFY(passpoints.estimateSimilarityTransformation(&t0));
+	
+	passpoints.resize(1);
+	passpoints[0].src_coords  = MapCoordF { 32.0, 0.0 };
+	passpoints[0].dest_coords = MapCoordF { 64.0, 64.0 };
+	
+	TemplateTransform t1;
+	QVERIFY(passpoints.estimateSimilarityTransformation(&t1));
+	QCOMPARE(t1.template_x, MapCoord(32,64).nativeX());
+	QCOMPARE(t1.template_y, MapCoord(32,64).nativeY());
+	QCOMPARE(t1.template_scale_x, 1.0);
+	QCOMPARE(t1.template_scale_y, 1.0);
+	QVERIFY(t1.template_rotation < 0.000001);
+	
+	QCOMPARE(QPointF(passpoints[0].calculated_coords), QPointF(passpoints[0].dest_coords));
+	QVERIFY(passpoints[0].error < min_distance);
+	
+	// The following passpoints establish a rotation by exactly 90°.
+	// This results in an invalid scale value of zero, so the tests fail.
+	passpoints.clear();
+	passpoints.resize(2);
+	passpoints[0].src_coords  = MapCoordF { 32.0, 0.0 };
+	passpoints[0].dest_coords = MapCoordF { 0.0, -32.0 };
+	passpoints[1].src_coords  = MapCoordF { 0.0, -32.0 };
+	passpoints[1].dest_coords = MapCoordF { -32.0, 0.0 };
+	
+	TemplateTransform t2;
+	QVERIFY(passpoints.estimateSimilarityTransformation(&t2));
+	QCOMPARE(t2.template_x, 0);
+	QCOMPARE(t2.template_y, 0);
+	QCOMPARE(t2.template_rotation, qDegreesToRadians(90.0));
+	QCOMPARE(t2.template_scale_x, 1.0);
+	QCOMPARE(t2.template_scale_y, 1.0);
+	
+	QCOMPARE(QPointF(passpoints[0].calculated_coords), QPointF(passpoints[0].dest_coords));
+	QVERIFY(passpoints[0].error < min_distance);
+	QCOMPARE(QPointF(passpoints[1].calculated_coords), QPointF(passpoints[1].dest_coords));
+	QVERIFY(passpoints[1].error < min_distance);
+	
+	passpoints.resize(3);
+	passpoints[0].src_coords  = MapCoordF { 128.0, 0.0 };
+	passpoints[0].dest_coords = MapCoordF { 64.0, 64.0 };
+	passpoints[1].src_coords  = MapCoordF { 256.0, 0.0 };
+	passpoints[1].dest_coords = MapCoordF { 96.0, 64.0 };
+	passpoints[2].src_coords  = MapCoordF { 128.0, 128.0 };
+	passpoints[2].dest_coords = MapCoordF { 64.0, 96.0 };
+	
+	TemplateTransform t3;
+	QVERIFY(passpoints.estimateSimilarityTransformation(&t3));
+	QCOMPARE(t3.template_x, MapCoord(32,64).nativeX());
+	QCOMPARE(t3.template_y, MapCoord(32,64).nativeY());
+	QCOMPARE(t3.template_scale_x, 0.25);
+	QCOMPARE(t3.template_scale_y, 0.25);
+	QVERIFY(t3.template_rotation < 0.000001);
+	
+	QCOMPARE(QPointF(passpoints[0].calculated_coords), QPointF(passpoints[0].dest_coords));
+	QVERIFY(passpoints[0].error < min_distance);
+	QCOMPARE(QPointF(passpoints[1].calculated_coords), QPointF(passpoints[1].dest_coords));
+	QVERIFY(passpoints[1].error < min_distance);
+	QCOMPARE(QPointF(passpoints[2].calculated_coords), QPointF(passpoints[2].dest_coords));
+	QVERIFY(passpoints[2].error < min_distance);
+}
+
 
 QTEST_APPLESS_MAIN(TransformTest)
