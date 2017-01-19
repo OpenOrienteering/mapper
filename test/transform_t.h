@@ -57,6 +57,13 @@ private slots:
 	 * Test PassPointList::estimateNonIsometricSimilarityTransform.
 	 */
 	void testEstimateNonIsometric();
+	
+	/**
+	 * Test PassPointList::estimateSimilarityTransformation.
+	 * 
+	 * \todo Cover transformation with significant error.
+	 */
+	void testEstimateSimilarityTransformation();
 };
 
 #endif
