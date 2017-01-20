@@ -205,6 +205,9 @@ void TransformTest::testEstimateSimilarityTransformation()
 		QVERIFY(passpoints.estimateSimilarityTransformation(&t0));
 		
 		QTransform q0;
+		QVERIFY(passpoints.estimateSimilarityTransformation(&q0));
+		QVERIFY(q0.isIdentity());
+		
 		TemplateTransform check;
 		qTransformToTemplateTransform(q0, &check);
 		QCOMPARE(check, t0);
@@ -225,6 +228,22 @@ void TransformTest::testEstimateSimilarityTransformation()
 		
 		QCOMPARE(QPointF(passpoints[0].calculated_coords), QPointF(passpoints[0].dest_coords));
 		QVERIFY(passpoints[0].error < min_distance);
+		
+		QTransform q1;
+		QVERIFY(passpoints.estimateSimilarityTransformation(&q1));
+		QVERIFY(q1.isAffine());
+		QVERIFY(q1.isTranslating());
+		QVERIFY(!q1.isScaling());
+		QVERIFY(!q1.isRotating());
+		QCOMPARE(q1.dx(), MapCoord(32,64).x());
+		QCOMPARE(q1.dy(), MapCoord(32,64).y());
+		
+		QCOMPARE(QPointF(passpoints[0].calculated_coords), QPointF(passpoints[0].dest_coords));
+		QVERIFY(passpoints[0].error < min_distance);
+		
+		TemplateTransform check;
+		qTransformToTemplateTransform(q1, &check);
+		QCOMPARE(check, t1);
 	}
 	
 	{
@@ -246,6 +265,22 @@ void TransformTest::testEstimateSimilarityTransformation()
 		QVERIFY(passpoints[0].error < min_distance);
 		QCOMPARE(QPointF(passpoints[1].calculated_coords), QPointF(passpoints[1].dest_coords));
 		QVERIFY(passpoints[1].error < min_distance);
+		
+		QTransform q2;
+		QVERIFY(passpoints.estimateSimilarityTransformation(&q2));
+		QVERIFY(q2.isAffine());
+		QVERIFY(q2.isRotating());
+		QCOMPARE(q2.dx(), qreal(0));
+		QCOMPARE(q2.dy(), qreal(0));
+		
+		QCOMPARE(QPointF(passpoints[0].calculated_coords), QPointF(passpoints[0].dest_coords));
+		QVERIFY(passpoints[0].error < min_distance);
+		QCOMPARE(QPointF(passpoints[1].calculated_coords), QPointF(passpoints[1].dest_coords));
+		QVERIFY(passpoints[1].error < min_distance);
+		
+		TemplateTransform check;
+		qTransformToTemplateTransform(q2, &check);
+		QCOMPARE(check, t2);
 	}
 	
 	{
@@ -271,6 +306,24 @@ void TransformTest::testEstimateSimilarityTransformation()
 		QVERIFY(passpoints[1].error < min_distance);
 		QCOMPARE(QPointF(passpoints[2].calculated_coords), QPointF(passpoints[2].dest_coords));
 		QVERIFY(passpoints[2].error < min_distance);
+		
+		QTransform q3;
+		QVERIFY(passpoints.estimateSimilarityTransformation(&q3));
+		QVERIFY(q3.isAffine());
+		QVERIFY(q3.isScaling());
+		QCOMPARE(q3.dx(), MapCoord(32,64).x());
+		QCOMPARE(q3.dy(), MapCoord(32,64).y());
+		
+		QCOMPARE(QPointF(passpoints[0].calculated_coords), QPointF(passpoints[0].dest_coords));
+		QVERIFY(passpoints[0].error < min_distance);
+		QCOMPARE(QPointF(passpoints[1].calculated_coords), QPointF(passpoints[1].dest_coords));
+		QVERIFY(passpoints[1].error < min_distance);
+		QCOMPARE(QPointF(passpoints[2].calculated_coords), QPointF(passpoints[2].dest_coords));
+		QVERIFY(passpoints[2].error < min_distance);
+		
+		TemplateTransform check;
+		qTransformToTemplateTransform(q3, &check);
+		QCOMPARE(check, t3);
 	}
 }
 
