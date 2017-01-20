@@ -42,13 +42,14 @@
 
 // ### TemplateTransform ###
 
-TemplateTransform::TemplateTransform()
+// static
+TemplateTransform TemplateTransform::fromQTransform(const QTransform& qt) noexcept
 {
-	template_x = 0;
-	template_y = 0;
-	template_scale_x = 1;
-	template_scale_y = 1;
-	template_rotation = 0;
+	const auto rotation = qAtan2(qt.m21(), qt.m11());
+	const auto cos_r    = qCos(rotation);
+	return { qRound(1000 * qt.m31()), qRound(1000 * qt.m32()),
+	         rotation,
+	         qt.m11() / cos_r, qt.m22() / cos_r };
 }
 
 
@@ -97,6 +98,22 @@ void TemplateTransform::load(QXmlStreamReader& xml)
 	template_scale_y = element.attribute<double>(QLatin1String("scale_y"));
 	template_rotation = element.attribute<double>(QLatin1String("rotation"));
 }
+
+bool operator==(const TemplateTransform& lhs, const TemplateTransform& rhs) noexcept
+{
+	return lhs.template_x == rhs.template_x
+	        && (qFuzzyCompare(lhs.template_rotation, rhs.template_rotation)
+	            || (qIsNull(lhs.template_rotation) && qIsNull(rhs.template_rotation)))
+	        && qFuzzyCompare(lhs.template_scale_x, rhs.template_scale_x)
+	        && qFuzzyCompare(lhs.template_scale_y, rhs.template_scale_y);
+}
+
+bool operator!=(const TemplateTransform& lhs, const TemplateTransform& rhs) noexcept
+{
+	return !operator==(lhs, rhs);
+}
+
+
 
 // ### Template ###
 

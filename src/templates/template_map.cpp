@@ -183,7 +183,7 @@ void TemplateMap::calculateTransformation()
 	if (ok0 && ok1 && ok2
 	    && passpoints.estimateNonIsometricSimilarityTransform(&q_transform))
 	{
-		qTransformToTemplateTransform(q_transform, &transform);
+		transform = TemplateTransform::fromQTransform(q_transform);
 		updateTransformationMatrices();
 	}
 	else

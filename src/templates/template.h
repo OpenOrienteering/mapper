@@ -19,8 +19,8 @@
  */
 
 
-#ifndef _OPENORIENTEERING_TEMPLATE_H_
-#define _OPENORIENTEERING_TEMPLATE_H_
+#ifndef OPENORIENTEERING_TEMPLATE_H
+#define OPENORIENTEERING_TEMPLATE_H
 
 #include <memory>
 
@@ -41,26 +41,47 @@ class Map;
 class MapView;
 class MapWidget;
 
-/** Transformation parameters for non-georeferenced templates */
-class TemplateTransform
+
+/**
+ * Transformation parameters for non-georeferenced templates.
+ * 
+ * The parameters are to applied in the order
+ * 1. translate
+ * 2. rotate
+ * 3. scale.
+ * 
+ * So this order is also chosen for the member variables, and
+ * thus used in list initalization.
+ * 
+ * \see Template::applyTemplateTransform()
+ */
+struct TemplateTransform
 {
-public:
-	TemplateTransform();
+	/// x position in 1/1000 mm
+	qint32 template_x = 0;
+	/// x position in 1/1000 mm
+	qint32 template_y = 0;
+	
+	/// Rotation in radians
+	double template_rotation = 0.0;
+	
+	/// Scaling in x direction (relative to 1 mm on map)
+	double template_scale_x = 1.0;
+	/// Scaling in y direction (relative to 1 mm on map)
+	double template_scale_y = 1.0;
+	
+	static TemplateTransform fromQTransform(const QTransform& qt) noexcept;
 	
 	void load(QIODevice* file);
 	
 	void save(QXmlStreamWriter& xml, const QString role) const;
  	void load(QXmlStreamReader& xml);
-	
-	/// Position in 1/1000 mm
-	qint32 template_x;
-	qint32 template_y;
-	/// Scaling relative to "1 painter unit == 1 mm on map"
-	double template_scale_x;
-	double template_scale_y;
-	/// Rotation in radians
-	double template_rotation;
 };
+
+bool operator==(const TemplateTransform& lhs, const TemplateTransform& rhs) noexcept;
+bool operator!=(const TemplateTransform& lhs, const TemplateTransform& rhs) noexcept;
+
+
 
 /** Abstract base class for templates. */
 class Template : public QObject

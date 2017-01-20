@@ -34,6 +34,11 @@ public:
 	
 private slots:
 	/**
+	 * Tests basic transform operators.
+	 */
+	void testTransformBasics();
+	
+	/**
 	 * Tests conversion of identity QTransform to TemplateTransform
 	 */
 	void testTransformIdentity();

@@ -513,7 +513,7 @@ void TemplateImage::updatePosFromGeoreferencing()
 		qDebug() << "updatePosFromGeoreferencing() failed";
 		return; // TODO: proper error message?
 	}
-	qTransformToTemplateTransform(q_transform, &transform);
+	transform = TemplateTransform::fromQTransform(q_transform);
 	updateTransformationMatrices();
 }
 
