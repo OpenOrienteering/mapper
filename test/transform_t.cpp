@@ -94,7 +94,7 @@ void TransformTest::testTransformRotate()
 	QCOMPARE(t.template_y, 0);
 	QCOMPARE(t.template_scale_x, 1.0);
 	QCOMPARE(t.template_scale_y, 1.0);
-	QCOMPARE(t.template_rotation, rotation);
+	QCOMPARE(t.template_rotation, -rotation);
 }
 
 void TransformTest::testEstimateNonIsometric()
