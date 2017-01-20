@@ -79,8 +79,4 @@ public:
 	bool estimateNonIsometricSimilarityTransform(not_null<QTransform*> out);
 };
 
-/** Converts a QTranform into a template transform. Takes only affine parts
- *  and removes any shearing. */
-void qTransformToTemplateTransform(const QTransform& in, TemplateTransform* out);
-
 #endif

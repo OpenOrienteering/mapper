@@ -70,6 +70,8 @@ struct TemplateTransform
 	/// Scaling in y direction (relative to 1 mm on map)
 	double template_scale_y = 1.0;
 	
+	static TemplateTransform fromQTransform(const QTransform& qt) noexcept;
+	
 	void load(QIODevice* file);
 	
 	void save(QXmlStreamWriter& xml, const QString role) const;

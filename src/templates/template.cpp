@@ -42,6 +42,17 @@
 
 // ### TemplateTransform ###
 
+// static
+TemplateTransform TemplateTransform::fromQTransform(const QTransform& qt) noexcept
+{
+	const auto rotation = qAtan2(qt.m21(), qt.m11());
+	const auto cos_r    = qCos(rotation);
+	return { qRound(1000 * qt.m31()), qRound(1000 * qt.m32()),
+	         rotation,
+	         qt.m11() / cos_r, qt.m22() / cos_r };
+}
+
+
 #ifndef NO_NATIVE_FILE_FORMAT
 
 void TemplateTransform::load(QIODevice* file)
