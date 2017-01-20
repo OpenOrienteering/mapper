@@ -111,7 +111,7 @@ PassPoint PassPoint::load(QXmlStreamReader& xml)
 
 // ### PassPointList ###
 
-bool PassPointList::estimateSimilarityTransformation(TemplateTransform* transform)
+bool PassPointList::estimateSimilarityTransformation(not_null<TemplateTransform*> transform)
 {
 	auto num_pass_points = int(size());
 	if (num_pass_points == 1)
@@ -227,7 +227,7 @@ bool PassPointList::estimateSimilarityTransformation(TemplateTransform* transfor
 	return true;
 }
 
-bool PassPointList::estimateNonIsometricSimilarityTransform(QTransform* out)
+bool PassPointList::estimateNonIsometricSimilarityTransform(not_null<QTransform*> out)
 {
 	auto num_pass_points = int(size());
 	Q_ASSERT(num_pass_points >= 3);

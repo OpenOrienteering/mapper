@@ -61,12 +61,20 @@ struct PassPoint
 class PassPointList : public std::vector< PassPoint >
 {
 public:
+	/**
+	 * Indicates arguments which must not be nullptr.
+	 * \todo Use the Guideline Support Library
+	 */
+	template <typename T>
+	using not_null = T;
+	
+	
 	/** Estimates a similarity transformation based on the contained pass points
 	 *  and applies it to the transformation passed in. */
-	bool estimateSimilarityTransformation(TemplateTransform* transform);
+	bool estimateSimilarityTransformation(not_null<TemplateTransform*> transform);
 	
 	/** Estimates an affine transformation without shearing. */
-	bool estimateNonIsometricSimilarityTransform(QTransform* out);
+	bool estimateNonIsometricSimilarityTransform(not_null<QTransform*> out);
 };
 
 /** Converts a QTranform into a template transform. Takes only affine parts
