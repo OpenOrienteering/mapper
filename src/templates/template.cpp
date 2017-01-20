@@ -46,7 +46,6 @@ Q_STATIC_ASSERT(std::is_standard_layout<TemplateTransform>::value);
 Q_STATIC_ASSERT(std::is_nothrow_default_constructible<TemplateTransform>::value);
 Q_STATIC_ASSERT(std::is_nothrow_copy_constructible<TemplateTransform>::value);
 Q_STATIC_ASSERT(std::is_nothrow_move_constructible<TemplateTransform>::value);
-Q_STATIC_ASSERT(std::is_trivially_copyable<TemplateTransform>::value);
 Q_STATIC_ASSERT(std::is_nothrow_copy_assignable<TemplateTransform>::value);
 Q_STATIC_ASSERT(std::is_nothrow_move_assignable<TemplateTransform>::value);
 
