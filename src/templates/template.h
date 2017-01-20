@@ -70,6 +70,24 @@ struct TemplateTransform
 	/// Scaling in y direction (relative to 1 mm on map)
 	double template_scale_y = 1.0;
 	
+	/**
+	 * Explicit implementation of aggregate initialization.
+	 * 
+	 * In C++11, there is no aggregate initialization when default initalizers are present.
+	 * \todo Remove when we can use C++14 everywhere.
+	 */
+	TemplateTransform(qint32 x, qint32 y, double rotation, double scale_x, double scale_y) noexcept
+	: template_x{x}, template_y{y}, template_rotation{rotation}, template_scale_x{scale_x}, template_scale_y{scale_y}
+	{}
+	
+	/**
+	 * Explicitly defaulted default constructor.
+	 * 
+	 * This is needed because of the other explicit constructor.
+	 * \todo Remove when we can use C++14 everywhere.
+	 */
+	TemplateTransform() noexcept = default;
+	
 	static TemplateTransform fromQTransform(const QTransform& qt) noexcept;
 	
 	void load(QIODevice* file);

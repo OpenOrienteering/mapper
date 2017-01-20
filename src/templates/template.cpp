@@ -42,27 +42,23 @@
 
 // ### TemplateTransform ###
 
+Q_STATIC_ASSERT(std::is_standard_layout<TemplateTransform>::value);
+Q_STATIC_ASSERT(std::is_nothrow_default_constructible<TemplateTransform>::value);
+Q_STATIC_ASSERT(std::is_nothrow_copy_constructible<TemplateTransform>::value);
+Q_STATIC_ASSERT(std::is_nothrow_move_constructible<TemplateTransform>::value);
+Q_STATIC_ASSERT(std::is_trivially_copyable<TemplateTransform>::value);
+Q_STATIC_ASSERT(std::is_nothrow_copy_assignable<TemplateTransform>::value);
+Q_STATIC_ASSERT(std::is_nothrow_move_assignable<TemplateTransform>::value);
+
+
 // static
 TemplateTransform TemplateTransform::fromQTransform(const QTransform& qt) noexcept
 {
 	const auto rotation = qAtan2(qt.m21(), qt.m11());
 	const auto cos_r    = qCos(rotation);
-#ifdef CXX14
 	return { qRound(1000 * qt.m31()), qRound(1000 * qt.m32()),
 	         rotation,
 	         qt.m11() / cos_r, qt.m22() / cos_r };
-#else
-	// C++11 does not allow aggregate initialization when there are
-	// default member initializers (as is the case for TemplateTransform).
-	/// \todo Switch back to aggregate initialization when C++14 is available everywhere.
-	TemplateTransform tt;
-	tt.template_x = qRound(1000 * qt.m31());
-	tt.template_y = qRound(1000 * qt.m32());
-	tt.template_rotation = rotation;
-	tt.template_scale_x = qt.m11() / cos_r;
-	tt.template_scale_y = qt.m22() / cos_r;
-	return tt;
-#endif
 }
 
 
