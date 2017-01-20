@@ -27,25 +27,87 @@
 #include "../src/templates/template.h"
 
 
+Q_STATIC_ASSERT(std::is_standard_layout<TemplateTransform>::value);
+Q_STATIC_ASSERT(std::is_nothrow_default_constructible<TemplateTransform>::value);
+Q_STATIC_ASSERT(std::is_nothrow_copy_constructible<TemplateTransform>::value);
+Q_STATIC_ASSERT(std::is_nothrow_move_constructible<TemplateTransform>::value);
+Q_STATIC_ASSERT(std::is_trivially_copyable<TemplateTransform>::value);
+Q_STATIC_ASSERT(std::is_nothrow_copy_assignable<TemplateTransform>::value);
+Q_STATIC_ASSERT(std::is_nothrow_move_assignable<TemplateTransform>::value);
+
+
 TransformTest::TransformTest(QObject* parent)
 : QObject(parent)
 {
 	// nothing
 }
 
+void TransformTest::testTransformBasics()
+{
+	// Default TemplateTransform: identity
+	TemplateTransform t;
+	QCOMPARE(t.template_x, 0);
+	QCOMPARE(t.template_y, 0);
+	QCOMPARE(t.template_scale_x, 1.0);
+	QCOMPARE(t.template_scale_y, 1.0);
+	QCOMPARE(t.template_rotation, 0.0);
+	
+	// List initialization
+	auto t2 = TemplateTransform { 12, -3, 0.1, 2.0, 3.0 };
+	QCOMPARE(t2.template_x, 12);
+	QCOMPARE(t2.template_y, -3);
+	QCOMPARE(t2.template_scale_x, 2.0);
+	QCOMPARE(t2.template_scale_y, 3.0);
+	QCOMPARE(t2.template_rotation, 0.1);
+	
+	// Assignment
+	t = t2;
+	QCOMPARE(t.template_x, 12);
+	QCOMPARE(t.template_y, -3);
+	QCOMPARE(t.template_scale_x, 2.0);
+	QCOMPARE(t.template_scale_y, 3.0);
+	QCOMPARE(t.template_rotation, 0.1);
+	
+	// Comparison
+	QCOMPARE(t, t2);
+}
+
 
 void TransformTest::testTransformIdentity()
 {
+	// Default QTransform: identity
 	QTransform qt;
+	QVERIFY(qt.isIdentity());
 	QCOMPARE(int(qt.type()), int(QTransform::TxNone));
 	
+	// Default TemplateTransform: identity
 	TemplateTransform t;
+	
+	// TemplateTransform list initialization, and assignment
+	t = { 12, -3, 0.1, 2.0, 3.0 };
+	QCOMPARE(t.template_x, 12);
+	QCOMPARE(t.template_y, -3);
+	QCOMPARE(t.template_scale_x, 2.0);
+	QCOMPARE(t.template_scale_y, 3.0);
+	QCOMPARE(t.template_rotation, 0.1);
+	
+	// Now transfer the identity QTransform to the TemplateTransform
 	qTransformToTemplateTransform(qt, &t);
 	QCOMPARE(t.template_x, 0);
 	QCOMPARE(t.template_y, 0);
 	QCOMPARE(t.template_scale_x, 1.0);
 	QCOMPARE(t.template_scale_y, 1.0);
 	QCOMPARE(t.template_rotation, 0.0);
+	
+	// Put something different in the QTransform
+	qt.translate(4, 8);
+	qt.rotate(1);
+	qt.scale(2.0, 1.5);
+	QVERIFY(qt.isAffine());
+	QVERIFY(!qt.isIdentity());
+	QVERIFY(qt.isTranslating());
+	QVERIFY(qt.isRotating());
+	QVERIFY(qt.isScaling());
 }
 
 void TransformTest::testTransformTranslate()
@@ -53,6 +115,7 @@ void TransformTest::testTransformTranslate()
 	MapCoord offset { 100.0, 100.0 };
 	QTransform qt;
 	qt.translate(offset.x(), offset.y());
+	QVERIFY(qt.isTranslating());
 	QCOMPARE(int(qt.type()), int(QTransform::TxTranslate));
 	
 	TemplateTransform t;
@@ -70,6 +133,7 @@ void TransformTest::testTransformProject()
 	qreal scale_y = 2.5;
 	QTransform qt;
 	qt.scale(scale_x, scale_y);
+	QVERIFY(qt.isScaling());
 	QCOMPARE(int(qt.type()), int(QTransform::TxScale));
 	
 	TemplateTransform t;
@@ -139,6 +203,11 @@ void TransformTest::testEstimateSimilarityTransformation()
 		
 		TemplateTransform t0;
 		QVERIFY(passpoints.estimateSimilarityTransformation(&t0));
+		
+		QTransform q0;
+		TemplateTransform check;
+		qTransformToTemplateTransform(q0, &check);
+		QCOMPARE(check, t0);
 	}
 	
 	{

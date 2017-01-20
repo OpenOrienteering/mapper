@@ -33,7 +33,7 @@ class QXmlStreamReader;
 class QXmlStreamWriter;
 QT_END_NAMESPACE
 
-class TemplateTransform;
+struct TemplateTransform;
 
 /** Pair of source and destination coordinates used to calculate transformations. */
 struct PassPoint
