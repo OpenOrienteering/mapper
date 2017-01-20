@@ -396,7 +396,7 @@ void qTransformToTemplateTransform(const QTransform& in, TemplateTransform* out)
 	out->template_x = qRound(1000 * in.m31());
 	out->template_y = qRound(1000 * in.m32());
 	
-	out->template_rotation = qAtan2(-in.m21(), in.m11());
+	out->template_rotation = qAtan2(in.m21(), in.m11());
 	
 	out->template_scale_x = in.m11() / qCos(out->template_rotation);
 	out->template_scale_y = in.m22() / qCos(out->template_rotation);
