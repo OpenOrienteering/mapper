@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2015 Kai Pastor
+ *    Copyright 2013-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,26 +21,22 @@
 
 #include "template_track.h"
 
-#include <qmath.h>
-#include <QComboBox>
 #include <QCommandLinkButton>
-#include <QFormLayout>
 #include <QMessageBox>
 #include <QPainter>
-#include <QRadioButton>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
-#include "gui/georeferencing_dialog.h"
-#include "gui/select_crs_dialog.h"
-#include "gui/map/map_widget.h"
-#include "undo/object_undo.h"
 #include "core/objects/object.h"
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/point_symbol.h"
-#include "util/util.h"
+#include "gui/georeferencing_dialog.h"
+#include "gui/select_crs_dialog.h"
 #include "gui/task_dialog.h"
-#include "gui/util_gui.h"
+#include "gui/map/map_widget.h"
+#include "templates/template_positioning_dialog.h"
+#include "undo/object_undo.h"
+#include "util/util.h"
 
 const std::vector<QByteArray>& TemplateTrack::supportedExtensions()
 {
@@ -183,7 +179,7 @@ bool TemplateTrack::postLoadConfiguration(QWidget* dialog_parent, bool& out_cent
 	{
 		is_georeferenced = false;
 		
-		LocalCRSPositioningDialog dialog(this, dialog_parent);
+		TemplatePositioningDialog dialog(dialog_parent);
 		if (dialog.exec() == QDialog::Rejected)
 			return false;
 		
@@ -516,59 +512,4 @@ void TemplateTrack::calculateLocalGeoreferencing()
 		.arg(proj_center.latitude()).arg(proj_center.longitude()));
 	georef.setGeographicRefPoint(proj_center);
 	track.changeMapGeoreferencing(georef);
-}
-
-
-LocalCRSPositioningDialog::LocalCRSPositioningDialog(TemplateTrack* temp, QWidget* parent)
- : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
-{
-	Q_UNUSED(temp);
-	
-	setWindowModality(Qt::WindowModal);
-	setWindowTitle(tr("Track scaling and positioning"));
-	
-	QFormLayout* layout = new QFormLayout();
-	
-	coord_system_box = new QComboBox();
-	layout->addRow(tr("Coordinate system"), coord_system_box);
-	coord_system_box->addItem(tr("Real"));
-	coord_system_box->addItem(tr("Map"));
-	coord_system_box->setCurrentIndex(0);
-	
-	unit_scale_edit = Util::SpinBox::create(6, 0, 99999.999999, tr("m", "meters"));
-	unit_scale_edit->setValue(1);
-	unit_scale_edit->setEnabled(false);
-	layout->addRow(tr("One coordinate unit equals:"), unit_scale_edit);
-	
-	original_pos_radio = new QRadioButton(tr("Position track at given coordinates"));
-	original_pos_radio->setChecked(true);
-	layout->addRow(original_pos_radio);
-	
-	view_center_radio = new QRadioButton(tr("Position track at view center"));
-	layout->addRow(view_center_radio);
-	
-	layout->addItem(Util::SpacerItem::create(this));
-	
-	button_box = new QDialogButtonBox(QDialogButtonBox::Cancel | QDialogButtonBox::Ok);
-	layout->addWidget(button_box);
-	
-	setLayout(layout);
-	
-	connect(button_box, SIGNAL(accepted()), this, SLOT(accept()));
-	connect(button_box, SIGNAL(rejected()), this, SLOT(reject()));
-}
-
-bool LocalCRSPositioningDialog::useRealCoords() const
-{
-	return coord_system_box->currentIndex() == 0;
-}
-
-double LocalCRSPositioningDialog::getUnitScale() const
-{
-	return unit_scale_edit->value();
-}
-
-bool LocalCRSPositioningDialog::centerOnView() const
-{
-	return view_center_radio->isChecked();
 }

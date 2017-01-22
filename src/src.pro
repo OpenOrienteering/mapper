@@ -157,6 +157,7 @@ HEADERS += \
   templates/template_image.h \
   templates/template_map.h \
   templates/template_position_dock_widget.h \
+  templates/template_positioning_dialog.h \
   templates/template_tool_move.h \
   templates/template_tool_paint.h \
   templates/template_track.h \
@@ -312,6 +313,7 @@ SOURCES += \
   templates/template_image.cpp \
   templates/template_map.cpp \
   templates/template_position_dock_widget.cpp \
+  templates/template_positioning_dialog.cpp \
   templates/template_tool_move.cpp \
   templates/template_tool_paint.cpp \
   templates/template_track.cpp \

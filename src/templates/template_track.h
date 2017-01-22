@@ -1,5 +1,6 @@
 /*
- *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2014 Thomas Schöps
+ *    Copyright 2013-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -18,21 +19,12 @@
  */
 
 
-#ifndef _OPENORIENTEERING_TEMPLATE_TRACK_H_
-#define _OPENORIENTEERING_TEMPLATE_TRACK_H_
+#ifndef OPENORIENTEERING_TEMPLATE_TRACK_H
+#define OPENORIENTEERING_TEMPLATE_TRACK_H
 
 #include "template.h"
 
-#include <QDialog>
-
 #include "sensors/gps_track.h"
-
-QT_BEGIN_NAMESPACE
-class QComboBox;
-class QDialogButtonBox;
-class QDoubleSpinBox;
-class QRadioButton;
-QT_END_NAMESPACE
 
 class PathObject;
 class PointObject;
@@ -100,27 +92,9 @@ protected:
 	
 	Track track;
 	QString track_crs_spec;
-};
-
-/**
- * Dialog allowing for local positioning of a track (without georeferencing).
- */
-class LocalCRSPositioningDialog : public QDialog
-{
-Q_OBJECT
-public:
-	LocalCRSPositioningDialog(TemplateTrack* temp, QWidget* parent = NULL);
-	
-	bool useRealCoords() const;
-	double getUnitScale() const;
-	bool centerOnView() const;
 	
 private:
-	QComboBox* coord_system_box;
-	QDoubleSpinBox* unit_scale_edit;
-	QRadioButton* original_pos_radio;
-	QRadioButton* view_center_radio;
-	QDialogButtonBox* button_box;
+	Q_DISABLE_COPY(TemplateTrack)
 };
 
 #endif
