@@ -2206,7 +2206,7 @@
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="92"/>
         <source>bevel</source>
-        <translation type="unfinished">bevelo</translation>
+        <translation>bevelo</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="85"/>
@@ -4878,7 +4878,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_import.h" line="433"/>
         <source>Color id not found: %1, ignoring this color</source>
-        <translation type="unfinished">Kolora id ne trovita: %1, malatentas tiun koloron</translation>
+        <translation>Kolora id ne trovita: %1, malatentas tiun koloron</translation>
     </message>
 </context>
 <context>
@@ -5030,7 +5030,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="127"/>
         <source>Line cap:</source>
-        <translation type="unfinished">Linia fino:</translation>
+        <translation>Linia fino:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="129"/>
@@ -7233,13 +7233,13 @@ La maksimuma subtenata versio estas %2.</translation>
         <location filename="../src/gui/util_gui.h" line="79"/>
         <source>mm</source>
         <comment>millimeters</comment>
-        <translation type="unfinished">mm</translation>
+        <translation>mm</translation>
     </message>
     <message>
         <location filename="../src/gui/util_gui.h" line="114"/>
         <source>m</source>
         <comment>meters</comment>
-        <translation type="unfinished">m</translation>
+        <translation>m</translation>
     </message>
 </context>
 <context>

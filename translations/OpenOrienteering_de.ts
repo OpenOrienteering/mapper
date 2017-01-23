@@ -1075,7 +1075,7 @@
         <location filename="../src/tools/draw_text_tool.cpp" line="102"/>
         <source>Snap</source>
         <extracomment>Snap to existing objects</extracomment>
-        <translation type="unfinished">Einrasten</translation>
+        <translation>Einrasten</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="465"/>
@@ -1085,7 +1085,7 @@
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="466"/>
         <source>&lt;b&gt;%1+%2&lt;/b&gt;: Cancel editing. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+%2&lt;/b&gt;: Bearbeitung abbrechen. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="471"/>
@@ -2081,7 +2081,7 @@
         <location filename="../src/fileformats/file_import_export.h" line="230"/>
         <source>No such option: %1</source>
         <comment>No such import / export option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Unbekannte Option: %1</translation>
     </message>
 </context>
 <context>
@@ -2595,7 +2595,7 @@ Unbekanntes Dateiformat.</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="152"/>
         <source>You must close the current file before you can open another one.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vor dem Öffnen einer neuen Datei muss die aktuelle Datei geschlossen werden.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="272"/>
@@ -4285,7 +4285,7 @@ gewählt</translation>
         <location filename="future_translations.cpp" line="46"/>
         <source>Deletes the selected objects.</source>
         <extracomment>To replace existing translation which uses "object(s)".</extracomment>
-        <translation></translation>
+        <translation>Löscht die ausgewählten Objekte.</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="49"/>
@@ -5069,7 +5069,7 @@ Zoomen ist mit dem Mausrad möglich.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.h" line="433"/>
         <source>Color id not found: %1, ignoring this color</source>
-        <translation type="unfinished">Farb-ID nicht gefunden: %1, ignoriere diese Farbe</translation>
+        <translation>Farb-ID nicht gefunden: %1, ignoriere diese Farbe</translation>
     </message>
 </context>
 <context>
@@ -7488,13 +7488,13 @@ Die höchste unterstütze Version ist %2.</translation>
         <location filename="../src/gui/util_gui.h" line="79"/>
         <source>mm</source>
         <comment>millimeters</comment>
-        <translation type="unfinished">mm</translation>
+        <translation>mm</translation>
     </message>
     <message>
         <location filename="../src/gui/util_gui.h" line="114"/>
         <source>m</source>
         <comment>meters</comment>
-        <translation type="unfinished">m</translation>
+        <translation>m</translation>
     </message>
 </context>
 <context>
