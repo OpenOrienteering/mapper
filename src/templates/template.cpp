@@ -127,7 +127,7 @@ bool operator!=(const TemplateTransform& lhs, const TemplateTransform& rhs) noex
 
 decltype(Template::pathForSaving) Template::pathForSaving = &Template::getTemplatePath;
 
-Template::Template(const QString& path, Map* map)
+Template::Template(const QString& path, not_null<Map*> map)
  : map(map)
  , template_group(0)
 {
@@ -194,7 +194,7 @@ void Template::setErrorString(const QString &text)
 
 #ifndef NO_NATIVE_FILE_FORMAT
 
-bool Template::loadTemplateConfiguration(QIODevice* stream, int version)
+bool Template::loadTemplateConfiguration(not_null<QIODevice*> stream, int version)
 {
 	loadString(stream, template_file);
 	
@@ -403,6 +403,11 @@ Q_ASSERT(temp->passpoints.size() == 0);
 	}
 	
 	return temp;
+}
+
+bool Template::saveTemplateFile() const
+{
+	return false;
 }
 
 void Template::switchTemplateFile(const QString& new_path, bool load_file)
@@ -631,6 +636,11 @@ void Template::setTemplateAreaDirty()
 	map->setTemplateAreaDirty(this, template_area, getTemplateBoundingBoxPixelBorder());	// TODO: Would be better to do this with the corner points, instead of the bounding box
 }
 
+bool Template::canBeDrawnOnto() const
+{
+	return false;
+}
+
 QRectF Template::calculateTemplateBoundingBox() const
 {
 	// Create bounding box by calculating the positions of all corners of the transformed extent rect
@@ -643,7 +653,7 @@ QRectF Template::calculateTemplateBoundingBox() const
 	return bbox;
 }
 
-void Template::drawOntoTemplate(MapCoordF* coords, int num_coords, QColor color, float width, QRectF map_bbox)
+void Template::drawOntoTemplate(not_null<MapCoordF*> coords, int num_coords, QColor color, float width, QRectF map_bbox)
 {
 	Q_ASSERT(canBeDrawnOnto());
 	Q_ASSERT(num_coords > 1);

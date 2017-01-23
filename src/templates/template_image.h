@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -18,13 +19,14 @@
  */
 
 
-#ifndef _OPENORIENTEERING_TEMPLATE_IMAGE_H_
-#define _OPENORIENTEERING_TEMPLATE_IMAGE_H_
+#ifndef OPENORIENTEERING_TEMPLATE_IMAGE_H
+#define OPENORIENTEERING_TEMPLATE_IMAGE_H
 
 #include "template.h"
 
 #include <QDialog>
 #include <QImage>
+#include <QLineEdit>
 
 QT_BEGIN_NAMESPACE
 class QCheckBox;

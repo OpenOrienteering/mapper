@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -29,9 +29,7 @@
 
 QT_BEGIN_NAMESPACE
 class QIODevice;
-class QLineEdit;
 class QPainter;
-class QPixmap;
 class QRectF;
 class QXmlStreamReader;
 class QXmlStreamWriter;
@@ -39,7 +37,6 @@ QT_END_NAMESPACE
 
 class Map;
 class MapView;
-class MapWidget;
 
 
 /**
@@ -101,12 +98,16 @@ bool operator!=(const TemplateTransform& lhs, const TemplateTransform& rhs) noex
 
 
 
-/** Abstract base class for templates. */
+/**
+ * Abstract base class for templates.
+ */
 class Template : public QObject
 {
 Q_OBJECT
 public:
-	/// States in the lifetime of a template
+	/**
+	 * States in the lifetime of a template.
+	 */
 	enum State
 	{
 		/// The template is loaded and ready to be displayed
@@ -118,18 +119,36 @@ public:
 		Invalid
 	};
 	
+	/**
+	 * Indicates arguments which must not be nullptr.
+	 * \todo Use the Guideline Support Library
+	 */
+	template <typename T>
+	using not_null = T;
 	
-	/// To be called by derived classes with main template file and map pointer.
-	/// Initializes the template as "invalid".
-	Template(const QString& path, Map* map);
+	
+protected:	
+	/**
+	 * Initializes the template as "invalid".
+	 */
+	Template(const QString& path, not_null<Map*> map);
+
+public:	
 	virtual ~Template();
 	
-	/// Creates a duplicate of the template
+	/**
+	 * Creates a duplicate of the template
+	 * 
+	 * \todo Rewrite as virtual function, using protected copy constructor.
+	 */
 	Template* duplicate() const;
 	
-	/// Returns a string which should identify the type of the template uniquely:
-	/// the class name. Very simple RTTI feature.
+	/**
+	 * Returns a string which should identify the type of the template uniquely:
+	 * the class name. Very simple RTTI feature.
+	 */
 	virtual const char* getTemplateType() const = 0;
+	
 	
 	/**
 	 * Returns a description of the last error that occurred.
@@ -144,129 +163,231 @@ public:
 	virtual bool isRasterGraphics() const = 0;
 	
 	
-	/// Saves template parameters such as filename, transformation, adjustment, etc. and
-	/// type-specific parameters (e.g. filtering mode for images)
+	/**
+	 * Saves template parameters.
+	 * 
+	 * This method saves as common properties such as filename, transformation,
+	 * adjustment, etc., and it calls saveTypeSpecificTemplateConfiguration for
+	 * saving type-specific parameters (e.g. filtering mode for images).
+	 */
 	void saveTemplateConfiguration(QXmlStreamWriter& xml, bool open);
 	
-	/// Loads template parameters, see saveTemplateConfiguration(), and returns true if successful
-	bool loadTemplateConfiguration(QIODevice* stream, int version);
+	/**
+	 * Loads template parameters.
+	 * 
+	 * Returns true if successful
+	 */
+	bool loadTemplateConfiguration(not_null<QIODevice*> stream, int version);
+	
+	/**
+	 * Creates and returns a template from the configuration in the XML stream.
+	 * 
+	 * Returns a null pointer in the case of error.
+	 */
 	static std::unique_ptr<Template> loadTemplateConfiguration(QXmlStreamReader& xml, Map& map, bool& open);
 	
-	/// Saves the template itself, returns true if successful.
-	/// This is called when saving the map and the template's hasUnsavedChanges() returns true
-	virtual bool saveTemplateFile() const {return false;}
 	
-	/// Changes a template's file without changing the parameters.
-	/// Useful when a template file has been moved.
-	/// If load_file is true, tries to load the given file.
+	/**
+	 *  Saves the template itself, returns true if successful.
+	 *
+	 * This is called when saving the map if the template's hasUnsavedChanges()
+	 * is true.
+	 */
+	virtual bool saveTemplateFile() const;
+	
+	/**
+	 * Changes a template's file without changing the parameters.
+	 * 
+	 * Useful when a template file has been moved.
+	 * If load_file is true, tries to load the given file.
+	 */
 	void switchTemplateFile(const QString& new_path, bool load_file);
 	
-	/// Shows the dialog to find a moved template. If the user selects a new file,
-	/// tries to switch to the selected template file using switchTemplateFile() and
-	/// by trying to load the new file. Returns true if this succeeds; if not, reverts the
-	/// switch and returns false. Also returns false if the dialog is aborted.
+	/**
+	 * Shows the dialog to find a moved template.
+	 * 
+	 * If the user selects a new file, tries to switch to the selected template
+	 * file using switchTemplateFile() and by trying to load the new file.
+	 * Returns true if this succeeds; if not, reverts the switch and returns
+	 * false. Also returns false if the dialog is aborted.
+	 */
 	bool execSwitchTemplateFileDialog(QWidget* dialog_parent);
 	
 	
-	/// Does preLoadConfiguration(), loadTemplateFile() and postLoadConfiguration() and
-	/// returns if the process was successful. Pass in the view in which the template
-	/// should be centered, if it is centered.
+	/**
+	 * Does everything needed to load a template.
+	 * 
+	 * Calls preLoadConfiguration(), loadTemplateFile() and
+	 * postLoadConfiguration(). Returns if the process was successful. 
+	 * 
+	 * The passed-in view is used to center the template if needed.
+	 */
 	bool configureAndLoad(QWidget* dialog_parent, MapView* view);
 	
-	/// Tries to find and (re-)load the template file from the following positions:
-	///  - saved relative position to map file, if available and map_directory is not empty
-	///  - absolute position of template file
-	///  - template filename in map_directory, if map_directory not empty
-	/// Returns true if successful.
-	/// If out_loaded_from_map_dir is given, it is set to true if the template file is successfully
-	/// loaded using the template filename in the map's directory (3rd option).
-	bool tryToFindAndReloadTemplateFile(QString map_directory, bool* out_loaded_from_map_dir = NULL);
+	/**
+	 * Tries to find and load the template file non-interactively.
+	 * 
+	 * This function searches for the template in the following locations:
+	 *  - saved relative position to map file, if available and map_directory is not empty
+	 *  - absolute position of template file
+	 *  - template filename in map_directory, if map_directory not empty
+	 * 
+	 * Returns true if successful.
+	 * 
+	 * If out_loaded_from_map_dir is given, it is set to true if the template file is successfully
+	 * loaded using the template filename in the map's directory (3rd alternative).
+	 */
+	bool tryToFindAndReloadTemplateFile(QString map_directory, bool* out_loaded_from_map_dir = nullptr);
 	
-	/// Does the pre-load configuration when the template is opened initially
-	/// (after the user chooses the template file, but before it is loaded).
-	/// Derived classes can show dialogs here to get user input which is needed
-	/// to interpret the template file.
-	/// If the implementation returns false, loading the template is aborted.
-	/// NOTE: derived classes should set is_georeferenced either here or
-	/// in postLoadConfiguration(). By default templates are loaded as non-georeferenced.
+	/** 
+	 * Does configuration before the actual template is loaded.
+	 * 
+	 * This function is called after the user chooses the template file, but
+	 * before it is loaded. Derived classes can show dialogs here to get user
+	 * input which is needed to interpret the template file.
+	 * 
+	 * If the implementation returns false, loading the template is aborted.
+	 * 
+	 * \note Derived classes should set is_georeferenced either here or in
+	 *       postLoadConfiguration().
+	 *       By default templates are loaded as non-georeferenced.
+	 */
 	virtual bool preLoadConfiguration(QWidget* dialog_parent);
 	
-	/// Loads the template file. Can be called if the template state is Invalid or Unloaded.
-	/// Must not be called if the template file is already loaded.
-	/// Set the configuring parameter to true if the template is currently being configured
-	/// by the user (in contrast to the case where it is loaded from an existing map file).
-	/// In this case, the next step is to call postLoadConfiguration().
+	/**
+	 * Loads the template file.
+	 * 
+	 * This function can be called if the template state is Invalid or Unloaded.
+	 * It must not be called if the template file is already loaded.
+	 * It returns true if the template is loaded successfully.
+	 * 
+	 * Set the configuring parameter to true if the template is currently being
+	 * configured by the user (in contrast to the case where it is reloaded, e.g.
+	 * when loaded while reopening an existing map file).
+	 */
 	bool loadTemplateFile(bool configuring);
 	
-	/// Does the post-load configuration when the template is opened initially
-	/// (after the chosen template file is loaded).
-	/// If the implementation returns false, loading the template is aborted.
-	/// By setting out_center_in_view, the implementation can decide if the template should
-	/// be centered in the active view if it is a non-georeferenced template (on by default).
+	/**
+	 * Does configuration after the actual template is loaded.
+	 * 
+	 * This function is called after the user chose the template file and after
+	 * the chosen file was successfully loaded. Derived classes can show dialogs
+	 * here to get user input which is needed to interpret the template file.
+	 * 
+	 * If the implementation returns false, loading the template is aborted.
+	 * 
+	 * By setting out_center_in_view, the implementation can decide if the
+	 * template should be centered in the active view (only if it is not
+	 * georeferenced.)
+	 */
 	virtual bool postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view);
 	
-	/// Unloads the template file. Can be called if the template state is Loaded.
-	/// Must not be called if the template file is already unloaded, or invalid.
+	/**
+	 * Unloads the template file.
+	 * 
+	 * Can be called if the template state is Loaded.
+	 * Must not be called if the template file is already unloaded, or invalid.
+	 */
 	void unloadTemplateFile();
 	
 	
-	/// Must draw the template using the given painter with the given opacity.
-	/// The clip rect is in template coordinates,
-	/// the scale is the combined view & template scale,
-	/// which can be used to give a minimum size to elements.
-	/// The painter transformation is set to use template coordinates.
+	/** 
+	 * Draws the template using the given painter with the given opacity.
+	 * 
+	 * The painter transformation is set to use template coordinates.
+	 * The clip rect is in template coordinates.
+	 * The scale is the combined view & template scale. It can be used to give
+	 * a minimum size to elements.
+	 */
     virtual void drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, bool on_screen, float opacity) const = 0;
 	
-	/// Calculates the template's bounding box in map coordinates.
+	
+	/** 
+	 * Calculates the template's bounding box in map coordinates.
+	 */
 	virtual QRectF calculateTemplateBoundingBox() const;
 	
-	/// Returns the extent of the template out of the bounding box,
-	/// which is defined in map coordinates, in pixels. This is useful for elements which
-	/// stay the same size regardless of the zoom level, where a bounding box in map coords
-	/// cannot be calculated.
+	/**
+	 * Returns the extra extent of the template out of the bounding box.
+	 * 
+	 * While the bounding box is defined in map coordinates, this border is
+	 * given in pixels. This is useful for elements which stay the same size
+	 * regardless of the zoom level so that a bounding box in map coords
+	 * cannot be calculated.
+	 */
 	virtual int getTemplateBoundingBoxPixelBorder() {return 0;}
 	
-	/// Marks the whole area of the template as "to be redrawn".
-	/// Use this before and after modifications to the template transformation.
-	/// The default implementation marks everything as "to be redrawn" for georeferenced
-	/// templates and uses the reported extent otherwise
+	/** 
+	 * Marks the whole area of the template as needing a redraw.
+	 * 
+	 * Use this before and after modifications to the template transformation.
+	 * 
+	 * The default implementation marks everything as "to be redrawn" for
+	 * georeferenced templates and uses the reported extent otherwise.
+	 */
 	virtual void setTemplateAreaDirty();
 	
 	
-	/// Must return if freehand drawing onto the template is possible
-	virtual bool canBeDrawnOnto() const {return false;}
+	/** 
+	 * Must return if freehand drawing onto the template is possible.
+	 */
+	virtual bool canBeDrawnOnto() const;
 	
-	/// Draws onto the template. coords is an array of points with which the
-	/// drawn line is defined and must contain at least 2 points.
-	/// map_bbox can be an invalid rect, then the method will calculate it itself.
-	/// This only works for templates for which canBeDrawnOnto() returns true.
-	void drawOntoTemplate(MapCoordF* coords, int num_coords, QColor color, float width, QRectF map_bbox);
+	/**
+	 * Draws onto the template.
+	 * 
+	 * This only works for templates for which canBeDrawnOnto() returns true.
+	 * 
+	 * coords is an array of points with which the drawn line is defined and
+	 * must contain at least 2 points. 
+	 * 
+	 * If map_bbox is an invalid rect, then the method will calculate it itself.
+	 * 
+	 * \todo Rewrite using a range of MapCoordF.
+	 */
+	void drawOntoTemplate(not_null<MapCoordF*> coords, int num_coords, QColor color, float width, QRectF map_bbox);
 	
-	/// Triggers an undo or redo action for template freehand drawing.
-	/// The type of action is determined by the parameter.
-	/// This only works for templates for which canBeDrawnOnto() returns true.
+	/** 
+	 * Triggers an undo or redo action for template freehand drawing.
+	 * 
+	 * This only works for templates for which canBeDrawnOnto() returns true.
+	 */
 	virtual void drawOntoTemplateUndo(bool redo);
 	
 	
 	// Transformation related methods for non-georeferenced templates only
 	
-	/// Changes the painter's transformation so it can be used to draw in template coordinates.
-	/// The previous transformation of the painter must be the map transformation.
-	/// NOTE: for non-georeferenced templates only,
-	/// or if the template transformation has been set by the template nevertheless.
+	/**
+	 * Changes the painter's transformation so it can be used to draw in template coordinates.
+	 * 
+	 * The previous transformation of the painter must be the map transformation.
+	 * 
+	 * \note For non-georeferenced templates only, or if the template
+	 *       transformation has been set by the template nevertheless.
+	 */
 	void applyTemplateTransform(QPainter* painter) const;
 	
-	/// Returns the extent of the template in template coordinates.
-	/// The default implementation returns a "very big" rectangle.
-	/// NOTE: for non-georeferenced templates only!
+	/**
+	 * Returns the extent of the template in template coordinates.
+	 * 
+	 * The default implementation returns a "very big" rectangle.
+	 * 
+	 * \note For non-georeferenced templates only!
+	 */
 	virtual QRectF getTemplateExtent() const;
 	
-	/// Scales the template with the given scaling center.
-	/// NOTE: for non-georeferenced templates only!
+	/** 
+	 * Scales the template with the given scaling center.
+	 * 
+	 * \note For non-georeferenced templates only!
+	 */
 	void scale(double factor, const MapCoord& center);
 	
-	/// Rotates the template around the given point.
-	/// NOTE: for non-georeferenced templates only!
+	/** 
+	 * Rotates the template around the given point.
+	 * 
+	 * \note For non-georeferenced templates only!
+	 */
 	void rotate(double rotation, const MapCoord& center);
 	
 	
@@ -389,9 +510,13 @@ public:
 	 */
 	static const QString& (Template::* pathForSaving)() const;
 	
+	
 signals:
-	/// Emitted whenever template_state was changed
+	/** 
+	 * Emitted whenever template_state was changed.
+	 */
 	void templateStateChanged();
+	
 	
 protected:
 	/**
@@ -399,37 +524,74 @@ protected:
 	 */
 	void setErrorString(const QString &text);
 	
-	/// Derived classes must create a duplicate and transfer
-	/// type specific information over to the copy here.
-	/// This includes the content of the template file if it is loaded.
+	
+	/** 
+	 * Derived classes must create a duplicate and transfer
+	 * 
+	 * type specific information over to the copy here.
+	 * This includes the content of the template file if it is loaded.
+	 * 
+	 * \todo Rewrite together with duplicate().
+	 */
 	virtual Template* duplicateImpl() const = 0;
 	
-	/// Derived classes must load type specific template parameters here and return true if successful
+	
+	/**
+	 * Hook for loading parameters needed by the actual template type.
+	 * 
+	 * The default implementation does nothing.
+	 * 
+	 * Returns true on success.
+	 */
 	virtual bool loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version);
 	
-	/// Derived classes must save type specific template parameters here
+	
+	/** 
+	 * Hook for saving parameters needed by the actual template type.
+	 * 
+	 * The default implementation does nothing.
+	 */
 	virtual void saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const;
 	
-	/// Derived classes must load type specific template parameters here and return false
-	/// if a critical error ocurrs and loading must be aborted.
-	/// This method is called for every xml tag under the template tag which is not parsed by
-	/// the base class.
-	/// IMPORTANT: implementations must call xml.skipCurrentElement() if they do not parse it.
+	/**
+	 * Hook for loading parameters needed by the actual template type.
+	 * 
+	 * \note The default implementation calls xml.skipCurrentElement().
+	 *       Implementations must do the same if they do not parse it.
+	 * 
+	 * Returns true on success.
+	 */
 	virtual bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml);
 	
-	/// Derived classes must load the template file here and return true if successful.
-	/// If configuring is true, a call to postLoadConfiguration() will follow if this returns true.
+	
+	/**
+	 * Hook for loading the actual template file non-interactively.
+	 * 
+	 * Returns true if successful.
+	 * 
+	 * If configuring is true, a call to postLoadConfiguration() will follow
+	 * if this returns true.
+	 */
 	virtual bool loadTemplateFileImpl(bool configuring) = 0;
 	
-	/// Derived classes must unload the template file here
+	/**
+	 * Hook for unloading the template file.
+	 */
 	virtual void unloadTemplateFileImpl() = 0;
 	
 	
-	/// Must be implemented to draw the polyline given by the points onto the template if canBeDrawnOnto() returns true
+	/** 
+	 * Hook for drawing on the template.
+	 * 
+	 * Draws the polyline given by the points onto the template.
+	 * Required if canBeDrawnOnto() returns true.
+	 */
 	virtual void drawOntoTemplateImpl(MapCoordF* coords, int num_coords, QColor color, float width);
 	
 	
-	/// Must be called after direct changes to transform or other_transform
+	/**
+	 * Must be called after direct changes to transform or other_transform.
+	 */
 	void updateTransformationMatrices();
 	
 	
@@ -486,13 +648,5 @@ protected:
 	Matrix template_to_map;
 	Matrix template_to_map_other;
 };
-
-
-
-// ### Template inline code ###
-
-
-
-
 
 #endif
