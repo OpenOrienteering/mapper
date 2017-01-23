@@ -88,7 +88,7 @@
 <context>
     <name>TemplateTrack</name>
     <message numerus="yes">
-        <location filename="../src/templates/template_track.cpp" line="479"/>
+        <location filename="../src/templates/template_track.cpp" line="475"/>
         <source>%n path object(s) could not be imported (reason: missing coordinates).</source>
         <translation>
             <numerusform>One path object could not be imported (reason: missing coordinates).</numerusform>

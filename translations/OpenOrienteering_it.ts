@@ -2478,50 +2478,6 @@
     </message>
 </context>
 <context>
-    <name>LocalCRSPositioningDialog</name>
-    <message>
-        <location filename="../src/templates/template_track.cpp" line="528"/>
-        <source>Track scaling and positioning</source>
-        <translation>Scalatura e posizionamento della traccia</translation>
-    </message>
-    <message>
-        <location filename="../src/templates/template_track.cpp" line="533"/>
-        <source>Coordinate system</source>
-        <translation>Sistema di coordinate</translation>
-    </message>
-    <message>
-        <location filename="../src/templates/template_track.cpp" line="534"/>
-        <source>Real</source>
-        <translation>Reale</translation>
-    </message>
-    <message>
-        <location filename="../src/templates/template_track.cpp" line="535"/>
-        <source>Map</source>
-        <translation>Mappa</translation>
-    </message>
-    <message>
-        <location filename="../src/templates/template_track.cpp" line="538"/>
-        <source>m</source>
-        <comment>meters</comment>
-        <translation>m</translation>
-    </message>
-    <message>
-        <location filename="../src/templates/template_track.cpp" line="541"/>
-        <source>One coordinate unit equals:</source>
-        <translation>Una unità di coordinata equivale:</translation>
-    </message>
-    <message>
-        <location filename="../src/templates/template_track.cpp" line="543"/>
-        <source>Position track at given coordinates</source>
-        <translation>Posiziona il tracciato a coordinate data</translation>
-    </message>
-    <message>
-        <location filename="../src/templates/template_track.cpp" line="547"/>
-        <source>Position track at view center</source>
-        <translation>Posiziona il tracciato al centro della vista</translation>
-    </message>
-</context>
-<context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
         <source>Services</source>
@@ -6550,28 +6506,28 @@ to jump over the lazy dog
 <context>
     <name>Template</name>
     <message>
-        <location filename="../src/templates/template.cpp" line="403"/>
+        <location filename="../src/templates/template.cpp" line="428"/>
         <source>Find the moved template file</source>
         <translation>Trova il file template (spostato?)</translation>
     </message>
     <message>
-        <location filename="../src/templates/template.cpp" line="405"/>
+        <location filename="../src/templates/template.cpp" line="430"/>
         <source>All files (*.*)</source>
         <translation>Tutti i files (*.*)</translation>
     </message>
     <message>
-        <location filename="../src/templates/template.cpp" line="420"/>
+        <location filename="../src/templates/template.cpp" line="445"/>
         <source>Error</source>
         <translation>Errore</translation>
     </message>
     <message>
-        <location filename="../src/templates/template.cpp" line="502"/>
-        <location filename="../src/templates/template.cpp" line="521"/>
+        <location filename="../src/templates/template.cpp" line="527"/>
+        <location filename="../src/templates/template.cpp" line="546"/>
         <source>No such file.</source>
         <translation>File non trovato.</translation>
     </message>
     <message>
-        <location filename="../src/templates/template.cpp" line="539"/>
+        <location filename="../src/templates/template.cpp" line="564"/>
         <source>Is the format of the file correct for this template type?</source>
         <translation>Il formato del file per questo template risulta corretto?</translation>
     </message>
@@ -6932,7 +6888,7 @@ In ogni caso, se non intendi disegnare su questo template, non ci sono problemi.
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="399"/>
-        <location filename="../src/templates/template.cpp" line="416"/>
+        <location filename="../src/templates/template.cpp" line="441"/>
         <source>Cannot open template
 %1:
 %2</source>
@@ -7019,44 +6975,88 @@ In ogni caso, se non intendi disegnare su questo template, non ci sono problemi.
     </message>
 </context>
 <context>
+    <name>TemplatePositioningDialog</name>
+    <message>
+        <location filename="../src/templates/template_positioning_dialog.cpp" line="36"/>
+        <source>Track scaling and positioning</source>
+        <translation>Scalatura e posizionamento della traccia</translation>
+    </message>
+    <message>
+        <location filename="../src/templates/template_positioning_dialog.cpp" line="41"/>
+        <source>Coordinate system</source>
+        <translation>Sistema di coordinate</translation>
+    </message>
+    <message>
+        <location filename="../src/templates/template_positioning_dialog.cpp" line="42"/>
+        <source>Real</source>
+        <translation>Reale</translation>
+    </message>
+    <message>
+        <location filename="../src/templates/template_positioning_dialog.cpp" line="43"/>
+        <source>Map</source>
+        <translation>Mappa</translation>
+    </message>
+    <message>
+        <location filename="../src/templates/template_positioning_dialog.cpp" line="46"/>
+        <source>m</source>
+        <comment>meters</comment>
+        <translation>m</translation>
+    </message>
+    <message>
+        <location filename="../src/templates/template_positioning_dialog.cpp" line="49"/>
+        <source>One coordinate unit equals:</source>
+        <translation>Una unità di coordinata equivale:</translation>
+    </message>
+    <message>
+        <location filename="../src/templates/template_positioning_dialog.cpp" line="51"/>
+        <source>Position track at given coordinates</source>
+        <translation>Posiziona il tracciato a coordinate data</translation>
+    </message>
+    <message>
+        <location filename="../src/templates/template_positioning_dialog.cpp" line="55"/>
+        <source>Position track at view center</source>
+        <translation>Posiziona il tracciato al centro della vista</translation>
+    </message>
+</context>
+<context>
     <name>TemplateTrack</name>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="145"/>
+        <location filename="../src/templates/template_track.cpp" line="141"/>
         <source>Select the coordinate reference system of the track coordinates</source>
         <translation>Selezionare il sistema di riferimento delle coordinate delle coordinate delle tracce</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="163"/>
+        <location filename="../src/templates/template_track.cpp" line="159"/>
         <source>Opening track ...</source>
         <translation>Apertura tracce ...</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="164"/>
+        <location filename="../src/templates/template_track.cpp" line="160"/>
         <source>Load the track in georeferenced or non-georeferenced mode?</source>
         <translation>Caricamento delle tracce in modalità georeferenziata o non georeferenziata?</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="166"/>
+        <location filename="../src/templates/template_track.cpp" line="162"/>
         <source>Positions the track according to the map's georeferencing settings.</source>
         <translation>Posiziona la traccia tenendo conto delle impostazioni di georefernziazione della mappa.</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="168"/>
+        <location filename="../src/templates/template_track.cpp" line="164"/>
         <source>These are not configured yet, so they will be shown as the next step.</source>
         <translation>Queste non sono state ancora configurate, quindi verranno mostrate al prossimo passo.</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="169"/>
+        <location filename="../src/templates/template_track.cpp" line="165"/>
         <source>Georeferenced</source>
         <translation>Georefernziata</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="170"/>
+        <location filename="../src/templates/template_track.cpp" line="166"/>
         <source>Non-georeferenced</source>
         <translation>Non georefernziata</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="170"/>
+        <location filename="../src/templates/template_track.cpp" line="166"/>
         <source>Projects the track using an orthographic projection with center at the track's coordinate average. Allows adjustment of the transformation and setting the map georeferencing using the adjusted track position.</source>
         <translation>Proietta le tracce usando una proiezione ortografica con il centro posizionato nel punto menido fra tutte le coordinate. Permette l'aggiustamento della trasformazione ed l'impstazione della georeferenziazione usando la posizione corretta della traccia.</translation>
     </message>
@@ -7064,32 +7064,32 @@ In ogni caso, se non intendi disegnare su questo template, non ci sono problemi.
         <location filename="../src/sensors/gps_track.cpp" line="499"/>
         <location filename="../src/sensors/gps_track.cpp" line="508"/>
         <location filename="../src/sensors/gps_track.cpp" line="515"/>
-        <location filename="../src/templates/template_track.cpp" line="398"/>
+        <location filename="../src/templates/template_track.cpp" line="394"/>
         <source>Error</source>
         <translation>Errore</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="398"/>
+        <location filename="../src/templates/template_track.cpp" line="394"/>
         <source>The path is empty, there is nothing to import!</source>
         <translation>La mappa è vuota, non c'è nulla da importare!</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="411"/>
+        <location filename="../src/templates/template_track.cpp" line="407"/>
         <source>Question</source>
         <translation>Domanda</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="411"/>
+        <location filename="../src/templates/template_track.cpp" line="407"/>
         <source>Should the waypoints be imported as a line going through all points?</source>
         <translation>I waypoints debbono essere importati come linee che vanno attraverso tutti i punti?</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="478"/>
+        <location filename="../src/templates/template_track.cpp" line="474"/>
         <source>Import problems</source>
         <translation>Problemi di importazione</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/templates/template_track.cpp" line="479"/>
+        <location filename="../src/templates/template_track.cpp" line="475"/>
         <source>%n path object(s) could not be imported (reason: missing coordinates).</source>
         <translation>
             <numerusform>%n oggetti percorso non possono essere importati (motivo: coordinate mancanti).</numerusform>

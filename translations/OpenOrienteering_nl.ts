@@ -2674,50 +2674,6 @@
     </message>
 </context>
 <context>
-    <name>LocalCRSPositioningDialog</name>
-    <message>
-        <location filename="../src/templates/template_track.cpp" line="528"/>
-        <source>Track scaling and positioning</source>
-        <translation>Schaling en positionering van spoor ("track")</translation>
-    </message>
-    <message>
-        <location filename="../src/templates/template_track.cpp" line="533"/>
-        <source>Coordinate system</source>
-        <translation>Coördinatensysteem</translation>
-    </message>
-    <message>
-        <location filename="../src/templates/template_track.cpp" line="534"/>
-        <source>Real</source>
-        <translation>Werkelijkheid</translation>
-    </message>
-    <message>
-        <location filename="../src/templates/template_track.cpp" line="535"/>
-        <source>Map</source>
-        <translation>Kaart</translation>
-    </message>
-    <message>
-        <location filename="../src/templates/template_track.cpp" line="538"/>
-        <source>m</source>
-        <comment>meters</comment>
-        <translation>m</translation>
-    </message>
-    <message>
-        <location filename="../src/templates/template_track.cpp" line="541"/>
-        <source>One coordinate unit equals:</source>
-        <translation>Een coördinateneenheid komt overeen met:</translation>
-    </message>
-    <message>
-        <location filename="../src/templates/template_track.cpp" line="543"/>
-        <source>Position track at given coordinates</source>
-        <translation>Positioneer spoor ("track") op de aangegeven coördinaten</translation>
-    </message>
-    <message>
-        <location filename="../src/templates/template_track.cpp" line="547"/>
-        <source>Position track at view center</source>
-        <translation>Positioneer spoor ("track") in het midden van het beeld</translation>
-    </message>
-</context>
-<context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
         <source>Services</source>
@@ -8476,28 +8432,28 @@ van de wijs
 <context>
     <name>Template</name>
     <message>
-        <location filename="../src/templates/template.cpp" line="403"/>
+        <location filename="../src/templates/template.cpp" line="428"/>
         <source>Find the moved template file</source>
         <translation>Zoek het verplaatste sjabloon-bestand</translation>
     </message>
     <message>
-        <location filename="../src/templates/template.cpp" line="405"/>
+        <location filename="../src/templates/template.cpp" line="430"/>
         <source>All files (*.*)</source>
         <translation>Alle bestanden (*.*)</translation>
     </message>
     <message>
-        <location filename="../src/templates/template.cpp" line="420"/>
+        <location filename="../src/templates/template.cpp" line="445"/>
         <source>Error</source>
         <translation>Fout</translation>
     </message>
     <message>
-        <location filename="../src/templates/template.cpp" line="502"/>
-        <location filename="../src/templates/template.cpp" line="521"/>
+        <location filename="../src/templates/template.cpp" line="527"/>
+        <location filename="../src/templates/template.cpp" line="546"/>
         <source>No such file.</source>
         <translation>Geen dergelijk bestand.</translation>
     </message>
     <message>
-        <location filename="../src/templates/template.cpp" line="539"/>
+        <location filename="../src/templates/template.cpp" line="564"/>
         <source>Is the format of the file correct for this template type?</source>
         <translation>Is het formaat van het bestand juist voor dit sjabloon type?</translation>
     </message>
@@ -8720,7 +8676,7 @@ Indien dat toch niet de bedoeling is, is dat geen probleem.</translation>
     <name>TemplateListWidget</name>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="399"/>
-        <location filename="../src/templates/template.cpp" line="416"/>
+        <location filename="../src/templates/template.cpp" line="441"/>
         <source>Cannot open template
 %1:
 %2</source>
@@ -8941,47 +8897,91 @@ Indien dat toch niet de bedoeling is, is dat geen probleem.</translation>
     </message>
 </context>
 <context>
+    <name>TemplatePositioningDialog</name>
+    <message>
+        <location filename="../src/templates/template_positioning_dialog.cpp" line="36"/>
+        <source>Track scaling and positioning</source>
+        <translation>Schaling en positionering van spoor ("track")</translation>
+    </message>
+    <message>
+        <location filename="../src/templates/template_positioning_dialog.cpp" line="41"/>
+        <source>Coordinate system</source>
+        <translation>Coördinatensysteem</translation>
+    </message>
+    <message>
+        <location filename="../src/templates/template_positioning_dialog.cpp" line="42"/>
+        <source>Real</source>
+        <translation>Werkelijkheid</translation>
+    </message>
+    <message>
+        <location filename="../src/templates/template_positioning_dialog.cpp" line="43"/>
+        <source>Map</source>
+        <translation>Kaart</translation>
+    </message>
+    <message>
+        <location filename="../src/templates/template_positioning_dialog.cpp" line="46"/>
+        <source>m</source>
+        <comment>meters</comment>
+        <translation>m</translation>
+    </message>
+    <message>
+        <location filename="../src/templates/template_positioning_dialog.cpp" line="49"/>
+        <source>One coordinate unit equals:</source>
+        <translation>Een coördinateneenheid komt overeen met:</translation>
+    </message>
+    <message>
+        <location filename="../src/templates/template_positioning_dialog.cpp" line="51"/>
+        <source>Position track at given coordinates</source>
+        <translation>Positioneer spoor ("track") op de aangegeven coördinaten</translation>
+    </message>
+    <message>
+        <location filename="../src/templates/template_positioning_dialog.cpp" line="55"/>
+        <source>Position track at view center</source>
+        <translation>Positioneer spoor ("track") in het midden van het beeld</translation>
+    </message>
+</context>
+<context>
     <name>TemplateTrack</name>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="145"/>
+        <location filename="../src/templates/template_track.cpp" line="141"/>
         <source>Select the coordinate reference system of the track coordinates</source>
         <translatorcomment>tracks is beter dan routes in deze contekst</translatorcomment>
         <translation>Kies het referentiecoördinatensysteem voor de coördinaten van de sporen ("tracks")</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="163"/>
+        <location filename="../src/templates/template_track.cpp" line="159"/>
         <source>Opening track ...</source>
         <translatorcomment>Track is beter dan route in deze contekst</translatorcomment>
         <translation>Spoor ("track") openen ...</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="164"/>
+        <location filename="../src/templates/template_track.cpp" line="160"/>
         <source>Load the track in georeferenced or non-georeferenced mode?</source>
         <translation>Kromme ("track") inlezen in geografisch gerefereerde of niet-geografisch gerefereerde modus?</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="166"/>
+        <location filename="../src/templates/template_track.cpp" line="162"/>
         <source>Positions the track according to the map's georeferencing settings.</source>
         <translation>Plaatst het pad ("track") volgens de geografische uitlijning van de kaart.</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="168"/>
+        <location filename="../src/templates/template_track.cpp" line="164"/>
         <source>These are not configured yet, so they will be shown as the next step.</source>
         <translatorcomment>Add explanation for "these".</translatorcomment>
         <translation>Deze zijn nog niet ingesteld, en worden dus getoond in de volgende stap.</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="169"/>
+        <location filename="../src/templates/template_track.cpp" line="165"/>
         <source>Georeferenced</source>
         <translation>Geografisce uitgelijnd</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="170"/>
+        <location filename="../src/templates/template_track.cpp" line="166"/>
         <source>Non-georeferenced</source>
         <translation>Niet-geografisce uitgelijnd</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="170"/>
+        <location filename="../src/templates/template_track.cpp" line="166"/>
         <source>Projects the track using an orthographic projection with center at the track's coordinate average. Allows adjustment of the transformation and setting the map georeferencing using the adjusted track position.</source>
         <translatorcomment>Track is beter dan route in deze contekst</translatorcomment>
         <translation>Parallelprojectie van het pad ("track") met als centrum het gemiddelde van de coördinaten van het pad. Aanpassing van de transformatie is mogelijk. De geografische uitlijning van de kaart kan worden aangepast met de positie van het pad.</translation>
@@ -8990,32 +8990,32 @@ Indien dat toch niet de bedoeling is, is dat geen probleem.</translation>
         <location filename="../src/sensors/gps_track.cpp" line="499"/>
         <location filename="../src/sensors/gps_track.cpp" line="508"/>
         <location filename="../src/sensors/gps_track.cpp" line="515"/>
-        <location filename="../src/templates/template_track.cpp" line="398"/>
+        <location filename="../src/templates/template_track.cpp" line="394"/>
         <source>Error</source>
         <translation>Fout</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="398"/>
+        <location filename="../src/templates/template_track.cpp" line="394"/>
         <source>The path is empty, there is nothing to import!</source>
         <translation>Het pad is leeg, er valt niets te importeren!</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="411"/>
+        <location filename="../src/templates/template_track.cpp" line="407"/>
         <source>Question</source>
         <translation>Vragen</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="411"/>
+        <location filename="../src/templates/template_track.cpp" line="407"/>
         <source>Should the waypoints be imported as a line going through all points?</source>
         <translation>Moeten de punten worden geimporteerd als een lijn door alle punten?</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="478"/>
+        <location filename="../src/templates/template_track.cpp" line="474"/>
         <source>Import problems</source>
         <translation>Porblemen bij importeren</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/templates/template_track.cpp" line="479"/>
+        <location filename="../src/templates/template_track.cpp" line="475"/>
         <source>%n path object(s) could not be imported (reason: missing coordinates).</source>
         <translation>
             <numerusform>%n pad-object kon niet geimporteerd worden (reden: ontbrekende coördinaten).</numerusform>
