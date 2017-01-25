@@ -26,6 +26,7 @@
 #include "ogr_file_format_p.h"
 #include "core/map.h"
 #include "core/objects/object.h"
+#include "templates/template_positioning_dialog.h"
 
 
 const std::vector<QByteArray>& OgrTemplate::supportedExtensions()
@@ -37,6 +38,8 @@ const std::vector<QByteArray>& OgrTemplate::supportedExtensions()
 OgrTemplate::OgrTemplate(const QString& path, Map* map)
 : TemplateMap(path, map)
 , migrating_from_template_track(false)
+, use_real_coords{ true }
+, center_in_view{ false }
 {
 	// nothing else
 }
@@ -54,6 +57,39 @@ const char* OgrTemplate::getTemplateType() const
 }
 
 
+bool OgrTemplate::preLoadConfiguration(QWidget* dialog_parent)
+{
+	auto show_dialog = true;
+	
+	QFile file{ template_path };
+	try
+	{
+		show_dialog = !OgrFileImport::checkGeoreferencing(file, map->getGeoreferencing());
+	}
+	catch (FileFormatException& e)
+	{
+		setErrorString(QString::fromUtf8(e.what()));
+		return false;
+	}
+	
+	if (show_dialog)
+	{
+		TemplatePositioningDialog dialog(dialog_parent);
+		if (dialog.exec() == QDialog::Rejected)
+			return false;
+		
+		use_real_coords = dialog.useRealCoords();
+		if (use_real_coords)
+		{
+			transform.template_scale_x = transform.template_scale_y = dialog.getUnitScale();
+			updateTransformationMatrices();
+		}
+		center_in_view = dialog.centerOnView();
+	}
+	return true;
+}
+
+
 bool OgrTemplate::loadTemplateFileImpl(bool configuring)
 {
 	Q_UNUSED(configuring);
@@ -64,7 +100,7 @@ bool OgrTemplate::loadTemplateFileImpl(bool configuring)
 	QFile stream{ template_path };
 	try
 	{
-		OgrFileImport importer{ &stream, new_template_map.get(), nullptr, migrating_from_template_track };
+		OgrFileImport importer{ &stream, new_template_map.get(), nullptr, use_real_coords };
 		importer.doImport(false, template_path);
 		setTemplateMap(std::move(new_template_map));
 		
@@ -80,7 +116,6 @@ bool OgrTemplate::loadTemplateFileImpl(bool configuring)
 			message.chop(1);
 			setErrorString(message);
 		}
-		
 		return true;
 	}
 	catch (FileFormatException& e)
@@ -88,6 +123,15 @@ bool OgrTemplate::loadTemplateFileImpl(bool configuring)
 		setErrorString(QString::fromUtf8(e.what()));
 		return false;
 	}
+}
+
+
+bool OgrTemplate::postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view)
+{
+	Q_UNUSED(dialog_parent)
+	is_georeferenced = false;
+	out_center_in_view = center_in_view;
+	return true;
 }
 
 

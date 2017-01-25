@@ -42,8 +42,11 @@ public:
 	
 	const char* getTemplateType() const override;
 	
+	bool preLoadConfiguration(QWidget* dialog_parent) override;
 	
 	bool loadTemplateFileImpl(bool configuring) override;
+	
+	bool postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view) override;
 	
 protected:
 	Template* duplicateImpl() const override;
@@ -54,6 +57,8 @@ protected:
 	
 private:
 	bool migrating_from_template_track;
+	bool use_real_coords;
+	bool center_in_view;
 };
 
 #endif // OPENORIENTEERING_OGR_TEMPLATE_H
