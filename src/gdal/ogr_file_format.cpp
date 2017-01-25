@@ -1068,3 +1068,46 @@ MapCoord OgrFileImport::fromProjected(double x, double y) const
 {
 	return map->getGeoreferencing().toMapCoords(QPointF{ x, y });
 }
+
+
+// static
+bool OgrFileImport::checkGeoreferencing(QFile& file, const Georeferencing& georef)
+{
+	if (georef.isLocal() || !georef.isValid())
+		return false;
+	
+	GdalManager();
+	
+	auto filename = file.fileName();
+	// GDAL 2.0: ... = GDALOpenEx(template_path.toLatin1(), GDAL_OF_VECTOR, nullptr, nullptr, nullptr);
+	auto data_source = ogr::unique_datasource(OGROpen(filename.toUtf8().constData(), 0, nullptr));
+	if (data_source == nullptr)
+	{
+		throw FileFormatException(Importer::tr("Could not read '%1': %2")
+		                          .arg(filename, QString::fromLatin1(CPLGetLastErrorMsg())));
+	}
+	
+	auto spec = georef.getProjectedCRSSpec().toLatin1();
+	auto map_srs = ogr::unique_srs { OSRNewSpatialReference(nullptr) };
+	OSRImportFromProj4(map_srs.get(), spec.constData());
+	
+	bool suitable_srs_found = false;
+	auto num_layers = OGR_DS_GetLayerCount(data_source.get());
+	for (int i = 0; i < num_layers; ++i)
+	{
+		if (auto layer = OGR_DS_GetLayer(data_source.get(), i))
+		{
+			if (auto spatial_reference = OGR_L_GetSpatialRef(layer))
+			{
+				auto transformation = OCTNewCoordinateTransformation(spatial_reference, map_srs.get());
+				if (!transformation)
+					return false;
+				
+				OCTDestroyCoordinateTransformation(transformation);
+				suitable_srs_found = true;
+			}
+		}
+	}
+	
+	return suitable_srs_found;
+}

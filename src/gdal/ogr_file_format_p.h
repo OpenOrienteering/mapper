@@ -33,7 +33,12 @@
 #include "fileformats/file_import_export.h"
 #include "core/symbols/symbol.h"
 
+QT_BEGIN_NAMESPACE
+class QFile;
+QT_END_NAMESPACE
+
 class AreaSymbol;
+class Georeferencing;
 class LineSymbol;
 class MapColor;
 class MapPart;
@@ -117,6 +122,15 @@ public:
 	OgrFileImport(QIODevice* stream, Map *map, MapView *view, bool drawing_from_projected = false);
 	
 	~OgrFileImport() override;
+	
+	/**
+	 * Tests if the file's spatial references can be used with the given georeferencing.
+	 * 
+	 * This returns true only if all layers' spatial references can be
+	 * transformed to the spatial reference systems represented by georef.
+	 * It will always return false for a local or invalid Georeferencing.
+	 */
+	static bool checkGeoreferencing(QFile& file, const Georeferencing& georef);
 	
 protected:
 	void import(bool load_symbols_only) override;
