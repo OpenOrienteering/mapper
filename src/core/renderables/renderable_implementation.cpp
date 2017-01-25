@@ -249,7 +249,7 @@ LineRenderable::LineRenderable(const LineSymbol* symbol, const VirtualPath& virt
 			}
 		}
 	}
-	Q_ASSERT(extent.right() < 999999);	// assert if bogus values are returned
+	Q_ASSERT(extent.right() < 60000000);	// assert if bogus values are returned
 }
 
 LineRenderable::LineRenderable(const LineSymbol* symbol, QPointF first, QPointF second)
@@ -509,7 +509,7 @@ AreaRenderable::AreaRenderable(const AreaSymbol* symbol, const PathPartVector& p
 			}
 		}
 	}
-	Q_ASSERT(extent.right() < 999999);	// assert if bogus values are returned
+	Q_ASSERT(extent.right() < 60000000);	// assert if bogus values are returned
 }
 
 AreaRenderable::AreaRenderable(const AreaSymbol* symbol, const VirtualPath& virtual_path)

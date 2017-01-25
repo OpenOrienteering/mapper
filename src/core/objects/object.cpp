@@ -544,7 +544,7 @@ bool Object::update() const
 	
 	createRenderables(output, options);
 	
-	Q_ASSERT(extent.right() < 999999);	// assert if bogus values are returned
+	Q_ASSERT(extent.right() < 60000000);	// assert if bogus values are returned
 	output_dirty = false;
 	
 	if (map)
