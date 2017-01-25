@@ -60,7 +60,7 @@ FileFormat::~FileFormat()
 
 void FileFormat::addExtension(const QString& file_extension)
 {
-	file_extensions << file_extension;
+	file_extensions << file_extension << file_extension.toUpper();
 	format_filter = QString::fromLatin1("%1 (*.%2)").arg(format_description, file_extensions.join(QString::fromLatin1(" *.")));
 }
 
