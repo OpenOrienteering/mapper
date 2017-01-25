@@ -97,18 +97,19 @@ bool OgrTemplate::loadTemplateFileImpl(bool configuring)
 	std::unique_ptr<Map> new_template_map{ new Map() };
 	new_template_map->setGeoreferencing(map->getGeoreferencing());
 	
-	QFile stream{ template_path };
+	QFile file{ template_path };
 	try
 	{
-		OgrFileImport importer{ &stream, new_template_map.get(), nullptr, use_real_coords };
+		OgrFileImport importer{ &file, new_template_map.get(), nullptr, use_real_coords };
 		importer.doImport(false, template_path);
 		setTemplateMap(std::move(new_template_map));
 		
-		if (!importer.warnings().empty())
+		const auto& warnings = importer.warnings();
+		if (!warnings.empty())
 		{
 			QString message;
-			message.reserve((importer.warnings().back().length()+1) * importer.warnings().size());
-			for (auto& warning : importer.warnings())
+			message.reserve((warnings.back().length()+1) * int(warnings.size()));
+			for (const auto& warning : warnings)
 			{
 				message.append(warning);
 				message.append(QLatin1Char{'\n'});
