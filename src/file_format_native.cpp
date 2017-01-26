@@ -413,6 +413,7 @@ void NativeFileImport::import(bool load_symbols_only)
 			MapPart* part = new MapPart({}, map);
 			if (!part->load(stream, version, map))
 			{
+				delete part;
 				throw FileFormatException(Importer::tr("Error while loading map part %2.").arg(i+1));
 			}
 			map->parts[i] = part;
