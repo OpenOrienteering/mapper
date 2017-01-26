@@ -58,7 +58,7 @@ void GeoreferencingTest::testEmptyProjectedCRS()
 	QVERIFY(new_georef.isValid());
 	QVERIFY(new_georef.isLocal());
 	QCOMPARE(new_georef.getState(), Georeferencing::Local);
-	QCOMPARE(new_georef.getScaleDenominator(), 1u);
+	QCOMPARE(new_georef.getScaleDenominator(), 1000u);
 	QCOMPARE(new_georef.getGridScaleFactor(), 1.0);
 	QCOMPARE(new_georef.getDeclination(), 0.0);
 	QCOMPARE(new_georef.getGrivation(), 0.0);

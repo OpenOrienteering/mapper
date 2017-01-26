@@ -135,7 +135,7 @@ const QString Georeferencing::geographic_crs_spec(QString::fromLatin1("+proj=lat
 
 Georeferencing::Georeferencing()
 : state(Local),
-  scale_denominator(1),
+  scale_denominator{1000},
   grid_scale_factor{1.0},
   declination(0.0),
   grivation(0.0),
