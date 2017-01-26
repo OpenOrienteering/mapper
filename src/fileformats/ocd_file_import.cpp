@@ -1046,7 +1046,7 @@ OcdFileImport::OcdImportedLineSymbol* OcdFileImport::importLineSymbolBase(const 
 			
 			if (attributes.end_length && attributes.end_length != attributes.main_length)
 			{
-				if (attributes.main_length && 0.75 >= attributes.end_length / attributes.main_length)
+				if (attributes.main_length && 0.75 >= double(attributes.end_length) / double(attributes.main_length))
 				{
 					// End length max. 75 % of main length
 					symbol->half_outer_dashes = true;

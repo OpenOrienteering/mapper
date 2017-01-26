@@ -780,6 +780,8 @@ void MapPrinter::mapScaleChanged()
 
 void MapPrinter::takePrinterSettings(const QPrinter* printer)
 {
+	if (!printer) return;
+
 	MapPrinterPageFormat f(*printer);
 	if (target == pdfTarget() || target == imageTarget())
 	{
@@ -798,7 +800,7 @@ void MapPrinter::takePrinterSettings(const QPrinter* printer)
 
 	setResolution(printer->resolution());
 	
-	if (printer && printer->outputFormat() == QPrinter::NativeFormat)
+	if (printer->outputFormat() == QPrinter::NativeFormat)
 	{
 		PlatformPrinterProperties::save(printer, native_data);
 	}
