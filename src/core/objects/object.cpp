@@ -455,7 +455,7 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 			try {
 				coords_element.read(object->coords);
 			}
-			catch (FileFormatException e)
+			catch (FileFormatException& e)
 			{
 				throw FileFormatException(ImportExport::tr("Error while loading an object of type %1 at %2:%3: %4").
 				  arg(object_type).arg(xml.lineNumber()).arg(xml.columnNumber()).arg(e.message()));
