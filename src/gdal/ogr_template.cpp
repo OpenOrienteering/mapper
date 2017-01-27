@@ -68,7 +68,7 @@ bool OgrTemplate::preLoadConfiguration(QWidget* dialog_parent)
 	}
 	catch (FileFormatException& e)
 	{
-		setErrorString(QString::fromUtf8(e.what()));
+		setErrorString(e.message());
 		return false;
 	}
 	
@@ -122,7 +122,7 @@ bool OgrTemplate::loadTemplateFileImpl(bool configuring)
 	}
 	catch (FileFormatException& e)
 	{
-		setErrorString(QString::fromUtf8(e.what()));
+		setErrorString(e.message());
 		return false;
 	}
 }
