@@ -39,6 +39,7 @@ QT_END_NAMESPACE
 
 class AreaSymbol;
 class Georeferencing;
+class LatLon;
 class LineSymbol;
 class MapColor;
 class MapPart;
@@ -132,6 +133,10 @@ public:
 	
 	~OgrFileImport() override;
 	
+	
+	void setGeoreferencingImportEnabled(bool enabled);
+	
+	
 	/**
 	 * Tests if the file's spatial references can be used with the given georeferencing.
 	 * 
@@ -141,8 +146,16 @@ public:
 	 */
 	static bool checkGeoreferencing(QFile& file, const Georeferencing& georef);
 	
+	/**
+	 * Calculates the average geographic coordinates (WGS84) of the file.
+	 */
+	static LatLon calcAverageLatLon(QFile& file);
+	
+	
 protected:
 	void import(bool load_symbols_only) override;
+	
+	void importGeoreferencing(OGRDataSourceH data_source);
 	
 	void importStyles(OGRDataSourceH data_source);
 	
@@ -182,6 +195,10 @@ protected:
 	 */
 	MapCoord fromProjected(double x, double y) const;
 	
+	
+	static LatLon calcAverageLatLon(OGRDataSourceH data_source);
+	
+	
 private:
 	Symbol* getSymbolForPointGeometry(const QByteArray& style_string);
 	LineSymbol* getLineSymbol(const QByteArray& style_string);
@@ -220,6 +237,8 @@ private:
 	unsigned int too_few_coordinates;
 	
 	UnitType unit_type;
+	
+	bool georeferencing_import_enabled;
 };
 
 

@@ -273,6 +273,7 @@ OgrFileImport::OgrFileImport(QIODevice* stream, Map* map, MapView* view, UnitTyp
  , map_srs{ OSRNewSpatialReference(nullptr) }
  , manager{ OGR_SM_Create(nullptr) }
  , unit_type{ unit_type }
+ , georeferencing_import_enabled{ true }
 {
 	GdalManager().configure();
 	
@@ -338,6 +339,15 @@ OgrFileImport::~OgrFileImport()
 	// nothing
 }
 
+
+
+void OgrFileImport::setGeoreferencingImportEnabled(bool enabled)
+{
+	georeferencing_import_enabled = enabled;
+}
+
+
+
 void OgrFileImport::import(bool load_symbols_only)
 {
 	auto file = qobject_cast<QFile*>(stream);
@@ -360,6 +370,9 @@ void OgrFileImport::import(bool load_symbols_only)
 	failed_transformation = 0;
 	unsupported_geometry_type = 0;
 	too_few_coordinates = 0;
+	
+	if (georeferencing_import_enabled)
+		importGeoreferencing(data_source.get());
 	
 	importStyles(data_source.get());
 
@@ -435,6 +448,72 @@ void OgrFileImport::import(bool load_symbols_only)
 		           .arg(tr("Not enough coordinates.")));
 	}
 }
+
+
+
+void OgrFileImport::importGeoreferencing(OGRDataSourceH data_source)
+{
+	auto wgs84 = ogr::unique_srs { OSRNewSpatialReference(nullptr) };
+	OSRSetWellKnownGeogCS(wgs84.get(), "WGS84");
+	
+	auto data_srs = ogr::unique_srs { nullptr };
+	
+	// Find any SRS which can be transformed to WGS84,
+	// but prefer projected SRS.
+	auto num_layers = OGR_DS_GetLayerCount(data_source);
+	for (int i = 0; i < num_layers; ++i)
+	{
+		auto layer = OGR_DS_GetLayer(data_source, i);
+		if (!layer)
+		    continue;
+		             
+		auto spatial_reference = OGR_L_GetSpatialRef(layer);
+		if (!spatial_reference)
+			continue;
+		
+		auto transformation = OCTNewCoordinateTransformation(spatial_reference, wgs84.get());
+		if (transformation)
+		{
+			OCTDestroyCoordinateTransformation(transformation);
+			if (!data_srs)
+			{
+				data_srs.reset(OSRClone(spatial_reference));
+				if (OSRIsProjected(spatial_reference))
+					break;
+			}
+		}
+	}
+	
+	if (data_srs && !OSRIsProjected(data_srs.get()))
+	{
+		// Found a suitable SRS but it is not projected.
+		// Setting up a local orthographic projection.
+		auto center = calcAverageLatLon(data_source);
+		auto latitude = 0.001 * qRound(1000 * center.latitude());
+		auto longitude = 0.001 * qRound(1000 * center.longitude());
+		auto ortho_georef = Georeferencing();
+		ortho_georef.setScaleDenominator(int(map->getScaleDenominator()));
+		ortho_georef.setProjectedCRS(QString{}, QString::fromLatin1("+proj=ortho +datum=WGS84 +lat_0=%1 +lon_0=%2")
+		                                        .arg(latitude).arg(longitude));
+		ortho_georef.setGeographicRefPoint(LatLon{ latitude, longitude }, false);
+		map->setGeoreferencing(ortho_georef);
+		OSRImportFromProj4(map_srs.get(), ortho_georef.getProjectedCRSSpec().toLatin1());
+	}
+	else if (data_srs) {
+		char* data = nullptr;
+		auto error = OSRExportToProj4(data_srs.get(), &data);
+		if (!error)
+		{
+			auto georef = map->getGeoreferencing();
+			georef.setProjectedCRS(QString::fromLatin1(data));
+			CPLFree(data);
+			map->setGeoreferencing(georef);
+			map_srs = std::move(data_srs);
+		}
+	}
+}
+
+
 
 void OgrFileImport::importStyles(OGRDataSourceH data_source)
 {
@@ -1110,4 +1189,70 @@ bool OgrFileImport::checkGeoreferencing(QFile& file, const Georeferencing& geore
 	}
 	
 	return suitable_srs_found;
+}
+
+
+
+// static
+LatLon OgrFileImport::calcAverageLatLon(QFile& file)
+{
+	GdalManager();
+	
+	auto filename = file.fileName();
+	// GDAL 2.0: ... = GDALOpenEx(template_path.toLatin1(), GDAL_OF_VECTOR, nullptr, nullptr, nullptr);
+	auto data_source = ogr::unique_datasource(OGROpen(filename.toUtf8().constData(), 0, nullptr));
+	if (data_source == nullptr)
+	{
+		throw FileFormatException(Importer::tr("Could not read '%1': %2")
+		                          .arg(filename, QString::fromLatin1(CPLGetLastErrorMsg())));
+	}
+	
+	return calcAverageLatLon(data_source.get());
+}
+
+
+// static
+LatLon OgrFileImport::calcAverageLatLon(OGRDataSourceH data_source)
+{
+	auto geo_srs = ogr::unique_srs { OSRNewSpatialReference(nullptr) };
+	OSRImportFromProj4(geo_srs.get(), "+proj=latlong +datum=WGS84");
+	
+	auto num_coords = 0u;
+	double x = 0, y = 0;
+	auto num_layers = OGR_DS_GetLayerCount(data_source);
+	for (int i = 0; i < num_layers; ++i)
+	{
+		if (auto layer = OGR_DS_GetLayer(data_source, i))
+		{
+			auto spatial_reference = OGR_L_GetSpatialRef(layer);
+			if (!spatial_reference)
+				continue;
+			
+			auto transformation = ogr::unique_transformation{ OCTNewCoordinateTransformation(spatial_reference, geo_srs.get()) };
+			if (!transformation)
+				continue;
+			
+			OGR_L_ResetReading(layer);
+			while (auto feature = ogr::unique_feature(OGR_L_GetNextFeature(layer)))
+			{
+				auto geometry = OGR_F_GetGeometryRef(feature.get());
+				if (!geometry || OGR_G_IsEmpty(geometry))
+					continue;
+				
+				auto error = OGR_G_Transform(geometry, transformation.get());
+				if (error)
+					continue;
+				
+				auto num_points = OGR_G_GetPointCount(geometry);
+				for (int i = 0; i < num_points; ++i)
+				{
+					x += OGR_G_GetX(geometry, i);
+					y += OGR_G_GetY(geometry, i);
+					++num_coords;
+				}
+			}
+		}
+	}
+	
+	return num_coords ? LatLon{ y / num_coords, x / num_coords } : LatLon{};
 }
