@@ -56,7 +56,8 @@ protected:
 	void saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const override;
 	
 private:
-	bool migrating_from_template_track;
+	QString crs_spec;
+	bool migrating_from_pre_v07;  /// Some files saved with unstable snapshots < v0.7
 	bool use_real_coords;
 	bool center_in_view;
 };

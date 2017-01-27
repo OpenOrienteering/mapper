@@ -28,6 +28,7 @@
 #include <QMessageBox>
 #include <QPainter>
 #include <QPixmap>
+#include <QScopedValueRollback>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
@@ -263,25 +264,43 @@ void Template::saveTemplateConfiguration(QXmlStreamWriter& xml, bool open)
 	}
 	else
 	{
-		xml.writeStartElement(QString::fromLatin1("transformations"));
-		if (adjusted)
-			xml.writeAttribute(QString::fromLatin1("adjusted"), QString::fromLatin1("true"));
-		if (adjustment_dirty)
-			xml.writeAttribute(QString::fromLatin1("adjustment_dirty"), QString::fromLatin1("true"));
-		int num_passpoints = (int)passpoints.size();
-		xml.writeAttribute(QString::fromLatin1("passpoints"), QString::number(num_passpoints));
+		{
+			QScopedValueRollback<TemplateTransform> rollback{transform};
+			if (!accounted_offset.isNull())
+			{
+				// Temporarily revert the offset the saved data is expected to
+				// match the original data before bounds checking / correction
+				QTransform t;
+				t.rotate(-getTemplateRotation() * (180 / M_PI));
+				t.scale(getTemplateScaleX(), getTemplateScaleY());
+				setTemplatePosition(templatePosition() - MapCoord{t.map(accounted_offset)});
+			}
+			
+			xml.writeStartElement(QString::fromLatin1("transformations"));
+			if (adjusted)
+				xml.writeAttribute(QString::fromLatin1("adjusted"), QString::fromLatin1("true"));
+			if (adjustment_dirty)
+				xml.writeAttribute(QString::fromLatin1("adjustment_dirty"), QString::fromLatin1("true"));
+			int num_passpoints = (int)passpoints.size();
+			xml.writeAttribute(QString::fromLatin1("passpoints"), QString::number(num_passpoints));
+			
+			transform.save(xml, QString::fromLatin1("active"));
+			other_transform.save(xml, QString::fromLatin1("other"));
+			
+			for (int i = 0; i < num_passpoints; ++i)
+				passpoints[i].save(xml);
+			
+			map_to_template.save(xml, QString::fromLatin1("map_to_template"));
+			template_to_map.save(xml, QString::fromLatin1("template_to_map"));
+			template_to_map_other.save(xml, QString::fromLatin1("template_to_map_other"));
+			
+			xml.writeEndElement(/*transformations*/);
+		}
 		
-		transform.save(xml, QString::fromLatin1("active"));
-		other_transform.save(xml, QString::fromLatin1("other"));
-		
-		for (int i = 0; i < num_passpoints; ++i)
-			passpoints[i].save(xml);
-		
-		map_to_template.save(xml, QString::fromLatin1("map_to_template"));
-		template_to_map.save(xml, QString::fromLatin1("template_to_map"));
-		template_to_map_other.save(xml, QString::fromLatin1("template_to_map_other"));
-		
-		xml.writeEndElement(/*transformations*/);
+		if (!accounted_offset.isNull())
+		{
+			updateTransformationMatrices();
+		}
 	}
 	
 	saveTypeSpecificTemplateConfiguration(xml);

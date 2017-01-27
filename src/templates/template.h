@@ -625,6 +625,9 @@ protected:
 	
 	// Properties for non-georeferenced templates (invalid if is_georeferenced is true) 
 	
+	/// Bounds correction offset for map templates. Must be masked out when saving.
+	QPointF accounted_offset;
+	
 	/// Currently active transformation. NOTE: after direct changes here call updateTransformationMatrices()
 	TemplateTransform transform;
 	
