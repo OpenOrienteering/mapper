@@ -1066,7 +1066,7 @@ MapCoord OgrFileImport::fromDrawing(double x, double y) const
 
 MapCoord OgrFileImport::fromProjected(double x, double y) const
 {
-	return map->getGeoreferencing().toMapCoords(QPointF{ x, y });
+	return MapCoord::load(map->getGeoreferencing().toMapCoordF(QPointF{ x, y }), 0);
 }
 
 
