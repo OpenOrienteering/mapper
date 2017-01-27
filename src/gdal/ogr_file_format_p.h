@@ -119,7 +119,7 @@ public:
 	/**
 	 * Constructs a new importer.
 	 */
-	OgrFileImport(QIODevice* stream, Map *map, MapView *view, bool drawing_from_projected = false);
+	OgrFileImport(QIODevice* stream, Map *map, MapView *view, bool drawing_from_projected = true);
 	
 	~OgrFileImport() override;
 	
