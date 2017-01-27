@@ -243,6 +243,11 @@ MapCoord MapCoord::load(qreal x, qreal y, int flags)
 	return MapCoord { static_cast<qint32>(x64), static_cast<qint32>(y64), flags };
 }
 
+MapCoord MapCoord::load(QPointF p, int flags)
+{
+	return MapCoord::load(p.x(), p.y(), flags);
+}
+
 #ifndef NO_NATIVE_FILE_FORMAT
 	
 MapCoord::MapCoord(const LegacyMapCoord& coord)

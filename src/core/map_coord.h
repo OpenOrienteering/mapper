@@ -415,6 +415,14 @@ public:
 	 */
 	static MapCoord load(qreal x, qreal y, int flags);
 	
+	/** Creates a MapCoord from map coordinates in millimeters, with offset handling.
+	 * 
+	 * This will initialize the boundsOffset() if neccessary. Otherwise it will
+	 * apply the BoundsOffset() and throw a std::range_error if the adjusted
+	 * coordinates are out of bounds for qint32.
+	 */
+	static MapCoord load(QPointF p, int flags);
+	
 	
 	friend constexpr bool operator==(const MapCoord& lhs, const MapCoord& rhs);
 	friend constexpr MapCoord operator+(const MapCoord& lhs, const MapCoord& rhs);
