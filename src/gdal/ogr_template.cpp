@@ -100,7 +100,8 @@ bool OgrTemplate::loadTemplateFileImpl(bool configuring)
 	QFile file{ template_path };
 	try
 	{
-		OgrFileImport importer{ &file, new_template_map.get(), nullptr, use_real_coords };
+		auto unit_type = use_real_coords ? OgrFileImport::UnitOnGround : OgrFileImport::UnitOnPaper;
+		OgrFileImport importer{ &file, new_template_map.get(), nullptr, unit_type };
 		importer.doImport(false, template_path);
 		setTemplateMap(std::move(new_template_map));
 		

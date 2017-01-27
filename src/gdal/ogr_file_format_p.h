@@ -112,6 +112,15 @@ class OgrFileImport : public Importer
 Q_OBJECT
 public:
 	/**
+	 * The unit type indicates the coordinate system the data units refers to.
+	 */
+	enum UnitType
+	{
+		UnitOnGround,  ///< Data refers to real dimensions. Includes geograghic CS.
+		UnitOnPaper    ///< Data refers to dimensions in the (printed) map.
+	};
+	
+	/**
 	 * A Pointer to a function which creates a MapCoordF from double coordinates.
 	 */
 	using MapCoordConstructor = MapCoord (OgrFileImport::*)(double, double) const;
@@ -119,7 +128,7 @@ public:
 	/**
 	 * Constructs a new importer.
 	 */
-	OgrFileImport(QIODevice* stream, Map *map, MapView *view, bool drawing_from_projected = true);
+	OgrFileImport(QIODevice* stream, Map *map, MapView *view, UnitType unit_type = UnitOnGround);
 	
 	~OgrFileImport() override;
 	
@@ -210,7 +219,7 @@ private:
 	unsigned int unsupported_geometry_type;
 	unsigned int too_few_coordinates;
 	
-	bool drawing_from_projected;
+	UnitType unit_type;
 };
 
 

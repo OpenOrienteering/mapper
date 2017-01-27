@@ -268,11 +268,11 @@ Importer* OgrFileFormat::createImporter(QIODevice* stream, Map *map, MapView *vi
 
 // ### OgrFileImport ###
 
-OgrFileImport::OgrFileImport(QIODevice* stream, Map* map, MapView* view, bool drawing_from_projected)
+OgrFileImport::OgrFileImport(QIODevice* stream, Map* map, MapView* view, UnitType unit_type)
  : Importer(stream, map, view)
  , map_srs{ OSRNewSpatialReference(nullptr) }
  , manager{ OGR_SM_Create(nullptr) }
- , drawing_from_projected{ drawing_from_projected }
+ , unit_type{ unit_type }
 {
 	GdalManager().configure();
 	
@@ -365,7 +365,7 @@ void OgrFileImport::import(bool load_symbols_only)
 
 	if (!load_symbols_only)
 	{
-		if (!drawing_from_projected)
+		if (unit_type == UnitOnPaper)
 		{
 			Q_ASSERT(MapCoord::boundsOffset().isZero());
 			MapCoord::boundsOffset().reset(true);
@@ -403,7 +403,7 @@ void OgrFileImport::import(bool load_symbols_only)
 			importLayer(part, layer);
 		}
 		
-		if (!drawing_from_projected)
+		if (unit_type == UnitOnPaper)
 		{
 			MapCoord::boundsOffset().reset(false);
 		}
@@ -491,7 +491,7 @@ void OgrFileImport::importFeature(MapPart* map_part, OGRFeatureDefnH feature_def
 			return;
 		}
 	}
-	else if (!drawing_from_projected)
+	else if (unit_type == UnitOnPaper)
 	{
 		to_map_coord = &OgrFileImport::fromDrawing;
 	}
