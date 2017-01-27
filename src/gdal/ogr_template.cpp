@@ -98,33 +98,36 @@ bool OgrTemplate::loadTemplateFileImpl(bool configuring)
 	new_template_map->setGeoreferencing(map->getGeoreferencing());
 	
 	QFile file{ template_path };
+	auto unit_type = use_real_coords ? OgrFileImport::UnitOnGround : OgrFileImport::UnitOnPaper;
+	OgrFileImport importer{ &file, new_template_map.get(), nullptr, unit_type };
+	
 	try
 	{
-		auto unit_type = use_real_coords ? OgrFileImport::UnitOnGround : OgrFileImport::UnitOnPaper;
-		OgrFileImport importer{ &file, new_template_map.get(), nullptr, unit_type };
 		importer.doImport(false, template_path);
-		setTemplateMap(std::move(new_template_map));
-		
-		const auto& warnings = importer.warnings();
-		if (!warnings.empty())
-		{
-			QString message;
-			message.reserve((warnings.back().length()+1) * int(warnings.size()));
-			for (const auto& warning : warnings)
-			{
-				message.append(warning);
-				message.append(QLatin1Char{'\n'});
-			}
-			message.chop(1);
-			setErrorString(message);
-		}
-		return true;
 	}
 	catch (FileFormatException& e)
 	{
 		setErrorString(e.message());
 		return false;
 	}
+	
+	setTemplateMap(std::move(new_template_map));
+	
+	const auto& warnings = importer.warnings();
+	if (!warnings.empty())
+	{
+		QString message;
+		message.reserve((warnings.back().length()+1) * int(warnings.size()));
+		for (const auto& warning : warnings)
+		{
+			message.append(warning);
+			message.append(QLatin1Char{'\n'});
+		}
+		message.chop(1);
+		setErrorString(message);
+	}
+	
+	return true;
 }
 
 
