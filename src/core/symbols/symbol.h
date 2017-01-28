@@ -144,7 +144,7 @@ public:
 	bool isTypeCompatibleTo(const Object* object) const;
 	
 	/** Returns if the symbol numbers are identical. */
-	bool numberEquals(const Symbol* other, bool ignore_trailing_zeros);
+	bool numberEquals(const Symbol* other, bool ignore_trailing_zeros) const;
 	
 	
 	// Saving and loading

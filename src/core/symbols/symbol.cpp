@@ -147,7 +147,7 @@ bool Symbol::isTypeCompatibleTo(const Object* object) const
 	return false;
 }
 
-bool Symbol::numberEquals(const Symbol* other, bool ignore_trailing_zeros)
+bool Symbol::numberEquals(const Symbol* other, bool ignore_trailing_zeros) const
 {
 	if (ignore_trailing_zeros)
 	{
