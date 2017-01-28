@@ -29,6 +29,7 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QRegularExpression>
+#include <QScopedValueRollback>
 #include <QtMath>
 
 #include "gdal_manager.h"
@@ -378,11 +379,8 @@ void OgrFileImport::import(bool load_symbols_only)
 
 	if (!load_symbols_only)
 	{
-		if (unit_type == UnitOnPaper)
-		{
-			Q_ASSERT(MapCoord::boundsOffset().isZero());
-			MapCoord::boundsOffset().reset(true);
-		}
+		QScopedValueRollback<MapCoord::BoundsOffset> rollback { MapCoord::boundsOffset() };
+		MapCoord::boundsOffset().reset(true);
 		
 		auto num_layers = OGR_DS_GetLayerCount(data_source.get());
 		for (int i = 0; i < num_layers; ++i)
@@ -416,9 +414,16 @@ void OgrFileImport::import(bool load_symbols_only)
 			importLayer(part, layer);
 		}
 		
-		if (unit_type == UnitOnPaper)
+		const auto& offset = MapCoord::boundsOffset();
+		if (!offset.isZero())
 		{
-			MapCoord::boundsOffset().reset(false);
+			// We need to adjust the georeferencing.
+			auto offset_f  = MapCoordF { offset.x / 1000.0, offset.y / 1000.0 };
+			auto georef = map->getGeoreferencing();
+			auto ref_point = MapCoordF { georef.getMapRefPoint() };
+			auto new_projected = georef.toProjectedCoords(ref_point + offset_f);
+			georef.setProjectedRefPoint(new_projected, false);
+			map->setGeoreferencing(georef);
 		}
 	}
 	
