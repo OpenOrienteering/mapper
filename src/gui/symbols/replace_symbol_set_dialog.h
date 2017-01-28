@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -18,11 +19,13 @@
  */
 
 
-#ifndef _OPENORIENTEERING_SYMBOL_DIALOG_REPLACE_H_
-#define _OPENORIENTEERING_SYMBOL_DIALOG_REPLACE_H_
+#ifndef OPENORIENTEERING_REPLACE_SYMBOL_SET_DIALOG_H
+#define OPENORIENTEERING_REPLACE_SYMBOL_SET_DIALOG_H
 
-#include <QHash>
+#include <memory>
+
 #include <QDialog>
+#include <QHash>
 
 QT_BEGIN_NAMESPACE
 class QCheckBox;
@@ -33,8 +36,10 @@ class Map;
 class Symbol;
 class SymbolDropDownDelegate;
 
+
 /**
- * Dialog for replacing the map's symbol set with another.
+ * Dialog and tool for replacing the map's symbol set with another.
+ * 
  * Lets the user choose options and possibly even choose the replacement
  * for every single symbol.
  */
@@ -42,8 +47,12 @@ class ReplaceSymbolSetDialog : public QDialog
 {
 Q_OBJECT
 public:
+	using SymbolMapping      = QHash<const Symbol*, Symbol*>;
+	using ConstSymbolMapping = QHash<const Symbol*, const Symbol*>;
+	
 	/**
 	 * Lets the user select a file to load the symbols from and shows the dialog.
+	 * 
 	 * Returns true if the replacement has been finished, false if aborted.
 	 */
 	static bool showDialog(QWidget* parent, Map* map);
@@ -54,17 +63,17 @@ private slots:
 	void apply();
 	
 private:
-	ReplaceSymbolSetDialog(QWidget* parent, Map* map, Map* symbol_map);
+	ReplaceSymbolSetDialog(QWidget* parent, Map* map, const Map* symbol_map);
     virtual ~ReplaceSymbolSetDialog();
 	
 	void calculateNumberMatchMapping();
-	Symbol* findNumberMatch(Symbol* original, bool ignore_trailing_zeros);
+	const Symbol* findNumberMatch(const Symbol* original, bool ignore_trailing_zeros);
 	void updateMappingTable();
 	void updateMappingFromTable();
 	
 	Map* map;
-	Map* symbol_map;
-	QHash<const Symbol*, const Symbol*> mapping;
+	const Map* symbol_map;
+	ConstSymbolMapping mapping;
 	
 	QCheckBox* import_all_check;
 	QCheckBox* delete_unused_symbols_check;
@@ -72,7 +81,7 @@ private:
 	QCheckBox* preserve_symbol_states_check;
 	QCheckBox* match_by_number_check;
 	QTableWidget* mapping_table;
-	std::vector<SymbolDropDownDelegate*> symbol_widget_delegates;
+	std::vector<std::unique_ptr<SymbolDropDownDelegate>> symbol_widget_delegates;
 };
 
 #endif

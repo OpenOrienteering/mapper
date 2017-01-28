@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -29,17 +30,52 @@
 #include <QTableWidget>
 #include <QVBoxLayout>
 
+#include "core/map.h"
+#include "core/objects/object.h"
 #include "fileformats/file_format.h"
 #include "gui/main_window.h"
 #include "gui/widgets/symbol_dropdown.h"
-#include "core/map.h"
-#include "core/objects/object.h"
 #include "undo/undo_manager.h"
 #include "util/util.h"
 
 
-ReplaceSymbolSetDialog::ReplaceSymbolSetDialog(QWidget* parent, Map* map, Map* symbol_map)
- : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), map(map), symbol_map(symbol_map)
+//### ReplaceSymbolSetOperation ###
+
+struct ReplaceSymbolSetOperation
+{
+	using SymbolMapping = ReplaceSymbolSetDialog::SymbolMapping;
+	using ConstSymbolMapping = ReplaceSymbolSetDialog::ConstSymbolMapping;
+	
+	ReplaceSymbolSetOperation(ConstSymbolMapping& mapping, SymbolMapping& import_symbol_map) noexcept
+	 : mapping{ mapping }
+	 , import_symbol_map{ import_symbol_map }
+	{
+		// nothing else
+	}
+	
+	bool operator()(Object* object, MapPart*, int) const
+	{
+		if (mapping.contains(object->getSymbol()))
+		{
+			auto target_symbol = import_symbol_map.value(mapping.value(object->getSymbol()));
+			object->setSymbol(target_symbol, true);
+		}
+		return true;
+	}
+	
+private:
+	const ConstSymbolMapping& mapping;
+	const SymbolMapping& import_symbol_map;
+};
+
+
+
+//### ReplaceSymbolSetDialog ###
+
+ReplaceSymbolSetDialog::ReplaceSymbolSetDialog(QWidget* parent, Map* map, const Map* symbol_map)
+ : QDialog{ parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint }
+ , map{ map }
+ , symbol_map{ symbol_map }
 {
 	setWindowTitle(tr("Replace symbol set"));
 	
@@ -83,19 +119,21 @@ ReplaceSymbolSetDialog::ReplaceSymbolSetDialog(QWidget* parent, Map* map, Map* s
 	layout->addWidget(button_box);
 	setLayout(layout);
 	
-	connect(match_by_number_check, SIGNAL(clicked(bool)), this, SLOT(matchByNumberClicked(bool)));
-	connect(button_box, SIGNAL(helpRequested()), this, SLOT(showHelp()));
-	connect(button_box, SIGNAL(accepted()), this, SLOT(apply()));
-	connect(button_box, SIGNAL(rejected()), this, SLOT(reject()));
+	connect(match_by_number_check, &QAbstractButton::clicked, this, &ReplaceSymbolSetDialog::matchByNumberClicked);
+	connect(button_box, &QDialogButtonBox::helpRequested, this, &ReplaceSymbolSetDialog::showHelp);
+	connect(button_box, &QDialogButtonBox::accepted, this, &ReplaceSymbolSetDialog::apply);
+	connect(button_box, &QDialogButtonBox::rejected, this, &QDialog::reject);
 	
 	matchByNumberClicked(true);
 }
 
+
 ReplaceSymbolSetDialog::~ReplaceSymbolSetDialog()
 {
-	for (int i = 0, end = (int)symbol_widget_delegates.size(); i < end; ++i)
-		delete symbol_widget_delegates[i];
+	// nothing, not inlined
 }
+
+
 
 void ReplaceSymbolSetDialog::matchByNumberClicked(bool checked)
 {
@@ -105,45 +143,25 @@ void ReplaceSymbolSetDialog::matchByNumberClicked(bool checked)
 		updateMappingTable();
 	}
 	
-	mapping_table->setEditTriggers(checked ?
-		QAbstractItemView::NoEditTriggers : QAbstractItemView::AllEditTriggers);
+	mapping_table->setEditTriggers(checked ? QAbstractItemView::NoEditTriggers
+	                                       : QAbstractItemView::AllEditTriggers);
 	for (int row = 0; row < mapping_table->rowCount(); ++row)
 	{
-		mapping_table->item(row, 1)->setFlags(checked ?
-			Qt::NoItemFlags : (Qt::ItemIsEnabled | Qt::ItemIsEditable));
+		auto item = mapping_table->item(row, 1);
+		item->setFlags(checked ? Qt::NoItemFlags : (Qt::ItemIsEnabled | Qt::ItemIsEditable));
 	}
 }
+
 
 void ReplaceSymbolSetDialog::showHelp()
 {
 	Util::showHelp(this, "symbol_replace_dialog.html");
 }
 
-struct ReplaceSymbolSetOperation
-{
-	inline ReplaceSymbolSetOperation(QHash<const Symbol*, const Symbol*>* mapping, QHash<const Symbol*, Symbol*>* import_symbol_map)
-	 : mapping(mapping), import_symbol_map(import_symbol_map)
-	{
-	}
-	inline bool operator()(Object* object, MapPart* part, int object_index) const
-	{
-		Q_UNUSED(part);
-		Q_UNUSED(object_index);
-		if (mapping->contains(object->getSymbol()))
-		{
-			const Symbol* target_symbol = import_symbol_map->value(mapping->value(object->getSymbol()));
-			object->setSymbol(target_symbol, true);
-		}
-		return true;
-	}
-private:
-	QHash<const Symbol*, const Symbol*>* mapping;
-	QHash<const Symbol*, Symbol*>* import_symbol_map;
-};
 
 void ReplaceSymbolSetDialog::apply()
 {
-	QHash<const Symbol*, Symbol*> import_symbol_map;
+	SymbolMapping import_symbol_map;
 	
 	updateMappingFromTable();
 	
@@ -155,15 +173,14 @@ void ReplaceSymbolSetDialog::apply()
 	}
 	
 	// Import new symbols
-	std::vector<bool>* symbol_filter = NULL;
+	auto symbol_filter = std::unique_ptr<std::vector<bool>>{ nullptr };
 	if (!import_all_check->isChecked())
 	{
 		// Import only symbols which are chosen as replacement symbols
-		symbol_filter = new std::vector<bool>();
-		symbol_filter->resize(symbol_map->getNumSymbols(), false);
+		symbol_filter.reset(new std::vector<bool>(std::size_t(symbol_map->getNumSymbols()), false));
 		for (int i = 0; i < symbol_map->getNumSymbols(); ++i)
 		{
-			for (QHash<const Symbol*, const Symbol*>::iterator it = mapping.begin(), end = mapping.end(); it != end; ++it)
+			for (auto it = mapping.begin(), end = mapping.end(); it != end; ++it)
 			{
 				if (it.value() == symbol_map->getSymbol(i))
 				{
@@ -173,22 +190,21 @@ void ReplaceSymbolSetDialog::apply()
 			}
 		}
 	}
-	map->importMap(symbol_map, Map::MinimalSymbolImport, this, symbol_filter, -1, false, &import_symbol_map);
-	delete symbol_filter;
+	map->importMap(symbol_map, Map::MinimalSymbolImport, this, symbol_filter.get(), -1, false, &import_symbol_map);
 	
 	// Take over hidden / protected states from old symbol set?
 	if (preserve_symbol_states_check->isChecked())
 	{
-		for (QHash<const Symbol*, const Symbol*>::iterator it = mapping.begin(), end = mapping.end(); it != end; ++it)
+		for (auto it = mapping.begin(), end = mapping.end(); it != end; ++it)
 		{
-			Symbol* target_symbol = import_symbol_map.value(it.value());
+			auto target_symbol = import_symbol_map.value(it.value());
 			target_symbol->setHidden(it.key()->isHidden());
 			target_symbol->setProtected(it.key()->isProtected());
 		}
 	}
 	
 	// Change symbols for all objects
-	map->applyOnAllObjects(ReplaceSymbolSetOperation(&mapping, &import_symbol_map));
+	map->applyOnAllObjects(ReplaceSymbolSetOperation(mapping, import_symbol_map));
 	
 	// Delete unused old symbols
 	if (delete_unused_symbols_check->isChecked())
@@ -198,7 +214,7 @@ void ReplaceSymbolSetDialog::apply()
 		
 		for (int i = map->getNumSymbols() - 1; i >= 0; --i)
 		{
-			Symbol* symbol = map->getSymbol(i);
+			auto symbol = map->getSymbol(i);
 			if (!old_symbols.contains(symbol) || symbols_in_use[i])
 				continue;
 			
@@ -218,9 +234,8 @@ void ReplaceSymbolSetDialog::apply()
 		
 		for (int i = map->getNumColors() - 1; i >= 0; --i)
 		{
-			if (colors_in_use[i])
-				continue;
-			map->deleteColor(i);
+			if (!colors_in_use[i])
+				map->deleteColor(i);
 		}
 	}
 	
@@ -232,47 +247,46 @@ void ReplaceSymbolSetDialog::apply()
 	accept();
 }
 
+
 void ReplaceSymbolSetDialog::calculateNumberMatchMapping()
 {
 	mapping.clear();
 	
 	for (int i = 0; i < map->getNumSymbols(); ++i)
 	{
-		Symbol* original = map->getSymbol(i);
-		Symbol* replacement = findNumberMatch(original, false);
-		if (replacement)
-			mapping.insert(original, replacement);
-		else
-		{
+		auto original = map->getSymbol(i);
+		auto replacement = findNumberMatch(original, false);
+		if (!replacement)
 			// No match found. Do second pass which ignores trailing zeros
 			replacement = findNumberMatch(original, true);
-			if (replacement)
-				mapping.insert(original, replacement);
-		}
+		
+		if (replacement)
+			mapping.insert(original, replacement);
 	}
 }
 
-Symbol* ReplaceSymbolSetDialog::findNumberMatch(Symbol* original, bool ignore_trailing_zeros)
+
+const Symbol* ReplaceSymbolSetDialog::findNumberMatch(const Symbol* original, bool ignore_trailing_zeros)
 {
 	for (int k = 0; k < symbol_map->getNumSymbols(); ++k)
 	{
-		Symbol* replacement = symbol_map->getSymbol(k);
+		auto replacement = symbol_map->getSymbol(k);
 		if (original->numberEquals(replacement, ignore_trailing_zeros) &&
 			Symbol::areTypesCompatible(original->getType(), replacement->getType()))
 		{
 			return replacement;
 		}
 	}
-	return NULL;
+	return nullptr;
 }
+
 
 void ReplaceSymbolSetDialog::updateMappingTable()
 {
 	mapping_table->clearContents();
 	mapping_table->setRowCount(map->getNumSymbols());
 	
-	for (int i = 0, end = (int)symbol_widget_delegates.size(); i < end; ++i)
-		delete symbol_widget_delegates[i];
+	symbol_widget_delegates.clear();
 	symbol_widget_delegates.resize(map->getNumSymbols());
 	
 	for (int row = 0; row < map->getNumSymbols(); ++row)
@@ -287,7 +301,7 @@ void ReplaceSymbolSetDialog::updateMappingTable()
 		mapping_table->setItem(row, 0, original_item);
 		
 		// Note on const: this is not a const method.
-		const Symbol* replacement_symbol = mapping.contains(original_symbol) ? mapping.value(original_symbol) : NULL;
+		const Symbol* replacement_symbol = mapping.contains(original_symbol) ? mapping.value(original_symbol) : nullptr;
 		QTableWidgetItem* replacement_item;
 		if (replacement_symbol)
 			replacement_item = new QTableWidgetItem(replacement_symbol->getNumberAsString() + QLatin1Char(' ') + replacement_symbol->getPlainTextName());
@@ -300,10 +314,11 @@ void ReplaceSymbolSetDialog::updateMappingTable()
 			replacement_item->setData(Qt::DecorationRole, replacement_symbol->getIcon(symbol_map));
 		mapping_table->setItem(row, 1, replacement_item);
 		
-		symbol_widget_delegates[row] = new SymbolDropDownDelegate(Symbol::getCompatibleTypes(original_symbol->getType()));
-		mapping_table->setItemDelegateForRow(row, symbol_widget_delegates[row]);
+		symbol_widget_delegates[row].reset(new SymbolDropDownDelegate(Symbol::getCompatibleTypes(original_symbol->getType())));
+		mapping_table->setItemDelegateForRow(row, symbol_widget_delegates[row].get());
 	}
 }
+
 
 void ReplaceSymbolSetDialog::updateMappingFromTable()
 {
@@ -311,26 +326,26 @@ void ReplaceSymbolSetDialog::updateMappingFromTable()
 	
 	for (int row = 0; row < map->getNumSymbols(); ++row)
 	{
-		const Symbol* replacement_symbol = mapping_table->item(row, 1)->data(Qt::UserRole).toList().at(1).value<const Symbol*>();
-		if (!replacement_symbol)
-			continue;
-		
-		mapping.insert(map->getSymbol(row), replacement_symbol);
+		auto replacement_symbol = mapping_table->item(row, 1)->data(Qt::UserRole).toList().at(1).value<const Symbol*>();
+		if (replacement_symbol)
+			mapping.insert(map->getSymbol(row), replacement_symbol);
 	}
 }
 
+
+
 bool ReplaceSymbolSetDialog::showDialog(QWidget* parent, Map* map)
 {
-	Map* symbol_map = NULL;
+	auto symbol_map = std::unique_ptr<Map>{ nullptr };
 	while (true)
 	{
-		QString path = MainWindow::getOpenFileName(parent, tr("Choose map file to load symbols from"),
-													FileFormat::MapFile);
+		auto path = MainWindow::getOpenFileName(parent, tr("Choose map file to load symbols from"),
+		                                        FileFormat::MapFile);
 		if (path.isEmpty())
 			return false;
 		
-		symbol_map = new Map();
-		if (!symbol_map->loadFrom(path, parent, NULL, true))
+		symbol_map.reset(new Map);
+		if (!symbol_map->loadFrom(path, parent, nullptr, true))
 		{
 			QMessageBox::warning(parent, tr("Error"), tr("Cannot load map file, aborting."));
 			return false;
@@ -342,7 +357,6 @@ bool ReplaceSymbolSetDialog::showDialog(QWidget* parent, Map* map)
 				tr("The chosen symbol set has a scale of 1:%1, while the map scale is 1:%2. Do you really want to choose this set?").arg(symbol_map->getScaleDenominator()).arg(map->getScaleDenominator()),
 				QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
 			{
-				delete symbol_map;
 				continue;
 			}
 		}
@@ -350,10 +364,8 @@ bool ReplaceSymbolSetDialog::showDialog(QWidget* parent, Map* map)
 		break;
 	}
 	
-	ReplaceSymbolSetDialog dialog(parent, map, symbol_map);
+	ReplaceSymbolSetDialog dialog(parent, map, symbol_map.get());
 	dialog.setWindowModality(Qt::WindowModal);
-	bool accepted = dialog.exec() == QDialog::Accepted;
-	
-	delete symbol_map;
-	return accepted;
+	auto result = dialog.exec();
+	return result == QDialog::Accepted;
 }
