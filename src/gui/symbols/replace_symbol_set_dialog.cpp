@@ -28,10 +28,12 @@
 #include <QMessageBox>
 #include <QSet>
 #include <QTableWidget>
+#include <QTextStream>
 #include <QVBoxLayout>
 
 #include "core/map.h"
 #include "core/objects/object.h"
+#include "core/objects/object_query.h"
 #include "fileformats/file_format.h"
 #include "gui/main_window.h"
 #include "gui/widgets/symbol_dropdown.h"
@@ -72,25 +74,32 @@ private:
 
 //### ReplaceSymbolSetDialog ###
 
-ReplaceSymbolSetDialog::ReplaceSymbolSetDialog(QWidget* parent, Map* map, const Map* symbol_map)
+ReplaceSymbolSetDialog::ReplaceSymbolSetDialog(QWidget* parent, Map* map, const Map* symbol_map, Mode mode)
  : QDialog{ parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint }
  , map{ map }
  , symbol_map{ symbol_map }
+ , mode{ mode }
 {
+	auto check_enabled_default = mode != ModeCRT;
+	
 	setWindowTitle(tr("Replace symbol set"));
 	
 	QLabel* desc_label = new QLabel(tr("Configure how the symbols should be replaced, and which."));
 	
 	import_all_check = new QCheckBox(tr("Import all new symbols, even if not used as replacement"));
-	import_all_check->setChecked(true);
+	import_all_check->setChecked(check_enabled_default);
+	import_all_check->setEnabled(check_enabled_default);
 	delete_unused_symbols_check = new QCheckBox(tr("Delete original symbols which are unused after the replacement"));
-	delete_unused_symbols_check->setChecked(true);
+	delete_unused_symbols_check->setChecked(check_enabled_default);
+	delete_unused_symbols_check->setEnabled(check_enabled_default);
 	delete_unused_colors_check = new QCheckBox(tr("Delete unused colors after the replacement"));
-	delete_unused_colors_check->setChecked(true);
+	delete_unused_colors_check->setChecked(check_enabled_default);
+	delete_unused_colors_check->setEnabled(check_enabled_default);
 	
 	QLabel* mapping_label = new QLabel(tr("Symbol mapping:"));
 	preserve_symbol_states_check = new QCheckBox(tr("Keep the symbols' hidden / protected states of the old symbol set"));
-	preserve_symbol_states_check->setChecked(true);
+	preserve_symbol_states_check->setChecked(check_enabled_default);
+	preserve_symbol_states_check->setEnabled(check_enabled_default);
 	match_by_number_check = new QCheckBox(tr("Match replacement symbols by symbol number"));
 	match_by_number_check->setChecked(true);
 	
@@ -137,18 +146,20 @@ ReplaceSymbolSetDialog::~ReplaceSymbolSetDialog()
 
 void ReplaceSymbolSetDialog::matchByNumberClicked(bool checked)
 {
+	auto triggers = QAbstractItemView::AllEditTriggers;
+	auto flags    = Qt::ItemIsEnabled | Qt::ItemIsEditable;
 	if (checked)
 	{
 		calculateNumberMatchMapping();
 		updateMappingTable();
+		triggers = QAbstractItemView::NoEditTriggers;
+		flags    = Qt::NoItemFlags;
 	}
 	
-	mapping_table->setEditTriggers(checked ? QAbstractItemView::NoEditTriggers
-	                                       : QAbstractItemView::AllEditTriggers);
+	mapping_table->setEditTriggers(triggers);
 	for (int row = 0; row < mapping_table->rowCount(); ++row)
 	{
-		auto item = mapping_table->item(row, 1);
-		item->setFlags(checked ? Qt::NoItemFlags : (Qt::ItemIsEnabled | Qt::ItemIsEditable));
+		mapping_table->item(row, 1)->setFlags(flags);
 	}
 }
 
@@ -257,7 +268,7 @@ void ReplaceSymbolSetDialog::calculateNumberMatchMapping()
 		auto original = map->getSymbol(i);
 		auto replacement = findNumberMatch(original, false);
 		if (!replacement)
-			// No match found. Do second pass which ignores trailing zeros
+			// No match found. Do a second pass which ignores trailing zeros.
 			replacement = findNumberMatch(original, true);
 		
 		if (replacement)
@@ -292,7 +303,10 @@ void ReplaceSymbolSetDialog::updateMappingTable()
 	for (int row = 0; row < map->getNumSymbols(); ++row)
 	{
 		Symbol* original_symbol = map->getSymbol(row);
-		QTableWidgetItem* original_item = new QTableWidgetItem(original_symbol->getNumberAsString() + QLatin1Char(' ') + original_symbol->getPlainTextName());
+		auto original_string = original_symbol->getPlainTextName();
+		if (mode != ModeCRT)
+			original_string.prepend(original_symbol->getNumberAsString() + QLatin1Char(' '));
+		QTableWidgetItem* original_item = new QTableWidgetItem(original_string);
 		original_item->setFlags(Qt::ItemIsEnabled); // make item non-editable
 		QVariantList original_item_data =
 			QVariantList() << qVariantFromValue<const Map*>(map) << qVariantFromValue<const Symbol*>(original_symbol);
@@ -313,6 +327,9 @@ void ReplaceSymbolSetDialog::updateMappingTable()
 		if (replacement_symbol)
 			replacement_item->setData(Qt::DecorationRole, replacement_symbol->getIcon(symbol_map));
 		mapping_table->setItem(row, 1, replacement_item);
+		
+		auto hide = (mode == ModeCRT && original_symbol->isHidden());
+		mapping_table->setRowHidden(row, hide);
 		
 		symbol_widget_delegates[row].reset(new SymbolDropDownDelegate(Symbol::getCompatibleTypes(original_symbol->getType())));
 		mapping_table->setItemDelegateForRow(row, symbol_widget_delegates[row].get());
@@ -368,4 +385,113 @@ bool ReplaceSymbolSetDialog::showDialog(QWidget* parent, Map* map)
 	dialog.setWindowModality(Qt::WindowModal);
 	auto result = dialog.exec();
 	return result == QDialog::Accepted;
+}
+
+
+bool ReplaceSymbolSetDialog::showDialogForCRT(QWidget* parent, const Map* base_map, Map* imported_map, QIODevice& crt_file)
+{
+	QTextStream stream{ &crt_file };
+	stream.setIntegerBase(10); // No autodectection; 001 is 1.
+	while (!stream.atEnd())
+	{
+		int major = -1;
+		int minor =  0;
+		QChar separator;
+		stream >> major >> separator;
+		if (separator == QLatin1Char('.'))
+			stream >> minor;
+		auto layer = stream.readLine().trimmed();
+		auto query = ObjectQuery(QString::fromLatin1("Layer"), ObjectQuery::OperatorIs, layer);
+		
+		SymbolMapping layerized_symbols;
+		for (int i = 0; i < base_map->getNumSymbols(); ++i)
+		{
+			auto symbol = base_map->getSymbol(i);
+			
+			if (symbol->getNumberComponent(0) != major)
+				continue;
+			
+			if (minor > 0 && symbol->getNumberComponent(1) > 0
+			    && symbol->getNumberComponent(1) != minor)
+				continue;
+			
+			if (symbol->getNumberComponent(1) >= 0
+			    && symbol->getNumberComponent(2) >= 0)
+				continue;
+			
+			// Target symbol exists, now adjust imported symbols for automatic matching
+			auto layerize = [imported_map, symbol, &layer, &layerized_symbols](Object* object, MapPart*, int)->bool
+			{
+				if (symbol->isTypeCompatibleTo(object))
+				{
+				    auto object_symbol = object->getSymbol();
+					if (!layerized_symbols.contains(object_symbol)
+					    && object->getTag({}).isEmpty())
+					{
+						auto layerized_symbol = object_symbol->duplicate();
+						layerized_symbol->setNumberComponent(0, symbol->getNumberComponent(0));
+						layerized_symbol->setNumberComponent(1, symbol->getNumberComponent(2));
+						layerized_symbol->setNumberComponent(2, symbol->getNumberComponent(2));
+						layerized_symbol->setName(layer);
+						imported_map->addSymbol(layerized_symbol, imported_map->getNumSymbols());
+						layerized_symbols.insert(object_symbol, layerized_symbol);
+					}
+					object->setSymbol(layerized_symbols[object_symbol], true);
+					object->setTag({}, QString::number(imported_map->findSymbolIndex(object_symbol)));
+				}
+				return false;
+			};
+			
+			imported_map->applyOnMatchingObjects(layerize, query);
+		}
+	}
+	
+	// Remove symbols which are no longer in use
+	std::vector<bool> symbols_in_use;
+	imported_map->determineSymbolsInUse(symbols_in_use);
+	
+	for (int i = imported_map->getNumSymbols() - 1; i >= 0; --i)
+	{
+		if (!symbols_in_use[std::size_t(i)])
+			imported_map->getSymbol(i)->setHidden(true);
+	}
+	
+	// Now show the replacement dialog
+	ReplaceSymbolSetDialog dialog(parent, imported_map, base_map, ModeCRT);
+	dialog.setWindowModality(Qt::WindowModal);
+	const auto accepted = dialog.exec() == QDialog::Accepted;
+	
+	if (accepted)
+	{
+		// Accepted. Just rempove the extra tag.
+		auto reset = [](Object* object, MapPart*, int)->bool
+		{
+			object->removeTag({});
+			return false;
+		};
+		imported_map->applyOnAllObjects(reset);
+	}
+	else
+	{
+		// Rejected. Restore the original symbols, and remove the extra tag.
+		auto num_symbols = imported_map->getNumSymbols();
+		for (int i = num_symbols - 1; i >= 0; --i)
+		{
+			imported_map->getSymbol(i)->setHidden(false);
+		}
+		auto unlayerize = [imported_map, num_symbols](Object* object, MapPart*, int)->bool
+		{
+			bool ok;
+			auto number = object->getTag({}).toInt(&ok);
+			if (ok && 0 <= number && number < num_symbols)
+			{
+				object->setSymbol(imported_map->getSymbol(number), false);
+			}
+			object->removeTag({});
+			return false;
+		};
+		imported_map->applyOnAllObjects(unlayerize);
+	}
+	
+	return accepted;
 }

@@ -3845,11 +3845,42 @@ bool MapEditorController::importMapFile(const QString& filename, bool show_error
 	Map imported_map;
 	imported_map.setScaleDenominator(map->getScaleDenominator()); // for non-scaled geodata
 	
-	bool result = imported_map.loadFrom(filename, window, nullptr, false, show_errors);
-	if (result)
-		map->importMap(&imported_map, Map::MinimalObjectImport, window);
+	if (!imported_map.loadFrom(filename, window, nullptr, false, show_errors))
+		return false;
 	
-	return result;
+	if (filename.endsWith(QLatin1String(".dxf"), Qt::CaseInsensitive))
+	{
+		Q_ASSERT(imported_map.getScaleDenominator() == map->getScaleDenominator());
+		
+		auto crt_filename = filename;
+		crt_filename.replace(filename.lastIndexOf(QLatin1Char('.')), 4, QLatin1String(".crt"));
+		if (!QFileInfo{crt_filename}.exists())
+			crt_filename.replace(filename.lastIndexOf(QLatin1Char('.')), 4, QLatin1String(".CRT"));
+		
+		QFile crt_file{ crt_filename };
+		if (crt_file.exists())
+		{
+			if (!crt_file.open(QFile::ReadOnly))
+			{
+				QMessageBox::warning(window, Map::tr("Error"),
+				                     Map::tr("Cannot open file:\n%1\nfor reading.").arg(crt_filename));
+				return false;
+			}
+			if (!ReplaceSymbolSetDialog::showDialogForCRT(window, map, &imported_map, crt_file))
+			{
+				auto choice = QMessageBox::question(window, Map::tr("Import..."),
+				                                    Map::tr("Symbol replacement was canceled.\n"
+				                                            "Import the data anyway?"),
+				                                    QMessageBox::Yes | QMessageBox::No,
+				                                    QMessageBox::No);
+				if (choice == QMessageBox::No)
+					return false;
+			}
+		}
+	}
+	
+	map->importMap(&imported_map, Map::MinimalObjectImport, window);
+	return true;
 }
 
 // slot

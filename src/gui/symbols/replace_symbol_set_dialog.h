@@ -57,14 +57,28 @@ public:
 	 */
 	static bool showDialog(QWidget* parent, Map* map);
 	
+	/**
+	 * Shows the dialog for a given base map, imported map, and cross reference file.
+	 * 
+	 * The replacement takes place in the imported map.
+	 * Returns true if the replacement has been finished, false if aborted.
+	 */
+	static bool showDialogForCRT(QWidget* parent, const Map* base_map, Map* imported_map, QIODevice& crt_file);
+	
 private slots:
 	void matchByNumberClicked(bool checked);
 	void showHelp();
 	void apply();
 	
 private:
-	ReplaceSymbolSetDialog(QWidget* parent, Map* map, const Map* symbol_map);
-    virtual ~ReplaceSymbolSetDialog();
+	enum Mode
+	{
+		ModeStandard,
+		ModeCRT
+	};
+	
+	ReplaceSymbolSetDialog(QWidget* parent, Map* map, const Map* symbol_map, Mode mode = ModeStandard);
+	virtual ~ReplaceSymbolSetDialog();
 	
 	void calculateNumberMatchMapping();
 	const Symbol* findNumberMatch(const Symbol* original, bool ignore_trailing_zeros);
@@ -74,6 +88,7 @@ private:
 	Map* map;
 	const Map* symbol_map;
 	ConstSymbolMapping mapping;
+	Mode mode;
 	
 	QCheckBox* import_all_check;
 	QCheckBox* delete_unused_symbols_check;
