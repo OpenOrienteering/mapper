@@ -56,6 +56,9 @@ function(fixup_bundle_portable runtime dirs)
 		fixup_bundle("$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}${runtime_destination}/Mapper.exe" "${runtime}" "${dirs}")
 	elseif(APPLE)
 		fixup_bundle("$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}${runtime_destination}/Mapper.app" "${runtime}" "${dirs}")
+	elseif(UNIX)
+		# Add required symlinks.
+		execute_process(COMMAND ldconfig -n "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}@MAPPER_LIBRARY_DESTINATION@")
 	endif()
 endfunction()
 

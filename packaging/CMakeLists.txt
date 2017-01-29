@@ -374,15 +374,6 @@ if(APPLE)
 	install_qt5_executable(Mapper.app
 	  "${MAPPER_QT_PLUGINS_FOUND}"
 	  ${FIXUP_ASSISTANT})
-elseif(UNIX)
-	find_program(LDCONFIG_COMMAND NAMES ldconfig)
-	if(${LDCONFIG_COMMAND} MATCHES NOTFOUND)
-		message(FATAL_ERROR "Could not find ldconfig command.")
-	endif()
-	# Add required symlinks.
-	install(CODE "execute_process(COMMAND \"${LDCONFIG_COMMAND}\" -n \"\$ENV{DESTDIR}${MAPPER_LIBRARY_DESTINATION}/lib\")")
-	# Create DEBIAN directory to make dpkg-shlibdeps happy.
-	install(CODE "file(MAKE_DIRECTORY \"\$ENV{DESTDIR}/DEBIAN\")") 
 endif()
 
 if(UNIX AND NOT APPLE)
