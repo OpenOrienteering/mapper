@@ -33,7 +33,6 @@
 
 #include "core/map.h"
 #include "core/objects/object.h"
-#include "core/objects/object_query.h"
 #include "fileformats/file_format.h"
 #include "gui/main_window.h"
 #include "gui/widgets/symbol_dropdown.h"
@@ -401,7 +400,17 @@ bool ReplaceSymbolSetDialog::showDialogForCRT(QWidget* parent, const Map* base_m
 		if (separator == QLatin1Char('.'))
 			stream >> minor;
 		auto layer = stream.readLine().trimmed();
-		auto query = ObjectQuery(QString::fromLatin1("Layer"), ObjectQuery::OperatorIs, layer);
+		
+		// We use a tag with an empty key to temporarily save the index of the
+		// original symbol. This is needed to case to reset the data in case the
+		// dialog is canceled. In addition, this tag serves as a flag that an
+		// object was already handled.
+		auto query = [&layer](Object* object)->bool
+		{
+			const auto& tags = object->tags();
+			return !tags.contains({})
+			       && tags[QStringLiteral("Layer")] == layer;
+		};
 		
 		SymbolMapping layerized_symbols;
 		for (int i = 0; i < base_map->getNumSymbols(); ++i)
@@ -425,8 +434,7 @@ bool ReplaceSymbolSetDialog::showDialogForCRT(QWidget* parent, const Map* base_m
 				if (symbol->isTypeCompatibleTo(object))
 				{
 				    auto object_symbol = object->getSymbol();
-					if (!layerized_symbols.contains(object_symbol)
-					    && object->getTag({}).isEmpty())
+					if (!layerized_symbols.contains(object_symbol))
 					{
 						auto layerized_symbol = object_symbol->duplicate();
 						layerized_symbol->setNumberComponent(0, symbol->getNumberComponent(0));
@@ -446,7 +454,7 @@ bool ReplaceSymbolSetDialog::showDialogForCRT(QWidget* parent, const Map* base_m
 		}
 	}
 	
-	// Remove symbols which are no longer in use
+	// Hide symbols which are no longer in use
 	std::vector<bool> symbols_in_use;
 	imported_map->determineSymbolsInUse(symbols_in_use);
 	
@@ -463,7 +471,7 @@ bool ReplaceSymbolSetDialog::showDialogForCRT(QWidget* parent, const Map* base_m
 	
 	if (accepted)
 	{
-		// Accepted. Just rempove the extra tag.
+		// Accepted and done. Just remove the extra tag.
 		auto reset = [](Object* object, MapPart*, int)->bool
 		{
 			object->removeTag({});
