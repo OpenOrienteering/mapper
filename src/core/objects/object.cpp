@@ -689,6 +689,9 @@ void Object::rotate(double angle)
 
 void Object::transform(const QTransform& t)
 {
+	if (t.isIdentity())
+		return;
+	
 	for (auto& coord : coords)
 	{
 		const auto p = t.map(MapCoordF{coord});
