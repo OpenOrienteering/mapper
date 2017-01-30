@@ -925,19 +925,20 @@ void Map::importMap(
 		// Import parts like this:
 		//  - if the other map has only one part, import it into the current part
 		//  - else check if there is already a part with an equal name for every part to import and import into this part if found, else create a new part
-		for (int part = 0; part < other->getNumParts(); ++part)
+		for (const auto* part_to_import : other->parts)
 		{
-			MapPart* part_to_import = other->getPart(part);
 			MapPart* dest_part = nullptr;
-			if (other->getNumParts() == 1)
+			if (other->parts.size() == 1)
+			{
 				dest_part = getCurrentPart();
+			}
 			else
 			{
-				for (int check_part = 0; check_part < getNumParts(); ++check_part)
+				for (auto* check_part : parts)
 				{
-					if (getPart(check_part)->getName().compare(other->getPart(part)->getName(), Qt::CaseInsensitive) == 0)
+					if (check_part->getName().compare(part_to_import->getName(), Qt::CaseInsensitive) == 0)
 					{
-						dest_part = getPart(check_part);
+						dest_part = check_part;
 						break;
 					}
 				}
@@ -951,14 +952,14 @@ void Map::importMap(
 			
 			// Temporarily switch the current part for importing so the undo step gets created for the right part
 			MapPart* temp_current_part = getCurrentPart();
-			current_part_index = findPartIndex(dest_part);
+			current_part_index = std::size_t(findPartIndex(dest_part));
 			
 			bool select_and_center_objects = dest_part == temp_current_part;
 			dest_part->importPart(part_to_import, symbol_map, q_transform, select_and_center_objects);
 			if (select_and_center_objects)
 				ensureVisibilityOfSelectedObjects(Map::FullVisibility);
 			
-			current_part_index = findPartIndex(temp_current_part);
+			current_part_index = std::size_t(findPartIndex(temp_current_part));
 		}
 	}
 }
