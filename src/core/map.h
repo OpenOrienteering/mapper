@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Thomas Schöps
- *    Copyright 2013-2015 Kai Pastor
+ *    Copyright 2013-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,8 +19,8 @@
  */
 
 
-#ifndef _OPENORIENTEERING_MAP_H_
-#define _OPENORIENTEERING_MAP_H_
+#ifndef OPENORIENTEERING_MAP_H
+#define OPENORIENTEERING_MAP_H
 
 #include <vector>
 #include <set>
@@ -83,31 +83,23 @@ public:
 	/** A set of selected objects represented by a std::set of object pointers. */
 	typedef std::set<Object*> ObjectSelection;
 	
-	/** Different strategies for importing things from another map into this map. */
-	enum ImportMode
+	/**
+	 * Different strategies for importing elements from another map.
+	 */
+	enum ImportModeFlag
 	{
-		/**
-		 * Imports all objects with minimal symbol and color dependencies.
-		 */
-		MinimalObjectImport = 0,
+		ObjectImport   = 0x00,       ///< Import objects, symbols and colors.
+		SymbolImport   = 0x01,       ///< Import symbols and colors.
+		ColorImport    = 0x02,       ///< Import colors.
+		GeorefImport   = 0x10,       ///< Use the georeferencing for object import.
+		MinimalImport  = 0x20,       ///< Imports with minimal symbol and color dependencies.
 		
-		/**
-		 * Imports symbols (all, or filtered by the given filter) with minimal
-		 * color dependencies. If a filter is given, symbols blocked by
-		 * the filter but which are needed by included symbols are included, too.
-		 */
-		MinimalSymbolImport,
-		
-		/**
-		 * Imports objects (all, or filtered by the given filter).
-		 */
-		ColorImport,
-		
-		/**
-		 * Imports all colors, symbols and objects.
-		 */
-		CompleteImport
+		MinimalSymbolImport = SymbolImport | MinimalImport,
+		MinimalObjectImport = ObjectImport | MinimalImport,
+		CompleteImport      = ObjectImport | GeorefImport
 	};
+	
+	Q_DECLARE_FLAGS(ImportMode, ImportModeFlag)
 	
 	
 	/** Options for zooming to visibility of selection. */
@@ -1480,6 +1472,8 @@ Q_DECLARE_METATYPE(const Map*)
 
 
 // ### Map inline code ###
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(Map::ImportMode)
 
 inline
 int Map::getNumColors() const

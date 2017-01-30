@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Thomas Schöps
- *    Copyright 2013-2015 Kai Pastor
+ *    Copyright 2013-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -802,14 +802,18 @@ void Map::importMap(
         QHash<const Symbol*, Symbol*>* out_symbol_map )
 {
 	// Check if there is something to import
-	if (other->getNumColors() == 0 && other->getNumSymbols() == 0 && other->getNumObjects() == 0)
+	if (other->getNumColors() == 0
+	    && other->getNumSymbols() == 0
+	    && other->getNumObjects() == 0)
 	{
 		QMessageBox::critical(dialog_parent, tr("Error"), tr("Nothing to import."));
 		return;
 	}
 	
 	// Check scale
-	if (other->getNumSymbols() > 0 && other->getScaleDenominator() != getScaleDenominator())
+	if ((mode & 0x0f) != ColorImport
+	    && other->getNumSymbols() > 0
+	    && other->getScaleDenominator() != getScaleDenominator())
 	{
 		int answer = QMessageBox::question(dialog_parent, tr("Question"),
 										   tr("The scale of the imported data is 1:%1 which is different from this map's scale of 1:%2.\n\nRescale the imported data?")
@@ -838,63 +842,70 @@ void Map::importMap(
 		}
 	}
 	
-	/// \todo Test and review import of georeferenced and non-georeferenced maps, in all combinations.
-	/// \todo Handle rotation of patterns and text, cf. QObject::transform.
-	const auto& georef = getGeoreferencing();
-	const auto& other_georef = other->getGeoreferencing();
-	const auto src_origin = MapCoordF { other_georef.getMapRefPoint() };
-	
-	bool ok0, ok1, ok2;
 	QTransform q_transform;
-	PassPointList passpoints;
-	passpoints.resize(3);
-	passpoints[0].src_coords  = src_origin;
-	passpoints[0].dest_coords = georef.toMapCoordF(&other_georef, passpoints[0].src_coords, &ok0);
-	passpoints[1].src_coords  = src_origin + MapCoordF { 128.0, 0.0 }; // 128 mm off horizontally
-	passpoints[1].dest_coords = georef.toMapCoordF(&other_georef, passpoints[1].src_coords, &ok1);
-	passpoints[2].src_coords  = src_origin + MapCoordF { 0.0, 128.0 }; // 128 mm off vertically
-	passpoints[2].dest_coords = georef.toMapCoordF(&other_georef, passpoints[2].src_coords, &ok2);
-	if (ok0 && ok1 && ok2
-	    && !passpoints.estimateNonIsometricSimilarityTransform(&q_transform))
+	if (mode.testFlag(GeorefImport))
 	{
-		/// \todo proper error message
-		qDebug("Failed to calculate transformation");
-		q_transform.reset();
+		/// \todo Test and review import of georeferenced and non-georeferenced maps, in all combinations.
+		/// \todo Handle rotation of patterns and text, cf. Object::transform.
+		const auto& georef = getGeoreferencing();
+		const auto& other_georef = other->getGeoreferencing();
+		const auto src_origin = MapCoordF { other_georef.getMapRefPoint() };
+		
+		bool ok0, ok1, ok2;
+		PassPointList passpoints;
+		passpoints.resize(3);
+		passpoints[0].src_coords  = src_origin;
+		passpoints[0].dest_coords = georef.toMapCoordF(&other_georef, passpoints[0].src_coords, &ok0);
+		passpoints[1].src_coords  = src_origin + MapCoordF { 128.0, 0.0 }; // 128 mm off horizontally
+		passpoints[1].dest_coords = georef.toMapCoordF(&other_georef, passpoints[1].src_coords, &ok1);
+		passpoints[2].src_coords  = src_origin + MapCoordF { 0.0, 128.0 }; // 128 mm off vertically
+		passpoints[2].dest_coords = georef.toMapCoordF(&other_georef, passpoints[2].src_coords, &ok2);
+		if (ok0 && ok1 && ok2
+		    && !passpoints.estimateNonIsometricSimilarityTransform(&q_transform))
+		{
+			/// \todo proper error message
+			qDebug("Failed to calculate transformation");
+			q_transform.reset();
+		}
 	}
 	
-	// Determine which symbols to import
-	std::vector<bool> symbol_filter;
-	symbol_filter.resize(other->getNumSymbols(), true);
-	if (mode == MinimalObjectImport)
+	// Determine which symbols and colors to import
+	std::vector<bool> color_filter(std::size_t(other->getNumColors()), true);
+	std::vector<bool> symbol_filter(std::size_t(other->getNumSymbols()), true);
+	if (mode.testFlag(MinimalImport))
 	{
-		if (other->getNumObjects() > 0)
-			other->determineSymbolsInUse(symbol_filter);
-	}
-	else if (mode == MinimalSymbolImport && filter)
-	{
-		Q_ASSERT(filter->size() == symbol_filter.size());
-		symbol_filter = *filter;
-		other->determineSymbolUseClosure(symbol_filter);
-	}
-	
-	// Determine which colors to import
-	std::vector<bool> color_filter;
-	color_filter.resize(other->getNumColors(), true);
-	if (mode == MinimalObjectImport || mode == MinimalSymbolImport)
-	{
-		if (other->getNumSymbols() > 0)
+		switch (mode & 0x0f)
+		{
+		case ObjectImport:
+			if (other->getNumObjects() > 0)
+				other->determineSymbolsInUse(symbol_filter);
 			other->determineColorsInUse(symbol_filter, color_filter);
-	}
-	else if (mode == ColorImport && filter)
-	{
-		Q_ASSERT(filter->size() == color_filter.size());
-		color_filter = *filter;
+			break;
+		case SymbolImport:
+			if (filter)
+			{
+				Q_ASSERT(filter->size() == symbol_filter.size());
+				symbol_filter = *filter;
+				other->determineSymbolUseClosure(symbol_filter);
+			}
+			other->determineColorsInUse(symbol_filter, color_filter);
+			break;
+		case ColorImport:
+			if (filter)
+			{
+				Q_ASSERT(filter->size() == color_filter.size());
+				color_filter = *filter;
+			}
+			break;
+		default:
+			Q_UNREACHABLE();
+		}
 	}
 	
 	// Import colors
 	MapColorMap color_map(color_set->importSet(*other->color_set, &color_filter, this));
 	
-	if (mode == ColorImport)
+	if ((mode & 0x0f) == ColorImport)
 		return;
 	
 	QHash<const Symbol*, Symbol*> symbol_map;
@@ -906,7 +917,7 @@ void Map::importMap(
 			*out_symbol_map = symbol_map;
 	}
 	
-	if (mode == MinimalSymbolImport)
+	if ((mode & 0x0f) == SymbolImport)
 		return;
 	
 	if (other->getNumObjects() > 0)

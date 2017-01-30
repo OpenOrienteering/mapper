@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2016 Kai Pastor
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -3879,7 +3879,7 @@ bool MapEditorController::importMapFile(const QString& filename, bool show_error
 		}
 	}
 	
-	map->importMap(&imported_map, Map::MinimalObjectImport, window);
+	map->importMap(&imported_map, Map::MinimalObjectImport | Map::GeorefImport, window);
 	return true;
 }
 
