@@ -76,6 +76,9 @@ function(add_test_helper testname autorun)
 		if(autorun)
 			set_property(DIRECTORY APPEND PROPERTY Mapper_AUTORUN_TESTS ${testname})
 		endif()
+		if(Mapper_COVERAGE_BUILD)
+			register_coverage_generating_target(${testname})
+		endif()
 	endif()
 endfunction()
 
@@ -138,6 +141,9 @@ add_unit_test(util_t ../src/util/util ../src/settings ../src/mapper_resource)
 
 # Benchmarks
 add_system_test(coord_xml_t MANUAL)
+if(Mapper_COVERAGE_BUILD)
+	register_coverage_generating_target(coord_xml_t -iterations 1)
+endif()
 
 # System tests
 add_system_test(map_t)

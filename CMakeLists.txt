@@ -125,6 +125,8 @@ option(Mapper_AUTORUN_SYSTEM_TESTS "Run the system tests as part of the Mapper_T
 option(Mapper_AUTORUN_MANUAL_TESTS "Run the system tests as part of the Mapper_Test target" OFF)
 mark_as_advanced(Mapper_AUTORUN_SYSTEM_TESTS Mapper_AUTORUN_MANUAL_TESTS)
 
+option(Mapper_COVERAGE_BUILD "Builds with coverage support" ${Mapper_DEVELOPMENT_BUILD})
+
 option(Mapper_BUILD_PACKAGE     "Create a target for building packages"                ${Mapper_BUILD_PACKAGE_DEFAULT})
 option(Mapper_PACKAGE_PROJ      "Include all required Proj components in the packages" ${Mapper_BUILD_PROJ})
 option(Mapper_PACKAGE_GDAL      "Include all required GDAL components in the packages" ${Mapper_BUILD_GDAL})
@@ -201,6 +203,15 @@ endif()
 if(CMAKE_COMPILER_IS_GNUCXX)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wpedantic -Wextra")
 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -Wall -Wpedantic")
+endif()
+
+if(Mapper_COVERAGE_BUILD)
+	if(CMAKE_BUILD_TYPE STREQUAL Debug)
+		include(EnableCoverage)
+	else()
+		message(WARNING "Requested build with code coverage flags, but not a Debug build")
+		set(Mapper_COVERAGE_BUILD OFF)
+	endif()
 endif()
 
 add_custom_target(Mapper_prerequisites
@@ -362,3 +373,7 @@ foreach(lang CXX C)
 		message(STATUS "CMAKE_${lang}_FLAGS${i}: ${CMAKE_${lang}_FLAGS${i}}")
 	endforeach()
 endforeach()
+
+if(Mapper_COVERAGE_BUILD)
+	finalize_coverage_setup("${CMAKE_SOURCE_DIR}/3rd-party/*" "${CMAKE_SOURCE_DIR}/test/*")
+endif()

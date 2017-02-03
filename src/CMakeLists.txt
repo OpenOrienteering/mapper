@@ -275,6 +275,9 @@ target_compile_definitions(Mapper_Common PRIVATE
   QT_NO_CAST_TO_ASCII
   QT_USE_QSTRINGBUILDER
 )
+if(Mapper_COVERAGE_BUILD)
+	enable_coverage_for(Mapper_Common)
+endif()
 
 qt5_translations_sources(
   SOURCES ${Mapper_Common_SRCS} ${Mapper_Common_HEADERS}
