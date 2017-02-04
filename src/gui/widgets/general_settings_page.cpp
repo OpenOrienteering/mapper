@@ -48,6 +48,7 @@
 #include <QList>
 #include <QLocale>
 #include <QMessageBox>
+#include <QPushButton>
 #include <QScreen>
 #include <QSettings> // IWYU pragma: keep
 #include <QSignalBlocker>
@@ -206,17 +207,27 @@ void GeneralSettingsPage::apply()
 		case QLocale::AnyLanguage:
 		case QLocale::C:
 		case QLocale::English:
-			QMessageBox::information(window(), QLatin1String("Notice"), QLatin1String("The program must be restarted for the language change to take effect!"));
-			break;
+			{
+				if (showRestartOnLanguageChangeDialog(false))
+				{
+					qApp->exit(MainWindow::exit_code_reboot);
+				}
+				break;
+			}
 			
 		default:
-			qApp->installEventFilter(this);
-			qApp->installTranslator(&translation.getQtTranslator());
-			qApp->installTranslator(&translation.getAppTranslator());
-			QMessageBox::information(window(), tr("Notice"), tr("The program must be restarted for the language change to take effect!"));
-			qApp->removeTranslator(&translation.getAppTranslator());
-			qApp->removeTranslator(&translation.getQtTranslator());
-			qApp->removeEventFilter(this);
+			{
+				qApp->installEventFilter(this);
+				qApp->installTranslator(&translation.getQtTranslator());
+				qApp->installTranslator(&translation.getAppTranslator());
+				if (showRestartOnLanguageChangeDialog(true))
+				{
+					qApp->exit(MainWindow::exit_code_reboot);
+				}
+				qApp->removeTranslator(&translation.getAppTranslator());
+				qApp->removeTranslator(&translation.getQtTranslator());
+				qApp->removeEventFilter(this);
+			}
 		}
 		
 		setSetting(Settings::General_Language, translation.code());
@@ -423,5 +434,19 @@ bool GeneralSettingsPage::eventFilter(QObject* /* watched */, QEvent* event)
 	return false;
 }
 
+bool GeneralSettingsPage::showRestartOnLanguageChangeDialog(bool is_translatable)
+{
+#define TR(str) is_translatable ? tr(str) : QLatin1String(str)
+	QMessageBox messageBox(window());
+	messageBox.setWindowTitle(TR("Restart?"));
+	messageBox.setText(TR("The program must be restarted for the language change to take effect!"));
+	messageBox.setInformativeText(TR("Do you want to restart now?"));
+	messageBox.setIcon(QMessageBox::Question);
+	auto yesButton = messageBox.addButton(TR("Restart Now"), QMessageBox::YesRole);
+	messageBox.addButton(TR("Restart Later"), QMessageBox::NoRole);
+	messageBox.exec();
+	return messageBox.clickedButton() == yesButton;
+#undef TR
+}
 
 }  // namespace OpenOrienteering

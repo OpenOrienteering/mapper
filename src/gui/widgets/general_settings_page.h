@@ -65,6 +65,8 @@ protected:
 	 */
 	bool eventFilter(QObject* watched, QEvent* event) override;
 	
+	bool showRestartOnLanguageChangeDialog(bool is_translatable);
+	
 private slots:
 	void openTranslationFileDialog();
 	

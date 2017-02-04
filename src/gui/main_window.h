@@ -83,6 +83,7 @@ public:
 	/** Returns the application's localized name. */
 	QString appName() const;
 	
+	static constexpr int exit_code_reboot = -1;
 	
 	/**
 	 * Returns whether the window is operating in mobile mode.
