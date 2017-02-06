@@ -55,18 +55,14 @@ endmacro(deploy_qt_translations)
 
 
 
-if(APPLE)
-	# Set some Qt4 variables to reasonable values for Qt5, too.
-	# (needed for DeployQt5.cmake)
-	find_package(Qt5Core REQUIRED QUIET)
-	if(NOT QT_LIBRARY_DIR)
-		get_target_property(_qt5core_lib Qt5::Core IMPORTED_LOCATION_RELEASE)
-		get_filename_component(QT_LIBRARY_DIR ${_qt5core_lib} PATH)
-	endif()
-	if(NOT QT_BINARY_DIR)
-		get_target_property(_qt5moc_bin Qt5::moc IMPORTED_LOCATION)
-		get_filename_component(QT_BINARY_DIR ${_qt5moc_bin} PATH)
-	endif()
+find_package(Qt5Core REQUIRED QUIET)
+if(NOT QT_LIBRARY_DIR)
+	get_target_property(_qt5core_lib Qt5::Core IMPORTED_LOCATION_RELEASE)
+	get_filename_component(QT_LIBRARY_DIR ${_qt5core_lib} PATH)
+endif()
+if(NOT QT_BINARY_DIR)
+	get_target_property(_qt5moc_bin Qt5::moc IMPORTED_LOCATION)
+	get_filename_component(QT_BINARY_DIR ${_qt5moc_bin} PATH)
 endif()
 
 if(NOT Mapper_BUILD_PACKAGE)
@@ -246,7 +242,9 @@ unset(MAPPER_LIB_HINTS)
 unset(MAPPER_LIBS)
 
 if(Mapper_PACKAGE_PROJ)
-	if(NOT PROJ4_ROOT)
+	if(PROJ4_DIR AND NOT PROJ4_ROOT)
+		get_filename_component(PROJ4_ROOT ${PROJ4_DIR} PATH)
+	elseif(NOT PROJ4_ROOT)
 		message(FATAL_ERROR "PROJ4_ROOT must be set when Mapper_PACKAGE_PROJ is enabled.")
 	endif()
 	install(
@@ -256,6 +254,11 @@ if(Mapper_PACKAGE_PROJ)
 endif()
 
 if(Mapper_PACKAGE_GDAL)
+	if(GDAL_DIR AND NOT GDAL_BINARY_DIR)
+		get_filename_component(GDAL_BINARY_DIR ${GDAL_DIR} PATH)
+	elseif(NOT GDAL_BINARY_DIR)
+		message(FATAL_ERROR "GDAL_BINARY_DIR must be set when Mapper_PACKAGE_GDAL is enabled.")
+	endif()
 	install(
 	  DIRECTORY "${GDAL_BINARY_DIR}/../share/gdal"
 	  DESTINATION "${MAPPER_DATA_DESTINATION}")
