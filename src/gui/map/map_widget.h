@@ -300,7 +300,7 @@ public:
 	QWidget* getContextMenu();
 	
 	/** Returns the widget's preferred size. */
-	virtual QSize sizeHint() const;
+	virtual QSize sizeHint() const override;
 	
 	/**
 	 * @copybrief MainWindowController::keyPressEventFilter
@@ -342,30 +342,30 @@ private slots:
 	void updateDrawingLaterSlot();
 	
 protected:
-	virtual bool event(QEvent *event);
+	virtual bool event(QEvent *event) override;
 	
 	virtual void gestureEvent(QGestureEvent* event);
 	
-	virtual void paintEvent(QPaintEvent* event);
-	virtual void resizeEvent(QResizeEvent* event);
+	virtual void paintEvent(QPaintEvent* event) override;
+	virtual void resizeEvent(QResizeEvent* event) override;
 	
 	// Mouse input
-	virtual void mousePressEvent(QMouseEvent* event);
+	virtual void mousePressEvent(QMouseEvent* event) override;
 	void _mousePressEvent(QMouseEvent* event);
-	virtual void mouseMoveEvent(QMouseEvent* event);
+	virtual void mouseMoveEvent(QMouseEvent* event) override;
 	void _mouseMoveEvent(QMouseEvent* event);
-	virtual void mouseReleaseEvent(QMouseEvent* event);
+	virtual void mouseReleaseEvent(QMouseEvent* event) override;
 	void _mouseReleaseEvent(QMouseEvent* event);
-	virtual void mouseDoubleClickEvent(QMouseEvent* event);
+	virtual void mouseDoubleClickEvent(QMouseEvent* event) override;
 	void _mouseDoubleClickEvent(QMouseEvent* event);
-	virtual void wheelEvent(QWheelEvent* event);
-	virtual void leaveEvent(QEvent* event);
+	virtual void wheelEvent(QWheelEvent* event) override;
+	virtual void leaveEvent(QEvent* event) override;
 	
 	// Key input (see also slots)
-	virtual void inputMethodEvent(QInputMethodEvent *event);
-	virtual void focusOutEvent(QFocusEvent* event);
+	virtual void inputMethodEvent(QInputMethodEvent *event) override;
+	virtual void focusOutEvent(QFocusEvent* event) override;
 	
-	virtual void contextMenuEvent(QContextMenuEvent* event);
+	virtual void contextMenuEvent(QContextMenuEvent* event) override;
 	
 private:
 	/** Checks if there is a visible template in the range
