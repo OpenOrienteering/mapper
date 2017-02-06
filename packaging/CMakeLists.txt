@@ -290,6 +290,11 @@ if(Mapper_PACKAGE_QT)
 	  printsupport/cupsprintersupport
 	  printsupport/windowsprintersupport
 	)
+	set(QT_PLUGIN_TARGETS )
+	foreach(module Gui Positioning PrintSupport Sensors)
+		find_package(Qt5${module} QUIET)
+		list(APPEND QT_PLUGIN_TARGETS ${Qt5${module}_PLUGINS})
+	endforeach()
 
 	# Cf. Qt5's qt_de.ts for dependencies - qt_de.ts would not load without them.
 	deploy_qt_translations(qt qtbase)
@@ -343,24 +348,24 @@ endif()
 # Install all plugins
 unset(MAPPER_QT_PLUGINS_FOUND)
 foreach(_qt_plugin ${MAPPER_QT_PLUGINS})
-	get_filename_component(_qt_plugin_name "${_qt_plugin}" NAME)
-	get_filename_component(_qt_plugin_dir "${_qt_plugin}" PATH)
-	set(_qt_plugin_id "QT_${_qt_plugin_dir}-${_qt_plugin_name}_PLUGIN")
-	find_library(${_qt_plugin_id} ${_qt_plugin_name}
-	  HINTS ${QT_PLUGINS_DIR}
-	  PATH_SUFFIXES ${_qt_plugin_dir} plugins/${_qt_plugin_dir}
-	  NO_CMAKE_FIND_ROOT_PATH)
-	if(NOT ${${_qt_plugin_id}} MATCHES NOTFOUND)
-		message("   ${_qt_plugin} plugin library - found")
-		list(APPEND MAPPER_QT_PLUGINS_FOUND "${${_qt_plugin_id}}")
-		if(NOT APPLE)
-			install(
-			  FILES "${${_qt_plugin_id}}" 
-			  DESTINATION "${MAPPER_LIBRARY_DESTINATION}/plugins/${_qt_plugin_dir}")
+	foreach(plugin_target ${QT_PLUGIN_TARGETS} NOT_FOUND)
+		if(plugin_target STREQUAL "NOT_FOUND")
+			message("   ${_qt_plugin} plugin library - not found")
+			break()
 		endif()
-	else()
-		message("   ${_qt_plugin} plugin library - not found")
-	endif()
+		get_target_property(_qt_plugin_location ${plugin_target} IMPORTED_LOCATION_RELEASE)
+		if(_qt_plugin_location MATCHES "${_qt_plugin}")
+			message("   ${_qt_plugin} plugin library - found")
+			list(APPEND MAPPER_QT_PLUGINS_FOUND "${_qt_plugin}")
+			if(NOT APPLE)
+				get_filename_component(_qt_plugin_dir "${_qt_plugin}" PATH)
+				install(
+				  FILES "${_qt_plugin_location}"
+				  DESTINATION "${MAPPER_LIBRARY_DESTINATION}/plugins/${_qt_plugin_dir}")
+			endif()
+			break()
+		endif()
+	endforeach()
 endforeach(_qt_plugin)
 
 
