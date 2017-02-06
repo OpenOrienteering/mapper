@@ -369,13 +369,6 @@ foreach(_qt_plugin ${MAPPER_QT_PLUGINS})
 endforeach(_qt_plugin)
 
 
-if(APPLE)
-	include(${PROJECT_SOURCE_DIR}/cmake/DeployQt5.cmake)
-	install_qt5_executable(Mapper.app
-	  "${MAPPER_QT_PLUGINS_FOUND}"
-	  ${FIXUP_ASSISTANT})
-endif()
-
 if(UNIX AND NOT APPLE)
 	install(
 	  FILES "${PROJECT_SOURCE_DIR}/doc/man/Mapper.1"
