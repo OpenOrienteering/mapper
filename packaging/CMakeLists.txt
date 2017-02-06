@@ -269,11 +269,6 @@ unset(MAPPER_QT_PLUGINS)
 if(Mapper_PACKAGE_QT)
 	set(QT_LIB_SUFFIX "")
 	list(APPEND MAPPER_LIB_HINTS ${QT_BINARY_DIR})
-	if(WIN32 AND EXISTS "${PROJECT_BINARY_DIR}/3rd-party/qt5/qt.conf")
-		install(
-		  FILES "${PROJECT_BINARY_DIR}/3rd-party/qt5/qt.conf"
-		  DESTINATION "${MAPPER_RUNTIME_DESTINATION}")
-	endif()
 	set(MAPPER_QT_PLUGINS
 	  generic/qevdevkeyboardplugin
 	  generic/qevdevmouseplugin
