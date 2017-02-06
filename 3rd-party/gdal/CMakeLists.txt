@@ -185,6 +185,14 @@ endif()
 ExternalProject_Get_Property(GDAL BINARY_DIR)
 ExternalProject_Get_Property(GDAL INSTALL_DIR)
 
+find_program(GDAL_CONFIG
+  NAMES gdal-config
+  PATHS "${INSTALL_DIR}/bin"
+  NO_DEFAULT_PATH
+  NO_CMAKE_FIND_ROOT_PATH
+)
+mark_as_advanced(GDAL_CONFIG)
+
 find_path(GDAL_INCLUDE_DIR NAMES gdal.h PATHS
   "${INSTALL_DIR}/include"
   NO_DEFAULT_PATH
@@ -199,9 +207,7 @@ find_library(GDAL_LIBRARY NAMES gdal PATHS
 )
 mark_as_advanced(GDAL_LIBRARY)
 
-if(GDAL_INCLUDE_DIR AND GDAL_LIBRARY)
-	set(GDAL_BINARY_DIR "${INSTALL_DIR}/bin" PARENT_SCOPE)
-	mark_as_advanced(GDAL_BINARY_DIR)
+if(GDAL_CONFIG AND GDAL_INCLUDE_DIR AND GDAL_LIBRARY)
 	set(GDAL_FOUND TRUE PARENT_SCOPE)
 endif()
 

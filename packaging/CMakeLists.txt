@@ -254,15 +254,34 @@ if(Mapper_PACKAGE_PROJ)
 endif()
 
 if(Mapper_PACKAGE_GDAL)
-	if(GDAL_DIR AND NOT GDAL_BINARY_DIR)
-		get_filename_component(GDAL_BINARY_DIR ${GDAL_DIR} PATH)
-	elseif(NOT GDAL_BINARY_DIR)
-		message(FATAL_ERROR "GDAL_BINARY_DIR must be set when Mapper_PACKAGE_GDAL is enabled.")
+	if(NOT GDAL_DATA_DIR)
+		# Cf. CMake's FindGDAL.cmake
+		find_program(GDAL_CONFIG gdal-config
+		  HINTS
+		    ENV GDAL_DIR
+		    ENV GDAL_ROOT
+		  PATH_SUFFIXES bin
+		)
+		if(GDAL_CONFIG)
+			exec_program(${GDAL_CONFIG} ARGS --datadir OUTPUT_VARIABLE gdal_data_dir)
+		endif()
+		if(gdal_data_dir)
+			# Search in CMAKE_FIND_ROOT_PATH
+			find_path(GDAL_DATA_DIR
+			  NAMES ellipsoid.csv
+			  HINTS ${gdal_data_dir}
+			)
+		endif()
+	endif()
+	if(NOT GDAL_DATA_DIR)
+		message(FATAL_ERROR "The gdal-config script must be available, or GDAL_DATA_DIR must be set, "
+		                    "when Mapper_PACKAGE_GDAL is enabled.")
 	endif()
 	install(
-	  DIRECTORY "${GDAL_BINARY_DIR}/../share/gdal"
-	  DESTINATION "${MAPPER_DATA_DESTINATION}")
-	list(APPEND MAPPER_LIB_HINTS ${GDAL_BINARY_DIR})
+	  DIRECTORY "${GDAL_DATA_DIR}/"
+	  DESTINATION "${MAPPER_DATA_DESTINATION}/gdal")
+	get_filename_component(GDAL_LIBRARY_DIR "{GDAL_LIBRARY}" PATH)
+	list(APPEND MAPPER_LIB_HINTS "${GDAL_LIBRARY_DIR}")
 endif()
 
 unset(MAPPER_QT_PLUGINS)
