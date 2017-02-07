@@ -60,10 +60,6 @@ if(NOT QT_LIBRARY_DIR)
 	get_target_property(_qt5core_lib Qt5::Core IMPORTED_LOCATION_RELEASE)
 	get_filename_component(QT_LIBRARY_DIR ${_qt5core_lib} PATH)
 endif()
-if(NOT QT_BINARY_DIR)
-	get_target_property(_qt5moc_bin Qt5::moc IMPORTED_LOCATION)
-	get_filename_component(QT_BINARY_DIR ${_qt5moc_bin} PATH)
-endif()
 
 if(NOT Mapper_BUILD_PACKAGE)
     # Don't configure and include CPack
@@ -287,7 +283,7 @@ endif()
 unset(MAPPER_QT_PLUGINS)
 if(Mapper_PACKAGE_QT)
 	set(QT_LIB_SUFFIX "")
-	list(APPEND MAPPER_LIB_HINTS ${QT_BINARY_DIR})
+	list(APPEND MAPPER_LIB_HINTS ${QT_LIBRARY_DIR})
 	set(MAPPER_QT_PLUGINS
 	  generic/qevdevkeyboardplugin
 	  generic/qevdevmouseplugin
