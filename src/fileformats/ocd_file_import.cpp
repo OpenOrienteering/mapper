@@ -889,12 +889,18 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol, int ocd_version)
 	        (ocd_symbol.common.double_mode != 0) &&
 	        (ocd_symbol.common.double_left_width > 0 || ocd_symbol.common.double_right_width > 0);
 	OcdImportedLineSymbol *double_line = nullptr;
-	if ( has_border_line &&
-		(ocd_symbol.common.double_flags & LineStyle::DoubleFillColorOn || !line_for_borders) )
+	if (ocd_symbol.common.double_flags & LineStyle::DoubleFillColorOn
+	    || (has_border_line && !line_for_borders) )
 	{
 		double_line = importLineSymbolDoubleBorder(ocd_symbol.common);
 		setupBaseSymbol(double_line, ocd_symbol);
 		line_for_borders = double_line;
+	}
+	else if (ocd_symbol.common.double_flags & LineStyle::DoubleBackgroundColorOn)
+	{
+		auto symbol = std::unique_ptr<LineSymbol>(importLineSymbolDoubleBorder(ocd_symbol.common));
+		addSymbolWarning(symbol.get(),
+		  tr("Unsupported line style '%1'.").arg(QLatin1String("LineStyle::DoubleBackgroundColorOn")) );
 	}
 	
 	// Border lines
