@@ -310,7 +310,7 @@ if(Mapper_PACKAGE_QT)
 	  printsupport/windowsprintersupport
 	)
 	set(QT_PLUGIN_TARGETS )
-	foreach(module Gui Positioning PrintSupport Sensors)
+	foreach(module Gui Positioning PrintSupport Sensors Sql)
 		find_package(Qt5${module} QUIET)
 		list(APPEND QT_PLUGIN_TARGETS ${Qt5${module}_PLUGINS})
 	endforeach()
@@ -319,8 +319,16 @@ if(Mapper_PACKAGE_QT)
 	deploy_qt_translations(qt qtbase)
 endif()
 
-unset(FIXUP_ASSISTANT)
 if(Mapper_PACKAGE_ASSISTANT)
+	set(assistant_find_options )
+	if(CMAKE_FIND_ROOT_PATH)
+		set(assistant_find_options ONLY_CMAKE_FIND_ROOT_PATH)
+	endif()
+	find_program(Qt5Help_ASSISTANT_EXECUTABLE
+	  NAMES assistant Assistant assistant.exe
+#	  HINTS bin
+	  ${assistant_find_options}
+	)
 	if(NOT Qt5Help_ASSISTANT_EXECUTABLE)
 		message(FATAL_ERROR "Qt5Help_ASSISTANT_EXECUTABLE: not found, "
 		  "but required by option Mapper_PACKAGE_ASSISTANT="
@@ -338,9 +346,6 @@ if(Mapper_PACKAGE_ASSISTANT)
 		install(
 		  FILES "${PROJECT_BINARY_DIR}/3rd-party/qt5/qt.conf"
 		  DESTINATION "${MAPPER_LIBRARY_DESTINATION}/bin")
-	endif()
-	if(APPLE)
-		set(FIXUP_ASSISTANT "Mapper.app/Contents/MacOS/Assistant")
 	endif()
 	list(APPEND MAPPER_QT_PLUGINS
 	  sqldrivers/qsqlite
