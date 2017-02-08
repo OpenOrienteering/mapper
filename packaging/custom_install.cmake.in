@@ -38,11 +38,13 @@ function(fixup_bundle_portable runtime dirs)
 	if(MINGW)
 		# gp_tool and gp_cmd are needed for module GetPrerequisites.
 		set(gp_tool "objdump")
-		string(REGEX REPLACE "gcc$" "${gp_tool}" gp_cmd "@CMAKE_C_COMPILER@")
-		# This function resolves all unknown items as 'system' libraries,
-		# thus catching the system libraries in the MinGW context.
+		set(gp_cmd  "@CMAKE_OBJDUMP@")
+		# This function resolves all unknown items which do not match the
+		# MinGW DLL name pattern NAME-NUMBER.dll as 'system' libraries,
+		# thus catching the Windows system libraries in the MinGW context.
 		function(gp_resolve_item_override context item exepath dirs resolved_item_var resolved_var)
-			if(NOT ${resolved_var})
+			if(NOT ${resolved_var}
+			   AND NOT "${item}" MATCHES "-[0-9]*.dll$")
 				set(${resolved_item_var} "/system/${item}" PARENT_SCOPE)
 				set(${resolved_var} 1 PARENT_SCOPE)
 			endif()
