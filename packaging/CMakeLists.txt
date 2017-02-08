@@ -251,13 +251,7 @@ endif()
 
 if(Mapper_PACKAGE_GDAL)
 	if(NOT GDAL_DATA_DIR)
-		# Cf. CMake's FindGDAL.cmake
-		find_program(GDAL_CONFIG gdal-config
-		  HINTS
-		    ENV GDAL_DIR
-		    ENV GDAL_ROOT
-		  PATH_SUFFIXES bin
-		)
+		find_program(GDAL_CONFIG gdal-config ONLY_CMAKE_FIND_ROOT_PATH)
 		if(GDAL_CONFIG)
 			exec_program(${GDAL_CONFIG} ARGS --datadir OUTPUT_VARIABLE gdal_data_dir)
 		endif()
