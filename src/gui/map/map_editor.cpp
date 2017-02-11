@@ -812,7 +812,7 @@ void MapEditorController::createActions()
 	
 	show_grid_act = newCheckAction("showgrid", tr("Show grid"), this, SLOT(showGrid()), "grid.png", QString{}, "grid.html");
 	configure_grid_act = newAction("configuregrid", tr("Configure grid..."), this, SLOT(configureGrid()), "grid.png", QString{}, "grid.html");
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
 	configure_grid_act->setMenuRole(QAction::NoRole);
 #endif
 	pan_act = newToolAction("panmap", tr("Pan"), this, SLOT(pan()), "move.png", QString{}, "view_menu.html");

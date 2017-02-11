@@ -252,7 +252,7 @@ bool MapEditorToolBase::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coor
 bool MapEditorToolBase::keyPressEvent(QKeyEvent* event)
 {
 	active_modifiers = event->modifiers() | keyButtonBarModifiers();
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
 	// FIXME: On Mac, QKeyEvent::modifiers() seems to return the keyboard 
 	// modifier flags that existed immediately before the event occurred.
 	// This is in contradiction to the documenation for QKeyEvent::modifiers(),
@@ -282,7 +282,7 @@ bool MapEditorToolBase::keyPressEvent(QKeyEvent* event)
 bool MapEditorToolBase::keyReleaseEvent(QKeyEvent* event)
 {
 	active_modifiers = event->modifiers() | keyButtonBarModifiers();
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
 	// FIXME: On Mac, QKeyEvent::modifiers() seems to return the keyboard 
 	// modifier flags that existed immediately before the event occurred.
 	// This is in contradiction to the documenation for QKeyEvent::modifiers(),

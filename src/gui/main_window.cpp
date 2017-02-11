@@ -251,7 +251,7 @@ void MainWindow::setController(MainWindowController* new_controller, bool has_fi
 	if (create_menu)
 		createHelpMenu();
 	
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
 	if (isVisible() && qApp->activeWindow() == this)
 	{
 		// Force a menu synchronisation,

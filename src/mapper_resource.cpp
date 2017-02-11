@@ -127,7 +127,7 @@ QStringList MapperResource::getLocations(MapperResource::RESOURCE_TYPE resource_
 	addIfExists(locations, linux_dir);
 #endif
 	
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
 	// Mac OS X: load resources from the Resources directory of the bundle
 	QString osx_dir(app_dir.absoluteFilePath(QLatin1String("../Resources") + resource_path));
 	addIfExists(locations, osx_dir);
@@ -158,7 +158,7 @@ QStringList MapperResource::getProgramLocations(MapperResource::RESOURCE_TYPE re
 		case ASSISTANT:
 #if defined(Q_OS_WIN)
 			program_name = QString::fromLatin1("assistant.exe");
-#elif defined(Q_OS_MAC)
+#elif defined(Q_OS_MACOS)
 			program_name = QString::fromLatin1("Assistant");
 #else
 			program_name = QString::fromLatin1("assistant");

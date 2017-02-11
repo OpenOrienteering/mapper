@@ -376,7 +376,7 @@ void GeoreferencingDialog::requestDeclination(bool no_confirm)
 	query.addQueryItem(QString::fromLatin1("startMonth"), QString::number(today.month()));
 	query.addQueryItem(QString::fromLatin1("startDay"), QString::number(today.day()));
 	
-#if defined(Q_OS_WIN) || defined(Q_OS_MAC) || defined(Q_OS_ANDROID) || !defined(QT_NETWORK_LIB)
+#if defined(Q_OS_WIN) || defined(Q_OS_MACOS) || defined(Q_OS_ANDROID) || !defined(QT_NETWORK_LIB)
 	// No QtNetwork or no OpenSSL: open result in system browser.
 	query.addQueryItem(QString::fromLatin1("resultFormat"), QString::fromLatin1("html"));
 	service_url.setQuery(query);
