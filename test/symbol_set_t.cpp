@@ -374,8 +374,13 @@ void SymbolSetTool::processExamples()
 
 /*
  * We don't need a real GUI window.
+ * 
+ * But we discovered QTBUG-58768 macOS: Crash when using QPrinter
+ * while running with "minimal" platform plugin.
  */
+#ifndef Q_OS_MACOS
 auto qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");
+#endif
 
 
 QTEST_MAIN(SymbolSetTool)

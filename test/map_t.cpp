@@ -143,12 +143,14 @@ void MapTest::importTest()
 }
 
 /*
- * We select a non-standard QPA because we don't need a real GUI window.
+ * We don't need a real GUI window.
  * 
- * Normally, the "offscreen" plugin would be the correct one.
- * However, it bails out with a QFontDatabase error (cf. QTBUG-33674)
+ * But we discovered QTBUG-58768 macOS: Crash when using QPrinter
+ * while running with "minimal" platform plugin.
  */
+#ifndef Q_OS_MACOS
 auto qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");
+#endif
 
 
 QTEST_MAIN(MapTest)
