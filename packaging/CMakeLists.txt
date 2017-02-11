@@ -23,6 +23,15 @@ option(Mapper_PACKAGE_QT_ALL_TRANSLATIONS "Add all Qt translations to the packag
 macro(deploy_qt_translations basename)
 	find_package(Qt5LinguistTools REQUIRED QUIET)
 	get_target_property(LCONVERT_EXECUTABLE Qt5::lconvert IMPORTED_LOCATION)
+	if(NOT QT_TRANSLATIONS_DIR)
+		find_package(Qt5Core REQUIRED QUIET)
+		get_target_property(QMAKE_EXECUTABLE Qt5::qmake IMPORTED_LOCATION)
+		execute_process(
+		  COMMAND "${QMAKE_EXECUTABLE}" -query QT_INSTALL_TRANSLATIONS
+		  OUTPUT_VARIABLE QT_TRANSLATIONS_DIR
+		)
+		string(STRIP "${QT_TRANSLATIONS_DIR}" QT_TRANSLATIONS_DIR)
+	endif()
 	set(install_translations_code )
 	if(Mapper_PACKAGE_QT_ALL_TRANSLATIONS)
 		file(GLOB basename_files RELATIVE "${QT_TRANSLATIONS_DIR}" "${QT_TRANSLATIONS_DIR}/${basename}_??.qm")
