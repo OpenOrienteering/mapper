@@ -295,6 +295,8 @@ if(Mapper_PACKAGE_QT)
 	  platforms/qcocoa
 	  platforms/qwindows
 	  platforms/qxcb
+	  position/qtposition_geoclue
+	  position/qtposition_positionpoll
 	  printsupport/cocoaprintersupport
 	  printsupport/cupsprintersupport
 	  printsupport/windowsprintersupport
@@ -304,7 +306,6 @@ if(Mapper_PACKAGE_QT)
 		find_package(Qt5${module} QUIET)
 		list(APPEND QT_PLUGIN_TARGETS ${Qt5${module}_PLUGINS})
 	endforeach()
-
 	# Cf. Qt5's qt_de.ts for dependencies - qt_de.ts would not load without them.
 	deploy_qt_translations(qt qtbase)
 endif()
