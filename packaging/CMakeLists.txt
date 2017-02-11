@@ -376,6 +376,8 @@ if(CMAKE_CROSSCOMPILING AND MINGW)
 	string(REPLACE \; \\\; MINGW_SEARCH_DIRS "${MINGW_SEARCH_DIRS}")
 	string(REPLACE : \; MINGW_SEARCH_DIRS "${MINGW_SEARCH_DIRS}")
 	list(APPEND MAPPER_LIB_HINTS ${MINGW_SEARCH_DIRS})
+	# Grep is used (and desperately needed) to speed up objdump parsing.
+	find_program(gp_grep_cmd NAMES grep)
 endif()
 	
 

@@ -39,6 +39,8 @@ function(fixup_bundle_portable runtime dirs)
 		# gp_tool and gp_cmd are needed for module GetPrerequisites.
 		set(gp_tool "objdump")
 		set(gp_cmd  "@CMAKE_OBJDUMP@")
+		# grep is used (and desperately needed) to speed up objdump parsing.
+		set(gp_grep_cmd "@gp_grep_cmd@")
 		# This function resolves all unknown items which do not match the
 		# MinGW DLL name pattern NAME-NUMBER.dll as 'system' libraries,
 		# thus catching the Windows system libraries in the MinGW context.
