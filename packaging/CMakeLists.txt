@@ -304,6 +304,16 @@ if(Mapper_PACKAGE_QT)
 	set(QT_PLUGIN_TARGETS )
 	foreach(module Gui Positioning PrintSupport Sensors Sql)
 		find_package(Qt5${module} QUIET)
+		if(module STREQUAL "Positioning" AND Qt5Positioning_DIR)
+			# Workaround for QTBUG-58812 CMake: Plugin config not loaded
+			# unless plugin class name ends in Plugin
+			file(GLOB pluginTargets "${Qt5Positioning_DIR}/Qt5Positioning_*.cmake")
+			foreach(file ${pluginTargets})
+				if(NOT file MATCHES "Plugin.cmake")
+					include(${file})
+				endif()
+			endforeach()
+		endif()
 		list(APPEND QT_PLUGIN_TARGETS ${Qt5${module}_PLUGINS})
 	endforeach()
 	# Cf. Qt5's qt_de.ts for dependencies - qt_de.ts would not load without them.
