@@ -18,7 +18,7 @@
  
 message(STATUS "Configuring ${PROJECT_NAME} packaging")
 
-option(Mapper_PACKAGE_QT_ALL_TRANSLATIONS "Add all Qt translation to the packages" TRUE)
+option(Mapper_PACKAGE_QT_ALL_TRANSLATIONS "Add all Qt translations to the packages" OFF)
 
 macro(deploy_qt_translations basename)
 	find_package(Qt5LinguistTools REQUIRED QUIET)
@@ -30,10 +30,10 @@ macro(deploy_qt_translations basename)
 		unset(basename_files)
 		foreach(_mapper_trans ${Mapper_TRANS})
 			get_filename_component(basename_file ${_mapper_trans} NAME_WE)
-			string(REPLACE OpenOrienteering_ ${basename} basename_file ${basename_file})
-			if(EXISTS "${QT_TRANSLATIONS_DIR}/${basename_file}")
-				list(append ${basename_file})
- 			endif()
+			string(REPLACE OpenOrienteering ${basename} basename_file ${basename_file})
+			string(REGEX REPLACE "(_..)_..$" "\\1" basename_file ${basename_file})
+			file(GLOB translation_files RELATIVE "${QT_TRANSLATIONS_DIR}" "${QT_TRANSLATIONS_DIR}/${basename_file}*.qm")
+			list(APPEND basename_files ${translation_files})
 		endforeach()
 	endif()
 	foreach(basename_file ${basename_files})
