@@ -304,8 +304,9 @@ if(Mapper_PACKAGE_QT)
 	  platforms/qcocoa
 	  platforms/qwindows
 	  platforms/qxcb
+	  position/qtposition_cl
 	  position/qtposition_geoclue
-	  position/qtposition_positionpoll
+	  position/qtposition_serialnmea
 	  printsupport/cocoaprintersupport
 	  printsupport/cupsprintersupport
 	  printsupport/windowsprintersupport
