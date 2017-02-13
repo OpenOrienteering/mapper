@@ -68,6 +68,7 @@ find_package(Qt5Core REQUIRED QUIET)
 if(NOT QT_LIBRARY_DIR)
 	get_target_property(_qt5core_lib Qt5::Core IMPORTED_LOCATION_RELEASE)
 	get_filename_component(QT_LIBRARY_DIR ${_qt5core_lib} PATH)
+	string(REGEX REPLACE "/[^/]*\\.framework" "" QT_LIBRARY_DIR "${QT_LIBRARY_DIR}")
 endif()
 
 if(NOT Mapper_BUILD_PACKAGE)
@@ -248,7 +249,11 @@ unset(MAPPER_LIBS)
 
 if(Mapper_PACKAGE_PROJ)
 	if(PROJ4_DIR AND NOT PROJ4_ROOT)
-		get_filename_component(PROJ4_ROOT ${PROJ4_DIR} PATH)
+		# Cf. find_package documentation
+		string(REGEX REPLACE "/CMake$|/cmake$" "" PROJ4_ROOT "${PROJ4_DIR}")            # U
+		string(REGEX REPLACE "/PROJ4[^/]*$" "" PROJ4_ROOT "${PROJ4_ROOT}")              # U, W
+		string(REGEX REPLACE "/cmake$" "" PROJ4_ROOT "${PROJ4_ROOT}")                   # U
+		string(REGEX REPLACE "/lib/[^/]*$|/lib$|/share$" "" PROJ4_ROOT "${PROJ4_ROOT}") # U, W
 	elseif(NOT PROJ4_ROOT)
 		message(FATAL_ERROR "PROJ4_ROOT must be set when Mapper_PACKAGE_PROJ is enabled.")
 	endif()
@@ -385,13 +390,15 @@ endif()
 # Install all plugins
 unset(MAPPER_QT_PLUGINS_FOUND)
 foreach(_qt_plugin ${MAPPER_QT_PLUGINS})
+	string(REPLACE "/" "/lib" alternative_pattern "${_qt_plugin}")
 	foreach(plugin_target ${QT_PLUGIN_TARGETS} NOT_FOUND)
 		if(plugin_target STREQUAL "NOT_FOUND")
 			message("   ${_qt_plugin} plugin library - not found")
 			break()
 		endif()
 		get_target_property(_qt_plugin_location ${plugin_target} IMPORTED_LOCATION_RELEASE)
-		if(_qt_plugin_location MATCHES "${_qt_plugin}")
+		if(_qt_plugin_location MATCHES "${_qt_plugin}"
+		   OR _qt_plugin_location MATCHES "${alternative_pattern}")
 			message("   ${_qt_plugin} plugin library - found")
 			list(APPEND MAPPER_QT_PLUGINS_FOUND "${_qt_plugin}")
 			if(NOT APPLE)
