@@ -66,7 +66,15 @@ function(fixup_bundle_portable runtime dirs)
 			endforeach()
 		endif()
 	elseif(APPLE)
+		file(GLOB_RECURSE plugins "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}${runtime_destination}@MAPPER_MACOS_SUBDIR@/../PlugIns/*.dylib")
+		list(APPEND runtime "${plugins}")
 		fixup_bundle("$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}${runtime_destination}/Mapper.app" "${runtime}" "${dirs}")
+		if (CMAKE_INSTALL_DO_STRIP AND NOT "@CMAKE_STRIP@" STREQUAL "")
+			file(GLOB dylibs "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}${runtime_destination}@MAPPER_MACOS_SUBDIR@/*.dylib")
+			foreach(item ${dylibs} ${runtime})
+				execute_process(COMMAND "@CMAKE_STRIP@" -x "${item}")
+			endforeach()
+		endif()
 	elseif(UNIX)
 		# Add required symlinks.
 		execute_process(COMMAND ldconfig -n "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}@MAPPER_LIBRARY_DESTINATION@")
@@ -79,8 +87,10 @@ function(handle_qt_conf)
 	handle_crosscompiling()
 	set(qt_conf "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}${runtime_destination}/qt.conf")
 	if(EXISTS "${qt_conf}")
+		message(STATUS "Skipping ${qt_conf}")
 		return()
 	elseif(WIN32)
+		message(STATUS "Writing ${qt_conf}")
 		file(RELATIVE_PATH rel_path
 		  "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/@MAPPER_RUNTIME_DESTINATION@"
 		  "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/@MAPPER_LIBRARY_DESTINATION@")
@@ -91,6 +101,13 @@ function(handle_qt_conf)
 [Paths]
 Plugins=${rel_path}/plugins
 Translations=${rel_path}/translations
+")
+	elseif(APPLE)
+		set(qt_conf "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}${runtime_destination}@MAPPER_MACOS_SUBDIR@/../Resources/qt.conf")
+		message(STATUS "Writing ${qt_conf}")
+		file(WRITE "${qt_conf}" "\
+[Paths]
+Plugins=PlugIns
 ")
 	endif()
 endfunction()
@@ -103,5 +120,5 @@ if(runtime_destination STREQUAL "/.")
 endif()
 set(runtime "")
 set(dirs "@MAPPER_LIB_HINTS@")
-fixup_bundle_portable("${runtime}" "${dirs}")
 handle_qt_conf()
+fixup_bundle_portable("${runtime}" "${dirs}")

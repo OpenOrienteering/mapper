@@ -401,8 +401,12 @@ foreach(_qt_plugin ${MAPPER_QT_PLUGINS})
 		   OR _qt_plugin_location MATCHES "${alternative_pattern}")
 			message("   ${_qt_plugin} plugin library - found")
 			list(APPEND MAPPER_QT_PLUGINS_FOUND "${_qt_plugin}")
-			if(NOT APPLE)
-				get_filename_component(_qt_plugin_dir "${_qt_plugin}" PATH)
+			get_filename_component(_qt_plugin_dir "${_qt_plugin}" PATH)
+			if(APPLE)
+				install(
+				  FILES "${_qt_plugin_location}"
+				  DESTINATION "${MAPPER_RUNTIME_DESTINATION}${MAPPER_MACOS_SUBDIR}/../PlugIns/${_qt_plugin_dir}")
+			else()
 				install(
 				  FILES "${_qt_plugin_location}"
 				  DESTINATION "${MAPPER_LIBRARY_DESTINATION}/plugins/${_qt_plugin_dir}")
