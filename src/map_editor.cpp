@@ -3847,7 +3847,10 @@ bool MapEditorController::importMapFile(const QString& filename, bool show_error
 	
 	bool result = imported_map.loadFrom(filename, window, nullptr, false, show_errors);
 	if (result)
+	{
+		map->setProperty("import-georeferencing", QVariant{true});
 		map->importMap(&imported_map, Map::MinimalObjectImport, window);
+	}
 	
 	return result;
 }
