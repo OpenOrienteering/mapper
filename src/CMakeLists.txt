@@ -158,6 +158,7 @@ set(Mapper_Common_SRCS
   templates/template_tool_move.cpp
   templates/template_tool_paint.cpp
   templates/template_track.cpp
+  templates/world_file.cpp
   
   tools/boolean_tool.cpp
   tools/cut_tool.cpp
@@ -224,6 +225,8 @@ set(Mapper_Common_HEADERS
   
   gui/util_gui.h
   gui/map/map_editor_p.h
+  
+  templates/world_file.h
   
   util/backports.h
   util/memory.h

@@ -140,17 +140,18 @@ add_unit_test(util_t ../src/util/util ../src/settings ../src/mapper_resource)
 add_system_test(coord_xml_t MANUAL)
 
 # System tests
-add_system_test(map_t)
 add_system_test(file_format_t)
 add_dependencies(file_format_t Mapper_test_data)
 add_system_test(duplicate_equals_t)
 add_dependencies(duplicate_equals_t Mapper_test_data)
+add_system_test(map_t)
 add_system_test(object_query_t)
+add_system_test(path_object_t)
+add_system_test(symbol_set_t)
+add_system_test(template_t)
 add_system_test(tools_t)
 add_system_test(transform_t)
-add_system_test(path_object_t)
 add_system_test(undo_manager_t)
-add_system_test(symbol_set_t)
 
 
 # Collect the AUTORUN_TESTS
