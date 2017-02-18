@@ -22,6 +22,10 @@
 
 #include <QDir>
 
+#include "core/georeferencing.h"
+#include "core/map.h"
+#include "core/map_view.h"
+#include "templates/template.h"
 #include "templates/world_file.h"
 
 
@@ -34,6 +38,10 @@ Q_OBJECT
 private slots:
 	void initTestCase()
 	{
+		Q_INIT_RESOURCE(resources);
+		doStaticInitializations();
+		// Static map initializations
+		Map map;
 		QDir::addSearchPath(QStringLiteral("testdata"), QFileInfo(QString::fromUtf8(__FILE__)).dir().absoluteFilePath(QStringLiteral("data")));
 	}
 	
@@ -58,9 +66,43 @@ private slots:
 		QVERIFY(world_file_from_image.tryToLoadForImage(image_path));
 		QCOMPARE(world_file_from_image.pixel_to_world, world_file.pixel_to_world);
 	}
+	
+	void worldFileTemplateTest()
+	{
+		Map map;
+		MapView view{ &map };
+		QVERIFY(map.loadFrom(QStringLiteral("testdata:templates/world-file.xmap"), nullptr, &view, false, false));
+		
+		const auto& georef = map.getGeoreferencing();
+		QVERIFY(georef.isValid());
+		
+		QCOMPARE(map.getNumTemplates(), 1);
+		auto temp = map.getTemplate(0);
+		QCOMPARE(temp->getTemplateType(), "TemplateImage");
+		QCOMPARE(temp->getTemplateFilename(), QString::fromLatin1("world-file.png"));
+		QCOMPARE(temp->getTemplateState(), Template::Loaded);
+		QVERIFY(temp->isTemplateGeoreferenced());
+		auto rotation_template = 0.01 * qRound(100 * qRadiansToDegrees(temp->getTemplateRotation()));
+		auto rotation_map = 0.01 * qRound(100 * georef.getGrivation());
+		QCOMPARE(rotation_template, rotation_map);
+	}
+	
 };
 
 
 
-QTEST_APPLESS_MAIN(TemplateTest)
+/*
+ * We don't need a real GUI window.
+ * 
+ * But we discovered QTBUG-58768 macOS: Crash when using QPrinter
+ * while running with "minimal" platform plugin.
+ */
+#ifndef Q_OS_MACOS
+namespace  {
+	auto qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");
+}
+#endif
+
+
+QTEST_MAIN(TemplateTest)
 #include "template_t.moc"
