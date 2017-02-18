@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013-2015 Kai Pastor
+ *    Copyright 2013-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,8 +21,8 @@
 
 #include "core/map.h"
 #include "core/map_color.h"
-#include "../src/core/map_printer.h"
-#include "../src/core/map_view.h"
+#include "core/map_printer.h"
+#include "core/map_view.h"
 
 namespace
 {
@@ -50,46 +50,46 @@ void MapTest::printerConfigTest()
 
 void MapTest::specialColorsTest()
 {
-	QVERIFY(Map::getCoveringRed() != NULL);
+	QVERIFY(Map::getCoveringRed() != nullptr);
 	QCOMPARE(Map::getCoveringWhite()->getPriority(), static_cast<int>(MapColor::CoveringWhite));
 	
-	QVERIFY(Map::getCoveringWhite() != NULL);
+	QVERIFY(Map::getCoveringWhite() != nullptr);
 	QCOMPARE(Map::getCoveringRed()->getPriority(), static_cast<int>(MapColor::CoveringRed));
 	
-	QVERIFY(Map::getUndefinedColor() != NULL);
+	QVERIFY(Map::getUndefinedColor() != nullptr);
 	QCOMPARE(Map::getUndefinedColor()->getPriority(), static_cast<int>(MapColor::Undefined));
 	
-	QVERIFY(Map::getRegistrationColor() != NULL);
+	QVERIFY(Map::getRegistrationColor() != nullptr);
 	QCOMPARE(Map::getRegistrationColor()->getPriority(), static_cast<int>(MapColor::Registration));
 	
 	Map map;               // non-const
 	const Map& cmap(map);  // const
-	QCOMPARE(map.getMapColor(MapColor::CoveringWhite), (MapColor*)NULL);
-	QCOMPARE(cmap.getMapColor(MapColor::CoveringWhite), (MapColor*)NULL);
+	QCOMPARE(map.getMapColor(MapColor::CoveringWhite), static_cast<MapColor*>(nullptr));
+	QCOMPARE(cmap.getMapColor(MapColor::CoveringWhite), static_cast<MapColor*>(nullptr));
 	QCOMPARE(map.getColor(MapColor::CoveringWhite), Map::getCoveringWhite());
 	QCOMPARE(cmap.getColor(MapColor::CoveringWhite), Map::getCoveringWhite());
-	QCOMPARE(map.getMapColor(MapColor::CoveringRed), (MapColor*)NULL);
-	QCOMPARE(cmap.getMapColor(MapColor::CoveringRed), (MapColor*)NULL);
+	QCOMPARE(map.getMapColor(MapColor::CoveringRed), static_cast<MapColor*>(nullptr));
+	QCOMPARE(cmap.getMapColor(MapColor::CoveringRed), static_cast<MapColor*>(nullptr));
 	QCOMPARE(map.getColor(MapColor::CoveringRed), Map::getCoveringRed());
 	QCOMPARE(cmap.getColor(MapColor::CoveringRed), Map::getCoveringRed());
-	QCOMPARE(map.getMapColor(MapColor::Undefined), (MapColor*)NULL);
-	QCOMPARE(cmap.getMapColor(MapColor::Undefined), (MapColor*)NULL);
+	QCOMPARE(map.getMapColor(MapColor::Undefined), static_cast<MapColor*>(nullptr));
+	QCOMPARE(cmap.getMapColor(MapColor::Undefined), static_cast<MapColor*>(nullptr));
 	QCOMPARE(map.getColor(MapColor::Undefined), Map::getUndefinedColor());
 	QCOMPARE(cmap.getColor(MapColor::Undefined), Map::getUndefinedColor());
-	QCOMPARE(map.getMapColor(MapColor::Registration), (MapColor*)NULL);
-	QCOMPARE(cmap.getMapColor(MapColor::Registration), (MapColor*)NULL);
+	QCOMPARE(map.getMapColor(MapColor::Registration), static_cast<MapColor*>(nullptr));
+	QCOMPARE(cmap.getMapColor(MapColor::Registration), static_cast<MapColor*>(nullptr));
 	QCOMPARE(map.getColor(MapColor::Registration), Map::getRegistrationColor());
 	QCOMPARE(cmap.getColor(MapColor::Registration), Map::getRegistrationColor());
 	
-	QCOMPARE(map.getMapColor(MapColor::Reserved), (MapColor*)NULL);
-	QCOMPARE(cmap.getMapColor(MapColor::Reserved), (MapColor*)NULL);
-	QCOMPARE(map.getColor(MapColor::Reserved), (MapColor*)NULL);
-	QCOMPARE(cmap.getColor(MapColor::Reserved), (MapColor*)NULL);
+	QCOMPARE(map.getMapColor(MapColor::Reserved), static_cast<MapColor*>(nullptr));
+	QCOMPARE(cmap.getMapColor(MapColor::Reserved), static_cast<MapColor*>(nullptr));
+	QCOMPARE(map.getColor(MapColor::Reserved), static_cast<MapColor*>(nullptr));
+	QCOMPARE(cmap.getColor(MapColor::Reserved), static_cast<MapColor*>(nullptr));
 	
-	QCOMPARE(map.getMapColor(map.getNumColors()), (MapColor*)NULL);
-	QCOMPARE(cmap.getMapColor(cmap.getNumColors()), (MapColor*)NULL);
-	QCOMPARE(map.getColor(map.getNumColors()), (MapColor*)NULL);
-	QCOMPARE(cmap.getColor(cmap.getNumColors()), (MapColor*)NULL);
+	QCOMPARE(map.getMapColor(map.getNumColors()), static_cast<MapColor*>(nullptr));
+	QCOMPARE(cmap.getMapColor(cmap.getNumColors()), static_cast<MapColor*>(nullptr));
+	QCOMPARE(map.getColor(map.getNumColors()), static_cast<MapColor*>(nullptr));
+	QCOMPARE(cmap.getColor(cmap.getNumColors()), static_cast<MapColor*>(nullptr));
 }
 
 void MapTest::importTest_data()
@@ -114,7 +114,7 @@ void MapTest::importTest()
 	
 	auto original_size = map.getNumObjects();
 	auto original_num_colors = map.getNumColors();
-#if IMPORT_MAP_DOES_NOT_USE_GUI
+#ifdef IMPORT_MAP_DOES_NOT_USE_GUI
 	Map empty_map;
 	map.importMap(&empty_map, Map::CompleteImport);
 	QCOMPARE(map.getNumObjects(), original_size);
@@ -149,7 +149,9 @@ void MapTest::importTest()
  * while running with "minimal" platform plugin.
  */
 #ifndef Q_OS_MACOS
-auto qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");
+namespace  {
+	auto qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");
+}
 #endif
 
 
