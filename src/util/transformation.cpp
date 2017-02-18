@@ -384,8 +384,8 @@ bool PassPointList::estimateNonIsometricSimilarityTransform(not_null<QTransform*
 	pseudo_inverse.multiply(values, output);
 	
 	out->setMatrix(
-		output.get(0, 0), output.get(1, 0), 0,
-		output.get(3, 0), output.get(4, 0), 0,
+		output.get(0, 0), output.get(3, 0), 0,
+		output.get(1, 0), output.get(4, 0), 0,
 		output.get(2, 0), output.get(5, 0), 1);
 	return true;
 }
