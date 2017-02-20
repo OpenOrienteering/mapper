@@ -1115,7 +1115,7 @@
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="466"/>
         <source>&lt;b&gt;%1+%2&lt;/b&gt;: Cancel editing. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+%2&lt;/b&gt;: Avbryt redigering. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="471"/>
@@ -2197,11 +2197,9 @@
     <message numerus="yes">
         <location filename="../src/fileformats/file_import_export.cpp" line="93"/>
         <source>Dropped %n irregular object(s).</source>
-        <translation>
-            <numerusform>Utelot %n feilaktige objekt(er).</numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>Utelot %n ikke-regelbundne objekt.</numerusform>
+        <numerusform>Utelot %n ikke-regelbundne objekter.</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="100"/>
         <source>Error during symbol post-processing.</source>
@@ -4288,7 +4286,7 @@ er valgt</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3554"/>
         <source>Switched to map part '%1'.</source>
-        <translation type="unfinished"></translation>
+        <translation>Byttet til kartdel «%1».</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3661"/>
@@ -4324,13 +4322,13 @@ er valgt</translation>
         <location filename="future_translations.cpp" line="31"/>
         <source>Rotate objects</source>
         <extracomment>To replace existing translation which uses "object(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Roter objekter</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="34"/>
         <source>Scale objects</source>
         <extracomment>To replace existing translation which uses "object(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Skaler objekter</translation>
     </message>
     <message numerus="yes">
         <location filename="future_translations.cpp" line="37"/>
@@ -4810,11 +4808,9 @@ rull musehjulet for å zoome.</translation>
     <message numerus="yes">
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="146"/>
         <source>%n color separation(s) were skipped, reason: Import disabled.</source>
-        <translation>
-            <numerusform>%n fargeseparasjon(er) ble droppet, årsak: Import deaktivert.</numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n fargeseparasjon ble droppet, årsak: Import deaktivert.</numerusform>
+        <numerusform>%n fargeseparasjoner ble droppet, årsak: Import deaktivert.</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="151"/>
         <source>Could not load the spot color definitions, error: %1</source>
@@ -9121,11 +9117,9 @@ Hvis du ikke har til hensikt å endre denne malen, er det ikke noe problem.</tra
     <message numerus="yes">
         <location filename="../src/templates/template_track.cpp" line="475"/>
         <source>%n path object(s) could not be imported (reason: missing coordinates).</source>
-        <translation>
-            <numerusform>%n linjeobjekt(er) kunne ikke importeres (årsak: manglende koordinater).</numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n linjeobjekt kunne ikke importeres (årsak: manglende koordinater).</numerusform>
+        <numerusform>%n linjeobjekter kunne ikke importeres (årsak: manglende koordinater).</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/sensors/gps_track.cpp" line="421"/>
         <source>Error reading</source>
