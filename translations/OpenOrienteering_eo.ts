@@ -127,7 +127,7 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="160"/>
         <source>Pattern interval:</source>
-        <translation type="unfinished"></translation>
+        <translation>Modela intervalo:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="165"/>
@@ -440,7 +440,7 @@
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="189"/>
         <source>The map contains symbols with this color. Deleting it will remove the color from these objects! Do you really want to do that?</source>
-        <translation type="unfinished"></translation>
+        <translation>La mapo enhavas simbolojn kun tiu koloro. Ĝia forigo kondukas al forigo de la koloro el tiuj simboloj. Ĉu vi vere volas fari tion?</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="206"/>
@@ -708,7 +708,7 @@
         <location filename="../src/tools/cutout_tool.cpp" line="135"/>
         <location filename="../src/tools/cutout_tool.cpp" line="139"/>
         <source>&lt;b&gt;%1+Click or drag&lt;/b&gt;: Select the objects to be clipped. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+Klaki aŭ treni&lt;/b&gt;: Elekti objektojn por eltondi. </translation>
     </message>
     <message>
         <location filename="../src/tools/cutout_tool.cpp" line="140"/>
@@ -1047,7 +1047,7 @@
         <location filename="../src/tools/draw_text_tool.cpp" line="102"/>
         <source>Snap</source>
         <extracomment>Snap to existing objects</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kapti</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="465"/>
@@ -1057,7 +1057,7 @@
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="466"/>
         <source>&lt;b&gt;%1+%2&lt;/b&gt;: Cancel editing. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+%2&lt;/b&gt;: Rezigni redakton. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="471"/>
@@ -1071,7 +1071,7 @@
         <location filename="../src/tools/edit_line_tool.cpp" line="402"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation>Kapto</translation>
+        <translation>Kapti</translation>
     </message>
     <message>
         <location filename="../src/tools/edit_line_tool.cpp" line="403"/>
@@ -1096,7 +1096,7 @@
         <location filename="../src/tools/edit_point_tool.cpp" line="521"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation>Kapto</translation>
+        <translation>Kapti</translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="522"/>
@@ -2698,7 +2698,7 @@ because the format is unknown.</source>
     <message>
         <location filename="../src/core/map.cpp" line="746"/>
         <source>The map import generated warnings.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mapa importo generis avertojn.</translation>
     </message>
     <message>
         <location filename="../src/core/map.cpp" line="694"/>
@@ -4183,7 +4183,7 @@ elektitaj</translation>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1266"/>
         <source>Canceled</source>
-        <translation>Nuligita</translation>
+        <translation>Rezignita</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1270"/>
@@ -5449,7 +5449,7 @@ apartigoj</translation>
         <location filename="../src/gui/print_widget.cpp" line="1229"/>
         <location filename="../src/gui/print_widget.cpp" line="1261"/>
         <source>Canceled.</source>
-        <translation>Nuligita.</translation>
+        <translation>Rezignita.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1265"/>
