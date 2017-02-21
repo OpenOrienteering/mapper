@@ -34,17 +34,17 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="165"/>
         <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
-        <translation type="unfinished"></translation>
+        <translation>תוכנית זו היא תוכנה חופשית: אתה יכול להפיצה ו/או לשנות אותה תחת התנאים של &lt;a %1&gt;  גנו (מערכת הפעלה)  רשיון ציבורי כללי (GPL)  , גרסה 3&lt;/a&gt;, כפי שפורסם על ידי קרן התוכנה החופשית.</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="170"/>
         <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License (GPL), version&amp;nbsp;3, for &lt;a %1&gt;more details&lt;/a&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>תוכנה זו מופצת בתקווה שתהיה שימושית, אך זאת ללא אחריות כלשהי; אפילו ללא אחריות משתמעת לגבי סחירות או התאמה למטרה מסוימת. ראה את גנו - הרשיון הציבורי הכללי (GPL), גרסה 3, &lt;a %1&gt; לפרטים נוספים&lt;/a&gt;.</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="179"/>
         <source>For contributions, thanks to:</source>
-        <translation type="unfinished"></translation>
+        <translation>לתרומות, תודה:</translation>
     </message>
 </context>
 <context>
@@ -52,12 +52,12 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="92"/>
         <source>Open most recently used file</source>
-        <translation type="unfinished"></translation>
+        <translation>פתח קבצים אחרונים</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="95"/>
         <source>Show tip of the day</source>
-        <translation type="unfinished"></translation>
+        <translation>הראה את הטיפ היומי</translation>
     </message>
 </context>
 <context>
@@ -65,7 +65,7 @@
     <message>
         <location filename="../src/gui/widgets/action_grid_bar.cpp" line="53"/>
         <source>Show remaining items</source>
-        <translation type="unfinished"></translation>
+        <translation>הצג פריטים נותרים</translation>
     </message>
 </context>
 <context>
@@ -73,27 +73,27 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="64"/>
         <source>mm²</source>
-        <translation type="unfinished"></translation>
+        <translation>mm²</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="65"/>
         <source>Minimum size:</source>
-        <translation type="unfinished"></translation>
+        <translation>גודל מינימלי:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="72"/>
         <source>Fills</source>
-        <translation type="unfinished"></translation>
+        <translation>מילויים</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="85"/>
         <source>Line fill</source>
-        <translation type="unfinished"></translation>
+        <translation>מילוי קו</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="86"/>
         <source>Pattern fill</source>
-        <translation type="unfinished"></translation>
+        <translation>מילוי צורה</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="124"/>
@@ -102,52 +102,52 @@
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="161"/>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="166"/>
         <source>mm</source>
-        <translation type="unfinished"></translation>
+        <translation>מ"מ</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="139"/>
         <source>Single line</source>
-        <translation type="unfinished"></translation>
+        <translation>קו בודד</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="153"/>
         <source>Parallel lines</source>
-        <translation type="unfinished"></translation>
+        <translation>קווים מקבילים</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="155"/>
         <source>Line spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>ריווח</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="158"/>
         <source>Single row</source>
-        <translation type="unfinished"></translation>
+        <translation>שורה יחידה</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="160"/>
         <source>Pattern interval:</source>
-        <translation type="unfinished"></translation>
+        <translation>מירווח הצורה:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="165"/>
         <source>Pattern offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>היסט צורה:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="170"/>
         <source>Row offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>היסט שורה:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="172"/>
         <source>Parallel rows</source>
-        <translation type="unfinished"></translation>
+        <translation>שורות מקבילות</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="174"/>
         <source>Row spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>ריווח שורות:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="180"/>
@@ -157,57 +157,57 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="182"/>
         <source>°</source>
-        <translation type="unfinished"></translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="184"/>
         <source>Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>זווית:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="186"/>
         <source>adjustable per object</source>
-        <translation type="unfinished"></translation>
+        <translation>מתכוונן לכל אובייקט</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="201"/>
         <source>Area settings</source>
-        <translation type="unfinished"></translation>
+        <translation>הגדרות אזור</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="282"/>
         <source>Pattern fill %1</source>
-        <translation type="unfinished"></translation>
+        <translation>מילוי צורה 1%</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="291"/>
         <source>Line fill %1</source>
-        <translation type="unfinished"></translation>
+        <translation>מילוי שורה 1%</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="308"/>
         <source>No fill selected</source>
-        <translation type="unfinished"></translation>
+        <translation>לא נבחר מילוי</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="62"/>
         <source>Area color:</source>
-        <translation type="unfinished"></translation>
+        <translation>צבע אזור:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="151"/>
         <source>Line offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>היסט קו:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="146"/>
         <source>Line color:</source>
-        <translation type="unfinished"></translation>
+        <translation>צבע קו:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="141"/>
         <source>Line width:</source>
-        <translation type="unfinished"></translation>
+        <translation>רוחב קו:</translation>
     </message>
 </context>
 <context>
@@ -215,36 +215,34 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="43"/>
         <source>Autosaved file</source>
-        <translation type="unfinished"></translation>
+        <translation>קובץ שמור אוטומטית</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/autosave_dialog.cpp" line="45"/>
         <location filename="../src/gui/autosave_dialog.cpp" line="51"/>
         <source>%n bytes</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n בתים</numerusform>
+        <numerusform>%n בתים</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="49"/>
         <source>File saved by the user</source>
-        <translation type="unfinished"></translation>
+        <translation>הקובץ נשמר על-ידי המשתמש</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="56"/>
         <source>File recovery</source>
-        <translation type="unfinished"></translation>
+        <translation>שחזור קובץ</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="58"/>
         <source>File %1 was not properly closed. At the moment, there are two versions:</source>
-        <translation type="unfinished"></translation>
+        <translation>הקובץ %1 לא נסגר כראוי. כרגע, ישנן שתי גירסאות:</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="72"/>
         <source>Save the active file to remove the conflicting version.</source>
-        <translation type="unfinished"></translation>
+        <translation>שמור את הקובץ הפעיל כדי להסיר את הגרסה הסותרת.</translation>
     </message>
 </context>
 <context>
@@ -252,12 +250,12 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="45"/>
         <source>Edit map color</source>
-        <translation type="unfinished"></translation>
+        <translation>עריכת צבע מפה</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="62"/>
         <source>Defines a spot color:</source>
-        <translation type="unfinished"></translation>
+        <translation>מגדיר צבע נקודה:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="71"/>
@@ -272,7 +270,7 @@
         <location filename="../src/gui/color_dialog.cpp" line="139"/>
         <location filename="../src/gui/color_dialog.cpp" line="349"/>
         <source>%</source>
-        <translation type="unfinished"></translation>
+        <translation>%</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="91"/>
@@ -288,72 +286,72 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="114"/>
         <source>Calculate from RGB color</source>
-        <translation type="unfinished"></translation>
+        <translation>חישוב של צבע RGB</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="119"/>
         <source>Custom process color:</source>
-        <translation type="unfinished"></translation>
+        <translation>צבע מותאם אישית:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="125"/>
         <source>Cyan</source>
-        <translation type="unfinished"></translation>
+        <translation>ציאן</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="130"/>
         <source>Magenta</source>
-        <translation type="unfinished"></translation>
+        <translation>מג׳נטה</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="135"/>
         <source>Yellow</source>
-        <translation type="unfinished"></translation>
+        <translation>צהוב</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="140"/>
         <source>Black</source>
-        <translation type="unfinished"></translation>
+        <translation>שחור</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="171"/>
         <source>Calculate from CMYK color</source>
-        <translation type="unfinished"></translation>
+        <translation>חישוב מצבעי CMYK</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="176"/>
         <source>Custom RGB color:</source>
-        <translation type="unfinished"></translation>
+        <translation>צבע RGB מותאם אישית:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="182"/>
         <source>Red</source>
-        <translation type="unfinished"></translation>
+        <translation>אדום</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="187"/>
         <source>Green</source>
-        <translation type="unfinished"></translation>
+        <translation>ירוק</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="192"/>
         <source>Blue</source>
-        <translation type="unfinished"></translation>
+        <translation>כחול</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="197"/>
         <source>#RRGGBB</source>
-        <translation type="unfinished"></translation>
+        <translation>#RRGGBB</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="215"/>
         <source>Desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>שולחן עבודה</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="216"/>
         <source>Professional printing</source>
-        <translation type="unfinished"></translation>
+        <translation>הדפסה מקצועית</translation>
     </message>
 </context>
 <context>
@@ -361,7 +359,7 @@
     <message>
         <location filename="../src/gui/widgets/color_dropdown.cpp" line="32"/>
         <source>- none -</source>
-        <translation type="unfinished"></translation>
+        <translation>- ללא -</translation>
     </message>
 </context>
 <context>
@@ -369,27 +367,27 @@
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="57"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>שם</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="57"/>
         <source>Opacity</source>
-        <translation type="unfinished"></translation>
+        <translation>שקיפות</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="57"/>
         <source>Spot color</source>
-        <translation type="unfinished"></translation>
+        <translation>צבע</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="57"/>
         <source>CMYK</source>
-        <translation type="unfinished"></translation>
+        <translation>CMYK</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="57"/>
         <source>RGB</source>
-        <translation type="unfinished"></translation>
+        <translation>RGB</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="57"/>
@@ -400,63 +398,63 @@
         <location filename="../src/gui/color_dock_widget.cpp" line="63"/>
         <location filename="../src/gui/color_dock_widget.cpp" line="68"/>
         <source>New</source>
-        <translation type="unfinished"></translation>
+        <translation>חדש</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="71"/>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>מחק</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="64"/>
         <source>Duplicate</source>
-        <translation type="unfinished"></translation>
+        <translation>שכפל</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="77"/>
         <source>Move Up</source>
-        <translation type="unfinished"></translation>
+        <translation>העבר למעלה</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="79"/>
         <source>Move Down</source>
-        <translation type="unfinished"></translation>
+        <translation>העבר למטה</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="90"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>עזרה</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="111"/>
         <source>Double-click a color value to open a dialog.</source>
-        <translation type="unfinished"></translation>
+        <translation>לחץ פעמיים על ערך צבע כדי לפתוח תיבת דו-שיח.</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="189"/>
         <source>Confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation>אישור</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="189"/>
         <source>The map contains symbols with this color. Deleting it will remove the color from these objects! Do you really want to do that?</source>
-        <translation type="unfinished"></translation>
+        <translation>המפה מכילה סמלים עם הצבע הזה. מחיקתו תסיר את הצבע של אובייקטים אלה!  האם אתה באמת רוצה לעשות את זה?</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="206"/>
         <source> (Duplicate)</source>
-        <translation type="unfinished"></translation>
+        <translation> שכפול</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="364"/>
         <location filename="../src/gui/color_dock_widget.cpp" line="411"/>
         <source>Double click to define the color</source>
-        <translation type="unfinished"></translation>
+        <translation>לחץ פעמיים כדי להגדיר את צבע</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="371"/>
         <source>Click to select the name and click again to edit.</source>
-        <translation type="unfinished"></translation>
+        <translation>לחץ כדי לבחור את השם ולחץ שוב כדי לערוך.</translation>
     </message>
 </context>
 <context>
@@ -464,27 +462,27 @@
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="65"/>
         <source>&amp;Number of parts:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; מספר חלקים:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="80"/>
         <source>- Private line symbol -</source>
-        <translation type="unfinished"></translation>
+        <translation>-סימן קו אישי-</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="81"/>
         <source>- Private area symbol -</source>
-        <translation type="unfinished"></translation>
+        <translation>-אזור סמל אישי-</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="87"/>
         <source>Edit private symbol...</source>
-        <translation type="unfinished"></translation>
+        <translation>עריכת סמל אישי...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="107"/>
         <source>Combination settings</source>
-        <translation type="unfinished"></translation>
+        <translation>הגדרות משולבות</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="160"/>
@@ -1847,7 +1845,7 @@
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="161"/>
         <source>About %1</source>
         <comment>As in 'About OpenOrienteering Mapper'</comment>
-        <translation type="unfinished">1% בקירוב</translation>
+        <translation>1% בקירוב</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="164"/>
@@ -4165,17 +4163,17 @@ selected</source>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1266"/>
         <source>Canceled</source>
-        <translation type="unfinished"></translation>
+        <translation>ביטול</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1270"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>שגיאה</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1275"/>
         <source>Finished</source>
-        <translation type="unfinished"></translation>
+        <translation>הסתיים</translation>
     </message>
 </context>
 <context>
@@ -4190,18 +4188,18 @@ selected</source>
         <location filename="../src/gui/map/map_widget.cpp" line="583"/>
         <source>mm</source>
         <comment>millimeters</comment>
-        <translation type="unfinished"></translation>
+        <translation>מ"מ</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_widget.cpp" line="599"/>
         <source>m</source>
         <comment>meters</comment>
-        <translation type="unfinished"></translation>
+        <translation>מטר</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_widget.cpp" line="636"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>שגיאה</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_widget.cpp" line="834"/>
@@ -4211,7 +4209,11 @@ Start by defining some colors:
 Select Symbols -&gt; Color window to
 open the color dialog and
 define the colors there.</source>
-        <translation type="unfinished"></translation>
+        <translation>מפה ריקה!
+
+התחל בהגדרת מספר צבעים:
+בחר סמלים -&gt; צבע חלון ל
+פתח את דיאלוג הצבע והגדר את הצבעים שם.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_widget.cpp" line="836"/>
@@ -4221,7 +4223,11 @@ Now define some symbols:
 Right-click in the symbol bar
 and select "New symbol"
 to create one.</source>
-        <translation type="unfinished"></translation>
+        <translation>אין סמלים!
+
+עכשיו הגדר מספר סמלים:
+קליק ימני על תיבת הסמלים
+ליצירת סמל בחר "סמל חדש".</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_widget.cpp" line="838"/>
@@ -4230,13 +4236,17 @@ to create one.</source>
 Start drawing or load a base map.
 To load a base map, click
 Templates -&gt; Open template...</source>
-        <translation type="unfinished"></translation>
+        <translation>מוכן לציור!
+
+התחל לצייר או העלה תמונת רקע.
+להעלאת תמונת רקע לחץ על תבניות -&gt; פתח תבנית...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_widget.cpp" line="838"/>
         <source>Hint: Hold the middle mouse button to drag the map,
 zoom using the mouse wheel, if available.</source>
-        <translation type="unfinished"></translation>
+        <translation>רמז: החזק את הכפתור האמצעי בעכבר כדי לגרור את המפה,
+הגדל באמצעות גלגל העכבר.</translation>
     </message>
 </context>
 <context>
@@ -4244,63 +4254,63 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="98"/>
         <source>Boundary length:</source>
-        <translation type="unfinished"></translation>
+        <translation>אורך הגבול:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="136"/>
         <source>Length:</source>
-        <translation type="unfinished"></translation>
+        <translation>אורך:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="114"/>
         <source>Area:</source>
-        <translation type="unfinished"></translation>
+        <translation>שטח:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="61"/>
         <source>No object selected.</source>
-        <translation type="unfinished"></translation>
+        <translation>לא נבחר אובייקט.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="65"/>
         <source>%1 objects selected.</source>
-        <translation type="unfinished"></translation>
+        <translation>1% מהאובייקטים נבחרו.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="75"/>
         <source>The selected object is not a path.</source>
-        <translation type="unfinished"></translation>
+        <translation>האובייקט הנבחר אינו מסלול.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="99"/>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="137"/>
         <source>mm</source>
         <comment>millimeters</comment>
-        <translation type="unfinished"></translation>
+        <translation>מ"מ</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="100"/>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="138"/>
         <source>m</source>
         <comment>meters</comment>
-        <translation type="unfinished"></translation>
+        <translation>מטר</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="115"/>
         <source>mm²</source>
         <comment>square millimeters</comment>
-        <translation type="unfinished"></translation>
+        <translation>מ"מ רבוע</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="116"/>
         <source>m²</source>
         <comment>square meters</comment>
-        <translation type="unfinished"></translation>
+        <translation>מטר רבוע</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="128"/>
         <source>This object is too small.</source>
-        <translation type="unfinished"></translation>
+        <translation>האובייקט הזה קטן מידי.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="129"/>
