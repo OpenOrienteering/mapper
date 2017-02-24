@@ -26,17 +26,17 @@
 #include <QMessageBox>
 
 #include "core/map.h"
-#include "undo/object_undo.h"
-#include "gui/map/map_widget.h"
+#include "core/objects/boolean_tool.h"
 #include "core/objects/object.h"
 #include "core/symbols/symbol.h"
 #include "core/symbols/combined_symbol.h"
-#include "boolean_tool.h"
-#include "draw_circle_tool.h"
-#include "draw_path_tool.h"
-#include "draw_rectangle_tool.h"
-#include "util/util.h"
 #include "gui/modifier_key.h"
+#include "gui/map/map_widget.h"
+#include "tools/draw_circle_tool.h"
+#include "tools/draw_path_tool.h"
+#include "tools/draw_rectangle_tool.h"
+#include "undo/object_undo.h"
+#include "util/util.h"
 
 
 CutHoleTool::CutHoleTool(MapEditorController* editor, QAction* tool_button, CutHoleTool::HoleType hole_type)
