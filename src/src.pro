@@ -196,7 +196,6 @@ HEADERS += \
   util/encoding.h \
   util/item_delegates.h \
   util/matrix.h \
-  util/memory.h \
   util/overriding_shortcut.h \
   util/recording_translator.h \
   util/scoped_signals_blocker.h \

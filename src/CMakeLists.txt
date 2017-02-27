@@ -229,7 +229,6 @@ set(Mapper_Common_HEADERS
   templates/world_file.h
   
   util/backports.h
-  util/memory.h
 )
 
 
