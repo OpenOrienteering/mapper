@@ -7,22 +7,22 @@
         <location filename="../src/gui/about_dialog.cpp" line="94"/>
         <location filename="../src/gui/about_dialog.cpp" line="161"/>
         <source>About %1</source>
-        <translation type="unfinished">关于 %1</translation>
+        <translation>关于 %1</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="175"/>
         <source>&lt;a %1&gt;All about licenses, copyright notices, conditions and disclaimers.&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;a％1&gt;所有关于许可证，版权的告示，条件和免责声明</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="177"/>
         <source>The OpenOrienteering developers in alphabetical order:</source>
-        <translation type="unfinished"></translation>
+        <translation>按字母顺序排列的 OpenOrienteering 开发人员</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="178"/>
         <source>(project initiator)</source>
-        <translation type="unfinished"></translation>
+        <translation>（项目发起人）</translation>
     </message>
     <message>
         <location filename="../packaging/translations.cpp" line="14"/>
@@ -34,17 +34,17 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="165"/>
         <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
-        <translation type="unfinished"></translation>
+        <translation>此程序是免费的软件︰ 你可以将它重新分发和/或修改根据 &lt;a %1&gt; GNU 通用公共许可证 (GPL)，版本 3&lt;/a&gt; 的条款，如由自由软件基金会出版。</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="170"/>
         <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License (GPL), version&amp;nbsp;3, for &lt;a %1&gt;more details&lt;/a&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>请参阅GNU通用公共许可证（GPL），版本3，有关&lt;a %1&gt;更多详细信息&lt;/a&gt;。</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="179"/>
         <source>For contributions, thanks to:</source>
-        <translation type="unfinished"></translation>
+        <translation>作出的贡献，感谢</translation>
     </message>
 </context>
 <context>
@@ -52,12 +52,12 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="92"/>
         <source>Open most recently used file</source>
-        <translation type="unfinished"></translation>
+        <translation>打开最近使用的文件</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="95"/>
         <source>Show tip of the day</source>
-        <translation type="unfinished"></translation>
+        <translation>显示每日提示</translation>
     </message>
 </context>
 <context>
@@ -65,7 +65,7 @@
     <message>
         <location filename="../src/gui/widgets/action_grid_bar.cpp" line="53"/>
         <source>Show remaining items</source>
-        <translation type="unfinished"></translation>
+        <translation>显示剩余项目</translation>
     </message>
 </context>
 <context>
@@ -73,27 +73,27 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="64"/>
         <source>mm²</source>
-        <translation type="unfinished"></translation>
+        <translation>mm²</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="65"/>
         <source>Minimum size:</source>
-        <translation type="unfinished"></translation>
+        <translation>最小尺寸</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="72"/>
         <source>Fills</source>
-        <translation type="unfinished"></translation>
+        <translation>填充</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="85"/>
         <source>Line fill</source>
-        <translation type="unfinished"></translation>
+        <translation>线条与填充</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="86"/>
         <source>Pattern fill</source>
-        <translation type="unfinished"></translation>
+        <translation>图案填充</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="124"/>
@@ -102,112 +102,112 @@
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="161"/>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="166"/>
         <source>mm</source>
-        <translation type="unfinished"></translation>
+        <translation>毫米</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="139"/>
         <source>Single line</source>
-        <translation type="unfinished"></translation>
+        <translation>单行</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="153"/>
         <source>Parallel lines</source>
-        <translation type="unfinished"></translation>
+        <translation>两条平行线</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="155"/>
         <source>Line spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>行间距</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="158"/>
         <source>Single row</source>
-        <translation type="unfinished"></translation>
+        <translation>单排</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="160"/>
         <source>Pattern interval:</source>
-        <translation type="unfinished"></translation>
+        <translation>模式间隔</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="165"/>
         <source>Pattern offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>模式偏移量</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="170"/>
         <source>Row offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>行偏移量</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="172"/>
         <source>Parallel rows</source>
-        <translation type="unfinished"></translation>
+        <translation>平行的行</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="174"/>
         <source>Row spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>行间距</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="180"/>
         <source>Fill rotation</source>
-        <translation type="unfinished"></translation>
+        <translation>填补旋转</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="182"/>
         <source>°</source>
-        <translation type="unfinished"></translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="184"/>
         <source>Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>角度</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="186"/>
         <source>adjustable per object</source>
-        <translation type="unfinished"></translation>
+        <translation>每个对象可调节</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="201"/>
         <source>Area settings</source>
-        <translation type="unfinished"></translation>
+        <translation>区域设置</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="282"/>
         <source>Pattern fill %1</source>
-        <translation type="unfinished"></translation>
+        <translation>图案填充 %1</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="291"/>
         <source>Line fill %1</source>
-        <translation type="unfinished"></translation>
+        <translation>线条与填充 %1</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="308"/>
         <source>No fill selected</source>
-        <translation type="unfinished"></translation>
+        <translation>没有选定的填充</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="62"/>
         <source>Area color:</source>
-        <translation type="unfinished"></translation>
+        <translation>区域颜色</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="151"/>
         <source>Line offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>行偏移量</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="146"/>
         <source>Line color:</source>
-        <translation type="unfinished"></translation>
+        <translation>线条颜色</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="141"/>
         <source>Line width:</source>
-        <translation type="unfinished"></translation>
+        <translation>线宽</translation>
     </message>
 </context>
 <context>
@@ -215,35 +215,33 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="43"/>
         <source>Autosaved file</source>
-        <translation type="unfinished"></translation>
+        <translation>自动保存文件</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/autosave_dialog.cpp" line="45"/>
         <location filename="../src/gui/autosave_dialog.cpp" line="51"/>
         <source>%n bytes</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n 字节</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="49"/>
         <source>File saved by the user</source>
-        <translation type="unfinished"></translation>
+        <translation>由用户保存的文件</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="56"/>
         <source>File recovery</source>
-        <translation type="unfinished"></translation>
+        <translation>文件恢复</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="58"/>
         <source>File %1 was not properly closed. At the moment, there are two versions:</source>
-        <translation type="unfinished"></translation>
+        <translation>文件 %1 不正确地关闭。目前，有两个版本</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="72"/>
         <source>Save the active file to remove the conflicting version.</source>
-        <translation type="unfinished"></translation>
+        <translation>保存活动文件删除冲突的版本。</translation>
     </message>
 </context>
 <context>
@@ -251,17 +249,17 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="45"/>
         <source>Edit map color</source>
-        <translation type="unfinished"></translation>
+        <translation>编辑地图颜色</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="62"/>
         <source>Defines a spot color:</source>
-        <translation type="unfinished"></translation>
+        <translation>定义专色</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="71"/>
         <source>Mixture of spot colors (screens and overprint):</source>
-        <translation type="unfinished"></translation>
+        <translation>混合物的专色 （屏幕和叠印）</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="86"/>
@@ -271,88 +269,88 @@
         <location filename="../src/gui/color_dialog.cpp" line="139"/>
         <location filename="../src/gui/color_dialog.cpp" line="349"/>
         <source>%</source>
-        <translation type="unfinished"></translation>
+        <translation>%</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="91"/>
         <source>Knockout: erases lower colors</source>
-        <translation type="unfinished"></translation>
+        <translation>挖空︰ 擦除低颜色</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="109"/>
         <location filename="../src/gui/color_dialog.cpp" line="166"/>
         <source>Calculate from spot colors</source>
-        <translation type="unfinished"></translation>
+        <translation>计算从专色</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="114"/>
         <source>Calculate from RGB color</source>
-        <translation type="unfinished"></translation>
+        <translation>计算从 RGB 颜色</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="119"/>
         <source>Custom process color:</source>
-        <translation type="unfinished"></translation>
+        <translation>自定义过程颜色</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="125"/>
         <source>Cyan</source>
-        <translation type="unfinished"></translation>
+        <translation>青色</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="130"/>
         <source>Magenta</source>
-        <translation type="unfinished"></translation>
+        <translation>洋红色</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="135"/>
         <source>Yellow</source>
-        <translation type="unfinished"></translation>
+        <translation>黄色</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="140"/>
         <source>Black</source>
-        <translation type="unfinished"></translation>
+        <translation>黑色</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="171"/>
         <source>Calculate from CMYK color</source>
-        <translation type="unfinished"></translation>
+        <translation>计算从 CMYK 颜色</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="176"/>
         <source>Custom RGB color:</source>
-        <translation type="unfinished"></translation>
+        <translation>自定义 RGB 颜色</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="182"/>
         <source>Red</source>
-        <translation type="unfinished"></translation>
+        <translation>红色</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="187"/>
         <source>Green</source>
-        <translation type="unfinished"></translation>
+        <translation>绿色</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="192"/>
         <source>Blue</source>
-        <translation type="unfinished"></translation>
+        <translation>蓝色</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="197"/>
         <source>#RRGGBB</source>
-        <translation type="unfinished"></translation>
+        <translation>#RRGGBB</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="215"/>
         <source>Desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>桌面</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="216"/>
         <source>Professional printing</source>
-        <translation type="unfinished"></translation>
+        <translation>专业印刷</translation>
     </message>
 </context>
 <context>
@@ -360,7 +358,7 @@
     <message>
         <location filename="../src/gui/widgets/color_dropdown.cpp" line="32"/>
         <source>- none -</source>
-        <translation type="unfinished"></translation>
+        <translation>-无-</translation>
     </message>
 </context>
 <context>
@@ -368,94 +366,94 @@
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="57"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>名称</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="57"/>
         <source>Opacity</source>
-        <translation type="unfinished"></translation>
+        <translation>不透明度</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="57"/>
         <source>Spot color</source>
-        <translation type="unfinished"></translation>
+        <translation>专色</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="57"/>
         <source>CMYK</source>
-        <translation type="unfinished"></translation>
+        <translation>CMYK</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="57"/>
         <source>RGB</source>
-        <translation type="unfinished"></translation>
+        <translation>RGB</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="57"/>
         <source>K.o.</source>
-        <translation type="unfinished"></translation>
+        <translation>棍</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="63"/>
         <location filename="../src/gui/color_dock_widget.cpp" line="68"/>
         <source>New</source>
-        <translation type="unfinished"></translation>
+        <translation>新增功能</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="71"/>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>删除</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="64"/>
         <source>Duplicate</source>
-        <translation type="unfinished"></translation>
+        <translation>重复</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="77"/>
         <source>Move Up</source>
-        <translation type="unfinished"></translation>
+        <translation>向上移动</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="79"/>
         <source>Move Down</source>
-        <translation type="unfinished"></translation>
+        <translation>向下移动</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="90"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>說明</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="111"/>
         <source>Double-click a color value to open a dialog.</source>
-        <translation type="unfinished"></translation>
+        <translation>双击要打开一个对话框的颜色值。</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="189"/>
         <source>Confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation>确认</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="189"/>
         <source>The map contains symbols with this color. Deleting it will remove the color from these objects! Do you really want to do that?</source>
-        <translation type="unfinished"></translation>
+        <translation>映射包含这种颜色的符号。删除它将从这些对象中删除颜色 ！你真的想要这样做？</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="206"/>
         <source> (Duplicate)</source>
-        <translation type="unfinished"></translation>
+        <translation> （重复）</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="364"/>
         <location filename="../src/gui/color_dock_widget.cpp" line="411"/>
         <source>Double click to define the color</source>
-        <translation type="unfinished"></translation>
+        <translation>双击要定义的颜色</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="371"/>
         <source>Click to select the name and click again to edit.</source>
-        <translation type="unfinished"></translation>
+        <translation>单击以选中名称，再次单击可编辑。</translation>
     </message>
 </context>
 <context>
@@ -463,42 +461,42 @@
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="65"/>
         <source>&amp;Number of parts:</source>
-        <translation type="unfinished"></translation>
+        <translation>与零件数目</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="80"/>
         <source>- Private line symbol -</source>
-        <translation type="unfinished"></translation>
+        <translation>-私人线符号-</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="81"/>
         <source>- Private area symbol -</source>
-        <translation type="unfinished"></translation>
+        <translation>-私人领域符号-</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="87"/>
         <source>Edit private symbol...</source>
-        <translation type="unfinished"></translation>
+        <translation>编辑私有符号...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="107"/>
         <source>Combination settings</source>
-        <translation type="unfinished"></translation>
+        <translation>组合设置</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="160"/>
         <source>Change from public to private symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>从公共改为私有符号</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="161"/>
         <source>Take the old symbol as template for the private symbol?</source>
-        <translation type="unfinished"></translation>
+        <translation>把旧的符号作为私有符号模板吗？</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="77"/>
         <source>Symbol %1:</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 的符号</translation>
     </message>
 </context>
 <context>
@@ -506,150 +504,150 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="53"/>
         <source>Configure grid</source>
-        <translation type="unfinished"></translation>
+        <translation>配置网格</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="55"/>
         <source>Show grid</source>
-        <translation type="unfinished"></translation>
+        <translation>显示网格</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="56"/>
         <source>Snap to grid</source>
-        <translation type="unfinished"></translation>
+        <translation>对齐网格</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="57"/>
         <source>Choose...</source>
-        <translation type="unfinished"></translation>
+        <translation>请选择...</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="60"/>
         <source>All lines</source>
-        <translation type="unfinished"></translation>
+        <translation>所有行</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="61"/>
         <source>Horizontal lines</source>
-        <translation type="unfinished"></translation>
+        <translation>水平线</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="62"/>
         <source>Vertical lines</source>
-        <translation type="unfinished"></translation>
+        <translation>垂直线条</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="114"/>
         <source>Alignment</source>
-        <translation type="unfinished"></translation>
+        <translation>对齐方式</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="64"/>
         <source>Align with magnetic north</source>
-        <translation type="unfinished"></translation>
+        <translation>磁北与对齐</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="65"/>
         <source>Align with grid north</source>
-        <translation type="unfinished"></translation>
+        <translation>与北方的网格对齐</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="66"/>
         <source>Align with true north</source>
-        <translation type="unfinished"></translation>
+        <translation>真北路与对齐</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="68"/>
         <source>Additional rotation (counter-clockwise):</source>
-        <translation type="unfinished"></translation>
+        <translation>额外的旋转 （逆时针）</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="69"/>
         <source>°</source>
-        <translation type="unfinished"></translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="121"/>
         <source>Positioning</source>
-        <translation type="unfinished"></translation>
+        <translation>定位</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="74"/>
         <source>meters in terrain</source>
-        <translation type="unfinished"></translation>
+        <translation>在地形米</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="75"/>
         <source>millimeters on map</source>
-        <translation type="unfinished"></translation>
+        <translation>在地图上的毫米</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="77"/>
         <source>Horizontal spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>水平间距</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="79"/>
         <source>Vertical spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>垂直间距</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="83"/>
         <source>Horizontal offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>水平偏移量</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="85"/>
         <source>Vertical offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>垂直偏移量</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="122"/>
         <source>Unit:</source>
         <comment>measurement unit</comment>
-        <translation type="unfinished"></translation>
+        <translation>单位</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="110"/>
         <source>Line color:</source>
-        <translation type="unfinished"></translation>
+        <translation>线条颜色</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="111"/>
         <source>Display:</source>
-        <translation type="unfinished"></translation>
+        <translation>显示︰</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="159"/>
         <source>Choose grid line color</source>
-        <translation type="unfinished"></translation>
+        <translation>选择网格线颜色</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="243"/>
         <source>m</source>
         <comment>meters</comment>
-        <translation type="unfinished"></translation>
+        <translation>m</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="243"/>
         <source>mm</source>
         <comment>millimeters</comment>
-        <translation type="unfinished"></translation>
+        <translation>毫米</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="249"/>
         <source>Origin at: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>原点: %1</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="251"/>
         <source>paper coordinates origin</source>
-        <translation type="unfinished"></translation>
+        <translation>本文坐标原点</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="253"/>
         <source>projected coordinates origin</source>
-        <translation type="unfinished"></translation>
+        <translation>投影的坐标原点</translation>
     </message>
 </context>
 <context>
@@ -657,7 +655,7 @@
     <message>
         <location filename="../src/tools/cut_hole_tool.cpp" line="241"/>
         <source>&lt;b&gt;Click or drag&lt;/b&gt;: Start drawing the hole. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;单击或拖动&lt;/b&gt;︰ 开始绘制孔。 </translation>
     </message>
 </context>
 <context>
@@ -668,32 +666,32 @@
         <location filename="../src/tools/cut_tool.cpp" line="405"/>
         <location filename="../src/tools/cut_tool.cpp" line="411"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>错误</translation>
     </message>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="399"/>
         <source>The split line must end on the area boundary!</source>
-        <translation type="unfinished"></translation>
+        <translation>拆分线必须结束在区域边界上 ！</translation>
     </message>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="405"/>
         <source>Start and end of the split line are at different parts of the object!</source>
-        <translation type="unfinished"></translation>
+        <translation>开始和结束的拆分线是在对象的不同部分 ！</translation>
     </message>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="411"/>
         <source>Start and end of the split line are at the same position!</source>
-        <translation type="unfinished"></translation>
+        <translation>开始和结束的拆分线处于相同的位置 ！</translation>
     </message>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="93"/>
         <source>&lt;b&gt;Click&lt;/b&gt; on a line: Split it into two. &lt;b&gt;Drag&lt;/b&gt; along a line: Remove this line part. &lt;b&gt;Click or Drag&lt;/b&gt; at an area boundary: Start a split line. </source>
-        <translation type="unfinished"></translation>
+        <translation>在行上 &lt;b&gt;单击&lt;/b&gt;︰ 分成两个。沿着一条线 &lt;b&gt;拖&lt;/b&gt;︰ 删除此线部件。&lt;b&gt;单击或拖动&lt;/b&gt; 在区域边界︰ 开始拆分线。 </translation>
     </message>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="352"/>
         <source>Splitting holes of area objects is not supported yet!</source>
-        <translation type="unfinished"></translation>
+        <translation>劈裂孔的区域对象尚不支持 ！</translation>
     </message>
 </context>
 <context>
@@ -701,18 +699,18 @@
     <message>
         <location filename="../src/tools/cutout_tool.cpp" line="134"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Clip the whole map. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;︰ 剪辑整个地图。 </translation>
     </message>
     <message>
         <location filename="../src/tools/cutout_tool.cpp" line="135"/>
         <location filename="../src/tools/cutout_tool.cpp" line="139"/>
         <source>&lt;b&gt;%1+Click or drag&lt;/b&gt;: Select the objects to be clipped. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1 + 单击或拖动&lt;/b&gt;︰ 选择要被剪切的对象。 </translation>
     </message>
     <message>
         <location filename="../src/tools/cutout_tool.cpp" line="140"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Clip the selected objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;︰ 所选的对象的剪辑。 </translation>
     </message>
 </context>
 <context>
@@ -720,12 +718,12 @@
     <message>
         <location filename="../src/util/dxfparser.cpp" line="36"/>
         <source>Could not open the file.</source>
-        <translation type="unfinished"></translation>
+        <translation>无法打开该文件。</translation>
     </message>
     <message>
         <location filename="../src/util/dxfparser.cpp" line="52"/>
         <source>The file is not an DXF file.</source>
-        <translation type="unfinished"></translation>
+        <translation>该文件不是 DXF 文件。</translation>
     </message>
 </context>
 <context>
@@ -733,18 +731,18 @@
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="87"/>
         <source>Letter:</source>
-        <translation type="unfinished"></translation>
+        <translation>字：</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="89"/>
         <source>A</source>
         <extracomment>"A" is the default letter which is used for determining letter height.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>A</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="95"/>
         <source>Height:</source>
-        <translation type="unfinished"></translation>
+        <translation>高度︰</translation>
     </message>
 </context>
 <context>
@@ -752,38 +750,38 @@
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="121"/>
         <source>Distribute points evenly along path</source>
-        <translation type="unfinished"></translation>
+        <translation>分发点沿路径均匀</translation>
     </message>
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="127"/>
         <source>Number of points per path:</source>
-        <translation type="unfinished"></translation>
+        <translation>每个路径点的数目︰</translation>
     </message>
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="129"/>
         <source>Also place objects at line end points</source>
-        <translation type="unfinished"></translation>
+        <translation>此外将对象置于线条端点</translation>
     </message>
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="135"/>
         <source>Rotation settings</source>
-        <translation type="unfinished"></translation>
+        <translation>旋转设置</translation>
     </message>
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="138"/>
         <source>Align points with direction of line</source>
-        <translation type="unfinished"></translation>
+        <translation>对齐点与线的方向</translation>
     </message>
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="142"/>
         <source>°</source>
         <comment>degrees</comment>
-        <translation type="unfinished"></translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="144"/>
         <source>Additional rotation angle (counter-clockwise):</source>
-        <translation type="unfinished"></translation>
+        <translation>额外的旋转角度 （逆时针）︰</translation>
     </message>
 </context>
 <context>
@@ -792,32 +790,32 @@
         <location filename="../src/tools/draw_circle_tool.cpp" line="59"/>
         <source>From center</source>
         <comment>Draw circle starting from center</comment>
-        <translation type="unfinished"></translation>
+        <translation>从中心</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="294"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Start a circle or ellipse. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;单击&lt;/b&gt;︰ 启动一个圆或椭圆。 </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="295"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw a circle. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;拖&lt;/b&gt;︰ 画一个圆。 </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="297"/>
         <source>Hold %1 to start drawing from the center.</source>
-        <translation type="unfinished"></translation>
+        <translation>持有 %1 从中心开始绘制。</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="301"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Finish the circle. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;单击&lt;/b&gt;︰ 完成圈。 </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="302"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw an ellipse. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;拖&lt;/b&gt;︰ 绘制一个椭圆。 </translation>
     </message>
 </context>
 <context>
@@ -825,7 +823,7 @@
     <message>
         <location filename="../src/tools/draw_freehand_tool.cpp" line="276"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw a path. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;拖&lt;/b&gt;︰ 绘制路径。 </translation>
     </message>
 </context>
 <context>
@@ -834,37 +832,37 @@
         <location filename="../src/tools/draw_path_tool.cpp" line="1065"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="700"/>
         <source>&lt;b&gt;Dash points on.&lt;/b&gt; </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;破折号点。&lt;/b&gt; </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1071"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap or append to existing objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1 + 点击&lt;/b&gt;︰ 对齐或将追加到现有的对象。 </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1076"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="706"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Pick direction from existing objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1 + 单击&lt;/b&gt;︰ 选择从现有对象的方向。 </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1089"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="711"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="735"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap to existing objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1 + 点击&lt;/b&gt;︰ 与现有对象对齐。 </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1095"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="725"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;︰ 固定的角度。 </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1103"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="741"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Undo last point. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;︰ 撤消最后一点。 </translation>
     </message>
 </context>
 <context>
@@ -872,60 +870,60 @@
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="87"/>
         <source>Finish</source>
-        <translation type="unfinished"></translation>
+        <translation>完成</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="88"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>关闭</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="89"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation type="unfinished"></translation>
+        <translation>管理单元</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="90"/>
         <source>Angle</source>
         <comment>Using constrained angles</comment>
-        <translation type="unfinished"></translation>
+        <translation>角度</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="91"/>
         <source>Dash</source>
         <comment>Drawing dash points</comment>
-        <translation type="unfinished"></translation>
+        <translation>短划线</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="92"/>
         <source>Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>撤消</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="93"/>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation>中止</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1061"/>
         <source>&lt;b&gt;Length:&lt;/b&gt; %1 m </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;长度︰&lt;/b&gt; %1 m </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1081"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Start a straight line. &lt;b&gt;Drag&lt;/b&gt;: Start a curve. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;单击&lt;/b&gt;︰ 开始一条直线。&lt;b&gt;拖&lt;/b&gt;︰ 开始一条曲线。 </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1090"/>
         <source>&lt;b&gt;%1+Drag&lt;/b&gt;: Follow existing objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;％1  拖动&lt;/b&gt; ：按照现有对象 </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1100"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Draw a straight line. &lt;b&gt;Drag&lt;/b&gt;: Draw a curve. &lt;b&gt;Right or double click&lt;/b&gt;: Finish the path. &lt;b&gt;%1&lt;/b&gt;: Close the path. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;单击&lt;/b&gt;︰ 绘制一条直线。&lt;b&gt;拖&lt;/b&gt;︰ 绘制一条曲线。&lt;b&gt;右或双点击&lt;/b&gt;︰ 完成路径。&lt;b&gt;%1&lt;/b&gt;︰ 闭合该路径。 </translation>
     </message>
 </context>
 <context>
@@ -933,12 +931,12 @@
     <message>
         <location filename="../src/tools/draw_point_gps_tool.cpp" line="73"/>
         <source>Touch the map to finish averaging</source>
-        <translation type="unfinished"></translation>
+        <translation>轻触地图完成平均</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_gps_tool.cpp" line="182"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Finish setting the object. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;单击&lt;/b&gt;︰ 完成设置对象。 </translation>
     </message>
 </context>
 <context>
@@ -947,46 +945,46 @@
         <location filename="../src/tools/draw_point_tool.cpp" line="60"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation type="unfinished"></translation>
+        <translation>管理单元</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="61"/>
         <source>Angle</source>
         <comment>Using constrained angles</comment>
-        <translation type="unfinished"></translation>
+        <translation>角度</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="62"/>
         <source>Reset</source>
         <comment>Reset rotation</comment>
-        <translation type="unfinished"></translation>
+        <translation>重置</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="317"/>
         <location filename="../src/tools/draw_point_tool.cpp" line="329"/>
         <source>&lt;b&gt;Angle:&lt;/b&gt; %1° </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;角︰&lt;/b&gt; %1 ° </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="318"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;︰ 固定的角度。 </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="323"/>
         <location filename="../src/tools/draw_point_tool.cpp" line="337"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a point object.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;点击&lt;/b&gt; ：创建一个点对象。</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="324"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Create an object and set its orientation.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;拖&lt;/b&gt;︰ 创建一个对象并设置其方向。</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="330"/>
         <source>&lt;b&gt;%1, 0&lt;/b&gt;: Reset rotation.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;0 %1&lt;/b&gt;︰ 重置旋转。</translation>
     </message>
 </context>
 <context>
@@ -994,50 +992,50 @@
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="78"/>
         <source>Finish</source>
-        <translation type="unfinished"></translation>
+        <translation>完成</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="79"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation type="unfinished"></translation>
+        <translation>管理单元</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="80"/>
         <source>Line snap</source>
         <comment>Snap to previous lines</comment>
-        <translation type="unfinished"></translation>
+        <translation>线管理单元</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="81"/>
         <source>Dash</source>
         <comment>Drawing dash points</comment>
-        <translation type="unfinished"></translation>
+        <translation>短划线</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="82"/>
         <source>Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>撤消</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="83"/>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation>中止</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="716"/>
         <source>&lt;b&gt;Click or Drag&lt;/b&gt;: Start drawing a rectangle. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;单击或拖动&lt;/b&gt;︰ 开始绘制一个矩形。 </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="729"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Snap to previous lines. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;︰ 与以前的行对齐。 </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="740"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set a corner point. &lt;b&gt;Right or double click&lt;/b&gt;: Finish the rectangle. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;单击&lt;/b&gt;︰ 设置一个角点。&lt;b&gt;右或双点击&lt;/b&gt;︰ 完成该矩形。 </translation>
     </message>
 </context>
 <context>
@@ -1046,22 +1044,22 @@
         <location filename="../src/tools/draw_text_tool.cpp" line="102"/>
         <source>Snap</source>
         <extracomment>Snap to existing objects</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>管理单元</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="465"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Finish editing. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;︰ 完成编辑。 </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="466"/>
         <source>&lt;b&gt;%1+%2&lt;/b&gt;: Cancel editing. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1 + %2&lt;/b&gt;︰ 取消编辑。 </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="471"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a text object with a single anchor. &lt;b&gt;Drag&lt;/b&gt;: Create a text box. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;单击&lt;/b&gt;︰ 创建具有单锚文本对象。&lt;b&gt;拖&lt;/b&gt;︰ 中创建一个文本框。 </translation>
     </message>
 </context>
 <context>
@@ -1070,23 +1068,23 @@
         <location filename="../src/tools/edit_line_tool.cpp" line="402"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation type="unfinished"></translation>
+        <translation>管理单元</translation>
     </message>
     <message>
         <location filename="../src/tools/edit_line_tool.cpp" line="403"/>
         <source>Toggle curve</source>
         <comment>Toggle between curved and flat segment</comment>
-        <translation type="unfinished"></translation>
+        <translation>切换曲线</translation>
     </message>
     <message>
         <location filename="../src/tools/edit_line_tool.cpp" line="515"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Free movement. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;︰ 自由流动。 </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_line_tool.cpp" line="531"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on segment: Toggle between straight and curved. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1 + 单击&lt;/b&gt; 段上︰ 直线和曲线之间切换。 </translation>
     </message>
 </context>
 <context>
@@ -1095,44 +1093,44 @@
         <location filename="../src/tools/edit_point_tool.cpp" line="521"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation type="unfinished"></translation>
+        <translation>管理单元</translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="522"/>
         <source>Point / Angle</source>
         <comment>Modify points or use constrained angles</comment>
-        <translation type="unfinished"></translation>
+        <translation>点 / 角</translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="523"/>
         <source>Toggle dash</source>
         <comment>Toggle dash points</comment>
-        <translation type="unfinished"></translation>
+        <translation>切换破折号</translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="697"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Finish editing. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;︰ 完成编辑。 </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="717"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Keep opposite handle positions. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;︰ 保持相反的句柄位置。 </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="738"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new dash point; with &lt;b&gt;%2&lt;/b&gt;: Add a normal point. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1 + 单击&lt;/b&gt; 点︰ 删除它;在路径上︰ 添加一个新的破折号点;&lt;b&gt;%2&lt;/b&gt;︰ 添加一个正常点。 </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="741"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new point; with &lt;b&gt;%2&lt;/b&gt;: Add a dash point. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1 + 单击&lt;/b&gt; 点︰ 删除它;在路径上︰ 添加一个新的点;&lt;b&gt;%2&lt;/b&gt;︰ 添加一个破折号点。 </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="745"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point to switch between dash and normal point. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1 + 单击&lt;/b&gt; 的点划线和正常点之间进行切换。 </translation>
     </message>
 </context>
 <context>
@@ -1141,31 +1139,31 @@
         <location filename="../src/tools/edit_point_tool.cpp" line="702"/>
         <location filename="../src/tools/edit_line_tool.cpp" line="508"/>
         <source>&lt;b&gt;Coordinate offset:&lt;/b&gt; %1, %2 mm  &lt;b&gt;Distance:&lt;/b&gt; %3 m </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;坐标偏移量︰&lt;/b&gt; %1、 %2 毫米 &lt;b&gt;距离︰&lt;/b&gt; %3 m </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="709"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;︰ 固定的角度。 </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="473"/>
         <location filename="../src/tools/edit_point_tool.cpp" line="721"/>
         <location filename="../src/tools/edit_line_tool.cpp" line="517"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Snap to existing objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;︰ 与现有对象对齐。 </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="727"/>
         <location filename="../src/tools/edit_line_tool.cpp" line="523"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Select a single object. &lt;b&gt;Drag&lt;/b&gt;: Select multiple objects. &lt;b&gt;%1+Click&lt;/b&gt;: Toggle selection. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;单击&lt;/b&gt;︰ 选择单个对象。&lt;b&gt;拖动&lt;/b&gt;︰ 选择多个对象。&lt;b&gt;%1 + 点击&lt;/b&gt;︰ 切换选择。 </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="730"/>
         <location filename="../src/tools/edit_line_tool.cpp" line="526"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Delete selected objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;︰ 删除选定的对象。 </translation>
     </message>
 </context>
 <context>
@@ -1173,23 +1171,23 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="36"/>
         <source>High quality map display (antialiasing)</source>
-        <translation type="unfinished"></translation>
+        <translation>高质量地图显示 （抗锯齿）</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="37"/>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="41"/>
         <source>Antialiasing makes the map look much better, but also slows down the map display</source>
-        <translation type="unfinished"></translation>
+        <translation>抗锯齿功能使地图看起来好多了，但也会减慢地图显示</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="40"/>
         <source>High quality text display in map (antialiasing), slow</source>
-        <translation type="unfinished"></translation>
+        <translation>高质量的文本显示在地图 （抗锯齿），缓慢</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="45"/>
         <source>Click tolerance:</source>
-        <translation type="unfinished"></translation>
+        <translation>请单击公差︰</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="44"/>
@@ -1197,92 +1195,92 @@
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="84"/>
         <source>mm</source>
         <comment>millimeters</comment>
-        <translation type="unfinished"></translation>
+        <translation>毫米</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="48"/>
         <source>Snap distance (%1):</source>
-        <translation type="unfinished"></translation>
+        <translation>对齐距离 (%1):</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="51"/>
         <source>Stepping of fixed angle mode (%1):</source>
-        <translation type="unfinished"></translation>
+        <translation>步进的固定的角模式 (%1):</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="50"/>
         <source>°</source>
         <comment>Degree sign for angles</comment>
-        <translation type="unfinished"></translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="53"/>
         <source>When selecting an object, automatically select its symbol, too</source>
-        <translation type="unfinished"></translation>
+        <translation>当选择一个对象，自动选择它的符号太</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="56"/>
         <source>Zoom away from cursor when zooming out</source>
-        <translation type="unfinished"></translation>
+        <translation>从光标放大，放大了</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="59"/>
         <source>Drawing tools: set last point on finishing with right click</source>
-        <translation type="unfinished"></translation>
+        <translation>绘图工具︰ 套上整理的最后一个点右键单击</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="62"/>
         <source>Templates: keep settings of closed templates</source>
-        <translation type="unfinished"></translation>
+        <translation>模板︰ 保持封闭模板设置</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="67"/>
         <source>Edit tool:</source>
-        <translation type="unfinished"></translation>
+        <translation>编辑工具︰</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="70"/>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="76"/>
         <source>Retain old shape</source>
-        <translation type="unfinished"></translation>
+        <translation>保留旧的形状</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="71"/>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="77"/>
         <source>Reset outer curve handles</source>
-        <translation type="unfinished"></translation>
+        <translation>重置外曲线手柄</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="72"/>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="78"/>
         <source>Keep outer curve handles</source>
-        <translation type="unfinished"></translation>
+        <translation>保持外曲线手柄</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="73"/>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="79"/>
         <source>Action on deleting a curve point with %1:</source>
-        <translation type="unfinished"></translation>
+        <translation>有关删除 %1 曲线点的行动︰</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="82"/>
         <source>Rectangle tool:</source>
-        <translation type="unfinished"></translation>
+        <translation>矩形工具︰</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="85"/>
         <source>Radius of helper cross:</source>
-        <translation type="unfinished"></translation>
+        <translation>助手交叉半径：</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="87"/>
         <source>Preview the width of lines with helper cross</source>
-        <translation type="unfinished"></translation>
+        <translation>预览与助手交叉线条的宽度</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="103"/>
         <source>Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>编辑器</translation>
     </message>
 </context>
 <context>
@@ -1290,12 +1288,12 @@
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1559"/>
         <source>Could not create new file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>不能创建新文件: %1</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_format.cpp" line="87"/>
         <source>Format (%1) does not support export</source>
-        <translation type="unfinished"></translation>
+        <translation>格式 (%1) 不支持出口</translation>
     </message>
 </context>
 <context>
@@ -1303,39 +1301,39 @@
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="99"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>警告</translation>
     </message>
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="100"/>
         <source>The map area is large. Use of the fill tool may be very slow. Do you want to use it anyway?</source>
-        <translation type="unfinished"></translation>
+        <translation>地图面积大。填充工具的使用可能会很慢。你想要使用它吗？</translation>
     </message>
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="85"/>
         <location filename="../src/tools/fill_tool.cpp" line="119"/>
         <location filename="../src/tools/fill_tool.cpp" line="167"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>错误</translation>
     </message>
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="86"/>
         <source>The clicked area is not bounded by lines or areas, cannot fill this area.</source>
-        <translation type="unfinished"></translation>
+        <translation>单击的区域不受线路或地区，不能填补这一领域。</translation>
     </message>
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="120"/>
         <source>The clicked position is not free, cannot use the fill tool there.</source>
-        <translation type="unfinished"></translation>
+        <translation>被单击的位置不是免费的不能那里使用填充工具。</translation>
     </message>
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="168"/>
         <source>Failed to create the fill object.</source>
-        <translation type="unfinished"></translation>
+        <translation>未能创建填充对象。</translation>
     </message>
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="179"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Fill area with active symbol. The area to be filled must be bounded by lines or areas, other symbols are not taken into account. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;单击&lt;/b&gt;︰ 用活动符号填充区域。要填充的区域必须有界的直线或地区，不考虑其他符号。 </translation>
     </message>
 </context>
 <context>
@@ -1343,17 +1341,17 @@
     <message>
         <location filename="../src/sensors/gps_display.cpp" line="88"/>
         <source>GPS is disabled in the device settings. Open settings now?</source>
-        <translation type="unfinished"></translation>
+        <translation>GPS 在设备设置被禁用。现在打开设置吗？</translation>
     </message>
     <message>
         <location filename="../src/sensors/gps_display.cpp" line="89"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>是的</translation>
     </message>
     <message>
         <location filename="../src/sensors/gps_display.cpp" line="90"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>不</translation>
     </message>
 </context>
 <context>
@@ -1361,125 +1359,125 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="53"/>
         <source>Appearance</source>
-        <translation type="unfinished"></translation>
+        <translation>外观</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="58"/>
         <source>Language:</source>
-        <translation type="unfinished"></translation>
+        <translation>语言︰</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="75"/>
         <source>Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>屏幕</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="80"/>
         <source>Pixels per inch:</source>
-        <translation type="unfinished"></translation>
+        <translation>每英寸的像素数︰</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="90"/>
         <source>Program start</source>
-        <translation type="unfinished"></translation>
+        <translation>启动程序</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="99"/>
         <source>Saving files</source>
-        <translation type="unfinished"></translation>
+        <translation>保存文件</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="101"/>
         <source>Retain compatibility with Mapper %1</source>
-        <translation type="unfinished"></translation>
+        <translation>保留与映射程序 %1 的兼容性</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="106"/>
         <source>Save information for automatic recovery</source>
-        <translation type="unfinished"></translation>
+        <translation>保存自动恢复信息</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="110"/>
         <source>Recovery information saving interval:</source>
-        <translation type="unfinished"></translation>
+        <translation>恢复信息的保存时间间隔︰</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="109"/>
         <source>min</source>
         <comment>unit minutes</comment>
-        <translation type="unfinished"></translation>
+        <translation>分钟</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="113"/>
         <source>File import and export</source>
-        <translation type="unfinished"></translation>
+        <translation>文件导入和导出</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="137"/>
         <source>8-bit encoding:</source>
-        <translation type="unfinished"></translation>
+        <translation>8 位编码︰</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="130"/>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="281"/>
         <source>More...</source>
-        <translation type="unfinished"></translation>
+        <translation>更多...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="116"/>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>默认</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="139"/>
         <source>Use the new OCD importer also for version 8 files</source>
-        <translation type="unfinished"></translation>
+        <translation>使用新的强迫症进口商也为版本 8 文件</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="159"/>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>一般</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="183"/>
         <source>Notice</source>
-        <translation type="unfinished"></translation>
+        <translation>通知</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="183"/>
         <source>The program must be restarted for the language change to take effect!</source>
-        <translation type="unfinished"></translation>
+        <translation>语言更改生效，必须重新启动该程序 ！</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="323"/>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="329"/>
         <source>Open translation</source>
-        <translation type="unfinished"></translation>
+        <translation>开放式翻译</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="323"/>
         <source>Translation files (*.qm)</source>
-        <translation type="unfinished"></translation>
+        <translation>翻译文件 (*.qm)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="330"/>
         <source>The selected file is not a valid translation.</source>
-        <translation type="unfinished"></translation>
+        <translation>所选的文件不是有效的翻译。</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="360"/>
         <source>%1 x %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 %2 x</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="361"/>
         <source>Primary screen resolution in pixels:</source>
-        <translation type="unfinished"></translation>
+        <translation>以像素为单位的主屏幕分辨率︰</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="365"/>
         <source>Primary screen size in inches (diagonal):</source>
-        <translation type="unfinished"></translation>
+        <translation>在英寸 （对角线） 的主屏幕大小︰</translation>
     </message>
 </context>
 <context>
@@ -1488,95 +1486,95 @@
         <location filename="../src/core/crs_template_implementation.cpp" line="48"/>
         <source>UTM</source>
         <comment>UTM coordinate reference system</comment>
-        <translation type="unfinished"></translation>
+        <translation>UTM</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="49"/>
         <source>UTM coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>UTM 坐标</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="52"/>
         <source>UTM Zone (number north/south)</source>
-        <translation type="unfinished"></translation>
+        <translation>UTM 区域 （编号南北）</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="59"/>
         <source>Gauss-Krueger, datum: Potsdam</source>
         <comment>Gauss-Krueger coordinate reference system</comment>
-        <translation type="unfinished"></translation>
+        <translation>高斯-克鲁格、 基准︰ 波茨坦</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="60"/>
         <source>Gauss-Krueger coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>高斯-克鲁格坐标</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="63"/>
         <source>Zone number (1 to 119)</source>
         <comment>Zone number for Gauss-Krueger coordinates</comment>
-        <translation type="unfinished"></translation>
+        <translation>区数 (1 到 119)</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="71"/>
         <source>by EPSG code</source>
         <comment>as in: The CRS is specified by EPSG code</comment>
-        <translation type="unfinished"></translation>
+        <translation>通过对代码</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="73"/>
         <source>EPSG @code@ coordinates</source>
         <extracomment>Don't translate @code@. It is placeholder.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>对 @code @ 坐标</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="84"/>
         <location filename="../src/core/georeferencing.cpp" line="533"/>
         <source>Local coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>局部坐标</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="76"/>
         <source>EPSG code</source>
-        <translation type="unfinished"></translation>
+        <translation>对代码</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="83"/>
         <source>Custom PROJ.4</source>
         <comment>PROJ.4 specification</comment>
-        <translation type="unfinished"></translation>
+        <translation>自定义 PROJ.4</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="87"/>
         <source>Specification</source>
         <comment>PROJ.4 specification</comment>
-        <translation type="unfinished"></translation>
+        <translation>规格</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="229"/>
         <source>Map scale specification invalid or missing.</source>
-        <translation type="unfinished"></translation>
+        <translation>地图比例尺规范无效或丢失。</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="235"/>
         <source>Invalid grid scale factor: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>无效的网格尺度因子: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="272"/>
         <location filename="../src/core/georeferencing.cpp" line="299"/>
         <source>Unknown CRS specification language: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>未知的 CRS 规范语言: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="302"/>
         <source>Unsupported geographic CRS specification: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>不受支持的地理 CRS 规格: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="524"/>
         <source>Local</source>
-        <translation type="unfinished"></translation>
+        <translation>本地</translation>
     </message>
 </context>
 <context>
@@ -1584,223 +1582,223 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="90"/>
         <source>Map Georeferencing</source>
-        <translation type="unfinished"></translation>
+        <translation>地图地理参考坐标系</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="167"/>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="499"/>
         <source>Lookup...</source>
-        <translation type="unfinished"></translation>
+        <translation>查找...</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="127"/>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="128"/>
         <source>m</source>
-        <translation type="unfinished"></translation>
+        <translation>m</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="201"/>
         <source>Declination:</source>
-        <translation type="unfinished"></translation>
+        <translation>赤纬︰</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="152"/>
         <source>Projected coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>投影的坐标</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="99"/>
         <source>Status:</source>
-        <translation type="unfinished"></translation>
+        <translation>状态︰</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="153"/>
         <source>Geographic coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>地理坐标</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="148"/>
         <source>Show reference point in:</source>
-        <translation type="unfinished"></translation>
+        <translation>显示中的参考点︰</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="338"/>
         <source>valid</source>
-        <translation type="unfinished"></translation>
+        <translation>有效</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="331"/>
         <source>&lt;a href="%1"&gt;OpenStreetMap&lt;/a&gt; | &lt;a href="%2"&gt;World of O Maps&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;a href="%1"&gt; 开放&lt;/a&gt; |&lt;a href="%2"&gt; O 地图世界&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="362"/>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="675"/>
         <source>Online declination lookup</source>
-        <translation type="unfinished"></translation>
+        <translation>在线的赤纬查找</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="94"/>
         <source>Map coordinate reference system</source>
-        <translation type="unfinished"></translation>
+        <translation>地图坐标参考系统</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="97"/>
         <source>- local -</source>
-        <translation type="unfinished"></translation>
+        <translation>-本地-</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="105"/>
         <source>Grid scale factor:</source>
         <extracomment>The grid scale factor is the ratio between a length in the grid plane and the corresponding length on the curved earth model. It is applied as a factor to ground distances to get grid plane distances.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>网格的缩放比例︰</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="108"/>
         <source>Reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>参考点</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="110"/>
         <source>&amp;Pick on map</source>
-        <translation type="unfinished"></translation>
+        <translation>与在地图上选择</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="112"/>
         <source>(Datum: WGS84)</source>
-        <translation type="unfinished"></translation>
+        <translation>(基准︰ WGS84)</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="115"/>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="116"/>
         <source>mm</source>
-        <translation type="unfinished"></translation>
+        <translation>毫米</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="120"/>
         <source>X</source>
         <comment>x coordinate</comment>
-        <translation type="unfinished"></translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="122"/>
         <source>Y</source>
         <comment>y coordinate</comment>
-        <translation type="unfinished"></translation>
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="131"/>
         <source>E</source>
         <comment>west / east</comment>
-        <translation type="unfinished"></translation>
+        <translation>E</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="133"/>
         <source>N</source>
         <comment>north / south</comment>
-        <translation type="unfinished"></translation>
+        <translation>N</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="137"/>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="138"/>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="166"/>
         <source>°</source>
-        <translation type="unfinished"></translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="141"/>
         <source>N</source>
         <comment>north</comment>
-        <translation type="unfinished"></translation>
+        <translation>N</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="143"/>
         <source>E</source>
         <comment>east</comment>
-        <translation type="unfinished"></translation>
+        <translation>E</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="164"/>
         <source>Map north</source>
-        <translation type="unfinished"></translation>
+        <translation>北地图</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="184"/>
         <location filename="../src/gui/select_crs_dialog.cpp" line="84"/>
         <source>&amp;Coordinate reference system:</source>
-        <translation type="unfinished"></translation>
+        <translation>与参考坐标系︰</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="191"/>
         <source>Map coordinates:</source>
-        <translation type="unfinished"></translation>
+        <translation>地图坐标︰</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="193"/>
         <source>Geographic coordinates:</source>
-        <translation type="unfinished"></translation>
+        <translation>地理坐标︰</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="196"/>
         <source>On CRS changes, keep:</source>
-        <translation type="unfinished"></translation>
+        <translation>CRS 的变化，保持︰</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="202"/>
         <source>Grivation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Grivation:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="363"/>
         <source>The magnetic declination for the reference point %1° %2° will now be retrieved from &lt;a href="%3"&gt;%3&lt;/a&gt;. Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>磁偏角为参考点 %1 %2 ° 现在将从 &lt;a href="%3"&gt; %3&lt;/a&gt; 中检索。你想要继续吗？</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="442"/>
         <source>Declination change</source>
-        <translation type="unfinished"></translation>
+        <translation>赤纬变化</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="442"/>
         <source>The declination has been changed. Do you want to rotate the map content accordingly, too?</source>
-        <translation type="unfinished"></translation>
+        <translation>赤纬已被更改。你想要旋转地图内容因此，太吗？</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="472"/>
         <source>Local coordinates:</source>
-        <translation type="unfinished"></translation>
+        <translation>局部坐标︰</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="499"/>
         <source>Loading...</source>
-        <translation type="unfinished"></translation>
+        <translation>正在加载...</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="506"/>
         <source>locked</source>
-        <translation type="unfinished"></translation>
+        <translation>已锁定</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="646"/>
         <source>Could not parse data.</source>
-        <translation type="unfinished"></translation>
+        <translation>不能分析数据。</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="671"/>
         <source>Declination value not found.</source>
-        <translation type="unfinished"></translation>
+        <translation>找不到的赤纬值。</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="676"/>
         <source>The online declination lookup failed:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>在线的赤纬查找失败: %1</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="504"/>
         <source>%1 °</source>
         <comment>degree value</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 °</translation>
     </message>
 </context>
 <context>
@@ -1808,7 +1806,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="704"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the reference point. &lt;b&gt;Right click&lt;/b&gt;: Cancel.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;单击&lt;/b&gt;︰ 设置的参考点。&lt;b&gt;右键单击&lt;/b&gt;︰ 取消。</translation>
     </message>
 </context>
 <context>
@@ -1816,7 +1814,7 @@
     <message>
         <location filename="../src/gui/home_screen_controller.cpp" line="147"/>
         <source>Welcome to OpenOrienteering Mapper!</source>
-        <translation type="unfinished"></translation>
+        <translation>欢迎来到 OpenOrienteering 映射器 ！</translation>
     </message>
 </context>
 <context>
@@ -1824,23 +1822,23 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="146"/>
         <source>Activities</source>
-        <translation type="unfinished"></translation>
+        <translation>活动</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="149"/>
         <source>Create a new map ...</source>
-        <translation type="unfinished"></translation>
+        <translation>创建一张新的地图...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="152"/>
         <source>Open map ...</source>
-        <translation type="unfinished"></translation>
+        <translation>打开地图...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="158"/>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="336"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>設定</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="161"/>
@@ -1852,47 +1850,47 @@
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="164"/>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="338"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>說明</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="167"/>
         <source>Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>結束</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="187"/>
         <source>Recent maps</source>
-        <translation type="unfinished"></translation>
+        <translation>最近地图</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="212"/>
         <source>Open most recently used file on start</source>
-        <translation type="unfinished"></translation>
+        <translation>打开最近使用的文件启动</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="215"/>
         <source>Clear list</source>
-        <translation type="unfinished"></translation>
+        <translation>清除列表</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="234"/>
         <source>Tip of the day</source>
-        <translation type="unfinished"></translation>
+        <translation>每日提示</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="239"/>
         <source>Show tip of the day</source>
-        <translation type="unfinished"></translation>
+        <translation>显示每日提示</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="243"/>
         <source>Previous</source>
-        <translation type="unfinished"></translation>
+        <translation>上一页</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="245"/>
         <source>Next</source>
-        <translation type="unfinished"></translation>
+        <translation>下一个</translation>
     </message>
 </context>
 <context>
@@ -1900,22 +1898,22 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="334"/>
         <source>Examples</source>
-        <translation type="unfinished"></translation>
+        <translation>例子</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="340"/>
         <source>About Mapper</source>
-        <translation type="unfinished"></translation>
+        <translation>关于映射器</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="458"/>
         <source>File list</source>
-        <translation type="unfinished"></translation>
+        <translation>文件列表</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="541"/>
         <source>No map files found!&lt;br/&gt;&lt;br/&gt;Copy map files to a top-level folder named 'OOMapper' on the device or a memory card.</source>
-        <translation type="unfinished"></translation>
+        <translation>没有找到的地图文件 ！ &lt;br/&gt; &lt;br/&gt;将地图文件复制到名为 'OOMapper' 在设备或存储卡上的顶级文件夹。</translation>
     </message>
 </context>
 <context>
@@ -1923,81 +1921,81 @@
     <message>
         <location filename="../src/core/symbols/symbol.cpp" line="226"/>
         <source>Error while loading a symbol of type %1 at line %2 column %3.</source>
-        <translation type="unfinished"></translation>
+        <translation>加载在列行 %2%3 %1 类型的符号时的错误。</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/symbol.cpp" line="234"/>
         <source>Symbol ID '%1' not unique at line %2 column %3.</source>
-        <translation type="unfinished"></translation>
+        <translation>符号 ID '%1' 不是唯一的在行 %2 列 %3。</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/symbol.cpp" line="282"/>
         <source>Error while loading a symbol of type %1 at line %2 column %3: %4</source>
-        <translation type="unfinished"></translation>
+        <translation>加载类型 %1 在 %2 线列 %3 的象征时出现错误: %4</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object.cpp" line="396"/>
         <source>Error while loading an object of type %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>加载类型 %1 的对象时出现错误。</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object.cpp" line="460"/>
         <source>Error while loading an object of type %1 at %2:%3: %4</source>
-        <translation type="unfinished"></translation>
+        <translation>加载类型 %1 在 %2 的对象时出现错误: %3: %4</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object.cpp" line="428"/>
         <source>Unable to find symbol for object at %1:%2.</source>
-        <translation type="unfinished"></translation>
+        <translation>无法找到符号对象在 %1: %2。</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object.cpp" line="440"/>
         <source>Point object with undefined or wrong symbol at %1:%2.</source>
-        <translation type="unfinished"></translation>
+        <translation>点对象未定义或错符号在 %1: %2。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/native_file_format.cpp" line="92"/>
         <location filename="../src/fileformats/xml_file_format.cpp" line="68"/>
         <source>OpenOrienteering Mapper</source>
-        <translation type="unfinished"></translation>
+        <translation>OpenOrienteering 映射器</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="59"/>
         <source>OCAD Versions 7, 8</source>
-        <translation type="unfinished"></translation>
+        <translation>OCAD 版本 7 8</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="32"/>
         <source>OCAD</source>
-        <translation type="unfinished"></translation>
+        <translation>遗漏</translation>
     </message>
     <message>
         <location filename="../src/util/xml_stream_util.cpp" line="176"/>
         <location filename="../src/util/xml_stream_util.cpp" line="192"/>
         <source>Could not parse the coordinates.</source>
-        <translation type="unfinished"></translation>
+        <translation>无法解析坐标。</translation>
     </message>
     <message>
         <location filename="../src/util/xml_stream_util.cpp" line="216"/>
         <source>Expected %1 coordinates, found %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>预期的 %1 坐标，找到 %2。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="877"/>
         <source>Error while loading the printing configuration at %1:%2: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>在 %1 的打印配置加载时出错: %2: %3</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="890"/>
         <location filename="../src/fileformats/xml_file_format.cpp" line="904"/>
         <source>Error while loading the undo/redo steps at %1:%2: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>撤消/重复加载时的错误步骤在 %1: %2: %3</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.h" line="230"/>
         <source>No such option: %1</source>
         <comment>No such import / export option</comment>
-        <translation type="unfinished"></translation>
+        <translation>没有这样的选项: %1</translation>
     </message>
 </context>
 <context>
@@ -2005,98 +2003,96 @@
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="65"/>
         <source>Found an object without symbol.</source>
-        <translation type="unfinished"></translation>
+        <translation>发现一个无符号的对象。</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/fileformats/file_import_export.cpp" line="93"/>
         <source>Dropped %n irregular object(s).</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>首字下沉 %n 不规则对象。</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="100"/>
         <source>Error during symbol post-processing.</source>
-        <translation type="unfinished"></translation>
+        <translation>符号后加工过程中的错误。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="114"/>
         <source>Template "%1" has been loaded from the map's directory instead of the relative location to the map file where it was previously.</source>
-        <translation type="unfinished"></translation>
+        <translation>模板"%1"已从地图的目录而不是相对位置加载到它那里以前的映射文件。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="120"/>
         <source>Failed to load template '%1', reason: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>未能加载模板"%1"，原因: %2</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="125"/>
         <source>Warnings when loading template '%1':
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>警告当加载模板 '%1': %2</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="132"/>
         <location filename="../src/fileformats/file_import_export.cpp" line="134"/>
         <source>At least one template file could not be found.</source>
-        <translation type="unfinished"></translation>
+        <translation>找不到至少一个模板文件。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="135"/>
         <source>Click the red template name(s) in the Templates -&gt; Template setup window to locate the template file name(s).</source>
-        <translation type="unfinished"></translation>
+        <translation>单击模板-模板安装窗口 &gt; 查找模板文件名称中的红色模板名称。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/native_file_format.cpp" line="123"/>
         <source>This file uses an obsolete format. Support for this format is to be removed from this program soon. To be able to open the file in the future, save it again.</source>
-        <translation type="unfinished"></translation>
+        <translation>此文件使用过时的格式。支持这种格式是从中删除此程序很快。为了能在将来打开该文件，请重新保存。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/native_file_format.cpp" line="136"/>
         <location filename="../src/fileformats/xml_file_format.cpp" line="413"/>
         <source>Invalid file format version.</source>
-        <translation type="unfinished"></translation>
+        <translation>无效的文件格式版本。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/native_file_format.cpp" line="140"/>
         <location filename="../src/fileformats/xml_file_format.cpp" line="415"/>
         <source>Unsupported old file format version. Please use an older program version to load and update the file.</source>
-        <translation type="unfinished"></translation>
+        <translation>旧版本的文件格式不受支持。请使用较旧的程序版本加载和更新该文件。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/native_file_format.cpp" line="144"/>
         <source>Unsupported new file format version. Some map features will not be loaded or saved by this version of the program. Consider updating.</source>
-        <translation type="unfinished"></translation>
+        <translation>新版本的文件格式不受支持。一些地图功能将不会加载或保存此版本的程序。考虑更新。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/native_file_format.cpp" line="200"/>
         <source>The geographic coordinate reference system of the map was "%1". This CRS is not supported. Using "%2".</source>
-        <translation type="unfinished"></translation>
+        <translation>地图的地理坐标参考系为"%1"。不支持此 CRS。使用"%2"。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/native_file_format.cpp" line="319"/>
         <source>Error while loading a symbol with type %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>%2 型加载符号时的错误。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/native_file_format.cpp" line="324"/>
         <source>Error while loading a symbol.</source>
-        <translation type="unfinished"></translation>
+        <translation>加载符号时的错误。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/native_file_format.cpp" line="396"/>
         <source>Error while loading undo steps.</source>
-        <translation type="unfinished"></translation>
+        <translation>装入撤消步骤时出错。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/native_file_format.cpp" line="406"/>
         <source>Error while reading map part count.</source>
-        <translation type="unfinished"></translation>
+        <translation>读取地图部分计数时出错。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/native_file_format.cpp" line="416"/>
         <source>Error while loading map part %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>加载地图部分 %2 时出现错误。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="117"/>
@@ -2107,22 +2103,22 @@
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2032"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2062"/>
         <source>Could not read file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>无法读取文件: %1</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="407"/>
         <source>Unsupported file format.</source>
-        <translation type="unfinished"></translation>
+        <translation>不支持的文件格式。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="417"/>
         <source>Unsupported new file format version. Some map features will not be loaded or saved by this version of the program.</source>
-        <translation type="unfinished"></translation>
+        <translation>新版本的文件格式不受支持。一些地图功能将不会加载或保存此版本的程序。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_format.cpp" line="79"/>
         <source>Format (%1) does not support import</source>
-        <translation type="unfinished"></translation>
+        <translation>格式 (%1) 不支持导入</translation>
     </message>
 </context>
 <context>
@@ -2130,12 +2126,12 @@
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="279"/>
         <source>Line settings</source>
-        <translation type="unfinished"></translation>
+        <translation>行的设置</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="59"/>
         <source>Line width:</source>
-        <translation type="unfinished"></translation>
+        <translation>线宽︰</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="60"/>
@@ -2152,168 +2148,168 @@
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="536"/>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="539"/>
         <source>mm</source>
-        <translation type="unfinished"></translation>
+        <translation>毫米</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="62"/>
         <source>Line color:</source>
-        <translation type="unfinished"></translation>
+        <translation>线条颜色︰</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="74"/>
         <source>Minimum line length:</source>
-        <translation type="unfinished"></translation>
+        <translation>最小线长度︰</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="77"/>
         <source>Line cap:</source>
-        <translation type="unfinished"></translation>
+        <translation>线帽︰</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="79"/>
         <source>flat</source>
-        <translation type="unfinished"></translation>
+        <translation>平</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="80"/>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="91"/>
         <source>round</source>
-        <translation type="unfinished"></translation>
+        <translation>一轮</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="81"/>
         <source>square</source>
-        <translation type="unfinished"></translation>
+        <translation>广场</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="82"/>
         <source>pointed</source>
-        <translation type="unfinished"></translation>
+        <translation>指出</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="88"/>
         <source>Line join:</source>
-        <translation type="unfinished"></translation>
+        <translation>线条联接︰</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="90"/>
         <source>miter</source>
-        <translation type="unfinished"></translation>
+        <translation>斜角</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="92"/>
         <source>bevel</source>
-        <translation type="unfinished"></translation>
+        <translation>斜角</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="85"/>
         <source>Cap length:</source>
-        <translation type="unfinished"></translation>
+        <translation>帽长度︰</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="95"/>
         <source>Line is dashed</source>
-        <translation type="unfinished"></translation>
+        <translation>线为虚线</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="201"/>
         <source>Show at least one mid symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>至少显示一个中期符号</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="204"/>
         <source>Minimum mid symbol count:</source>
-        <translation type="unfinished"></translation>
+        <translation>中旬符号计数的最低要求︰</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="207"/>
         <source>Minimum mid symbol count when closed:</source>
-        <translation type="unfinished"></translation>
+        <translation>中旬符号计数关闭时的最低要求︰</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="128"/>
         <source>Dash length:</source>
-        <translation type="unfinished"></translation>
+        <translation>短划线的长度︰</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="124"/>
         <source>Dashed line</source>
-        <translation type="unfinished"></translation>
+        <translation>虚线</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="131"/>
         <source>Break length:</source>
-        <translation type="unfinished"></translation>
+        <translation>打破长度：</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="134"/>
         <source>Dashes grouped together:</source>
-        <translation type="unfinished"></translation>
+        <translation>短划线组合在一起︰</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="136"/>
         <source>none</source>
-        <translation type="unfinished"></translation>
+        <translation>没有一个</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="137"/>
         <source>2</source>
-        <translation type="unfinished"></translation>
+        <translation>2</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="138"/>
         <source>3</source>
-        <translation type="unfinished"></translation>
+        <translation>3</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="139"/>
         <source>4</source>
-        <translation type="unfinished"></translation>
+        <translation>4</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="142"/>
         <source>In-group break length:</source>
-        <translation type="unfinished"></translation>
+        <translation>圈内裂断长︰</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="145"/>
         <source>Half length of first and last dash</source>
-        <translation type="unfinished"></translation>
+        <translation>第一个和最后一个短划线的长度的一半</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="174"/>
         <source>Mid symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>中期的符号</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="177"/>
         <source>Mid symbols per spot:</source>
-        <translation type="unfinished"></translation>
+        <translation>每一地点的中期符号︰</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="180"/>
         <source>Mid symbol distance:</source>
-        <translation type="unfinished"></translation>
+        <translation>中期的符号距离︰</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="236"/>
         <source>Borders</source>
-        <translation type="unfinished"></translation>
+        <translation>边框</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="240"/>
         <source>Different borders on left and right sides</source>
-        <translation type="unfinished"></translation>
+        <translation>在左、 右两边的不同边框</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="245"/>
         <source>Left border:</source>
-        <translation type="unfinished"></translation>
+        <translation>左边的框︰</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="250"/>
         <source>Right border:</source>
-        <translation type="unfinished"></translation>
+        <translation>右边框︰</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/line_symbol.cpp" line="1643"/>
@@ -2322,14 +2318,14 @@
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="284"/>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="744"/>
         <source>Start symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>开始符号</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/line_symbol.cpp" line="1647"/>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="284"/>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="744"/>
         <source>Mid symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>中期的符号</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/line_symbol.cpp" line="1651"/>
@@ -2337,7 +2333,7 @@
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="284"/>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="744"/>
         <source>End symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>结束符号</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/line_symbol.cpp" line="1655"/>
@@ -2347,57 +2343,57 @@
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="284"/>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="744"/>
         <source>Dash symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>破折号</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="98"/>
         <source>Enable border lines</source>
-        <translation type="unfinished"></translation>
+        <translation>使边框线</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="195"/>
         <source>Distance between spots:</source>
-        <translation type="unfinished"></translation>
+        <translation>点之间的距离︰</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="198"/>
         <source>Distance from line end:</source>
-        <translation type="unfinished"></translation>
+        <translation>线端的距离︰</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="264"/>
         <source>Suppress the dash symbol at line start and line end</source>
-        <translation type="unfinished"></translation>
+        <translation>在压制线的起点和终点线的划线标志</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="505"/>
         <source>Border width:</source>
-        <translation type="unfinished"></translation>
+        <translation>边框宽度︰</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="508"/>
         <source>Border color:</source>
-        <translation type="unfinished"></translation>
+        <translation>边框颜色︰</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="511"/>
         <source>Border shift:</source>
-        <translation type="unfinished"></translation>
+        <translation>边境的转变︰</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="514"/>
         <source>Border is dashed</source>
-        <translation type="unfinished"></translation>
+        <translation>虚线边框</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="535"/>
         <source>Border dash length:</source>
-        <translation type="unfinished"></translation>
+        <translation>边界划线长度︰</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="538"/>
         <source>Border break length:</source>
-        <translation type="unfinished"></translation>
+        <translation>边界断裂长度︰</translation>
     </message>
 </context>
 <context>
@@ -2405,194 +2401,197 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="270"/>
         <source>&amp;New</source>
-        <translation type="unfinished"></translation>
+        <translation>与新</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="272"/>
         <source>Create a new map</source>
-        <translation type="unfinished"></translation>
+        <translation>创建一个新的映射</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="276"/>
         <source>&amp;Open...</source>
-        <translation type="unfinished"></translation>
+        <translation>与打开......</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="278"/>
         <source>Open an existing file</source>
-        <translation type="unfinished"></translation>
+        <translation>打开现有的文件</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="282"/>
         <source>Open &amp;recent</source>
-        <translation type="unfinished"></translation>
+        <translation>开放与最近</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="293"/>
         <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
+        <translation>与保存</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="298"/>
         <source>Save &amp;as...</source>
-        <translation type="unfinished"></translation>
+        <translation>保存与作为...</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="300"/>
         <source>Ctrl+Shift+S</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl + Shift + S</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="306"/>
         <source>Settings...</source>
-        <translation type="unfinished"></translation>
+        <translation>设置。。。</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="311"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="115"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>关闭</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="313"/>
         <source>Close this file</source>
-        <translation type="unfinished"></translation>
+        <translation>关闭此文件</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="317"/>
         <source>E&amp;xit</source>
-        <translation type="unfinished"></translation>
+        <translation>E &amp; xit</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="319"/>
         <source>Exit the application</source>
-        <translation type="unfinished"></translation>
+        <translation>退出应用程序</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="326"/>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>与文件</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="345"/>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>一般</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="360"/>
         <source>Open &amp;Manual</source>
-        <translation type="unfinished"></translation>
+        <translation>打开 &amp; 手册</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="361"/>
         <source>Show the help file for this application</source>
-        <translation type="unfinished"></translation>
+        <translation>显示此应用程序的帮助文件</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="365"/>
         <source>&amp;About %1</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; 大约 %1</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="366"/>
         <source>Show information about this application</source>
-        <translation type="unfinished"></translation>
+        <translation>显示有关此应用程序的信息</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="370"/>
         <source>About &amp;Qt</source>
-        <translation type="unfinished"></translation>
+        <translation>关于与 qt 离散度</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="371"/>
         <source>Show information about Qt</source>
-        <translation type="unfinished"></translation>
+        <translation>显示有关 qt 离散度的信息</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="377"/>
         <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
+        <translation>与帮助</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="553"/>
         <source>Do you want to remove the autosaved version?</source>
-        <translation type="unfinished"></translation>
+        <translation>你想要删除自动保存的版本？</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="559"/>
         <source>The file has been modified.
 Do you want to save your changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>该文件已被修改。
+你想要保存您的更改吗？</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="398"/>
         <source>Unsaved file</source>
-        <translation type="unfinished"></translation>
+        <translation>未保存的文件</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="672"/>
         <location filename="../src/gui/main_window.cpp" line="963"/>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="445"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>警告</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="672"/>
         <source>The selected map scale is 1:%1, but the chosen symbol set has a nominal scale of 1:%2.
 
 Do you want to scale the symbols to the selected scale?</source>
-        <translation type="unfinished"></translation>
+        <translation>选定的比例尺是 1:%1，但选的符号集只有 1:%2 名义尺度。
+
+你想要缩放到选定的比例符号吗？</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="741"/>
         <source>Crash warning</source>
-        <translation type="unfinished"></translation>
+        <translation>崩溃的警告</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="742"/>
         <source>It seems that %1 crashed the last time this file was opened:&lt;br /&gt;&lt;tt&gt;%2&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Really retry to open it?</source>
-        <translation type="unfinished"></translation>
+        <translation>看来这 %1 坠毁最后一次打开此文件时间: &lt; br / &gt; &lt;tt&gt;%2&lt;/tt&gt; &lt; br / &gt; &lt; br / &gt; 真的重新尝试打开它吗？</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="930"/>
         <source>Autosaving...</source>
-        <translation type="unfinished"></translation>
+        <translation>自动保存...</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="940"/>
         <source>Autosaving failed!</source>
-        <translation type="unfinished"></translation>
+        <translation>自动保存失败 ！</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1015"/>
         <source>All maps</source>
-        <translation type="unfinished"></translation>
+        <translation>所有的地图</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1019"/>
         <source>All files</source>
-        <translation type="unfinished"></translation>
+        <translation>所有文件</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="710"/>
         <source>Open file</source>
-        <translation type="unfinished"></translation>
+        <translation>打开的文件</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="152"/>
         <source>You must close the current file before you can open another one.</source>
-        <translation type="unfinished"></translation>
+        <translation>你可以打开另一个之前，必须关闭当前文件。</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="722"/>
         <source>Opening %1</source>
-        <translation type="unfinished"></translation>
+        <translation>打开 %1</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="755"/>
         <location filename="../src/gui/main_window.cpp" line="1075"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>错误</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="755"/>
@@ -2600,18 +2599,19 @@ Do you want to scale the symbols to the selected scale?</source>
 %1
 
 File format not recognized.</source>
-        <translation type="unfinished"></translation>
+        <translation>无法打开文件: %1 文件格式无法识别。</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="832"/>
         <source>The file has been modified.
 Do you want to discard your changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>该文件已被修改。
+你想要放弃您的更改吗？</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="883"/>
         <source>&amp;%1 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>与 %1 %2</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="962"/>
@@ -2619,27 +2619,30 @@ Do you want to discard your changes?</source>
 
 Press Yes to save in this format.
 Press No to choose a different format.</source>
-        <translation type="unfinished"></translation>
+        <translation>这张地图是被保存为"%1"的文件。信息可能会丢失。
+
+按是保存为此格式。
+按无选择不同的格式。</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1055"/>
         <source>Save file</source>
-        <translation type="unfinished"></translation>
+        <translation>保存文件</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1076"/>
         <source>File could not be saved:</source>
-        <translation type="unfinished"></translation>
+        <translation>无法保存文件︰</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1077"/>
         <source>There was a problem in determining the file format.</source>
-        <translation type="unfinished"></translation>
+        <translation>还有一个问题中确定的文件格式。</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1078"/>
         <source>Please report this as a bug.</source>
-        <translation type="unfinished"></translation>
+        <translation>请当作一个 bug 报告这。</translation>
     </message>
 </context>
 <context>
@@ -2653,55 +2656,55 @@ Press No to choose a different format.</source>
         <location filename="../src/core/map.cpp" line="781"/>
         <location filename="../src/core/map.cpp" line="807"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>错误</translation>
     </message>
     <message>
         <location filename="../src/core/map.cpp" line="614"/>
         <source>Cannot export the map as
 "%1"
 because saving as %2 (.%3) is not supported.</source>
-        <translation type="unfinished"></translation>
+        <translation>不能导出该映射为"%1"，因为另存为 %2 (.%3) 不受支持。</translation>
     </message>
     <message>
         <location filename="../src/core/map.cpp" line="609"/>
         <source>Cannot export the map as
 "%1"
 because the format is unknown.</source>
-        <translation type="unfinished"></translation>
+        <translation>不能导出该映射为"%1"，因为该格式是未知。</translation>
     </message>
     <message>
         <location filename="../src/core/map.cpp" line="676"/>
         <location filename="../src/core/map.cpp" line="745"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>警告</translation>
     </message>
     <message>
         <location filename="../src/core/map.cpp" line="676"/>
         <source>The map export generated warnings.</source>
-        <translation type="unfinished"></translation>
+        <translation>地图出口将生成警告。</translation>
     </message>
     <message>
         <location filename="../src/core/map.cpp" line="651"/>
         <source>Internal error while saving:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>保存时出现内部错误: %1</translation>
     </message>
     <message>
         <location filename="../src/core/map.cpp" line="746"/>
         <source>The map import generated warnings.</source>
-        <translation type="unfinished"></translation>
+        <translation>导入映射生成警告。</translation>
     </message>
     <message>
         <location filename="../src/core/map.cpp" line="694"/>
         <source>Cannot open file:
 %1
 for reading.</source>
-        <translation type="unfinished"></translation>
+        <translation>无法打开文件: %1 的阅读。</translation>
     </message>
     <message>
         <location filename="../src/core/map.cpp" line="708"/>
         <source>Invalid file type.</source>
-        <translation type="unfinished"></translation>
+        <translation>无效的文件类型。</translation>
     </message>
     <message>
         <location filename="../src/core/map.cpp" line="664"/>
@@ -2710,42 +2713,44 @@ for reading.</source>
 %1
 
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>无法打开文件: %1 %2</translation>
     </message>
     <message>
         <location filename="../src/core/map.cpp" line="665"/>
         <source>Cannot save file
 %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>无法保存文件 %1: %2</translation>
     </message>
     <message>
         <location filename="../src/core/map.cpp" line="807"/>
         <source>Nothing to import.</source>
-        <translation type="unfinished"></translation>
+        <translation>没有要导入。</translation>
     </message>
     <message>
         <location filename="../src/core/map.cpp" line="814"/>
         <source>Question</source>
-        <translation type="unfinished"></translation>
+        <translation>问题</translation>
     </message>
     <message>
         <location filename="../src/core/map.cpp" line="815"/>
         <source>The scale of the imported data is 1:%1 which is different from this map's scale of 1:%2.
 
 Rescale the imported data?</source>
-        <translation type="unfinished"></translation>
+        <translation>导入的数据规模 1:%1 是从 1:%2 本地图规模不同。
+
+重新缩放导入的数据吗？</translation>
     </message>
     <message>
         <location filename="../src/core/map.cpp" line="440"/>
         <source>default part</source>
-        <translation type="unfinished"></translation>
+        <translation>默认部分</translation>
     </message>
     <message>
         <location filename="../src/core/map_color.cpp" line="28"/>
         <location filename="../src/core/map_color.cpp" line="42"/>
         <source>New color</source>
-        <translation type="unfinished"></translation>
+        <translation>新颜色</translation>
     </message>
 </context>
 <context>
@@ -2753,7 +2758,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/core/map_color.cpp" line="71"/>
         <source>Registration black (all printed colors)</source>
-        <translation type="unfinished"></translation>
+        <translation>注册黑色 （所有打印颜色）</translation>
     </message>
 </context>
 <context>
@@ -2761,7 +2766,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/core/map_coord.cpp" line="176"/>
         <source>Coordinates are out-of-bounds.</source>
-        <translation type="unfinished"></translation>
+        <translation>坐标是出界。</translation>
     </message>
 </context>
 <context>
@@ -2769,414 +2774,414 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="801"/>
         <source>Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>撤消</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="801"/>
         <source>Undo the last step</source>
-        <translation type="unfinished"></translation>
+        <translation>撤消最后一步</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="802"/>
         <source>Redo</source>
-        <translation type="unfinished"></translation>
+        <translation>重做</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="802"/>
         <source>Redo the last step</source>
-        <translation type="unfinished"></translation>
+        <translation>重做的最后一步</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="803"/>
         <source>Cu&amp;t</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">铜 &amp; t</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="804"/>
         <source>C&amp;opy</source>
-        <translation type="unfinished"></translation>
+        <translation>C 与复制</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="805"/>
         <source>&amp;Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>与粘贴</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="819"/>
         <source>Zoom in</source>
-        <translation type="unfinished"></translation>
+        <translation>放大</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="820"/>
         <source>Zoom out</source>
-        <translation type="unfinished"></translation>
+        <translation>缩小</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="822"/>
         <source>Toggle fullscreen mode</source>
-        <translation type="unfinished"></translation>
+        <translation>切换全屏模式</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="823"/>
         <source>Set custom zoom factor...</source>
-        <translation type="unfinished"></translation>
+        <translation>设置自定义的缩放因子......</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="830"/>
         <source>Symbol window</source>
-        <translation type="unfinished"></translation>
+        <translation>符号窗口</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="830"/>
         <source>Show/Hide the symbol window</source>
-        <translation type="unfinished"></translation>
+        <translation>显示/隐藏符号窗口</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="831"/>
         <source>Color window</source>
-        <translation type="unfinished"></translation>
+        <translation>颜色窗口</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="831"/>
         <source>Show/Hide the color window</source>
-        <translation type="unfinished"></translation>
+        <translation>显示/隐藏颜色窗口</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="832"/>
         <source>Replace the symbols with those from another map file</source>
-        <translation type="unfinished"></translation>
+        <translation>符号替换那些来自另一个映射文件</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="835"/>
         <source>Scale all symbols...</source>
-        <translation type="unfinished"></translation>
+        <translation>缩放所有符号...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="835"/>
         <source>Scale the whole symbol set</source>
-        <translation type="unfinished"></translation>
+        <translation>缩放整个符号集</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="837"/>
         <source>Change map scale...</source>
-        <translation type="unfinished"></translation>
+        <translation>更改地图规模......</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="837"/>
         <source>Change the map scale and adjust map objects and symbol sizes</source>
-        <translation type="unfinished"></translation>
+        <translation>改变地图规模和调整地图对象和符号尺寸</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="839"/>
         <source>Map notes...</source>
-        <translation type="unfinished"></translation>
+        <translation>注意到地图...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="841"/>
         <source>Template setup window</source>
-        <translation type="unfinished"></translation>
+        <translation>模板安装程序窗口</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="841"/>
         <source>Show/Hide the template window</source>
-        <translation type="unfinished"></translation>
+        <translation>显示/隐藏模板窗口</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="844"/>
         <source>Open template...</source>
-        <translation type="unfinished"></translation>
+        <translation>打开模板...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="821"/>
         <source>Show whole map</source>
-        <translation type="unfinished"></translation>
+        <translation>显示整个地图</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="851"/>
         <source>Edit objects</source>
-        <translation type="unfinished"></translation>
+        <translation>编辑对象</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="853"/>
         <source>Set point objects</source>
-        <translation type="unfinished"></translation>
+        <translation>设置点对象</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="854"/>
         <source>Draw paths</source>
-        <translation type="unfinished"></translation>
+        <translation>绘制路径</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="855"/>
         <source>Draw circles and ellipses</source>
-        <translation type="unfinished"></translation>
+        <translation>绘制圆和椭圆</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="859"/>
         <source>Write text</source>
-        <translation type="unfinished"></translation>
+        <translation>写入文本</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="860"/>
         <source>Duplicate</source>
-        <translation type="unfinished"></translation>
+        <translation>重复</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="861"/>
         <source>Switch symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>开关符号</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="862"/>
         <source>Fill / Create border</source>
-        <translation type="unfinished"></translation>
+        <translation>填充/创建边框</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="863"/>
         <source>Switch dash direction</source>
-        <translation type="unfinished"></translation>
+        <translation>破折号方向切换</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="864"/>
         <source>Connect paths</source>
-        <translation type="unfinished"></translation>
+        <translation>连接路径</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="866"/>
         <source>Cut object</source>
-        <translation type="unfinished"></translation>
+        <translation>剪切对象</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="882"/>
         <source>Rotate object(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>旋转对象</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="885"/>
         <source>Measure lengths and areas</source>
-        <translation type="unfinished"></translation>
+        <translation>测量长度和面积</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="888"/>
         <source>Cut away from area</source>
-        <translation type="unfinished"></translation>
+        <translation>切离地区</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="890"/>
         <source>Merge area holes</source>
-        <translation type="unfinished"></translation>
+        <translation>合并区孔</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="902"/>
         <source>Paint on template settings</source>
-        <translation type="unfinished"></translation>
+        <translation>画上模板设置</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="908"/>
         <source>Enable touch cursor</source>
-        <translation type="unfinished"></translation>
+        <translation>启用触摸光标</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="909"/>
         <source>Enable GPS display</source>
-        <translation type="unfinished"></translation>
+        <translation>启用 GPS 显示</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="911"/>
         <source>Enable GPS distance rings</source>
-        <translation type="unfinished"></translation>
+        <translation>启用 GPS 距离环</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="913"/>
         <source>Set point object at GPS position</source>
-        <translation type="unfinished"></translation>
+        <translation>在 GPS 定位设置点对象</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="915"/>
         <source>Set temporary marker at GPS position</source>
-        <translation type="unfinished"></translation>
+        <translation>在 GPS 定位设置临时记号笔</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="917"/>
         <source>Create temporary path at GPS position</source>
-        <translation type="unfinished"></translation>
+        <translation>在 GPS 位置创建临时路径</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="919"/>
         <source>Clear temporary GPS markers</source>
-        <translation type="unfinished"></translation>
+        <translation>清除临时 GPS 标记</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="922"/>
         <source>Enable compass display</source>
-        <translation type="unfinished"></translation>
+        <translation>启用指南针显示</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="923"/>
         <source>Align map with north</source>
-        <translation type="unfinished"></translation>
+        <translation>对齐与北地图</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="925"/>
         <location filename="../src/gui/map/map_editor.cpp" line="3477"/>
         <source>Add new part...</source>
-        <translation type="unfinished"></translation>
+        <translation>添加新的部分...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="926"/>
         <location filename="../src/gui/map/map_editor.cpp" line="3537"/>
         <source>Rename current part...</source>
-        <translation type="unfinished"></translation>
+        <translation>重命名当前部分...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="927"/>
         <location filename="../src/gui/map/map_editor.cpp" line="3498"/>
         <source>Remove current part</source>
-        <translation type="unfinished"></translation>
+        <translation>删除当前部分</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="928"/>
         <source>Merge all parts</source>
-        <translation type="unfinished"></translation>
+        <translation>合并所有零件</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="930"/>
         <source>Import...</source>
-        <translation type="unfinished"></translation>
+        <translation>导入...</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="87"/>
         <location filename="../src/gui/map/map_editor.cpp" line="982"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="248"/>
         <source>&amp;Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>与编辑</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1000"/>
         <source>&amp;View</source>
-        <translation type="unfinished"></translation>
+        <translation>与视图</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1030"/>
         <source>&amp;Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>与工具</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1083"/>
         <source>Sy&amp;mbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Sy &amp; mbols</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1065"/>
         <source>M&amp;ap</source>
-        <translation type="unfinished"></translation>
+        <translation>购 ap</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1093"/>
         <source>&amp;Templates</source>
-        <translation type="unfinished"></translation>
+        <translation>与模板</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1149"/>
         <source>Drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>绘图</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="897"/>
         <source>Paint on template</source>
-        <translation type="unfinished"></translation>
+        <translation>在模板上画</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="485"/>
         <source>Editing in progress</source>
-        <translation type="unfinished"></translation>
+        <translation>在进展中编辑</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="485"/>
         <source>The map is currently being edited. Please finish the edit operation before saving.</source>
-        <translation type="unfinished"></translation>
+        <translation>当前正在编辑的地图。请完成编辑操作然后再进行保存。</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="490"/>
         <source>Map saved</source>
-        <translation type="unfinished"></translation>
+        <translation>保存地图</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="813"/>
         <source>Show grid</source>
-        <translation type="unfinished"></translation>
+        <translation>显示网格</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="814"/>
         <location filename="../src/gui/map/map_editor.cpp" line="1124"/>
         <source>Configure grid...</source>
-        <translation type="unfinished"></translation>
+        <translation>配置网格...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="825"/>
         <source>Hatch areas</source>
-        <translation type="unfinished"></translation>
+        <translation>剖面线区域</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="826"/>
         <source>Baseline view</source>
-        <translation type="unfinished"></translation>
+        <translation>基线视图</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="827"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="110"/>
         <source>Hide all templates</source>
-        <translation type="unfinished"></translation>
+        <translation>隐藏所有模板</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="832"/>
         <source>Replace symbol set...</source>
-        <translation type="unfinished"></translation>
+        <translation>替换符号集...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="836"/>
         <source>Georeferencing...</source>
-        <translation type="unfinished"></translation>
+        <translation>小基......</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="838"/>
         <source>Rotate map...</source>
-        <translation type="unfinished"></translation>
+        <translation>旋转地图...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="838"/>
         <source>Rotate the whole map</source>
-        <translation type="unfinished"></translation>
+        <translation>旋转整个地图</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="845"/>
         <source>Reopen template...</source>
-        <translation type="unfinished"></translation>
+        <translation>重新打开模板...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="847"/>
         <source>Tag editor</source>
-        <translation type="unfinished"></translation>
+        <translation>标签编辑器</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="847"/>
         <source>Show/Hide the tag editor window</source>
-        <translation type="unfinished"></translation>
+        <translation>显示/隐藏标记编辑器窗口</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="856"/>
         <source>Draw rectangles</source>
-        <translation type="unfinished"></translation>
+        <translation>绘制矩形</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="857"/>
         <source>Draw free-handedly</source>
-        <translation type="unfinished"></translation>
+        <translation>单枪匹马的自由绘制</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="858"/>
         <source>Fill bounded areas</source>
-        <translation type="unfinished"></translation>
+        <translation>填充有界的区域</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="806"/>
@@ -4304,7 +4309,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="129"/>
         <source>mm²</source>
-        <translation type="unfinished"></translation>
+        <translation>mm²</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="132"/>
@@ -5524,7 +5529,7 @@ separations</source>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="64"/>
         <source>Original</source>
-        <translation type="unfinished"></translation>
+        <translation>源语言</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="64"/>
@@ -7199,7 +7204,7 @@ The maximum supported version is %2.</source>
         <location filename="../src/gui/util_gui.h" line="114"/>
         <source>m</source>
         <comment>meters</comment>
-        <translation type="unfinished"></translation>
+        <translation>m</translation>
     </message>
 </context>
 <context>
@@ -7209,28 +7214,28 @@ The maximum supported version is %2.</source>
         <location filename="../src/util/util.cpp" line="263"/>
         <location filename="../src/util/util.cpp" line="296"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>错误</translation>
     </message>
     <message>
         <location filename="../src/util/util.cpp" line="256"/>
         <source>Failed to locate the help files.</source>
-        <translation type="unfinished"></translation>
+        <translation>未能找到帮助文件。</translation>
     </message>
     <message>
         <location filename="../src/util/util.cpp" line="263"/>
         <source>Failed to locate the help browser ("Qt Assistant").</source>
-        <translation type="unfinished"></translation>
+        <translation>无法找到帮助浏览器（“Qt的助手”）。</translation>
     </message>
     <message>
         <location filename="../src/util/util.cpp" line="297"/>
         <source>Failed to launch the help browser ("Qt Assistant").</source>
-        <translation type="unfinished"></translation>
+        <translation>无法启动帮助浏览器（“Qt的助手”）。</translation>
     </message>
     <message>
         <location filename="../src/util/util.cpp" line="313"/>
         <source>See more...</source>
         <extracomment>This "See more" is displayed as a link to the manual in What's-this tooltips.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>查看更多...</translation>
     </message>
 </context>
 <context>
@@ -7238,7 +7243,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="184"/>
         <source>Older versions of Mapper do not support multiple map parts. To save the map in compatibility mode, you must first merge all map parts.</source>
-        <translation type="unfinished"></translation>
+        <translation>映射器的旧版本不支持多个地图部分。若要保存在兼容模式下的地图，必须首先将所有地图部分都合并。</translation>
     </message>
 </context>
 <context>
@@ -7246,69 +7251,69 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="396"/>
         <source>Unsupported element: %1 (line %2 column %3)</source>
-        <translation type="unfinished"></translation>
+        <translation>不支持的元素: %1 （%2 线列 %3）</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="427"/>
         <source>Some coordinates were out of bounds for printing. Map content was adjusted.</source>
-        <translation type="unfinished"></translation>
+        <translation>一些坐标已超出界限印刷。映射内容作了调整。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="477"/>
         <source>unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>未知</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="478"/>
         <source>Parts of this file cannot be read by this version of Mapper. Minimum required version: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>此版本的映射器无法读取这个文件的部分。所需的最低版本: %1</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="512"/>
         <source>Error at line %1 column %2: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>在列行 %1 %2 的错误: %3</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="524"/>
         <location filename="../src/fileformats/xml_file_format.cpp" line="773"/>
         <source>Some invalid characters had to be removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>一些无效的字符必须被去除。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="542"/>
         <source>Unknown error</source>
-        <translation type="unfinished"></translation>
+        <translation>未知的错误</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="543"/>
         <source>Unsupported or invalid georeferencing specification '%1': %2</source>
-        <translation type="unfinished"></translation>
+        <translation>不支持或无效的地理参考规范“％1”：％2</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="661"/>
         <location filename="../src/fileformats/xml_file_format.cpp" line="720"/>
         <source>Could not set knockout property of color '%1'.</source>
-        <translation type="unfinished"></translation>
+        <translation>无法设置颜色“％1”的淘汰赛财产。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="680"/>
         <source>Expected %1 colors, found %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>预期找到 %2 的 %1 颜色。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="696"/>
         <source>Spot color %1 not found while processing %2 (%3).</source>
-        <translation type="unfinished"></translation>
+        <translation>专色处理 %(%3) 2 时找不到 %1。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="751"/>
         <source>Expected %1 symbols, found %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>预计1％的符号，找到％2。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="790"/>
         <source>Expected %1 map parts, found %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>预计1％的部分地图，找到％2。</translation>
     </message>
 </context>
 </TS>
