@@ -52,6 +52,7 @@ HEADERS += \
   core/map_part.h \
   core/map_printer.h \
   core/map_view.h \
+  core/objects/boolean_tool.h \
   core/objects/object.h \
   core/objects/object_operations.h \
   core/objects/object_query.h \
@@ -162,7 +163,6 @@ HEADERS += \
   templates/template_tool_paint.h \
   templates/template_track.h \
   templates/world_file.h \
-  tools/boolean_tool.h \
   tools/cut_hole_tool.h \
   tools/cut_tool.h \
   tools/cutout_tool.h \
@@ -219,6 +219,7 @@ SOURCES += \
   core/map_part.cpp \
   core/map_printer.cpp \
   core/map_view.cpp \
+  core/objects/boolean_tool.cpp \
   core/objects/object.cpp \
   core/objects/object_query.cpp \
   core/objects/text_object.cpp \
@@ -319,7 +320,6 @@ SOURCES += \
   templates/template_tool_paint.cpp \
   templates/template_track.cpp \
   templates/world_file.cpp \
-  tools/boolean_tool.cpp \
   tools/cut_hole_tool.cpp \
   tools/cut_tool.cpp \
   tools/cutout_tool.cpp \

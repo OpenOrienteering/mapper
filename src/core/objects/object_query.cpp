@@ -1,5 +1,6 @@
 /*
  *    Copyright 2016 Mitchell Krome
+ *    Copyright 2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,12 +21,11 @@
 
 #include "object_query.h"
 
-#include "core/map.h"
-#include "gui/map/map_editor.h"
-#include "core/map_part.h"
 #include "object.h"
+#include "core/map.h"
+#include "core/map_part.h"
+#include "gui/map/map_editor.h"
 #include "tools/tool.h"
-#include "util/memory.h"
 
 
 // ### ObjectQuery ###
@@ -41,8 +41,8 @@ ObjectQuery::ObjectQuery(const ObjectQuery& query)
 : op        { query.op }
 , key_arg   { query.key_arg }
 , value_arg { query.value_arg }
-, left_arg  { query.left_arg ? make_unique<ObjectQuery>(*query.left_arg) : make_unique<ObjectQuery>() }
-, right_arg { query.right_arg ? make_unique<ObjectQuery>(*query.right_arg) : make_unique<ObjectQuery>() }
+, left_arg  { query.left_arg ? std::make_unique<ObjectQuery>(*query.left_arg) : std::make_unique<ObjectQuery>() }
+, right_arg { query.right_arg ? std::make_unique<ObjectQuery>(*query.right_arg) : std::make_unique<ObjectQuery>() }
 {
 	// nothing else
 }
@@ -65,9 +65,9 @@ ObjectQuery& ObjectQuery::operator=(const ObjectQuery& query)
 	key_arg = query.key_arg;
 	value_arg = query.value_arg;
 	if (query.left_arg)
-		left_arg = make_unique<ObjectQuery>(*query.left_arg);
+		left_arg = std::make_unique<ObjectQuery>(*query.left_arg);
 	if (query.right_arg)
-		right_arg = make_unique<ObjectQuery>(*query.right_arg);
+		right_arg = std::make_unique<ObjectQuery>(*query.right_arg);
 	return *this;
 }
 
@@ -103,8 +103,8 @@ ObjectQuery::ObjectQuery(const QString& key, ObjectQuery::Operator op, const QSt
 
 ObjectQuery::ObjectQuery(const ObjectQuery& left, ObjectQuery::Operator op, const ObjectQuery& right)
 : op        { op }
-, left_arg  { make_unique<ObjectQuery>(left) }
-, right_arg { make_unique<ObjectQuery>(right) }
+, left_arg  { std::make_unique<ObjectQuery>(left) }
+, right_arg { std::make_unique<ObjectQuery>(right) }
 {
 	// Must be a logical operator
 	Q_ASSERT(op >= 1);
@@ -120,8 +120,8 @@ ObjectQuery::ObjectQuery(const ObjectQuery& left, ObjectQuery::Operator op, cons
 
 ObjectQuery::ObjectQuery(ObjectQuery&& left, ObjectQuery::Operator op, ObjectQuery&& right) noexcept
 : op        { op }
-, left_arg  { make_unique<ObjectQuery>(std::move(left)) }
-, right_arg { make_unique<ObjectQuery>(std::move(right)) }
+, left_arg  { std::make_unique<ObjectQuery>(std::move(left)) }
+, right_arg { std::make_unique<ObjectQuery>(std::move(right)) }
 {
 	// Must be a logical operator
 	Q_ASSERT(op >= 1);

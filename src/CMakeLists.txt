@@ -57,6 +57,7 @@ set(Mapper_Common_SRCS
   core/virtual_coord_vector.cpp
   core/virtual_path.cpp
   
+  core/objects/boolean_tool.cpp
   core/objects/object.cpp
   core/objects/object_query.cpp
   core/objects/text_object.cpp
@@ -160,7 +161,6 @@ set(Mapper_Common_SRCS
   templates/template_track.cpp
   templates/world_file.cpp
   
-  tools/boolean_tool.cpp
   tools/cut_tool.cpp
   tools/cut_hole_tool.cpp
   tools/cutout_tool.cpp
