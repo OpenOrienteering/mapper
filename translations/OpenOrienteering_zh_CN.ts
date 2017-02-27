@@ -3186,152 +3186,152 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="806"/>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>删除</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="867"/>
         <source>Cut free form hole</source>
-        <translation type="unfinished"></translation>
+        <translation>挖了自由形式</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="868"/>
         <source>Cut round hole</source>
-        <translation type="unfinished"></translation>
+        <translation>切圆孔</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="872"/>
         <source>Cut rectangular hole</source>
-        <translation type="unfinished"></translation>
+        <translation>剪切矩形孔</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="883"/>
         <source>Rotate pattern</source>
-        <translation type="unfinished"></translation>
+        <translation>旋转模式</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="884"/>
         <source>Scale object(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>规模对象</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="886"/>
         <source>Unify areas</source>
-        <translation type="unfinished"></translation>
+        <translation>统一的领域</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="887"/>
         <source>Intersect areas</source>
-        <translation type="unfinished"></translation>
+        <translation>相交区域</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="889"/>
         <source>Area XOr</source>
-        <translation type="unfinished"></translation>
+        <translation>异或地区</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="893"/>
         <source>Cutout</source>
-        <translation type="unfinished"></translation>
+        <translation>剪影</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="894"/>
         <source>Cut away</source>
-        <translation type="unfinished"></translation>
+        <translation>切掉了</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="895"/>
         <source>Distribute points along path</source>
-        <translation type="unfinished"></translation>
+        <translation>分发点沿路径</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="932"/>
         <source>Map coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>地图坐标</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="934"/>
         <source>Projected coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>投影的坐标</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="936"/>
         <source>Latitude/Longitude (Dec)</source>
-        <translation type="unfinished"></translation>
+        <translation>经纬度 （12 月）</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="938"/>
         <source>Latitude/Longitude (DMS)</source>
-        <translation type="unfinished"></translation>
+        <translation>经纬度 (DMS)</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1014"/>
         <source>Display coordinates as...</source>
-        <translation type="unfinished"></translation>
+        <translation>显示坐标作为...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="876"/>
         <source>Cut hole</source>
-        <translation type="unfinished"></translation>
+        <translation>挖洞</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="741"/>
         <source>Ctrl+A</source>
-        <translation type="unfinished"></translation>
+        <translation>按 Ctrl + A</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="742"/>
         <source>Ctrl+Shift+A</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl + Shift + A</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="743"/>
         <source>Ctrl+I</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl + I</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="745"/>
         <source>G</source>
-        <translation type="unfinished"></translation>
+        <translation>G</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="759"/>
         <source>E</source>
-        <translation type="unfinished"></translation>
+        <translation>E</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="760"/>
         <source>L</source>
-        <translation type="unfinished"></translation>
+        <translation>L</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="761"/>
         <source>S</source>
-        <translation type="unfinished"></translation>
+        <translation>S</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="762"/>
         <source>P</source>
-        <translation type="unfinished"></translation>
+        <translation>P</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="763"/>
         <source>O</source>
-        <translation type="unfinished"></translation>
+        <translation>O</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="764"/>
         <source>Ctrl+R</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl + R</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="765"/>
         <source>F</source>
-        <translation type="unfinished"></translation>
+        <translation>F</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="766"/>
         <source>T</source>
-        <translation type="unfinished"></translation>
+        <translation>T</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="768"/>
