@@ -21,6 +21,8 @@
 
 #include "crs_template_implementation.h"
 
+#include <memory>
+
 #include <QCompleter>
 #include <QLineEdit>
 #include <QSpinBox>
