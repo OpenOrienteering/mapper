@@ -23,17 +23,17 @@
 
 #include <QKeyEvent>
 
-#include "core/objects/object.h"
-#include "core/map.h"
-#include "gui/map/map_widget.h"
 #include "settings.h"
+#include "core/map.h"
+#include "core/objects/object.h"
+#include "core/objects/boolean_tool.h"
 #include "core/symbols/combined_symbol.h"
-#include "edit_tool.h"
-#include "util/util.h"
-#include "undo/object_undo.h"
-#include "boolean_tool.h"
-#include "gui/map/map_editor.h"
 #include "gui/modifier_key.h"
+#include "gui/map/map_editor.h"
+#include "gui/map/map_widget.h"
+#include "tools/edit_tool.h"
+#include "undo/object_undo.h"
+#include "util/util.h"
 
 CutoutTool::CutoutTool(MapEditorController* editor, QAction* tool_button, bool cut_away)
  : MapEditorToolBase(QCursor(QPixmap(QString::fromLatin1(":/images/cursor-hollow.png")), 1, 1), Other, editor, tool_button),

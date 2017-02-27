@@ -96,7 +96,7 @@
 #include "templates/template_position_dock_widget.h"
 #include "templates/template_tool_paint.h"
 #include "tools/tool.h"
-#include "tools/boolean_tool.h"
+#include "core/objects/boolean_tool.h"
 #include "tools/cut_tool.h"
 #include "tools/cut_hole_tool.h"
 #include "tools/cutout_tool.h"
