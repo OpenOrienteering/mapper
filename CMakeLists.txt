@@ -17,12 +17,11 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  
-cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
 cmake_policy(SET CMP0020 OLD)
-if(CMAKE_VERSION VERSION_GREATER 2.9)
 cmake_policy(SET CMP0026 OLD)
 cmake_policy(SET CMP0048 OLD)
-endif()
+
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 include(FeatureSummary)

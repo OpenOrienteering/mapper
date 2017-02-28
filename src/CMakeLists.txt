@@ -17,7 +17,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
 
-find_package(Qt5Core 5.2 REQUIRED)
+find_package(Qt5Core 5.3 REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Network)
 find_package(Qt5PrintSupport)
