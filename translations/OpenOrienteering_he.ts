@@ -7,7 +7,7 @@
         <location filename="../src/gui/about_dialog.cpp" line="94"/>
         <location filename="../src/gui/about_dialog.cpp" line="161"/>
         <source>About %1</source>
-        <translation>1% בקירוב</translation>
+        <translation type="unfinished">על %1</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="175"/>
@@ -152,7 +152,7 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="180"/>
         <source>Fill rotation</source>
-        <translation type="unfinished"></translation>
+        <translation>הטיית מילוי</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="182"/>
@@ -260,7 +260,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="71"/>
         <source>Mixture of spot colors (screens and overprint):</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">תערובת של צבעי ספוט (מסכים ואוברפרינט):</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="86"/>
@@ -275,13 +275,13 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="91"/>
         <source>Knockout: erases lower colors</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">הסתרה: מוחק צבעים נמוכים יותר</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="109"/>
         <location filename="../src/gui/color_dialog.cpp" line="166"/>
         <source>Calculate from spot colors</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">חישוב מצבעי ספוט</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="114"/>
@@ -392,7 +392,7 @@
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="57"/>
         <source>K.o.</source>
-        <translation type="unfinished"></translation>
+        <translation>הסתרה</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="63"/>
@@ -487,17 +487,17 @@
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="160"/>
         <source>Change from public to private symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>שנה סמל מציבורי לפרטי</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="161"/>
         <source>Take the old symbol as template for the private symbol?</source>
-        <translation type="unfinished"></translation>
+        <translation>האם לקחת את הסמל הישן כתבנית עבור הסימן הפרטי?</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="77"/>
         <source>Symbol %1:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">סמל %1:</translation>
     </message>
 </context>
 <context>
@@ -505,150 +505,150 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="53"/>
         <source>Configure grid</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">קביעת התצורה של הרשת</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="55"/>
         <source>Show grid</source>
-        <translation type="unfinished"></translation>
+        <translation>הצג רשת</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="56"/>
         <source>Snap to grid</source>
-        <translation type="unfinished"></translation>
+        <translation>הצמד לרשת</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="57"/>
         <source>Choose...</source>
-        <translation type="unfinished"></translation>
+        <translation>בחר…</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="60"/>
         <source>All lines</source>
-        <translation type="unfinished"></translation>
+        <translation>כל הקווים</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="61"/>
         <source>Horizontal lines</source>
-        <translation type="unfinished"></translation>
+        <translation>קווים אופקיים</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="62"/>
         <source>Vertical lines</source>
-        <translation type="unfinished"></translation>
+        <translation>קווים אנכיים</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="114"/>
         <source>Alignment</source>
-        <translation type="unfinished"></translation>
+        <translation>יישור</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="64"/>
         <source>Align with magnetic north</source>
-        <translation type="unfinished"></translation>
+        <translation>יישור עם הצפון המגנטי</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="65"/>
         <source>Align with grid north</source>
-        <translation type="unfinished"></translation>
+        <translation>יישור עם רשת צפונית</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="66"/>
         <source>Align with true north</source>
-        <translation type="unfinished"></translation>
+        <translation>יישור עם צפון אמיתי</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="68"/>
         <source>Additional rotation (counter-clockwise):</source>
-        <translation type="unfinished"></translation>
+        <translation>סיבוב נוסף (נגד כיוון השעון):</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="69"/>
         <source>°</source>
-        <translation type="unfinished"></translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="121"/>
         <source>Positioning</source>
-        <translation type="unfinished"></translation>
+        <translation>מיקום</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="74"/>
         <source>meters in terrain</source>
-        <translation type="unfinished"></translation>
+        <translation>מטרים בשטח</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="75"/>
         <source>millimeters on map</source>
-        <translation type="unfinished"></translation>
+        <translation>מילימטרים על המפה</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="77"/>
         <source>Horizontal spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>מרווח אופקי:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="79"/>
         <source>Vertical spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>מרווח אנכי:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="83"/>
         <source>Horizontal offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>הסטה אופקית:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="85"/>
         <source>Vertical offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>הסטה אנכית:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="122"/>
         <source>Unit:</source>
         <comment>measurement unit</comment>
-        <translation type="unfinished"></translation>
+        <translation>יחידה:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="110"/>
         <source>Line color:</source>
-        <translation type="unfinished"></translation>
+        <translation>צבע קו:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="111"/>
         <source>Display:</source>
-        <translation type="unfinished"></translation>
+        <translation>תצוגה:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="159"/>
         <source>Choose grid line color</source>
-        <translation type="unfinished"></translation>
+        <translation>בחר צבע קו רשת</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="243"/>
         <source>m</source>
         <comment>meters</comment>
-        <translation type="unfinished"></translation>
+        <translation>מֶטֶר</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="243"/>
         <source>mm</source>
         <comment>millimeters</comment>
-        <translation type="unfinished"></translation>
+        <translation>גודל מ"מ</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="249"/>
         <source>Origin at: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>מקור ב: %1</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="251"/>
         <source>paper coordinates origin</source>
-        <translation type="unfinished"></translation>
+        <translation>קואורדינטות מקור בדף</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="253"/>
         <source>projected coordinates origin</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">מקור קואורדינטות משוערות</translation>
     </message>
 </context>
 <context>
@@ -656,7 +656,7 @@
     <message>
         <location filename="../src/tools/cut_hole_tool.cpp" line="241"/>
         <source>&lt;b&gt;Click or drag&lt;/b&gt;: Start drawing the hole. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;לחץ או גרור&lt;/b&gt;: התחל לצייר את החור. </translation>
     </message>
 </context>
 <context>
@@ -667,27 +667,27 @@
         <location filename="../src/tools/cut_tool.cpp" line="405"/>
         <location filename="../src/tools/cut_tool.cpp" line="411"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>שגיאה</translation>
     </message>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="399"/>
         <source>The split line must end on the area boundary!</source>
-        <translation type="unfinished"></translation>
+        <translation>קו הפיצול חייב להסתיים על גבול אזור!</translation>
     </message>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="405"/>
         <source>Start and end of the split line are at different parts of the object!</source>
-        <translation type="unfinished"></translation>
+        <translation>ההתחלה והסיום של קו פיצול נמצאים בחלקים שונים של האובייקט!</translation>
     </message>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="411"/>
         <source>Start and end of the split line are at the same position!</source>
-        <translation type="unfinished"></translation>
+        <translation>ההתחלה והסיום של קו פיצול נמצאים באותו המיקום!</translation>
     </message>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="93"/>
         <source>&lt;b&gt;Click&lt;/b&gt; on a line: Split it into two. &lt;b&gt;Drag&lt;/b&gt; along a line: Remove this line part. &lt;b&gt;Click or Drag&lt;/b&gt; at an area boundary: Start a split line. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;לחץ&lt;/b&gt; על קו: לפצל אותו לשניים. &lt;b&gt;גרור&lt;/b&gt; לאורך קו: להסיר חלק קו זה. &lt;b&gt;לחץ או גרור&lt;/b&gt; בגבול אזור: להתחיל שורה מפוצלת. </translation>
     </message>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="352"/>
