@@ -257,12 +257,12 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="62"/>
         <source>Defines a spot color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Difini spot-koloron:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="71"/>
         <source>Mixture of spot colors (screens and overprint):</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikso de spot-koloroj (ekranoj kaj surpreso):</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="86"/>
@@ -283,7 +283,7 @@
         <location filename="../src/gui/color_dialog.cpp" line="109"/>
         <location filename="../src/gui/color_dialog.cpp" line="166"/>
         <source>Calculate from spot colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Kalkuli el spot-koloroj</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="114"/>
@@ -379,7 +379,7 @@
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="57"/>
         <source>Spot color</source>
-        <translation type="unfinished"></translation>
+        <translation>Spot-koloro</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="57"/>
@@ -4516,7 +4516,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="151"/>
         <source>Could not load the spot color definitions, error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne eblis ŝargi la spot-koloran difinon, eraro: %1</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="211"/>
@@ -4685,7 +4685,7 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="423"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="430"/>
         <source>Spot color information was ignored.</source>
-        <translation type="unfinished"></translation>
+        <translation>Spot-koloron informo estis malatentita.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="558"/>
@@ -7338,7 +7338,7 @@ La maksimuma subtenata versio estas %2.</translation>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="696"/>
         <source>Spot color %1 not found while processing %2 (%3).</source>
-        <translation type="unfinished"></translation>
+        <translation>Spot-koloro %1 ne trovita dum traktado de %2 (%3).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="751"/>
