@@ -207,27 +207,23 @@ void GeneralSettingsPage::apply()
 		case QLocale::AnyLanguage:
 		case QLocale::C:
 		case QLocale::English:
+			if (showRestartOnLanguageChangeDialog([](const char* s){ return QString::fromLatin1(s); }))
 			{
-				if (showRestartOnLanguageChangeDialog(false))
-				{
-					qApp->exit(MainWindow::exit_code_reboot);
-				}
-				break;
+				qApp->exit(MainWindow::exit_code_reboot);
 			}
+			break;
 			
 		default:
+			qApp->installEventFilter(this);
+			qApp->installTranslator(&translation.getQtTranslator());
+			qApp->installTranslator(&translation.getAppTranslator());
+			if (showRestartOnLanguageChangeDialog([](const char* s){ return GeneralSettingsPage::tr(s); }))
 			{
-				qApp->installEventFilter(this);
-				qApp->installTranslator(&translation.getQtTranslator());
-				qApp->installTranslator(&translation.getAppTranslator());
-				if (showRestartOnLanguageChangeDialog(true))
-				{
-					qApp->exit(MainWindow::exit_code_reboot);
-				}
-				qApp->removeTranslator(&translation.getAppTranslator());
-				qApp->removeTranslator(&translation.getQtTranslator());
-				qApp->removeEventFilter(this);
+				qApp->exit(MainWindow::exit_code_reboot);
 			}
+			qApp->removeTranslator(&translation.getAppTranslator());
+			qApp->removeTranslator(&translation.getQtTranslator());
+			qApp->removeEventFilter(this);
 		}
 		
 		setSetting(Settings::General_Language, translation.code());
@@ -434,19 +430,17 @@ bool GeneralSettingsPage::eventFilter(QObject* /* watched */, QEvent* event)
 	return false;
 }
 
-bool GeneralSettingsPage::showRestartOnLanguageChangeDialog(bool is_translatable)
+bool GeneralSettingsPage::showRestartOnLanguageChangeDialog(std::function<QString(const char*)> tr)
 {
-#define TR(str) is_translatable ? tr(str) : QLatin1String(str)
 	QMessageBox messageBox(window());
-	messageBox.setWindowTitle(TR("Restart?"));
-	messageBox.setText(TR("The program must be restarted for the language change to take effect!"));
-	messageBox.setInformativeText(TR("Do you want to restart now?"));
+	messageBox.setWindowTitle(tr("Restart?"));
+	messageBox.setText(tr("The program must be restarted for the language change to take effect!"));
+	messageBox.setInformativeText(tr("Do you want to restart now?"));
 	messageBox.setIcon(QMessageBox::Question);
-	auto yesButton = messageBox.addButton(TR("Restart Now"), QMessageBox::YesRole);
-	messageBox.addButton(TR("Restart Later"), QMessageBox::NoRole);
+	auto yesButton = messageBox.addButton(tr("Restart Now"), QMessageBox::YesRole);
+	messageBox.addButton(tr("Restart Later"), QMessageBox::NoRole);
 	messageBox.exec();
 	return messageBox.clickedButton() == yesButton;
-#undef TR
 }
 
 }  // namespace OpenOrienteering

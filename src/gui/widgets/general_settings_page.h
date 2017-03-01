@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Jan Dalheimer
- *    Copyright 2013-2016  Kai Pastor
+ *    Copyright 2013-2017  Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -26,6 +26,8 @@
 #include <QVariant>
 
 #include "settings_page.h"
+
+#include <functional>
 
 class QCheckBox;
 class QComboBox;
@@ -65,7 +67,10 @@ protected:
 	 */
 	bool eventFilter(QObject* watched, QEvent* event) override;
 	
-	bool showRestartOnLanguageChangeDialog(bool is_translatable);
+	/**
+	 * Shows the dialog for switching the language, using the given function for translation.
+	 */
+	bool showRestartOnLanguageChangeDialog(std::function<QString(const char*)> tr);
 	
 private slots:
 	void openTranslationFileDialog();
