@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2015 Kai Pastor
+ *    Copyright 2013-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,6 +21,8 @@
 
 #include "template.h"
 
+#include <cmath>
+
 #include <QCoreApplication>
 #include <QDebug>
 #include <QFileDialog>
@@ -38,6 +40,7 @@
 #include "template_map.h"
 #include "template_track.h"
 #include "gdal/ogr_template.h"
+#include "util/backports.h"          // Reason: std::hypot on Android
 #include "util/util.h"
 #include "util/xml_stream_util.h"
 
@@ -49,7 +52,6 @@ Q_STATIC_ASSERT(std::is_nothrow_copy_constructible<TemplateTransform>::value);
 Q_STATIC_ASSERT(std::is_nothrow_move_constructible<TemplateTransform>::value);
 Q_STATIC_ASSERT(std::is_nothrow_copy_assignable<TemplateTransform>::value);
 Q_STATIC_ASSERT(std::is_nothrow_move_assignable<TemplateTransform>::value);
-
 
 // static
 TemplateTransform TemplateTransform::fromQTransform(const QTransform& qt) noexcept

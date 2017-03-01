@@ -18,7 +18,7 @@
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
 
 TEMPLATE = subdirs
-CONFIG  += c++11
+CONFIG  += c++14
 CONFIG  -= debug_and_release
 
 include("oo-mapper-version.pri")

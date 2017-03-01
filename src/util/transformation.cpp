@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2016 Kai Pastor
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,6 +21,8 @@
 
 #include "transformation.h"
 
+#include <cmath>
+
 #include <qmath.h>
 #include <QScopedValueRollback>
 #include <QTransform>
@@ -30,6 +32,7 @@
 #include "fileformats/file_format.h"
 #include "matrix.h"
 #include "templates/template.h"
+#include "util/backports.h"          // Reason: std::hypot on Android
 #include "util/xml_stream_util.h"
 
 // ### PassPoint ###
