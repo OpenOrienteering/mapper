@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012-2016 Kai Pastor
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -26,6 +26,19 @@
 #if QT_VERSION < 0x050700
 #  include "qasconst.h"
 #  include "qoverload.h"
+#endif
+
+#if  defined(ANDROID) && defined(_GLIBCXX_CMATH) && !(__cplusplus >= 201103L)
+namespace std
+{
+
+template <class T>
+T hypot(T t1, T t2)
+{
+	return ::hypot(t1, t2);
+}
+
+};
 #endif
 
 #endif
