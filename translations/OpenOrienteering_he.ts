@@ -692,7 +692,7 @@
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="352"/>
         <source>Splitting holes of area objects is not supported yet!</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">פיצול חורים של אובייקטים אזוריים אינה נתמכת עדיין!</translation>
     </message>
 </context>
 <context>
@@ -700,18 +700,18 @@
     <message>
         <location filename="../src/tools/cutout_tool.cpp" line="134"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Clip the whole map. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: גזור את כל המפה. </translation>
     </message>
     <message>
         <location filename="../src/tools/cutout_tool.cpp" line="135"/>
         <location filename="../src/tools/cutout_tool.cpp" line="139"/>
         <source>&lt;b&gt;%1+Click or drag&lt;/b&gt;: Select the objects to be clipped. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;% 1 + לחץ או גרור&lt;/b&gt;: בחר אובייקטים שייגזרו. </translation>
     </message>
     <message>
         <location filename="../src/tools/cutout_tool.cpp" line="140"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Clip the selected objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: גזור את האובייקטים שנבחרו. </translation>
     </message>
 </context>
 <context>
@@ -719,12 +719,12 @@
     <message>
         <location filename="../src/util/dxfparser.cpp" line="36"/>
         <source>Could not open the file.</source>
-        <translation type="unfinished"></translation>
+        <translation>לא היתה אפשרות לפתוח את הקובץ.</translation>
     </message>
     <message>
         <location filename="../src/util/dxfparser.cpp" line="52"/>
         <source>The file is not an DXF file.</source>
-        <translation type="unfinished"></translation>
+        <translation>הקובץ אינו קובץ DXF.</translation>
     </message>
 </context>
 <context>
@@ -732,18 +732,18 @@
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="87"/>
         <source>Letter:</source>
-        <translation type="unfinished"></translation>
+        <translation>אות:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="89"/>
         <source>A</source>
         <extracomment>"A" is the default letter which is used for determining letter height.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">A</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="95"/>
         <source>Height:</source>
-        <translation type="unfinished"></translation>
+        <translation>גובה:</translation>
     </message>
 </context>
 <context>
@@ -751,38 +751,38 @@
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="121"/>
         <source>Distribute points evenly along path</source>
-        <translation type="unfinished"></translation>
+        <translation>להפיץ נקודות באופן שווה לאורך נתיב</translation>
     </message>
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="127"/>
         <source>Number of points per path:</source>
-        <translation type="unfinished"></translation>
+        <translation>מספר נקודות לנתיב:</translation>
     </message>
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="129"/>
         <source>Also place objects at line end points</source>
-        <translation type="unfinished"></translation>
+        <translation>גם למקם אובייקטים נקודות הקצה של הקו</translation>
     </message>
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="135"/>
         <source>Rotation settings</source>
-        <translation type="unfinished"></translation>
+        <translation>הגדרות הסיבוב</translation>
     </message>
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="138"/>
         <source>Align points with direction of line</source>
-        <translation type="unfinished"></translation>
+        <translation>יישור נקודות עם כיוון של קו</translation>
     </message>
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="142"/>
         <source>°</source>
         <comment>degrees</comment>
-        <translation type="unfinished"></translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="144"/>
         <source>Additional rotation angle (counter-clockwise):</source>
-        <translation type="unfinished"></translation>
+        <translation>זווית סיבוב נוספת (נגד כיוון השעון):</translation>
     </message>
 </context>
 <context>
@@ -791,32 +791,32 @@
         <location filename="../src/tools/draw_circle_tool.cpp" line="59"/>
         <source>From center</source>
         <comment>Draw circle starting from center</comment>
-        <translation type="unfinished"></translation>
+        <translation>ממרכז</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="294"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Start a circle or ellipse. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;לחץ על&lt;/b&gt;: להתחיל עיגול או אליפסה. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="295"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw a circle. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;גרור&lt;/b&gt;: לצייר עיגול. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="297"/>
         <source>Hold %1 to start drawing from the center.</source>
-        <translation type="unfinished"></translation>
+        <translation>החזק את %1 כדי להתחיל ציור מן המרכז.</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="301"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Finish the circle. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;הקלק&lt;/b&gt;: לסיים את המעגל. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="302"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw an ellipse. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;גרור&lt;/b&gt;: לשרטט אליפסה. </translation>
     </message>
 </context>
 <context>
@@ -824,7 +824,7 @@
     <message>
         <location filename="../src/tools/draw_freehand_tool.cpp" line="276"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw a path. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;גרור&lt;/b&gt;: לצייר נתיב. </translation>
     </message>
 </context>
 <context>
@@ -838,13 +838,13 @@
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1071"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap or append to existing objects. </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;b&gt;% 1 + לחיצה&lt;/b&gt;: הצמד או הוסף לאובייקטים קיימים. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1076"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="706"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Pick direction from existing objects. </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;b&gt;% 1 + לחיצה&lt;/b&gt;: לבחור כיוון מאובייקטים קיימים. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1089"/>
@@ -857,13 +857,13 @@
         <location filename="../src/tools/draw_path_tool.cpp" line="1095"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="725"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: זוויות קבועות. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1103"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="741"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Undo last point. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: לבטל את הנקודה האחרונה. </translation>
     </message>
 </context>
 <context>
@@ -871,18 +871,18 @@
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="87"/>
         <source>Finish</source>
-        <translation type="unfinished"></translation>
+        <translation>סיום</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="88"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>סגור</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="89"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation type="unfinished"></translation>
+        <translation>הצמד</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="90"/>
