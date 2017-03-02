@@ -22,6 +22,7 @@
 
 #include "ocd_file_import.h"
 
+#include <cmath>
 #include <memory>
 
 #include <QBuffer>
@@ -230,7 +231,7 @@ void OcdFileImport::importGeoreferencing(const OcdFile<Ocd::FormatV8>& file)
 	Georeferencing georef;
 	georef.setScaleDenominator(qRound(setup->map_scale));
 	georef.setProjectedRefPoint(QPointF(setup->real_offset_x, setup->real_offset_y));
-	if (qAbs(setup->real_angle) >= 0.01) /* degrees */
+	if (std::abs(setup->real_angle) >= 0.01) /* degrees */
 	{
 		georef.setGrivation(setup->real_angle);
 	}
