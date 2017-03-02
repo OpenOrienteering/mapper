@@ -291,12 +291,6 @@ set(Mapper_SRCS
  
 if(WIN32)
 	enable_language(RC)
-	if(MINGW)
-		# Cf. http://public.kitware.com/Bug/view.php?id=14865
-		if(CMAKE_RC_COMPILER MATCHES "windres\$" AND CMAKE_RC_COMPILE_OBJECT MATCHES "/fo")
-			include(Platform/${CMAKE_SYSTEM_NAME}-windres)
-		endif()
-	endif()
 	configure_file(mingw/resources.rc.in ${CMAKE_CURRENT_BINARY_DIR}/resources.rc @ONLY)
 	configure_file(${PROJECT_SOURCE_DIR}/images/mapper-icon/Mapper.ico ${CMAKE_CURRENT_BINARY_DIR}/Mapper.ico COPYONLY)
 	list(APPEND Mapper_SRCS ${CMAKE_CURRENT_BINARY_DIR}/resources.rc)
