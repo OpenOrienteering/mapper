@@ -22,6 +22,7 @@
 
 #include "ocd_file_import.h"
 
+#include <cmath>
 #include <memory>
 
 #include <QBuffer>
@@ -31,29 +32,29 @@
 #include <QFileInfo>
 #include <QImageReader>
 
+#include "settings.h"
+#include "ocad8_file_format.h"
+#include "ocad8_file_format_p.h"
 #include "ocd_types_v9.h"
 #include "ocd_types_v10.h"
 #include "ocd_types_v11.h"
 #include "ocd_types_v12.h"
 #include "core/crs_template.h"
+#include "core/georeferencing.h"
+#include "core/map.h"
 #include "core/map_color.h"
 #include "core/map_view.h"
-#include "core/georeferencing.h"
-#include "ocad8_file_format.h"
-#include "ocad8_file_format_p.h"
-#include "core/map.h"
 #include "core/objects/text_object.h"
-#include "../settings.h"
 #include "core/symbols/area_symbol.h"
 #include "core/symbols/combined_symbol.h"
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/point_symbol.h"
 #include "core/symbols/text_symbol.h"
-#include "../templates/template.h"
-#include "../templates/template_image.h"
-#include "../templates/template_map.h"
+#include "templates/template.h"
+#include "templates/template_image.h"
+#include "templates/template_map.h"
+#include "util/encoding.h"
 #include "util/util.h"
-#include "../util/encoding.h"
 
 
 namespace {
@@ -231,7 +232,7 @@ void OcdFileImport::importGeoreferencing(const OcdFile<Ocd::FormatV8>& file)
 	Georeferencing georef;
 	georef.setScaleDenominator(qRound(setup->map_scale));
 	georef.setProjectedRefPoint(QPointF(setup->real_offset_x, setup->real_offset_y));
-	if (qAbs(setup->real_angle) >= 0.01) /* degrees */
+	if (std::abs(setup->real_angle) >= 0.01) /* degrees */
 	{
 		georef.setGrivation(setup->real_angle);
 	}

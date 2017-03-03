@@ -28,7 +28,7 @@
 #  include "qoverload.h"
 #endif
 
-#if  defined(ANDROID) && defined(_GLIBCXX_CMATH) && !(__cplusplus >= 201103L)
+#if defined(ANDROID) && defined(_GLIBCXX_CMATH)
 namespace std
 {
 
@@ -38,7 +38,7 @@ T hypot(T t1, T t2)
 	return ::hypot(t1, t2);
 }
 
-};
+}
 #endif
 
 #endif

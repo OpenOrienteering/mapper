@@ -19,11 +19,19 @@
 
 find_package(Qt5Core 5.3 REQUIRED)
 find_package(Qt5Widgets REQUIRED)
-find_package(Qt5Network)
-find_package(Qt5PrintSupport)
+
+if(ANDROID)
+	find_package(Qt5AndroidExtras REQUIRED)
+else()
+	find_package(Qt5Network)
+endif()
+
 set(CMAKE_AUTOMOC ON)
 
-if(Mapper_PACKAGE_QT AND UNIX AND NOT APPLE AND NOT Mapper_DEVELOPMENT_BUILD)
+if(NOT DEFINED MAPPER_USE_QT_CONF_QRC
+   AND Mapper_PACKAGE_QT
+   AND NOT Mapper_DEVELOPMENT_BUILD
+   AND UNIX AND NOT APPLE AND NOT ANDROID)
 	set(MAPPER_USE_QT_CONF_QRC 1)
 endif()
 
@@ -255,23 +263,14 @@ add_dependencies(Mapper_Common
 target_link_libraries(Mapper_Common
   libocad
   Polyclipping::Polyclipping
-  printsupport
   PROJ4::proj
   Qt5::Widgets
 )
-if(Qt5Network_FOUND)
-	target_link_libraries(Mapper_Common
-	  Qt5::Network
-	)
-endif()
-if(Qt5PrintSupport_FOUND)
-	target_link_libraries(Mapper_Common
-	  Qt5::PrintSupport
-	)
-endif()
-if(TARGET mapper-gdal)
-	target_link_libraries(Mapper_Common mapper-gdal)
-endif()
+foreach(lib Qt5::Network Qt5::AndroidExtras printsupport mapper-gdal)
+	if(TARGET ${lib})
+		target_link_libraries(Mapper_Common ${lib})
+	endif()
+endforeach()
 target_compile_definitions(Mapper_Common PRIVATE
   QT_NO_CAST_FROM_ASCII
   QT_NO_CAST_TO_ASCII
@@ -291,12 +290,6 @@ set(Mapper_SRCS
  
 if(WIN32)
 	enable_language(RC)
-	if(MINGW)
-		# Cf. http://public.kitware.com/Bug/view.php?id=14865
-		if(CMAKE_RC_COMPILER MATCHES "windres\$" AND CMAKE_RC_COMPILE_OBJECT MATCHES "/fo")
-			include(Platform/${CMAKE_SYSTEM_NAME}-windres)
-		endif()
-	endif()
 	configure_file(mingw/resources.rc.in ${CMAKE_CURRENT_BINARY_DIR}/resources.rc @ONLY)
 	configure_file(${PROJECT_SOURCE_DIR}/images/mapper-icon/Mapper.ico ${CMAKE_CURRENT_BINARY_DIR}/Mapper.ico COPYONLY)
 	list(APPEND Mapper_SRCS ${CMAKE_CURRENT_BINARY_DIR}/resources.rc)
