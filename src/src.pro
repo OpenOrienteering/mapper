@@ -354,7 +354,6 @@ android {
     plugins/imageformats/libqgif.so \
     plugins/imageformats/libqicns.so \
     plugins/imageformats/libqico.so \
-    plugins/imageformats/libqjp2.so \
     plugins/imageformats/libqjpeg.so \
     plugins/imageformats/libqtiff.so \
     plugins/imageformats/libqwebp.so \
@@ -368,6 +367,9 @@ android {
     jar/QtPositioning-bundled.jar \
     plugins/position/libqtposition_android.so \
     # END
+  
+  exists($$[QT_INSTALL_PLUGINS]/imageformats/libqjp2.so): \
+    ANDROID_DEPLOYMENT_DEPENDENCIES += plugins/imageformats/libqjp2.so
 
   # Do not use qtsingleapplication
   LIBS -= -lqtsingleapplication

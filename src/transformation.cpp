@@ -191,7 +191,9 @@ bool PassPointList::estimateSimilarityTransformation(TemplateTransform* transfor
 		double move_x = output.get(2, 0);
 		double move_y = output.get(3, 0);
 		double rotation = qAtan2((-1) * output.get(1, 0), output.get(0, 0));
-		double scale = output.get(0, 0) / qCos(rotation);
+		// Avoid division by (values close to) zero
+		bool use_cos = (qAbs(rotation) < 0.34 * M_PI || qAbs(rotation) > 0.66 * M_PI);
+		double scale = use_cos ? (output.get(0, 0) / qCos(rotation)) : (output.get(1, 0) / -qSin(rotation));
 		
 		// Calculate transformation matrix
 		double cosr = cos(rotation);
@@ -279,8 +281,8 @@ bool PassPointList::estimateNonIsometricSimilarityTransform(QTransform* out)
 	pseudo_inverse.multiply(values, output);
 	
 	out->setMatrix(
-		output.get(0, 0), output.get(1, 0), 0,
-		output.get(3, 0), output.get(4, 0), 0,
+		output.get(0, 0), output.get(3, 0), 0,
+		output.get(1, 0), output.get(4, 0), 0,
 		output.get(2, 0), output.get(5, 0), 1);
 	return true;
 }
@@ -291,7 +293,7 @@ void qTransformToTemplateTransform(const QTransform& in, TemplateTransform* out)
 	out->template_x = qRound(1000 * in.m31());
 	out->template_y = qRound(1000 * in.m32());
 	
-	out->template_rotation = qAtan2(-in.m21(), in.m11());
+	out->template_rotation = qAtan2(in.m21(), in.m11());
 	
 	out->template_scale_x = in.m11() / qCos(out->template_rotation);
 	out->template_scale_y = in.m22() / qCos(out->template_rotation);

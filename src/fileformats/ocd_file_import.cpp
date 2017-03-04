@@ -22,6 +22,7 @@
 
 #include "ocd_file_import.h"
 
+#include <cmath>
 #include <memory>
 
 #include <QBuffer>
@@ -230,7 +231,7 @@ void OcdFileImport::importGeoreferencing(const OcdFile<Ocd::FormatV8>& file)
 	Georeferencing georef;
 	georef.setScaleDenominator(qRound(setup->map_scale));
 	georef.setProjectedRefPoint(QPointF(setup->real_offset_x, setup->real_offset_y));
-	if (qAbs(setup->real_angle) >= 0.01) /* degrees */
+	if (std::abs(setup->real_angle) >= 0.01) /* degrees */
 	{
 		georef.setGrivation(setup->real_angle);
 	}
@@ -888,12 +889,18 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol, int ocd_version)
 	        (ocd_symbol.common.double_mode != 0) &&
 	        (ocd_symbol.common.double_left_width > 0 || ocd_symbol.common.double_right_width > 0);
 	OcdImportedLineSymbol *double_line = nullptr;
-	if ( has_border_line &&
-		(ocd_symbol.common.double_flags & LineStyle::DoubleFillColorOn || !line_for_borders) )
+	if (ocd_symbol.common.double_flags & LineStyle::DoubleFillColorOn
+	    || (has_border_line && !line_for_borders) )
 	{
 		double_line = importLineSymbolDoubleBorder(ocd_symbol.common);
 		setupBaseSymbol(double_line, ocd_symbol);
 		line_for_borders = double_line;
+	}
+	else if (ocd_symbol.common.double_flags & LineStyle::DoubleBackgroundColorOn)
+	{
+		auto symbol = std::unique_ptr<LineSymbol>(importLineSymbolDoubleBorder(ocd_symbol.common));
+		addSymbolWarning(symbol.get(),
+		  tr("Unsupported line style '%1'.").arg(QLatin1String("LineStyle::DoubleBackgroundColorOn")) );
 	}
 	
 	// Border lines
@@ -1045,7 +1052,7 @@ OcdFileImport::OcdImportedLineSymbol* OcdFileImport::importLineSymbolBase(const 
 			
 			if (attributes.end_length && attributes.end_length != attributes.main_length)
 			{
-				if (attributes.main_length && 0.75 >= attributes.end_length / attributes.main_length)
+				if (attributes.main_length && 0.75 >= (double)attributes.end_length / attributes.main_length)
 				{
 					// End length max. 75 % of main length
 					symbol->half_outer_dashes = true;
