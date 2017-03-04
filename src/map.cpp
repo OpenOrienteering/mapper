@@ -820,6 +820,7 @@ void Map::importMap(
 			/// \todo No need to clone iff the other map is discarded after import.
 			Map clone;
 			clone.setGeoreferencing(other->getGeoreferencing());
+			clone.setProperty("import-georeferencing", other->property("import-georeferencing"));
 			clone.importMap(other, mode, dialog_parent, filter, -1, false, out_symbol_map);
 			clone.changeScale(getScaleDenominator(), MapCoord(0, 0), true, true, true, true);
 			QHash<const Symbol*, Symbol*> symbol_map;
@@ -855,6 +856,7 @@ void Map::importMap(
 	passpoints[2].src_coords  = src_origin + MapCoordF { 0.0, 128.0 }; // 128 mm off vertically
 	passpoints[2].dest_coords = georef.toMapCoordF(&other_georef, passpoints[2].src_coords, &ok2);
 	if (ok0 && ok1 && ok2
+	    && other->property("import-georeferencing").toBool()
 	    && !passpoints.estimateNonIsometricSimilarityTransform(&q_transform))
 	{
 		/// \todo proper error message

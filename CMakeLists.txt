@@ -1,6 +1,6 @@
 #
 #    Copyright 2012, 2013, 2014 Thomas Schöps
-#    Copyright 2012-2016 Kai Pastor
+#    Copyright 2012-2017 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -31,7 +31,7 @@ include(FeatureSummary)
 
 project(Mapper)
 
-set(Mapper_COPYRIGHT "(C) 2012-2016 OpenOrienteering developers")
+set(Mapper_COPYRIGHT "(C) 2012-2017 The OpenOrienteering developers")
 
 # All version components must be integers.
 # We use Mapper_VERSION_PATCH >= 99 to mark development builds.
@@ -39,7 +39,7 @@ set(Mapper_VERSION_MAJOR 0)
 set(Mapper_VERSION_MINOR 6)
 if(NOT Mapper_VERSION_PATCH)
 	# This can be configured when running cmake
-	set(Mapper_VERSION_PATCH 7)
+	set(Mapper_VERSION_PATCH 8)
 endif()
 
 set(MAPPER_VERSION_PRI "${PROJECT_SOURCE_DIR}/oo-mapper-version.pri")
@@ -316,7 +316,7 @@ else()
 	add_subdirectory("test")
 endif()
 
-foreach(qt5_module Core Gui Network PrintSupport Test Widgets Xml)
+foreach(qt5_module Core Gui Network PrintSupport Test Widgets)
 	if (TARGET Qt5::${qt5_module} AND TARGET Qt5)
 		add_dependencies(Qt5::${qt5_module} Qt5)
 	endif()
