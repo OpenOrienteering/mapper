@@ -20,9 +20,11 @@
 # Prerequisite
 add_subdirectory(data)
 
+find_package(Qt5Network REQUIRED)
 find_package(Qt5PrintSupport REQUIRED)
 find_package(Qt5Test REQUIRED)
 find_package(Qt5Widgets REQUIRED)
+
 set(CMAKE_AUTOMOC ON)
 
 if(Mapper_DEVELOPMENT_BUILD)
