@@ -192,33 +192,6 @@ elseif(UNIX AND EXISTS /usr/bin/dpkg AND EXISTS /usr/bin/lsb_release)
 	set(CPACK_DEBIAN_PACKAGE_HOMEPAGE   "http://openorienteering.org/apps/mapper/")
 	set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS  "ON")
 	
-	unset(FAKEROOT_EXECUTABLE CACHE)
-	find_program(FAKEROOT_EXECUTABLE fakeroot)
-	if(NOT FAKEROOT_EXECUTABLE)
-		install(CODE "MESSAGE(WARNING
-		  \"'fakeroot' not found. To build a DEB package with proper file \"
-		  \"ownership, fakeroot must be installed.\")"
-		)
-	endif(NOT FAKEROOT_EXECUTABLE)
-	mark_as_advanced(FAKEROOT_EXECUTABLE)
-	
-	message(WARNING 
-	  "The CPackDeb generator for creating deb packages has some issues. Run\n"
-	  "   make deb\n"
-	  "instead of running make package directly." )
-	add_custom_target(deb
-	  COMMENT "Building a DEB package"
-	  COMMAND sh -c 'if [ -d \"${CPACK_PACKAGE_FILE_NAME}\" ]; then rm -R \"${CPACK_PACKAGE_FILE_NAME}\" ";" fi'
-	  COMMAND sh -c 'mkdir \"${CPACK_PACKAGE_FILE_NAME}\" && chmod 0755 \"${CPACK_PACKAGE_FILE_NAME}\"'
-	  COMMAND sh -c 'umask 022 && 
-	    "\$(MAKE)" package &&
-	    dpkg-deb -R \"${CPACK_PACKAGE_FILE_NAME}.deb\" \"${CPACK_PACKAGE_FILE_NAME}\" &&
-	    ldconfig -n \"${CPACK_PACKAGE_FILE_NAME}${MAPPER_LIBRARY_DESTINATION}/lib\" &&
-	    fakeroot dpkg-deb -b \"${CPACK_PACKAGE_FILE_NAME}\"'
-	  COMMAND rm -R "./${CPACK_PACKAGE_FILE_NAME}"
-	  WORKING_DIRECTORY "${PROJECT_BINARY_DIR}"
-	)
-	
 endif()
 
 set(CPACK_GENERATOR "${CPACK_GENERATOR_DEFAULT}"
