@@ -91,13 +91,11 @@ if(WIN32 OR APPLE)
 	set(Mapper_BUILD_GDAL_DEFAULT ON)
 	set(Mapper_BUILD_QT_DEFAULT ON)
 	set(Mapper_BUILD_DOXYGEN_DEFAULT ON)
-	set(Mapper_BUILD_PACKAGE_DEFAULT ON)
 else()
 	set(Mapper_BUILD_PROJ_DEFAULT OFF)
 	set(Mapper_BUILD_GDAL_DEFAULT OFF)
 	set(Mapper_BUILD_QT_DEFAULT ON)
 	set(Mapper_BUILD_DOXYGEN_DEFAULT OFF)
-	set(Mapper_BUILD_PACKAGE_DEFAULT OFF)
 endif()
 
 option(Mapper_BUILD_CLIPPER "Build the Clipper package from source" ${Mapper_BUILD_CLIPPER_DEFAULT})
@@ -124,12 +122,11 @@ option(Mapper_AUTORUN_SYSTEM_TESTS "Run the system tests as part of the Mapper_T
 option(Mapper_AUTORUN_MANUAL_TESTS "Run the system tests as part of the Mapper_Test target" OFF)
 mark_as_advanced(Mapper_AUTORUN_SYSTEM_TESTS Mapper_AUTORUN_MANUAL_TESTS)
 
-option(Mapper_BUILD_PACKAGE     "Create a target for building packages"                ${Mapper_BUILD_PACKAGE_DEFAULT})
 option(Mapper_PACKAGE_PROJ      "Include all required Proj components in the packages" ${Mapper_BUILD_PROJ})
 option(Mapper_PACKAGE_GDAL      "Include all required GDAL components in the packages" ${Mapper_BUILD_GDAL})
 option(Mapper_PACKAGE_QT        "Include all required Qt components in the packages"   ${Mapper_BUILD_QT})
 option(Mapper_PACKAGE_ASSISTANT "Include Qt Assistant in the packages"                 ${Mapper_BUILD_QT})
-mark_as_advanced(Mapper_BUILD_PACKAGE Mapper_PACKAGE_QT Mapper_PACKAGE_ASSISTANT Mapper_PACKAGE_PROJ)
+mark_as_advanced(Mapper_PACKAGE_QT Mapper_PACKAGE_ASSISTANT Mapper_PACKAGE_PROJ)
 
 unset(Mapper_PACKAGE_LIBRARIES CACHE) # Legacy
 
