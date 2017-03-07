@@ -19,7 +19,6 @@
  
 cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
 cmake_policy(SET CMP0026 OLD)
-cmake_policy(SET CMP0048 OLD)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
@@ -27,18 +26,9 @@ include(FeatureSummary)
 
 # Project declaration
 
-project(Mapper)
+project(Mapper VERSION 0.7.0 LANGUAGES CXX C)
 
 set(Mapper_COPYRIGHT "(C) 2012-2017 The OpenOrienteering developers")
-
-# All version components must be integers.
-# We use Mapper_VERSION_PATCH >= 99 to mark development builds.
-set(Mapper_VERSION_MAJOR 0)
-set(Mapper_VERSION_MINOR 6)
-if(NOT Mapper_VERSION_PATCH)
-	# This can be configured when running cmake
-	set(Mapper_VERSION_PATCH 7)
-endif()
 
 set(MAPPER_VERSION_PRI "${PROJECT_SOURCE_DIR}/oo-mapper-version.pri")
 file(READ "${MAPPER_VERSION_PRI}" current)
