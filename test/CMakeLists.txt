@@ -168,8 +168,7 @@ configure_file(AUTORUN_TESTS.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/AUTORUN_TESTS.
 add_executable(Mapper-with-test mapper_t.cpp)
 add_dependencies(Mapper-with-test Mapper_prerequisites)
 target_link_libraries(Mapper-with-test Qt5::Core)
-get_target_property(mapper_location Mapper LOCATION)
-target_compile_definitions(Mapper-with-test PRIVATE -DCMAKE_COMMAND="${CMAKE_COMMAND}" -DMAPPER_LOCATION="${mapper_location}")
+target_compile_definitions(Mapper-with-test PRIVATE -DCMAKE_COMMAND="${CMAKE_COMMAND}" -DMAPPER_LOCATION="$<TARGET_FILE:Mapper>")
 
 
 if(Mapper_BUILD_QT)
