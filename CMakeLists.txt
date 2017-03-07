@@ -18,7 +18,6 @@
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  
 cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
-cmake_policy(SET CMP0020 OLD)
 cmake_policy(SET CMP0026 OLD)
 cmake_policy(SET CMP0048 OLD)
 
