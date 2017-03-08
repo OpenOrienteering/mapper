@@ -851,7 +851,7 @@
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="711"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="735"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap to existing objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;% 1 + לחיצה&lt;/b&gt;: הצמד לאובייקטים הקיים. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1095"/>
@@ -888,28 +888,28 @@
         <location filename="../src/tools/draw_path_tool.cpp" line="90"/>
         <source>Angle</source>
         <comment>Using constrained angles</comment>
-        <translation type="unfinished"></translation>
+        <translation>זווית</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="91"/>
         <source>Dash</source>
         <comment>Drawing dash points</comment>
-        <translation type="unfinished"></translation>
+        <translation>מקף</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="92"/>
         <source>Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>בטל</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="93"/>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation>בטל</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1061"/>
         <source>&lt;b&gt;Length:&lt;/b&gt; %1 m </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;b&gt;אורך:&lt;/b&gt; %1 מ' </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1081"/>
@@ -932,7 +932,7 @@
     <message>
         <location filename="../src/tools/draw_point_gps_tool.cpp" line="73"/>
         <source>Touch the map to finish averaging</source>
-        <translation type="unfinished"></translation>
+        <translation>מגע במפה לסיים מיצוע</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_gps_tool.cpp" line="182"/>
@@ -946,19 +946,19 @@
         <location filename="../src/tools/draw_point_tool.cpp" line="60"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation type="unfinished"></translation>
+        <translation>הצמד</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="61"/>
         <source>Angle</source>
         <comment>Using constrained angles</comment>
-        <translation type="unfinished"></translation>
+        <translation>זווית</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="62"/>
         <source>Reset</source>
         <comment>Reset rotation</comment>
-        <translation type="unfinished"></translation>
+        <translation>איפוס</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="317"/>
@@ -993,35 +993,35 @@
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="78"/>
         <source>Finish</source>
-        <translation type="unfinished"></translation>
+        <translation>סיום</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="79"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation type="unfinished"></translation>
+        <translation>הצמד</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="80"/>
         <source>Line snap</source>
         <comment>Snap to previous lines</comment>
-        <translation type="unfinished"></translation>
+        <translation>צימוד לקו</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="81"/>
         <source>Dash</source>
         <comment>Drawing dash points</comment>
-        <translation type="unfinished"></translation>
+        <translation>מקף</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="82"/>
         <source>Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>בטל</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="83"/>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation>בטל</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="716"/>
