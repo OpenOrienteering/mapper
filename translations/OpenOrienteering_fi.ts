@@ -1093,7 +1093,7 @@
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="466"/>
         <source>&lt;b&gt;%1+%2&lt;/b&gt;: Cancel editing. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+%2&lt;/b&gt;: Peruuta muokkaus. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="471"/>
@@ -2143,13 +2143,13 @@
         <location filename="../src/fileformats/xml_file_format.cpp" line="890"/>
         <location filename="../src/fileformats/xml_file_format.cpp" line="904"/>
         <source>Error while loading the undo/redo steps at %1:%2: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Virhe ladattaessa kumoa / tee uudestaan vaiheita %1:%2: %3</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.h" line="230"/>
         <source>No such option: %1</source>
         <comment>No such import / export option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ei ole sellaista vaihtoehtoa: %1</translation>
     </message>
 </context>
 <context>
@@ -4909,7 +4909,7 @@ zoomaa hiiren rullalla.</translation>
         <location filename="../src/core/objects/object_query.cpp" line="163"/>
         <source>invalid</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>virheellinen</translation>
     </message>
 </context>
 <context>
@@ -6553,12 +6553,12 @@ jokapäiväinen ilmiö
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="76"/>
         <source>Add Row</source>
-        <translation type="unfinished"></translation>
+        <translation>Lisää rivi</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="77"/>
         <source>Remove Row</source>
-        <translation type="unfinished"></translation>
+        <translation>Poista rivi</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="83"/>
@@ -6591,7 +6591,7 @@ jokapäiväinen ilmiö
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="350"/>
         <source>Invalid query</source>
-        <translation type="unfinished"></translation>
+        <translation>Virheellinen kysely</translation>
     </message>
 </context>
 <context>
