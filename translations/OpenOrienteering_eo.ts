@@ -753,7 +753,7 @@
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="121"/>
         <source>Distribute points evenly along path</source>
-        <translation type="unfinished"></translation>
+        <translation>Distribui punktojn egalmezure laŭlonge de la vojo</translation>
     </message>
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="127"/>
@@ -1174,7 +1174,7 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="36"/>
         <source>High quality map display (antialiasing)</source>
-        <translation type="unfinished"></translation>
+        <translation>Alta kvalita vidigo de mapo (glatigo)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="37"/>
@@ -1185,12 +1185,12 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="40"/>
         <source>High quality text display in map (antialiasing), slow</source>
-        <translation type="unfinished"></translation>
+        <translation>Alta kvalita vidigo de teksto sur la mapo (glatigo), malrapida</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="45"/>
         <source>Click tolerance:</source>
-        <translation type="unfinished"></translation>
+        <translation>Klaka tolero:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="44"/>
@@ -1499,13 +1499,13 @@
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="52"/>
         <source>UTM Zone (number north/south)</source>
-        <translation type="unfinished"></translation>
+        <translation>UTM-zono (numero N/S)</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="59"/>
         <source>Gauss-Krueger, datum: Potsdam</source>
         <comment>Gauss-Krueger coordinate reference system</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gauss-Krueger, datumo: Potsdamo</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="60"/>
@@ -1516,7 +1516,7 @@
         <location filename="../src/core/crs_template_implementation.cpp" line="63"/>
         <source>Zone number (1 to 119)</source>
         <comment>Zone number for Gauss-Krueger coordinates</comment>
-        <translation type="unfinished"></translation>
+        <translation>Numero de zono (1-119)</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="71"/>
@@ -1585,13 +1585,13 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="90"/>
         <source>Map Georeferencing</source>
-        <translation type="unfinished"></translation>
+        <translation>Mapa georeferencado</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="167"/>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="499"/>
         <source>Lookup...</source>
-        <translation type="unfinished"></translation>
+        <translation>Elserĉi...</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="127"/>
@@ -1669,7 +1669,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="112"/>
         <source>(Datum: WGS84)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Datumo: WGS84)</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="115"/>
@@ -1981,7 +1981,7 @@
     <message>
         <location filename="../src/util/xml_stream_util.cpp" line="216"/>
         <source>Expected %1 coordinates, found %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Atendita %1 koordinatoj, %2 estis trovita.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="877"/>
@@ -1998,7 +1998,7 @@
         <location filename="../src/fileformats/file_import_export.h" line="230"/>
         <source>No such option: %1</source>
         <comment>No such import / export option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tia opcio ne ekzistas.: %1</translation>
     </message>
 </context>
 <context>
@@ -2355,12 +2355,12 @@
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="98"/>
         <source>Enable border lines</source>
-        <translation>Ebligi limajn liniojn</translation>
+        <translation>Ŝalti limajn liniojn</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="195"/>
         <source>Distance between spots:</source>
-        <translation type="unfinished"></translation>
+        <translation>Distanco inter la punktoj:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="198"/>
@@ -2940,7 +2940,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="861"/>
         <source>Switch symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Ŝanĝi simbolon</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="862"/>
@@ -2990,12 +2990,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="908"/>
         <source>Enable touch cursor</source>
-        <translation type="unfinished"></translation>
+        <translation>Ŝalti tuŝkursoron</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="909"/>
         <source>Enable GPS display</source>
-        <translation type="unfinished"></translation>
+        <translation>Ŝalti GPS-vidigon</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="911"/>
@@ -3025,7 +3025,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="922"/>
         <source>Enable compass display</source>
-        <translation type="unfinished"></translation>
+        <translation>Ŝalti vidigon de kompaso</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="923"/>
@@ -3100,7 +3100,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="897"/>
         <source>Paint on template</source>
-        <translation type="unfinished"></translation>
+        <translation>Desegni sur la ŝablono</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="485"/>
@@ -3131,7 +3131,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="825"/>
         <source>Hatch areas</source>
-        <translation type="unfinished"></translation>
+        <translation>Haĉitaj areoj</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="826"/>
@@ -3152,7 +3152,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="836"/>
         <source>Georeferencing...</source>
-        <translation type="unfinished"></translation>
+        <translation>Georeferencado…</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="838"/>
@@ -3247,7 +3247,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="894"/>
         <source>Cut away</source>
-        <translation type="unfinished"></translation>
+        <translation>Ĉirkaŭtranĉi</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="895"/>
@@ -3455,7 +3455,7 @@ Rescale the imported data?</source>
         <location filename="../src/gui/map/map_editor.cpp" line="1235"/>
         <location filename="../src/gui/map/map_editor.cpp" line="3412"/>
         <source>Map parts</source>
-        <translation type="unfinished"></translation>
+        <translation>Partoj de mapo</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1167"/>
@@ -3528,7 +3528,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1580"/>
         <source>Copied %1 object(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopiita %1 objekto(j)</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1590"/>
@@ -3538,7 +3538,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1620"/>
         <source>Pasted %1 object(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Algluita %1 objekto(j)</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1678"/>
@@ -3769,7 +3769,7 @@ elektitaj</translation>
         <location filename="../src/gui/map/map_editor.cpp" line="3478"/>
         <location filename="../src/gui/map/map_editor.cpp" line="3538"/>
         <source>Enter the name of the map part:</source>
-        <translation type="unfinished"></translation>
+        <translation>Enigu nomon de la mapa parto:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3554"/>
@@ -3830,7 +3830,7 @@ elektitaj</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="818"/>
         <source>Pan</source>
-        <translation type="unfinished"></translation>
+        <translation>Movi</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="828"/>
@@ -3961,7 +3961,7 @@ elektitaj</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2400"/>
         <source>%1 object(s) duplicated</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 duobligita(j) objekto(j)</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2612"/>
@@ -4435,7 +4435,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1844"/>
         <source>Unable to export template: file type of "%1" is not supported yet</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne eblas eksporti ŝablonon: dosiertipo "%1" ankoraŭ ne estas subtenata</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="2062"/>
@@ -4493,7 +4493,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="115"/>
         <source>Could not allocate buffer.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne eblas asigni bufron.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="119"/>
@@ -4700,7 +4700,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="655"/>
         <source>Unable to import template: "%1" is not a supported template type.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne eblas importi ŝablonon: "%1" estas nesubtenata tipo de ŝablono.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="959"/>
@@ -4758,7 +4758,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1951"/>
         <source>Vertical alignment '%1' is not supported.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vertikala ĝisrandigo '%1' estas nesubtenata.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1923"/>
@@ -4793,12 +4793,12 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="83"/>
         <source>Encoding '%1' is not available. Check the settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kodoprezento '%1' ne estas disponebla. Kontrolu la agordojn.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="120"/>
         <source>In area symbol %1 '%2': %3</source>
-        <translation type="unfinished"></translation>
+        <translation>En area simbolo %1 '%2': %3</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1559"/>
@@ -5303,7 +5303,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1078"/>
         <source>Not supported on Android.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nesubtenata sur Androjdo.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1086"/>
@@ -5382,7 +5382,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1247"/>
         <source>Printing Progress</source>
-        <translation type="unfinished"></translation>
+        <translation>Plenumo de presado</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1078"/>
@@ -5577,7 +5577,7 @@ apartigoj</translation>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="335"/>
         <source>Cannot load map file, aborting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne eblas ŝargi mapodosieron, ĉesigado.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="341"/>
@@ -5671,7 +5671,7 @@ apartigoj</translation>
     <message>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="86"/>
         <source>Rotate non-georeferenced templates</source>
-        <translation type="unfinished"></translation>
+        <translation>Turni negeoreferencitajn ŝablonojn</translation>
     </message>
 </context>
 <context>
@@ -5781,7 +5781,7 @@ apartigoj</translation>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="71"/>
         <source>Scale symbol sizes</source>
-        <translation type="unfinished"></translation>
+        <translation>Skali grandojn de simboloj</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="78"/>
@@ -5796,7 +5796,7 @@ apartigoj</translation>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="92"/>
         <source>Scale non-georeferenced templates</source>
-        <translation type="unfinished"></translation>
+        <translation>Skali negeoreferencitajn ŝablonojn</translation>
     </message>
 </context>
 <context>
@@ -5878,7 +5878,7 @@ apartigoj</translation>
     <message>
         <location filename="../src/core/storage_location.cpp" line="287"/>
         <source>'%1' is not a valid storage location.</source>
-        <translation type="unfinished"></translation>
+        <translation>'%1' estas nevalida memoraloko.</translation>
     </message>
 </context>
 <context>
@@ -6015,7 +6015,7 @@ apartigoj</translation>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="906"/>
         <source>Scale symbol(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Skali simbolo(j)n</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="975"/>
@@ -6158,7 +6158,7 @@ apartigoj</translation>
         <location filename="future_translations.cpp" line="79"/>
         <source>Scale symbols</source>
         <extracomment>To replace existing translation which uses "symbol(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Skali simbolojn</translation>
     </message>
 </context>
 <context>
@@ -6361,7 +6361,7 @@ manĝaĵo kun spicoj
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="63"/>
         <source>Template adjustment</source>
-        <translation type="unfinished"></translation>
+        <translation>Ĝustigo de ŝablono</translation>
     </message>
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="140"/>
@@ -6392,7 +6392,7 @@ manĝaĵo kun spicoj
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="806"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Delete pass points. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Klaki&lt;/b&gt;: Forigi interpunktojn. </translation>
     </message>
 </context>
 <context>
@@ -6400,7 +6400,7 @@ manĝaĵo kun spicoj
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="681"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move pass points. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Treni&lt;/b&gt;: Movi interpunktojn. </translation>
     </message>
 </context>
 <context>
@@ -6408,7 +6408,7 @@ manĝaĵo kun spicoj
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="193"/>
         <source>Pass points:</source>
-        <translation type="unfinished"></translation>
+        <translation>Interpunktoj:</translation>
     </message>
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="195"/>
@@ -6453,7 +6453,7 @@ manĝaĵo kun spicoj
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="221"/>
         <source>Apply pass points</source>
-        <translation type="unfinished"></translation>
+        <translation>Apliki interpunktojn</translation>
     </message>
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="223"/>
@@ -6476,7 +6476,7 @@ manĝaĵo kun spicoj
     <message>
         <location filename="../src/templates/template_image.cpp" line="129"/>
         <source>Not enough free memory (image size: %1x%2 pixels)</source>
-        <translation type="unfinished"></translation>
+        <translation>Nesufiĉa libera memoro (bilda grandeco: %1x%2 bilderoj)</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="169"/>
@@ -6526,12 +6526,12 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/templates/template_image.cpp" line="614"/>
         <source>no georeferencing information</source>
-        <translation type="unfinished"></translation>
+        <translation>nenia informo pri georeferencado</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="616"/>
         <source>Georeferenced</source>
-        <translation type="unfinished"></translation>
+        <translation>Georeferencita</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="620"/>
@@ -6606,7 +6606,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="231"/>
         <source>Georeferenced: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Georeferencita: %1</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="215"/>
@@ -6847,7 +6847,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/templates/template_track.cpp" line="160"/>
         <source>Load the track in georeferenced or non-georeferenced mode?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ŝargi la trakon en georeferencita aŭ negeoreferencita reĝimo?</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="162"/>
@@ -6862,12 +6862,12 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/templates/template_track.cpp" line="165"/>
         <source>Georeferenced</source>
-        <translation type="unfinished"></translation>
+        <translation>Georeferencita</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="166"/>
         <source>Non-georeferenced</source>
-        <translation type="unfinished"></translation>
+        <translation>Negeoreferencita</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="166"/>
@@ -7101,7 +7101,7 @@ La maksimuma subtenata versio estas %2.</translation>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="134"/>
         <source>Symbol icon text:</source>
-        <translation type="unfinished"></translation>
+        <translation>Teksto de la bildsimbolo:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="138"/>
@@ -7322,7 +7322,7 @@ La maksimuma subtenata versio estas %2.</translation>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="543"/>
         <source>Unsupported or invalid georeferencing specification '%1': %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Nesubtenata aŭ nevalida specifo de georeferencado '%1': %2</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="661"/>
