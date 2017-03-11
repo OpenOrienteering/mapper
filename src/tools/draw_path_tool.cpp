@@ -1,6 +1,6 @@
 /*
- *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2015 Kai Pastor
+ *    Copyright 2012-2014 Thomas Schöps
+ *    Copyright 2013-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -160,6 +160,7 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 						 snap_info.object->getType() == Object::Path)
 				{
 					// Start following another path
+					picked_angle = false;
 					startFollowing(snap_info, snap_coord);
 					return true;
 				}
