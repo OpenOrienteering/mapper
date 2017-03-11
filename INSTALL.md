@@ -210,9 +210,3 @@ Android packages are built in Qt Creator using the provided `oo-mapper.pro` file
 Windows and Linux packages are regularly build on
 https://build.opensuse.org/project/show/home:dg0yt, so proper package recipes for
 common distributions and package managers can be found there.
-
-Packaging with cmake is not enabled by default for Linux. Add `-DMapper_BUILD_PACKAGE=1`
-to change this. As already stated, this is untested, and you might need to look for
-additional tweaks.
-
-

@@ -113,7 +113,7 @@ public:
 			MapCoordF first, MapCoordF second,
 			float delta_offset,
 			LineSymbol* line,
-			PointObject* point_object,
+			float rotation,
 			ObjectRenderables& output
 		) const;
 		/** Spatially scales the pattern settings by the given factor. */

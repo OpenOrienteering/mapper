@@ -71,173 +71,137 @@ if(NOT QT_LIBRARY_DIR)
 	string(REGEX REPLACE "/[^/]*\\.framework" "" QT_LIBRARY_DIR "${QT_LIBRARY_DIR}")
 endif()
 
-if(NOT Mapper_BUILD_PACKAGE)
-    # Don't configure and include CPack
 
-elseif(NOT EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
-	message(WARNING "CPack not found, target 'package' will not be available")
 
-else()
-	# cf. http://www.cmake.org/cmake/help/cmake-2-8-docs.html#module:CPack
-	# cf. http://www.cmake.org/Wiki/CMake:CPackPackageGenerators
-	set(CPACK_PACKAGE_NAME "OpenOrienteering ${CMAKE_PROJECT_NAME}")
-	set(CPACK_PACKAGE_VENDOR "OpenOrienteering")
-	set(CPACK_PACKAGE_VERSION_MAJOR ${Mapper_VERSION_MAJOR})
-	set(CPACK_PACKAGE_VERSION_MINOR ${Mapper_VERSION_MINOR})
-	set(CPACK_PACKAGE_VERSION_PATCH ${Mapper_VERSION_PATCH})
-	set(CPACK_PACKAGE_DESCRIPTION_SUMMARY 
-	  "Map drawing program from OpenOrienteering")
-	if(NOT CMAKE_SIZEOF_VOID_P AND MINGW)
-		set(_env_lang $ENV{LANG})
-		set(ENV{LANG} C)
-		execute_process(
-		  COMMAND ${CMAKE_C_COMPILER} -dumpmachine
-		  OUTPUT_VARIABLE HOST_TRIPLET
-		)
-		set(ENV{LANG} ${_env_lang})
-		if(${HOST_TRIPLET} MATCHES ^i686)
-			set(CMAKE_SIZEOF_VOID_P 4)
-		elseif(${HOST_TRIPLET} MATCHES ^x86_64)
-			set(CMAKE_SIZEOF_VOID_P 8)
-		endif()
+# cf. http://www.cmake.org/cmake/help/cmake-2-8-docs.html#module:CPack
+# cf. http://www.cmake.org/Wiki/CMake:CPackPackageGenerators
+set(CPACK_PACKAGE_NAME "OpenOrienteering ${CMAKE_PROJECT_NAME}")
+set(CPACK_PACKAGE_VENDOR "OpenOrienteering")
+set(CPACK_PACKAGE_VERSION_MAJOR ${Mapper_VERSION_MAJOR})
+set(CPACK_PACKAGE_VERSION_MINOR ${Mapper_VERSION_MINOR})
+set(CPACK_PACKAGE_VERSION_PATCH ${Mapper_VERSION_PATCH})
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Map drawing program from OpenOrienteering")
+if(NOT CMAKE_SIZEOF_VOID_P AND MINGW)
+	set(_env_lang $ENV{LANG})
+	set(ENV{LANG} C)
+	execute_process(
+	  COMMAND ${CMAKE_C_COMPILER} -dumpmachine
+	  OUTPUT_VARIABLE HOST_TRIPLET
+	)
+	set(ENV{LANG} ${_env_lang})
+	if(${HOST_TRIPLET} MATCHES ^i686)
+		set(CMAKE_SIZEOF_VOID_P 4)
+	elseif(${HOST_TRIPLET} MATCHES ^x86_64)
+		set(CMAKE_SIZEOF_VOID_P 8)
 	endif()
-	if(CMAKE_SIZEOF_VOID_P EQUAL 4)
-		set(_system_name "${CMAKE_SYSTEM_NAME}-x86")
-	elseif(CMAKE_SIZEOF_VOID_P EQUAL 8)
-		set(_system_name "${CMAKE_SYSTEM_NAME}-x64")
-	else()
-		set(_system_name "${CMAKE_SYSTEM_NAME}-unknown")
-	endif()
-	set(CPACK_PACKAGE_FILE_NAME 
-	  "openorienteering-mapper_${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}-${_system_name}")
-	set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/COPYING")
-	set(CPACK_STRIP_FILES "TRUE")
-	
-	set(CPACK_SOURCE_PACKAGE_FILE_NAME
-	  "openorienteering-mapper_${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}-src")
-	set(CPACK_SOURCE_IGNORE_FILES 
-	  "${PROJECT_BINARY_DIR}"
-	  "/[.]git/"
-	  "/3rd-party/clipper/download/"
-	  "/3rd-party/proj/download/"
-	  "/3rd-party/qt5/download/"
-	  ${CPACK_SOURCE_IGNORE_FILES})
-	
-	set(MAPPER_MACOS_SUBDIR "")
-
-	if(WIN32)
-		# Packaging as ZIP archive
-		set(CPACK_GENERATOR_DEFAULT "ZIP")
-		#set(CPACK_INCLUDE_TOPLEVEL_DIRECTORY 0)
-		set(CPACK_PACKAGE_INSTALL_DIRECTORY "${CPACK_PACKAGE_NAME} ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
-		set(CPACK_PACKAGE_EXECUTABLES "Mapper" "${CPACK_PACKAGE_NAME} ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
-
-		find_program(MAKENSIS_EXECUTABLE "makensis")
-		if(MAKENSIS_EXECUTABLE)
-			list(APPEND CPACK_GENERATOR_DEFAULT "NSIS")
-			# The title displayed at the top of the installer
-			set(CPACK_NSIS_PACKAGE_NAME "${CPACK_PACKAGE_NAME}")
-			# The display name string that appears in the Windows Add/Remove Program control panel
-			set(CPACK_NSIS_DISPLAY_NAME "${CPACK_PACKAGE_NAME} ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
-			# NSIS start menu links will point to executables in this directory
-			set(CPACK_NSIS_EXECUTABLES_DIRECTORY ".")
-			# A path to the executable that contains the uninstaller icon.
-			set(CPACK_NSIS_INSTALLED_ICON_NAME Mapper.exe)
-			# URL to a web site providing more information about your application.
-			set(CPACK_NSIS_URL_INFO_ABOUT "http://openorienteering.org/apps/mapper/")
-			# Extra NSIS include
-			configure_file(windows/custom.nsi.in windows/custom.nsi @ONLY)
-			set(CPACK_NSIS_DEFINES "!include \\\"${CMAKE_CURRENT_BINARY_DIR}\\\\windows\\\\custom.nsi\\\"")
-			# Extra NSIS commands that will be added to the install/uninstall sections.
-			set(CPACK_NSIS_EXTRA_INSTALL_COMMANDS   "Call installAssociations")
-			set(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS "Call un.installAssociations")
-			# 64 bit build
-			if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-				set(CPACK_NSIS_INSTALL_ROOT "$PROGRAMFILES64")
-				set(CPACK_NSIS_DISPLAY_NAME "${CPACK_NSIS_DISPLAY_NAME} x64")
-			endif()
-		endif(MAKENSIS_EXECUTABLE)
-
-	elseif(APPLE)
-		set(MAPPER_MACOS_SUBDIR "/Mapper.app/Contents/MacOS")
-		set(CPACK_GENERATOR_DEFAULT "DragNDrop")
-		set(CPACK_PACKAGE_EXECUTABLES "Mapper" "OpenOrienteering Mapper ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
-		set(CPACK_PACKAGE_ICON "${PROJECT_SOURCE_DIR}/images/mapper-icon/Mapper.icns")
-		set_target_properties(Mapper PROPERTIES
-		  MACOSX_BUNDLE_INFO_STRING          "${CPACK_PACKAGE_DESCRIPTION_SUMMARY}"
-		  MACOSX_BUNDLE_ICON_FILE            "Mapper.icns"
-		  MACOSX_BUNDLE_GUI_IDENTIFIER       "org.openorienteering.${CMAKE_PROJECT_NAME}"
-		  MACOSX_BUNDLE_LONG_VERSION_STRING  "${CMAKE_PROJECT_NAME} ${Mapper_VERSION_DISPLAY} for OS X"
-		  MACOSX_BUNDLE_BUNDLE_NAME          "${CMAKE_PROJECT_NAME}" # less than 16 characters long
-		  MACOSX_BUNDLE_SHORT_VERSION_STRING "${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}"
-		  MACOSX_BUNDLE_BUNDLE_VERSION       "${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}"
-		  MACOSX_BUNDLE_COPYRIGHT            "${Mapper_COPYRIGHT}"
-		)
-		install(FILES "${CPACK_PACKAGE_ICON}"
-		  DESTINATION "${MAPPER_DATA_DESTINATION}")
-
-	elseif(UNIX AND EXISTS /usr/bin/dpkg AND EXISTS /usr/bin/lsb_release)
-		# Packaging on Debian or similar
-		set(CPACK_GENERATOR_DEFAULT "DEB")
-		set(CPACK_DEBIAN_PACKAGE_NAME "openorienteering-mapper")
-		execute_process(
-		  COMMAND /usr/bin/lsb_release -sc 
-		  OUTPUT_VARIABLE CPACK_LSB_RELEASE 
-		  OUTPUT_STRIP_TRAILING_WHITESPACE)
-		string(REPLACE 
-		  "Linux-x86" 
-		  "${CPACK_LSB_RELEASE}_i386" 
-		  CPACK_PACKAGE_FILE_NAME
-		  ${CPACK_PACKAGE_FILE_NAME})
-		string(REPLACE 
-		  "Linux-x64" 
-		  "${CPACK_LSB_RELEASE}_amd64" 
-		  CPACK_PACKAGE_FILE_NAME
-		  ${CPACK_PACKAGE_FILE_NAME})
-		set(CPACK_DEBIAN_PACKAGE_MAINTAINER
-		   "Kai Pastor <dg0yt@darc.de>")
-		set(CPACK_DEBIAN_SECTION "graphics")
-		set(CPACK_DEBIAN_PACKAGE_HOMEPAGE 
-		  "http://openorienteering.org/apps/mapper/")
-		set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS "ON")
-		
-		unset(FAKEROOT_EXECUTABLE CACHE)
-		find_program(FAKEROOT_EXECUTABLE fakeroot)
-		if(NOT FAKEROOT_EXECUTABLE)
-			install(CODE "MESSAGE(WARNING
-			  \"'fakeroot' not found. To build a DEB package with proper file \"
-			  \"ownership, fakeroot must be installed.\")")
-		endif(NOT FAKEROOT_EXECUTABLE)
-		mark_as_advanced(FAKEROOT_EXECUTABLE)
-		
-		message(WARNING 
-		  "The CPackDeb generator for creating deb packages has some issues. Run\n"
-		  "   make deb\n"
-		  "instead of running make package directly." )
-		add_custom_target(deb
-		  COMMENT "Building a DEB package"
-		  COMMAND sh -c 'if [ -d \"${CPACK_PACKAGE_FILE_NAME}\" ]; then rm -R \"${CPACK_PACKAGE_FILE_NAME}\" ";" fi'
-		  COMMAND sh -c 'mkdir \"${CPACK_PACKAGE_FILE_NAME}\" && chmod 0755 \"${CPACK_PACKAGE_FILE_NAME}\"'
-		  COMMAND sh -c '
-		    umask 022 && 
-		    "\$(MAKE)" package &&
-		    dpkg-deb -R \"${CPACK_PACKAGE_FILE_NAME}.deb\" \"${CPACK_PACKAGE_FILE_NAME}\" &&
-		    ldconfig -n \"${CPACK_PACKAGE_FILE_NAME}${MAPPER_LIBRARY_DESTINATION}/lib\" &&
-		    fakeroot dpkg-deb -b \"${CPACK_PACKAGE_FILE_NAME}\"'
-		  COMMAND rm -R "./${CPACK_PACKAGE_FILE_NAME}"
-		  WORKING_DIRECTORY "${PROJECT_BINARY_DIR}")
-	
-	endif()
-
-	set(CPACK_GENERATOR "${CPACK_GENERATOR_DEFAULT}"
-	  CACHE STRING "The binary package generators (ZIP;DEB;DragNDrop;NSIS)")
-	set(CPACK_SOURCE_GENERATOR "OFF"
-	  CACHE STRING "The source package generators (TGZ;ZIP)")
-	mark_as_advanced(CPACK_GENERATOR CPACK_SOURCE_GENERATOR)
-
-	include(CPack)
-
 endif()
+if(CMAKE_SIZEOF_VOID_P EQUAL 4)
+	set(_system_name "${CMAKE_SYSTEM_NAME}-x86")
+elseif(CMAKE_SIZEOF_VOID_P EQUAL 8)
+	set(_system_name "${CMAKE_SYSTEM_NAME}-x64")
+else()
+	set(_system_name "${CMAKE_SYSTEM_NAME}-unknown")
+endif()
+set(CPACK_PACKAGE_FILE_NAME 
+    "openorienteering-mapper_${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}-${_system_name}")
+set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/COPYING")
+set(CPACK_STRIP_FILES "TRUE")
+
+set(CPACK_SOURCE_PACKAGE_FILE_NAME
+    "openorienteering-mapper_${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}-src")
+set(CPACK_SOURCE_IGNORE_FILES 
+  "${PROJECT_BINARY_DIR}"
+  "/[.]git/"
+  "/3rd-party/clipper/download/"
+  "/3rd-party/proj/download/"
+  "/3rd-party/qt5/download/"
+  ${CPACK_SOURCE_IGNORE_FILES}
+)
+
+set(MAPPER_MACOS_SUBDIR "")
+
+if(WIN32)
+	# Packaging as ZIP archive
+	set(CPACK_GENERATOR_DEFAULT "ZIP")
+	#set(CPACK_INCLUDE_TOPLEVEL_DIRECTORY 0)
+	set(CPACK_PACKAGE_INSTALL_DIRECTORY "${CPACK_PACKAGE_NAME} ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
+	set(CPACK_PACKAGE_EXECUTABLES "Mapper" "${CPACK_PACKAGE_NAME} ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
+	
+	find_program(MAKENSIS_EXECUTABLE "makensis")
+	if(MAKENSIS_EXECUTABLE)
+		list(APPEND CPACK_GENERATOR_DEFAULT "NSIS")
+		# The title displayed at the top of the installer
+		set(CPACK_NSIS_PACKAGE_NAME "${CPACK_PACKAGE_NAME}")
+		# The display name string that appears in the Windows Add/Remove Program control panel
+		set(CPACK_NSIS_DISPLAY_NAME "${CPACK_PACKAGE_NAME} ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
+		# NSIS start menu links will point to executables in this directory
+		set(CPACK_NSIS_EXECUTABLES_DIRECTORY ".")
+		# A path to the executable that contains the uninstaller icon.
+		set(CPACK_NSIS_INSTALLED_ICON_NAME Mapper.exe)
+		# URL to a web site providing more information about your application.
+		set(CPACK_NSIS_URL_INFO_ABOUT "http://openorienteering.org/apps/mapper/")
+		# Extra NSIS include
+		configure_file(windows/custom.nsi.in windows/custom.nsi @ONLY)
+		set(CPACK_NSIS_DEFINES "!include \\\"${CMAKE_CURRENT_BINARY_DIR}\\\\windows\\\\custom.nsi\\\"")
+		# Extra NSIS commands that will be added to the install/uninstall sections.
+		set(CPACK_NSIS_EXTRA_INSTALL_COMMANDS   "Call installAssociations")
+		set(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS "Call un.installAssociations")
+		# 64 bit build
+		if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+			set(CPACK_NSIS_INSTALL_ROOT "$PROGRAMFILES64")
+			set(CPACK_NSIS_DISPLAY_NAME "${CPACK_NSIS_DISPLAY_NAME} x64")
+		endif()
+	endif(MAKENSIS_EXECUTABLE)
+	
+elseif(APPLE)
+	set(MAPPER_MACOS_SUBDIR "/Mapper.app/Contents/MacOS")
+	set(CPACK_GENERATOR_DEFAULT "DragNDrop")
+	set(CPACK_PACKAGE_EXECUTABLES "Mapper" "OpenOrienteering Mapper ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
+	set(CPACK_PACKAGE_ICON "${PROJECT_SOURCE_DIR}/images/mapper-icon/Mapper.icns")
+	set_target_properties(Mapper PROPERTIES
+	  MACOSX_BUNDLE_INFO_STRING          "${CPACK_PACKAGE_DESCRIPTION_SUMMARY}"
+	  MACOSX_BUNDLE_ICON_FILE            "Mapper.icns"
+	  MACOSX_BUNDLE_GUI_IDENTIFIER       "org.openorienteering.${CMAKE_PROJECT_NAME}"
+	  MACOSX_BUNDLE_LONG_VERSION_STRING  "${CMAKE_PROJECT_NAME} ${Mapper_VERSION_DISPLAY} for OS X"
+	  MACOSX_BUNDLE_BUNDLE_NAME          "${CMAKE_PROJECT_NAME}" # less than 16 characters long
+	  MACOSX_BUNDLE_SHORT_VERSION_STRING "${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}"
+	  MACOSX_BUNDLE_BUNDLE_VERSION       "${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}"
+	  MACOSX_BUNDLE_COPYRIGHT            "${Mapper_COPYRIGHT}"
+	)
+	install(FILES "${CPACK_PACKAGE_ICON}"
+	  DESTINATION "${MAPPER_DATA_DESTINATION}"
+	)
+	
+elseif(UNIX AND EXISTS /usr/bin/dpkg AND EXISTS /usr/bin/lsb_release)
+	# Packaging on Debian or similar
+	set(CPACK_GENERATOR_DEFAULT "DEB")
+	set(CPACK_DEBIAN_PACKAGE_NAME "openorienteering-mapper")
+	execute_process(
+	  COMMAND /usr/bin/lsb_release -sc 
+	  OUTPUT_VARIABLE CPACK_LSB_RELEASE 
+	  OUTPUT_STRIP_TRAILING_WHITESPACE
+	)
+	string(REPLACE "Linux-x86" "${CPACK_LSB_RELEASE}_i386"
+	  CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_FILE_NAME}"
+	)
+	string(REPLACE "Linux-x64" "${CPACK_LSB_RELEASE}_amd64"
+	  CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_FILE_NAME}"
+	)
+	set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Kai Pastor <dg0yt@darc.de>")
+	set(CPACK_DEBIAN_SECTION            "graphics")
+	set(CPACK_DEBIAN_PACKAGE_HOMEPAGE   "http://openorienteering.org/apps/mapper/")
+	set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS  "ON")
+	
+endif()
+
+set(CPACK_GENERATOR "${CPACK_GENERATOR_DEFAULT}"
+    CACHE STRING "The binary package generators (ZIP;DEB;DragNDrop;NSIS)")
+set(CPACK_SOURCE_GENERATOR "OFF"
+    CACHE STRING "The source package generators (TGZ;ZIP)")
+mark_as_advanced(CPACK_GENERATOR CPACK_SOURCE_GENERATOR)
+
+include(CPack)
+
 
 
 # Cleanup obsolete cache items

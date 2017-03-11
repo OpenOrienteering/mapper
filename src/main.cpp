@@ -155,11 +155,3 @@ int main(int argc, char** argv)
 	first_window.raise();
 	return qapp.exec();
 }
-
-#ifdef _MSC_VER
-#include "Windows.h"
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
-{
-	return main(__argc, __argv);
-}
-#endif
