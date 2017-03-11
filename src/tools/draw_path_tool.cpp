@@ -874,7 +874,7 @@ void DrawPathTool::updateAngleHelper()
 		return;
 	
 	if (!preview_path
-	    || (updatePreviewPath(), preview_path->parts().empty()))
+	    || (static_cast<void>(updatePreviewPath()), preview_path->parts().empty()))
 	{
 		angle_helper->clearAngles();
 		angle_helper->addDefaultAnglesDeg(0);
@@ -893,15 +893,14 @@ void DrawPathTool::updateAngleHelper()
 			tangent = MapCoordF(1, 0);
 		angle = -tangent.angle();
 	}
+	else if (previous_point_is_curve_point)
+	{
+		angle = previous_point_direction;
+	}
 	else
 	{
-		if (previous_point_is_curve_point)
-			angle = previous_point_direction;
-		else
-		{
-			angle = 0;
-			rectangular_stepping = false;
-		}
+		angle = 0;
+		rectangular_stepping = false;
 	}
 	
 	if (!part.empty())
@@ -918,7 +917,9 @@ bool DrawPathTool::pickAngle(MapCoordF coord, MapWidget* widget)
 	MapCoord snap_position;
 	bool picked = snap_helper->snapToDirection(coord, widget, angle_helper.data(), &snap_position);
 	if (picked)
+	{
 		angle_helper->setCenter(MapCoordF(snap_position));
+	}
 	else
 	{
 		updateAngleHelper();
@@ -998,20 +999,18 @@ void DrawPathTool::finishFollowing()
 {
 	following = false;
 	
-	int last = preview_path->getCoordinateCount() - 1;
+	auto last = preview_path->getCoordinateCount() - 1;
 	
-	if (last >= 3 && preview_path->getCoordinate(last - 3).isCurveStart())
+	previous_point_is_curve_point = (last >= 3 && preview_path->getCoordinate(last - 3).isCurveStart());
+	if (previous_point_is_curve_point)
 	{
 		MapCoord first = preview_path->getCoordinate(last - 1);
 		MapCoord second = preview_path->getCoordinate(last);
 		
-		previous_point_is_curve_point = true;
 		previous_point_direction = -atan2(second.x() - first.x(), first.y() - second.y());
 		previous_pos_map = MapCoordF(second);
-		previous_drag_map = MapCoordF(second.x() + (second.x() - first.x()) / 2, second.y() + (second.y() - first.y()) / 2);
+		previous_drag_map = MapCoordF(2*second.x() - first.x(), 2*second.y() +  - first.y());
 	}
-	else
-		previous_point_is_curve_point = false;
 	
 	updateAngleHelper();
 }
