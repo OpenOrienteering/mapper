@@ -773,7 +773,7 @@
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="138"/>
         <source>Align points with direction of line</source>
-        <translation type="unfinished"></translation>
+        <translation>Ĝisrandigi punktojn al direkto de linio</translation>
     </message>
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="142"/>
@@ -1273,7 +1273,7 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="85"/>
         <source>Radius of helper cross:</source>
-        <translation type="unfinished"></translation>
+        <translation>Radiuso de helpa kruco:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="87"/>
@@ -1868,7 +1868,7 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="212"/>
         <source>Open most recently used file on start</source>
-        <translation type="unfinished"></translation>
+        <translation>Malfermi plej antaŭ nelonge uzita dosieron startigante</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="215"/>
@@ -1998,7 +1998,7 @@
         <location filename="../src/fileformats/file_import_export.h" line="230"/>
         <source>No such option: %1</source>
         <comment>No such import / export option</comment>
-        <translation>Tia opcio ne ekzistas.: %1</translation>
+        <translation>Tia opcio ne ekzistas: %1</translation>
     </message>
 </context>
 <context>
@@ -5199,7 +5199,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="150"/>
         <source>Map area:</source>
-        <translation type="unfinished"></translation>
+        <translation>Areo de mapo:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="152"/>
@@ -5245,7 +5245,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="223"/>
         <source>Template appearance may differ.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ŝablona aspekto povas nuanciĝi.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="230"/>
@@ -5471,7 +5471,7 @@ apartigoj</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1329"/>
         <source>The map area is empty. Output canceled.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mapa areo estas malplena. Eligo estas nuligita.</translation>
     </message>
 </context>
 <context>
