@@ -296,13 +296,10 @@ if(WIN32)
 	list(APPEND Mapper_SRCS ${CMAKE_CURRENT_BINARY_DIR}/resources.rc)
 endif()
 
-add_executable(Mapper
-  WIN32
-  MACOSX_BUNDLE
-  ${Mapper_SRCS}
-)
-
-if(TARGET QtSingleApplication)
+if(ANDROID)
+	add_library(Mapper SHARED ${Mapper_SRCS})
+else()
+	add_executable(Mapper WIN32 MACOSX_BUNDLE ${Mapper_SRCS})
 	target_link_libraries(Mapper QtSingleApplication)
 endif()
 
@@ -318,7 +315,8 @@ target_compile_definitions(Mapper PRIVATE
 
 install(TARGETS Mapper
   RUNTIME DESTINATION "${MAPPER_RUNTIME_DESTINATION}"
-  BUNDLE DESTINATION "${MAPPER_RUNTIME_DESTINATION}"
+  BUNDLE DESTINATION "${MAPPER_RUNTIME_DESTINATION}"   # macOS
+  LIBRARY DESTINATION "${MAPPER_RUNTIME_DESTINATION}"  # Android
 )
 
 if(Mapper_BUILD_QT)

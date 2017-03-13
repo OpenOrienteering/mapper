@@ -172,6 +172,50 @@ elseif(APPLE)
 	  DESTINATION "${MAPPER_DATA_DESTINATION}"
 	)
 	
+elseif(ANDROID)
+	# We don't use a CPack generator,
+	# but run androiddeployqt from CPackConfig.cmake
+	set(CPACK_GENERATOR_DEFAULT "")
+	
+	set(KEYSTORE_URL "KEYSTORE_URL-NOTFOUND" CACHE STRING
+	  "URL of the keystore to be used when signing APK packages."
+	)
+	set(KEYSTORE_ALIAS "KEYSTORE_ALIAS-NOTFOUND" CACHE STRING
+	  "Alias in the keystore to be used when signing APK packages."
+	)
+	if(KEYSTORE_URL AND KEYSTORE_ALIAS)
+		set(SIGN_APK "$<OR:$<CONFIG:Release>,$<CONFIG:RelWithDebInfo>>")
+	else()
+		set(SIGN_APK 0)
+	endif()
+	configure_file(
+	  "${PROJECT_SOURCE_DIR}/android/CPackConfig.cmake.in"
+	  "${PROJECT_BINARY_DIR}/CPackConfig.cmake.tmp"
+	  @ONLY
+	)
+	file(GENERATE
+	  OUTPUT "${PROJECT_BINARY_DIR}/CPackConfig.cmake"
+	  INPUT "${PROJECT_BINARY_DIR}/CPackConfig.cmake.tmp"
+	)
+	
+	# For configuring androiddeployqt, we create a dummy qmake project.
+	# The directory name must match the Mapper binary.
+	file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/Mapper")
+	configure_file(
+	  "${PROJECT_SOURCE_DIR}/android/Mapper.pro.in"
+	  "${CMAKE_CURRENT_BINARY_DIR}/Mapper/Mapper.pro"
+	  @ONLY
+	)
+	include(ExternalProject)
+	ExternalProject_Add(APK
+	  SOURCE_DIR "${CMAKE_CURRENT_BINARY_DIR}/Mapper"
+	  CONFIGURE_COMMAND  Qt5::qmake .
+	  INSTALL_COMMAND    ""
+	  BUILD_IN_SOURCE    1
+	  BUILD_ALWAYS       1
+	  EXCLUDE_FROM_ALL   1
+	)
+	
 elseif(UNIX AND EXISTS /usr/bin/dpkg AND EXISTS /usr/bin/lsb_release)
 	# Packaging on Debian or similar
 	set(CPACK_GENERATOR_DEFAULT "DEB")
@@ -194,13 +238,15 @@ elseif(UNIX AND EXISTS /usr/bin/dpkg AND EXISTS /usr/bin/lsb_release)
 	
 endif()
 
-set(CPACK_GENERATOR "${CPACK_GENERATOR_DEFAULT}"
-    CACHE STRING "The binary package generators (ZIP;DEB;DragNDrop;NSIS)")
-set(CPACK_SOURCE_GENERATOR "OFF"
-    CACHE STRING "The source package generators (TGZ;ZIP)")
-mark_as_advanced(CPACK_GENERATOR CPACK_SOURCE_GENERATOR)
-
-include(CPack)
+if(CPACK_GENERATOR_DEFAULT)
+	set(CPACK_GENERATOR "${CPACK_GENERATOR_DEFAULT}"
+		CACHE STRING "The binary package generators (ZIP;DEB;DragNDrop;NSIS)")
+	set(CPACK_SOURCE_GENERATOR "OFF"
+		CACHE STRING "The source package generators (TGZ;ZIP)")
+	mark_as_advanced(CPACK_GENERATOR CPACK_SOURCE_GENERATOR)
+	
+	include(CPack)
+endif()
 
 
 
@@ -280,6 +326,9 @@ if(Mapper_PACKAGE_QT)
 	  printsupport/cupsprintersupport
 	  printsupport/windowsprintersupport
 	)
+	if(ANDROID)
+		set(MAPPER_QT_PLUGINS ) # Ignore for now, handled by androiddeployqt
+	endif()
 	set(QT_PLUGIN_TARGETS )
 	foreach(module Gui Positioning PrintSupport Sensors Sql)
 		find_package(Qt5${module} QUIET)
@@ -381,7 +430,7 @@ foreach(_qt_plugin ${MAPPER_QT_PLUGINS})
 endforeach(_qt_plugin)
 
 
-if(UNIX AND NOT APPLE)
+if(UNIX AND NOT APPLE AND NOT ANDROID)
 	install(
 	  FILES "${PROJECT_SOURCE_DIR}/doc/man/Mapper.1"
 	  DESTINATION "share/man/man1")
