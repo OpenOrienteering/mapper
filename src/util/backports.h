@@ -28,7 +28,7 @@
 #  include "qoverload.h"
 #endif
 
-#if defined(ANDROID) && defined(_GLIBCXX_CMATH)
+#if defined(Q_OS_ANDROID) && defined(_GLIBCXX_CMATH)
 namespace std
 {
 

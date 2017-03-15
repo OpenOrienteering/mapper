@@ -1,5 +1,5 @@
 #
-#    Copyright 2016 Kai Pastor
+#    Copyright 2017 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -17,28 +17,15 @@
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
 
 
-if(NOT COMMAND check_cxx_compiler_flag)
-	include(CheckCXXCompilerFlag)
-endif()
+# This qmake project files is to create a configuration for androiddeployqt.
 
-macro(enable_sanitize)
-	foreach(option ${ARGV})
-		if(ANDROID)
-			break() # out of macro
-		endif()
-		if(option STREQUAL "NO_RECOVER")
-			set(full_option "-fno-sanitize-recover=all")
-		else()
-			set(full_option "-fsanitize=${option}")
-		endif()
-		if(NOT CMAKE_CXX_FLAGS MATCHES "${full_option}")
-			string(MAKE_C_IDENTIFIER ${option} option_id)
-			check_cxx_compiler_flag("${full_option}" SANITIZE_${option_id})
-			if(SANITIZE_${option_id})
-				set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${full_option}")
-			endif()
-		endif()
-	endforeach()
-	
-endmacro()
+!android:error("This project is for Android only.")
+
+TEMPLATE = app
+TARGET   = Mapper
+
+ANDROID_PACKAGE_SOURCE_DIR = @PROJECT_SOURCE_DIR@/android
+
+# Additional configuration from packaging/custom_install.cmake
+include(mapper_libs.pri)
 
