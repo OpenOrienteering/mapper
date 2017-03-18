@@ -203,8 +203,12 @@ elseif(ANDROID)
 	file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/Mapper")
 	configure_file(
 	  "${PROJECT_SOURCE_DIR}/android/Mapper.pro.in"
-	  "${CMAKE_CURRENT_BINARY_DIR}/Mapper/Mapper.pro"
+	  "${CMAKE_CURRENT_BINARY_DIR}/Mapper/Mapper.tmp.pro"
 	  @ONLY
+	)
+	file(GENERATE
+	  OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/Mapper/Mapper.pro"
+	  INPUT "${CMAKE_CURRENT_BINARY_DIR}/Mapper/Mapper.tmp.pro"
 	)
 	
 elseif(UNIX AND EXISTS /usr/bin/dpkg AND EXISTS /usr/bin/lsb_release)
