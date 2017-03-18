@@ -143,7 +143,7 @@ else()
 			string(REGEX REPLACE \".*<file>\"  \"\" match \"\${match}\")
 			string(REGEX REPLACE \"</file>.*\" \"\" match \"\${match}\")
 			file(INSTALL
-			  DESTINATION \"${MAPPER_DATA_DESTINATION}/doc/manual\"
+			  DESTINATION \"\${CMAKE_INSTALL_PREFIX}/${MAPPER_DATA_DESTINATION}/doc/manual\"
 			  FILES \"${CMAKE_CURRENT_BINARY_DIR}/html/\${match}\"
 			)
 		endforeach()

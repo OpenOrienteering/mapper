@@ -190,12 +190,12 @@ elseif(ANDROID)
 	endif()
 	configure_file(
 	  "${PROJECT_SOURCE_DIR}/android/CPackConfig.cmake.in"
-	  "${PROJECT_BINARY_DIR}/CPackConfig.cmake.tmp"
+	  "${PROJECT_BINARY_DIR}/CPackConfig.tmp.cmake"
 	  @ONLY
 	)
 	file(GENERATE
 	  OUTPUT "${PROJECT_BINARY_DIR}/CPackConfig.cmake"
-	  INPUT "${PROJECT_BINARY_DIR}/CPackConfig.cmake.tmp"
+	  INPUT "${PROJECT_BINARY_DIR}/CPackConfig.tmp.cmake"
 	)
 	
 	# For configuring androiddeployqt, we create a dummy qmake project.
@@ -203,17 +203,12 @@ elseif(ANDROID)
 	file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/Mapper")
 	configure_file(
 	  "${PROJECT_SOURCE_DIR}/android/Mapper.pro.in"
-	  "${CMAKE_CURRENT_BINARY_DIR}/Mapper/Mapper.pro"
+	  "${CMAKE_CURRENT_BINARY_DIR}/Mapper/Mapper.tmp.pro"
 	  @ONLY
 	)
-	include(ExternalProject)
-	ExternalProject_Add(APK
-	  SOURCE_DIR "${CMAKE_CURRENT_BINARY_DIR}/Mapper"
-	  CONFIGURE_COMMAND  Qt5::qmake .
-	  INSTALL_COMMAND    ""
-	  BUILD_IN_SOURCE    1
-	  BUILD_ALWAYS       1
-	  EXCLUDE_FROM_ALL   1
+	file(GENERATE
+	  OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/Mapper/Mapper.pro"
+	  INPUT "${CMAKE_CURRENT_BINARY_DIR}/Mapper/Mapper.tmp.pro"
 	)
 	
 elseif(UNIX AND EXISTS /usr/bin/dpkg AND EXISTS /usr/bin/lsb_release)
