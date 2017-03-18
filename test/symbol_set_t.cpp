@@ -1,5 +1,5 @@
 /*
- *    Copyright 2014-2016 Kai Pastor
+ *    Copyright 2014-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,14 +19,14 @@
 
 #include "symbol_set_t.h"
 
-#include "core/map_color.h"
-#include "../src/core/map_printer.h"
-#include "../src/core/map_view.h"
-#include "../src/fileformats/xml_file_format_p.h"
+#include "settings.h"
 #include "core/map.h"
+#include "core/map_color.h"
+#include "core/map_printer.h"
+#include "core/map_view.h"
 #include "core/symbols/area_symbol.h"
-#include "../src/settings.h"
-#include "../src/templates/template.h"
+#include "fileformats/xml_file_format_p.h"
+#include "templates/template.h"
 #include "undo/undo_manager.h"
 
 
@@ -41,7 +41,7 @@ void saveIfDifferent(const QString& path, Map* map, MapView* view = nullptr)
 	if (file.exists())
 	{
 		QVERIFY(file.open(QIODevice::ReadOnly));
-		existing_data.reserve(file.size()+1);
+		existing_data.reserve(int(file.size()+1));
 		existing_data = file.readAll();
 		QCOMPARE(file.error(), QFileDevice::NoError);
 		file.close();
@@ -82,6 +82,9 @@ void SymbolSetTool::initTestCase()
 	
 	examples_dir.cd(QFileInfo(QString::fromUtf8(__FILE__)).dir().absoluteFilePath(QString::fromLatin1("../examples")));
 	QVERIFY(examples_dir.exists());
+	
+	test_data_dir.cd(QFileInfo(QString::fromUtf8(__FILE__)).dir().absoluteFilePath(QString::fromLatin1("../test/data")));
+	QVERIFY(test_data_dir.exists());
 	
 	Template::pathForSaving = &Template::getTemplateRelativePath;
 }
@@ -372,6 +375,31 @@ void SymbolSetTool::processExamples()
 }
 
 
+void SymbolSetTool::processTestData_data()
+{
+	QTest::addColumn<QString>("name");
+
+	QTest::newRow("world-file")  << QString::fromLatin1("templates/world-file");
+}
+
+void SymbolSetTool::processTestData()
+{
+	QFETCH(QString, name);
+	
+	QString source_filename = QString::fromLatin1("%1.xmap").arg(name);
+	QVERIFY(test_data_dir.exists(source_filename));
+	
+	QString source_path = test_data_dir.absoluteFilePath(source_filename);
+	
+	Map map;
+	MapView view{ &map };
+	map.loadFrom(source_path, nullptr, &view, false, false);
+	
+	map.undoManager().clear();
+	saveIfDifferent(source_path, &map, &view);
+}
+
+
 /*
  * We don't need a real GUI window.
  * 
@@ -379,7 +407,7 @@ void SymbolSetTool::processExamples()
  * while running with "minimal" platform plugin.
  */
 #ifndef Q_OS_MACOS
-auto qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");
+static auto qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");
 #endif
 
 
