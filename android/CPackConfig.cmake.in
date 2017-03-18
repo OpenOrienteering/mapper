@@ -31,7 +31,6 @@ if(EXISTS "${destdir}")
 	FILE(REMOVE_RECURSE "${destdir}")
 endif()
 
-execute_process(COMMAND "${CMAKE_COMMAND}" -E echo "Install project: @PROJECT_NAME@")
 execute_process(
   COMMAND "${CMAKE_COMMAND}"
     "-DCMAKE_INSTALL_PREFIX=${destdir}"
@@ -44,17 +43,21 @@ if(result)
 	message(FATAL_ERROR "Installation failed: ${result}")
 endif()
 
-execute_process(COMMAND "${CMAKE_COMMAND}" -E echo "Creating APK configuration")
+# Create an androiddeployqt configuration file via qmake project.
 execute_process(
-  COMMAND "${CMAKE_COMMAND}"
-    --build .
-	--target APK
-  WORKING_DIRECTORY "@PROJECT_BINARY_DIR@"
+  COMMAND "$<TARGET_FILE:Qt5::qmake>"
+  WORKING_DIRECTORY "@CMAKE_CURRENT_BINARY_DIR@/Mapper"
   RESULT_VARIABLE result
 )
 if(result)
 	message(FATAL_ERROR "Creating APK configuration failed: ${result}")
 endif()
+
+# Copy the Mapper runtime from the CMake project to the qmake project.
+file(INSTALL
+  DESTINATION "@CMAKE_CURRENT_BINARY_DIR@/Mapper"
+  FILES "$<TARGET_FILE:Mapper>"
+)
 
 set(sign )
 set(final_error )
@@ -74,7 +77,6 @@ if(UNIX)
 endif()
 >>
 
-execute_process(COMMAND "${CMAKE_COMMAND}" -E echo "Create package")
 execute_process(
   COMMAND androiddeployqt
     --output "${destdir}"

@@ -206,15 +206,6 @@ elseif(ANDROID)
 	  "${CMAKE_CURRENT_BINARY_DIR}/Mapper/Mapper.pro"
 	  @ONLY
 	)
-	include(ExternalProject)
-	ExternalProject_Add(APK
-	  SOURCE_DIR "${CMAKE_CURRENT_BINARY_DIR}/Mapper"
-	  CONFIGURE_COMMAND  Qt5::qmake .
-	  INSTALL_COMMAND    ""
-	  BUILD_IN_SOURCE    1
-	  BUILD_ALWAYS       1
-	  EXCLUDE_FROM_ALL   1
-	)
 	
 elseif(UNIX AND EXISTS /usr/bin/dpkg AND EXISTS /usr/bin/lsb_release)
 	# Packaging on Debian or similar
