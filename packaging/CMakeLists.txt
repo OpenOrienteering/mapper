@@ -190,12 +190,12 @@ elseif(ANDROID)
 	endif()
 	configure_file(
 	  "${PROJECT_SOURCE_DIR}/android/CPackConfig.cmake.in"
-	  "${PROJECT_BINARY_DIR}/CPackConfig.cmake.tmp"
+	  "${PROJECT_BINARY_DIR}/CPackConfig.tmp.cmake"
 	  @ONLY
 	)
 	file(GENERATE
 	  OUTPUT "${PROJECT_BINARY_DIR}/CPackConfig.cmake"
-	  INPUT "${PROJECT_BINARY_DIR}/CPackConfig.cmake.tmp"
+	  INPUT "${PROJECT_BINARY_DIR}/CPackConfig.tmp.cmake"
 	)
 	
 	# For configuring androiddeployqt, we create a dummy qmake project.
