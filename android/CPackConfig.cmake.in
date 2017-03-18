@@ -60,20 +60,23 @@ file(INSTALL
 )
 
 set(sign )
-set(final_error )
+set(result )
+set(final_message )
 $<$<OR:$<CONFIG:Release>,$<CONFIG:MinSizeRel>>:$<$<AND:$<BOOL:${KEYSTORE_URL}>,$<BOOL:${KEYSTORE_ALIAS}>>:
-if(UNIX)
+if("@CMAKE_HOST_UNIX@")
 	execute_process(COMMAND "${CMAKE_COMMAND}" -E echo "Checking if we are running in a terminal")
 	execute_process(COMMAND tty	RESULT_VARIABLE result)
 	if(result)
 		message(SEND_ERROR "Not running in a terminal, signing disabled.")
-		set(final_error "The build created an unsigned APK. To sign the APK, run:
-  jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore '${KEYSTORE_URL}' /path/to/install-release-unsigned.apk ${KEYSTORE_ALIAS}
-  zipalign 4 /path/to/install-release-unsigned.apk outfile.apk"
-	)
 	else()
 		set(sign --sign "${KEYSTORE_URL}" "${KEYSTORE_ALIAS}")
 	endif()
+endif()
+if(NOT "@CMAKE_HOST_UNIX@" OR result)
+	set(final_message "The build created an unsigned APK. To sign the APK, run:
+  jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore '${KEYSTORE_URL}' /path/to/install-release-unsigned.apk ${KEYSTORE_ALIAS}
+  zipalign 4 /path/to/install-release-unsigned.apk outfile.apk"
+	)
 endif()
 >>
 
@@ -96,7 +99,7 @@ if(result)
 	message(FATAL_ERROR "Running androiddeployqt failed: ${result}")
 endif()
 
-if(final_error)
-	message(FATAL_ERROR "${final_error}")
+if(final_message)
+	message(STATUS "${final_message}")
 endif()
 	
