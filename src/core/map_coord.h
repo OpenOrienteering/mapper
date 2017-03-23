@@ -483,19 +483,19 @@ class MapCoordF : public QPointF
 public:
 	
 	/** Creates a MapCoordF with both values set to zero. */
-	constexpr MapCoordF();
+	constexpr MapCoordF() noexcept;
 	
 	/** Creates a MapCoordF with the given position in map coordinates. */
-	constexpr MapCoordF(qreal x, qreal y);
+	constexpr MapCoordF(qreal x, qreal y) noexcept;
 	
 	/** Creates a MapCoordF from a MapCoord, dropping its flags. */
-	explicit constexpr MapCoordF(MapCoord coord);
+	explicit constexpr MapCoordF(MapCoord coord) noexcept;
 	
 	/** Copy constructor. */
-	constexpr MapCoordF(const MapCoordF&) = default;
+	constexpr MapCoordF(const MapCoordF&) noexcept = default;
 	
 	/** Copy constructor for QPointF prototypes. */
-	explicit constexpr MapCoordF(const QPointF& point);
+	explicit constexpr MapCoordF(const QPointF& point) noexcept;
 	
 	
 	/** Returns a vector with the given length and angle. */
@@ -503,7 +503,7 @@ public:
 	
 	
 	/** Assignment operator. */
-	MapCoordF& operator= (const QPointF& point);
+	MapCoordF& operator= (const QPointF& point) noexcept;
 	
 	
 	/**
@@ -963,25 +963,25 @@ constexpr MapCoord operator/(const MapCoord& lhs, double divisor)
 
 // ### MapCoordF inline code  ###
 
-constexpr MapCoordF::MapCoordF()
+constexpr MapCoordF::MapCoordF() noexcept
  : QPointF {}
 {
 	// Nothing else
 }
 
-constexpr MapCoordF::MapCoordF(qreal x, qreal y)
+constexpr MapCoordF::MapCoordF(qreal x, qreal y) noexcept
  : QPointF { x, y }
 {
 	// Nothing else
 }
 
-constexpr MapCoordF::MapCoordF(MapCoord coord)
+constexpr MapCoordF::MapCoordF(MapCoord coord) noexcept
  : QPointF { coord.x(), coord.y() }
 {
 	// Nothing else
 }
 
-constexpr MapCoordF::MapCoordF(const QPointF& point)
+constexpr MapCoordF::MapCoordF(const QPointF& point) noexcept
  : QPointF { point }
 {
 	// Nothing else
@@ -995,7 +995,7 @@ const MapCoordF MapCoordF::fromPolar(qreal length, qreal angle)
 }
 
 inline
-MapCoordF& MapCoordF::operator=(const QPointF& point)
+MapCoordF& MapCoordF::operator=(const QPointF& point) noexcept
 {
 	return static_cast<MapCoordF&>(*static_cast<QPointF*>(this) = point);
 }
