@@ -550,7 +550,6 @@ void EditLineTool::updateHoverState(MapCoordF cursor_pos)
 		{
 			float click_tolerance_sq = qPow(0.001f * cur_map_widget->getMapView()->pixelToLength(clickTolerance()), 2);
 			float best_distance_sq = std::numeric_limits<float>::max();
-			PathCoord hover_path_coord;
 			
 			for (auto object : map()->selectedObjects())
 			{
@@ -569,8 +568,7 @@ void EditLineTool::updateHoverState(MapCoordF cursor_pos)
 						new_hover_object = path;
 						new_hover_line   = path_coord.index;
 						best_distance_sq = distance_sq;
-						hover_path_coord = path_coord;
-						handle_offset    = hover_path_coord.pos - cursor_pos;
+						handle_offset    = path_coord.pos - cursor_pos;
 						
 						const auto part = path->findPartForIndex(new_hover_line);
 						if (new_hover_line == part->last_index)
