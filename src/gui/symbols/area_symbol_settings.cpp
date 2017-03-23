@@ -121,7 +121,7 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, SymbolSettingDialog* 
 	
 	QStackedWidget* single_line_label3 = new QStackedWidget();
 	connect(this, SIGNAL(switchPatternEdits(int)), single_line_label3, SLOT(setCurrentIndex(int)));
-	pattern_line_offset_edit = Util::SpinBox::create(2, -999999.9, 999999.9, tr("mm"));
+	pattern_line_offset_edit = Util::SpinBox::create(3, -999999.9, 999999.9, tr("mm"));
 	fill_pattern_layout->addRow(single_line_label3, pattern_line_offset_edit);
 	
 	fill_pattern_layout->addItem(Util::SpacerItem::create(this));
@@ -132,14 +132,14 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, SymbolSettingDialog* 
 	
 	QStackedWidget* parallel_lines_label1 = new QStackedWidget();
 	connect(this, SIGNAL(switchPatternEdits(int)), parallel_lines_label1, SLOT(setCurrentIndex(int)));
-	pattern_spacing_edit = Util::SpinBox::create(2, 0.0, 999999.9, tr("mm"));
+	pattern_spacing_edit = Util::SpinBox::create(3, 0.0, 999999.9, tr("mm"));
 	fill_pattern_layout->addRow(parallel_lines_label1, pattern_spacing_edit);
 	
 	/* Stacked widgets, index 0: line pattern fields */
 	single_line_headline->addWidget(Util::Headline::create(tr("Single line")));
 	
 	QLabel* pattern_linewidth_label = new QLabel(tr("Line width:"));
-	pattern_linewidth_edit = Util::SpinBox::create(2, 0.0, 999999.9, tr("mm"));
+	pattern_linewidth_edit = Util::SpinBox::create(3, 0.0, 999999.9, tr("mm"));
 	single_line_label1->addWidget(pattern_linewidth_label);
 	single_line_edit1 ->addWidget(pattern_linewidth_edit);
 	
@@ -158,12 +158,12 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, SymbolSettingDialog* 
 	single_line_headline->addWidget(Util::Headline::create(tr("Single row")));
 	
 	QLabel* pattern_pointdist_label = new QLabel(tr("Pattern interval:"));
-	pattern_pointdist_edit = Util::SpinBox::create(2, 0, 999999.9, tr("mm"));
+	pattern_pointdist_edit = Util::SpinBox::create(3, 0, 999999.9, tr("mm"));
 	single_line_label1->addWidget(pattern_pointdist_label);
 	single_line_edit1 ->addWidget(pattern_pointdist_edit);
 	
 	QLabel* pattern_offset_along_line_label = new QLabel(tr("Pattern offset:"));
-	pattern_offset_along_line_edit = Util::SpinBox::create(2, -999999.9, 999999.9, tr("mm"));
+	pattern_offset_along_line_edit = Util::SpinBox::create(3, -999999.9, 999999.9, tr("mm"));
 	single_line_label2->addWidget(pattern_offset_along_line_label);
 	single_line_edit2 ->addWidget(pattern_offset_along_line_edit);
 	
