@@ -147,12 +147,12 @@
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="1.000" g="0.865" b="0.605"/>
         </color>
-        <color priority="20" name="Bílá nad žlutou 70%" c="0.000" m="0.189" y="0.553" k="0.000" opacity="1.000">
+        <color priority="20" name="Bílá nad žlutou 70%" c="0.000" m="0.000" y="0.000" k="0.000" opacity="1.000">
             <spotcolors>
-                <component factor="0.7" spotcolor="18"/>
+                <component factor="0" spotcolor="18"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="1.000" g="0.811" b="0.447"/>
+            <rgb method="spotcolor" r="1.000" g="1.000" b="1.000"/>
         </color>
         <color priority="21" name="Žlutá 70%" c="0.000" m="0.189" y="0.553" k="0.000" opacity="1.000">
             <spotcolors knockout="true">
