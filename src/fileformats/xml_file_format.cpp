@@ -595,7 +595,6 @@ void XMLFileImporter::importColors()
 			cmyk.m = color_element.attribute<float>(literal::m);
 			cmyk.y = color_element.attribute<float>(literal::y);
 			cmyk.k = color_element.attribute<float>(literal::k);
-			color->setCmyk(cmyk);
 			
 			bool knockout = false;
 			SpotColorComponents components;
@@ -642,10 +641,25 @@ void XMLFileImporter::importColors()
 					rgb.r = rgb_element.attribute<float>(literal::r);
 					rgb.g = rgb_element.attribute<float>(literal::g);
 					rgb.b = rgb_element.attribute<float>(literal::b);
-					color->setRgbFromSpotColors();
 				}
 				else
+				{
 					xml.skipCurrentElement(); // unsupported
+				}
+			}
+			
+			if (cmyk_method == literal::custom)
+			{
+				color->setCmyk(cmyk);
+				if (rgb_method == literal::cmyk)
+					color->setRgbFromCmyk();
+			}
+			
+			if (rgb_method == literal::custom)
+			{
+				color->setRgb(rgb);
+				if (cmyk_method == literal::rgb)
+					color->setCmykFromRgb();
 			}
 			
 			if (!components.empty())
@@ -661,12 +675,6 @@ void XMLFileImporter::importColors()
 			{
 				addWarning(tr("Could not set knockout property of color '%1'.").arg(color->getName()));
 			}
-			
-			if (cmyk_method == literal::rgb)
-				color->setCmykFromRgb();
-			
-			if (rgb_method == literal::cmyk)
-				color->setRgbFromCmyk();
 			
 			colors.push_back(color);
 		}
