@@ -1,5 +1,5 @@
 #
-#    Copyright 2013-2015 Kai Pastor
+#    Copyright 2013-2017 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -24,7 +24,7 @@ set(Mapper_EXAMPLES
 
 install(
   FILES ${Mapper_EXAMPLES}
-  DESTINATION "${MAPPER_DATA_DESTINATION}/examples/${_dir}"
+  DESTINATION "${MAPPER_DATA_DESTINATION}/examples"
 )
 
 foreach(_example ${Mapper_EXAMPLES} examples.qrc)

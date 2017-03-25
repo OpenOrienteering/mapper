@@ -4,7 +4,7 @@
 
 TEMPLATE = app
 TARGET   = Mapper
-CONFIG  += c++11
+CONFIG  += c++14
 CONFIG  -= debug_and_release
 DEFINES *= QT_USE_QSTRINGBUILDER QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII
 
@@ -52,6 +52,7 @@ HEADERS += \
   core/map_part.h \
   core/map_printer.h \
   core/map_view.h \
+  core/objects/boolean_tool.h \
   core/objects/object.h \
   core/objects/object_operations.h \
   core/objects/object_query.h \
@@ -161,7 +162,7 @@ HEADERS += \
   templates/template_tool_move.h \
   templates/template_tool_paint.h \
   templates/template_track.h \
-  tools/boolean_tool.h \
+  templates/world_file.h \
   tools/cut_hole_tool.h \
   tools/cut_tool.h \
   tools/cutout_tool.h \
@@ -195,7 +196,6 @@ HEADERS += \
   util/encoding.h \
   util/item_delegates.h \
   util/matrix.h \
-  util/memory.h \
   util/overriding_shortcut.h \
   util/recording_translator.h \
   util/scoped_signals_blocker.h \
@@ -218,6 +218,7 @@ SOURCES += \
   core/map_part.cpp \
   core/map_printer.cpp \
   core/map_view.cpp \
+  core/objects/boolean_tool.cpp \
   core/objects/object.cpp \
   core/objects/object_query.cpp \
   core/objects/text_object.cpp \
@@ -317,7 +318,7 @@ SOURCES += \
   templates/template_tool_move.cpp \
   templates/template_tool_paint.cpp \
   templates/template_track.cpp \
-  tools/boolean_tool.cpp \
+  templates/world_file.cpp \
   tools/cut_hole_tool.cpp \
   tools/cut_tool.cpp \
   tools/cutout_tool.cpp \
@@ -401,7 +402,6 @@ android {
     plugins/imageformats/libqgif.so \
     plugins/imageformats/libqicns.so \
     plugins/imageformats/libqico.so \
-    plugins/imageformats/libqjp2.so \
     plugins/imageformats/libqjpeg.so \
     plugins/imageformats/libqtiff.so \
     plugins/imageformats/libqwebp.so \
@@ -414,6 +414,9 @@ android {
     jar/QtPositioning-bundled.jar \
     plugins/position/libqtposition_android.so \
     # END
+  
+  exists($$[QT_INSTALL_PLUGINS]/imageformats/libqjp2.so): \
+    ANDROID_DEPLOYMENT_DEPENDENCIES += plugins/imageformats/libqjp2.so
 
   # Do not use qtsingleapplication
   LIBS -= -lqtsingleapplication

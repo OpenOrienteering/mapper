@@ -198,13 +198,14 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, float delta_rotat
 	if (type == PointPattern && point_distance <= 0)
 		return;
 	
+	if (!rotatable)
+		delta_rotation = 0;
+	
 	auto line_width_f = 0.001*line_width;
 	auto line_spacing_f = 0.001*line_spacing;
 	
 	// Make rotation unique
-	double rotation = angle;
-	if (rotatable)
-		rotation += delta_rotation;
+	auto rotation = double(angle + delta_rotation);
 	rotation = fmod(1.0 * rotation, M_PI);
 	if (rotation < 0)
 		rotation = M_PI + rotation;
@@ -217,10 +218,6 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, float delta_rotat
 		line.setColor(line_color);
 		line.setLineWidth(line_width_f);
 	}
-	
-	PointObject point_object(point);
-	if (point && point->isRotatable())
-		point_object.setRotation(delta_rotation);
 	
 	MapCoordF first, second;
 	
@@ -236,9 +233,11 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, float delta_rotat
 		else
 			fill_extent = QRectF(-0.5 * line_width_f, -0.5 * line_width_f, line_width_f, line_width_f);	// not the 100% optimum but the performance gain is surely neglegible
 	}
-	else
+	else if (point)
 	{
 		// TODO: Ugly method to get the point's extent
+		PointObject point_object(point);
+		point_object.setRotation(delta_rotation);
 		point_object.update();
 		fill_extent = point_object.getExtent();
 	}
@@ -271,7 +270,7 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, float delta_rotat
 		{
 			first = MapCoordF(cur, extent.top());
 			second = MapCoordF(cur, extent.bottom());
-			createLine(first, second, delta_along_line_offset, &line, &point_object, output);
+			createLine(first, second, delta_along_line_offset, &line, delta_rotation, output);
 		}
 	}
 	else if (qAbs(rotation - 0) < 0.0001)
@@ -282,7 +281,7 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, float delta_rotat
 		{
 			first = MapCoordF(extent.left(), cur);
 			second = MapCoordF(extent.right(), cur);
-			createLine(first, second, delta_along_line_offset, &line, &point_object, output);
+			createLine(first, second, delta_along_line_offset, &line, delta_rotation, output);
 		}
 	}
 	else
@@ -329,7 +328,7 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, float delta_rotat
 				// Create the renderable(s)
 				first = MapCoordF(start_x, start_y);
 				second = MapCoordF(end_x, end_y);
-				createLine(first, second, delta_along_line_offset, &line, &point_object, output);
+				createLine(first, second, delta_along_line_offset, &line, delta_rotation, output);
 				
 				// Move to next position
 				start_x += dist_x;
@@ -366,7 +365,7 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, float delta_rotat
 				// Create the renderable(s)
 				first = MapCoordF(start_x, start_y);
 				second = MapCoordF(end_x, end_y);
-				createLine(first, second, delta_along_line_offset, &line, &point_object, output);
+				createLine(first, second, delta_along_line_offset, &line, delta_rotation, output);
 				
 				// Move to next position
 				start_x += dist_x;
@@ -376,7 +375,7 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, float delta_rotat
 	}
 }
 
-void AreaSymbol::FillPattern::createLine(MapCoordF first, MapCoordF second, float delta_offset, LineSymbol* line, PointObject* point_object, ObjectRenderables& output) const
+void AreaSymbol::FillPattern::createLine(MapCoordF first, MapCoordF second, float delta_offset, LineSymbol* line, float rotation, ObjectRenderables& output) const
 {
 	if (type == LinePattern)
 	{
@@ -395,10 +394,9 @@ void AreaSymbol::FillPattern::createLine(MapCoordF first, MapCoordF second, floa
 		auto to_next = direction * step_length;
 		
 		auto coord = first + direction * start_length;
-		auto rotation = -point_object->getRotation();
 		for (auto cur = start_length; cur < length; cur += step_length)
 		{
-			point->createRenderablesScaled(coord, rotation, output);
+			point->createRenderablesScaled(coord, -rotation, output);
 			coord += to_next;
 		}
 	}

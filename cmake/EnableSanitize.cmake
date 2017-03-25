@@ -23,7 +23,10 @@ endif()
 
 macro(enable_sanitize)
 	foreach(option ${ARGV})
-		if (option STREQUAL "NO_RECOVER")
+		if(ANDROID)
+			break() # out of macro
+		endif()
+		if(option STREQUAL "NO_RECOVER")
 			set(full_option "-fno-sanitize-recover=all")
 		else()
 			set(full_option "-fsanitize=${option}")
@@ -36,4 +39,6 @@ macro(enable_sanitize)
 			endif()
 		endif()
 	endforeach()
+	
 endmacro()
+

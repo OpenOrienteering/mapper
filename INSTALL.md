@@ -5,11 +5,11 @@ This document is about building OpenOrienteering Mapper from source code.
 The general build process prerequisites are:
  - A supported platform: 
    - Mac OS X 10.10 (Yosemite). Mac OS X 10.7 or newer may work.
-   - Linux. Ubuntu 14.04 is known to work.
+   - Linux. Ubuntu 16.04 is known to work.
  - The OpenOrienteering Mapper source code.
- - CMake >= 2.8.12.
+ - CMake >= 3.1.
    CMake is available from http://www.cmake.org/.
- - A supported C++ compiler toolchain. C++11 is mandatory.
+ - A supported C++ compiler toolchain. C++14 is mandatory.
 
 See below for platform-specific details and build instructions.
 
@@ -18,7 +18,7 @@ See below for platform-specific details and build instructions.
 
 This program uses the Qt library from http://www.qt.io which is released
 under the terms of the GNU General Public License, Version 3. 
-The program needs at least Qt 5.2. Qt 5.5.1 is the recommended version.
+The program needs at least Qt 5.3. Qt 5.5.1 is the recommended version.
 By default CMake build settings for OS X and Windows,
 a special OpenOrienteering source package of Qt 5.5.1 will be downloaded
 and built as part of the build process.
@@ -74,7 +74,7 @@ PROJ.4 library and of CUPS are installed. For a Ubuntu or Debian system, install
 
 For using the Qt libraries provided by the repositories, the following packages
 need to be installed:
-`qt5-default` (>= 5.2), `qtbase5-private-dev`, `qttools5-dev`, `qttools5-dev-tools`, `libqt5sql5-sqlite`
+`qt5-default` (>= 5.3), `qtbase5-private-dev`, `qttools5-dev`, `qttools5-dev-tools`, `libqt5sql5-sqlite`
 
 Open a terminal, and create a build directory, e.g. as subdirectory build in
 the source directory, and change to that directory. From the build directory,
@@ -210,9 +210,3 @@ Android packages are built in Qt Creator using the provided `oo-mapper.pro` file
 Windows and Linux packages are regularly build on
 https://build.opensuse.org/project/show/home:dg0yt, so proper package recipes for
 common distributions and package managers can be found there.
-
-Packaging with cmake is not enabled by default for Linux. Add `-DMapper_BUILD_PACKAGE=1`
-to change this. As already stated, this is untested, and you might need to look for
-additional tweaks.
-
-

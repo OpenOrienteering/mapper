@@ -18,7 +18,7 @@
 
 TEMPLATE = lib
 TARGET   = printsupport
-CONFIG  += staticlib c++11
+CONFIG  += staticlib c++14
 CONFIG  -= debug_and_release
 QT      += printsupport printsupport-private gui-private core-private
 DEFINES *= QT_USE_QSTRINGBUILDER QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII

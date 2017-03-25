@@ -135,23 +135,118 @@ void TransformTest::testTransformProject()
 	QCOMPARE(t.template_rotation, 0.0);
 }
 
+void TransformTest::testTransformRotate_data()
+{
+	QTest::addColumn<int>("type");
+	QTest::addColumn<double>("rotation");
+	
+	QTest::newRow("No rotation") << int(QTransform::TxNone)   <<   0.0;
+	QTest::newRow("90 deg")      << int(QTransform::TxRotate) <<  90.0; // cos(90deg) := 0
+	QTest::newRow("180 deg")     << int(QTransform::TxScale)  << 180.0; // sin(180deg) := 0
+	QTest::newRow("200 deg")     << int(QTransform::TxRotate) << 200.0; // quadrant III
+	QTest::newRow("270 deg")     << int(QTransform::TxRotate) << 270.0; // cos(270deg) := 0
+}
+
 void TransformTest::testTransformRotate()
 {
-	qreal rotation = 0.1;
+	QFETCH(int, type);
+	QFETCH(double, rotation);
+	
 	QTransform qt;
-	qt.rotateRadians(rotation, Qt::ZAxis);
-	QCOMPARE(int(qt.type()), int(QTransform::TxRotate));
+	qt.rotate(qreal(rotation), Qt::ZAxis);
+	QCOMPARE(int(qt.type()), type);
 	
 	auto t = TemplateTransform::fromQTransform(qt);
 	QCOMPARE(t.template_x, 0);
 	QCOMPARE(t.template_y, 0);
 	QCOMPARE(t.template_scale_x, 1.0);
 	QCOMPARE(t.template_scale_y, 1.0);
-	QCOMPARE(t.template_rotation, -rotation);
+	if (rotation <= 180.0)
+		QCOMPARE(t.template_rotation, -qDegreesToRadians(qreal(rotation)));
+	else
+		QCOMPARE(t.template_rotation, -qDegreesToRadians(qreal(rotation - 360.0)));
+}
+
+void TransformTest::testTransformCombined_data()
+{
+	QTest::addColumn<int>("type");
+	QTest::addColumn<double>("rotation");
+	
+	QTest::newRow("No rotation") << int(QTransform::TxScale)  <<   0.0;
+	QTest::newRow("90 deg")      << int(QTransform::TxRotate) <<  90.0; // cos(90deg) := 0
+	QTest::newRow("180 deg")     << int(QTransform::TxScale)  << 180.0; // sin(180deg) := 0
+	QTest::newRow("200 deg")     << int(QTransform::TxRotate) << 200.0; // quadrant III
+	QTest::newRow("270 deg")     << int(QTransform::TxRotate) << 270.0; // cos(270deg) := 0
+}
+
+void TransformTest::testTransformCombined()
+{
+	QFETCH(int, type);
+	QFETCH(double, rotation);
+	
+	qint32 dx = -3000;
+	qint32 dy = 16000;
+	qreal scale_x = 4.5;
+	qreal scale_y = 2.5;
+	
+	QTransform qt;
+	// Template::applyTemplateTransform order: translate, rotate, scale
+	qt.translate(dx / 1000.0, dy / 1000.0);
+	qt.rotate(qreal(rotation));
+	qt.scale(scale_x, scale_y);
+	QVERIFY(qt.isScaling());
+	QCOMPARE(int(qt.type()), type);
+	
+	auto t = TemplateTransform::fromQTransform(qt);
+	QCOMPARE(t.template_x, dx);
+	QCOMPARE(t.template_y, dy);
+	QCOMPARE(t.template_scale_x, scale_x);
+	QCOMPARE(t.template_scale_y, scale_y);
+	if (rotation <= 180.0)
+		QCOMPARE(t.template_rotation, -qDegreesToRadians(qreal(rotation)));
+	else
+		QCOMPARE(t.template_rotation, -qDegreesToRadians(qreal(rotation - 360.0)));
+}
+
+void TransformTest::testTransformRoundTrip_data()
+{
+	QTest::addColumn<int>("dx");
+	QTest::addColumn<int>("dy");
+	QTest::addColumn<double>("rotation");
+	QTest::addColumn<double>("scale_x");
+	QTest::addColumn<double>("scale_y");
+	
+	// For simplicity, we use rotation from -180 to 180 degree,
+	QTest::newRow("No rotation") << 120 << -20 <<    0.0 << 1.2 << 0.7;
+	QTest::newRow("90 deg")      << 320 << -60 <<   90.0 << 1.3 << 1.7;
+	QTest::newRow("180 deg")     << -20 << 220 <<  180.0 << 1.4 << 0.5;
+	QTest::newRow("-160 deg")    << 100 << -10 << -160.0 << 1.5 << 2.7;
+	QTest::newRow("-90 deg")     <<   0 << -20 <<  -90.0 << 1.6 << 3.7;
+}
+
+void TransformTest::testTransformRoundTrip()
+{
+	QFETCH(int, dx);
+	QFETCH(int, dy);
+	QFETCH(double, rotation);
+	QFETCH(double, scale_x);
+	QFETCH(double, scale_y);
+
+	TemplateTransform t = { dx, dy, qDegreesToRadians(rotation), scale_x, scale_y };
+	
+	// Template::applyTemplateTransform order: translate, rotate, scale
+	QTransform qt;
+	qt.translate(t.template_x / 1000.0, t.template_y / 1000.0);
+	qt.rotate(-t.template_rotation * (180 / M_PI));
+	qt.scale(t.template_scale_x, t.template_scale_y);
+	
+	auto t2 = TemplateTransform::fromQTransform(qt);
+	QCOMPARE(t2, t);
 }
 
 void TransformTest::testEstimateNonIsometric()
 {
+	// Scaling and translation
 	PassPointList passpoints;
 	passpoints.resize(3);
 	passpoints[0].src_coords  = MapCoordF { 128.0, 0.0 };
@@ -176,7 +271,30 @@ void TransformTest::testEstimateNonIsometric()
 	QCOMPARE(t.template_y, MapCoord(32,64).nativeY());
 	QCOMPARE(t.template_scale_x, 0.25);
 	QCOMPARE(t.template_scale_y, 0.25);
-	QVERIFY(t.template_rotation < 0.000001);
+	QVERIFY(qAbs(t.template_rotation) < 0.000001);
+	
+	// Rotation
+	passpoints[0].src_coords  = MapCoordF { 0.0, 0.0 };
+	passpoints[0].dest_coords = MapCoordF { 0.0, 0.0 };
+	passpoints[1].src_coords  = MapCoordF { 5.0, 0.0 };
+	passpoints[1].dest_coords = MapCoordF { 4.0, -3.0 };
+	passpoints[2].src_coords  = MapCoordF { 0.0, 5.0 };
+	passpoints[2].dest_coords = MapCoordF { 3.0, 4.0 };
+	
+	QVERIFY(passpoints.estimateNonIsometricSimilarityTransform(&qt));
+	QVERIFY(qt.isRotating());
+	QCOMPARE(int(qt.type()), int(QTransform::TxRotate));
+	
+	QCOMPARE(qt.map(passpoints[0].src_coords), QPointF{passpoints[0].dest_coords});
+	QCOMPARE(qt.map(passpoints[1].src_coords), QPointF{passpoints[1].dest_coords});
+	QCOMPARE(qt.map(passpoints[2].src_coords), QPointF{passpoints[2].dest_coords});
+	
+	t = TemplateTransform::fromQTransform(qt);
+	QCOMPARE(t.template_x, 0);
+	QCOMPARE(t.template_y, 0);
+	QCOMPARE(t.template_scale_x, 1.0);
+	QCOMPARE(t.template_scale_y, 1.0);
+	QCOMPARE(t.template_rotation, qAcos(passpoints[1].dest_coords.x() / passpoints[1].src_coords.x()));
 }
 
 void TransformTest::testEstimateSimilarityTransformation()

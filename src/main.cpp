@@ -89,7 +89,7 @@ int main(int argc, char** argv)
 	auto translation_file = settings.getSetting(Settings::General_TranslationFile).toString();
 	TranslationUtil translation(language, translation_file);
 	QLocale::setDefault(QLocale(translation.code()));
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
 	// Normally this is done in Settings::apply() because it is too late here.
 	// But Mapper 0.6.2/0.6.3 accidently wrote a string instead of a list. This
 	// error caused crashes when opening native dialogs (i.e. the open-file dialog!).
@@ -155,11 +155,3 @@ int main(int argc, char** argv)
 	first_window.raise();
 	return qapp.exec();
 }
-
-#ifdef _MSC_VER
-#include "Windows.h"
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
-{
-	return main(__argc, __argv);
-}
-#endif

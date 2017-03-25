@@ -20,9 +20,11 @@
 # Prerequisite
 add_subdirectory(data)
 
+find_package(Qt5Network REQUIRED)
 find_package(Qt5PrintSupport REQUIRED)
 find_package(Qt5Test REQUIRED)
 find_package(Qt5Widgets REQUIRED)
+
 set(CMAKE_AUTOMOC ON)
 
 if(Mapper_DEVELOPMENT_BUILD)
@@ -146,17 +148,18 @@ if(Mapper_COVERAGE_BUILD)
 endif()
 
 # System tests
-add_system_test(map_t)
 add_system_test(file_format_t)
 add_dependencies(file_format_t Mapper_test_data)
 add_system_test(duplicate_equals_t)
 add_dependencies(duplicate_equals_t Mapper_test_data)
+add_system_test(map_t)
 add_system_test(object_query_t)
+add_system_test(path_object_t)
+add_system_test(symbol_set_t)
+add_system_test(template_t)
 add_system_test(tools_t)
 add_system_test(transform_t)
-add_system_test(path_object_t)
 add_system_test(undo_manager_t)
-add_system_test(symbol_set_t)
 
 
 # Collect the AUTORUN_TESTS
@@ -171,8 +174,7 @@ configure_file(AUTORUN_TESTS.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/AUTORUN_TESTS.
 add_executable(Mapper-with-test mapper_t.cpp)
 add_dependencies(Mapper-with-test Mapper_prerequisites)
 target_link_libraries(Mapper-with-test Qt5::Core)
-get_target_property(mapper_location Mapper LOCATION)
-target_compile_definitions(Mapper-with-test PRIVATE -DCMAKE_COMMAND="${CMAKE_COMMAND}" -DMAPPER_LOCATION="${mapper_location}")
+target_compile_definitions(Mapper-with-test PRIVATE -DCMAKE_COMMAND="${CMAKE_COMMAND}" -DMAPPER_LOCATION="$<TARGET_FILE:Mapper>")
 
 
 if(Mapper_BUILD_QT)

@@ -147,7 +147,7 @@ int MapperProxyStyle::pixelMetric(PixelMetric metric, const QStyleOption* option
 			return s;
 		}
 #endif
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
 	case QStyle::PM_ToolBarIconSize:
 		{
 			static int s = (QProxyStyle::pixelMetric(metric) + QProxyStyle::pixelMetric(QStyle::PM_SmallIconSize)) / 2;

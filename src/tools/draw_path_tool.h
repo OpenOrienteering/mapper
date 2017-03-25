@@ -1,6 +1,6 @@
 /*
- *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2015 Kai Pastor
+ *    Copyright 2012-2014 Thomas Schöps
+ *    Copyright 2013-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,8 +19,8 @@
  */
 
 
-#ifndef _OPENORIENTEERING_DRAW_PATH_H_
-#define _OPENORIENTEERING_DRAW_PATH_H_
+#ifndef OPENORIENTEERING_DRAW_PATH_H
+#define OPENORIENTEERING_DRAW_PATH_H
 
 #include <QPointer>
 #include <QScopedPointer>
@@ -109,8 +109,12 @@ protected:
 	MapCoordF click_pos_map;
 	QPoint cur_pos;
 	MapCoordF cur_pos_map;
-	MapCoordF previous_pos_map;
+	
+	/** The beginning of the current curve in the preview path. */
+	MapCoordF previous_pos_map;  
+	/** A control point defining the tangent at the beginning of the current curve. */
 	MapCoordF previous_drag_map;
+	
 	bool dragging;
 	
 	bool path_has_preview_point;
@@ -134,8 +138,8 @@ protected:
 	QScopedPointer<ConstrainAngleToolHelper> angle_helper;
 	bool left_mouse_down;
 	bool ctrl_pressed;
-	bool picking_angle;
-	bool picked_angle;
+	bool picking_angle;   ///< Indicates picking of the initial angle from an object.
+	bool picked_angle;    ///< Indicates an active angle picked from another object.
 	MapCoordF constrained_pos_map;
 	
 	QScopedPointer<SnappingToolHelper> snap_helper;

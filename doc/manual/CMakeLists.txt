@@ -1,6 +1,6 @@
 #
 #    Copyright 2012, 2013, 2014 Thomas Schöps
-#    Copyright 2012-2015 Kai Pastor
+#    Copyright 2012-2017 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -18,14 +18,27 @@
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
 
 if(NOT PROJECT_NAME)
+	# FIXME Used by legacy qmake build for Android
+	cmake_minimum_required(VERSION 3.0)
 	project(Mapper_Manual NONE)
-	cmake_minimum_required(VERSION 2.8.8)
+	set(MAPPER_DATA_DESTINATION /assets)
+	enable_language(CXX)
 else()
 	message(STATUS "Configuring ${PROJECT_NAME} user manual")
 endif()
 
-if(NOT ANDROID) # ---------------------------------------------------
 
+set(Mapper_MANUAL_QTHELP_default ON)
+if(ANDROID)
+	set(Mapper_MANUAL_QTHELP_default OFF)
+endif()
+option(Mapper_MANUAL_QTHELP
+  "Provide the manual as Qt Help collection"
+  ${Mapper_MANUAL_QTHELP_default}
+)
+
+
+# Qt provides a broken Qt5::qcollectiongenerator when crosscompiling.
 if (CMAKE_CROSSCOMPILING AND NOT TARGET Qt5::qcollectiongenerator)
 	find_program(Qt5Help_QCOLLECTIONGENERATOR_EXECUTABLE
 	  NAMES qcollectiongenerator-qt5 qcollectiongenerator
@@ -33,37 +46,13 @@ if (CMAKE_CROSSCOMPILING AND NOT TARGET Qt5::qcollectiongenerator)
 	)
 	add_executable(Qt5::qcollectiongenerator IMPORTED)
 	set_target_properties(Qt5::qcollectiongenerator PROPERTIES
-		IMPORTED_LOCATION ${Qt5Help_QCOLLECTIONGENERATOR_EXECUTABLE}
+	  IMPORTED_LOCATION ${Qt5Help_QCOLLECTIONGENERATOR_EXECUTABLE}
 	)
+elseif(NOT Qt5Help_QCOLLECTIONGENERATOR_EXECUTABLE)
+	find_package(Qt5Help REQUIRED)
+	set(Qt5Help_QCOLLECTIONGENERATOR_EXECUTABLE Qt5::qcollectiongenerator)
 endif()
 
-enable_language(CXX)
-find_package(Qt5Help REQUIRED)
-
-# Not exported from Qt5
-if (NOT TARGET Qt5::qcollectiongenerator AND TARGET Qt5::moc)
-	add_executable(Qt5::qcollectiongenerator IMPORTED)
-	get_target_property(imported_location Qt5::moc IMPORTED_LOCATION)
-	get_filename_component(imported_location ${imported_location} PATH)
-	set(imported_location ${imported_location}/qcollectiongenerator)
-	if(NOT EXISTS "${imported_location}")
-		message(FATAL_ERROR "qcollectiongenerator executable does not exist: "
-		                    "${imported_location}")
-	endif()
-	set_target_properties(Qt5::qcollectiongenerator PROPERTIES
-		IMPORTED_LOCATION ${imported_location}
-	)
-endif()
-set(Qt5Help_QCOLLECTIONGENERATOR_EXECUTABLE Qt5::qcollectiongenerator)
-
-find_program(Qt5Help_ASSISTANT_EXECUTABLE NAMES assistant${CMAKE_EXECUTABLE_SUFFIX} Assistant${CMAKE_EXECUTABLE_SUFFIX}
-  DOC "The path of the Qt Assistant executable"
-  HINTS ${QT5_DIR}
-  PATH_SUFFIXES bin
-  NO_DEFAULT_PATH)
-mark_as_advanced(Qt5Help_ASSISTANT_EXECUTABLE)
-
-endif(NOT ANDROID) # ---------------------------------------------------
 
 set(Mapper_HELP_NAMESPACE "openorienteering.mapper-${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}.help"
   CACHE INTERNAL "The namespace where the current version's help will be located.")
@@ -72,114 +61,99 @@ set(Mapper_HELP_COLLECTION "Mapper ${Mapper_VERSION_DISPLAY} Manual.qhc")
 set(Mapper_COMPRESSED_HELP "Mapper ${Mapper_VERSION_DISPLAY} Manual.qch")
 configure_file(Manual.qhcp.in Manual.qhcp @ONLY)
 
-find_program(DOXYGEN_EXECUTABLE NAMES doxygen
-	  DOC "The path of the doxygen executable")
+find_program(DOXYGEN_EXECUTABLE
+  NAMES doxygen
+  DOC "The path of the doxygen executable"
+)
+if(DOXYGEN_EXECUTABLE MATCHES NOTFOUND)
+	message(FATAL_ERROR "doxygen executable not found.")
+endif()
 mark_as_advanced(DOXYGEN_EXECUTABLE)
 
-if(DOXYGEN_EXECUTABLE MATCHES NOTFOUND)
-	message(WARNING "doxygen executable not found.")
-else()
-	configure_file(preprocess-markdown.cmake.in preprocess-markdown.cmake @ONLY)
-	add_custom_target(
-	  Mapper-manual-pages
-	  COMMAND   ${CMAKE_COMMAND} -P preprocess-markdown.cmake
-	)
+configure_file(preprocess-markdown.cmake.in preprocess-markdown.cmake @ONLY)
+add_custom_target(Mapper-manual-pages
+  COMMAND "${CMAKE_COMMAND}" -P preprocess-markdown.cmake
+)
 
-	if(NOT MANUAL_SECTIONS)
-		if(APPLE)
-			set(MANUAL_SECTIONS_DEFAULT OSX)
-		elseif(UNIX)
-			set(MANUAL_SECTIONS_DEFAULT LINUX)
-		elseif(WIN32)
-			set(MANUAL_SECTIONS_DEFAULT WINDOWS)
-		else()
-			set(MANUAL_SECTIONS_DEFAULT OTHER)
-		endif()
-		set(MANUAL_SECTIONS "${MANUAL_SECTIONS_DEFAULT}"
-		    CACHE STRING "Conditional manual sections to be enabled")
+if(NOT MANUAL_SECTIONS)
+	if(ANDROID)
+		set(MANUAL_SECTIONS_DEFAULT ANDROID)
+	elseif(APPLE)
+		set(MANUAL_SECTIONS_DEFAULT MACOS)
+	elseif(UNIX)
+		set(MANUAL_SECTIONS_DEFAULT LINUX)
+	elseif(WIN32)
+		set(MANUAL_SECTIONS_DEFAULT WINDOWS)
+	else()
+		set(MANUAL_SECTIONS_DEFAULT OTHER)
 	endif()
-	message(STATUS "Conditional manual sections: ${MANUAL_SECTIONS}")
+	set(MANUAL_SECTIONS "${MANUAL_SECTIONS_DEFAULT}" CACHE STRING
+	  "Conditional manual sections to be enabled")
+endif()
+message(STATUS "Conditional manual sections: ${MANUAL_SECTIONS}")
 
-	configure_file(Doxyfile.in Doxyfile @ONLY)
-	
-	configure_file(postprocess-qhp.cmake.in postprocess-qhp.cmake @ONLY)
-	add_custom_command( 
-	  OUTPUT    ${CMAKE_CURRENT_BINARY_DIR}/html/index.qhp
-	  COMMAND   ${CMAKE_COMMAND}
-	  ARGS      -E remove_directory html
-	  COMMAND   ${DOXYGEN_EXECUTABLE}
-	  ARGS      Doxyfile
-	  COMMAND   ${CMAKE_COMMAND}
-	  ARGS      -P postprocess-qhp.cmake
-	  MAIN_DEPENDENCY preprocess-markdown.stamp
-	  DEPENDS   Mapper-manual-pages
-	            ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
-	            ${CMAKE_CURRENT_BINARY_DIR}/postprocess-qhp.cmake
-	            ${DOXYGEN_EXECUTABLE}
-	            header.html
-	            footer.html
-	            style.css
-	  COMMENT   "Running doxygen on the manual"
-	)
-    set_source_files_properties(preprocess-markdown.stamp PROPERTIES GENERATED 1)
+configure_file(Doxyfile.in Doxyfile @ONLY)
 
-	if(NOT ANDROID) # ---------------------------------------------------
-	
+configure_file(postprocess-qhp.cmake.in postprocess-qhp.cmake @ONLY)
+add_custom_command( 
+  OUTPUT    "${CMAKE_CURRENT_BINARY_DIR}/html/index.qhp"
+  COMMAND   "${CMAKE_COMMAND}" -E remove_directory html
+  COMMAND   "${DOXYGEN_EXECUTABLE}" Doxyfile
+  COMMAND   "${CMAKE_COMMAND}" -P postprocess-qhp.cmake
+  MAIN_DEPENDENCY preprocess-markdown.stamp
+  DEPENDS   Mapper-manual-pages
+            "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile"
+            "${CMAKE_CURRENT_BINARY_DIR}/postprocess-qhp.cmake"
+            "${DOXYGEN_EXECUTABLE}"
+            header.html
+            footer.html
+            style.css
+  COMMENT   "Running doxygen on the manual"
+)
+set_source_files_properties(preprocess-markdown.stamp PROPERTIES GENERATED 1)
+
+if(Mapper_MANUAL_QTHELP)
 	set(MAPPER_MANUAL_TARGET "${Mapper_HELP_COLLECTION}")
-
 	add_custom_command( 
-	  OUTPUT    ${Mapper_HELP_COLLECTION} ${Mapper_COMPRESSED_HELP}
-	  COMMAND   ${Qt5Help_QCOLLECTIONGENERATOR_EXECUTABLE}
-	  ARGS      Manual.qhcp
+	  OUTPUT    "${Mapper_HELP_COLLECTION}"
+	            "${Mapper_COMPRESSED_HELP}"
+	  COMMAND   "${Qt5Help_QCOLLECTIONGENERATOR_EXECUTABLE}" Manual.qhcp
 	            -o "${Mapper_HELP_COLLECTION}"
 	  MAIN_DEPENDENCY ${CMAKE_CURRENT_BINARY_DIR}/html/index.qhp
-	  DEPENDS   ${CMAKE_CURRENT_BINARY_DIR}/Manual.qhcp
-	            ${CMAKE_CURRENT_BINARY_DIR}/html/index.qhp
-	  WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+	  DEPENDS   "${CMAKE_CURRENT_BINARY_DIR}/Manual.qhcp"
+	            "${CMAKE_CURRENT_BINARY_DIR}/html/index.qhp"
+	  WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
 	  COMMENT   "Running qcollectiongenerator on the manual"
 	)
-
-	if(NOT CMAKE_CROSSCOMPILING)
-		add_custom_target(view-Mapper-manual
-		  COMMAND   "${Qt5Help_ASSISTANT_EXECUTABLE}"
-		            -collectionFile "${Mapper_HELP_COLLECTION}"
-		  DEPENDS   Mapper-manual
-		  COMMENT   "Opening Mapper manual"
-		)
-	endif()
-	
 	install(
 	  FILES "${CMAKE_CURRENT_BINARY_DIR}/${Mapper_HELP_COLLECTION}" 
 	        "${CMAKE_CURRENT_BINARY_DIR}/${Mapper_COMPRESSED_HELP}" 
-	  DESTINATION "${MAPPER_DATA_DESTINATION}/doc/manual")
-	
-	elseif(ANDROID) # ---------------------------------------------------
-	
+	  DESTINATION "${MAPPER_DATA_DESTINATION}/doc/manual"
+	)
+else()
 	set(MAPPER_MANUAL_TARGET "${CMAKE_CURRENT_BINARY_DIR}/html/index.qhp")
-	
 	file(APPEND "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile" \n
 	  "FILE_PATTERNS          = android* toolbar*" \n
 	  "USE_MDFILE_AS_MAINPAGE = android-index.md" \n
 	)
-	
 	install(CODE "
-	  file(READ \"${CMAKE_CURRENT_BINARY_DIR}/html/index.qhp\" index_qhp)
-	  string(REGEX MATCHALL \"<file>[^<]*</file>\" matches \${index_qhp})
-	  foreach(match \${matches})
-	    string(REGEX REPLACE \".*<file>\"  \"\" match \"\${match}\")
-	    string(REGEX REPLACE \"</file>.*\" \"\" match \"\${match}\")
-	    file(INSTALL DESTINATION /assets/doc/manual FILES \"${CMAKE_CURRENT_BINARY_DIR}/html/\${match}\")
-	  endforeach()
-	")
-	
-	endif() # ---------------------------------------------------
-	
-	add_custom_target(Mapper-manual ALL
-	  DEPENDS   "${MAPPER_MANUAL_TARGET}"
-	  # Sources to be listed in Qt Creator
-	  SOURCES   header.html
-	            footer.html
-	            style.css
-	)
-	
+		file(READ \"${CMAKE_CURRENT_BINARY_DIR}/html/index.qhp\" index_qhp)
+		string(REGEX MATCHALL \"<file>[^<]*</file>\" matches \${index_qhp})
+		foreach(match \${matches})
+			string(REGEX REPLACE \".*<file>\"  \"\" match \"\${match}\")
+			string(REGEX REPLACE \"</file>.*\" \"\" match \"\${match}\")
+			file(INSTALL
+			  DESTINATION \"\${CMAKE_INSTALL_PREFIX}/${MAPPER_DATA_DESTINATION}/doc/manual\"
+			  FILES \"${CMAKE_CURRENT_BINARY_DIR}/html/\${match}\"
+			)
+		endforeach()
+")
 endif()
+
+add_custom_target(Mapper-manual ALL
+  DEPENDS   "${MAPPER_MANUAL_TARGET}"
+  # Sources to be listed in Qt Creator
+  SOURCES   header.html
+  footer.html
+  style.css
+)

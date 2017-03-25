@@ -188,7 +188,7 @@ void GeneralSettingsPage::apply()
 		
 		setSetting(Settings::General_Language, translation.code());
 		setSetting(Settings::General_TranslationFile, translation_file);
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
 		// The native [file] dialogs will use the first element of the
 		// AppleLanguages array in the application's .plist file -
 		// and this file is also the one used by QSettings.

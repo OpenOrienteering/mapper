@@ -813,7 +813,7 @@ void drawBuffer(QPainter* device_painter, const QImage* page_buffer, qreal pixel
 	
 	device_painter->save();
 	
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
 	// Workaround for miss-scaled image export output
 	int logical_dpi = device_painter->device()->logicalDpiX();
 	if (logical_dpi != 0)
@@ -910,7 +910,7 @@ void MapPrinter::drawPage(QPainter* device_painter, float units_per_inch, const 
 		scale = pixel_per_mm;
 		int w = qCeil(page_format.paper_dimensions.width() * scale);
 		int h = qCeil(page_format.paper_dimensions.height() * scale);
-#if defined (Q_OS_MAC)
+#if defined (Q_OS_MACOS)
 		if (device_painter->device()->physicalDpiX() == 0)
 		{
 			// Possible Qt bug, since according to QPaintDevice documentation,

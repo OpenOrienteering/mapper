@@ -94,23 +94,6 @@ public slots:
 	void updateGeoreferencing();
 	
 protected:
-	/** Holds a pixel-to-world transform loaded from a world file. */
-	struct WorldFile
-	{
-		bool loaded;
-		QTransform pixel_to_world;
-		
-		/// Creates an unloaded world file
-		WorldFile();
-		
-		/// Tries to load the given path as world file.
-		/// Returns true on success and sets loaded to true or false.
-		bool load(const QString& path);
-		
-		/// Tries to find and load a world file for the given image path.
-		bool tryToLoadForImage(const QString& image_path);
-	};
-	
 	/** Information about an undo step for the paint-on-template functionality. */
 	struct DrawOnImageUndoStep
 	{

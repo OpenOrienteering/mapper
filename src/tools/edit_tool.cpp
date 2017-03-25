@@ -446,7 +446,7 @@ void ObjectMover::calculateConstraints()
 
 // ### EditTool ###
 
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
 const Qt::Key EditTool::delete_object_key = Qt::Key_Backspace;
 #else
 const Qt::Key EditTool::delete_object_key = Qt::Key_Delete;

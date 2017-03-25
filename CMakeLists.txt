@@ -17,30 +17,17 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  
-cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
-cmake_policy(SET CMP0020 OLD)
-if(CMAKE_VERSION VERSION_GREATER 2.9)
-cmake_policy(SET CMP0026 OLD)
-cmake_policy(SET CMP0048 OLD)
-endif()
+cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
+
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 include(FeatureSummary)
 
 # Project declaration
 
-project(Mapper)
+project(Mapper VERSION 0.7.0 LANGUAGES CXX C)
 
 set(Mapper_COPYRIGHT "(C) 2012-2017 The OpenOrienteering developers")
-
-# All version components must be integers.
-# We use Mapper_VERSION_PATCH >= 99 to mark development builds.
-set(Mapper_VERSION_MAJOR 0)
-set(Mapper_VERSION_MINOR 6)
-if(NOT Mapper_VERSION_PATCH)
-	# This can be configured when running cmake
-	set(Mapper_VERSION_PATCH 7)
-endif()
 
 set(MAPPER_VERSION_PRI "${PROJECT_SOURCE_DIR}/oo-mapper-version.pri")
 file(READ "${MAPPER_VERSION_PRI}" current)
@@ -92,13 +79,11 @@ if(WIN32 OR APPLE)
 	set(Mapper_BUILD_GDAL_DEFAULT ON)
 	set(Mapper_BUILD_QT_DEFAULT ON)
 	set(Mapper_BUILD_DOXYGEN_DEFAULT ON)
-	set(Mapper_BUILD_PACKAGE_DEFAULT ON)
 else()
 	set(Mapper_BUILD_PROJ_DEFAULT OFF)
 	set(Mapper_BUILD_GDAL_DEFAULT OFF)
 	set(Mapper_BUILD_QT_DEFAULT ON)
 	set(Mapper_BUILD_DOXYGEN_DEFAULT OFF)
-	set(Mapper_BUILD_PACKAGE_DEFAULT OFF)
 endif()
 
 option(Mapper_BUILD_CLIPPER "Build the Clipper package from source" ${Mapper_BUILD_CLIPPER_DEFAULT})
@@ -127,12 +112,11 @@ mark_as_advanced(Mapper_AUTORUN_SYSTEM_TESTS Mapper_AUTORUN_MANUAL_TESTS)
 
 option(Mapper_COVERAGE_BUILD "Builds with coverage support" ${Mapper_DEVELOPMENT_BUILD})
 
-option(Mapper_BUILD_PACKAGE     "Create a target for building packages"                ${Mapper_BUILD_PACKAGE_DEFAULT})
 option(Mapper_PACKAGE_PROJ      "Include all required Proj components in the packages" ${Mapper_BUILD_PROJ})
 option(Mapper_PACKAGE_GDAL      "Include all required GDAL components in the packages" ${Mapper_BUILD_GDAL})
 option(Mapper_PACKAGE_QT        "Include all required Qt components in the packages"   ${Mapper_BUILD_QT})
 option(Mapper_PACKAGE_ASSISTANT "Include Qt Assistant in the packages"                 ${Mapper_BUILD_QT})
-mark_as_advanced(Mapper_BUILD_PACKAGE Mapper_PACKAGE_QT Mapper_PACKAGE_ASSISTANT Mapper_PACKAGE_PROJ)
+mark_as_advanced(Mapper_PACKAGE_QT Mapper_PACKAGE_ASSISTANT Mapper_PACKAGE_PROJ)
 
 unset(Mapper_PACKAGE_LIBRARIES CACHE) # Legacy
 
@@ -160,11 +144,16 @@ elseif(APPLE)
 	set(MAPPER_LIBRARY_DESTINATION .)
 	set(MAPPER_DATA_DESTINATION    "Mapper.app/Contents/Resources")
 	set(MAPPER_ABOUT_DESTINATION   "Mapper.app/Contents/Resources")
+elseif(ANDROID)
+	set(MAPPER_RUNTIME_DESTINATION "libs/${CMAKE_ANDROID_ARCH_ABI}")
+	set(MAPPER_LIBRARY_DESTINATION "libs/${CMAKE_ANDROID_ARCH_ABI}")
+	set(MAPPER_DATA_DESTINATION    "assets")
+	set(MAPPER_ABOUT_DESTINATION   "assets/doc")
 else() # LINUX and alike
-	set(MAPPER_RUNTIME_DESTINATION "/usr/bin")
-	set(MAPPER_LIBRARY_DESTINATION "/usr/lib/${Mapper_PACKAGE_NAME}")
-	set(MAPPER_DATA_DESTINATION    "/usr/share/${Mapper_PACKAGE_NAME}")
-	set(MAPPER_ABOUT_DESTINATION   "/usr/share/doc/${Mapper_PACKAGE_NAME}")
+	set(MAPPER_RUNTIME_DESTINATION "bin")
+	set(MAPPER_LIBRARY_DESTINATION "lib/${Mapper_PACKAGE_NAME}")
+	set(MAPPER_DATA_DESTINATION    "share/${Mapper_PACKAGE_NAME}")
+	set(MAPPER_ABOUT_DESTINATION   "share/doc/${Mapper_PACKAGE_NAME}")
 endif()
 
 if(CMAKE_CROSSCOMPILING)
@@ -174,26 +163,9 @@ endif()
 
 # Build definitons
 
-if(CMAKE_VERSION VERSION_GREATER 3.0.2)
-	set(CMAKE_CXX_STANDARD 14)
-	set(CMAKE_CXX_STANDARD_REQUIRED FALSE)
-else()
-	include(CheckCXXCompilerFlag)
-	check_cxx_compiler_flag("-std=c++11" std_cxx11)
-	if(NOT std_cxx11)
-		check_cxx_compiler_flag("-std=c++0x" std_cxx0x)
-	endif()
-	if(std_cxx11)
-		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-	elseif(std_cxx0x)
-		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
-	elseif(CMAKE_COMPILER_IS_GNUXX)
-		message(FATAL_ERROR "The compiler does not support C++11.")
-	else()
-		message(FATAL_ERROR "The compiler support for C++11 is not known.")
-	endif()
-endif()
-	
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
+
 if(APPLE AND Mapper_MACOSX_VERSION)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++ -mmacosx-version-min=${Mapper_MACOSX_VERSION}")
 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mmacosx-version-min=${Mapper_MACOSX_VERSION}")
@@ -309,12 +281,16 @@ add_subdirectory("examples")
 add_subdirectory("symbol sets")
 add_subdirectory("translations")
 add_subdirectory("3rd-party/qbezier")
-add_subdirectory("3rd-party/qtsingleapplication")
+if(NOT ANDROID)
+	add_subdirectory("3rd-party/qtsingleapplication")
+endif()
 if (Mapper_USE_GDAL)
 	add_subdirectory("src/gdal")
 endif()
 add_subdirectory("src/libocad")
-add_subdirectory("src/printsupport")
+if(NOT ANDROID)
+	add_subdirectory("src/printsupport")
+endif()
 add_subdirectory("src")
 add_subdirectory("packaging")
 if(CMAKE_CROSSCOMPILING)

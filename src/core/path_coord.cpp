@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2016 Kai Pastor
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -23,6 +23,20 @@
 
 #include "virtual_path.h"
 #include "util/util.h"
+
+
+static_assert(std::is_nothrow_default_constructible<PathCoord>::value,
+              "PathCoord must be nothrow default constructible.");
+static_assert(std::is_nothrow_copy_constructible<PathCoord>::value,
+              "PathCoord must be nothrow copy constructible.");
+static_assert(std::is_nothrow_move_constructible<PathCoord>::value,
+              "PathCoord must be nothrow move constructible.");
+static_assert(std::is_nothrow_copy_assignable<PathCoord>::value,
+              "PathCoord must be nothrow copy assignable.");
+static_assert(std::is_nothrow_move_assignable<PathCoord>::value,
+              "PathCoord must be nothrow move assignable.");
+static_assert(std::is_nothrow_destructible<PathCoord>::value,
+              "PathCoord must be nothrow destructible.");
 
 
 // ### PathCoord ###

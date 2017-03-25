@@ -1,5 +1,6 @@
 /*
- *    Copyright 2016 Kai Pastor
+ *    Copyright 2012 Thomas Schöps
+ *    Copyright 2015-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -18,34 +19,35 @@
  */
 
 
-#ifndef OPENORIENTEERING_UTIL_MEMORY_H
-#define OPENORIENTEERING_UTIL_MEMORY_H
+#ifndef OPENORIENTEERING_WORLD_FILE_H
+#define OPENORIENTEERING_WORLD_FILE_H
 
-#include <memory>
+#include <QTransform>
 
+QT_BEGIN_NAMESPACE
+class QString;
+QT_END_NAMESPACE
 
-#if defined(__cpp_lib_make_unique) && __cpp_lib_make_unique >= 201304 // C++14, gcc
-
-using std::make_unique;
-
-#elif defined(_LIBCPP_STD_VER) &&  _LIBCPP_STD_VER > 11 // C++14, llvm
-
-using std::make_unique;
-
-#else
 
 /**
- * Returns a new object for the given constructor arguments, wrapped in a std::unique_ptr.
+ * Handles pixel-to-world transformations given by world files.
  * 
- * \see std::make_unique
+ * \see https://en.wikipedia.org/wiki/World_file
  */
-template <class T, class... Args>
-std::unique_ptr<T> make_unique(Args&&... args)
+struct WorldFile
 {
-	return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
-}
-
-#endif
-
+	bool loaded;
+	QTransform pixel_to_world;
+	
+	/// Creates an unloaded world file
+	WorldFile();
+	
+	/// Tries to load the given path as world file.
+	/// Returns true on success and sets loaded to true or false.
+	bool load(const QString& path);
+	
+	/// Tries to find and load a world file for the given image path.
+	bool tryToLoadForImage(const QString& image_path);
+};
 
 #endif

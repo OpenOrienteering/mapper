@@ -57,6 +57,19 @@ private slots:
 	 * Tests conversion of rotating QTransform to TemplateTransform
 	 */
 	void testTransformRotate();
+	void testTransformRotate_data();
+	
+	/**
+	 * Tests conversion of non-trivial QTransform to TemplateTransform
+	 */
+	void testTransformCombined();
+	void testTransformCombined_data();
+	
+	/**
+	 * Tests round-trip conversion TemplateTransform -> QTransform -> TemplateTransform.
+	 */
+	void testTransformRoundTrip();
+	void testTransformRoundTrip_data();
 	
 	/**
 	 * Test PassPointList::estimateNonIsometricSimilarityTransform.

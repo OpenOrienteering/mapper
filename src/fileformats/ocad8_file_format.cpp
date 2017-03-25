@@ -1690,10 +1690,16 @@ void OCAD8FileExport::doExport()
 			}
 			else if (object->getType() == Object::Path)
 			{
-				PathObject* path = static_cast<PathObject*>(object);
-				ocad_object->angle = convertRotation(path->getPatternRotation());
-				if (path->getPatternOrigin() != MapCoord(0, 0))
-					addWarning(tr("Unable to export fill pattern shift for an area object"));
+				if (object->getSymbol()->getType() == Symbol::Area)
+				{
+					PathObject* path = static_cast<PathObject*>(object);
+					// Known issue: In OCD format, pattern rotatability is all
+					// or nothing. In Mapper, it is an option per pattern.
+					if (path->getSymbol()->asArea()->hasRotatableFillPattern())
+						ocad_object->angle = convertRotation(path->getPatternRotation());
+					if (path->getPatternOrigin() != MapCoord(0, 0))
+						addWarning(tr("Unable to export fill pattern shift for an area object"));
+				}
 			}
 			else if (object->getType() == Object::Text)
 			{
