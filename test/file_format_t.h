@@ -56,6 +56,12 @@ private slots:
 	void saveAndLoad();
 	void saveAndLoad_data();
 	
+	/**
+	 * Test saving and loading a map which is created in memory and does not go
+	 * through an implicit export-import-cycle before the test.
+	 */
+	void pristineMapTest();
+	
 private:
 	QStringList test_maps;
 };

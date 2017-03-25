@@ -33,6 +33,7 @@
 #include "fileformats/file_format_registry.h"
 #include "fileformats/file_import_export.h"
 #include "fileformats/ocad8_file_format.h"
+#include "fileformats/xml_file_format.h"
 #include "templates/template.h"
 #include "undo/undo_manager.h"
 #include "util/backports.h"
@@ -462,6 +463,40 @@ void FileFormatTest::saveAndLoad()
 		QFAIL(QString::fromLatin1("Loaded map does not equal saved map, error: %1").arg(error).toLocal8Bit());
 	
 	comparePrinterConfig(new_map->printerConfig(), original->printerConfig());
+}
+
+
+
+void FileFormatTest::pristineMapTest()
+{
+	auto spot_color = std::make_unique<MapColor>(QString::fromLatin1("spot color"), 0);
+	spot_color->setSpotColorName(QString::fromLatin1("SPOTCOLOR"));
+	spot_color->setCmyk({0.1f, 0.2f, 0.3f, 0.4f});
+	spot_color->setRgbFromCmyk();
+	
+	auto mixed_color = std::make_unique<MapColor>(QString::fromLatin1("mixed color"), 1);
+	mixed_color->setSpotColorComposition({ {&*spot_color, 0.5f} });
+	mixed_color->setCmykFromSpotColors();
+	mixed_color->setRgbFromCmyk();
+	
+	auto custom_color = std::make_unique<MapColor>(QString::fromLatin1("custom color"), 2);
+	custom_color->setSpotColorComposition({ {&*spot_color, 0.5f} });
+	custom_color->setCmyk({0.1f, 0.2f, 0.3f, 0.4f});
+	custom_color->setRgb({0.5f, 0.6f, 0.7f});
+	
+	Map map {};
+	map.addColor(spot_color.release(), 0);
+	map.addColor(mixed_color.release(), 1);
+	map.addColor(custom_color.release(), 2);
+	
+	XMLFileFormat format;
+	auto reloaded_map = saveAndLoadMap(map, &format);
+	
+	QVERIFY(bool(reloaded_map));
+	
+	QString error;
+	if (!compareMaps(map, *reloaded_map, error))
+		QFAIL(QString::fromLatin1("Loaded map does not equal saved map, error: %1").arg(error).toLocal8Bit());
 }
 
 
