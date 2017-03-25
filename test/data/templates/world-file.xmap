@@ -19,7 +19,7 @@
                 <namedcolor>PURPLE</namedcolor>
             </spotcolors>
             <cmyk method="custom"/>
-            <rgb method="custom" r="0.800" g="0.000" b="1.000"/>
+            <rgb method="cmyk" r="0.800" g="0.000" b="1.000"/>
         </color>
     </colors>
     <symbols count="1">

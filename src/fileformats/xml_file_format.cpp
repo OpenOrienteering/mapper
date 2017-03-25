@@ -267,6 +267,7 @@ void XMLFileExporter::exportColors()
 						component_element.writeAttribute(literal::factor, component.factor);
 						component_element.writeAttribute(literal::spotcolor, component.spot_color->getPriority());
 					}
+					break;
 				default:
 					; // nothing
 			}
@@ -289,7 +290,7 @@ void XMLFileExporter::exportColors()
 		
 		{
 			XmlElementWriter rgb_element(xml, literal::rgb);
-			switch(color->getCmykColorMethod())
+			switch(color->getRgbColorMethod())
 			{
 				case MapColor::SpotColor:
 					rgb_element.writeAttribute(literal::method, literal::spotcolor);
