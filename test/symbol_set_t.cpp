@@ -158,6 +158,19 @@ void SymbolSetTool::processSymbolSet()
 	
 	map.resetPrinterConfig();
 	map.undoManager().clear();
+	for (int i = 0; i < map.getNumColors(); ++i)
+	{
+		auto color = map.getMapColor(i);
+		if (color->getSpotColorMethod() == MapColor::CustomColor)
+		{
+			color->setCmykFromSpotColors();
+			color->setRgbFromSpotColors();
+		}
+		else
+		{
+			color->setRgbFromCmyk();
+		}
+	}
 	saveIfDifferent(source_path, &map, &view);
 	
 	const int num_symbols = map.getNumSymbols();

@@ -16,8 +16,8 @@
             <spotcolors knockout="true">
                 <component factor="1" spotcolor="5"/>
             </spotcolors>
-            <cmyk method="custom"/>
-            <rgb method="custom" r="0.000" g="0.000" b="0.000"/>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="0.000" g="0.000" b="0.000"/>
         </color>
         <color priority="2" name="White above framing" c="0.000" m="0.000" y="0.000" k="0.000" opacity="1.000">
             <spotcolors knockout="true">
@@ -30,8 +30,8 @@
             <spotcolors knockout="true">
                 <component factor="1" spotcolor="5"/>
             </spotcolors>
-            <cmyk method="custom"/>
-            <rgb method="custom" r="0.000" g="0.000" b="0.000"/>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="0.000" g="0.000" b="0.000"/>
         </color>
         <color priority="4" name="White below framing" c="0.000" m="0.000" y="0.000" k="0.000" opacity="1.000">
             <spotcolors knockout="true">
