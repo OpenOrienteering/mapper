@@ -119,7 +119,7 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller
 	// Line
 	line_properties = new QWidget();
 	QLabel* line_width_label = new QLabel(tr("Line width:"));
-	line_width_edit = Util::SpinBox::create(2, 0.0, 99999.9, tr("mm"));
+	line_width_edit = Util::SpinBox::create(3, 0.0, 99999.9, tr("mm"));
 	
 	QLabel* line_color_label = new QLabel(tr("Line color:"));
 	line_color_edit = new ColorDropDown(map);
