@@ -182,6 +182,7 @@ private:
 			settings.setValue(QString::fromLatin1("CPL_DEBUG"), QVariant{QLatin1String("OFF")});
 			settings.setValue(QString::fromLatin1("USE_PROJ_480_FEATURES"), QVariant{QLatin1String("YES")});
 			settings.setValue(QString::fromLatin1("OSM_USE_CUSTOM_INDEXING"), QVariant{QLatin1String("NO")});
+			settings.setValue(QString::fromLatin1("GPX_ELE_AS_25D") , QVariant{QLatin1String("YES")});
 			new_parameters = settings.childKeys();
 		}
 		
