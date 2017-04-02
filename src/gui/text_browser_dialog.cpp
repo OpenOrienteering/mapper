@@ -32,10 +32,12 @@
 
 #include <mapper_config.h>
 
+#include "gui/widgets/text_browser.h"
+
 
 TextBrowserDialog::TextBrowserDialog(const QUrl& initial_url, QWidget* parent)
  : QDialog(parent)
- , text_browser(new QTextBrowser())
+ , text_browser(new TextBrowser())
 {
 	if (parent)
 	{

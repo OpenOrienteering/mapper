@@ -145,6 +145,7 @@ HEADERS += \
   gui/widgets/tags_widget.h \
   gui/widgets/template_list_widget.h \
   gui/widgets/text_alignment_widget.h \
+  gui/widgets/text_browser.h \
   mapper_resource.h \
   sensors/compass.h \
   sensors/gps_display.h \
@@ -301,6 +302,7 @@ SOURCES += \
   gui/widgets/tags_widget.cpp \
   gui/widgets/template_list_widget.cpp \
   gui/widgets/text_alignment_widget.cpp \
+  gui/widgets/text_browser.cpp \
   mapper_resource.cpp \
   sensors/compass.cpp \
   sensors/gps_display.cpp \
