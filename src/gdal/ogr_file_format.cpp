@@ -311,6 +311,7 @@ OgrFileImport::OgrFileImport(QIODevice* stream, Map* map, MapView* view, UnitTyp
 	default_point_symbol->setName(tr("Point"));
 	default_point_symbol->setNumberComponent(0, 1);
 	default_point_symbol->setInnerColor(default_pen_color);
+	default_point_symbol->setInnerRadius(500); // (um)
 	map->addSymbol(default_point_symbol, 0);
 	
 	default_line_symbol = new LineSymbol();
