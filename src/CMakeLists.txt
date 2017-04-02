@@ -151,6 +151,7 @@ set(Mapper_Common_SRCS
   gui/widgets/tags_widget.cpp
   gui/widgets/template_list_widget.cpp
   gui/widgets/text_alignment_widget.cpp
+  gui/widgets/text_browser.cpp
   
   sensors/compass.cpp
   sensors/gps_display.cpp
@@ -305,7 +306,6 @@ endif()
 
 target_link_libraries(Mapper
   Mapper_Common
-  doc-licensing
 )
 target_compile_definitions(Mapper PRIVATE
   QT_NO_CAST_FROM_ASCII

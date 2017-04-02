@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013, 2014 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -18,8 +18,8 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_ABOUT_DIALOG_H_
-#define _OPENORIENTEERING_ABOUT_DIALOG_H_
+#ifndef OPENORIENTEERING_ABOUT_DIALOG_H
+#define OPENORIENTEERING_ABOUT_DIALOG_H
 
 #include "text_browser_dialog.h"
 
