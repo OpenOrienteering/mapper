@@ -305,7 +305,6 @@ endif()
 
 target_link_libraries(Mapper
   Mapper_Common
-  doc-licensing
 )
 target_compile_definitions(Mapper PRIVATE
   QT_NO_CAST_FROM_ASCII

@@ -297,11 +297,6 @@ foreach(qt5_module Core Gui Network PrintSupport Test Widgets)
 	endif()
 endforeach()
 
-install(FILES COPYING 
-  DESTINATION "${MAPPER_ABOUT_DESTINATION}"
-)
-configure_file(COPYING COPYING COPYONLY)
-
 set(MAPPER_SUPERBUILD 0 CACHE INTERNAL "Flag to avoid superbuild loops." FORCE)
 
 elseif(MAPPER_SUPERBUILD)

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -75,6 +75,10 @@ QStringList MapperResource::getLocations(MapperResource::RESOURCE_TYPE resource_
 			// Don't fiddle with gdal resource path.
 			return locations;
 #endif
+			
+		case LICENSING_DATA:
+			resource_path = QString::fromLatin1("/doc");
+			break;
 		
 		case MANUAL:
 			// TODO: Support localized manual

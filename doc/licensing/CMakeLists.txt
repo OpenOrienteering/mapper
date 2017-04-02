@@ -19,72 +19,132 @@
 
 message(STATUS "Configuring ${PROJECT_NAME} licensing documentation")
 
+find_file(LICENSING_COPYRIGHT_DIR
+  NAMES copyright
+  PATH_SUFFIXES share/doc
+)
+set(LICENSING_COPYRIGHT_DIR "${LICENSING_COPYRIGHT_DIR}" CACHE DIR
+  "Path to directory with 3rd-party component copyright files"
+)
 
-find_package(Qt5Core REQUIRED)
+find_file(LICENSING_COMMON_DIR
+  NAMES common-licenses
+  PATHS "${LICENSING_COPYRIGHT_DIR}"
+  NO_DEFAULT_PATH
+)
+set(LICENSING_COMMON_DIR "${LICENSING_COMMON_DIR}" CACHE DIR
+  "Path to directory with common license files"
+)
 
-# Like Qt5::moc, Qt5::qdoc should come from Qt5CoreConfigExtra.cmake
-if (NOT TARGET Qt5::qdoc AND TARGET Qt5::moc)
-    get_target_property(_qt5_moc_path Qt5::moc IMPORTED_LOCATION)
-    get_filename_component(_qt5_bin_prefix "${_qt5_moc_path}" PATH)
-    add_executable(Qt5::qdoc IMPORTED)
-	set(imported_location ${_qt5_bin_prefix}/qdoc)
-	if(NOT EXISTS "${imported_location}")
-		message(FATAL_ERROR "qdoc executable does not exist: "
-		                    "${imported_location}")
-	endif()
-	set_target_properties(Qt5::qdoc PROPERTIES
-		IMPORTED_LOCATION ${imported_location}
+message(STATUS "LICENSING_COPYRIGHT_DIR: ${LICENSING_COPYRIGHT_DIR}")
+message(STATUS "LICENSING_COMMON_DIR:    ${LICENSING_COMMON_DIR}")
+
+
+set(copyright_files_basenames
+  curl-7*
+  expat-2*
+  gdal-2*
+  libjpeg-turbo-1*
+  libpng1.6-1*
+  libpolyclipping-6*
+  pcre3-8*
+  proj-4*
+  qtbase-5*
+  qtimageformats-5*
+  qtlocation-5*
+  qtsensors-5*
+  qtserialport-5*
+  qttools-5*
+  qttranslations-5*
+  sqlite3-3*
+  tiff-4*
+  xz-utils-5*
+  zlib-1*
+)
+
+set(common_licenses_basenames
+  Apache-2.0
+  Artistic
+  BSD
+  GFDL-1.3
+  GPL-1
+  GPL-2
+  GPL-3
+  LGPL-2
+  LGPL-2.1
+  LGPL-3
+)
+
+function(collect_files var type dir target)
+	set(basenames ${ARGN})
+	set(${var} )
+	foreach(basename ${basenames})
+		if(basename STREQUAL "GPL-3")
+			set(name "GPL-3.txt")
+			set(path "${PROJECT_SOURCE_DIR}/COPYING")
+		else()
+			file(GLOB path "${dir}/${basename}.txt")
+			if(NOT path)
+				message(WARNING "No ${type} file for ${basename}" )
+				continue()
+			elseif(path MATCHES ";")
+				message(SEND_ERROR "Multiple ${type} files for ${basename}")
+				continue()
+			endif()
+			get_filename_component(name "${path}" NAME)
+			string(REPLACE ".txt" "" basename "${name}")
+		endif()
+		list(APPEND ${var} "  <li><a href=\"${target}/${name}\">${basename}</a></li>")
+		install(FILES "${path}"
+		  DESTINATION "${MAPPER_ABOUT_DESTINATION}/${target}"
+		  RENAME "${basename}.txt"
+		)
+	endforeach()
+	string(REPLACE ";" "\n" ${var} "${${var}}")
+	set(${var} "${${var}}" PARENT_SCOPE)
+endfunction()
+
+
+set(third_party_copyright )
+set(common_licenses )
+if(LICENSING_COPYRIGHT_DIR AND LICENSING_COMMON_DIR)
+	collect_files(third_party_copyright
+	  "copyright"
+	  "${LICENSING_COPYRIGHT_DIR}"
+	  "3rd-party"
+	  ${copyright_files_basenames}
 	)
-	if(TARGET Qt5)
-		add_dependencies(Qt5::qdoc Qt5)
-	endif()
+	
+	collect_files(common_licenses
+	  "license"
+	  "${LICENSING_COMMON_DIR}"
+	  "common-licenses"
+	  ${common_licenses_basenames}
+	)
+	
+elseif(LICENSING_COPYRIGHT_DIR OR LICENSING_COMMON_DIR)
+	message(SEND_ERROR "Both LICENSING_COPYRIGHT_DIR and LICENSING_COMMON_DIR must be set")
+	
+else()
+	message(WARNING "LICENSING_COPYRIGHT_DIR and LICENSING_COMMON_DIR are not set.")
+	message(WARNING "Licensing documentation will be incomplete.")
+	install(FILES "${CMAKE_CURRENT_BINARY_DIR}/GPL-3.txt"
+	  DESTINATION "${MAPPER_ABOUT_DESTINATION}/common-licenses"
+	)
+	
 endif()
-set(Qt5Core_QDOC_EXECUTABLE Qt5::qdoc)
+	
 
-
-set(LICENSING_SRCS
-  licensing.qdocconf
-  licensing-html.qdocconf
-  licensing.css
-  src/licensing.qdoc
-  src/gdal-licensing.qdocinc
-  src/qt-licensing.qdocinc
-  src/trademarks.qdocinc
-  src/apache-2.0.qdoc
-  src/gpl-3.0.qdoc
-  src/lgpl-2.1.qdoc
-  src/lgpl-3.0.qdoc
-  src/gcc-runtime-library-exception.qdoc
+configure_file(licensing.html licensing.tmp.html)
+file(GENERATE
+  OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/licensing.html
+  INPUT ${CMAKE_CURRENT_BINARY_DIR}/licensing.tmp.html
 )
 
-add_custom_target(licensing-sources
-  COMMENT   "This target makes Qt Creator show all sources in the project tree."
-  SOURCES   licensing.pro licensing.qrc ${LICENSING_SRCS}
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/licensing.html"
+  DESTINATION "${MAPPER_ABOUT_DESTINATION}"
 )
 
-add_custom_command(
-  OUTPUT    html/licensing.html
-  COMMENT   "Running qdoc on licensing documentation"
-  COMMAND   ${Qt5Core_QDOC_EXECUTABLE} "${CMAKE_CURRENT_SOURCE_DIR}/licensing.qdocconf"
-			  -outputdir "${CMAKE_CURRENT_BINARY_DIR}/html"
-  DEPENDS   ${LICENSING_SRCS}
-)
-
-add_custom_command(
-  OUTPUT    licensing.tmp.qrc
-  COMMAND   ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/licensing.qrc" licensing.tmp.qrc
-  DEPENDS   "${CMAKE_CURRENT_SOURCE_DIR}/licensing.qrc" html/licensing.html
-)
-qt5_add_resources(LICENSING_QRC_CPP
-  "${CMAKE_CURRENT_BINARY_DIR}/licensing.tmp.qrc"
-  OPTIONS -compress 9 -threshold 50
-)
-
-add_library(doc-licensing
-  STATIC
-  ${LICENSING_QRC_CPP}
-)
-
-target_link_libraries(doc-licensing
-  PUBLIC Qt5::Core
+add_custom_target(Mapper-licensing ALL
+  DEPENDS   licensing.html
 )

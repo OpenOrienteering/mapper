@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012-2014 Kai Pastor
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -18,8 +18,8 @@
  */
 
 
-#ifndef _OPENORIENTEERING_MAPPER_RESOURCE_H_
-#define _OPENORIENTEERING_MAPPER_RESOURCE_H_
+#ifndef OPENORIENTEERING_MAPPER_RESOURCE_H
+#define OPENORIENTEERING_MAPPER_RESOURCE_H
 
 #include <QString>
 
@@ -41,6 +41,7 @@ namespace MapperResource
 		ASSISTANT,
 		EXAMPLE,
 		GDAL_DATA,
+		LICENSING_DATA,
 		MANUAL,
 		PROJ_DATA,
 		SYMBOLSET,
