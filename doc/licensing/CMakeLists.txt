@@ -128,8 +128,9 @@ elseif(LICENSING_COPYRIGHT_DIR OR LICENSING_COMMON_DIR)
 else()
 	message(WARNING "LICENSING_COPYRIGHT_DIR and LICENSING_COMMON_DIR are not set.")
 	message(WARNING "Licensing documentation will be incomplete.")
-	install(FILES "${CMAKE_CURRENT_BINARY_DIR}/GPL-3.txt"
+	install(FILES "${PROJECT_SOURCE_DIR}/COPYING"
 	  DESTINATION "${MAPPER_ABOUT_DESTINATION}/common-licenses"
+	  RENAME "GPL-3.txt" # used by About dialog
 	)
 	
 endif()
