@@ -121,14 +121,14 @@ function(collect_files var type dir target)
 				set(path )
 			else()
 				get_filename_component(name "${path}" NAME)
-				string(REPLACE ".txt" "" basename "${name}")
 			endif()
 		endif()
-		if(path)
+		if(name AND path)
+			string(REPLACE ".txt" "" basename "${name}")
 			list(APPEND ${var} "  <li><a href=\"${target}/${name}\">${basename}</a></li>")
 			install(FILES "${path}"
 			  DESTINATION "${MAPPER_ABOUT_DESTINATION}/${target}"
-			  RENAME "${basename}.txt"
+			  RENAME "${name}"
 			)
 		endif()
 	endforeach()
