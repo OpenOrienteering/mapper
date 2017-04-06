@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -283,6 +284,7 @@ void NewMapDialog::loadSymbolSetDir(const QDir& symbol_set_dir)
 		subdir.setNameFilters(symbol_set_filters);
 		
 		QFileInfoList symbol_set_files = subdir.entryInfoList(QDir::Files | QDir::Hidden | QDir::NoSymLinks | QDir::NoDotAndDotDot, QDir::Name);
-		symbol_set_map.insert(std::make_pair(dir_name, symbol_set_files));
+		auto item = symbol_set_map.emplace(dir_name, QFileInfoList{}).first;
+		item->second.append(symbol_set_files);
 	}
 }
