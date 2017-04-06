@@ -17,9 +17,6 @@
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
 
 
-# Prerequisite
-add_subdirectory(data)
-
 find_package(Qt5Network REQUIRED)
 find_package(Qt5PrintSupport REQUIRED)
 find_package(Qt5Test REQUIRED)
@@ -143,9 +140,7 @@ add_system_test(coord_xml_t MANUAL)
 
 # System tests
 add_system_test(file_format_t)
-add_dependencies(file_format_t Mapper_test_data)
 add_system_test(duplicate_equals_t)
-add_dependencies(duplicate_equals_t Mapper_test_data)
 add_system_test(map_t)
 add_system_test(object_query_t)
 add_system_test(path_object_t)

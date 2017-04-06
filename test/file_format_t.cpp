@@ -21,7 +21,6 @@
 #include "file_format_t.h"
 
 #include "global.h"
-#include "mapper_resource.h"
 #include "settings.h"
 #include "core/georeferencing.h"
 #include "core/map.h"
@@ -310,7 +309,15 @@ namespace
 		return out;
 	}
 	
-}
+	static const auto test_files = {
+	  "data:issue-513-coords-outside-printable.xmap",
+	  "data:issue-513-coords-outside-printable.omap",
+	  "data:issue-513-coords-outside-qint32.omap",
+	  "data:spotcolor_overprint.xmap",
+	  "data:test_map.omap"
+	};
+	
+} // namespace
 
 
 
@@ -324,21 +331,13 @@ void FileFormatTest::initTestCase()
 	if (!FileFormats.findFormat("OCAD78"))
 		FileFormats.registerFormat(new OCAD8FileFormat());
 	
-	auto filenames = {
-	  "COPY_OF_issue-513-coords-outside-printable.xmap",
-	  "COPY_OF_issue-513-coords-outside-printable.omap",
-	  "COPY_OF_issue-513-coords-outside-qint32.omap",
-	  "COPY_OF_spotcolor_overprint.xmap",
-	  "COPY_OF_test_map.omap"
-	};
+	static const auto prefix = QString::fromLatin1("data");
+	QDir::addSearchPath(prefix, QFileInfo(QString::fromUtf8(__FILE__)).dir().absoluteFilePath(prefix));
 	
-	test_maps.reserve(int(filenames.size()));
-	for (auto item : filenames)
+	for (auto raw_path : test_files)
 	{
-		auto filename = QString::fromLatin1(item);
-		auto path = MapperResource::locate(MapperResource::TEST_DATA, filename);
-		QVERIFY2(!path.isEmpty(), QString::fromLatin1("Unable to locate %1").arg(filename).toLocal8Bit());
-		test_maps.push_back(path);
+		auto path = QString::fromUtf8(raw_path);
+		QVERIFY(QFileInfo::exists(path));
 	}
 }
 
@@ -362,10 +361,11 @@ void FileFormatTest::issue_513_high_coordinates_data()
 {
 	QTest::addColumn<QString>("filename");
 	
-	for (const auto& filename : qAsConst(test_maps))
+	for (auto raw_path : test_files)
 	{
-		if (filename.contains(QString::fromLatin1("issue-513")))
-			QTest::newRow(QFileInfo(filename).fileName().toLocal8Bit()) << filename;
+		auto path = QString::fromUtf8(raw_path);
+		if (path.contains(QString::fromLatin1("issue-513")))
+			QTest::newRow(raw_path) << QString::fromUtf8(raw_path);
 	}
 }
 
@@ -403,6 +403,7 @@ void FileFormatTest::issue_513_high_coordinates()
 void FileFormatTest::saveAndLoad_data()
 {
 	// Add all file formats which support import and export
+	QTest::addColumn<QByteArray>("id"); // memory management for test data tag
 	QTest::addColumn<QByteArray>("format_id");
 	QTest::addColumn<QString>("map_filename");
 	
@@ -410,10 +411,14 @@ void FileFormatTest::saveAndLoad_data()
 	{
 		if (format->supportsExport() && format->supportsImport())
 		{
-			for (const auto& filename : qAsConst(test_maps))
+			for (auto raw_path : test_files)
 			{
-				auto id = QString { QFileInfo(filename).fileName() + QLatin1String(" <> ") + QLatin1String(format->id()) };
-				QTest::newRow(id.toLocal8Bit()) << QByteArray{format->id()} << filename;
+				auto format_id = format->id();
+				auto id = QByteArray{};
+				id.reserve(int(qstrlen(raw_path) + qstrlen(format_id) + 5u));
+				id.append(raw_path).append(" <> ").append(format_id);
+				auto path = QString::fromUtf8(raw_path);
+				QTest::newRow(id) << id << QByteArray{format_id} << path;
 			}
 		}
 	}
