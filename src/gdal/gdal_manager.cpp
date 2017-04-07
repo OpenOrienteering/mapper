@@ -23,9 +23,8 @@
 #include <cpl_conv.h>
 
 #include <QByteArray>
+#include <QFileInfo>
 #include <QSettings>
-
-#include "mapper_resource.h"
 
 
 
@@ -167,11 +166,11 @@ private:
 			enabled_vector_extensions.push_back("osm");
 		settings.endGroup();
 		
-		auto gdal_data = MapperResource::locate(MapperResource::GDAL_DATA);
-		if (!gdal_data.isEmpty())
+		auto gdal_data = QFileInfo(QLatin1String("data:/gdal"));
+		if (gdal_data.exists())
 		{
 			// The user may overwrite this default in the settings.
-			CPLSetConfigOption("GDAL_DATA", gdal_data.toLatin1().constData());
+			CPLSetConfigOption("GDAL_DATA", gdal_data.absoluteFilePath().toLocal8Bit());
 		}
 		
 		settings.beginGroup(gdal_configuration_group);

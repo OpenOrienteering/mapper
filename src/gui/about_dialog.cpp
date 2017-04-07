@@ -25,8 +25,7 @@
 #include <QApplication>
 #include <QTextBrowser>
 
-#include <mapper_config.h>
-#include "mapper_resource.h"
+#include "mapper_config.h"
 
 
 /**
@@ -76,8 +75,6 @@ static QString formatBlock(const QStringList& items)
 AboutDialog::AboutDialog(QWidget* parent)
  : TextBrowserDialog(about_page_url, parent)
 {
-	auto licensing_data = MapperResource::locate(MapperResource::LICENSING_DATA);
-	text_browser->setSearchPaths(text_browser->searchPaths() << licensing_data);
 	text_browser->setHtml(about());
 	text_browser->document()->adjustSize();
 	updateWindowTitle();
@@ -167,14 +164,14 @@ QString AboutDialog::about()
 	  tr("This program is free software: you can redistribute it "
 	     "and/or modify it under the terms of the "
 	     "<a %1>GNU General Public License (GPL), version&nbsp;3</a>, "
-	     "as published by the Free Software Foundation.").arg(QString::fromLatin1("href=\"common-licenses/gpl-3.txt\"")), // %5
+	     "as published by the Free Software Foundation.").arg(QString::fromLatin1("href=\"file:doc:/common-licenses/GPL-3.txt\"")), // %5
 	    // %6
 	  tr("This program is distributed in the hope that it will be useful, "
 	     "but WITHOUT ANY WARRANTY; without even the implied warranty of "
 	     "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the "
 	     "GNU General Public License (GPL), version&nbsp;3, for "
-	     "<a %1>more details</a>.").arg(QString::fromLatin1("href=\"common-licenses/gpl-3.txt#L589\"")), // %6
-	  tr("<a %1>All about licenses, copyright notices, conditions and disclaimers.</a>").arg(QString::fromLatin1("href=\"licensing.html\"")) // %7
+	     "<a %1>more details</a>.").arg(QString::fromLatin1("href=\"file:doc:/common-licenses/GPL-3.txt#L589\"")), // %6
+	  tr("<a %1>All about licenses, copyright notices, conditions and disclaimers.</a>").arg(QString::fromLatin1("href=\"file:doc:/licensing.html\"")) // %7
 	).arg(
 	  tr("The OpenOrienteering developers in alphabetical order:"), // %8
 	  formatBlock(developers_list).arg(tr("(project initiator)").replace(QLatin1Char('('), QString{}).replace(QLatin1Char(')'), QString{})), // %9

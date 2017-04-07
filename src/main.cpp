@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2016 Kai Pastor
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -39,13 +39,15 @@
 #endif
 
 #include "global.h"
+#include "mapper_resource.h"
+#include "settings.h"
 #include "gui/home_screen_controller.h"
 #include "gui/main_window.h"
 #include "gui/widgets/mapper_proxystyle.h"
-#include "settings.h"
-#include "util/translation_util.h"
 #include "util/backports.h"
 #include "util/recording_translator.h"
+#include "util/translation_util.h"
+
 
 int main(int argc, char** argv)
 {
@@ -81,6 +83,8 @@ int main(int argc, char** argv)
 	// Load plugins on Windows
 	qapp.addLibraryPath(QCoreApplication::applicationDirPath() + QLatin1String("/plugins"));
 #endif
+	
+	MapperResource::setSeachPaths();
 	
 	// Localization
 	TranslationUtil::setBaseName(QLatin1String("OpenOrienteering"));

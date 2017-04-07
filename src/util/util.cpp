@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2015 Kai Pastor
+ *    Copyright 2013-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -29,13 +29,13 @@
 #include <QProcess>
 #include <QSettings>
 #include <QScreen>
+#include <QStandardPaths>
 #include <QUrl>
 
-#include "core/map_coord.h"
-#include "mapper_resource.h"
+#include "mapper_config.h"
 #include "settings.h"
+#include "core/map_coord.h"
 #include "gui/text_browser_dialog.h"
-#include <mapper_config.h>
 
 DoubleValidator::DoubleValidator(double bottom, double top, QObject* parent, int decimals) : QDoubleValidator(bottom, top, decimals, parent)
 {
@@ -249,15 +249,22 @@ void showHelp(QWidget* dialog_parent, QString filename)
 	}
 	else
 	{
-		const QString help_collection_path(MapperResource::locate(MapperResource::MANUAL, QString::fromUtf8("Mapper " APP_VERSION " Manual.qhc")));
-		const QString compiled_help_path(MapperResource::locate(MapperResource::MANUAL, QString::fromUtf8("Mapper " APP_VERSION " Manual.qch")));
-		if (help_collection_path.isEmpty() || compiled_help_path.isEmpty())
+		auto help_collection = QFileInfo{ QString::fromUtf8("data:/doc/manual/Mapper " APP_VERSION " Manual.qhc") };
+		auto compiled_help_path = QFileInfo{ QString::fromUtf8("data:/doc/manual/Mapper " APP_VERSION " Manual.qch") };
+		if (!help_collection.exists() || !compiled_help_path.exists())
 		{
 			QMessageBox::warning(dialog_parent, QApplication::translate("Util", "Error"), QApplication::translate("Util", "Failed to locate the help files."));
 			return;
 		}
 		
-		QString assistant_path = MapperResource::locate(MapperResource::ASSISTANT);
+#if defined(Q_OS_MACOS)
+		const auto assistant = QString::fromLatin1("Assistant");
+#else
+		const auto assistant = QString::fromLatin1("assistant");
+#endif
+		auto assistant_path = QStandardPaths::findExecutable(assistant, { QCoreApplication::applicationDirPath() });
+		if (assistant_path.isEmpty())
+			assistant_path = QStandardPaths::findExecutable(assistant);
 		if (assistant_path.isEmpty())
 		{
 			QMessageBox::warning(dialog_parent, QApplication::translate("Util", "Error"), QApplication::translate("Util", "Failed to locate the help browser (\"Qt Assistant\")."));
@@ -267,7 +274,7 @@ void showHelp(QWidget* dialog_parent, QString filename)
 		// Try to start the Qt Assistant process
 		QStringList args;
 		args << QLatin1String("-collectionFile")
-			 << QDir::toNativeSeparators(help_collection_path)
+			 << QDir::toNativeSeparators(help_collection.absoluteFilePath())
 			 << QLatin1String("-showUrl")
 			 << (base_url + filename)
 			 << QLatin1String("-enableRemoteControl");

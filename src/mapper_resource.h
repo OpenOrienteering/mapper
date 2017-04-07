@@ -17,52 +17,27 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 #ifndef OPENORIENTEERING_MAPPER_RESOURCE_H
 #define OPENORIENTEERING_MAPPER_RESOURCE_H
 
-#include <QString>
 
-class QStringList;
-
-/**
- * Utility for locating and loading resources.
- * 
- * Depending on operating system and build configuration,
- * resources may be located in a number of different locations.
- * This interface hides all the complex dependencies.
- */
 namespace MapperResource
 {
-	/**
-	 * Various types of resources which are used by Mapper.
-	 */
-	enum RESOURCE_TYPE {
-		ASSISTANT,
-		EXAMPLE,
-		GDAL_DATA,
-		LICENSING_DATA,
-		MANUAL,
-		PROJ_DATA,
-		SYMBOLSET,
-		TEST_DATA,
-		TRANSLATION
-	};
-	
-	/** 
-	 * Get a list of paths where to find particular resources.
-	 * Returns an empty list if no valid path exists.
-	 */
-	QStringList getLocations(MapperResource::RESOURCE_TYPE resource_type);
-	
-	/** 
-	 * Get the first instance of a resource. 
-	 * Returns an empty string if the resource is not found.
-	 * 
-	 * If the name parameter is given, it is understood as a filename in the 
-	 * resource directory identified by resource_type.
-	 */
-	QString locate(MapperResource::RESOURCE_TYPE resource_type, const QString& name = QString());
+
+/**
+ * Initializes QDir::searchPaths for Mapper resource prefixes.
+ * 
+ * This function registers the prefixes "data" and "doc" with paths leading
+ * to possible locations in the build dir (development build only), application
+ * bundle (Android, macOS, Windows), system (Linux) and Qt resource system.
+ * Thus resource lookup may either iterate explicitly over
+ * QDir::searchPaths("PREFIX"), or directly access resources using 
+ * QFile("PREFIX:name").
+ */
+void setSeachPaths();
+
 }
+
+
 
 #endif

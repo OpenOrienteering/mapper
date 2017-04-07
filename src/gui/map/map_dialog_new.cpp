@@ -36,7 +36,6 @@
 
 #include "fileformats/file_format.h"
 #include "fileformats/file_format_registry.h"
-#include "mapper_resource.h"
 #include "util/util.h"
 
 NewMapDialog::NewMapDialog(QWidget* parent) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
@@ -249,11 +248,13 @@ void NewMapDialog::showFileDialog()
 
 void NewMapDialog::loadSymbolSetMap()
 {
-	QString app_dir = QCoreApplication::applicationDirPath();
+	loadSymbolSetDir(QDir(QDir::homePath() + QLatin1String("/my symbol sets")));
 	
-	QStringList locations = MapperResource::getLocations(MapperResource::SYMBOLSET);
-	for (auto&& symbol_set_dir : locations)
-		loadSymbolSetDir(symbol_set_dir);
+	const auto locations = QDir::searchPaths(QLatin1String("data"));
+	for (const auto& symbol_set_dir : locations)
+	{
+		loadSymbolSetDir(QDir(symbol_set_dir + QLatin1String("/symbol sets")));
+	}
 }
 
 void NewMapDialog::loadSymbolSetDir(const QDir& symbol_set_dir)
