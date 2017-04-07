@@ -82,8 +82,9 @@ set(common_licenses_basenames
   LGPL-3
 )
 
-# Generate for manual tests from build dir.
+# Generate GPL-3.txt for manual tests from build dir.
 # As a side effect, makes "COPYING" visible in Qt Creator.
+file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/common-licenses")
 file(GENERATE
   OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/common-licenses/GPL-3.txt"
   INPUT  "${PROJECT_SOURCE_DIR}/COPYING"
