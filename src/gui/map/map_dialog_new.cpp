@@ -24,7 +24,6 @@
 #include <QCheckBox>
 #include <QComboBox>
 #include <QCoreApplication>
-#include <QDebug>
 #include <QDir>
 #include <QFileDialog>
 #include <QHBoxLayout>
@@ -269,9 +268,9 @@ void NewMapDialog::loadSymbolSetDir(const QDir& symbol_set_dir)
 		//}
 		
 		QDir subdir(symbol_set_dir);
-		if (! subdir.cd(dir_name))
+		if (!subdir.cd(dir_name))
 		{
-			qDebug() << dir_name << ": cannot access this directory.";
+			qDebug("%s: cannot access this directory.", qPrintable(dir_name));
 			continue;
 		}
 		
