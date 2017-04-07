@@ -249,9 +249,9 @@ void showHelp(QWidget* dialog_parent, QString filename)
 	}
 	else
 	{
-		auto help_collection = QFileInfo{ QString::fromUtf8("data:/doc/manual/Mapper " APP_VERSION " Manual.qhc") };
-		auto compiled_help_path = QFileInfo{ QString::fromUtf8("data:/doc/manual/Mapper " APP_VERSION " Manual.qch") };
-		if (!help_collection.exists() || !compiled_help_path.exists())
+		auto help_collection = QFileInfo{ QString::fromUtf8("doc:Mapper " APP_VERSION " Manual.qhc") };
+		auto compiled_help = QFileInfo{ QString::fromUtf8("doc:Mapper " APP_VERSION " Manual.qch") };
+		if (!help_collection.exists() || !compiled_help.exists())
 		{
 			QMessageBox::warning(dialog_parent, QApplication::translate("Util", "Error"), QApplication::translate("Util", "Failed to locate the help files."));
 			return;
