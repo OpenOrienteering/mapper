@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013, 2014 Thomas Schöps
- *    Copyright 2012, 2013, 2014 Kai Pastor
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,13 +21,14 @@
 
 #include "global.h"
 
-#include <mapper_config.h>
+#include "mapper_config.h"
 
 #include "fileformats/file_format_registry.h"
 #include "fileformats/native_file_format.h"
 #include "fileformats/xml_file_format.h"
 #include "fileformats/ocd_file_format.h"
 #include "gdal/ogr_file_format.h"
+
 
 void doStaticInitializations()
 {
