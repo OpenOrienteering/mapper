@@ -17,8 +17,8 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_DUPLICATE_EQUALS_T_H
-#define _OPENORIENTEERING_DUPLICATE_EQUALS_T_H
+#ifndef OPENORIENTEERING_DUPLICATE_EQUALS_T_H
+#define OPENORIENTEERING_DUPLICATE_EQUALS_T_H
 
 #include <QtTest/QtTest>
 
@@ -37,9 +37,6 @@ private slots:
 	
 	void objects();
 	void objects_data();
-	
-private:
-	QString map_filename;
 };
 
 #endif

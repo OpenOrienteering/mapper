@@ -17,17 +17,13 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_GLOBAL_H_
-#define _OPENORIENTEERING_GLOBAL_H_
+#ifndef OPENORIENTEERING_GLOBAL_H
+#define OPENORIENTEERING_GLOBAL_H
 
-#define QT_USE_FAST_CONCATENATION
-#define QT_USE_FAST_OPERATOR_PLUS
-
-#ifdef _MSC_VER
-	#pragma warning(disable: 4290)	// "C++ exception specification ignored"
-#endif
-
-/// This is called at startup in main() and by the test cases to do the global initializations
+/** 
+ * This is called at startup in main() and by the test cases
+ * to do the global initializations.
+ */
 void doStaticInitializations();
 
 #endif

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013, 2014 Thomas Schöps
- *    Copyright 2012-2016 Kai Pastor
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -54,7 +54,6 @@
 #include "core/map.h"
 #include "gui/map/map_dialog_new.h"
 #include "gui/map/map_editor.h"
-#include "../mapper_resource.h"
 #include "../fileformats/file_format.h"
 #include "../settings.h"
 #include "core/symbols/symbol.h"
@@ -1145,10 +1144,7 @@ void MainWindow::linkClicked(const QString &link)
 	else if (link.compare(QLatin1String("about:"), Qt::CaseInsensitive) == 0)
 		showAbout();
 	else if (link.startsWith(QLatin1String("examples:"), Qt::CaseInsensitive))
-	{
-		auto example = link.midRef(9);
-		openPathLater(MapperResource::locate(MapperResource::EXAMPLE) + QLatin1Char('/') + example);
-	}
+		openPathLater(QLatin1String("data:/examples/") + link.midRef(9));
 	else
 		QDesktopServices::openUrl(link);
 }

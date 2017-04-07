@@ -28,7 +28,6 @@
 #include "gui/map/map_editor.h"
 #include "core/map_grid.h"
 #include "gui/map/map_widget.h"
-#include "../src/mapper_resource.h"
 #include "core/objects/object.h"
 #include "core/symbols/symbol.h"
 #include "core/symbols/line_symbol.h"

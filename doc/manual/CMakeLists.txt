@@ -128,7 +128,7 @@ if(Mapper_MANUAL_QTHELP)
 	install(
 	  FILES "${CMAKE_CURRENT_BINARY_DIR}/${Mapper_HELP_COLLECTION}" 
 	        "${CMAKE_CURRENT_BINARY_DIR}/${Mapper_COMPRESSED_HELP}" 
-	  DESTINATION "${MAPPER_DATA_DESTINATION}/doc/manual"
+	  DESTINATION "${MAPPER_ABOUT_DESTINATION}"
 	)
 else()
 	set(MAPPER_MANUAL_TARGET "${CMAKE_CURRENT_BINARY_DIR}/html/index.qhp")
@@ -143,7 +143,7 @@ else()
 			string(REGEX REPLACE \".*<file>\"  \"\" match \"\${match}\")
 			string(REGEX REPLACE \"</file>.*\" \"\" match \"\${match}\")
 			file(INSTALL
-			  DESTINATION \"\${CMAKE_INSTALL_PREFIX}/${MAPPER_DATA_DESTINATION}/doc/manual\"
+			  DESTINATION \"\${CMAKE_INSTALL_PREFIX}/${MAPPER_ABOUT_DESTINATION}\"
 			  FILES \"${CMAKE_CURRENT_BINARY_DIR}/html/\${match}\"
 			)
 		endforeach()

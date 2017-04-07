@@ -1,5 +1,6 @@
 /*
- *    Copyright 2012, 2013 Thomas Schöps, Kai Pastor
+ *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,31 +20,50 @@
 
 #include "duplicate_equals_t.h"
 
-#include "../src/global.h"
+#include "global.h"
 #include "core/map.h"
-#include "../src/mapper_resource.h"
 #include "core/objects/object.h"
+
+
+namespace
+{
+
+static const auto test_files = {
+  "data:test_map.omap",
+};
+
+} // namespace
 
 
 void DuplicateEqualsTest::initTestCase()
 {
 	doStaticInitializations();
-	map_filename = MapperResource::locate(MapperResource::TEST_DATA, QString::fromLatin1("COPY_OF_test_map.omap"));
-	QVERIFY2(!map_filename.isEmpty(), "Unable to locate test map");
+	
+	static const auto prefix = QString::fromLatin1("data");
+	QDir::addSearchPath(prefix, QFileInfo(QString::fromUtf8(__FILE__)).dir().absoluteFilePath(prefix));
+	
+	for (auto raw_path : test_files)
+	{
+		auto path = QString::fromUtf8(raw_path);
+		QVERIFY(QFileInfo::exists(path));
+	}
 }
 
 
 void DuplicateEqualsTest::symbols_data()
 {
 	QTest::addColumn<QString>("map_filename");
-	QTest::newRow(map_filename.toLocal8Bit()) << map_filename;
+	for (auto raw_path : test_files)
+	{
+		QTest::newRow(raw_path) << QString::fromUtf8(raw_path);
+	}
 }
 
 void DuplicateEqualsTest::symbols()
 {
 	QFETCH(QString, map_filename);
 	Map* map = new Map();
-	map->loadFrom(map_filename, NULL, NULL, false, false);
+	map->loadFrom(map_filename, nullptr, nullptr, false, false);
 	
 	for (int symbol = 0; symbol < map->getNumSymbols(); ++symbol)
 	{
@@ -60,14 +80,17 @@ void DuplicateEqualsTest::symbols()
 void DuplicateEqualsTest::objects_data()
 {
 	QTest::addColumn<QString>("map_filename");
-	QTest::newRow(map_filename.toLocal8Bit()) << map_filename;
+	for (auto raw_path : test_files)
+	{
+		QTest::newRow(raw_path) << QString::fromUtf8(raw_path);
+	}
 }
 
 void DuplicateEqualsTest::objects()
 {
 	QFETCH(QString, map_filename);
 	Map* map = new Map();
-	map->loadFrom(map_filename, NULL, NULL, false, false);
+	map->loadFrom(map_filename, nullptr, nullptr, false, false);
 	
 	for (int part_number = 0; part_number < map->getNumParts(); ++part_number)
 	{
@@ -99,7 +122,7 @@ void DuplicateEqualsTest::objects()
  * while running with "minimal" platform plugin.
  */
 #ifndef Q_OS_MACOS
-auto qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");
+static auto qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");
 #endif
 
 

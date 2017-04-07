@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -23,7 +24,6 @@
 #include <QCheckBox>
 #include <QComboBox>
 #include <QCoreApplication>
-#include <QDebug>
 #include <QDir>
 #include <QFileDialog>
 #include <QHBoxLayout>
@@ -36,7 +36,6 @@
 
 #include "fileformats/file_format.h"
 #include "fileformats/file_format_registry.h"
-#include "mapper_resource.h"
 #include "util/util.h"
 
 NewMapDialog::NewMapDialog(QWidget* parent) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
@@ -249,11 +248,13 @@ void NewMapDialog::showFileDialog()
 
 void NewMapDialog::loadSymbolSetMap()
 {
-	QString app_dir = QCoreApplication::applicationDirPath();
+	loadSymbolSetDir(QDir(QDir::homePath() + QLatin1String("/my symbol sets")));
 	
-	QStringList locations = MapperResource::getLocations(MapperResource::SYMBOLSET);
-	for (auto&& symbol_set_dir : locations)
-		loadSymbolSetDir(symbol_set_dir);
+	const auto locations = QDir::searchPaths(QLatin1String("data"));
+	for (const auto& symbol_set_dir : locations)
+	{
+		loadSymbolSetDir(QDir(symbol_set_dir + QLatin1String("/symbol sets")));
+	}
 }
 
 void NewMapDialog::loadSymbolSetDir(const QDir& symbol_set_dir)
@@ -268,9 +269,9 @@ void NewMapDialog::loadSymbolSetDir(const QDir& symbol_set_dir)
 		//}
 		
 		QDir subdir(symbol_set_dir);
-		if (! subdir.cd(dir_name))
+		if (!subdir.cd(dir_name))
 		{
-			qDebug() << dir_name << ": cannot access this directory.";
+			qDebug("%s: cannot access this directory.", qPrintable(dir_name));
 			continue;
 		}
 		
@@ -283,6 +284,7 @@ void NewMapDialog::loadSymbolSetDir(const QDir& symbol_set_dir)
 		subdir.setNameFilters(symbol_set_filters);
 		
 		QFileInfoList symbol_set_files = subdir.entryInfoList(QDir::Files | QDir::Hidden | QDir::NoSymLinks | QDir::NoDotAndDotDot, QDir::Name);
-		symbol_set_map.insert(std::make_pair(dir_name, symbol_set_files));
+		auto item = symbol_set_map.emplace(dir_name, QFileInfoList{}).first;
+		item->second.append(symbol_set_files);
 	}
 }

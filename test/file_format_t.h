@@ -61,9 +61,6 @@ private slots:
 	 * through an implicit export-import-cycle before the test.
 	 */
 	void pristineMapTest();
-	
-private:
-	QStringList test_maps;
 };
 
 #endif // _OPENORIENTEERING_FILE_FORMAT_T_H

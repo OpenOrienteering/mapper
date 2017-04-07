@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012-2016 Kai Pastor
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -26,7 +26,33 @@
 #include <QLocale>
 #include <QTranslator>
 
-#include "mapper_resource.h"
+#include "mapper_config.h"
+
+
+namespace
+{
+
+QStringList searchPath()
+{
+	static QStringList search_path;
+	if (search_path.isEmpty())
+	{
+		const auto data_paths = QDir::searchPaths(QLatin1String("data"));
+#if !defined(Mapper_TRANSLATIONS_EMBEDDED)
+		search_path.reserve(data_paths.size() + 1);
+		// Always load embedded translations first if enabled
+		search_path.append(QLatin1String(":/translations"));
+#else
+		search_path.reserve(data_paths.size());
+#endif
+		for (const auto& path : data_paths)
+			search_path.append(path + QLatin1String("/translations"));
+	}
+	return search_path;
+}
+
+} // namespace
+
 
 
 QString TranslationUtil::base_name(QString::fromLatin1("qt_"));
@@ -131,13 +157,3 @@ TranslationUtil::Language TranslationUtil::languageFromCode(const QString& code)
 	return language;
 }
 
-
-// static
-const QStringList& TranslationUtil::searchPath()
-{
-	static QStringList search_path;
-	if (search_path.isEmpty())
-		search_path = MapperResource::getLocations(MapperResource::TRANSLATION);
-	
-	return search_path;
-}

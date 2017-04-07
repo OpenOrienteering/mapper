@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012, 2013 Kai Pastor
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -18,14 +18,12 @@
  */
 
 
-#ifndef OPENORIENTEERING_UTIL_TRANSLATION_H
-#define OPENORIENTEERING_UTIL_TRANSLATION_H
+#ifndef OPENORIENTEERING_TRANSLATION_UTIL_H
+#define OPENORIENTEERING_TRANSLATION_UTIL_H
 
 #include <vector>
 
 #include <QLocale>
-#include <QMap>
-#include <QStringList>
 #include <QTranslator>
 
 
@@ -122,11 +120,6 @@ protected:
 	 */
 	bool load(QTranslator& translator, QString translation_name) const;
 	
-	
-	/**
-	 * Returns the search path for translations.
-	 */
-	static const QStringList& searchPath();
 	
 	static QString base_name;
 	
