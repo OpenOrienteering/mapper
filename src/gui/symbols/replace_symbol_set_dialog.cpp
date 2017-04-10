@@ -438,7 +438,7 @@ bool ReplaceSymbolSetDialog::showDialogForCRT(QWidget* parent, const Map* base_m
 					{
 						auto layerized_symbol = object_symbol->duplicate();
 						layerized_symbol->setNumberComponent(0, symbol->getNumberComponent(0));
-						layerized_symbol->setNumberComponent(1, symbol->getNumberComponent(2));
+						layerized_symbol->setNumberComponent(1, symbol->getNumberComponent(1));
 						layerized_symbol->setNumberComponent(2, symbol->getNumberComponent(2));
 						layerized_symbol->setName(layer);
 						imported_map->addSymbol(layerized_symbol, imported_map->getNumSymbols());
