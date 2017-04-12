@@ -3299,12 +3299,12 @@ Skal de importerte dataene omskaleres?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="849"/>
         <source>Tag Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Merkevalg</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="849"/>
         <source>Show/Hide the tag selection window</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis/skjul merkevalgvinduet</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="851"/>
@@ -3680,7 +3680,7 @@ Skal de importerte dataene omskaleres?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1949"/>
         <source>Tag Selector</source>
-        <translation type="unfinished"></translation>
+        <translation>Merkevelger</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2087"/>
@@ -4391,7 +4391,7 @@ er valgt</translation>
         <location filename="future_translations.cpp" line="64"/>
         <source>Fill the selected lines or create a border for the selected areas.</source>
         <extracomment>To replace existing translation which uses "line(s)" and "area(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Fyll de valgte linjene eller lag en kant rundt de valgte områdene.</translation>
     </message>
     <message numerus="yes">
         <location filename="future_translations.cpp" line="67"/>
