@@ -605,7 +605,7 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="83"/>
         <source>Horizontal offset:</source>
-        <translation>Offset orrizzontale:</translation>
+        <translation>Offset orizzontale:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="85"/>
@@ -626,7 +626,7 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="111"/>
         <source>Display:</source>
-        <translation type="unfinished"></translation>
+        <translation>Schermo:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="159"/>
@@ -653,7 +653,7 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="251"/>
         <source>paper coordinates origin</source>
-        <translation>Origina delle coordinate sulla carta</translation>
+        <translation>Origine delle coordinate sulla carta</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="253"/>
@@ -980,7 +980,7 @@
         <location filename="../src/tools/draw_point_tool.cpp" line="62"/>
         <source>Reset</source>
         <comment>Reset rotation</comment>
-        <translation type="unfinished"></translation>
+        <translation>Resetta</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="317"/>
@@ -997,21 +997,21 @@
         <location filename="../src/tools/draw_point_tool.cpp" line="323"/>
         <location filename="../src/tools/draw_point_tool.cpp" line="337"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a point object.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Click&lt;/b&gt;: Crea un oggetto puntuale.</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="324"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Create an object and set its orientation.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Trascina&lt;/b&gt;: Crea un oggetto e definisci il suo orientamento.</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="330"/>
         <source>&lt;b&gt;%1, 0&lt;/b&gt;: Reset rotation.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1, 0&lt;/b&gt;: Resetta la rotazione.</translation>
     </message>
     <message>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a point object. &lt;b&gt;Drag&lt;/b&gt;: Create an object and set its orientation (if rotatable). </source>
-        <translation type="vanished">&lt;b&gt;Click&lt;/b&gt;: Crea un oggetto di tipo punto. &lt;b&gt;Trascina&lt;/b&gt;: Crea un oggetto ed imposta la rotazione (se esso è ruotatabile). </translation>
+        <translation>&lt;b&gt;Click&lt;/b&gt;: Crea un oggetto di tipo punto. &lt;b&gt;Trascina&lt;/b&gt;: Crea un oggetto ed imposta la rotazione (se esso è ruotabile). </translation>
     </message>
 </context>
 <context>
@@ -1071,7 +1071,7 @@
         <location filename="../src/tools/draw_text_tool.cpp" line="102"/>
         <source>Snap</source>
         <extracomment>Snap to existing objects</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Aggancio magnetico</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="465"/>
@@ -1081,7 +1081,7 @@
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="466"/>
         <source>&lt;b&gt;%1+%2&lt;/b&gt;: Cancel editing. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+%2&lt;/b&gt;: Annulla la modifica. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="471"/>
