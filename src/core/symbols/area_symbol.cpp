@@ -34,10 +34,10 @@
 // ### FillPattern ###
 
 AreaSymbol::FillPattern::FillPattern()
+: flags {}
 {
 	type = LinePattern;
 	angle = 0;
-	rotatable = false;
 	line_spacing = 5000; // 5 mm
 	line_offset = 0;
 	offset_along_line = 0;
@@ -53,12 +53,17 @@ AreaSymbol::FillPattern::FillPattern()
 
 bool AreaSymbol::FillPattern::load(QIODevice* file, int version, Map* map)
 {
+	flags = Option::Default;
 	qint32 itype;
 	file->read((char*)&itype, sizeof(qint32));
 	type = (Type)itype;
 	file->read((char*)&angle, sizeof(float));
 	if (version >= 4)
-		file->read((char*)&rotatable, sizeof(bool));
+	{
+		bool is_rotatable;
+		file->read((char*)&is_rotatable, sizeof(bool));
+		setRotatable(is_rotatable);
+	}
 	file->read((char*)&line_spacing, sizeof(int));
 	if (version >= 3)
 	{
@@ -99,7 +104,7 @@ void AreaSymbol::FillPattern::save(QXmlStreamWriter& xml, const Map& map) const
 	xml.writeStartElement(QString::fromLatin1("pattern"));
 	xml.writeAttribute(QString::fromLatin1("type"), QString::number(type));
 	xml.writeAttribute(QString::fromLatin1("angle"), QString::number(angle));
-	if (rotatable)
+	if (rotatable())
 		xml.writeAttribute(QString::fromLatin1("rotatable"), QString::fromLatin1("true"));
 	xml.writeAttribute(QString::fromLatin1("line_spacing"), QString::number(line_spacing));
 	xml.writeAttribute(QString::fromLatin1("line_offset"), QString::number(line_offset));
@@ -124,10 +129,12 @@ void AreaSymbol::FillPattern::load(QXmlStreamReader& xml, const Map& map, Symbol
 {
 	Q_ASSERT (xml.name() == QLatin1String("pattern"));
 	
+	flags = Option::Default;
 	QXmlStreamAttributes attributes = xml.attributes();
 	type = static_cast<Type>(attributes.value(QLatin1String("type")).toInt());
 	angle = attributes.value(QLatin1String("angle")).toFloat();
-	rotatable = (attributes.value(QLatin1String("rotatable")) == QLatin1String("true"));
+	if (attributes.value(QLatin1String("rotatable")) == QLatin1String("true"))
+		flags |= Option::Rotatable;
 	line_spacing = attributes.value(QLatin1String("line_spacing")).toInt();
 	line_offset = attributes.value(QLatin1String("line_offset")).toInt();
 	offset_along_line = attributes.value(QLatin1String("offset_along_line")).toInt();
@@ -158,7 +165,7 @@ bool AreaSymbol::FillPattern::equals(const AreaSymbol::FillPattern& other, Qt::C
 		return false;
 	if (qAbs(angle - other.angle) > 1e-05)
 		return false;
-	if (rotatable != other.rotatable)
+	if (flags != other.flags)
 		return false;
 	if (line_spacing != other.line_spacing)
 		return false;
@@ -191,6 +198,15 @@ bool AreaSymbol::FillPattern::equals(const AreaSymbol::FillPattern& other, Qt::C
 	return true;
 }
 
+
+
+void AreaSymbol::FillPattern::setRotatable(bool value)
+{
+	flags = value ? (flags | Option::Rotatable) : (flags & ~Option::Rotatable);
+}
+
+
+
 void AreaSymbol::FillPattern::createRenderables(QRectF extent, float delta_rotation, const MapCoord& pattern_origin, ObjectRenderables& output) const
 {
 	if (line_spacing <= 0)
@@ -198,7 +214,7 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, float delta_rotat
 	if (type == PointPattern && point_distance <= 0)
 		return;
 	
-	if (!rotatable)
+	if (!rotatable())
 		delta_rotation = 0;
 	
 	auto line_width_f = 0.001*line_width;
@@ -246,7 +262,7 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, float delta_rotat
 	// Fill
 	float delta_line_offset = 0;
 	float delta_along_line_offset = 0;
-	if (rotatable)
+	if (rotatable())
 	{
 		MapCoordF line_normal(0, -1);
 		line_normal.rotate(rotation);
@@ -539,7 +555,7 @@ void AreaSymbol::createHatchingRenderables(
 			{
 				const AreaSymbol::FillPattern& orig_pattern = orig_symbol->getFillPattern(0);
 				pattern.angle = orig_pattern.angle;
-				pattern.rotatable = orig_pattern.rotatable;
+				pattern.flags = orig_pattern.flags;
 				if (orig_pattern.type == AreaSymbol::FillPattern::LinePattern)
 				{
 					pattern.line_spacing = std::max(1000, orig_pattern.line_spacing);
@@ -626,7 +642,7 @@ bool AreaSymbol::hasRotatableFillPattern() const
 {
 	for (int i = 0, size = (int)patterns.size(); i < size; ++i)
 	{
-		if (patterns[i].rotatable)
+		if (patterns[i].rotatable())
 			return true;
 	}
 	return false;

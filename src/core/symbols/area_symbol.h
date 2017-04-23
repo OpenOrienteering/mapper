@@ -49,12 +49,22 @@ public:
 			PointPattern = 2
 		};
 		
+		/**
+		 * Flags for pattern properties.
+		 */
+		enum Option
+		{
+			Default                      = 0x00,
+			Rotatable                    = 0x10, ///< Pattern is rotatable per-object
+		};
+		Q_DECLARE_FLAGS(Options, Option)
+		
 		/** Type of the pattern */
 		Type type;
+		/** Basic properties of the pattern. */
+		Options flags;
 		/** Rotation angle in radians */
 		float angle;
-		/** True if the pattern is rotatable per-object. */
-		bool rotatable;
 		/** Distance between parallel lines, as usual in 0.001mm */
 		int line_spacing;
 		/** Offset of the first line from the origin */
@@ -93,6 +103,18 @@ public:
 		 * TODO: should the transient name really be compared?!
 		 */
 		bool equals(const FillPattern& other, Qt::CaseSensitivity case_sensitivity) const;
+		
+		
+		/**
+		 * Returns true if the pattern is rotatable per object.
+		 */
+		bool rotatable() const;
+		
+		/**
+		 * Controls whether the pattern is rotatable per object.
+		 */
+		void setRotatable(bool value);
+		
 		
 		/**
 		 * Creates renderables for this pattern in the area given by extent.
@@ -179,5 +201,16 @@ protected:
 	int minimum_area;	// in mm^2 // FIXME: unit (factor) wrong
 	std::vector<FillPattern> patterns;
 };
+
+
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(AreaSymbol::FillPattern::Options)
+
+inline
+bool AreaSymbol::FillPattern::rotatable() const
+{
+	return flags.testFlag(Option::Rotatable);
+}
+
 
 #endif

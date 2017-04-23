@@ -314,7 +314,7 @@ void AreaSymbolSettings::updatePatternWidgets()
 	
 	pattern_angle_edit->setValue(pattern->angle * 180.0 / M_PI);
 	pattern_angle_edit->setEnabled(pattern_active);
-	pattern_rotatable_check->setChecked(pattern->rotatable);
+	pattern_rotatable_check->setChecked(pattern->rotatable());
 	pattern_rotatable_check->setEnabled(pattern_active);
 	pattern_spacing_edit->setValue(0.001 * pattern->line_spacing);
 	pattern_spacing_edit->setEnabled(pattern_active);
@@ -461,7 +461,7 @@ void AreaSymbolSettings::patternAngleChanged(double value)
 
 void AreaSymbolSettings::patternRotatableClicked(bool checked)
 {
-	active_pattern->rotatable = checked;
+	active_pattern->setRotatable(checked);
 	emit propertiesModified();
 }
 
