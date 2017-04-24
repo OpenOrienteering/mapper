@@ -39,13 +39,13 @@ QVariant TextBrowser::loadResource(int type, const QUrl& name)
 	auto result = QTextBrowser::loadResource(type, name);
 	if (result.type() == QVariant::ByteArray
 	    && type == QTextDocument::HtmlResource
-	    && name.fileName().endsWith(QLatin1String(".txt")))
+	    && !name.fileName().contains(QLatin1String(".htm"), Qt::CaseInsensitive))
 	{
 		auto html = QString {
 		  QLatin1String("<html><head><title>") +
-		    name.fileName() +
+		    name.fileName().toHtmlEscaped() +
 		  QLatin1String("</title></head><body><pre>") +
-		    QString::fromUtf8(result.toByteArray()) +
+		    QString::fromUtf8(result.toByteArray()).toHtmlEscaped() +
 		  QLatin1String("</pre></body></html>")
 		};
 		result = QVariant{ html };

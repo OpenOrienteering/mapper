@@ -19,153 +19,222 @@
 
 message(STATUS "Configuring ${PROJECT_NAME} licensing documentation")
 
-find_file(LICENSING_COPYRIGHT_DIR
-  NAMES copyright
-  PATH_SUFFIXES share/doc
-)
-set(LICENSING_COPYRIGHT_DIR "${LICENSING_COPYRIGHT_DIR}" CACHE DIR
-  "Path to directory with 3rd-party component copyright files"
+
+# Show all available providers in Qt Creator
+set(known_providers )
+file(GLOB provider_files "${CMAKE_CURRENT_LIST_DIR}/*-licensing.cmake")
+foreach(file ${provider_files})
+	get_filename_component(name "${file}" NAME)
+	string(REPLACE "-licensing.cmake" "" provider "${name}")
+	list(APPEND known_providers "${provider}")
+	file(GENERATE OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/${name}.stamp"
+	  INPUT "${file}"
+	)
+endforeach()
+
+# Select default provider
+if(ANDROID OR APPLE OR WIN32)
+	set(default_provider superbuild)
+elseif(UNIX)
+	execute_process(
+	  COMMAND sh -c ". /etc/os-release; echo $ID"
+	  OUTPUT_VARIABLE system
+	  OUTPUT_STRIP_TRAILING_WHITESPACE 
+	)
+	if(system)
+		set(default_provider "${system}")
+	else()
+		set(default_provider NOTFOUND)
+	endif()
+endif()
+
+set(LICENSING_PROVIDER "${default_provider}" CACHE STRING
+  "Provider for 3rd-party licensing information (${known_providers})"
 )
 
-find_file(LICENSING_COMMON_DIR
-  NAMES common-licenses
-  PATHS "${LICENSING_COPYRIGHT_DIR}"
-  NO_DEFAULT_PATH
+
+# Software and data used directly by Mapper
+set(third_party_components
+  libpolyclipping
+  proj
+  qtbase
+  qtimageformats
+  qttranslations
 )
-set(LICENSING_COMMON_DIR "${LICENSING_COMMON_DIR}" CACHE DIR
-  "Path to directory with common license files"
+if(TARGET Qt5::AndroidExtras)
+	list(APPEND third_party_components qtandroidextras)
+endif()
+if(TARGET Qt5::Positioning)
+	list(APPEND third_party_components qtlocation)
+endif()
+if(TARGET Qt5::Sensors)
+	list(APPEND third_party_components qtsensors)
+endif()
+if(TARGET Qt5::Serialport)
+	list(APPEND third_party_components qtserialport)
+endif()
+if(TARGET QtSingleApplication)
+	list(APPEND third_party_components qtsingleapplication)
+endif()
+if(TARGET mapper-gdal)
+	list(APPEND third_party_components gdal)
+endif()
+if(TARGET printsupport)
+	list(APPEND third_party_components zlib)
+endif()
+if(Mapper_PACKAGE_ASSISTANT)
+	list(APPEND third_party_components qttools)
+endif()
+
+
+# Licences used directly by Mapper
+set(common_license_names
+  GPL-3
 )
 
-message(STATUS "LICENSING_COPYRIGHT_DIR: ${LICENSING_COPYRIGHT_DIR}")
-message(STATUS "LICENSING_COMMON_DIR:    ${LICENSING_COMMON_DIR}")
+# Required, because linked from About dialog
+set(explicit_copyright_GPL-3
+  "GPL-3.txt"
+  "${PROJECT_SOURCE_DIR}/COPYING"
+  "common-licenses"
+)
+set(explicit_copyright_qtsingleapplication
+  "qtsingleapplication.txt"
+  "${PROJECT_SOURCE_DIR}/3rd-party/qtsingleapplication/copyright"
+  "3rd-party"
+)
+if(Mapper_BUILD_CLIPPER)
+	set(explicit_copyright_libpolyclipping
+	  "libpolyclipping-${CLIPPER_VERSION}.txt"
+	  "${PROJECT_SOURCE_DIR}/3rd-party/clipper/copyright"
+	  "3rd-party"
+	)
+endif()
 
-if(NOT LICENSING_COPYRIGHT_DIR AND NOT LICENSING_COMMON_DIR)
-	message(WARNING "Licensing documentation will be incomplete.")
-elseif(NOT LICENSING_COPYRIGHT_DIR OR NOT LICENSING_COMMON_DIR)
-	message(SEND_ERROR "Both LICENSING_COPYRIGHT_DIR and LICENSING_COMMON_DIR must be set")
+
+if(LICENSING_PROVIDER)
+	message(STATUS "Licensing information provided by: ${LICENSING_PROVIDER}")
+	set(third_party_copyright )
+	set(common_licenses )
+	include("${LICENSING_PROVIDER}-licensing.cmake")
+else()
+	set(licensing_warning "
+This build is a configuration without an external provider of third-party \
+licensing and copyright information. It may not fulfill requirements for \
+redistribution of third-party components."
+	)
+	message(WARNING "${licensing_warning}")
+	set(third_party_copyright "<li>${licensing_warning}</li>")
+	set(common_licenses )
 endif()	
 
 
-set(copyright_files_basenames
-  curl-7
-  expat-2
-  gdal-2
-  libjpeg-turbo-1
-  libpng1.6-1
-  libpolyclipping-6
-  pcre3-8
-  proj-4
-  qtbase-5
-  qtimageformats-5
-  qtlocation-5
-  qtsensors-5
-  qtserialport-5
-  qtsingleapplication
-  qttools-5
-  qttranslations-5
-  sqlite3-3
-  tiff-4
-  xz-utils-5
-  zlib-1
-)
 
-set(common_licenses_basenames
-  Apache-2.0
-  Artistic
-  BSD
-  GFDL-1.3
-  GPL-1
-  GPL-2
-  GPL-3
-  LGPL-2
-  LGPL-2.1
-  LGPL-3
-)
-
-# Generate GPL-3.txt for manual tests from build dir.
-# As a side effect, makes "COPYING" visible in Qt Creator.
-file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/common-licenses")
-file(GENERATE
-  OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/common-licenses/GPL-3.txt"
-  INPUT  "${PROJECT_SOURCE_DIR}/COPYING"
-)
-
-set(explicit_copyright_GPL-3
-  "GPL-3.txt" "${PROJECT_SOURCE_DIR}/COPYING"
-)
-if(ANDROID)
-	list(REMOVE_ITEM copyright_files_basenames qtsingleapplication)
-else()
-	set(explicit_copyright_qtsingleapplication
-	  "qtsingleapplication.txt"
-	  "${PROJECT_SOURCE_DIR}/3rd-party/qtsingleapplication/copyright"
-	)
-endif()
-if(Mapper_BUILD_CLIPPER)
-	set(explicit_copyright_libpolyclipping-6
-	  "libpolyclipping-${CLIPPER_VERSION}.txt"
-	  "${PROJECT_SOURCE_DIR}/3rd-party/clipper/copyright"
-	)
-endif()
-
-function(collect_files var type dir target)
-	set(basenames ${ARGN})
-	set(${var} )
-	foreach(basename ${basenames})
-		if(DEFINED explicit_copyright_${basename})
-			list(GET explicit_copyright_${basename} 0 name)
-			list(GET explicit_copyright_${basename} 1 path)
-		elseif(NOT dir)
-			set(path )
-		else()
-			file(GLOB path "${dir}/${basename}.txt")
-			if(NOT path)
-				file(GLOB path "${dir}/${basename}.*.txt")
-			endif()
-			if(NOT path)
-				message(WARNING "No ${type} file for ${basename}" )
-			elseif(path MATCHES ";")
-				message(SEND_ERROR "Multiple ${type} files for ${basename}")
-				set(path )
-			else()
-				get_filename_component(name "${path}" NAME)
-			endif()
+function(add_copyright var name path)
+	if(name AND path MATCHES "file:///")
+		string(REPLACE "file:///" "/" file "${path}")
+		if(NOT EXISTS "${file}")
+			message(FATAL_ERROR "No such license file: ${file}")
 		endif()
-		if(name AND path)
-			string(REPLACE ".txt" "" basename "${name}")
-			list(APPEND ${var} "  <li><a href=\"${target}/${name}\">${basename}</a></li>")
-			install(FILES "${path}"
-			  DESTINATION "${MAPPER_ABOUT_DESTINATION}/${target}"
-			  RENAME "${name}"
-			)
-		endif()
-	endforeach()
-	string(REPLACE ";" "\n" ${var} "${${var}}")
+		list(APPEND ${var} "  <li><a href=\"${path}\">${name}</a></li>")
+	elseif(name AND path STREQUAL "-" AND ARGN)
+		list(APPEND ${var} "  <li>${name}: ${ARGN}</li>")
+	elseif(name AND path STREQUAL "-")
+		list(APPEND ${var} "  <li>${name}</li>")
+	elseif(name AND path AND ARGN)
+		set(target ${ARGN})
+		string(REPLACE ".txt" "" basename "${name}")
+		list(APPEND ${var} "  <li><a href=\"${target}/${name}\">${basename}</a></li>")
+		install(FILES "${path}"
+		  DESTINATION "${MAPPER_ABOUT_DESTINATION}/${target}"
+		  RENAME "${name}"
+		)
+		# Generate output for manual tests from build dir.
+		# As a side effect, make source visible in Qt Creator.
+		file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/${target}")
+		file(GENERATE
+		  OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/${target}/${name}"
+		  INPUT  "${path}"
+		)
+	elseif()
+		message(FATAL_ERROR "Cannot create link for ${name}, ${path}, ${target}")
+	endif()
 	set(${var} "${${var}}" PARENT_SCOPE)
 endfunction()
 
 
-set(third_party_copyright )
-collect_files(third_party_copyright
-  "copyright"
-  "${LICENSING_COPYRIGHT_DIR}"
-  "3rd-party"
-  ${copyright_files_basenames}
-)
 
-set(common_licenses )
-collect_files(common_licenses
-  "license"
-  "${LICENSING_COMMON_DIR}"
-  "common-licenses"
-  ${common_licenses_basenames}
-)
-	
-configure_file(licensing.html licensing.tmp.html)
-file(GENERATE
-  OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/licensing.html
-  INPUT ${CMAKE_CURRENT_BINARY_DIR}/licensing.tmp.html
-)
+foreach(entry ${package_names})
+	set(entry "explicit_package_${entry}")
+	string(REPLACE ":" ";" entry ${entry})
+	set(${entry})
+endforeach()
+
+list(SORT third_party_components)
+list(REMOVE_DUPLICATES third_party_components)
+foreach(basename ${third_party_components})
+	if(LICENSING_PROVIDER AND NOT DEFINED explicit_copyright_${basename})
+		if(explicit_package_${basename})
+			set(package ${explicit_package_${basename}})
+		else()
+			set(package ${basename})
+		endif()
+		# Exact match
+		string(CONFIGURE "${copyright_pattern}" pattern @ONLY)
+		file(GLOB path ${pattern})
+		if(NOT path)
+			# Pattern match
+			string(REPLACE "/${package}/" "/${package}*/" pattern "${pattern}")
+			file(GLOB raw_path ${pattern})
+			set(path )
+			foreach(item ${raw_path})
+				if(NOT item MATCHES "${package}.*-"
+				   OR item MATCHES "${package}[0-9]*-[0-9]")
+					list(APPEND path ${item})
+				endif()
+			endforeach()
+		endif()
+		if(NOT path)
+			message(SEND_ERROR "No license file for ${basename} (${pattern})")
+		elseif(path MATCHES ";")
+			message(SEND_ERROR "Multiple matches for ${basename}: ${path}")
+		elseif(system_copyright_dir AND path MATCHES "^${system_copyright_dir}/")
+			set(explicit_copyright_${basename} "${basename}" "file://${path}")
+		else()
+			string(REGEX REPLACE "-[0-9]*$" "" name ${basename})
+			set(explicit_copyright_${basename} "${name}.txt" "${path}" "3rd-party")
+		endif()
+	endif()
+	if(explicit_copyright_${basename})
+		add_copyright(third_party_copyright ${explicit_copyright_${basename}})
+	endif()
+endforeach()
+
+list(SORT common_license_names)
+list(REMOVE_DUPLICATES common_license_names)
+foreach(basename ${common_license_names})
+	if(NOT DEFINED explicit_copyright_${basename})
+		string(CONFIGURE "${common_license_pattern}" pattern @ONLY)
+		file(GLOB path ${pattern})
+		if(NOT path)
+			message(SEND_ERROR "No license file for ${basename} (${pattern})")
+		elseif(path MATCHES ";")
+			message(SEND_ERROR "Multiple matches for ${basename}: ${path}")
+		elseif(system_copyright_dir AND path MATCHES "^${system_copyright_dir}/")
+			set(explicit_copyright_${basename} "${basename}" "file://${path}")
+		else()
+			set(explicit_copyright_${basename} "${basename}.txt" "${path}" "common-licenses")
+		endif()
+	endif()
+	if(explicit_copyright_${basename})
+		add_copyright(common_licenses ${explicit_copyright_${basename}})
+	endif()
+endforeach()
+
+
+string(REPLACE ";" "\n" third_party_copyright "${third_party_copyright}")
+string(REPLACE ";" "\n" common_licenses "${common_licenses}")
+configure_file(licensing.html "${CMAKE_CURRENT_BINARY_DIR}/licensing.html" @ONLY)
 
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/licensing.html"
   DESTINATION "${MAPPER_ABOUT_DESTINATION}"

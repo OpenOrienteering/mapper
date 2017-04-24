@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013, 2014 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,8 +20,6 @@
 
 #include "text_browser_dialog.h"
 
-#include <cmath>
-
 #include <QApplication>
 #include <QPushButton>
 #include <QScrollBar>
@@ -30,9 +28,8 @@
 #include <QToolTip>
 #include <QVBoxLayout>
 
-#include <mapper_config.h>
-
 #include "gui/widgets/text_browser.h"
+#include "util/backports.h"
 
 
 TextBrowserDialog::TextBrowserDialog(const QUrl& initial_url, QWidget* parent)
@@ -72,7 +69,7 @@ TextBrowserDialog::TextBrowserDialog(const QUrl& initial_url, QWidget* parent)
 	connect(text_browser, &QTextBrowser::sourceChanged, this, &TextBrowserDialog::sourceChanged);
 	connect(text_browser, &QTextBrowser::textChanged, this, &TextBrowserDialog::updateWindowTitle);
 	connect(text_browser, &QTextBrowser::backwardAvailable, back_button, &TextBrowserDialog::setEnabled);
-	connect(text_browser, (void (QTextBrowser::*)(const QString &))&QTextBrowser::highlighted, this, &TextBrowserDialog::highlighted);
+	connect(text_browser, QOverload<const QString&>::of(&QTextBrowser::highlighted), this, &TextBrowserDialog::highlighted);
 	connect(back_button,  &QPushButton::clicked, text_browser, &QTextBrowser::backward);
 	connect(close_button, &QPushButton::clicked, this, &TextBrowserDialog::accept);
 	
@@ -115,20 +112,12 @@ void TextBrowserDialog::highlighted(const QString& link)
 	if (link.isEmpty())
 	{
 		QToolTip::hideText();
-		return;
-	}
-	
-	QString tooltip_text;
-	if (link.contains(QLatin1String("://")))
-	{
-		tooltip_text = tr("External link: %1").arg(link);
 	}
 	else
 	{
-		tooltip_text = tr("Click to view");
+		/// @todo: Position near mouse pointer
+		auto tooltip_pos  = pos() + text_browser->pos();
+		tooltip_pos.ry() += text_browser->height();
+		QToolTip::showText(tooltip_pos, link, this, {});
 	}
-	/// @todo: Position near mouse pointer
-	QPoint tooltip_pos   = pos() + text_browser->pos();
-	tooltip_pos.ry()    += text_browser->height();
-	QToolTip::showText(tooltip_pos, tooltip_text, this, QRect());
 }

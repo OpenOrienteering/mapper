@@ -264,7 +264,6 @@ endif()
 
 # Subdirectories
 
-add_subdirectory("doc/licensing")
 add_subdirectory("doc/manual")
 add_subdirectory("examples")
 add_subdirectory("symbol sets")
@@ -282,6 +281,8 @@ if(NOT ANDROID)
 endif()
 add_subdirectory("src")
 add_subdirectory("packaging")
+add_subdirectory("doc/licensing")
+
 if(CMAKE_CROSSCOMPILING)
 	add_custom_target(TEST_WARNING ALL
 	  COMMENT "Crosscompiling, skipping all tests")
