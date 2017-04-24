@@ -29,6 +29,7 @@
 #include "core/renderables/renderable_implementation.h"
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/point_symbol.h"
+#include "util/xml_stream_util.h"
 
 
 // ### FillPattern ###
@@ -101,28 +102,29 @@ bool AreaSymbol::FillPattern::load(QIODevice* file, int version, Map* map)
 
 void AreaSymbol::FillPattern::save(QXmlStreamWriter& xml, const Map& map) const
 {
-	xml.writeStartElement(QString::fromLatin1("pattern"));
-	xml.writeAttribute(QString::fromLatin1("type"), QString::number(type));
-	xml.writeAttribute(QString::fromLatin1("angle"), QString::number(angle));
+	XmlElementWriter element { xml, QLatin1String("pattern") };
+	element.writeAttribute(QLatin1String("type"), type);
+	element.writeAttribute(QLatin1String("angle"), angle);
 	if (rotatable())
-		xml.writeAttribute(QString::fromLatin1("rotatable"), QString::fromLatin1("true"));
-	xml.writeAttribute(QString::fromLatin1("line_spacing"), QString::number(line_spacing));
-	xml.writeAttribute(QString::fromLatin1("line_offset"), QString::number(line_offset));
-	xml.writeAttribute(QString::fromLatin1("offset_along_line"), QString::number(offset_along_line));
+		element.writeAttribute(QLatin1String("rotatable"), true);
+	element.writeAttribute(QLatin1String("line_spacing"), line_spacing);
+	element.writeAttribute(QLatin1String("line_offset"), line_offset);
+	element.writeAttribute(QLatin1String("offset_along_line"), offset_along_line);
 	
-	if (type == LinePattern)
+	switch (type)
 	{
-		xml.writeAttribute(QString::fromLatin1("color"), QString::number(map.findColorIndex(line_color)));
-		xml.writeAttribute(QString::fromLatin1("line_width"), QString::number(line_width));
-	}
-	else
-	{
-		xml.writeAttribute(QString::fromLatin1("point_distance"), QString::number(point_distance));
-		if (point != NULL)
+	case LinePattern:
+		element.writeAttribute(QLatin1String("color"), map.findColorIndex(line_color));
+		element.writeAttribute(QLatin1String("line_width"), line_width);
+		break;
+		
+	case PointPattern:
+		element.writeAttribute(QLatin1String("point_distance"), point_distance);
+		if (point)
 			point->save(xml, map);
-	}
+		break;
 	
-	xml.writeEndElement(/*pattern*/);
+	}
 }
 
 void AreaSymbol::FillPattern::load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict)
@@ -130,25 +132,24 @@ void AreaSymbol::FillPattern::load(QXmlStreamReader& xml, const Map& map, Symbol
 	Q_ASSERT (xml.name() == QLatin1String("pattern"));
 	
 	flags = Option::Default;
-	QXmlStreamAttributes attributes = xml.attributes();
-	type = static_cast<Type>(attributes.value(QLatin1String("type")).toInt());
-	angle = attributes.value(QLatin1String("angle")).toFloat();
-	if (attributes.value(QLatin1String("rotatable")) == QLatin1String("true"))
+	XmlElementReader element { xml };
+	type = element.attribute<Type>(QLatin1String("type"));
+	angle = element.attribute<float>(QLatin1String("angle"));
+	if (element.attribute<bool>(QLatin1String("rotatable")))
 		flags |= Option::Rotatable;
-	line_spacing = attributes.value(QLatin1String("line_spacing")).toInt();
-	line_offset = attributes.value(QLatin1String("line_offset")).toInt();
-	offset_along_line = attributes.value(QLatin1String("offset_along_line")).toInt();
+	line_spacing = element.attribute<int>(QLatin1String("line_spacing"));
+	line_offset = element.attribute<int>(QLatin1String("line_offset"));
+	offset_along_line = element.attribute<int>(QLatin1String("offset_along_line"));
 	
-	if (type == LinePattern)
+	switch (type)
 	{
-		int temp = attributes.value(QLatin1String("color")).toInt();
-		line_color = map.getColor(temp);
-		line_width = attributes.value(QLatin1String("line_width")).toInt();
-		xml.skipCurrentElement();
-	}
-	else
-	{
-		point_distance = attributes.value(QLatin1String("point_distance")).toInt();
+	case LinePattern:
+		line_color = map.getColor(element.attribute<int>(QLatin1String("color")));
+		line_width = element.attribute<int>(QLatin1String("line_width"));
+		break;
+		
+	case PointPattern:
+		point_distance = element.attribute<int>(QLatin1String("point_distance"));
 		while (xml.readNextStartElement())
 		{
 			if (xml.name() == QLatin1String("symbol"))
@@ -156,6 +157,8 @@ void AreaSymbol::FillPattern::load(QXmlStreamReader& xml, const Map& map, Symbol
 			else
 				xml.skipCurrentElement();
 		}
+		break;
+		
 	}
 }
 
@@ -672,15 +675,12 @@ bool AreaSymbol::loadImpl(QIODevice* file, int version, Map* map)
 
 void AreaSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 {
-	xml.writeStartElement(QString::fromLatin1("area_symbol"));
-	xml.writeAttribute(QString::fromLatin1("inner_color"), QString::number(map.findColorIndex(color)));
-	xml.writeAttribute(QString::fromLatin1("min_area"), QString::number(minimum_area));
-	
-	int num_patterns = (int)patterns.size();
-	xml.writeAttribute(QString::fromLatin1("patterns"), QString::number(num_patterns));
-	for (int i = 0; i < num_patterns; ++i)
-		patterns[i].save(xml, map);
-	xml.writeEndElement(/*area_symbol*/);
+	XmlElementWriter element { xml, QLatin1String("area_symbol") };
+	element.writeAttribute(QLatin1String{"inner_color"}, map.findColorIndex(color));
+	element.writeAttribute(QLatin1String{"min_area"}, minimum_area);
+	element.writeAttribute(QLatin1String{"patterns"}, patterns.size());
+	for (const auto& pattern : patterns)
+		pattern.save(xml, map);
 }
 
 bool AreaSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict)
@@ -688,13 +688,12 @@ bool AreaSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionar
 	if (xml.name() != QLatin1String("area_symbol"))
 		return false;
 	
-	QXmlStreamAttributes attributes = xml.attributes();
-	int temp = attributes.value(QLatin1String("inner_color")).toInt();
-	color = map.getColor(temp);
-	minimum_area = attributes.value(QLatin1String("min_area")).toInt();
+	XmlElementReader element { xml };
+	color = map.getColor(element.attribute<int>(QLatin1String("inner_color")));
+	minimum_area = element.attribute<int>(QLatin1String("min_area"));
 	
-	int num_patterns = attributes.value(QLatin1String("patterns")).toInt();
-	patterns.reserve(num_patterns % 5); // 5 is not the limit
+	auto num_patterns = element.attribute<int>(QLatin1String("patterns"));
+	patterns.reserve(num_patterns % 100); // 100 is not the limit
 	while (xml.readNextStartElement())
 	{
 		if (xml.name() == QLatin1String("pattern"))
@@ -703,7 +702,9 @@ bool AreaSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionar
 			patterns.back().load(xml, map, symbol_dict);
 		}
 		else
+		{
 			xml.skipCurrentElement();
+		}
 	}
 	
 	return true;
