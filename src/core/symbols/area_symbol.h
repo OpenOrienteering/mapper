@@ -55,6 +55,10 @@ public:
 		enum Option
 		{
 			Default                      = 0x00,
+			NoClippingIfCompletelyInside = 0x01,
+			NoClippingIfCenterInside     = 0x02,
+			NoClippingIfPartiallyInside  = 0x03,
+			AlternativeToClipping        = 0x03, ///< Bitmask for NoClipping* options
 			Rotatable                    = 0x10, ///< Pattern is rotatable per-object
 		};
 		Q_DECLARE_FLAGS(Options, Option)

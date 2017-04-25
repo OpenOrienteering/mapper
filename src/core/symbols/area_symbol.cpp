@@ -108,6 +108,8 @@ void AreaSymbol::FillPattern::save(QXmlStreamWriter& xml, const Map& map) const
 	XmlElementWriter element { xml, QLatin1String("pattern") };
 	element.writeAttribute(QLatin1String("type"), type);
 	element.writeAttribute(QLatin1String("angle"), angle);
+	if (auto no_clipping = int(flags & Option::AlternativeToClipping))
+		element.writeAttribute(QLatin1String("no_clipping"), no_clipping);
 	if (rotatable())
 		element.writeAttribute(QLatin1String("rotatable"), true);
 	element.writeAttribute(QLatin1String("line_spacing"), line_spacing);
@@ -134,10 +136,10 @@ void AreaSymbol::FillPattern::load(QXmlStreamReader& xml, const Map& map, Symbol
 {
 	Q_ASSERT (xml.name() == QLatin1String("pattern"));
 	
-	flags = Option::Default;
 	XmlElementReader element { xml };
 	type = element.attribute<Type>(QLatin1String("type"));
 	angle = element.attribute<float>(QLatin1String("angle"));
+	flags = Options{element.attribute<int>(QLatin1String("no_clipping")) & Option::AlternativeToClipping};
 	if (element.attribute<bool>(QLatin1String("rotatable")))
 		flags |= Option::Rotatable;
 	line_spacing = element.attribute<int>(QLatin1String("line_spacing"));
