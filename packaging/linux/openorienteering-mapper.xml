@@ -15,6 +15,7 @@
      <comment xml:lang="nl">Oriëntatiekaart</comment>
      <comment xml:lang="ru">Спортивная карта</comment>
      <comment xml:lang="uk">Спортивна карта</comment>
+     <comment xml:lang="zh_CN">定向运动地图</comment>
      <glob pattern="*.omap"/>
      <glob pattern="*.xmap"/>
    </mime-type>
@@ -32,6 +33,7 @@
      <comment xml:lang="nl">Oriëntatiekaart</comment>
      <comment xml:lang="ru">Спортивная карта</comment>
      <comment xml:lang="uk">Спортивна карта</comment>
+     <comment xml:lang="zh_CN">定向运动地图</comment>
      <glob pattern="*.ocd"/>
    </mime-type>
 </mime-info>
