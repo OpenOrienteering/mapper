@@ -1115,7 +1115,7 @@
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="466"/>
         <source>&lt;b&gt;%1+%2&lt;/b&gt;: Cancel editing. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+%2&lt;/b&gt;: Avbryt redigering. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="471"/>
@@ -2184,7 +2184,7 @@
         <location filename="../src/fileformats/file_import_export.h" line="230"/>
         <source>No such option: %1</source>
         <comment>No such import / export option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Intet slikt valg: %1</translation>
     </message>
 </context>
 <context>
@@ -2197,11 +2197,9 @@
     <message numerus="yes">
         <location filename="../src/fileformats/file_import_export.cpp" line="93"/>
         <source>Dropped %n irregular object(s).</source>
-        <translation>
-            <numerusform>Utelot %n feilaktige objekt(er).</numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>Utelot %n ikke-regelbundne objekt.</numerusform>
+        <numerusform>Utelot %n ikke-regelbundne objekter.</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="100"/>
         <source>Error during symbol post-processing.</source>
@@ -3301,12 +3299,12 @@ Skal de importerte dataene omskaleres?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="849"/>
         <source>Tag Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Merkevalg</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="849"/>
         <source>Show/Hide the tag selection window</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis/skjul merkevalgvinduet</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="851"/>
@@ -3682,7 +3680,7 @@ Skal de importerte dataene omskaleres?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1949"/>
         <source>Tag Selector</source>
-        <translation type="unfinished"></translation>
+        <translation>Merkevelger</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2087"/>
@@ -4288,7 +4286,7 @@ er valgt</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3554"/>
         <source>Switched to map part '%1'.</source>
-        <translation type="unfinished"></translation>
+        <translation>Byttet til kartdel «%1».</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3661"/>
@@ -4324,82 +4322,76 @@ er valgt</translation>
         <location filename="future_translations.cpp" line="31"/>
         <source>Rotate objects</source>
         <extracomment>To replace existing translation which uses "object(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Roter objekter</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="34"/>
         <source>Scale objects</source>
         <extracomment>To replace existing translation which uses "object(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Skaler objekter</translation>
     </message>
     <message numerus="yes">
         <location filename="future_translations.cpp" line="37"/>
         <source>Cut %n object(s)</source>
         <extracomment>Past tense. Displayed when an Edit &gt; Cut operator is completed.</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>Klipp %n objekt</numerusform>
+        <numerusform>Klipp %n objekter</numerusform>
+        </translation></message>
     <message numerus="yes">
         <location filename="future_translations.cpp" line="40"/>
         <source>Copied %n object(s)</source>
         <extracomment>To replace existing translation which doesn't use plural correctly</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>Kopier %n objekt</numerusform>
+        <numerusform>Kopier %n objekter</numerusform>
+        </translation></message>
     <message numerus="yes">
         <location filename="future_translations.cpp" line="43"/>
         <source>Pasted %n object(s)</source>
         <extracomment>To replace existing translation which doesn't use plural correctly</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>Limte inn %n objekt</numerusform>
+        <numerusform>Limte inn %n objekter</numerusform>
+        </translation></message>
     <message>
         <location filename="future_translations.cpp" line="46"/>
         <source>Deletes the selected objects.</source>
         <extracomment>To replace existing translation which uses "object(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Sletter de valgte objektene.</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="49"/>
         <source>Duplicate the selected objects.</source>
         <extracomment>To replace existing translation which uses "object(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Dupliser de valgte objektene.</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="52"/>
         <source>Rotate the selected objects.</source>
         <extracomment>To replace existing translation which uses "object(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Roter de valgte objektene.</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="55"/>
         <source>Scale the selected objects.</source>
         <extracomment>To replace existing translation which uses "object(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Skaler de valgte objektene.</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="58"/>
         <source>Cut the selected objects into smaller parts.</source>
         <extracomment>To replace existing translation which uses "object(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Klipp de valgte objektene i mindre deler.</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="61"/>
         <source>Switches the symbol of the selected objects to the selected symbol.</source>
         <extracomment>To replace existing translation which uses "object(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Bytter ut symbolet for de valgte objektene til det valgte symbolet.</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="64"/>
         <source>Fill the selected lines or create a border for the selected areas.</source>
         <extracomment>To replace existing translation which uses "line(s)" and "area(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Fyll de valgte linjene eller lag en kant rundt de valgte områdene.</translation>
     </message>
     <message numerus="yes">
         <location filename="future_translations.cpp" line="67"/>
@@ -4414,7 +4406,7 @@ er valgt</translation>
         <location filename="future_translations.cpp" line="70"/>
         <source>No objects were selected because there are no objects with the selected symbols.</source>
         <extracomment>To replace existing translation which uses "symbol(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Valgte ingen objekter da det ikke finnes noen objekter med de valgte symbolene.</translation>
     </message>
 </context>
 <context>
@@ -4810,11 +4802,9 @@ rull musehjulet for å zoome.</translation>
     <message numerus="yes">
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="146"/>
         <source>%n color separation(s) were skipped, reason: Import disabled.</source>
-        <translation>
-            <numerusform>%n fargeseparasjon(er) ble droppet, årsak: Import deaktivert.</numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n fargeseparasjon ble droppet, årsak: Import deaktivert.</numerusform>
+        <numerusform>%n fargeseparasjoner ble droppet, årsak: Import deaktivert.</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="151"/>
         <source>Could not load the spot color definitions, error: %1</source>
@@ -4937,37 +4927,37 @@ rull musehjulet for å zoome.</translation>
         <location filename="../src/core/objects/object_query.cpp" line="146"/>
         <source>is</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>er</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="149"/>
         <source>is not</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>er ikke</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="152"/>
         <source>contains</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>inneholder</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="156"/>
         <source>and</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>og</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="159"/>
         <source>or</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>eller</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="163"/>
         <source>invalid</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ugyldig</translation>
     </message>
 </context>
 <context>
@@ -5145,7 +5135,7 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.h" line="433"/>
         <source>Color id not found: %1, ignoring this color</source>
-        <translation type="unfinished">Farge-id ikke funnet: %1, fargen ignoreres</translation>
+        <translation>Fant ikke farge-id: %1, fargen ignoreres</translation>
     </message>
 </context>
 <context>
@@ -5153,12 +5143,12 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../packaging/translations.cpp" line="10"/>
         <source>Orienteering map</source>
-        <translation type="unfinished"></translation>
+        <translation>Orienteringskart</translation>
     </message>
     <message>
         <location filename="../packaging/translations.cpp" line="11"/>
         <source>Software for drawing orienteering maps</source>
-        <translation type="unfinished"></translation>
+        <translation>Programvare for å tegne orienteringskart</translation>
     </message>
 </context>
 <context>
@@ -8015,7 +8005,7 @@ Velg et annet navn.</translation>
     <message>
         <location filename="../src/core/storage_location.cpp" line="284"/>
         <source>'%1' is not writable. Changes cannot be saved.</source>
-        <translation type="unfinished"></translation>
+        <translation>«%1'» er ikke skrivebar.  Endringer kan ikke lagres.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="287"/>
@@ -8292,7 +8282,7 @@ Velg et annet navn.</translation>
         <location filename="future_translations.cpp" line="73"/>
         <source>Switch symbol of selected objects</source>
         <extracomment>To replace existing translation which uses "object(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Bytt symbol for valgte objekter</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="76"/>
@@ -8304,7 +8294,7 @@ Velg et annet navn.</translation>
         <location filename="future_translations.cpp" line="79"/>
         <source>Scale symbols</source>
         <extracomment>To replace existing translation which uses "symbol(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Skaler symboler</translation>
     </message>
 </context>
 <context>
@@ -8390,17 +8380,17 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="60"/>
         <source>Key</source>
-        <translation type="unfinished"></translation>
+        <translation>Nøkkel</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="60"/>
         <source>Comparison</source>
-        <translation type="unfinished"></translation>
+        <translation>Sammenligning</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="60"/>
         <source>Value</source>
-        <translation type="unfinished">Verdi</translation>
+        <translation>Verdi</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="76"/>
@@ -8415,22 +8405,22 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="83"/>
         <source>Move Up</source>
-        <translation type="unfinished">Flytt opp</translation>
+        <translation>Flytt opp</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="85"/>
         <source>Move Down</source>
-        <translation type="unfinished">Flytt ned</translation>
+        <translation>Flytt ned</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="92"/>
         <source>Select</source>
-        <translation type="unfinished">Velg</translation>
+        <translation>Velg</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="97"/>
         <source>Help</source>
-        <translation type="unfinished">Hjelp</translation>
+        <translation>Hjelp</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="346"/>
@@ -8443,7 +8433,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="350"/>
         <source>Invalid query</source>
-        <translation type="unfinished"></translation>
+        <translation>Ugyldig spørring</translation>
     </message>
 </context>
 <context>
@@ -9121,11 +9111,9 @@ Hvis du ikke har til hensikt å endre denne malen, er det ikke noe problem.</tra
     <message numerus="yes">
         <location filename="../src/templates/template_track.cpp" line="475"/>
         <source>%n path object(s) could not be imported (reason: missing coordinates).</source>
-        <translation>
-            <numerusform>%n linjeobjekt(er) kunne ikke importeres (årsak: manglende koordinater).</numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n linjeobjekt kunne ikke importeres (årsak: manglende koordinater).</numerusform>
+        <numerusform>%n linjeobjekter kunne ikke importeres (årsak: manglende koordinater).</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/sensors/gps_track.cpp" line="421"/>
         <source>Error reading</source>
@@ -9461,13 +9449,13 @@ Høyeste støttede versjon er %2.</translation>
         <location filename="../src/gui/util_gui.h" line="79"/>
         <source>mm</source>
         <comment>millimeters</comment>
-        <translation type="unfinished">mm</translation>
+        <translation>mm</translation>
     </message>
     <message>
         <location filename="../src/gui/util_gui.h" line="114"/>
         <source>m</source>
         <comment>meters</comment>
-        <translation type="unfinished">m</translation>
+        <translation>m</translation>
     </message>
 </context>
 <context>
@@ -9540,7 +9528,7 @@ Høyeste støttede versjon er %2.</translation>
         <location filename="../src/fileformats/xml_file_format.cpp" line="524"/>
         <location filename="../src/fileformats/xml_file_format.cpp" line="773"/>
         <source>Some invalid characters had to be removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Måtte fjerne noen ugyldige tegn.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="542"/>

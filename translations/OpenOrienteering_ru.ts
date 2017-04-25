@@ -5567,7 +5567,7 @@ separations</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1329"/>
         <source>The map area is empty. Output canceled.</source>
-        <translation>Область карта пуста. Вывод отменен.</translation>
+        <translation>Область карты пуста. Вывод отменен.</translation>
     </message>
 </context>
 <context>
