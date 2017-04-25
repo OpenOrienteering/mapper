@@ -742,9 +742,13 @@ bool AreaSymbol::equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensit
 	if (minimum_area != area->minimum_area)
 		return false;
 	
-	// TODO: Fill patterns are only compared in order
 	if (patterns.size() != area->patterns.size())
 		return false;
+	
+	// std::is_permutation would identify equal sets of patterns.
+	// However, guessDominantColor() depends on pattern order if there is no
+	// AreaSymbol::color (or after the AreaSymbol::color is set to nullptr).
+	// So equalsImpl cannot be changed unless guessDominantColor is changed.
 	return std::equal(begin(patterns), end(patterns), begin(area->patterns), [case_sensitivity](auto& lhs, auto& rhs){
 		return lhs.equals(rhs, case_sensitivity);
 	});

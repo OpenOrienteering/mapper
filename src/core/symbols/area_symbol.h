@@ -211,6 +211,12 @@ protected:
 #endif
 	void saveImpl(QXmlStreamWriter& xml, const Map& map) const override;
 	bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict) override;
+	
+	/**
+	 * Compares AreaSymbol objects for equality.
+	 * 
+	 * Fill patterns are only compared in order.
+	 */
 	bool equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensitivity) const override;
 	
 	const MapColor* color;
