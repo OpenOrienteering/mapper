@@ -91,7 +91,7 @@ public:
 		
 		
 		/** Creates a default fill pattern */
-		FillPattern();
+		FillPattern() noexcept;
 		/** Loads the pattern in the old "native" format */
 		bool load(QIODevice* file, int version, Map* map);
 		/** Saves the pattern in xml format */
@@ -160,7 +160,7 @@ public:
 	
 	AreaSymbol();
 	virtual ~AreaSymbol();
-	Symbol* duplicate(const MapColorMap* color_map = NULL) const override;
+	Symbol* duplicate(const MapColorMap* color_map = nullptr) const override;
 	
 	void createRenderables(
 	        const Object *object,

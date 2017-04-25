@@ -36,20 +36,20 @@
 
 // ### FillPattern ###
 
-AreaSymbol::FillPattern::FillPattern()
-: flags {}
+AreaSymbol::FillPattern::FillPattern() noexcept
+: type { LinePattern }
+, flags { Default }
+, angle { 0 }
+, line_spacing { 5000 } // 5 mm
+, line_offset { 0 }
+, line_color { nullptr }
+, line_width { 200 } // 0.2 mm
+, offset_along_line { 0 }
+, point_distance { 5000 } // 5 mm
+, point { nullptr }
+, name {}
 {
-	type = LinePattern;
-	angle = 0;
-	line_spacing = 5000; // 5 mm
-	line_offset = 0;
-	offset_along_line = 0;
-	
-	line_color = NULL;
-	line_width = 200; // 0.2 mm
-	
-	point_distance = 5000; // 5 mm
-	point = NULL;
+	// nothing else
 }
 
 #ifndef NO_NATIVE_FILE_FORMAT
@@ -78,7 +78,7 @@ bool AreaSymbol::FillPattern::load(QIODevice* file, int version, Map* map)
 	{
 		int color_index;
 		file->read((char*)&color_index, sizeof(int));
-		line_color = (color_index >= 0) ? map->getColor(color_index) : NULL;
+		line_color = (color_index >= 0) ? map->getColor(color_index) : nullptr;
 		file->read((char*)&line_width, sizeof(int));
 	}
 	else
@@ -95,7 +95,7 @@ bool AreaSymbol::FillPattern::load(QIODevice* file, int version, Map* map)
 				point->setRotatable(true);
 		}
 		else
-			point = NULL;
+			point = nullptr;
 	}
 	return true;
 }
@@ -183,8 +183,8 @@ bool AreaSymbol::FillPattern::equals(const AreaSymbol::FillPattern& other, Qt::C
 			return false;
 		if (point_distance != other.point_distance)
 			return false;
-		if ((point == NULL && other.point != NULL) ||
-			(point != NULL && other.point == NULL))
+		if ((point == nullptr && other.point != nullptr) ||
+		    (point != nullptr && other.point == nullptr))
 			return false;
 		if (point && !point->equals(other.point, case_sensitivity))
 			return false;
@@ -483,18 +483,20 @@ void AreaSymbol::FillPattern::scale(double factor)
 
 // ### AreaSymbol ###
 
-AreaSymbol::AreaSymbol() : Symbol(Symbol::Area)
+AreaSymbol::AreaSymbol()
+: Symbol { Symbol::Area }
+, color { nullptr }
+, minimum_area { 0 }
 {
-	color = NULL;
-	minimum_area = 0;
+	// nothing else
 }
 
 AreaSymbol::~AreaSymbol()
 {
-	for (int i = 0; i < (int)patterns.size(); ++i)
+	for (auto& pattern : patterns)
 	{
-		if (patterns[i].type == FillPattern::PointPattern)
-			delete patterns[i].point;
+		if (pattern.type == FillPattern::PointPattern)
+			delete pattern.point;
 	}
 }
 
@@ -505,12 +507,12 @@ Symbol* AreaSymbol::duplicate(const MapColorMap* color_map) const
 	new_area->color = color_map ? color_map->value(color) : color;
 	new_area->minimum_area = minimum_area;
 	new_area->patterns = patterns;
-	for (int i = 0; i < (int)new_area->patterns.size(); ++i)
+	for (auto& new_pattern : new_area->patterns)
 	{
-		if (new_area->patterns[i].type == FillPattern::PointPattern)
-			new_area->patterns[i].point = static_cast<PointSymbol*>(new_area->patterns[i].point->duplicate(color_map));
-		else if (new_area->patterns[i].type == FillPattern::LinePattern && color_map)
-			new_area->patterns[i].line_color = color_map->value(new_area->patterns[i].line_color);
+		if (new_pattern.type == FillPattern::PointPattern)
+			new_pattern.point = static_cast<PointSymbol*>(new_pattern.point->duplicate(color_map));
+		else if (new_pattern.type == FillPattern::LinePattern && color_map)
+			new_pattern.line_color = color_map->value(new_pattern.line_color);
 	}
 	return new_area;
 }
@@ -659,21 +661,18 @@ void AreaSymbol::scale(double factor)
 {
 	minimum_area = qRound(factor*factor * minimum_area);
 	
-	int size = (int)patterns.size();
-	for (int i = 0; i < size; ++i)
-		patterns[i].scale(factor);
+	for (auto& pattern : patterns)
+		pattern.scale(factor);
 	
 	resetIcon();
 }
 
+
 bool AreaSymbol::hasRotatableFillPattern() const
 {
-	for (int i = 0, size = (int)patterns.size(); i < size; ++i)
-	{
-		if (patterns[i].rotatable())
-			return true;
-	}
-	return false;
+	return std::any_of(begin(patterns), end(patterns), [](auto& pattern){
+		return pattern.rotatable();
+	});
 }
 
 #ifndef NO_NATIVE_FILE_FORMAT
@@ -682,7 +681,7 @@ bool AreaSymbol::loadImpl(QIODevice* file, int version, Map* map)
 {
 	int temp;
 	file->read((char*)&temp, sizeof(int));
-	color = (temp >= 0) ? map->getColor(temp) : NULL;
+	color = (temp >= 0) ? map->getColor(temp) : nullptr;
 	if (version >= 2)
 		file->read((char*)&minimum_area, sizeof(int));
 	
@@ -746,10 +745,7 @@ bool AreaSymbol::equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensit
 	// TODO: Fill patterns are only compared in order
 	if (patterns.size() != area->patterns.size())
 		return false;
-	for (size_t i = 0, end = patterns.size(); i < end; ++i)
-	{
-		if (!patterns[i].equals(area->patterns[i], case_sensitivity))
-			return false;
-	}
-	return true;
+	return std::equal(begin(patterns), end(patterns), begin(area->patterns), [case_sensitivity](auto& lhs, auto& rhs){
+		return lhs.equals(rhs, case_sensitivity);
+	});
 }
