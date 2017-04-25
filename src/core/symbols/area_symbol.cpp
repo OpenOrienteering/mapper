@@ -21,6 +21,8 @@
 
 #include "area_symbol.h"
 
+#include <algorithm>
+
 #include <QIODevice>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
@@ -206,6 +208,52 @@ bool AreaSymbol::FillPattern::equals(const AreaSymbol::FillPattern& other, Qt::C
 void AreaSymbol::FillPattern::setRotatable(bool value)
 {
 	flags = value ? (flags | Option::Rotatable) : (flags & ~Option::Rotatable);
+}
+
+
+
+void AreaSymbol::FillPattern::colorDeleted(const MapColor* color)
+{
+	switch (type)
+	{
+	case FillPattern::PointPattern:
+		point->colorDeleted(color);
+		break;
+	case FillPattern::LinePattern:
+		if (line_color == color)
+			line_color = nullptr;
+		break;
+	}
+}
+
+
+bool AreaSymbol::FillPattern::containsColor(const MapColor* color) const
+{
+	switch (type)
+	{
+	case FillPattern::PointPattern:
+		return point && point->containsColor(color);
+	case FillPattern::LinePattern:
+		return line_color == color;
+	}
+	Q_UNREACHABLE();
+}
+
+
+const MapColor* AreaSymbol::FillPattern::guessDominantColor() const
+{
+	const MapColor* color = nullptr;
+	switch (type)
+	{
+	case FillPattern::PointPattern:
+		if (point)
+			color = point->guessDominantColor();
+		break;
+	case FillPattern::LinePattern:
+		color = line_color;
+		break;
+	}
+	return color;
 }
 
 
@@ -571,64 +619,41 @@ void AreaSymbol::createHatchingRenderables(
 	}
 }
 
+
+
 void AreaSymbol::colorDeleted(const MapColor* color)
 {
-	bool change = false;
-	if (color == this->color)
+	if (containsColor(color))
 	{
-		this->color = NULL;
-		change = true;
-	}
-	
-	for (int i = 0; i < (int)patterns.size(); ++i)
-	{
-		if (patterns[i].type == FillPattern::PointPattern)
-			patterns[i].point->colorDeleted(color);
-		else if (patterns[i].line_color == color)
-		{
-			patterns[i].line_color = NULL;
-			change = true;
-		}
-	}
-	
-	if (change)
+		if (color == this->color)
+			this->color = nullptr;
+		for (auto& pattern : patterns)
+			pattern.colorDeleted(color);
 		resetIcon();
+	}
 }
+
+
 bool AreaSymbol::containsColor(const MapColor* color) const
 {
-	if (color == this->color)
-		return true;
-	
-	for (int i = 0; i < (int)patterns.size(); ++i)
-	{
-		if (patterns[i].type == FillPattern::PointPattern && patterns[i].point && patterns[i].point->containsColor(color))
-			return true;
-		else if (patterns[i].type == FillPattern::LinePattern && patterns[i].line_color == color)
-			return true;
-	}
-	
-	return false;
+	return color == this->color
+	       || std::any_of(begin(patterns), end(patterns), [color](const auto& pattern){ return pattern.containsColor(color); });
 }
+
 
 const MapColor* AreaSymbol::guessDominantColor() const
 {
-	if (color)
-		return color;
-	
-	// Hope that the first pattern's color is representative
-	for (int i = 0; i < (int)patterns.size(); ++i)
+	auto color = this->color;
+	auto pattern = begin(patterns);
+	while (!color && pattern != end(patterns))
 	{
-		if (patterns[i].type == FillPattern::PointPattern && patterns[i].point)
-		{
-			const MapColor* dominant_color = patterns[i].point->guessDominantColor();
-			if (dominant_color) return dominant_color;
-		}
-		else if (patterns[i].type == FillPattern::LinePattern && patterns[i].line_color)
-			return patterns[i].line_color;
+		color = pattern->guessDominantColor();
+		++pattern;
 	}
-	
-	return NULL;
+	return color;
 }
+
+
 
 void AreaSymbol::scale(double factor)
 {

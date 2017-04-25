@@ -117,6 +117,22 @@ public:
 		
 		
 		/**
+		 * Removes the pattern's references to the deleted color.
+		 */
+		void colorDeleted(const MapColor* color);
+		                  
+		/**
+		 * Tests if the pattern contains the given color.
+		 */
+		bool containsColor(const MapColor* color) const;
+		
+		/**
+		 * Returns the patterns primary color.
+		 */
+		const MapColor* guessDominantColor() const;
+		
+		
+		/**
 		 * Creates renderables for this pattern in the area given by extent.
 		 * @param extent Rectangular area to create renderables for.
 		 * @param delta_rotation Rotation offest which is added to the pattern angle.
