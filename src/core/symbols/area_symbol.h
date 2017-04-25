@@ -63,7 +63,10 @@ public:
 		Type type;
 		/** Basic properties of the pattern. */
 		Options flags;
-		/** Rotation angle in radians */
+		/** Rotation angle in radians
+		 * 
+		 * \todo Switch to qreal when legacy native file format is dropped.
+		 */
 		float angle;
 		/** Distance between parallel lines, as usual in 0.001mm */
 		int line_spacing;
@@ -149,11 +152,12 @@ public:
 		/** Creates one line of renderables, called by createRenderables(). */
 		void createLine(
 			MapCoordF first, MapCoordF second,
-			float delta_offset,
+			qreal delta_offset,
 			LineSymbol* line,
 			float rotation,
 			ObjectRenderables& output
 		) const;
+		
 		/** Spatially scales the pattern settings by the given factor. */
 		void scale(double factor);
 	};
@@ -198,10 +202,10 @@ public:
 	inline const MapColor* getColor() const {return color;}
 	inline void setColor(const MapColor* color) {this->color = color;}
 	inline int getMinimumArea() const {return minimum_area; }
-	inline int getNumFillPatterns() const {return (int)patterns.size();}
-	inline void setNumFillPatterns(int count) {patterns.resize(count);}
-	inline FillPattern& getFillPattern(int i) {return patterns[i];}
-	inline const FillPattern& getFillPattern(int i) const {return patterns[i];}
+	inline int getNumFillPatterns() const {return int(patterns.size());}
+	inline void setNumFillPatterns(int count) {patterns.resize(std::size_t(count));}
+	inline FillPattern& getFillPattern(int i) {return patterns[std::size_t(i)];}
+	inline const FillPattern& getFillPattern(int i) const {return patterns[std::size_t(i)];}
 	bool hasRotatableFillPattern() const;
 	SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog) override;
 	

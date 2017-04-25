@@ -23,6 +23,7 @@
 
 #include <algorithm>
 
+#include <QtMath>
 #include <QIODevice>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
@@ -168,7 +169,7 @@ bool AreaSymbol::FillPattern::equals(const AreaSymbol::FillPattern& other, Qt::C
 {
 	if (type != other.type)
 		return false;
-	if (qAbs(angle - other.angle) > 1e-05)
+	if (qAbs(angle - other.angle) > 1e-05f)
 		return false;
 	if (flags != other.flags)
 		return false;
@@ -311,8 +312,8 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, float delta_rotat
 	extent = QRectF(extent.topLeft() - fill_extent.bottomRight(), extent.bottomRight() - fill_extent.topLeft());
 	
 	// Fill
-	float delta_line_offset = 0;
-	float delta_along_line_offset = 0;
+	qreal delta_line_offset = 0;
+	qreal delta_along_line_offset = 0;
 	if (rotatable())
 	{
 		MapCoordF line_normal(0, -1);
@@ -326,7 +327,7 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, float delta_rotat
 		delta_along_line_offset = MapCoordF::dotProduct(line_tangent, MapCoordF(pattern_origin));
 	}
 	
-	const float offset = 0.001f * line_offset + delta_line_offset;
+	const auto offset = 0.001 * line_offset + delta_line_offset;
 	if (qAbs(rotation - M_PI/2) < 0.0001)
 	{
 		// Special case: vertical lines
@@ -357,23 +358,23 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, float delta_rotat
 		if (rotation < M_PI / 2)
 			delta_along_line_offset = -delta_along_line_offset;
 		
-		float xfactor = 1.0f / sin(rotation);
-		float yfactor = 1.0f / cos(rotation);
+		auto xfactor = 1.0 / sin(rotation);
+		auto yfactor = 1.0 / cos(rotation);
 		
-		float dist_x = xfactor * line_spacing_f;
-		float dist_y = yfactor * line_spacing_f;
-		float offset_x = xfactor * offset;
-		float offset_y = yfactor * offset;
+		auto dist_x = xfactor * line_spacing_f;
+		auto dist_y = yfactor * line_spacing_f;
+		auto offset_x = xfactor * offset;
+		auto offset_y = yfactor * offset;
 		
 		if (rotation < M_PI/2)
 		{
 			// Start with the upper left corner
 			offset_x += (-extent.top()) / tan(rotation);
 			offset_y -= extent.left() * tan(rotation);
-			float start_x = offset_x + ceil((extent.x() - offset_x) / dist_x) * dist_x;
-			float start_y = extent.top();
-			float end_x = extent.left();
-			float end_y = offset_y + ceil((extent.y() - offset_y) / dist_y) * dist_y;
+			auto start_x = offset_x + ceil((extent.x() - offset_x) / dist_x) * dist_x;
+			auto start_y = extent.top();
+			auto end_x = extent.left();
+			auto end_y = offset_y + ceil((extent.y() - offset_y) / dist_y) * dist_y;
 			
 			do
 			{
@@ -407,10 +408,10 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, float delta_rotat
 			// Start with left lower corner
 			offset_x += (-extent.bottom()) / tan(rotation);
 			offset_y -= extent.x() * tan(rotation);
-			float start_x = offset_x + ceil((extent.x() - offset_x) / dist_x) * dist_x;
-			float start_y = extent.bottom();
-			float end_x = extent.x();
-			float end_y = offset_y + ceil((extent.bottom() - offset_y) / dist_y) * dist_y;
+			auto start_x = offset_x + ceil((extent.x() - offset_x) / dist_x) * dist_x;
+			auto start_y = extent.bottom();
+			auto end_x = extent.x();
+			auto end_y = offset_y + ceil((extent.bottom() - offset_y) / dist_y) * dist_y;
 			
 			do
 			{
@@ -442,7 +443,7 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, float delta_rotat
 	}
 }
 
-void AreaSymbol::FillPattern::createLine(MapCoordF first, MapCoordF second, float delta_offset, LineSymbol* line, float rotation, ObjectRenderables& output) const
+void AreaSymbol::FillPattern::createLine(MapCoordF first, MapCoordF second, qreal delta_offset, LineSymbol* line, float rotation, ObjectRenderables& output) const
 {
 	if (type == LinePattern)
 	{
@@ -593,7 +594,7 @@ void AreaSymbol::createHatchingRenderables(
 		area_symbol.setNumFillPatterns(1);
 		AreaSymbol::FillPattern& pattern = area_symbol.getFillPattern(0);
 		pattern.type = AreaSymbol::FillPattern::LinePattern;
-		pattern.angle = 45 * M_PI / 180.0f;
+		pattern.angle = qDegreesToRadians(45.0f);
 		pattern.line_spacing = 1000;
 		pattern.line_offset = 0;
 		pattern.line_color = color;
