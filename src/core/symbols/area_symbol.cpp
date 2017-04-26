@@ -291,27 +291,26 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, float delta_rotat
 	
 	MapCoordF first, second;
 	
-	// Determine real extent to fill
-	QRectF fill_extent;
-	if (type == LinePattern)
+	// Adjust extent wrt fill pattern size
+	switch (type)
 	{
-		
-		if (qAbs(rotation - M_PI/2) < 0.0001)
-			fill_extent = QRectF(-0.5 * line_width_f, 0, line_width_f, 0);	// horizontal lines
-		else if (qAbs(rotation - 0) < 0.0001)
-			fill_extent = QRectF(0, -0.5 * line_width_f, 0, line_width_f);	// verticallines
-		else
-			fill_extent = QRectF(-0.5 * line_width_f, -0.5 * line_width_f, line_width_f, line_width_f);	// not the 100% optimum but the performance gain is surely neglegible
+	case LinePattern:
+		{
+			auto margin = line_width_f / 2;
+			extent.adjust(-margin, -margin, margin, margin);
+		}
+		break;
+	case PointPattern:
+		if (point)
+		{
+			PointObject point_object(point);
+			point_object.setRotation(delta_rotation);
+			point_object.update();
+			auto point_extent = point_object.getExtent();
+			extent.adjust(-point_extent.right(), -point_extent.bottom(), -point_extent.left(), -point_extent.top());
+		}
+		break;
 	}
-	else if (point)
-	{
-		// TODO: Ugly method to get the point's extent
-		PointObject point_object(point);
-		point_object.setRotation(delta_rotation);
-		point_object.update();
-		fill_extent = point_object.getExtent();
-	}
-	extent = QRectF(extent.topLeft() - fill_extent.bottomRight(), extent.bottomRight() - fill_extent.topLeft());
 	
 	// Fill
 	qreal delta_line_offset = 0;
