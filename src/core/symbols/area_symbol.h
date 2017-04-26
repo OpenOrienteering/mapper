@@ -24,6 +24,7 @@
 
 #include "symbol.h"
 
+class AreaRenderable;
 class PointObject;
 
 
@@ -140,14 +141,14 @@ public:
 		
 		
 		/**
-		 * Creates renderables for this pattern in the area given by extent.
-		 * @param extent Rectangular area to create renderables for.
+		 * Creates renderables for this pattern to fill the area surrounded by the outline.
+		 * @param outline A renderable giving the extent and outline.
 		 * @param delta_rotation Rotation offest which is added to the pattern angle.
 		 * @param pattern_origin Origin point for line / point placement.
 		 * @param output Created renderables will be inserted here.
 		 */
 		void createRenderables(
-			QRectF extent,
+			const AreaRenderable& outline,
 			float delta_rotation,
 			const MapCoord& pattern_origin,
 			ObjectRenderables& output

@@ -261,7 +261,7 @@ const MapColor* AreaSymbol::FillPattern::guessDominantColor() const
 
 
 
-void AreaSymbol::FillPattern::createRenderables(QRectF extent, float delta_rotation, const MapCoord& pattern_origin, ObjectRenderables& output) const
+void AreaSymbol::FillPattern::createRenderables(const AreaRenderable& outline, float delta_rotation, const MapCoord& pattern_origin, ObjectRenderables& output) const
 {
 	if (line_spacing <= 0)
 		return;
@@ -292,6 +292,7 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, float delta_rotat
 	MapCoordF first, second;
 	
 	// Adjust extent wrt fill pattern size
+	auto extent = outline.getExtent();
 	switch (type)
 	{
 	case LinePattern:
@@ -311,6 +312,9 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, float delta_rotat
 		}
 		break;
 	}
+	
+	const auto old_clip_path = output.getClipPath();
+	output.setClipPath(outline.painterPath());
 	
 	// Fill
 	qreal delta_line_offset = 0;
@@ -442,6 +446,8 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, float delta_rotat
 			} while (true);
 		}
 	}
+	
+	output.setClipPath(old_clip_path);
 }
 
 void AreaSymbol::FillPattern::createLine(MapCoordF first, MapCoordF second, qreal delta_offset, LineSymbol* line, float rotation, ObjectRenderables& output) const
@@ -565,18 +571,11 @@ void AreaSymbol::createRenderablesNormal(
 	AreaRenderable* color_fill = new AreaRenderable(this, path_parts);
 	output.insertRenderable(color_fill);
 	
-	if (!patterns.empty())
+	auto rotation = object->getPatternRotation();
+	auto origin = object->getPatternOrigin();
+	for (const auto& pattern : patterns)
 	{
-		const QPainterPath* old_clip_path = output.getClipPath();
-		output.setClipPath(color_fill->painterPath());
-		auto extent = color_fill->getExtent();
-		auto rotation = object->getPatternRotation();
-		auto origin = object->getPatternOrigin();
-		for (const auto& pattern: patterns)
-		{
-			pattern.createRenderables(extent, rotation, origin, output);
-		}
-		output.setClipPath(old_clip_path);
+		pattern.createRenderables(*color_fill, rotation, origin, output);
 	}
 }
 
