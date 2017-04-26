@@ -261,65 +261,58 @@ const MapColor* AreaSymbol::FillPattern::guessDominantColor() const
 
 
 
-void AreaSymbol::FillPattern::createRenderables(const AreaRenderable& outline, float delta_rotation, const MapCoord& pattern_origin, ObjectRenderables& output) const
+template <>
+inline
+void AreaSymbol::FillPattern::createLine<AreaSymbol::FillPattern::LinePattern>(
+        MapCoordF first, MapCoordF second,
+        qreal,
+        LineSymbol* line,
+        float,
+        const AreaRenderable&,
+        QRectF,
+        ObjectRenderables& output ) const
 {
-	if (line_spacing <= 0)
-		return;
-	if (type == PointPattern && point_distance <= 0)
-		return;
-	
-	if (!rotatable())
-		delta_rotation = 0;
-	
-	auto line_width_f = 0.001*line_width;
-	auto line_spacing_f = 0.001*line_spacing;
-	
-	// Make rotation unique
-	auto rotation = double(angle + delta_rotation);
-	rotation = fmod(1.0 * rotation, M_PI);
-	if (rotation < 0)
-		rotation = M_PI + rotation;
-	Q_ASSERT(rotation >= 0 && rotation <= M_PI);
-	
-	// Helpers
-	LineSymbol line;
-	if (type == LinePattern)
-	{
-		line.setColor(line_color);
-		line.setLineWidth(line_width_f);
-	}
+	// out of inlining
+	output.insertRenderable(new LineRenderable(line, first, second));
+}
+
+
+template <>
+inline
+void AreaSymbol::FillPattern::createLine<AreaSymbol::FillPattern::PointPattern>(
+        MapCoordF first, MapCoordF second,
+        qreal delta_offset,
+        LineSymbol*,
+        float rotation,
+        const AreaRenderable& outline,
+        QRectF point_extent,
+        ObjectRenderables& output ) const
+{
+	// out of inlining
+	createPointPatternLine(first, second, delta_offset, rotation, outline, point_extent, output);
+}
+
+
+// This template will be instantiated in non-template createRenderables()
+// once for each type of pattern, thus duplicating the complex body.
+// This is by intention, in order to let the compiler optimize each
+// instantiation independently, with regard to unused parameters in
+// createLine(), and to eliminate any runtime checks for pattern type
+// outside of non-template createRenderables().
+template <int T>
+void AreaSymbol::FillPattern::createRenderables(
+        const AreaRenderable& outline,
+        float delta_rotation,
+        const MapCoord& pattern_origin,
+        QRectF point_extent,
+        LineSymbol* line,
+        qreal rotation,
+        ObjectRenderables& output ) const
+{
+	auto extent = outline.getExtent();
+	extent.adjust(-point_extent.right(), -point_extent.bottom(), -point_extent.left(), -point_extent.top());
 	
 	MapCoordF first, second;
-	
-	// Adjust extent wrt fill pattern size
-	auto extent = outline.getExtent();
-	auto point_extent = QRectF {};
-	switch (type)
-	{
-	case LinePattern:
-		{
-			auto margin = line_width_f / 2;
-			extent.adjust(-margin, -margin, margin, margin);
-		}
-		break;
-	case PointPattern:
-		if (point)
-		{
-			PointObject point_object(point);
-			point_object.setRotation(delta_rotation);
-			point_object.update();
-			point_extent = point_object.getExtent();
-			extent.adjust(-point_extent.right(), -point_extent.bottom(), -point_extent.left(), -point_extent.top());
-		}
-		break;
-	}
-	
-	const auto old_clip_path = output.getClipPath();
-	if (!(flags & Option::AlternativeToClipping))
-	{
-		// \todo Prevent or handle early return after this statement.
-		output.setClipPath(outline.painterPath());
-	}
 	
 	// Fill
 	qreal delta_line_offset = 0;
@@ -337,6 +330,8 @@ void AreaSymbol::FillPattern::createRenderables(const AreaRenderable& outline, f
 		delta_along_line_offset = MapCoordF::dotProduct(line_tangent, MapCoordF(pattern_origin));
 	}
 	
+	auto line_spacing_f = 0.001*line_spacing;
+	
 	const auto offset = 0.001 * line_offset + delta_line_offset;
 	if (qAbs(rotation - M_PI/2) < 0.0001)
 	{
@@ -348,7 +343,7 @@ void AreaSymbol::FillPattern::createRenderables(const AreaRenderable& outline, f
 		{
 			first = MapCoordF(cur, extent.top());
 			second = MapCoordF(cur, extent.bottom());
-			createLine(first, second, delta_along_line_offset, &line, delta_rotation, outline, point_extent, output);
+			createLine<T>(first, second, delta_along_line_offset, line, delta_rotation, outline, point_extent, output);
 		}
 	}
 	else if (qAbs(rotation - 0) < 0.0001)
@@ -359,7 +354,7 @@ void AreaSymbol::FillPattern::createRenderables(const AreaRenderable& outline, f
 		{
 			first = MapCoordF(extent.left(), cur);
 			second = MapCoordF(extent.right(), cur);
-			createLine(first, second, delta_along_line_offset, &line, delta_rotation, outline, point_extent, output);
+			createLine<T>(first, second, delta_along_line_offset, line, delta_rotation, outline, point_extent, output);
 		}
 	}
 	else
@@ -406,7 +401,7 @@ void AreaSymbol::FillPattern::createRenderables(const AreaRenderable& outline, f
 				// Create the renderable(s)
 				first = MapCoordF(start_x, start_y);
 				second = MapCoordF(end_x, end_y);
-				createLine(first, second, delta_along_line_offset, &line, delta_rotation, outline, point_extent, output);
+				createLine<T>(first, second, delta_along_line_offset, line, delta_rotation, outline, point_extent, output);
 				
 				// Move to next position
 				start_x += dist_x;
@@ -443,7 +438,7 @@ void AreaSymbol::FillPattern::createRenderables(const AreaRenderable& outline, f
 				// Create the renderable(s)
 				first = MapCoordF(start_x, start_y);
 				second = MapCoordF(end_x, end_y);
-				createLine(first, second, delta_along_line_offset, &line, delta_rotation, outline, point_extent, output);
+				createLine<T>(first, second, delta_along_line_offset, line, delta_rotation, outline, point_extent, output);
 				
 				// Move to next position
 				start_x += dist_x;
@@ -451,27 +446,59 @@ void AreaSymbol::FillPattern::createRenderables(const AreaRenderable& outline, f
 			} while (true);
 		}
 	}
-	
-	output.setClipPath(old_clip_path);
 }
 
-void AreaSymbol::FillPattern::createLine(
-        MapCoordF first, MapCoordF second,
-        qreal delta_offset,
-        LineSymbol* line,
-        float rotation,
-        const AreaRenderable& outline,
-        QRectF point_extent,
-        ObjectRenderables& output ) const
+
+void AreaSymbol::FillPattern::createRenderables(const AreaRenderable& outline, float delta_rotation, const MapCoord& pattern_origin, ObjectRenderables& output) const
 {
-	if (type == LinePattern)
+	if (line_spacing <= 0)
+		return;
+	
+	if (!rotatable())
+		delta_rotation = 0;
+	
+	// Make rotation unique
+	auto rotation = double(angle + delta_rotation);
+	rotation = fmod(1.0 * rotation, M_PI);
+	if (rotation < 0)
+		rotation = M_PI + rotation;
+	Q_ASSERT(rotation >= 0 && rotation <= M_PI);
+	
+	// Handle clipping
+	const auto old_clip_path = output.getClipPath();
+	if (!(flags & Option::AlternativeToClipping))
 	{
-		output.insertRenderable(new LineRenderable(line, first, second));
+		output.setClipPath(outline.painterPath());
 	}
-	else
+	
+	switch (type)
 	{
-		createPointPatternLine(first, second, delta_offset, rotation, outline, point_extent, output);
+	case LinePattern:
+		{
+			LineSymbol line;
+			line.setColor(line_color);
+			
+			auto line_width_f = 0.001*line_width;
+			line.setLineWidth(line_width_f);
+			
+			auto margin = line_width_f / 2;
+			auto point_extent = QRectF{-margin, -margin, margin, margin};
+			createRenderables<LinePattern>(outline, delta_rotation, pattern_origin, point_extent, &line, rotation, output);
+		}
+		break;
+	case PointPattern:
+		if (point && point_distance > 0)
+		{
+			PointObject point_object(point);
+			point_object.setRotation(delta_rotation);
+			point_object.update();
+			auto point_extent = point_object.getExtent();
+			createRenderables<PointPattern>(outline, delta_rotation, pattern_origin, point_extent, nullptr, rotation, output);
+		}
+		break;
 	}
+	
+	output.setClipPath(old_clip_path);
 }
 
 

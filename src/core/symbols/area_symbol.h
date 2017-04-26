@@ -154,7 +154,20 @@ public:
 			ObjectRenderables& output
 		) const;
 		
+		/** Does the heavy-lifting in loops over lines. */
+		template <int type>
+		void createRenderables(
+			const AreaRenderable& outline,
+			float delta_rotation,
+			const MapCoord& pattern_origin,
+			QRectF point_extent,
+			LineSymbol* line,
+			qreal rotation,
+			ObjectRenderables& output
+		) const;
+		
 		/** Creates one line of renderables, called by createRenderables(). */
+		template <int type>
 		void createLine(
 			MapCoordF first, MapCoordF second,
 			qreal delta_offset,
