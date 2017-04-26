@@ -160,6 +160,8 @@ public:
 			qreal delta_offset,
 			LineSymbol* line,
 			float rotation,
+			const AreaRenderable& outline,
+			QRectF point_extent,
 			ObjectRenderables& output
 		) const;
 		

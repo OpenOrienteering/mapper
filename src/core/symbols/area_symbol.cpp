@@ -293,6 +293,7 @@ void AreaSymbol::FillPattern::createRenderables(const AreaRenderable& outline, f
 	
 	// Adjust extent wrt fill pattern size
 	auto extent = outline.getExtent();
+	auto point_extent = QRectF {};
 	switch (type)
 	{
 	case LinePattern:
@@ -307,14 +308,18 @@ void AreaSymbol::FillPattern::createRenderables(const AreaRenderable& outline, f
 			PointObject point_object(point);
 			point_object.setRotation(delta_rotation);
 			point_object.update();
-			auto point_extent = point_object.getExtent();
+			point_extent = point_object.getExtent();
 			extent.adjust(-point_extent.right(), -point_extent.bottom(), -point_extent.left(), -point_extent.top());
 		}
 		break;
 	}
 	
 	const auto old_clip_path = output.getClipPath();
-	output.setClipPath(outline.painterPath());
+	if (!(flags & Option::AlternativeToClipping))
+	{
+		// \todo Prevent or handle early return after this statement.
+		output.setClipPath(outline.painterPath());
+	}
 	
 	// Fill
 	qreal delta_line_offset = 0;
@@ -343,7 +348,7 @@ void AreaSymbol::FillPattern::createRenderables(const AreaRenderable& outline, f
 		{
 			first = MapCoordF(cur, extent.top());
 			second = MapCoordF(cur, extent.bottom());
-			createLine(first, second, delta_along_line_offset, &line, delta_rotation, output);
+			createLine(first, second, delta_along_line_offset, &line, delta_rotation, outline, point_extent, output);
 		}
 	}
 	else if (qAbs(rotation - 0) < 0.0001)
@@ -354,7 +359,7 @@ void AreaSymbol::FillPattern::createRenderables(const AreaRenderable& outline, f
 		{
 			first = MapCoordF(extent.left(), cur);
 			second = MapCoordF(extent.right(), cur);
-			createLine(first, second, delta_along_line_offset, &line, delta_rotation, output);
+			createLine(first, second, delta_along_line_offset, &line, delta_rotation, outline, point_extent, output);
 		}
 	}
 	else
@@ -401,7 +406,7 @@ void AreaSymbol::FillPattern::createRenderables(const AreaRenderable& outline, f
 				// Create the renderable(s)
 				first = MapCoordF(start_x, start_y);
 				second = MapCoordF(end_x, end_y);
-				createLine(first, second, delta_along_line_offset, &line, delta_rotation, output);
+				createLine(first, second, delta_along_line_offset, &line, delta_rotation, outline, point_extent, output);
 				
 				// Move to next position
 				start_x += dist_x;
@@ -438,7 +443,7 @@ void AreaSymbol::FillPattern::createRenderables(const AreaRenderable& outline, f
 				// Create the renderable(s)
 				first = MapCoordF(start_x, start_y);
 				second = MapCoordF(end_x, end_y);
-				createLine(first, second, delta_along_line_offset, &line, delta_rotation, output);
+				createLine(first, second, delta_along_line_offset, &line, delta_rotation, outline, point_extent, output);
 				
 				// Move to next position
 				start_x += dist_x;
@@ -450,7 +455,14 @@ void AreaSymbol::FillPattern::createRenderables(const AreaRenderable& outline, f
 	output.setClipPath(old_clip_path);
 }
 
-void AreaSymbol::FillPattern::createLine(MapCoordF first, MapCoordF second, qreal delta_offset, LineSymbol* line, float rotation, ObjectRenderables& output) const
+void AreaSymbol::FillPattern::createLine(
+        MapCoordF first, MapCoordF second,
+        qreal delta_offset,
+        LineSymbol* line,
+        float rotation,
+        const AreaRenderable& outline,
+        QRectF point_extent,
+        ObjectRenderables& output ) const
 {
 	if (type == LinePattern)
 	{
@@ -467,12 +479,36 @@ void AreaSymbol::FillPattern::createLine(MapCoordF first, MapCoordF second, qrea
 		auto start_length = ceil((offset) / step_length) * step_length - offset;
 		
 		auto to_next = direction * step_length;
-		
 		auto coord = first + direction * start_length;
-		for (auto cur = start_length; cur < length; cur += step_length)
+		auto center = point_extent.center();
+		
+		// Duplicated loops for optimum locality of code
+		switch (flags & Option::AlternativeToClipping)
 		{
-			point->createRenderablesScaled(coord, -rotation, output);
-			coord += to_next;
+		case Option::NoClippingIfCenterInside:
+			for (auto cur = start_length; cur < length; cur += step_length, coord += to_next)
+				if (outline.painterPath()->contains(coord + center))
+					point->createRenderablesScaled(coord, -rotation, output);
+			break;
+		case Option::NoClippingIfCompletelyInside:
+			for (auto cur = start_length; cur < length; cur += step_length, coord += to_next)
+				if (outline.painterPath()->contains(point_extent.translated(coord.x(), coord.y())))
+					point->createRenderablesScaled(coord, -rotation, output);
+			break;
+		case Option::Default:
+#if 1
+			// Avoids expensive check, but may create objects which won't be rendered.
+			for (auto cur = start_length; cur < length; cur += step_length, coord += to_next)
+				point->createRenderablesScaled(coord, -rotation, output);
+			break;
+#endif
+		case Option::NoClippingIfPartiallyInside:
+			for (auto cur = start_length; cur < length; cur += step_length, coord += to_next)
+				if (outline.painterPath()->intersects(point_extent.translated(coord.x(), coord.y())))
+					point->createRenderablesScaled(coord, -rotation, output);
+			break;
+		default:  
+			Q_UNREACHABLE();
 		}
 	}
 }
