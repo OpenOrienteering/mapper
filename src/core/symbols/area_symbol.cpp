@@ -470,48 +470,62 @@ void AreaSymbol::FillPattern::createLine(
 	}
 	else
 	{
-		auto direction = second - first;
-		auto length = direction.length();
-		direction /= length; // normalize
-		
-		auto offset       = MapCoordF::dotProduct(direction, first) - 0.001 * offset_along_line - delta_offset;
-		auto step_length  = 0.001 * point_distance;
-		auto start_length = ceil((offset) / step_length) * step_length - offset;
-		
-		auto to_next = direction * step_length;
-		auto coord = first + direction * start_length;
-		auto center = point_extent.center();
-		
-		// Duplicated loops for optimum locality of code
-		switch (flags & Option::AlternativeToClipping)
-		{
-		case Option::NoClippingIfCenterInside:
-			for (auto cur = start_length; cur < length; cur += step_length, coord += to_next)
-				if (outline.painterPath()->contains(coord + center))
-					point->createRenderablesScaled(coord, -rotation, output);
-			break;
-		case Option::NoClippingIfCompletelyInside:
-			for (auto cur = start_length; cur < length; cur += step_length, coord += to_next)
-				if (outline.painterPath()->contains(point_extent.translated(coord.x(), coord.y())))
-					point->createRenderablesScaled(coord, -rotation, output);
-			break;
-		case Option::Default:
-#if 1
-			// Avoids expensive check, but may create objects which won't be rendered.
-			for (auto cur = start_length; cur < length; cur += step_length, coord += to_next)
-				point->createRenderablesScaled(coord, -rotation, output);
-			break;
-#endif
-		case Option::NoClippingIfPartiallyInside:
-			for (auto cur = start_length; cur < length; cur += step_length, coord += to_next)
-				if (outline.painterPath()->intersects(point_extent.translated(coord.x(), coord.y())))
-					point->createRenderablesScaled(coord, -rotation, output);
-			break;
-		default:  
-			Q_UNREACHABLE();
-		}
+		createPointPatternLine(first, second, delta_offset, rotation, outline, point_extent, output);
 	}
 }
+
+
+void AreaSymbol::FillPattern::createPointPatternLine(
+        MapCoordF first, MapCoordF second,
+        qreal delta_offset,
+        float rotation,
+        const AreaRenderable& outline,
+        QRectF point_extent,
+        ObjectRenderables& output ) const
+{
+	auto direction = second - first;
+	auto length = direction.length();
+	direction /= length; // normalize
+	
+	auto offset       = MapCoordF::dotProduct(direction, first) - 0.001 * offset_along_line - delta_offset;
+	auto step_length  = 0.001 * point_distance;
+	auto start_length = ceil((offset) / step_length) * step_length - offset;
+	
+	auto to_next = direction * step_length;
+	auto coord = first + direction * start_length;
+	auto center = point_extent.center();
+	
+	// Duplicated loops for optimum locality of code
+	switch (flags & Option::AlternativeToClipping)
+	{
+	case Option::NoClippingIfCenterInside:
+		for (auto cur = start_length; cur < length; cur += step_length, coord += to_next)
+			if (outline.painterPath()->contains(coord + center))
+				point->createRenderablesScaled(coord, -rotation, output);
+		break;
+	case Option::NoClippingIfCompletelyInside:
+		for (auto cur = start_length; cur < length; cur += step_length, coord += to_next)
+			if (outline.painterPath()->contains(point_extent.translated(coord.x(), coord.y())))
+				point->createRenderablesScaled(coord, -rotation, output);
+		break;
+	case Option::Default:
+#if 1
+		// Avoids expensive check, but may create objects which won't be rendered.
+		for (auto cur = start_length; cur < length; cur += step_length, coord += to_next)
+			point->createRenderablesScaled(coord, -rotation, output);
+		break;
+#endif
+	case Option::NoClippingIfPartiallyInside:
+		for (auto cur = start_length; cur < length; cur += step_length, coord += to_next)
+			if (outline.painterPath()->intersects(point_extent.translated(coord.x(), coord.y())))
+				point->createRenderablesScaled(coord, -rotation, output);
+		break;
+	default:  
+		Q_UNREACHABLE();
+	}
+}
+
+
 
 void AreaSymbol::FillPattern::scale(double factor)
 {
@@ -524,6 +538,8 @@ void AreaSymbol::FillPattern::scale(double factor)
 	if (point)
 		point->scale(factor);
 }
+
+
 
 // ### AreaSymbol ###
 

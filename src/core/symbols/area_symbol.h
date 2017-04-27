@@ -165,6 +165,17 @@ public:
 			ObjectRenderables& output
 		) const;
 		
+		/** Creates a single line of renderables for a PointPattern. */
+		void createPointPatternLine(
+			MapCoordF first, MapCoordF second,
+			qreal delta_offset,
+			float rotation,
+			const AreaRenderable& outline,
+			QRectF point_extent,
+			ObjectRenderables& output
+		) const;
+		
+		
 		/** Spatially scales the pattern settings by the given factor. */
 		void scale(double factor);
 	};
