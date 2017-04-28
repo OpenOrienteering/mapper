@@ -7219,7 +7219,7 @@ Velg et annet navn.</translation>
     </message>
     <message>
         <source>Print Screen</source>
-        <translation>Print Screen</translation>
+        <translation>Skjermutskrift</translation>
     </message>
     <message>
         <source>Zoom In</source>
