@@ -65,9 +65,6 @@ int main(int argc, char** argv)
 #endif
 	
 	// Load resources
-#ifdef MAPPER_USE_QT_CONF_QRC
-	Q_INIT_RESOURCE(qt);
-#endif
 	Q_INIT_RESOURCE(resources);
 	
 	// QSettings on OS X benefits from using an internet domain here.

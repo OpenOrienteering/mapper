@@ -29,13 +29,6 @@ endif()
 
 set(CMAKE_AUTOMOC ON)
 
-if(NOT DEFINED MAPPER_USE_QT_CONF_QRC
-   AND Mapper_PACKAGE_QT
-   AND NOT Mapper_DEVELOPMENT_BUILD
-   AND UNIX AND NOT APPLE AND NOT ANDROID)
-	set(MAPPER_USE_QT_CONF_QRC 1)
-endif()
-
 configure_file(mapper_config.h.in "${CMAKE_CURRENT_BINARY_DIR}/mapper_config.h.tmp")
 execute_process(
   COMMAND "${CMAKE_COMMAND}" -E copy_if_different mapper_config.h.tmp mapper_config.h
@@ -244,10 +237,7 @@ set(Mapper_Common_HEADERS
 
 # Resources (from project root)
 
-if(MAPPER_USE_QT_CONF_QRC)
-	set(Mapper_RESOURCES ${Mapper_RESOURCES} ${PROJECT_BINARY_DIR}/3rd-party/qt5/qt.conf.qrc)
-endif()
-set(Mapper_RESOURCES ${Mapper_RESOURCES} ${PROJECT_SOURCE_DIR}/resources.qrc)
+list(APPEND Mapper_RESOURCES "${PROJECT_SOURCE_DIR}/resources.qrc")
 qt5_add_resources(Mapper_RESOURCES_RCC ${Mapper_RESOURCES} OPTIONS -no-compress)
 
 
@@ -318,12 +308,6 @@ install(TARGETS Mapper
   BUNDLE DESTINATION "${MAPPER_RUNTIME_DESTINATION}"   # macOS
   LIBRARY DESTINATION "${MAPPER_RUNTIME_DESTINATION}"  # Android
 )
-
-if(Mapper_BUILD_QT)
-	write_qt_conf()
-elseif(EXISTS "${CMAKE_CURRENT_BINARY_DIR}/qt.conf")
-	file(REMOVE "${CMAKE_CURRENT_BINARY_DIR}/qt.conf")
-endif()
 
 
 # Workaround Qt private include dir issue
