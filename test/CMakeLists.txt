@@ -164,11 +164,3 @@ add_executable(Mapper-with-test mapper_t.cpp)
 add_dependencies(Mapper-with-test Mapper_prerequisites)
 target_link_libraries(Mapper-with-test Qt5::Core)
 target_compile_definitions(Mapper-with-test PRIVATE -DCMAKE_COMMAND="${CMAKE_COMMAND}" -DMAPPER_LOCATION="$<TARGET_FILE:Mapper>")
-
-
-if(Mapper_BUILD_QT)
-	write_qt_conf()
-elseif(EXISTS "${CMAKE_CURRENT_BINARY_DIR}/qt.conf")
-	file(REMOVE "${CMAKE_CURRENT_BINARY_DIR}/qt.conf")
-endif()
-
