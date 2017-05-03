@@ -29,19 +29,6 @@ project(Mapper VERSION 0.7.0 LANGUAGES CXX C)
 
 set(Mapper_COPYRIGHT "(C) 2012-2017 The OpenOrienteering developers")
 
-set(MAPPER_VERSION_PRI "${PROJECT_SOURCE_DIR}/oo-mapper-version.pri")
-file(READ "${MAPPER_VERSION_PRI}" current)
-string(MD5 file_md5 "${current}")
-set(output "# Generated in CMakeLists.txt, do not edit here.
-Mapper_VERSION_MAJOR = ${Mapper_VERSION_MAJOR}
-Mapper_VERSION_MINOR = ${Mapper_VERSION_MINOR}
-Mapper_VERSION_PATCH = ${Mapper_VERSION_PATCH}
-")
-string(MD5 output_md5 "${output}")
-if(NOT "${output_md5}" STREQUAL "${file_md5}")
-	file(WRITE "${MAPPER_VERSION_PRI}" "${output}")
-endif()
-
 set(android_manifest "${PROJECT_SOURCE_DIR}/android/AndroidManifest.xml")
 file(READ "${android_manifest}" current)
 if(NOT current MATCHES " android:versionName=.${Mapper_VERSION_MAJOR}\\.${Mapper_VERSION_MINOR}\\.${Mapper_VERSION_PATCH}. ")
@@ -172,8 +159,6 @@ add_custom_target(Mapper_prerequisites
   SOURCES # Extra files to be shown in IDE
     INSTALL.md
     README.md
-    oo-mapper.pro
-    ${MAPPER_VERSION_PRI}
 )
 set(Mapper_prerequisites_FOUND TRUE)
 

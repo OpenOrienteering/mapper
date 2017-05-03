@@ -24,14 +24,11 @@
 TEMPLATE = app
 TARGET   = Mapper
 
-include(@PROJECT_SOURCE_DIR@/oo-mapper-version.pri)
-
-
 ANDROID_PACKAGE_SOURCE_DIR = "@PROJECT_SOURCE_DIR@/android"
 
-EXPECTED_VERSION = $$Mapper_VERSION_MAJOR\.$$Mapper_VERSION_MINOR\.$$Mapper_VERSION_PATCH
+EXPECTED_VERSION = @Mapper_VERSION_MAJOR@\.@Mapper_VERSION_MINOR@\.@Mapper_VERSION_PATCH@
 !system(grep "$$EXPECTED_VERSION" "$$ANDROID_PACKAGE_SOURCE_DIR/AndroidManifest.xml") {
-	error(The version name in AndroidManifest.xml does not match the version in oo-mapper-version.pri.)
+	error(The version name in AndroidManifest.xml does not match $$EXPECTED_VERSION.)
 }
 
 CONFIG(debug, release|debug) {

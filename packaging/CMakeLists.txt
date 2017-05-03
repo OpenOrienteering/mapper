@@ -198,7 +198,9 @@ elseif(ANDROID)
 	  INPUT "${PROJECT_BINARY_DIR}/CPackConfig.tmp.cmake"
 	)
 	
-	# For configuring androiddeployqt, we create a dummy qmake project.
+	# For Android, we create a dummy qmake project which provides
+	# - configuration for running androiddeployqt from CPackConfig.cmake, and
+	# - a project for debugging the Android app in Qt Creator
 	# The directory name must match the Mapper binary.
 	file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/Mapper")
 	configure_file(
