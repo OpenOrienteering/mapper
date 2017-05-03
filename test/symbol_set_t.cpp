@@ -96,26 +96,26 @@ void SymbolSetTool::processSymbolSet_data()
 	QTest::addColumn<unsigned int>("source_scale");
 	QTest::addColumn<unsigned int>("target_scale");
 
-	QTest::newRow("ISOM 1:15000") << QString::fromLatin1("ISOM")  << 15000u << 15000u;
-	QTest::newRow("ISOM 1:10000") << QString::fromLatin1("ISOM")  << 15000u << 10000u;
+	QTest::newRow("ISOM-2000 1:15000") << QString::fromLatin1("ISOM-2000")  << 15000u << 15000u;
+	QTest::newRow("ISOM-2000 1:10000") << QString::fromLatin1("ISOM-2000")  << 15000u << 10000u;
 	QTest::newRow("ISSOM 1:5000") << QString::fromLatin1("ISSOM") <<  5000u <<  5000u;
 	QTest::newRow("ISSOM 1:4000") << QString::fromLatin1("ISSOM") <<  5000u <<  4000u;
 	
-	QTest::newRow("ISOM 1:15000 Czech") << QString::fromLatin1("ISOM_cs")  << 15000u << 15000u;
-	QTest::newRow("ISOM 1:10000 Czech") << QString::fromLatin1("ISOM_cs")  << 15000u << 10000u;
+	QTest::newRow("ISOM-2000 1:15000 Czech") << QString::fromLatin1("ISOM-2000_cs")  << 15000u << 15000u;
+	QTest::newRow("ISOM-2000 1:10000 Czech") << QString::fromLatin1("ISOM-2000_cs")  << 15000u << 10000u;
 	QTest::newRow("ISSOM 1:5000 Czech") << QString::fromLatin1("ISSOM_cs") <<  5000u <<  5000u;
 	QTest::newRow("ISSOM 1:4000 Czech") << QString::fromLatin1("ISSOM_cs") <<  5000u <<  4000u;
 	
-	QTest::newRow("ISOM 1:15000 Finnish") << QString::fromLatin1("ISOM_fi")  << 15000u << 15000u;
-	QTest::newRow("ISOM 1:10000 Finnish") << QString::fromLatin1("ISOM_fi")  << 15000u << 10000u;
+	QTest::newRow("ISOM-2000 1:15000 Finnish") << QString::fromLatin1("ISOM-2000_fi")  << 15000u << 15000u;
+	QTest::newRow("ISOM-2000 1:10000 Finnish") << QString::fromLatin1("ISOM-2000_fi")  << 15000u << 10000u;
 	QTest::newRow("ISSOM 1:5000 Finnish") << QString::fromLatin1("ISSOM_fi") <<  5000u <<  5000u;
 	QTest::newRow("ISSOM 1:4000 Finnish") << QString::fromLatin1("ISSOM_fi") <<  5000u <<  4000u;
 	
 	QTest::newRow("ISSOM 1:5000 French") << QString::fromLatin1("ISSOM_fr") <<  5000u <<  5000u;
 	QTest::newRow("ISSOM 1:4000 French") << QString::fromLatin1("ISSOM_fr") <<  5000u <<  4000u;
 	
-	QTest::newRow("ISOM 1:15000 Russian") << QString::fromLatin1("ISOM_ru")  << 15000u << 15000u;
-	QTest::newRow("ISOM 1:10000 Russian") << QString::fromLatin1("ISOM_ru")  << 15000u << 10000u;
+	QTest::newRow("ISOM-2000 1:15000 Russian") << QString::fromLatin1("ISOM-2000_ru")  << 15000u << 15000u;
+	QTest::newRow("ISOM-2000 1:10000 Russian") << QString::fromLatin1("ISOM-2000_ru")  << 15000u << 10000u;
 	
 	QTest::newRow("ISMTBOM 1:20000") << QString::fromLatin1("ISMTBOM") << 15000u << 20000u;
 	QTest::newRow("ISMTBOM 1:15000") << QString::fromLatin1("ISMTBOM") << 15000u << 15000u;
@@ -190,7 +190,7 @@ void SymbolSetTool::processSymbolSet()
 	{
 		map.setScaleDenominator(target_scale);
 		
-		if (name.startsWith(QLatin1String("ISOM")))
+		if (name.startsWith(QLatin1String("ISOM-2000")))
 		{
 			const double factor = double(source_scale) / double(target_scale);
 			map.scaleAllObjects(factor, MapCoord());
