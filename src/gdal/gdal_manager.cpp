@@ -26,6 +26,8 @@
 #include <QFileInfo>
 #include <QSettings>
 
+#include "util/backports.h"
+
 
 
 namespace
@@ -174,23 +176,29 @@ private:
 		}
 		
 		settings.beginGroup(gdal_configuration_group);
-		QStringList new_parameters = settings.childKeys();
-		if (new_parameters.isEmpty())
+		
+		const char* defaults[][2] = {
+		    { "CPL_DEBUG",               "OFF" },
+		    { "USE_PROJ_480_FEATURES",   "YES" },
+		    { "OSM_USE_CUSTOM_INDEXING", "NO"  },
+		    { "GPX_ELE_AS_25D",          "YES" },
+		};
+		for (const auto setting : defaults)
 		{
-			// Default options for debugging and for some drivers
-			settings.setValue(QString::fromLatin1("CPL_DEBUG"), QVariant{QLatin1String("OFF")});
-			settings.setValue(QString::fromLatin1("USE_PROJ_480_FEATURES"), QVariant{QLatin1String("YES")});
-			settings.setValue(QString::fromLatin1("OSM_USE_CUSTOM_INDEXING"), QVariant{QLatin1String("NO")});
-			settings.setValue(QString::fromLatin1("GPX_ELE_AS_25D") , QVariant{QLatin1String("YES")});
-			new_parameters = settings.childKeys();
+			const auto key = QString::fromLatin1(setting[0]);
+			if (!settings.contains(key))
+			{
+				settings.setValue(key, QVariant{QLatin1String(setting[1])});
+			}
 		}
 		
+		auto new_parameters = settings.childKeys();
 		new_parameters.sort();
-		for (auto parameter : new_parameters)
+		for (const auto& parameter : qAsConst(new_parameters))
 		{
 			CPLSetConfigOption(parameter.toLatin1().constData(), settings.value(parameter).toByteArray().constData());
 		}
-		for (auto parameter : static_cast<const QStringList&>(applied_parameters))
+		for (const auto& parameter : qAsConst(applied_parameters))
 		{
 			if (!new_parameters.contains(parameter)
 			    && parameter != QLatin1String{ "GDAL_DATA" })
