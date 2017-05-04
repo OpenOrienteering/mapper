@@ -2916,13 +2916,14 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3871"/>
         <source>Import...</source>
-        <translation type="unfinished">Importieren...</translation>
+        <translation>Importieren...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3872"/>
         <source>Symbol replacement was canceled.
 Import the data anyway?</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbolersetzung wurde abgebrochen.
+Daten trotzdem importieren?</translation>
     </message>
 </context>
 <context>
