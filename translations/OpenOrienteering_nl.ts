@@ -1074,7 +1074,7 @@
         <location filename="../src/tools/draw_text_tool.cpp" line="102"/>
         <source>Snap</source>
         <extracomment>Snap to existing objects</extracomment>
-        <translation type="unfinished">Kleven</translation>
+        <translation>Vastkleven</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="465"/>
@@ -1084,7 +1084,7 @@
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="466"/>
         <source>&lt;b&gt;%1+%2&lt;/b&gt;: Cancel editing. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+%2&lt;/b&gt;: Wijzigingen ongedaan maken. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="471"/>
@@ -2256,7 +2256,7 @@
         <location filename="../src/fileformats/file_import_export.h" line="230"/>
         <source>No such option: %1</source>
         <comment>No such import / export option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Een dergelijke optie bestaat niet: %1</translation>
     </message>
 </context>
 <context>
@@ -3105,13 +3105,14 @@ Geimporteerde gegevens schalen?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3871"/>
         <source>Import...</source>
-        <translation type="unfinished">Inlezen...</translation>
+        <translation>Importeren...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3872"/>
         <source>Symbol replacement was canceled.
 Import the data anyway?</source>
-        <translation type="unfinished"></translation>
+        <translation>Vervangen van symbolen is ongedaan gemaakt.
+Desondanks de gegevens importeren?</translation>
     </message>
 </context>
 <context>
@@ -5222,7 +5223,7 @@ en gebruik -indien beschikbaar- het muiswiel om uit te vergroten/verkleinen.</tr
     <message>
         <location filename="../src/fileformats/ocd_file_import.h" line="433"/>
         <source>Color id not found: %1, ignoring this color</source>
-        <translation type="unfinished">Kleur-ID niet gevonden: %1; deze kleur wordt genegeerd</translation>
+        <translation>Kleur-ID niet gevonden: %1; deze kleur wordt genegeerd</translation>
     </message>
 </context>
 <context>
@@ -9503,13 +9504,13 @@ Vorlage konnte Niet geladen werden. Existiert deze Gegevens?</translation>
         <location filename="../src/gui/util_gui.h" line="79"/>
         <source>mm</source>
         <comment>millimeters</comment>
-        <translation type="unfinished">mm</translation>
+        <translation>mm</translation>
     </message>
     <message>
         <location filename="../src/gui/util_gui.h" line="114"/>
         <source>m</source>
         <comment>meters</comment>
-        <translation type="unfinished">m</translation>
+        <translation>m</translation>
     </message>
 </context>
 <context>
