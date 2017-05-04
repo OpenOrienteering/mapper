@@ -297,14 +297,16 @@ OgrFileImport::OgrFileImport(QIODevice* stream, Map* map, MapView* view, UnitTyp
 	// Reasonable default?
 	
 	// OGR feature style defaults
-	default_pen_color = new MapColor(tr("Black"), 0); 
-	default_pen_color->setRgb({0.0, 0.0, 0.0});
-	default_pen_color->setCmykFromRgb();
+	default_pen_color = new MapColor(tr("Purple"), 0); 
+	default_pen_color->setSpotColorName(QLatin1String{"PURPLE"});
+	default_pen_color->setCmyk({0.2f, 1.0, 0.0, 0.0});
+	default_pen_color->setRgbFromCmyk();
 	map->addColor(default_pen_color, 0);
 	
-	auto default_brush_color = new MapColor(tr("Black") + QLatin1String(" 50%"), 0);
-	default_brush_color->setRgb({0.5, 0.5, 0.5});
-	default_brush_color->setCmykFromRgb();
+	auto default_brush_color = new MapColor(default_pen_color->getName() + QLatin1String(" 50%"), 0);
+	default_brush_color->setSpotColorComposition({ {default_pen_color, 0.5f} });
+	default_brush_color->setCmykFromSpotColors();
+	default_brush_color->setRgbFromSpotColors();
 	map->addColor(default_brush_color, 1);
 	
 	default_point_symbol = new PointSymbol();
