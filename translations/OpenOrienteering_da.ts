@@ -29,12 +29,12 @@
         <location filename="../src/gui/about_dialog.cpp" line="162"/>
         <source>A free software for drawing orienteering maps</source>
         <extracomment>For the moment, we use this existing translation instead of the previous one.</extracomment>
-        <translation>En gratis software til tegning af orienteringskort</translation>
+        <translation type="unfinished">En gratis software til tegning af orienteringskort</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="164"/>
         <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
-        <translation>Dette program er en gratis software: du kan distribuere det videre og/eller ændre det iht. betingelserne i &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, publiceret af Free Software Foundation.</translation>
+        <translation type="unfinished">Dette program er en gratis software: du kan distribuere det videre og/eller ændre det iht. betingelserne i &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, publiceret af Free Software Foundation.</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="169"/>
