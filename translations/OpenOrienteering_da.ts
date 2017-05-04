@@ -12,7 +12,7 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="175"/>
         <source>&lt;a %1&gt;All about licenses, copyright notices, conditions and disclaimers.&lt;/a&gt;</source>
-        <translation type="unfinished">&lt;a %1&gt; om licenser, copyright meddelelser, vilkår og ansvarsfralæggelser.&lt;/a&gt;</translation>
+        <translation>&lt;a %1&gt;Alt om licenser, copyright info, vilkår og ansvarsfralæggelser.&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="177"/>
@@ -22,19 +22,19 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="178"/>
         <source>(project initiator)</source>
-        <translation type="unfinished"></translation>
+        <translation>(initiativtagere)</translation>
     </message>
     <message>
         <location filename="../packaging/translations.cpp" line="14"/>
         <location filename="../src/gui/about_dialog.cpp" line="163"/>
         <source>A free software for drawing orienteering maps</source>
         <extracomment>For the moment, we use this existing translation instead of the previous one.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>En gratis software til tegning af orienteringskort</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="165"/>
         <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dette program er en gratis software: du kan distribuere det videre og/eller ændre det iht. betingelserne i &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, publiceret af Free Software Foundation.</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="170"/>
@@ -52,12 +52,12 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="92"/>
         <source>Open most recently used file</source>
-        <translation type="unfinished"></translation>
+        <translation>Åben sidst brugte fil</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="95"/>
         <source>Show tip of the day</source>
-        <translation>Vis Dagens tip</translation>
+        <translation>Vis dagens tip</translation>
     </message>
 </context>
 <context>
@@ -65,7 +65,7 @@
     <message>
         <location filename="../src/gui/widgets/action_grid_bar.cpp" line="53"/>
         <source>Show remaining items</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis resterende elementer</translation>
     </message>
 </context>
 <context>
@@ -78,22 +78,22 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="65"/>
         <source>Minimum size:</source>
-        <translation type="unfinished">Mindstemål:</translation>
+        <translation>Mindstemål:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="72"/>
         <source>Fills</source>
-        <translation type="unfinished">Fyld</translation>
+        <translation>Fyld</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="85"/>
         <source>Line fill</source>
-        <translation type="unfinished">Liniefyld</translation>
+        <translation>Liniefyld</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="86"/>
         <source>Pattern fill</source>
-        <translation type="unfinished">Mønsterfyld</translation>
+        <translation>Mønsterfyld</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="124"/>
@@ -152,12 +152,12 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="180"/>
         <source>Fill rotation</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotation af fyld</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="182"/>
         <source>°</source>
-        <translation type="unfinished"></translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="184"/>
@@ -167,17 +167,17 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="186"/>
         <source>adjustable per object</source>
-        <translation type="unfinished">justerbar pr. objekt</translation>
+        <translation>justerbar pr. objekt</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="201"/>
         <source>Area settings</source>
-        <translation type="unfinished">Områdeindstillinger</translation>
+        <translation>Områdeindstillinger</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="282"/>
         <source>Pattern fill %1</source>
-        <translation type="unfinished">Fyldmønster %1</translation>
+        <translation>Fyldmønster %1</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="291"/>
@@ -187,12 +187,12 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="308"/>
         <source>No fill selected</source>
-        <translation type="unfinished">Ingen fyldning er valgt</translation>
+        <translation>Ingen fyldning er valgt</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="62"/>
         <source>Area color:</source>
-        <translation type="unfinished">Områdefarve:</translation>
+        <translation>Områdefarve:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="151"/>
@@ -215,36 +215,34 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="43"/>
         <source>Autosaved file</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatisk gemt fil</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/autosave_dialog.cpp" line="45"/>
         <location filename="../src/gui/autosave_dialog.cpp" line="51"/>
         <source>%n bytes</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n byte</numerusform>
+        <numerusform>%n bytes</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="49"/>
         <source>File saved by the user</source>
-        <translation type="unfinished"></translation>
+        <translation>Fil gemt af brugeren</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="56"/>
         <source>File recovery</source>
-        <translation type="unfinished"></translation>
+        <translation>Fil genoprettelse</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="58"/>
         <source>File %1 was not properly closed. At the moment, there are two versions:</source>
-        <translation type="unfinished"></translation>
+        <translation>Filen %1 blev ikke lukket ordentligt. Der findes derfor nu to versioner:</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="72"/>
         <source>Save the active file to remove the conflicting version.</source>
-        <translation type="unfinished"></translation>
+        <translation>Gem den aktive fil for at fjerne konflikt med en anden version.</translation>
     </message>
 </context>
 <context>
@@ -252,17 +250,17 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="45"/>
         <source>Edit map color</source>
-        <translation type="unfinished"></translation>
+        <translation>Rediger kortfarve</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="62"/>
         <source>Defines a spot color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Definerer en spotfarve:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="71"/>
         <source>Mixture of spot colors (screens and overprint):</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Blanding af spotfarver (skærme og overprint):</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="86"/>
@@ -272,18 +270,18 @@
         <location filename="../src/gui/color_dialog.cpp" line="139"/>
         <location filename="../src/gui/color_dialog.cpp" line="349"/>
         <source>%</source>
-        <translation type="unfinished">%</translation>
+        <translation>%</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="91"/>
         <source>Knockout: erases lower colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Knockout: fjerner lavere farver</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="109"/>
         <location filename="../src/gui/color_dialog.cpp" line="166"/>
         <source>Calculate from spot colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Beregn fra spotfarver</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="114"/>

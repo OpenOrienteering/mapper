@@ -1105,7 +1105,7 @@
         <location filename="../src/tools/draw_text_tool.cpp" line="102"/>
         <source>Snap</source>
         <extracomment>Snap to existing objects</extracomment>
-        <translation type="unfinished">Tilknytt</translation>
+        <translation>Tilknytt eksisterende objekt</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="465"/>
@@ -1496,7 +1496,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="116"/>
         <source>Default</source>
-        <translation type="unfinished">Standard</translation>
+        <translation>Standard</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="139"/>
@@ -4397,11 +4397,9 @@ er valgt</translation>
         <location filename="future_translations.cpp" line="67"/>
         <source>Duplicated %n object(s)</source>
         <extracomment>To replace existing translation which doesn't use plural correctly</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>Kopiert %n objekt(er)</numerusform>
+        <numerusform></numerusform>
+        </translation></message>
     <message>
         <location filename="future_translations.cpp" line="70"/>
         <source>No objects were selected because there are no objects with the selected symbols.</source>
@@ -5090,7 +5088,7 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="83"/>
         <source>Encoding '%1' is not available. Check the settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kode '%1' er ikke tilgjengelig. Sjekk innstillingene.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="120"/>
@@ -7221,7 +7219,7 @@ Velg et annet navn.</translation>
     </message>
     <message>
         <source>Print Screen</source>
-        <translation>Print Screen</translation>
+        <translation>Skjermutskrift</translation>
     </message>
     <message>
         <source>Zoom In</source>
@@ -7995,12 +7993,12 @@ Velg et annet navn.</translation>
     <message>
         <location filename="../src/core/storage_location.cpp" line="278"/>
         <source>'%1' is stored in a regular location.</source>
-        <translation type="unfinished"></translation>
+        <translation>'%1' er lagret på fast plass.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="281"/>
         <source>'%1' is located in app storage. The files will be removed when uninstalling the app.</source>
-        <translation type="unfinished"></translation>
+        <translation>'%1' er lagret i programminnet. Filene vil bli fjernet ved avinstallering av programmet.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="284"/>
@@ -8010,7 +8008,7 @@ Velg et annet navn.</translation>
     <message>
         <location filename="../src/core/storage_location.cpp" line="287"/>
         <source>'%1' is not a valid storage location.</source>
-        <translation type="unfinished"></translation>
+        <translation>'%1' er ikke en tillatt lagringsplass.</translation>
     </message>
 </context>
 <context>
@@ -8288,7 +8286,7 @@ Velg et annet navn.</translation>
         <location filename="future_translations.cpp" line="76"/>
         <source>Fill / Create border for selected objects</source>
         <extracomment>To replace existing translation which uses "object(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Fyll / Lag ramme for valgte objekter</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="79"/>
@@ -8375,7 +8373,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="60"/>
         <source>Relation</source>
-        <translation type="unfinished"></translation>
+        <translation>Relasjon</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="60"/>
@@ -8395,12 +8393,12 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="76"/>
         <source>Add Row</source>
-        <translation type="unfinished"></translation>
+        <translation>Legg til rad</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="77"/>
         <source>Remove Row</source>
-        <translation type="unfinished"></translation>
+        <translation>Fjern rad</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="83"/>
@@ -8425,11 +8423,9 @@ to jump over the lazy dog
     <message numerus="yes">
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="346"/>
         <source>%n object(s) selected</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n objekt(er) valgt</numerusform>
+        <numerusform>%n objekter valgt</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="350"/>
         <source>Invalid query</source>

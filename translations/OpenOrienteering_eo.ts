@@ -293,7 +293,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="119"/>
         <source>Custom process color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Propra procezkoloro:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="125"/>
@@ -494,7 +494,7 @@
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="161"/>
         <source>Take the old symbol as template for the private symbol?</source>
-        <translation type="unfinished"></translation>
+        <translation>Preni la malnovan simbolon kiel ŝablono por la privata simbolo?</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="77"/>
@@ -674,22 +674,22 @@
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="399"/>
         <source>The split line must end on the area boundary!</source>
-        <translation type="unfinished"></translation>
+        <translation>La dividolinio devas finiĝi ĉe limo de la areo!</translation>
     </message>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="405"/>
         <source>Start and end of the split line are at different parts of the object!</source>
-        <translation type="unfinished"></translation>
+        <translation>Komenco kaj fino de la dividolinio estas sur diversaj partoj de la objekto!</translation>
     </message>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="411"/>
         <source>Start and end of the split line are at the same position!</source>
-        <translation type="unfinished"></translation>
+        <translation>Komenco kaj fino de la dividolinio estas sur sama pozicio!</translation>
     </message>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="93"/>
         <source>&lt;b&gt;Click&lt;/b&gt; on a line: Split it into two. &lt;b&gt;Drag&lt;/b&gt; along a line: Remove this line part. &lt;b&gt;Click or Drag&lt;/b&gt; at an area boundary: Start a split line. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Klaki&lt;/b&gt; sur linio: Dividi ĝin en du. &lt;b&gt;Treni&lt;/b&gt; laŭlonge linio: Forigi ĉi tiun linioparton. &lt;b&gt;Klaki aŭ treni&lt;/b&gt; ĉe limo de la areo: Komenci dividolinion. </translation>
     </message>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="352"/>
@@ -1062,7 +1062,7 @@
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="471"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a text object with a single anchor. &lt;b&gt;Drag&lt;/b&gt;: Create a text box. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Klaki&lt;/b&gt;: Krei tekstan objekton kun unuopa ankro. &lt;b&gt;Treni&lt;/b&gt;: Krei tekstujon. </translation>
     </message>
 </context>
 <context>
@@ -1087,7 +1087,7 @@
     <message>
         <location filename="../src/tools/edit_line_tool.cpp" line="531"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on segment: Toggle between straight and curved. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+Klaki&lt;/b&gt; sur segmento: Baskuligi inter rekta kaj malrekta. </translation>
     </message>
 </context>
 <context>
@@ -1251,13 +1251,13 @@
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="71"/>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="77"/>
         <source>Reset outer curve handles</source>
-        <translation type="unfinished"></translation>
+        <translation>Reagordi eksterajn tenilojn de kurbo</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="72"/>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="78"/>
         <source>Keep outer curve handles</source>
-        <translation type="unfinished"></translation>
+        <translation>Konservi eksterajn tenilojn de kurbo</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="73"/>
@@ -1556,7 +1556,7 @@
     <message>
         <location filename="../src/core/georeferencing.cpp" line="229"/>
         <source>Map scale specification invalid or missing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Specifo de mapa skalo estas nevalida aŭ mankas.</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="235"/>
@@ -1567,7 +1567,7 @@
         <location filename="../src/core/georeferencing.cpp" line="272"/>
         <location filename="../src/core/georeferencing.cpp" line="299"/>
         <source>Unknown CRS specification language: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nekonata CRS-specifa lingvo: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="302"/>
@@ -1643,7 +1643,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="94"/>
         <source>Map coordinate reference system</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinatsistemo de mapo</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="97"/>
@@ -1729,7 +1729,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="184"/>
         <location filename="../src/gui/select_crs_dialog.cpp" line="84"/>
         <source>&amp;Coordinate reference system:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Koordinatsistemo:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="191"/>
@@ -1759,7 +1759,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="442"/>
         <source>Declination change</source>
-        <translation>Deklinacioŝanĝo</translation>
+        <translation>Deklinacia ŝanĝo</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="442"/>
@@ -1789,7 +1789,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="671"/>
         <source>Declination value not found.</source>
-        <translation>Inklinacia valoro ne trovita.</translation>
+        <translation>Deklinacia valoro ne trovita.</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="676"/>
@@ -2074,7 +2074,7 @@
     <message>
         <location filename="../src/fileformats/native_file_format.cpp" line="200"/>
         <source>The geographic coordinate reference system of the map was "%1". This CRS is not supported. Using "%2".</source>
-        <translation type="unfinished"></translation>
+        <translation>La geografia koordinatsistemo de la mapo estis "%1". Ĉi tiu CRS estas nesubtenata. "%2" estas uzata.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/native_file_format.cpp" line="319"/>
@@ -2094,12 +2094,12 @@
     <message>
         <location filename="../src/fileformats/native_file_format.cpp" line="406"/>
         <source>Error while reading map part count.</source>
-        <translation type="unfinished"></translation>
+        <translation>Eraro dum lego de nombro de mapopartoj.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/native_file_format.cpp" line="416"/>
         <source>Error while loading map part %2.</source>
-        <translation>Eraro dum ŝarĝo de mapa parto %2.</translation>
+        <translation>Eraro dum ŝarĝo de mapoparto %2.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="117"/>
@@ -3455,7 +3455,7 @@ Rescale the imported data?</source>
         <location filename="../src/gui/map/map_editor.cpp" line="1235"/>
         <location filename="../src/gui/map/map_editor.cpp" line="3412"/>
         <source>Map parts</source>
-        <translation>Partoj de mapo</translation>
+        <translation>Mapopartoj</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1167"/>
@@ -3677,7 +3677,7 @@ elektitaj</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2233"/>
         <source>Resulting symbol: %1 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Rezultinta simbolo: %1 %2.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2234"/>
@@ -3769,7 +3769,7 @@ elektitaj</translation>
         <location filename="../src/gui/map/map_editor.cpp" line="3478"/>
         <location filename="../src/gui/map/map_editor.cpp" line="3538"/>
         <source>Enter the name of the map part:</source>
-        <translation>Enigu nomon de la mapa parto:</translation>
+        <translation>Enigu nomon de la mapoparto:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3554"/>
@@ -3780,17 +3780,17 @@ elektitaj</translation>
         <location filename="../src/gui/map/map_editor.cpp" line="3576"/>
         <location filename="../src/gui/map/map_editor.cpp" line="3606"/>
         <source>Merge map parts</source>
-        <translation>Kunfandi mapajn partojn</translation>
+        <translation>Kunfandi mapopartojn</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3577"/>
         <source>Do you want to move all objects from map part "%1" to "%2", and to remove "%1"?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ĉu vi volas movi ĉiujn objektojn el mapoparto "%1" al "%2", kaj forigi "%1"?</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3607"/>
         <source>Do you want to move all objects to map part "%1", and to remove all other map parts?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ĉu vi volas movi ĉiujn objektojn al mapoparto "%1", kaj forigi ĉiujn aliajn mapopartojn?</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3832"/>
@@ -3820,12 +3820,12 @@ elektitaj</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="811"/>
         <source>Clear undo / redo history</source>
-        <translation type="unfinished"></translation>
+        <translation>Vakigi malfaran / refaran historion</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="811"/>
         <source>Clear the undo / redo history to reduce map file size.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vakigi malfaran / refaran historion por redukti mapodosiergrandon.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="818"/>
@@ -4001,7 +4001,7 @@ elektitaj</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3499"/>
         <source>Do you want to remove map part "%1" and all its objects?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ĉu vi volas forigi mapoparton "%1" kaj ĉiujn ĝiajn objektojn?</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3661"/>
@@ -4679,7 +4679,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="389"/>
         <source>Could not load the coordinate reference system '%1'.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne eblas ŝargi la koordinatsistemon '%1'.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="423"/>
@@ -5822,7 +5822,7 @@ apartigoj</translation>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="54"/>
         <source>Select coordinate reference system</source>
-        <translation type="unfinished"></translation>
+        <translation>Elekti koordinatsistemon</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="62"/>
@@ -6196,12 +6196,12 @@ apartigoj</translation>
     <message>
         <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="114"/>
         <source>bounding box on origin</source>
-        <translation type="unfinished"></translation>
+        <translation>limiga kesto sur origino</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="115"/>
         <source>center of gravity on origin</source>
-        <translation type="unfinished"></translation>
+        <translation>masocentro sur origino</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="233"/>
@@ -6324,7 +6324,7 @@ manĝaĵo kun spicoj
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="234"/>
         <source>The key "%1" already exists and must not be used twice.</source>
-        <translation type="unfinished"></translation>
+        <translation>La ŝlosilo "%1" jam ekzistas kaj devas ne esti uzata dufoje.</translation>
     </message>
 </context>
 <context>
@@ -6332,7 +6332,7 @@ manĝaĵo kun spicoj
     <message>
         <location filename="../src/templates/template.cpp" line="428"/>
         <source>Find the moved template file</source>
-        <translation type="unfinished"></translation>
+        <translation>Serĉi la movitan ŝablonan dosieron</translation>
     </message>
     <message>
         <location filename="../src/templates/template.cpp" line="430"/>
@@ -6353,7 +6353,7 @@ manĝaĵo kun spicoj
     <message>
         <location filename="../src/templates/template.cpp" line="564"/>
         <source>Is the format of the file correct for this template type?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ĉu la dosierformo estas ĝusta por ĉi tiu tipo de ŝablono?</translation>
     </message>
 </context>
 <context>
@@ -6488,7 +6488,9 @@ manĝaĵo kun spicoj
         <source>Loading a GIF image template.
 Saving GIF files is not supported. This means that drawings on this template won't be saved!
 If you do not intend to draw on this template however, that is no problem.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ŝargado de GIF-bilda ŝablono.
+Konservado de GIF-dosieroj estas nesubtenata. Tio signifas, ke desegnado sur ĉi tiu ŝablono ne estos konservita!
+Tamen se vi ne intencas desegni sur ĉi tiu ŝablono, tio ne estas problemo.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="211"/>
@@ -7278,7 +7280,7 @@ La maksimuma subtenata versio estas %2.</translation>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="184"/>
         <source>Older versions of Mapper do not support multiple map parts. To save the map in compatibility mode, you must first merge all map parts.</source>
-        <translation type="unfinished"></translation>
+        <translation>Malnovaj versioj de Mapper ne subtenas plurajn mapopartojn. Por konservi la mapon en kongrueca reĝimo, vi devas kunfandi ĉiujn mapopartojn antaŭe.</translation>
     </message>
 </context>
 <context>
@@ -7348,7 +7350,7 @@ La maksimuma subtenata versio estas %2.</translation>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="790"/>
         <source>Expected %1 map parts, found %2.</source>
-        <translation>Atendata %1 mapaj partoj, trovita %2.</translation>
+        <translation>Atendata %1 mapopartoj, trovita %2.</translation>
     </message>
 </context>
 </TS>
