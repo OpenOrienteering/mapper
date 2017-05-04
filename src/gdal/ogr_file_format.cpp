@@ -393,6 +393,13 @@ void OgrFileImport::import(bool load_symbols_only)
 				continue;
 			}
 			
+			if (qstrcmp(OGR_L_GetName(layer), "track_points") == 0)
+			{
+				// Skip GPX track points as points. Track line is separate.
+				/// \todo Use hooks and delegates per file format
+				continue;
+			}
+			
 			auto part = map->getCurrentPart();
 			if (option(QLatin1String("Separate layers")).toBool())
 			{
