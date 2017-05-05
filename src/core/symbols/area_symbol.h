@@ -125,6 +125,17 @@ public:
 		
 		
 		/**
+		 * Returns the flags which control drawing at boundary.
+		 */
+		Options clipping() const;
+		
+		/**
+		 * Sets the flags which control drawing at boundary.
+		 */
+		void setClipping(Options clipping);
+		
+		
+		/**
 		 * Removes the pattern's references to the deleted color.
 		 */
 		void colorDeleted(const MapColor* color);
@@ -267,6 +278,12 @@ inline
 bool AreaSymbol::FillPattern::rotatable() const
 {
 	return flags.testFlag(Option::Rotatable);
+}
+
+inline
+AreaSymbol::FillPattern::Options AreaSymbol::FillPattern::clipping() const
+{
+	return flags & Option::AlternativeToClipping;
 }
 
 

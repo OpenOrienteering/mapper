@@ -215,6 +215,13 @@ void AreaSymbol::FillPattern::setRotatable(bool value)
 
 
 
+void AreaSymbol::FillPattern::setClipping(Options clipping)
+{
+	flags = (flags & ~Option::AlternativeToClipping) | (clipping & Option::AlternativeToClipping);
+}
+
+
+
 void AreaSymbol::FillPattern::colorDeleted(const MapColor* color)
 {
 	switch (type)
