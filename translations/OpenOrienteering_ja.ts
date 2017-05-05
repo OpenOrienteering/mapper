@@ -3231,13 +3231,14 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3871"/>
         <source>Import...</source>
-        <translation type="unfinished">インポート...</translation>
+        <translation>インポート...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3872"/>
         <source>Symbol replacement was canceled.
 Import the data anyway?</source>
-        <translation type="unfinished"></translation>
+        <translation>記号の置換がキャンセルされました。
+それでもデータをインポートしますか?</translation>
     </message>
 </context>
 <context>
