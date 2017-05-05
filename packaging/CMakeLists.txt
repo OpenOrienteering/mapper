@@ -369,9 +369,6 @@ if(Mapper_PACKAGE_ASSISTANT)
 		install(
 		  PROGRAMS ${Qt5Help_ASSISTANT_EXECUTABLE}
 		  DESTINATION "${MAPPER_LIBRARY_DESTINATION}/bin")
-		install(
-		  FILES "${PROJECT_BINARY_DIR}/3rd-party/qt5/qt.conf"
-		  DESTINATION "${MAPPER_LIBRARY_DESTINATION}/bin")
 	endif()
 	list(APPEND MAPPER_QT_PLUGINS
 	  sqldrivers/qsqlite
