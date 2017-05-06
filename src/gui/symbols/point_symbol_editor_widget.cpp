@@ -506,9 +506,8 @@ void PointSymbolEditorWidget::deleteCurrentElement()
 {
 	int row = element_list->currentRow();
 	Q_ASSERT(row > 0);
-	int pos = row - 1;
-	symbol->deleteElement(pos);
 	delete element_list->item(row);
+	symbol->deleteElement(row - 1);
 	map->updateAllObjectsWithSymbol(symbol);
 	emit symbolEdited();
 }
