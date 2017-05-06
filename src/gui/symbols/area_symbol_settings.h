@@ -28,6 +28,7 @@
 
 QT_BEGIN_NAMESPACE
 class QCheckBox;
+class QComboBox;
 class QDoubleSpinBox;
 class QLabel;
 class QListWidget;
@@ -117,6 +118,8 @@ private:
 	ColorDropDown*  pattern_color_edit;
 	QDoubleSpinBox* pattern_linewidth_edit;
 	QDoubleSpinBox* pattern_pointdist_edit;
+	
+	QComboBox*      pattern_clipping_edit;
 };
 
 #endif

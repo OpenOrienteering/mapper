@@ -22,6 +22,7 @@
 #include "area_symbol_settings.h"
 
 #include <QtMath>
+#include <QComboBox>
 #include <QDialogButtonBox>
 #include <QFormLayout>
 #include <QLabel>
@@ -190,6 +191,31 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, SymbolSettingDialog* 
 	fill_pattern_layout->addRow(QString{}, pattern_rotatable_check);
 	
 	
+	fill_pattern_layout->addItem(Util::SpacerItem::create(this));
+	
+	/* Stacked widgets again. */
+	QStackedWidget* clipping_headline = new QStackedWidget();
+	connect(this, &AreaSymbolSettings::switchPatternEdits, clipping_headline, &QStackedWidget::setCurrentIndex);
+	fill_pattern_layout->addRow(clipping_headline);
+	
+	QStackedWidget* clipping_edit  = new QStackedWidget();
+	connect(this, &AreaSymbolSettings::switchPatternEdits, clipping_edit, &QStackedWidget::setCurrentIndex);
+	fill_pattern_layout->addRow(clipping_edit);
+	
+	// Line pattern: Clipping settings not used
+	clipping_headline->addWidget(new QWidget());
+	clipping_edit->addWidget(new QWidget());
+	
+	// Point pattern clipping
+	clipping_headline->addWidget(Util::Headline::create(tr("Element drawing at boundary")));
+	pattern_clipping_edit = new QComboBox();
+	pattern_clipping_edit->addItem(tr("Clip elements at the boundary."), AreaSymbol::FillPattern::Default);
+	pattern_clipping_edit->addItem(tr("Draw elements if the center is inside the boundary."), AreaSymbol::FillPattern::NoClippingIfCenterInside);
+	pattern_clipping_edit->addItem(tr("Draw elements if any point is inside the boundary."), AreaSymbol::FillPattern::NoClippingIfPartiallyInside);
+	pattern_clipping_edit->addItem(tr("Draw elements if all points are inside the boundary."), AreaSymbol::FillPattern::NoClippingIfCompletelyInside);
+	clipping_edit->addWidget(pattern_clipping_edit);
+	
+	
 	QHBoxLayout* fill_patterns_layout = new QHBoxLayout();
 	fill_patterns_layout->addLayout(fill_patterns_list_layout, 1);
 	fill_patterns_layout->addItem(Util::SpacerItem::create(this));
@@ -216,6 +242,11 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, SymbolSettingDialog* 
 	connect(pattern_color_edit, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &AreaSymbolSettings::patternColorChanged);
 	connect(pattern_linewidth_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &AreaSymbolSettings::patternLineWidthChanged);
 	connect(pattern_pointdist_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &AreaSymbolSettings::patternPointDistChanged);
+	
+	connect(pattern_clipping_edit, QOverload<int>::of(&QComboBox::currentIndexChanged), [this](){
+		active_pattern->setClipping(AreaSymbol::FillPattern::Options(pattern_clipping_edit->currentData(Qt::UserRole).toInt()));
+		emit propertiesModified();
+	});
 	
 	updateAreaGeneral();
 	updatePatternWidgets();
@@ -355,11 +386,16 @@ void AreaSymbolSettings::updatePatternWidgets()
 		{
 			emit switchPatternEdits(1);
 			
-			ScopedMultiSignalsBlocker block(pattern_offset_along_line_edit, pattern_pointdist_edit);
+			ScopedMultiSignalsBlocker block(
+			  pattern_offset_along_line_edit,
+			  pattern_pointdist_edit,
+			  pattern_clipping_edit
+			);
 			pattern_offset_along_line_edit->setValue(0.001 * pattern->offset_along_line);
 			pattern_offset_along_line_edit->setEnabled(pattern_active);
 			pattern_pointdist_edit->setValue(0.001 * pattern->point_distance);
 			pattern_pointdist_edit->setEnabled(pattern_active);
+			pattern_clipping_edit->setCurrentIndex(pattern_clipping_edit->findData(int(pattern->clipping())));
 			break;
 		}
 	}

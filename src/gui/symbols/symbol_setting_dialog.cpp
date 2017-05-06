@@ -399,14 +399,15 @@ void SymbolSettingDialog::createPreviewMap()
 	}
 	else if (symbol->getType() == Symbol::Area)
 	{
-		const float half_radius = 8;
-		const float offset_y = 0;
+		const qreal half_radius = 8;
+		const qreal offset_y = 0;
 		
 		PathObject* path = new PathObject(symbol);
 		path->addCoordinate(0, { -half_radius, -half_radius + offset_y });
-		path->addCoordinate(1, { half_radius,  -half_radius + offset_y });
-		path->addCoordinate(2, { half_radius,  half_radius + offset_y });
-		path->addCoordinate(3, { -half_radius, half_radius + offset_y });
+		path->addCoordinate(1, {  0.0,         -half_radius + offset_y });
+		path->addCoordinate(2, {  half_radius,                offset_y });
+		path->addCoordinate(3, {  half_radius,  half_radius + offset_y });
+		path->addCoordinate(4, { -half_radius,  half_radius + offset_y });
 		preview_map->addObject(path);
 		
 		preview_objects.push_back(path);
