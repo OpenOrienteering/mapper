@@ -55,7 +55,10 @@ Q_OBJECT
 public:
 	AreaSymbolSettings(AreaSymbol* symbol, SymbolSettingDialog* dialog);
 	
-	virtual void reset(Symbol* symbol);
+	~AreaSymbolSettings() override;
+	
+	
+	void reset(Symbol* symbol) override;
 	
 	/**
 	 * Updates the general area fields (not related to patterns)
