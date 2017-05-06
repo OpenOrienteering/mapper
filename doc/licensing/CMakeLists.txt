@@ -49,7 +49,7 @@ elseif(UNIX)
 endif()
 
 set(LICENSING_PROVIDER "${default_provider}" CACHE STRING
-  "Provider for 3rd-party licensing information (${known_providers})"
+  "Provider for 3rd-party licensing information (${known_providers};OFF)"
 )
 
 
@@ -79,7 +79,7 @@ endif()
 if(TARGET mapper-gdal)
 	list(APPEND third_party_components gdal)
 endif()
-if(TARGET printsupport)
+if(TARGET printsupport AND WIN32)
 	list(APPEND third_party_components zlib)
 endif()
 if(Mapper_PACKAGE_ASSISTANT)

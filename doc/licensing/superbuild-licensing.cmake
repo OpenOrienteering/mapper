@@ -39,18 +39,28 @@ endif()
 
 # Based on OpenOrienteering superbuild as of 2017-04
 list(APPEND third_party_components
-  libcurl
-  libexpat
   libjpeg-turbo
   liblzma
   libpcre3
   libpng
-  libsqlite
   libtiff
-  zlib
 )
+if(NOT APPLE)
+	list(APPEND third_party_components
+	  libcurl
+	  libexpat
+	  libsqlite
+	)
+endif()
+if(NOT ANDROID AND NOT APPLE)
+	list(APPEND third_party_components
+	  zlib
+	)
+endif()
 if(ANDROID OR MINGW)
-	list(APPEND third_party_components gnustl)
+	list(APPEND third_party_components
+	  gnustl
+	)
 endif()
 
 list(APPEND common_license_names
@@ -66,8 +76,7 @@ list(APPEND common_license_names
 )
 
 
-# A 3rd-party Mapper component may consist of multiple DEB packages sharing the
-# same copyright file. We reference it just once.
+# Map component names to package names
 set(package_names
   libcurl:curl
   libexpat:expat
