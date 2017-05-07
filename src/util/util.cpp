@@ -233,7 +233,7 @@ void showHelp(QWidget* dialog_parent, const char* file_and_anchor_latin1)
 void showHelp(QWidget* dialog_parent, QString filename)
 {
 #if defined(Q_OS_ANDROID)
-	const QString manual_path = QLatin1String("doc:") + filename;
+	const QString manual_path = QLatin1String("doc:/manual/") + filename;
 	const QUrl help_url = QUrl::fromLocalFile(manual_path);
 	TextBrowserDialog help_dialog(help_url, dialog_parent);
 	help_dialog.exec();
