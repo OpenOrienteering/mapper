@@ -7,7 +7,7 @@ redirect_from:
 ---
 
 {% if doxygen %}
-**Note:** The [online version](http://openorienteering.github.io/mapper-manual/) of this documentation may contain additions and corrections.
+**Note:** The [online version](http://www.openorienteering.org/mapper-manual/) of this documentation may contain additions and corrections.
 {% endif %}
 
 Contents    {#index_contents}
