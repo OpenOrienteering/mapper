@@ -98,7 +98,7 @@ Settings::Settings()
 	static bool migration_checked = false;
 	if (!migration_checked)
 	{
-		QVariant current_version { QLatin1String("0.5.9") };
+		QVariant current_version { QLatin1String("0.7") };
 		QSettings settings;
 		if (settings.value(QString::fromLatin1("version")) != current_version)
 		{
