@@ -62,7 +62,7 @@ file(INSTALL
 set(sign )
 set(result )
 set(final_message )
-$<$<OR:$<CONFIG:Release>,$<CONFIG:MinSizeRel>>:$<$<AND:$<BOOL:${KEYSTORE_URL}>,$<BOOL:${KEYSTORE_ALIAS}>>:
+$<$<AND:$<OR:$<CONFIG:Release>,$<CONFIG:MinSizeRel>>,$<BOOL:${KEYSTORE_URL}>,$<BOOL:${KEYSTORE_ALIAS}>>:
 if("@CMAKE_HOST_UNIX@")
 	execute_process(COMMAND "${CMAKE_COMMAND}" -E echo "Checking if we are running in a terminal")
 	execute_process(COMMAND tty	RESULT_VARIABLE result)
@@ -78,7 +78,7 @@ if(NOT "@CMAKE_HOST_UNIX@" OR result)
   zipalign 4 /path/to/install-release-unsigned.apk outfile.apk"
 	)
 endif()
->>
+>
 
 execute_process(
   COMMAND androiddeployqt
@@ -98,8 +98,15 @@ $<$<OR:$<CONFIG:Release>,$<CONFIG:MinSizeRel>>:
 if(result)
 	message(FATAL_ERROR "Running androiddeployqt failed: ${result}")
 endif()
+$<$<AND:$<OR:$<CONFIG:Release>,$<CONFIG:MinSizeRel>>,$<BOOL:${KEYSTORE_URL}>,$<BOOL:${KEYSTORE_ALIAS}>>:
+configure_file(
+  "@CMAKE_CURRENT_BINARY_DIR@/Mapper/install/build/outputs/apk/install-release-signed.apk"
+  "@PROJECT_BINARY_DIR@/@CPACK_PACKAGE_FILE_NAME@.apk"
+  COPYONLY
+)
+>
 
 if(final_message)
 	message(STATUS "${final_message}")
 endif()
-	
+
