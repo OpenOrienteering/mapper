@@ -3017,13 +3017,14 @@ Změnit měřítko importovaných dat na měřítko mapy?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3871"/>
         <source>Import...</source>
-        <translation type="unfinished">Import...</translation>
+        <translation>Import...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3872"/>
         <source>Symbol replacement was canceled.
 Import the data anyway?</source>
-        <translation type="unfinished"></translation>
+        <translation>Nahrazení symbolů bylo zrušeno.
+Importovat data tak jako tak?</translation>
     </message>
 </context>
 <context>
