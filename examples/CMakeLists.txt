@@ -22,6 +22,11 @@ set(Mapper_EXAMPLES
   complete\ map.omap
 )
 
+if(ANDROID)
+	# \todo Support overprinting simulation in the mobile app.
+	list(REMOVE_ITEM Mapper_EXAMPLES overprinting.omap)
+endif()
+
 install(
   FILES ${Mapper_EXAMPLES}
   DESTINATION "${MAPPER_DATA_DESTINATION}/examples"
