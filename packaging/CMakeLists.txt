@@ -197,6 +197,11 @@ elseif(ANDROID)
 	  OUTPUT "${PROJECT_BINARY_DIR}/CPackConfig.cmake"
 	  INPUT "${PROJECT_BINARY_DIR}/CPackConfig.tmp.cmake"
 	)
+	if(NOT EXISTS "${PROJECT_BINARY_DIR}/CPackConfig.cmake")
+		file(WRITE "${PROJECT_BINARY_DIR}/CPackConfig.cmake"
+		  [[# Placeholder to enforce 'package' target creation]]
+		)
+	endif()
 	
 	# For Android, we create a dummy qmake project which provides
 	# - configuration for running androiddeployqt from CPackConfig.cmake, and
