@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013-2016 Kai Pastor
+ *    Copyright 2013-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -25,8 +25,19 @@
 #include <QTextStream>
 
 #include "core/map_coord.h"
-#include "fileformats/xml_file_format.h"
 #include "fileformats/file_import_export.h"
+#include "fileformats/xml_file_format.h"
+
+
+void writeLineBreak(QXmlStreamWriter& xml)
+{
+	if (!xml.autoFormatting())
+	{
+		static const QString linebreak = QLatin1String{"\n"};
+		xml.writeCharacters(linebreak);
+	}
+}
+
 
 
 //### XmlRecoveryHelper ###

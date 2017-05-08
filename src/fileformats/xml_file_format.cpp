@@ -1,7 +1,7 @@
 /*
  *    Copyright 2012 Pete Curtis
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2016  Kai Pastor
+ *    Copyright 2012-2017  Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -33,24 +33,25 @@
 #  include <QPrinter>
 #endif
 
+#include "file_import_export.h"
+#include "settings.h"
 #include "core/georeferencing.h"
 #include "core/map_color.h"
 #include "core/map_grid.h"
 #include "core/map_printer.h"
 #include "core/map_view.h"
-#include "file_import_export.h"
 #include "core/map.h"
 #include "core/objects/object.h"
 #include "core/objects/text_object.h"
-#include "../settings.h"
 #include "core/symbols/area_symbol.h"
 #include "core/symbols/combined_symbol.h"
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/point_symbol.h"
 #include "core/symbols/text_symbol.h"
-#include "../templates/template.h"
+#include "templates/template.h"
 #include "undo/undo_manager.h"
-#include "../util/xml_stream_util.h"
+#include "util/xml_stream_util.h"
+
 
 // ### XMLFileFormat definition ###
 
@@ -186,15 +187,19 @@ void XMLFileExporter::doExport()
 	
 	xml.writeDefaultNamespace(mapper_namespace);
 	xml.writeStartDocument();
+	writeLineBreak(xml);
 	
 	{
 		XmlElementWriter map_element(xml, literal::map);
 		map_element.writeAttribute(literal::version, XMLFileFormat::active_version);
+		writeLineBreak(xml);
 		
 		xml.writeTextElement(literal::notes, map->getMapNotes());
+		writeLineBreak(xml);
 		
 		exportGeoreferencing();
 		exportColors();
+		writeLineBreak(xml);
 
 		XmlElementWriter* barrier = NULL;
 		if (XMLFileFormat::active_version >= 6)
@@ -205,13 +210,19 @@ void XMLFileExporter::doExport()
 			barrier = new XmlElementWriter(xml, literal::barrier);
 			barrier->writeAttribute(literal::version, 6);
 			barrier->writeAttribute(literal::required, "0.6.0");
+			writeLineBreak(xml);
 		}
 		exportSymbols();
+		writeLineBreak(xml);
 		exportMapParts();
+		writeLineBreak(xml);
 		exportTemplates();
+		writeLineBreak(xml);
 		exportView();
+		writeLineBreak(xml);
 		exportPrint();
 		delete barrier;
+		writeLineBreak(xml);
 
 		// Prevent Mapper versions < 0.6.0 from crashing
 		// when compatibilty mode IS activated
@@ -219,9 +230,11 @@ void XMLFileExporter::doExport()
 		barrier = new XmlElementWriter(xml, literal::barrier);
 		barrier->writeAttribute(literal::version, 6);
 		barrier->writeAttribute(literal::required, "0.6.0");
+		writeLineBreak(xml);
 		exportUndo();
 		exportRedo();
 		delete barrier;
+		writeLineBreak(xml);
 	}
 	
 	xml.writeEndDocument();
@@ -230,6 +243,7 @@ void XMLFileExporter::doExport()
 void XMLFileExporter::exportGeoreferencing()
 {
 	map->getGeoreferencing().save(xml);
+	writeLineBreak(xml);
 }
 
 void XMLFileExporter::exportColors()
@@ -237,8 +251,10 @@ void XMLFileExporter::exportColors()
 	XmlElementWriter all_colors_element(xml, literal::colors);
 	std::size_t num_colors = map->color_set->colors.size();
 	all_colors_element.writeAttribute(literal::count, num_colors);
+	
 	for (std::size_t i = 0; i < num_colors; ++i)
 	{
+		writeLineBreak(xml);
 		MapColor* color = map->color_set->colors[i];
 		const MapColorCmyk &cmyk = color->getCmyk();
 		XmlElementWriter color_element(xml, literal::color);
@@ -307,6 +323,7 @@ void XMLFileExporter::exportColors()
 			rgb_element.writeAttribute(literal::b, rgb.b, 3);
 		}
 	}
+	writeLineBreak(xml);
 }
 
 void XMLFileExporter::exportSymbols()
@@ -316,8 +333,10 @@ void XMLFileExporter::exportSymbols()
 	symbols_element.writeAttribute(literal::count, num_symbols);
 	for (int i = 0; i < num_symbols; ++i)
 	{
+		writeLineBreak(xml);
 		map->getSymbol(i)->save(xml, *map);
 	}
+	writeLineBreak(xml);
 }
 
 void XMLFileExporter::exportMapParts()
@@ -328,7 +347,11 @@ void XMLFileExporter::exportMapParts()
 	parts_element.writeAttribute(literal::count, num_parts);
 	parts_element.writeAttribute(literal::current, map->current_part_index);
 	for (int i = 0; i < num_parts; ++i)
+	{
+		writeLineBreak(xml);
 		map->getPart(i)->save(xml);
+	}
+	writeLineBreak(xml);
 }
 
 void XMLFileExporter::exportTemplates()
@@ -339,46 +362,63 @@ void XMLFileExporter::exportTemplates()
 	templates_element.writeAttribute(literal::count, num_templates);
 	templates_element.writeAttribute(literal::first_front_template, map->first_front_template);
 	for (int i = 0; i < map->getNumTemplates(); ++i)
+	{
+		writeLineBreak(xml);
 		map->getTemplate(i)->saveTemplateConfiguration(xml, true);
+	}
 	for (int i = 0; i < map->getNumClosedTemplates(); ++i)
+	{
+		writeLineBreak(xml);
 		map->getClosedTemplate(i)->saveTemplateConfiguration(xml, false);
+	}
 	
 	{
+		writeLineBreak(xml);
 		XmlElementWriter defaults_element(xml, literal::defaults);
 		defaults_element.writeAttribute(literal::use_meters_per_pixel, map->image_template_use_meters_per_pixel);
 		defaults_element.writeAttribute(literal::meters_per_pixel, map->image_template_meters_per_pixel);
 		defaults_element.writeAttribute(literal::dpi, map->image_template_dpi);
 		defaults_element.writeAttribute(literal::scale, map->image_template_scale);
 	}
+	writeLineBreak(xml);
 }
 
 void XMLFileExporter::exportView()
 {
 	XmlElementWriter view_element(xml, literal::view);
-	
 	view_element.writeAttribute(literal::area_hatching_enabled, bool(map->renderable_options & Symbol::RenderAreasHatched));
 	view_element.writeAttribute(literal::baseline_view_enabled, bool(map->renderable_options & Symbol::RenderBaselines));
 	
+	writeLineBreak(xml);
 	map->getGrid().save(xml);
 	
 	if (view)
+	{
+		writeLineBreak(xml);
 		view->save(xml, literal::map_view);
+	}
+	writeLineBreak(xml);
 }
 
 void XMLFileExporter::exportPrint()
 {
 	if (map->hasPrinterConfig())
+	{
 		map->printerConfig().save(xml, literal::print);
+		writeLineBreak(xml);
+	}
 }
 
 void XMLFileExporter::exportUndo()
 {
 	map->undoManager().saveUndo(xml);
+	writeLineBreak(xml);
 }
 
 void XMLFileExporter::exportRedo()
 {
 	map->undoManager().saveRedo(xml);
+	writeLineBreak(xml);
 }
 
 

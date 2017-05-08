@@ -1,6 +1,5 @@
 .gitignore           export-ignore
 .gitattributes       export-ignore
-*.omap               binary diff=xmllint
 *.ocd                binary
 *.ts                 binary diff=xmllint
 3rd-party/*          linguist-vendored

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -28,12 +28,12 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
-#include "fileformats/file_format.h"
 #include "map.h"
 #include "core/objects/object.h"
 #include "core/objects/object_operations.h"
-#include "undo/object_undo.h"
 #include "core/renderables/renderable.h"
+#include "fileformats/file_format.h"
+#include "undo/object_undo.h"
 #include "util/util.h"
 #include "util/xml_stream_util.h"
 
@@ -101,12 +101,13 @@ void MapPart::save(QXmlStreamWriter& xml) const
 	part_element.writeAttribute(literal::name, name);
 	{
 		XmlElementWriter objects_element(xml, literal::objects);
-		std::size_t size = objects.size();
-		objects_element.writeAttribute(literal::count, size);
+		objects_element.writeAttribute(literal::count, objects.size());
 		for (const Object* object : objects)
 		{
+			writeLineBreak(xml);
 			object->save(xml);
 		}
+		writeLineBreak(xml);
 	}
 }
 
