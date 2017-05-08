@@ -19,6 +19,8 @@
 
 find_package(Qt5Core 5.3 REQUIRED)
 find_package(Qt5Widgets REQUIRED)
+find_package(Qt5Sensors)
+find_package(Qt5Positioning)
 
 if(ANDROID)
 	find_package(Qt5AndroidExtras REQUIRED)
@@ -258,7 +260,14 @@ target_link_libraries(Mapper_Common
   PROJ4::proj
   Qt5::Widgets
 )
-foreach(lib Qt5::Network Qt5::AndroidExtras printsupport mapper-gdal)
+foreach(lib
+  mapper-gdal
+  printsupport
+  Qt5::AndroidExtras
+  Qt5::Network
+  Qt5::Positioning
+  Qt5::Sensors
+)
 	if(TARGET ${lib})
 		target_link_libraries(Mapper_Common ${lib})
 	endif()
