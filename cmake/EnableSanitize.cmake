@@ -23,7 +23,7 @@ endif()
 
 macro(enable_sanitize)
 	foreach(option ${ARGV})
-		if(ANDROID)
+		if(CMAKE_CROSSCOMPILING)
 			break() # out of macro
 		endif()
 		if(option STREQUAL "NO_RECOVER")
