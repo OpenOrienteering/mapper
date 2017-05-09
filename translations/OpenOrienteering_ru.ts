@@ -2841,13 +2841,14 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3871"/>
         <source>Import...</source>
-        <translation type="unfinished">Импорт…</translation>
+        <translation>Импорт…</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3872"/>
         <source>Symbol replacement was canceled.
 Import the data anyway?</source>
-        <translation type="unfinished"></translation>
+        <translation>Замена символа была отменена.
+Всё равно импортировать данные?</translation>
     </message>
 </context>
 <context>
