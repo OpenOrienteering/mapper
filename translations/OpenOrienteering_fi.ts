@@ -2971,7 +2971,7 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3871"/>
         <source>Import...</source>
-        <translation type="unfinished">Tuo…</translation>
+        <translation>Tuo…</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3872"/>
