@@ -195,7 +195,7 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	
 	dpi_combo = new QComboBox();
 	dpi_combo->setEditable(true);
-	dpi_combo->setValidator(new QRegExpValidator(QRegExp(QLatin1String("^[1-9]\\d{1,4}$|^[1-9]\\d{1,4} ")+tr("dpi")+QLatin1Char('$')), dpi_combo));
+	dpi_combo->setValidator(new QRegExpValidator(QRegExp(QLatin1String("^[1-9]\\d{0,4}$|^[1-9]\\d{0,4} ")+tr("dpi")+QLatin1Char('$')), dpi_combo));
 	// TODO: Implement spinbox-style " dpi" suffix
 	layout->addRow(tr("Resolution:"), dpi_combo);
 	
