@@ -185,7 +185,6 @@ public:
 			LineSymbol* line,
 			float rotation,
 			const AreaRenderable& outline,
-			QRectF point_extent,
 			ObjectRenderables& output
 		) const;
 		
@@ -195,7 +194,6 @@ public:
 			qreal delta_offset,
 			float rotation,
 			const AreaRenderable& outline,
-			QRectF point_extent,
 			ObjectRenderables& output
 		) const;
 		

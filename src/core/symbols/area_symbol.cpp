@@ -276,7 +276,6 @@ void AreaSymbol::FillPattern::createLine<AreaSymbol::FillPattern::LinePattern>(
         LineSymbol* line,
         float,
         const AreaRenderable&,
-        QRectF,
         ObjectRenderables& output ) const
 {
 	// out of inlining
@@ -292,11 +291,10 @@ void AreaSymbol::FillPattern::createLine<AreaSymbol::FillPattern::PointPattern>(
         LineSymbol*,
         float rotation,
         const AreaRenderable& outline,
-        QRectF point_extent,
         ObjectRenderables& output ) const
 {
 	// out of inlining
-	createPointPatternLine(first, second, delta_offset, rotation, outline, point_extent, output);
+	createPointPatternLine(first, second, delta_offset, rotation, outline, output);
 }
 
 
@@ -350,7 +348,7 @@ void AreaSymbol::FillPattern::createRenderables(
 		{
 			first = MapCoordF(cur, extent.top());
 			second = MapCoordF(cur, extent.bottom());
-			createLine<T>(first, second, delta_along_line_offset, line, delta_rotation, outline, point_extent, output);
+			createLine<T>(first, second, delta_along_line_offset, line, delta_rotation, outline, output);
 		}
 	}
 	else if (qAbs(rotation - 0) < 0.0001)
@@ -361,7 +359,7 @@ void AreaSymbol::FillPattern::createRenderables(
 		{
 			first = MapCoordF(extent.left(), cur);
 			second = MapCoordF(extent.right(), cur);
-			createLine<T>(first, second, delta_along_line_offset, line, delta_rotation, outline, point_extent, output);
+			createLine<T>(first, second, delta_along_line_offset, line, delta_rotation, outline, output);
 		}
 	}
 	else
@@ -408,7 +406,7 @@ void AreaSymbol::FillPattern::createRenderables(
 				// Create the renderable(s)
 				first = MapCoordF(start_x, start_y);
 				second = MapCoordF(end_x, end_y);
-				createLine<T>(first, second, delta_along_line_offset, line, delta_rotation, outline, point_extent, output);
+				createLine<T>(first, second, delta_along_line_offset, line, delta_rotation, outline, output);
 				
 				// Move to next position
 				start_x += dist_x;
@@ -445,7 +443,7 @@ void AreaSymbol::FillPattern::createRenderables(
 				// Create the renderable(s)
 				first = MapCoordF(start_x, start_y);
 				second = MapCoordF(end_x, end_y);
-				createLine<T>(first, second, delta_along_line_offset, line, delta_rotation, outline, point_extent, output);
+				createLine<T>(first, second, delta_along_line_offset, line, delta_rotation, outline, output);
 				
 				// Move to next position
 				start_x += dist_x;
@@ -514,7 +512,6 @@ void AreaSymbol::FillPattern::createPointPatternLine(
         qreal delta_offset,
         float rotation,
         const AreaRenderable& outline,
-        QRectF point_extent,
         ObjectRenderables& output ) const
 {
 	auto direction = second - first;
@@ -527,20 +524,17 @@ void AreaSymbol::FillPattern::createPointPatternLine(
 	
 	auto to_next = direction * step_length;
 	auto coord = first + direction * start_length;
-	auto center = point_extent.center();
 	
 	// Duplicated loops for optimum locality of code
 	switch (flags & Option::AlternativeToClipping)
 	{
 	case Option::NoClippingIfCenterInside:
 		for (auto cur = start_length; cur < length; cur += step_length, coord += to_next)
-			if (outline.painterPath()->contains(coord + center))
-				point->createRenderablesScaled(coord, -rotation, output);
+			point->createRenderablesIfCenterInside(coord, -rotation, outline.painterPath(), output);
 		break;
 	case Option::NoClippingIfCompletelyInside:
 		for (auto cur = start_length; cur < length; cur += step_length, coord += to_next)
-			if (outline.painterPath()->contains(point_extent.translated(coord.x(), coord.y())))
-				point->createRenderablesScaled(coord, -rotation, output);
+			point->createRenderablesIfCompletelyInside(coord, -rotation, outline.painterPath(), output);
 		break;
 	case Option::Default:
 #if 1
@@ -551,8 +545,7 @@ void AreaSymbol::FillPattern::createPointPatternLine(
 #endif
 	case Option::NoClippingIfPartiallyInside:
 		for (auto cur = start_length; cur < length; cur += step_length, coord += to_next)
-			if (outline.painterPath()->intersects(point_extent.translated(coord.x(), coord.y())))
-				point->createRenderablesScaled(coord, -rotation, output);
+			point->createRenderablesIfPartiallyInside(coord, -rotation, outline.painterPath(), output);
 		break;
 	default:  
 		Q_UNREACHABLE();
