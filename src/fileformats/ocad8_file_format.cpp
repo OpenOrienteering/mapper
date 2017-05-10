@@ -670,7 +670,7 @@ Symbol *OCAD8FileImport::importAreaSymbol(const OCADAreaSymbol *ocad_symbol)
         int n = symbol->patterns.size(); symbol->patterns.resize(n + 1); pat = &(symbol->patterns[n]);
         pat->type = AreaSymbol::FillPattern::LinePattern;
         pat->angle = convertRotation(ocad_symbol->hangle1);
-        pat->rotatable = true;
+        pat->flags = AreaSymbol::FillPattern::Option::Rotatable;
         pat->line_spacing = convertSize(ocad_symbol->hdist + ocad_symbol->hwidth);
         pat->line_offset = 0;
         pat->line_color = convertColor(ocad_symbol->hcolor);
@@ -693,7 +693,7 @@ Symbol *OCAD8FileImport::importAreaSymbol(const OCADAreaSymbol *ocad_symbol)
         int n = symbol->patterns.size(); symbol->patterns.resize(n + 1); pat = &(symbol->patterns[n]);
         pat->type = AreaSymbol::FillPattern::PointPattern;
         pat->angle = convertRotation(ocad_symbol->pangle);
-        pat->rotatable = true;
+        pat->flags = AreaSymbol::FillPattern::Option::Rotatable;
         pat->point_distance = convertSize(ocad_symbol->pwidth);
         pat->line_spacing = spacing;
         pat->line_offset = 0;
@@ -706,7 +706,7 @@ Symbol *OCAD8FileImport::importAreaSymbol(const OCADAreaSymbol *ocad_symbol)
             int n = symbol->patterns.size(); symbol->patterns.resize(n + 1); pat = &(symbol->patterns[n]);
             pat->type = AreaSymbol::FillPattern::PointPattern;
             pat->angle = convertRotation(ocad_symbol->pangle);
-            pat->rotatable = true;
+            pat->flags = AreaSymbol::FillPattern::Option::Rotatable;
             pat->point_distance = convertSize(ocad_symbol->pwidth);
             pat->line_spacing = spacing;
             pat->line_offset = pat->line_spacing / 2;
@@ -2219,7 +2219,7 @@ s16 OCAD8FileExport::exportAreaSymbol(const AreaSymbol* area)
 				continue;
 			}
 			
-			if (pattern.rotatable)
+			if (pattern.rotatable())
 				ocad_symbol->base_flags |= 1;
 			
 			++ocad_symbol->hmode;
@@ -2246,7 +2246,7 @@ s16 OCAD8FileExport::exportAreaSymbol(const AreaSymbol* area)
 		const AreaSymbol::FillPattern& pattern = area->getFillPattern(i);
 		if (pattern.type == AreaSymbol::FillPattern::PointPattern)
 		{
-			if (pattern.rotatable)
+			if (pattern.rotatable())
 				ocad_symbol->base_flags |= 1;
 			
 			++ocad_symbol->pmode;

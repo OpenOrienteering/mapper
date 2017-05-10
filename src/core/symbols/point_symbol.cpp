@@ -146,6 +146,215 @@ void PointSymbol::createRenderablesScaled(MapCoordF coord, float rotation, Objec
 	}
 }
 
+
+void PointSymbol::createRenderablesIfCenterInside(MapCoordF point_coord, qreal rotation, const QPainterPath* outline, ObjectRenderables& output) const
+{
+	if (outline->contains(point_coord))
+	{
+		if (inner_color && inner_radius > 0)
+		{
+			output.insertRenderable(new DotRenderable(this, point_coord));
+		}
+		
+		if (outer_color && outer_width > 0)
+		{
+			output.insertRenderable(new CircleRenderable(this, point_coord));
+		}
+	}
+	
+	if (!objects.empty())
+	{
+		auto offset_x = point_coord.x();
+		auto offset_y = point_coord.y();
+		auto cosr = 1.0;
+		auto sinr = 0.0;
+		if (rotation != 0.0)
+		{
+			cosr = qCos(rotation);
+			sinr = qSin(rotation);
+		}
+		
+		// Add elements which possibly need to be moved and rotated
+		auto size = objects.size();
+		for (auto i = 0u; i < size; ++i)
+		{
+			// Point symbol elements should not be entered into the map,
+			// otherwise map settings like area hatching affect them
+			Q_ASSERT(!objects[i]->getMap());
+			
+			const MapCoordVector& element_coords = objects[i]->getRawCoordinateVector();
+			
+			MapCoordF center{};
+			MapCoordVectorF transformed_coords;
+			transformed_coords.reserve(element_coords.size());
+			for (auto& coord : element_coords)
+			{
+				auto ex = coord.x();
+				auto ey = coord.y();
+				transformed_coords.emplace_back(ex * cosr - ey * sinr + offset_x,
+				                                ey * cosr + ex * sinr + offset_y);
+				
+				center += transformed_coords.back();
+			}
+			
+			if (!transformed_coords.empty() && outline->contains(center/transformed_coords.size()))
+			{
+				// TODO: if this point is rotated, it has to pass it on to its children to make it work that rotatable point objects can be children.
+				// But currently only basic, rotationally symmetric points can be children, so it does not matter for now.
+				symbols[i]->createRenderables(objects[i], VirtualCoordVector(element_coords, transformed_coords), output, Symbol::RenderNormal);
+			}
+		}
+	}
+}
+
+
+void PointSymbol::createRenderablesIfCompletelyInside(MapCoordF point_coord, qreal rotation, const QPainterPath* outline, ObjectRenderables& output) const
+{
+	if (inner_color && inner_radius > 0)
+	{
+		auto r = inner_radius/1000.0;
+		if (outline->contains({point_coord.x()-r, point_coord.y()})
+		    && outline->contains({point_coord.x(), point_coord.y()-r})
+		    && outline->contains({point_coord.x()+r, point_coord.y()})
+		    && outline->contains({point_coord.x(), point_coord.y()+r}) )
+		{
+			output.insertRenderable(new DotRenderable(this, point_coord));
+		}
+	}
+	
+	if (outer_color && outer_width > 0)
+	{
+		auto r = inner_radius/1000.0 + outer_width/2000.0;
+		if (outline->contains({point_coord.x()-r, point_coord.y()})
+		    && outline->contains({point_coord.x(), point_coord.y()-r})
+		    && outline->contains({point_coord.x()+r, point_coord.y()})
+		    && outline->contains({point_coord.x(), point_coord.y()+r}) )
+		{
+			output.insertRenderable(new CircleRenderable(this, point_coord));
+		}
+	}
+	
+	if (!objects.empty())
+	{
+		auto offset_x = point_coord.x();
+		auto offset_y = point_coord.y();
+		auto cosr = 1.0;
+		auto sinr = 0.0;
+		if (rotation != 0.0)
+		{
+			cosr = qCos(rotation);
+			sinr = qSin(rotation);
+		}
+		
+		// Add elements which possibly need to be moved and rotated
+		auto size = objects.size();
+		for (auto i = 0u; i < size; ++i)
+		{
+			// Point symbol elements should not be entered into the map,
+			// otherwise map settings like area hatching affect them
+			Q_ASSERT(!objects[i]->getMap());
+			
+			const MapCoordVector& element_coords = objects[i]->getRawCoordinateVector();
+			
+			MapCoordVectorF transformed_coords;
+			transformed_coords.reserve(element_coords.size());
+			for (auto& coord : element_coords)
+			{
+				auto ex = coord.x();
+				auto ey = coord.y();
+				transformed_coords.emplace_back(ex * cosr - ey * sinr + offset_x,
+				                                ey * cosr + ex * sinr + offset_y);
+				if (!outline->contains(transformed_coords.back()))
+				{
+					transformed_coords.clear();
+					break;
+				}
+			}
+			
+			if (!transformed_coords.empty())
+			{
+				// TODO: if this point is rotated, it has to pass it on to its children to make it work that rotatable point objects can be children.
+				// But currently only basic, rotationally symmetric points can be children, so it does not matter for now.
+				symbols[i]->createRenderables(objects[i], VirtualCoordVector(element_coords, transformed_coords), output, Symbol::RenderNormal);
+			}
+		}
+	}
+}
+
+
+void PointSymbol::createRenderablesIfPartiallyInside(MapCoordF point_coord, qreal rotation, const QPainterPath* outline, ObjectRenderables& output) const
+{
+	if (inner_color && inner_radius > 0)
+	{
+		auto r = inner_radius/1000.0;
+		if (outline->contains({point_coord.x()-r, point_coord.y()})
+		    || outline->contains({point_coord.x(), point_coord.y()-r})
+		    || outline->contains({point_coord.x()+r, point_coord.y()})
+		    || outline->contains({point_coord.x(), point_coord.y()+r}) )
+		{
+			output.insertRenderable(new DotRenderable(this, point_coord));
+		}
+	}
+	
+	if (outer_color && outer_width > 0)
+	{
+		auto r = inner_radius/1000.0 + outer_width/2000.0;
+		if (outline->contains({point_coord.x()-r, point_coord.y()})
+		    || outline->contains({point_coord.x(), point_coord.y()-r})
+		    || outline->contains({point_coord.x()+r, point_coord.y()})
+		    || outline->contains({point_coord.x(), point_coord.y()+r}) )
+		{
+			output.insertRenderable(new CircleRenderable(this, point_coord));
+		}
+	}
+	
+	if (!objects.empty())
+	{
+		auto offset_x = point_coord.x();
+		auto offset_y = point_coord.y();
+		auto cosr = 1.0;
+		auto sinr = 0.0;
+		if (rotation != 0.0)
+		{
+			cosr = qCos(rotation);
+			sinr = qSin(rotation);
+		}
+		
+		// Add elements which possibly need to be moved and rotated
+		auto size = objects.size();
+		for (auto i = 0u; i < size; ++i)
+		{
+			// Point symbol elements should not be entered into the map,
+			// otherwise map settings like area hatching affect them
+			Q_ASSERT(!objects[i]->getMap());
+			
+			const MapCoordVector& element_coords = objects[i]->getRawCoordinateVector();
+			
+			bool is_partially_inside = false;
+			MapCoordVectorF transformed_coords;
+			transformed_coords.reserve(element_coords.size());
+			for (auto& coord : element_coords)
+			{
+				auto ex = coord.x();
+				auto ey = coord.y();
+				transformed_coords.emplace_back(ex * cosr - ey * sinr + offset_x,
+				                                ey * cosr + ex * sinr + offset_y);
+				if (!is_partially_inside)
+					is_partially_inside = outline->contains(transformed_coords.back());
+			}
+			
+			if (is_partially_inside)
+			{
+				// TODO: if this point is rotated, it has to pass it on to its children to make it work that rotatable point objects can be children.
+				// But currently only basic, rotationally symmetric points can be children, so it does not matter for now.
+				symbols[i]->createRenderables(objects[i], VirtualCoordVector(element_coords, transformed_coords), output, Symbol::RenderNormal);
+			}
+		}
+	}
+}
+
+
+
 int PointSymbol::getNumElements() const
 {
 	return (int)objects.size();
