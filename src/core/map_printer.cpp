@@ -812,22 +812,6 @@ void drawBuffer(QPainter* device_painter, const QImage* page_buffer, qreal pixel
 	Q_ASSERT(page_buffer);
 	
 	device_painter->save();
-	
-#if defined(Q_OS_MACOS)
-	// Workaround for miss-scaled image export output
-	int logical_dpi = device_painter->device()->logicalDpiX();
-	if (logical_dpi != 0)
-	{
-		int physical_dpi = device_painter->device()->physicalDpiX();
-		if (physical_dpi != 0 && logical_dpi != physical_dpi)
-		{
-			qreal s = (qreal)logical_dpi / (qreal)physical_dpi;
-			//qreal s = physical_dpi / logical_dpi;
-			device_painter->scale(s, s);
-		}
-	}
-#endif
-	
 	device_painter->scale(pixel2units, pixel2units);
 	device_painter->setRenderHint(QPainter::SmoothPixmapTransform, false);
 	device_painter->drawImage(0, 0, *page_buffer);
