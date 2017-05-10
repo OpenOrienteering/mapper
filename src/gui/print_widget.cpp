@@ -285,7 +285,7 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	connect(overlap_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &PrintWidget::overlapEdited);
 	
 	connect(mode_button_group, QOverload<QAbstractButton*>::of(&QButtonGroup::buttonClicked), this, &PrintWidget::printModeChanged);
-	connect(dpi_combo->lineEdit(), &QLineEdit::editingFinished, this, &PrintWidget::resolutionEdited);
+	connect(dpi_combo->lineEdit(), &QLineEdit::textEdited, this, &PrintWidget::resolutionEdited);
 	connect(different_scale_check, &QAbstractButton::clicked, this, &PrintWidget::differentScaleClicked);
 	connect(different_scale_edit, QOverload<int>::of(&QSpinBox::valueChanged), this, &PrintWidget::differentScaleEdited);
 	connect(show_templates_check, &QAbstractButton::clicked, this, &PrintWidget::showTemplatesClicked);
@@ -981,7 +981,11 @@ void PrintWidget::resolutionEdited()
 	auto index_of_space = resolution_text.indexOf(QLatin1Char(' '));
 	auto dpi_value = resolution_text.leftRef(index_of_space).toInt();
 	if (dpi_value > 0)
+	{
+		auto pos = dpi_combo->lineEdit()->cursorPosition();
 		map_printer->setResolution(dpi_value);
+		dpi_combo->lineEdit()->setCursorPosition(pos);
+	}
 }
 
 // slot
