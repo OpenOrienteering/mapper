@@ -413,23 +413,22 @@ protected:
 	
 	
 private:
-	/** The symbol type, determined by the subclass */
-	Type type;
+	/** Symbol icon. If icon.isNull() is true, it is not generated yet. */
+	mutable QImage icon;
 	/** Symbol name */
 	QString name;
-	/** Symbol number */
-	int number[number_components];
 	/** Symbol description */
 	QString description;
+	/** The symbol type, determined by the subclass */
+	Type type;
+	/** Symbol number */
+	int number[number_components];
 	/** Helper symbol flag, see isHelperSymbol() */
 	bool is_helper_symbol;
 	/** Hidden flag, see isHidden() */
 	mutable bool is_hidden;
 	/** Protected flag, see isProtected() */
 	bool is_protected;
-	
-	/** Pointer to symbol icon, if generated */
-	mutable QImage icon;
 };
 
 Q_DECLARE_METATYPE(const Symbol*)
