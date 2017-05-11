@@ -65,8 +65,6 @@ typedef QHash<QString, Symbol*> SymbolDictionary;
  */
 class Symbol
 {
-friend class OCAD8FileImport;
-friend class XMLImportExport;
 public:
 	/** Enumeration of all possible symbol types,
 	 *  must be able to be used as bits in a bitmask. */
@@ -283,7 +281,7 @@ public:
 	inline void setName(const QString& new_name) {name = new_name;}
 	
 	/** Returns the symbol number as string. */
-    QString getNumberAsString() const;
+	QString getNumberAsString() const;
 	/** Returns the i-th component of the symbol number as int. */
 	inline int getNumberComponent(int i) const {Q_ASSERT(i >= 0 && i < number_components); return number[i];}
 	/** Sets the i-th component of the symbol number. */
@@ -414,6 +412,7 @@ protected:
 	void duplicateImplCommon(const Symbol* other);
 	
 	
+private:
 	/** The symbol type, determined by the subclass */
 	Type type;
 	/** Symbol name */
@@ -429,7 +428,6 @@ protected:
 	/** Protected flag, see isProtected() */
 	bool is_protected;
 	
-private:
 	/** Pointer to symbol icon, if generated */
 	mutable QImage icon;
 };

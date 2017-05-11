@@ -1226,7 +1226,7 @@ void OcdFileImport::setupLineSymbolPointSymbol(OcdFileImport::OcdImportedLineSym
 	if (line_symbol->start_symbol && line_symbol->end_symbol)
 	{
 		line_symbol->setSuppressDashSymbolAtLineEnds(true);
-		if (line_symbol->dash_symbol && line_symbol->number[0] != 799)
+		if (line_symbol->dash_symbol && line_symbol->getNumberComponent(0) != 799)
 		{
 			addSymbolWarning(line_symbol, tr("Suppressing dash symbol at line ends."));
 		}

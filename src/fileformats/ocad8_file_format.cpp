@@ -612,7 +612,7 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
 	if (symbol_line->start_symbol != NULL && symbol_line->end_symbol != NULL)
 	{
 		symbol_line->setSuppressDashSymbolAtLineEnds(true);
-		if (symbol_line->dash_symbol && symbol_line->number[0] != 799)
+		if (symbol_line->dash_symbol && symbol_line->getNumberComponent(0) != 799)
 			addWarning(tr("Line symbol %1: suppressing dash symbol at line ends.").arg(QString::number(0.1 * ocad_symbol->number) + QLatin1Char(' ') + symbol_line->getName()));
 	}
 	
@@ -921,11 +921,11 @@ PointSymbol *OCAD8FileImport::importPattern(s16 npts, OCADPoint *pts)
 void OCAD8FileImport::fillCommonSymbolFields(Symbol *symbol, const OCADSymbol *ocad_symbol)
 {
     // common fields are name, number, description, helper_symbol, hidden/protected status
-    symbol->name = convertPascalString(ocad_symbol->name);
-    symbol->number[0] = ocad_symbol->number / 10;
-    symbol->number[1] = ocad_symbol->number % 10;
-    symbol->number[2] = -1;
-    symbol->is_helper_symbol = false; // no such thing in OCAD
+    symbol->setName(convertPascalString(ocad_symbol->name));
+    symbol->setNumberComponent(0, ocad_symbol->number / 10);
+    symbol->setNumberComponent(1, ocad_symbol->number % 10);
+    symbol->setNumberComponent(2, -1);
+    symbol->setIsHelperSymbol(false); // no such thing in OCAD
     if (ocad_symbol->status & 1)
 		symbol->setProtected(true);
 	if (ocad_symbol->status & 2)
