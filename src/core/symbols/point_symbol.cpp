@@ -178,13 +178,15 @@ void PointSymbol::createRenderablesIfCenterInside(MapCoordF point_coord, qreal r
 		auto size = objects.size();
 		for (auto i = 0u; i < size; ++i)
 		{
+			const auto symbol = symbols[i];
+			const auto object = objects[i];
+			
 			// Point symbol elements should not be entered into the map,
 			// otherwise map settings like area hatching affect them
-			Q_ASSERT(!objects[i]->getMap());
-			
-			const MapCoordVector& element_coords = objects[i]->getRawCoordinateVector();
+			Q_ASSERT(!object->getMap());
 			
 			MapCoordF center{};
+			const MapCoordVector& element_coords = object->getRawCoordinateVector();
 			MapCoordVectorF transformed_coords;
 			transformed_coords.reserve(element_coords.size());
 			for (auto& coord : element_coords)
@@ -201,14 +203,14 @@ void PointSymbol::createRenderablesIfCenterInside(MapCoordF point_coord, qreal r
 			{
 				// TODO: if this point is rotated, it has to pass it on to its children to make it work that rotatable point objects can be children.
 				// But currently only basic, rotationally symmetric points can be children, so it does not matter for now.
-				symbols[i]->createRenderables(objects[i], VirtualCoordVector(element_coords, transformed_coords), output, Symbol::RenderNormal);
+				symbol->createRenderables(object, VirtualCoordVector(element_coords, transformed_coords), output, Symbol::RenderNormal);
 			}
 		}
 	}
 }
 
 
-void PointSymbol::createRenderablesIfCompletelyInside(MapCoordF point_coord, qreal rotation, const QPainterPath* outline, ObjectRenderables& output) const
+void PointSymbol::createPrimitivesIfCompletelyInside(MapCoordF point_coord, const QPainterPath* outline, ObjectRenderables& output) const
 {
 	if (inner_color && inner_radius > 0)
 	{
@@ -233,6 +235,12 @@ void PointSymbol::createRenderablesIfCompletelyInside(MapCoordF point_coord, qre
 			output.insertRenderable(new CircleRenderable(this, point_coord));
 		}
 	}
+}
+
+
+void PointSymbol::createRenderablesIfCompletelyInside(MapCoordF point_coord, qreal rotation, const QPainterPath* outline, ObjectRenderables& output) const
+{
+	createPrimitivesIfCompletelyInside(point_coord, outline, output);
 	
 	if (!objects.empty())
 	{
@@ -250,12 +258,22 @@ void PointSymbol::createRenderablesIfCompletelyInside(MapCoordF point_coord, qre
 		auto size = objects.size();
 		for (auto i = 0u; i < size; ++i)
 		{
+			const auto symbol = symbols[i];
+			const auto object = objects[i];
 			// Point symbol elements should not be entered into the map,
 			// otherwise map settings like area hatching affect them
-			Q_ASSERT(!objects[i]->getMap());
+			Q_ASSERT(!object->getMap());
 			
-			const MapCoordVector& element_coords = objects[i]->getRawCoordinateVector();
+			if (symbol->getType() == Symbol::Point)
+			{
+				auto coord = object->getRawCoordinateVector().front();
+				auto transformed_coord = MapCoordF{ coord.x() * cosr - coord.y() * sinr + offset_x,
+				                                    coord.y() * cosr + coord.x() * sinr + offset_y};
+				static_cast<const PointSymbol*>(symbol)->createPrimitivesIfCompletelyInside(transformed_coord, outline, output);
+				continue;
+			}
 			
+			const MapCoordVector& element_coords = object->getRawCoordinateVector();
 			MapCoordVectorF transformed_coords;
 			transformed_coords.reserve(element_coords.size());
 			for (auto& coord : element_coords)
@@ -275,14 +293,14 @@ void PointSymbol::createRenderablesIfCompletelyInside(MapCoordF point_coord, qre
 			{
 				// TODO: if this point is rotated, it has to pass it on to its children to make it work that rotatable point objects can be children.
 				// But currently only basic, rotationally symmetric points can be children, so it does not matter for now.
-				symbols[i]->createRenderables(objects[i], VirtualCoordVector(element_coords, transformed_coords), output, Symbol::RenderNormal);
+				symbol->createRenderables(object, VirtualCoordVector(element_coords, transformed_coords), output, Symbol::RenderNormal);
 			}
 		}
 	}
 }
 
 
-void PointSymbol::createRenderablesIfPartiallyInside(MapCoordF point_coord, qreal rotation, const QPainterPath* outline, ObjectRenderables& output) const
+void PointSymbol::createPrimitivesIfPartiallyInside(MapCoordF point_coord, const QPainterPath* outline, ObjectRenderables& output) const
 {
 	if (inner_color && inner_radius > 0)
 	{
@@ -307,6 +325,12 @@ void PointSymbol::createRenderablesIfPartiallyInside(MapCoordF point_coord, qrea
 			output.insertRenderable(new CircleRenderable(this, point_coord));
 		}
 	}
+}
+
+
+void PointSymbol::createRenderablesIfPartiallyInside(MapCoordF point_coord, qreal rotation, const QPainterPath* outline, ObjectRenderables& output) const
+{
+	createPrimitivesIfPartiallyInside(point_coord, outline, output);
 	
 	if (!objects.empty())
 	{
@@ -324,13 +348,23 @@ void PointSymbol::createRenderablesIfPartiallyInside(MapCoordF point_coord, qrea
 		auto size = objects.size();
 		for (auto i = 0u; i < size; ++i)
 		{
+			const auto symbol = symbols[i];
+			const auto object = objects[i];
 			// Point symbol elements should not be entered into the map,
 			// otherwise map settings like area hatching affect them
-			Q_ASSERT(!objects[i]->getMap());
+			Q_ASSERT(!object->getMap());
 			
-			const MapCoordVector& element_coords = objects[i]->getRawCoordinateVector();
+			if (symbol->getType() == Symbol::Point)
+			{
+				auto coord = object->getRawCoordinateVector().front();
+				auto transformed_coord = MapCoordF{ coord.x() * cosr - coord.y() * sinr + offset_x,
+				                                    coord.y() * cosr + coord.x() * sinr + offset_y};
+				static_cast<const PointSymbol*>(symbol)->createPrimitivesIfPartiallyInside(transformed_coord, outline, output);
+				continue;
+			}
 			
 			bool is_partially_inside = false;
+			const MapCoordVector& element_coords = object->getRawCoordinateVector();
 			MapCoordVectorF transformed_coords;
 			transformed_coords.reserve(element_coords.size());
 			for (auto& coord : element_coords)
@@ -347,7 +381,7 @@ void PointSymbol::createRenderablesIfPartiallyInside(MapCoordF point_coord, qrea
 			{
 				// TODO: if this point is rotated, it has to pass it on to its children to make it work that rotatable point objects can be children.
 				// But currently only basic, rotationally symmetric points can be children, so it does not matter for now.
-				symbols[i]->createRenderables(objects[i], VirtualCoordVector(element_coords, transformed_coords), output, Symbol::RenderNormal);
+				symbol->createRenderables(object, VirtualCoordVector(element_coords, transformed_coords), output, Symbol::RenderNormal);
 			}
 		}
 	}
