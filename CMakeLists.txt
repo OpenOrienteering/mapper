@@ -27,7 +27,8 @@ include(FeatureSummary)
 
 project(Mapper VERSION 0.7.0 LANGUAGES CXX C)
 
-set(Mapper_COPYRIGHT "(C) 2012-2017 The OpenOrienteering developers")
+set(Mapper_COPYRIGHT_YEARS "2012-2017")
+set(Mapper_COPYRIGHT "(C) ${Mapper_COPYRIGHT_YEARS} The OpenOrienteering developers")
 
 set(android_manifest "${PROJECT_SOURCE_DIR}/android/AndroidManifest.xml")
 file(READ "${android_manifest}" current)
