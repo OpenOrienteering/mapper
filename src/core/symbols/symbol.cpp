@@ -45,19 +45,22 @@
 
 
 Symbol::Symbol(Type type)
- : type(type)
+ : type { type }
+ , number { -1, -1, -1 }
  , is_helper_symbol(false)
  , is_hidden(false)
  , is_protected(false)
 {
-	for (int i = 0; i < number_components; ++i)
-		number[i] = -1;
+	// nothing else
 }
+
 
 Symbol::~Symbol()
 {
-	; // nothing
+	// nothing
 }
+
+
 
 bool Symbol::equals(const Symbol* other, Qt::CaseSensitivity case_sensitivity, bool compare_state) const
 {
@@ -343,7 +346,7 @@ QImage Symbol::getIcon(const Map* map, bool update) const
 	return icon;
 }
 
-QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, int bottom_right_border, float best_zoom) const
+QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, int bottom_right_border, qreal best_zoom) const
 {
 	Type contained_types = getContainedTypes();
 	
@@ -363,8 +366,8 @@ QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, in
 		white_border_pixels = 2;
 	else
 		Q_ASSERT(false);
-	const float max_icon_mm = 0.001f * view.pixelToLength(side_length - bottom_right_border - white_border_pixels);
-	const float max_icon_mm_half = 0.5f * max_icon_mm;
+	const auto max_icon_mm = view.pixelToLength(side_length - bottom_right_border - white_border_pixels) / 1000;
+	const auto max_icon_mm_half = max_icon_mm / 2;
 	
 	// Create image
 	QImage image(side_length, side_length, QImage::Format_ARGB32_Premultiplied);
@@ -380,8 +383,8 @@ QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, in
 	painter.setCompositionMode(mode);
 	
 	// Create geometry
-	Object* object = NULL;
-	Symbol* icon_symbol = NULL;
+	Object* object = nullptr;
+	Symbol* icon_symbol = nullptr;
 	if (type == Point)
 	{
 		PointObject* point = new PointObject(static_cast<const PointSymbol*>(this));
@@ -411,18 +414,18 @@ QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, in
 			{
 				LineSymbol* icon_line = duplicate()->asLine();
 				
-				float ideal_length = 0.001 * (2 * line->getDashesInGroup() * line->getDashLength() + 2 * (line->getDashesInGroup() - 1) * line->getInGroupBreakLength() + line->getBreakLength());
-				float real_length = max_icon_mm;
-				float factor = qMin(1.0f, real_length / qMax(0.001f, ideal_length));
+				auto ideal_length = qreal(2 * line->getDashesInGroup() * line->getDashLength() + 2 * (line->getDashesInGroup() - 1) * line->getInGroupBreakLength() + line->getBreakLength()) / 1000;
+				auto real_length = max_icon_mm;
+				auto factor = qMin(qreal(1), real_length / qMax(qreal(0.001), ideal_length));
 				
-				icon_line->setDashLength(factor * icon_line->getDashLength());
-				icon_line->setBreakLength(factor * icon_line->getBreakLength());
-				icon_line->setInGroupBreakLength(factor * icon_line->getInGroupBreakLength());
+				icon_line->setDashLength(qRound(factor * icon_line->getDashLength()));
+				icon_line->setBreakLength(qRound(factor * icon_line->getBreakLength()));
+				icon_line->setInGroupBreakLength(qRound(factor * icon_line->getInGroupBreakLength()));
 				
 				icon_symbol = icon_line;
 				symbol_to_use = icon_symbol;
 			}
-			else if (line->getDashSymbol() != NULL)
+			else if (line->getDashSymbol() != nullptr)
 			{
 				show_dash_symbol = !line->getDashSymbol()->isEmpty();
 			}
@@ -465,13 +468,13 @@ QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, in
 	if (type == Point || type == Text)
 	{
 		// Center on the object's extent center
-		real_icon_mm_half = qMax(object->getExtent().width() / 2.0, object->getExtent().height() / 2.0);
+		real_icon_mm_half = qMax(object->getExtent().width() / 2, object->getExtent().height() / 2);
 		view.setCenter(MapCoord{ object->getExtent().center() });
 	}
 	else if (contained_types & Line && !(contained_types & Area))
 	{
 		// Center horizontally on extent
-		real_icon_mm_half = qMax((qreal)(object->getExtent().width() / 2.0), object->getExtent().bottom());
+		real_icon_mm_half = qMax(object->getExtent().width() / 2, object->getExtent().bottom());
 		real_icon_mm_half = qMax(real_icon_mm_half, -object->getExtent().top());
 		auto pos = MapCoord{ object->getExtent().center() };
 		pos.setY(0);
@@ -487,7 +490,7 @@ QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, in
 	if (real_icon_mm_half > max_icon_mm_half)
 		view.setZoom(best_zoom * (max_icon_mm_half / real_icon_mm_half));
 	
-	painter.translate(0.5f * (side_length - bottom_right_border), 0.5f * (side_length - bottom_right_border));
+	painter.translate((side_length - bottom_right_border)/2, (side_length - bottom_right_border)/2);
 	painter.setWorldTransform(view.worldTransform(), true);
 	
 	RenderConfig config = { *map, QRectF(-10000, -10000, 20000, 20000), view.calculateFinalZoomFactor(), RenderConfig::HelperSymbols, 1.0 };
@@ -549,7 +552,7 @@ Symbol* Symbol::getSymbolForType(Symbol::Type type)
 	else
 	{
 		Q_ASSERT(false);
-		return NULL;
+		return nullptr;
 	}
 }
 

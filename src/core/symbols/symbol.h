@@ -94,7 +94,7 @@ public:
 	/** Constructs an empty symbol */
 	Symbol(Type type);
 	virtual ~Symbol();
-	virtual Symbol* duplicate(const MapColorMap* color_map = NULL) const = 0;
+	virtual Symbol* duplicate(const MapColorMap* color_map = nullptr) const = 0;
 	
 	/**
 	 * Checks for equality to the other symbol.
@@ -234,7 +234,7 @@ public:
 	/**
 	 * Called by the map in which the symbol is to notify it of a symbol being
 	 * changed (pointer becomes invalid).
-	 * If new_symbol == NULL, the symbol is being deleted.
+	 * If new_symbol == nullptr, the symbol is being deleted.
 	 * Must return true if this symbol contained the deleted symbol.
 	 */
 	virtual bool symbolChanged(const Symbol* old_symbol, const Symbol* new_symbol);
@@ -258,7 +258,7 @@ public:
 	 * Creates a new image with the given side length and draws the smybol icon onto it.
 	 * Returns an image pointer which you must delete yourself when no longer needed.
 	 */
-	QImage createIcon(const Map* map, int side_length, bool antialiasing, int bottom_right_border = 0, float best_zoom = 2) const;
+	QImage createIcon(const Map* map, int side_length, bool antialiasing, int bottom_right_border = 0, qreal best_zoom = 2) const;
 	
 	/** Clear the symbol's icon. It will be recreated when it is needed. */
 	void resetIcon() { icon = QImage(); }
