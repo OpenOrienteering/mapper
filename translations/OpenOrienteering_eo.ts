@@ -835,7 +835,7 @@
         <location filename="../src/tools/draw_path_tool.cpp" line="1065"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="700"/>
         <source>&lt;b&gt;Dash points on.&lt;/b&gt; </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Uzi strekpunktojn.&lt;/b&gt; </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1071"/>
@@ -926,7 +926,7 @@
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1100"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Draw a straight line. &lt;b&gt;Drag&lt;/b&gt;: Draw a curve. &lt;b&gt;Right or double click&lt;/b&gt;: Finish the path. &lt;b&gt;%1&lt;/b&gt;: Close the path. </source>
-        <translation>&lt;b&gt;Klaki&lt;/b&gt;: Desegni rektan linion. &lt;b&gt;Treni&lt;/b&gt;: Desegni kurbon. &lt;b&gt;Dekstra aŭ duobla klako&lt;/b&gt;: Fini la vojon. &lt;b&gt;%1&lt;/b&gt;: Fermi la vojon. </translation>
+        <translation>&lt;b&gt;Klaki&lt;/b&gt;: Desegni rektan linion. &lt;b&gt;Treni&lt;/b&gt;: Desegni kurbon. &lt;b&gt;Dekstre aŭ duoble alklaki&lt;/b&gt;: Fini la vojon. &lt;b&gt;%1&lt;/b&gt;: Fermi la vojon. </translation>
     </message>
 </context>
 <context>
@@ -1028,7 +1028,7 @@
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="716"/>
         <source>&lt;b&gt;Click or Drag&lt;/b&gt;: Start drawing a rectangle. </source>
-        <translation>&lt;b&gt;Klaki aŭ Treni&lt;/b&gt;: Komenci desegni rektangulon. </translation>
+        <translation>&lt;b&gt;Klaki aŭ treni&lt;/b&gt;: Komenci desegni rektangulon. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="729"/>
@@ -1123,17 +1123,17 @@
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="738"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new dash point; with &lt;b&gt;%2&lt;/b&gt;: Add a normal point. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+Klaki&lt;/b&gt; sur punkto: Forigi ĝin; sur vojo: Aldoni novan strekpunkton; kun &lt;b&gt;%2&lt;/b&gt;: Aldoni normalan punkton. </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="741"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new point; with &lt;b&gt;%2&lt;/b&gt;: Add a dash point. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+Klaki&lt;/b&gt; sur punkto: Forigi ĝin; sur vojo: Aldoni novan punkton; kun &lt;b&gt;%2&lt;/b&gt;: Aldoni strekpunkton. </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="745"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point to switch between dash and normal point. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+Klaki&lt;/b&gt; sur punkto por ŝalti inter streka kaj normala punkto. </translation>
     </message>
 </context>
 <context>
@@ -1638,7 +1638,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="362"/>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="675"/>
         <source>Online declination lookup</source>
-        <translation type="unfinished"></translation>
+        <translation>Reta serĉo por deklinacio</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="94"/>
@@ -1809,7 +1809,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="704"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the reference point. &lt;b&gt;Right click&lt;/b&gt;: Cancel.</source>
-        <translation>&lt;b&gt;Klaki&lt;/b&gt;: Agordi referencan punkton. &lt;b&gt;Klaki dekstre&lt;/b&gt;: Rezigni.</translation>
+        <translation>&lt;b&gt;Klaki&lt;/b&gt;: Agordi referencan punkton. &lt;b&gt;Dekstre alklaki&lt;/b&gt;: Rezigni.</translation>
     </message>
 </context>
 <context>
@@ -5581,7 +5581,7 @@ apartigoj</translation>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="358"/>
         <source>Choose map file to load symbols from</source>
-        <translation type="unfinished"></translation>
+        <translation>Elekti mapodosieron por elŝargi simbolojn</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="366"/>
@@ -5800,7 +5800,7 @@ apartigoj</translation>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="78"/>
         <source>Scale map object positions</source>
-        <translation type="unfinished"></translation>
+        <translation>Skali poziciojn de mapaj objektoj</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="85"/>
@@ -5823,7 +5823,7 @@ apartigoj</translation>
     <message>
         <location filename="../src/tools/scale_tool.cpp" line="64"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the scaling center. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Klaki&lt;/b&gt;: Agordi skalocentron. </translation>
     </message>
     <message>
         <location filename="../src/tools/scale_tool.cpp" line="65"/>
@@ -5931,7 +5931,7 @@ apartigoj</translation>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="65"/>
         <source>Helper symbol (not shown in finished map)</source>
-        <translation type="unfinished"></translation>
+        <translation>Helpa simbolo (ne estos montrita sur finita mapo)</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="100"/>
@@ -6009,7 +6009,7 @@ apartigoj</translation>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="254"/>
         <source>Switch symbol of selected object(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ŝanĝi simbolon de elektita(j) objekto(j)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="255"/>
@@ -6047,7 +6047,7 @@ apartigoj</translation>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="990"/>
         <source>There are no symbols in clipboard which could be pasted!</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne estas simboloj en tondejo, kiuj povas esti algluitaj!</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1159"/>
@@ -6138,7 +6138,7 @@ apartigoj</translation>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="906"/>
         <source>Scale to percentage:</source>
-        <translation type="unfinished"></translation>
+        <translation>Skali en elcentoj:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="937"/>
@@ -6160,7 +6160,7 @@ apartigoj</translation>
         <location filename="future_translations.cpp" line="73"/>
         <source>Switch symbol of selected objects</source>
         <extracomment>To replace existing translation which uses "object(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ŝanĝi simbolon de elektitaj objektoj</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="76"/>
@@ -6527,7 +6527,7 @@ Tamen se vi ne intencas desegni sur ĉi tiu ŝablono, tio ne estas problemo.</tr
     <message>
         <location filename="../src/templates/template_image.cpp" line="532"/>
         <source>Specify how to position or scale the image:</source>
-        <translation type="unfinished"></translation>
+        <translation>Precizigi kiel pozicii aŭ skali la bildon:</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="542"/>
@@ -6704,7 +6704,7 @@ Tamen se vi ne intencas desegni sur ĉi tiu ŝablono, tio ne estas problemo.</tr
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="728"/>
         <source>Please enter a valid integer number to set a group or leave the field empty to ungroup the template!</source>
-        <translation type="unfinished"></translation>
+        <translation>Bonvolu enigi validan entjeron por agordi grupon aŭ lasi la kampon malplena por malgrupigi la ŝablonon!</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="972"/>
@@ -6809,7 +6809,7 @@ Tamen se vi ne intencas desegni sur ĉi tiu ŝablono, tio ne estas problemo.</tr
     <message>
         <location filename="../src/templates/template_positioning_dialog.cpp" line="36"/>
         <source>Track scaling and positioning</source>
-        <translation type="unfinished"></translation>
+        <translation>Skalado kaj lokado de la trako</translation>
     </message>
     <message>
         <location filename="../src/templates/template_positioning_dialog.cpp" line="41"/>
@@ -6835,7 +6835,7 @@ Tamen se vi ne intencas desegni sur ĉi tiu ŝablono, tio ne estas problemo.</tr
     <message>
         <location filename="../src/templates/template_positioning_dialog.cpp" line="49"/>
         <source>One coordinate unit equals:</source>
-        <translation type="unfinished"></translation>
+        <translation>Unu unuo de koordinato egalas:</translation>
     </message>
     <message>
         <location filename="../src/templates/template_positioning_dialog.cpp" line="51"/>
@@ -6845,7 +6845,7 @@ Tamen se vi ne intencas desegni sur ĉi tiu ŝablono, tio ne estas problemo.</tr
     <message>
         <location filename="../src/templates/template_positioning_dialog.cpp" line="55"/>
         <source>Position track at view center</source>
-        <translation type="unfinished"></translation>
+        <translation>Pozicii trakon meze de la ekrano</translation>
     </message>
 </context>
 <context>
@@ -6873,7 +6873,7 @@ Tamen se vi ne intencas desegni sur ĉi tiu ŝablono, tio ne estas problemo.</tr
     <message>
         <location filename="../src/templates/template_track.cpp" line="164"/>
         <source>These are not configured yet, so they will be shown as the next step.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiuj ĉi ankoraŭ ne estas agordita, tial ili estos montrita ĉe la sekva paŝo.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="165"/>

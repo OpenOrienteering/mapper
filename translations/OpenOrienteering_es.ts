@@ -1453,7 +1453,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="80"/>
         <source>Pixels per inch:</source>
-        <translation>Puntos por pulgada:</translation>
+        <translation>Píxeles por pulgada:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="90"/>
@@ -2243,7 +2243,7 @@
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="135"/>
         <source>Click the red template name(s) in the Templates -&gt; Template setup window to locate the template file name(s).</source>
-        <translation>Haga clic sobre el nombre de plantilla en rojo en la ventana de Plantillas -&gt; Configuración de plantilla, para localizar el nombre del archivo de la plantilla.</translation>
+        <translation>Haga clic sobre el nombre(s) de plantilla en rojo en la ventana Plantillas -&gt; Configuración de plantilla, para localizar el nombre del archivo de la plantilla.</translation>
     </message>
     <message>
         <source>At least one template file could not be found. Click the red template name(s) in the Templates -&gt; Template setup window to locate the template file name(s).</source>
@@ -3024,13 +3024,14 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3871"/>
         <source>Import...</source>
-        <translation type="unfinished">Importar...</translation>
+        <translation>Importar...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3872"/>
         <source>Symbol replacement was canceled.
 Import the data anyway?</source>
-        <translation type="unfinished"></translation>
+        <translation>Se canceló el remplazo de símbolos.
+¿Desea importar los datos de todas formas?</translation>
     </message>
 </context>
 <context>
@@ -5667,7 +5668,7 @@ zoom usando la rueda del ratón, si dispone de esos elementos.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1115"/>
         <source>A non-standard view mode is activated. Are you sure to print / export the map like this?</source>
-        <translation>Está activado un modo de vista que no es estándar. ¿Está seguro de imprimir / exportar el mapa de esta forma?</translation>
+        <translation>Está activado un modo de visualización no estándar. ¿Está seguro de imprimir / exportar el mapa de esta forma?</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1132"/>
@@ -6890,7 +6891,7 @@ Sin embargo, si no pretende dibujar sobre esta plantilla, entonces no hay proble
     <message>
         <location filename="../src/templates/template_image.cpp" line="212"/>
         <source>Select the coordinate reference system of the coordinates in the world file</source>
-        <translation>Seleccionar el sistema de referencia de coordenadas en el archivo mundial</translation>
+        <translation>Seleccionar el sistema de referencia de coordenadas para las coordenadas en el archivo mundial</translation>
     </message>
 </context>
 <context>

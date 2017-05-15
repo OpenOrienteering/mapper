@@ -2571,7 +2571,7 @@ löytääksesi taustakarttatiedoston nimen.</translation>
     </message>
     <message>
         <source>Hide Others</source>
-        <translation type="vanished">Piilota Muut</translation>
+        <translation>Piilota muut</translation>
     </message>
     <message>
         <source>Show All</source>
@@ -2749,12 +2749,12 @@ Skaalataanko symbolit?</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="929"/>
         <source>Autosaving...</source>
-        <translation type="unfinished"></translation>
+        <translation>Automaattinen tallennus…</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="939"/>
         <source>Autosaving failed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Automaattinen tallennus epäonnistui!</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1014"/>
@@ -2774,7 +2774,7 @@ Skaalataanko symbolit?</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="151"/>
         <source>You must close the current file before you can open another one.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sinun täytyy sulkea nykyinen tiedosto ennen kuin voit avata toinen.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="721"/>
@@ -2802,7 +2802,8 @@ Tuntematon tiedostomuoto.</translation>
         <location filename="../src/gui/main_window.cpp" line="831"/>
         <source>The file has been modified.
 Do you want to discard your changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiedosto on muutettu.
+Haluatko hylkää muutokseni?</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="882"/>
@@ -2993,7 +2994,7 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/core/map_coord.cpp" line="176"/>
         <source>Coordinates are out-of-bounds.</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinaatit ovat rajojen ulkopuolella.</translation>
     </message>
 </context>
 <context>
@@ -3684,17 +3685,17 @@ Import the data anyway?</source>
         <location filename="../src/gui/map/map_editor.cpp" line="3576"/>
         <location filename="../src/gui/map/map_editor.cpp" line="3606"/>
         <source>Merge map parts</source>
-        <translation type="unfinished"></translation>
+        <translation>Yhdistä karttaosat</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3577"/>
         <source>Do you want to move all objects from map part "%1" to "%2", and to remove "%1"?</source>
-        <translation type="unfinished"></translation>
+        <translation>Haluatko siirtää kaikki kohteet karttaosasta "%1" "%2":een, ja poistaa "%1"?</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3607"/>
         <source>Do you want to move all objects to map part "%1", and to remove all other map parts?</source>
-        <translation type="unfinished"></translation>
+        <translation>Haluatko siirtää kaikki kohteet karttaosaan "%1", ja poistaa kaikki muut karttaosat?</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3832"/>
@@ -3962,12 +3963,12 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="908"/>
         <source>Enable touch cursor</source>
-        <translation type="unfinished"></translation>
+        <translation>Ota kosketuskohdistin käyttöön</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="909"/>
         <source>Enable GPS display</source>
-        <translation type="unfinished"></translation>
+        <translation>Ota GPS-näyttö käyttöön</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="911"/>
@@ -3977,27 +3978,27 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="913"/>
         <source>Set point object at GPS position</source>
-        <translation type="unfinished"></translation>
+        <translation>Aseta pistemäinen kohde GPS-kohdalle</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="915"/>
         <source>Set temporary marker at GPS position</source>
-        <translation type="unfinished"></translation>
+        <translation>Aseta väliaikainen merkki GPS-kohdalle</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="917"/>
         <source>Create temporary path at GPS position</source>
-        <translation type="unfinished"></translation>
+        <translation>Luo väliaikainen viiva GPS-kohdalle</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="919"/>
         <source>Clear temporary GPS markers</source>
-        <translation type="unfinished"></translation>
+        <translation>Tyhjennä väliaikaiset GPS-merkit</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="922"/>
         <source>Enable compass display</source>
-        <translation type="unfinished"></translation>
+        <translation>Ota kompassinäyttö käyttöön</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="923"/>
@@ -4022,17 +4023,17 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1228"/>
         <source>Hide top bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Piilota yläpalkki</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1231"/>
         <source>Show top bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Näytä yläpalkki</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1493"/>
         <source>Print / Export is not available in this program version!</source>
-        <translation type="unfinished"></translation>
+        <translation>Tulostus / vienti ei ole käytettävissä tässä ohjelman versiossa!</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1927"/>
@@ -4072,7 +4073,7 @@ valittu</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2097"/>
         <source>Fill bounded areas.</source>
-        <translation type="unfinished"></translation>
+        <translation>Täytä suljetut alueet.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2192"/>
@@ -4239,7 +4240,7 @@ valittu</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3304"/>
         <source>Clear temporary markers</source>
-        <translation type="unfinished"></translation>
+        <translation>Tyhjennä väliaikaiset merkit</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3304"/>
@@ -6597,11 +6598,9 @@ jokapäiväinen ilmiö
     <message numerus="yes">
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="346"/>
         <source>%n object(s) selected</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n kohde valittu</numerusform>
+        <numerusform>%n kohdetta valittu</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="350"/>
         <source>Invalid query</source>
