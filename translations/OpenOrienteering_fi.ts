@@ -1402,6 +1402,49 @@
     </message>
 </context>
 <context>
+    <name>GdalSettingsPage</name>
+    <message>
+        <location filename="../src/gdal/gdal_settings_page.cpp" line="44"/>
+        <source>Import with GDAL/OGR:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/gdal_settings_page.cpp" line="46"/>
+        <source>DXF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/gdal_settings_page.cpp" line="49"/>
+        <source>GPX</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/gdal_settings_page.cpp" line="52"/>
+        <source>OSM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/gdal_settings_page.cpp" line="56"/>
+        <source>Configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/gdal_settings_page.cpp" line="64"/>
+        <source>Parameter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/gdal_settings_page.cpp" line="64"/>
+        <source>Value</source>
+        <translation type="unfinished">Arvo</translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/gdal_settings_page.cpp" line="83"/>
+        <source>GDAL/OGR</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>GeneralSettingsPage</name>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="53"/>
@@ -2069,17 +2112,17 @@
 <context>
     <name>ImportExport</name>
     <message>
-        <location filename="../src/core/symbols/symbol.cpp" line="226"/>
+        <location filename="../src/core/symbols/symbol.cpp" line="229"/>
         <source>Error while loading a symbol of type %1 at line %2 column %3.</source>
         <translation>Virhe ladattaessa symbolia %1 rivillä %2 sarakkeessa %3.</translation>
     </message>
     <message>
-        <location filename="../src/core/symbols/symbol.cpp" line="234"/>
+        <location filename="../src/core/symbols/symbol.cpp" line="237"/>
         <source>Symbol ID '%1' not unique at line %2 column %3.</source>
         <translation>Symboli ID '%1' ei yksilöllinen rivillä %2 sarakkeessa %3.</translation>
     </message>
     <message>
-        <location filename="../src/core/symbols/symbol.cpp" line="282"/>
+        <location filename="../src/core/symbols/symbol.cpp" line="285"/>
         <source>Error while loading a symbol of type %1 at line %2 column %3: %4</source>
         <translation>Virhe ladattaessa symboli tyyppiä %1 rivillä %2 sarakkeessa %3:%4</translation>
     </message>
@@ -2109,7 +2152,7 @@
     </message>
     <message>
         <location filename="../src/fileformats/native_file_format.cpp" line="92"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="68"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="69"/>
         <source>OpenOrienteering Mapper</source>
         <translation></translation>
     </message>
@@ -2124,24 +2167,24 @@
         <translation>OCAD</translation>
     </message>
     <message>
-        <location filename="../src/util/xml_stream_util.cpp" line="176"/>
-        <location filename="../src/util/xml_stream_util.cpp" line="192"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="187"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="203"/>
         <source>Could not parse the coordinates.</source>
         <translation>Koordinaattien tulkitseminen ei onnistu.</translation>
     </message>
     <message>
-        <location filename="../src/util/xml_stream_util.cpp" line="216"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="227"/>
         <source>Expected %1 coordinates, found %2.</source>
         <translation>Vaaditaan %1 koordinaatteja, löydetty %2.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="886"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="926"/>
         <source>Error while loading the printing configuration at %1:%2: %3</source>
         <translation>Virhe ladattaessa tulostus asetuksia %1:%2: %3</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="899"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="913"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="939"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="953"/>
         <source>Error while loading the undo/redo steps at %1:%2: %3</source>
         <translation>Virhe ladattaessa kumoa / tee uudestaan vaiheita %1:%2: %3</translation>
     </message>
@@ -2150,6 +2193,11 @@
         <source>No such option: %1</source>
         <comment>No such import / export option</comment>
         <translation>Ei ole sellaista vaihtoehtoa: %1</translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="252"/>
+        <source>Geospatial vector data</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2212,13 +2260,13 @@ löytääksesi taustakarttatiedoston nimen.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/native_file_format.cpp" line="136"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="414"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="454"/>
         <source>Invalid file format version.</source>
         <translation>Tiedostomuodon versio ei kelpaa.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/native_file_format.cpp" line="140"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="416"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="456"/>
         <source>Unsupported old file format version. Please use an older program version to load and update the file.</source>
         <translation>Näin vanhaa tiedostomuotoa ei tueta. Käytä vanhempaa ohjelmaa päivittääksesi tiedoston.</translation>
     </message>
@@ -2269,12 +2317,12 @@ löytääksesi taustakarttatiedoston nimen.</translation>
         <translation>Tiedostoa %1 ei voitu lukea</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="408"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="448"/>
         <source>Unsupported file format.</source>
         <translation>Tiedostomuotoa ei tueta.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="418"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="458"/>
         <source>Unsupported new file format version. Some map features will not be loaded or saved by this version of the program.</source>
         <translation>Näin uutta tiedostomuotoa ei tueta. Joitain kartan ominaisuuksia ei voida ladata tai tallentaa tällä versiolla.</translation>
     </message>
@@ -2282,6 +2330,13 @@ löytääksesi taustakarttatiedoston nimen.</translation>
         <location filename="../src/fileformats/file_format.cpp" line="79"/>
         <source>Format (%1) does not support import</source>
         <translation>Formaattia (%1) ei tueta ladattaessa</translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="368"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="1180"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="1221"/>
+        <source>Could not read '%1': %2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2571,7 +2626,7 @@ löytääksesi taustakarttatiedoston nimen.</translation>
     </message>
     <message>
         <source>Hide Others</source>
-        <translation>Piilota muut</translation>
+        <translation type="vanished">Piilota muut</translation>
     </message>
     <message>
         <source>Show All</source>
@@ -4420,27 +4475,27 @@ valittu</translation>
         <translation>- Kartta -</translation>
     </message>
     <message>
-        <location filename="../src/core/map_printer.cpp" line="1217"/>
+        <location filename="../src/core/map_printer.cpp" line="1201"/>
         <source>Processing separations of page %1...</source>
         <translation>Käsitellään sivujen erotuksia %1…</translation>
     </message>
     <message>
-        <location filename="../src/core/map_printer.cpp" line="1218"/>
+        <location filename="../src/core/map_printer.cpp" line="1202"/>
         <source>Processing page %1...</source>
         <translation>Käsitellään sivua %1…</translation>
     </message>
     <message>
-        <location filename="../src/core/map_printer.cpp" line="1268"/>
+        <location filename="../src/core/map_printer.cpp" line="1252"/>
         <source>Canceled</source>
         <translation>Keskeytetty</translation>
     </message>
     <message>
-        <location filename="../src/core/map_printer.cpp" line="1272"/>
+        <location filename="../src/core/map_printer.cpp" line="1256"/>
         <source>Error</source>
         <translation>Virhe</translation>
     </message>
     <message>
-        <location filename="../src/core/map_printer.cpp" line="1277"/>
+        <location filename="../src/core/map_printer.cpp" line="1261"/>
         <source>Finished</source>
         <translation>Valmis</translation>
     </message>
@@ -5105,6 +5160,81 @@ zoomaa hiiren rullalla.</translation>
     </message>
 </context>
 <context>
+    <name>OgrFileImport</name>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="293"/>
+        <source>Unable to setup "%1" SRS for GDAL: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="300"/>
+        <source>Purple</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="313"/>
+        <source>Point</source>
+        <translation type="unfinished">Piste</translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="320"/>
+        <source>Line</source>
+        <translation type="unfinished">Viiva</translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="329"/>
+        <source>Area</source>
+        <translation type="unfinished">Alue</translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="335"/>
+        <source>Text</source>
+        <translation type="unfinished">Teksti</translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="394"/>
+        <source>Unable to load layer %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../src/gdal/ogr_file_format.cpp" line="442"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="447"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="452"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="457"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="462"/>
+        <source>Unable to load %n objects, reason: %1</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="443"/>
+        <source>Empty geometry.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="448"/>
+        <source>Can't determine the coordinate transformation: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="453"/>
+        <source>Failed to transform the coordinates.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="458"/>
+        <source>Unknown or unsupported geometry type.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="463"/>
+        <source>Not enough coordinates.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>OpenOrienteering</name>
     <message>
         <location filename="../packaging/translations.cpp" line="10"/>
@@ -5168,7 +5298,7 @@ zoomaa hiiren rullalla.</translation>
 <context>
     <name>PointSymbolEditorTool</name>
     <message>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="967"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="966"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Add a coordinate. &lt;b&gt;%1+Click&lt;/b&gt;: Change the selected coordinate. </source>
         <translation>&lt;b&gt;Klikkaa&lt;/b&gt;: Lisää koordinaatti. &lt;b&gt;%1+Klikkaa&lt;/b&gt;: Muuta valittu koordinaatti. </translation>
     </message>
@@ -5187,19 +5317,19 @@ zoomaa hiiren rullalla.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="74"/>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="929"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="928"/>
         <source>Point</source>
         <translation>Piste</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="75"/>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="931"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="930"/>
         <source>Line</source>
         <translation>Viiva</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="76"/>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="933"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="932"/>
         <source>Area</source>
         <translation>Alue</translation>
     </message>
@@ -5327,7 +5457,7 @@ zoomaa hiiren rullalla.</translation>
         <translation>[Keskipiste]</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="936"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="935"/>
         <source>Unknown</source>
         <translation>Tuntematon</translation>
     </message>
@@ -5575,100 +5705,100 @@ zoomaa hiiren rullalla.</translation>
         <translation>dpi</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1078"/>
+        <location filename="../src/gui/print_widget.cpp" line="1082"/>
         <source>Not supported on Android.</source>
         <translation>Ei tueta Androidilla.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1086"/>
+        <location filename="../src/gui/print_widget.cpp" line="1090"/>
         <source>Failed to prepare the preview.</source>
         <translation>Esikastelun valmistelu epäonnistui.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1097"/>
+        <location filename="../src/gui/print_widget.cpp" line="1101"/>
         <source>Print Preview Progress</source>
         <translation>Esikatselun eteneminen</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1114"/>
+        <location filename="../src/gui/print_widget.cpp" line="1118"/>
         <source>Warning</source>
         <translation>Varoitus</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1115"/>
+        <location filename="../src/gui/print_widget.cpp" line="1119"/>
         <source>A non-standard view mode is activated. Are you sure to print / export the map like this?</source>
         <translation>Vakionäkymä ei ole päällä. Haluatko varmasti tulostaa / viedä kartan tällaisena?</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1132"/>
+        <location filename="../src/gui/print_widget.cpp" line="1136"/>
         <source>PNG</source>
         <translation>PNG</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1133"/>
+        <location filename="../src/gui/print_widget.cpp" line="1137"/>
         <source>BMP</source>
         <translation>BMP</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1134"/>
+        <location filename="../src/gui/print_widget.cpp" line="1138"/>
         <source>TIFF</source>
         <translation>TIFF</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1135"/>
+        <location filename="../src/gui/print_widget.cpp" line="1139"/>
         <source>JPEG</source>
         <translation>JPEG</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1189"/>
+        <location filename="../src/gui/print_widget.cpp" line="1193"/>
         <source>Failed to prepare the PDF export.</source>
         <translation>PDF-viennin valmistelu epäonnistui.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1199"/>
+        <location filename="../src/gui/print_widget.cpp" line="1203"/>
         <source>PDF</source>
         <translation>PDF</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1252"/>
+        <location filename="../src/gui/print_widget.cpp" line="1256"/>
         <source>An error occurred during printing.</source>
         <translation>Virhe tapahtui tulostuksen aikana.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1137"/>
-        <location filename="../src/gui/print_widget.cpp" line="1165"/>
-        <location filename="../src/gui/print_widget.cpp" line="1201"/>
-        <location filename="../src/gui/print_widget.cpp" line="1213"/>
+        <location filename="../src/gui/print_widget.cpp" line="1141"/>
+        <location filename="../src/gui/print_widget.cpp" line="1169"/>
+        <location filename="../src/gui/print_widget.cpp" line="1205"/>
+        <location filename="../src/gui/print_widget.cpp" line="1217"/>
         <source>Export map ...</source>
         <translation>Vie kartta …</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1136"/>
-        <location filename="../src/gui/print_widget.cpp" line="1200"/>
+        <location filename="../src/gui/print_widget.cpp" line="1140"/>
+        <location filename="../src/gui/print_widget.cpp" line="1204"/>
         <source>All files (*.*)</source>
         <translation>Kaikki tiedostot (*.*)</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1238"/>
+        <location filename="../src/gui/print_widget.cpp" line="1242"/>
         <source>Failed to prepare the printing.</source>
         <translation>Tulostuksen valmistaminen epäonnistui.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1247"/>
+        <location filename="../src/gui/print_widget.cpp" line="1251"/>
         <source>Printing Progress</source>
         <translation>Tulostuksen eteneminen</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1078"/>
-        <location filename="../src/gui/print_widget.cpp" line="1086"/>
-        <location filename="../src/gui/print_widget.cpp" line="1155"/>
-        <location filename="../src/gui/print_widget.cpp" line="1174"/>
-        <location filename="../src/gui/print_widget.cpp" line="1189"/>
-        <location filename="../src/gui/print_widget.cpp" line="1219"/>
-        <location filename="../src/gui/print_widget.cpp" line="1238"/>
-        <location filename="../src/gui/print_widget.cpp" line="1252"/>
-        <location filename="../src/gui/print_widget.cpp" line="1265"/>
-        <location filename="../src/gui/print_widget.cpp" line="1329"/>
+        <location filename="../src/gui/print_widget.cpp" line="1082"/>
+        <location filename="../src/gui/print_widget.cpp" line="1090"/>
+        <location filename="../src/gui/print_widget.cpp" line="1159"/>
+        <location filename="../src/gui/print_widget.cpp" line="1178"/>
+        <location filename="../src/gui/print_widget.cpp" line="1193"/>
+        <location filename="../src/gui/print_widget.cpp" line="1223"/>
+        <location filename="../src/gui/print_widget.cpp" line="1242"/>
+        <location filename="../src/gui/print_widget.cpp" line="1256"/>
+        <location filename="../src/gui/print_widget.cpp" line="1269"/>
+        <location filename="../src/gui/print_widget.cpp" line="1333"/>
         <source>Error</source>
         <translation>Virhe</translation>
     </message>
@@ -5704,29 +5834,29 @@ erottelut</translation>
         <translation>Moodi:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1155"/>
+        <location filename="../src/gui/print_widget.cpp" line="1159"/>
         <source>Failed to prepare the image. Not enough memory.</source>
         <translation>Kuvan valmistaminen epäonnistui. Ei tarpeeksi muistia.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1174"/>
+        <location filename="../src/gui/print_widget.cpp" line="1178"/>
         <source>Failed to save the image. Does the path exist? Do you have sufficient rights?</source>
         <translation>Kuvaa ei voitu tallentaa. Onko tiedostopolku oikein? Onko sinulla riittävät oikeudet?</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1178"/>
-        <location filename="../src/gui/print_widget.cpp" line="1223"/>
+        <location filename="../src/gui/print_widget.cpp" line="1182"/>
+        <location filename="../src/gui/print_widget.cpp" line="1227"/>
         <source>Exported successfully to %1</source>
         <translation>Viety onnistuneesti %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1219"/>
+        <location filename="../src/gui/print_widget.cpp" line="1223"/>
         <source>Failed to finish the PDF export.</source>
         <translation>PDF-viennin viimeistely epäonnistui.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1229"/>
-        <location filename="../src/gui/print_widget.cpp" line="1261"/>
+        <location filename="../src/gui/print_widget.cpp" line="1233"/>
+        <location filename="../src/gui/print_widget.cpp" line="1265"/>
         <source>Canceled.</source>
         <translation>Keskeytetty.</translation>
     </message>
@@ -5735,24 +5865,24 @@ erottelut</translation>
         <translation type="vanished">Tulostaa</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1265"/>
+        <location filename="../src/gui/print_widget.cpp" line="1269"/>
         <source>The print job could not be stopped.</source>
         <translation>Tulostustyötä ei voitu pysäyttää.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1256"/>
+        <location filename="../src/gui/print_widget.cpp" line="1260"/>
         <source>Successfully created print job</source>
         <translation>Tulostustyö luotiin onnistuneesti</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1313"/>
-        <location filename="../src/gui/print_widget.cpp" line="1321"/>
+        <location filename="../src/gui/print_widget.cpp" line="1317"/>
+        <location filename="../src/gui/print_widget.cpp" line="1325"/>
         <source>Unknown</source>
         <comment>Paper size</comment>
         <translation>Tuntematon</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1329"/>
+        <location filename="../src/gui/print_widget.cpp" line="1333"/>
         <source>The map area is empty. Output canceled.</source>
         <translation>Kartan alue on tyhjä. Tulostus keskeytettiin.</translation>
     </message>
@@ -6598,9 +6728,11 @@ jokapäiväinen ilmiö
     <message numerus="yes">
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="346"/>
         <source>%n object(s) selected</source>
-        <translation><numerusform>%n kohde valittu</numerusform>
-        <numerusform>%n kohdetta valittu</numerusform>
-        </translation></message>
+        <translation>
+            <numerusform>%n kohde valittu</numerusform>
+            <numerusform>%n kohdetta valittu</numerusform>
+        </translation>
+    </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="350"/>
         <source>Invalid query</source>
@@ -7627,7 +7759,7 @@ Tuetaan vain versioon %2 asti.</translation>
 <context>
     <name>XMLFileExporter</name>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="184"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="185"/>
         <source>Older versions of Mapper do not support multiple map parts. To save the map in compatibility mode, you must first merge all map parts.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7635,27 +7767,27 @@ Tuetaan vain versioon %2 asti.</translation>
 <context>
     <name>XMLFileImporter</name>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="397"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="437"/>
         <source>Unsupported element: %1 (line %2 column %3)</source>
         <translation>Elementtiä ei tueta: %1 (rivi %2 sarake %3)</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="428"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="468"/>
         <source>Some coordinates were out of bounds for printing. Map content was adjusted.</source>
         <translation>Jotkin koordinaatit ovat tulostusrajojen ulkopuolella. Kartan sisältöä säädetty.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="478"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="518"/>
         <source>unknown</source>
         <translation>Epämääräinen</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="479"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="519"/>
         <source>Parts of this file cannot be read by this version of Mapper. Minimum required version: %1</source>
         <translation>Osaa tiedostosta ei voida lukea tällä Mapper versiolla. Minimi vaadittu versio: %1</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="513"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="553"/>
         <source>Error at line %1 column %2: %3</source>
         <translation>Virhe rivillä %1 sarakkeessa %2: %3</translation>
     </message>
@@ -7664,44 +7796,44 @@ Tuetaan vain versioon %2 asti.</translation>
         <translation type="vanished">Kartan muistiinpanoja ei voitu lukea.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="525"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="782"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="565"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="822"/>
         <source>Some invalid characters had to be removed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="543"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="583"/>
         <source>Unknown error</source>
         <translation>Tuntematon virhe</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="544"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="584"/>
         <source>Unsupported or invalid georeferencing specification '%1': %2</source>
         <translation>Georeferoinnin määrittelyä '%1' ei tueta tai ei kelpaa: %2</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="676"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="729"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="716"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="769"/>
         <source>Could not set knockout property of color '%1'.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="689"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="729"/>
         <source>Expected %1 colors, found %2.</source>
         <translation>Oletettiin %1 väriä, löydetty %2.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="705"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="745"/>
         <source>Spot color %1 not found while processing %2 (%3).</source>
         <translation>Spottiväriä %1 ei löytynyt käsiteltäessä %2 (%3).</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="760"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="800"/>
         <source>Expected %1 symbols, found %2.</source>
         <translation>Oletettiin %1 symbolia, löydetty %2.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="799"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="839"/>
         <source>Expected %1 map parts, found %2.</source>
         <translation>Oletettiin %1 karttaosaa, löydetty %2.</translation>
     </message>

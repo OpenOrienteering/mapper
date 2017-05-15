@@ -27,13 +27,18 @@ set(MAPPER_GDAL_HEADERS
   ogr_file_format_p.h
 )
 	
-add_library(mapper-gdal STATIC
-  ${MAPPER_GDAL_HEADERS}
+set(MAPPER_GDAL_SOURCES
   gdal_manager.cpp
   gdal_settings_page.cpp
   ogr_file_format.cpp
   ogr_template.cpp
 )
+	
+qt5_translations_sources(
+  SOURCES ${MAPPER_GDAL_HEADERS} ${MAPPER_GDAL_SOURCES}
+)
+
+add_library(mapper-gdal STATIC ${MAPPER_GDAL_HEADERS} ${MAPPER_GDAL_SOURCES})
 
 target_compile_definitions(mapper-gdal PRIVATE
   QT_NO_CAST_FROM_ASCII

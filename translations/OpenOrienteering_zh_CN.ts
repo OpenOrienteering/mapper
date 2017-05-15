@@ -1357,6 +1357,49 @@
     </message>
 </context>
 <context>
+    <name>GdalSettingsPage</name>
+    <message>
+        <location filename="../src/gdal/gdal_settings_page.cpp" line="44"/>
+        <source>Import with GDAL/OGR:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/gdal_settings_page.cpp" line="46"/>
+        <source>DXF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/gdal_settings_page.cpp" line="49"/>
+        <source>GPX</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/gdal_settings_page.cpp" line="52"/>
+        <source>OSM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/gdal_settings_page.cpp" line="56"/>
+        <source>Configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/gdal_settings_page.cpp" line="64"/>
+        <source>Parameter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/gdal_settings_page.cpp" line="64"/>
+        <source>Value</source>
+        <translation type="unfinished">价值</translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/gdal_settings_page.cpp" line="83"/>
+        <source>GDAL/OGR</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>GeneralSettingsPage</name>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="53"/>
@@ -1921,17 +1964,17 @@
 <context>
     <name>ImportExport</name>
     <message>
-        <location filename="../src/core/symbols/symbol.cpp" line="226"/>
+        <location filename="../src/core/symbols/symbol.cpp" line="229"/>
         <source>Error while loading a symbol of type %1 at line %2 column %3.</source>
         <translation>加载在列行 %2%3 %1 类型的符号时的错误。</translation>
     </message>
     <message>
-        <location filename="../src/core/symbols/symbol.cpp" line="234"/>
+        <location filename="../src/core/symbols/symbol.cpp" line="237"/>
         <source>Symbol ID '%1' not unique at line %2 column %3.</source>
         <translation>符号 ID '%1' 不是唯一的在行 %2 列 %3。</translation>
     </message>
     <message>
-        <location filename="../src/core/symbols/symbol.cpp" line="282"/>
+        <location filename="../src/core/symbols/symbol.cpp" line="285"/>
         <source>Error while loading a symbol of type %1 at line %2 column %3: %4</source>
         <translation>加载类型 %1 在 %2 线列 %3 的象征时出现错误: %4</translation>
     </message>
@@ -1957,7 +2000,7 @@
     </message>
     <message>
         <location filename="../src/fileformats/native_file_format.cpp" line="92"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="68"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="69"/>
         <source>OpenOrienteering Mapper</source>
         <translation>OpenOrienteering 映射器</translation>
     </message>
@@ -1972,24 +2015,24 @@
         <translation>遗漏</translation>
     </message>
     <message>
-        <location filename="../src/util/xml_stream_util.cpp" line="176"/>
-        <location filename="../src/util/xml_stream_util.cpp" line="192"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="187"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="203"/>
         <source>Could not parse the coordinates.</source>
         <translation>无法解析坐标。</translation>
     </message>
     <message>
-        <location filename="../src/util/xml_stream_util.cpp" line="216"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="227"/>
         <source>Expected %1 coordinates, found %2.</source>
         <translation>预期的 %1 坐标，找到 %2。</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="886"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="926"/>
         <source>Error while loading the printing configuration at %1:%2: %3</source>
         <translation>在 %1 的打印配置加载时出错: %2: %3</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="899"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="913"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="939"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="953"/>
         <source>Error while loading the undo/redo steps at %1:%2: %3</source>
         <translation>撤消/重复加载时的错误步骤在 %1: %2: %3</translation>
     </message>
@@ -1998,6 +2041,11 @@
         <source>No such option: %1</source>
         <comment>No such import / export option</comment>
         <translation>没有这样的选项: %1</translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="252"/>
+        <source>Geospatial vector data</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2053,13 +2101,13 @@
     </message>
     <message>
         <location filename="../src/fileformats/native_file_format.cpp" line="136"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="414"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="454"/>
         <source>Invalid file format version.</source>
         <translation>无效的文件格式版本。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/native_file_format.cpp" line="140"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="416"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="456"/>
         <source>Unsupported old file format version. Please use an older program version to load and update the file.</source>
         <translation>旧版本的文件格式不受支持。请使用较旧的程序版本加载和更新该文件。</translation>
     </message>
@@ -2110,12 +2158,12 @@
         <translation>无法读取文件: %1</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="408"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="448"/>
         <source>Unsupported file format.</source>
         <translation>不支持的文件格式。</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="418"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="458"/>
         <source>Unsupported new file format version. Some map features will not be loaded or saved by this version of the program.</source>
         <translation>新版本的文件格式不受支持。一些地图功能将不会加载或保存此版本的程序。</translation>
     </message>
@@ -2123,6 +2171,13 @@
         <location filename="../src/fileformats/file_format.cpp" line="79"/>
         <source>Format (%1) does not support import</source>
         <translation>格式 (%1) 不支持导入</translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="368"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="1180"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="1221"/>
+        <source>Could not read '%1': %2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4169,27 +4224,27 @@ selected</source>
         <translation>-地图-</translation>
     </message>
     <message>
-        <location filename="../src/core/map_printer.cpp" line="1217"/>
+        <location filename="../src/core/map_printer.cpp" line="1201"/>
         <source>Processing separations of page %1...</source>
         <translation>分色处理的页 %1...</translation>
     </message>
     <message>
-        <location filename="../src/core/map_printer.cpp" line="1218"/>
+        <location filename="../src/core/map_printer.cpp" line="1202"/>
         <source>Processing page %1...</source>
         <translation>处理页 %1...</translation>
     </message>
     <message>
-        <location filename="../src/core/map_printer.cpp" line="1268"/>
+        <location filename="../src/core/map_printer.cpp" line="1252"/>
         <source>Canceled</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../src/core/map_printer.cpp" line="1272"/>
+        <location filename="../src/core/map_printer.cpp" line="1256"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../src/core/map_printer.cpp" line="1277"/>
+        <location filename="../src/core/map_printer.cpp" line="1261"/>
         <source>Finished</source>
         <translation>完成</translation>
     </message>
@@ -4843,6 +4898,80 @@ zoom using the mouse wheel, if available.</source>
     </message>
 </context>
 <context>
+    <name>OgrFileImport</name>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="293"/>
+        <source>Unable to setup "%1" SRS for GDAL: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="300"/>
+        <source>Purple</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="313"/>
+        <source>Point</source>
+        <translation type="unfinished">点</translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="320"/>
+        <source>Line</source>
+        <translation type="unfinished">线</translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="329"/>
+        <source>Area</source>
+        <translation type="unfinished">地区</translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="335"/>
+        <source>Text</source>
+        <translation type="unfinished">文本</translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="394"/>
+        <source>Unable to load layer %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../src/gdal/ogr_file_format.cpp" line="442"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="447"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="452"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="457"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="462"/>
+        <source>Unable to load %n objects, reason: %1</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="443"/>
+        <source>Empty geometry.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="448"/>
+        <source>Can't determine the coordinate transformation: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="453"/>
+        <source>Failed to transform the coordinates.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="458"/>
+        <source>Unknown or unsupported geometry type.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="463"/>
+        <source>Not enough coordinates.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>OpenOrienteering</name>
     <message>
         <location filename="../packaging/translations.cpp" line="10"/>
@@ -4906,7 +5035,7 @@ zoom using the mouse wheel, if available.</source>
 <context>
     <name>PointSymbolEditorTool</name>
     <message>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="967"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="966"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Add a coordinate. &lt;b&gt;%1+Click&lt;/b&gt;: Change the selected coordinate. </source>
         <translation>&lt;b&gt;单击&lt;/b&gt;︰ 添加坐标。&lt;b&gt;%1 + 点击&lt;/b&gt;︰ 更改选定的坐标。 </translation>
     </message>
@@ -4925,19 +5054,19 @@ zoom using the mouse wheel, if available.</source>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="74"/>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="929"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="928"/>
         <source>Point</source>
         <translation>点</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="75"/>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="931"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="930"/>
         <source>Line</source>
         <translation>线</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="76"/>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="933"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="932"/>
         <source>Area</source>
         <translation>地区</translation>
     </message>
@@ -5065,7 +5194,7 @@ zoom using the mouse wheel, if available.</source>
         <translation>[中点]</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="936"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="935"/>
         <source>Unknown</source>
         <translation>未知</translation>
     </message>
@@ -5306,100 +5435,100 @@ zoom using the mouse wheel, if available.</source>
         <translation>新闻部</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1078"/>
+        <location filename="../src/gui/print_widget.cpp" line="1082"/>
         <source>Not supported on Android.</source>
         <translation>不支持在 Android 上。</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1086"/>
+        <location filename="../src/gui/print_widget.cpp" line="1090"/>
         <source>Failed to prepare the preview.</source>
         <translation>未能准备预览。</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1097"/>
+        <location filename="../src/gui/print_widget.cpp" line="1101"/>
         <source>Print Preview Progress</source>
         <translation>打印预览进展</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1114"/>
+        <location filename="../src/gui/print_widget.cpp" line="1118"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1115"/>
+        <location filename="../src/gui/print_widget.cpp" line="1119"/>
         <source>A non-standard view mode is activated. Are you sure to print / export the map like this?</source>
         <translation>非标准视图模式被激活。是否确实要打印 / 导出映射像这样？</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1132"/>
+        <location filename="../src/gui/print_widget.cpp" line="1136"/>
         <source>PNG</source>
         <translation>PNG</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1133"/>
+        <location filename="../src/gui/print_widget.cpp" line="1137"/>
         <source>BMP</source>
         <translation>骨形态发生蛋白</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1134"/>
+        <location filename="../src/gui/print_widget.cpp" line="1138"/>
         <source>TIFF</source>
         <translation>TIFF</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1135"/>
+        <location filename="../src/gui/print_widget.cpp" line="1139"/>
         <source>JPEG</source>
         <translation>JPEG</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1189"/>
+        <location filename="../src/gui/print_widget.cpp" line="1193"/>
         <source>Failed to prepare the PDF export.</source>
         <translation>准备 PDF 导出失败。</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1199"/>
+        <location filename="../src/gui/print_widget.cpp" line="1203"/>
         <source>PDF</source>
         <translation>PDF</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1252"/>
+        <location filename="../src/gui/print_widget.cpp" line="1256"/>
         <source>An error occurred during printing.</source>
         <translation>在打印过程中出现错误。</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1137"/>
-        <location filename="../src/gui/print_widget.cpp" line="1165"/>
-        <location filename="../src/gui/print_widget.cpp" line="1201"/>
-        <location filename="../src/gui/print_widget.cpp" line="1213"/>
+        <location filename="../src/gui/print_widget.cpp" line="1141"/>
+        <location filename="../src/gui/print_widget.cpp" line="1169"/>
+        <location filename="../src/gui/print_widget.cpp" line="1205"/>
+        <location filename="../src/gui/print_widget.cpp" line="1217"/>
         <source>Export map ...</source>
         <translation>导出映射...</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1136"/>
-        <location filename="../src/gui/print_widget.cpp" line="1200"/>
+        <location filename="../src/gui/print_widget.cpp" line="1140"/>
+        <location filename="../src/gui/print_widget.cpp" line="1204"/>
         <source>All files (*.*)</source>
         <translation>所有文件 (*.*)</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1238"/>
+        <location filename="../src/gui/print_widget.cpp" line="1242"/>
         <source>Failed to prepare the printing.</source>
         <translation>准备打印失败。</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1247"/>
+        <location filename="../src/gui/print_widget.cpp" line="1251"/>
         <source>Printing Progress</source>
         <translation>打印进度</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1078"/>
-        <location filename="../src/gui/print_widget.cpp" line="1086"/>
-        <location filename="../src/gui/print_widget.cpp" line="1155"/>
-        <location filename="../src/gui/print_widget.cpp" line="1174"/>
-        <location filename="../src/gui/print_widget.cpp" line="1189"/>
-        <location filename="../src/gui/print_widget.cpp" line="1219"/>
-        <location filename="../src/gui/print_widget.cpp" line="1238"/>
-        <location filename="../src/gui/print_widget.cpp" line="1252"/>
-        <location filename="../src/gui/print_widget.cpp" line="1265"/>
-        <location filename="../src/gui/print_widget.cpp" line="1329"/>
+        <location filename="../src/gui/print_widget.cpp" line="1082"/>
+        <location filename="../src/gui/print_widget.cpp" line="1090"/>
+        <location filename="../src/gui/print_widget.cpp" line="1159"/>
+        <location filename="../src/gui/print_widget.cpp" line="1178"/>
+        <location filename="../src/gui/print_widget.cpp" line="1193"/>
+        <location filename="../src/gui/print_widget.cpp" line="1223"/>
+        <location filename="../src/gui/print_widget.cpp" line="1242"/>
+        <location filename="../src/gui/print_widget.cpp" line="1256"/>
+        <location filename="../src/gui/print_widget.cpp" line="1269"/>
+        <location filename="../src/gui/print_widget.cpp" line="1333"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
@@ -5427,51 +5556,51 @@ separations</source>
         <translation>模式︰</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1155"/>
+        <location filename="../src/gui/print_widget.cpp" line="1159"/>
         <source>Failed to prepare the image. Not enough memory.</source>
         <translation>未能准备映像。没有足够的内存。</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1174"/>
+        <location filename="../src/gui/print_widget.cpp" line="1178"/>
         <source>Failed to save the image. Does the path exist? Do you have sufficient rights?</source>
         <translation>未能保存图像。路径存在吗？你有足够的权利吗？</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1178"/>
-        <location filename="../src/gui/print_widget.cpp" line="1223"/>
+        <location filename="../src/gui/print_widget.cpp" line="1182"/>
+        <location filename="../src/gui/print_widget.cpp" line="1227"/>
         <source>Exported successfully to %1</source>
         <translation>成功导出到 %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1219"/>
+        <location filename="../src/gui/print_widget.cpp" line="1223"/>
         <source>Failed to finish the PDF export.</source>
         <translation>未能完成 PDF 导出。</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1229"/>
-        <location filename="../src/gui/print_widget.cpp" line="1261"/>
+        <location filename="../src/gui/print_widget.cpp" line="1233"/>
+        <location filename="../src/gui/print_widget.cpp" line="1265"/>
         <source>Canceled.</source>
         <translation>取消了。</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1265"/>
+        <location filename="../src/gui/print_widget.cpp" line="1269"/>
         <source>The print job could not be stopped.</source>
         <translation>不能停止打印作业。</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1256"/>
+        <location filename="../src/gui/print_widget.cpp" line="1260"/>
         <source>Successfully created print job</source>
         <translation>成功创建打印作业</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1313"/>
-        <location filename="../src/gui/print_widget.cpp" line="1321"/>
+        <location filename="../src/gui/print_widget.cpp" line="1317"/>
+        <location filename="../src/gui/print_widget.cpp" line="1325"/>
         <source>Unknown</source>
         <comment>Paper size</comment>
         <translation>未知</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1329"/>
+        <location filename="../src/gui/print_widget.cpp" line="1333"/>
         <source>The map area is empty. Output canceled.</source>
         <translation>映射区为空。取消的输出。</translation>
     </message>
@@ -7268,7 +7397,7 @@ The maximum supported version is %2.</source>
 <context>
     <name>XMLFileExporter</name>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="184"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="185"/>
         <source>Older versions of Mapper do not support multiple map parts. To save the map in compatibility mode, you must first merge all map parts.</source>
         <translation>映射器的旧版本不支持多个地图部分。若要保存在兼容模式下的地图，必须首先将所有地图部分都合并。</translation>
     </message>
@@ -7276,69 +7405,69 @@ The maximum supported version is %2.</source>
 <context>
     <name>XMLFileImporter</name>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="397"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="437"/>
         <source>Unsupported element: %1 (line %2 column %3)</source>
         <translation>不支持的元素: %1 （%2 线列 %3）</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="428"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="468"/>
         <source>Some coordinates were out of bounds for printing. Map content was adjusted.</source>
         <translation>一些坐标已超出界限印刷。映射内容作了调整。</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="478"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="518"/>
         <source>unknown</source>
         <translation>未知</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="479"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="519"/>
         <source>Parts of this file cannot be read by this version of Mapper. Minimum required version: %1</source>
         <translation>此版本的映射器无法读取这个文件的部分。所需的最低版本: %1</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="513"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="553"/>
         <source>Error at line %1 column %2: %3</source>
         <translation>在列行 %1 %2 的错误: %3</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="525"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="782"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="565"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="822"/>
         <source>Some invalid characters had to be removed.</source>
         <translation>一些无效的字符必须被去除。</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="543"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="583"/>
         <source>Unknown error</source>
         <translation>未知的错误</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="544"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="584"/>
         <source>Unsupported or invalid georeferencing specification '%1': %2</source>
         <translation>不支持或无效的地理参考规范“％1”：％2</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="676"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="729"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="716"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="769"/>
         <source>Could not set knockout property of color '%1'.</source>
         <translation>无法设置颜色“％1”的淘汰赛财产。</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="689"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="729"/>
         <source>Expected %1 colors, found %2.</source>
         <translation>预期找到 %2 的 %1 颜色。</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="705"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="745"/>
         <source>Spot color %1 not found while processing %2 (%3).</source>
         <translation>专色处理 %(%3) 2 时找不到 %1。</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="760"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="800"/>
         <source>Expected %1 symbols, found %2.</source>
         <translation>预计1％的符号，找到％2。</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="799"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="839"/>
         <source>Expected %1 map parts, found %2.</source>
         <translation>预计1％的部分地图，找到％2。</translation>
     </message>

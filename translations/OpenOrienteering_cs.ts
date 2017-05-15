@@ -1423,6 +1423,49 @@
     </message>
 </context>
 <context>
+    <name>GdalSettingsPage</name>
+    <message>
+        <location filename="../src/gdal/gdal_settings_page.cpp" line="44"/>
+        <source>Import with GDAL/OGR:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/gdal_settings_page.cpp" line="46"/>
+        <source>DXF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/gdal_settings_page.cpp" line="49"/>
+        <source>GPX</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/gdal_settings_page.cpp" line="52"/>
+        <source>OSM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/gdal_settings_page.cpp" line="56"/>
+        <source>Configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/gdal_settings_page.cpp" line="64"/>
+        <source>Parameter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/gdal_settings_page.cpp" line="64"/>
+        <source>Value</source>
+        <translation type="unfinished">Hodnota</translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/gdal_settings_page.cpp" line="83"/>
+        <source>GDAL/OGR</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>GeneralSettingsPage</name>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="53"/>
@@ -2097,17 +2140,17 @@
 <context>
     <name>ImportExport</name>
     <message>
-        <location filename="../src/core/symbols/symbol.cpp" line="226"/>
+        <location filename="../src/core/symbols/symbol.cpp" line="229"/>
         <source>Error while loading a symbol of type %1 at line %2 column %3.</source>
         <translation>Chyba při nahrávání symbolu typu %1, řádek %2, sloupec %3.</translation>
     </message>
     <message>
-        <location filename="../src/core/symbols/symbol.cpp" line="234"/>
+        <location filename="../src/core/symbols/symbol.cpp" line="237"/>
         <source>Symbol ID '%1' not unique at line %2 column %3.</source>
         <translation>Symbol ID '%1', není jedinečný na řádku %2, sloupec %3.</translation>
     </message>
     <message>
-        <location filename="../src/core/symbols/symbol.cpp" line="282"/>
+        <location filename="../src/core/symbols/symbol.cpp" line="285"/>
         <source>Error while loading a symbol of type %1 at line %2 column %3: %4</source>
         <translation>Chyba při nahrávání symbolu typu %1, řádek %2, sloupec %3: %4</translation>
     </message>
@@ -2137,7 +2180,7 @@
     </message>
     <message>
         <location filename="../src/fileformats/native_file_format.cpp" line="92"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="68"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="69"/>
         <source>OpenOrienteering Mapper</source>
         <translation>OpenOrienteering Mapper</translation>
     </message>
@@ -2156,24 +2199,24 @@
         <translation type="vanished">Nepodařilo se zpracovat data.</translation>
     </message>
     <message>
-        <location filename="../src/util/xml_stream_util.cpp" line="176"/>
-        <location filename="../src/util/xml_stream_util.cpp" line="192"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="187"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="203"/>
         <source>Could not parse the coordinates.</source>
         <translation>Nepodařilo se zpracovat souřadnice.</translation>
     </message>
     <message>
-        <location filename="../src/util/xml_stream_util.cpp" line="216"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="227"/>
         <source>Expected %1 coordinates, found %2.</source>
         <translation>Očekávány %1 souřadnice, nalezeno %2.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="886"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="926"/>
         <source>Error while loading the printing configuration at %1:%2: %3</source>
         <translation>Chyba při načítání nastavení tisku v %1: %2: %3</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="899"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="913"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="939"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="953"/>
         <source>Error while loading the undo/redo steps at %1:%2: %3</source>
         <translation>Chyba při nahrávání kroků zpět/znovu v %1: %2: %3</translation>
     </message>
@@ -2182,6 +2225,11 @@
         <source>No such option: %1</source>
         <comment>No such import / export option</comment>
         <translation>Neexistuje volba: %1</translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="252"/>
+        <source>Geospatial vector data</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2244,13 +2292,13 @@
     </message>
     <message>
         <location filename="../src/fileformats/native_file_format.cpp" line="136"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="414"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="454"/>
         <source>Invalid file format version.</source>
         <translation>Neplatná verze souborového formátu.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/native_file_format.cpp" line="140"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="416"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="456"/>
         <source>Unsupported old file format version. Please use an older program version to load and update the file.</source>
         <translation>Nepodporovaná stará verze souborového formátu. Použijte, prosím, starší verzi programu k otevření souboru a k jeho opětovnému uložení.</translation>
     </message>
@@ -2301,12 +2349,12 @@
         <translation>Nepodařilo se přečíst soubor: %1</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="408"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="448"/>
         <source>Unsupported file format.</source>
         <translation>Nepodporovaný souborový formát.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="418"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="458"/>
         <source>Unsupported new file format version. Some map features will not be loaded or saved by this version of the program.</source>
         <translation>Nepodporovaná nová verze souborového formátu. Některé mapové prvky nejsou touto verzí nahrány nebo uloženy.</translation>
     </message>
@@ -2314,6 +2362,13 @@
         <location filename="../src/fileformats/file_format.cpp" line="79"/>
         <source>Format (%1) does not support import</source>
         <translation>Formát (%1) nepodporuje import</translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="368"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="1180"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="1221"/>
+        <source>Could not read '%1': %2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4485,27 +4540,27 @@ symbolů</translation>
         <translation>- Mapa -</translation>
     </message>
     <message>
-        <location filename="../src/core/map_printer.cpp" line="1217"/>
+        <location filename="../src/core/map_printer.cpp" line="1201"/>
         <source>Processing separations of page %1...</source>
         <translation>Probíhá zpracování separací na straně %1...</translation>
     </message>
     <message>
-        <location filename="../src/core/map_printer.cpp" line="1218"/>
+        <location filename="../src/core/map_printer.cpp" line="1202"/>
         <source>Processing page %1...</source>
         <translation>Probíhá zpracování strany %1...</translation>
     </message>
     <message>
-        <location filename="../src/core/map_printer.cpp" line="1268"/>
+        <location filename="../src/core/map_printer.cpp" line="1252"/>
         <source>Canceled</source>
         <translation>Zrušeno</translation>
     </message>
     <message>
-        <location filename="../src/core/map_printer.cpp" line="1272"/>
+        <location filename="../src/core/map_printer.cpp" line="1256"/>
         <source>Error</source>
         <translation>Chyba</translation>
     </message>
     <message>
-        <location filename="../src/core/map_printer.cpp" line="1277"/>
+        <location filename="../src/core/map_printer.cpp" line="1261"/>
         <source>Finished</source>
         <translation>Dokončeno</translation>
     </message>
@@ -5202,6 +5257,82 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     </message>
 </context>
 <context>
+    <name>OgrFileImport</name>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="293"/>
+        <source>Unable to setup "%1" SRS for GDAL: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="300"/>
+        <source>Purple</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="313"/>
+        <source>Point</source>
+        <translation type="unfinished">Bod</translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="320"/>
+        <source>Line</source>
+        <translation type="unfinished">Linie</translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="329"/>
+        <source>Area</source>
+        <translation type="unfinished">Plocha</translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="335"/>
+        <source>Text</source>
+        <translation type="unfinished">Text</translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="394"/>
+        <source>Unable to load layer %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../src/gdal/ogr_file_format.cpp" line="442"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="447"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="452"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="457"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="462"/>
+        <source>Unable to load %n objects, reason: %1</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="443"/>
+        <source>Empty geometry.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="448"/>
+        <source>Can't determine the coordinate transformation: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="453"/>
+        <source>Failed to transform the coordinates.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="458"/>
+        <source>Unknown or unsupported geometry type.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="463"/>
+        <source>Not enough coordinates.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>OpenOrienteering</name>
     <message>
         <location filename="../packaging/translations.cpp" line="10"/>
@@ -5265,7 +5396,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
 <context>
     <name>PointSymbolEditorTool</name>
     <message>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="967"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="966"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Add a coordinate. &lt;b&gt;%1+Click&lt;/b&gt;: Change the selected coordinate. </source>
         <translation>&lt;b&gt;Klepnutí&lt;/b&gt;: Přidá souřadnice. &lt;b&gt;%1 + klepnutí&lt;/b&gt;: Změní vybrané souřadnice. </translation>
     </message>
@@ -5284,19 +5415,19 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="74"/>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="929"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="928"/>
         <source>Point</source>
         <translation>Bod</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="75"/>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="931"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="930"/>
         <source>Line</source>
         <translation>Linie</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="76"/>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="933"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="932"/>
         <source>Area</source>
         <translation>Plocha</translation>
     </message>
@@ -5424,7 +5555,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
         <translation>[Středový bod]</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="936"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="935"/>
         <source>Unknown</source>
         <translation>Neznámý</translation>
     </message>
@@ -5707,130 +5838,130 @@ barev</translation>
         <translation>dpi</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1078"/>
+        <location filename="../src/gui/print_widget.cpp" line="1082"/>
         <source>Not supported on Android.</source>
         <translation>Není podporováno v systému Android.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1086"/>
+        <location filename="../src/gui/print_widget.cpp" line="1090"/>
         <source>Failed to prepare the preview.</source>
         <translation>Nepodařilo se připravit náhled.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1097"/>
+        <location filename="../src/gui/print_widget.cpp" line="1101"/>
         <source>Print Preview Progress</source>
         <translation>Postup zobrazení náhledu tisku</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1114"/>
+        <location filename="../src/gui/print_widget.cpp" line="1118"/>
         <source>Warning</source>
         <translation>Varování</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1115"/>
+        <location filename="../src/gui/print_widget.cpp" line="1119"/>
         <source>A non-standard view mode is activated. Are you sure to print / export the map like this?</source>
         <translation>Je aktivní nestandardní režim zobrazení. Opravdu chcete mapu takto vytisknout / exportovat?</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1132"/>
+        <location filename="../src/gui/print_widget.cpp" line="1136"/>
         <source>PNG</source>
         <translation>PNG</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1133"/>
+        <location filename="../src/gui/print_widget.cpp" line="1137"/>
         <source>BMP</source>
         <translation>BMP</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1134"/>
+        <location filename="../src/gui/print_widget.cpp" line="1138"/>
         <source>TIFF</source>
         <translation>TIFF</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1135"/>
+        <location filename="../src/gui/print_widget.cpp" line="1139"/>
         <source>JPEG</source>
         <translation>JPEG</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1189"/>
+        <location filename="../src/gui/print_widget.cpp" line="1193"/>
         <source>Failed to prepare the PDF export.</source>
         <translation>Nepodařilo se připravit export do PDF.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1199"/>
+        <location filename="../src/gui/print_widget.cpp" line="1203"/>
         <source>PDF</source>
         <translation>PDF</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1252"/>
+        <location filename="../src/gui/print_widget.cpp" line="1256"/>
         <source>An error occurred during printing.</source>
         <translation>Při tisku se vyskytla chyba.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1137"/>
-        <location filename="../src/gui/print_widget.cpp" line="1165"/>
-        <location filename="../src/gui/print_widget.cpp" line="1201"/>
-        <location filename="../src/gui/print_widget.cpp" line="1213"/>
+        <location filename="../src/gui/print_widget.cpp" line="1141"/>
+        <location filename="../src/gui/print_widget.cpp" line="1169"/>
+        <location filename="../src/gui/print_widget.cpp" line="1205"/>
+        <location filename="../src/gui/print_widget.cpp" line="1217"/>
         <source>Export map ...</source>
         <translatorcomment>Check original</translatorcomment>
         <translation>Exportovat mapu...</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1136"/>
-        <location filename="../src/gui/print_widget.cpp" line="1200"/>
+        <location filename="../src/gui/print_widget.cpp" line="1140"/>
+        <location filename="../src/gui/print_widget.cpp" line="1204"/>
         <source>All files (*.*)</source>
         <translation>Všechny soubory (*.*)</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1078"/>
-        <location filename="../src/gui/print_widget.cpp" line="1086"/>
-        <location filename="../src/gui/print_widget.cpp" line="1155"/>
-        <location filename="../src/gui/print_widget.cpp" line="1174"/>
-        <location filename="../src/gui/print_widget.cpp" line="1189"/>
-        <location filename="../src/gui/print_widget.cpp" line="1219"/>
-        <location filename="../src/gui/print_widget.cpp" line="1238"/>
-        <location filename="../src/gui/print_widget.cpp" line="1252"/>
-        <location filename="../src/gui/print_widget.cpp" line="1265"/>
-        <location filename="../src/gui/print_widget.cpp" line="1329"/>
+        <location filename="../src/gui/print_widget.cpp" line="1082"/>
+        <location filename="../src/gui/print_widget.cpp" line="1090"/>
+        <location filename="../src/gui/print_widget.cpp" line="1159"/>
+        <location filename="../src/gui/print_widget.cpp" line="1178"/>
+        <location filename="../src/gui/print_widget.cpp" line="1193"/>
+        <location filename="../src/gui/print_widget.cpp" line="1223"/>
+        <location filename="../src/gui/print_widget.cpp" line="1242"/>
+        <location filename="../src/gui/print_widget.cpp" line="1256"/>
+        <location filename="../src/gui/print_widget.cpp" line="1269"/>
+        <location filename="../src/gui/print_widget.cpp" line="1333"/>
         <source>Error</source>
         <translation>Chyba</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1174"/>
+        <location filename="../src/gui/print_widget.cpp" line="1178"/>
         <source>Failed to save the image. Does the path exist? Do you have sufficient rights?</source>
         <translatorcomment>Check original.</translatorcomment>
         <translation>Nepodařilo se uložit obrázek. Existuje cesta? Máte dostatečná práva?</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1178"/>
-        <location filename="../src/gui/print_widget.cpp" line="1223"/>
+        <location filename="../src/gui/print_widget.cpp" line="1182"/>
+        <location filename="../src/gui/print_widget.cpp" line="1227"/>
         <source>Exported successfully to %1</source>
         <translatorcomment>Check original</translatorcomment>
         <translation>Úspěšně exportováno do %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1219"/>
+        <location filename="../src/gui/print_widget.cpp" line="1223"/>
         <source>Failed to finish the PDF export.</source>
         <translation>Nepodařilo se dokončit export do PDF.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1238"/>
+        <location filename="../src/gui/print_widget.cpp" line="1242"/>
         <source>Failed to prepare the printing.</source>
         <translation>Nepodařilo se připravit tisk.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1247"/>
+        <location filename="../src/gui/print_widget.cpp" line="1251"/>
         <source>Printing Progress</source>
         <translation>Průběh tisku</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1155"/>
+        <location filename="../src/gui/print_widget.cpp" line="1159"/>
         <source>Failed to prepare the image. Not enough memory.</source>
         <translation>Nepodařilo se připravit obrázek. Nedostatek paměti.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1229"/>
-        <location filename="../src/gui/print_widget.cpp" line="1261"/>
+        <location filename="../src/gui/print_widget.cpp" line="1233"/>
+        <location filename="../src/gui/print_widget.cpp" line="1265"/>
         <source>Canceled.</source>
         <translation>Zrušeno.</translation>
     </message>
@@ -5839,24 +5970,24 @@ barev</translation>
         <translation type="vanished">Tisk</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1265"/>
+        <location filename="../src/gui/print_widget.cpp" line="1269"/>
         <source>The print job could not be stopped.</source>
         <translation>Tiskovou úlohu se nepodařilo zastavit.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1256"/>
+        <location filename="../src/gui/print_widget.cpp" line="1260"/>
         <source>Successfully created print job</source>
         <translation>Tisková úloha úspěšně vytvořena</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1313"/>
-        <location filename="../src/gui/print_widget.cpp" line="1321"/>
+        <location filename="../src/gui/print_widget.cpp" line="1317"/>
+        <location filename="../src/gui/print_widget.cpp" line="1325"/>
         <source>Unknown</source>
         <comment>Paper size</comment>
         <translation>Neznámý</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1329"/>
+        <location filename="../src/gui/print_widget.cpp" line="1333"/>
         <source>The map area is empty. Output canceled.</source>
         <translation>Oblast mapy je prázdná. Výstup zrušen.</translation>
     </message>
@@ -7788,7 +7919,7 @@ Nejvyšší podporovaná verze je %2.</translation>
 <context>
     <name>XMLFileExporter</name>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="184"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="185"/>
         <source>Older versions of Mapper do not support multiple map parts. To save the map in compatibility mode, you must first merge all map parts.</source>
         <translation>Starší verze Mapperu nepodporují více mapových částí. Pro uložení souboru v režimu kompatibility musíte nejprve všechny části mapy sloučit.</translation>
     </message>
@@ -7796,27 +7927,27 @@ Nejvyšší podporovaná verze je %2.</translation>
 <context>
     <name>XMLFileImporter</name>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="397"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="437"/>
         <source>Unsupported element: %1 (line %2 column %3)</source>
         <translation>Nepodporovaný prvek: %1 (řádek %2, sloupec %3)</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="428"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="468"/>
         <source>Some coordinates were out of bounds for printing. Map content was adjusted.</source>
         <translation>Některé souřadnice byly mimo hranice tisku. Obsah mapy byl přizpůsoben.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="478"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="518"/>
         <source>unknown</source>
         <translation>neznámý</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="479"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="519"/>
         <source>Parts of this file cannot be read by this version of Mapper. Minimum required version: %1</source>
         <translation>Části souboru nelze totuto verzí Mapperu přečíst. Nejnižší požadovaná verze: %1</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="513"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="553"/>
         <source>Error at line %1 column %2: %3</source>
         <translation>Chyba na řádku %1, ve sloupci %2: %3</translation>
     </message>
@@ -7825,44 +7956,44 @@ Nejvyšší podporovaná verze je %2.</translation>
         <translation type="vanished">Mapové poznámky nebylo možné načíst.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="525"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="782"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="565"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="822"/>
         <source>Some invalid characters had to be removed.</source>
         <translation>Některé neplatné znaky musejí být odstraněny.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="543"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="583"/>
         <source>Unknown error</source>
         <translation>Neznámá chyba</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="544"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="584"/>
         <source>Unsupported or invalid georeferencing specification '%1': %2</source>
         <translation>Nepodporovaná nebo neplatná specifikace souřadnicového systému '%1': %2</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="676"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="729"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="716"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="769"/>
         <source>Could not set knockout property of color '%1'.</source>
         <translation>Nelze nastavit vlastnosti vyřezání (knockout) u barvy '%1'.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="689"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="729"/>
         <source>Expected %1 colors, found %2.</source>
         <translation>Očekáváno %1 barev, nalezeno %2.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="705"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="745"/>
         <source>Spot color %1 not found while processing %2 (%3).</source>
         <translation>Přímá barva %1 nebyla při zpracování %2 (%3) nalezena.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="760"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="800"/>
         <source>Expected %1 symbols, found %2.</source>
         <translation>Očekáváno %1 symbolů, nalezeno %2.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="799"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="839"/>
         <source>Expected %1 map parts, found %2.</source>
         <translation>Očekáváno %1 částí mapy, nalezeno %2.</translation>
     </message>
