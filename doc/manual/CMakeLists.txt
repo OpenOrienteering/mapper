@@ -73,6 +73,7 @@ mark_as_advanced(DOXYGEN_EXECUTABLE)
 configure_file(preprocess-markdown.cmake.in preprocess-markdown.cmake @ONLY)
 add_custom_target(Mapper-manual-pages
   COMMAND "${CMAKE_COMMAND}" -P preprocess-markdown.cmake
+  BYPRODUCTS preprocess-markdown.stamp
 )
 
 if(NOT MANUAL_SECTIONS)
@@ -96,7 +97,7 @@ configure_file(Doxyfile.in Doxyfile @ONLY)
 
 configure_file(postprocess-qhp.cmake.in postprocess-qhp.cmake @ONLY)
 add_custom_command( 
-  OUTPUT    "${CMAKE_CURRENT_BINARY_DIR}/html/index.qhp"
+  OUTPUT    "html/index.qhp"
   COMMAND   "${CMAKE_COMMAND}" -E remove_directory html
   COMMAND   "${DOXYGEN_EXECUTABLE}" Doxyfile
   COMMAND   "${CMAKE_COMMAND}" -P postprocess-qhp.cmake
@@ -110,7 +111,6 @@ add_custom_command(
             style.css
   COMMENT   "Running doxygen on the manual"
 )
-set_source_files_properties(preprocess-markdown.stamp PROPERTIES GENERATED 1)
 
 if(Mapper_MANUAL_QTHELP)
 	set(MAPPER_MANUAL_TARGET "${Mapper_HELP_COLLECTION}")
@@ -119,9 +119,8 @@ if(Mapper_MANUAL_QTHELP)
 	            "${Mapper_COMPRESSED_HELP}"
 	  COMMAND   "${Qt5Help_QCOLLECTIONGENERATOR_EXECUTABLE}" Manual.qhcp
 	            -o "${Mapper_HELP_COLLECTION}"
-	  MAIN_DEPENDENCY ${CMAKE_CURRENT_BINARY_DIR}/html/index.qhp
+	  MAIN_DEPENDENCY "html/index.qhp"
 	  DEPENDS   "${CMAKE_CURRENT_BINARY_DIR}/Manual.qhcp"
-	            "${CMAKE_CURRENT_BINARY_DIR}/html/index.qhp"
 	  WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
 	  COMMENT   "Running qcollectiongenerator on the manual"
 	)
@@ -131,7 +130,7 @@ if(Mapper_MANUAL_QTHELP)
 	  DESTINATION "${MAPPER_ABOUT_DESTINATION}"
 	)
 else()
-	set(MAPPER_MANUAL_TARGET "${CMAKE_CURRENT_BINARY_DIR}/html/index.qhp")
+	set(MAPPER_MANUAL_TARGET "html/index.qhp")
 	file(APPEND "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile" \n
 	  "FILE_PATTERNS          = android* toolbar*" \n
 	  "USE_MDFILE_AS_MAINPAGE = android-index.md" \n
@@ -153,7 +152,8 @@ endif()
 add_custom_target(Mapper-manual ALL
   DEPENDS   "${MAPPER_MANUAL_TARGET}"
   # Sources to be listed in Qt Creator
-  SOURCES   header.html
-  footer.html
-  style.css
+  SOURCES
+    header.html
+    footer.html
+    style.css
 )
