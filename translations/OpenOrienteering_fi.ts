@@ -1098,7 +1098,7 @@
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="471"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a text object with a single anchor. &lt;b&gt;Drag&lt;/b&gt;: Create a text box. </source>
-        <translation>&lt;b&gt;Klikkaa&lt;/b&gt;:Kirjoita tekstiä. &lt;b&gt;Vedä&lt;/b&gt;: Tee tekstilaatikko. </translation>
+        <translation>&lt;b&gt;Klikkaa&lt;/b&gt;: Kirjoita tekstiä. &lt;b&gt;Vedä&lt;/b&gt;: Tee tekstilaatikko. </translation>
     </message>
     <message>
         <source>A</source>
@@ -1406,42 +1406,42 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="44"/>
         <source>Import with GDAL/OGR:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tuo GDAL/OGR:lla:</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="46"/>
         <source>DXF</source>
-        <translation type="unfinished"></translation>
+        <translation>DXF</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="49"/>
         <source>GPX</source>
-        <translation type="unfinished"></translation>
+        <translation>GPX</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="52"/>
         <source>OSM</source>
-        <translation type="unfinished"></translation>
+        <translation>OSM</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="56"/>
         <source>Configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Asetukset</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="64"/>
         <source>Parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Parametri</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="64"/>
         <source>Value</source>
-        <translation type="unfinished">Arvo</translation>
+        <translation>Arvo</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="83"/>
         <source>GDAL/OGR</source>
-        <translation type="unfinished"></translation>
+        <translation>GDAL/OGR</translation>
     </message>
 </context>
 <context>
@@ -2106,7 +2106,7 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="540"/>
         <source>No map files found!&lt;br/&gt;&lt;br/&gt;Copy map files to a top-level folder named 'OOMapper' on the device or a memory card.</source>
-        <translation>Kartta tiedostoa ei löydy!&lt;br/&gt;&lt;br/&gt; Kopio karttatiedosto laitteen tai muistikortin juuressa olevaan  'OOMapper' kansioon.</translation>
+        <translation>Kartta tiedostoa ei löydy!&lt;br/&gt;&lt;br/&gt; Kopio karttatiedosto laitteen tai muistikortin juuressa olevaan 'OOMapper' kansioon.</translation>
     </message>
 </context>
 <context>
@@ -2336,7 +2336,7 @@ löytääksesi taustakarttatiedoston nimen.</translation>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1180"/>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1221"/>
         <source>Could not read '%1': %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Ei voitu lukea '%1': %2</translation>
     </message>
 </context>
 <context>
@@ -2918,7 +2918,7 @@ Paina Ei valitaksesi toisen tiedostomuodon.</translation>
 because saving as %2 (.%3) is not supported.</source>
         <translation>Karttaa ei voi viedä
 "%1"
-tallentaminen %2 ( %3) ei ole tuettu.</translation>
+tallentaminen %2 (.%3) ei ole tuettu.</translation>
     </message>
     <message>
         <location filename="../src/core/map.cpp" line="609"/>
@@ -5169,32 +5169,32 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="300"/>
         <source>Purple</source>
-        <translation type="unfinished"></translation>
+        <translation>Sinipunainen</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="313"/>
         <source>Point</source>
-        <translation type="unfinished">Piste</translation>
+        <translation>Piste</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="320"/>
         <source>Line</source>
-        <translation type="unfinished">Viiva</translation>
+        <translation>Viiva</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="329"/>
         <source>Area</source>
-        <translation type="unfinished">Alue</translation>
+        <translation>Alue</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="335"/>
         <source>Text</source>
-        <translation type="unfinished">Teksti</translation>
+        <translation>Teksti</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="394"/>
         <source>Unable to load layer %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tasoa %1 ei voitu ladata.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gdal/ogr_file_format.cpp" line="442"/>
@@ -5211,7 +5211,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="443"/>
         <source>Empty geometry.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tyhjä geometria.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="448"/>
@@ -5226,12 +5226,12 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="458"/>
         <source>Unknown or unsupported geometry type.</source>
-        <translation type="unfinished"></translation>
+        <translation>Geometrian tyyppiä ei tunnisteta tai ei tueta.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="463"/>
         <source>Not enough coordinates.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ei ole riittävästi koordinaatteja.</translation>
     </message>
 </context>
 <context>
