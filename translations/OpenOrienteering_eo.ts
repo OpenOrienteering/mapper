@@ -835,7 +835,7 @@
         <location filename="../src/tools/draw_path_tool.cpp" line="1065"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="700"/>
         <source>&lt;b&gt;Dash points on.&lt;/b&gt; </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Uzi strekpunktojn.&lt;/b&gt; </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1071"/>
@@ -926,7 +926,7 @@
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1100"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Draw a straight line. &lt;b&gt;Drag&lt;/b&gt;: Draw a curve. &lt;b&gt;Right or double click&lt;/b&gt;: Finish the path. &lt;b&gt;%1&lt;/b&gt;: Close the path. </source>
-        <translation>&lt;b&gt;Klaki&lt;/b&gt;: Desegni rektan linion. &lt;b&gt;Treni&lt;/b&gt;: Desegni kurbon. &lt;b&gt;Dekstra aŭ duobla klako&lt;/b&gt;: Fini la vojon. &lt;b&gt;%1&lt;/b&gt;: Fermi la vojon. </translation>
+        <translation>&lt;b&gt;Klaki&lt;/b&gt;: Desegni rektan linion. &lt;b&gt;Treni&lt;/b&gt;: Desegni kurbon. &lt;b&gt;Dekstre aŭ duoble alklaki&lt;/b&gt;: Fini la vojon. &lt;b&gt;%1&lt;/b&gt;: Fermi la vojon. </translation>
     </message>
 </context>
 <context>
@@ -1028,7 +1028,7 @@
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="716"/>
         <source>&lt;b&gt;Click or Drag&lt;/b&gt;: Start drawing a rectangle. </source>
-        <translation>&lt;b&gt;Klaki aŭ Treni&lt;/b&gt;: Komenci desegni rektangulon. </translation>
+        <translation>&lt;b&gt;Klaki aŭ treni&lt;/b&gt;: Komenci desegni rektangulon. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="729"/>
@@ -1123,17 +1123,17 @@
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="738"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new dash point; with &lt;b&gt;%2&lt;/b&gt;: Add a normal point. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+Klaki&lt;/b&gt; sur punkto: Forigi ĝin; sur vojo: Aldoni novan strekpunkton; kun &lt;b&gt;%2&lt;/b&gt;: Aldoni normalan punkton. </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="741"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new point; with &lt;b&gt;%2&lt;/b&gt;: Add a dash point. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+Klaki&lt;/b&gt; sur punkto: Forigi ĝin; sur vojo: Aldoni novan punkton; kun &lt;b&gt;%2&lt;/b&gt;: Aldoni strekpunkton. </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="745"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point to switch between dash and normal point. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+Klaki&lt;/b&gt; sur punkto por ŝalti inter streka kaj normala punkto. </translation>
     </message>
 </context>
 <context>
@@ -1355,6 +1355,49 @@
         <location filename="../src/sensors/gps_display.cpp" line="90"/>
         <source>No</source>
         <translation>Ne</translation>
+    </message>
+</context>
+<context>
+    <name>GdalSettingsPage</name>
+    <message>
+        <location filename="../src/gdal/gdal_settings_page.cpp" line="44"/>
+        <source>Import with GDAL/OGR:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/gdal_settings_page.cpp" line="46"/>
+        <source>DXF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/gdal_settings_page.cpp" line="49"/>
+        <source>GPX</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/gdal_settings_page.cpp" line="52"/>
+        <source>OSM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/gdal_settings_page.cpp" line="56"/>
+        <source>Configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/gdal_settings_page.cpp" line="64"/>
+        <source>Parameter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/gdal_settings_page.cpp" line="64"/>
+        <source>Value</source>
+        <translation type="unfinished">Valoro</translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/gdal_settings_page.cpp" line="83"/>
+        <source>GDAL/OGR</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1638,7 +1681,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="362"/>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="675"/>
         <source>Online declination lookup</source>
-        <translation type="unfinished"></translation>
+        <translation>Reta serĉo por deklinacio</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="94"/>
@@ -1809,7 +1852,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="704"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the reference point. &lt;b&gt;Right click&lt;/b&gt;: Cancel.</source>
-        <translation>&lt;b&gt;Klaki&lt;/b&gt;: Agordi referencan punkton. &lt;b&gt;Klaki dekstre&lt;/b&gt;: Rezigni.</translation>
+        <translation>&lt;b&gt;Klaki&lt;/b&gt;: Agordi referencan punkton. &lt;b&gt;Dekstre alklaki&lt;/b&gt;: Rezigni.</translation>
     </message>
 </context>
 <context>
@@ -1922,17 +1965,17 @@
 <context>
     <name>ImportExport</name>
     <message>
-        <location filename="../src/core/symbols/symbol.cpp" line="226"/>
+        <location filename="../src/core/symbols/symbol.cpp" line="229"/>
         <source>Error while loading a symbol of type %1 at line %2 column %3.</source>
         <translation>Eraro dum ŝarĝo de simbolo de tipo %1 ĉe linio %2 kolumno %3.</translation>
     </message>
     <message>
-        <location filename="../src/core/symbols/symbol.cpp" line="234"/>
+        <location filename="../src/core/symbols/symbol.cpp" line="237"/>
         <source>Symbol ID '%1' not unique at line %2 column %3.</source>
         <translation>Simbola ID '%1' ne estas unika ĉe linio %2 kolumno %3.</translation>
     </message>
     <message>
-        <location filename="../src/core/symbols/symbol.cpp" line="282"/>
+        <location filename="../src/core/symbols/symbol.cpp" line="285"/>
         <source>Error while loading a symbol of type %1 at line %2 column %3: %4</source>
         <translation>Eraro dum ŝarĝo de simbolo de tipo %1 ĉe linio %2 kolumno %3: %4</translation>
     </message>
@@ -1958,7 +2001,7 @@
     </message>
     <message>
         <location filename="../src/fileformats/native_file_format.cpp" line="92"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="68"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="69"/>
         <source>OpenOrienteering Mapper</source>
         <translation>OpenOrienteering Mapper</translation>
     </message>
@@ -1973,24 +2016,24 @@
         <translation>OCAD</translation>
     </message>
     <message>
-        <location filename="../src/util/xml_stream_util.cpp" line="176"/>
-        <location filename="../src/util/xml_stream_util.cpp" line="192"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="187"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="203"/>
         <source>Could not parse the coordinates.</source>
         <translation>Ne eblis analizi la koordinatojn.</translation>
     </message>
     <message>
-        <location filename="../src/util/xml_stream_util.cpp" line="216"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="227"/>
         <source>Expected %1 coordinates, found %2.</source>
         <translation>Atendita %1 koordinatoj, %2 estis trovita.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="886"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="926"/>
         <source>Error while loading the printing configuration at %1:%2: %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="899"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="913"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="939"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="953"/>
         <source>Error while loading the undo/redo steps at %1:%2: %3</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1999,6 +2042,11 @@
         <source>No such option: %1</source>
         <comment>No such import / export option</comment>
         <translation>Tia opcio ne ekzistas: %1</translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="252"/>
+        <source>Geospatial vector data</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2056,13 +2104,13 @@
     </message>
     <message>
         <location filename="../src/fileformats/native_file_format.cpp" line="136"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="414"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="454"/>
         <source>Invalid file format version.</source>
         <translation>Nevalida versio de dosierformo.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/native_file_format.cpp" line="140"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="416"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="456"/>
         <source>Unsupported old file format version. Please use an older program version to load and update the file.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2113,12 +2161,12 @@
         <translation>Ne eblis legi dosieron: %1</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="408"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="448"/>
         <source>Unsupported file format.</source>
         <translation>Nesubtenata dosierformo.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="418"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="458"/>
         <source>Unsupported new file format version. Some map features will not be loaded or saved by this version of the program.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2126,6 +2174,13 @@
         <location filename="../src/fileformats/file_format.cpp" line="79"/>
         <source>Format (%1) does not support import</source>
         <translation>Formo (%1) ne subtenas importon</translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="368"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="1180"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="1221"/>
+        <source>Could not read '%1': %2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3581,7 +3636,7 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1795"/>
         <source>Scale to percentage:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Skali en elcentoj:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1819"/>
@@ -4184,27 +4239,27 @@ elektitaj</translation>
         <translation>- Mapo -</translation>
     </message>
     <message>
-        <location filename="../src/core/map_printer.cpp" line="1217"/>
+        <location filename="../src/core/map_printer.cpp" line="1201"/>
         <source>Processing separations of page %1...</source>
         <translation>Traktado de disiĝoj de paĝo %1…</translation>
     </message>
     <message>
-        <location filename="../src/core/map_printer.cpp" line="1218"/>
+        <location filename="../src/core/map_printer.cpp" line="1202"/>
         <source>Processing page %1...</source>
         <translation>Traktado de paĝo %1…</translation>
     </message>
     <message>
-        <location filename="../src/core/map_printer.cpp" line="1268"/>
+        <location filename="../src/core/map_printer.cpp" line="1252"/>
         <source>Canceled</source>
         <translation>Rezignita</translation>
     </message>
     <message>
-        <location filename="../src/core/map_printer.cpp" line="1272"/>
+        <location filename="../src/core/map_printer.cpp" line="1256"/>
         <source>Error</source>
         <translation>Eraro</translation>
     </message>
     <message>
-        <location filename="../src/core/map_printer.cpp" line="1277"/>
+        <location filename="../src/core/map_printer.cpp" line="1261"/>
         <source>Finished</source>
         <translation>Finigita</translation>
     </message>
@@ -4852,6 +4907,81 @@ zoom using the mouse wheel, if available.</source>
     </message>
 </context>
 <context>
+    <name>OgrFileImport</name>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="293"/>
+        <source>Unable to setup "%1" SRS for GDAL: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="300"/>
+        <source>Purple</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="313"/>
+        <source>Point</source>
+        <translation type="unfinished">Punkto</translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="320"/>
+        <source>Line</source>
+        <translation type="unfinished">Linio</translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="329"/>
+        <source>Area</source>
+        <translation type="unfinished">Areo</translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="335"/>
+        <source>Text</source>
+        <translation type="unfinished">Teksto</translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="394"/>
+        <source>Unable to load layer %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../src/gdal/ogr_file_format.cpp" line="442"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="447"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="452"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="457"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="462"/>
+        <source>Unable to load %n objects, reason: %1</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="443"/>
+        <source>Empty geometry.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="448"/>
+        <source>Can't determine the coordinate transformation: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="453"/>
+        <source>Failed to transform the coordinates.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="458"/>
+        <source>Unknown or unsupported geometry type.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="463"/>
+        <source>Not enough coordinates.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>OpenOrienteering</name>
     <message>
         <location filename="../packaging/translations.cpp" line="10"/>
@@ -4915,7 +5045,7 @@ zoom using the mouse wheel, if available.</source>
 <context>
     <name>PointSymbolEditorTool</name>
     <message>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="967"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="966"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Add a coordinate. &lt;b&gt;%1+Click&lt;/b&gt;: Change the selected coordinate. </source>
         <translation>&lt;b&gt;Klaki&lt;/b&gt;: Aldoni koordinaton. &lt;b&gt;%1+Klaki&lt;/b&gt;: Ŝanĝi la elektitan koordinaton. </translation>
     </message>
@@ -4934,19 +5064,19 @@ zoom using the mouse wheel, if available.</source>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="74"/>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="929"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="928"/>
         <source>Point</source>
         <translation>Punkto</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="75"/>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="931"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="930"/>
         <source>Line</source>
         <translation>Linio</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="76"/>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="933"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="932"/>
         <source>Area</source>
         <translation>Areo</translation>
     </message>
@@ -5074,7 +5204,7 @@ zoom using the mouse wheel, if available.</source>
         <translation>[Mezo]</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="936"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="935"/>
         <source>Unknown</source>
         <translation>Nekonata</translation>
     </message>
@@ -5315,100 +5445,100 @@ zoom using the mouse wheel, if available.</source>
         <translation>dpi</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1078"/>
+        <location filename="../src/gui/print_widget.cpp" line="1082"/>
         <source>Not supported on Android.</source>
         <translation>Nesubtenata sur Androjdo.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1086"/>
+        <location filename="../src/gui/print_widget.cpp" line="1090"/>
         <source>Failed to prepare the preview.</source>
         <translation>Fiaskis pretigi antaŭrigardon.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1097"/>
+        <location filename="../src/gui/print_widget.cpp" line="1101"/>
         <source>Print Preview Progress</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1114"/>
+        <location filename="../src/gui/print_widget.cpp" line="1118"/>
         <source>Warning</source>
         <translation>Averto</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1115"/>
+        <location filename="../src/gui/print_widget.cpp" line="1119"/>
         <source>A non-standard view mode is activated. Are you sure to print / export the map like this?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1132"/>
+        <location filename="../src/gui/print_widget.cpp" line="1136"/>
         <source>PNG</source>
         <translation>PNG</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1133"/>
+        <location filename="../src/gui/print_widget.cpp" line="1137"/>
         <source>BMP</source>
         <translation>BMP</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1134"/>
+        <location filename="../src/gui/print_widget.cpp" line="1138"/>
         <source>TIFF</source>
         <translation>TIFF</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1135"/>
+        <location filename="../src/gui/print_widget.cpp" line="1139"/>
         <source>JPEG</source>
         <translation>JPEG</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1189"/>
+        <location filename="../src/gui/print_widget.cpp" line="1193"/>
         <source>Failed to prepare the PDF export.</source>
         <translation>Fiaskis pretigi PDF-eksporton.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1199"/>
+        <location filename="../src/gui/print_widget.cpp" line="1203"/>
         <source>PDF</source>
         <translation>PDF</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1252"/>
+        <location filename="../src/gui/print_widget.cpp" line="1256"/>
         <source>An error occurred during printing.</source>
         <translation>Eraro okazis dum presado.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1137"/>
-        <location filename="../src/gui/print_widget.cpp" line="1165"/>
-        <location filename="../src/gui/print_widget.cpp" line="1201"/>
-        <location filename="../src/gui/print_widget.cpp" line="1213"/>
+        <location filename="../src/gui/print_widget.cpp" line="1141"/>
+        <location filename="../src/gui/print_widget.cpp" line="1169"/>
+        <location filename="../src/gui/print_widget.cpp" line="1205"/>
+        <location filename="../src/gui/print_widget.cpp" line="1217"/>
         <source>Export map ...</source>
         <translation>Eksporti mapon …</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1136"/>
-        <location filename="../src/gui/print_widget.cpp" line="1200"/>
+        <location filename="../src/gui/print_widget.cpp" line="1140"/>
+        <location filename="../src/gui/print_widget.cpp" line="1204"/>
         <source>All files (*.*)</source>
         <translation>Ĉiuj dosieroj (*.*)</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1238"/>
+        <location filename="../src/gui/print_widget.cpp" line="1242"/>
         <source>Failed to prepare the printing.</source>
         <translation>Fiaskis pretigi presadon.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1247"/>
+        <location filename="../src/gui/print_widget.cpp" line="1251"/>
         <source>Printing Progress</source>
         <translation>Plenumo de presado</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1078"/>
-        <location filename="../src/gui/print_widget.cpp" line="1086"/>
-        <location filename="../src/gui/print_widget.cpp" line="1155"/>
-        <location filename="../src/gui/print_widget.cpp" line="1174"/>
-        <location filename="../src/gui/print_widget.cpp" line="1189"/>
-        <location filename="../src/gui/print_widget.cpp" line="1219"/>
-        <location filename="../src/gui/print_widget.cpp" line="1238"/>
-        <location filename="../src/gui/print_widget.cpp" line="1252"/>
-        <location filename="../src/gui/print_widget.cpp" line="1265"/>
-        <location filename="../src/gui/print_widget.cpp" line="1329"/>
+        <location filename="../src/gui/print_widget.cpp" line="1082"/>
+        <location filename="../src/gui/print_widget.cpp" line="1090"/>
+        <location filename="../src/gui/print_widget.cpp" line="1159"/>
+        <location filename="../src/gui/print_widget.cpp" line="1178"/>
+        <location filename="../src/gui/print_widget.cpp" line="1193"/>
+        <location filename="../src/gui/print_widget.cpp" line="1223"/>
+        <location filename="../src/gui/print_widget.cpp" line="1242"/>
+        <location filename="../src/gui/print_widget.cpp" line="1256"/>
+        <location filename="../src/gui/print_widget.cpp" line="1269"/>
+        <location filename="../src/gui/print_widget.cpp" line="1333"/>
         <source>Error</source>
         <translation>Eraro</translation>
     </message>
@@ -5439,51 +5569,51 @@ apartigoj</translation>
         <translation>Reĝimo:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1155"/>
+        <location filename="../src/gui/print_widget.cpp" line="1159"/>
         <source>Failed to prepare the image. Not enough memory.</source>
         <translation>Fiaskis pretigi bildon. Ne estas sufiĉe da memoro.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1174"/>
+        <location filename="../src/gui/print_widget.cpp" line="1178"/>
         <source>Failed to save the image. Does the path exist? Do you have sufficient rights?</source>
         <translation>Fiaskis konservi la bildon. Ĉu la vojo ekzistas? Ĉu vi havas sufiĉaj rajtoj?</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1178"/>
-        <location filename="../src/gui/print_widget.cpp" line="1223"/>
+        <location filename="../src/gui/print_widget.cpp" line="1182"/>
+        <location filename="../src/gui/print_widget.cpp" line="1227"/>
         <source>Exported successfully to %1</source>
         <translation>Sukcese eksportita al %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1219"/>
+        <location filename="../src/gui/print_widget.cpp" line="1223"/>
         <source>Failed to finish the PDF export.</source>
         <translation>Fiaskis fini PDF-eksporton.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1229"/>
-        <location filename="../src/gui/print_widget.cpp" line="1261"/>
+        <location filename="../src/gui/print_widget.cpp" line="1233"/>
+        <location filename="../src/gui/print_widget.cpp" line="1265"/>
         <source>Canceled.</source>
         <translation>Rezignita.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1265"/>
+        <location filename="../src/gui/print_widget.cpp" line="1269"/>
         <source>The print job could not be stopped.</source>
         <translation>La presa tasko ne povis esti ĉesita.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1256"/>
+        <location filename="../src/gui/print_widget.cpp" line="1260"/>
         <source>Successfully created print job</source>
         <translation>Sukcese kreita prestasko</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1313"/>
-        <location filename="../src/gui/print_widget.cpp" line="1321"/>
+        <location filename="../src/gui/print_widget.cpp" line="1317"/>
+        <location filename="../src/gui/print_widget.cpp" line="1325"/>
         <source>Unknown</source>
         <comment>Paper size</comment>
         <translation>Nekonata</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1329"/>
+        <location filename="../src/gui/print_widget.cpp" line="1333"/>
         <source>The map area is empty. Output canceled.</source>
         <translation>Mapa areo estas malplena. Eligo estas nuligita.</translation>
     </message>
@@ -5581,7 +5711,7 @@ apartigoj</translation>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="358"/>
         <source>Choose map file to load symbols from</source>
-        <translation type="unfinished"></translation>
+        <translation>Elekti mapodosieron por elŝargi simbolojn</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="366"/>
@@ -5800,7 +5930,7 @@ apartigoj</translation>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="78"/>
         <source>Scale map object positions</source>
-        <translation type="unfinished"></translation>
+        <translation>Skali poziciojn de mapaj objektoj</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="85"/>
@@ -5823,7 +5953,7 @@ apartigoj</translation>
     <message>
         <location filename="../src/tools/scale_tool.cpp" line="64"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the scaling center. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Klaki&lt;/b&gt;: Agordi skalocentron. </translation>
     </message>
     <message>
         <location filename="../src/tools/scale_tool.cpp" line="65"/>
@@ -5931,7 +6061,7 @@ apartigoj</translation>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="65"/>
         <source>Helper symbol (not shown in finished map)</source>
-        <translation type="unfinished"></translation>
+        <translation>Helpa simbolo (ne estos montrita sur finita mapo)</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="100"/>
@@ -6009,7 +6139,7 @@ apartigoj</translation>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="254"/>
         <source>Switch symbol of selected object(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ŝanĝi simbolon de elektita(j) objekto(j)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="255"/>
@@ -6047,7 +6177,7 @@ apartigoj</translation>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="990"/>
         <source>There are no symbols in clipboard which could be pasted!</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne estas simboloj en tondejo, kiuj povas esti algluitaj!</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1159"/>
@@ -6138,7 +6268,7 @@ apartigoj</translation>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="906"/>
         <source>Scale to percentage:</source>
-        <translation type="unfinished"></translation>
+        <translation>Skali en elcentoj:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="937"/>
@@ -6160,7 +6290,7 @@ apartigoj</translation>
         <location filename="future_translations.cpp" line="73"/>
         <source>Switch symbol of selected objects</source>
         <extracomment>To replace existing translation which uses "object(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ŝanĝi simbolon de elektitaj objektoj</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="76"/>
@@ -6527,7 +6657,7 @@ Tamen se vi ne intencas desegni sur ĉi tiu ŝablono, tio ne estas problemo.</tr
     <message>
         <location filename="../src/templates/template_image.cpp" line="532"/>
         <source>Specify how to position or scale the image:</source>
-        <translation type="unfinished"></translation>
+        <translation>Precizigi kiel pozicii aŭ skali la bildon:</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="542"/>
@@ -6704,7 +6834,7 @@ Tamen se vi ne intencas desegni sur ĉi tiu ŝablono, tio ne estas problemo.</tr
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="728"/>
         <source>Please enter a valid integer number to set a group or leave the field empty to ungroup the template!</source>
-        <translation type="unfinished"></translation>
+        <translation>Bonvolu enigi validan entjeron por agordi grupon aŭ lasi la kampon malplena por malgrupigi la ŝablonon!</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="972"/>
@@ -6809,7 +6939,7 @@ Tamen se vi ne intencas desegni sur ĉi tiu ŝablono, tio ne estas problemo.</tr
     <message>
         <location filename="../src/templates/template_positioning_dialog.cpp" line="36"/>
         <source>Track scaling and positioning</source>
-        <translation type="unfinished"></translation>
+        <translation>Skalado kaj lokado de la trako</translation>
     </message>
     <message>
         <location filename="../src/templates/template_positioning_dialog.cpp" line="41"/>
@@ -6835,7 +6965,7 @@ Tamen se vi ne intencas desegni sur ĉi tiu ŝablono, tio ne estas problemo.</tr
     <message>
         <location filename="../src/templates/template_positioning_dialog.cpp" line="49"/>
         <source>One coordinate unit equals:</source>
-        <translation type="unfinished"></translation>
+        <translation>Unu unuo de koordinato egalas:</translation>
     </message>
     <message>
         <location filename="../src/templates/template_positioning_dialog.cpp" line="51"/>
@@ -6845,7 +6975,7 @@ Tamen se vi ne intencas desegni sur ĉi tiu ŝablono, tio ne estas problemo.</tr
     <message>
         <location filename="../src/templates/template_positioning_dialog.cpp" line="55"/>
         <source>Position track at view center</source>
-        <translation type="unfinished"></translation>
+        <translation>Pozicii trakon meze de la ekrano</translation>
     </message>
 </context>
 <context>
@@ -6873,7 +7003,7 @@ Tamen se vi ne intencas desegni sur ĉi tiu ŝablono, tio ne estas problemo.</tr
     <message>
         <location filename="../src/templates/template_track.cpp" line="164"/>
         <source>These are not configured yet, so they will be shown as the next step.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiuj ĉi ankoraŭ ne estas agordita, tial ili estos montrita ĉe la sekva paŝo.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="165"/>
@@ -7290,7 +7420,7 @@ La maksimuma subtenata versio estas %2.</translation>
 <context>
     <name>XMLFileExporter</name>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="184"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="185"/>
         <source>Older versions of Mapper do not support multiple map parts. To save the map in compatibility mode, you must first merge all map parts.</source>
         <translation>Malnovaj versioj de Mapper ne subtenas plurajn mapopartojn. Por konservi la mapon en kongrueca reĝimo, vi devas kunfandi ĉiujn mapopartojn antaŭe.</translation>
     </message>
@@ -7298,69 +7428,69 @@ La maksimuma subtenata versio estas %2.</translation>
 <context>
     <name>XMLFileImporter</name>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="397"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="437"/>
         <source>Unsupported element: %1 (line %2 column %3)</source>
         <translation>Nesubtenata elemento: %1 (linio %2 kolumno %3)</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="428"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="468"/>
         <source>Some coordinates were out of bounds for printing. Map content was adjusted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="478"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="518"/>
         <source>unknown</source>
         <translation>nekonata</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="479"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="519"/>
         <source>Parts of this file cannot be read by this version of Mapper. Minimum required version: %1</source>
         <translation>Partoj de ĉi tiu dosiero ne estas legebla per tiu versio de Mapper. Minimuma postulata versio: %1</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="513"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="553"/>
         <source>Error at line %1 column %2: %3</source>
         <translation>Eraro ĉe linio %1 kolumno %2: %3</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="525"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="782"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="565"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="822"/>
         <source>Some invalid characters had to be removed.</source>
         <translation>Kelkaj nevalidaj simboloj devis esti forigita.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="543"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="583"/>
         <source>Unknown error</source>
         <translation>Nekonata eraro</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="544"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="584"/>
         <source>Unsupported or invalid georeferencing specification '%1': %2</source>
         <translation>Nesubtenata aŭ nevalida specifo de georeferencado '%1': %2</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="676"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="729"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="716"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="769"/>
         <source>Could not set knockout property of color '%1'.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="689"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="729"/>
         <source>Expected %1 colors, found %2.</source>
         <translation>Atendata %1 koloroj, trovita %2.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="705"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="745"/>
         <source>Spot color %1 not found while processing %2 (%3).</source>
         <translation>Spot-koloro %1 ne trovita dum traktado de %2 (%3).</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="760"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="800"/>
         <source>Expected %1 symbols, found %2.</source>
         <translation>Atendata %1 simboloj, trovita %2.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="799"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="839"/>
         <source>Expected %1 map parts, found %2.</source>
         <translation>Atendata %1 mapopartoj, trovita %2.</translation>
     </message>

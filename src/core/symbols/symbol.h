@@ -65,8 +65,6 @@ typedef QHash<QString, Symbol*> SymbolDictionary;
  */
 class Symbol
 {
-friend class OCAD8FileImport;
-friend class XMLImportExport;
 public:
 	/** Enumeration of all possible symbol types,
 	 *  must be able to be used as bits in a bitmask. */
@@ -96,7 +94,7 @@ public:
 	/** Constructs an empty symbol */
 	Symbol(Type type);
 	virtual ~Symbol();
-	virtual Symbol* duplicate(const MapColorMap* color_map = NULL) const = 0;
+	virtual Symbol* duplicate(const MapColorMap* color_map = nullptr) const = 0;
 	
 	/**
 	 * Checks for equality to the other symbol.
@@ -236,7 +234,7 @@ public:
 	/**
 	 * Called by the map in which the symbol is to notify it of a symbol being
 	 * changed (pointer becomes invalid).
-	 * If new_symbol == NULL, the symbol is being deleted.
+	 * If new_symbol == nullptr, the symbol is being deleted.
 	 * Must return true if this symbol contained the deleted symbol.
 	 */
 	virtual bool symbolChanged(const Symbol* old_symbol, const Symbol* new_symbol);
@@ -260,7 +258,7 @@ public:
 	 * Creates a new image with the given side length and draws the smybol icon onto it.
 	 * Returns an image pointer which you must delete yourself when no longer needed.
 	 */
-	QImage createIcon(const Map* map, int side_length, bool antialiasing, int bottom_right_border = 0, float best_zoom = 2) const;
+	QImage createIcon(const Map* map, int side_length, bool antialiasing, int bottom_right_border = 0, qreal best_zoom = 2) const;
 	
 	/** Clear the symbol's icon. It will be recreated when it is needed. */
 	void resetIcon() { icon = QImage(); }
@@ -283,7 +281,7 @@ public:
 	inline void setName(const QString& new_name) {name = new_name;}
 	
 	/** Returns the symbol number as string. */
-    QString getNumberAsString() const;
+	QString getNumberAsString() const;
 	/** Returns the i-th component of the symbol number as int. */
 	inline int getNumberComponent(int i) const {Q_ASSERT(i >= 0 && i < number_components); return number[i];}
 	/** Sets the i-th component of the symbol number. */
@@ -414,24 +412,23 @@ protected:
 	void duplicateImplCommon(const Symbol* other);
 	
 	
-	/** The symbol type, determined by the subclass */
-	Type type;
+private:
+	/** Symbol icon. If icon.isNull() is true, it is not generated yet. */
+	mutable QImage icon;
 	/** Symbol name */
 	QString name;
-	/** Symbol number */
-	int number[number_components];
 	/** Symbol description */
 	QString description;
+	/** The symbol type, determined by the subclass */
+	Type type;
+	/** Symbol number */
+	int number[number_components];
 	/** Helper symbol flag, see isHelperSymbol() */
 	bool is_helper_symbol;
 	/** Hidden flag, see isHidden() */
 	mutable bool is_hidden;
 	/** Protected flag, see isProtected() */
 	bool is_protected;
-	
-private:
-	/** Pointer to symbol icon, if generated */
-	mutable QImage icon;
 };
 
 Q_DECLARE_METATYPE(const Symbol*)
