@@ -1362,42 +1362,42 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="44"/>
         <source>Import with GDAL/OGR:</source>
-        <translation type="unfinished"></translation>
+        <translation>Importi kun GDAL/OGR:</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="46"/>
         <source>DXF</source>
-        <translation type="unfinished"></translation>
+        <translation>DXF</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="49"/>
         <source>GPX</source>
-        <translation type="unfinished"></translation>
+        <translation>GPX</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="52"/>
         <source>OSM</source>
-        <translation type="unfinished"></translation>
+        <translation>OSM</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="56"/>
         <source>Configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Agordo</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="64"/>
         <source>Parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Parametro</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="64"/>
         <source>Value</source>
-        <translation type="unfinished">Valoro</translation>
+        <translation>Valoro</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="83"/>
         <source>GDAL/OGR</source>
-        <translation type="unfinished"></translation>
+        <translation>GDAL/OGR</translation>
     </message>
 </context>
 <context>
@@ -1959,7 +1959,7 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="540"/>
         <source>No map files found!&lt;br/&gt;&lt;br/&gt;Copy map files to a top-level folder named 'OOMapper' on the device or a memory card.</source>
-        <translation type="unfinished"></translation>
+        <translation>Neniu dosiero trovita!&lt;br/&gt;&lt;br/&gt; Kopii mapodosierojn al supra dosierujo 'OOMapper' sur la aparato aŭ memorkarto.</translation>
     </message>
 </context>
 <context>
@@ -2029,13 +2029,13 @@
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="926"/>
         <source>Error while loading the printing configuration at %1:%2: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Eraro dum ŝarĝo de presagordo ĉe %1:%2: %3</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="939"/>
         <location filename="../src/fileformats/xml_file_format.cpp" line="953"/>
         <source>Error while loading the undo/redo steps at %1:%2: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Eraro dum ŝarĝo de la malfari/refari paŝoj ĉe %1:%2: %3</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.h" line="230"/>
@@ -2112,7 +2112,7 @@
         <location filename="../src/fileformats/native_file_format.cpp" line="140"/>
         <location filename="../src/fileformats/xml_file_format.cpp" line="456"/>
         <source>Unsupported old file format version. Please use an older program version to load and update the file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nesubtenata malnova versio de dosierformo. Bonvolu uzi pli malnovan programversion por ŝargi kaj ĝisdatigi la dosieron.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/native_file_format.cpp" line="144"/>
@@ -2180,7 +2180,7 @@
         <location filename="../src/gdal/ogr_file_format.cpp" line="1180"/>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1221"/>
         <source>Could not read '%1': %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne eblas legi '%1': %2</translation>
     </message>
 </context>
 <context>
@@ -2605,7 +2605,7 @@ Do you want to scale the symbols to the selected scale?</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="740"/>
         <source>Crash warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Kraŝaverto</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="741"/>
@@ -2640,7 +2640,7 @@ Do you want to scale the symbols to the selected scale?</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="151"/>
         <source>You must close the current file before you can open another one.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vi devas fermi la aktualan dosieron antaŭ vi povas malfermi alian.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="721"/>
@@ -3088,7 +3088,7 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="919"/>
         <source>Clear temporary GPS markers</source>
-        <translation type="unfinished"></translation>
+        <translation>Vakigi provizorajn GPS-markojn</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="922"/>
@@ -3574,7 +3574,7 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1493"/>
         <source>Print / Export is not available in this program version!</source>
-        <translation type="unfinished"></translation>
+        <translation>Preso / eksporto ne estas disponebla en ĉi tiu programversio!</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1513"/>
@@ -3636,7 +3636,7 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1795"/>
         <source>Scale to percentage:</source>
-        <translation type="unfinished">Skali en elcentoj:</translation>
+        <translation>Skali en elcentoj:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1819"/>
@@ -3842,7 +3842,7 @@ elektitaj</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3554"/>
         <source>Switched to map part '%1'.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ŝanĝis al mapoparto '%1'.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3576"/>
@@ -4483,7 +4483,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1555"/>
         <source>The map contains more than 256 colors which is not supported by ocd version 8.</source>
-        <translation type="unfinished"></translation>
+        <translation>La mapo enhavas pli ol 256 koloroj, ke estas nesubtenata de OCD-versio 8.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1559"/>
@@ -4571,7 +4571,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="122"/>
         <source>OCAD files of version %1 are not supported!</source>
-        <translation type="unfinished"></translation>
+        <translation>Versio %1 de OCAD-dosieroj ne estas subtenata!</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="146"/>
@@ -4916,32 +4916,32 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="300"/>
         <source>Purple</source>
-        <translation type="unfinished"></translation>
+        <translation>Purpura</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="313"/>
         <source>Point</source>
-        <translation type="unfinished">Punkto</translation>
+        <translation>Punkto</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="320"/>
         <source>Line</source>
-        <translation type="unfinished">Linio</translation>
+        <translation>Linio</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="329"/>
         <source>Area</source>
-        <translation type="unfinished">Areo</translation>
+        <translation>Areo</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="335"/>
         <source>Text</source>
-        <translation type="unfinished">Teksto</translation>
+        <translation>Teksto</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="394"/>
         <source>Unable to load layer %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne eblas ŝarĝi tavolon %1.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gdal/ogr_file_format.cpp" line="442"/>
@@ -4950,15 +4950,13 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gdal/ogr_file_format.cpp" line="457"/>
         <location filename="../src/gdal/ogr_file_format.cpp" line="462"/>
         <source>Unable to load %n objects, reason: %1</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>Ne eblas ŝarĝi %n objekton, kaŭzo: %1</numerusform>
+        <numerusform>Ne eblas ŝarĝi %n objektojn, kaŭzo: %1</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="443"/>
         <source>Empty geometry.</source>
-        <translation type="unfinished"></translation>
+        <translation>Malplena geometrio.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="448"/>
@@ -4973,12 +4971,12 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="458"/>
         <source>Unknown or unsupported geometry type.</source>
-        <translation type="unfinished"></translation>
+        <translation>Geometria tipo estas nekonata aŭ nesubtenata.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="463"/>
         <source>Not enough coordinates.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne sufiĉas koordinatoj.</translation>
     </message>
 </context>
 <context>

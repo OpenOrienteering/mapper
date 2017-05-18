@@ -83,11 +83,9 @@
         <location filename="../src/gdal/ogr_file_format.cpp" line="457"/>
         <location filename="../src/gdal/ogr_file_format.cpp" line="462"/>
         <source>Unable to load %n objects, reason: %1</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>Unable to load one object, reason: %1</numerusform>
+        <numerusform>Unable to load %n objects, reason: %1</numerusform>
+        </translation></message>
 </context>
 <context>
     <name>TagSelectWidget</name>

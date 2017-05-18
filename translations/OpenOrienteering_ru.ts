@@ -431,7 +431,7 @@
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="111"/>
         <source>Double-click a color value to open a dialog.</source>
-        <translation>Дважды щелкните на значении цвета, чтобы открыть диалоговое окно.</translation>
+        <translation>Дважды щёлкните на значении цвета, чтобы открыть диалоговое окно.</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="189"/>
@@ -460,12 +460,12 @@
         <location filename="../src/gui/color_dock_widget.cpp" line="364"/>
         <location filename="../src/gui/color_dock_widget.cpp" line="411"/>
         <source>Double click to define the color</source>
-        <translation>Дважды щелкните, чтобы определить цвет</translation>
+        <translation>Дважды щёлкните, чтобы определить цвет</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="371"/>
         <source>Click to select the name and click again to edit.</source>
-        <translation>Щёлкните, чтобы выбрать имя и щёлкните еще раз, чтобы изменить.</translation>
+        <translation>Щёлкните, чтобы выбрать имя и щёлкните ещё раз, чтобы изменить.</translation>
     </message>
 </context>
 <context>
@@ -757,7 +757,7 @@
     </message>
     <message>
         <source>This dialog allows to choose a font size which results in a given exact height for a specific letter.</source>
-        <translation type="vanished">Данное диалоговое окно позволяет выбрать размер шрифта по точной высоте определенной буквы.</translation>
+        <translation>Данное диалоговое окно позволяет выбрать размер шрифта по точной высоте определённой буквы.</translation>
     </message>
     <message>
         <source>mm</source>
@@ -1365,7 +1365,7 @@
     <message>
         <location filename="../src/sensors/gps_display.cpp" line="88"/>
         <source>GPS is disabled in the device settings. Open settings now?</source>
-        <translation>GPS отключен в настройках устройства. Открыть настройки?</translation>
+        <translation>GPS отключён в настройках устройства. Открыть настройки?</translation>
     </message>
     <message>
         <location filename="../src/sensors/gps_display.cpp" line="89"/>
@@ -1383,42 +1383,42 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="44"/>
         <source>Import with GDAL/OGR:</source>
-        <translation type="unfinished"></translation>
+        <translation>Импортировать с помощью GDAL/OGR:</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="46"/>
         <source>DXF</source>
-        <translation type="unfinished"></translation>
+        <translation>DXF</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="49"/>
         <source>GPX</source>
-        <translation type="unfinished"></translation>
+        <translation>GPX</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="52"/>
         <source>OSM</source>
-        <translation type="unfinished"></translation>
+        <translation>OSM</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="56"/>
         <source>Configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Конфигурация</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="64"/>
         <source>Parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Параметр</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="64"/>
         <source>Value</source>
-        <translation type="unfinished">Значение</translation>
+        <translation>Значение</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="83"/>
         <source>GDAL/OGR</source>
-        <translation type="unfinished"></translation>
+        <translation>GDAL/OGR</translation>
     </message>
 </context>
 <context>
@@ -2072,7 +2072,7 @@
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="252"/>
         <source>Geospatial vector data</source>
-        <translation type="unfinished"></translation>
+        <translation>Геопространственные векторные данные</translation>
     </message>
 </context>
 <context>
@@ -2122,7 +2122,7 @@
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="135"/>
         <source>Click the red template name(s) in the Templates -&gt; Template setup window to locate the template file name(s).</source>
-        <translation>Щелкните на красное название подложки в меню Подложки -&gt; Окно настройки подложек, чтобы определить новое имя файла подложки.</translation>
+        <translation>Щёлкните на красное название подложки в меню Подложки -&gt; Окно настройки подложек, чтобы определить новое имя файла подложки.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/native_file_format.cpp" line="123"/>
@@ -2207,7 +2207,7 @@
         <location filename="../src/gdal/ogr_file_format.cpp" line="1180"/>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1221"/>
         <source>Could not read '%1': %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось прочитать '%1': %2</translation>
     </message>
 </context>
 <context>
@@ -2644,7 +2644,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="397"/>
         <source>Unsaved file</source>
-        <translation>Несохраненный файл</translation>
+        <translation>Несохранённый файл</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="671"/>
@@ -2755,7 +2755,7 @@ Press No to choose a different format.</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1075"/>
         <source>File could not be saved:</source>
-        <translation>Файл не может быть сохранен:</translation>
+        <translation>Файл не может быть сохранён:</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1076"/>
@@ -3916,7 +3916,7 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3554"/>
         <source>Switched to map part '%1'.</source>
-        <translation>Перешел на слой '%1'.</translation>
+        <translation>Перешёл на слой '%1'.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3576"/>
@@ -4910,7 +4910,7 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="947"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1300"/>
         <source>This symbol cannot be saved as a proper OCD symbol again.</source>
-        <translation>Этот символ не может быть сохранен как правильный символ OCD.</translation>
+        <translation>Этот символ не может быть сохранён как правильный символ OCD.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1943"/>
@@ -5000,7 +5000,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_import.h" line="433"/>
         <source>Color id not found: %1, ignoring this color</source>
-        <translation>Идентификатор цвета не найдет: %1, цвет игнорируется</translation>
+        <translation>Идентификатор цвета не найден: %1, цвет игнорируется</translation>
     </message>
 </context>
 <context>
@@ -5008,37 +5008,37 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="293"/>
         <source>Unable to setup "%1" SRS for GDAL: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось установить "%1" SRS для GDAL: %2</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="300"/>
         <source>Purple</source>
-        <translation type="unfinished"></translation>
+        <translation>Пурпурный</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="313"/>
         <source>Point</source>
-        <translation type="unfinished">Точка</translation>
+        <translation>Точка</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="320"/>
         <source>Line</source>
-        <translation type="unfinished">Линия</translation>
+        <translation>Линия</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="329"/>
         <source>Area</source>
-        <translation type="unfinished">Площадь</translation>
+        <translation>Площадь</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="335"/>
         <source>Text</source>
-        <translation type="unfinished">Текст</translation>
+        <translation>Текст</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="394"/>
         <source>Unable to load layer %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно загрузить слой %1.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gdal/ogr_file_format.cpp" line="442"/>
@@ -5047,36 +5047,34 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gdal/ogr_file_format.cpp" line="457"/>
         <location filename="../src/gdal/ogr_file_format.cpp" line="462"/>
         <source>Unable to load %n objects, reason: %1</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>Невозможно загрузить %n объект по следующей причине: %1</numerusform>
+        <numerusform>Невозможно загрузить %n объекта по следующей причине: %1</numerusform>
+        <numerusform>Невозможно загрузить %n объектов по следующей причине: %1</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="443"/>
         <source>Empty geometry.</source>
-        <translation type="unfinished"></translation>
+        <translation>Пустая геометрия.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="448"/>
         <source>Can't determine the coordinate transformation: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно определить преобразование координат: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="453"/>
         <source>Failed to transform the coordinates.</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось преобразовать координаты.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="458"/>
         <source>Unknown or unsupported geometry type.</source>
-        <translation type="unfinished"></translation>
+        <translation>Неизвестный или неподдерживаемый тип геометрии.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="463"/>
         <source>Not enough coordinates.</source>
-        <translation type="unfinished"></translation>
+        <translation>Недостаточно координат.</translation>
     </message>
 </context>
 <context>
@@ -5819,7 +5817,7 @@ separations</source>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="366"/>
         <source>Cannot load map file, aborting.</source>
-        <translation>Не удается загрузить файл карты, прерывание.</translation>
+        <translation>Не удаётся загрузить файл карты, прерывание.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="372"/>
@@ -6576,7 +6574,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template.cpp" line="457"/>
         <source>Find the moved template file</source>
-        <translation>Найти перемещенный файл подложки</translation>
+        <translation>Найти перемещённый файл подложки</translation>
     </message>
     <message>
         <location filename="../src/templates/template.cpp" line="459"/>
@@ -7104,7 +7102,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/templates/template_track.cpp" line="164"/>
         <source>These are not configured yet, so they will be shown as the next step.</source>
-        <translation>Они еще не настроены, поэтому будут показаны на следующем шаге.</translation>
+        <translation>Они ещё не настроены, поэтому будут показаны на следующем шаге.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="165"/>
@@ -7119,7 +7117,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/templates/template_track.cpp" line="166"/>
         <source>Projects the track using an orthographic projection with center at the track's coordinate average. Allows adjustment of the transformation and setting the map georeferencing using the adjusted track position.</source>
-        <translation>Проецировать трек с использованием ортогональной проекции с центром в точке усредненных координат трека. Это позволит осуществить трансформацию карты и установить её геопривязку подгонкой относительно позиции трека.</translation>
+        <translation>Проецировать трек с использованием ортогональной проекции с центром в точке усреднённых координат трека. Это позволит осуществить трансформацию карты и установить её геопривязку подгонкой относительно позиции трека.</translation>
     </message>
     <message>
         <location filename="../src/sensors/gps_track.cpp" line="499"/>
@@ -7142,7 +7140,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/templates/template_track.cpp" line="407"/>
         <source>Should the waypoints be imported as a line going through all points?</source>
-        <translation>Должны ли путевый точки быть импортированы в виде линии, их соединяющей?</translation>
+        <translation>Должны ли путевые точки быть импортированы в виде линии, их соединяющей?</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="474"/>
@@ -7459,7 +7457,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/undo/undo_manager.cpp" line="121"/>
         <source>Cannot undo because the last undo step became invalid. This can for example happen if you change the symbol of an object to another and then delete the old symbol.</source>
-        <translation>Отмена невозможна, потому что последний шаг отмены стал недействительным. Например, это произойдет, если вы измените символ объекта на другой, а затем удалите старый символ.</translation>
+        <translation>Отмена невозможна, потому что последний шаг отмены стал недействительным. Например, это произойдёт, если вы измените символ объекта на другой, а затем удалите старый символ.</translation>
     </message>
     <message>
         <location filename="../src/undo/undo_manager.cpp" line="127"/>
