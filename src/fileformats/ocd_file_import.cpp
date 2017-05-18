@@ -1864,10 +1864,16 @@ void OcdFileImport::fillPathCoords(OcdImportedPathObject *object, bool is_area, 
 				object->coords[i] = coord;
 			}
 			
-			if (i - start > 1)
+			switch (i - start)
 			{
+			default:
 				object->coords[i-2].setCurveStart(false);
+				// fall through
+			case 1:
 				object->coords[i-1].setCurveStart(false);
+				// fall through
+			case 0:
+				; // nothing
 			}
 			
 			start = i + 1;
