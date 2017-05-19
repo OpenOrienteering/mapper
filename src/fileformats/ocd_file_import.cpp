@@ -315,7 +315,7 @@ void OcdFileImport::importGeoreferencing(const QString& param_string, int)
 	
 	if (x_ok && y_ok)
 	{
-		georef.setProjectedRefPoint(proj_ref_point);
+		georef.setProjectedRefPoint(proj_ref_point, false);
 	}
 	
 	map->setGeoreferencing(georef);
