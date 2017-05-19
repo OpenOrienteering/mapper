@@ -17,7 +17,7 @@ Contents    {#index_contents}
 Explanation of the main drawing window.
 
 [Reference](reference.md){: .subpage} <br/>
-Toolbar and menu items, including explanations for [all drawing tools](toolbars.md#drawing)
+Toolbar and menu items, including explanations for [all drawing tools](toolbars.md#drawing-toolbar)
 
 [Starting a new map](new_map.md){: .subpage} <br/>
 First steps
