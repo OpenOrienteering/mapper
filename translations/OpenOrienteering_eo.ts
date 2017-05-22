@@ -721,7 +721,7 @@
     <message>
         <location filename="../src/util/dxfparser.cpp" line="36"/>
         <source>Could not open the file.</source>
-        <translation>Ne eblis malfermi la dosieron.</translation>
+        <translation>Ne povis malfermi la dosieron.</translation>
     </message>
     <message>
         <location filename="../src/util/dxfparser.cpp" line="52"/>
@@ -1291,7 +1291,7 @@
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1559"/>
         <source>Could not create new file: %1</source>
-        <translation>Ne eblas krei novan dosieron: %1</translation>
+        <translation>Ne povis krei novan dosieron: %1</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_format.cpp" line="87"/>
@@ -1827,7 +1827,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="646"/>
         <source>Could not parse data.</source>
-        <translation>Ne eblis analizi datumon.</translation>
+        <translation>Ne povis analizi datumon.</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="671"/>
@@ -2019,7 +2019,7 @@
         <location filename="../src/util/xml_stream_util.cpp" line="187"/>
         <location filename="../src/util/xml_stream_util.cpp" line="203"/>
         <source>Could not parse the coordinates.</source>
-        <translation>Ne eblis analizi la koordinatojn.</translation>
+        <translation>Ne povis analizi la koordinatojn.</translation>
     </message>
     <message>
         <location filename="../src/util/xml_stream_util.cpp" line="227"/>
@@ -2158,7 +2158,7 @@
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2039"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2069"/>
         <source>Could not read file: %1</source>
-        <translation>Ne eblis legi dosieron: %1</translation>
+        <translation>Ne povis legi dosieron: %1</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="448"/>
@@ -2180,7 +2180,7 @@
         <location filename="../src/gdal/ogr_file_format.cpp" line="1180"/>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1221"/>
         <source>Could not read '%1': %2</source>
-        <translation>Ne eblas legi '%1': %2</translation>
+        <translation>Ne povis legi '%1': %2</translation>
     </message>
 </context>
 <context>
@@ -2659,7 +2659,7 @@ Do you want to scale the symbols to the selected scale?</source>
 %1
 
 File format not recognized.</source>
-        <translation>Ne eblas malfermi dosieron:
+        <translation>Ne povas malfermi dosieron:
 %1
 
 Dosierformo ne rekonita.</translation>
@@ -2762,7 +2762,7 @@ because the format is unknown.</source>
         <source>Cannot open file:
 %1
 for reading.</source>
-        <translation>Ne eblas malfermi dosieron:
+        <translation>Ne povas malfermi dosieron:
 %1
 por legado.</translation>
     </message>
@@ -2778,7 +2778,7 @@ por legado.</translation>
 %1
 
 %2</source>
-        <translation>Ne eblas malfermi dosieron:
+        <translation>Ne povas malfermi dosieron:
 %1
 
 %2</translation>
@@ -2788,7 +2788,7 @@ por legado.</translation>
         <source>Cannot save file
 %1:
 %2</source>
-        <translation>Ne eblas konservi dosieron
+        <translation>Ne povas konservi dosieron
 %1:
 %2</translation>
     </message>
@@ -3863,7 +3863,7 @@ elektitaj</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3832"/>
         <source>Cannot import the selected map file because it could not be loaded.</source>
-        <translation>Ne eblas importi la elektitan mapodosieron, ĉar ĝi ne povis esti ŝargita.</translation>
+        <translation>Ne povas importi la elektitan mapodosieron, ĉar ĝi ne povis esti ŝargita.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2093"/>
@@ -4099,7 +4099,7 @@ elektitaj</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3825"/>
         <source>Cannot import the selected file because its file format is not supported.</source>
-        <translation>Ne eblas importi la elektitan dosieron, ĉar ĝia dosierformo estas nesubtenata.</translation>
+        <translation>Ne povas importi la elektitan dosieron, ĉar ĝia dosierformo estas nesubtenata.</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="31"/>
@@ -4561,7 +4561,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="115"/>
         <source>Could not allocate buffer.</source>
-        <translation>Ne eblas asigni bufron.</translation>
+        <translation>Ne povis asigni bufron.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="119"/>
@@ -4584,7 +4584,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="151"/>
         <source>Could not load the spot color definitions, error: %1</source>
-        <translation>Ne eblis ŝargi la spot-koloran difinon, eraro: %1</translation>
+        <translation>Ne povis ŝargi la spot-koloran difinon, eraro: %1</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="211"/>
@@ -4747,7 +4747,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="390"/>
         <source>Could not load the coordinate reference system '%1'.</source>
-        <translation>Ne eblas ŝargi la koordinatsistemon '%1'.</translation>
+        <translation>Ne povis ŝargi la koordinatsistemon '%1'.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="424"/>
@@ -5620,26 +5620,26 @@ apartigoj</translation>
     <name>QAbstractSpinBox</name>
     <message>
         <source>Step &amp;down</source>
-        <translation type="unfinished"></translation>
+        <translation>Paŝo &amp;malsupren</translation>
     </message>
     <message>
         <source>&amp;Step up</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Paŝo supren</translation>
     </message>
     <message>
         <source>&amp;Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Elekti ĉiujn</translation>
     </message>
 </context>
 <context>
     <name>QComboBox</name>
     <message>
         <source>True</source>
-        <translation type="unfinished"></translation>
+        <translation>Vero</translation>
     </message>
     <message>
         <source>False</source>
-        <translation type="unfinished"></translation>
+        <translation>Malvero</translation>
     </message>
     <message>
         <source>Open the combo box selection popup</source>
@@ -5650,163 +5650,163 @@ apartigoj</translation>
     <name>QDialog</name>
     <message>
         <source>What's This?</source>
-        <translation type="unfinished"></translation>
+        <translation>Kio estas tio?</translation>
     </message>
 </context>
 <context>
     <name>QDialogButtonBox</name>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>Bone</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Bone</translation>
     </message>
     <message>
         <source>&amp;No</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ne</translation>
     </message>
     <message>
         <source>&amp;Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Jes</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Helpo</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Malfermi</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Konservi</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Konservi</translation>
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation>Ĉesigi</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Apliki</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Fermi</translation>
     </message>
     <message>
         <source>Reset</source>
-        <translation type="unfinished"></translation>
+        <translation>Reagordi</translation>
     </message>
     <message>
         <source>Retry</source>
-        <translation type="unfinished"></translation>
+        <translation>Reprovi</translation>
     </message>
     <message>
         <source>Restore Defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>Restarigi defaŭltojn</translation>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Fermi</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Rezigni</translation>
     </message>
     <message>
         <source>Ignore</source>
-        <translation type="unfinished"></translation>
+        <translation>Malatenti</translation>
     </message>
     <message>
         <source>Close without Saving</source>
-        <translation type="unfinished"></translation>
+        <translation>Fermi sen konservi</translation>
     </message>
     <message>
         <source>N&amp;o to All</source>
-        <translation type="unfinished"></translation>
+        <translation>N&amp;e por ĉiuj</translation>
     </message>
     <message>
         <source>Save All</source>
-        <translation type="unfinished"></translation>
+        <translation>Konservi ĉiujn</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Rezigni</translation>
     </message>
     <message>
         <source>Discard</source>
-        <translation type="unfinished"></translation>
+        <translation>Forĵeti</translation>
     </message>
     <message>
         <source>Yes to &amp;All</source>
-        <translation type="unfinished"></translation>
+        <translation>Jes por ĉi&amp;uj</translation>
     </message>
     <message>
         <source>Don't Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne konservi</translation>
     </message>
 </context>
 <context>
     <name>QDirModel</name>
     <message>
         <source>Kind</source>
-        <translation type="unfinished"></translation>
+        <translation>Speco</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nomo</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Grando</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo</translation>
     </message>
     <message>
         <source>Date Modified</source>
-        <translation type="unfinished"></translation>
+        <translation>Dato de modifo</translation>
     </message>
 </context>
 <context>
     <name>QErrorMessage</name>
     <message>
         <source>&amp;OK</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Bone</translation>
     </message>
     <message>
         <source>Fatal Error:</source>
-        <translation type="unfinished"></translation>
+        <translation>Neriparebla eraro:</translation>
     </message>
     <message>
         <source>&amp;Show this message again</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Montri ĉi tiun mesaĝon plu</translation>
     </message>
     <message>
         <source>Debug Message:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sencimiga mesaĝo:</translation>
     </message>
     <message>
         <source>Warning:</source>
-        <translation type="unfinished"></translation>
+        <translation>Averto:</translation>
     </message>
 </context>
 <context>
     <name>QFile</name>
     <message>
         <source>Cannot remove source file</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne povas forigi fontan dosieron</translation>
     </message>
     <message>
         <source>Cannot create %1 for output</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne povas krei %1 por eligo</translation>
     </message>
     <message>
         <source>Failure to write block</source>
@@ -5814,15 +5814,15 @@ apartigoj</translation>
     </message>
     <message>
         <source>Cannot open %1 for input</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne povas malfermi %1 por enigo</translation>
     </message>
     <message>
         <source>Destination file exists</source>
-        <translation type="unfinished"></translation>
+        <translation>Celdosieroj ekzistas</translation>
     </message>
     <message>
         <source>Cannot open for output</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne povas malfermi por eligo</translation>
     </message>
     <message>
         <source>Will not rename sequential file using block copy</source>
@@ -5832,25 +5832,25 @@ apartigoj</translation>
 <context>
     <name>QFileDialog</name>
     <message>
-        <location filename="../src/gui/text_browser_dialog.cpp" line="59"></location>
+        <location filename="../src/gui/text_browser_dialog.cpp" line="59"/>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Malantaŭen</translation>
     </message>
     <message>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosiero</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Malfermi</translation>
     </message>
     <message>
         <source>&amp;Open</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Malfermi</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Konservi</translation>
     </message>
     <message>
         <source>Alias</source>
@@ -5862,20 +5862,21 @@ apartigoj</translation>
     </message>
     <message>
         <source>Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosieroj</translation>
     </message>
     <message>
         <source>Show </source>
-        <translation type="unfinished"></translation>
+        <translation>Montri </translation>
     </message>
     <message>
         <source>'%1' is write protected.
 Do you want to delete it anyway?</source>
-        <translation type="unfinished"></translation>
+        <translation>'%1' estas kontraŭskribe protektita.
+Ĉu vi volas forigi ĝin ĉiuokaze?</translation>
     </message>
     <message>
         <source>Are you sure you want to delete '%1'?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ĉu vi certas, ke vi volas forigi '%1'?</translation>
     </message>
     <message>
         <source>List of places and bookmarks</source>
@@ -5883,39 +5884,39 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <source>File &amp;name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosier&amp;nomo:</translation>
     </message>
     <message>
         <source>File Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosierujo</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Forigi</translation>
     </message>
     <message>
         <source>New Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Nova dosierujo</translation>
     </message>
     <message>
         <source>Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosierujo</translation>
     </message>
     <message>
         <source>Parent Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Patra dosierujo</translation>
     </message>
     <message>
         <source>&amp;New Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Nova dosierujo</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Forigi</translation>
     </message>
     <message>
         <source>My Computer</source>
-        <translation type="unfinished"></translation>
+        <translation>Mia komputilo</translation>
     </message>
     <message>
         <source>Look in:</source>
@@ -5923,23 +5924,23 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <source>Create a New Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Krei novan dosierujon</translation>
     </message>
     <message>
         <source>Files of type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosierspeco:</translation>
     </message>
     <message>
         <source>Find Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Serĉi dosierujon</translation>
     </message>
     <message>
         <source>Show &amp;hidden files</source>
-        <translation type="unfinished"></translation>
+        <translation>Montri &amp;kaŝitajn dosierojn</translation>
     </message>
     <message>
         <source>Save As</source>
-        <translation type="unfinished"></translation>
+        <translation>Konservi kiel</translation>
     </message>
     <message>
         <source>%1
@@ -5949,60 +5950,61 @@ Please verify the correct directory name was given.</source>
     </message>
     <message>
         <source>Sidebar</source>
-        <translation type="unfinished"></translation>
+        <translation>Flanka strio</translation>
     </message>
     <message>
         <source>List View</source>
-        <translation type="unfinished"></translation>
+        <translation>Lista vidigo</translation>
     </message>
     <message>
         <source>&amp;Choose</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Elekti</translation>
     </message>
     <message>
         <source>&amp;Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Forigi</translation>
     </message>
     <message>
         <source>All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ĉiuj dosieroj (*)</translation>
     </message>
     <message>
         <source>Directories</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosierujoj</translation>
     </message>
     <message>
         <source>&amp;Rename</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Renomi</translation>
     </message>
     <message>
         <source>Could not delete directory.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne povis forigi la dosierujon.</translation>
     </message>
     <message>
         <source>Directory:</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosierujo:</translation>
     </message>
     <message>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Nekonata</translation>
     </message>
     <message>
         <source>%1 already exists.
 Do you want to replace it?</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 jam ekzistas.
+Ĉu vi volas anstataŭigi ĝin?</translation>
     </message>
     <message>
         <source>Forward</source>
-        <translation type="unfinished"></translation>
+        <translation>Antaŭen</translation>
     </message>
     <message>
         <source>Go forward</source>
-        <translation type="unfinished"></translation>
+        <translation>Iri antaŭen</translation>
     </message>
     <message>
         <source>Go to the parent directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Iri al patra dosierujo</translation>
     </message>
     <message>
         <source>Recent Places</source>
@@ -6010,7 +6012,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Go back</source>
-        <translation type="unfinished"></translation>
+        <translation>Iri malantaŭen</translation>
     </message>
     <message>
         <source>Change to detail view mode</source>
@@ -6018,15 +6020,15 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Create New Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Krei novan dosierujon</translation>
     </message>
     <message>
         <source>Shortcut</source>
-        <translation type="unfinished"></translation>
+        <translation>Fulmoklavo</translation>
     </message>
     <message>
         <source>Detail View</source>
-        <translation type="unfinished"></translation>
+        <translation>Detala vido</translation>
     </message>
     <message>
         <source>%1
@@ -6043,35 +6045,35 @@ Please verify the correct file name was given.</source>
     <name>QFileSystemModel</name>
     <message>
         <source>Kind</source>
-        <translation type="unfinished"></translation>
+        <translation>Speco</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nomo</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Grando</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo</translation>
     </message>
     <message>
         <source>%1 GB</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 GB</translation>
     </message>
     <message>
         <source>%1 KB</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 KB</translation>
     </message>
     <message>
         <source>%1 MB</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 MB</translation>
     </message>
     <message>
         <source>%1 TB</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 TB</translation>
     </message>
     <message>
         <source>&lt;b&gt;The name "%1" can not be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuations marks.</source>
@@ -6079,38 +6081,38 @@ Please verify the correct file name was given.</source>
     </message>
     <message>
         <source>%1 bytes</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 bajtoj</translation>
     </message>
     <message>
         <source>My Computer</source>
-        <translation type="unfinished"></translation>
+        <translation>Mia komputilo</translation>
     </message>
     <message>
         <source>Computer</source>
-        <translation type="unfinished"></translation>
+        <translation>Komputilo</translation>
     </message>
     <message>
         <source>Invalid filename</source>
-        <translation type="unfinished"></translation>
+        <translation>Nevalida dosiernomo</translation>
     </message>
     <message>
         <source>%1 byte(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 bajto(j)</translation>
     </message>
     <message>
         <source>Date Modified</source>
-        <translation type="unfinished"></translation>
+        <translation>Dato de modifo</translation>
     </message>
 </context>
 <context>
     <name>QIODevice</name>
     <message>
         <source>No such file or directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Tia dosiero aŭ dosierujo ne ekzistas</translation>
     </message>
     <message>
         <source>Permission denied</source>
-        <translation type="unfinished"></translation>
+        <translation>Permeso rifuzita</translation>
     </message>
     <message>
         <source>No space left on device</source>
@@ -6118,87 +6120,87 @@ Please verify the correct file name was given.</source>
     </message>
     <message>
         <source>Unknown error</source>
-        <translation type="unfinished"></translation>
+        <translation>Nekonata eraro</translation>
     </message>
     <message>
         <source>Too many open files</source>
-        <translation type="unfinished"></translation>
+        <translation>Tro da malfermitaj dosieroj</translation>
     </message>
 </context>
 <context>
     <name>QInputDialog</name>
     <message>
         <source>Enter a value:</source>
-        <translation type="unfinished"></translation>
+        <translation>Enigu valoron:</translation>
     </message>
 </context>
 <context>
     <name>QLineEdit</name>
     <message>
         <source>Cu&amp;t</source>
-        <translation type="unfinished"></translation>
+        <translation>Elton&amp;di</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Kopii</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Refari</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Malfari</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Alglui</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Forigi</translation>
     </message>
     <message>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>Elekti ĉiujn</translation>
     </message>
 </context>
 <context>
     <name>QMessageBox</name>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>Bone</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Helpo</translation>
     </message>
     <message>
         <source>Show Details...</source>
-        <translation type="unfinished"></translation>
+        <translation>Montri detalojn…</translation>
     </message>
     <message>
         <source>About Qt</source>
-        <translation type="unfinished"></translation>
+        <translation>Pri Qt</translation>
     </message>
     <message>
         <source>Hide Details...</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaŝi detalojn…</translation>
     </message>
     <message>
         <source>&lt;h3&gt;About Qt&lt;/h3&gt;&lt;p&gt;This program uses Qt version %1.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;h3&gt;Pri Qt&lt;/h3&gt;&lt;p&gt;Ĉi tiu programo uzos Qt-version %1.&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
     <name>QPPDOptionsModel</name>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nomo</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Valoro</translation>
     </message>
 </context>
 <context>
@@ -6209,11 +6211,11 @@ Please verify the correct file name was given.</source>
     </message>
     <message>
         <source>bottom margin</source>
-        <translation type="unfinished"></translation>
+        <translation>malsupra marĝeno</translation>
     </message>
     <message>
         <source>Paper</source>
-        <translation type="unfinished"></translation>
+        <translation>Papero</translation>
     </message>
     <message>
         <source>Paper source:</source>
@@ -6221,39 +6223,39 @@ Please verify the correct file name was given.</source>
     </message>
     <message>
         <source>Centimeters (cm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Centimetroj (cm)</translation>
     </message>
     <message>
         <source>right margin</source>
-        <translation type="unfinished"></translation>
+        <translation>dekstra marĝeno</translation>
     </message>
     <message>
         <source>Margins</source>
-        <translation type="unfinished"></translation>
+        <translation>Marĝenoj</translation>
     </message>
     <message>
         <source>Landscape</source>
-        <translation type="unfinished"></translation>
+        <translation>Horizontala</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation type="unfinished"></translation>
+        <translation>Larĝo:</translation>
     </message>
     <message>
         <source>Orientation</source>
-        <translation type="unfinished"></translation>
+        <translation>Orientiĝo</translation>
     </message>
     <message>
         <source>Portrait</source>
-        <translation type="unfinished"></translation>
+        <translation>Vertikala</translation>
     </message>
     <message>
         <source>top margin</source>
-        <translation type="unfinished"></translation>
+        <translation>supra marĝeno</translation>
     </message>
     <message>
         <source>left margin</source>
-        <translation type="unfinished"></translation>
+        <translation>maldekstra marĝeno</translation>
     </message>
     <message>
         <source>Page size:</source>
@@ -6265,7 +6267,7 @@ Please verify the correct file name was given.</source>
     </message>
     <message>
         <source>Millimeters (mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Milimetroj (mm)</translation>
     </message>
     <message>
         <source>Points (pt)</source>
@@ -6281,114 +6283,114 @@ Please verify the correct file name was given.</source>
     </message>
     <message>
         <source>Height:</source>
-        <translation type="unfinished"></translation>
+        <translation>Alteco:</translation>
     </message>
 </context>
 <context>
     <name>QPlatformTheme</name>
     <message>
-        <location filename="../src/gui/text_browser_dialog.cpp" line="64"></location>
+        <location filename="../src/gui/text_browser_dialog.cpp" line="64"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Fermi</translation>
     </message>
 </context>
 <context>
     <name>QPrintDialog</name>
     <message>
         <source>A0</source>
-        <translation type="unfinished"></translation>
+        <translation>A0</translation>
     </message>
     <message>
         <source>A1</source>
-        <translation type="unfinished"></translation>
+        <translation>A1</translation>
     </message>
     <message>
         <source>A2</source>
-        <translation type="unfinished"></translation>
+        <translation>A2</translation>
     </message>
     <message>
         <source>A3</source>
-        <translation type="unfinished"></translation>
+        <translation>A3</translation>
     </message>
     <message>
         <source>A4</source>
-        <translation type="unfinished"></translation>
+        <translation>A4</translation>
     </message>
     <message>
         <source>A5</source>
-        <translation type="unfinished"></translation>
+        <translation>A5</translation>
     </message>
     <message>
         <source>A6</source>
-        <translation type="unfinished"></translation>
+        <translation>A6</translation>
     </message>
     <message>
         <source>A7</source>
-        <translation type="unfinished"></translation>
+        <translation>A7</translation>
     </message>
     <message>
         <source>A8</source>
-        <translation type="unfinished"></translation>
+        <translation>A8</translation>
     </message>
     <message>
         <source>A9</source>
-        <translation type="unfinished"></translation>
+        <translation>A9</translation>
     </message>
     <message>
         <source>B0</source>
-        <translation type="unfinished"></translation>
+        <translation>B0</translation>
     </message>
     <message>
         <source>B1</source>
-        <translation type="unfinished"></translation>
+        <translation>B1</translation>
     </message>
     <message>
         <source>B2</source>
-        <translation type="unfinished"></translation>
+        <translation>B2</translation>
     </message>
     <message>
         <source>B3</source>
-        <translation type="unfinished"></translation>
+        <translation>B3</translation>
     </message>
     <message>
         <source>B4</source>
-        <translation type="unfinished"></translation>
+        <translation>B4</translation>
     </message>
     <message>
         <source>B5</source>
-        <translation type="unfinished"></translation>
+        <translation>B5</translation>
     </message>
     <message>
         <source>B6</source>
-        <translation type="unfinished"></translation>
+        <translation>B6</translation>
     </message>
     <message>
         <source>B7</source>
-        <translation type="unfinished"></translation>
+        <translation>B7</translation>
     </message>
     <message>
         <source>B8</source>
-        <translation type="unfinished"></translation>
+        <translation>B8</translation>
     </message>
     <message>
         <source>B9</source>
-        <translation type="unfinished"></translation>
+        <translation>B9</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>Bone</translation>
     </message>
     <message>
         <source>B10</source>
-        <translation type="unfinished"></translation>
+        <translation>B10</translation>
     </message>
     <message>
         <source>C5E</source>
-        <translation type="unfinished"></translation>
+        <translation>C5E</translation>
     </message>
     <message>
         <source>DLE</source>
-        <translation type="unfinished"></translation>
+        <translation>DLE</translation>
     </message>
     <message>
         <source>Folio</source>
@@ -6404,11 +6406,11 @@ Please verify the correct file name was given.</source>
     </message>
     <message>
         <source>&amp;Options &lt;&lt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Agordaĵoj &lt;&lt;</translation>
     </message>
     <message>
         <source>&amp;Options &gt;&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Agordaĵoj &gt;&gt;</translation>
     </message>
     <message>
         <source>Write PDF file</source>
@@ -6421,11 +6423,12 @@ Please verify the correct file name was given.</source>
     <message>
         <source>%1 already exists.
 Do you want to overwrite it?</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 jam ekzistas.
+Ĉu vi volas superskribi ĝin?</translation>
     </message>
     <message>
         <source>Custom</source>
-        <translation type="unfinished"></translation>
+        <translation>Propra</translation>
     </message>
     <message>
         <source>Ledger</source>
@@ -6437,15 +6440,15 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Local file</source>
-        <translation type="unfinished"></translation>
+        <translation>Loka dosiero</translation>
     </message>
     <message>
         <source>Print to File (PDF)</source>
-        <translation type="unfinished"></translation>
+        <translation>Presi al dosiero (PDF)</translation>
     </message>
     <message>
         <source>Print To File ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Presi al dosiero …</translation>
     </message>
     <message>
         <source>Tabloid</source>
@@ -6466,19 +6469,21 @@ Do you want to overwrite it?</source>
     <message>
         <source>%1 is a directory.
 Please choose a different file name.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 estas dosierujo.
+Bonvolu elekti malsaman dosiernomon.</translation>
     </message>
     <message>
         <source>File %1 is not writable.
 Please choose a different file name.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosiero %1 ne estas skribebla.
+Bonvolu elekti malsaman dosiernomon.</translation>
     </message>
 </context>
 <context>
     <name>QPrintPreviewDialog</name>
     <message>
         <source>%1%</source>
-        <translation type="unfinished"></translation>
+        <translation>%1%</translation>
     </message>
     <message>
         <source>Print Preview</source>
@@ -6494,15 +6499,15 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>Zoom in</source>
-        <translation type="unfinished"></translation>
+        <translation>Zomi</translation>
     </message>
     <message>
         <source>Landscape</source>
-        <translation type="unfinished"></translation>
+        <translation>Horizontala</translation>
     </message>
     <message>
         <source>Zoom out</source>
-        <translation type="unfinished"></translation>
+        <translation>Malzomi</translation>
     </message>
     <message>
         <source>Fit width</source>
@@ -6510,15 +6515,15 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>Portrait</source>
-        <translation type="unfinished"></translation>
+        <translation>Vertikala</translation>
     </message>
     <message>
         <source>Page Setup</source>
-        <translation type="unfinished"></translation>
+        <translation>Paĝo-agordo</translation>
     </message>
     <message>
         <source>Page setup</source>
-        <translation type="unfinished"></translation>
+        <translation>Paĝo-agordo</translation>
     </message>
     <message>
         <source>Show overview of all pages</source>
@@ -6526,11 +6531,11 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>First page</source>
-        <translation type="unfinished"></translation>
+        <translation>Unua paĝo</translation>
     </message>
     <message>
         <source>Last page</source>
-        <translation type="unfinished"></translation>
+        <translation>Lasta paĝo</translation>
     </message>
     <message>
         <source>Show single page</source>
@@ -6538,15 +6543,15 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>Export to PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksporti al PDF</translation>
     </message>
     <message>
         <source>Previous page</source>
-        <translation type="unfinished"></translation>
+        <translation>Antaŭa paĝo</translation>
     </message>
     <message>
         <source>Next page</source>
-        <translation type="unfinished"></translation>
+        <translation>Sekva paĝo</translation>
     </message>
     <message>
         <source>Show facing pages</source>
@@ -6554,7 +6559,7 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>Export to PostScript</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksporti al PostScript</translation>
     </message>
 </context>
 <context>
@@ -6565,18 +6570,18 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>Page</source>
-        <translation type="unfinished"></translation>
+        <translation>Paĝo</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation>Speciala</translation>
     </message>
 </context>
 <context>
     <name>QPrintSettingsOutput</name>
     <message>
         <source>to</source>
-        <translation type="unfinished"></translation>
+        <translation>al</translation>
     </message>
     <message>
         <source>Form</source>
@@ -6584,11 +6589,11 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>Nenio</translation>
     </message>
     <message>
         <source>Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Koloro</translation>
     </message>
     <message>
         <source>Print all</source>
@@ -6596,11 +6601,11 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>Current Page</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktuala paĝo</translation>
     </message>
     <message>
         <source>Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Elektaĵo</translation>
     </message>
     <message>
         <source>Long side</source>
@@ -6608,7 +6613,7 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>Copies</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopioj</translation>
     </message>
     <message>
         <source>Print range</source>
@@ -6616,11 +6621,11 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>Color Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Kolora reĝimo</translation>
     </message>
     <message>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Agordaĵoj</translation>
     </message>
     <message>
         <source>Output Settings</source>
@@ -6632,7 +6637,7 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>Grayscale</source>
-        <translation type="unfinished"></translation>
+        <translation>Grizoskalo</translation>
     </message>
     <message>
         <source>Short side</source>
@@ -6644,7 +6649,7 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>Copies:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopioj:</translation>
     </message>
     <message>
         <source>Pages from</source>
@@ -6659,7 +6664,7 @@ Please choose a different file name.</source>
     <name>QPrintWidget</name>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>…</translation>
     </message>
     <message>
         <source>Form</source>
@@ -6667,19 +6672,19 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo:</translation>
     </message>
     <message>
         <source>&amp;Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Nomo:</translation>
     </message>
     <message>
         <source>Output &amp;file:</source>
-        <translation type="unfinished"></translation>
+        <translation>Eliga &amp;dosiero:</translation>
     </message>
     <message>
         <source>P&amp;roperties</source>
-        <translation type="unfinished"></translation>
+        <translation>At&amp;ributoj</translation>
     </message>
     <message>
         <source>Preview</source>
@@ -6687,11 +6692,11 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>Printer</source>
-        <translation type="unfinished"></translation>
+        <translation>Presilo</translation>
     </message>
     <message>
         <source>Location:</source>
-        <translation type="unfinished"></translation>
+        <translation>Loko:</translation>
     </message>
 </context>
 <context>
@@ -6737,18 +6742,18 @@ Please choose a different file name.</source>
     <name>QProgressDialog</name>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Rezigni</translation>
     </message>
 </context>
 <context>
     <name>QScrollBar</name>
     <message>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Supren</translation>
     </message>
     <message>
         <source>Scroll down</source>
-        <translation type="unfinished"></translation>
+        <translation>Rulumi malsupren</translation>
     </message>
     <message>
         <source>Scroll here</source>
@@ -6756,27 +6761,27 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>Scroll left</source>
-        <translation type="unfinished"></translation>
+        <translation>Rulumi maldekstren</translation>
     </message>
     <message>
         <source>Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Malsupren</translation>
     </message>
     <message>
         <source>Page up</source>
-        <translation type="unfinished"></translation>
+        <translation>Paĝo supren</translation>
     </message>
     <message>
         <source>Page right</source>
-        <translation type="unfinished"></translation>
+        <translation>Paĝo dekstren</translation>
     </message>
     <message>
         <source>Scroll up</source>
-        <translation type="unfinished"></translation>
+        <translation>Rulumi supren</translation>
     </message>
     <message>
         <source>Scroll right</source>
-        <translation type="unfinished"></translation>
+        <translation>Rulumi dekstren</translation>
     </message>
     <message>
         <source>Left edge</source>
@@ -6784,11 +6789,11 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>Page down</source>
-        <translation type="unfinished"></translation>
+        <translation>Paĝo malsupren</translation>
     </message>
     <message>
         <source>Page left</source>
-        <translation type="unfinished"></translation>
+        <translation>Paĝo maldekstren</translation>
     </message>
     <message>
         <source>Right edge</source>
@@ -6799,7 +6804,7 @@ Please choose a different file name.</source>
     <name>QShortcut</name>
     <message>
         <source>+</source>
-        <translation type="unfinished"></translation>
+        <translation>+</translation>
     </message>
     <message>
         <source>Go</source>
@@ -6807,51 +6812,51 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne</translation>
     </message>
     <message>
         <source>Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Supren</translation>
     </message>
     <message>
         <source>Alt</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt</translation>
     </message>
     <message>
         <source>F%1</source>
-        <translation type="unfinished"></translation>
+        <translation>F%1</translation>
     </message>
     <message>
         <source>Del</source>
-        <translation type="unfinished"></translation>
+        <translation>Del</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="unfinished"></translation>
+        <translation>Eltondi</translation>
     </message>
     <message>
         <source>End</source>
-        <translation type="unfinished"></translation>
+        <translation>End</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation type="unfinished"></translation>
+        <translation>Esc</translation>
     </message>
     <message>
         <source>Ins</source>
-        <translation type="unfinished"></translation>
+        <translation>Ins</translation>
     </message>
     <message>
         <source>Tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Tab</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Jes</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Malantaŭen</translation>
     </message>
     <message>
         <source>Away</source>
@@ -6859,127 +6864,127 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>Book</source>
-        <translation type="unfinished"></translation>
+        <translation>Libro</translation>
     </message>
     <message>
         <source>Call</source>
-        <translation type="unfinished"></translation>
+        <translation>Voki</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopii</translation>
     </message>
     <message>
         <source>Ctrl</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl</translation>
     </message>
     <message>
         <source>Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Malsupren</translation>
     </message>
     <message>
         <source>Flip</source>
-        <translation type="unfinished"></translation>
+        <translation>Renversi</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Helpo</translation>
     </message>
     <message>
         <source>Home</source>
-        <translation type="unfinished"></translation>
+        <translation>Hejmo</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Maldekstren</translation>
     </message>
     <message>
         <source>Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Menuo</translation>
     </message>
     <message>
         <source>Meta</source>
-        <translation type="unfinished"></translation>
+        <translation>Meta</translation>
     </message>
     <message>
         <source>PgUp</source>
-        <translation type="unfinished"></translation>
+        <translation>PgUp</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Konservi</translation>
     </message>
     <message>
         <source>Send</source>
-        <translation type="unfinished"></translation>
+        <translation>Sendi</translation>
     </message>
     <message>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>Haltigi</translation>
     </message>
     <message>
         <source>XFer</source>
-        <translation type="unfinished"></translation>
+        <translation>XFer</translation>
     </message>
     <message>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Vido</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation>Vakigi</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Fermi</translation>
     </message>
     <message>
         <source>Enter</source>
-        <translation type="unfinished"></translation>
+        <translation>Enter</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>Alglui</translation>
     </message>
     <message>
         <source>Pause</source>
-        <translation type="unfinished"></translation>
+        <translation>Pause</translation>
     </message>
     <message>
         <source>Print</source>
-        <translation type="unfinished"></translation>
+        <translation>Print</translation>
     </message>
     <message>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Dekstren</translation>
     </message>
     <message>
         <source>Shift</source>
-        <translation type="unfinished"></translation>
+        <translation>Shift</translation>
     </message>
     <message>
         <source>Space</source>
-        <translation type="unfinished"></translation>
+        <translation>Spaceto</translation>
     </message>
     <message>
         <source>Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>Iloj</translation>
     </message>
     <message>
         <source>Print Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekrankopio</translation>
     </message>
     <message>
         <source>Zoom In</source>
-        <translation type="unfinished"></translation>
+        <translation>Zomi</translation>
     </message>
     <message>
         <source>Scroll Lock</source>
-        <translation type="unfinished"></translation>
+        <translation>Ruluma baskulo</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Forigi</translation>
     </message>
     <message>
         <source>Escape</source>
@@ -6987,55 +6992,55 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>Insert</source>
-        <translation type="unfinished"></translation>
+        <translation>Enmeti</translation>
     </message>
     <message>
         <source>Option</source>
-        <translation type="unfinished"></translation>
+        <translation>Opcio</translation>
     </message>
     <message>
         <source>PgDown</source>
-        <translation type="unfinished"></translation>
+        <translation>PgDown</translation>
     </message>
     <message>
         <source>Reload</source>
-        <translation type="unfinished"></translation>
+        <translation>Reŝargi</translation>
     </message>
     <message>
         <source>Return</source>
-        <translation type="unfinished"></translation>
+        <translation>Return</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Serĉi</translation>
     </message>
     <message>
         <source>Select</source>
-        <translation type="unfinished"></translation>
+        <translation>Elekti</translation>
     </message>
     <message>
         <source>SysReq</source>
-        <translation type="unfinished"></translation>
+        <translation>SysReq</translation>
     </message>
     <message>
         <source>NumLock</source>
-        <translation type="unfinished"></translation>
+        <translation>NumLock</translation>
     </message>
     <message>
         <source>ScrollLock</source>
-        <translation type="unfinished"></translation>
+        <translation>ScrollLock</translation>
     </message>
     <message>
         <source>Zoom Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Malzomi</translation>
     </message>
     <message>
         <source>Page Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Paĝo supren</translation>
     </message>
     <message>
         <source>Caps Lock</source>
-        <translation type="unfinished"></translation>
+        <translation>Majuskla baskulo</translation>
     </message>
     <message>
         <source>System Request</source>
@@ -7043,19 +7048,19 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>CapsLock</source>
-        <translation type="unfinished"></translation>
+        <translation>CapsLock</translation>
     </message>
     <message>
         <source>Backtab</source>
-        <translation type="unfinished"></translation>
+        <translation>Backtab</translation>
     </message>
     <message>
         <source>Backspace</source>
-        <translation type="unfinished"></translation>
+        <translation>Backspace</translation>
     </message>
     <message>
         <source>Page Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Paĝo malsupren</translation>
     </message>
     <message>
         <source>Wake Up</source>
@@ -7070,7 +7075,7 @@ Please choose a different file name.</source>
     <name>QStandardPaths</name>
     <message>
         <source>Home</source>
-        <translation type="unfinished"></translation>
+        <translation>Hejmo</translation>
     </message>
     <message>
         <source>Cache</source>
@@ -7078,11 +7083,11 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>Fonts</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiparoj</translation>
     </message>
     <message>
         <source>Music</source>
-        <translation type="unfinished"></translation>
+        <translation>Muziko</translation>
     </message>
     <message>
         <source>Shared Cache</source>
@@ -7090,7 +7095,7 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>Movies</source>
-        <translation type="unfinished"></translation>
+        <translation>Filmoj</translation>
     </message>
     <message>
         <source>Download</source>
@@ -7110,7 +7115,7 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>Documents</source>
-        <translation type="unfinished"></translation>
+        <translation>Dokumentoj</translation>
     </message>
     <message>
         <source>Desktop</source>
@@ -7126,112 +7131,112 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>Applications</source>
-        <translation type="unfinished"></translation>
+        <translation>Aplikaĵoj</translation>
     </message>
     <message>
         <source>Pictures</source>
-        <translation type="unfinished"></translation>
+        <translation>Bildoj</translation>
     </message>
 </context>
 <context>
     <name>QTabBar</name>
     <message>
         <source>Scroll Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Rulumi maldekstren</translation>
     </message>
     <message>
         <source>Scroll Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Rulumi dekstren</translation>
     </message>
 </context>
 <context>
     <name>QUndoGroup</name>
     <message>
         <source>Redo</source>
-        <translation type="unfinished"></translation>
+        <translation>Refari</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>Malfari</translation>
     </message>
     <message>
         <source>Redo %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Refari %1</translation>
     </message>
     <message>
         <source>Undo %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Malfari %1</translation>
     </message>
 </context>
 <context>
     <name>QUndoModel</name>
     <message>
         <source>&lt;empty&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;malplena&gt;</translation>
     </message>
 </context>
 <context>
     <name>QUndoStack</name>
     <message>
         <source>Redo</source>
-        <translation type="unfinished"></translation>
+        <translation>Refari</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>Malfari</translation>
     </message>
     <message>
         <source>Redo %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Refari %1</translation>
     </message>
     <message>
         <source>Undo %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Malfari %1</translation>
     </message>
 </context>
 <context>
     <name>QWhatsThisAction</name>
     <message>
         <source>What's This?</source>
-        <translation type="unfinished"></translation>
+        <translation>Kio estas tio?</translation>
     </message>
 </context>
 <context>
     <name>QWidget</name>
     <message>
         <source>*</source>
-        <translation type="unfinished"></translation>
+        <translation>*</translation>
     </message>
 </context>
 <context>
     <name>QWidgetTextControl</name>
     <message>
         <source>Cu&amp;t</source>
-        <translation type="unfinished"></translation>
+        <translation>El&amp;tondi</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Kopii</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Refari</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Malfari</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Alglui</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Forigi</translation>
     </message>
     <message>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>Elekti ĉiujn</translation>
     </message>
     <message>
         <source>Copy &amp;Link Location</source>
@@ -7242,23 +7247,23 @@ Please choose a different file name.</source>
     <name>QWizard</name>
     <message>
         <source>Done</source>
-        <translation type="unfinished"></translation>
+        <translation>Farita</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Helpo</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Helpo</translation>
     </message>
     <message>
         <source>&amp;Next</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Sekva</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Rezigni</translation>
     </message>
     <message>
         <source>Commit</source>
@@ -7266,15 +7271,15 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>Continue</source>
-        <translation type="unfinished"></translation>
+        <translation>Daŭrigi</translation>
     </message>
     <message>
         <source>&amp;Finish</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Fini</translation>
     </message>
     <message>
         <source>&amp;Next &gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Sekva &gt;</translation>
     </message>
     <message>
         <source>Go Back</source>
@@ -7282,7 +7287,7 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>&lt; &amp;Back</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt; &amp;Malantaŭen</translation>
     </message>
 </context>
 <context>
@@ -7388,7 +7393,7 @@ Please choose a different file name.</source>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="366"/>
         <source>Cannot load map file, aborting.</source>
-        <translation>Ne eblas ŝargi mapodosieron, ĉesigado.</translation>
+        <translation>Ne povas ŝargi mapodosieron, ĉesigado.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="372"/>
@@ -8519,7 +8524,7 @@ Tamen se vi ne intencas desegni sur ĉi tiu ŝablono, tio ne estas problemo.</tr
         <source>Cannot open template
 %1:
 %2</source>
-        <translation>Ne eblas malfermi ŝablonon
+        <translation>Ne povas malfermi ŝablonon
 %1:
 %2</translation>
     </message>
