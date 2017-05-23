@@ -826,16 +826,15 @@ void Map::importMap(
 			clone.setGeoreferencing(other->getGeoreferencing());
 			clone.importMap(other, mode, dialog_parent, filter, -1, false, out_symbol_map);
 			clone.changeScale(getScaleDenominator(), MapCoord(0, 0), true, true, true, true);
-			QHash<const Symbol*, Symbol*> symbol_map;
+			QHash<const Symbol*, Symbol*> symbol_map; // clone symbol -> this map's symbol
 			importMap(&clone, mode, dialog_parent, nullptr, symbol_insert_pos, merge_duplicate_symbols, &symbol_map);
-			if (out_symbol_map)
+			if (out_symbol_map) // original imported symbol -> clone symbol
 			{
 				Q_ASSERT(symbol_map.size() == out_symbol_map->size());
-				auto end = out_symbol_map->end();
-				for (auto item = out_symbol_map->begin(); item != end; ++item)
+				for (auto& symbol : *out_symbol_map)
 				{
-					Q_ASSERT(symbol_map.contains(item.key()));
-					item.value() = symbol_map.value(item.key());
+					Q_ASSERT(symbol_map.contains(symbol));
+					symbol = symbol_map.value(symbol); // original imported symbol -> this map's symbol
 				}
 			}
 			return;
