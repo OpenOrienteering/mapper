@@ -1396,17 +1396,22 @@ private:
 		void adjustColorPriorities(int first, int last);
 	};
 	
-	/// Imports the other symbol set into this set, only importing the symbols for which filter[color_index] == true and
-	/// returning the map from symbol indices in other to imported indices. Imported symbols are placed after the existing symbols.
-	void importSymbols(
-	        const Map* other,
+	
+	/** 
+	 * Imports the other symbol set into this map's symbols.
+	 * 
+	 * If a filter is given, imports only the symbols for which filter[color_index] == true.
+	 * Imported symbols are placed at insert_pos (if positive), or after the existing symbols.
+	 * Returns a mapping from original symbols (in other) to imported symbols.
+	 */
+	QHash<const Symbol*, Symbol*> importSymbols(
+	        const Map& other,
 	        const MapColorMap& color_map,
 	        int insert_pos = -1,
 	        bool merge_duplicates = true,
-	        std::vector<bool>* filter = nullptr,
-	        QHash<int, int>* out_indexmap = nullptr,
-	        QHash<const Symbol*, Symbol*>* out_pointermap = nullptr
+	        const std::vector<bool>& filter = {}
 	);
+	
 	
 	void addSelectionRenderables(const Object* object);
 	void updateSelectionRenderables(const Object* object);
