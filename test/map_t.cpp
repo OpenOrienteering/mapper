@@ -125,15 +125,10 @@ void MapTest::importTest()
 	
 	auto original_size = map.getNumObjects();
 	auto original_num_colors = map.getNumColors();
-#ifdef IMPORT_MAP_DOES_NOT_USE_GUI
 	Map empty_map;
 	map.importMap(&empty_map, Map::CompleteImport);
 	QCOMPARE(map.getNumObjects(), original_size);
 	QCOMPARE(map.getNumColors(), original_num_colors);
-#else
-	map.color_set->importSet(*map.color_set, {});
-	QCOMPARE(map.getNumColors(), original_num_colors);
-#endif
 	
 	map.importMap(&map, Map::ColorImport);
 	QCOMPARE(map.getNumObjects(), original_size);
