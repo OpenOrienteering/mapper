@@ -19,6 +19,8 @@
 
 #include "map_t.h"
 
+#include <QMessageBox>
+
 #include "core/map.h"
 #include "core/map_color.h"
 #include "core/map_printer.h"
@@ -29,6 +31,7 @@ namespace
 	static QDir examples_dir;
 }
 
+
 void MapTest::initTestCase()
 {
 	Q_INIT_RESOURCE(resources);
@@ -36,7 +39,15 @@ void MapTest::initTestCase()
 	examples_dir.cd(QFileInfo(QString::fromUtf8(__FILE__)).dir().absoluteFilePath(QString::fromLatin1("../examples")));
 	// Static map initializations
 	Map map;
+	
+	// Accept any message boxes
+	connect(qApp, &QApplication::focusChanged, [](QWidget*, QWidget* w) {
+		if (w && qobject_cast<QMessageBox*>(w->window()))
+			QTimer::singleShot(0, w->window(), SLOT(accept()));
+	});
 }
+
+
 
 void MapTest::printerConfigTest()
 {
@@ -114,15 +125,10 @@ void MapTest::importTest()
 	
 	auto original_size = map.getNumObjects();
 	auto original_num_colors = map.getNumColors();
-#ifdef IMPORT_MAP_DOES_NOT_USE_GUI
 	Map empty_map;
 	map.importMap(&empty_map, Map::CompleteImport);
 	QCOMPARE(map.getNumObjects(), original_size);
 	QCOMPARE(map.getNumColors(), original_num_colors);
-#else
-	map.color_set->importSet(*map.color_set, {});
-	QCOMPARE(map.getNumColors(), original_num_colors);
-#endif
 	
 	map.importMap(&map, Map::ColorImport);
 	QCOMPARE(map.getNumObjects(), original_size);
@@ -135,12 +141,16 @@ void MapTest::importTest()
 	QString imported_path = examples_dir.absoluteFilePath(imported_file);
 	Map imported_map;
 	QVERIFY(imported_map.loadFrom(imported_path, nullptr, nullptr, false, false));
+	QVERIFY(imported_map.getNumSymbols() > 0);
 	
 	original_size = map.getNumObjects();
-	imported_map.changeScale(map.getScaleDenominator(), {}, true, true, true, true);
-	map.importMap(&imported_map, Map::CompleteImport);
+	QHash<const Symbol*, Symbol*> symbol_map;
+	map.importMap(&imported_map, Map::CompleteImport, nullptr, nullptr, -1, false, &symbol_map);
 	QCOMPARE(map.getNumObjects(), original_size + imported_map.getNumObjects());
+	QCOMPARE(symbol_map.size(), imported_map.getNumSymbols());
 }
+
+
 
 /*
  * We don't need a real GUI window.
