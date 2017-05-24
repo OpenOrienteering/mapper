@@ -1420,7 +1420,7 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="64"/>
         <source>Value</source>
-        <translation type="unfinished">Wert</translation>
+        <translation>Wert</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="83"/>
@@ -5113,22 +5113,22 @@ Zoomen ist mit dem Mausrad möglich.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="313"/>
         <source>Point</source>
-        <translation type="unfinished">Punkt</translation>
+        <translation>Punkt</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="320"/>
         <source>Line</source>
-        <translation type="unfinished">Linie</translation>
+        <translation>Linie</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="329"/>
         <source>Area</source>
-        <translation type="unfinished">Fläche</translation>
+        <translation>Fläche</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="335"/>
         <source>Text</source>
-        <translation type="unfinished">Text</translation>
+        <translation>Text</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="394"/>
