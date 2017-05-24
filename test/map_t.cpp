@@ -146,10 +146,13 @@ void MapTest::importTest()
 	QString imported_path = examples_dir.absoluteFilePath(imported_file);
 	Map imported_map;
 	QVERIFY(imported_map.loadFrom(imported_path, nullptr, nullptr, false, false));
+	QVERIFY(imported_map.getNumSymbols() > 0);
 	
 	original_size = map.getNumObjects();
-	map.importMap(&imported_map, Map::CompleteImport);
+	QHash<const Symbol*, Symbol*> symbol_map;
+	map.importMap(&imported_map, Map::CompleteImport, nullptr, nullptr, -1, false, &symbol_map);
 	QCOMPARE(map.getNumObjects(), original_size + imported_map.getNumObjects());
+	QCOMPARE(symbol_map.size(), imported_map.getNumSymbols());
 }
 
 
