@@ -19,6 +19,8 @@
 
 #include "map_t.h"
 
+#include <QMessageBox>
+
 #include "core/map.h"
 #include "core/map_color.h"
 #include "core/map_printer.h"
@@ -29,6 +31,7 @@ namespace
 	static QDir examples_dir;
 }
 
+
 void MapTest::initTestCase()
 {
 	Q_INIT_RESOURCE(resources);
@@ -36,7 +39,15 @@ void MapTest::initTestCase()
 	examples_dir.cd(QFileInfo(QString::fromUtf8(__FILE__)).dir().absoluteFilePath(QString::fromLatin1("../examples")));
 	// Static map initializations
 	Map map;
+	
+	// Accept any message boxes
+	connect(qApp, &QApplication::focusChanged, [](QWidget*, QWidget* w) {
+		if (w && qobject_cast<QMessageBox*>(w->window()))
+			QTimer::singleShot(0, w->window(), SLOT(accept()));
+	});
 }
+
+
 
 void MapTest::printerConfigTest()
 {
@@ -137,10 +148,11 @@ void MapTest::importTest()
 	QVERIFY(imported_map.loadFrom(imported_path, nullptr, nullptr, false, false));
 	
 	original_size = map.getNumObjects();
-	imported_map.changeScale(map.getScaleDenominator(), {}, true, true, true, true);
 	map.importMap(&imported_map, Map::CompleteImport);
 	QCOMPARE(map.getNumObjects(), original_size + imported_map.getNumObjects());
 }
+
+
 
 /*
  * We don't need a real GUI window.
