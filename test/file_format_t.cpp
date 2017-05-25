@@ -84,7 +84,7 @@ namespace QTest
 	{
 		const auto& page_format = t;
 		QByteArray ba = "";
-		ba += MapPrinter::paperSizeNames()[page_format.paper_size];
+		ba += MapPrinter::paperSizeNames()[page_format.page_size];
 		ba += (page_format.orientation == MapPrinterPageFormat::Landscape) ? " landscape (" : " portrait (";
 		ba += QByteArray::number(page_format.paper_dimensions.width(), 'f', 2) + "x";
 		ba += QByteArray::number(page_format.paper_dimensions.height(), 'f', 2) + "), ";
