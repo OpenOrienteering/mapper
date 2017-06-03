@@ -724,6 +724,14 @@ bool MapWidget::event(QEvent* event)
 		if (static_cast<QTouchEvent*>(event)->touchPoints().count() >= 2)
 			return true;
 		break;
+		
+	case QEvent::KeyPress:
+		// No focus changing in QWidget::event if Tab is handled by tool.
+		if (static_cast<QKeyEvent*>(event)->key() == Qt::Key_Tab
+		    && keyPressEventFilter(static_cast<QKeyEvent*>(event)))
+			return true;
+		break;
+		
 	default:
 		; // nothing
 	}
