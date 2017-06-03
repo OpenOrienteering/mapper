@@ -113,6 +113,11 @@ protected:
 	bool hoveringOverSingleText() const;
 	
 	/**
+	 * Checks if cursor hovers over a curve handle.
+	 */
+	bool hoveringOverCurveHandle() const;
+	
+	/**
 	 * Checks if the cursor hovers over the selection frame.
 	 */
 	bool hoveringOverFrame() const;

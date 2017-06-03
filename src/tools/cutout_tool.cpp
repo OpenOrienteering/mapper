@@ -91,8 +91,9 @@ void CutoutTool::drawImpl(QPainter* painter, MapWidget* widget)
 
 bool CutoutTool::keyPress(QKeyEvent* event)
 {
-	if (event->key() == Qt::Key_Return)
+	switch (event->key())
 	{
+	case Qt::Key_Return:
 		// Insert cutout object again at its original index to keep the objects order
 		// (necessary for not breaking undo / redo)
 		map()->getCurrentPart()->addObject(cutout_object, cutout_object_index);
@@ -101,12 +102,13 @@ bool CutoutTool::keyPress(QKeyEvent* event)
 		// Apply tool via static function and deselect this tool
 		apply(map(), cutout_object, cut_away);
 		editor->setEditTool();
-	}
-	else if (event->key() == Qt::Key_Escape)
-	{
+		return true;
+		
+	case Qt::Key_Escape:
 		editor->setEditTool();
+		return true;
+		
 	}
-	
 	return false;
 }
 

@@ -332,7 +332,7 @@ void EditPointTool::dragStart()
 		
 		if (active_modifiers & Qt::ControlModifier)
 			activateAngleHelperWhileEditing();
-		if (active_modifiers & Qt::ShiftModifier)
+		if (active_modifiers & Qt::ShiftModifier && !hoveringOverCurveHandle())
 			activateSnapHelperWhileEditing();
 	}
 }
@@ -397,102 +397,90 @@ void EditPointTool::focusOutEvent(QFocusEvent* event)
 	updateStatusText();
 }
 
+
 bool EditPointTool::keyPress(QKeyEvent* event)
 {
-	if (text_editor)
+	if (text_editor && text_editor->keyPressEvent(event))
 	{
-		if (event->key() == Qt::Key_Escape)
-		{
-			finishEditing(); 
-			return true;
-		}
-		else if (text_editor->keyPressEvent(event))
-		{
-			return true;
-		}
+		return true;
 	}
 	
-	if (event->key() == Qt::Key_Space)
+	switch(event->key())
 	{
-		space_pressed = true;
-	}
-	else if (isDragging())
-	{
-		if (event->key() == Qt::Key_Escape)
-			cancelDragging();
-	}
-	else if (editingInProgress())
-	{
-		if (event->key() == Qt::Key_Control)
-		{
-			activateAngleHelperWhileEditing();
-		}
-		else if (event->key() == Qt::Key_Shift)
-		{
-			if (hover_state == OverObjectNode &&
-				hover_object->getType() == Object::Path &&
-				hover_object->asPath()->isCurveHandle(hover_point))
-			{
-				// In this case, Shift just activates deactivates
-				// the opposite curve handle constraints
-				return true;
-			}
-			activateSnapHelperWhileEditing();
-		}
-	}
-	else if (map()->getNumSelectedObjects() > 0)
-	{
-		if (event->key() == delete_object_key)
-		{
+	case EditTool::DeleteObjectKey:
+		if (map()->getNumSelectedObjects() > 0)
 			deleteSelectedObjects();
-		}
-		else if (event->key() == Qt::Key_Escape && !waiting_for_mouse_release)
-		{
+		updateStatusText();
+		return true;
+		
+	case Qt::Key_Escape:
+		if (text_editor)
+			finishEditing(); 
+		else if (isDragging())
+			cancelDragging();
+		else if (map()->getNumSelectedObjects() > 0 && !waiting_for_mouse_release)
 			map()->clearObjectSelection(true);
-		}
-	}
-	else
-	{
-		return false;
-	}
+		updateStatusText();
+		return true;
+		
+	case Qt::Key_Space:
+		space_pressed = true;
+		updateStatusText();
+		return true;
+		
+	case Qt::Key_Control:
+		if (editingInProgress())
+			activateAngleHelperWhileEditing();
+		updateStatusText();
+		return false; // not consuming Ctrl
 	
-	updateStatusText();
-	return true;
+	case Qt::Key_Shift:
+		if (hoveringOverCurveHandle())
+			reapplyConstraintHelpers();
+		else if (editingInProgress())
+			activateSnapHelperWhileEditing();
+		updateStatusText();
+		return false; // not consuming Shift
+		
+	}
+	return false;
 }
+
 
 bool EditPointTool::keyRelease(QKeyEvent* event)
 {
 	if (text_editor && text_editor->keyReleaseEvent(event))
-		return true;
-	
-	if (event->key() == Qt::Key_Control)
 	{
+		return true;
+	}
+	
+	switch(event->key())
+	{
+	case Qt::Key_Control:
 		angle_helper->setActive(false);
 		if (editingInProgress())
-		{
 			reapplyConstraintHelpers();
-		}
-	}
-	else if (event->key() == Qt::Key_Shift)
-	{
+		updateStatusText();
+		return false; // not consuming Ctrl
+		
+	case Qt::Key_Shift:
 		snap_helper->setFilter(SnappingToolHelper::NoSnapping);
-		if (editingInProgress())
-		{
+		if (hoveringOverCurveHandle())
 			reapplyConstraintHelpers();
-		}
-	}
-	else if (event->key() == Qt::Key_Space)
-	{
+		else if (editingInProgress())
+			reapplyConstraintHelpers();
+		updateStatusText();
+		return false; // not consuming Shift
+		
+	case Qt::Key_Space:
 		space_pressed = false;
+		updateStatusText();
+		return true;
+		
 	}
-	else
-	{
-		return false;
-	}
-	
-	updateStatusText();
-	return true;
+	return false;
 }
+
 
 bool EditPointTool::inputMethodEvent(QInputMethodEvent* event)
 {
@@ -710,13 +698,12 @@ void EditPointTool::updateStatusText()
 		
 		if (!(active_modifiers & Qt::ShiftModifier))
 		{
-			if (hover_state == OverObjectNode &&
-				hover_object->getType() == Object::Path &&
-				hover_object->asPath()->isCurveHandle(hover_point))
+			if (hoveringOverCurveHandle())
 			{
+				//: Actually, this means: "Keep the opposite handle's position. "
 				text += tr("<b>%1</b>: Keep opposite handle positions. ").arg(ModifierKey::shift());
-			}
-			else
+			}	
+			else 
 			{
 				text += EditTool::tr("<b>%1</b>: Snap to existing objects. ").arg(ModifierKey::shift());
 			}
@@ -727,7 +714,7 @@ void EditPointTool::updateStatusText()
 		text = EditTool::tr("<b>Click</b>: Select a single object. <b>Drag</b>: Select multiple objects. <b>%1+Click</b>: Toggle selection. ").arg(ModifierKey::shift());
 		if (map()->getNumSelectedObjects() > 0)
 		{
-			text += EditTool::tr("<b>%1</b>: Delete selected objects. ").arg(ModifierKey(delete_object_key));
+			text += EditTool::tr("<b>%1</b>: Delete selected objects. ").arg(ModifierKey(DeleteObjectKey));
 			
 			if (map()->selectedObjects().size() <= max_objects_for_handle_display)
 			{
@@ -920,4 +907,12 @@ bool EditPointTool::hoveringOverSingleText() const
 	       map()->selectedObjects().size() == 1 &&
 	       map()->getFirstSelectedObject()->getType() == Object::Text &&
 	       map()->getFirstSelectedObject()->asText()->calcTextPositionAt(cur_pos_map, true) >= 0;
+}
+
+
+bool EditPointTool::hoveringOverCurveHandle() const
+{
+	return hover_state == OverObjectNode
+	       && hover_object->getType() == Object::Path
+	       && hover_object->asPath()->isCurveHandle(hover_point);
 }

@@ -128,10 +128,8 @@ bool RotateTool::keyRelease(QKeyEvent* event)
 	case Qt::Key_Control:
 		angle_helper->setActive(false);
 		reapplyConstraintHelpers();
-		return true;
+		return false; // not consuming Ctrl
 		
-	default:
-		; // nothing
 	}
 	return false;
 }

@@ -327,68 +327,60 @@ void EditLineTool::dragCanceled()
 
 bool EditLineTool::keyPress(QKeyEvent* event)
 {
-	if (event->key() == Qt::Key_Escape)
+	switch(event->key())
 	{
+	case EditTool::DeleteObjectKey:
+		if (map()->getNumSelectedObjects() > 0)
+			deleteSelectedObjects();
+		updateStatusText();
+		return true;
+		
+	case Qt::Key_Escape:
 		if (isDragging())
-		{
 			cancelDragging();
-		}
-		else if (!waiting_for_mouse_release)
-		{
+		else if (map()->getNumSelectedObjects() > 0 && !waiting_for_mouse_release)
 			map()->clearObjectSelection(true);
-		}
-	}
-	else if (editingInProgress())
-	{
-		if (event->key() == Qt::Key_Control)
-		{
+		else
+			return false;
+		updateStatusText();
+		return true;
+		
+	case Qt::Key_Control:
+		if (editingInProgress())
 			// This tool uses inverted logic.
 			activateAngleHelperWhileEditing(false);
-		}
-		else if (event->key() == Qt::Key_Shift)
-		{
+		updateStatusText();
+		return false; // not consuming Ctrl
+	
+	case Qt::Key_Shift:
+		if (editingInProgress())
 			activateSnapHelperWhileEditing();
-		}
+		updateStatusText();
+		return false; // not consuming Shift
+		
 	}
-	else if (map()->getNumSelectedObjects() > 0)
-	{
-		if (event->key() == delete_object_key)
-		{
-			deleteSelectedObjects();
-		}
-		else if (event->key() == Qt::Key_Escape && !waiting_for_mouse_release)
-		{
-			map()->clearObjectSelection(true);
-		}
-	}
-	else
-	{
-		return false;
-	}
-	updateStatusText();
-	return true;
+	return false;
 }
 
 bool EditLineTool::keyRelease(QKeyEvent* event)
 {
-	if (editingInProgress())
+	switch(event->key())
 	{
-		if (event->key() == Qt::Key_Control)
-		{
+	case Qt::Key_Control:
+		if (editingInProgress())
 			// This tool uses inverted logic.
 			activateAngleHelperWhileEditing(true);
-		}
-		else if (event->key() == Qt::Key_Shift)
-		{
+		updateStatusText();
+		return false; // not consuming Ctrl
+		
+	case Qt::Key_Shift:
+		if (editingInProgress())
 			activateSnapHelperWhileEditing(false);
-		}
+		updateStatusText();
+		return false; // not consuming Shift
+		
 	}
-	else
-	{
-		return false;
-	}
-	updateStatusText();
-	return true;
+	return false;
 }
 
 void EditLineTool::initImpl()
@@ -523,7 +515,7 @@ void EditLineTool::updateStatusText()
 		text = EditTool::tr("<b>Click</b>: Select a single object. <b>Drag</b>: Select multiple objects. <b>%1+Click</b>: Toggle selection. ").arg(ModifierKey::shift());
 		if (map()->getNumSelectedObjects() > 0)
 		{
-			text += EditTool::tr("<b>%1</b>: Delete selected objects. ").arg(ModifierKey(delete_object_key));
+			text += EditTool::tr("<b>%1</b>: Delete selected objects. ").arg(ModifierKey(DeleteObjectKey));
 			
 			if (map()->selectedObjects().size() <= max_objects_for_handle_display)
 			{

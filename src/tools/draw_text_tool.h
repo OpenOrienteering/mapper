@@ -59,8 +59,6 @@ protected:
 	bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
 	bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
 	
-	bool keyPressEvent(QKeyEvent* event) override;
-	bool keyReleaseEvent(QKeyEvent* event) override;
 	bool inputMethodEvent(QInputMethodEvent* event) override;
 	QVariant inputMethodQuery(Qt::InputMethodQuery property, QVariant argument) const override;
 	

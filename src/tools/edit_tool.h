@@ -186,7 +186,11 @@ public:
 	 *       "delete object", or switch to a QAction based implementation
 	 *       since QAction supports alternative QKeySequences.
 	 */
-	static const Qt::Key delete_object_key;
+#ifdef Q_OS_MACOS
+	static constexpr Qt::Key DeleteObjectKey = Qt::Key_Backspace;
+#else
+	static constexpr Qt::Key DeleteObjectKey = Qt::Key_Delete;
+#endif
 	
 protected:
 	/**
