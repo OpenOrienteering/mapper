@@ -26,10 +26,9 @@ AutosavePrivate::AutosavePrivate(Autosave& document)
 : document(document)
 , autosave_needed(false)
 {
-	autosave_timer = new QTimer(this);
-	autosave_timer->setSingleShot(true);
-	connect(autosave_timer, SIGNAL(timeout()), this, SLOT(autosave()));
-	connect(&Settings::getInstance(), SIGNAL(settingsChanged()), this, SLOT(settingsChanged()));
+	autosave_timer.setSingleShot(true);
+	connect(&autosave_timer, &QTimer::timeout, this, &AutosavePrivate::autosave);
+	connect(&Settings::getInstance(), &Settings::settingsChanged, this, &AutosavePrivate::settingsChanged);
 	settingsChanged();
 }
 
@@ -42,18 +41,18 @@ void AutosavePrivate::settingsChanged()
 {
 	// Normally, the autosave interval can be stored as an integer.
 	// It is loaded as a double here to allow for faster unit testing.
-	autosave_interval = Settings::getInstance().getSetting(Settings::General_AutosaveInterval).toDouble() * 60000;
+	autosave_interval = qRound(Settings::getInstance().getSetting(Settings::General_AutosaveInterval).toDouble() * 60000);
 	if (autosave_interval < 1000)
 	{
 		// stop autosave
 		autosave_interval = 0;
-		autosave_timer->stop();
+		autosave_timer.stop();
 	}
-	else if (autosave_needed && !autosave_timer->isActive())
+	else if (autosave_needed && !autosave_timer.isActive())
 	{
 		// start autosave
-		autosave_timer->setInterval(autosave_interval);
-		autosave_timer->start();
+		autosave_timer.setInterval(autosave_interval);
+		autosave_timer.start();
 	}
 }
 
@@ -68,14 +67,14 @@ void AutosavePrivate::setAutosaveNeeded(bool needed)
 	if (autosave_interval)
 	{
 		// autosaving enabled
-		if (autosave_needed && !autosave_timer->isActive())
+		if (autosave_needed && !autosave_timer.isActive())
 		{
-			autosave_timer->setInterval(autosave_interval);
-			autosave_timer->start();
+			autosave_timer.setInterval(autosave_interval);
+			autosave_timer.start();
 		}
-		else if (!autosave_needed && autosave_timer->isActive())
+		else if (!autosave_needed && autosave_timer.isActive())
 		{
-			autosave_timer->stop();
+			autosave_timer.stop();
 		}
 	}
 }
@@ -88,17 +87,16 @@ void AutosavePrivate::autosave()
 		switch (result)
 		{
 		case Autosave::TemporaryFailure:
-			autosave_timer->setInterval(5000);
-			autosave_timer->start();
-			break;
+			autosave_timer.setInterval(5000);
+			autosave_timer.start();
+			return;
 		case Autosave::Success:
 		case Autosave::PermanentFailure:
-			autosave_timer->setInterval(autosave_interval);
-			autosave_timer->start();
-			break;
-		default:
-			Q_ASSERT(false && "Return value of Autosave() is not a valid Autosave::AutosaveResult.");
+			autosave_timer.setInterval(autosave_interval);
+			autosave_timer.start();
+			return;
 		}
+		Q_UNREACHABLE();
 	}
 }
 

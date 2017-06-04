@@ -34,6 +34,11 @@ public:
 	
 private slots:
 	/**
+	 * Tests basic transform operators.
+	 */
+	void testTransformBasics();
+	
+	/**
 	 * Tests conversion of identity QTransform to TemplateTransform
 	 */
 	void testTransformIdentity();
@@ -52,11 +57,31 @@ private slots:
 	 * Tests conversion of rotating QTransform to TemplateTransform
 	 */
 	void testTransformRotate();
+	void testTransformRotate_data();
+	
+	/**
+	 * Tests conversion of non-trivial QTransform to TemplateTransform
+	 */
+	void testTransformCombined();
+	void testTransformCombined_data();
+	
+	/**
+	 * Tests round-trip conversion TemplateTransform -> QTransform -> TemplateTransform.
+	 */
+	void testTransformRoundTrip();
+	void testTransformRoundTrip_data();
 	
 	/**
 	 * Test PassPointList::estimateNonIsometricSimilarityTransform.
 	 */
 	void testEstimateNonIsometric();
+	
+	/**
+	 * Test PassPointList::estimateSimilarityTransformation.
+	 * 
+	 * \todo Cover transformation with significant error.
+	 */
+	void testEstimateSimilarityTransformation();
 };
 
 #endif

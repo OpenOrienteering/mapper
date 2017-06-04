@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013, 2014 Thomas Schöps
- *    Copyright 2012-2016 Kai Pastor
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -49,17 +49,16 @@
 #include "home_screen_controller.h"
 #include "settings_dialog.h"
 #include "../core/map_view.h"
-#include "../file_format_registry.h"
-#include "../file_import_export.h"
-#include "../map.h"
-#include "../map_dialog_new.h"
-#include "../map_editor.h"
-#include "../mapper_resource.h"
-#include "../file_format.h"
+#include "../fileformats/file_format_registry.h"
+#include "../fileformats/file_import_export.h"
+#include "core/map.h"
+#include "gui/map/map_dialog_new.h"
+#include "gui/map/map_editor.h"
+#include "../fileformats/file_format.h"
 #include "../settings.h"
-#include "../symbol.h"
-#include "../undo_manager.h"
-#include "../util.h"
+#include "core/symbols/symbol.h"
+#include "undo/undo_manager.h"
+#include "util/util.h"
 #include "../util/backports.h"
 
 
@@ -251,7 +250,7 @@ void MainWindow::setController(MainWindowController* new_controller, bool has_fi
 	if (create_menu)
 		createHelpMenu();
 	
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
 	if (isVisible() && qApp->activeWindow() == this)
 	{
 		// Force a menu synchronisation,
@@ -387,17 +386,20 @@ void MainWindow::setCurrentPath(const QString& path)
 {
 	Q_ASSERT(has_opened_file || path.isEmpty());
 	
-	QString window_file_path;
-	current_path.clear();
-	if (has_opened_file)
+	if (path != current_path)
 	{
-		window_file_path = QFileInfo(path).canonicalFilePath();
-		if (window_file_path.isEmpty())
-			window_file_path = tr("Unsaved file");
-		else
-			current_path = window_file_path;
+		QString window_file_path;
+		current_path.clear();
+		if (has_opened_file)
+		{
+			window_file_path = QFileInfo(path).canonicalFilePath();
+			if (window_file_path.isEmpty())
+				window_file_path = tr("Unsaved file");
+			else
+				current_path = window_file_path;
+		}
+		setWindowFilePath(window_file_path);
 	}
-	setWindowFilePath(window_file_path);
 }
 
 void MainWindow::setMostRecentlyUsedFile(const QString& path)
@@ -1142,10 +1144,7 @@ void MainWindow::linkClicked(const QString &link)
 	else if (link.compare(QLatin1String("about:"), Qt::CaseInsensitive) == 0)
 		showAbout();
 	else if (link.startsWith(QLatin1String("examples:"), Qt::CaseInsensitive))
-	{
-		auto example = link.midRef(9);
-		openPathLater(MapperResource::locate(MapperResource::EXAMPLE) + QLatin1Char('/') + example);
-	}
+		openPathLater(QLatin1String("data:/examples/") + link.midRef(9));
 	else
 		QDesktopServices::openUrl(link);
 }

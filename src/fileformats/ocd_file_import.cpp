@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013-2016 Kai Pastor
+ *    Copyright 2013-2017 Kai Pastor
  *
  *    Some parts taken from file_format_oc*d8{.h,_p.h,cpp} which are
  *    Copyright 2012 Pete Curtis
@@ -22,37 +22,39 @@
 
 #include "ocd_file_import.h"
 
+#include <cmath>
 #include <memory>
 
 #include <QBuffer>
+#include <QCoreApplication>
 #include <QDebug>
 #include <QDir>
 #include <QFileInfo>
 #include <QImageReader>
 
+#include "settings.h"
+#include "ocad8_file_format.h"
+#include "ocad8_file_format_p.h"
 #include "ocd_types_v9.h"
 #include "ocd_types_v10.h"
 #include "ocd_types_v11.h"
 #include "ocd_types_v12.h"
-#include "../core/crs_template.h"
-#include "../core/map_color.h"
-#include "../core/map_view.h"
-#include "../core/georeferencing.h"
-#include "../file_format_ocad8.h"
-#include "../file_format_ocad8_p.h"
-#include "../map.h"
-#include "../object_text.h"
-#include "../settings.h"
-#include "../symbol_area.h"
-#include "../symbol_combined.h"
-#include "../symbol_line.h"
-#include "../symbol_point.h"
-#include "../symbol_text.h"
-#include "../template.h"
-#include "../template_image.h"
-#include "../template_map.h"
-#include "../util.h"
-#include "../util/encoding.h"
+#include "core/crs_template.h"
+#include "core/georeferencing.h"
+#include "core/map.h"
+#include "core/map_color.h"
+#include "core/map_view.h"
+#include "core/objects/text_object.h"
+#include "core/symbols/area_symbol.h"
+#include "core/symbols/combined_symbol.h"
+#include "core/symbols/line_symbol.h"
+#include "core/symbols/point_symbol.h"
+#include "core/symbols/text_symbol.h"
+#include "templates/template.h"
+#include "templates/template_image.h"
+#include "templates/template_map.h"
+#include "util/encoding.h"
+#include "util/util.h"
 
 
 namespace {
@@ -230,7 +232,7 @@ void OcdFileImport::importGeoreferencing(const OcdFile<Ocd::FormatV8>& file)
 	Georeferencing georef;
 	georef.setScaleDenominator(qRound(setup->map_scale));
 	georef.setProjectedRefPoint(QPointF(setup->real_offset_x, setup->real_offset_y));
-	if (qAbs(setup->real_angle) >= 0.01) /* degrees */
+	if (std::abs(setup->real_angle) >= 0.01) /* degrees */
 	{
 		georef.setGrivation(setup->real_angle);
 	}
@@ -313,7 +315,7 @@ void OcdFileImport::importGeoreferencing(const QString& param_string, int)
 	
 	if (x_ok && y_ok)
 	{
-		georef.setProjectedRefPoint(proj_ref_point);
+		georef.setProjectedRefPoint(proj_ref_point, false);
 	}
 	
 	map->setGeoreferencing(georef);
@@ -888,12 +890,18 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol, int ocd_version)
 	        (ocd_symbol.common.double_mode != 0) &&
 	        (ocd_symbol.common.double_left_width > 0 || ocd_symbol.common.double_right_width > 0);
 	OcdImportedLineSymbol *double_line = nullptr;
-	if ( has_border_line &&
-		(ocd_symbol.common.double_flags & LineStyle::DoubleFillColorOn || !line_for_borders) )
+	if (ocd_symbol.common.double_flags & LineStyle::DoubleFillColorOn
+	    || (has_border_line && !line_for_borders) )
 	{
 		double_line = importLineSymbolDoubleBorder(ocd_symbol.common);
 		setupBaseSymbol(double_line, ocd_symbol);
 		line_for_borders = double_line;
+	}
+	else if (ocd_symbol.common.double_flags & LineStyle::DoubleBackgroundColorOn)
+	{
+		auto symbol = std::unique_ptr<LineSymbol>(importLineSymbolDoubleBorder(ocd_symbol.common));
+		addSymbolWarning(symbol.get(),
+		  OcdFileImport::tr("Unsupported line style '%1'.").arg(QLatin1String("LineStyle::DoubleBackgroundColorOn")) );
 	}
 	
 	// Border lines
@@ -1045,7 +1053,7 @@ OcdFileImport::OcdImportedLineSymbol* OcdFileImport::importLineSymbolBase(const 
 			
 			if (attributes.end_length && attributes.end_length != attributes.main_length)
 			{
-				if (attributes.main_length && 0.75 >= attributes.end_length / attributes.main_length)
+				if (attributes.main_length && 0.75 >= double(attributes.end_length) / double(attributes.main_length))
 				{
 					// End length max. 75 % of main length
 					symbol->half_outer_dashes = true;
@@ -1190,21 +1198,21 @@ void OcdFileImport::setupLineSymbolPointSymbol(OcdFileImport::OcdImportedLineSym
 	{
 		line_symbol->dash_symbol = new OcdImportedPointSymbol();
 		setupPointSymbolPattern(line_symbol->dash_symbol, attributes.corner_data_size, reinterpret_cast<const Ocd::PointSymbolElementV8*>(coords), ocd_version);
-		line_symbol->dash_symbol->setName(LineSymbolSettings::tr("Dash symbol"));
+		line_symbol->dash_symbol->setName(QCoreApplication::translate("LineSymbolSettings", "Dash symbol"));
 		coords += attributes.corner_data_size;
 	}
 	if (attributes.start_data_size > 0)
 	{
 		line_symbol->start_symbol = new OcdImportedPointSymbol();
 		setupPointSymbolPattern(line_symbol->start_symbol, attributes.start_data_size, reinterpret_cast<const Ocd::PointSymbolElementV8*>(coords), ocd_version);
-		line_symbol->start_symbol->setName(LineSymbolSettings::tr("Start symbol"));
+		line_symbol->start_symbol->setName(QCoreApplication::translate("LineSymbolSettings", "Start symbol"));
 		coords += attributes.start_data_size;
 	}
 	if (attributes.end_data_size > 0)
 	{
 		line_symbol->end_symbol = new OcdImportedPointSymbol();
 		setupPointSymbolPattern(line_symbol->end_symbol, attributes.end_data_size, reinterpret_cast<const Ocd::PointSymbolElementV8*>(coords), ocd_version);
-		line_symbol->end_symbol->setName(LineSymbolSettings::tr("End symbol"));
+		line_symbol->end_symbol->setName(QCoreApplication::translate("LineSymbolSettings", "End symbol"));
 	}
 	
 	// FIXME: not really sure how this translates... need test cases
@@ -1218,7 +1226,7 @@ void OcdFileImport::setupLineSymbolPointSymbol(OcdFileImport::OcdImportedLineSym
 	if (line_symbol->start_symbol && line_symbol->end_symbol)
 	{
 		line_symbol->setSuppressDashSymbolAtLineEnds(true);
-		if (line_symbol->dash_symbol && line_symbol->number[0] != 799)
+		if (line_symbol->dash_symbol && line_symbol->getNumberComponent(0) != 799)
 		{
 			addSymbolWarning(line_symbol, tr("Suppressing dash symbol at line ends."));
 		}
@@ -1854,6 +1862,18 @@ void OcdFileImport::fillPathCoords(OcdImportedPathObject *object, bool is_area, 
 				coord.setHolePoint(true);
 				coord.setClosePoint(true);
 				object->coords[i] = coord;
+			}
+			
+			switch (i - start)
+			{
+			default:
+				object->coords[i-2].setCurveStart(false);
+				// fall through
+			case 1:
+				object->coords[i-1].setCurveStart(false);
+				// fall through
+			case 0:
+				; // nothing
 			}
 			
 			start = i + 1;

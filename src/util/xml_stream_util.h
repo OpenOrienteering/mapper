@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013, 2014, 2016 Kai Pastor
+ *    Copyright 2013-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -28,12 +28,19 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
-#include "../file_format.h"
+#include "fileformats/file_format.h"
 
 
 // Originally defined in map_coord.h, but we want to avoid the depedency.
 class MapCoord;
 typedef std::vector<MapCoord> MapCoordVector;
+
+
+/**
+ * Writes a line break to the XML stream unless auto formatting is active.
+ */
+void writeLineBreak(QXmlStreamWriter& xml);
+
 
 
 /**

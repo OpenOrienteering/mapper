@@ -22,7 +22,7 @@
 
 #include "ocd_file_export.h"
 
-#include "../file_format_ocad8_p.h"
+#include "ocad8_file_format_p.h"
 
 
 OcdFileExport::OcdFileExport(QIODevice* stream, Map* map, MapView* view)

@@ -44,11 +44,11 @@
 #include "../core/crs_template.h"
 #include "../core/georeferencing.h"
 #include "main_window.h"
-#include "../map.h"
-#include "../map_editor.h"
-#include "../map_dialog_rotate.h"
-#include "../util_gui.h"
-#include "../util.h"
+#include "core/map.h"
+#include "gui/map/map_editor.h"
+#include "gui/map/map_dialog_rotate.h"
+#include "util_gui.h"
+#include "util/util.h"
 #include "../util/scoped_signals_blocker.h"
 #include "widgets/crs_selector.h"
 
@@ -376,7 +376,7 @@ void GeoreferencingDialog::requestDeclination(bool no_confirm)
 	query.addQueryItem(QString::fromLatin1("startMonth"), QString::number(today.month()));
 	query.addQueryItem(QString::fromLatin1("startDay"), QString::number(today.day()));
 	
-#if defined(Q_OS_WIN) || defined(Q_OS_MAC) || defined(Q_OS_ANDROID) || !defined(QT_NETWORK_LIB)
+#if defined(Q_OS_WIN) || defined(Q_OS_MACOS) || defined(Q_OS_ANDROID) || !defined(QT_NETWORK_LIB)
 	// No QtNetwork or no OpenSSL: open result in system browser.
 	query.addQueryItem(QString::fromLatin1("resultFormat"), QString::fromLatin1("html"));
 	service_url.setQuery(query);

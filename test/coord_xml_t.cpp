@@ -21,7 +21,7 @@
 
 #include <algorithm>
 
-#include "../src/file_format_xml.h"
+#include "../src/fileformats/xml_file_format.h"
 #include "../src/util/xml_stream_util.h"
 
 namespace literal

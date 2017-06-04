@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013, 2015 Kai Pastor
+ *    Copyright 2013-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -18,12 +18,12 @@
  */
 
 
-#ifndef _OPENORIENTEERING_MAP_T_H
-#define _OPENORIENTEERING_MAP_T_H
+#ifndef OPENORIENTEERING_MAP_T_H
+#define OPENORIENTEERING_MAP_T_H
 
 #include <QtTest/QtTest>
 
-#include "../src/object.h"
+#include "core/objects/object.h"
 
 
 /**
@@ -43,6 +43,7 @@ private slots:
 	/** Tests if special colors are correctly handled. */
 	void specialColorsTest();
 	
+	/** Tests various modes of Map::importMap(). */
 	void importTest_data();
 	void importTest();
 };

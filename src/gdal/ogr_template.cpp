@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016 Kai Pastor
+ *    Copyright 2016-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -24,8 +24,9 @@
 
 #include "gdal_manager.h"
 #include "ogr_file_format_p.h"
-#include "../map.h"
-#include "../object.h"
+#include "core/map.h"
+#include "core/objects/object.h"
+#include "templates/template_positioning_dialog.h"
 
 
 const std::vector<QByteArray>& OgrTemplate::supportedExtensions()
@@ -36,7 +37,9 @@ const std::vector<QByteArray>& OgrTemplate::supportedExtensions()
 
 OgrTemplate::OgrTemplate(const QString& path, Map* map)
 : TemplateMap(path, map)
-, migrating_from_template_track(false)
+, migrating_from_pre_v07{ true }
+, use_real_coords{ true }
+, center_in_view{ false }
 {
 	// nothing else
 }
@@ -54,40 +57,143 @@ const char* OgrTemplate::getTemplateType() const
 }
 
 
-bool OgrTemplate::loadTemplateFileImpl(bool configuring)
+bool OgrTemplate::preLoadConfiguration(QWidget* dialog_parent)
 {
-	Q_UNUSED(configuring);
+	migrating_from_pre_v07 = false;
 	
-	std::unique_ptr<Map> new_template_map{ new Map() };
-	new_template_map->setGeoreferencing(map->getGeoreferencing());
+	auto show_dialog = true;
 	
-	QFile stream{ template_path };
+	QFile file{ template_path };
 	try
 	{
-		OgrFileImport importer{ &stream, new_template_map.get(), nullptr, migrating_from_template_track };
-		importer.doImport(false, template_path);
-		setTemplateMap(std::move(new_template_map));
-		
-		if (!importer.warnings().empty())
-		{
-			QString message;
-			message.reserve((importer.warnings().back().length()+1) * importer.warnings().size());
-			for (auto& warning : importer.warnings())
-			{
-				message.append(warning);
-				message.append(QLatin1Char{'\n'});
-			}
-			message.chop(1);
-			setErrorString(message);
-		}
-		
-		return true;
+		show_dialog = !OgrFileImport::checkGeoreferencing(file, map->getGeoreferencing());
 	}
 	catch (FileFormatException& e)
 	{
-		setErrorString(QString::fromUtf8(e.what()));
+		setErrorString(e.message());
 		return false;
 	}
+	
+	if (show_dialog)
+	{
+		TemplatePositioningDialog dialog(dialog_parent);
+		if (dialog.exec() == QDialog::Rejected)
+			return false;
+		
+		use_real_coords = dialog.useRealCoords();
+		if (use_real_coords)
+		{
+			transform.template_scale_x = transform.template_scale_y = dialog.getUnitScale();
+			updateTransformationMatrices();
+		}
+		center_in_view = dialog.centerOnView();
+	}
+	return true;
+}
+
+
+bool OgrTemplate::loadTemplateFileImpl(bool configuring)
+{
+	if (migrating_from_pre_v07) 
+		configuring = true;
+	
+	std::unique_ptr<Map> new_template_map{ new Map() };
+	const auto& georef = map->getGeoreferencing();
+	new_template_map->setGeoreferencing(georef);
+	
+	QFile file{ template_path };
+	
+	auto is_geographic = [this](const QString& spec)->bool {
+		return spec.contains(QLatin1String("+proj=latlong"));
+	};
+	if (!configuring
+	    && !is_georeferenced
+	    && is_geographic(crs_spec))
+	{
+		// Handle non-georeferenced geographic TemplateTrack data
+		// by orthographic projection.
+		// See TemplateTrack::calculateLocalGeoreferencing()
+		auto center = OgrFileImport::calcAverageLatLon(file);
+		auto ortho_georef = Georeferencing();
+		ortho_georef.setScaleDenominator(int(georef.getScaleDenominator()));
+		ortho_georef.setProjectedCRS(QString{}, QString::fromLatin1("+proj=ortho +datum=WGS84 +lat_0=%1 +lon_0=%2")
+		                             .arg(center.latitude()).arg(center.longitude()));
+		ortho_georef.setGeographicRefPoint(center, false);
+		new_template_map->setGeoreferencing(ortho_georef);
+	}
+	
+	auto unit_type = use_real_coords ? OgrFileImport::UnitOnGround : OgrFileImport::UnitOnPaper;
+	OgrFileImport importer{ &file, new_template_map.get(), nullptr, unit_type };
+	importer.setGeoreferencingImportEnabled(georef.isLocal() && configuring);
+	
+	try
+	{
+		importer.doImport(false, template_path);
+	}
+	catch (FileFormatException& e)
+	{
+		setErrorString(e.message());
+		return false;
+	}
+	
+	if (configuring)
+	{
+		const auto& new_georef = new_template_map->getGeoreferencing();
+		crs_spec = new_georef.getProjectedCRSSpec();
+		if (georef.isLocal() && crs_spec.contains(QLatin1String("+proj=ortho")))
+		{
+			// Geographic data that was projected automatically
+			crs_spec = QString::fromLatin1("+proj=latlong +datum=WGS84");
+		}
+	}
+	
+	accounted_offset = {};
+	if (is_georeferenced || !is_geographic(crs_spec))
+	{
+		// Handle data which has been subject to bounds handling during doImport().
+		// p1 := ref_point + offset; p2: = ref_point;
+		auto p1 = georef.toMapCoords(new_template_map->getGeoreferencing().getProjectedRefPoint());
+		auto p2 = georef.getMapRefPoint();
+		if (p1 != p2)
+		{
+			accounted_offset = QPointF{p1 - p2};
+			if (!configuring || migrating_from_pre_v07)
+			{
+				QTransform t;
+				t.rotate(-getTemplateRotation() * (180 / M_PI));
+				t.scale(getTemplateScaleX(), getTemplateScaleY());
+				setTemplatePosition(templatePosition() + MapCoord{t.map(accounted_offset)});
+				migrating_from_pre_v07 = false;
+			}
+		}
+	}
+	
+	setTemplateMap(std::move(new_template_map));
+	
+	const auto& warnings = importer.warnings();
+	if (!warnings.empty())
+	{
+		QString message;
+		message.reserve((warnings.back().length()+1) * int(warnings.size()));
+		for (const auto& warning : warnings)
+		{
+			message.append(warning);
+			message.append(QLatin1Char{'\n'});
+		}
+		message.chop(1);
+		setErrorString(message);
+	}
+	
+	return true;
+}
+
+
+bool OgrTemplate::postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view)
+{
+	Q_UNUSED(dialog_parent)
+	is_georeferenced = false;
+	out_center_in_view = center_in_view;
+	return true;
 }
 
 
@@ -104,16 +210,17 @@ bool OgrTemplate::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
 {
 	if (xml.name() == QLatin1String("crs_spec"))
 	{
-		migrating_from_template_track = true;
+		migrating_from_pre_v07 = false;
+		crs_spec = xml.readElementText();
 	}
-	xml.skipCurrentElement();
+	else
+	{
+		xml.skipCurrentElement();
+	}
 	return true;
 }
 
 void OgrTemplate::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const
 {
-	if (migrating_from_template_track)
-	{
-		xml.writeEmptyElement(QLatin1String("crs_spec"));
-	}
+	xml.writeTextElement(QLatin1String("crs_spec"), crs_spec);
 }

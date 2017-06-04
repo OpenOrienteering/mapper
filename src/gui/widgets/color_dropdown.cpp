@@ -21,8 +21,8 @@
 
 #include "color_dropdown.h"
 
-#include "../../map.h"
-#include "../../core/map_color.h"
+#include "core/map.h"
+#include "core/map_color.h"
 
 
 ColorDropDown::ColorDropDown(const Map* map, const MapColor* initial_color, bool spot_colors_only, QWidget* parent)

@@ -16,28 +16,34 @@
 # 
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
- 
+
+if(ANDROID)
+	# Don't install symbol sets on Android
+	# \todo Add map creation to the mobile app.
+	return()
+endif()
+
 set(Mapper_SYMBOL_SETS
   4000/ISSOM_4000.omap
   5000/ISSOM_5000.omap
-  10000/ISOM_10000.omap
-  15000/ISOM_15000.omap
+  10000/ISOM2000_10000.omap
+  15000/ISOM2000_15000.omap
   
   4000/ISSOM_cs_4000.omap
   5000/ISSOM_cs_5000.omap
-  10000/ISOM_cs_10000.omap
-  15000/ISOM_cs_15000.omap
+  10000/ISOM2000_cs_10000.omap
+  15000/ISOM2000_cs_15000.omap
   
   4000/ISSOM_fi_4000.omap
   5000/ISSOM_fi_5000.omap
-  10000/ISOM_fi_10000.omap
-  15000/ISOM_fi_15000.omap
+  10000/ISOM2000_fi_10000.omap
+  15000/ISOM2000_fi_15000.omap
   
   4000/ISSOM_fr_4000.omap
   5000/ISSOM_fr_5000.omap
   
-  10000/ISOM_ru_10000.omap
-  15000/ISOM_ru_15000.omap
+  10000/ISOM2000_ru_10000.omap
+  15000/ISOM2000_ru_15000.omap
   
   5000/ISMTBOM_5000.omap
   7500/ISMTBOM_7500.omap

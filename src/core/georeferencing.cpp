@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012-2016 Kai Pastor
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -35,10 +35,9 @@
 #include <proj_api.h>
 
 #include "crs_template.h"
-#include "../file_format.h"
-#include "../file_format_xml.h"
-#include "../mapper_resource.h"
-#include "../util_gui.h"
+#include "../fileformats/file_format.h"
+#include "../fileformats/xml_file_format.h"
+#include "gui/util_gui.h"
 #include "../util/xml_stream_util.h"
 #include "../util/scoped_signals_blocker.h"
 
@@ -85,14 +84,13 @@ namespace
 	public:
 		ProjSetup()
 		{
-			QVarLengthArray<QByteArray,3> buffer;
-			QVarLengthArray<const char*,3> data;
-			for (auto&& location : MapperResource::getLocations(MapperResource::PROJ_DATA))
+			auto proj_data = QFileInfo(QLatin1String("data:/proj"));
+			if (proj_data.exists())
 			{
-				buffer.append(location.toLocal8Bit());
-				data.append(buffer.back().data());
+				static const auto location = proj_data.absoluteFilePath().toLocal8Bit();
+				static auto data = location.constData();
+				pj_set_searchpath(1, &data);
 			}
-			pj_set_searchpath(data.size(), data.data());
 			
 #if defined(Q_OS_ANDROID)
 			// Register file finder function needed by Proj.4
@@ -135,7 +133,7 @@ const QString Georeferencing::geographic_crs_spec(QString::fromLatin1("+proj=lat
 
 Georeferencing::Georeferencing()
 : state(Local),
-  scale_denominator(1),
+  scale_denominator{1000},
   grid_scale_factor{1.0},
   declination(0.0),
   grivation(0.0),

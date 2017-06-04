@@ -51,13 +51,13 @@
 #include "print_progress_dialog.h"
 #include "print_tool.h"
 #include "../core/map_printer.h"
-#include "../map.h"
-#include "../map_editor.h"
-#include "../map_widget.h"
+#include "core/map.h"
+#include "gui/map/map_editor.h"
+#include "gui/map/map_widget.h"
 #include "../settings.h"
-#include "../template.h"
-#include "../util.h"
-#include "../util_gui.h"
+#include "../templates/template.h"
+#include "util/util.h"
+#include "util_gui.h"
 #include "../util/backports.h"
 #include "../util/scoped_signals_blocker.h"
 
@@ -195,7 +195,7 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	
 	dpi_combo = new QComboBox();
 	dpi_combo->setEditable(true);
-	dpi_combo->setValidator(new QRegExpValidator(QRegExp(QLatin1String("^[1-9]\\d{1,4}$|^[1-9]\\d{1,4} ")+tr("dpi")+QLatin1Char('$')), dpi_combo));
+	dpi_combo->setValidator(new QRegExpValidator(QRegExp(QLatin1String("^[1-9]\\d{0,4}$|^[1-9]\\d{0,4} ")+tr("dpi")+QLatin1Char('$')), dpi_combo));
 	// TODO: Implement spinbox-style " dpi" suffix
 	layout->addRow(tr("Resolution:"), dpi_combo);
 	
@@ -285,7 +285,7 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	connect(overlap_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &PrintWidget::overlapEdited);
 	
 	connect(mode_button_group, QOverload<QAbstractButton*>::of(&QButtonGroup::buttonClicked), this, &PrintWidget::printModeChanged);
-	connect(dpi_combo->lineEdit(), &QLineEdit::editingFinished, this, &PrintWidget::resolutionEdited);
+	connect(dpi_combo->lineEdit(), &QLineEdit::textEdited, this, &PrintWidget::resolutionEdited);
 	connect(different_scale_check, &QAbstractButton::clicked, this, &PrintWidget::differentScaleClicked);
 	connect(different_scale_edit, QOverload<int>::of(&QSpinBox::valueChanged), this, &PrintWidget::differentScaleEdited);
 	connect(show_templates_check, &QAbstractButton::clicked, this, &PrintWidget::showTemplatesClicked);
@@ -981,7 +981,11 @@ void PrintWidget::resolutionEdited()
 	auto index_of_space = resolution_text.indexOf(QLatin1Char(' '));
 	auto dpi_value = resolution_text.leftRef(index_of_space).toInt();
 	if (dpi_value > 0)
+	{
+		auto pos = dpi_combo->lineEdit()->cursorPosition();
 		map_printer->setResolution(dpi_value);
+		dpi_combo->lineEdit()->setCursorPosition(pos);
+	}
 }
 
 // slot

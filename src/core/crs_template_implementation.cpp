@@ -1,6 +1,6 @@
 /*
  *    Copyright 2013, 2014 Thomas Schöps
- *    Copyright 2014, 2015 Kai Pastor
+ *    Copyright 2014-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -26,12 +26,11 @@
 #include <QSpinBox>
 #include <QVariant>
 
-#include "georeferencing.h"
-#include "../gui/widgets/crs_param_widgets.h"
-#include "../gui/georeferencing_dialog.h"
-#include "../util_gui.h"
-#include "../util/memory.h"
-#include "../util/scoped_signals_blocker.h"
+#include "core/georeferencing.h"
+#include "gui/georeferencing_dialog.h"
+#include "gui/util_gui.h"
+#include "gui/widgets/crs_param_widgets.h"
+#include "util/scoped_signals_blocker.h"
 
 
 namespace CRSTemplates
@@ -43,7 +42,7 @@ CRSTemplateRegistry::TemplateList defaultList()
 	templates.reserve(5);
 	
 	// UTM
-	auto temp = make_unique<CRSTemplate>(
+	auto temp = std::make_unique<CRSTemplate>(
 	  QString::fromLatin1("UTM"),
 	  Georeferencing::tr("UTM", "UTM coordinate reference system"),
 	  Georeferencing::tr("UTM coordinates"),
@@ -54,7 +53,7 @@ CRSTemplateRegistry::TemplateList defaultList()
 	templates.push_back(std::move(temp));
 	
 	// Gauss-Krueger
-	temp = make_unique<CRSTemplate>(
+	temp = std::make_unique<CRSTemplate>(
 	  QString::fromLatin1("Gauss-Krueger, datum: Potsdam"),
 	  Georeferencing::tr("Gauss-Krueger, datum: Potsdam", "Gauss-Krueger coordinate reference system"),
 	  Georeferencing::tr("Gauss-Krueger coordinates"),
@@ -66,7 +65,7 @@ CRSTemplateRegistry::TemplateList defaultList()
 	templates.push_back(std::move(temp));
 	
 	// EPSG
-	temp = make_unique<CRSTemplate>(
+	temp = std::make_unique<CRSTemplate>(
 	  QString::fromLatin1("EPSG"),
 	  Georeferencing::tr("by EPSG code", "as in: The CRS is specified by EPSG code"),
 	  //: Don't translate @code@. It is placeholder.
@@ -78,7 +77,7 @@ CRSTemplateRegistry::TemplateList defaultList()
 	templates.push_back(std::move(temp));
 	
 	// Custom
-	temp = make_unique<CRSTemplate>(
+	temp = std::make_unique<CRSTemplate>(
 	  QString::fromLatin1("PROJ.4"), // Don't change this ID.
 	  Georeferencing::tr("Custom PROJ.4", "PROJ.4 specification"),
 	  Georeferencing::tr("Local coordinates"),

@@ -1,5 +1,5 @@
 #
-#    Copyright 2016 Kai Pastor
+#    Copyright 2016-2017 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -19,26 +19,26 @@
 find_package(GDAL REQUIRED)
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Gui REQUIRED)
-find_package(Qt5Widgets REQUIRED) # TODO: Remove, once Symbol headers don't need it.
+find_package(Qt5Widgets REQUIRED)
+set(CMAKE_AUTOMOC ON)
  
-qt_wrap_cpp(mapper-gdal MAPPER_GDAL_MOC
-  gdal_settings_page.h
+# Extra header to be shown in the IDE or to be translated
+set(MAPPER_GDAL_HEADERS
   ogr_file_format_p.h
-  ogr_template.h
 )
-
-add_library(mapper-gdal STATIC
-  ${MAPPER_GDAL_MOC}
-  gdal_manager.h
+	
+set(MAPPER_GDAL_SOURCES
   gdal_manager.cpp
-  gdal_settings_page.h
   gdal_settings_page.cpp
-  ogr_file_format.h
-  ogr_file_format_p.h
   ogr_file_format.cpp
-  ogr_template.h
   ogr_template.cpp
 )
+	
+qt5_translations_sources(
+  SOURCES ${MAPPER_GDAL_HEADERS} ${MAPPER_GDAL_SOURCES}
+)
+
+add_library(mapper-gdal STATIC ${MAPPER_GDAL_HEADERS} ${MAPPER_GDAL_SOURCES})
 
 target_compile_definitions(mapper-gdal PRIVATE
   QT_NO_CAST_FROM_ASCII
@@ -48,7 +48,7 @@ target_compile_definitions(mapper-gdal PRIVATE
 
 target_compile_definitions(mapper-gdal INTERFACE MAPPER_USE_GDAL)
 
-target_include_directories(mapper-gdal PRIVATE "${GDAL_INCLUDE_DIR}")
+target_include_directories(mapper-gdal PRIVATE "${GDAL_INCLUDE_DIR}" "${PROJECT_SOURCE_DIR}/src")
 
 target_link_libraries(mapper-gdal "${GDAL_LIBRARY}" Qt5::Core Qt5::Gui Qt5::Widgets)
 

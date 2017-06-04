@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016 Kai Pastor
+ *    Copyright 2016-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,7 +20,7 @@
 #ifndef OPENORIENTEERING_GDAL_SETTINGS_PAGE_H
 #define OPENORIENTEERING_GDAL_SETTINGS_PAGE_H
 
-#include "../gui/widgets/settings_page.h"
+#include "gui/widgets/settings_page.h"
 
 class QCheckBox;
 class QTableWidget;

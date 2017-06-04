@@ -1,5 +1,5 @@
 /*
- *    Copyright 2014-2016 Kai Pastor
+ *    Copyright 2014-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,15 +19,15 @@
 
 #include "symbol_set_t.h"
 
-#include "../src/core/map_color.h"
-#include "../src/core/map_printer.h"
-#include "../src/core/map_view.h"
-#include "../src/file_format_xml_p.h"
-#include "../src/map.h"
-#include "../src/symbol_area.h"
-#include "../src/settings.h"
-#include "../src/template.h"
-#include "../src/undo_manager.h"
+#include "settings.h"
+#include "core/map.h"
+#include "core/map_color.h"
+#include "core/map_printer.h"
+#include "core/map_view.h"
+#include "core/symbols/area_symbol.h"
+#include "fileformats/xml_file_format_p.h"
+#include "templates/template.h"
+#include "undo/undo_manager.h"
 
 
 /**
@@ -41,7 +41,7 @@ void saveIfDifferent(const QString& path, Map* map, MapView* view = nullptr)
 	if (file.exists())
 	{
 		QVERIFY(file.open(QIODevice::ReadOnly));
-		existing_data.reserve(file.size()+1);
+		existing_data.reserve(int(file.size()+1));
 		existing_data = file.readAll();
 		QCOMPARE(file.error(), QFileDevice::NoError);
 		file.close();
@@ -83,6 +83,9 @@ void SymbolSetTool::initTestCase()
 	examples_dir.cd(QFileInfo(QString::fromUtf8(__FILE__)).dir().absoluteFilePath(QString::fromLatin1("../examples")));
 	QVERIFY(examples_dir.exists());
 	
+	test_data_dir.cd(QFileInfo(QString::fromUtf8(__FILE__)).dir().absoluteFilePath(QString::fromLatin1("../test/data")));
+	QVERIFY(test_data_dir.exists());
+	
 	Template::pathForSaving = &Template::getTemplateRelativePath;
 }
 
@@ -93,26 +96,26 @@ void SymbolSetTool::processSymbolSet_data()
 	QTest::addColumn<unsigned int>("source_scale");
 	QTest::addColumn<unsigned int>("target_scale");
 
-	QTest::newRow("ISOM 1:15000") << QString::fromLatin1("ISOM")  << 15000u << 15000u;
-	QTest::newRow("ISOM 1:10000") << QString::fromLatin1("ISOM")  << 15000u << 10000u;
+	QTest::newRow("ISOM2000 1:15000") << QString::fromLatin1("ISOM2000")  << 15000u << 15000u;
+	QTest::newRow("ISOM2000 1:10000") << QString::fromLatin1("ISOM2000")  << 15000u << 10000u;
 	QTest::newRow("ISSOM 1:5000") << QString::fromLatin1("ISSOM") <<  5000u <<  5000u;
 	QTest::newRow("ISSOM 1:4000") << QString::fromLatin1("ISSOM") <<  5000u <<  4000u;
 	
-	QTest::newRow("ISOM 1:15000 Czech") << QString::fromLatin1("ISOM_cs")  << 15000u << 15000u;
-	QTest::newRow("ISOM 1:10000 Czech") << QString::fromLatin1("ISOM_cs")  << 15000u << 10000u;
+	QTest::newRow("ISOM2000 1:15000 Czech") << QString::fromLatin1("ISOM2000_cs")  << 15000u << 15000u;
+	QTest::newRow("ISOM2000 1:10000 Czech") << QString::fromLatin1("ISOM2000_cs")  << 15000u << 10000u;
 	QTest::newRow("ISSOM 1:5000 Czech") << QString::fromLatin1("ISSOM_cs") <<  5000u <<  5000u;
 	QTest::newRow("ISSOM 1:4000 Czech") << QString::fromLatin1("ISSOM_cs") <<  5000u <<  4000u;
 	
-	QTest::newRow("ISOM 1:15000 Finnish") << QString::fromLatin1("ISOM_fi")  << 15000u << 15000u;
-	QTest::newRow("ISOM 1:10000 Finnish") << QString::fromLatin1("ISOM_fi")  << 15000u << 10000u;
+	QTest::newRow("ISOM2000 1:15000 Finnish") << QString::fromLatin1("ISOM2000_fi")  << 15000u << 15000u;
+	QTest::newRow("ISOM2000 1:10000 Finnish") << QString::fromLatin1("ISOM2000_fi")  << 15000u << 10000u;
 	QTest::newRow("ISSOM 1:5000 Finnish") << QString::fromLatin1("ISSOM_fi") <<  5000u <<  5000u;
 	QTest::newRow("ISSOM 1:4000 Finnish") << QString::fromLatin1("ISSOM_fi") <<  5000u <<  4000u;
 	
 	QTest::newRow("ISSOM 1:5000 French") << QString::fromLatin1("ISSOM_fr") <<  5000u <<  5000u;
 	QTest::newRow("ISSOM 1:4000 French") << QString::fromLatin1("ISSOM_fr") <<  5000u <<  4000u;
 	
-	QTest::newRow("ISOM 1:15000 Russian") << QString::fromLatin1("ISOM_ru")  << 15000u << 15000u;
-	QTest::newRow("ISOM 1:10000 Russian") << QString::fromLatin1("ISOM_ru")  << 15000u << 10000u;
+	QTest::newRow("ISOM2000 1:15000 Russian") << QString::fromLatin1("ISOM2000_ru")  << 15000u << 15000u;
+	QTest::newRow("ISOM2000 1:10000 Russian") << QString::fromLatin1("ISOM2000_ru")  << 15000u << 10000u;
 	
 	QTest::newRow("ISMTBOM 1:20000") << QString::fromLatin1("ISMTBOM") << 15000u << 20000u;
 	QTest::newRow("ISMTBOM 1:15000") << QString::fromLatin1("ISMTBOM") << 15000u << 15000u;
@@ -155,6 +158,19 @@ void SymbolSetTool::processSymbolSet()
 	
 	map.resetPrinterConfig();
 	map.undoManager().clear();
+	for (int i = 0; i < map.getNumColors(); ++i)
+	{
+		auto color = map.getMapColor(i);
+		if (color->getSpotColorMethod() == MapColor::CustomColor)
+		{
+			color->setCmykFromSpotColors();
+			color->setRgbFromSpotColors();
+		}
+		else
+		{
+			color->setRgbFromCmyk();
+		}
+	}
 	saveIfDifferent(source_path, &map, &view);
 	
 	const int num_symbols = map.getNumSymbols();
@@ -174,7 +190,7 @@ void SymbolSetTool::processSymbolSet()
 	{
 		map.setScaleDenominator(target_scale);
 		
-		if (name.startsWith(QLatin1String("ISOM")))
+		if (name.startsWith(QLatin1String("ISOM2000")))
 		{
 			const double factor = double(source_scale) / double(target_scale);
 			map.scaleAllObjects(factor, MapCoord());
@@ -372,10 +388,40 @@ void SymbolSetTool::processExamples()
 }
 
 
+void SymbolSetTool::processTestData_data()
+{
+	QTest::addColumn<QString>("name");
+
+	QTest::newRow("world-file")  << QString::fromLatin1("templates/world-file");
+}
+
+void SymbolSetTool::processTestData()
+{
+	QFETCH(QString, name);
+	
+	QString source_filename = QString::fromLatin1("%1.xmap").arg(name);
+	QVERIFY(test_data_dir.exists(source_filename));
+	
+	QString source_path = test_data_dir.absoluteFilePath(source_filename);
+	
+	Map map;
+	MapView view{ &map };
+	map.loadFrom(source_path, nullptr, &view, false, false);
+	
+	map.undoManager().clear();
+	saveIfDifferent(source_path, &map, &view);
+}
+
+
 /*
  * We don't need a real GUI window.
+ * 
+ * But we discovered QTBUG-58768 macOS: Crash when using QPrinter
+ * while running with "minimal" platform plugin.
  */
-auto qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");
+#ifndef Q_OS_MACOS
+static auto qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");
+#endif
 
 
 QTEST_MAIN(SymbolSetTool)

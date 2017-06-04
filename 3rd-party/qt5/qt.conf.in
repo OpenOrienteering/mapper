@@ -1,3 +1,0 @@
-[Paths]
-Plugins=@MAPPER_LIBRARY_DESTINATION@/plugins
-Translations=@MAPPER_DATA_DESTINATION@/translations

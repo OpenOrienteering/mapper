@@ -25,7 +25,7 @@
 #include <QMainWindow>
 
 #include "../core/autosave.h"
-#include "../file_format.h"
+#include "../fileformats/file_format.h"
 
 QT_BEGIN_NAMESPACE
 class QLabel;

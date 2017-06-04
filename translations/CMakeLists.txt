@@ -1,5 +1,6 @@
 #
-#    Copyright 2012, 2013, 2014 Thomas Schöps, Kai Pastor
+#    Copyright 2012, 2013 Thomas Schöps
+#    Copyright 2012-2017 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -21,36 +22,36 @@ message(STATUS "Configuring ${PROJECT_NAME} translations")
 find_package(Qt5LinguistTools REQUIRED)
 
 set(Mapper_TRANS
- OpenOrienteering_cs.ts
- OpenOrienteering_da.ts
- OpenOrienteering_de.ts
- OpenOrienteering_en.ts
- OpenOrienteering_eo.ts
- OpenOrienteering_es.ts
- OpenOrienteering_et.ts
- OpenOrienteering_fi.ts
- OpenOrienteering_fr.ts
- OpenOrienteering_he.ts
- OpenOrienteering_hu.ts
- OpenOrienteering_id.ts
- OpenOrienteering_it.ts
- OpenOrienteering_ja.ts
- OpenOrienteering_lv.ts
- OpenOrienteering_nb.ts
- OpenOrienteering_nl.ts
- OpenOrienteering_pl.ts
- OpenOrienteering_pt_BR.ts
- OpenOrienteering_ru.ts
- OpenOrienteering_sv.ts
- OpenOrienteering_uk.ts
- OpenOrienteering_zh_CN.ts
- CACHE INTERNAL "Translation files"
+  OpenOrienteering_cs.ts
+  OpenOrienteering_da.ts
+  OpenOrienteering_de.ts
+  OpenOrienteering_en.ts
+  OpenOrienteering_eo.ts
+  OpenOrienteering_es.ts
+  OpenOrienteering_fi.ts
+  OpenOrienteering_fr.ts
+  OpenOrienteering_hu.ts
+  OpenOrienteering_id.ts
+  OpenOrienteering_it.ts
+  OpenOrienteering_ja.ts
+  OpenOrienteering_lv.ts
+  OpenOrienteering_nb.ts
+  OpenOrienteering_nl.ts
+  OpenOrienteering_pl.ts
+  OpenOrienteering_pt_BR.ts
+  OpenOrienteering_ru.ts
+  OpenOrienteering_sv.ts
+  OpenOrienteering_uk.ts
+  OpenOrienteering_zh_CN.ts
+  CACHE INTERNAL "Translation files"
 )
 qt5_add_translation(Mapper_QM ${Mapper_TRANS})
 
 set(Mapper_TRANS_TEMPLATE
- OpenOrienteering_template.ts
- CACHE INTERNAL "Translation template file"
+  OpenOrienteering_et.ts
+  OpenOrienteering_he.ts
+  OpenOrienteering_template.ts
+  CACHE INTERNAL "Translation files which are not deployed"
 )
 
 set(Mapper_TRANS_DIR
@@ -133,7 +134,7 @@ macro(QT5_TRANSLATIONS_SOURCES)
 		find_package(Qt5LinguistTools REQUIRED QUIET) # Provides Qt5_LUPDATE_EXECUTABLE
 	endif()
 	if(TARGET ${Qt5_LUPDATE_EXECUTABLE})
-		get_property(Qt5_LUPDATE_EXECUTABLE TARGET ${Qt5_LUPDATE_EXECUTABLE} PROPERTY LOCATION)
+		get_property(Qt5_LUPDATE_EXECUTABLE TARGET ${Qt5_LUPDATE_EXECUTABLE} PROPERTY IMPORTED_LOCATION)
 	endif()
 	execute_process(
 	  COMMAND "${Qt5_LUPDATE_EXECUTABLE}" -version
@@ -149,13 +150,13 @@ macro(QT5_TRANSLATIONS_SOURCES)
 	endif()
 	set(_DO_SOURCES FALSE)
 	foreach(_arg ${loop_args})
+		get_filename_component(_ts_filename ${_arg} NAME_WE)
 		if("${_arg}" STREQUAL "SOURCES")
 			set(_DO_SOURCES TRUE)
 		elseif(_DO_SOURCES)
 			get_source_file_property(_abs_path ${_arg} LOCATION)
 			file(APPEND "${${PROJECT_NAME}_TRANSLATIONS_LISTFILE}" "${_abs_path}\n")
-		else()
-			get_filename_component(_ts_filename ${_arg} NAME_WE)
+		elseif(NOT TARGET "${PROJECT_NAME}_${_ts_filename}_update")
 			set(LUPDATE_OPTIONS -locations absolute)
 			if("${_ts_filename}" STREQUAL "OpenOrienteering_en")
 				list(APPEND LUPDATE_OPTIONS -pluralonly)
@@ -163,8 +164,8 @@ macro(QT5_TRANSLATIONS_SOURCES)
 			if("${_ts_filename}" STREQUAL "OpenOrienteering_template")
 				list(APPEND LUPDATE_OPTIONS -no-obsolete)
 			endif()
-			if("${_ts_filename}" MATCHES "OpenOrienteering_(et|id|lv|nb|nl)")
-				# Qt translations which are not yet available from upstream, as of Qt 5.5.1.
+			if("${_ts_filename}" MATCHES "OpenOrienteering_(eo|et|id|lv|nb|nl)")
+				# Qt translations which are not yet available from upstream, as of Qt 5.8.0.
 				# Inserted from qt_template.ts into the OpenOrienteering .ts file by
 				#   lconvert -sort-contexts -o OpenOrienteering_XX.ts 
 				# Need to revert the "obsolete" and "vanished" marker created by lupdate,

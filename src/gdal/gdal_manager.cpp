@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016 Kai Pastor
+ *    Copyright 2016-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -23,9 +23,10 @@
 #include <cpl_conv.h>
 
 #include <QByteArray>
+#include <QFileInfo>
 #include <QSettings>
 
-#include "../mapper_resource.h"
+#include "util/backports.h"
 
 
 
@@ -167,30 +168,37 @@ private:
 			enabled_vector_extensions.push_back("osm");
 		settings.endGroup();
 		
-		auto gdal_data = MapperResource::locate(MapperResource::GDAL_DATA);
-		if (!gdal_data.isEmpty())
+		auto gdal_data = QFileInfo(QLatin1String("data:/gdal"));
+		if (gdal_data.exists())
 		{
 			// The user may overwrite this default in the settings.
-			CPLSetConfigOption("GDAL_DATA", gdal_data.toLatin1().constData());
+			CPLSetConfigOption("GDAL_DATA", gdal_data.absoluteFilePath().toLocal8Bit());
 		}
 		
 		settings.beginGroup(gdal_configuration_group);
-		QStringList new_parameters = settings.childKeys();
-		if (new_parameters.isEmpty())
+		
+		const char* defaults[][2] = {
+		    { "CPL_DEBUG",               "OFF" },
+		    { "USE_PROJ_480_FEATURES",   "YES" },
+		    { "OSM_USE_CUSTOM_INDEXING", "NO"  },
+		    { "GPX_ELE_AS_25D",          "YES" },
+		};
+		for (const auto setting : defaults)
 		{
-			// Default options for debugging and for some drivers
-			settings.setValue(QString::fromLatin1("CPL_DEBUG"), QVariant{QLatin1String("OFF")});
-			settings.setValue(QString::fromLatin1("USE_PROJ_480_FEATURES"), QVariant{QLatin1String("YES")});
-			settings.setValue(QString::fromLatin1("OSM_USE_CUSTOM_INDEXING"), QVariant{QLatin1String("NO")});
-			new_parameters = settings.childKeys();
+			const auto key = QString::fromLatin1(setting[0]);
+			if (!settings.contains(key))
+			{
+				settings.setValue(key, QVariant{QLatin1String(setting[1])});
+			}
 		}
 		
+		auto new_parameters = settings.childKeys();
 		new_parameters.sort();
-		for (auto parameter : new_parameters)
+		for (const auto& parameter : qAsConst(new_parameters))
 		{
 			CPLSetConfigOption(parameter.toLatin1().constData(), settings.value(parameter).toByteArray().constData());
 		}
-		for (auto parameter : static_cast<const QStringList&>(applied_parameters))
+		for (const auto& parameter : qAsConst(applied_parameters))
 		{
 			if (!new_parameters.contains(parameter)
 			    && parameter != QLatin1String{ "GDAL_DATA" })

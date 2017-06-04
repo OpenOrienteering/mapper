@@ -18,22 +18,16 @@
  
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Network REQUIRED)
+set(CMAKE_AUTOMOC ON)
 
 set(QSINGLEAPP_SRCS
   src/qtlocalpeer.cpp
   src/qtsingleapplication.cpp
   src/qtsinglecoreapplication.cpp
 )
-set(QSINGLEAPP_MOC_INPUT
-  src/qtlocalpeer.h
-  src/qtsingleapplication.h
-  src/qtsinglecoreapplication.h
-)
-qt5_wrap_cpp(QSINGLEAPP_MOC ${QSINGLEAPP_MOC_INPUT})
 
 add_library(QtSingleApplication STATIC
   ${QSINGLEAPP_SRCS}
-  ${QSINGLEAPP_MOC}
 )
 
 target_include_directories(QtSingleApplication

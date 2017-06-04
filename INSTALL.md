@@ -4,53 +4,41 @@ This document is about building OpenOrienteering Mapper from source code.
 
 The general build process prerequisites are:
  - A supported platform: 
-   - Mac OS X 10.10 (Yosemite). Mac OS X 10.7 or newer may work.
-   - Linux. Ubuntu 14.04 is known to work.
- - The OpenOrienteering Mapper source code.
- - CMake >= 2.8.12.
-   CMake is available from http://www.cmake.org/.
- - A supported C++ compiler toolchain. C++11 is mandatory.
+   - Linux. Ubuntu 16.04 is known to work.
+     Linux is also used to cross-compile for Windows and Android.
+   - OS X Yosemite (10.10). OS X Mountain Lion (10.8) or newer may work.
+     (Qt supports Mac OS X Lion (10.7) for deployment only until Qt 5.6.)
+ - CMake >= 3.1.
+   CMake is available from https://cmake.org/.
+ - A supported C++ compiler toolchain. C++14 is mandatory.
 
-See below for platform-specific details and build instructions.
+Mapper has a number of direct and indirect dependencies on third-party
+components. Direct dependencies are:
+ - Qt >=5.3
+   https://www.qt.io/download-open-source/
+ - Clipper library (aka libpolyclipping) >= 6.1.3.a
+   http://www.angusj.com/delphi/clipper.php
+ - PROJ.4 Cartographic Projections Library >= 4.8
+   http://proj4.org/
+ - GDAL Geospatial Data Abstraction Library
+   http://www.gdal.org/
+ - ZLib Compression Library
+   http://zlib.net/
 
+When building for Linux, you may use the distributions' packages. 
+However, openSUSE is known to lack the Clipper library.
 
-## Qt Library
+For target systems other than desktop Linux, the recommended way to deal
+with the dependencies is to use the OpenOrienteering superbuild project
+(https://github.com/OpenOrienteering/superbuild). See below for details.
 
-This program uses the Qt library from http://www.qt.io which is released
-under the terms of the GNU General Public License, Version 3. 
-The program needs at least Qt 5.2. Qt 5.5.1 is the recommended version.
-By default CMake build settings for OS X and Windows,
-a special OpenOrienteering source package of Qt 5.5.1 will be downloaded
-and built as part of the build process.
-You can change the cmake option `Mapper_BUILD_QT` to adjust this.
-
-
-## Clipper Library
-
-The program uses the clipper code library from 
-http://www.angusj.com/delphi/clipper.php /
-http://sourceforge.net/projects/polyclipping/
-which is released under the terms of the Boost Software License, Version 1.0.
-The program is known to work with release 6.1.3a and not compile with releases
-5.x.x or earlier. By default build settings, clipper 6.1.3a will be downloaded
-and built as part of the build process. 
-You can change the cmake option `Mapper_BUILD_CLIPPER` to adjust this.
-
-
-## PROJ.4 Cartographic Projections Library
-
-The program uses the PROJ.4 Cartographic Projections Library from
-http://trac.osgeo.org/proj/ which is released under permissive license terms.
-The program is known to work with the releases 4.8.0 (as contained in Ubuntu
-14.04), 4.9.1 and 4.9.2. By default build settings, proj 4.9.2 will be
-downloaded and built as part of the build process. On Linux, default settings
-will use the installed proj library.
-You can change the cmake option `Mapper_BUILD_PROJ` to adjust this.
+The recommented integrated development environment (IDE) is Qt Creator
+which is available from https://www.qt.io/download-open-source/.
 
 
 ## Getting the Source
 
-Download a zip or tar.gz Source code archive from
+Download a zip or tar.gz source code archive from
 
 https://github.com/OpenOrienteering/mapper/releases
 
@@ -61,28 +49,35 @@ and unpack it, or checkout the source code with git:
 git clone https://github.com/OpenOrienteering/mapper.git
 ```
 
-The directory created by unpacking or checkout will be referred to as the
-source directory (`SOURCE_DIR`).
 
+## Compiling for Linux (without OpenOrienteering superbuild)
 
-## Compiling on Linux
+The standard g++ (>= 4.9) compiler from a recent distribution should work. Make
+sure that the required development and tool packages are installed. For a Ubuntu
+or Debian system, install:
 
-The standard g++ compiler from a recent distribution should work. The Ubuntu
-14.04 g++ is known to work. Make sure that the development packages of the
-PROJ.4 library and of CUPS are installed. For a Ubuntu or Debian system, install
-`libproj-dev` and `libcups2-dev`.
+cmake,
+doxygen,
+libcups2-dev,
+libgdal-dev,
+libpolyclipping-dev
+libproj-dev,
+qt5-default,
+qtbase5-dev, qtbase5-private-dev, qtbase5-dev-tools,
+qttools5-dev, qttools5-dev-tools, libqt5sql5-sqlite,
+zlib1g-dev
 
-For using the Qt libraries provided by the repositories, the following packages
-need to be installed:
-`qt5-default` (>= 5.2), `qttools5-dev`, `qttools5-dev-tools`, `libqt5sql5-sqlite`
-
-Open a terminal, and create a build directory, e.g. as subdirectory build in
-the source directory, and change to that directory. From the build directory,
-configure and build like this:
+When not using Qt Creator, open a terminal, and create a build directory, e.g.
+as subdirectory build in the source directory, and change to that directory.
+From the build directory, configure and build like this:
 
 ```
 cmake PATH/TO/SOURCE_DIR
 ```
+
+When building on openSUSE, you may want to add -DMapper_BUILD_CLIPPER=1. This
+will make the build download and build the Clipper library (libpolyclipping)
+which is not (yet) provided by this distribution.
 
 Now you may start the build process by running
 
@@ -91,128 +86,73 @@ make
 ```
 
 
-## Compiling on OS X
+## Compiling with OpenOrienteering superbuild
 
-The supported compiler is clang from the Command Line Tools for Xcode.
-XCode 7.0.1 and the accompanying command line tools are known to work.
+The OpenOrienteering superbuild project
+(https://github.com/OpenOrienteering/superbuild)
+takes care of downloading toolchains and sources, unpacking and patching
+sources, and building the binaries with respect to all known dependencies,
+using parallel jobs as much as possible. Superbuild will even create packages
+for Mapper when you build an openorienteering-mapper-...-package target.
 
-Now create a build directory, e.g. as subdirectory build in the source
-directory, and change to that directory. In the build directory, configure
-and build like this:
+If you want to do development on the Mapper project for macOS, Windows, or
+Android, you can use the results (install directory, toolchain directory) from
+the superbuild for building the Mapper CMake project, for example by using
+the toolchain file from the superbuild directory, or by setting
+CMAKE_PREFIX_PATH to point to the superbuild installation directory.
 
-```
-cmake PATH/TO/SOURCE_DIR
-```
+For convenient development in Qt Creator, it is possible to create a Kit which
+uses the corresponding toolchain and installation directories from the
+superbuild. When building Mapper with this Kit, it will find all dependencies
+it needs.
 
-Now you may start the build process by running
+For setting up Kits, see the Qt Creator documentation:
 
-```
-make
-```
+http://doc.qt.io/qtcreator/creator-targets.html
 
-and generate a DragNDrop package by
-
-```
-make package
-```
-
-
-## Cross-Compiling on Linux for Windows
-
-Some linux distributions may offer cross compiler packages based on MinGW or
-MinGW-w64 (for Ubuntu: g++-mingw-w64 et al.), and even NSIS/makensis is
-available. MXE.cc provides an alternative cross-compilation environment
-
-For MinGW-w64 i686 (32 bit) builds, configure the build with
-
-```
-cmake PATH/TO/SOURCE_DIR -DCMAKE_TOOLCHAIN_FILE=PATH/TO/SOURCE_DIR/cmake/toolchain/i686-w64-mingw32
-```
-
-and proceed with
-
-```
-make
-```
+Starting with Qt Creator 4.3, it might become possible to simply open the
+superbuild's openorienteering-mapper build directory as a regular project
+with no further toolchain configuration.
 
 
 ## Cross-Compiling on Linux for Android
 
 In addition to the general build process prerequisites, you need:
+ - CMake >= 3.7
  - the Android SDK
  - the Android NDK
- - Qt 5.5.1 for Android which includes Qt Creator
+The OpenOrienteering superbuild project will download and install this software
+when it creates an android toolchain.
 
-When downloading packages for specific Android API levels,
-keep in mind that Qt5 requires at least API Level 9 to work, and apps
-built for the armeabi-v7a ABI require at least an emulator image of API
-level 14 to work with the emulator.
+Qt 5.6 requires at least API Level 9 to work. Apps built for the armeabi-v7a
+ABI require at least an emulator image of API level 14.
 
-The build of OpenOrienteering Mapper for Android is controlled by qmake and the
-oo-mapper.pro file. The easist way to do the build is using Qt Creator where you
-can define different "kits" representing different types of target devices. 
-Qt Creator takes care of switching between debug and release configurations.
-For setting up the kits, see the Qt Creator documentation:
+The build of OpenOrienteering Mapper for Android is done by CMake, too.
+However, the cmake-generated build creates a qmake project in
+BUILD_DIR/packaging/Mapper. While the cmake-generated build only used the
+deployment settings generated by qmake for this project, you this project is
+suitable for convenient deplyoing and debugging Mapper in Qt Creator.
 
-http://doc.qt.io/qtcreator/creator-targets.html
-
-Mapper's dependencies, such as the PROJ.4 library, are build by cmake, based on
-the exisiting CMakeList.txt files and Qt Creator's kit settings.
-
-For development, you may use the Android Qt kits which come with Qt Creator.
-For official releases, you need to build the Qt libraries from the sources.
-This can be done by loading 3rd-party/qt5/qt5.pro in Qt Creator, and building
-it using a kit for Android. The resulting Qt kit can be added to Qt Creator
-as another Qt version via  Tools > Options... > Build & Run > Qt Versions.
-Qt Creator will automatically create a kit for this, and then you can use this
-kit to build official OpenOrienteering releases.
-For general Qt5 for Android build instructions, see:
-
-http://qt-project.org/wiki/Qt5ForAndroidBuilding
+Note that release APKs need to be signed, and the signing key cannot change for
+replacing an installed app without loosing the data (maps) stored for this app.
+To facilitate development, debug builds of Mapper use a different namespace and
+name.
 
 
-## Binary Package Distribution
+## Binary Packages and Distribution
 
-Distributing binary code under open source licenses creates certain legal
-obligations, such as the distribution of the corresponding source code and
-build instructions for GPL licensed binaries. This is how to do this correctly
-for Mapper.
+Even under open source licenses, distributing and/or using code in source or
+binary form creates certain legal obligations, such as the distribution of the
+corresponding source code and build instructions for GPL licensed binaries,
+and displaying copyright statements and disclaimers.
 
-Official release packages need to be build from an official source code archive.
-This is to make sure that every user can indeed get all required sources for the
-binary release.
+For OpenOrienteering Mapper, this is solved by either using (not distributing)
+the Linux distributors' build systems and packages, or by packaging with
+OpenOrienteering superbuild. OpenOrienteering superbuild collects all
+third-party downloads, patches and control scripts, so that they can be made
+available together with the release binaries.
 
-Release packages will include the Qt libraries and the Qt assistant executable.
-That is why release packages need to build the Qt components from the Qt source
-code in the particular version which we distribute along with our source. The
-Mapper default build configuration will normally take care of this.
-
-The same principle applies to the other third party components (PROJ.4,
-Clipper). If the compiler requires distribution of additional libraries, such
-as a libstdc++ DLL, these binaries' licenses must be respected as well, which
-may add additional source code and build instruction distribution requirements.
-
-The build shall start from a fresh build directory. The build shall be in
-release mode, i.e. with `-DCMAKE_BUILD_TYPE=Release`. Synopsis:
-
-```
-tar xvzf openorienteering-mapper_X.Y.Z-src.tgz
-cd openorienteering-mapper_X.Y.Z
-mkdir build
-cd build
-cmake .. -DCMAKE_BUILD_TYPE=Release
-make
-```
-
-The actual package may be built by `make package`. However, this is used
-(i.e. tested) only for OS X at the moment.
-Android packages are built in Qt Creator using the provided `oo-mapper.pro` file.
-Windows and Linux packages are regularly build on
-https://build.opensuse.org/project/show/home:dg0yt, so proper package recipes for
-common distributions and package managers can be found there.
-
-Packaging with cmake is not enabled by default for Linux. Add `-DMapper_BUILD_PACKAGE=1`
-to change this. As already stated, this is untested, and you might need to look for
-additional tweaks.
-
-
+Packages for macOS and Windows are built using CPack which comes with CMake.
+Android APKs are build in the same way, although not using a CPack generator.
+These packages bundle all 3rd-party components (Qt binaries and translations,
+PROJ.4 and GDAL binaries and data, etc.). 

@@ -28,11 +28,11 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
-#include "georeferencing.h"
-#include "../map.h"
-#include "../core/map_coord.h"
-#include "../util.h"
-#include "../util/xml_stream_util.h"
+#include "core/georeferencing.h"
+#include "map.h"
+#include "map_coord.h"
+#include "util/util.h"
+#include "util/xml_stream_util.h"
 
 struct ProcessLine
 {
@@ -91,7 +91,8 @@ const MapGrid& MapGrid::load(QIODevice* file, int version)
 void MapGrid::save(QXmlStreamWriter& xml) const
 {
 	XmlElementWriter element{xml, QLatin1String("grid")};
-	element.writeAttribute(QLatin1String("color"), QColor(color).name());
+	const auto name_format = qAlpha(color) == 0xff ? QColor::HexRgb : QColor::HexArgb;
+	element.writeAttribute(QLatin1String("color"), QColor::fromRgba(color).name(name_format));
 	element.writeAttribute(QLatin1String("display"), display);
 	element.writeAttribute(QLatin1String("alignment"), alignment);
 	element.writeAttribute(QLatin1String("additional_rotation"), additional_rotation);

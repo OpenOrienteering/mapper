@@ -17,8 +17,8 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_AUTOSAVE_P_H
-#define _OPENORIENTEERING_AUTOSAVE_P_H
+#ifndef OPENORIENTEERING_AUTOSAVE_P_H
+#define OPENORIENTEERING_AUTOSAVE_P_H
 
 #include <QObject>
 #include <QTimer>
@@ -55,7 +55,7 @@ private:
 	Q_DISABLE_COPY(AutosavePrivate)
 	
 	Autosave& document;
-	QTimer* autosave_timer;
+	QTimer autosave_timer;
 	bool autosave_needed;
 	int  autosave_interval;
 };

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015  Kai Pastor
+ *    Copyright 2012-2017  Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -18,13 +18,10 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_FILE_FORMAT_T_H
-#define _OPENORIENTEERING_FILE_FORMAT_T_H
+#ifndef OPENORIENTEERING_FILE_FORMAT_T_H
+#define OPENORIENTEERING_FILE_FORMAT_T_H
 
 #include <QtTest/QtTest>
-
-#include "../src/map.h"
-#include "../src/file_format.h"
 
 
 /**
@@ -59,11 +56,11 @@ private slots:
 	void saveAndLoad();
 	void saveAndLoad_data();
 	
-private:
-	Map* saveAndLoadMap(Map* input, const FileFormat* format);
-	void comparePrinterConfig(const MapPrinterConfig& copy, const MapPrinterConfig& orig);
-	bool compareMaps(const Map* a, const Map* b, QString& error);
-	QStringList map_filenames;
+	/**
+	 * Test saving and loading a map which is created in memory and does not go
+	 * through an implicit export-import-cycle before the test.
+	 */
+	void pristineMapTest();
 };
 
 #endif // _OPENORIENTEERING_FILE_FORMAT_T_H

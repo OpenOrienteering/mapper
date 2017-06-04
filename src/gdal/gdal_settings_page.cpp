@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016 Kai Pastor
+ *    Copyright 2016-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -26,11 +26,14 @@
 #include <QTableWidget>
 #include <QVBoxLayout>
 
+#include "fileformats/file_format_registry.h"
+#include "gui/util_gui.h"
+#include "util/backports.h"
+#include "util/scoped_signals_blocker.h"
+
 #include "gdal_manager.h"
 #include "ogr_file_format.h"
-#include "../util_gui.h"
-#include "../file_format_registry.h"
-#include "../util/scoped_signals_blocker.h"
+
 
 
 GdalSettingsPage::GdalSettingsPage(QWidget* parent)
@@ -106,7 +109,7 @@ void GdalSettingsPage::apply()
 			manager.setParameterValue(key, value.trimmed());
 		}
 	}
-	for (const auto key : old_parameters)
+	for (const auto& key : qAsConst(old_parameters))
 	{
 		if (!new_parameters.contains(key))
 		{
@@ -131,7 +134,7 @@ void GdalSettingsPage::updateWidgets()
 	options.sort();
 	parameters->setRowCount(options.size() + 1);
 	auto row = 0;
-	for (auto item : static_cast<const QStringList&>(options))
+	for (const auto& item : qAsConst(options))
 	{
 		auto key_item = new QTableWidgetItem(item);
 		parameters->setItem(row, 0, key_item);

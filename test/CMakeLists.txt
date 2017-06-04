@@ -1,5 +1,5 @@
 #
-#    Copyright 2012-2016 Kai Pastor
+#    Copyright 2012-2017 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -17,12 +17,12 @@
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
 
 
-# Prerequisite
-add_subdirectory(data)
-
+find_package(Qt5Network REQUIRED)
 find_package(Qt5PrintSupport REQUIRED)
 find_package(Qt5Test REQUIRED)
 find_package(Qt5Widgets REQUIRED)
+
+set(CMAKE_AUTOMOC ON)
 
 if(Mapper_DEVELOPMENT_BUILD)
 	include(EnableSanitize)
@@ -50,22 +50,15 @@ add_definitions(
 #
 function(add_test_helper testname autorun)
 	unset(TEST_${testname}_SRCS)
-	unset(TEST_${testname}_HDRS)
 	set(manual_test 0)
 	foreach(arg ${ARGN})
 		if("${arg}" STREQUAL "MANUAL")
 			set(manual_test 1)
 		else()
 			list(APPEND TEST_${testname}_SRCS ${arg}.cpp)
-			list(APPEND TEST_${testname}_HDRS ${arg}.h)
-			if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${arg}_p.h)
-				list(APPEND TEST_${testname}_HDRS ${arg}_p.h)
-			endif()
 		endif()
 	endforeach()
-	qt5_wrap_cpp(TEST_${testname}_MOC ${testname}.h)
-	qt5_wrap_cpp(TEST_${testname}_XTRA_MOC ${TEST_${testname}_HDRS} OPTIONS -nw)
-	add_executable(${testname} ${testname}.cpp ${TEST_${testname}_SRCS} ${TEST_${testname}_MOC} ${TEST_${testname}_XTRA_MOC})
+	add_executable(${testname} ${testname}.cpp ${TEST_${testname}_SRCS})
 	target_link_libraries(${testname}
 	  PROJ4::proj
 	  Qt5::Test
@@ -120,13 +113,14 @@ endfunction()
 
 
 # Include generated files (moc ouput, build configuration)
-include_directories("${CMAKE_CURRENT_BINARY_DIR}/../src")
+include_directories("${PROJECT_BINARY_DIR}/src")
+include_directories("${PROJECT_SOURCE_DIR}/src")
 include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
 
 # Unit tests
 add_unit_test(tst_qglobal)
-add_unit_test(autosave_t MANUAL ../src/core/autosave ../src/settings ../src/util ../src/mapper_resource)
+add_unit_test(autosave_t MANUAL ../src/core/autosave ../src/settings ../src/util/util)
 add_unit_test(encoding_t ../src/util/encoding)
 add_unit_test(georeferencing_t ../src/core/georeferencing
 	../src/core/latlon
@@ -134,27 +128,27 @@ add_unit_test(georeferencing_t ../src/core/georeferencing
 	../src/core/crs_template_implementation
 	../src/gui/widgets/crs_param_widgets
 	../src/mapper_resource
-	../src/file_format
+	../src/fileformats/file_format
 )
-add_unit_test(locale_t ../src/util_translation ../src/mapper_resource)
+add_unit_test(locale_t ../src/util/translation_util)
 add_unit_test(map_color_t ../src/core/map_color)
 add_unit_test(qpainter_t)
+add_unit_test(util_t ../src/util/util ../src/settings)
 
 # Benchmarks
 add_system_test(coord_xml_t MANUAL)
 
 # System tests
-add_system_test(map_t)
 add_system_test(file_format_t)
-add_dependencies(file_format_t Mapper_test_data)
 add_system_test(duplicate_equals_t)
-add_dependencies(duplicate_equals_t Mapper_test_data)
+add_system_test(map_t)
 add_system_test(object_query_t)
+add_system_test(path_object_t)
+add_system_test(symbol_set_t)
+add_system_test(template_t)
 add_system_test(tools_t)
 add_system_test(transform_t)
-add_system_test(path_object_t)
 add_system_test(undo_manager_t)
-add_system_test(symbol_set_t)
 
 
 # Collect the AUTORUN_TESTS
@@ -169,13 +163,4 @@ configure_file(AUTORUN_TESTS.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/AUTORUN_TESTS.
 add_executable(Mapper-with-test mapper_t.cpp)
 add_dependencies(Mapper-with-test Mapper_prerequisites)
 target_link_libraries(Mapper-with-test Qt5::Core)
-get_target_property(mapper_location Mapper LOCATION)
-target_compile_definitions(Mapper-with-test PRIVATE -DCMAKE_COMMAND="${CMAKE_COMMAND}" -DMAPPER_LOCATION="${mapper_location}")
-
-
-if(Mapper_BUILD_QT)
-	write_qt_conf()
-elseif(EXISTS "${CMAKE_CURRENT_BINARY_DIR}/qt.conf")
-	file(REMOVE "${CMAKE_CURRENT_BINARY_DIR}/qt.conf")
-endif()
-
+target_compile_definitions(Mapper-with-test PRIVATE -DCMAKE_COMMAND="${CMAKE_COMMAND}" -DMAPPER_LOCATION="$<TARGET_FILE:Mapper>")

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -72,23 +72,23 @@ public:
 	
 	
 	/** Default contructor. */
-	constexpr PathCoord();
+	constexpr PathCoord() noexcept;
 	
 	/** Copy constructor. */
-	constexpr PathCoord(const PathCoord&) = default;
+	constexpr PathCoord(const PathCoord&) noexcept = default;
 	
 	/** Move constructor. */
-	PathCoord(PathCoord&&) = default;
+	PathCoord(PathCoord&&) noexcept = default;
 	
 	/** Explicit construction with all member values. */
-	constexpr PathCoord(MapCoordF pos, size_type index, param_type param, length_type clen);
+	constexpr PathCoord(MapCoordF pos, size_type index, param_type param, length_type clen) noexcept;
 	
 	
 	/** Assignment operator. */
-	PathCoord& operator=(const PathCoord&) = default;
+	PathCoord& operator=(const PathCoord&) noexcept = default;
 	
 	/** Move assignment operator. */
-	PathCoord& operator=(PathCoord&&) = default;
+	PathCoord& operator=(PathCoord&&) noexcept = default;
 	
 	
 	/**
@@ -255,13 +255,13 @@ public:
 
 // ### PathCoord inline code ###
 
-constexpr PathCoord::PathCoord()
+constexpr PathCoord::PathCoord() noexcept
  : PathCoord( {}, 0, 0.0, 0.0)
 {
 	// Nothing else
 }
 
-constexpr PathCoord::PathCoord(MapCoordF pos, size_type index, param_type param, PathCoord::length_type clen)
+constexpr PathCoord::PathCoord(MapCoordF pos, size_type index, param_type param, PathCoord::length_type clen) noexcept
  : pos { pos }
  , index { index }
  , param { param }

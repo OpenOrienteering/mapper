@@ -1,5 +1,5 @@
 /*
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2014, 2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -17,8 +17,8 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_AUTO_SAVE_T_H
-#define _OPENORIENTEERING_AUTO_SAVE_T_H
+#ifndef OPENORIENTEERING_AUTO_SAVE_T_H
+#define OPENORIENTEERING_AUTO_SAVE_T_H
 
 #include <QtTest/QtTest>
 
@@ -36,6 +36,8 @@ public:
 	 */
 	AutosaveTestDocument(Autosave::AutosaveResult expected_result);
 	
+	~AutosaveTestDocument() override = default;
+	
 	/**
 	 * @brief Simulates autosaving by returning the current expected_result.
 	 * 
@@ -43,7 +45,7 @@ public:
 	 * Autosave::TemporaryFailure, the expected result (as returned by the next
 	 * invocation) will be changed to Autosave::Success.
 	 */
-	virtual Autosave::AutosaveResult autosave();
+	Autosave::AutosaveResult autosave() override;
 	
 	/**
 	 * @brief Returns the number of invocations of autosave().
@@ -71,7 +73,7 @@ class AutosaveTest : public QObject
 Q_OBJECT
 public:
 	/** @brief Constructor */
-	explicit AutosaveTest(QObject* parent = NULL);
+	explicit AutosaveTest(QObject* parent = nullptr);
 	
 private slots:
 	/** @brief Check the AutosaveTestDocument implementation of autosave(). */

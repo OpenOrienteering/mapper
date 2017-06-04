@@ -26,7 +26,7 @@
 #include <QSignalMapper>
 #include <QTextDocument>
 
-#include "../util_gui.h"
+#include "gui/util_gui.h"
 
 
 // ### ColorItemDelegate ###

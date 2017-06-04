@@ -16,7 +16,7 @@
 <context>
     <name>Importer</name>
     <message numerus="yes">
-        <location filename="../src/file_import_export.cpp" line="93"/>
+        <location filename="../src/fileformats/file_import_export.cpp" line="93"/>
         <source>Dropped %n irregular object(s).</source>
         <translation>
             <numerusform>Dropped one irregular object.</numerusform>
@@ -66,13 +66,26 @@
 <context>
     <name>OCAD8FileImport</name>
     <message numerus="yes">
-        <location filename="../src/file_format_ocad8.cpp" line="145"/>
+        <location filename="../src/fileformats/ocad8_file_format.cpp" line="146"/>
         <source>%n color separation(s) were skipped, reason: Import disabled.</source>
         <translation>
             <numerusform>One color separation was skipped, reason: Import disabled.</numerusform>
             <numerusform>%n color separations were skipped, reason: Import disabled.</numerusform>
         </translation>
     </message>
+</context>
+<context>
+    <name>OgrFileImport</name>
+    <message numerus="yes">
+        <location filename="../src/gdal/ogr_file_format.cpp" line="442"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="447"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="452"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="457"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="462"/>
+        <source>Unable to load %n objects, reason: %1</source>
+        <translation><numerusform>Unable to load one object, reason: %1</numerusform>
+        <numerusform>Unable to load %n objects, reason: %1</numerusform>
+        </translation></message>
 </context>
 <context>
     <name>TagSelectWidget</name>
@@ -88,7 +101,7 @@
 <context>
     <name>TemplateTrack</name>
     <message numerus="yes">
-        <location filename="../src/template_track.cpp" line="479"/>
+        <location filename="../src/templates/template_track.cpp" line="475"/>
         <source>%n path object(s) could not be imported (reason: missing coordinates).</source>
         <translation>
             <numerusform>One path object could not be imported (reason: missing coordinates).</numerusform>

@@ -41,13 +41,13 @@
 #endif
 
 #include "../core/georeferencing.h"
-#include "../core/map_color.h"
+#include "map_color.h"
 #include "../core/map_view.h"
-#include "../map.h"
-#include "../renderable.h"
+#include "map.h"
+#include "core/renderables/renderable.h"
 #include "../settings.h"
-#include "../template.h"
-#include "../util.h"
+#include "../templates/template.h"
+#include "util/util.h"
 #include "../util/xml_stream_util.h"
 
 
@@ -780,6 +780,8 @@ void MapPrinter::mapScaleChanged()
 
 void MapPrinter::takePrinterSettings(const QPrinter* printer)
 {
+	if (!printer) return;
+
 	MapPrinterPageFormat f(*printer);
 	if (target == pdfTarget() || target == imageTarget())
 	{
@@ -798,7 +800,7 @@ void MapPrinter::takePrinterSettings(const QPrinter* printer)
 
 	setResolution(printer->resolution());
 	
-	if (printer && printer->outputFormat() == QPrinter::NativeFormat)
+	if (printer->outputFormat() == QPrinter::NativeFormat)
 	{
 		PlatformPrinterProperties::save(printer, native_data);
 	}
@@ -810,22 +812,6 @@ void drawBuffer(QPainter* device_painter, const QImage* page_buffer, qreal pixel
 	Q_ASSERT(page_buffer);
 	
 	device_painter->save();
-	
-#if defined(Q_OS_MAC)
-	// Workaround for miss-scaled image export output
-	int logical_dpi = device_painter->device()->logicalDpiX();
-	if (logical_dpi != 0)
-	{
-		int physical_dpi = device_painter->device()->physicalDpiX();
-		if (physical_dpi != 0 && logical_dpi != physical_dpi)
-		{
-			qreal s = (qreal)logical_dpi / (qreal)physical_dpi;
-			//qreal s = physical_dpi / logical_dpi;
-			device_painter->scale(s, s);
-		}
-	}
-#endif
-	
 	device_painter->scale(pixel2units, pixel2units);
 	device_painter->setRenderHint(QPainter::SmoothPixmapTransform, false);
 	device_painter->drawImage(0, 0, *page_buffer);
@@ -908,7 +894,7 @@ void MapPrinter::drawPage(QPainter* device_painter, float units_per_inch, const 
 		scale = pixel_per_mm;
 		int w = qCeil(page_format.paper_dimensions.width() * scale);
 		int h = qCeil(page_format.paper_dimensions.height() * scale);
-#if defined (Q_OS_MAC)
+#if defined (Q_OS_MACOS)
 		if (device_painter->device()->physicalDpiX() == 0)
 		{
 			// Possible Qt bug, since according to QPaintDevice documentation,

@@ -25,7 +25,7 @@
 
 #include <QDialog>
 
-#include "../core/map_color.h"
+#include "core/map_color.h"
 
 class QAbstractButton;
 class QCheckBox;

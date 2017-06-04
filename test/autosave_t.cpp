@@ -22,6 +22,18 @@
 #include "../src/settings.h"
 
 
+namespace {
+
+/// Converts from autosave interval unit (minutes) to QThread::msleep unit (milliseconds)
+unsigned long msecs(double minutes)
+{
+	return static_cast<unsigned long>(minutes * 60000);
+}
+
+}  // namespace
+
+
+
 //### AutosaveTestDocument ###
 
 AutosaveTestDocument::AutosaveTestDocument(Autosave::AutosaveResult expected_result)
@@ -51,12 +63,13 @@ int AutosaveTestDocument::autosaveCount() const
 //### AutosaveTest ###
 
 AutosaveTest::AutosaveTest(QObject* parent)
-: QObject(parent),
-  autosave_interval(0.02) // 0.02 min = 1.2 s
+: QObject(parent)
+, autosave_interval(0.02) // 0.02 min = 1.2 s
 {
 	// Set distinct application name in order to use distinct settings.
 	// Autosave objects must not be constructed before this!
 	QCoreApplication::setApplicationName(QString::fromLatin1("Tests"));
+	Settings::getInstance().setSetting(Settings::General_AutosaveInterval, autosave_interval);
 }
 
 void AutosaveTest::autosaveTestDocumentTest()
@@ -89,26 +102,25 @@ void AutosaveTest::successTest()
 	AutosaveTestDocument doc(Autosave::Success);
 	
 	// Enable and trigger Autosave
-	Settings::getInstance().setSetting(Settings::General_AutosaveInterval, autosave_interval);
 	doc.setAutosaveNeeded(true);
 	
 	// Verify that Autosave does not trigger too early
-	QThread::msleep(autosave_interval * 50000); 
+	QThread::msleep(msecs(0.9 * autosave_interval));
 	QCoreApplication::processEvents();
 	QCOMPARE(doc.autosaveCount(), 0);
 	
 	// Verify that Autosave does trigger exactly once before too late
-	QThread::msleep(autosave_interval * 20000);
+	QThread::msleep(msecs(0.2 * autosave_interval));
 	QCoreApplication::processEvents();
 	QCOMPARE(doc.autosaveCount(), 1);
 	
 	// Verify that Autosave does not trigger again too early
-	QThread::msleep(autosave_interval * 50000); 
+	QThread::msleep(msecs(0.9 * autosave_interval));
 	QCoreApplication::processEvents();
 	QCOMPARE(doc.autosaveCount(), 1);
 	
 	// Verify that Autosave does trigger again once before too late
-	QThread::msleep(autosave_interval * 20000);
+	QThread::msleep(msecs(0.2 * autosave_interval));
 	QCoreApplication::processEvents();
 	QCOMPARE(doc.autosaveCount(), 2);
 }
@@ -118,31 +130,35 @@ void AutosaveTest::temporaryFailureTest()
 	AutosaveTestDocument doc(Autosave::TemporaryFailure);
 	
 	// Enable and trigger Autosave
-	Settings::getInstance().setSetting(Settings::General_AutosaveInterval, autosave_interval);
 	doc.setAutosaveNeeded(true);
 	
 	// Verify that Autosave does not trigger too early
-	QThread::msleep(autosave_interval * 50000); 
+	QThread::msleep(msecs(0.9 * autosave_interval));
 	QCoreApplication::processEvents();
 	QCOMPARE(doc.autosaveCount(), 0);
 	
 	// Verify that Autosave does trigger exactly once before too late
-	QThread::msleep(autosave_interval * 20000);
+	QThread::msleep(msecs(0.2 * autosave_interval));
+	QCoreApplication::processEvents();
+	QCOMPARE(doc.autosaveCount(), 1);
+	
+	// Verify that Autosave does not trigger once more too early
+	QThread::msleep(4000);
 	QCoreApplication::processEvents();
 	QCOMPARE(doc.autosaveCount(), 1);
 	
 	// Verify that Autosave does trigger once more quickly
-	QThread::msleep(10000);
+	QThread::msleep(2000);
 	QCoreApplication::processEvents();
 	QCOMPARE(doc.autosaveCount(), 2);
 	
 	// Verify that Autosave does not trigger again too early
-	QThread::msleep(autosave_interval * 50000); 
+	QThread::msleep(msecs(0.9 * autosave_interval));
 	QCoreApplication::processEvents();
 	QCOMPARE(doc.autosaveCount(), 2);
 	
 	// Verify that Autosave does trigger again once before too late
-	QThread::msleep(autosave_interval * 20000);
+	QThread::msleep(msecs(0.2 * autosave_interval));
 	QCoreApplication::processEvents();
 	QCOMPARE(doc.autosaveCount(), 3);
 }
@@ -152,26 +168,25 @@ void AutosaveTest::permanentFailureTest()
 	AutosaveTestDocument doc(Autosave::PermanentFailure);
 	
 	// Enable and trigger Autosave
-	Settings::getInstance().setSetting(Settings::General_AutosaveInterval, autosave_interval);
 	doc.setAutosaveNeeded(true);
 	
 	// Verify that Autosave does not trigger too early
-	QThread::msleep(autosave_interval * 50000); 
+	QThread::msleep(msecs(0.9 * autosave_interval));
 	QCoreApplication::processEvents();
 	QCOMPARE(doc.autosaveCount(), 0);
 	
 	// Verify that Autosave does trigger exactly once before too late
-	QThread::msleep(autosave_interval * 20000);
+	QThread::msleep(msecs(0.2 * autosave_interval));
 	QCoreApplication::processEvents();
 	QCOMPARE(doc.autosaveCount(), 1);
 	
 	// Verify that Autosave does not trigger again too early
-	QThread::msleep(autosave_interval * 50000); 
+	QThread::msleep(msecs(0.9 * autosave_interval));
 	QCoreApplication::processEvents();
 	QCOMPARE(doc.autosaveCount(), 1);
 	
 	// Verify that Autosave does trigger again once before too late
-	QThread::msleep(autosave_interval * 20000);
+	QThread::msleep(msecs(0.2 * autosave_interval));
 	QCoreApplication::processEvents();
 	QCOMPARE(doc.autosaveCount(), 2);
 }
@@ -182,17 +197,16 @@ void AutosaveTest::autosaveStopTest()
 		AutosaveTestDocument doc(Autosave::Success);
 		
 		// Enable and trigger Autosave
-		Settings::getInstance().setSetting(Settings::General_AutosaveInterval, autosave_interval);
 		doc.setAutosaveNeeded(true);
 		
 		// Sleep some time
-		QThread::msleep(autosave_interval * 20000); 
+		QThread::msleep(msecs(0.3 * autosave_interval));
 		QCoreApplication::processEvents();
 		QCOMPARE(doc.autosaveCount(), 0);
 		
 		// Verify that Autosave does not trigger after setAutosaveNeeded(false)
 		doc.setAutosaveNeeded(false);
-		QThread::msleep(autosave_interval * 70000); 
+		QThread::msleep(msecs(1.1 * autosave_interval));
 		QCoreApplication::processEvents();
 		QCOMPARE(doc.autosaveCount(), 0);
 	}
@@ -202,12 +216,12 @@ void AutosaveTest::autosaveStopTest()
 		
 		// Test stopping autosave in temporary failure mode
 		doc.setAutosaveNeeded(true);
-		QThread::msleep(autosave_interval * 70000); 
+		QThread::msleep(msecs(1.1 * autosave_interval));
 		QCoreApplication::processEvents();
 		QCOMPARE(doc.autosaveCount(), 1);
 		
 		doc.setAutosaveNeeded(false);
-		QThread::msleep(autosave_interval * 20000); 
+		QThread::msleep(msecs(autosave_interval) + 6000);
 		QCoreApplication::processEvents();
 		QCOMPARE(doc.autosaveCount(), 1);
 	}
@@ -217,12 +231,12 @@ void AutosaveTest::autosaveStopTest()
 		
 		// Test stopping autosave in permament failure mode
 		doc.setAutosaveNeeded(true);
-		QThread::msleep(autosave_interval * 70000); 
+		QThread::msleep(msecs(1.1 * autosave_interval));
 		QCoreApplication::processEvents();
 		QCOMPARE(doc.autosaveCount(), 1);
 		
 		doc.setAutosaveNeeded(false);
-		QThread::msleep(autosave_interval * 70000); 
+		QThread::msleep(msecs(1.1 * autosave_interval));
 		QCoreApplication::processEvents();
 		QCOMPARE(doc.autosaveCount(), 1);
 	}
@@ -234,7 +248,7 @@ void AutosaveTest::autosaveStopTest()
  * Normally, the "offscreen" plugin would be the correct one.
  * However, it bails out with a QFontDatabase error (cf. QTBUG-33674)
  */
-auto qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");
+static auto qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");
 
 
 QTEST_MAIN(AutosaveTest)

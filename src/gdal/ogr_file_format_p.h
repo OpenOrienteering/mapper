@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016 Kai Pastor
+ *    Copyright 2016-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -29,11 +29,17 @@
 #include <ogr_api.h>
 #include <ogr_srs_api.h>
 
-#include "../core/map_coord.h"
-#include "../file_import_export.h"
-#include "../symbol.h"
+#include "core/map_coord.h"
+#include "fileformats/file_import_export.h"
+#include "core/symbols/symbol.h"
+
+QT_BEGIN_NAMESPACE
+class QFile;
+QT_END_NAMESPACE
 
 class AreaSymbol;
+class Georeferencing;
+class LatLon;
 class LineSymbol;
 class MapColor;
 class MapPart;
@@ -107,6 +113,15 @@ class OgrFileImport : public Importer
 Q_OBJECT
 public:
 	/**
+	 * The unit type indicates the coordinate system the data units refers to.
+	 */
+	enum UnitType
+	{
+		UnitOnGround,  ///< Data refers to real dimensions. Includes geograghic CS.
+		UnitOnPaper    ///< Data refers to dimensions in the (printed) map.
+	};
+	
+	/**
 	 * A Pointer to a function which creates a MapCoordF from double coordinates.
 	 */
 	using MapCoordConstructor = MapCoord (OgrFileImport::*)(double, double) const;
@@ -114,12 +129,33 @@ public:
 	/**
 	 * Constructs a new importer.
 	 */
-	OgrFileImport(QIODevice* stream, Map *map, MapView *view, bool drawing_from_projected = false);
+	OgrFileImport(QIODevice* stream, Map *map, MapView *view, UnitType unit_type = UnitOnGround);
 	
 	~OgrFileImport() override;
 	
+	
+	void setGeoreferencingImportEnabled(bool enabled);
+	
+	
+	/**
+	 * Tests if the file's spatial references can be used with the given georeferencing.
+	 * 
+	 * This returns true only if all layers' spatial references can be
+	 * transformed to the spatial reference systems represented by georef.
+	 * It will always return false for a local or invalid Georeferencing.
+	 */
+	static bool checkGeoreferencing(QFile& file, const Georeferencing& georef);
+	
+	/**
+	 * Calculates the average geographic coordinates (WGS84) of the file.
+	 */
+	static LatLon calcAverageLatLon(QFile& file);
+	
+	
 protected:
 	void import(bool load_symbols_only) override;
+	
+	void importGeoreferencing(OGRDataSourceH data_source);
 	
 	void importStyles(OGRDataSourceH data_source);
 	
@@ -159,6 +195,10 @@ protected:
 	 */
 	MapCoord fromProjected(double x, double y) const;
 	
+	
+	static LatLon calcAverageLatLon(OGRDataSourceH data_source);
+	
+	
 private:
 	Symbol* getSymbolForPointGeometry(const QByteArray& style_string);
 	LineSymbol* getLineSymbol(const QByteArray& style_string);
@@ -196,7 +236,9 @@ private:
 	unsigned int unsupported_geometry_type;
 	unsigned int too_few_coordinates;
 	
-	bool drawing_from_projected;
+	UnitType unit_type;
+	
+	bool georeferencing_import_enabled;
 };
 
 

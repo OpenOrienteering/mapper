@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -43,8 +43,7 @@
 #include "../main_window.h"
 #include "../settings_dialog.h"
 #include "../../core/storage_location.h"
-#include "../../file_format_registry.h"
-#include "../../mapper_resource.h"
+#include "../../fileformats/file_format_registry.h"
 
 
 //### AbstractHomeScreenWidget ###
@@ -415,10 +414,10 @@ void HomeScreenWidgetMobile::showExamples()
 {
 	int old_size = file_list->count();
 	
-	QStringList paths = MapperResource::getLocations(MapperResource::EXAMPLE);
-	while (!paths.isEmpty())
+	const auto paths = QDir::searchPaths(QLatin1String("data"));
+	for(const auto& path : paths)
 	{
-		addFilesToFileList(file_list, paths.takeFirst());
+		addFilesToFileList(file_list, path + QLatin1String("/examples"));
 	}
 	
 	if (file_list->count() > old_size)
