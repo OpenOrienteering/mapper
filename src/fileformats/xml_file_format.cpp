@@ -56,7 +56,7 @@
 // ### XMLFileFormat definition ###
 
 const int XMLFileFormat::minimum_version = 2;
-const int XMLFileFormat::current_version = 6;
+const int XMLFileFormat::current_version = 7;
 
 int XMLFileFormat::active_version = 5; // updated by XMLFileExporter::doExport()
 
@@ -178,7 +178,7 @@ void XMLFileExporter::doExport()
 	
 	int current_version = XMLFileFormat::current_version;
 	bool retain_compatibility = Settings::getInstance().getSetting(Settings::General_RetainCompatiblity).toBool();
-	XMLFileFormat::active_version = retain_compatibility ? current_version-1 : current_version;
+	XMLFileFormat::active_version = retain_compatibility ? 5 : current_version;
 	
 	if (XMLFileFormat::active_version < 6 && map->getNumParts() != 1)
 	{
