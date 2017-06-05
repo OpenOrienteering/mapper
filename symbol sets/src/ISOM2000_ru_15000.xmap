@@ -21,7 +21,7 @@
         </color>
         <color priority="2" name="Коричневый 50%" c="0.000" m="0.280" y="0.500" k="0.090" opacity="1.000">
             <spotcolors knockout="true">
-                <component factor="0.5" spotcolor="4"/>
+                <component factor="0.5" spotcolor="7"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.910" g="0.680" b="0.500"/>
@@ -33,41 +33,41 @@
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.000" g="0.000" b="0.000"/>
         </color>
-        <color priority="4" name="Коричневый" c="0.000" m="0.560" y="1.000" k="0.180" opacity="1.000">
-            <spotcolors>
-                <namedcolor>BROWN</namedcolor>
-            </spotcolors>
-            <cmyk method="custom"/>
-            <rgb method="cmyk" r="0.820" g="0.361" b="0.000"/>
-        </color>
-        <color priority="5" name="Оранжевый OpenOrienteering" c="0.000" m="0.474" y="0.895" k="0.090" opacity="1.000">
-            <spotcolors>
-                <component factor="0.5" spotcolor="4"/>
-                <component factor="1" spotcolor="18"/>
-            </spotcolors>
-            <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="0.910" g="0.497" b="0.105"/>
-        </color>
-        <color priority="6" name="Непрозрачный синий" c="0.870" m="0.180" y="0.000" k="0.000" opacity="1.000">
+        <color priority="4" name="Непрозрачный синий" c="0.870" m="0.180" y="0.000" k="0.000" opacity="1.000">
             <spotcolors knockout="true">
-                <component factor="1" spotcolor="7"/>
+                <component factor="1" spotcolor="5"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.130" g="0.820" b="1.000"/>
         </color>
-        <color priority="7" name="Синий" c="0.870" m="0.180" y="0.000" k="0.000" opacity="1.000">
+        <color priority="5" name="Синий" c="0.870" m="0.180" y="0.000" k="0.000" opacity="1.000">
             <spotcolors>
                 <namedcolor>BLUE</namedcolor>
             </spotcolors>
             <cmyk method="custom"/>
             <rgb method="cmyk" r="0.130" g="0.820" b="1.000"/>
         </color>
-        <color priority="8" name="Синий 50%" c="0.435" m="0.090" y="0.000" k="0.000" opacity="1.000">
+        <color priority="6" name="Синий 50%" c="0.435" m="0.090" y="0.000" k="0.000" opacity="1.000">
             <spotcolors knockout="true">
-                <component factor="0.5" spotcolor="7"/>
+                <component factor="0.5" spotcolor="5"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.565" g="0.910" b="1.000"/>
+        </color>
+        <color priority="7" name="Коричневый" c="0.000" m="0.560" y="1.000" k="0.180" opacity="1.000">
+            <spotcolors>
+                <namedcolor>BROWN</namedcolor>
+            </spotcolors>
+            <cmyk method="custom"/>
+            <rgb method="cmyk" r="0.820" g="0.361" b="0.000"/>
+        </color>
+        <color priority="8" name="Оранжевый OpenOrienteering" c="0.000" m="0.474" y="0.895" k="0.090" opacity="1.000">
+            <spotcolors>
+                <component factor="0.5" spotcolor="7"/>
+                <component factor="1" spotcolor="18"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="0.910" g="0.497" b="0.105"/>
         </color>
         <color priority="9" name="Чёрный 30%" c="0.000" m="0.000" y="0.000" k="0.300" opacity="1.000">
             <spotcolors knockout="true">
@@ -165,22 +165,22 @@
     <symbols count="157">
         <symbol type="2" id="0" code="101" name="Горизонталь">
             <description>Линия, соединяющая точки одной высоты. Стандартный интервал между горизонталями по вертикали (сечение рельефа) 5 м. Минимально допустимый изгиб линии 0,25 мм от центра до центра линии.</description>
-            <line_symbol color="4" line_width="140" minimum_length="0" join_style="2" cap_style="1" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="7" line_width="140" minimum_length="0" join_style="2" cap_style="1" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="1" code="102" name="Утолщённая горизонталь">
             <description>Каждая пятая горизонталь должна быть утолщённой. Это способствует быстроте оценки разницы высот и общего восприятия форм местности. При необходимости показа мелких деталей, утолщённая горизонталь может быть вычерчена нормальной линией.</description>
-            <line_symbol color="4" line_width="250" minimum_length="0" join_style="2" cap_style="1" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="7" line_width="250" minimum_length="0" join_style="2" cap_style="1" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="2" code="103" name="Вспомогательная горизонталь">
             <description>Используется для передачи дополнительной информации о формах рельефа, отображение которых невозможно основными горизонталями. Между двумя основными горизонталями может быть проведена только одна вспомогательная.</description>
-            <line_symbol color="4" line_width="140" minimum_length="0" join_style="2" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1250" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="7" line_width="140" minimum_length="0" join_style="2" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1250" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="1" id="3" code="104" name="Указатель направления ската (бергштрих)">
             <description>Бергштрих может быть нарисован на нижней стороне горизонтали, вдоль линии ската или во впадине. Они используются только когда необходимо уточнить понижение местности.</description>
             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -198,18 +198,18 @@
             <description>Обозначение высоты горизонтали часто применяют с целью оценки большой разности высоты. Они помещаются в утолщенных горизонталях там, где не загораживают важных деталей. Верх цифр должен располагаться в более высокой части склона.</description>
             <text_symbol icon_text="225">
                 <font family="Arial" size="2076"/>
-                <text color="4" line_spacing="1" paragraph_spacing="0" character_spacing="0" kerning="true"/>
+                <text color="7" line_spacing="1" paragraph_spacing="0" character_spacing="0" kerning="true"/>
             </text_symbol>
         </symbol>
         <symbol type="2" id="5" code="106" name="Грунтовый обрыв">
             <description>Крутой перегиб поверхности земли, однозначно выделяющийся из окружающей среды. Гравийные или песчаные выработки, дорожные выемки и насыпи и т. п. Зубцы должны показывать полную проекцию склона, но могут быть опущены, если два обрыва располагаются близко друг от друга. Опасные грунтовые обрывы показываются знаком 201.</description>
-            <line_symbol color="4" line_width="180" minimum_length="600" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="780" end_length="850" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <line_symbol color="7" line_width="180" minimum_length="600" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="780" end_length="850" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <start_symbol>
                     <symbol type="1" code="" name="Начальный символ">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -229,7 +229,7 @@
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -249,7 +249,7 @@
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -271,7 +271,7 @@
             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="3">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="7" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -285,7 +285,7 @@
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -299,7 +299,7 @@
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -315,13 +315,13 @@
         </symbol>
         <symbol type="2" id="7" code="106.1" name="Грунтовый обрыв, очень высокий">
             <description>Очень высокие грунтовые обрывы могут быть показаны толщиной линии бровки 0,25 мм.</description>
-            <line_symbol color="4" line_width="250" minimum_length="600" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="780" end_length="850" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <line_symbol color="7" line_width="250" minimum_length="600" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="780" end_length="850" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <start_symbol>
                     <symbol type="1" code="" name="Начальный символ">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -341,7 +341,7 @@
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -361,7 +361,7 @@
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -383,7 +383,7 @@
             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="3">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="7" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -397,7 +397,7 @@
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -411,7 +411,7 @@
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -427,52 +427,52 @@
         </symbol>
         <symbol type="2" id="9" code="106.2" name="Грунтовый обрыв, зубчатая линия">
             <description>Используется для показа на всем протяжении широкого грунтовго обрыва.</description>
-            <line_symbol color="4" line_width="140" minimum_length="500" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="7" line_width="140" minimum_length="500" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="10" code="107" name="Грунтовый вал">
             <description>Четко видимая земляная насыпь. Высота минимум 1 метр.</description>
-            <line_symbol color="4" line_width="140" minimum_length="0" join_style="2" cap_style="0" pointed_cap_length="1000" segment_length="2500" end_length="1250" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <line_symbol color="7" line_width="140" minimum_length="0" join_style="2" cap_style="0" pointed_cap_length="1000" segment_length="2500" end_length="1250" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <mid_symbol>
                     <symbol type="1" code="" name="Средний символ">
-                        <point_symbol rotatable="true" inner_radius="200" inner_color="4" outer_width="0" outer_color="-1" elements="0"/>
+                        <point_symbol rotatable="true" inner_radius="200" inner_color="7" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </mid_symbol>
             </line_symbol>
         </symbol>
         <symbol type="2" id="11" code="108" name="Маленький земляной вал">
             <description>Маленькая или частично разрушенная земляная насыпь показывается прерывистой линией. Минимальная высота 0,5 метра.</description>
-            <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2240" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2240" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <mid_symbol>
                     <symbol type="1" code="" name="Средний символ">
-                        <point_symbol rotatable="true" inner_radius="200" inner_color="4" outer_width="0" outer_color="-1" elements="0"/>
+                        <point_symbol rotatable="true" inner_radius="200" inner_color="7" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </mid_symbol>
             </line_symbol>
         </symbol>
         <symbol type="2" id="12" code="109" name="Промоина">
             <description>Овраг или ров, которые не могут быть отображены в масштабе карты знаком 106. Толщина линии отображает ширину промоины. Минимальная глубина 1 метр.</description>
-            <line_symbol color="4" line_width="250" minimum_length="0" join_style="2" cap_style="3" pointed_cap_length="747" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="7" line_width="250" minimum_length="0" join_style="2" cap_style="3" pointed_cap_length="747" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="13" code="110" name="Маленькая промоина">
             <description>Маленькая промоина или канава. Минимальная глубина 0,5 метров.</description>
             <line_symbol color="-1" line_width="0" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="500" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <mid_symbol>
                     <symbol type="1" code="" name="Средний символ">
-                        <point_symbol rotatable="true" inner_radius="125" inner_color="4" outer_width="0" outer_color="-1" elements="0"/>
+                        <point_symbol rotatable="true" inner_radius="125" inner_color="7" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </mid_symbol>
             </line_symbol>
         </symbol>
         <symbol type="1" id="14" code="112" name="Внемасштабный бугор">
             <description>Маленький грунтовый или каменистый бугры, которые не возможно отобразить с помощью горизонталей (диаметр менее 5 м). Минимальная высота 1 метр. В случаях совпадения с горизонталью, линия должна быть разорвана.</description>
-            <point_symbol inner_radius="250" inner_color="4" outer_width="0" outer_color="-1" elements="0"/>
+            <point_symbol inner_radius="250" inner_color="7" outer_width="0" outer_color="-1" elements="0"/>
         </symbol>
         <symbol type="1" id="15" code="113" name="Вытянутый внемасштабный бугор">
             <description>Выделяющийся внемасштабный бугор вытянутой формы (длинна менее 12 м ширина менее 4 м). Показываются бугры высотой не менее 1 метра над окружающей их поверхностью. Знак не может находиться на линии горизонтали.</description>
             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="4" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="7" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="13">
@@ -502,7 +502,7 @@
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="7" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="7">
@@ -526,7 +526,7 @@
             <point_symbol inner_radius="900" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="4" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="7" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="7">
@@ -547,18 +547,18 @@
         </symbol>
         <symbol type="1" id="18" code="117.1" name="Поверхность с микронеровностями, малая плотность">
             <description>Площадь, сплошь усеянная микробугорками и микроямками, что каждый показать невозможно.</description>
-            <point_symbol inner_radius="90" inner_color="4" outer_width="0" outer_color="-1" elements="0"/>
+            <point_symbol inner_radius="90" inner_color="7" outer_width="0" outer_color="-1" elements="0"/>
         </symbol>
         <symbol type="1" id="19" code="117.2" name="Поверхность с микронеровностями, большая плотность">
             <description>Площадь, сплошь усеянная микробугорками и микроямками, что каждый показать невозможно.</description>
-            <point_symbol inner_radius="125" inner_color="4" outer_width="0" outer_color="-1" elements="0"/>
+            <point_symbol inner_radius="125" inner_color="7" outer_width="0" outer_color="-1" elements="0"/>
         </symbol>
         <symbol type="1" id="20" code="118" name="Специальные формы рельефа">
             <description>Знак служит для показа специальных внемасштабных объектов рельефа. Пояснение к использованию знака должно быть дано в легенде карты.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="7" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -572,7 +572,7 @@
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="7" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -1036,7 +1036,7 @@
         </symbol>
         <symbol type="4" id="45" code="301" name="Озеро">
             <description>Большие водные пространства показываются регулярной точечной сеткой, маленькие - сплошной заливкой.</description>
-            <area_symbol inner_color="8" min_area="1000" patterns="0"/>
+            <area_symbol inner_color="6" min_area="1000" patterns="0"/>
         </symbol>
         <symbol type="2" id="46" code="301.1" name="Озеро, береговая линия">
             <description>Чёрная береговая линия показывает непроходимость объекта.</description>
@@ -1050,14 +1050,14 @@
         </symbol>
         <symbol type="4" id="48" code="302" name="Пруд">
             <description>В случаях когда озеро или пруд меньше 1 мм2 в масштабе карты береговая линия не показывается.</description>
-            <area_symbol inner_color="6" min_area="500" patterns="0"/>
+            <area_symbol inner_color="4" min_area="500" patterns="0"/>
         </symbol>
         <symbol type="1" id="49" code="303" name="Лужа">
             <description>Яма с водой или лужа, не выражающаяся в масштабе карты. Центр объекта совпадает с центром тяжести знака.</description>
             <point_symbol inner_radius="900" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="7" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="7">
@@ -1078,22 +1078,22 @@
         </symbol>
         <symbol type="2" id="50" code="305" name="Преодолимая река">
             <description>Преодолимый река или канава шириной минимум 2 метра. Если ширина больше 5 метров, то объект показывается в масштабе карты.</description>
-            <line_symbol color="7" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="5" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="51" code="306" name="Преодолимый ручей">
             <description>Преодолимый ручей или канава шириной менее 2 метров. Для лучшей читаемости, канава по болоту должна отображаться знаком 305.</description>
-            <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="5" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="52" code="307" name="Канава с водой">
             <description>Естественная или искусственная пересыхающая канава.</description>
-            <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1250" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="5" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1250" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="53" code="308" name="Узкое болото">
             <description>Болото или мокрый грунт, которые невозможно показать знаком 310 (ширина меньше чем 5 метров).</description>
             <line_symbol color="-1" line_width="0" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="500" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <mid_symbol>
                     <symbol type="1" code="" name="Средний символ">
-                        <point_symbol rotatable="true" inner_radius="125" inner_color="7" outer_width="0" outer_color="-1" elements="0"/>
+                        <point_symbol rotatable="true" inner_radius="125" inner_color="5" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </mid_symbol>
             </line_symbol>
@@ -1101,7 +1101,7 @@
         <symbol type="4" id="54" code="309" name="Непроходимое болото">
             <description>Болото непроходимое или опасное для спортсменов. Чёрная линия дается по контуру.</description>
             <area_symbol inner_color="-1" min_area="0" patterns="1">
-                <pattern type="1" angle="0" line_spacing="500" line_offset="0" offset_along_line="0" color="7" line_width="250"/>
+                <pattern type="1" angle="0" line_spacing="500" line_offset="0" offset_along_line="0" color="5" line_width="250"/>
             </area_symbol>
         </symbol>
         <symbol type="2" id="55" code="309.1" name="Непроходимое болото, ограничивающая линия">
@@ -1117,14 +1117,14 @@
         <symbol type="4" id="57" code="310" name="Болото">
             <description>Преодолимое болото с четко видимыми краями. Знак 310 может комбинироваться со знаком 403 для отображения открытого болота. Залесённые болота могут быть показаны в комбинации со знаками растительности. Маленькие болота показываются на карте не меньше, чем двумя штрихами. Если маленькое болотце показывается в сочетании со знаками 403/404, то для улучшения читаемости, разрешается заменить эти знаки на 401/402 соответственно.</description>
             <area_symbol inner_color="-1" min_area="0" patterns="1">
-                <pattern type="1" angle="0" line_spacing="300" line_offset="0" offset_along_line="0" color="7" line_width="100"/>
+                <pattern type="1" angle="0" line_spacing="300" line_offset="0" offset_along_line="0" color="5" line_width="100"/>
             </area_symbol>
         </symbol>
         <symbol type="1" id="58" code="310.1" name="Болото, минимальный размер">
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="7" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="5" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -1138,7 +1138,7 @@
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="7" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="5" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -1160,7 +1160,7 @@
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="7" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="5" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -1180,7 +1180,7 @@
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="7" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="5" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -1201,7 +1201,7 @@
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="4">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="7" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="5" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -1215,7 +1215,7 @@
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="7" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="5" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -1229,7 +1229,7 @@
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="7" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="5" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -1243,7 +1243,7 @@
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="7" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="5" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -1259,14 +1259,14 @@
         </symbol>
         <symbol type="1" id="61" code="312" name="Колодец">
             <description>Колодцы скважины или оборудованные источники, четко видимые на местности.</description>
-            <point_symbol inner_radius="310" inner_color="-1" outer_width="180" outer_color="7" elements="0"/>
+            <point_symbol inner_radius="310" inner_color="-1" outer_width="180" outer_color="5" elements="0"/>
         </symbol>
         <symbol type="1" id="62" code="313" name="Родник">
             <description>Родник или четко видимый исток. Знак ориентируется разрывом вниз по течению.</description>
             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="7" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="5" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="7">
@@ -1290,7 +1290,7 @@
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="7" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="5" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -1304,7 +1304,7 @@
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="7" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="5" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -2330,11 +2330,11 @@
         </symbol>
         <symbol type="2" id="135" code="601.2" name="Линии магнитного меридиана, синие">
             <description>Располагаются на карте с интервалом 33,33 мм, что соответствует 500 метрам в масштабе 1: 15 000. На картах в других масштабах эти линии располагаются с интервалом кратным круглому количеству метров (50 м, 100 м, 250 м) и наносятся на карту на расстоянии в промежутке между 20 и 40 мм. Линии магнитного меридиана могут быть разорваны в местах пересечения с мелкими деталями карты (валуны, бугры, скалы, слияния ручьев, концы троп и т.п.) На картах с малым количеством объектов отображаемых голубым цветом, линии магнитного меридиана могут быть показаны голубыми линиями.</description>
-            <line_symbol color="7" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="5" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="4" id="136" code="601.3" name="Шаблон меридиана, синий">
             <area_symbol inner_color="-1" min_area="0" patterns="1">
-                <pattern type="1" angle="1.5708" rotatable="true" line_spacing="33330" line_offset="0" offset_along_line="0" color="7" line_width="180"/>
+                <pattern type="1" angle="1.5708" rotatable="true" line_spacing="33330" line_offset="0" offset_along_line="0" color="5" line_width="180"/>
             </area_symbol>
         </symbol>
         <symbol type="1" id="137" code="602" name="Контрольная метка">
@@ -2811,7 +2811,7 @@
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="6" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="37">
@@ -2860,7 +2860,7 @@
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="35">
@@ -2907,7 +2907,7 @@
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="25">
@@ -2944,7 +2944,7 @@
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="5">
@@ -2999,7 +2999,7 @@
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="37">
@@ -3048,7 +3048,7 @@
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="39">
@@ -3175,7 +3175,7 @@
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="35">
@@ -3222,7 +3222,7 @@
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="25">
@@ -3259,7 +3259,7 @@
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="5">
@@ -3276,7 +3276,7 @@
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="37">
@@ -3325,7 +3325,7 @@
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="6" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="74">
@@ -3411,7 +3411,7 @@
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="6" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="69">
@@ -3492,7 +3492,7 @@
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="6" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="89">
@@ -3643,7 +3643,7 @@
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="89">
@@ -3744,7 +3744,7 @@
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="89">
@@ -3845,7 +3845,7 @@
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="89">
@@ -3946,7 +3946,7 @@
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="87">
@@ -4095,7 +4095,7 @@
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="74">

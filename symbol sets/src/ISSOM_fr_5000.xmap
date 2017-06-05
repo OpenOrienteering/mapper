@@ -35,7 +35,7 @@
         </color>
         <color priority="4" name="Brown for contours" c="0.000" m="0.560" y="1.000" k="0.180" opacity="1.000">
             <spotcolors>
-                <component factor="1" spotcolor="16"/>
+                <component factor="1" spotcolor="21"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.820" g="0.361" b="0.000"/>
@@ -78,14 +78,14 @@
         </color>
         <color priority="10" name="Opaque Blue above Brown" c="0.870" m="0.180" y="0.000" k="0.000" opacity="1.000">
             <spotcolors knockout="true">
-                <component factor="1" spotcolor="19"/>
+                <component factor="1" spotcolor="17"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.130" g="0.820" b="1.000"/>
         </color>
         <color priority="11" name="Blue above Brown" c="0.870" m="0.180" y="0.000" k="0.000" opacity="1.000">
             <spotcolors>
-                <component factor="1" spotcolor="19"/>
+                <component factor="1" spotcolor="17"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.130" g="0.820" b="1.000"/>
@@ -100,14 +100,14 @@
         </color>
         <color priority="13" name="Brown 20-50% for paved area, non-urban" c="0.000" m="0.224" y="0.400" k="0.072" opacity="1.000">
             <spotcolors knockout="true">
-                <component factor="0.4" spotcolor="16"/>
+                <component factor="0.4" spotcolor="21"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.928" g="0.744" b="0.600"/>
         </color>
         <color priority="14" name="Brown 0-30% for paved area, urban" c="0.000" m="0.112" y="0.200" k="0.036" opacity="1.000">
             <spotcolors knockout="true">
-                <component factor="0.2" spotcolor="16"/>
+                <component factor="0.2" spotcolor="21"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.964" g="0.872" b="0.800"/>
@@ -119,55 +119,55 @@
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.000" g="0.000" b="0.000"/>
         </color>
-        <color priority="16" name="Brown" c="0.000" m="0.560" y="1.000" k="0.180" opacity="1.000">
-            <spotcolors>
-                <namedcolor>BROWN</namedcolor>
-            </spotcolors>
-            <cmyk method="custom"/>
-            <rgb method="cmyk" r="0.820" g="0.361" b="0.000"/>
-        </color>
-        <color priority="17" name="OpenOrienteering Orange" c="0.000" m="0.474" y="0.895" k="0.090" opacity="1.000">
-            <spotcolors>
-                <component factor="0.5" spotcolor="16"/>
-                <component factor="1" spotcolor="32"/>
-            </spotcolors>
-            <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="0.910" g="0.497" b="0.105"/>
-        </color>
-        <color priority="18" name="Opaque Blue" c="0.870" m="0.180" y="0.000" k="0.000" opacity="1.000">
+        <color priority="16" name="Opaque Blue" c="0.870" m="0.180" y="0.000" k="0.000" opacity="1.000">
             <spotcolors knockout="true">
-                <component factor="1" spotcolor="19"/>
+                <component factor="1" spotcolor="17"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.130" g="0.820" b="1.000"/>
         </color>
-        <color priority="19" name="Blue" c="0.870" m="0.180" y="0.000" k="0.000" opacity="1.000">
+        <color priority="17" name="Blue" c="0.870" m="0.180" y="0.000" k="0.000" opacity="1.000">
             <spotcolors>
                 <namedcolor>BLUE</namedcolor>
             </spotcolors>
             <cmyk method="custom"/>
             <rgb method="cmyk" r="0.130" g="0.820" b="1.000"/>
         </color>
-        <color priority="20" name="Blue 75%" c="0.653" m="0.135" y="0.000" k="0.000" opacity="1.000">
+        <color priority="18" name="Blue 75%" c="0.653" m="0.135" y="0.000" k="0.000" opacity="1.000">
             <spotcolors knockout="true">
-                <component factor="0.75" spotcolor="19"/>
+                <component factor="0.75" spotcolor="17"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.348" g="0.865" b="1.000"/>
         </color>
-        <color priority="21" name="Blue 30%" c="0.261" m="0.054" y="0.000" k="0.000" opacity="1.000">
+        <color priority="19" name="Blue 30%" c="0.261" m="0.054" y="0.000" k="0.000" opacity="1.000">
             <spotcolors knockout="true">
-                <component factor="0.3" spotcolor="19"/>
+                <component factor="0.3" spotcolor="17"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.739" g="0.946" b="1.000"/>
         </color>
-        <color priority="22" name="OpenOrienteering Blue 50%" c="0.435" m="0.090" y="0.000" k="0.000" opacity="1.000">
+        <color priority="20" name="OpenOrienteering Blue 50%" c="0.435" m="0.090" y="0.000" k="0.000" opacity="1.000">
             <spotcolors>
-                <component factor="0.5" spotcolor="19"/>
+                <component factor="0.5" spotcolor="17"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.565" g="0.910" b="1.000"/>
+        </color>
+        <color priority="21" name="Brown" c="0.000" m="0.560" y="1.000" k="0.180" opacity="1.000">
+            <spotcolors>
+                <namedcolor>BROWN</namedcolor>
+            </spotcolors>
+            <cmyk method="custom"/>
+            <rgb method="cmyk" r="0.820" g="0.361" b="0.000"/>
+        </color>
+        <color priority="22" name="OpenOrienteering Orange" c="0.000" m="0.474" y="0.895" k="0.090" opacity="1.000">
+            <spotcolors>
+                <component factor="0.5" spotcolor="21"/>
+                <component factor="1" spotcolor="32"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="0.910" g="0.497" b="0.105"/>
         </color>
         <color priority="23" name="Grey" c="0.000" m="0.000" y="0.000" k="0.200" opacity="1.000">
             <spotcolors knockout="true">
@@ -306,13 +306,13 @@ La différence d'altitude relative entre des éléments voisins doit être repr�
         </symbol>
         <symbol type="2" id="5" code="106.0" name="Abrupt de terre">
             <description>Un abrupt de terre est un changement brutal dans le niveau du terrain qui peut être clairement distingué dans l'environnement, comme par exemple une carrière ou des tranchées, des remblais de route ou de chemins de terre. La longueur des tirets doit montrer l'importance de la pente, mais ils peuvent être omis si deux abrupts sont très proches l'un de l'autre. Des abrupts de terre infranchissables doivent être dessinés avec le symbole de falaise infranchissable (201). L'épaisseur de ligne d'abrupts très importants peut être de 0,37 mm.</description>
-            <line_symbol color="16" line_width="270" minimum_length="325" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="750" end_length="380" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <line_symbol color="21" line_width="270" minimum_length="325" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="750" end_length="380" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <mid_symbol>
                     <symbol type="1" code="" name="Mid symbol">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="16" line_width="210" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="21" line_width="210" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -331,13 +331,13 @@ La différence d'altitude relative entre des éléments voisins doit être repr�
         </symbol>
         <symbol type="2" id="6" code="106.1" name="Abrupt de terre, important">
             <description>Un abrupt de terre est un changement brutal dans le niveau du terrain qui peut être clairement distingué dans l'environnement, comme par exemple une carrière ou des tranchées, des remblais de route ou de chemins de terre. La longueur des tirets doit montrer l'importance de la pente, mais ils peuvent être omis si deux abrupts sont très proches l'un de l'autre. Des abrupts de terre infranchissables doivent être dessinés avec le symbole de falaise infranchissable (201). L'épaisseur de ligne d'abrupts très importants peut être de 0,37 mm.</description>
-            <line_symbol color="16" line_width="370" minimum_length="325" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="750" end_length="380" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <line_symbol color="21" line_width="370" minimum_length="325" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="750" end_length="380" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <mid_symbol>
                     <symbol type="1" code="" name="Mid symbol">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="16" line_width="210" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="21" line_width="210" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -356,35 +356,35 @@ La différence d'altitude relative entre des éléments voisins doit être repr�
         </symbol>
         <symbol type="2" id="7" code="106.2" name="Abrupt de terre, tiret">
             <description>Utiliser ce symbole pour représenter l'étendue de l'abrupt de terre.</description>
-            <line_symbol color="16" line_width="210" minimum_length="645" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="21" line_width="210" minimum_length="645" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="8" code="108.1" name="Petite levée de terre">
             <description>Petit mur de terre distinct, généralement créé par l'homme. La hauteur minimum est de 0,5 m. Des murs plus importants doivent être représentés par les symboles de courbe de niveau (101), de courbe de forme (103) ou d'abrupt de terre (106).</description>
-            <line_symbol color="16" line_width="210" minimum_length="0" join_style="2" cap_style="0" pointed_cap_length="1000" segment_length="3750" end_length="1875" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <line_symbol color="21" line_width="210" minimum_length="0" join_style="2" cap_style="0" pointed_cap_length="1000" segment_length="3750" end_length="1875" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <mid_symbol>
                     <symbol type="1" code="" name="Symbole intérieur">
-                        <point_symbol rotatable="true" inner_radius="300" inner_color="16" outer_width="0" outer_color="-1" elements="0"/>
+                        <point_symbol rotatable="true" inner_radius="300" inner_color="21" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </mid_symbol>
             </line_symbol>
         </symbol>
         <symbol type="2" id="9" code="109" name="Ravin">
             <description>Ravin provoqué par l'érosion ou une tranchée trop petite pour être dessinée avec les symboles d'abrupt de terre (106), de courbe de niveau - maîtresse - de forme (101-102-103) est représenté par un seul trait. L'épaisseur du trait représente les dimensions du ravin. Le trait se termine en pointe. Profondeur minimale : 1 m. Longueur minimale sur la carte : 3 mm.</description>
-            <line_symbol color="16" line_width="370" minimum_length="3000" join_style="2" cap_style="3" pointed_cap_length="750" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="21" line_width="370" minimum_length="3000" join_style="2" cap_style="3" pointed_cap_length="750" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="10" code="110" name="Petit ravin">
             <description>Ravine, fossé sec ou petite tranchée. Profondeur minimale : 0,5 m.</description>
             <line_symbol color="2" line_width="0" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="600" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <mid_symbol>
                     <symbol type="1" code="" name="Mid symbol">
-                        <point_symbol rotatable="true" inner_radius="185" inner_color="16" outer_width="0" outer_color="-1" elements="0"/>
+                        <point_symbol rotatable="true" inner_radius="185" inner_color="21" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </mid_symbol>
             </line_symbol>
         </symbol>
         <symbol type="1" id="11" code="112" name="Petite butte">
             <description>Petit monticule visible ou une butte rocheuse qui ne peut être déssinée avec des courbes de niveau (101), des courbes de niveau maîtresse (102) ou des courbes de forme (103). La hauteur d'une butte doit être d'au mois 1 m par rapport au terrain qui l'entoure.</description>
-            <point_symbol inner_radius="375" inner_color="16" outer_width="0" outer_color="-1" elements="0"/>
+            <point_symbol inner_radius="375" inner_color="21" outer_width="0" outer_color="-1" elements="0"/>
         </symbol>
         <symbol type="1" id="12" code="113" name="Butte allongée">
             <description>Petit monticule visible, allongé et qui ne peut être dessiné à l'échelle avec une courbe de niveau (101), maîtresse (102) ou de forme (103). La longueur maximum sera de 6 m et sa largeur maximale 2 m. La hauteur d'une butte doit être d'au moins 1 m par rapport au terrain qui l'entoure. Les buttes plus importantes doivent être dessinées avec des courbes de niveau. 
@@ -393,7 +393,7 @@ Ce symbole ne peut être dessiné sous forme libre ou de telle manière que deux
             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="16" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="21" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="13">
@@ -423,7 +423,7 @@ Ce symbole ne peut être dessiné sous forme libre ou de telle manière que deux
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="16" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="21" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="7">
@@ -447,7 +447,7 @@ Ce symbole ne peut être dessiné sous forme libre ou de telle manière que deux
             <point_symbol inner_radius="900" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="16" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="21" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="6">
@@ -467,18 +467,18 @@ Ce symbole ne peut être dessiné sous forme libre ou de telle manière que deux
         </symbol>
         <symbol type="1" id="15" code="117.1" name="Terrain accidenté, léger">
             <description>Zone de trous et de buttes, trop complexe pour être détaillée. La densité des points placés au hasard peut varier selon les détails sur le terrain.</description>
-            <point_symbol inner_radius="100" inner_color="16" outer_width="0" outer_color="-1" elements="0"/>
+            <point_symbol inner_radius="100" inner_color="21" outer_width="0" outer_color="-1" elements="0"/>
         </symbol>
         <symbol type="1" id="16" code="117.2" name="Terrain accidenté">
             <description>Zone de trous et de buttes, trop complexe pour être détaillée. La densité des points placés au hasard peut varier selon les détails sur le terrain.</description>
-            <point_symbol inner_radius="150" inner_color="16" outer_width="0" outer_color="-1" elements="0"/>
+            <point_symbol inner_radius="150" inner_color="21" outer_width="0" outer_color="-1" elements="0"/>
         </symbol>
         <symbol type="1" id="17" code="118" name="Détail particulier du relief">
             <description>Ce symbole peut être utilisé pour des détails particuliers de relief. Sa définition doit toujours figurer sur la légende de la carte. Le symbole est orienté au nord.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="16" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="21" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -492,7 +492,7 @@ Ce symbole ne peut être dessiné sous forme libre ou de telle manière que deux
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="16" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="21" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -907,18 +907,18 @@ Le concurrent qui ne respecte pas cette règle sera disqualifié.&lt;/span&gt;</
 
 &lt;span style=&quot;color:magenta&quot;&gt;Il est interdit de franchir une zone d'eau infranchissable !
 Le concurrent qui ne respecte pas cette règle sera disqualifié.&lt;/span&gt;</description>
-            <area_symbol inner_color="18" min_area="1000" patterns="0"/>
+            <area_symbol inner_color="16" min_area="1000" patterns="0"/>
         </symbol>
         <symbol type="4" id="45" code="304.4" name="Zone d'eau infranchissable, remplissage, 75% bleu &lt;span style=&quot;color:magenta&quot;&gt;(franchissement interdit)&lt;/span&gt;">
             <description>Zone d'eau profonde, tel un lac, un étang, une rivière qui peut constituer un danger pour le compétiteur ou est interdite d'accès. La couleur bleue foncé et la limite noire indiquent que l'élément ne peut être franchi. La dimension minimale est 1 mm².
 
 &lt;span style=&quot;color:magenta&quot;&gt;Il est interdit de franchir une zone d'eau infranchissable !
 Le concurrent qui ne respecte pas cette règle sera disqualifié.&lt;/span&gt;</description>
-            <area_symbol inner_color="20" min_area="1000" patterns="0"/>
+            <area_symbol inner_color="18" min_area="1000" patterns="0"/>
         </symbol>
         <symbol type="4" id="46" code="305.0.1" name="Zone d'eau franchissable, remplissage">
             <description>Zone d'eau peu profonde, telle un étang, une mare, une rivière ou une fontaine qui peut être franchie. La profondeur sera inférieure à 0,5 m et courable. Si l'étendue d'eau n'est pas courable, elle doit être représentée par le symbole 304.1 (infranchissable). Si aucun autre symbole de ligne ne touche le bord de cette étendue d'eau, la rive sera représentée par une ligne bleue.</description>
-            <area_symbol inner_color="21" min_area="1000" patterns="0"/>
+            <area_symbol inner_color="19" min_area="1000" patterns="0"/>
         </symbol>
         <symbol type="2" id="47" code="305.0.2" name="Zone d'eau franchissable, contour">
             <description>Zone d'eau peu profonde, telle un étang, une mare, une rivière ou une fontaine qui peut être franchie. La profondeur sera inférieure à 0,5 m et courable. Si l'étendue d'eau n'est pas courable, elle doit être représentée par le symbole 304.1 (infranchissable). Si aucun autre symbole de ligne ne touche le bord de cette étendue d'eau, la rive sera représentée par une ligne bleue.</description>
@@ -962,7 +962,7 @@ Le concurrent qui ne respecte pas cette règle sera disqualifié.&lt;/span&gt;</
         <symbol type="4" id="53" code="309.0.1" name="Marais infranchissable, remplissage">
             <description>Ce symbole ne doit pas être utilisé seul.</description>
             <area_symbol inner_color="-1" min_area="0" patterns="1">
-                <pattern type="1" angle="0" line_spacing="500" line_offset="0" offset_along_line="0" color="19" line_width="250"/>
+                <pattern type="1" angle="0" line_spacing="500" line_offset="0" offset_along_line="0" color="17" line_width="250"/>
             </area_symbol>
         </symbol>
         <symbol type="2" id="54" code="309.0.2" name="Marais infranchissable, bordure">
@@ -974,14 +974,14 @@ Le concurrent qui ne respecte pas cette règle sera disqualifié.&lt;/span&gt;</
 
 Taille minimum : 2 lignes, 5mm de longueur.</description>
             <area_symbol inner_color="-1" min_area="200" patterns="1">
-                <pattern type="1" angle="0" line_spacing="300" line_offset="0" offset_along_line="0" color="19" line_width="100"/>
+                <pattern type="1" angle="0" line_spacing="300" line_offset="0" offset_along_line="0" color="17" line_width="100"/>
             </area_symbol>
         </symbol>
         <symbol type="1" id="56" code="310.1" name="Marais, taille minimum">
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="19" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="17" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -995,7 +995,7 @@ Taille minimum : 2 lignes, 5mm de longueur.</description>
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="19" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="17" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -1019,7 +1019,7 @@ Taille minimum : 4 tirets.</description>
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="19" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="17" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -1039,7 +1039,7 @@ Taille minimum : 4 tirets.</description>
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="19" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="17" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -1060,7 +1060,7 @@ Taille minimum : 4 tirets.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="4">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="19" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="17" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -1074,7 +1074,7 @@ Taille minimum : 4 tirets.</description>
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="19" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="17" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -1088,7 +1088,7 @@ Taille minimum : 4 tirets.</description>
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="19" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="17" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -1102,7 +1102,7 @@ Taille minimum : 4 tirets.</description>
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="19" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="17" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -2945,7 +2945,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d'arrivée. C
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="22" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="20" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="37">
@@ -2994,7 +2994,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d'arrivée. C
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="17" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="22" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="35">
@@ -3041,7 +3041,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d'arrivée. C
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="17" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="22" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="25">
@@ -3078,7 +3078,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d'arrivée. C
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="17" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="22" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="5">
@@ -3133,7 +3133,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d'arrivée. C
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="17" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="22" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="37">
@@ -3182,7 +3182,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d'arrivée. C
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="17" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="22" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="39">
@@ -3309,7 +3309,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d'arrivée. C
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="17" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="22" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="35">
@@ -3356,7 +3356,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d'arrivée. C
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="17" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="22" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="25">
@@ -3393,7 +3393,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d'arrivée. C
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="17" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="22" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="5">
@@ -3410,7 +3410,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d'arrivée. C
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="17" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="22" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="37">
@@ -3459,7 +3459,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d'arrivée. C
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="22" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="20" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="74">
@@ -3545,7 +3545,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d'arrivée. C
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="22" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="20" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="69">
@@ -3626,7 +3626,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d'arrivée. C
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="22" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="20" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="89">
@@ -3777,7 +3777,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d'arrivée. C
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="17" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="22" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="89">
@@ -3878,7 +3878,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d'arrivée. C
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="17" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="22" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="89">
@@ -3979,7 +3979,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d'arrivée. C
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="17" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="22" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="89">
@@ -4080,7 +4080,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d'arrivée. C
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="17" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="22" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="87">
@@ -4229,7 +4229,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d'arrivée. C
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="17" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="22" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="74">

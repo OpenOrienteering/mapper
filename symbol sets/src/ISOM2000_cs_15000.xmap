@@ -21,7 +21,7 @@
         </color>
         <color priority="2" name="Hnědá 50%" c="0.000" m="0.280" y="0.500" k="0.090" opacity="1.000">
             <spotcolors knockout="true">
-                <component factor="0.5" spotcolor="4"/>
+                <component factor="0.5" spotcolor="7"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.910" g="0.680" b="0.500"/>
@@ -33,41 +33,41 @@
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.000" g="0.000" b="0.000"/>
         </color>
-        <color priority="4" name="Hnědá" c="0.000" m="0.560" y="1.000" k="0.180" opacity="1.000">
-            <spotcolors>
-                <namedcolor>Hnědá</namedcolor>
-            </spotcolors>
-            <cmyk method="custom"/>
-            <rgb method="cmyk" r="0.820" g="0.361" b="0.000"/>
-        </color>
-        <color priority="5" name="Oranžová OpenOrienteering" c="0.000" m="0.474" y="0.895" k="0.090" opacity="1.000">
-            <spotcolors>
-                <component factor="0.5" spotcolor="4"/>
-                <component factor="1" spotcolor="18"/>
-            </spotcolors>
-            <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="0.910" g="0.497" b="0.105"/>
-        </color>
-        <color priority="6" name="Krycí modrá" c="0.870" m="0.180" y="0.000" k="0.000" opacity="1.000">
+        <color priority="4" name="Krycí modrá" c="0.870" m="0.180" y="0.000" k="0.000" opacity="1.000">
             <spotcolors knockout="true">
-                <component factor="1" spotcolor="7"/>
+                <component factor="1" spotcolor="5"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.130" g="0.820" b="1.000"/>
         </color>
-        <color priority="7" name="Modrá" c="0.870" m="0.180" y="0.000" k="0.000" opacity="1.000">
+        <color priority="5" name="Modrá" c="0.870" m="0.180" y="0.000" k="0.000" opacity="1.000">
             <spotcolors>
                 <namedcolor>Modrá</namedcolor>
             </spotcolors>
             <cmyk method="custom"/>
             <rgb method="cmyk" r="0.130" g="0.820" b="1.000"/>
         </color>
-        <color priority="8" name="Modrá 50%" c="0.435" m="0.090" y="0.000" k="0.000" opacity="1.000">
+        <color priority="6" name="Modrá 50%" c="0.435" m="0.090" y="0.000" k="0.000" opacity="1.000">
             <spotcolors knockout="true">
-                <component factor="0.5" spotcolor="7"/>
+                <component factor="0.5" spotcolor="5"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.565" g="0.910" b="1.000"/>
+        </color>
+        <color priority="7" name="Hnědá" c="0.000" m="0.560" y="1.000" k="0.180" opacity="1.000">
+            <spotcolors>
+                <namedcolor>Hnědá</namedcolor>
+            </spotcolors>
+            <cmyk method="custom"/>
+            <rgb method="cmyk" r="0.820" g="0.361" b="0.000"/>
+        </color>
+        <color priority="8" name="Oranžová OpenOrienteering" c="0.000" m="0.474" y="0.895" k="0.090" opacity="1.000">
+            <spotcolors>
+                <component factor="0.5" spotcolor="7"/>
+                <component factor="1" spotcolor="18"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="0.910" g="0.497" b="0.105"/>
         </color>
         <color priority="9" name="Černá 30%" c="0.000" m="0.000" y="0.000" k="0.300" opacity="1.000">
             <spotcolors knockout="true">
@@ -166,17 +166,17 @@
         <symbol type="2" id="0" code="101" name="Vrstevnice">
             <description>Čára spojující body stejné {nadmořské} výšky. Základní výškový interval mezi vrstevnicemi je 5 metrů. Nejmenší ohyb vrstevnice je 0,25 mm od středu ke středu linie.
 Barva: hnědá.</description>
-            <line_symbol color="4" line_width="140" minimum_length="0" join_style="2" cap_style="1" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="7" line_width="140" minimum_length="0" join_style="2" cap_style="1" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="1" code="102" name="Hlavní vrstevnice">
             <description>Každá pátá vrstevnice se kreslí silnější čarou. To napomáhá rychlé-mu odhadu výškového rozdílu a celkového tvaru terénu. Tam, kde se hlavní vrstevnice vyskytuje v oblasti s mnoha detaily, může být nakreslena jako normální vrstevnice {aby některé detaily nebyly neúměrně zvýrazněny}.
 Barva: hnědá.</description>
-            <line_symbol color="4" line_width="250" minimum_length="0" join_style="2" cap_style="1" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="7" line_width="250" minimum_length="0" join_style="2" cap_style="1" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="2" code="103" name="Pomocná vrstevnice">
             <description>Mezivrstevnice. Pomocné vrstevnice se použijí tam, kde dají více informací o utváření terénu. Užívají se pouze tehdy, když není možné znázornění řádnými vrstevnicemi. Mezi sousedními vrstevnicemi může být použita pouze jedna pomocná vrstevnice.
 Barva: hnědá.</description>
-            <line_symbol color="4" line_width="140" minimum_length="0" join_style="2" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1250" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="7" line_width="140" minimum_length="0" join_style="2" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1250" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="1" id="3" code="104" name="Spádnice">
             <description>Spádnice se mohou kreslit na nižší straně vrstevnice, například v ose údolí nebo v prohlubních. {Nekreslí se na hřbetech a kupkách.} Používají se pouze tehdy, když je nutné vyjasnit směr spádu.
@@ -184,7 +184,7 @@ Barva: hnědá.</description>
             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -203,19 +203,19 @@ Barva: hnědá.</description>
 Barva: hnědá.</description>
             <text_symbol icon_text="225">
                 <font family="Arial" size="2076"/>
-                <text color="4" line_spacing="1" paragraph_spacing="0" character_spacing="0" kerning="true"/>
+                <text color="7" line_spacing="1" paragraph_spacing="0" character_spacing="0" kerning="true"/>
             </text_symbol>
         </symbol>
         <symbol type="2" id="5" code="106" name="Sráz">
             <description>Strmý sráz je zlomová změna úrovně povrchu, která se jasně odlišuje od svého okolí, například štěrkoviště a pískovny, zářezy a náspy silnic a železnic {a meze}. Čárky ukazují celý rozsah svahu {při respektování minimální délky čárek}, mohou být ale {vyjímečně} vynechány, jsou-li dva srázy blízko sebe. Neschůdné srázy se kreslí značkou 201 (neschůdný sráz). Síla čáry velmi vysokých srázů může být 0,25 mm. {Prochází-li srázem vrstevnice, přeruší se tak, aby neprotínala spádové čárky.}
 Barva: hnědá.</description>
-            <line_symbol color="4" line_width="180" minimum_length="600" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="780" end_length="850" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <line_symbol color="7" line_width="180" minimum_length="600" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="780" end_length="850" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <start_symbol>
                     <symbol type="1" code="" name="Symbol pro začátek">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -235,7 +235,7 @@ Barva: hnědá.</description>
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -255,7 +255,7 @@ Barva: hnědá.</description>
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -278,7 +278,7 @@ Barva: hnědá.</description>
             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="3">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="7" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -292,7 +292,7 @@ Barva: hnědá.</description>
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -306,7 +306,7 @@ Barva: hnědá.</description>
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -322,13 +322,13 @@ Barva: hnědá.</description>
         </symbol>
         <symbol type="2" id="7" code="106.1" name="Velmi vysoký sráz">
             <description>Síla čáry velmi vysokých srázů může být 0,25 mm.</description>
-            <line_symbol color="4" line_width="250" minimum_length="600" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="780" end_length="850" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <line_symbol color="7" line_width="250" minimum_length="600" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="780" end_length="850" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <start_symbol>
                     <symbol type="1" code="" name="Symbol pro začátek">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -348,7 +348,7 @@ Barva: hnědá.</description>
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -368,7 +368,7 @@ Barva: hnědá.</description>
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -390,7 +390,7 @@ Barva: hnědá.</description>
             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="3">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="7" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -404,7 +404,7 @@ Barva: hnědá.</description>
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -418,7 +418,7 @@ Barva: hnědá.</description>
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -434,15 +434,15 @@ Barva: hnědá.</description>
         </symbol>
         <symbol type="2" id="9" code="106.2" name="Sráz, souvislá čára">
             <description>Tento symbol se použije k zobrazení celého rozsahu širokých srázů.</description>
-            <line_symbol color="4" line_width="140" minimum_length="500" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="7" line_width="140" minimum_length="500" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="10" code="107" name="Hráz">
             <description>Výrazný hliněný val {- úzký násep bez komunikace}. Minimální výška je 1 m. {Širší náspy se kreslí pomocí dvou značek 106.}
 Barva: hnědá.</description>
-            <line_symbol color="4" line_width="140" minimum_length="0" join_style="2" cap_style="0" pointed_cap_length="1000" segment_length="2500" end_length="1250" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <line_symbol color="7" line_width="140" minimum_length="0" join_style="2" cap_style="0" pointed_cap_length="1000" segment_length="2500" end_length="1250" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <mid_symbol>
                     <symbol type="1" code="" name="Vnitřní symbol">
-                        <point_symbol rotatable="true" inner_radius="200" inner_color="4" outer_width="0" outer_color="-1" elements="0"/>
+                        <point_symbol rotatable="true" inner_radius="200" inner_color="7" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </mid_symbol>
             </line_symbol>
@@ -450,10 +450,10 @@ Barva: hnědá.</description>
         <symbol type="2" id="11" code="108" name="Malá hráz">
             <description>Malá nebo částečně rozpadlá hráz může být znázorněna přerušova-nou linií. Minimální výška je 0,5 m.
 Barva: hnědá.</description>
-            <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2240" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2240" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <mid_symbol>
                     <symbol type="1" code="" name="Vnitřní symbol">
-                        <point_symbol rotatable="true" inner_radius="200" inner_color="4" outer_width="0" outer_color="-1" elements="0"/>
+                        <point_symbol rotatable="true" inner_radius="200" inner_color="7" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </mid_symbol>
             </line_symbol>
@@ -461,7 +461,7 @@ Barva: hnědá.</description>
         <symbol type="2" id="12" code="109" name="Rýha">
             <description>Erozní rýha nebo příkop, které jsou příliš úzké pro znázornění {vrstevnicemi nebo} značkou 106, se znázorní jedinou čarou. Šířka linie odpovídá šířce rýhy. Minimální hloubka 1 m. Konec čáry je zašpičatělý.
 Barva: hnědá.</description>
-            <line_symbol color="4" line_width="250" minimum_length="0" join_style="2" cap_style="3" pointed_cap_length="747" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="7" line_width="250" minimum_length="0" join_style="2" cap_style="3" pointed_cap_length="747" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="13" code="110" name="Mělká rýha">
             <description>Mělká erozní rýha nebo příkop. Minimální hloubka 0,5 m.
@@ -469,7 +469,7 @@ Barva: hnědá.</description>
             <line_symbol color="-1" line_width="0" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="500" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <mid_symbol>
                     <symbol type="1" code="" name="Vnitřní symbol">
-                        <point_symbol rotatable="true" inner_radius="125" inner_color="4" outer_width="0" outer_color="-1" elements="0"/>
+                        <point_symbol rotatable="true" inner_radius="125" inner_color="7" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </mid_symbol>
             </line_symbol>
@@ -484,7 +484,7 @@ Poznámka:
 
 Kupky se znázorňují vrstevnicemi. Význačné kupky, které padnou mezi vrstevnice, lze přesto vyjádřit vrstevnicí, pokud odchylka od skutečné výšky vrstevnice je menší než 25 %. Menší, nebo plošší kupky se znázorní pomocnými vrstevnicemi. {Spádnice se nepoužijí.}
 Barva: hnědá.</description>
-            <point_symbol inner_radius="250" inner_color="4" outer_width="0" outer_color="-1" elements="0"/>
+            <point_symbol inner_radius="250" inner_color="7" outer_width="0" outer_color="-1" elements="0"/>
         </symbol>
         <symbol type="1" id="15" code="113" name="Protáhlá kupka">
             <description>Malá, zřetelně protáhlá kupka, která nemůže být vykreslena vrstevnicí (délka menší než 12 m a šířka menší než 4 m). Výška kupky má být alespoň 1 m nad okolním terénem. Větší kupky musí být vykresleny vrstevnici. Značka nesmí být kreslena volnou formou, nebo tak, že se dvě značky protáhlé kupky překrývají. Značka se nesmí dotýkat vrstevnice.
@@ -492,7 +492,7 @@ Barva: hnědá.</description>
             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="4" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="7" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="13">
@@ -530,7 +530,7 @@ Barva: hnědá.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="7" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="7">
@@ -555,7 +555,7 @@ Barva: hnědá.</description>
             <point_symbol inner_radius="900" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="4" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="7" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="7">
@@ -577,14 +577,14 @@ Barva: hnědá.</description>
         <symbol type="1" id="18" code="117.1" name="Rozbitý povrch, malý">
             <description>Oblast jam nebo kupek, které se nedají jednotlivě znázornit. Hustota náhodně umístěných teček se může měnit podle četnosti detailů na povrchu.
 Barva: hnědá.</description>
-            <point_symbol inner_radius="90" inner_color="4" outer_width="0" outer_color="-1" elements="0"/>
+            <point_symbol inner_radius="90" inner_color="7" outer_width="0" outer_color="-1" elements="0"/>
         </symbol>
         <symbol type="1" id="19" code="117.2" name="Rozbitý povrch, velký">
             <description>Oblast jam nebo kupek, které se nedají jednotlivě znázornit. Hustota náhodně umístěných teček se může měnit podle četnosti detailů na povrchu.
 Barva: hnědá.
 
 Velikost teček se může lišit.</description>
-            <point_symbol inner_radius="125" inner_color="4" outer_width="0" outer_color="-1" elements="0"/>
+            <point_symbol inner_radius="125" inner_color="7" outer_width="0" outer_color="-1" elements="0"/>
         </symbol>
         <symbol type="1" id="20" code="118" name="Zvláštní terénní objekt">
             <description>Tato značka může být použita pro zvláštní malý terénní útvar. Definice značky musí být uvedena v legendě mapy.
@@ -592,7 +592,7 @@ Barva: hnědá.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="7" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -606,7 +606,7 @@ Barva: hnědá.</description>
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="7" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -1089,7 +1089,7 @@ Barva: černá 30% (60 linek/cm) nebo šedá.</description>
         <symbol type="4" id="45" code="301" name="Jezero">
             <description>Velká vodní plocha je znázorněna bodovým rastrem. Malá vodní plocha se znázorňuje plnou barvou. Černá břehová čára označuje, že útvar nelze překonat. {Plochy trvale porostlé rákosím se kreslí jako bažiny.}
 Barva: modrá 50% (60 linek/cm), černá.</description>
-            <area_symbol inner_color="8" min_area="1000" patterns="0"/>
+            <area_symbol inner_color="6" min_area="1000" patterns="0"/>
         </symbol>
         <symbol type="2" id="46" code="301.1" name="Jezero, okrajová čára">
             <description>Černá břehová čára ukazuje, že objekt nelze překročit.</description>
@@ -1104,7 +1104,7 @@ Barva: modrá 50% (60 linek/cm), černá.</description>
         <symbol type="4" id="48" code="302" name="Rybníček">
             <description>Když je jezero nebo rybníček menší než 1mm2 na vytištěné mapě, břehová čára se vynechá.
 Barva: modrá.</description>
-            <area_symbol inner_color="6" min_area="500" patterns="0"/>
+            <area_symbol inner_color="4" min_area="500" patterns="0"/>
         </symbol>
         <symbol type="1" id="49" code="303" name="Jáma s vodou">
             <description>Vodou naplněná jáma nebo vodní plocha příliš malá pro zobrazení v měřítku. Umístění je v těžišti značky, značka je orientována k severu.
@@ -1112,7 +1112,7 @@ Barva: modrá.</description>
             <point_symbol inner_radius="900" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="7" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="7">
@@ -1141,17 +1141,17 @@ Poznámka:
 
 Nepřekonatelná řeka nebo kanál se kreslí s černými břehovými čarami. Břehové čáry jsou přerušeny v místě brodu. {Pro nepřekona-telné vodní toky užší než 0,2 mm v tiskovém měřítku se použije místo modré 50% modrá 100%.}
 Barva: modrá 50% (60 linek/cm), černá.</description>
-            <line_symbol color="7" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="5" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="51" code="306" name="Překonatelný malý vodní tok">
             <description>Překonatelný vodní tok (včetně větších odvodňovacích příkopů) široký méně než 2 m. Pro zlepšení čitelnosti se odvodňovací příkop v bažině znázorňuje jako překonatelný vodní tok (305).
 Barva: modrá.</description>
-            <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="5" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="52" code="307" name="Malý vodní příkop">
             <description>Přírodní nebo umělý malý vodní příkop {vodoteč}, který může obsa-hovat vodu pouze občas.
 Barva: modrá.</description>
-            <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1250" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="5" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1250" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="53" code="308" name="Úzká bažina">
             <description>Bažina nebo vodní průsak, které jsou příliš úzké pro znázornění značkou 310 (užší než asi 5 m).
@@ -1159,7 +1159,7 @@ Barva: modrá.</description>
             <line_symbol color="-1" line_width="0" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="500" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <mid_symbol>
                     <symbol type="1" code="" name="Vnitřní symbol">
-                        <point_symbol rotatable="true" inner_radius="125" inner_color="7" outer_width="0" outer_color="-1" elements="0"/>
+                        <point_symbol rotatable="true" inner_radius="125" inner_color="5" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </mid_symbol>
             </line_symbol>
@@ -1168,7 +1168,7 @@ Barva: modrá.</description>
             <description>Bažina, která je nepřekonatelná, nebo nebezpečná pro běžce. Značka je ohraničena černou čarou.
 Barva: modrá, černá.</description>
             <area_symbol inner_color="-1" min_area="0" patterns="1">
-                <pattern type="1" angle="0" line_spacing="500" line_offset="0" offset_along_line="0" color="7" line_width="250"/>
+                <pattern type="1" angle="0" line_spacing="500" line_offset="0" offset_along_line="0" color="5" line_width="250"/>
             </area_symbol>
         </symbol>
         <symbol type="2" id="55" code="309.1" name="Nepřekonatelná bažina, okrajová čára">
@@ -1185,14 +1185,14 @@ Barva: modrá, černá.</description>
             <description>Překonatelná bažina, obvykle s výrazným okrajem. Značka může být kombinována se značkami pro porost ke znázornění průběžnosti a otevřenosti. Tam kde by malá bažinatá oblast měla být kombinová-na s jednou ze značek 403/404, je možné použít značku 401/402 ke zlepšení čitelnosti.
 Barva: modrá (se žlutou/zelenou).</description>
             <area_symbol inner_color="-1" min_area="0" patterns="1">
-                <pattern type="1" angle="0" line_spacing="300" line_offset="0" offset_along_line="0" color="7" line_width="100"/>
+                <pattern type="1" angle="0" line_spacing="300" line_offset="0" offset_along_line="0" color="5" line_width="100"/>
             </area_symbol>
         </symbol>
         <symbol type="1" id="58" code="310.1" name="Bažina, nejmenší velikost">
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="7" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="5" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -1206,7 +1206,7 @@ Barva: modrá (se žlutou/zelenou).</description>
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="7" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="5" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -1229,7 +1229,7 @@ Barva: modrá.</description>
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="7" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="5" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -1249,7 +1249,7 @@ Barva: modrá.</description>
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="7" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="5" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -1270,7 +1270,7 @@ Barva: modrá.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="4">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="7" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="5" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -1284,7 +1284,7 @@ Barva: modrá.</description>
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="7" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="5" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -1298,7 +1298,7 @@ Barva: modrá.</description>
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="7" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="5" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -1312,7 +1312,7 @@ Barva: modrá.</description>
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="7" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="5" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -1329,7 +1329,7 @@ Barva: modrá.</description>
         <symbol type="1" id="61" code="312" name="Studna">
             <description>Studny a obezděné {a jímané} prameny, které jsou v terénu jasně viditelné.
 Barva: modrá.</description>
-            <point_symbol inner_radius="310" inner_color="-1" outer_width="180" outer_color="7" elements="0"/>
+            <point_symbol inner_radius="310" inner_color="-1" outer_width="180" outer_color="5" elements="0"/>
         </symbol>
         <symbol type="1" id="62" code="313" name="Pramen">
             <description>Vývěr vody se zřetelným odtokem. Značka je orientována k otevře-nému odtoku. {Nemá-li pramen zřetelný odtok, vyjádří se značkou orientovanou k severu.}
@@ -1337,7 +1337,7 @@ Barva: modrá.</description>
             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="7" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="5" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="7">
@@ -1362,7 +1362,7 @@ Barva: modrá.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="7" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="5" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -1376,7 +1376,7 @@ Barva: modrá.</description>
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="7" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="5" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -2495,11 +2495,11 @@ Barva: černá (modrá).</description>
         <symbol type="2" id="135" code="601.2" name="Magnetické poledníky {severníky}, modré">
             <description>Magnetické poledníky jsou čáry umístěné na mapu tak, aby směřova-ly k magnetickému severu. Jejich rozestup na mapě je 33,33 mm což představuje 500 m ve skutečnosti v měřítku 1 : 15 000. Pro mapy s jinými měřítky se čáry umísťují ve vzdálenostech, které reprezentují zaokrouhlený počet metrů (například 50 m, 100 m, 250 m, 500 m) a tak, aby rozestup byl mezi 20 mm a 40 mm na mapě. Severníky mohou být přerušeny tam, kde by zakrývaly malé objekty, jako balvany, kupky, srázy, větvení potoků, konce cest a tak dále. V oblastech s malým počtem vodních objektů lze použít modré čáry.
 Barva: černá (modrá).</description>
-            <line_symbol color="7" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="5" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="4" id="136" code="601.3" name="Vzor poledníku, modrý">
             <area_symbol inner_color="-1" min_area="0" patterns="1">
-                <pattern type="1" angle="1.5708" rotatable="true" line_spacing="33330" line_offset="0" offset_along_line="0" color="7" line_width="180"/>
+                <pattern type="1" angle="1.5708" rotatable="true" line_spacing="33330" line_offset="0" offset_along_line="0" color="5" line_width="180"/>
             </area_symbol>
         </symbol>
         <symbol type="1" id="137" code="602" name="Registrační značky">
@@ -2997,7 +2997,7 @@ Fialová čára se trchu rozšíří do symbolu pro cíl. To je nedostatek tohot
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="6" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="37">
@@ -3046,7 +3046,7 @@ Fialová čára se trchu rozšíří do symbolu pro cíl. To je nedostatek tohot
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="35">
@@ -3093,7 +3093,7 @@ Fialová čára se trchu rozšíří do symbolu pro cíl. To je nedostatek tohot
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="25">
@@ -3130,7 +3130,7 @@ Fialová čára se trchu rozšíří do symbolu pro cíl. To je nedostatek tohot
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="5">
@@ -3185,7 +3185,7 @@ Fialová čára se trchu rozšíří do symbolu pro cíl. To je nedostatek tohot
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="37">
@@ -3234,7 +3234,7 @@ Fialová čára se trchu rozšíří do symbolu pro cíl. To je nedostatek tohot
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="39">
@@ -3361,7 +3361,7 @@ Fialová čára se trchu rozšíří do symbolu pro cíl. To je nedostatek tohot
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="35">
@@ -3408,7 +3408,7 @@ Fialová čára se trchu rozšíří do symbolu pro cíl. To je nedostatek tohot
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="25">
@@ -3445,7 +3445,7 @@ Fialová čára se trchu rozšíří do symbolu pro cíl. To je nedostatek tohot
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="5">
@@ -3462,7 +3462,7 @@ Fialová čára se trchu rozšíří do symbolu pro cíl. To je nedostatek tohot
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="37">
@@ -3511,7 +3511,7 @@ Fialová čára se trchu rozšíří do symbolu pro cíl. To je nedostatek tohot
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="6" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="74">
@@ -3597,7 +3597,7 @@ Fialová čára se trchu rozšíří do symbolu pro cíl. To je nedostatek tohot
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="6" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="69">
@@ -3678,7 +3678,7 @@ Fialová čára se trchu rozšíří do symbolu pro cíl. To je nedostatek tohot
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="6" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="89">
@@ -3829,7 +3829,7 @@ Fialová čára se trchu rozšíří do symbolu pro cíl. To je nedostatek tohot
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="89">
@@ -3930,7 +3930,7 @@ Fialová čára se trchu rozšíří do symbolu pro cíl. To je nedostatek tohot
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="89">
@@ -4031,7 +4031,7 @@ Fialová čára se trchu rozšíří do symbolu pro cíl. To je nedostatek tohot
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="89">
@@ -4132,7 +4132,7 @@ Fialová čára se trchu rozšíří do symbolu pro cíl. To je nedostatek tohot
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="87">
@@ -4281,7 +4281,7 @@ Fialová čára se trchu rozšíří do symbolu pro cíl. To je nedostatek tohot
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="74">

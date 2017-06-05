@@ -21,7 +21,7 @@
         </color>
         <color priority="2" name="Brown 50%" c="0.000" m="0.280" y="0.500" k="0.090" opacity="1.000">
             <spotcolors knockout="true">
-                <component factor="0.5" spotcolor="4"/>
+                <component factor="0.5" spotcolor="7"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.910" g="0.680" b="0.500"/>
@@ -33,41 +33,41 @@
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.000" g="0.000" b="0.000"/>
         </color>
-        <color priority="4" name="Brown" c="0.000" m="0.560" y="1.000" k="0.180" opacity="1.000">
-            <spotcolors>
-                <namedcolor>BROWN</namedcolor>
-            </spotcolors>
-            <cmyk method="custom"/>
-            <rgb method="cmyk" r="0.820" g="0.361" b="0.000"/>
-        </color>
-        <color priority="5" name="OpenOrienteering Orange" c="0.000" m="0.474" y="0.895" k="0.090" opacity="1.000">
-            <spotcolors>
-                <component factor="0.5" spotcolor="4"/>
-                <component factor="1" spotcolor="18"/>
-            </spotcolors>
-            <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="0.910" g="0.497" b="0.105"/>
-        </color>
-        <color priority="6" name="Opaque Blue" c="0.870" m="0.180" y="0.000" k="0.000" opacity="1.000">
+        <color priority="4" name="Opaque Blue" c="0.870" m="0.180" y="0.000" k="0.000" opacity="1.000">
             <spotcolors knockout="true">
-                <component factor="1" spotcolor="7"/>
+                <component factor="1" spotcolor="5"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.130" g="0.820" b="1.000"/>
         </color>
-        <color priority="7" name="Blue" c="0.870" m="0.180" y="0.000" k="0.000" opacity="1.000">
+        <color priority="5" name="Blue" c="0.870" m="0.180" y="0.000" k="0.000" opacity="1.000">
             <spotcolors>
                 <namedcolor>BLUE</namedcolor>
             </spotcolors>
             <cmyk method="custom"/>
             <rgb method="cmyk" r="0.130" g="0.820" b="1.000"/>
         </color>
-        <color priority="8" name="Blue 50%" c="0.435" m="0.090" y="0.000" k="0.000" opacity="1.000">
+        <color priority="6" name="Blue 50%" c="0.435" m="0.090" y="0.000" k="0.000" opacity="1.000">
             <spotcolors knockout="true">
-                <component factor="0.5" spotcolor="7"/>
+                <component factor="0.5" spotcolor="5"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.565" g="0.910" b="1.000"/>
+        </color>
+        <color priority="7" name="Brown" c="0.000" m="0.560" y="1.000" k="0.180" opacity="1.000">
+            <spotcolors>
+                <namedcolor>BROWN</namedcolor>
+            </spotcolors>
+            <cmyk method="custom"/>
+            <rgb method="cmyk" r="0.820" g="0.361" b="0.000"/>
+        </color>
+        <color priority="8" name="OpenOrienteering Orange" c="0.000" m="0.474" y="0.895" k="0.090" opacity="1.000">
+            <spotcolors>
+                <component factor="0.5" spotcolor="7"/>
+                <component factor="1" spotcolor="18"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="0.910" g="0.497" b="0.105"/>
         </color>
         <color priority="9" name="Black 30%" c="0.000" m="0.000" y="0.000" k="0.300" opacity="1.000">
             <spotcolors knockout="true">
@@ -165,22 +165,22 @@
     <symbols count="157">
         <symbol type="2" id="0" code="101" name="Korkeuskäyrä">
             <description>Viiva joka yhdistää samalla korkeudella olevat pisteet. Standardikäyräväli on 5 m. Pienin käyrien välinen etäisyys on 0.25 mm viivan keskeltä keskelle. </description>
-            <line_symbol color="4" line_width="140" minimum_length="0" join_style="2" cap_style="1" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="7" line_width="140" minimum_length="0" join_style="2" cap_style="1" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="1" code="102" name="Johtokäyrä">
             <description>Korkeuserojen nopeaa arviointia helpottamaan kuvataan joka viides käyrä johtokäyränä. Johtokäyrälle osuvat pienmuodot, kuten notkot ja nenät, sekä pienet kukkulat ja supat kuvataan korkeuskäyrällä (101). </description>
-            <line_symbol color="4" line_width="250" minimum_length="0" join_style="2" cap_style="1" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="7" line_width="250" minimum_length="0" join_style="2" cap_style="1" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="2" code="103" name="Apukäyrä">
             <description>Maanpinnan muotojen kuvausta täydentämään käytetään puolta käyräväliä vastaavia apukäyriä. Niiden avulla voidaan antaa maanpinnan muodoista lisätietoja, kun muotoja ei saada kuvatuiksi käyräväliä vastaavin korkeuskäyrin. Kahden korkeuskäyrän välissä saa käyttää vain yhtä apukäyrää. </description>
-            <line_symbol color="4" line_width="140" minimum_length="0" join_style="2" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1250" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="7" line_width="140" minimum_length="0" join_style="2" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1250" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="1" id="3" code="104" name="Rinneviiva">
             <description>Maanpinnan muotojen kuvauksen selventämiseksi piirrettävä maaston laskevan kaltevuuden suuntaa osoittavia rinneviivoja. Kaikkiin sulkeutuviin suppakäyriin kuuluu rinneviiva. Usean käyrän supassa on rinneviiva merkittävä jokaiseen käyrään.</description>
             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -198,18 +198,18 @@
             <description>Korkeuslukuja käytetään helpottamaan erittäin suurten korkeuserojen lukemista. Ne sijoitetaan lähinnä johtokäyriin ja sellaisiin kohtiin, missä ne eivät häiritse muuta karttakuvausta. Numeroiden yläreunojen on osoitettava nousevan rinteen suuntaan. </description>
             <text_symbol icon_text="225">
                 <font family="Arial" size="2076"/>
-                <text color="4" line_spacing="1" paragraph_spacing="0" character_spacing="0" kerning="true"/>
+                <text color="7" line_spacing="1" paragraph_spacing="0" character_spacing="0" kerning="true"/>
             </text_symbol>
         </symbol>
         <symbol type="2" id="5" code="106" name="Irtomaarinne">
             <description>Selvästi näkyvät ja ympäristöstään erottuvat rinteet, esim. sora- ja hiekkakuopat, jokien, teiden ja rautateiden leikkaukset. Poikkiviivat peittävät koko rinteen alueen ja ne voidaan jättää pois kapeissa kohdissa. Ylipääsemättömät rinteet kuvataan merkillä 201 (ylipääsemätön jyrkänne). Erittäin korkeat rinteet merkitään viivalla 0.25.</description>
-            <line_symbol color="4" line_width="180" minimum_length="600" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="780" end_length="850" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <line_symbol color="7" line_width="180" minimum_length="600" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="780" end_length="850" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <start_symbol>
                     <symbol type="1" code="" name="Aloitussymboli">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -229,7 +229,7 @@
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -249,7 +249,7 @@
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -271,7 +271,7 @@
             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="3">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="7" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -285,7 +285,7 @@
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -299,7 +299,7 @@
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -315,13 +315,13 @@
         </symbol>
         <symbol type="2" id="7" code="106.1" name="Irtomaarinne, hyvin korkea">
             <description>Viivan leveys voi olla 0.25 mm.</description>
-            <line_symbol color="4" line_width="250" minimum_length="600" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="780" end_length="850" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <line_symbol color="7" line_width="250" minimum_length="600" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="780" end_length="850" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <start_symbol>
                     <symbol type="1" code="" name="Aloitussymboli">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -341,7 +341,7 @@
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -361,7 +361,7 @@
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -383,7 +383,7 @@
             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="3">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="7" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -397,7 +397,7 @@
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -411,7 +411,7 @@
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -427,52 +427,52 @@
         </symbol>
         <symbol type="2" id="9" code="106.2" name="Irtomaarinne, rinneviiva">
             <description>Käytä tätä kuvaamaan leveiden irtomaarinteiden todellinen leveys. </description>
-            <line_symbol color="4" line_width="140" minimum_length="500" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="7" line_width="140" minimum_length="500" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="10" code="107" name="Maavalli">
             <description>Selvästi havaittava maavalli. Minimikorkeus 1m.</description>
-            <line_symbol color="4" line_width="140" minimum_length="0" join_style="2" cap_style="0" pointed_cap_length="1000" segment_length="2500" end_length="1250" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <line_symbol color="7" line_width="140" minimum_length="0" join_style="2" cap_style="0" pointed_cap_length="1000" segment_length="2500" end_length="1250" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <mid_symbol>
                     <symbol type="1" code="" name="Välisymboli">
-                        <point_symbol rotatable="true" inner_radius="200" inner_color="4" outer_width="0" outer_color="-1" elements="0"/>
+                        <point_symbol rotatable="true" inner_radius="200" inner_color="7" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </mid_symbol>
             </line_symbol>
         </symbol>
         <symbol type="2" id="11" code="108" name="Pieni maavalli">
             <description>Pieni, osittain sortunut tai epäselvä maavalli. Minimikorkeus 0.75</description>
-            <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2240" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2240" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <mid_symbol>
                     <symbol type="1" code="" name="Välisymboli">
-                        <point_symbol rotatable="true" inner_radius="200" inner_color="4" outer_width="0" outer_color="-1" elements="0"/>
+                        <point_symbol rotatable="true" inner_radius="200" inner_color="7" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </mid_symbol>
             </line_symbol>
         </symbol>
         <symbol type="2" id="12" code="109" name="Uurre">
             <description>Jyrkkäreunainen kapea irtomaarinteinen uoma, jota ei mahdu kuvaamaan irtomaarinteen merkillä (106). Minimisyvyys 1 m ja minimipituus 20 m. Viivan päät ovat terävät.</description>
-            <line_symbol color="4" line_width="250" minimum_length="0" join_style="2" cap_style="3" pointed_cap_length="747" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="7" line_width="250" minimum_length="0" join_style="2" cap_style="3" pointed_cap_length="747" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="13" code="110" name="Kuiva pieni uoma">
             <description>Hyvin pieni uoma, jossa ei virtaa vettä ja joka ei ole soinen. Minimisyvyys 0.5 m ja minimipituus 20 m.</description>
             <line_symbol color="-1" line_width="0" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="500" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <mid_symbol>
                     <symbol type="1" code="" name="Välisymboli">
-                        <point_symbol rotatable="true" inner_radius="125" inner_color="4" outer_width="0" outer_color="-1" elements="0"/>
+                        <point_symbol rotatable="true" inner_radius="125" inner_color="7" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </mid_symbol>
             </line_symbol>
         </symbol>
         <symbol type="1" id="14" code="112" name="Pieni kumpare">
             <description>Pieni selvä kohouma, jota ei voida kuvata korkeuskäyrällä. Halkaisija pienempi kuin 5 m, minimikorkeus 1 m. Pieni kumpare on aina terävästi maastosta kohoava. Pientä kumparetta ei saa sijoittaa korkeuskäyrälle eikä käyrää kumpareen kohdalla katkaista.</description>
-            <point_symbol inner_radius="250" inner_color="4" outer_width="0" outer_color="-1" elements="0"/>
+            <point_symbol inner_radius="250" inner_color="7" outer_width="0" outer_color="-1" elements="0"/>
         </symbol>
         <symbol type="1" id="15" code="113" name="Pitkulainen pieni kumpare">
             <description>Pieni pitkänomainen selvä yli 1 m:n kohoutuma, jota ei voida kuvata korkeuskäyrillä. Maksimipituus on 12 m ja -leveys 4 m. Pitkulainen pieni kumpare piirretään suuntaansa.</description>
             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="4" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="7" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="13">
@@ -503,7 +503,7 @@ Minimimitta halkaisija 2m. Kaivetut pienet kuopat kuvataan merkillä 116.</descr
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="7" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="7">
@@ -527,7 +527,7 @@ Minimimitta halkaisija 2m. Kaivetut pienet kuopat kuvataan merkillä 116.</descr
             <point_symbol inner_radius="900" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="4" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="7" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="7">
@@ -548,11 +548,11 @@ Minimimitta halkaisija 2m. Kaivetut pienet kuopat kuvataan merkillä 116.</descr
         </symbol>
         <symbol type="1" id="18" code="117.1" name="Pienimuotoinen alue, pieni">
             <description>Erittäin pienimuotoinen maasto, kuoppa- tai kumparekenttä, jota ei voida kuvata yksittäisillä symboleilla. Pisteiden tiheydellä osoitetaan kohteiden tiheyttä maastossa. Vähintään 3 pistettä.</description>
-            <point_symbol inner_radius="90" inner_color="4" outer_width="0" outer_color="-1" elements="0"/>
+            <point_symbol inner_radius="90" inner_color="7" outer_width="0" outer_color="-1" elements="0"/>
         </symbol>
         <symbol type="1" id="19" code="117.2" name="Pienimuotoinen alue, iso">
             <description>Erittäin pienimuotoinen maasto, kuoppa- tai kumparekenttä, jota ei voida kuvata yksittäisillä symboleilla. Pisteiden tiheydellä osoitetaan kohteiden tiheyttä maastossa. Vähintään 3 pistettä.</description>
-            <point_symbol inner_radius="125" inner_color="4" outer_width="0" outer_color="-1" elements="0"/>
+            <point_symbol inner_radius="125" inner_color="7" outer_width="0" outer_color="-1" elements="0"/>
         </symbol>
         <symbol type="1" id="20" code="118" name="Maaston erikoiskohde">
             <description>Pieni kumparemainen erikoiskohde. Merkillä kuvataan samantapaiset kohteet koko kartta-alalla, joka selvitetään merkkien selityksissä. 
@@ -560,7 +560,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</description
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="7" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -574,7 +574,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</description
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="7" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -1038,7 +1038,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</description
         </symbol>
         <symbol type="4" id="45" code="301" name="Vesialue">
             <description>Suuri vesialue kuvataan pisterasterina. Pienet vesialueet kuvataan kompaktivärillä. Mustalla kuvattu rantaviiva esittää ylipääsemättömyyttä. Kahluupaikan kohdalta rantaviiva jätetään pois.</description>
-            <area_symbol inner_color="8" min_area="1000" patterns="0"/>
+            <area_symbol inner_color="6" min_area="1000" patterns="0"/>
         </symbol>
         <symbol type="2" id="46" code="301.1" name="Rantaviiva">
             <description>Rantaviiva esittää ylipääsemättömyyttä. Kahluupaikan kohdalta rantaviiva jätetään pois.</description>
@@ -1052,14 +1052,14 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</description
         </symbol>
         <symbol type="4" id="48" code="302" name="Lammikko">
             <description>Kun vesialue on pienempi kuin 1 mm2 painetussa kartassa jätetään rantaviiva pois</description>
-            <area_symbol inner_color="6" min_area="500" patterns="0"/>
+            <area_symbol inner_color="4" min_area="500" patterns="0"/>
         </symbol>
         <symbol type="1" id="49" code="303" name="Vesikuoppa">
             <description>Veden täyttämä kuoppa, jota ei pienen kokonsa vuoksi voida kuvata pohjapiirroksen mukaisesti merkillä 302. Merkki avautuu pohjoiseen.</description>
             <point_symbol inner_radius="900" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="7" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="7">
@@ -1080,22 +1080,22 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</description
         </symbol>
         <symbol type="2" id="50" code="305" name="Leveä puro tai oja">
             <description>Ylitettävä vähintään 2 m leveä vesiuoma. Yli 5m leveä vesistö kuvataan mittakaavan mukaisesti.</description>
-            <line_symbol color="7" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="5" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="51" code="306" name="Pieni puro tai oja">
             <description>Ylitettävä, maastossa selvästi havaittava puro tai oja , leveys alle 2 m.</description>
-            <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="5" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="52" code="307" name="Epäselvä oja">
             <description>Selvästi havaittava pieni kaivettu tai luonnon vesiuoma joka voi ajoittain olla kuiva. Metsittyvän niityn ja pellon sarkaojat sekä soiden vanhat umpeutuvat ojat kuvataan tällä merkillä.</description>
-            <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1250" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="5" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1250" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="53" code="308" name="Suojuotti">
             <description>Maastossa selvästi havaittava suomainen juotti, jota ei kapeutensa vuoksi voida kuvata suon merkillä 310 (kapeampi kuin 5 m).</description>
             <line_symbol color="-1" line_width="0" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="500" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <mid_symbol>
                     <symbol type="1" code="" name="Välisymboli">
-                        <point_symbol rotatable="true" inner_radius="125" inner_color="7" outer_width="0" outer_color="-1" elements="0"/>
+                        <point_symbol rotatable="true" inner_radius="125" inner_color="5" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </mid_symbol>
             </line_symbol>
@@ -1103,7 +1103,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</description
         <symbol type="4" id="54" code="309" name="Ylipääsemätön suo">
             <description>Suo, jonka ylittäminen on vaarallista ja mahdotonta. Ympäröidään mustalla rantaviivalla. Kun ylipääsemätön suo rajoittuu vesialueeseen on se erotettava siitä rantaviivalla. </description>
             <area_symbol inner_color="-1" min_area="0" patterns="1">
-                <pattern type="1" angle="0" line_spacing="500" line_offset="0" offset_along_line="0" color="7" line_width="250"/>
+                <pattern type="1" angle="0" line_spacing="500" line_offset="0" offset_along_line="0" color="5" line_width="250"/>
             </area_symbol>
         </symbol>
         <symbol type="2" id="55" code="309.1" name="Ylipääsemättömän suon reunaviiva">
@@ -1119,7 +1119,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</description
         <symbol type="4" id="57" code="310" name="Suo">
             <description>Ylitettävä selväreunainen suo, joka selvästi eroaa ympäristöstään tyypillisen suokasvustonsa perustella. Luonnostaan avoin pieni suo kuvataan lisäksi merkillä 401 ja suuret avosuot merkillä 403. Tiheät ja muusta kuin normaalista suokasvillisuudesta johtuva kulkukelpoisuuden hidastavuus kuvataan lisäksi merkeillä 406-410. </description>
             <area_symbol inner_color="-1" min_area="0" patterns="1">
-                <pattern type="1" angle="0" line_spacing="300" line_offset="0" offset_along_line="0" color="7" line_width="100"/>
+                <pattern type="1" angle="0" line_spacing="300" line_offset="0" offset_along_line="0" color="5" line_width="100"/>
             </area_symbol>
         </symbol>
         <symbol type="1" id="58" code="310.1" name="Suo minimikoko">
@@ -1127,7 +1127,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</description
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="7" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="5" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -1141,7 +1141,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</description
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="7" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="5" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -1163,7 +1163,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</description
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="7" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="5" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -1183,7 +1183,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</description
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="7" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="5" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -1204,7 +1204,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</description
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="4">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="7" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="5" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -1218,7 +1218,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</description
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="7" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="5" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -1232,7 +1232,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</description
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="7" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="5" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -1246,7 +1246,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</description
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="7" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="5" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -1262,14 +1262,14 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</description
         </symbol>
         <symbol type="1" id="61" code="312" name="Kaivo">
             <description>Kaivo tai katettu lähde joka erottuu selvästi maastosta. Minimikorkeus 0.6 m.</description>
-            <point_symbol inner_radius="310" inner_color="-1" outer_width="180" outer_color="7" elements="0"/>
+            <point_symbol inner_radius="310" inner_color="-1" outer_width="180" outer_color="5" elements="0"/>
         </symbol>
         <symbol type="1" id="62" code="313" name="Lähde">
             <description>Selvästi maastossa havaittava vesipiste josta virtaa puro. Merkki avautuu puron suuntaan. Jos virtaavaa puroa ei ole avautuu merkki pohjoiseen. </description>
             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="7" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="5" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="7">
@@ -1293,7 +1293,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</description
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="7" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="5" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -1307,7 +1307,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</description
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="7" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="5" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -2337,11 +2337,11 @@ Rasti: koju, romukasa, autonromu tms.</description>
         </symbol>
         <symbol type="2" id="135" code="601.2" name="Suunnanottoviiva">
             <description>Suunnanottoviivoilla osoitetaan maaston magneettinen pohjoissuunta. Viivojen etäisyys 1:15000 kartalla on 33.33 mm (500 maastometriä). Viivojen etäisyys 1:10000 kartalla on 25.00 mm (250 maastometriä. Muissa mittakaavoissa viivat piirretään 20-40 mm:n välein niin, että niiden väli maastometreinä on tasametrejä (esim. 50, 100, 250 tai 500 m). Maastoalue asemoidaan arkille aina niin, että suunnanottoviivat tulevat arkin reunojen suuntaisesti pystysuoraan. Suunnanottoviivat katkaistaan kohdista, joissa ne peittäisivät karttamerkkejä, kuten kumpareita, kiviä, polunhaaroja, polunpäitä jne. </description>
-            <line_symbol color="7" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="5" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="4" id="136" code="601.3" name="Suunnanottoviiva, kuvio, sininen">
             <area_symbol inner_color="-1" min_area="0" patterns="1">
-                <pattern type="1" angle="1.5708" rotatable="true" line_spacing="26667" line_offset="0" offset_along_line="0" color="7" line_width="180"/>
+                <pattern type="1" angle="1.5708" rotatable="true" line_spacing="26667" line_offset="0" offset_along_line="0" color="5" line_width="180"/>
             </area_symbol>
         </symbol>
         <symbol type="1" id="137" code="602" name="Kohdistusristi">
@@ -2829,7 +2829,7 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="6" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="37">
@@ -2878,7 +2878,7 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="35">
@@ -2925,7 +2925,7 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="25">
@@ -2962,7 +2962,7 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="5">
@@ -3017,7 +3017,7 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="37">
@@ -3066,7 +3066,7 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="39">
@@ -3193,7 +3193,7 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="35">
@@ -3240,7 +3240,7 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="25">
@@ -3277,7 +3277,7 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="5">
@@ -3294,7 +3294,7 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="37">
@@ -3343,7 +3343,7 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="6" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="74">
@@ -3429,7 +3429,7 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="6" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="69">
@@ -3510,7 +3510,7 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="6" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="89">
@@ -3661,7 +3661,7 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="89">
@@ -3762,7 +3762,7 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="89">
@@ -3863,7 +3863,7 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="89">
@@ -3964,7 +3964,7 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="87">
@@ -4113,7 +4113,7 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="74">
