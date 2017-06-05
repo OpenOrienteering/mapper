@@ -361,6 +361,8 @@ void MapEditorController::setEditingInProgress(bool value)
 		map_widget->setGesturesEnabled(!editing_in_progress);
 		Q_ASSERT(symbol_widget);
 		symbol_widget->setEnabled(!editing_in_progress);
+		if (isInMobileMode())
+			mobile_symbol_selector_action->setEnabled(!editing_in_progress);
 		if (color_dock_widget)
 			color_dock_widget->widget()->setEnabled(!editing_in_progress);
 		if (mappart_selector_box)
