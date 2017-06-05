@@ -406,46 +406,58 @@ bool DrawPathTool::mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord
 
 bool DrawPathTool::keyPressEvent(QKeyEvent* event)
 {
-	bool key_handled = false;
-	if (editingInProgress())
+	switch (event->key())
 	{
-		key_handled = true;
-		if (event->key() == Qt::Key_Escape)
-			abortDrawing();
-		else if (event->key() == Qt::Key_Backspace)
-			undoLastPoint();
-		else if (event->key() == Qt::Key_Return && allow_closing_paths)
+	case Qt::Key_Escape:
+		if (editingInProgress())
 		{
-			if (! (event->modifiers() & Qt::ControlModifier))
+			abortDrawing();
+			return true;
+		}
+		break;
+		
+	case Qt::Key_Backspace:
+		if (editingInProgress())
+		{
+			undoLastPoint();
+			return true;
+		}
+		else if (finished_path_is_selected)
+		{
+			if (removeLastPointFromSelectedPath())
+				return true;
+		}
+		break;
+		
+	case Qt::Key_Return:
+		if (editingInProgress())
+		{
+			if (allow_closing_paths && !(event->modifiers() & Qt::ControlModifier))
 				closeDrawing();
 			finishDrawing();
+			return true;
 		}
-		else
-			key_handled = false;
-	}
-	else if (event->key() == Qt::Key_Backspace && finished_path_is_selected)
-	{
-		key_handled = removeLastPointFromSelectedPath();
-	}
-	
-	if (event->key() == Qt::Key_Tab)
+		break;
+		
+	case Qt::Key_Tab:
 		deactivate();
-	else if (event->key() == Qt::Key_Space)
-	{
+		return true;
+		
+	case Qt::Key_Space:
 		draw_dash_points = !draw_dash_points;
 		updateStatusText();
-	}
-	else if (event->key() == Qt::Key_Control)
-	{
+		return true;
+		
+	case Qt::Key_Control:
 		ctrl_pressed = true;
 		angle_helper->setActive(true);
 		if (editingInProgress() && !dragging)
 			updateDrawHover();
 		picked_angle = false;
 		updateStatusText();
-	}
-	else if (event->key() == Qt::Key_Shift)
-	{
+		return false; // not consuming Ctrl
+		
+	case Qt::Key_Shift:
 		shift_pressed = true;
 		if (!dragging)
 		{
@@ -453,25 +465,26 @@ bool DrawPathTool::keyPressEvent(QKeyEvent* event)
 			updateDirtyRect();
 		}
 		updateStatusText();
+		return false; // not consuming Shift
+		
 	}
-	else
-		return key_handled;
-	return true;
+	return false;
 }
 
 bool DrawPathTool::keyReleaseEvent(QKeyEvent* event)
 {
-	if (event->key() == Qt::Key_Control)
+	switch (event->key())
 	{
+	case Qt::Key_Control:
 		ctrl_pressed = false;
 		if (!picked_angle)
 			angle_helper->setActive(false);
 		if (editingInProgress() && !dragging)
 			updateDrawHover();
 		updateStatusText();
-	}
-	else if (event->key() == Qt::Key_Shift)
-	{
+		return false; // not consuming Ctrl
+	
+	case Qt::Key_Shift:
 		shift_pressed = false;
 		if (!dragging && !following)
 		{
@@ -479,10 +492,10 @@ bool DrawPathTool::keyReleaseEvent(QKeyEvent* event)
 			updateDirtyRect();
 		}
 		updateStatusText();
+		return false; // not consuming Shift
+		
 	}
-	else
-		return false;
-	return true;
+	return false;
 }
 
 void DrawPathTool::draw(QPainter* painter, MapWidget* widget)

@@ -304,44 +304,52 @@ bool DrawRectangleTool::mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_
 
 bool DrawRectangleTool::keyPressEvent(QKeyEvent* event)
 {
-	if (event->key() == Qt::Key_Return)
+	switch(event->key())
 	{
+	case Qt::Key_Return:
 		if (editingInProgress())
 		{
 			if (angles.size() <= 1)
+			{
 				abortDrawing();
+			}
 			else
 			{
 				constrained_pos_map = MapCoordF(preview_path->getCoordinate(angles.size() - 1));
 				undoLastPoint();
 				finishDrawing();
 			}
+			return true;
 		}
-	}
-	else if (event->key() == Qt::Key_Escape)
-	{
+		break;
+		
+	case Qt::Key_Escape:
 		if (editingInProgress())
+		{
 			abortDrawing();
-	}
-	else if (event->key() == Qt::Key_Backspace)
-	{
+			return true;
+		}
+		break;
+		
+	case Qt::Key_Backspace:
 		if (editingInProgress())
 		{
 			undoLastPoint();
 			updateHover(false);
+			return true;
 		}
-	}
-	else if (event->key() == Qt::Key_Tab)
-	{
+		break;
+		
+	case Qt::Key_Tab:
 		deactivate();
-	}
-	else if (event->key() == Qt::Key_Space)
-	{
+		return true;
+		
+	case Qt::Key_Space:
 		draw_dash_points = !draw_dash_points;
 		updateStatusText();
-	}
-	else if (event->key() == Qt::Key_Control)
-	{
+		return true;
+		
+	case Qt::Key_Control:
 		ctrl_pressed = true;
 		if (editingInProgress() && angles.size() == 1)
 		{
@@ -357,22 +365,23 @@ bool DrawRectangleTool::keyPressEvent(QKeyEvent* event)
 			updateRectangle();
 		}
 		updateStatusText();
-	}
-	else if (event->key() == Qt::Key_Shift)
-	{
+		return false; // not consuming Ctrl
+		
+	case Qt::Key_Shift:
 		shift_pressed = true;
 		updateHover(false);
 		updateStatusText();
+		return false; // not consuming Shift
+		
 	}
-	else
-		return false;
-	return true;
+	return false;
 }
 
 bool DrawRectangleTool::keyReleaseEvent(QKeyEvent* event)
 {
-	if (event->key() == Qt::Key_Control)
+	switch(event->key())
 	{
+	case Qt::Key_Control:
 		ctrl_pressed = false;
 		if (!picked_direction && (!editingInProgress() || (editingInProgress() && angles.size() == 1)))
 		{
@@ -387,16 +396,16 @@ bool DrawRectangleTool::keyReleaseEvent(QKeyEvent* event)
 		if (picked_direction)
 			picked_direction = false;
 		updateStatusText();
-	}
-	else if (event->key() == Qt::Key_Shift)
-	{
+		return false; // not consuming Ctrl
+	
+	case Qt::Key_Shift:
 		shift_pressed = false;
 		updateHover(false);
 		updateStatusText();
+		return false; // not consuming Shift
+		
 	}
-	else
-		return false;
-	return true;
+	return false;
 }
 
 void DrawRectangleTool::draw(QPainter* painter, MapWidget* widget)

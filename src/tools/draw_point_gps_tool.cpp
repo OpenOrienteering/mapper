@@ -142,11 +142,14 @@ void DrawPointGPSTool::clickRelease()
 
 bool DrawPointGPSTool::keyPress(QKeyEvent* event)
 {
-	if (event->key() == Qt::Key_Tab)
+	switch (event->key())
+	{
+	case Qt::Key_Tab:
 		deactivate();
-	else
-		return false;
-	return true;
+		return true;
+		
+	}
+	return false;
 }
 
 void DrawPointGPSTool::drawImpl(QPainter* painter, MapWidget* widget)

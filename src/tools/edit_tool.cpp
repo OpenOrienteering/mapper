@@ -446,12 +446,6 @@ void ObjectMover::calculateConstraints()
 
 // ### EditTool ###
 
-#ifdef Q_OS_MACOS
-const Qt::Key EditTool::delete_object_key = Qt::Key_Backspace;
-#else
-const Qt::Key EditTool::delete_object_key = Qt::Key_Delete;
-#endif
-
 EditTool::EditTool(MapEditorController* editor, MapEditorTool::Type type, QAction* tool_button)
  : MapEditorToolBase { QCursor(QPixmap(QString::fromLatin1(":/images/cursor-hollow.png")), 1, 1), type, editor, tool_button }
  , object_selector { new ObjectSelector(map()) }

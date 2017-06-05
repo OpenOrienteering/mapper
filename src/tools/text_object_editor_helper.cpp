@@ -748,6 +748,10 @@ bool TextObjectEditorHelper::keyPressEvent(QKeyEvent* event)
 	{
 		replaceSelectionText(QString(QLatin1Char('\n')));
 	}
+	else if (event->key() == Qt::Key_Escape)
+	{
+		return false;
+	}
 	else if (!event->text().isEmpty()
 	         && event->text()[0].isPrint() )
 	{

@@ -89,8 +89,9 @@ void RotatePatternTool::updateStatusText()
 
 bool RotatePatternTool::keyPressEvent(QKeyEvent* event)
 {
-    if (event->key() == Qt::Key_Control)
+	switch(event->key())
 	{
+	case Qt::Key_Control:
 		active_modifiers |= Qt::ControlModifier;
 		
 		auto active = QGuiApplication::mouseButtons().testFlag(Qt::LeftButton);
@@ -105,7 +106,8 @@ bool RotatePatternTool::keyPressEvent(QKeyEvent* event)
 			updateDirtyRect(); // for active angle helper
 		}
 		updateStatusText();
-		return true;
+		return false; // not consuming Ctrl
+		
 	}
 	return false;
 }
@@ -113,8 +115,9 @@ bool RotatePatternTool::keyPressEvent(QKeyEvent* event)
 
 bool RotatePatternTool::keyReleaseEvent(QKeyEvent* event)
 {
-	if (event->key() == Qt::Key_Control)
+	switch(event->key())
 	{
+	case Qt::Key_Control:
 		active_modifiers &= ~Qt::ControlModifier;
 		
 		if (angle_helper->isActive())
@@ -131,7 +134,8 @@ bool RotatePatternTool::keyReleaseEvent(QKeyEvent* event)
 			}
 		}
 		updateStatusText();
-		return true;
+		return false; // not consuming Ctrl
+		
 	}
 	return false;
 }

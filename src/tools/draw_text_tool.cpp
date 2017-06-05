@@ -223,37 +223,6 @@ bool DrawTextTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 }
 
 
-bool DrawTextTool::keyPressEvent(QKeyEvent* event)
-{
-	if (text_editor)
-	{
-		if (event->key() == Qt::Key_Escape)
-		{
-			if (event->modifiers() & Qt::ControlModifier)
-				abortEditing();
-			else
-				finishEditing();
-			return true;
-		}
-		else if (text_editor->keyPressEvent(event))
-		{
-			return true;
-		}
-	}
-	
-	return MapEditorToolBase::keyPressEvent(event);
-}
-
-bool DrawTextTool::keyReleaseEvent(QKeyEvent* event)
-{
-	if (text_editor && text_editor->keyReleaseEvent(event))
-	{
-		return true;
-	}
-	
-	return MapEditorToolBase::keyReleaseEvent(event);
-}
-
 bool DrawTextTool::inputMethodEvent(QInputMethodEvent* event)
 {
 	if (text_editor && text_editor->inputMethodEvent(event))
@@ -307,8 +276,24 @@ void DrawTextTool::dragFinish()
 
 bool DrawTextTool::keyPress(QKeyEvent* event)
 {
+	if (text_editor && text_editor->keyPressEvent(event))
+	{
+		return true;
+	}
+	
 	switch (event->key())
 	{
+	case Qt::Key_Escape:
+		if (text_editor)
+		{
+			if (event->modifiers() & Qt::ControlModifier)
+				abortEditing();
+			else
+				finishEditing();
+			return true;
+		}
+		break;
+		
 	case Qt::Key_Shift:
 		if (!text_editor)
 		{
@@ -322,14 +307,17 @@ bool DrawTextTool::keyPress(QKeyEvent* event)
 		deactivate();
 		return true;
 		
-	default:
-		; // nothing
 	}
 	return false;
 }
 
 bool DrawTextTool::keyRelease(QKeyEvent* event)
 {
+	if (text_editor && text_editor->keyReleaseEvent(event))
+	{
+		return true;
+	}
+	
 	switch (event->key())
 	{
 	case Qt::Key_Shift:
@@ -337,14 +325,10 @@ bool DrawTextTool::keyRelease(QKeyEvent* event)
 		{
 			snap_helper->setFilter(SnappingToolHelper::NoSnapping);
 			reapplyConstraintHelpers();
-			return true;
 		}
-		break;
+		return false; // not consuming Shift
 		
-	default:
-		; // nothing
 	}
-	
 	return false;
 }
 

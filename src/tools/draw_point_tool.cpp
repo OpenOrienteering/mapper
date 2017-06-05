@@ -186,12 +186,11 @@ void DrawPointTool::dragFinish()
 
 bool DrawPointTool::keyPress(QKeyEvent* event)
 {
-	bool result = true;
 	switch (event->key())
 	{
 	case Qt::Key_Tab:
 		deactivate();
-		break;
+		return true;
 	
 	case Qt::Key_Escape:
 	case Qt::Key_0:
@@ -201,46 +200,41 @@ bool DrawPointTool::keyPress(QKeyEvent* event)
 			updateStatusText();
 			if (!editor->isInMobileMode())
 				mouseMove();
+			return true;
 		}
 		break;
 		
 	case Qt::Key_Control:
 		if (isDragging())
 			dragMove();
-		break;
+		return false; // not consuming Ctrl
 		
 	case Qt::Key_Shift:
 		snap_helper->setFilter(SnappingToolHelper::AllTypes);
 		reapplyConstraintHelpers();
-		break;
+		return false; // not consuming Shift
 		
-	default:
-		result = false;
 	}
-	
-	return result;
+	return false;
 }
 
 bool DrawPointTool::keyRelease(QKeyEvent* event)
 {
-	bool result = true;
 	switch (event->key())
 	{
 	case Qt::Key_Control:
 		if (isDragging())
 			dragMove();
-		break;
+		return false; // not consuming Ctrl
 		
 	case Qt::Key_Shift:
 		snap_helper->setFilter(SnappingToolHelper::NoSnapping);
 		reapplyConstraintHelpers();
-		break;
+		return false; // not consuming Shift
 		
-	default:
-		result = false;
 	}
 	
-	return result;
+	return false;
 }
 
 void DrawPointTool::drawImpl(QPainter* painter, MapWidget* widget)

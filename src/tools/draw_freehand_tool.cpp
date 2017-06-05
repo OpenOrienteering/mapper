@@ -127,12 +127,16 @@ bool DrawFreehandTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord
 
 bool DrawFreehandTool::keyPressEvent(QKeyEvent* event)
 {
-	if (event->key() == Qt::Key_Escape)
-		abortDrawing();
-	else if (event->key() == Qt::Key_Tab)
+	switch (event->key())
 	{
+	case Qt::Key_Escape:
+		abortDrawing();
+		return true;
+		
+	case Qt::Key_Tab:
 		deactivate();
 		return true;
+		
 	}
 	return false;
 }
