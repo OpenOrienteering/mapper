@@ -869,26 +869,40 @@ void Map::importMap(
 		}
 	}
 	
+	auto symbol_map = importMap(*other, mode, filter, symbol_insert_pos, merge_duplicate_symbols, q_transform);
+	if (out_symbol_map)
+		*out_symbol_map = symbol_map;
+}
+
+
+QHash<const Symbol*, Symbol*> Map::importMap(
+        const Map& imported_map,
+        ImportMode mode,
+        std::vector<bool>* filter,
+        int symbol_insert_pos,
+        bool merge_duplicate_symbols,
+        const QTransform& transform)
+{
 	// Determine which symbols and colors to import
-	std::vector<bool> color_filter(std::size_t(other->getNumColors()), true);
-	std::vector<bool> symbol_filter(std::size_t(other->getNumSymbols()), true);
+	std::vector<bool> color_filter(std::size_t(imported_map.getNumColors()), true);
+	std::vector<bool> symbol_filter(std::size_t(imported_map.getNumSymbols()), true);
 	if (mode.testFlag(MinimalImport))
 	{
 		switch (mode & 0x0f)
 		{
 		case ObjectImport:
-			if (other->getNumObjects() > 0)
-				other->determineSymbolsInUse(symbol_filter);
-			other->determineColorsInUse(symbol_filter, color_filter);
+			if (imported_map.getNumObjects() > 0)
+				imported_map.determineSymbolsInUse(symbol_filter);
+			imported_map.determineColorsInUse(symbol_filter, color_filter);
 			break;
 		case SymbolImport:
 			if (filter)
 			{
 				Q_ASSERT(filter->size() == symbol_filter.size());
 				symbol_filter = *filter;
-				other->determineSymbolUseClosure(symbol_filter);
+				imported_map.determineSymbolUseClosure(symbol_filter);
 			}
-			other->determineColorsInUse(symbol_filter, color_filter);
+			imported_map.determineColorsInUse(symbol_filter, color_filter);
 			break;
 		case ColorImport:
 			if (filter)
@@ -903,66 +917,66 @@ void Map::importMap(
 	}
 	
 	// Import colors
-	MapColorMap color_map(color_set->importSet(*other->color_set, &color_filter, this));
-	
-	if ((mode & 0x0f) == ColorImport)
-		return;
+	auto color_map = color_set->importSet(*imported_map.color_set, &color_filter, this);
 	
 	QHash<const Symbol*, Symbol*> symbol_map;
-	if (other->getNumSymbols() > 0)
+	if ((mode & 0x0f) != ColorImport)
 	{
-		// Import symbols
-		symbol_map = importSymbols(*other, color_map, symbol_insert_pos, merge_duplicate_symbols, symbol_filter);
-		if (out_symbol_map != nullptr)
-			*out_symbol_map = symbol_map;
-	}
-	
-	if ((mode & 0x0f) == SymbolImport)
-		return;
-	
-	if (other->getNumObjects() > 0)
-	{
-		// Import parts like this:
-		//  - if the other map has only one part, import it into the current part
-		//  - else check if there is already a part with an equal name for every part to import and import into this part if found, else create a new part
-		for (const auto* part_to_import : other->parts)
+		if (imported_map.getNumSymbols() > 0)
 		{
-			MapPart* dest_part = nullptr;
-			if (other->parts.size() == 1)
+			// Import symbols
+			symbol_map = importSymbols(imported_map, color_map, symbol_insert_pos, merge_duplicate_symbols, symbol_filter);
+		}
+		
+		if ((mode & 0x0f) != SymbolImport
+		    && imported_map.getNumObjects() > 0)
+		{
+			// Import parts like this:
+			//  - if the other map has only one part, import it into the current part
+			//  - else check if there is already a part with an equal name for every part to import and import into this part if found, else create a new part
+			for (const auto* part_to_import : imported_map.parts)
 			{
-				dest_part = getCurrentPart();
-			}
-			else
-			{
-				for (auto* check_part : parts)
+				MapPart* dest_part = nullptr;
+				if (imported_map.parts.size() == 1)
 				{
-					if (check_part->getName().compare(part_to_import->getName(), Qt::CaseInsensitive) == 0)
+					dest_part = getCurrentPart();
+				}
+				else
+				{
+					for (auto* check_part : parts)
 					{
-						dest_part = check_part;
-						break;
+						if (check_part->getName().compare(part_to_import->getName(), Qt::CaseInsensitive) == 0)
+						{
+							dest_part = check_part;
+							break;
+						}
+					}
+					if (dest_part == nullptr)
+					{
+						// Import as new part
+						dest_part = new MapPart(part_to_import->getName(), this);
+						addPart(dest_part, 0);
 					}
 				}
-				if (dest_part == nullptr)
-				{
-					// Import as new part
-					dest_part = new MapPart(part_to_import->getName(), this);
-					addPart(dest_part, 0);
-				}
+				
+				// Temporarily switch the current part for importing so the undo step gets created for the right part
+				MapPart* temp_current_part = getCurrentPart();
+				current_part_index = std::size_t(findPartIndex(dest_part));
+				
+				bool select_and_center_objects = dest_part == temp_current_part;
+				dest_part->importPart(part_to_import, symbol_map, transform, select_and_center_objects);
+				if (select_and_center_objects)
+					ensureVisibilityOfSelectedObjects(Map::FullVisibility);
+				
+				current_part_index = std::size_t(findPartIndex(temp_current_part));
 			}
-			
-			// Temporarily switch the current part for importing so the undo step gets created for the right part
-			MapPart* temp_current_part = getCurrentPart();
-			current_part_index = std::size_t(findPartIndex(dest_part));
-			
-			bool select_and_center_objects = dest_part == temp_current_part;
-			dest_part->importPart(part_to_import, symbol_map, q_transform, select_and_center_objects);
-			if (select_and_center_objects)
-				ensureVisibilityOfSelectedObjects(Map::FullVisibility);
-			
-			current_part_index = std::size_t(findPartIndex(temp_current_part));
 		}
 	}
+	
+	return symbol_map;
 }
+
+
 
 bool Map::exportToIODevice(QIODevice* stream)
 {

@@ -31,6 +31,7 @@
 #include <QScopedPointer>
 #include <QSharedData>
 #include <QString>
+#include <QTransform>
 
 #include "global.h"
 #include "map_coord.h"
@@ -194,6 +195,26 @@ public:
 	        bool merge_duplicate_symbols = true,
 	        QHash<const Symbol*, Symbol*>* out_symbol_map = nullptr
 	);
+	
+	/**
+	 * Imports another map into this map with the following strategy:
+	 *  - If the other map contains objects, import all objects with the
+	 *    minimum amount of colors and symbols needed to display them.
+	 *  - If the other map does not contain objects, import all symbols
+	 *    with the minimum amount of colors needed to display them.
+	 *  - If the other map does neither contain objects nor symbols,
+	 *    import all colors.
+	 * The transform is applied to all imported objects.
+	 */
+	QHash<const Symbol*, Symbol*> importMap(
+	        const Map& imported_map,
+	        ImportMode mode,
+	        std::vector<bool>* symbol_filter = nullptr,
+	        int symbol_insert_pos = -1,
+	        bool merge_duplicate_symbols = true,
+	        const QTransform& transform = {}
+	);
+	
 	
 	/**
 	 * Serializes the map directly into the given IO device in a known format.
