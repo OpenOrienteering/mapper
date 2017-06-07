@@ -5262,7 +5262,7 @@ rull musehjulet for å zoome.</translation>
         <location filename="../src/gdal/ogr_file_format.cpp" line="457"/>
         <location filename="../src/gdal/ogr_file_format.cpp" line="462"/>
         <source>Unable to load %n objects, reason: %1</source>
-        <translation><numerusform>Klarte ikke å laste %n objekter, årsak: %1</numerusform>
+        <translation><numerusform>Klarte ikke å laste %n objekt(er), årsak: %1</numerusform>
         <numerusform>Klarte ikke å laste %n objekter, årsak: %1</numerusform>
         </translation></message>
     <message>
