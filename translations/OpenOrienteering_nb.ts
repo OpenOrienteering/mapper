@@ -691,7 +691,7 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="253"/>
         <source>projected coordinates origin</source>
-        <translation>prosjekterte origokoordinater</translation>
+        <translation>projiserte origokoordinater</translation>
     </message>
 </context>
 <context>
@@ -1429,42 +1429,42 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="44"/>
         <source>Import with GDAL/OGR:</source>
-        <translation type="unfinished"></translation>
+        <translation>Importer med GDAL/OGR:</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="46"/>
         <source>DXF</source>
-        <translation type="unfinished"></translation>
+        <translation>DXF</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="49"/>
         <source>GPX</source>
-        <translation type="unfinished"></translation>
+        <translation>GPX</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="52"/>
         <source>OSM</source>
-        <translation type="unfinished"></translation>
+        <translation>OSM</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="56"/>
         <source>Configuration</source>
-        <translation type="unfinished">Konfigurasjon</translation>
+        <translation>Konfigurasjon</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="64"/>
         <source>Parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Parameter</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="64"/>
         <source>Value</source>
-        <translation type="unfinished">Verdi</translation>
+        <translation>Verdi</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="83"/>
         <source>GDAL/OGR</source>
-        <translation type="unfinished"></translation>
+        <translation>GDAL/OGR</translation>
     </message>
 </context>
 <context>
@@ -1703,7 +1703,7 @@
     </message>
     <message>
         <source>Projected</source>
-        <translation type="vanished">Prosjektert</translation>
+        <translation>Projisert</translation>
     </message>
 </context>
 <context>
@@ -1733,7 +1733,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="152"/>
         <source>Projected coordinates</source>
-        <translation>Prosjekterte koordinater</translation>
+        <translation>Projiserte koordinater</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="99"/>
@@ -1908,7 +1908,7 @@
     </message>
     <message>
         <source>Projected coordinates:</source>
-        <translation type="vanished">Prosjekterte koordinater:</translation>
+        <translation>Projiserte koordinater:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="472"/>
@@ -2232,7 +2232,7 @@
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="252"/>
         <source>Geospatial vector data</source>
-        <translation type="unfinished"></translation>
+        <translation>Vektordata</translation>
     </message>
 </context>
 <context>
@@ -2370,7 +2370,7 @@
         <location filename="../src/gdal/ogr_file_format.cpp" line="1180"/>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1221"/>
         <source>Could not read '%1': %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ikke lese '%1': %2</translation>
     </message>
 </context>
 <context>
@@ -3069,13 +3069,14 @@ Skal de importerte dataene omskaleres?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3871"/>
         <source>Import...</source>
-        <translation type="unfinished">Importer...</translation>
+        <translation>Importer...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3872"/>
         <source>Symbol replacement was canceled.
 Import the data anyway?</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbolerstatning ble avvist.
+Importer data likevel?</translation>
     </message>
 </context>
 <context>
@@ -3603,7 +3604,7 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="934"/>
         <source>Projected coordinates</source>
-        <translation>Prosjekterte koordinater</translation>
+        <translation>Projiserte koordinater</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="936"/>
@@ -5222,37 +5223,37 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="293"/>
         <source>Unable to setup "%1" SRS for GDAL: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Klarte ikke å sette "%1" SRS for GDAL: %2</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="300"/>
         <source>Purple</source>
-        <translation type="unfinished"></translation>
+        <translation>Lilla</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="313"/>
         <source>Point</source>
-        <translation type="unfinished">Punkt</translation>
+        <translation>Punkt</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="320"/>
         <source>Line</source>
-        <translation type="unfinished">Linje</translation>
+        <translation>Linje</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="329"/>
         <source>Area</source>
-        <translation type="unfinished"></translation>
+        <translation>Område</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="335"/>
         <source>Text</source>
-        <translation type="unfinished">Tekst</translation>
+        <translation>Tekst</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="394"/>
         <source>Unable to load layer %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Klarte ikke å laste lag %1.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gdal/ogr_file_format.cpp" line="442"/>
@@ -5261,35 +5262,33 @@ rull musehjulet for å zoome.</translation>
         <location filename="../src/gdal/ogr_file_format.cpp" line="457"/>
         <location filename="../src/gdal/ogr_file_format.cpp" line="462"/>
         <source>Unable to load %n objects, reason: %1</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>Klarte ikke å laste %n objekter, årsak: %1</numerusform>
+        <numerusform>Klarte ikke å laste %n objekter, årsak: %1</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="443"/>
         <source>Empty geometry.</source>
-        <translation type="unfinished"></translation>
+        <translation>Manglende geometri.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="448"/>
         <source>Can't determine the coordinate transformation: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ikke bestemme koordinattransformasjonen: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="453"/>
         <source>Failed to transform the coordinates.</source>
-        <translation type="unfinished"></translation>
+        <translation>Feil ved transformering av koordinatene.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="458"/>
         <source>Unknown or unsupported geometry type.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukjent eller ikke støttet geometritype.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="463"/>
         <source>Not enough coordinates.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ikke nok koordinater.</translation>
     </message>
 </context>
 <context>
