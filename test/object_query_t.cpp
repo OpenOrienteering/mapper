@@ -1,5 +1,6 @@
 /*
  *    Copyright 2016 Mitchell Krome
+ *    Copyright 2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -23,6 +24,7 @@
 
 #include "core/objects/object.h"
 #include "core/objects/object_query.h"
+#include "core/symbols/point_symbol.h"
 
 
 ObjectQueryTest::ObjectQueryTest(QObject* parent)
@@ -181,6 +183,32 @@ void ObjectQueryTest::testAndQuery()
 	auto query_and_invalid_3 = ObjectQuery(std::move(query_and_invalid_1), ObjectQuery::OperatorAnd, std::move(true_2));
 	QCOMPARE(query_and_invalid_3.getOperator(), ObjectQuery::OperatorInvalid);
 	QVERIFY(!query_and_invalid_3);
+}
+
+void ObjectQueryTest::testSymbol()
+{
+	PointSymbol symbol_1;
+	PointObject object(&symbol_1);
+	
+	auto symbol_query = ObjectQuery(&symbol_1);
+	QCOMPARE(symbol_query.getOperator(), ObjectQuery::OperatorSymbol);
+	QVERIFY(symbol_query(&object) == true);
+	
+	PointSymbol symbol_2;
+	symbol_query = ObjectQuery(&symbol_2);
+	QVERIFY(symbol_query(&object) == false);
+	
+	object.setSymbol(&symbol_2, false);
+	QVERIFY(symbol_query(&object) == true);
+	
+	auto operand = symbol_query.symbolOperand();
+	QVERIFY(operand);
+	QCOMPARE(operand, &symbol_2);
+	
+	auto clone = symbol_query;
+	operand = clone.symbolOperand();
+	QVERIFY(operand);
+	QCOMPARE(operand, &symbol_2);
 }
 
 QTEST_APPLESS_MAIN(ObjectQueryTest)

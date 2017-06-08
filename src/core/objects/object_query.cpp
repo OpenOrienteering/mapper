@@ -63,15 +63,19 @@ ObjectQuery::ObjectQuery(const ObjectQuery& query)
 {
 	if (op == ObjectQuery::OperatorInvalid)
 	{
-		; // nothing else
+		; // nothing
 	}
 	else if (op < 16)
 	{
 		new (&subqueries) LogicalOperands(query.subqueries);
 	}
-	else
+	else if (op < 32)
 	{
 		new (&tags) TagOperands(query.tags);
+	}
+	else if (op == ObjectQuery::OperatorSymbol)
+	{
+		symbol = query.symbol;
 	}
 }
 
@@ -163,6 +167,14 @@ ObjectQuery::ObjectQuery(ObjectQuery&& first, ObjectQuery::Operator op, ObjectQu
 }
 
 
+ObjectQuery::ObjectQuery(const Symbol* symbol) noexcept
+: op { ObjectQuery::OperatorSymbol }
+, symbol { symbol }
+{
+	// nothing else
+}
+
+
 
 // static
 QString ObjectQuery::labelFor(ObjectQuery::Operator op)
@@ -185,6 +197,10 @@ QString ObjectQuery::labelFor(ObjectQuery::Operator op)
 	case OperatorOr:
 		//: Very short label
 		return tr("or");
+		
+	case OperatorSymbol:
+		//: Very short label
+		return tr("Symbol");
 		
 	case OperatorInvalid:
 		//: Very short label
@@ -214,6 +230,9 @@ bool ObjectQuery::operator()(const Object* object) const
 		return (*subqueries.first)(object) && (*subqueries.second)(object);
 	case OperatorOr:
 		return (*subqueries.first)(object) || (*subqueries.second)(object);
+		
+	case OperatorSymbol:
+		return object->getSymbol() == symbol;
 		
 	case OperatorInvalid:
 		return false;
@@ -286,21 +305,40 @@ const ObjectQuery::TagOperands* ObjectQuery::tagOperands() const
 }
 
 
+const Symbol* ObjectQuery::symbolOperand() const
+{
+	const Symbol* result = nullptr;
+	if (op == ObjectQuery::OperatorSymbol)
+	{
+		result = symbol;
+	}
+	else
+	{
+		Q_ASSERT(op == ObjectQuery::OperatorSymbol);
+	}
+	return result;
+}
+
+
 
 void ObjectQuery::reset()
 {
 	if (op == ObjectQuery::OperatorInvalid)
 	{
-		; // nothing else
+		; // nothing
 	}
 	else if (op < 16)
 	{
 		subqueries.~LogicalOperands();
 		op = ObjectQuery::OperatorInvalid;
 	}
-	else
+	else if (op < 32)
 	{
 		tags.~TagOperands();
+		op = ObjectQuery::OperatorInvalid;
+	}
+	else if (op == ObjectQuery::OperatorSymbol)
+	{
 		op = ObjectQuery::OperatorInvalid;
 	}
 }
@@ -319,10 +357,14 @@ void ObjectQuery::consume(ObjectQuery&& other)
 		new (&subqueries) ObjectQuery::LogicalOperands{std::move(other.subqueries)};
 		other.subqueries.~LogicalOperands();
 	}
-	else
+	else if (op < 32)
 	{
 		new (&tags) ObjectQuery::TagOperands{std::move(other.tags)};
 		other.tags.~TagOperands();
+	}
+	else if (op == ObjectQuery::OperatorSymbol)
+	{
+		symbol = other.symbol;
 	}
 	other.op = ObjectQuery::OperatorInvalid;
 }

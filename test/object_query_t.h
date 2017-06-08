@@ -1,5 +1,6 @@
 /*
  *    Copyright 2016 Mitchell Krome
+ *    Copyright 2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -39,6 +40,7 @@ private slots:
 	void testContainsQuery();
 	void testOrQuery();
 	void testAndQuery();
+	void testSymbol();
 
 private:
 	const Object* testObject();

@@ -30,6 +30,7 @@
 class Map;
 class MapEditorController;
 class Object;
+class Symbol;
 
 
 /**
@@ -58,6 +59,9 @@ public:
 		OperatorIs       = 16, ///< Tests an existing tag for equality with the given value
 		OperatorIsNot    = 17, ///< Tests an existing tag for inequality with the given value
 		OperatorContains = 18, ///< Tests an existing tag for containing the given value
+		
+		// More operators, 32 ..
+		OperatorSymbol   = 32, ///< Test the symbol for equality.
 		
 		OperatorInvalid  = 0   ///< Marks an invalid query
 	};
@@ -113,6 +117,11 @@ public:
 	 */
 	ObjectQuery(ObjectQuery&& first, Operator op, ObjectQuery&& second) noexcept;
 	
+	/**
+	 * Constructs a query for a particular symbol.
+	 */
+	ObjectQuery(const Symbol* symbol) noexcept;
+	
 	
 	/**
 	 * Returns the underlying operator.
@@ -148,6 +157,11 @@ public:
 	 */
 	const TagOperands* tagOperands() const;
 	
+	/**
+	 * Returns the operand of symbol operations.
+	 */
+	const Symbol* symbolOperand() const;
+	
 	
 private:
 	/**
@@ -163,12 +177,15 @@ private:
 	 */
 	void consume(ObjectQuery&& other);
 	
+	using SymbolOperand = const Symbol*;
+	
 	Operator op;
 	
 	union
 	{
 		LogicalOperands subqueries;
 		TagOperands     tags;
+		SymbolOperand   symbol;
 	};
 	
 };
