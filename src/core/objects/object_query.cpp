@@ -28,6 +28,27 @@
 #include "tools/tool.h"
 
 
+// ### ObjectQuery::LogicalOperands ###
+
+ObjectQuery::LogicalOperands::LogicalOperands(const ObjectQuery::LogicalOperands& proto)
+: first(proto.first ? std::make_unique<ObjectQuery>(*proto.first) : std::make_unique<ObjectQuery>())
+, second(proto.second ? std::make_unique<ObjectQuery>(*proto.second) : std::make_unique<ObjectQuery>())
+{
+	// nothing else
+}
+
+
+ObjectQuery::LogicalOperands& ObjectQuery::LogicalOperands::operator=(const ObjectQuery::LogicalOperands& proto)
+{
+	if (proto.first)
+		first = std::make_unique<ObjectQuery>(*proto.first);
+	if (proto.second)
+		second = std::make_unique<ObjectQuery>(*proto.second);
+	return *this;
+}
+
+
+
 // ### ObjectQuery ###
 
 ObjectQuery::ObjectQuery() noexcept
@@ -38,100 +59,107 @@ ObjectQuery::ObjectQuery() noexcept
 
 
 ObjectQuery::ObjectQuery(const ObjectQuery& query)
-: op        { query.op }
-, key_arg   { query.key_arg }
-, value_arg { query.value_arg }
-, left_arg  { query.left_arg ? std::make_unique<ObjectQuery>(*query.left_arg) : std::make_unique<ObjectQuery>() }
-, right_arg { query.right_arg ? std::make_unique<ObjectQuery>(*query.right_arg) : std::make_unique<ObjectQuery>() }
+: op { query.op }
 {
-	// nothing else
+	if (op == ObjectQuery::OperatorInvalid)
+	{
+		; // nothing else
+	}
+	else if (op < 16)
+	{
+		new (&subqueries) LogicalOperands(query.subqueries);
+	}
+	else
+	{
+		new (&tags) TagOperands(query.tags);
+	}
 }
 
 
-ObjectQuery::ObjectQuery(ObjectQuery&& query) noexcept
-: op        { query.op }
-, key_arg   { std::move(query.key_arg) }
-, value_arg { std::move(query.value_arg) }
-, left_arg  { std::move(query.left_arg) }
-, right_arg { std::move(query.right_arg) }
+ObjectQuery::ObjectQuery(ObjectQuery&& proto) noexcept
+: op { ObjectQuery::OperatorInvalid }
 {
-	query.op = ObjectQuery::OperatorInvalid;
+	consume(std::move(proto));
 }
 
 
-ObjectQuery& ObjectQuery::operator=(const ObjectQuery& query)
+ObjectQuery& ObjectQuery::operator=(const ObjectQuery& proto) noexcept
 {
-	op = query.op;
-	key_arg = query.key_arg;
-	value_arg = query.value_arg;
-	if (query.left_arg)
-		left_arg = std::make_unique<ObjectQuery>(*query.left_arg);
-	if (query.right_arg)
-		right_arg = std::make_unique<ObjectQuery>(*query.right_arg);
+	reset();
+	consume(ObjectQuery{proto});
 	return *this;
 }
 
 
-ObjectQuery& ObjectQuery::operator=(ObjectQuery&& query) noexcept
+ObjectQuery& ObjectQuery::operator=(ObjectQuery&& proto) noexcept
 {
-	op = query.op;
-	key_arg = std::move(query.key_arg);
-	value_arg = std::move(query.value_arg);
-	left_arg = std::move(query.left_arg);
-	right_arg = std::move(query.right_arg);
-	query.op = ObjectQuery::OperatorInvalid;
+	reset();
+	consume(std::move(proto));	
 	return *this;
+}
+
+
+ObjectQuery::~ObjectQuery()
+{
+	reset();
 }
 
 
 ObjectQuery::ObjectQuery(const QString& key, ObjectQuery::Operator op, const QString& value)
-: op        { op }
-, key_arg   { key }
-, value_arg { value }
+: op { op }
+, tags { key, value }
 {
+	// Can't have an empty key (but can have empty value)
 	// Must be a key/value operator
 	Q_ASSERT(op >= 16);
 	Q_ASSERT(op <= 18);
-	if (op < 16 || op > 18)
-		this->op = OperatorInvalid;
-
-	// Can't have an empty key (can have empty value but)
-	if (key.length() == 0)
-		this->op = OperatorInvalid;
+	if (op < 16 || op > 18
+	    || key.length() == 0)
+	{
+		reset();
+	}
 }
 
 
-ObjectQuery::ObjectQuery(const ObjectQuery& left, ObjectQuery::Operator op, const ObjectQuery& right)
-: op        { op }
-, left_arg  { std::make_unique<ObjectQuery>(left) }
-, right_arg { std::make_unique<ObjectQuery>(right) }
+ObjectQuery::ObjectQuery(const ObjectQuery& first, ObjectQuery::Operator op, const ObjectQuery& second)
+: op { op }
+, subqueries {}
 {
+	// Both sub-queries must be valid.
 	// Must be a logical operator
 	Q_ASSERT(op >= 1);
 	Q_ASSERT(op <= 2);
-	if (op < 1 || op > 2)
-		this->op = OperatorInvalid;
-	
-	// Both sub-queries must be valid.
-	if (!*left_arg || !*right_arg)
-		this->op = OperatorInvalid;
+	if (op < 1 || op > 2
+	    || !first || !second)
+	{
+		reset();
+	}
+	else
+	{
+		subqueries.first = std::make_unique<ObjectQuery>(first);
+		subqueries.second = std::make_unique<ObjectQuery>(second);
+	}
 }
 
 
-ObjectQuery::ObjectQuery(ObjectQuery&& left, ObjectQuery::Operator op, ObjectQuery&& right) noexcept
-: op        { op }
-, left_arg  { std::make_unique<ObjectQuery>(std::move(left)) }
-, right_arg { std::make_unique<ObjectQuery>(std::move(right)) }
+ObjectQuery::ObjectQuery(ObjectQuery&& first, ObjectQuery::Operator op, ObjectQuery&& second) noexcept
+: op { op }
+, subqueries {}
 {
+	// Both sub-queries must be valid.
 	// Must be a logical operator
 	Q_ASSERT(op >= 1);
 	Q_ASSERT(op <= 2);
-	if (op < 1 || op > 2)
-		this->op = OperatorInvalid;
-	
-	// Both sub-queries must be valid.
-	if (!*left_arg || !*right_arg)
-		this->op = OperatorInvalid;
+	if (op < 1 || op > 2
+	    || !first || !second)
+	{
+		reset();
+	}
+	else
+	{
+		subqueries.first = std::make_unique<ObjectQuery>(std::move(first));
+		subqueries.second = std::make_unique<ObjectQuery>(std::move(second));
+	}
 }
 
 
@@ -170,22 +198,22 @@ QString ObjectQuery::labelFor(ObjectQuery::Operator op)
 
 bool ObjectQuery::operator()(const Object* object) const
 {
-	const auto tags = object->tags();
+	const auto& object_tags = object->tags();
 
 	switch(op)
 	{
 	case OperatorIs:
-		return tags.contains(key_arg) && tags.value(key_arg) == value_arg;
+		return object_tags.contains(tags.key) && object_tags.value(tags.key) == tags.value;
 	case OperatorIsNot:
 		// If the object does have the tag, not is true
-		return !tags.contains(key_arg) || tags.value(key_arg) != value_arg;
+		return !object_tags.contains(tags.key) || object_tags.value(tags.key) != tags.value;
 	case OperatorContains:
-		return tags.contains(key_arg) && tags.value(key_arg).contains(value_arg);
+		return object_tags.contains(tags.key) && object_tags.value(tags.key).contains(tags.value);
 		
 	case OperatorAnd:
-		return (*left_arg)(object) && (*right_arg)(object);
+		return (*subqueries.first)(object) && (*subqueries.second)(object);
 	case OperatorOr:
-		return (*left_arg)(object) || (*right_arg)(object);
+		return (*subqueries.first)(object) || (*subqueries.second)(object);
 		
 	case OperatorInvalid:
 		return false;
@@ -223,3 +251,46 @@ void ObjectQuery::selectMatchingObjects(Map* map, MapEditorController* controlle
 			controller->setEditTool();
 	}
 }
+
+
+
+void ObjectQuery::reset()
+{
+	if (op == ObjectQuery::OperatorInvalid)
+	{
+		; // nothing else
+	}
+	else if (op < 16)
+	{
+		subqueries.~LogicalOperands();
+		op = ObjectQuery::OperatorInvalid;
+	}
+	else
+	{
+		tags.~TagOperands();
+		op = ObjectQuery::OperatorInvalid;
+	}
+}
+
+
+void ObjectQuery::consume(ObjectQuery&& other)
+{
+	Q_ASSERT(op == ObjectQuery::OperatorInvalid);
+	op = other.op;
+	if (op == ObjectQuery::OperatorInvalid)
+	{
+		; // nothing else
+	}
+	else if (op < 16)
+	{
+		new (&subqueries) ObjectQuery::LogicalOperands{std::move(other.subqueries)};
+		other.subqueries.~LogicalOperands();
+	}
+	else
+	{
+		new (&tags) ObjectQuery::TagOperands{std::move(other.tags)};
+		other.tags.~TagOperands();
+	}
+	other.op = ObjectQuery::OperatorInvalid;
+}
+

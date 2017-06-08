@@ -1,5 +1,6 @@
 /*
  *    Copyright 2016 Mitchell Krome
+ *    Copyright 2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -61,11 +62,34 @@ public:
 		OperatorInvalid  = 0   ///< Marks an invalid query
 	};
 	
+	// Parameters for logical operations
+	struct LogicalOperands
+	{
+		std::unique_ptr<ObjectQuery> first;
+		std::unique_ptr<ObjectQuery> second;
+		
+		LogicalOperands() = default;
+		LogicalOperands(const LogicalOperands& proto);
+		LogicalOperands(LogicalOperands&&) = default;
+		~LogicalOperands() = default;
+		LogicalOperands& operator=(const LogicalOperands& proto);
+		LogicalOperands& operator=(LogicalOperands&&) = default;
+	 };
+	
+	// Parameters for operations on tags.
+	struct TagOperands
+	{
+		QString key;
+		QString value;
+	};
+
 	ObjectQuery() noexcept;
 	ObjectQuery(const ObjectQuery& query);
-	ObjectQuery(ObjectQuery&& query) noexcept;
-	ObjectQuery& operator=(const ObjectQuery& query);
-	ObjectQuery& operator=(ObjectQuery&& query) noexcept;
+	ObjectQuery(ObjectQuery&& proto) noexcept;
+	ObjectQuery& operator=(const ObjectQuery& proto) noexcept;
+	ObjectQuery& operator=(ObjectQuery&& proto) noexcept;
+	
+	~ObjectQuery();
 	
 	/**
 	 * Returns true if the query is valid.
@@ -82,12 +106,12 @@ public:
 	 * 
 	 * The sub-queries are copied.
 	 */
-	ObjectQuery(const ObjectQuery& left, Operator op, const ObjectQuery& right);
+	ObjectQuery(const ObjectQuery& first, Operator op, const ObjectQuery& second);
 	
 	/**
 	 * Constructs a query which connects two sub-queries.
 	 */
-	ObjectQuery(ObjectQuery&& left, Operator op, ObjectQuery&& right) noexcept;
+	ObjectQuery(ObjectQuery&& first, Operator op, ObjectQuery&& second) noexcept;
 	
 	
 	/**
@@ -115,15 +139,27 @@ public:
 	
 	
 private:
+	/**
+	 * Resets the query to the OperatorInvalid state.
+	 */
+	void reset();
+	
+	/**
+	 * Moves the other query's data to this one which must be in OperatorInvalid state.
+	 * 
+	 * Leaves the other object in OperatorInvalid state.
+	 * In effect, this is a move assignment with a strong precondition.
+	 */
+	void consume(ObjectQuery&& other);
+	
 	Operator op;
 	
-	// For compare ops
-	QString key_arg;
-	QString value_arg;
+	union
+	{
+		LogicalOperands subqueries;
+		TagOperands     tags;
+	};
 	
-	// For logical ops
-	std::unique_ptr<ObjectQuery> left_arg;
-	std::unique_ptr<ObjectQuery> right_arg;
 };
 
 Q_DECLARE_METATYPE(ObjectQuery::Operator)
