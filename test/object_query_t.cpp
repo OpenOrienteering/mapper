@@ -67,6 +67,11 @@ void ObjectQueryTest::testIsQuery()
 	QCOMPARE(query_moved_false.getOperator(), ObjectQuery::OperatorIs);
 	QCOMPARE(single_query_is_false_2.getOperator(), ObjectQuery::OperatorInvalid);
 	QVERIFY(query_moved_false(object) == false);
+	
+	auto operands = query_moved_false.tagOperands();
+	QVERIFY(operands);
+	QCOMPARE(operands->key, QString::fromLatin1("d"));
+	QCOMPARE(operands->value, QString::fromLatin1("1"));
 }
 
 void ObjectQueryTest::testIsNotQuery()
@@ -122,6 +127,13 @@ void ObjectQueryTest::testOrQuery()
 	auto false_2 = ObjectQuery(QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("2"));
 	ObjectQuery single_query_or_both_false{std::move(false_1), ObjectQuery::OperatorOr, std::move(false_2)};
 	QVERIFY(single_query_or_both_false(object) == false);
+	
+	auto operands = single_query_or_both_false.logicalOperands();
+	QVERIFY(operands);
+	QVERIFY(operands->first.get());
+	QCOMPARE(operands->first->getOperator(), ObjectQuery::OperatorIs);
+	QVERIFY(operands->second.get());
+	QCOMPARE(operands->second->getOperator(), ObjectQuery::OperatorIs);
 }
 
 void ObjectQueryTest::testAndQuery()

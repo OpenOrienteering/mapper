@@ -138,6 +138,17 @@ public:
 	void selectMatchingObjects(Map* map, MapEditorController* controller) const;
 	
 	
+	/**
+	 * Returns the operands of logical query operations.
+	 */
+	const LogicalOperands* logicalOperands() const;
+	
+	/**
+	 * Returns the operands of logical query operations.
+	 */
+	const TagOperands* tagOperands() const;
+	
+	
 private:
 	/**
 	 * Resets the query to the OperatorInvalid state.

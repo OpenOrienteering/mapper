@@ -254,6 +254,39 @@ void ObjectQuery::selectMatchingObjects(Map* map, MapEditorController* controlle
 
 
 
+const ObjectQuery::LogicalOperands* ObjectQuery::logicalOperands() const
+{
+	const LogicalOperands* result = nullptr;
+	if (op >= 1 && op <= 2)
+	{
+		result = &subqueries;
+	}
+	else
+	{
+		Q_ASSERT(op >= 1);
+		Q_ASSERT(op <= 2);
+	}
+	return result;
+}
+
+
+const ObjectQuery::TagOperands* ObjectQuery::tagOperands() const
+{
+	const TagOperands* result = nullptr;
+	if (op >= 16 && op <= 18)
+	{
+		result = &tags;
+	}
+	else
+	{
+		Q_ASSERT(op >= 16);
+		Q_ASSERT(op <= 18);
+	}
+	return result;
+}
+
+
+
 void ObjectQuery::reset()
 {
 	if (op == ObjectQuery::OperatorInvalid)
