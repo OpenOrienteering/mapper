@@ -592,14 +592,14 @@ void CutTool::drawImpl(QPainter* painter, MapWidget* widget)
 	
 	if (editingInProgress())
 	{
-		pointHandles().draw(painter, widget, edit_object, hover_point);
+		pointHandles().draw(painter, widget, edit_object, hover_point, false);
 	}
 	else if (map->selectedObjects().size() <= max_objects_for_handle_display)
 	{
 		for (const auto object: map->selectedObjects())
 		{
 			auto hover_point = MapCoordVector::size_type { hover_object == object ? this->hover_point : no_point };
-			pointHandles().draw(painter, widget, object, hover_point);
+			pointHandles().draw(painter, widget, object, hover_point, false);
 		}
 	}
 	
