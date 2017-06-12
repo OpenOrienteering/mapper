@@ -282,6 +282,7 @@ void CutTool::updateCuttingLine(MapCoordF cursor_pos)
 {
 	Q_ASSERT(editingInProgress());
 	
+	updateHoverState(cursor_pos);
 	PathCoord path_coord;
 	if (hover_state != EditTool::OverObjectNode)
 	{
@@ -591,14 +592,14 @@ void CutTool::drawImpl(QPainter* painter, MapWidget* widget)
 	
 	if (editingInProgress())
 	{
-		pointHandles().draw(painter, widget, edit_object, hover_point);
+		pointHandles().draw(painter, widget, edit_object, hover_point, false);
 	}
 	else if (map->selectedObjects().size() <= max_objects_for_handle_display)
 	{
 		for (const auto object: map->selectedObjects())
 		{
 			auto hover_point = MapCoordVector::size_type { hover_object == object ? this->hover_point : no_point };
-			pointHandles().draw(painter, widget, object, hover_point);
+			pointHandles().draw(painter, widget, object, hover_point, false);
 		}
 	}
 	
@@ -628,7 +629,17 @@ void CutTool::updateHoverState(MapCoordF cur_pos_map)
 	PathObject* new_hover_object = nullptr;
 	auto new_hover_point = MapCoordVector::size_type { no_point };
 	
-	if (map()->selectedObjects().size() <= max_objects_for_handle_display)
+	if (editingInProgress())
+	{
+		Q_ASSERT(edit_object);
+		new_hover_object = edit_object;
+		new_hover_point = findHoverPoint(cur_map_widget->mapToViewport(cur_pos_map), cur_map_widget, edit_object, false);
+		if (new_hover_point != no_point)
+		{
+			new_hover_state = HoverFlag::OverObjectNode;
+		}
+	}
+	else if (map()->selectedObjects().size() <= max_objects_for_handle_display)
 	{
 		auto best_distance_sq = std::numeric_limits<double>::max();
 		for (const auto object : map()->selectedObjects())

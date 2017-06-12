@@ -835,7 +835,7 @@
         <location filename="../src/tools/draw_path_tool.cpp" line="1065"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="700"/>
         <source>&lt;b&gt;Dash points on.&lt;/b&gt; </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;קו מקווקו פעיל.&lt;/b&gt; </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1071"/>
@@ -916,17 +916,17 @@
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1081"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Start a straight line. &lt;b&gt;Drag&lt;/b&gt;: Start a curve. </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;b&gt;לחץ&lt;/b&gt;: התחל קו ישר. &lt;b&gt;גרור&lt;/b&gt;: התחל עקומה. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1090"/>
         <source>&lt;b&gt;%1+Drag&lt;/b&gt;: Follow existing objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+גרור&lt;/b&gt;: עקוב אחר אובייקט קיים. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1100"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Draw a straight line. &lt;b&gt;Drag&lt;/b&gt;: Draw a curve. &lt;b&gt;Right or double click&lt;/b&gt;: Finish the path. &lt;b&gt;%1&lt;/b&gt;: Close the path. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;לחץ&lt;/b&gt;: צייר קו ישר. &lt;b&gt;גרור&lt;/b&gt;: צייר עקומה. &lt;b&gt;קליק ימיני או כפול&lt;/b&gt;: סיים את המסלול. &lt;b&gt;%1&lt;/b&gt;: סגור מסלול. </translation>
     </message>
 </context>
 <context>
