@@ -40,6 +40,7 @@ private slots:
 	void testContainsQuery();
 	void testOrQuery();
 	void testAndQuery();
+	void testSearch();
 	void testSymbol();
 
 private:

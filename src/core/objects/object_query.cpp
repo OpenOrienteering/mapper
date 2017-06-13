@@ -125,6 +125,21 @@ ObjectQuery::ObjectQuery(const QString& key, ObjectQuery::Operator op, const QSt
 }
 
 
+ObjectQuery::ObjectQuery(ObjectQuery::Operator op, const QString& value)
+: op { op }
+, tags { {}, value }
+{
+	// Can't have an empty key (but can have empty value)
+	// Must be a key/value operator
+	Q_ASSERT(op == 19);
+	if (op != 19
+	    || value.length() == 0)
+	{
+		reset();
+	}
+}
+	
+
 ObjectQuery::ObjectQuery(const ObjectQuery& first, ObjectQuery::Operator op, const ObjectQuery& second)
 : op { op }
 , subqueries {}
@@ -190,6 +205,9 @@ QString ObjectQuery::labelFor(ObjectQuery::Operator op)
 	case OperatorContains:
 		//: Very short label
 		return tr("contains");
+	case OperatorSearch:
+		//: Very short label
+		return tr("Search");
 		
 	case OperatorAnd:
 		//: Very short label
@@ -225,6 +243,16 @@ bool ObjectQuery::operator()(const Object* object) const
 		return !object_tags.contains(tags.key) || object_tags.value(tags.key) != tags.value;
 	case OperatorContains:
 		return object_tags.contains(tags.key) && object_tags.value(tags.key).contains(tags.value);
+	case OperatorSearch:
+		if (object->getSymbol() && object->getSymbol()->getName().contains(tags.value, Qt::CaseInsensitive))
+			return true;
+		for (auto it = object_tags.begin(), last = object_tags.end(); it != last; ++it)
+		{
+			if (it.key().contains(tags.value, Qt::CaseInsensitive)
+			    || it.value().contains(tags.value, Qt::CaseInsensitive))
+				return true;
+		}
+		return false;
 		
 	case OperatorAnd:
 		return (*subqueries.first)(object) && (*subqueries.second)(object);
@@ -292,14 +320,14 @@ const ObjectQuery::LogicalOperands* ObjectQuery::logicalOperands() const
 const ObjectQuery::TagOperands* ObjectQuery::tagOperands() const
 {
 	const TagOperands* result = nullptr;
-	if (op >= 16 && op <= 18)
+	if (op >= 16 && op <= 19)
 	{
 		result = &tags;
 	}
 	else
 	{
 		Q_ASSERT(op >= 16);
-		Q_ASSERT(op <= 18);
+		Q_ASSERT(op <= 19);
 	}
 	return result;
 }

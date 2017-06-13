@@ -56,9 +56,10 @@ public:
 		OperatorOr       = 2,  ///< Or-chains two object queries
 		
 		// Operators 16 .. 18 operate on object tags
-		OperatorIs       = 16, ///< Tests an existing tag for equality with the given value
-		OperatorIsNot    = 17, ///< Tests an existing tag for inequality with the given value
-		OperatorContains = 18, ///< Tests an existing tag for containing the given value
+		OperatorIs       = 16, ///< Tests an existing tag for equality with the given value (case-sensitive)
+		OperatorIsNot    = 17, ///< Tests an existing tag for inequality with the given value (case-sensitive)
+		OperatorContains = 18, ///< Tests an existing tag for containing the given value (case-sensitive)
+		OperatorSearch   = 19, ///< Tests if the symbol name, a tag key or a tag value contains the given value (case-insensitive)
 		
 		// More operators, 32 ..
 		OperatorSymbol   = 32, ///< Test the symbol for equality.
@@ -104,6 +105,13 @@ public:
 	 * Constructs a query for a key and value.
 	 */
 	ObjectQuery(const QString& key, Operator op, const QString& value);
+	
+	/**
+	 * Constructs a query for a value.
+	 * 
+	 * Valid for OperatorSearch.
+	 */
+	ObjectQuery(Operator op, const QString& value);
 	
 	/**
 	 * Constructs a query which connects two sub-queries.

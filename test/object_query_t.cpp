@@ -185,6 +185,25 @@ void ObjectQueryTest::testAndQuery()
 	QVERIFY(!query_and_invalid_3);
 }
 
+void ObjectQueryTest::testSearch()
+{
+	auto object = testObject();
+
+	ObjectQuery single_query_is_true_1{ObjectQuery::OperatorSearch, QLatin1String("Bc")};
+	QVERIFY(single_query_is_true_1(object) == true);
+	ObjectQuery single_query_is_true_2{ObjectQuery::OperatorSearch, QLatin1String("23")};
+	QVERIFY(single_query_is_true_2(object) == true);
+	ObjectQuery single_query_is_false_1{ObjectQuery::OperatorSearch, QLatin1String("Ac")};
+	QVERIFY(single_query_is_false_1(object) == false);
+	ObjectQuery single_query_is_false_2{ObjectQuery::OperatorSearch, QLatin1String("13")};
+	QVERIFY(single_query_is_false_2(object) == false);
+	
+	auto clone = single_query_is_true_1;
+	auto operands = clone.tagOperands();
+	QVERIFY(operands);
+	QCOMPARE(operands->value, QLatin1String("Bc"));
+}
+
 void ObjectQueryTest::testSymbol()
 {
 	PointSymbol symbol_1;
