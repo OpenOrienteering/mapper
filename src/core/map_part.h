@@ -173,7 +173,7 @@ public:
 	 * Uses symbol_map to replace all symbols contained there.
 	 * No replacement is done for symbols which are not in the symbol_map.
 	 */
-	void importPart(const MapPart* other, QHash<const Symbol*, Symbol*>& symbol_map,
+	void importPart(const MapPart* other, const QHash<const Symbol*, Symbol*>& symbol_map,
 		const QTransform& transform, bool select_new_objects);
 	
 	
