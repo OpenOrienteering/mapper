@@ -1510,13 +1510,13 @@ void Map::determineColorsInUse(const std::vector< bool >& by_which_symbols, std:
 		return;
 	}
 	
-	Q_ASSERT((int)by_which_symbols.size() == getNumSymbols());
-	out.assign(getNumColors(), false);
-	for (int c = 0; c < getNumColors(); ++c)
+	Q_ASSERT(int(by_which_symbols.size()) == getNumSymbols());
+	out.assign(std::size_t(getNumColors()), false);
+	for (std::size_t c = 0, last = std::size_t(getNumColors()); c != last; ++c)
 	{
-		for (int s = 0; s < getNumSymbols(); ++s)
+		for (std::size_t s = 0, last_s = std::size_t(getNumSymbols()); s != last_s; ++s)
 		{
-			if (by_which_symbols[s] && getSymbol(s)->containsColor(getColor(c)))
+			if (by_which_symbols[s] && getSymbol(int(s))->containsColor(getColor(int(c))))
 			{
 				out[c] = true;
 				break;
