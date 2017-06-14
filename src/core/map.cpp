@@ -1523,6 +1523,36 @@ void Map::determineColorsInUse(const std::vector< bool >& by_which_symbols, std:
 			}
 		}
 	}
+	
+	// Include required spot colors, too
+	for (std::size_t c = 0, last_c = std::size_t(getNumColors()); c != last_c; ++c)
+	{
+		if (out[c])
+			continue;
+		
+		const auto color = getColor(int(c));
+		if (color->getSpotColorMethod() != MapColor::SpotColor)
+			continue;
+		
+		for (std::size_t o = 0, last_o = std::size_t(getNumColors()); o != last_o; ++o)
+		{
+			if (!o)
+				continue;
+			
+			const auto other = getColor(int(o));
+			if (other->getSpotColorMethod() != MapColor::CustomColor)
+				continue;
+			
+			const auto& components = other->getComponents();
+			if (std::any_of(begin(components), end(components), [color](auto& component) {
+			    return component.spot_color == color;
+			}))
+			{
+				out[c] = true;
+				break;
+			}
+		}
+	}
 }
 
 void Map::checkSpotColorPresence()
