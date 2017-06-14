@@ -1536,7 +1536,7 @@ void Map::determineColorsInUse(const std::vector< bool >& by_which_symbols, std:
 		
 		for (std::size_t o = 0, last_o = std::size_t(getNumColors()); o != last_o; ++o)
 		{
-			if (!o)
+			if (!out[o])
 				continue;
 			
 			const auto other = getColor(int(o));
