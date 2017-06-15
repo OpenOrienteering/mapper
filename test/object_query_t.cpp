@@ -62,13 +62,15 @@ void ObjectQueryTest::testIsQuery()
 	
 	auto query_copy_true = single_query_is_true;
 	QCOMPARE(query_copy_true.getOperator(), ObjectQuery::OperatorIs);
-	QCOMPARE(single_query_is_true.getOperator(), ObjectQuery::OperatorIs);
+	QCOMPARE(query_copy_true, single_query_is_true);
 	QVERIFY(query_copy_true(object) == true);
+	QVERIFY(query_copy_true != single_query_is_false_1);
 	
 	auto query_moved_false = std::move(single_query_is_false_2);
 	QCOMPARE(query_moved_false.getOperator(), ObjectQuery::OperatorIs);
 	QCOMPARE(single_query_is_false_2.getOperator(), ObjectQuery::OperatorInvalid);
 	QVERIFY(query_moved_false(object) == false);
+	QVERIFY(query_moved_false != single_query_is_false_2);
 	
 	auto operands = query_moved_false.tagOperands();
 	QVERIFY(operands);
@@ -172,8 +174,9 @@ void ObjectQueryTest::testAndQuery()
 	
 	auto query_copy_true = single_query_and_both_true;
 	QCOMPARE(query_copy_true.getOperator(), ObjectQuery::OperatorAnd);
-	QCOMPARE(single_query_and_both_true.getOperator(), ObjectQuery::OperatorAnd);
+	QCOMPARE(query_copy_true, single_query_and_both_true);
 	QVERIFY(query_copy_true(object) == true);
+	QVERIFY(query_copy_true != single_query_and_left_true_right_false);
 	
 	auto query_moved_false = std::move(single_query_and_right_true_left_false);
 	QCOMPARE(query_moved_false.getOperator(), ObjectQuery::OperatorAnd);
@@ -199,6 +202,8 @@ void ObjectQueryTest::testSearch()
 	QVERIFY(single_query_is_false_2(object) == false);
 	
 	auto clone = single_query_is_true_1;
+	QCOMPARE(clone, single_query_is_true_1);
+	QVERIFY(clone != single_query_is_true_2);
 	auto operands = clone.tagOperands();
 	QVERIFY(operands);
 	QCOMPARE(operands->value, QLatin1String("Bc"));
@@ -225,6 +230,8 @@ void ObjectQueryTest::testSymbol()
 	QCOMPARE(operand, &symbol_2);
 	
 	auto clone = symbol_query;
+	QCOMPARE(clone, symbol_query);
+	QVERIFY(clone != ObjectQuery{});
 	operand = clone.symbolOperand();
 	QVERIFY(operand);
 	QCOMPARE(operand, &symbol_2);

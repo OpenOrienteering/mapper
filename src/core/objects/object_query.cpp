@@ -397,3 +397,36 @@ void ObjectQuery::consume(ObjectQuery&& other)
 	other.op = ObjectQuery::OperatorInvalid;
 }
 
+
+
+bool operator==(const ObjectQuery::TagOperands& lhs, const ObjectQuery::TagOperands& rhs)
+{
+	return lhs.key == rhs.key && lhs.value == rhs.value;
+}
+
+bool operator==(const ObjectQuery& lhs, const ObjectQuery& rhs)
+{
+	if (lhs.op != rhs.op)
+		return false;
+	
+	switch(lhs.op)
+	{
+	case ObjectQuery::OperatorIs:
+	case ObjectQuery::OperatorIsNot:
+	case ObjectQuery::OperatorContains:
+	case ObjectQuery::OperatorSearch:
+		return lhs.tags == rhs.tags;
+		
+	case ObjectQuery::OperatorAnd:
+	case ObjectQuery::OperatorOr:
+		return *lhs.subqueries.first == *rhs.subqueries.second;
+		
+	case ObjectQuery::OperatorSymbol:
+		return lhs.symbol == rhs.symbol;
+		
+	case ObjectQuery::OperatorInvalid:
+		return false;
+	}
+	
+	Q_UNREACHABLE();
+}

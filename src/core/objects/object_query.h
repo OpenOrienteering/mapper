@@ -171,6 +171,8 @@ public:
 	const Symbol* symbolOperand() const;
 	
 	
+	friend bool operator==(const ObjectQuery& lhs, const ObjectQuery& rhs);
+	
 private:
 	/**
 	 * Resets the query to the OperatorInvalid state.
@@ -199,5 +201,27 @@ private:
 };
 
 Q_DECLARE_METATYPE(ObjectQuery::Operator)
+
+bool operator==(const ObjectQuery& lhs, const ObjectQuery& rhs);
+
+bool operator!=(const ObjectQuery& lhs, const ObjectQuery& rhs);
+
+bool operator==(const ObjectQuery::TagOperands& lhs, const ObjectQuery::TagOperands& rhs);
+
+bool operator!=(const ObjectQuery::TagOperands& lhs, const ObjectQuery::TagOperands& rhs);
+
+
+
+inline
+bool operator!=(const ObjectQuery& lhs, const ObjectQuery& rhs)
+{
+	return !(lhs==rhs);
+}
+
+inline
+bool operator!=(const ObjectQuery::TagOperands& lhs, const ObjectQuery::TagOperands& rhs)
+{
+	return !(lhs==rhs);
+}
 
 #endif
