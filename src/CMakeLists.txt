@@ -64,6 +64,7 @@ set(Mapper_Common_SRCS
   core/objects/boolean_tool.cpp
   core/objects/object.cpp
   core/objects/object_query.cpp
+  core/objects/symbol_rule_set.cpp
   core/objects/text_object.cpp
   
   core/renderables/renderable.cpp
