@@ -1782,10 +1782,14 @@ void MapEditorController::showColorWindow(bool show)
 	color_dock_widget->setVisible(show);
 }
 
+
+
 void MapEditorController::loadSymbolsFromClicked()
 {
-	ReplaceSymbolSetDialog::showDialog(window, map);
+	ReplaceSymbolSetDialog::showDialog(window, *map);
 }
+
+
 void MapEditorController::loadColorsFromClicked()
 {
 	// TODO
@@ -3868,7 +3872,7 @@ bool MapEditorController::importMapFile(const QString& filename, bool show_error
 				                     Map::tr("Cannot open file:\n%1\nfor reading.").arg(crt_filename));
 				return false;
 			}
-			if (!ReplaceSymbolSetDialog::showDialogForCRT(window, map, &imported_map, crt_file))
+			if (!ReplaceSymbolSetDialog::showDialogForCRT(window, imported_map, *map, crt_file))
 			{
 				auto choice = QMessageBox::question(window, Map::tr("Import..."),
 				                                    Map::tr("Symbol replacement was canceled.\n"
