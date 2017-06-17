@@ -73,7 +73,7 @@ SettingsDialog::SettingsDialog(QWidget* parent)
 		buttons |=  QDialogButtonBox::Reset | QDialogButtonBox::Cancel | QDialogButtonBox::Help;
 		
 		tab_widget = new QTabWidget();
-#ifndef Q_OS_OSX
+#ifndef Q_OS_MACOS
 		tab_widget->setDocumentMode(true);
 #endif
 		layout->addWidget(tab_widget, 1);
