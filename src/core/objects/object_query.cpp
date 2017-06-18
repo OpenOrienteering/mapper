@@ -419,7 +419,8 @@ bool operator==(const ObjectQuery& lhs, const ObjectQuery& rhs)
 		
 	case ObjectQuery::OperatorAnd:
 	case ObjectQuery::OperatorOr:
-		return *lhs.subqueries.first == *rhs.subqueries.second;
+		return *lhs.subqueries.first == *rhs.subqueries.first
+		       && *lhs.subqueries.second == *rhs.subqueries.second;
 		
 	case ObjectQuery::OperatorSymbol:
 		return lhs.symbol == rhs.symbol;

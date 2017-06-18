@@ -55,10 +55,14 @@ void ObjectQueryTest::testIsQuery()
 
 	ObjectQuery single_query_is_true{QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("1")};
 	QVERIFY(single_query_is_true(object) == true);
+	QVERIFY(single_query_is_true == single_query_is_true);
+	QVERIFY(single_query_is_true != ObjectQuery{});
 	ObjectQuery single_query_is_false_1{QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("2")};
 	QVERIFY(single_query_is_false_1(object) == false);
 	ObjectQuery single_query_is_false_2{QLatin1String("d"), ObjectQuery::OperatorIs, QLatin1String("1")}; // key d doesn't exist
 	QVERIFY(single_query_is_false_2(object) == false);
+	QVERIFY(single_query_is_false_2 != single_query_is_true);
+	QVERIFY(single_query_is_true != single_query_is_false_2);
 	
 	auto query_copy_true = single_query_is_true;
 	QCOMPARE(query_copy_true.getOperator(), ObjectQuery::OperatorIs);
@@ -116,11 +120,15 @@ void ObjectQueryTest::testOrQuery()
 	auto true_2 = ObjectQuery(QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("1"));
 	ObjectQuery single_query_or_both_true{std::move(true_1), ObjectQuery::OperatorOr, std::move(true_2)};
 	QVERIFY(single_query_or_both_true(object) == true);
+	QVERIFY(single_query_or_both_true == single_query_or_both_true);
+	QVERIFY(single_query_or_both_true != ObjectQuery{});
 
 	true_1 = ObjectQuery(QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("1"));
 	auto false_1 = ObjectQuery(QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("2"));
 	ObjectQuery single_query_or_left_true_right_false{std::move(true_1), ObjectQuery::OperatorOr, std::move(false_1)};
 	QVERIFY(single_query_or_left_true_right_false(object) == true);
+	QVERIFY(single_query_or_left_true_right_false != single_query_or_both_true);
+	QVERIFY(single_query_or_both_true != single_query_or_left_true_right_false);
 
 	true_1 = ObjectQuery(QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("1"));
 	false_1 = ObjectQuery(QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("2"));
