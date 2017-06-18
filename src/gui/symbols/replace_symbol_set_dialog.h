@@ -52,11 +52,18 @@ class ReplaceSymbolSetDialog : public QDialog
 Q_OBJECT
 public:
 	/**
-	 * Lets the user select a file to load the symbols from and shows the dialog.
+	 * Lets the user select a symbol set file, and shows the dialog.
 	 * 
 	 * Returns true if the replacement has been finished, false if aborted.
 	 */
 	static bool showDialog(QWidget* parent, Map& object_map);
+	
+	/**
+	 * Lets the user select a CRT file, and shows the dialog.
+	 * 
+	 * Returns true if the replacement has been finished, false if aborted.
+	 */
+	static bool showDialogForCRT(QWidget* parent, Map& object_map, const Map& symbol_set);
 	
 	/**
 	 * Shows the dialog for a given object map, symbol map, and cross reference file.

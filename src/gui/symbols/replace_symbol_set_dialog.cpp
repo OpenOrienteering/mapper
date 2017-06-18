@@ -595,6 +595,29 @@ bool ReplaceSymbolSetDialog::showDialog(QWidget* parent, Map& object_map)
 
 
 // static
+bool ReplaceSymbolSetDialog::showDialogForCRT(QWidget* parent, Map& object_map, const Map& symbol_set)
+{
+	auto replacements = SymbolRuleSet{};
+	ReplaceSymbolSetDialog dialog(parent, object_map, symbol_set, replacements, AssignByPattern);
+	dialog.setWindowModality(Qt::WindowModal);
+	dialog.show();
+	dialog.openCrtFile();
+	auto result = dialog.exec();
+	switch (result)
+	{
+	case QDialog::Accepted:
+		replacements.squeezed().apply(object_map, symbol_set);
+		return true;
+		
+	case QDialog::Rejected:
+		return false;
+	}
+	
+	Q_UNREACHABLE();
+}
+
+
+// static
 bool ReplaceSymbolSetDialog::showDialogForCRT(QWidget* parent, Map& object_map, const Map& symbol_set, QIODevice& crt_file)
 {
 	QTextStream stream{ &crt_file };
