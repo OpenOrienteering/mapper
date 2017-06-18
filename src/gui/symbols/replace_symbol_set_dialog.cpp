@@ -254,12 +254,14 @@ void ReplaceSymbolSetDialog::openCrtFile()
 		{
 			for (auto& current : replacements)
 			{
-				if (item.type != SymbolRule::NoAssignment
-				    && item.query == current.query)
+				if (item.query == current.query)
 				{
-					current.symbol = item.symbol;
-					current.type = item.type;
-					item.type = SymbolRule::NoAssignment;
+					if (item.type != SymbolRule::NoAssignment)
+					{
+						current.symbol = item.symbol;
+						current.type = item.type;
+						item = {};
+					}
 					break;
 				}
 			}
@@ -268,7 +270,7 @@ void ReplaceSymbolSetDialog::openCrtFile()
 		{
 			for (auto&& item : new_replacements)
 			{
-				if (item.type != SymbolRule::NoAssignment)
+				if (item.query.getOperator() != ObjectQuery::OperatorInvalid)
 				{
 					replacements.emplace_back(std::move(item));
 				}
