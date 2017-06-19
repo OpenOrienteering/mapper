@@ -290,4 +290,72 @@ void ObjectQueryTest::testToString()
 }
 
 
+void ObjectQueryTest::testParser()
+{
+	ObjectQueryParser p;
+	
+	ObjectQuery q = ObjectQuery(ObjectQuery::OperatorSearch, QStringLiteral("1"));
+	QCOMPARE(p.parse(QStringLiteral("1")), q);
+	QCOMPARE(p.parse(QStringLiteral("\t \"1\"  \t ")), q);
+	
+	q = ObjectQuery(QStringLiteral("A"), ObjectQuery::OperatorIs, QStringLiteral("1"));
+	QCOMPARE(p.parse(QStringLiteral("A = 1")), q);
+	QCOMPARE(p.parse(QStringLiteral("A = \"1\"")), q);
+	QCOMPARE(p.parse(QStringLiteral("\"A\" = 1")), q);
+	QCOMPARE(p.parse(QStringLiteral("\"A\"=	1")), q);
+	QCOMPARE(p.parse(QStringLiteral(" (  A = 1)\t")), q);
+	
+	q = ObjectQuery({ObjectQuery::OperatorSearch, QStringLiteral("1")},
+	                ObjectQuery::OperatorOr,
+	                {ObjectQuery::OperatorSearch, QStringLiteral("2")});
+	QCOMPARE(p.parse(QStringLiteral("1 OR 2")), q);
+	QCOMPARE(p.parse(QStringLiteral("\"1\" OR 2")), q);
+	QCOMPARE(p.parse(QStringLiteral("(1 OR \"2\")")), q);
+	QCOMPARE(p.parse(QStringLiteral("((1) OR (\"2\"))")), q);
+	
+	q = ObjectQuery({ObjectQuery::OperatorSearch, QStringLiteral("1")},
+	                ObjectQuery::OperatorOr,
+	                {{ObjectQuery::OperatorSearch, QStringLiteral("2")},
+	                 ObjectQuery::OperatorAnd,
+	                 {ObjectQuery::OperatorSearch, QStringLiteral("3")}});
+	QCOMPARE(p.parse(QStringLiteral("1 OR 2 AND 3")), q);
+	QCOMPARE(p.parse(QStringLiteral("(1 OR 2 AND 3)")), q);
+	QCOMPARE(p.parse(QStringLiteral("1 OR (\"2\" AND 3)")), q);
+	
+	q = ObjectQuery({{ObjectQuery::OperatorSearch, QStringLiteral("1")},
+	                 ObjectQuery::OperatorAnd,
+	                 {ObjectQuery::OperatorSearch, QStringLiteral("2")}},
+	                ObjectQuery::OperatorOr,
+	                {ObjectQuery::OperatorSearch, QStringLiteral("3")});
+	QCOMPARE(p.parse(QStringLiteral("1 AND 2 OR 3")), q);
+	QCOMPARE(p.parse(QStringLiteral("(1 AND 2) OR 3")), q);
+	
+	q = ObjectQuery({ObjectQuery::OperatorSearch, QStringLiteral("1")},
+	                ObjectQuery::OperatorAnd,
+	                {{ObjectQuery::OperatorSearch, QStringLiteral("2")},
+	                 ObjectQuery::OperatorOr,
+	                 {ObjectQuery::OperatorSearch, QStringLiteral("3")}});
+	QCOMPARE(p.parse(QStringLiteral("1 AND (2 OR 3)")), q);
+	
+	QVERIFY(p.parse(QStringLiteral("1 AND (2 OR 3")).getOperator() == ObjectQuery::OperatorInvalid);
+	QVERIFY(p.parse(QStringLiteral("1 AND (2 OR 3))")).getOperator() == ObjectQuery::OperatorInvalid);
+	QVERIFY(p.parse(QStringLiteral("(1 AND (2 OR 3)")).getOperator() == ObjectQuery::OperatorInvalid);
+	
+	q = p.parse(QStringLiteral("AND 2"));
+	QVERIFY(q.getOperator() == ObjectQuery::OperatorInvalid);
+	QCOMPARE(p.errorPos(), 0);
+	
+	q = p.parse(QStringLiteral("1 2"));
+	QVERIFY(q.getOperator() == ObjectQuery::OperatorInvalid);
+	QCOMPARE(p.errorPos(), 2);
+	
+	q = p.parse(QStringLiteral("2 AND OR"));
+	QVERIFY(q.getOperator() == ObjectQuery::OperatorInvalid);
+	QCOMPARE(p.errorPos(), 6);
+	
+	q = ObjectQuery(ObjectQuery::OperatorSearch, QStringLiteral("1\"\\x"));
+	QCOMPARE(p.parse(QStringLiteral("\"1\\\"\\\\x\"")), q);
+}
+
+
 QTEST_APPLESS_MAIN(ObjectQueryTest)

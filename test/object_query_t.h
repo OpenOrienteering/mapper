@@ -43,6 +43,7 @@ private slots:
 	void testSearch();
 	void testSymbol();
 	void testToString();
+	void testParser();
 
 private:
 	const Object* testObject();

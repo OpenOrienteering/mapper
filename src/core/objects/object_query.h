@@ -220,6 +220,54 @@ bool operator!=(const ObjectQuery::TagOperands& lhs, const ObjectQuery::TagOpera
 
 
 
+/**
+ * Utility to contruct object queries from text.
+ * 
+ * The text shall be in the formal language generate by ObjectQuery::toString().
+ */
+class ObjectQueryParser
+{
+public:
+	/**
+	 * Returns an ObjectQuery for the given text.
+	 * 
+	 * The return query has ObjectQuery::OperatorInvalid in case of error.
+	 */
+	ObjectQuery parse(const QString& text);
+	
+	/**
+	 * In case of error, returns the approximate position where parsing the
+	 * text failed.
+	 */
+	int errorPos() const;
+	
+	enum TokenType
+	{
+		TokenUnknown = 0,
+		TokenNothing,
+		TokenString,
+		TokenWord,
+		TokenTextOperator,
+		TokenOr,
+		TokenAnd,
+		TokenLeftParen,
+		TokenRightParen,
+	};
+	
+private:
+	void getToken();
+	
+	QString tokenAsString() const;
+	
+	QStringRef input;
+	QStringRef token_text;
+	TokenType token;
+	int token_start;
+	int pos;
+};
+
+
+
 inline
 bool operator!=(const ObjectQuery& lhs, const ObjectQuery& rhs)
 {

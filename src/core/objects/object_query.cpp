@@ -27,6 +27,8 @@
 #include "gui/map/map_editor.h"
 #include "tools/tool.h"
 
+#include <QVarLengthArray>
+
 
 // ### Local utilites ###
 
@@ -52,6 +54,20 @@ QString toEscaped(QString string)
 		if (c == QLatin1Char('\\') || c == QLatin1Char('"'))
 		{
 			string.insert(i, QLatin1Char('\\'));
+			++i;
+		}
+	}
+	return string;
+}
+
+QString fromEscaped(QString string)
+{
+	for (int i = 0; i < string.length(); ++i)
+	{
+		const auto c = string.at(i);
+		if (c == QLatin1Char('\\'))
+		{
+			string.remove(i, 1);
 			++i;
 		}
 	}
@@ -524,4 +540,228 @@ bool operator==(const ObjectQuery& lhs, const ObjectQuery& rhs)
 	}
 	
 	Q_UNREACHABLE();
+}
+
+
+ObjectQuery ObjectQueryParser::parse(const QString& text)
+{
+	auto result = ObjectQuery{};
+	
+	input = {&text, 0, text.size()};
+	pos = 0;
+	auto paren_depth = 0;
+	QVarLengthArray<ObjectQuery*, 8> nested_expressions;
+	auto* current = &result;
+	
+	getToken();
+	while (token != TokenNothing)
+	{
+		if ((token == TokenWord || token == TokenString) && !*current)
+		{
+			auto key = tokenAsString();
+			getToken();
+			if (token == TokenTextOperator)
+			{
+				auto op = token_text;
+				getToken();
+				if (token == TokenWord || token == TokenString)
+				{
+					auto value = tokenAsString();
+					switch (op.at(0).toLatin1())
+					{
+					case '=':
+						*current = { key, ObjectQuery::OperatorIs, value };
+						break;
+					case '!':
+						*current = { key, ObjectQuery::OperatorIsNot, value };
+						break;
+					case '~':
+						*current = { key, ObjectQuery::OperatorContains, value };
+						break;
+					default:
+						Q_UNREACHABLE();
+					}
+					getToken();
+				}
+				else
+				{
+					op = {};
+					break;
+				}
+			}
+			else
+			{
+				*current = { ObjectQuery::OperatorSearch, key };
+			}
+		}
+		else if (token == TokenAnd && *current)
+		{
+			if (!nested_expressions.isEmpty() && nested_expressions.back()->getOperator() == ObjectQuery::OperatorAnd)
+			{
+				nested_expressions.pop_back(); // replaced by current query
+			}
+			// Cannot construct logical ObjectQuery with invalid operand, but can assign later...
+			auto tmp = ObjectQuery{std::move(*current), ObjectQuery::OperatorAnd, {ObjectQuery::OperatorSearch, text}};
+			*current = std::move(tmp);
+			nested_expressions.push_back(current);
+			
+			current = current->logicalOperands()->second.get();
+			*current = {};
+			
+			getToken();
+		}
+		else if (token == TokenOr && *current)
+		{
+			if (!nested_expressions.isEmpty())
+			{
+				current = nested_expressions.back();
+				nested_expressions.pop_back();
+			}
+			// Cannot construct logical ObjectQuery with invalid operand, but can assign later...
+			auto query = ObjectQuery{std::move(*current), ObjectQuery::OperatorOr, {ObjectQuery::OperatorSearch, text}};
+			*current = std::move(query);
+			nested_expressions.push_back(current);
+			
+			current = current->logicalOperands()->second.get();
+			*current = {};
+			
+			getToken();
+		}
+		else if (token == TokenLeftParen && !*current)
+		{
+			++paren_depth;
+			nested_expressions.push_back(current);
+			getToken();
+		}
+		else if (token == TokenRightParen && *current
+		         && !nested_expressions.isEmpty()
+		         && paren_depth > 0)
+		{
+			--paren_depth;
+			current = nested_expressions.back();
+			nested_expressions.pop_back();
+			getToken();
+		}
+		else
+		{
+			// Invalid input
+			result = {};
+			break;
+		}
+	}
+	
+	if (result && (!*current || paren_depth > 0))
+	{
+		result = {};
+	}
+	
+	return result;
+}
+
+
+int ObjectQueryParser::errorPos() const
+{
+	return token_start;
+}
+
+
+void ObjectQueryParser::getToken()
+{
+	token = TokenNothing;
+	QChar current;
+	while (true)
+	{
+		if (pos >= input.length())
+			return;
+		current = input.at(pos);
+		if (current != QLatin1Char(' ') && current != QLatin1Char('\t'))
+			break;
+		++pos;
+	}
+	
+	token = TokenUnknown;
+	token_start = pos;
+	if (current == QLatin1Char('"'))
+	{
+		for (++pos; pos < input.length(); ++pos)
+		{
+			current = input.at(pos);
+			if (current == QLatin1Char('"'))
+			{
+				token = TokenString;
+				token_text = input.mid(token_start + 1, pos - token_start - 1);
+				++pos;
+				break;
+			}
+			else if (current == QLatin1Char('\\'))
+			{
+				if (pos < input.length())
+					++pos;
+			}
+		}
+	}
+	else if (current == QLatin1Char('('))
+	{
+		token = TokenLeftParen;
+		token_text = input.mid(token_start, 1);
+		++pos;
+	}
+	else if (current == QLatin1Char(')'))
+	{
+		token = TokenRightParen;
+		token_text = input.mid(token_start, 1);
+		++pos;
+	}
+	else if (current == QLatin1Char('='))
+	{
+		token = TokenTextOperator;
+		token_text = input.mid(token_start, 1);
+		++pos;
+	}
+	else if ((current == QLatin1Char('!') || current == QLatin1Char('~'))
+	         && pos < input.length()
+	         && input.at(pos+1) == QLatin1Char('='))
+	{
+		token = TokenTextOperator;
+		token_text = input.mid(token_start, 2);
+		pos += 2;
+	}
+	else
+	{
+		for (++pos; pos < input.length(); ++pos)
+		{
+			current = input.at(pos);
+			if (current == QLatin1Char('"')
+			    || current == QLatin1Char(' ')
+			    || current == QLatin1Char('\t')
+			    || current == QLatin1Char('(')
+			    || current == QLatin1Char(')')
+			    || current == QLatin1Char('='))
+			{
+				break;
+			}
+			else if ((current == QLatin1Char('!') || current == QLatin1Char('~'))
+			         && pos < input.length()
+			         && input.at(pos+1) == QLatin1Char('='))
+			{
+				break;
+			}
+		}
+		token_text = input.mid(token_start, pos - token_start);
+		if (token_text == QLatin1String("OR"))
+			token = TokenOr;
+		else if (token_text == QLatin1String("AND"))
+			token = TokenAnd;
+		else
+			token = TokenWord;
+	}
+}
+
+
+QString ObjectQueryParser::tokenAsString() const
+{
+	QString string = token_text.toString();
+	if (token == TokenString)
+		string = fromEscaped(string);
+	return string;
 }
