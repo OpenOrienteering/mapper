@@ -296,6 +296,8 @@ public slots:
 	void showColorWindow(bool show);
 	/** Shows the "load symbols from" dialog. */
 	void loadSymbolsFromClicked();
+	/** Loads a CRT file and shows the symbol replacement dialog. */
+	void loadCrtClicked();
 	/** TODO: not implemented yet. */
 	void loadColorsFromClicked();
 	/** Shows the "scale all symbols" dialog. */
@@ -657,6 +659,7 @@ private:
 	QAction* color_window_act;
 	QPointer<EditorDockWidget> color_dock_widget;
 	QAction* load_symbols_from_act;
+	QAction* load_crt_act;
 	
 	QAction* symbol_window_act;
 	EditorDockWidget* symbol_dock_widget;

@@ -1,5 +1,6 @@
 /*
  *    Copyright 2016 Mitchell Krome
+ *    Copyright 2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -23,6 +24,17 @@
 
 #include "core/objects/object.h"
 #include "core/objects/object_query.h"
+#include "core/symbols/point_symbol.h"
+
+
+namespace QTest
+{
+	template<>
+	char* toString(const ObjectQuery& query)
+	{
+		return qstrdup(query.toString().toLatin1());
+	}
+}
 
 
 ObjectQueryTest::ObjectQueryTest(QObject* parent)
@@ -53,20 +65,31 @@ void ObjectQueryTest::testIsQuery()
 
 	ObjectQuery single_query_is_true{QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("1")};
 	QVERIFY(single_query_is_true(object) == true);
+	QVERIFY(single_query_is_true == single_query_is_true);
+	QVERIFY(single_query_is_true != ObjectQuery{});
 	ObjectQuery single_query_is_false_1{QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("2")};
 	QVERIFY(single_query_is_false_1(object) == false);
 	ObjectQuery single_query_is_false_2{QLatin1String("d"), ObjectQuery::OperatorIs, QLatin1String("1")}; // key d doesn't exist
 	QVERIFY(single_query_is_false_2(object) == false);
+	QVERIFY(single_query_is_false_2 != single_query_is_true);
+	QVERIFY(single_query_is_true != single_query_is_false_2);
 	
 	auto query_copy_true = single_query_is_true;
 	QCOMPARE(query_copy_true.getOperator(), ObjectQuery::OperatorIs);
-	QCOMPARE(single_query_is_true.getOperator(), ObjectQuery::OperatorIs);
+	QCOMPARE(query_copy_true, single_query_is_true);
 	QVERIFY(query_copy_true(object) == true);
+	QVERIFY(query_copy_true != single_query_is_false_1);
 	
 	auto query_moved_false = std::move(single_query_is_false_2);
 	QCOMPARE(query_moved_false.getOperator(), ObjectQuery::OperatorIs);
 	QCOMPARE(single_query_is_false_2.getOperator(), ObjectQuery::OperatorInvalid);
 	QVERIFY(query_moved_false(object) == false);
+	QVERIFY(query_moved_false != single_query_is_false_2);
+	
+	auto operands = query_moved_false.tagOperands();
+	QVERIFY(operands);
+	QCOMPARE(operands->key, QString::fromLatin1("d"));
+	QCOMPARE(operands->value, QString::fromLatin1("1"));
 }
 
 void ObjectQueryTest::testIsNotQuery()
@@ -107,11 +130,15 @@ void ObjectQueryTest::testOrQuery()
 	auto true_2 = ObjectQuery(QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("1"));
 	ObjectQuery single_query_or_both_true{std::move(true_1), ObjectQuery::OperatorOr, std::move(true_2)};
 	QVERIFY(single_query_or_both_true(object) == true);
+	QVERIFY(single_query_or_both_true == single_query_or_both_true);
+	QVERIFY(single_query_or_both_true != ObjectQuery{});
 
 	true_1 = ObjectQuery(QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("1"));
 	auto false_1 = ObjectQuery(QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("2"));
 	ObjectQuery single_query_or_left_true_right_false{std::move(true_1), ObjectQuery::OperatorOr, std::move(false_1)};
 	QVERIFY(single_query_or_left_true_right_false(object) == true);
+	QVERIFY(single_query_or_left_true_right_false != single_query_or_both_true);
+	QVERIFY(single_query_or_both_true != single_query_or_left_true_right_false);
 
 	true_1 = ObjectQuery(QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("1"));
 	false_1 = ObjectQuery(QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("2"));
@@ -122,6 +149,13 @@ void ObjectQueryTest::testOrQuery()
 	auto false_2 = ObjectQuery(QLatin1String("a"), ObjectQuery::OperatorIs, QLatin1String("2"));
 	ObjectQuery single_query_or_both_false{std::move(false_1), ObjectQuery::OperatorOr, std::move(false_2)};
 	QVERIFY(single_query_or_both_false(object) == false);
+	
+	auto operands = single_query_or_both_false.logicalOperands();
+	QVERIFY(operands);
+	QVERIFY(operands->first.get());
+	QCOMPARE(operands->first->getOperator(), ObjectQuery::OperatorIs);
+	QVERIFY(operands->second.get());
+	QCOMPARE(operands->second->getOperator(), ObjectQuery::OperatorIs);
 }
 
 void ObjectQueryTest::testAndQuery()
@@ -158,8 +192,9 @@ void ObjectQueryTest::testAndQuery()
 	
 	auto query_copy_true = single_query_and_both_true;
 	QCOMPARE(query_copy_true.getOperator(), ObjectQuery::OperatorAnd);
-	QCOMPARE(single_query_and_both_true.getOperator(), ObjectQuery::OperatorAnd);
+	QCOMPARE(query_copy_true, single_query_and_both_true);
 	QVERIFY(query_copy_true(object) == true);
+	QVERIFY(query_copy_true != single_query_and_left_true_right_false);
 	
 	auto query_moved_false = std::move(single_query_and_right_true_left_false);
 	QCOMPARE(query_moved_false.getOperator(), ObjectQuery::OperatorAnd);
@@ -170,5 +205,157 @@ void ObjectQueryTest::testAndQuery()
 	QCOMPARE(query_and_invalid_3.getOperator(), ObjectQuery::OperatorInvalid);
 	QVERIFY(!query_and_invalid_3);
 }
+
+void ObjectQueryTest::testSearch()
+{
+	auto object = testObject();
+
+	ObjectQuery single_query_is_true_1{ObjectQuery::OperatorSearch, QLatin1String("Bc")};
+	QVERIFY(single_query_is_true_1(object) == true);
+	ObjectQuery single_query_is_true_2{ObjectQuery::OperatorSearch, QLatin1String("23")};
+	QVERIFY(single_query_is_true_2(object) == true);
+	ObjectQuery single_query_is_false_1{ObjectQuery::OperatorSearch, QLatin1String("Ac")};
+	QVERIFY(single_query_is_false_1(object) == false);
+	ObjectQuery single_query_is_false_2{ObjectQuery::OperatorSearch, QLatin1String("13")};
+	QVERIFY(single_query_is_false_2(object) == false);
+	
+	auto clone = single_query_is_true_1;
+	QCOMPARE(clone, single_query_is_true_1);
+	QVERIFY(clone != single_query_is_true_2);
+	auto operands = clone.tagOperands();
+	QVERIFY(operands);
+	QCOMPARE(operands->value, QLatin1String("Bc"));
+}
+
+void ObjectQueryTest::testSymbol()
+{
+	PointSymbol symbol_1;
+	PointObject object(&symbol_1);
+	
+	auto symbol_query = ObjectQuery(&symbol_1);
+	QCOMPARE(symbol_query.getOperator(), ObjectQuery::OperatorSymbol);
+	QVERIFY(symbol_query(&object) == true);
+	
+	PointSymbol symbol_2;
+	symbol_query = ObjectQuery(&symbol_2);
+	QVERIFY(symbol_query(&object) == false);
+	
+	object.setSymbol(&symbol_2, false);
+	QVERIFY(symbol_query(&object) == true);
+	
+	auto operand = symbol_query.symbolOperand();
+	QVERIFY(operand);
+	QCOMPARE(operand, &symbol_2);
+	
+	auto clone = symbol_query;
+	QCOMPARE(clone, symbol_query);
+	QVERIFY(clone != ObjectQuery{});
+	operand = clone.symbolOperand();
+	QVERIFY(operand);
+	QCOMPARE(operand, &symbol_2);
+}
+
+
+void ObjectQueryTest::testToString()
+{
+	auto q = ObjectQuery(ObjectQuery::OperatorSearch, QStringLiteral("1"));
+	QCOMPARE(q.toString(), QStringLiteral("\"1\""));
+	
+	q = ObjectQuery(ObjectQuery::OperatorSearch, QStringLiteral("1\"\\x"));
+	QCOMPARE(q.toString(), QStringLiteral("\"1\\\"\\\\x\""));
+	
+	q = ObjectQuery({ObjectQuery::OperatorSearch, QStringLiteral("1")},
+	                ObjectQuery::OperatorOr,
+                    {ObjectQuery::OperatorSearch, QStringLiteral("2")});
+	QCOMPARE(q.toString(), QStringLiteral("\"1\" OR \"2\""));
+	
+	q = ObjectQuery({ObjectQuery::OperatorSearch, QStringLiteral("1")},
+	                ObjectQuery::OperatorOr,
+	                {{ObjectQuery::OperatorSearch, QStringLiteral("2")},
+	                 ObjectQuery::OperatorAnd,
+	                 {ObjectQuery::OperatorSearch, QStringLiteral("3")}});
+	QCOMPARE(q.toString(), QStringLiteral("\"1\" OR \"2\" AND \"3\""));
+	
+	q = ObjectQuery({ObjectQuery::OperatorSearch, QStringLiteral("1")},
+	                ObjectQuery::OperatorAnd,
+	                {{ObjectQuery::OperatorSearch, QStringLiteral("2")},
+	                 ObjectQuery::OperatorOr,
+	                 {ObjectQuery::OperatorSearch, QStringLiteral("3")}});
+	QCOMPARE(q.toString(), QStringLiteral("\"1\" AND (\"2\" OR \"3\")"));
+	
+	q = ObjectQuery({QStringLiteral("Layer"), ObjectQuery::OperatorIs, QStringLiteral("1")},
+	                ObjectQuery::OperatorAnd,
+	                {QStringLiteral("A B C"), ObjectQuery::OperatorIsNot, QStringLiteral("3")});
+	QCOMPARE(q.toString(), QStringLiteral("Layer = \"1\" AND \"A B C\" != \"3\""));
+}
+
+
+void ObjectQueryTest::testParser()
+{
+	ObjectQueryParser p;
+	
+	ObjectQuery q = ObjectQuery(ObjectQuery::OperatorSearch, QStringLiteral("1"));
+	QCOMPARE(p.parse(QStringLiteral("1")), q);
+	QCOMPARE(p.parse(QStringLiteral("\t \"1\"  \t ")), q);
+	
+	q = ObjectQuery(QStringLiteral("A"), ObjectQuery::OperatorIs, QStringLiteral("1"));
+	QCOMPARE(p.parse(QStringLiteral("A = 1")), q);
+	QCOMPARE(p.parse(QStringLiteral("A = \"1\"")), q);
+	QCOMPARE(p.parse(QStringLiteral("\"A\" = 1")), q);
+	QCOMPARE(p.parse(QStringLiteral("\"A\"=	1")), q);
+	QCOMPARE(p.parse(QStringLiteral(" (  A = 1)\t")), q);
+	
+	q = ObjectQuery({ObjectQuery::OperatorSearch, QStringLiteral("1")},
+	                ObjectQuery::OperatorOr,
+	                {ObjectQuery::OperatorSearch, QStringLiteral("2")});
+	QCOMPARE(p.parse(QStringLiteral("1 OR 2")), q);
+	QCOMPARE(p.parse(QStringLiteral("\"1\" OR 2")), q);
+	QCOMPARE(p.parse(QStringLiteral("(1 OR \"2\")")), q);
+	QCOMPARE(p.parse(QStringLiteral("((1) OR (\"2\"))")), q);
+	
+	q = ObjectQuery({ObjectQuery::OperatorSearch, QStringLiteral("1")},
+	                ObjectQuery::OperatorOr,
+	                {{ObjectQuery::OperatorSearch, QStringLiteral("2")},
+	                 ObjectQuery::OperatorAnd,
+	                 {ObjectQuery::OperatorSearch, QStringLiteral("3")}});
+	QCOMPARE(p.parse(QStringLiteral("1 OR 2 AND 3")), q);
+	QCOMPARE(p.parse(QStringLiteral("(1 OR 2 AND 3)")), q);
+	QCOMPARE(p.parse(QStringLiteral("1 OR (\"2\" AND 3)")), q);
+	
+	q = ObjectQuery({{ObjectQuery::OperatorSearch, QStringLiteral("1")},
+	                 ObjectQuery::OperatorAnd,
+	                 {ObjectQuery::OperatorSearch, QStringLiteral("2")}},
+	                ObjectQuery::OperatorOr,
+	                {ObjectQuery::OperatorSearch, QStringLiteral("3")});
+	QCOMPARE(p.parse(QStringLiteral("1 AND 2 OR 3")), q);
+	QCOMPARE(p.parse(QStringLiteral("(1 AND 2) OR 3")), q);
+	
+	q = ObjectQuery({ObjectQuery::OperatorSearch, QStringLiteral("1")},
+	                ObjectQuery::OperatorAnd,
+	                {{ObjectQuery::OperatorSearch, QStringLiteral("2")},
+	                 ObjectQuery::OperatorOr,
+	                 {ObjectQuery::OperatorSearch, QStringLiteral("3")}});
+	QCOMPARE(p.parse(QStringLiteral("1 AND (2 OR 3)")), q);
+	
+	QVERIFY(p.parse(QStringLiteral("1 AND (2 OR 3")).getOperator() == ObjectQuery::OperatorInvalid);
+	QVERIFY(p.parse(QStringLiteral("1 AND (2 OR 3))")).getOperator() == ObjectQuery::OperatorInvalid);
+	QVERIFY(p.parse(QStringLiteral("(1 AND (2 OR 3)")).getOperator() == ObjectQuery::OperatorInvalid);
+	
+	q = p.parse(QStringLiteral("AND 2"));
+	QVERIFY(q.getOperator() == ObjectQuery::OperatorInvalid);
+	QCOMPARE(p.errorPos(), 0);
+	
+	q = p.parse(QStringLiteral("1 2"));
+	QVERIFY(q.getOperator() == ObjectQuery::OperatorInvalid);
+	QCOMPARE(p.errorPos(), 2);
+	
+	q = p.parse(QStringLiteral("2 AND OR"));
+	QVERIFY(q.getOperator() == ObjectQuery::OperatorInvalid);
+	QCOMPARE(p.errorPos(), 6);
+	
+	q = ObjectQuery(ObjectQuery::OperatorSearch, QStringLiteral("1\"\\x"));
+	QCOMPARE(p.parse(QStringLiteral("\"1\\\"\\\\x\"")), q);
+}
+
 
 QTEST_APPLESS_MAIN(ObjectQueryTest)

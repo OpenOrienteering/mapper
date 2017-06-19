@@ -46,6 +46,14 @@ private slots:
 	/** Tests various modes of Map::importMap(). */
 	void importTest_data();
 	void importTest();
+	
+	/** Basic tests for symbol set replacements. */
+	void crtFileTest();
+	
+	/** Tests symbol set replacements with example files. */
+	void matchQuerySymbolNumberTest_data();
+	void matchQuerySymbolNumberTest();
+	
 };
 
 #endif

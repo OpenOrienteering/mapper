@@ -391,6 +391,7 @@ void MapEditorController::setEditingInProgress(bool value)
 		// Symbol menu
 		scale_all_symbols_act->setEnabled(!editing_in_progress);
 		load_symbols_from_act->setEnabled(!editing_in_progress);
+		load_crt_act->setEnabled(!editing_in_progress);
 		
 		updateObjectDependentActions();
 		updateSymbolDependentActions();
@@ -832,6 +833,7 @@ void MapEditorController::createActions()
 	symbol_window_act = newCheckAction("symbolwindow", tr("Symbol window"), this, SLOT(showSymbolWindow(bool)), "symbols.png", tr("Show/Hide the symbol window"), "symbol_dock_widget.html");
 	color_window_act = newCheckAction("colorwindow", tr("Color window"), this, SLOT(showColorWindow(bool)), "colors.png", tr("Show/Hide the color window"), "color_dock_widget.html");
 	load_symbols_from_act = newAction("loadsymbols", tr("Replace symbol set..."), this, SLOT(loadSymbolsFromClicked()), NULL, tr("Replace the symbols with those from another map file"), "symbol_replace_dialog.html");
+	load_crt_act = newAction("loadcrt", tr("Load CRT file..."), this, SLOT(loadCrtClicked()), NULL, tr("Assign new symbols by cross-reference table"), "symbol_replace_dialog.html");
 	/*QAction* load_colors_from_act = newAction("loadcolors", tr("Load colors from..."), this, SLOT(loadColorsFromClicked()), NULL, tr("Replace the colors with those from another map file"));*/
 	
 	scale_all_symbols_act = newAction("scaleall", tr("Scale all symbols..."), this, SLOT(scaleAllSymbolsClicked()), NULL, tr("Scale the whole symbol set"), "map_menu.html");
@@ -1089,6 +1091,7 @@ void MapEditorController::createMenuAndToolbars()
 	symbols_menu->addSeparator();
 	symbols_menu->addAction(scale_all_symbols_act);
 	symbols_menu->addAction(load_symbols_from_act);
+	symbols_menu->addAction(load_crt_act);
 	/*symbols_menu->addAction(load_colors_from_act);*/
 	
 	// Templates menu
@@ -1782,10 +1785,20 @@ void MapEditorController::showColorWindow(bool show)
 	color_dock_widget->setVisible(show);
 }
 
+
+
 void MapEditorController::loadSymbolsFromClicked()
 {
-	ReplaceSymbolSetDialog::showDialog(window, map);
+	ReplaceSymbolSetDialog::showDialog(window, *map);
 }
+
+
+void MapEditorController::loadCrtClicked()
+{
+	ReplaceSymbolSetDialog::showDialogForCRT(window, *map, *map);
+}
+
+
 void MapEditorController::loadColorsFromClicked()
 {
 	// TODO
@@ -3868,7 +3881,7 @@ bool MapEditorController::importMapFile(const QString& filename, bool show_error
 				                     Map::tr("Cannot open file:\n%1\nfor reading.").arg(crt_filename));
 				return false;
 			}
-			if (!ReplaceSymbolSetDialog::showDialogForCRT(window, map, &imported_map, crt_file))
+			if (!ReplaceSymbolSetDialog::showDialogForCRT(window, imported_map, *map, crt_file))
 			{
 				auto choice = QMessageBox::question(window, Map::tr("Import..."),
 				                                    Map::tr("Symbol replacement was canceled.\n"

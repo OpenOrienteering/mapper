@@ -34,26 +34,27 @@
 #include <QXmlStreamWriter>
 
 #include "core/georeferencing.h"
-#include "map_color.h"
+#include "core/map_color.h"
+#include "core/map_part.h"
 #include "core/map_printer.h"
 #include "core/map_view.h"
-#include "fileformats/ocad8_file_format.h"
-#include "fileformats/file_format_registry.h"
-#include "fileformats/file_import_export.h"
-#include "gui/map/map_editor.h"
-#include "map_part.h"
-#include "undo/object_undo.h"
-#include "gui/map/map_widget.h"
 #include "core/objects/object.h"
 #include "core/objects/object_operations.h"
 #include "core/renderables/renderable.h"
-#include "core/symbols/symbol.h"
 #include "core/symbols/combined_symbol.h"
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/point_symbol.h"
+#include "core/symbols/symbol.h"
 #include "core/symbols/text_symbol.h"
+#include "fileformats/file_format_registry.h"
+#include "fileformats/file_import_export.h"
+#include "fileformats/ocad8_file_format.h"
+#include "gui/map/map_editor.h"
+#include "gui/map/map_widget.h"
 #include "templates/template.h"
+#include "undo/object_undo.h"
 #include "undo/undo_manager.h"
+#include "util/backports.h"
 #include "util/util.h"
 
 // ### Misc ###
@@ -868,26 +869,40 @@ void Map::importMap(
 		}
 	}
 	
+	auto symbol_map = importMap(*other, mode, filter, symbol_insert_pos, merge_duplicate_symbols, q_transform);
+	if (out_symbol_map)
+		*out_symbol_map = symbol_map;
+}
+
+
+QHash<const Symbol*, Symbol*> Map::importMap(
+        const Map& imported_map,
+        ImportMode mode,
+        std::vector<bool>* filter,
+        int symbol_insert_pos,
+        bool merge_duplicate_symbols,
+        const QTransform& transform)
+{
 	// Determine which symbols and colors to import
-	std::vector<bool> color_filter(std::size_t(other->getNumColors()), true);
-	std::vector<bool> symbol_filter(std::size_t(other->getNumSymbols()), true);
+	std::vector<bool> color_filter(std::size_t(imported_map.getNumColors()), true);
+	std::vector<bool> symbol_filter(std::size_t(imported_map.getNumSymbols()), true);
 	if (mode.testFlag(MinimalImport))
 	{
 		switch (mode & 0x0f)
 		{
 		case ObjectImport:
-			if (other->getNumObjects() > 0)
-				other->determineSymbolsInUse(symbol_filter);
-			other->determineColorsInUse(symbol_filter, color_filter);
+			if (imported_map.getNumObjects() > 0)
+				imported_map.determineSymbolsInUse(symbol_filter);
+			imported_map.determineColorsInUse(symbol_filter, color_filter);
 			break;
 		case SymbolImport:
 			if (filter)
 			{
 				Q_ASSERT(filter->size() == symbol_filter.size());
 				symbol_filter = *filter;
-				other->determineSymbolUseClosure(symbol_filter);
+				imported_map.determineSymbolUseClosure(symbol_filter);
 			}
-			other->determineColorsInUse(symbol_filter, color_filter);
+			imported_map.determineColorsInUse(symbol_filter, color_filter);
 			break;
 		case ColorImport:
 			if (filter)
@@ -902,66 +917,66 @@ void Map::importMap(
 	}
 	
 	// Import colors
-	MapColorMap color_map(color_set->importSet(*other->color_set, &color_filter, this));
-	
-	if ((mode & 0x0f) == ColorImport)
-		return;
+	auto color_map = color_set->importSet(*imported_map.color_set, &color_filter, this);
 	
 	QHash<const Symbol*, Symbol*> symbol_map;
-	if (other->getNumSymbols() > 0)
+	if ((mode & 0x0f) != ColorImport)
 	{
-		// Import symbols
-		importSymbols(other, color_map, symbol_insert_pos, merge_duplicate_symbols, &symbol_filter, nullptr, &symbol_map);
-		if (out_symbol_map != nullptr)
-			*out_symbol_map = symbol_map;
-	}
-	
-	if ((mode & 0x0f) == SymbolImport)
-		return;
-	
-	if (other->getNumObjects() > 0)
-	{
-		// Import parts like this:
-		//  - if the other map has only one part, import it into the current part
-		//  - else check if there is already a part with an equal name for every part to import and import into this part if found, else create a new part
-		for (const auto* part_to_import : other->parts)
+		if (imported_map.getNumSymbols() > 0)
 		{
-			MapPart* dest_part = nullptr;
-			if (other->parts.size() == 1)
+			// Import symbols
+			symbol_map = importSymbols(imported_map, color_map, symbol_insert_pos, merge_duplicate_symbols, symbol_filter);
+		}
+		
+		if ((mode & 0x0f) != SymbolImport
+		    && imported_map.getNumObjects() > 0)
+		{
+			// Import parts like this:
+			//  - if the other map has only one part, import it into the current part
+			//  - else check if there is already a part with an equal name for every part to import and import into this part if found, else create a new part
+			for (const auto* part_to_import : imported_map.parts)
 			{
-				dest_part = getCurrentPart();
-			}
-			else
-			{
-				for (auto* check_part : parts)
+				MapPart* dest_part = nullptr;
+				if (imported_map.parts.size() == 1)
 				{
-					if (check_part->getName().compare(part_to_import->getName(), Qt::CaseInsensitive) == 0)
+					dest_part = getCurrentPart();
+				}
+				else
+				{
+					for (auto* check_part : parts)
 					{
-						dest_part = check_part;
-						break;
+						if (check_part->getName().compare(part_to_import->getName(), Qt::CaseInsensitive) == 0)
+						{
+							dest_part = check_part;
+							break;
+						}
+					}
+					if (dest_part == nullptr)
+					{
+						// Import as new part
+						dest_part = new MapPart(part_to_import->getName(), this);
+						addPart(dest_part, 0);
 					}
 				}
-				if (dest_part == nullptr)
-				{
-					// Import as new part
-					dest_part = new MapPart(part_to_import->getName(), this);
-					addPart(dest_part, 0);
-				}
+				
+				// Temporarily switch the current part for importing so the undo step gets created for the right part
+				MapPart* temp_current_part = getCurrentPart();
+				current_part_index = std::size_t(findPartIndex(dest_part));
+				
+				bool select_and_center_objects = dest_part == temp_current_part;
+				dest_part->importPart(part_to_import, symbol_map, transform, select_and_center_objects);
+				if (select_and_center_objects)
+					ensureVisibilityOfSelectedObjects(Map::FullVisibility);
+				
+				current_part_index = std::size_t(findPartIndex(temp_current_part));
 			}
-			
-			// Temporarily switch the current part for importing so the undo step gets created for the right part
-			MapPart* temp_current_part = getCurrentPart();
-			current_part_index = std::size_t(findPartIndex(dest_part));
-			
-			bool select_and_center_objects = dest_part == temp_current_part;
-			dest_part->importPart(part_to_import, symbol_map, q_transform, select_and_center_objects);
-			if (select_and_center_objects)
-				ensureVisibilityOfSelectedObjects(Map::FullVisibility);
-			
-			current_part_index = std::size_t(findPartIndex(temp_current_part));
 		}
 	}
+	
+	return symbol_map;
 }
+
+
 
 bool Map::exportToIODevice(QIODevice* stream)
 {
@@ -1575,85 +1590,68 @@ bool Map::hasSpotColors() const
 	return false;
 }
 
-void Map::importSymbols(
-        const Map* other,
+
+
+QHash<const Symbol*, Symbol*> Map::importSymbols(
+        const Map& other,
         const MapColorMap& color_map,
         int insert_pos,
         bool merge_duplicates,
-        std::vector< bool >* filter,
-        QHash<int, int>* out_indexmap,
-        QHash<const Symbol*, Symbol*>* out_pointermap )
+        const std::vector<bool>& filter )
 {
-	// We need a pointer map (and keep track of added symbols) to adjust the references of combined symbols
-	std::vector<Symbol*> added_symbols;
-	QHash<const Symbol*, Symbol*> local_pointermap;
-	if (!out_pointermap)
-		out_pointermap = &local_pointermap;
+	QHash<const Symbol*, Symbol*> out_pointermap;
 	
-	for (size_t i = 0, end = other->symbols.size(); i < end; ++i)
+	std::vector<Symbol*> created_symbols;
+	created_symbols.reserve(other.symbols.size());
+	for (std::size_t i = 0, last = other.symbols.size(); i < last; ++i)
 	{
-		if (filter && !filter->at(i))
-			continue;
-		Symbol* other_symbol = other->symbols.at(i);
-		
-		if (!merge_duplicates)
+		if (filter.empty() || filter[i])
 		{
-			added_symbols.push_back(other_symbol);
-			continue;
-		}
-		
-		// Check if symbol is already present
-		size_t k = 0;
-		size_t symbols_size = symbols.size();
-		for (; k < symbols_size; ++k)
-		{
-			if (symbols[k]->equals(other_symbol, Qt::CaseInsensitive, false))
+			const Symbol* symbol = other.symbols[i];
+			if (merge_duplicates)
 			{
-				// Symbol is already present
-				if (out_indexmap)
-					out_indexmap->insert(i, k);
-				if (out_pointermap)
-					out_pointermap->insert(other_symbol, symbols[k]);
-				break;
+				// Check if symbol is already present
+				auto match = std::find_if(begin(symbols), end(symbols), [symbol](auto s) {
+					return s->equals(symbol, Qt::CaseInsensitive, false);
+				});
+				if (match != end(symbols))
+				{
+					// Symbol is already present
+					out_pointermap.insert(symbol, *match);
+					continue;
+				}
 			}
-		}
-		
-		if (k >= symbols_size)
-		{
-			// Symbols does not exist in this map yet, mark it to be added
-			added_symbols.push_back(other_symbol);
+			
+			auto new_symbol = symbol->duplicate(&color_map);
+			out_pointermap.insert(symbol, new_symbol);
+			created_symbols.push_back(new_symbol);
 		}
 	}
 	
-	// Really add all the added symbols
+	
+	// Add the created symbols
 	if (insert_pos < 0)
 		insert_pos = getNumSymbols();
-	for (size_t i = 0, end = added_symbols.size(); i < end; ++i)
+	for (const auto symbol : created_symbols)
 	{
-		Symbol* old_symbol = added_symbols[i];
-		Symbol* new_symbol = added_symbols[i]->duplicate(&color_map);
-		added_symbols[i] = new_symbol;
-		
-		addSymbol(new_symbol, insert_pos);
+		addSymbol(symbol, insert_pos);
 		++insert_pos;
-		
-		if (out_indexmap)
-			out_indexmap->insert(i, insert_pos);
-		if (out_pointermap)
-			out_pointermap->insert(old_symbol, new_symbol);
 	}
 	
-	// Notify added symbols of other "environment"
-	for (size_t i = 0, end = added_symbols.size(); i < end; ++i)
+	// Notify the created symbols of the new context (mind combined symbols)
+	for (const auto symbol : created_symbols)
 	{
-		QHash<const Symbol*, Symbol*>::iterator it = out_pointermap->begin();
-		while (it != out_pointermap->end())
+		for (auto it = out_pointermap.constBegin(); it != out_pointermap.constEnd(); ++it)
 		{
-			added_symbols[i]->symbolChanged(it.key(), it.value());
-			++it;
+			// symbol is what was created by duplicate() above.
+			symbol->symbolChanged(it.key(), it.value());
 		}
 	}
+	
+	return out_pointermap;
 }
+
+
 
 void Map::addSelectionRenderables(const Object* object)
 {
