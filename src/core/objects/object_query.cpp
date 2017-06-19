@@ -492,12 +492,12 @@ void ObjectQuery::consume(ObjectQuery&& other)
 	}
 	else if (op < 16)
 	{
-		new (&subqueries) ObjectQuery::LogicalOperands{std::move(other.subqueries)};
+		new (&subqueries) ObjectQuery::LogicalOperands(std::move(other.subqueries));
 		other.subqueries.~LogicalOperands();
 	}
 	else if (op < 32)
 	{
-		new (&tags) ObjectQuery::TagOperands{std::move(other.tags)};
+		new (&tags) ObjectQuery::TagOperands(std::move(other.tags));
 		other.tags.~TagOperands();
 	}
 	else if (op == ObjectQuery::OperatorSymbol)
