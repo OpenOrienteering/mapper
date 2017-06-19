@@ -27,7 +27,9 @@ set(Mapper_SYMBOL_SETS
   4000/ISSOM_4000.omap
   5000/ISSOM_5000.omap
   10000/ISOM2000_10000.omap
+  10000/ISOM2017_10000.omap
   15000/ISOM2000_15000.omap
+  15000/ISOM2017_15000.omap
   
   4000/ISSOM_cs_4000.omap
   5000/ISSOM_cs_5000.omap
@@ -65,6 +67,9 @@ set(Mapper_SYMBOL_SETS
   5000/Course_Design_5000.omap
   10000/Course_Design_10000.omap
   15000/Course_Design_15000.omap
+  
+  ./ISOM2017.crt
+  ./OSM-ISOM2000.crt
 )
 
 set(_symbol_sets)
