@@ -449,36 +449,14 @@ void ReplaceSymbolSetDialog::updateMappingTable()
 				original_icon.fill(color);
 			}
 			
-			auto set_string_for_tags = [](const ObjectQuery& query, const char* op_string)->QString {
-				auto result = QString{};
-				if (auto operands = query.tagOperands())
-				{
-					result = operands->key + QLatin1String(op_string)
-					         + QLatin1Char('"') + operands->value + QLatin1Char('"');
-				}
-				return result;
-			};
-
 			switch (item.query.getOperator())
 			{
-			case ObjectQuery::OperatorContains:
-				original_string = set_string_for_tags(item.query, " ~ ");
-				break;
-				
-			case ObjectQuery::OperatorIs:
-				original_string = set_string_for_tags(item.query, " = ");
-				break;
-				
-			case ObjectQuery::OperatorIsNot:
-				original_string = set_string_for_tags(item.query, " != ");
-				break;
-									
-			case ObjectQuery::OperatorSearch:
-				original_string = set_string_for_tags(item.query, "");
+			case ObjectQuery::OperatorInvalid:
+			case ObjectQuery::OperatorSymbol:
 				break;
 				
 			default:
-				; // nothing
+				original_string = item.query.toString();
 			}
 		}
 		

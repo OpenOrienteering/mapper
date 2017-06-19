@@ -171,6 +171,14 @@ public:
 	const Symbol* symbolOperand() const;
 	
 	
+	/**
+	 * Pretty print the query.
+	 * 
+	 * The output is meant to be formal language, for possible parsing.
+	 */
+	QString toString() const;
+	
+	
 	friend bool operator==(const ObjectQuery& lhs, const ObjectQuery& rhs);
 	
 private:

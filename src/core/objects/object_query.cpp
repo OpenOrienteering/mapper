@@ -28,6 +28,53 @@
 #include "tools/tool.h"
 
 
+// ### Local utilites ###
+
+namespace {
+
+static QChar special_chars[9] = {
+    QLatin1Char('"'),
+    QLatin1Char(' '),
+    QLatin1Char('\t'),
+    QLatin1Char('('),
+    QLatin1Char(')'),
+    QLatin1Char('='),
+    QLatin1Char('!'),
+    QLatin1Char('~'),
+    QLatin1Char('\\')
+};
+
+QString toEscaped(QString string)
+{
+	for (int i = 0; i < string.length(); ++i)
+	{
+		const auto c = string.at(i);
+		if (c == QLatin1Char('\\') || c == QLatin1Char('"'))
+		{
+			string.insert(i, QLatin1Char('\\'));
+			++i;
+		}
+	}
+	return string;
+}
+
+QString keyToString(const QString &key)
+{
+	using std::begin;
+	using std::end;
+	if (std::find_first_of(begin(key), end(key), begin(special_chars), end(special_chars)) == end(key)
+	    && key != QLatin1String("AND")
+	    && key != QLatin1String("OR")
+	    && key != QLatin1String("SYMBOL"))
+		return key;
+	else
+		return QLatin1Char('"') + toEscaped(key) + QLatin1Char('"');
+}
+
+}
+
+
+
 // ### ObjectQuery::LogicalOperands ###
 
 ObjectQuery::LogicalOperands::LogicalOperands(const ObjectQuery::LogicalOperands& proto)
@@ -345,6 +392,53 @@ const Symbol* ObjectQuery::symbolOperand() const
 		Q_ASSERT(op == ObjectQuery::OperatorSymbol);
 	}
 	return result;
+}
+
+
+
+QString ObjectQuery::toString() const
+{
+	auto ret = QString{};
+	switch (op)
+	{
+	case OperatorIs:
+		ret = keyToString(tags.key) + QLatin1String(" = \"") + toEscaped(tags.value) + QLatin1Char('"');
+		break;
+	case OperatorIsNot:
+		ret = keyToString(tags.key) + QLatin1String(" != \"") + toEscaped(tags.value) + QLatin1Char('"');
+		break;
+	case OperatorContains:
+		ret = keyToString(tags.key) + QLatin1String(" ~= \"") + toEscaped(tags.value) + QLatin1Char('"');
+		break;
+	case OperatorSearch:
+		ret = QLatin1Char('"') + toEscaped(tags.value) + QLatin1Char('"');
+		break;
+		
+	case OperatorAnd:
+		if (subqueries.first->getOperator() == OperatorOr)
+			ret = QLatin1Char('(') + subqueries.first->toString() + QLatin1Char(')');
+		else
+			ret = subqueries.first->toString();
+		ret += QLatin1String(" AND ");
+		if (subqueries.second->getOperator() == OperatorOr)
+			ret += QLatin1Char('(') + subqueries.second->toString() + QLatin1Char(')');
+		else
+			ret += subqueries.second->toString();
+		break;
+	case OperatorOr:
+		ret = subqueries.first->toString() + QLatin1String(" OR ") + subqueries.second->toString();
+		break;
+		
+	case OperatorSymbol:
+		ret = QLatin1String("SYMBOL \"") + symbol->getNumberAsString() + QLatin1Char('\"');
+		break;
+		
+	case OperatorInvalid:
+		// Default empty string is sufficient
+		break;
+	}
+	
+	return ret;
 }
 
 

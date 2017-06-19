@@ -27,6 +27,16 @@
 #include "core/symbols/point_symbol.h"
 
 
+namespace QTest
+{
+	template<>
+	char* toString(const ObjectQuery& query)
+	{
+		return qstrdup(query.toString().toLatin1());
+	}
+}
+
+
 ObjectQueryTest::ObjectQueryTest(QObject* parent)
 : QObject(parent)
 {
@@ -244,5 +254,40 @@ void ObjectQueryTest::testSymbol()
 	QVERIFY(operand);
 	QCOMPARE(operand, &symbol_2);
 }
+
+
+void ObjectQueryTest::testToString()
+{
+	auto q = ObjectQuery(ObjectQuery::OperatorSearch, QStringLiteral("1"));
+	QCOMPARE(q.toString(), QStringLiteral("\"1\""));
+	
+	q = ObjectQuery(ObjectQuery::OperatorSearch, QStringLiteral("1\"\\x"));
+	QCOMPARE(q.toString(), QStringLiteral("\"1\\\"\\\\x\""));
+	
+	q = ObjectQuery({ObjectQuery::OperatorSearch, QStringLiteral("1")},
+	                ObjectQuery::OperatorOr,
+                    {ObjectQuery::OperatorSearch, QStringLiteral("2")});
+	QCOMPARE(q.toString(), QStringLiteral("\"1\" OR \"2\""));
+	
+	q = ObjectQuery({ObjectQuery::OperatorSearch, QStringLiteral("1")},
+	                ObjectQuery::OperatorOr,
+	                {{ObjectQuery::OperatorSearch, QStringLiteral("2")},
+	                 ObjectQuery::OperatorAnd,
+	                 {ObjectQuery::OperatorSearch, QStringLiteral("3")}});
+	QCOMPARE(q.toString(), QStringLiteral("\"1\" OR \"2\" AND \"3\""));
+	
+	q = ObjectQuery({ObjectQuery::OperatorSearch, QStringLiteral("1")},
+	                ObjectQuery::OperatorAnd,
+	                {{ObjectQuery::OperatorSearch, QStringLiteral("2")},
+	                 ObjectQuery::OperatorOr,
+	                 {ObjectQuery::OperatorSearch, QStringLiteral("3")}});
+	QCOMPARE(q.toString(), QStringLiteral("\"1\" AND (\"2\" OR \"3\")"));
+	
+	q = ObjectQuery({QStringLiteral("Layer"), ObjectQuery::OperatorIs, QStringLiteral("1")},
+	                ObjectQuery::OperatorAnd,
+	                {QStringLiteral("A B C"), ObjectQuery::OperatorIsNot, QStringLiteral("3")});
+	QCOMPARE(q.toString(), QStringLiteral("Layer = \"1\" AND \"A B C\" != \"3\""));
+}
+
 
 QTEST_APPLESS_MAIN(ObjectQueryTest)
