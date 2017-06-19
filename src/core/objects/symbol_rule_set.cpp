@@ -212,11 +212,19 @@ SymbolRuleSet SymbolRuleSet::loadCrt(QTextStream& stream, const Map& replacement
 	{
 		QString replacement_key;
 		stream >> replacement_key;
+		if (stream.status() == QTextStream::ReadPastEnd)
+		{
+			stream.resetStatus();
+			break;
+		}
 		auto pattern = stream.readLine().trimmed();
 		if (stream.status() == QTextStream::Ok
 		    && !replacement_key.startsWith(QLatin1Char{'#'}))
 		{
-			list.push_back({{ObjectQuery::OperatorSearch, pattern}, nullptr, SymbolRule::NoAssignment});
+			auto parsed_query = ObjectQueryParser().parse(pattern);
+			if (!parsed_query)
+				parsed_query = {ObjectQuery::OperatorSearch, pattern};
+			list.push_back({std::move(parsed_query), nullptr, SymbolRule::NoAssignment});
 			for (int k = 0; k < replacement_map.getNumSymbols(); ++k)
 			{
 				auto symbol = replacement_map.getSymbol(k);
