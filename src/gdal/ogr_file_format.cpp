@@ -26,15 +26,21 @@
 #include <cpl_conv.h>
 #include <ogr_srs_api.h>
 
+#include <QByteArray>
 #include <QFile>
 #include <QFileInfo>
+#include <QPointF>
 #include <QRegularExpression>
 #include <QScopedValueRollback>
 #include <QtMath>
 
 #include "gdal_manager.h"
 #include "core/georeferencing.h"
+#include "core/latlon.h"
 #include "core/map.h"
+#include "core/map_color.h"
+#include "core/map_coord.h"
+#include "core/objects/object.h"
 #include "core/objects/text_object.h"
 #include "core/symbols/area_symbol.h"
 #include "core/symbols/line_symbol.h"
@@ -150,7 +156,7 @@ namespace
 			auto pattern = QString::fromLatin1(raw_pattern);
 			auto sub_pattern_re = QRegularExpression(QString::fromLatin1("([0-9.]+)([a-z]*) *([0-9.]+)([a-z]*)"));
 			auto match = sub_pattern_re.match(pattern);
-			double length_0, length_1;
+			double length_0{}, length_1{};
 			bool ok = match.hasMatch();
 			if (ok)
 				length_0 = match.capturedRef(1).toDouble(&ok);
@@ -170,6 +176,7 @@ namespace
 		}
 	}
 	
+#if 0
 	int getFontSize(const char* font_size_string)
 	{
 		auto pattern = QString::fromLatin1(font_size_string);
@@ -205,6 +212,7 @@ namespace
 		}
 		return font_size;
 	}
+#endif
 	
 	void applyLabelAnchor(int anchor, TextObject* text_object)
 	{
@@ -251,7 +259,7 @@ namespace
 OgrFileFormat::OgrFileFormat()
  : FileFormat(OgrFile, "OGR", ImportExport::tr("Geospatial vector data"), QString{}, ImportSupported)
 {
-	for (const auto extension : GdalManager().supportedVectorExtensions())
+	for (const auto& extension : GdalManager().supportedVectorExtensions())
 		addExtension(QString::fromLatin1(extension));
 }
 
@@ -414,7 +422,7 @@ void OgrFileImport::import(bool load_symbols_only)
 					else
 					{
 						part = new MapPart(QString::fromUtf8(OGR_L_GetName(layer)), map);
-						auto index = map->getNumParts();
+						auto index = std::size_t(map->getNumParts());
 						map->addPart(part, index);
 						map->setCurrentPartIndex(index);
 					}
@@ -596,7 +604,7 @@ void OgrFileImport::importFeature(MapPart* map_part, OGRFeatureDefnH feature_def
 		map_part->addObject(object);
 		if (!feature_definition)
 			continue;
-
+		
 		auto num_fields = OGR_FD_GetFieldCount(feature_definition);
 		for (int i = 0; i < num_fields; ++i)
 		{

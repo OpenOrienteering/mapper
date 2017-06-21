@@ -172,7 +172,7 @@ protected:
 	Object* importPointGeometry(OGRFeatureH feature, OGRGeometryH geometry);
 	
 	PathObject* importLineStringGeometry(OGRFeatureH feature, OGRGeometryH geometry);
-
+	
 	PathObject* importPolygonGeometry(OGRFeatureH feature, OGRGeometryH geometry);
 	
 	
@@ -232,11 +232,11 @@ private:
 	
 	ogr::unique_stylemanager manager;
 	
-	unsigned int empty_geometries;
-	unsigned int no_transformation;
-	unsigned int failed_transformation;
-	unsigned int unsupported_geometry_type;
-	unsigned int too_few_coordinates;
+	int empty_geometries;
+	int no_transformation;
+	int failed_transformation;
+	int unsupported_geometry_type;
+	int too_few_coordinates;
 	
 	UnitType unit_type;
 	

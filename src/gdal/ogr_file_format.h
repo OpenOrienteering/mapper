@@ -22,6 +22,12 @@
 
 #include "fileformats/file_format.h"
 
+class Importer;
+class Map;
+class MapView;
+class QIODevice;
+
+
 /**
  * A FileFormat for geospatial vector data supported by OGR.
  * 
