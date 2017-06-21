@@ -172,14 +172,15 @@ private:
 			enabled_vector_extensions.push_back("osm");
 		settings.endGroup();
 		
-		auto gdal_data = QFileInfo(QLatin1String("data:/gdal"));
-		
-		if (gdal_data.exists())
+		// Using osmconf.ini to detect a directory with data from gdal. The
+		// data:/gdal directory will always exist, due to mapper-osmconf.ini.
+		auto osm_conf_ini = QFileInfo(QLatin1String("data:/gdal/osmconf.ini"));
+		if (osm_conf_ini.exists())
 		{
-			Q_ASSERT(!gdal_data.absoluteFilePath().contains(QStringLiteral("data:")));
-			Q_ASSERT(QFileInfo::exists(gdal_data.absoluteFilePath() + QLatin1String("/osmconf.ini")));
+			auto gdal_data = osm_conf_ini.absolutePath();
+			Q_ASSERT(!gdal_data.contains(QStringLiteral("data:")));
 			// The user may overwrite this default in the settings.
-			CPLSetConfigOption("GDAL_DATA", QDir::toNativeSeparators(gdal_data.absoluteFilePath()).toLocal8Bit());
+			CPLSetConfigOption("GDAL_DATA", QDir::toNativeSeparators(gdal_data).toLocal8Bit());
 		}
 		
 		settings.beginGroup(gdal_configuration_group);
@@ -196,6 +197,29 @@ private:
 			if (!settings.contains(key))
 			{
 				settings.setValue(key, QVariant{QLatin1String(setting[1])});
+			}
+		}
+		
+		osm_conf_ini = QFileInfo(QLatin1String("data:/gdal/mapper-osmconf.ini"));
+		if (osm_conf_ini.exists())
+		{
+			auto osm_conf_ini_path = QDir::toNativeSeparators(osm_conf_ini.absoluteFilePath()).toLocal8Bit();
+			auto key = QString::fromLatin1("OSM_CONFIG_FILE");
+			auto update_settings = !settings.contains(key);
+			if (!update_settings)
+			{
+				auto current = settings.value(key).toByteArray();
+				settings.beginGroup(QLatin1String("default"));
+				auto current_default = settings.value(key).toByteArray();
+				settings.endGroup();
+				update_settings = (current == current_default && current != osm_conf_ini_path);
+			}
+			if (update_settings)
+			{
+				settings.setValue(key, osm_conf_ini_path);
+				settings.beginGroup(QLatin1String("default"));
+				settings.setValue(key, osm_conf_ini_path);
+				settings.endGroup();
 			}
 		}
 		
