@@ -163,15 +163,17 @@ protected:
 	
 	void importFeature(MapPart* map_part, OGRFeatureDefnH feature_definition, OGRFeatureH feature, OGRGeometryH geometry);
 	
-	Object* importGeometry(MapPart* map_part, OGRFeatureH feature, OGRGeometryH geometry);
+	using ObjectList = std::vector<Object*>;
 	
-	Object* importGeometryCollection(MapPart* map_part, OGRFeatureH feature, OGRGeometryH geometry);
+	ObjectList importGeometry(OGRFeatureH feature, OGRGeometryH geometry);
 	
-	Object* importPointGeometry(MapPart* map_part, OGRFeatureH feature, OGRGeometryH geometry);
+	ObjectList importGeometryCollection(OGRFeatureH feature, OGRGeometryH geometry);
 	
-	PathObject* importLineStringGeometry(MapPart* map_part, OGRFeatureH feature, OGRGeometryH geometry);
+	Object* importPointGeometry(OGRFeatureH feature, OGRGeometryH geometry);
 	
-	PathObject* importPolygonGeometry(MapPart* map_part, OGRFeatureH feature, OGRGeometryH geometry);
+	PathObject* importLineStringGeometry(OGRFeatureH feature, OGRGeometryH geometry);
+
+	PathObject* importPolygonGeometry(OGRFeatureH feature, OGRGeometryH geometry);
 	
 	
 	Symbol* getSymbol(Symbol::Type type, const char* raw_style_string);
