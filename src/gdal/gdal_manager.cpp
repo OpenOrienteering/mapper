@@ -23,8 +23,12 @@
 #include <cpl_conv.h>
 
 #include <QByteArray>
+#include <QDir>
 #include <QFileInfo>
 #include <QSettings>
+#include <QString>
+#include <QStringList>
+#include <QVariant>
 
 #include "util/backports.h"
 
@@ -45,7 +49,7 @@ namespace
 class GdalManager::GdalManagerPrivate
 {
 public:
-	GdalManagerPrivate()
+	GdalManagerPrivate() noexcept
 	: dirty{ true }
 	{
 		// GDAL 2.0: GDALAllRegister();
@@ -169,10 +173,13 @@ private:
 		settings.endGroup();
 		
 		auto gdal_data = QFileInfo(QLatin1String("data:/gdal"));
+		
 		if (gdal_data.exists())
 		{
+			Q_ASSERT(!gdal_data.absoluteFilePath().contains(QStringLiteral("data:")));
+			Q_ASSERT(QFileInfo::exists(gdal_data.absoluteFilePath() + QLatin1String("/osmconf.ini")));
 			// The user may overwrite this default in the settings.
-			CPLSetConfigOption("GDAL_DATA", gdal_data.absoluteFilePath().toLocal8Bit());
+			CPLSetConfigOption("GDAL_DATA", QDir::toNativeSeparators(gdal_data.absoluteFilePath()).toLocal8Bit());
 		}
 		
 		settings.beginGroup(gdal_configuration_group);
@@ -208,6 +215,7 @@ private:
 		}
 		applied_parameters.swap(new_parameters);
 		
+		CPLFinderClean(); // force re-initialization of file finding tools
 		dirty = false;
 	}
 	
