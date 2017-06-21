@@ -18,7 +18,10 @@
  
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Network REQUIRED)
+
 set(CMAKE_AUTOMOC ON)
+set(CMAKE_CXX_CLANG_TIDY "")
+set(CMAKE_CXX_INCLUDE_WHAT_YOU_USE "")
 
 set(QSINGLEAPP_SRCS
   src/qtlocalpeer.cpp
