@@ -187,7 +187,9 @@ if(NOT TARGET PROJ4::proj)
 	find_package(PROJ4 MODULE REQUIRED)
 endif()
 
-find_package(GDAL REQUIRED)
+if(Mapper_USE_GDAL)
+	find_package(GDAL REQUIRED)
+endif()
 
 
 if(UNIX AND NOT APPLE)
