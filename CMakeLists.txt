@@ -192,6 +192,17 @@ if(Mapper_USE_GDAL)
 endif()
 
 
+include("TestBigEndian")
+test_big_endian(big_endian)
+if(big_endian)
+	add_definitions(-DBIG_ENDIAN)
+endif()
+
+
+if(ANDROID OR big_endian)
+	add_definitions(-DNO_NATIVE_FILE_FORMAT)
+endif()
+
 if(UNIX AND NOT APPLE)
 #	set(CMAKE_INSTALL_RPATH "\$ORIGIN/../lib/${Mapper_PACKAGE_NAME}/lib")
 	set(CMAKE_INSTALL_RPATH "${MAPPER_LIBRARY_DESTINATION}/lib")
