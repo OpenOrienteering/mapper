@@ -1370,7 +1370,7 @@
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="120"/>
         <source>The clicked position is not free, cannot use the fill tool there.</source>
-        <translation type="unfinished"></translation>
+        <translation>Valittu alue ei ole vapaa. Et voi käyttää täyttötyökalua täällä.</translation>
     </message>
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="168"/>
@@ -1380,7 +1380,7 @@
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="179"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Fill area with active symbol. The area to be filled must be bounded by lines or areas, other symbols are not taken into account. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Click&lt;/b&gt;: Täytä alue aktivoidulla symbolilla. Täytetty alueen täytyy olla ympäröity viivoilla tai alueilla. Muita symboleita ei oteta huomioon. </translation>
     </message>
 </context>
 <context>
@@ -1489,7 +1489,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="110"/>
         <source>Recovery information saving interval:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tallennusväli:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="109"/>
@@ -1656,7 +1656,7 @@
     <message>
         <location filename="../src/core/georeferencing.cpp" line="233"/>
         <source>Invalid grid scale factor: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Virheellinen mittakaavan skaalauskerroin</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="270"/>
@@ -2197,7 +2197,7 @@
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="252"/>
         <source>Geospatial vector data</source>
-        <translation type="unfinished"></translation>
+        <translation>Paikkatietodata</translation>
     </message>
 </context>
 <context>
@@ -2246,7 +2246,7 @@
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="135"/>
         <source>Click the red template name(s) in the Templates -&gt; Template setup window to locate the template file name(s).</source>
-        <translation type="unfinished"></translation>
+        <translation>Klikkaa punaista taustakartan nimeä kohdassa Taustakartta -&gt; Taustakartan asetukset löytääksesi taustakarttatiedoston nimen.</translation>
     </message>
     <message>
         <source>At least one template file could not be found. Click the red template name(s) in the Templates -&gt; Template setup window to locate the template file name(s).</source>
@@ -2256,7 +2256,7 @@ löytääksesi taustakarttatiedoston nimen.</translation>
     <message>
         <location filename="../src/fileformats/native_file_format.cpp" line="123"/>
         <source>This file uses an obsolete format. Support for this format is to be removed from this program soon. To be able to open the file in the future, save it again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tämä tiedosto käyttää vanhentunutta tiedostomuotoa, jota ei tueta ohjelman tulevissa versioissa. Mikäli haluat avata tiedoston tulevaisuudessa, tallenna se eri tiedostomuodolla.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/native_file_format.cpp" line="136"/>
@@ -3033,7 +3033,8 @@ Skaalataanko tuotu tieto?</translation>
         <location filename="../src/gui/map/map_editor.cpp" line="3872"/>
         <source>Symbol replacement was canceled.
 Import the data anyway?</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbolin korvaaminen peruutettiin.
+Haluatko silti tuoda datan?</translation>
     </message>
 </context>
 <context>
@@ -3667,27 +3668,27 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2234"/>
         <source>Select at least two area or path objects activate this tool.</source>
-        <translation type="unfinished"></translation>
+        <translation>Valitse vähintään kaksi aluetta tai reittiä aktivoidaksesi tämän työkalun.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2236"/>
         <source>Unify overlapping objects.</source>
-        <translation type="unfinished"></translation>
+        <translation>Liitä päällekkäiset objektit.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2238"/>
         <source>Remove all parts which are not overlaps with the first selected object.</source>
-        <translation type="unfinished"></translation>
+        <translation>Poista kaikki osat, jotka eivät ole päällekkäin ensiksi valitun objektin kanssa.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2240"/>
         <source>Remove overlapped parts of the first selected object.</source>
-        <translation type="unfinished"></translation>
+        <translation>Poista päällekkäiset osat ensimmäisestä valitusta objektista.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2242"/>
         <source>Remove all parts which overlap the first selected object.</source>
-        <translation type="unfinished"></translation>
+        <translation>Poista kaikki osat, jotka ovat päällekkäin ensiksi valitun objektin kanssa.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2251"/>
@@ -3718,7 +3719,7 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3418"/>
         <source>Merge this part with</source>
-        <translation type="unfinished"></translation>
+        <translation>Yhdistä tämä viivakohde objektiin</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3424"/>
@@ -3734,7 +3735,7 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3554"/>
         <source>Switched to map part '%1'.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vaihdettiin kartan osaan '%1'.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3576"/>
@@ -3858,12 +3859,12 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="857"/>
         <source>Draw free-handedly</source>
-        <translation type="unfinished"></translation>
+        <translation>Piirrä vapaalla kädellä</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="858"/>
         <source>Fill bounded areas</source>
-        <translation type="unfinished"></translation>
+        <translation>Täytä ympäröidyt alueet</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="806"/>
@@ -3998,7 +3999,7 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="849"/>
         <source>Tag Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Merkitse valinta</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="849"/>
