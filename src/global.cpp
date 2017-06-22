@@ -34,7 +34,9 @@ void doStaticInitializations()
 {
 	// Register the supported file formats
 	FileFormats.registerFormat(new XMLFileFormat());
+#ifndef BIG_ENDIAN
 	FileFormats.registerFormat(new OcdFileFormat());
+#endif
 #ifdef MAPPER_USE_GDAL
 	FileFormats.registerFormat(new OgrFileFormat());
 #endif

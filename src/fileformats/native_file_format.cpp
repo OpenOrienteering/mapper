@@ -19,6 +19,8 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef NO_NATIVE_FILE_FORMAT
+
 #include "native_file_format.h"
 
 #include <QFile>
@@ -423,3 +425,5 @@ void NativeFileImport::import(bool load_symbols_only)
 	emit map->currentMapPartIndexChanged(map->current_part_index);
 	emit map->currentMapPartChanged(map->getPart(map->current_part_index));
 }
+
+#endif
