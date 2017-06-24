@@ -19,8 +19,9 @@
 
 #include "gdal_manager.h"
 
-#include <ogr_api.h>
 #include <cpl_conv.h>
+#include <gdal.h>
+#include <ogr_api.h>
 
 #include <QByteArray>
 #include <QDir>
@@ -158,7 +159,40 @@ private:
 	{
 		QSettings settings;
 		
-		/// \todo Build from driver list in GDAL/OGR >= 2.0
+#ifdef GDAL_DMD_EXTENSIONS
+		// GDAL >= 2.0
+		settings.beginGroup(gdal_manager_group);
+		auto count = GDALGetDriverCount();
+		enabled_vector_extensions.clear();
+		enabled_vector_extensions.reserve(std::size_t(count));
+		for (auto i = 0; i < count; ++i)
+		{
+			auto driver_data = GDALGetDriver(i);
+			auto type = GDALGetMetadataItem(driver_data, GDAL_DCAP_VECTOR, nullptr);
+			if (qstrcmp(type, "YES") != 0)
+				continue;
+			
+			auto extensions_raw = GDALGetMetadataItem(driver_data, GDAL_DMD_EXTENSIONS, nullptr);
+			auto extensions = QByteArray::fromRawData(extensions_raw, int(qstrlen(extensions_raw)));
+			for (auto pos = 0; pos >= 0; )
+			{
+				auto start = pos;
+				pos = extensions.indexOf(' ', start+1);
+				auto extension = extensions.mid(start, pos - start);
+				if (extension.isEmpty())
+					continue;
+				if (extension == "dxf" && !settings.value(gdal_dxf_key).toBool())
+					continue;
+				if (extension == "gpx" && !settings.value(gdal_gpx_key).toBool())
+					continue;
+				if (extension == "osm" && !settings.value(gdal_osm_key).toBool())
+					continue;
+				enabled_vector_extensions.emplace_back(extension);
+			}
+		}
+		settings.endGroup();
+#else
+		// GDAL < 2.0 does not provide the supported extensions 
 		static const std::vector<QByteArray> default_extensions = { "shp", "shx" };
 		enabled_vector_extensions.reserve(default_extensions.size() + 3);
 		enabled_vector_extensions = default_extensions;
@@ -171,6 +205,7 @@ private:
 		if (settings.value(gdal_osm_key).toBool())
 			enabled_vector_extensions.push_back("osm");
 		settings.endGroup();
+#endif
 		
 		// Using osmconf.ini to detect a directory with data from gdal. The
 		// data:/gdal directory will always exist, due to mapper-osmconf.ini.
