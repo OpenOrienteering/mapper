@@ -117,21 +117,21 @@ public:
 	const std::vector<QByteArray>& supportedVectorExtensions() const
 	{
 		if (dirty)
-			update();
+			const_cast<GdalManagerPrivate*>(this)->update();
 		return enabled_vector_extensions;
 	}
 	
 	QStringList parameterKeys() const
 	{
 		if (dirty)
-			update();
+			const_cast<GdalManagerPrivate*>(this)->update();
 		return applied_parameters;
 	}
 	
 	QString parameterValue(const QString& key) const
 	{
 		if (dirty)
-			update();
+			const_cast<GdalManagerPrivate*>(this)->update();
 		QSettings settings;
 		settings.beginGroup(gdal_configuration_group);
 		return settings.value(key).toString();
@@ -154,7 +154,7 @@ public:
 	}
 	
 private:
-	void update() const
+	void update()
 	{
 		QSettings settings;
 		
