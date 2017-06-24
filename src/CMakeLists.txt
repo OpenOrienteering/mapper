@@ -113,6 +113,7 @@ set(Mapper_Common_SRCS
   gui/map/map_dialog_scale.cpp
   gui/map/map_editor.cpp
   gui/map/map_editor_activity.cpp
+  gui/map/map_find_feature.cpp
   gui/map/map_widget.cpp
   
   gui/symbols/area_symbol_settings.cpp

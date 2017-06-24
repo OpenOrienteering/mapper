@@ -59,6 +59,7 @@
 #include "core/georeferencing.h"
 #include "gui/configure_grid_dialog.h"
 #include "gui/georeferencing_dialog.h"
+#include "gui/map/map_find_feature.h"
 #include "gui/widgets/action_grid_bar.h"
 #include "gui/widgets/compass_display.h"
 #include "gui/widgets/symbol_widget.h"
@@ -372,6 +373,11 @@ void MapEditorController::setEditingInProgress(bool value)
 		undo_act->setEnabled(!editing_in_progress && map->undoManager().canUndo());
 		redo_act->setEnabled(!editing_in_progress && map->undoManager().canRedo());
 		updatePasteAvailability();
+		select_all_act->setEnabled(!editing_in_progress);
+		select_nothing_act->setEnabled(!editing_in_progress);
+		invert_selection_act->setEnabled(!editing_in_progress);
+		select_by_current_symbol_act->setEnabled(!editing_in_progress);
+		find_feature->setEnabled(!editing_in_progress);
 		
 		// Map menu
 		georeferencing_act->setEnabled(!editing_in_progress);
@@ -811,6 +817,8 @@ void MapEditorController::createActions()
 	select_nothing_act = newAction("select-nothing", tr("Select nothing"), this, SLOT(selectNothing()), nullptr, QString{}, "edit_menu.html");
 	invert_selection_act = newAction("invert-selection", tr("Invert selection"), this, SLOT(invertSelection()), nullptr, QString{}, "edit_menu.html");
 	select_by_current_symbol_act = newAction("select-by-symbol", QApplication::translate("SymbolRenderWidget", "Select all objects with selected symbols"), this, SLOT(selectByCurrentSymbols()), nullptr, QString{}, "edit_menu.html");
+	find_feature.reset(new MapFindFeature(*window, *this));
+	
 	clear_undo_redo_history_act = newAction("clearundoredohistory", tr("Clear undo / redo history"), this, SLOT(clearUndoRedoHistory()), NULL, tr("Clear the undo / redo history to reduce map file size."), "edit_menu.html");
 	
 	show_grid_act = newCheckAction("showgrid", tr("Show grid"), this, SLOT(showGrid()), "grid.png", QString{}, "grid.html");
@@ -997,6 +1005,9 @@ void MapEditorController::createMenuAndToolbars()
 	edit_menu->addAction(select_nothing_act);
 	edit_menu->addAction(invert_selection_act);
 	edit_menu->addAction(select_by_current_symbol_act);
+	edit_menu->addSeparator();
+	edit_menu->addAction(find_feature->showAction());
+	edit_menu->addAction(find_feature->findNextAction());
 	edit_menu->addSeparator();
 	edit_menu->addAction(clear_undo_redo_history_act);
 	
@@ -1399,6 +1410,8 @@ void MapEditorController::detach()
 	compass_display = NULL;
 	delete gps_marker_display;
 	gps_marker_display = NULL;
+	
+	find_feature.reset(nullptr);
 	
 	window->setCentralWidget(NULL);
 	delete map_widget;
