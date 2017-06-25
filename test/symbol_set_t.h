@@ -20,7 +20,8 @@
 #ifndef OPENORIENTEERING_SYMBOL_SET_T_H
 #define OPENORIENTEERING_SYMBOL_SET_T_H
 
-#include <QtTest/QtTest>
+#include <QDir>
+#include <QObject>
 
 /**
  * @test Updates compressed and scaled symbol sets, examples and test files.

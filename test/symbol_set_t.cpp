@@ -19,16 +19,41 @@
 
 #include "symbol_set_t.h"
 
+#include <vector>
+
+#include <QtGlobal>
+#include <QtTest>
+#include <QBuffer>
+#include <QByteArray>
+#include <QColor>
+#include <QCoreApplication>
+#include <QFile>
+#include <QFileDevice>
+#include <QFileInfo>
+#include <QFlags>
+#include <QIODevice>
+#include <QLatin1Char>
+#include <QPagedPaintDevice>
+#include <QPrinter>
+#include <QRectF>
+#include <QString>
+#include <QStringList>
+#include <QTestData>
+
+#include "global.h"
 #include "settings.h"
 #include "core/map.h"
 #include "core/map_color.h"
+#include "core/map_coord.h"
 #include "core/map_printer.h"
 #include "core/map_view.h"
 #include "core/symbols/area_symbol.h"
+#include "core/symbols/symbol.h"
 #include "fileformats/xml_file_format_p.h"
 #include "templates/template.h"
 #include "undo/undo_manager.h"
 
+class QColor;
 
 /**
  * Saves the map to the given path iff this changes the file's content.
