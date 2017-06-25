@@ -23,6 +23,7 @@
 
 #include <QCompleter>
 #include <QLineEdit>
+#include <QSignalBlocker>
 #include <QSpinBox>
 #include <QVariant>
 
@@ -30,7 +31,6 @@
 #include "gui/georeferencing_dialog.h"
 #include "gui/util_gui.h"
 #include "gui/widgets/crs_param_widgets.h"
-#include "util/scoped_signals_blocker.h"
 
 
 namespace CRSTemplates

@@ -32,25 +32,25 @@
 #include <QPainter>
 #include <QScroller>
 #include <QSettings>
+#include <QSignalBlocker>
 #include <QTableWidget>
 #include <QToolButton>
 
-#include "segmented_button_layout.h"
-#include "../main_window.h"
-#include "../../core/georeferencing.h"
+#include "settings.h"
+#include "core/georeferencing.h"
 #include "core/map.h"
+#include "core/objects/object.h"
+#include "gui/widgets/segmented_button_layout.h"
+#include "gui/main_window.h"
 #include "gui/map/map_editor.h"
 #include "gui/map/map_widget.h"
-#include "core/objects/object.h"
-#include "../../settings.h"
-#include "../../templates/template.h"
-#include "../../templates/template_adjust.h"
-#include "../../templates/template_map.h"
-#include "../../templates/template_position_dock_widget.h"
-#include "../../templates/template_tool_move.h"
+#include "templates/template.h"
+#include "templates/template_adjust.h"
+#include "templates/template_map.h"
+#include "templates/template_position_dock_widget.h"
+#include "templates/template_tool_move.h"
+#include "util/item_delegates.h"
 #include "util/util.h"
-#include "../../util/item_delegates.h"
-#include "../../util/scoped_signals_blocker.h"
 
 
 // ### ApplyTemplateTransform ###

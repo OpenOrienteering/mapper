@@ -18,60 +18,14 @@
  */
 
 
-#ifndef _UTIL_SCOPED_SIGNALS_BLOCKER_H_
-#define _UTIL_SCOPED_SIGNALS_BLOCKER_H_
+#ifndef OPENORIENTEERING_UTIL_SCOPED_SIGNALS_BLOCKER_H
+#define OPENORIENTEERING_UTIL_SCOPED_SIGNALS_BLOCKER_H
 
 #include <utility>
 
 #include <QObject>
 #include <QVarLengthArray>
 
-/**
- * @brief A safe and scoped wrapper around QObject::blockSignals().
- * 
- * A ScopedSignalsBlocker disables the signals of a QObject for the scope of a
- * particular block. It sets a QObject's signalsBlocked property to true during
- * construction, and resets its to its previous state during destruction.
- * 
- * Synopsis:
- * 
- *     {
- *         const ScopedSignalsBlocker block(my_widget);
- *         my_widget->setSomeProperty("Hello World");
- *     }
- * 
- * Since Qt 5.3, a better implementation is available from Qt as QSignalBlocker.
- */
-class ScopedSignalsBlocker
-{
-public:
-	inline explicit ScopedSignalsBlocker(QObject* obj)
-	: obj(obj)
-	, prev_state(obj && obj->blockSignals(true))
-	{
-		Q_ASSERT(!obj || obj->signalsBlocked());
-	}
-	
-	inline ~ScopedSignalsBlocker()
-	{
-		if (obj)
-			obj->blockSignals(prev_state);
-	}
-	
-private:
-	Q_DISABLE_COPY(ScopedSignalsBlocker)
-	QObject* obj;
-	const bool prev_state;
-};
-
-#if QT_VERSION < 0x050300
-
-// We export our class under the name of the class introduced in Qt 5.3.
-// Note: Our class does not support the full API of QSignalBlocker.
-// However, this is normal for lower API versions anyway.
-typedef ScopedSignalsBlocker QSignalBlocker;
-
-#endif
 
 /**
  * @brief A safe and scoped wrapper around QObject::blockSignals() of multiple objects.

@@ -26,6 +26,7 @@
 #include <QDir>
 #include <QLineEdit>
 #include <QLocale>
+#include <QSignalBlocker>
 #include <QSpinBox>
 #include <QTemporaryDir>
 #include <QXmlStreamAttributes>
@@ -34,12 +35,11 @@
 
 #include <proj_api.h>
 
-#include "crs_template.h"
-#include "../fileformats/file_format.h"
-#include "../fileformats/xml_file_format.h"
+#include "core/crs_template.h"
+#include "fileformats/file_format.h"
+#include "fileformats/xml_file_format.h"
 #include "gui/util_gui.h"
-#include "../util/xml_stream_util.h"
-#include "../util/scoped_signals_blocker.h"
+#include "util/xml_stream_util.h"
 
 
 // ### A namespace which collects various string constants of type QLatin1String. ###

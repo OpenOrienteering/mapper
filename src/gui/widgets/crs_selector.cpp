@@ -24,11 +24,11 @@
 #include <QEvent>
 #include <QFormLayout>
 #include <QLabel>
+#include <QSignalBlocker>
 
-#include "../georeferencing_dialog.h"
-#include "../../core/crs_template.h"
-#include "../../core/georeferencing.h"
-#include "../../util/scoped_signals_blocker.h"
+#include "core/crs_template.h"
+#include "core/georeferencing.h"
+#include "gui/georeferencing_dialog.h"
 
 
 // Helper functions for parameter widgets
