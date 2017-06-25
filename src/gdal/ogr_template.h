@@ -20,10 +20,23 @@
 #ifndef OPENORIENTEERING_OGR_TEMPLATE_H
 #define OPENORIENTEERING_OGR_TEMPLATE_H
 
+#include <vector>
+
+#include <QtGlobal>
+#include <QObject>
+#include <QString>
+
 #include "templates/template_map.h"
 
-#include "core/georeferencing.h"
+QT_BEGIN_NAMESPACE
+class QByteArray;
+class QWidget;
+class QXmlStreamReader;
+class QXmlStreamWriter;
+QT_END_NAMESPACE
 
+class Map;
+class Template;
 
 /**
  * Template displaying a file supported by OGR.

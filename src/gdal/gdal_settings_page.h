@@ -20,10 +20,17 @@
 #ifndef OPENORIENTEERING_GDAL_SETTINGS_PAGE_H
 #define OPENORIENTEERING_GDAL_SETTINGS_PAGE_H
 
+#include <QtGlobal>
+#include <QObject>
+#include <QString>
+
 #include "gui/widgets/settings_page.h"
 
+QT_BEGIN_NAMESPACE
 class QCheckBox;
 class QTableWidget;
+class QWidget;
+QT_END_NAMESPACE
 
 
 class GdalSettingsPage : public SettingsPage

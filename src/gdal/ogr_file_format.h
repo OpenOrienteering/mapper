@@ -20,12 +20,19 @@
 #ifndef OPENORIENTEERING_OGR_FILE_FORMAT_H
 #define OPENORIENTEERING_OGR_FILE_FORMAT_H
 
+#include <cstddef>
+
+#include <QtGlobal>
+
 #include "fileformats/file_format.h"
+
+QT_BEGIN_NAMESPACE
+class QIODevice;
+QT_END_NAMESPACE
 
 class Importer;
 class Map;
 class MapView;
-class QIODevice;
 
 
 /**

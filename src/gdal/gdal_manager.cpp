@@ -20,9 +20,10 @@
 #include "gdal_manager.h"
 
 #include <cpl_conv.h>
-#include <gdal.h>
+#include <gdal.h> // IWYU pragma: keep
 #include <ogr_api.h>
 
+#include <QtGlobal>
 #include <QByteArray>
 #include <QDir>
 #include <QFileInfo>

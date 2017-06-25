@@ -19,13 +19,27 @@
 
 #include "ogr_template.h"
 
-#include <QFile>
-#include <QXmlStreamReader>
+#include <algorithm>
+#include <memory>
 
-#include "gdal_manager.h"
-#include "ogr_file_format_p.h"
+#include <QtMath>
+#include <QDialog>
+#include <QFile>
+#include <QLatin1Char>
+#include <QPointF>
+#include <QStringRef>
+#include <QTransform>
+#include <QXmlStreamReader>
+#include <QXmlStreamWriter>
+
+#include "core/georeferencing.h"
+#include "core/latlon.h"
 #include "core/map.h"
-#include "core/objects/object.h"
+#include "core/map_coord.h"
+#include "fileformats/file_format.h"
+#include "gdal/gdal_manager.h"
+#include "gdal/ogr_file_format_p.h"
+#include "templates/template.h"
 #include "templates/template_positioning_dialog.h"
 
 
@@ -160,7 +174,7 @@ bool OgrTemplate::loadTemplateFileImpl(bool configuring)
 			if (!configuring || migrating_from_pre_v07)
 			{
 				QTransform t;
-				t.rotate(-getTemplateRotation() * (180 / M_PI));
+				t.rotate(-qRadiansToDegrees(getTemplateRotation()));
 				t.scale(getTemplateScaleX(), getTemplateScaleY());
 				setTemplatePosition(templatePosition() + MapCoord{t.map(accounted_offset)});
 				migrating_from_pre_v07 = false;

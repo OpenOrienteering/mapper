@@ -20,32 +20,51 @@
 #include "ogr_file_format.h"
 #include "ogr_file_format_p.h"
 
+#include <algorithm>
+#include <iterator>
 #include <memory>
+#include <vector>
+// IWYU pragma: no_include <type_traits>
 
 #include <cpl_error.h>
 #include <cpl_conv.h>
+#include <ogr_api.h>
 #include <ogr_srs_api.h>
+// IWYU pragma: no_include "ogr_core.h"
 
+#include <QtGlobal>
+#include <QtMath>
 #include <QByteArray>
+#include <QColor>
 #include <QFile>
-#include <QFileInfo>
+#include <QHash>
+#include <QIODevice>
+#include <QLatin1Char>
+#include <QObject>
 #include <QPointF>
 #include <QRegularExpression>
 #include <QScopedValueRollback>
-#include <QtMath>
+#include <QString>
+#include <QStringRef>
+#include <QVariant>
 
-#include "gdal_manager.h"
 #include "core/georeferencing.h"
 #include "core/latlon.h"
 #include "core/map.h"
 #include "core/map_color.h"
 #include "core/map_coord.h"
+#include "core/map_part.h"
 #include "core/objects/object.h"
 #include "core/objects/text_object.h"
 #include "core/symbols/area_symbol.h"
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/point_symbol.h"
+#include "core/symbols/symbol.h"
 #include "core/symbols/text_symbol.h"
+#include "fileformats/file_import_export.h"
+#include "gdal/gdal_manager.h"
+
+// IWYU pragma: no_forward_declare QFile
 
 
 namespace ogr
@@ -346,10 +365,8 @@ OgrFileImport::OgrFileImport(QIODevice* stream, Map* map, MapView* view, UnitTyp
 	map->addSymbol(default_text_symbol, 3);
 }
 
-OgrFileImport::~OgrFileImport()
-{
-	// nothing
-}
+
+OgrFileImport::~OgrFileImport() = default;  // not inlined
 
 
 
