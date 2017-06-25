@@ -195,7 +195,7 @@ endif()
 include("TestBigEndian")
 test_big_endian(big_endian)
 if(big_endian)
-	add_definitions(-DBIG_ENDIAN)
+	add_definitions(-DMAPPER_BIG_ENDIAN)
 endif()
 
 
