@@ -17,18 +17,15 @@
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
 
 
-# This macro sets CMAKE_CROSSCOMPILING, and when actually cross-compiling,
-# it also sets other CMAKE_... variables which describe the target system.
+# Sets CMAKE_CROSSCOMPILING and variables which describe the target system.
 macro(handle_crosscompiling)
 	set(CMAKE_CROSSCOMPILING @CMAKE_CROSSCOMPILING@)
-	if(CMAKE_CROSSCOMPILING)
-		# These variables must describe the target system
-		set(ANDROID @ANDROID@)
-		set(APPLE   @APPLE@)
-		set(MINGW   @MINGW@)
-		set(UNIX    @UNIX@)
-		set(WIN32   @WIN32@)
-	endif()
+	# These variables must describe the target system
+	set(ANDROID @ANDROID@)
+	set(APPLE   @APPLE@)
+	set(MINGW   @MINGW@)
+	set(UNIX    @UNIX@)
+	set(WIN32   @WIN32@)
 endmacro()
 
 
