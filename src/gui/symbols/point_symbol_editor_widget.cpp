@@ -42,6 +42,7 @@
 #include <QLabel>
 #include <QListWidget>
 #include <QListWidgetItem>
+#include <QLocale>
 #include <QMenu>
 #include <QMouseEvent>
 #include <QPainter>
@@ -710,8 +711,9 @@ void PointSymbolEditorWidget::coordinateChanged(int row, int column)
 			coord = path->getCoordinate(coord_index);
 		}
 		
+		QLocale locale;
 		auto ok = false;
-		auto new_value = qRound(1000 * coords_table->item(row, column)->text().toDouble(&ok));
+		auto new_value = qRound(1000 * locale.toDouble(coords_table->item(row, column)->text(), &ok));
 		
 		if (ok)
 		{
@@ -737,7 +739,7 @@ void PointSymbolEditorWidget::coordinateChanged(int row, int column)
 		
 		// Update, needed in cases of rounding and error
 		coords_table->blockSignals(true);
-		coords_table->item(row, column)->setText(QString::number((column == 0) ? coord.x() : -coord.y()));
+		coords_table->item(row, column)->setText(locale.toString((column == 0) ? coord.x() : -coord.y(), 'f', 3));
 		coords_table->blockSignals(false);
 	}
 	else
@@ -881,8 +883,9 @@ void PointSymbolEditorWidget::updateCoordsRow(int row)
 	else if (object->getType() == Object::Path)
 		coordF = MapCoordF(static_cast<PathObject*>(object)->getCoordinate(coord_index));
 	
-	coords_table->item(row, 0)->setText(QString::number(coordF.x()));
-	coords_table->item(row, 1)->setText(QString::number(-coordF.y()));
+	QLocale locale;
+	coords_table->item(row, 0)->setText(locale.toString(coordF.x(), 'f', 3));
+	coords_table->item(row, 1)->setText(locale.toString(-coordF.y(), 'f', 3));
 	
 	if (object->getType() == Object::Path)
 	{
