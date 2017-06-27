@@ -2004,7 +2004,7 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="211"/>
         <source>Open most recently used file on start</source>
-        <translation>Zuletzt benutzte Datei bei Programmstart öffnen</translation>
+        <translation>Meistbenutzte Datei bei Programmstart öffnen</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="214"/>
@@ -3549,7 +3549,7 @@ Daten trotzdem importieren?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="797"/>
         <source>Ctrl+Shift+A</source>
-        <translation>Ctrl+Shift+A</translation>
+        <translation>Strg+Umschalt+A</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="798"/>
