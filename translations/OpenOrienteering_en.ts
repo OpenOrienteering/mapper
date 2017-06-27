@@ -77,15 +77,17 @@
 <context>
     <name>OgrFileImport</name>
     <message numerus="yes">
-        <location filename="../src/gdal/ogr_file_format.cpp" line="442"/>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="447"/>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="452"/>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="457"/>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="462"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="467"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="472"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="477"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="482"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="487"/>
         <source>Unable to load %n objects, reason: %1</source>
-        <translation><numerusform>Unable to load one object, reason: %1</numerusform>
-        <numerusform>Unable to load %n objects, reason: %1</numerusform>
-        </translation></message>
+        <translation>
+            <numerusform>Unable to load one object, reason: %1</numerusform>
+            <numerusform>Unable to load %n objects, reason: %1</numerusform>
+        </translation>
+    </message>
 </context>
 <context>
     <name>TagSelectWidget</name>
