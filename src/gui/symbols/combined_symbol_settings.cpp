@@ -188,7 +188,7 @@ void CombinedSymbolSettings::editClicked(int index)
 	sub_dialog.setWindowModality(Qt::WindowModal);
 	if (sub_dialog.exec() == QDialog::Accepted)
 	{
-		symbol->setPart(index, sub_dialog.getNewSymbol(), true);
+		symbol->setPart(index, sub_dialog.getNewSymbol().release(), true);
 		emit propertiesModified();
 	}
 }

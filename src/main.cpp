@@ -112,7 +112,7 @@ int main(int argc, char** argv)
 	doStaticInitializations();
 	
 	QStyle* base_style = nullptr;
-#if !defined(Q_OS_WIN) && !defined(Q_OS_OSX)
+#if !defined(Q_OS_WIN) && !defined(Q_OS_MACOS)
 	if (QGuiApplication::platformName() == QLatin1String("xcb"))
 	{
 		// Use the modern 'fusion' style instead of the 
@@ -121,7 +121,7 @@ int main(int argc, char** argv)
 	}
 #endif
 	QApplication::setStyle(new MapperProxyStyle(base_style));
-#if !defined(Q_OS_OSX)
+#if !defined(Q_OS_MACOS)
 	QApplication::setPalette(QApplication::style()->standardPalette());
 #endif
 	

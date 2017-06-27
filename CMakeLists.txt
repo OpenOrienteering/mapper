@@ -187,8 +187,21 @@ if(NOT TARGET PROJ4::proj)
 	find_package(PROJ4 MODULE REQUIRED)
 endif()
 
-find_package(GDAL REQUIRED)
+if(Mapper_USE_GDAL)
+	find_package(GDAL REQUIRED)
+endif()
 
+
+include("TestBigEndian")
+test_big_endian(big_endian)
+if(big_endian)
+	add_definitions(-DMAPPER_BIG_ENDIAN)
+endif()
+
+
+if(ANDROID OR big_endian)
+	add_definitions(-DNO_NATIVE_FILE_FORMAT)
+endif()
 
 if(UNIX AND NOT APPLE)
 #	set(CMAKE_INSTALL_RPATH "\$ORIGIN/../lib/${Mapper_PACKAGE_NAME}/lib")

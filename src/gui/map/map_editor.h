@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013, 2014 Thomas Schöps
- *    Copyright 2013, 2014 Kai Pastor
+ *    Copyright 2013-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,45 +19,56 @@
  */
 
 
-#ifndef _OPENORIENTEERING_MAP_EDITOR_H_
-#define _OPENORIENTEERING_MAP_EDITOR_H_
+#ifndef OPENORIENTEERING_MAP_EDITOR_H
+#define OPENORIENTEERING_MAP_EDITOR_H
 
-#include <vector>
+#include <memory>
 
+#include <QtGlobal>
 #include <QClipboard>
+#include <QHash>
+#include <QObject>
 #include <QPointer>
 #include <QScopedPointer>
+#include <QString>
 #include <QTimer>
 
 #include "gui/main_window_controller.h"
-#include "core/map.h"
 
 QT_BEGIN_NAMESPACE
+class QAction;
+class QByteArray;
 class QComboBox;
 class QDockWidget;
 class QFrame;
+class QKeyEvent;
 class QLabel;
 class QMenu;
 class QSignalMapper;
-class QSizeGrip;
+// IWYU pragma: no_forward_declare QString
 class QToolBar;
 class QToolButton;
+class QWidget;
 QT_END_NAMESPACE
 
 class ActionGridBar;
 class CompassDisplay;
 class EditorDockWidget;
+class FileFormat;
 class GeoreferencingDialog;
+class MainWindow;
 class Map;
 class MapView;
 class MapWidget;
 class MapEditorActivity;
 class MapEditorTool;
+class MapFindFeature;
 class GPSDisplay;
 class GPSTemporaryMarkers;
 class GPSTrackRecorder;
 class PrintWidget;
 class ReopenTemplateDialog;
+class Symbol;
 class SymbolWidget;
 class Template;
 class TemplateListWidget;
@@ -98,7 +109,7 @@ public:
 	MapEditorController(OperatingMode mode, Map* map = nullptr, MapView* map_view = nullptr);
 	
 	/** Destroys the MapEditorController. */
-	~MapEditorController();
+	~MapEditorController() override;
 	
 	/** Returns if the editor is in mobile mode. */
 	bool isInMobileMode() const;
@@ -106,7 +117,7 @@ public:
 	/**
 	 * Changes to new_tool as the new active tool.
 	 * If there is a current tool before, calls deleteLater() on it.
-	 * new_tool may be NULL, but it is unusual to have no active tool, so
+	 * new_tool may be nullptr, but it is unusual to have no active tool, so
 	 * consider setEditTool() instead.
 	 */
 	void setTool(MapEditorTool* new_tool);
@@ -120,7 +131,7 @@ public:
 	/**
 	 * Sets new_override_tool as the new active override tool.
 	 * This takes precedence over all tools set via setTool().
-	 * new_override_tool may be NULL, which disables using an override tool
+	 * new_override_tool may be nullptr, which disables using an override tool
 	 * and re-enables the normal tool set via setTool().
 	 */
 	void setOverrideTool(MapEditorTool* new_override_tool);
@@ -133,12 +144,12 @@ public:
 	
 	
 	/**
-	 * @brief Returns the active symbol, or NULL.
+	 * @brief Returns the active symbol, or nullptr.
 	 * 
 	 * The active symbol is the single symbol which is to be used by drawing
 	 * tools and actions.
 	 * 
-	 * It there is no active symbol, this function returns NULL.
+	 * It there is no active symbol, this function returns nullptr.
 	 */
 	Symbol* activeSymbol() const;
 	
@@ -155,7 +166,7 @@ public:
 	 * Returns true when editing is in progress.
 	 * @see setEditingInProgress
 	 */
-	virtual bool isEditingInProgress() const;
+	bool isEditingInProgress() const override;
 	
 	/**
 	 * Adds a a floating dock widget to the main window.
@@ -165,7 +176,7 @@ public:
 	
 	/**
 	 * Sets the current editor activity.
-	 * new_activity may be NULL to disable the current editor activity.
+	 * new_activity may be nullptr to disable the current editor activity.
 	 */
 	void setEditorActivity(MapEditorActivity* new_activity);
 	
@@ -213,34 +224,34 @@ public:
 	
 	
 	/**
-	 * Returns the action identified by id if it exists, or NULL.
+	 * Returns the action identified by id if it exists, or nullptr.
 	 * This allows the reuse of the controller's actions in dock widgets etc.
 	 */
 	QAction* getAction(const char* id);
 	
 	/** Override from MainWindowController */
-	virtual bool save(const QString& path);
+	bool save(const QString& path) override;
 	/** Override from MainWindowController */
-	virtual bool exportTo(const QString& path, const FileFormat* format = NULL);
+	bool exportTo(const QString& path, const FileFormat* format = nullptr) override;
 	/** Override from MainWindowController */
-	virtual bool load(const QString& path, QWidget* dialog_parent = NULL);
+	bool load(const QString& path, QWidget* dialog_parent = nullptr) override;
 	
 	/** Override from MainWindowController */
-	virtual void attach(MainWindow* window);
+	void attach(MainWindow* window) override;
 	/** Override from MainWindowController */
-	virtual void detach();
+	void detach() override;
 	
 	/**
 	 * @copybrief MainWindowController::keyPressEventFilter
 	 * This implementation passes the event to MapWidget::keyPressEventFilter.
 	 */
-	virtual bool keyPressEventFilter(QKeyEvent* event);
+	bool keyPressEventFilter(QKeyEvent* event) override;
 	
 	/** 
 	 * @copybrief MainWindowController::keyReleaseEventFilter
 	 * This implementation passes the event to MapWidget::keyReleaseEventFilter.
 	 */
-	virtual bool keyReleaseEventFilter(QKeyEvent* event);
+	bool keyReleaseEventFilter(QKeyEvent* event) override;
 	
 public slots:
 	/**
@@ -296,6 +307,8 @@ public slots:
 	void showColorWindow(bool show);
 	/** Shows the "load symbols from" dialog. */
 	void loadSymbolsFromClicked();
+	/** Loads a CRT file and shows the symbol replacement dialog. */
+	void loadCrtClicked();
 	/** TODO: not implemented yet. */
 	void loadColorsFromClicked();
 	/** Shows the "scale all symbols" dialog. */
@@ -514,7 +527,7 @@ public slots:
 signals:
 	/**
 	 * @brief Indicates a change of the active symbol.
-	 * @param symbol The new active symbol, or NULL.
+	 * @param symbol The new active symbol, or nullptr.
 	 */
 	void activeSymbolChanged(const Symbol* symbol);
 	
@@ -569,7 +582,7 @@ private:
 	/// Updates enabled state of all widgets
 	void updateWidgets();
 	
-	void createSymbolWidget(QWidget* parent = NULL);
+	void createSymbolWidget(QWidget* parent = nullptr);
 	
 	void createColorWindow();
 	
@@ -628,6 +641,7 @@ private:
 	QAction* select_nothing_act;
 	QAction* invert_selection_act;
 	QAction* select_by_current_symbol_act;
+	std::unique_ptr<MapFindFeature> find_feature;
 	QAction* clear_undo_redo_history_act;
 	
 	QAction* pan_act;
@@ -657,6 +671,7 @@ private:
 	QAction* color_window_act;
 	QPointer<EditorDockWidget> color_dock_widget;
 	QAction* load_symbols_from_act;
+	QAction* load_crt_act;
 	
 	QAction* symbol_window_act;
 	EditorDockWidget* symbol_dock_widget;

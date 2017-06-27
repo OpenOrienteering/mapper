@@ -1317,7 +1317,7 @@ void OcdFileImport::setupAreaSymbolCommon(OcdImportedAreaSymbol* symbol, bool fi
 		AreaSymbol::FillPattern pattern;
 		pattern.type = AreaSymbol::FillPattern::LinePattern;
 		pattern.angle = convertAngle(ocd_symbol.hatch_angle_1);
-		pattern.rotatable = true;
+		pattern.setRotatable(true);
 		pattern.line_spacing = convertLength(ocd_symbol.hatch_dist);
 		pattern.line_offset = 0;
 		pattern.line_color = convertColor(ocd_symbol.hatch_color);
@@ -1341,7 +1341,7 @@ void OcdFileImport::setupAreaSymbolCommon(OcdImportedAreaSymbol* symbol, bool fi
 		AreaSymbol::FillPattern pattern;
 		pattern.type = AreaSymbol::FillPattern::PointPattern;
 		pattern.angle = convertAngle(ocd_symbol.structure_angle);
-		pattern.rotatable = true;
+		pattern.setRotatable(true);
 		pattern.point_distance = convertLength(ocd_symbol.structure_width);
 		pattern.line_spacing = convertLength(ocd_symbol.structure_height);
 		pattern.line_offset = 0;

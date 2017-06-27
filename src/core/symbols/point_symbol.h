@@ -23,6 +23,7 @@
 #define OPENORIENTEERING_POINT_SYMBOL_H
 
 #include "symbol.h"
+#include "area_symbol.h"
 
 
 /**
@@ -54,6 +55,12 @@ public:
 	        RenderableOptions options ) const override;
 	
 	void createRenderablesScaled(MapCoordF coord, float rotation, ObjectRenderables& output, float coord_scale = 1.0f) const;
+	
+	void createRenderablesIfCenterInside(MapCoordF point_coord, qreal rotation, const QPainterPath* outline, ObjectRenderables& output) const;
+	void createPrimitivesIfCompletelyInside(MapCoordF point_coord, const QPainterPath* outline, ObjectRenderables& output) const;
+	void createRenderablesIfCompletelyInside(MapCoordF point_coord, qreal rotation, const QPainterPath* outline, ObjectRenderables& output) const;
+	void createPrimitivesIfPartiallyInside(MapCoordF point_coord, const QPainterPath* outline, ObjectRenderables& output) const;
+	void createRenderablesIfPartiallyInside(MapCoordF point_coord, qreal rotation, const QPainterPath* outline, ObjectRenderables& output) const;
 	
 	void colorDeleted(const MapColor* color) override;
 	bool containsColor(const MapColor* color) const override;

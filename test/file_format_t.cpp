@@ -314,7 +314,9 @@ namespace
 	  "data:issue-513-coords-outside-printable.omap",
 	  "data:issue-513-coords-outside-qint32.omap",
 	  "data:spotcolor_overprint.xmap",
+#ifndef NO_NATIVE_FILE_FORMAT
 	  "data:test_map.omap"
+#endif
 	};
 	
 } // namespace

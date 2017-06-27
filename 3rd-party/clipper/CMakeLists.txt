@@ -107,6 +107,9 @@ ExternalProject_Get_Property(Clipper SOURCE_DIR)
 
 # The actual library build
 
+set(CMAKE_CXX_CLANG_TIDY "")
+set(CMAKE_CXX_INCLUDE_WHAT_YOU_USE "")
+
 if(CMAKE_COMPILER_IS_GNUCXX)
 	string(REPLACE "-Wpedantic" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 endif()

@@ -30,12 +30,12 @@
 #include <QListWidget>
 #include <QPushButton>
 #include <QRadioButton>
+#include <QSignalBlocker>
 
+#include "gui/util_gui.h"
 #include "gui/symbols/symbol_setting_dialog.h"
 #include "gui/widgets/color_dropdown.h"
-#include "gui/util_gui.h"
 #include "util/backports.h"
-#include "util/scoped_signals_blocker.h"
 
 
 // ### DetermineFontSizeDialog ###

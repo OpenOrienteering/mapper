@@ -34,11 +34,15 @@ void doStaticInitializations()
 {
 	// Register the supported file formats
 	FileFormats.registerFormat(new XMLFileFormat());
+#ifndef MAPPER_BIG_ENDIAN
 	FileFormats.registerFormat(new OcdFileFormat());
+#endif
 #ifdef MAPPER_USE_GDAL
 	FileFormats.registerFormat(new OgrFileFormat());
 #endif
+#ifndef MAPPER_BIG_ENDIAN
 #ifndef NO_NATIVE_FILE_FORMAT
 	FileFormats.registerFormat(new NativeFileFormat()); // TODO: Remove before release 1.0
+#endif
 #endif
 }

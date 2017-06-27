@@ -20,26 +20,51 @@
 #include "ogr_file_format.h"
 #include "ogr_file_format_p.h"
 
+#include <algorithm>
+#include <iterator>
 #include <memory>
+#include <vector>
+// IWYU pragma: no_include <type_traits>
 
 #include <cpl_error.h>
 #include <cpl_conv.h>
+#include <ogr_api.h>
 #include <ogr_srs_api.h>
+// IWYU pragma: no_include "ogr_core.h"
 
+#include <QtGlobal>
+#include <QtMath>
+#include <QByteArray>
+#include <QColor>
 #include <QFile>
-#include <QFileInfo>
+#include <QHash>
+#include <QIODevice>
+#include <QLatin1Char>
+#include <QObject>
+#include <QPointF>
 #include <QRegularExpression>
 #include <QScopedValueRollback>
-#include <QtMath>
+#include <QString>
+#include <QStringRef>
+#include <QVariant>
 
-#include "gdal_manager.h"
 #include "core/georeferencing.h"
+#include "core/latlon.h"
 #include "core/map.h"
+#include "core/map_color.h"
+#include "core/map_coord.h"
+#include "core/map_part.h"
+#include "core/objects/object.h"
 #include "core/objects/text_object.h"
 #include "core/symbols/area_symbol.h"
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/point_symbol.h"
+#include "core/symbols/symbol.h"
 #include "core/symbols/text_symbol.h"
+#include "fileformats/file_import_export.h"
+#include "gdal/gdal_manager.h"
+
+// IWYU pragma: no_forward_declare QFile
 
 
 namespace ogr
@@ -150,7 +175,7 @@ namespace
 			auto pattern = QString::fromLatin1(raw_pattern);
 			auto sub_pattern_re = QRegularExpression(QString::fromLatin1("([0-9.]+)([a-z]*) *([0-9.]+)([a-z]*)"));
 			auto match = sub_pattern_re.match(pattern);
-			double length_0, length_1;
+			double length_0{}, length_1{};
 			bool ok = match.hasMatch();
 			if (ok)
 				length_0 = match.capturedRef(1).toDouble(&ok);
@@ -170,6 +195,7 @@ namespace
 		}
 	}
 	
+#if 0
 	int getFontSize(const char* font_size_string)
 	{
 		auto pattern = QString::fromLatin1(font_size_string);
@@ -205,6 +231,7 @@ namespace
 		}
 		return font_size;
 	}
+#endif
 	
 	void applyLabelAnchor(int anchor, TextObject* text_object)
 	{
@@ -251,7 +278,7 @@ namespace
 OgrFileFormat::OgrFileFormat()
  : FileFormat(OgrFile, "OGR", ImportExport::tr("Geospatial vector data"), QString{}, ImportSupported)
 {
-	for (const auto extension : GdalManager().supportedVectorExtensions())
+	for (const auto& extension : GdalManager().supportedVectorExtensions())
 		addExtension(QString::fromLatin1(extension));
 }
 
@@ -338,10 +365,8 @@ OgrFileImport::OgrFileImport(QIODevice* stream, Map* map, MapView* view, UnitTyp
 	map->addSymbol(default_text_symbol, 3);
 }
 
-OgrFileImport::~OgrFileImport()
-{
-	// nothing
-}
+
+OgrFileImport::~OgrFileImport() = default;  // not inlined
 
 
 
@@ -414,7 +439,7 @@ void OgrFileImport::import(bool load_symbols_only)
 					else
 					{
 						part = new MapPart(QString::fromUtf8(OGR_L_GetName(layer)), map);
-						auto index = map->getNumParts();
+						auto index = std::size_t(map->getNumParts());
 						map->addPart(part, index);
 						map->setCurrentPartIndex(index);
 					}
@@ -590,10 +615,13 @@ void OgrFileImport::importFeature(MapPart* map_part, OGRFeatureDefnH feature_def
 		to_map_coord = &OgrFileImport::fromDrawing;
 	}
 	
-	auto object = importGeometry(map_part, feature, geometry);
-	
-	if (object && feature_definition)
+	auto objects = importGeometry(feature, geometry);
+	for (auto object : objects)
 	{
+		map_part->addObject(object);
+		if (!feature_definition)
+			continue;
+		
 		auto num_fields = OGR_FD_GetFieldCount(feature_definition);
 		for (int i = 0; i < num_fields; ++i)
 		{
@@ -607,44 +635,51 @@ void OgrFileImport::importFeature(MapPart* map_part, OGRFeatureDefnH feature_def
 	}
 }
 
-Object* OgrFileImport::importGeometry(MapPart* map_part, OGRFeatureH feature, OGRGeometryH geometry)
+OgrFileImport::ObjectList OgrFileImport::importGeometry(OGRFeatureH feature, OGRGeometryH geometry)
 {
+	ObjectList result;
 	auto geometry_type = wkbFlatten(OGR_G_GetGeometryType(geometry));
 	switch (geometry_type)
 	{
 	case OGRwkbGeometryType::wkbPoint:
-		return importPointGeometry(map_part, feature, geometry);
+		result = { importPointGeometry(feature, geometry) };
+		break;
 		
 	case OGRwkbGeometryType::wkbLineString:
-		return importLineStringGeometry(map_part, feature, geometry);
+		result = { importLineStringGeometry(feature, geometry) };
+		break;
 		
 	case OGRwkbGeometryType::wkbPolygon:
-		return importPolygonGeometry(map_part, feature, geometry);
+		result = { importPolygonGeometry(feature, geometry) };
+		return result;
 		
 	case OGRwkbGeometryType::wkbGeometryCollection:
 	case OGRwkbGeometryType::wkbMultiLineString:
 	case OGRwkbGeometryType::wkbMultiPoint:
 	case OGRwkbGeometryType::wkbMultiPolygon:
-		return importGeometryCollection(map_part, feature, geometry);
+		return importGeometryCollection(feature, geometry);
 		
 	default:
 		qDebug("OgrFileImport: Unknown or unsupported geometry type: %d", geometry_type);
 		++unsupported_geometry_type;
-		return nullptr;
 	}
+	return result;
 }
 
-Object* OgrFileImport::importGeometryCollection(MapPart* map_part, OGRFeatureH feature, OGRGeometryH geometry)
+OgrFileImport::ObjectList OgrFileImport::importGeometryCollection(OGRFeatureH feature, OGRGeometryH geometry)
 {
+	ObjectList result;
 	auto num_geometries = OGR_G_GetGeometryCount(geometry);
+	result.reserve(std::size_t(num_geometries));
 	for (int i = 0; i < num_geometries; ++i)
 	{
-		importGeometry(map_part, feature, OGR_G_GetGeometryRef(geometry, i));
+		auto tmp = importGeometry(feature, OGR_G_GetGeometryRef(geometry, i));
+		result.insert(result.end(), begin(tmp), end(tmp));
 	}
-	return nullptr;
+	return result;
 }
 
-Object* OgrFileImport::importPointGeometry(MapPart* map_part, OGRFeatureH feature, OGRGeometryH geometry)
+Object* OgrFileImport::importPointGeometry(OGRFeatureH feature, OGRGeometryH geometry)
 {
 	auto style = OGR_F_GetStyleString(feature);
 	auto symbol = getSymbol(Symbol::Point, style);
@@ -652,7 +687,6 @@ Object* OgrFileImport::importPointGeometry(MapPart* map_part, OGRFeatureH featur
 	{
 		auto object = new PointObject(symbol);
 		object->setPosition(toMapCoord(OGR_G_GetX(geometry, 0), OGR_G_GetY(geometry, 0)));
-		map_part->addObject(object);
 		return object;
 	}
 	else if (symbol->getType() == Symbol::Text)
@@ -696,7 +730,6 @@ Object* OgrFileImport::importPointGeometry(MapPart* map_part, OGRFeatureH featur
 				object->setRotation(qDegreesToRadians(angle));
 			}
 			
-			map_part->addObject(object);
 			return object;
 		}
 	}
@@ -704,7 +737,7 @@ Object* OgrFileImport::importPointGeometry(MapPart* map_part, OGRFeatureH featur
 	return nullptr;
 }
 
-PathObject* OgrFileImport::importLineStringGeometry(MapPart* map_part, OGRFeatureH feature, OGRGeometryH geometry)
+PathObject* OgrFileImport::importLineStringGeometry(OGRFeatureH feature, OGRGeometryH geometry)
 {
 	auto managed_geometry = ogr::unique_geometry(nullptr);
 	if (OGR_G_GetGeometryType(geometry) != wkbLineString)
@@ -726,11 +759,10 @@ PathObject* OgrFileImport::importLineStringGeometry(MapPart* map_part, OGRFeatur
 	{
 		object->addCoordinate(toMapCoord(OGR_G_GetX(geometry, i), OGR_G_GetY(geometry, i)));
 	}
-	map_part->addObject(object);
 	return object;
 }
 
-PathObject* OgrFileImport::importPolygonGeometry(MapPart* map_part, OGRFeatureH feature, OGRGeometryH geometry)
+PathObject* OgrFileImport::importPolygonGeometry(OGRFeatureH feature, OGRGeometryH geometry)
 {
 	auto num_geometries = OGR_G_GetGeometryCount(geometry);
 	if (num_geometries < 1)
@@ -773,7 +805,6 @@ PathObject* OgrFileImport::importPolygonGeometry(MapPart* map_part, OGRFeatureH 
 	}
 	
 	object->closeAllParts();
-	map_part->addObject(object);
 	return object;
 }
 

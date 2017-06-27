@@ -19,24 +19,35 @@
 
 #include "map_t.h"
 
+#include <QBuffer>
 #include <QMessageBox>
+#include <QTextStream>
 
 #include "core/map.h"
 #include "core/map_color.h"
 #include "core/map_printer.h"
 #include "core/map_view.h"
+#include "core/objects/symbol_rule_set.h"
 
 namespace
 {
 	static QDir examples_dir;
+	static QDir symbol_set_dir;
 }
 
 
 void MapTest::initTestCase()
 {
 	Q_INIT_RESOURCE(resources);
+	
 	doStaticInitializations();
+	
 	examples_dir.cd(QFileInfo(QString::fromUtf8(__FILE__)).dir().absoluteFilePath(QString::fromLatin1("../examples")));
+	QVERIFY(examples_dir.exists());
+	
+	symbol_set_dir.cd(QFileInfo(QString::fromUtf8(__FILE__)).dir().absoluteFilePath(QString::fromLatin1("../symbol sets")));
+	QVERIFY(symbol_set_dir.exists());
+	
 	// Static map initializations
 	Map map;
 	
@@ -148,6 +159,107 @@ void MapTest::importTest()
 	map.importMap(&imported_map, Map::CompleteImport, nullptr, nullptr, -1, false, &symbol_map);
 	QCOMPARE(map.getNumObjects(), original_size + imported_map.getNumObjects());
 	QCOMPARE(symbol_map.size(), imported_map.getNumSymbols());
+}
+
+
+
+void MapTest::crtFileTest()
+{
+	auto original =  symbol_set_dir.absoluteFilePath(QString::fromLatin1("15000/ISOM2000_15000.omap"));
+	Map original_map;
+	original_map.loadFrom(original, nullptr, nullptr, false, false);
+	QVERIFY(original_map.getNumSymbols() > 100);
+	
+	auto crt_data = QByteArray{
+	                "101     104\n"
+	                "102     105_text \n"
+	                "123456  106 \n"
+	};
+	QBuffer buffer{&crt_data};
+	buffer.open(QIODevice::ReadOnly);
+	QTextStream stream{&buffer};
+	auto r = SymbolRuleSet::loadCrt(stream, original_map);
+	QCOMPARE(stream.status(), QTextStream::Ok);
+	QCOMPARE(r.size(), std::size_t(3));
+	
+	QCOMPARE(r[0].type, SymbolRule::DefinedAssignment);
+	QCOMPARE(r[0].symbol->getNumberAsString(), QString::fromLatin1("101"));
+	QCOMPARE(r[0].query.getOperator(), ObjectQuery::OperatorSearch);
+	QCOMPARE(r[0].query.tagOperands()->value, QString::fromLatin1("104"));
+	QVERIFY(r[0].query.tagOperands()->key.isEmpty());
+	
+	QCOMPARE(r[1].type, SymbolRule::DefinedAssignment);
+	QCOMPARE(r[1].symbol->getNumberAsString(), QString::fromLatin1("102"));
+	QCOMPARE(r[1].query.getOperator(), ObjectQuery::OperatorSearch);
+	QCOMPARE(r[1].query.tagOperands()->value, QString::fromLatin1("105_text"));
+	QVERIFY(r[1].query.tagOperands()->key.isEmpty());
+	
+	QCOMPARE(r[2].type, SymbolRule::NoAssignment); // no 123456 in ISOM2000
+	QCOMPARE(r[2].query.getOperator(), ObjectQuery::OperatorSearch);
+	QCOMPARE(r[2].query.tagOperands()->value, QString::fromLatin1("106"));
+	QVERIFY(r[2].query.tagOperands()->key.isEmpty());
+	
+	QCOMPARE(r.squeezed().size(), std::size_t(2));
+	
+	QBuffer out_buffer;
+	out_buffer.open(QIODevice::WriteOnly);
+	QTextStream out_stream{&out_buffer};
+	r.writeCrt(out_stream);
+	out_stream.flush();
+	out_buffer.close();
+	const auto result = QString::fromLatin1(out_buffer.buffer());
+	QVERIFY(result.contains(QRegularExpression(QLatin1String("^101 *104$", QRegularExpression::MultilineOption))));
+	QVERIFY(result.contains(QRegularExpression(QLatin1String("102 *105_text$", QRegularExpression::MultilineOption))));
+	QVERIFY(!result.contains(QLatin1String("123456")));
+	QVERIFY(!result.contains(QLatin1String("106")));
+}
+
+
+
+void MapTest::matchQuerySymbolNumberTest_data()
+{
+	QTest::addColumn<QString>("original");
+	QTest::addColumn<QString>("replacement");
+	QTest::addColumn<int>("matching");
+
+	QTest::newRow("ISOM>ISMTBOM")
+	        << symbol_set_dir.absoluteFilePath(QString::fromLatin1("15000/ISOM2000_15000.omap"))
+	        << symbol_set_dir.absoluteFilePath(QString::fromLatin1("15000/ISMTBOM_15000.omap"))
+	        << 157; // Our ISMTBOM set has a (maybe hidden) match for every ISOM symbol.
+	
+	QTest::newRow("ISOM>ISSOM")
+	        << symbol_set_dir.absoluteFilePath(QString::fromLatin1("15000/ISOM2000_15000.omap"))
+	        << symbol_set_dir.absoluteFilePath(QString::fromLatin1("5000/ISSOM_5000.omap"))
+	        << 104; // Many ISOM symbol do not have a same-number counterpart in ISSOM.
+	
+}
+
+
+void MapTest::matchQuerySymbolNumberTest()
+{
+	QFETCH(QString, original);
+	QFETCH(QString, replacement);
+	QFETCH(int, matching);
+	
+	Map original_map;
+	original_map.loadFrom(original, nullptr, nullptr, false, false);
+	QVERIFY(original_map.getNumSymbols() > 0);
+	
+	auto r = SymbolRuleSet::forOriginalSymbols(original_map);
+	QCOMPARE(r.size(), std::size_t(original_map.getNumSymbols()));
+	QCOMPARE(r.squeezed().size(), std::size_t(0));
+	
+	r.matchQuerySymbolNumber(original_map);
+	QCOMPARE(r.size(), std::size_t(original_map.getNumSymbols()));
+	QCOMPARE(r.squeezed().size(), std::size_t(original_map.getNumSymbols()));
+	
+	Map replacement_map;
+	replacement_map.loadFrom(replacement, nullptr, nullptr, false, false);
+	QVERIFY(replacement_map.getNumSymbols() > 100);
+	
+	r = SymbolRuleSet::forOriginalSymbols(original_map);
+	r.matchQuerySymbolNumber(replacement_map);
+	QCOMPARE(r.squeezed().size(), std::size_t(matching));
 }
 
 

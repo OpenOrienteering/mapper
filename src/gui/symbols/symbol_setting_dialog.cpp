@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2016 Kai Pastor
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -32,36 +32,37 @@
 #include <QToolButton>
 #include <QVBoxLayout>
 
-#include "gui/widgets/template_list_widget.h"
 #include "core/map.h"
 #include "core/objects/object.h"
 #include "core/objects/text_object.h"
-#include "core/symbols/symbol.h"
-#include "core/symbols/point_symbol.h"
-#include "core/symbols/line_symbol.h"
 #include "core/symbols/area_symbol.h"
+#include "core/symbols/combined_symbol.h"
+#include "core/symbols/line_symbol.h"
+#include "core/symbols/point_symbol.h"
+#include "core/symbols/symbol.h"
 #include "core/symbols/text_symbol.h"
 #include "gui/main_window.h"
 #include "gui/map/map_editor.h"
 #include "gui/map/map_widget.h"
+#include "gui/symbols/symbol_properties_widget.h"
+#include "gui/widgets/template_list_widget.h"
+#include "point_symbol_editor_widget.h"
 #include "templates/template.h"
 #include "templates/template_image.h"
-#include "point_symbol_editor_widget.h"
-#include "core/symbols/combined_symbol.h"
-#include "symbol_properties_widget.h"
 #include "util/util.h"
 
-SymbolSettingDialog::SymbolSettingDialog(Symbol* source_symbol, Map* source_map, QWidget* parent)
-: QDialog(parent, Qt::CustomizeWindowHint | Qt::WindowTitleHint | Qt::WindowMaximizeButtonHint),
-  source_map(source_map),
-  source_symbol(source_symbol),
-  source_symbol_copy(source_symbol->duplicate())	// don't rely on external entity
+
+SymbolSettingDialog::SymbolSettingDialog(const Symbol* source_symbol, Map* source_map, QWidget* parent)
+: QDialog(parent, Qt::CustomizeWindowHint | Qt::WindowTitleHint | Qt::WindowMaximizeButtonHint)
+, source_map(source_map)
+, source_symbol(source_symbol)
+, source_symbol_copy(source_symbol->duplicate())	// don't rely on external entity
+, symbol(source_symbol->duplicate())
+, symbol_modified(false)
 {
 	setWindowTitle(tr("Symbol settings"));
 	setSizeGripEnabled(true);
-	symbol_modified = false;
 	
-	symbol = source_symbol->duplicate();
 	symbol->setHidden(false);
 	
 	symbol_icon_label = new QLabel();
@@ -70,13 +71,13 @@ SymbolSettingDialog::SymbolSettingDialog(Symbol* source_symbol, Map* source_map,
 	symbol_text_label = new QLabel();
 	updateSymbolLabel();
 	
-	QDialogButtonBox* button_box = new QDialogButtonBox(QDialogButtonBox::Cancel | QDialogButtonBox::Ok | QDialogButtonBox::Reset | QDialogButtonBox::Help);
+	auto button_box = new QDialogButtonBox(QDialogButtonBox::Cancel | QDialogButtonBox::Ok | QDialogButtonBox::Reset | QDialogButtonBox::Help);
 	ok_button = button_box->button(QDialogButtonBox::Ok);
 	reset_button = button_box->button(QDialogButtonBox::Reset);
-	connect(button_box, SIGNAL(rejected()), this, SLOT(reject()));
-	connect(button_box, SIGNAL(accepted()), this, SLOT(accept()));
-	connect(reset_button, SIGNAL(clicked(bool)), this, SLOT(reset()));
-	connect(button_box->button(QDialogButtonBox::Help), SIGNAL(clicked(bool)), this, SLOT(showHelp()));
+	connect(button_box, &QDialogButtonBox::rejected, this, &QDialog::reject);
+	connect(button_box, &QDialogButtonBox::accepted, this, &QDialog::accept);
+	connect(reset_button, &QAbstractButton::clicked, this, &SymbolSettingDialog::reset);
+	connect(button_box->button(QDialogButtonBox::Help), &QAbstractButton::clicked, this, &SymbolSettingDialog::showHelp);
 	
 	preview_map = new Map();
 	preview_map->useColorsFrom(source_map);
@@ -88,16 +89,16 @@ SymbolSettingDialog::SymbolSettingDialog(Symbol* source_symbol, Map* source_map,
 	preview_controller = new MapEditorController(MapEditorController::SymbolEditor, preview_map);
 	preview_widget->setController(preview_controller);
 	preview_map_view = preview_controller->getMainWidget()->getMapView();
-	float zoom_factor = 1;
+	double zoom_factor = 1;
 	if (symbol->getType() == Symbol::Point)
 		zoom_factor = 8;
 	else if (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Combined)
 		zoom_factor = 2;
 	preview_map_view->setZoom(zoom_factor * preview_map_view->getZoom());
 	
-	properties_widget = symbol->createPropertiesWidget(this);
+	properties_widget.reset(symbol->createPropertiesWidget(this));
 	
-	QVBoxLayout* preview_layout = NULL;
+	QVBoxLayout* preview_layout = nullptr;
 	if (symbol->getType() == Symbol::Point)
 	{
 		Q_UNUSED(QT_TR_NOOP("Template:")) /// \todo Switch the following line to Util::Headline::create
@@ -110,14 +111,14 @@ SymbolSettingDialog::SymbolSettingDialog(Symbol* source_symbol, Map* source_map,
 		center_template_button->setToolButtonStyle(Qt::ToolButtonTextOnly);
 		center_template_button->setPopupMode(QToolButton::InstantPopup);
 		center_template_button->setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed));
-		QMenu* center_template_menu = new QMenu(center_template_button);
+		auto center_template_menu = new QMenu(center_template_button);
 		center_template_menu->addAction(tr("bounding box on origin"), this, SLOT(centerTemplateBBox()));
 		center_template_menu->addAction(tr("center of gravity on origin"), this, SLOT(centerTemplateGravity()));
 		center_template_button->setMenu(center_template_menu);
 		
 		center_template_button->setEnabled(false);
 		
-		QHBoxLayout* template_layout = new QHBoxLayout();
+		auto template_layout = new QHBoxLayout();
 		template_layout->addWidget(template_label);
 		template_layout->addWidget(template_file_label, 1);
 		template_layout->addWidget(load_template_button);
@@ -128,35 +129,37 @@ SymbolSettingDialog::SymbolSettingDialog(Symbol* source_symbol, Map* source_map,
 		preview_layout->addLayout(template_layout);
 		preview_layout->addWidget(preview_widget);
 		
-		connect(load_template_button, SIGNAL(clicked(bool)), this, SLOT(loadTemplateClicked()));
+		connect(load_template_button, &QAbstractButton::clicked, this, &SymbolSettingDialog::loadTemplateClicked);
 	}
 	else
 	{
-		template_file_label = NULL;
-		center_template_button = NULL;
+		template_file_label = nullptr;
+		center_template_button = nullptr;
 	}
 	
-	QGridLayout* left_layout = new QGridLayout();
+	auto left_layout = new QGridLayout();
 	left_layout->addWidget(symbol_icon_label, 0, 0);
 	left_layout->addWidget(symbol_text_label, 0, 1);
-	left_layout->addWidget(properties_widget, 1, 0, 1, 2);
+	left_layout->addWidget(&*properties_widget, 1, 0, 1, 2);
 	left_layout->addWidget(button_box,        2, 0, 1, 2);
 	left_layout->setColumnStretch(1, 1);
 	
-	QWidget* left = new QWidget();
+	auto left = new QWidget();
 	left->setLayout(left_layout);
 	left->layout();
 	
 	QWidget* right = preview_widget;
-	if (preview_layout != NULL)
+	if (preview_layout != nullptr)
 	{
 		right = new QWidget();
 		right->setLayout(preview_layout);
 	}
 	else
+	{
 		right->setMinimumWidth(300);
+	}
 	
-	QSplitter* splitter = new QSplitter();
+	auto splitter = new QSplitter();
 	splitter->addWidget(left);
 	splitter->setCollapsible(0, false);
 	splitter->addWidget(right);
@@ -170,16 +173,13 @@ SymbolSettingDialog::SymbolSettingDialog(Symbol* source_symbol, Map* source_map,
 	updateButtons();
 }
 
-SymbolSettingDialog::~SymbolSettingDialog()
-{
-	delete properties_widget; // must be deleted before the symbol!
-	delete symbol;
-	delete source_symbol_copy;
-}
+SymbolSettingDialog::~SymbolSettingDialog() = default; // not inlined
 
-Symbol* SymbolSettingDialog::getNewSymbol() const
+
+
+std::unique_ptr<Symbol> SymbolSettingDialog::getNewSymbol() const
 {
-	Symbol* clone = symbol->duplicate();
+	auto clone = std::unique_ptr<Symbol>(symbol->duplicate());
 	clone->setHidden(source_symbol_copy->isHidden());
 	return clone;
 }
@@ -228,7 +228,7 @@ void SymbolSettingDialog::centerTemplateGravity()
 {
 	Q_ASSERT(preview_map->getNumTemplates() == 1);
 	Template* temp = preview_map->getTemplate(0);
-	TemplateImage* image = reinterpret_cast<TemplateImage*>(temp);
+	auto image = reinterpret_cast<TemplateImage*>(temp);
 	
 	QColor background_color = QColorDialog::getColor(Qt::white, this, tr("Select background color"));
 	if (!background_color.isValid())
@@ -245,29 +245,29 @@ void SymbolSettingDialog::createPreviewMap()
 {
 	symbol_icon_label->setPixmap(QPixmap::fromImage(symbol->getIcon(source_map)));
 	
-	for (int i = 0; i < (int)preview_objects.size(); ++i)
-		preview_map->deleteObject(preview_objects[i], false);
+	for (auto& object : preview_objects)
+		preview_map->deleteObject(object, false);
 	
 	preview_objects.clear();
 	
 	if (symbol->getType() == Symbol::Line)
 	{
-		LineSymbol* line = reinterpret_cast<LineSymbol*>(symbol);
+		auto line = reinterpret_cast<LineSymbol*>(&*symbol);
 		
 		const int num_lines = 15;
-		const float min_length = 0.5f;
-		const float max_length = 15;
-		const float x_offset = -0.5f * max_length;
-		const float y_offset = (0.001f * qMax(600, line->getLineWidth())) * 3.5f;
+		const auto min_length = 0.5;
+		const auto max_length = 15.0;
+		const auto x_offset = -0.5 * max_length;
+		const auto y_offset = (0.001 * qMax(600, line->getLineWidth())) * 3.5;
 		
-		float y_start = 0 - (y_offset * (num_lines - 1));
+		auto y_start = 0 - (y_offset * (num_lines - 1));
 		
 		for (int i = 0; i < num_lines; ++i)
 		{
-			float length = min_length + (i / (float)(num_lines - 1)) * (max_length - min_length);
-			float y = y_start + i * y_offset;
+			auto length = min_length + (max_length - min_length) * i / (num_lines - 1);
+			auto y = y_start + i * y_offset;
 			
-			PathObject* path = new PathObject(line);
+			auto path = new PathObject(line);
 			path->addCoordinate(0, { x_offset - length, y });
 			path->addCoordinate(1, { x_offset, y });
 			preview_map->addObject(path);
@@ -277,15 +277,15 @@ void SymbolSettingDialog::createPreviewMap()
 		
 		const int num_circular_lines = 12;
 		const auto inner_radius = 4;
-		auto center = MapCoordF { 2*inner_radius + 0.5 * max_length, 0.5f * y_start };
+		auto center = MapCoordF { 2*inner_radius + 0.5 * max_length, 0.5 * y_start };
 		
 		for (int i = 0; i < num_circular_lines; ++i)
 		{
 			auto angle = M_PI * 2 * i / num_circular_lines;
 			auto direction = MapCoordF::fromPolar(1.0, angle);
-			float length = min_length + (max_length - min_length) * i / (num_circular_lines - 1);
+			auto length = min_length + (max_length - min_length) * i / (num_circular_lines - 1);
 			
-			PathObject* path = new PathObject(line);
+			auto path = new PathObject(line);
 			path->addCoordinate(0, MapCoord(center + direction * inner_radius));
 			path->addCoordinate(1, MapCoord(center + direction * (inner_radius + length)));
 			preview_map->addObject(path);
@@ -293,26 +293,26 @@ void SymbolSettingDialog::createPreviewMap()
 			preview_objects.push_back(path);
 		}
 		
-		const float snake_min_x = -1.5f * max_length;
-		const float snake_max_x = 1.5f * max_length;
-		const float snake_max_y = qMin(0.5f * y_start - inner_radius - max_length, y_start) - 4;
-		const float snake_min_y = snake_max_y - 6;
-		const int snake_steps = 8;
+		const auto snake_min_x = -1.5 * max_length;
+		const auto snake_max_x = 1.5 * max_length;
+		const auto snake_max_y = qMin(0.5 * y_start - inner_radius - max_length, y_start) - 4;
+		const auto snake_min_y = snake_max_y - 6;
+		const int snake_steps = 8u;
 		
-		PathObject* path = new PathObject(line);
-		for (int i = 0; i < snake_steps; ++i)
+		auto path = new PathObject(line);
+		for (auto i = 0u; i < snake_steps; ++i)
 		{
-			MapCoord coord(snake_min_x + (i / (float)(snake_steps-1)) * (snake_max_x - snake_min_x), snake_min_y + (i % 2) * (snake_max_y - snake_min_y));
+			MapCoord coord(snake_min_x + (snake_max_x - snake_min_x) * i / (snake_steps-1), snake_min_y + (i % 2) * (snake_max_y - snake_min_y));
 			coord.setDashPoint(true);
 			path->addCoordinate(i, coord);
 		}
 		preview_map->addObject(path);
 		preview_objects.push_back(path);
 		
-		const float curve_min_x = snake_min_x;
-		const float curve_max_x = snake_max_x;
-		const float curve_max_y = snake_min_y - 4;
-		const float curve_min_y = curve_max_y - 6;
+		const auto curve_min_x = snake_min_x;
+		const auto curve_max_x = snake_max_x;
+		const auto curve_max_y = snake_min_y - 4;
+		const auto curve_min_y = curve_max_y - 6;
 		
 		path = new PathObject(line);
 		MapCoord coord = MapCoord(curve_min_x, curve_min_y);
@@ -322,7 +322,7 @@ void SymbolSettingDialog::createPreviewMap()
 		path->addCoordinate(coord);
 		coord = MapCoord(curve_min_x + 2 * (curve_max_x - curve_min_x) / 6, curve_max_y);
 		path->addCoordinate(coord);
-		coord = MapCoord(curve_min_x + 3 * (curve_max_x - curve_min_x) / 6, 0.5f * (curve_min_y + curve_max_y));
+		coord = MapCoord(curve_min_x + 3 * (curve_max_x - curve_min_x) / 6, 0.5 * (curve_min_y + curve_max_y));
 		coord.setCurveStart(true);
 		path->addCoordinate(coord);
 		coord = MapCoord(curve_min_x + 4 * (curve_max_x - curve_min_x) / 6, curve_min_y);
@@ -335,8 +335,7 @@ void SymbolSettingDialog::createPreviewMap()
 		preview_objects.push_back(path);
 		
 		// Debug objects
-		
-		/*
+#if 0
 		// Closed path, rectangular
 		PathObject* path;
 		MapCoord coord;
@@ -353,10 +352,10 @@ void SymbolSettingDialog::createPreviewMap()
 		path->addCoordinate(coord);
 		path->setPathClosed(true);
 		preview_map->addObject(path);
-		preview_objects.push_back(path);*/
+		preview_objects.push_back(path);
 		
 		// Closed path, curve
-		/*PathObject* path;
+		PathObject* path;
 		MapCoord coord;
 		
 		path = new PathObject(preview_map, line);
@@ -370,10 +369,10 @@ void SymbolSettingDialog::createPreviewMap()
 		path->addCoordinate(coord);
 		
 		preview_map->addObject(path);
-		preview_objects.push_back(path);*/
+		preview_objects.push_back(path);
 		
 		// Path with holes
-		/*PathObject* path;
+		PathObject* path;
 		MapCoord coord;
 		
 		path = new PathObject(preview_map, line);
@@ -395,29 +394,31 @@ void SymbolSettingDialog::createPreviewMap()
 		path->addCoordinate(coord);
 
 		preview_map->addObject(path);
-		preview_objects.push_back(path);*/
+		preview_objects.push_back(path);
+#endif
 	}
 	else if (symbol->getType() == Symbol::Area)
 	{
-		const float half_radius = 8;
-		const float offset_y = 0;
+		const qreal half_radius = 8;
+		const qreal offset_y = 0;
 		
-		PathObject* path = new PathObject(symbol);
+		auto path = new PathObject(&*symbol);
 		path->addCoordinate(0, { -half_radius, -half_radius + offset_y });
-		path->addCoordinate(1, { half_radius,  -half_radius + offset_y });
-		path->addCoordinate(2, { half_radius,  half_radius + offset_y });
-		path->addCoordinate(3, { -half_radius, half_radius + offset_y });
+		path->addCoordinate(1, {  0.0,         -half_radius + offset_y });
+		path->addCoordinate(2, {  half_radius,                offset_y });
+		path->addCoordinate(3, {  half_radius,  half_radius + offset_y });
+		path->addCoordinate(4, { -half_radius,  half_radius + offset_y });
 		preview_map->addObject(path);
 		
 		preview_objects.push_back(path);
 	}
 	else if (symbol->getType() == Symbol::Text)
 	{
-		TextSymbol* text_symbol = reinterpret_cast<TextSymbol*>(symbol);
+		auto text_symbol = reinterpret_cast<TextSymbol*>(&*symbol);
 		
 		const QString string = tr("The quick brown fox\ntakes the routechoice\nto jump over the lazy dog\n1234567890");
 		
-		TextObject* object = new TextObject(text_symbol);
+		auto object = new TextObject(text_symbol);
 		object->setAnchorPosition(0, 0);
 		object->setText(string);
 		object->setHorizontalAlignment(TextObject::AlignHCenter);
@@ -428,10 +429,10 @@ void SymbolSettingDialog::createPreviewMap()
 	}
 	else if (symbol->getType() == Symbol::Combined)
 	{
-		const float radius = 5;
+		const auto radius = 5.0;
 		
-		PathObject* path = new PathObject(symbol);
-		for (int i = 0; i < 5; ++i)
+		auto path = new PathObject(&*symbol);
+		for (auto i = 0u; i < 5u; ++i)
 			path->addCoordinate(i, MapCoord(sin(2*M_PI * i/5.0) * radius, -cos(2*M_PI * i/5.0) * radius));
 		path->parts().front().setClosed(true, false);
 		preview_map->addObject(path);
@@ -455,13 +456,11 @@ void SymbolSettingDialog::showHelp()
 
 void SymbolSettingDialog::reset()
 {
-	Symbol* old_symbol = symbol;
-	symbol = source_symbol_copy->duplicate();
+	auto duplicate = std::unique_ptr<Symbol>(source_symbol_copy->duplicate());
+	swap(symbol, duplicate);
 	symbol->setHidden(false);
 	createPreviewMap();
-	properties_widget->reset(symbol);
-	delete old_symbol;
-	
+	properties_widget->reset(&*symbol);
 	setSymbolModified(false);
 }
 

@@ -893,8 +893,7 @@ void SymbolRenderWidget::editSymbol()
 	dialog.setWindowModality(Qt::WindowModal);
 	if (dialog.exec() == QDialog::Accepted)
 	{
-		symbol = dialog.getNewSymbol();
-		map->setSymbol(symbol, current_symbol_index);
+		map->setSymbol(dialog.getNewSymbol().release(), current_symbol_index);
 	}
 }
 
@@ -1183,9 +1182,8 @@ bool SymbolRenderWidget::newSymbol(Symbol* prototype)
 	if (dialog.exec() == QDialog::Rejected)
 		return false;
 	
-	Symbol* new_symbol = dialog.getNewSymbol();
 	int pos = (current_symbol_index >= 0) ? current_symbol_index : map->getNumSymbols();
-	map->addSymbol(new_symbol, pos);
+	map->addSymbol(dialog.getNewSymbol().release(), pos);
 	// Ensure that a change in selection is detected
 	selectSingleSymbol(-1);
 	selectSingleSymbol(pos);

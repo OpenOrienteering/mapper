@@ -32,6 +32,7 @@ set(MAPPER_GDAL_SOURCES
   gdal_settings_page.cpp
   ogr_file_format.cpp
   ogr_template.cpp
+  mapper-osmconf.ini
 )
 	
 qt5_translations_sources(
@@ -53,3 +54,5 @@ target_include_directories(mapper-gdal PRIVATE "${GDAL_INCLUDE_DIR}" "${PROJECT_
 target_link_libraries(mapper-gdal "${GDAL_LIBRARY}" Qt5::Core Qt5::Gui Qt5::Widgets)
 
 set_target_properties(mapper-gdal PROPERTIES PREFIX "")
+
+install(FILES mapper-osmconf.ini DESTINATION "${MAPPER_DATA_DESTINATION}/gdal")
