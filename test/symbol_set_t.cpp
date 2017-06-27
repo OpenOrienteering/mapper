@@ -132,7 +132,7 @@ void SymbolSetTool::TranslationEntry::write(QXmlStreamWriter& xml, const QString
 	if (source.isEmpty())
 	{
 		QVERIFY(!comment.isEmpty());
-		qWarning("%s %s, %s: empty", qUtf8Printable(language), qUtf8Printable(context), qUtf8Printable(comment));
+		qWarning("%s %s, %s: empty", qPrintable(language), qPrintable(context), qPrintable(comment));
 		return;
 	}
 	
