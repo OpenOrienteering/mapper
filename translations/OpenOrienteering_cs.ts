@@ -200,27 +200,27 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="210"/>
         <source>Element drawing at boundary</source>
-        <translation type="unfinished"></translation>
+        <translation>Kresba prvků na okraji plochy</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="212"/>
         <source>Clip elements at the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Oříznout prvky na okraji plochy.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="213"/>
         <source>Draw elements if the center is inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vykreslit prvky pokud jejich střed je uvnitř okraje plochy.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="214"/>
         <source>Draw elements if any point is inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vykreslit prvky pokud jakákoliv jejich část je uvnitř okraje plochy.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="215"/>
         <source>Draw elements if all points are inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vykreslit prvky pokud všechny body jsou uvnitř okraje plochy.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="230"/>
@@ -3402,12 +3402,12 @@ Importovat data tak jako tak?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="890"/>
         <source>Load CRT file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Načíst CRT soubor...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="890"/>
         <source>Assign new symbols by cross-reference table</source>
-        <translation type="unfinished"></translation>
+        <translation>Přiřadit nové symboly pomocí cross-reference table</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="907"/>
@@ -4575,27 +4575,27 @@ symbolů</translation>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="50"/>
         <source>&amp;Find...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Najít...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="56"/>
         <source>Find &amp;next</source>
-        <translation type="unfinished"></translation>
+        <translation>Najít &amp;další</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="94"/>
         <source>Find objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Najít objekty</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="99"/>
         <source>&amp;Find next</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Najít další</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="102"/>
         <source>Find &amp;all</source>
-        <translation type="unfinished"></translation>
+        <translation>Najít &amp;vše</translation>
     </message>
 </context>
 <context>
@@ -5105,7 +5105,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
         <location filename="../src/core/objects/object_query.cpp" line="273"/>
         <source>Search</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Hledat</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="277"/>
@@ -5123,7 +5123,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
         <location filename="../src/core/objects/object_query.cpp" line="284"/>
         <source>Symbol</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Symbol</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="288"/>
@@ -6166,50 +6166,50 @@ barev</translation>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="100"/>
         <source>Match by symbol name</source>
-        <translation type="unfinished"></translation>
+        <translation>Spárovat dle názvu symbolu</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="105"/>
         <source>Assign new symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Přiřadit nové symboly</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="106"/>
         <source>Pattern</source>
-        <translation type="unfinished"></translation>
+        <translation>Vzor</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="118"/>
         <source>Clear replacements</source>
-        <translation type="unfinished"></translation>
+        <translation>Vymazat nahrazení</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="121"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="197"/>
         <source>Open CRT file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Otevřít CRT soubor...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="123"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="290"/>
         <source>Save CRT file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Uložit CRT soubor...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="128"/>
         <source>Symbol mapping</source>
-        <translation type="unfinished"></translation>
+        <translation>Mapování symbolů</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="196"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="289"/>
         <source>CRT file</source>
-        <translation type="unfinished"></translation>
+        <translation>CRT soubor</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="243"/>
         <source>There are multiple replacements for symbol %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Existuje více náhrad pro symbol %1.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="246"/>
@@ -6217,7 +6217,7 @@ barev</translation>
 %1
 
 %2</source>
-        <translation type="unfinished">Nelze otevřít soubor:
+        <translation>Nelze otevřít soubor:
 %1
 
 %2</translation>
@@ -6228,13 +6228,17 @@ barev</translation>
 %1
 
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Nelze uložit soubor:
+%1
+
+%2</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="319"/>
         <source>The cross reference table has been modified.
 Do you want to save your changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>Cross reference table byla změněna.
+Chcete uložit vaše změny?</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="476"/>
@@ -6270,7 +6274,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="607"/>
         <source>Cannot load CRT file, aborting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nemohu načíst CRT soubor, přerušuji.</translation>
     </message>
 </context>
 <context>
