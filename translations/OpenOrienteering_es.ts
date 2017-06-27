@@ -200,27 +200,27 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="210"/>
         <source>Element drawing at boundary</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Dibujo de objeto en el borde.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="212"/>
         <source>Clip elements at the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Cortar objetos en el límite.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="213"/>
         <source>Draw elements if the center is inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dibujar objetos si el centro está dentro del límite.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="214"/>
         <source>Draw elements if any point is inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dibujar objetos si algún punto esta dentro del límite.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="215"/>
         <source>Draw elements if all points are inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Dibujar objeto si todos los puntos están dentro del límite.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="230"/>
@@ -1464,42 +1464,42 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="48"/>
         <source>Import with GDAL/OGR:</source>
-        <translation type="unfinished"></translation>
+        <translation>Importar con GDAL/OGR:</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="50"/>
         <source>DXF</source>
-        <translation type="unfinished"></translation>
+        <translation>DXF</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="53"/>
         <source>GPX</source>
-        <translation type="unfinished"></translation>
+        <translation>GPX</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="56"/>
         <source>OSM</source>
-        <translation type="unfinished"></translation>
+        <translation>OSM</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="60"/>
         <source>Configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuración</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="68"/>
         <source>Parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Parámetro</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="68"/>
         <source>Value</source>
-        <translation type="unfinished">Valor</translation>
+        <translation>Valor</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="87"/>
         <source>GDAL/OGR</source>
-        <translation type="unfinished"></translation>
+        <translation>GDAL/OGR</translation>
     </message>
 </context>
 <context>
@@ -2268,7 +2268,7 @@
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="279"/>
         <source>Geospatial vector data</source>
-        <translation type="unfinished"></translation>
+        <translation>Datos vectoriales geoespaciales</translation>
     </message>
 </context>
 <context>
@@ -2406,7 +2406,7 @@
         <location filename="../src/gdal/ogr_file_format.cpp" line="1211"/>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1252"/>
         <source>Could not read '%1': %2</source>
-        <translation type="unfinished"></translation>
+        <translation>No se puede leer '%1': %2</translation>
     </message>
 </context>
 <context>
@@ -3403,12 +3403,12 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="890"/>
         <source>Load CRT file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Cargar fichero CRT...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="890"/>
         <source>Assign new symbols by cross-reference table</source>
-        <translation type="unfinished"></translation>
+        <translation>Asignar nuevos símbolos con tabla de referencia</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="907"/>
@@ -4571,27 +4571,27 @@ selecc</translation>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="50"/>
         <source>&amp;Find...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Encontrar...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="56"/>
         <source>Find &amp;next</source>
-        <translation type="unfinished"></translation>
+        <translation>Encontrar &amp;siguiente</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="94"/>
         <source>Find objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Encontrar objetos</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="99"/>
         <source>&amp;Find next</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Encontrar siguiente</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="102"/>
         <source>Find &amp;all</source>
-        <translation type="unfinished"></translation>
+        <translation>Encontrar &amp;todo</translation>
     </message>
 </context>
 <context>
@@ -5099,7 +5099,7 @@ zoom usando la rueda del ratón, si dispone de esos elementos.</translation>
         <location filename="../src/core/objects/object_query.cpp" line="273"/>
         <source>Search</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Buscar</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="277"/>
@@ -5117,7 +5117,7 @@ zoom usando la rueda del ratón, si dispone de esos elementos.</translation>
         <location filename="../src/core/objects/object_query.cpp" line="284"/>
         <source>Symbol</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Símbolo</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="288"/>
@@ -5314,32 +5314,32 @@ zoom usando la rueda del ratón, si dispone de esos elementos.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="327"/>
         <source>Purple</source>
-        <translation type="unfinished"></translation>
+        <translation>Púrpura</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="340"/>
         <source>Point</source>
-        <translation type="unfinished">Punto</translation>
+        <translation>Punto</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="347"/>
         <source>Line</source>
-        <translation type="unfinished">Línea</translation>
+        <translation>Línea</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="356"/>
         <source>Area</source>
-        <translation type="unfinished">Área</translation>
+        <translation>Área</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="362"/>
         <source>Text</source>
-        <translation type="unfinished">Texto</translation>
+        <translation>Texto</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="419"/>
         <source>Unable to load layer %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Imposible cargar capa %1.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gdal/ogr_file_format.cpp" line="467"/>
@@ -5356,27 +5356,27 @@ zoom usando la rueda del ratón, si dispone de esos elementos.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="468"/>
         <source>Empty geometry.</source>
-        <translation type="unfinished"></translation>
+        <translation>Geometría vacía.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="473"/>
         <source>Can't determine the coordinate transformation: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>No se puede determinar la transformación de coordenadas: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="478"/>
         <source>Failed to transform the coordinates.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fallo al transformar las coordenadas.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="483"/>
         <source>Unknown or unsupported geometry type.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo de geometría desconocida o no soportada.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="488"/>
         <source>Not enough coordinates.</source>
-        <translation type="unfinished"></translation>
+        <translation>Coordenadas insuficientes.</translation>
     </message>
 </context>
 <context>
@@ -6132,17 +6132,17 @@ de color</translation>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="100"/>
         <source>Match by symbol name</source>
-        <translation type="unfinished"></translation>
+        <translation>Relacionar por nombre de símbolo</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="105"/>
         <source>Assign new symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Asignar nueva simbología</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="106"/>
         <source>Pattern</source>
-        <translation type="unfinished"></translation>
+        <translation>Patrón</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="118"/>
@@ -6153,13 +6153,13 @@ de color</translation>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="121"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="197"/>
         <source>Open CRT file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir archivo CRT...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="123"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="290"/>
         <source>Save CRT file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardar archivo CRT...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="128"/>
@@ -6170,12 +6170,12 @@ de color</translation>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="196"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="289"/>
         <source>CRT file</source>
-        <translation type="unfinished"></translation>
+        <translation>Archivo CRT</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="243"/>
         <source>There are multiple replacements for symbol %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hay múltiples substitutos para el símbolo %1.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="246"/>
@@ -6194,13 +6194,17 @@ de color</translation>
 %1
 
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>No se puede guardar el archivo:
+%1
+
+%2</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="319"/>
         <source>The cross reference table has been modified.
 Do you want to save your changes?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">La tabla de referencia ha sido modificada.
+Quieres guardar los cambios?</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="476"/>
@@ -6236,7 +6240,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="607"/>
         <source>Cannot load CRT file, aborting.</source>
-        <translation type="unfinished"></translation>
+        <translation>No se puede cargar el archivo CRT, cancelando.</translation>
     </message>
 </context>
 <context>
