@@ -697,50 +697,48 @@ void PointSymbolEditorWidget::coordinateChanged(int row, int column)
 	
 	if (column < 2)
 	{
-		bool ok = false;
-		double new_value = coords_table->item(row, column)->text().toDouble(&ok);
+		auto coord = MapCoord{};
+		if (object->getType() == Object::Point)
+		{
+			auto point = static_cast<PointObject*>(object);
+			coord = point->getCoord();
+		}
+		else if (object->getType() == Object::Path)
+		{
+			auto path = static_cast<PathObject*>(object);
+			Q_ASSERT(coord_index < path->getCoordinateCount());
+			coord = path->getCoordinate(coord_index);
+		}
+		
+		auto ok = false;
+		auto new_value = qRound(1000 * coords_table->item(row, column)->text().toDouble(&ok));
 		
 		if (ok)
 		{
+			if (column == 0)
+				coord.setNativeX(new_value);
+			else
+				coord.setNativeY(-new_value);
+			
 			if (object->getType() == Object::Point)
 			{
 				auto point = static_cast<PointObject*>(object);
-				MapCoordF coord = point->getCoordF();
-				if (column == 0)
-					coord.setX(new_value);
-				else
-					coord.setY(-new_value);
 				point->setPosition(coord);
 			}
-			else
+			else if (object->getType() == Object::Path)
 			{
-				Q_ASSERT(object->getType() == Object::Path);
 				auto path = static_cast<PathObject*>(object);
-				Q_ASSERT(coord_index < path->getCoordinateCount());
-				if (column == 0)
-					path->getCoordinate(coord_index).setX(new_value);
-				else
-					path->getCoordinate(coord_index).setY(-new_value);
+				path->setCoordinate(coord_index, coord);
 			}
 			
 			map->updateAllObjectsWithSymbol(symbol);
 			emit symbolEdited();
 		}
-		else
-		{
-			coords_table->blockSignals(true);
-			if (object->getType() == Object::Point)
-			{
-				auto point = static_cast<PointObject*>(object);
-				coords_table->item(row, column)->setText(QString::number((column == 0) ? point->getCoordF().x() : (-point->getCoordF().y())));
-			}
-			else if (object->getType() == Object::Path)
-			{
-				auto path = static_cast<PathObject*>(object);
-				coords_table->item(row, column)->setText(QString::number((column == 0) ? path->getCoordinate(coord_index).x() : (-path->getCoordinate(coord_index).y())));
-			}
-			coords_table->blockSignals(false);
-		}
+		
+		// Update, needed in cases of rounding and error
+		coords_table->blockSignals(true);
+		coords_table->item(row, column)->setText(QString::number((column == 0) ? coord.x() : -coord.y()));
+		coords_table->blockSignals(false);
 	}
 	else
 	{
