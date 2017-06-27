@@ -73,7 +73,7 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="68"/>
         <source>mm²</source>
-        <translation type="unfinished"></translation>
+        <translation>mm²</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="69"/>
@@ -107,7 +107,7 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="143"/>
         <source>Single line</source>
-        <translation type="unfinished"></translation>
+        <translation>Lerro bakarra</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="157"/>
@@ -4438,7 +4438,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="129"/>
         <source>mm²</source>
-        <translation type="unfinished"></translation>
+        <translation>mm²</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="132"/>
@@ -7567,7 +7567,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="583"/>
         <source>Unknown error</source>
-        <translation type="unfinished"></translation>
+        <translation>Errore ezezaguna</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="584"/>
