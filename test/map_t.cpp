@@ -23,6 +23,7 @@
 #include <QMessageBox>
 #include <QTextStream>
 
+#include "global.h"
 #include "core/map.h"
 #include "core/map_color.h"
 #include "core/map_printer.h"

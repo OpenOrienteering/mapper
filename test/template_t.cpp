@@ -22,6 +22,7 @@
 
 #include <QDir>
 
+#include "global.h"
 #include "core/georeferencing.h"
 #include "core/map.h"
 #include "core/map_view.h"

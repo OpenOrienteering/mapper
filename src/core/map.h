@@ -22,10 +22,16 @@
 #ifndef OPENORIENTEERING_MAP_H
 #define OPENORIENTEERING_MAP_H
 
-#include <vector>
+#include <algorithm>
+#include <cstddef>
 #include <set>
+#include <vector>
 
+#include <QtGlobal>
+#include <QExplicitlySharedDataPointer>
+#include <QFlags>
 #include <QHash>
+#include <QMetaType>
 #include <QObject>
 #include <QRect>
 #include <QScopedPointer>
@@ -33,40 +39,36 @@
 #include <QString>
 #include <QTransform>
 
-#include "global.h"
 #include "map_coord.h"
 #include "map_grid.h"
-#include "fileformats/file_format.h"
 #include "map_part.h"
 
 QT_BEGIN_NAMESPACE
 class QIODevice;
 class QPainter;
+class QRectF;
+class QTransform;
 class QWidget;
-class QXmlStreamReader;
-class QXmlStreamWriter;
 QT_END_NAMESPACE
 
-class Map;
+class CombinedSymbol;
+class FileFormat;
+class Georeferencing;
+class LineSymbol;
 class MapColor;
 class MapColorMap;
-class MapWidget;
-class MapView;
 class MapPrinterConfig;
-class Symbol;
-class CombinedSymbol;
-class LineSymbol;
-class PointSymbol;
-class Object;
-class RenderConfig;
 class MapRenderables;
+class MapView;
+class MapWidget;
+class Object;
+class PointSymbol;
+class RenderConfig;
+class Symbol;
 class Template;
 class TextSymbol;
 class UndoManager;
 class UndoStep;
-class OCAD8FileImport;
-class Georeferencing;
-class MapGrid;
 
 /** Central class for an OpenOrienteering map */
 class Map : public QObject

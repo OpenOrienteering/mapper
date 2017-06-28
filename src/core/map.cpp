@@ -22,19 +22,31 @@
 #include "map.h"
 
 #include <algorithm>
+#include <cmath>
+#include <exception>
+#include <iterator>
+#include <memory>
 
+#include <Qt>
+#include <QtMath>
 #include <QDebug>
 #include <QDir>
 #include <QFile>
-#include <qmath.h>
+#include <QFileInfo>
+#include <QIODevice>
+#include <QLatin1Char>
+#include <QLocale>
 #include <QMessageBox>
 #include <QPainter>
+#include <QPoint>
+#include <QPointF>
 #include <QSaveFile>
-#include <QXmlStreamReader>
-#include <QXmlStreamWriter>
+#include <QStringList>
 
 #include "core/georeferencing.h"
 #include "core/map_color.h"
+#include "core/map_coord.h"
+#include "core/map_grid.h"
 #include "core/map_part.h"
 #include "core/map_printer.h"
 #include "core/map_view.h"
@@ -46,16 +58,16 @@
 #include "core/symbols/point_symbol.h"
 #include "core/symbols/symbol.h"
 #include "core/symbols/text_symbol.h"
+#include "fileformats/file_format.h"
 #include "fileformats/file_format_registry.h"
 #include "fileformats/file_import_export.h"
-#include "fileformats/ocad8_file_format.h"
-#include "gui/map/map_editor.h"
 #include "gui/map/map_widget.h"
 #include "templates/template.h"
 #include "undo/object_undo.h"
 #include "undo/undo_manager.h"
-#include "util/backports.h"
 #include "util/util.h"
+#include "util/transformation.h"
+
 
 // ### Misc ###
 
@@ -533,7 +545,7 @@ void Map::changeScale(unsigned int new_scale_denominator, const MapCoord& scalin
 
 void Map::rotateMap(double rotation, const MapCoord& center, bool adjust_georeferencing, bool adjust_declination, bool adjust_templates)
 {
-	if (fmod(rotation, 2 * M_PI) == 0)
+	if (std::fmod(rotation, 2 * M_PI) == 0)
 		return;
 	
 	undo_manager->clear();

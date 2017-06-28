@@ -20,6 +20,7 @@
 
 #include "path_object_t.h"
 
+#include "global.h"
 #include "core/map.h"
 #include "core/symbols/line_symbol.h"
 
