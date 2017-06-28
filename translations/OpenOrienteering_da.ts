@@ -1518,38 +1518,38 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="183"/>
         <source>The program must be restarted for the language change to take effect!</source>
-        <translation type="unfinished"></translation>
+        <translation>Programmet skal genstartes, før sprogændringen træder i kraft!</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="323"/>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="329"/>
         <source>Open translation</source>
-        <translation type="unfinished"></translation>
+        <translation>Åben oversættelse</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="323"/>
         <source>Translation files (*.qm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Oversættelsesfiler (*.qm)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="330"/>
         <source>The selected file is not a valid translation.</source>
-        <translation type="unfinished"></translation>
+        <translation>Den valgte fil er ikke en gyldig oversættelse.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="360"/>
         <source>%1 x %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 x %2</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="361"/>
         <source>Primary screen resolution in pixels:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Primær skærmopløsning i pixel:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="365"/>
         <source>Primary screen size in inches (diagonal):</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Primær skærmstørrelsen i tommer (diagonal):</translation>
     </message>
 </context>
 <context>
@@ -1558,69 +1558,69 @@
         <location filename="../src/core/crs_template_implementation.cpp" line="47"/>
         <source>UTM</source>
         <comment>UTM coordinate reference system</comment>
-        <translation type="unfinished"></translation>
+        <translation>UTM</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="48"/>
         <source>UTM coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>UTM koordinater</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="51"/>
         <source>UTM Zone (number north/south)</source>
-        <translation type="unfinished"></translation>
+        <translation>UTM Zone (nummer nord/syd)</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="58"/>
         <source>Gauss-Krueger, datum: Potsdam</source>
         <comment>Gauss-Krueger coordinate reference system</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gauss-Krueger, datum: Potsdam</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="59"/>
         <source>Gauss-Krueger coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>Gauss-Krueger koordinater</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="62"/>
         <source>Zone number (1 to 119)</source>
         <comment>Zone number for Gauss-Krueger coordinates</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zonenummer (1-119)</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="70"/>
         <source>by EPSG code</source>
         <comment>as in: The CRS is specified by EPSG code</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">af EPSG kode</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="72"/>
         <source>EPSG @code@ coordinates</source>
         <extracomment>Don't translate @code@. It is placeholder.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>EPSG @code@ koordinater</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="83"/>
         <location filename="../src/core/georeferencing.cpp" line="531"/>
         <source>Local coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>Lokale koordinater</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="75"/>
         <source>EPSG code</source>
-        <translation type="unfinished"></translation>
+        <translation>EPSG kode</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="82"/>
         <source>Custom PROJ.4</source>
         <comment>PROJ.4 specification</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Brugerdefineret PROJ.4</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="86"/>
         <source>Specification</source>
         <comment>PROJ.4 specification</comment>
-        <translation type="unfinished"></translation>
+        <translation>Specifikation</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="227"/>
@@ -1630,7 +1630,7 @@
     <message>
         <location filename="../src/core/georeferencing.cpp" line="233"/>
         <source>Invalid grid scale factor: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ugyldig gitterskalafaktor: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="270"/>
@@ -1646,7 +1646,7 @@
     <message>
         <location filename="../src/core/georeferencing.cpp" line="522"/>
         <source>Local</source>
-        <translation type="unfinished"></translation>
+        <translation>Lokal</translation>
     </message>
 </context>
 <context>
@@ -1681,22 +1681,22 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="99"/>
         <source>Status:</source>
-        <translation type="unfinished"></translation>
+        <translation>Status:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="153"/>
         <source>Geographic coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>Geografiske koordinater</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="148"/>
         <source>Show reference point in:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis referencepunkt i:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="338"/>
         <source>valid</source>
-        <translation type="unfinished"></translation>
+        <translation>gyldig</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="331"/>
@@ -1717,7 +1717,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="97"/>
         <source>- local -</source>
-        <translation type="unfinished"></translation>
+        <translation>- lokal -</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="105"/>
@@ -1728,7 +1728,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="108"/>
         <source>Reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Referencepunkt</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="110"/>
@@ -1762,13 +1762,13 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="131"/>
         <source>E</source>
         <comment>west / east</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ø</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="133"/>
         <source>N</source>
         <comment>north / south</comment>
-        <translation type="unfinished"></translation>
+        <translation>N</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="137"/>
@@ -1781,13 +1781,13 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="141"/>
         <source>N</source>
         <comment>north</comment>
-        <translation type="unfinished"></translation>
+        <translation>N</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="143"/>
         <source>E</source>
         <comment>east</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ø</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="164"/>
@@ -1808,7 +1808,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="193"/>
         <source>Geographic coordinates:</source>
-        <translation type="unfinished"></translation>
+        <translation>Geografiske koordinater:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="196"/>
@@ -1838,17 +1838,17 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="472"/>
         <source>Local coordinates:</source>
-        <translation type="unfinished"></translation>
+        <translation>Lokale koordinater:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="499"/>
         <source>Loading...</source>
-        <translation type="unfinished"></translation>
+        <translation>Indlæser...</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="506"/>
         <source>locked</source>
-        <translation type="unfinished"></translation>
+        <translation>låst</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="646"/>
