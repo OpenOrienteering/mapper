@@ -1256,7 +1256,7 @@ To be able to show the distinction between neighbouring (maximum 30 metres apart
                                 <coord x="-480" y="277"/>
                                 <coord x="480" y="277"/>
                                 <coord x="0" y="-554"/>
-                                <coord x="-500" y="289" flags="2"/>
+                                <coord x="-480" y="277" flags="18"/>
                             </coords>
                             <pattern rotation="0">
                                 <coord x="0" y="0"/>
@@ -2640,14 +2640,17 @@ Minimum length, green line implementation: 4 dashes (1.8 mm – footprint 27 m).
                 <line_symbol color="19" line_width="120" minimum_length="1800" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="300" break_length="200" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
             <symbol type="1" id="105" code="417" name="Prominent large tree">
+                <description>Footprint: 13.5 m x 13.5 m.</description>
                 <point_symbol inner_radius="270" inner_color="-1" outer_width="180" outer_color="14" elements="0"/>
             </symbol>
             <symbol type="1" id="106" code="418" name="Prominent bush or tree">
-                <description>Use sparingly, as it is easily mistaken for symbol 109 (small knoll) by the colour vision
-impaired.</description>
+                <description>Use sparingly, as it is easily mistaken for symbol 109 (small knoll) by the colour vision impaired.
+
+Footprint: 7.5 m x 7.5 m.</description>
                 <point_symbol inner_radius="250" inner_color="14" outer_width="0" outer_color="-1" elements="0"/>
             </symbol>
             <symbol type="1" id="107" code="419" name="Prominent vegetation feature">
+                <description>Footprint: 13.5 m x 13.5 m.</description>
                 <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                     <element>
                         <symbol type="2" code="">
@@ -3209,10 +3212,18 @@ Vertical black stripes may be used for areas where it is important to show a com
             </symbol>
             <symbol type="4" id="142" code="521" name="Building">
                 <description>A building is shown with its ground plan so far as the scale permits.
-Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m). Buildings within forbidden areas are generalised. Areas totally contained within a building shall not be mapped (they shall be represented as being part of the building). Minimum gap indicating a passage between buildings and between buildings and other impassable features should be 0.25 mm.</description>
+
+Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m). Buildings within forbidden areas are generalised. Areas totally contained within a building shall not be mapped (they shall be represented as being part of the building). Minimum gap indicating a passage between buildings and between buildings and other impassable features should be 0.25 mm.
+
+Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).
+
+Buildings larger than 75 m x 75 m may be represented with a dark grey infill in urban areas.</description>
                 <area_symbol inner_color="1" min_area="300" patterns="0"/>
             </symbol>
             <symbol type="1" id="143" code="521.1" name="Building, minimum size">
+                <description>A building is shown with its ground plan so far as the scale permits.
+
+Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</description>
                 <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                     <element>
                         <symbol type="4" code="">
@@ -3234,9 +3245,11 @@ Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m)
                 </point_symbol>
             </symbol>
             <symbol type="16" id="144" code="521.2" name="Large building with outline">
-                <description>A building is shown with its ground plan so far as the scale permits.
-Buildings larger than 75 m x 75 m may be represented with a dark grey infill in urban areas.
-Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m). Buildings within forbidden areas are generalised. Areas totally contained within a building shall not be mapped (they shall be represented as being part of the building). Minimum gap indicating a passage between buildings and between buildings and other impassable features should be 0.25 mm.</description>
+                <description>In urban areas, buildings larger than 75 m x 75 m may be represented with a dark grey infill .
+
+Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m). Buildings within forbidden areas are generalised. Areas totally contained within a building shall not be mapped (they shall be represented as being part of the building). Minimum gap indicating a passage between buildings and between buildings and other impassable features should be 0.25 mm.
+
+</description>
                 <combined_symbol parts="2">
                     <part symbol="145"/>
                     <part symbol="146"/>

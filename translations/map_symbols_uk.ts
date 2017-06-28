@@ -1194,6 +1194,11 @@ Minimum length, green line implementation: 4 dashes (1.8 mm – footprint 27 m).
             <translation type="unfinished"></translation>
         </message>
         <message>
+            <source>Footprint: 13.5 m x 13.5 m.</source>
+            <comment>Description of symbol 417</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
             <source>Prominent bush or tree</source>
             <comment>Name of symbol 418</comment>
             <translation type="unfinished"></translation>
@@ -1207,6 +1212,11 @@ impaired.</source>
         <message>
             <source>Prominent vegetation feature</source>
             <comment>Name of symbol 419</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Footprint: 13.5 m x 13.5 m.</source>
+            <comment>Description of symbol 419</comment>
             <translation type="unfinished"></translation>
         </message>
         <message>
@@ -1594,6 +1604,13 @@ Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m)
         <message>
             <source>Building, minimum size</source>
             <comment>Name of symbol 521.1</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>A building is shown with its ground plan so far as the scale permits.
+
+Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</source>
+            <comment>Description of symbol 521.1</comment>
             <translation type="unfinished"></translation>
         </message>
         <message>
