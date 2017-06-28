@@ -227,11 +227,15 @@ void SymbolSetTool::initTestCase()
 	QVERIFY(translations_dir.exists());
 	
 	Template::pathForSaving = &Template::getTemplateRelativePath;
+	
+	translations_complete = false;
 }
 
 
 void SymbolSetTool::processSymbolSet_data()
 {
+	translations_complete = true;
+	
 	QTest::addColumn<QString>("name");
 	QTest::addColumn<unsigned int>("source_scale");
 	QTest::addColumn<unsigned int>("target_scale");
@@ -284,6 +288,10 @@ void SymbolSetTool::processSymbolSet_data()
 
 void SymbolSetTool::processSymbolSet()
 {
+	// On failure, we exit with translations_complete == false.
+	auto completeness  = translations_complete;
+	translations_complete = false;
+	
 	auto raw_tag = QTest::currentDataTag();
 	auto tag = QByteArray::fromRawData(raw_tag, int(qstrlen(raw_tag)));
 	
@@ -326,9 +334,10 @@ void SymbolSetTool::processSymbolSet()
 		const Symbol* symbol = map.getSymbol(i);
 		QString number = symbol->getNumberAsString();
 		QString number_and_name = number + QLatin1Char(' ') % symbol->getPlainTextName();
-		QVERIFY2(!symbol->getName().isEmpty(), qPrintable(number_and_name));
-		QVERIFY2(!previous_numbers.contains(number), qPrintable(number_and_name));
+		QVERIFY2(!symbol->getName().isEmpty(), qPrintable(number_and_name + QLatin1String(": Name is empty")));
+		QVERIFY2(!previous_numbers.contains(number), qPrintable(number_and_name + QLatin1String(": Number is not unique")));
 		previous_numbers.append(number);
+		QVERIFY2(symbol->validate(), qPrintable(number_and_name + QLatin1String(": Symbol validation failed")));
 	}
 	
 	auto purple = QColor::fromCmykF(0, 1, 0, 0).hueF();
@@ -546,11 +555,15 @@ void SymbolSetTool::processSymbolSet()
 	
 	QString target_filename = QString::fromLatin1("%2/%1_%2.omap").arg(name, QString::number(target_scale));
 	saveIfDifferent(symbol_set_dir.absoluteFilePath(target_filename), &map, new_view);
+	
+	translations_complete = completeness;
 }
 
 
 void SymbolSetTool::processSymbolSetTranslations()
 {
+	QVERIFY(translations_complete);
+	
 	for (auto suffix :  { "_template", "_cs", "_fi", "_ru", "_uk" })
 	{
 		auto language = QString::fromLatin1(suffix).mid(1);
@@ -680,6 +693,19 @@ void SymbolSetTool::processExamples()
 	Map map;
 	MapView view{ &map };
 	map.loadFrom(source_path, nullptr, &view, false, false);
+	
+	const int num_symbols = map.getNumSymbols();
+	QStringList previous_numbers;
+	for (int i = 0; i < num_symbols; ++i)
+	{
+		const Symbol* symbol = map.getSymbol(i);
+		QString number = symbol->getNumberAsString();
+		QString number_and_name = number + QLatin1Char(' ') % symbol->getPlainTextName();
+		QVERIFY2(!symbol->getName().isEmpty(), qPrintable(number_and_name + QLatin1String(": Name is empty")));
+		QVERIFY2(!previous_numbers.contains(number), qPrintable(number_and_name + QLatin1String(": Number is not unique")));
+		previous_numbers.append(number);
+		QVERIFY2(symbol->validate(), qPrintable(number_and_name + QLatin1String(": Symbol validation failed")));
+	}
 	
 	map.undoManager().clear();
 	saveIfDifferent(source_path, &map, &view);

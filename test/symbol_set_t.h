@@ -80,6 +80,7 @@ private slots:
 	
 private:
 	std::vector<TranslationEntry> translation_entries;
+	bool translations_complete;
 	
 	QDir symbol_set_dir;
 	QDir examples_dir;
