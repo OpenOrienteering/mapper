@@ -10,6 +10,11 @@ before_install:
 install: 
     - sudo apt-get -y install qt59base qt59base cmake doxygen libcups2-dev libgdal-dev libpolyclipping-dev libproj-dev zlib1g-dev qt59tools 
     - source /opt/qt*/bin/qt*-env.sh
+    - # Needs newer compiler
+    - sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+    - sudo apt-get update
+    - sudo apt-get install gcc-4.9 g++-4.9
+    - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 60 --slave /usr/bin/g++ g++ /usr/bin/g++-4.9
 
 script:
   - cmake . -DCMAKE_INSTALL_PREFIX=/usr
