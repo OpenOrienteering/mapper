@@ -8,7 +8,7 @@ before_install:
     - sudo apt-get update -qq
     
 install: 
-    - sudo apt-get -y install qt59base
+    - sudo apt-get -y install qt59base qt59base cmake doxygen libcups2-dev libgdal-dev libpolyclipping-dev libproj-dev zlib1g-dev qt59tools 
     - source /opt/qt*/bin/qt*-env.sh
 
 script:
