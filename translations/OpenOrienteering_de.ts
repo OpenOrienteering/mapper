@@ -172,27 +172,27 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="210"/>
         <source>Element drawing at boundary</source>
-        <translation>Element am Rand gezeichnet</translation>
+        <translation>Zeichnen von Elementen  am Rand</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="212"/>
         <source>Clip elements at the boundary.</source>
-        <translation>Hefte Elemente an den Rand.</translation>
+        <translation>Elemente am Rand beschneiden.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="213"/>
         <source>Draw elements if the center is inside the boundary.</source>
-        <translation>Zeichne Elemente wenn das Zentrum innerhalb des Randes ist.</translation>
+        <translation>Elemente zeichnen wenn das Zentrum innerhalb der Begrenzung liegt.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="214"/>
         <source>Draw elements if any point is inside the boundary.</source>
-        <translation>Zeichne Elemente wenn irgendein Punkt innerhalb des Randes ist.</translation>
+        <translation>Elemente zeichnen wenn irgendein Punkt innerhalb der Begrenzung liegt.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="215"/>
         <source>Draw elements if all points are inside the boundary.</source>
-        <translation>Zeichne Elemente wenn alle Punkte innerhalb des Randes sind.</translation>
+        <translation>Elemente zeichnen wenn alle Punkte innerhalb der Begrenzung liegen.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="230"/>
@@ -2004,7 +2004,7 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="211"/>
         <source>Open most recently used file on start</source>
-        <translation>Meistbenutzte Datei bei Programmstart öffnen</translation>
+        <translation>Zuletzt benutzte Datei bei Programmstart öffnen</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="214"/>
@@ -3549,7 +3549,7 @@ Daten trotzdem importieren?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="797"/>
         <source>Ctrl+Shift+A</source>
-        <translation>Strg+Umschalt+A</translation>
+        <translation>Ctrl+Shift+A</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="798"/>
@@ -3684,12 +3684,12 @@ Daten trotzdem importieren?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="890"/>
         <source>Load CRT file...</source>
-        <translation>Lade CRT-Datei...</translation>
+        <translation>CRT-Datei laden...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="890"/>
         <source>Assign new symbols by cross-reference table</source>
-        <translation>Weise neue Symbole nach Querverweis-Tabelle zu</translation>
+        <translation>Neue Symbole per Querverweis-Tabelle zuweisen</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="907"/>
@@ -4440,27 +4440,27 @@ gewählt</translation>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="50"/>
         <source>&amp;Find...</source>
-        <translation>&amp;Suche...</translation>
+        <translation>&amp;Suchen...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="56"/>
         <source>Find &amp;next</source>
-        <translation>Suche &amp;next</translation>
+        <translation>&amp;Nächstes suchen</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="94"/>
         <source>Find objects</source>
-        <translation>Suche Objekte</translation>
+        <translation>Objekte suchen</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="99"/>
         <source>&amp;Find next</source>
-        <translation>&amp;Find nächstes</translation>
+        <translation>&amp;Nächstes suchen</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="102"/>
         <source>Find &amp;all</source>
-        <translation>Suche %all</translation>
+        <translation>&amp;Alle suchen</translation>
     </message>
 </context>
 <context>
@@ -6000,12 +6000,12 @@ rationen</translation>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="100"/>
         <source>Match by symbol name</source>
-        <translation>Ordne nach Symbolname zu</translation>
+        <translation>Nach Symbolname zuordnen</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="105"/>
         <source>Assign new symbols</source>
-        <translation>Weise neue Symbole zu</translation>
+        <translation>Neue Symbole zuweisen</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="106"/>
@@ -6015,19 +6015,19 @@ rationen</translation>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="118"/>
         <source>Clear replacements</source>
-        <translation>Entferne Platzhalter</translation>
+        <translation>Ersetzungen löschen</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="121"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="197"/>
         <source>Open CRT file...</source>
-        <translation>Öffne CRT-Datei...</translation>
+        <translation>CRT-Datei öffnen...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="123"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="290"/>
         <source>Save CRT file...</source>
-        <translation>Speicher CRT-Datei...</translation>
+        <translation>CRT-Datei speichern...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="128"/>
@@ -6043,7 +6043,7 @@ rationen</translation>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="243"/>
         <source>There are multiple replacements for symbol %1.</source>
-        <translation>Es gibt mehrere Platzhalter für das Symbol %1.</translation>
+        <translation>Es gibt mehrere Ersetzungen für das Symbol %1.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="246"/>
