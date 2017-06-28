@@ -15,8 +15,6 @@ install:
     - sudo apt-get update
     - sudo apt-get -y install gcc-4.9 g++-4.9
     - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 60 --slave /usr/bin/g++ g++ /usr/bin/g++-4.9
-    - echo "xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    - find /opt | grep "libQt5Network.so.5"
 
 script:
   - cmake . -DCMAKE_INSTALL_PREFIX=/usr
@@ -26,7 +24,7 @@ script:
 after_success:
   - wget -c "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage" 
   - chmod a+x linuxdeployqt*.AppImage
-  - unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
+  - unset QTDIR; unset QT_PLUGIN_PATH # ; unset LD_LIBRARY_PATH
   - ./linuxdeployqt*.AppImage ./appdir/usr/share/applications/*.desktop -bundle-non-qt-libs
   - ./linuxdeployqt*.AppImage ./appdir/usr/share/applications/*.desktop -appimage
   - find ./appdir -executable -type f -exec ldd {} \; | grep " => /usr" | cut -d " " -f 2-3 | sort | uniq
