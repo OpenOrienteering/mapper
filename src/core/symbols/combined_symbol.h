@@ -43,6 +43,8 @@ public:
 	virtual ~CombinedSymbol();
 	Symbol* duplicate(const MapColorMap* color_map = NULL) const override;
 	
+	bool validate() const override;
+	
 	void createRenderables(
 	        const Object *object,
 	        const VirtualCoordVector &coords,

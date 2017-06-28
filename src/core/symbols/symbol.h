@@ -96,6 +96,9 @@ public:
 	virtual ~Symbol();
 	virtual Symbol* duplicate(const MapColorMap* color_map = nullptr) const = 0;
 	
+	virtual bool validate() const;
+	
+	
 	/**
 	 * Checks for equality to the other symbol.
 	 * @param other The symbol to compare with.

@@ -60,6 +60,15 @@ Symbol* CombinedSymbol::duplicate(const MapColorMap* color_map) const
 	return new_symbol;
 }
 
+
+
+bool CombinedSymbol::validate() const
+{
+	return std::all_of(begin(parts), end(parts), [](auto& symbol) { return symbol->validate(); });
+}
+
+
+
 void CombinedSymbol::createRenderables(
         const Object *object,
         const VirtualCoordVector &coords,

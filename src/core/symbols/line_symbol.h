@@ -78,6 +78,8 @@ public:
 	virtual ~LineSymbol();
 	Symbol* duplicate(const MapColorMap* color_map = nullptr) const override;
 	
+	bool validate() const override;
+	
 	void createRenderables(
 	        const Object *object,
 	        const VirtualCoordVector &coords,

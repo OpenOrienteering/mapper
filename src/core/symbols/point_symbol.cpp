@@ -71,6 +71,16 @@ Symbol* PointSymbol::duplicate(const MapColorMap* color_map) const
 	return new_point;
 }
 
+
+
+bool PointSymbol::validate() const
+{
+	return std::all_of(begin(symbols), end(symbols), [](auto& symbol) { return symbol->validate(); })
+	       && std::all_of(begin(objects), end(objects), [](auto& object) { return object->validate(); });
+}
+
+
+
 void PointSymbol::createRenderables(
         const Object* object,
         const VirtualCoordVector& coords,

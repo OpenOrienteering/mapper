@@ -62,6 +62,13 @@ Symbol::~Symbol()
 
 
 
+bool Symbol::validate() const
+{
+	return true;
+}
+
+
+
 bool Symbol::equals(const Symbol* other, Qt::CaseSensitivity case_sensitivity, bool compare_state) const
 {
 	if (type != other->type)

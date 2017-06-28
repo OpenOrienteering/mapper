@@ -21,6 +21,8 @@
 
 #include "line_symbol.h"
 
+#include <iterator>
+
 #include <QtNumeric>
 #include <QIODevice>
 #include <QXmlStreamReader>
@@ -236,6 +238,22 @@ Symbol* LineSymbol::duplicate(const MapColorMap* color_map) const
 	new_line->right_border.assign(right_border, color_map);
 	return new_line;
 }
+
+
+
+bool LineSymbol::validate() const
+{
+	using std::begin;
+	using std::end;
+	using MemberSymbol = PointSymbol* LineSymbol::*;
+	MemberSymbol members[4] = { &LineSymbol::start_symbol, &LineSymbol::mid_symbol, &LineSymbol::end_symbol, &LineSymbol::dash_symbol };
+	return std::all_of(begin(members), end(members), [this](auto& member) {
+		auto sub_symbol = this->*member;
+		return !sub_symbol || !sub_symbol->isEmpty() || sub_symbol->validate();
+	});
+}
+
+
 
 void LineSymbol::createRenderables(
         const Object* object,

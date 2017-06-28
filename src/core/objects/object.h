@@ -118,6 +118,8 @@ public:
 	 */
 	bool equals(const Object* other, bool compare_symbol) const;
 	
+	virtual bool validate() const;
+	
 	/** Returns the object type determined by the subclass */
 	inline Type getType() const;
 	
@@ -477,6 +479,9 @@ public:
 	
 	/** Replaces this object's contents by those of the other. */
 	Object& operator=(const Object& other) override;
+	
+	
+	bool validate() const override;
 	
 	
 	/** Checks the path for valid flags, and makes corrections as neccessary. */

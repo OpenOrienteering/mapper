@@ -206,6 +206,15 @@ bool Object::equals(const Object* other, bool compare_symbol) const
 	return true;
 }
 
+
+
+bool Object::validate() const
+{
+	return true;
+}
+
+
+
 PointObject* Object::asPoint()
 {
 	Q_ASSERT(type == Point);
@@ -1055,6 +1064,18 @@ Object& PathObject::operator=(const Object& other)
 	}
 	return *this;
 }
+
+
+
+bool PathObject::validate() const
+{
+	return std::all_of(begin(path_parts), end(path_parts), [](auto &part) {
+		return !part.isClosed()
+		       || part.coords[part.first_index] == part.coords[part.last_index];
+	});
+}
+
+
 
 void PathObject::normalize()
 {
