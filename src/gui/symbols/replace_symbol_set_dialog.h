@@ -33,6 +33,7 @@
 QT_BEGIN_NAMESPACE
 class QCheckBox;
 class QIODevice;
+class QComboBox;
 class QTableWidget;
 class QWidget;
 QT_END_NAMESPACE
@@ -105,7 +106,7 @@ private:
 	QCheckBox* delete_unused_symbols_check;
 	QCheckBox* delete_unused_colors_check;
 	QCheckBox* preserve_symbol_states_check;
-	QCheckBox* match_by_number_check;
+	QComboBox* id_edit;
 	QTableWidget* mapping_table;
 	std::vector<std::unique_ptr<SymbolDropDownDelegate>> symbol_widget_delegates;
 	

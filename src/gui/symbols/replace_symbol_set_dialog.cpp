@@ -29,6 +29,7 @@
 #include <QAbstractItemView>
 #include <QAction>
 #include <QCheckBox>
+#include <QComboBox>
 #include <QColor>
 #include <QDialogButtonBox>
 #include <QFile>
@@ -114,6 +115,16 @@ ReplaceSymbolSetDialog::ReplaceSymbolSetDialog(QWidget* parent, Map& object_map,
 		delete_unused_colors_check = new QCheckBox(tr("Delete unused colors after the replacement"));
 		delete_unused_colors_check->setChecked(true);
 		form_layout->addRow(delete_unused_colors_check);
+		id_edit = new QComboBox();
+		id_edit->setEditable(true);
+		auto new_id = symbol_set.symbolSetId();
+		if (!new_id.isEmpty())
+			id_edit->addItem(new_id);
+		auto old_id = object_map.symbolSetId();
+		if (!old_id.isEmpty() && old_id != new_id)
+			id_edit->addItem(old_id);
+		id_edit->setCurrentIndex(0);
+		form_layout->addRow(tr("Edit the symbol set ID:"), id_edit);
 		form_layout->addItem(Util::SpacerItem::create(this));
 		
 		horizontal_headers << tr("Original") << tr("Replacement");
@@ -587,6 +598,7 @@ bool ReplaceSymbolSetDialog::showDialog(QWidget* parent, Map& object_map)
 	{
 	case QDialog::Accepted:
 		replacements.squeezed().apply(object_map, *symbol_set, flags_from_dialog(dialog));
+		object_map.setSymbolSetId(dialog.id_edit->currentText());
 		return true;
 		
 	case QDialog::Rejected:
