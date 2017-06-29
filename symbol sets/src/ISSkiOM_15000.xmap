@@ -176,7 +176,7 @@
             <rgb method="spotcolor" r="1.000" g="0.811" b="0.447"/>
         </color>
     </colors>
-    <symbols count="177">
+    <symbols count="177" id="ISSkiOM">
         <symbol type="2" id="0" code="101" name="Contour">
             <description>A line joining points of equal height. The standard vertical interval between contours is 5 metres. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</description>
             <line_symbol color="6" line_width="140" minimum_length="0" join_style="2" cap_style="1" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>

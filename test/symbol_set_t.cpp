@@ -371,6 +371,7 @@ void SymbolSetTool::processSymbolSet()
 	QCOMPARE(map.getScaleDenominator(), source_scale);
 	QCOMPARE(map.getNumClosedTemplates(), 0);
 	
+	map.setSymbolSetId(id);
 	map.resetPrinterConfig();
 	map.undoManager().clear();
 	for (int i = 0; i < map.getNumColors(); ++i)
@@ -757,15 +758,17 @@ void SymbolSetTool::processSymbolSetTranslations()
 void SymbolSetTool::processExamples_data()
 {
 	QTest::addColumn<QString>("name");
+	QTest::addColumn<QString>("id");
 
-	QTest::newRow("complete map")  << QString::fromLatin1("complete map");
-	QTest::newRow("forest sample") << QString::fromLatin1("forest sample");
-	QTest::newRow("overprinting")  << QString::fromLatin1("overprinting");
+	QTest::newRow("complete map")  << QString::fromLatin1("complete map") << QString::fromLatin1("ISSOM");
+	QTest::newRow("forest sample") << QString::fromLatin1("forest sample") << QString::fromLatin1("ISOM2000");
+	QTest::newRow("overprinting")  << QString::fromLatin1("overprinting") << QString::fromLatin1("ISOM2000");
 }
 
 void SymbolSetTool::processExamples()
 {
 	QFETCH(QString, name);
+	QFETCH(QString, id);
 	
 	QString source_filename = QString::fromLatin1("src/%1.xmap").arg(name);
 	QVERIFY(examples_dir.exists(source_filename));
@@ -789,6 +792,7 @@ void SymbolSetTool::processExamples()
 		QVERIFY2(symbol->validate(), qPrintable(number_and_name + QLatin1String(": Symbol validation failed")));
 	}
 	
+	map.setSymbolSetId(id);
 	map.undoManager().clear();
 	saveIfDifferent(source_path, &map, &view);
 	

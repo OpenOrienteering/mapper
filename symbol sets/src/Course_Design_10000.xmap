@@ -48,7 +48,7 @@
             <rgb method="cmyk" r="0.000" g="0.000" b="0.000"/>
         </color>
     </colors>
-    <symbols count="209">
+    <symbols count="209" id="Course_Design">
         <symbol type="2" id="0" code="799" name="Simple Orienteering Course">
             <description>This symbol provides a simple and quick way to make training courses.
 

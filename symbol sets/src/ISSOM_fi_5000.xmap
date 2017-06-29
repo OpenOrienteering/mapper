@@ -263,7 +263,7 @@
             <rgb method="spotcolor" r="1.000" g="0.811" b="0.447"/>
         </color>
     </colors>
-    <symbols count="169">
+    <symbols count="169" id="ISSOM">
         <symbol type="2" id="0" code="101" name="Korkeuskäyrä">
             <description>Viiva, joka yhdistää samalla korkeudella olevat pisteet. Kahden korkeuskäyrän välinen korkeusero
 eli käyräväli on 2 tai 2.5 m. Maaston pinnanmuotojen ja korkeuserojen kuvaamiseksi korkeuskäyrät

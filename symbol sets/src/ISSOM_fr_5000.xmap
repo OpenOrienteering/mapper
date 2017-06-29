@@ -263,7 +263,7 @@
             <rgb method="spotcolor" r="1.000" g="0.811" b="0.447"/>
         </color>
     </colors>
-    <symbols count="169">
+    <symbols count="169" id="ISSOM">
         <symbol type="2" id="0" code="101" name="Courbe de niveau">
             <description>Ligne qui rejoint les points d'altitude équivalente. L'intervalle vertical standard (équidistance) est 2 ou 2,5 mètres. Pour mettre en évidence l'effet 3D de l'image des courbes de niveau, celles-ci seront représentées en ligne continue au dessus des autres symboles, y compris les bâtiments (526.1) et les auvents (526.2). Cependant, elles seront interrompues si elles touchent les symboles ci-après : petite levée de terre (108.1), petite butte (112), petite butte allongée (113), petite dépréssion (115), trou (116), élément de relief bien visible (118), marche ou zone pavée (529.1). 
 

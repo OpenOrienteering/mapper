@@ -41,7 +41,7 @@
 <color priority="35" name="Yellow 70%" c="0.000" m="0.189" y="0.553" k="0.000" opacity="1.000"><spotcolors knockout="true"><component factor="0.7" spotcolor="32"/></spotcolors><cmyk method="spotcolor"/><rgb method="spotcolor" r="1.000" g="0.811" b="0.447"/></color>
 </colors>
 <barrier version="6" required="0.6.0">
-<symbols count="169">
+<symbols count="169" id="ISSOM">
 <symbol type="2" id="0" code="101" name="Korkeuskäyrä"><description>Viiva, joka yhdistää samalla korkeudella olevat pisteet. Kahden korkeuskäyrän välinen korkeusero
 eli käyräväli on 2 tai 2.5 m. Maaston pinnanmuotojen ja korkeuserojen kuvaamiseksi korkeuskäyrät
 piirretään jatkuvina viivoina läpi kaikkien aluevärien. Korkeuskäyrät piirretään katkeamattomana

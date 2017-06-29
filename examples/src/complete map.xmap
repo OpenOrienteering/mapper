@@ -294,7 +294,7 @@
         </color>
     </colors>
     <barrier version="6" required="0.6.0">
-        <symbols count="182">
+        <symbols count="182" id="ISSOM">
             <symbol type="2" id="0" code="101" name="Contour">
                 <description>A line joining points of equal height. The standard vertical interval between contours is 2 or 2.5 m. To emphasize the 3-dimensional effect of the contour line image, contour lines shall be represented as continuous lines through all symbols, also building (526.1) and canopy (526.2). However, contour lines shall be cut out for better legibility, if they touch the following symbols: small earth wall (108.1), small knoll (112), small elongated knoll (113), small depression (115), pit or hole (116), prominent landform feature (118), step or edge of paved area (529.1). 
 

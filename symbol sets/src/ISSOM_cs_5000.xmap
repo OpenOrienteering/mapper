@@ -263,7 +263,7 @@
             <rgb method="spotcolor" r="1.000" g="0.811" b="0.447"/>
         </color>
     </colors>
-    <symbols count="169">
+    <symbols count="169" id="ISSOM">
         <symbol type="2" id="0" code="101" name="Vrstevnice">
             <description>Čára spojující body stejné {nadmořské} výšky. Základní výškový interval mezi vrstevnicemi je 2 nebo 2,5 metru. Ke zdůraznění třídimensionálního efektu obrazu vrstevnic musí být vrstevnice zobrazeny jako spojité čáry procházející všemi značkami, včetně budov (526.1) a canopy (526.2). Vrstevnice nicméně musí být přerušeny z důvodu lepší čitelnosti, pokud se dotýkají následujících značek: {vrstevnicová kóta (105), sráz (106),} malá hráz (108.1), {mělká rýha (110),} malá kupka (112), malá protáhlá kupka (113), malá prohlubeň (115), jáma (116), význačný terénní objekt (118), schod nebo okraj zpevněných ploch (529.1). Relativní výškový rozdíl mezi sousedními objekty musí být zobrazen na mapě tak přesně, jak je možné. Absolutní výšková přesnost je méně důležitá. Je přípustné mírně upravit výšku vrstevnice, pokud to zlepší zobrazení objektu. Odchylka nesmí překročit 25 % intervalu vrstevnic a musí být brán ohled na sousední objekty. Nejmenší ohyb vrstevnice je 0,4 mm od středu ke středu čáry.
 
