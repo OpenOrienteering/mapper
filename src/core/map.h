@@ -474,6 +474,13 @@ public:
 	
 	// Symbols
 	
+	/** Returns the symbol set ID. */
+	QString symbolSetId() const;
+	
+	/** Sets the symbol set ID. */
+	void setSymbolSetId(const QString& id);
+	
+	
 	/** Returns the number of symbols in this map. */
 	int getNumSymbols() const;
 	
@@ -1444,6 +1451,7 @@ private:
 	
 	QExplicitlySharedDataPointer<MapColorSet> color_set;
 	bool has_spot_colors;
+	QString symbol_set_id;
 	SymbolVector symbols;
 	TemplateVector templates;
 	TemplateVector closed_templates;
@@ -1546,6 +1554,15 @@ const MapColor* Map::getColor(int i) const
 			return nullptr;
 	}
 }
+
+
+
+inline
+QString Map::symbolSetId() const
+{
+	return symbol_set_id;
+}
+
 
 inline
 int Map::getNumSymbols() const

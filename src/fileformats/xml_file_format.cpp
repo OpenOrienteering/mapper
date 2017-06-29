@@ -130,6 +130,7 @@ namespace literal
 	static const QLatin1String opacity("opacity");
 	
 	static const QLatin1String symbols("symbols");
+	static const QLatin1String id("id");
 	static const QLatin1String symbol("symbol");
 	
 	static const QLatin1String parts("parts");
@@ -329,8 +330,11 @@ void XMLFileExporter::exportColors()
 void XMLFileExporter::exportSymbols()
 {
 	XmlElementWriter symbols_element(xml, literal::symbols);
+	auto id = map->symbolSetId();
 	int num_symbols = map->getNumSymbols();
 	symbols_element.writeAttribute(literal::count, num_symbols);
+	if (!id.isEmpty())
+		symbols_element.writeAttribute(literal::id, id);
 	for (int i = 0; i < num_symbols; ++i)
 	{
 		writeLineBreak(xml);
@@ -777,6 +781,7 @@ void XMLFileImporter::importSymbols()
 	MapCoord::boundsOffset().reset(false);
 	
 	XmlElementReader symbols_element(xml);
+	map->setSymbolSetId(symbols_element.attribute<QString>(literal::id));
 	int num_symbols = symbols_element.attribute<int>(literal::count);
 	map->symbols.reserve(qMin(num_symbols, 1000)); // 1000 is not a limit
 	

@@ -461,6 +461,7 @@ void Map::init()
 	undo_manager->clear();
 	undo_manager->setClean();
 	
+	symbol_set_id = QString();
 	map_notes = QString();
 	
 	printer_config.reset();
@@ -1602,6 +1603,12 @@ bool Map::hasSpotColors() const
 	return false;
 }
 
+
+void Map::setSymbolSetId(const QString& id)
+{
+	symbol_set_id = id;
+	symbols_dirty = true;
+}
 
 
 QHash<const Symbol*, Symbol*> Map::importSymbols(
