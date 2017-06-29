@@ -305,6 +305,8 @@ public slots:
 	void showSymbolWindow(bool show);
 	/** Shows or hides the color dock widget. */
 	void showColorWindow(bool show);
+	/** Shows a dialog for changing the symbol set ID. */
+	void symbolSetIdClicked();
 	/** Shows the "load symbols from" dialog. */
 	void loadSymbolsFromClicked();
 	/** Loads a CRT file and shows the symbol replacement dialog. */
@@ -667,6 +669,7 @@ private:
 	QAction* scale_map_act;
 	QAction* rotate_map_act;
 	QAction* map_notes_act;
+	QAction* symbol_set_id_act;
 	
 	QAction* color_window_act;
 	QPointer<EditorDockWidget> color_dock_widget;

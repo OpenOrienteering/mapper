@@ -51,6 +51,7 @@
 #include <QFontMetrics>
 #include <QFrame>
 #include <QHBoxLayout>
+#include <QInputDialog>
 #include <QIODevice>
 #include <QIcon>
 #include <QImage>
@@ -441,6 +442,7 @@ void MapEditorController::setEditingInProgress(bool value)
 		mappart_merge_menu->setEnabled(!editing_in_progress && num_parts > 1);
 		
 		// Symbol menu
+		symbol_set_id_act->setEnabled(!editing_in_progress);
 		scale_all_symbols_act->setEnabled(!editing_in_progress);
 		load_symbols_from_act->setEnabled(!editing_in_progress);
 		load_crt_act->setEnabled(!editing_in_progress);
@@ -886,6 +888,7 @@ void MapEditorController::createActions()
 	
 	symbol_window_act = newCheckAction("symbolwindow", tr("Symbol window"), this, SLOT(showSymbolWindow(bool)), "symbols.png", tr("Show/Hide the symbol window"), "symbol_dock_widget.html");
 	color_window_act = newCheckAction("colorwindow", tr("Color window"), this, SLOT(showColorWindow(bool)), "colors.png", tr("Show/Hide the color window"), "color_dock_widget.html");
+	symbol_set_id_act = newAction("symbol-set-id", tr("Symbol set ID..."), this, SLOT(symbolSetIdClicked()), nullptr, tr("Edit the symbol set ID"), nullptr);
 	load_symbols_from_act = newAction("loadsymbols", tr("Replace symbol set..."), this, SLOT(loadSymbolsFromClicked()), nullptr, tr("Replace the symbols with those from another map file"), "symbol_replace_dialog.html");
 	load_crt_act = newAction("loadcrt", tr("Load CRT file..."), this, SLOT(loadCrtClicked()), nullptr, tr("Assign new symbols by cross-reference table"), "symbol_replace_dialog.html");
 	/*QAction* load_colors_from_act = newAction("loadcolors", tr("Load colors from..."), this, SLOT(loadColorsFromClicked()), nullptr, tr("Replace the colors with those from another map file"));*/
@@ -1146,6 +1149,7 @@ void MapEditorController::createMenuAndToolbars()
 	symbols_menu->addAction(symbol_window_act);
 	symbols_menu->addAction(color_window_act);
 	symbols_menu->addSeparator();
+	symbols_menu->addAction(symbol_set_id_act);
 	symbols_menu->addAction(scale_all_symbols_act);
 	symbols_menu->addAction(load_symbols_from_act);
 	symbols_menu->addAction(load_crt_act);
@@ -1844,6 +1848,16 @@ void MapEditorController::showColorWindow(bool show)
 	color_dock_widget->setVisible(show);
 }
 
+
+void MapEditorController::symbolSetIdClicked()
+{
+	bool ok;
+	auto id = QInputDialog::getText(window, tr("Symbol set ID"),
+	                                tr("Edit the symbol set ID:"), QLineEdit::Normal,
+	                                map->symbolSetId(), &ok);
+	if (ok)
+		map->setSymbolSetId(id);
+}
 
 
 void MapEditorController::loadSymbolsFromClicked()
