@@ -22,38 +22,61 @@
 #include "replace_symbol_set_dialog.h"
 
 #include <algorithm>
+#include <cstddef>
+#include <iterator>
 
+#include <Qt>
+#include <QAbstractItemView>
 #include <QAction>
 #include <QCheckBox>
+#include <QColor>
 #include <QDialogButtonBox>
 #include <QFile>
 #include <QFileDialog>
+#include <QFlags>
 #include <QFormLayout>
 #include <QGuiApplication>
 #include <QHeaderView>
+#include <QIcon>
+#include <QImage>
+#include <QIODevice>
 #include <QLabel>
+#include <QLatin1Char>
+#include <QList>
 #include <QMenu>
 #include <QMessageBox>
 #include <QPushButton>
-#include <QSet>
+#include <QSpacerItem>
+#include <QString>
+#include <QStringList>
 #include <QTableWidget>
+#include <QTableWidgetItem>
 #include <QTextStream>
-#include <QToolButton>
+#include <QVariant>
+#include <QVariantList>
+#include <QVBoxLayout>
 
 #include "settings.h"
 #include "core/map.h"
+#include "core/map_color.h"
 #include "core/objects/object.h"
+#include "core/objects/object_query.h"
+#include "core/objects/symbol_rule_set.h"
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/point_symbol.h"
+#include "core/symbols/symbol.h"
 #include "core/symbols/text_symbol.h"
 #include "fileformats/file_format.h"
-#include "fileformats/file_format_registry.h"
 #include "gui/main_window.h"
 #include "gui/util_gui.h"
 #include "gui/widgets/symbol_dropdown.h"
-#include "undo/undo_manager.h"
 #include "util/util.h"
-#include "util/backports.h"
+
+class MapPart;
+// IWYU pragma: no_forward_declare QColor
+// IWYU pragma: no_forward_declare QFormLayout
+// IWYU pragma: no_forward_declare QLabel
+// IWYU pragma: no_forward_declare QTableWidgetItem
 
 
 ReplaceSymbolSetDialog::ReplaceSymbolSetDialog(QWidget* parent, Map& object_map, const Map& symbol_set, SymbolRuleSet& replacements, Mode mode)
@@ -123,7 +146,7 @@ ReplaceSymbolSetDialog::ReplaceSymbolSetDialog(QWidget* parent, Map& object_map,
 	action = mapping_menu->addAction(QIcon{QLatin1String{":/images/save.png"}}, tr("Save CRT file..."));
 	connect(action, &QAction::triggered, this, &ReplaceSymbolSetDialog::saveCrtFile);
 	
-	QDialogButtonBox* button_box = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Help, Qt::Horizontal);
+	auto button_box = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Help, Qt::Horizontal);
 	auto mapping_button = button_box->addButton(tr("Symbol mapping:").replace(QLatin1Char{':'}, QString{}), QDialogButtonBox::ActionRole);
 	void(tr("Symbol mapping")); /// \todo Switch translation
 	mapping_button->setMenu(mapping_menu);
@@ -315,7 +338,7 @@ void ReplaceSymbolSetDialog::done(int r)
 	                return item.type == SymbolRule::ManualAssignment;
 	}))
 	{
-		auto save_crt = QMessageBox::warning(this, qGuiApp->applicationDisplayName(),
+		auto save_crt = QMessageBox::warning(this, qApp->applicationDisplayName(),
 		                                     tr("The cross reference table has been modified.\n"
 		                                        "Do you want to save your changes?"),
 		                                     // QGnomeThema label for Discard: "Close without saving"
@@ -379,27 +402,27 @@ void ReplaceSymbolSetDialog::updateMappingTable()
 				{
 				case Symbol::Area:
 					original_icon = object_map.getUndefinedLine()->getIcon(&object_map);
-					original_string = QCoreApplication::translate("SymbolRenderWidget", "Area");
+					original_string = QGuiApplication::translate("SymbolRenderWidget", "Area");
 					compatible_symbols = Symbol::getCompatibleTypes(replacement_symbol->getType());
 					break;
 				case Symbol::Combined:
 					original_icon = object_map.getUndefinedLine()->getIcon(&object_map);
-					original_string = QCoreApplication::translate("SymbolRenderWidget", "Combined");
+					original_string = QGuiApplication::translate("SymbolRenderWidget", "Combined");
 					compatible_symbols = Symbol::getCompatibleTypes(replacement_symbol->getType());
 					break;
 				case Symbol::Line:
 					original_icon = object_map.getUndefinedLine()->getIcon(&object_map);
-					original_string = QCoreApplication::translate("SymbolRenderWidget", "Line");
+					original_string = QGuiApplication::translate("SymbolRenderWidget", "Line");
 					compatible_symbols = Symbol::getCompatibleTypes(replacement_symbol->getType());
 					break;
 				case Symbol::Point:
 					original_icon = object_map.getUndefinedPoint()->getIcon(&object_map);
-					original_string = QCoreApplication::translate("SymbolRenderWidget", "Point");
+					original_string = QGuiApplication::translate("SymbolRenderWidget", "Point");
 					compatible_symbols = Symbol::getCompatibleTypes(replacement_symbol->getType());
 					break;
 				case Symbol::Text:
 					original_icon = object_map.getUndefinedText()->getIcon(&object_map);
-					original_string = QCoreApplication::translate("SymbolRenderWidget", "Text");
+					original_string = QGuiApplication::translate("SymbolRenderWidget", "Text");
 					compatible_symbols = Symbol::getCompatibleTypes(replacement_symbol->getType());
 					break;
 				case Symbol::AllSymbols:
@@ -460,7 +483,7 @@ void ReplaceSymbolSetDialog::updateMappingTable()
 			}
 		}
 		
-		QTableWidgetItem* original_item = new QTableWidgetItem(original_string);
+		auto original_item = new QTableWidgetItem(original_string);
 		original_item->setFlags(Qt::ItemIsEnabled); // make item non-editable
 		QVariantList original_item_data =
 			QVariantList() << qVariantFromValue<const Map*>(&object_map) << qVariantFromValue<const Symbol*>(original_symbol);

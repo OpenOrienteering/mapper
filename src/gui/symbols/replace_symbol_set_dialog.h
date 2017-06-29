@@ -23,22 +23,23 @@
 #define OPENORIENTEERING_REPLACE_SYMBOL_SET_DIALOG_H
 
 #include <memory>
+#include <vector>
 
+#include <QtGlobal>
+#include <QObject>
 #include <QDialog>
-#include <QHash>
-
-#include "core/objects/symbol_rule_set.h"
 
 
 QT_BEGIN_NAMESPACE
 class QCheckBox;
+class QIODevice;
 class QTableWidget;
-class QTextStream;
+class QWidget;
 QT_END_NAMESPACE
 
 class Map;
-class Symbol;
 class SymbolDropDownDelegate;
+class SymbolRuleSet;
 
 
 /**
