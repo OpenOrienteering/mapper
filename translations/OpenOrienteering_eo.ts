@@ -3523,7 +3523,7 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="890"/>
         <source>Load CRT file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ŝargi CRT-dosieron…</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="890"/>
@@ -4783,7 +4783,7 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/core/objects/object_query.cpp" line="273"/>
         <source>Search</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished">Serĉi</translation>
+        <translation>Serĉi</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="277"/>
@@ -7469,7 +7469,7 @@ Bonvolu elekti malsaman dosiernomon.</translation>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="106"/>
         <source>Pattern</source>
-        <translation type="unfinished"></translation>
+        <translation>Ŝablono</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="118"/>
@@ -7480,13 +7480,13 @@ Bonvolu elekti malsaman dosiernomon.</translation>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="121"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="197"/>
         <source>Open CRT file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Malfermi CRT-dosieron…</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="123"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="290"/>
         <source>Save CRT file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Konservi CRT-dosieron…</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="128"/>
@@ -7497,7 +7497,7 @@ Bonvolu elekti malsaman dosiernomon.</translation>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="196"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="289"/>
         <source>CRT file</source>
-        <translation type="unfinished"></translation>
+        <translation>CRT-dosiero</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="243"/>
@@ -7510,7 +7510,7 @@ Bonvolu elekti malsaman dosiernomon.</translation>
 %1
 
 %2</source>
-        <translation type="unfinished">Ne povas malfermi dosieron:
+        <translation>Ne povas malfermi dosieron:
 %1
 
 %2</translation>
@@ -7521,7 +7521,10 @@ Bonvolu elekti malsaman dosiernomon.</translation>
 %1
 
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne povas konservi dosieron:
+%1
+
+%2</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="319"/>

@@ -192,27 +192,27 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="210"/>
         <source>Element drawing at boundary</source>
-        <translation type="unfinished"></translation>
+        <translation>境界で描画する要素</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="212"/>
         <source>Clip elements at the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>境界のクリップ要素。</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="213"/>
         <source>Draw elements if the center is inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>中心が境界の内部にある場合は、要素を描画します。</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="214"/>
         <source>Draw elements if any point is inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>任意のポイントが境界内にある場合に、要素を描画します。</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="215"/>
         <source>Draw elements if all points are inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>すべてのポイントが境界内にある場合に、要素を描画します。</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="230"/>
@@ -4441,12 +4441,12 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="890"/>
         <source>Load CRT file...</source>
-        <translation type="unfinished"></translation>
+        <translation>CRT ファイルを読み込む...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="890"/>
         <source>Assign new symbols by cross-reference table</source>
-        <translation type="unfinished"></translation>
+        <translation>相互参照テーブルで、新しい記号を割り当てる</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="907"/>
@@ -4818,27 +4818,27 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="50"/>
         <source>&amp;Find...</source>
-        <translation type="unfinished"></translation>
+        <translation>検索(&amp;F)...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="56"/>
         <source>Find &amp;next</source>
-        <translation type="unfinished"></translation>
+        <translation>次を検索(&amp;n)</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="94"/>
         <source>Find objects</source>
-        <translation type="unfinished"></translation>
+        <translation>オブジェクトを検索</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="99"/>
         <source>&amp;Find next</source>
-        <translation type="unfinished"></translation>
+        <translation>次を検索(&amp;F)</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="102"/>
         <source>Find &amp;all</source>
-        <translation type="unfinished"></translation>
+        <translation>すべて検索(&amp;a)</translation>
     </message>
 </context>
 <context>
@@ -5379,7 +5379,7 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/core/objects/object_query.cpp" line="273"/>
         <source>Search</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>検索</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="277"/>
@@ -5397,7 +5397,7 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/core/objects/object_query.cpp" line="284"/>
         <source>Symbol</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>記号</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="288"/>
@@ -6503,50 +6503,50 @@ separations</source>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="100"/>
         <source>Match by symbol name</source>
-        <translation type="unfinished"></translation>
+        <translation>記号名で一致</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="105"/>
         <source>Assign new symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>新しい記号を割り当て</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="106"/>
         <source>Pattern</source>
-        <translation type="unfinished"></translation>
+        <translation>パターン</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="118"/>
         <source>Clear replacements</source>
-        <translation type="unfinished"></translation>
+        <translation>置き換えをクリア</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="121"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="197"/>
         <source>Open CRT file...</source>
-        <translation type="unfinished"></translation>
+        <translation>CRT ファイルを開く...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="123"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="290"/>
         <source>Save CRT file...</source>
-        <translation type="unfinished"></translation>
+        <translation>CRT ファイルを保存...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="128"/>
         <source>Symbol mapping</source>
-        <translation type="unfinished"></translation>
+        <translation>記号マッピング</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="196"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="289"/>
         <source>CRT file</source>
-        <translation type="unfinished"></translation>
+        <translation>CRT ファイル</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="243"/>
         <source>There are multiple replacements for symbol %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>記号 %1 に複数の置換があります。</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="246"/>
@@ -6554,7 +6554,7 @@ separations</source>
 %1
 
 %2</source>
-        <translation type="unfinished">ファイルを開くことができません:
+        <translation>ファイルを開くことができません:
 %1
 
 %2</translation>
@@ -6565,13 +6565,17 @@ separations</source>
 %1
 
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルを保存できません:
+%1
+
+%2</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="319"/>
         <source>The cross reference table has been modified.
 Do you want to save your changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>相互参照テーブルは変更されています。
+変更内容を保存しますか?</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="476"/>
@@ -6607,7 +6611,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="607"/>
         <source>Cannot load CRT file, aborting.</source>
-        <translation type="unfinished"></translation>
+        <translation>CRT ファイルを読み込みできません。中止します。</translation>
     </message>
 </context>
 <context>

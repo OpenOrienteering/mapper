@@ -49,6 +49,7 @@ qt5_add_translation(Mapper_QM ${Mapper_TRANS})
 
 set(Mapper_TRANS_TEMPLATE
   OpenOrienteering_et.ts
+  OpenOrienteering_eu.ts
   OpenOrienteering_he.ts
   OpenOrienteering_template.ts
   CACHE INTERNAL "Translation files which are not deployed"

@@ -6072,7 +6072,7 @@ erottelut</translation>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="106"/>
         <source>Pattern</source>
-        <translation type="unfinished"></translation>
+        <translation>Malli</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="118"/>
@@ -6083,13 +6083,13 @@ erottelut</translation>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="121"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="197"/>
         <source>Open CRT file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Avaa CRT-tiedosto…</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="123"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="290"/>
         <source>Save CRT file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Tallenna CRT-tiedosto…</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="128"/>
@@ -6100,7 +6100,7 @@ erottelut</translation>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="196"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="289"/>
         <source>CRT file</source>
-        <translation type="unfinished"></translation>
+        <translation>CRT-tiedosto</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="243"/>
@@ -6113,7 +6113,7 @@ erottelut</translation>
 %1
 
 %2</source>
-        <translation type="unfinished">Tiedostoa ei voi avata:
+        <translation>Tiedostoa ei voi avata:
 %1
 
 %2</translation>
@@ -6124,7 +6124,10 @@ erottelut</translation>
 %1
 
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiedostoa ei voi tallentaa:
+%1
+
+%2</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="319"/>

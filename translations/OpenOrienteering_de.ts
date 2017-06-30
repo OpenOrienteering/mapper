@@ -172,27 +172,27 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="210"/>
         <source>Element drawing at boundary</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeichnen von Elementen  am Rand</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="212"/>
         <source>Clip elements at the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Elemente am Rand beschneiden.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="213"/>
         <source>Draw elements if the center is inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Elemente zeichnen wenn das Zentrum innerhalb der Begrenzung liegt.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="214"/>
         <source>Draw elements if any point is inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Elemente zeichnen wenn irgendein Punkt innerhalb der Begrenzung liegt.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="215"/>
         <source>Draw elements if all points are inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Elemente zeichnen wenn alle Punkte innerhalb der Begrenzung liegen.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="230"/>
@@ -3684,12 +3684,12 @@ Daten trotzdem importieren?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="890"/>
         <source>Load CRT file...</source>
-        <translation type="unfinished"></translation>
+        <translation>CRT-Datei laden...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="890"/>
         <source>Assign new symbols by cross-reference table</source>
-        <translation type="unfinished"></translation>
+        <translation>Neue Symbole per Querverweis-Tabelle zuweisen</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="907"/>
@@ -4440,27 +4440,27 @@ gewählt</translation>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="50"/>
         <source>&amp;Find...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Suchen...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="56"/>
         <source>Find &amp;next</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Nächstes suchen</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="94"/>
         <source>Find objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Objekte suchen</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="99"/>
         <source>&amp;Find next</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Nächstes suchen</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="102"/>
         <source>Find &amp;all</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Alle suchen</translation>
     </message>
 </context>
 <context>
@@ -4971,7 +4971,7 @@ Zoomen ist mit dem Mausrad möglich.</translation>
         <location filename="../src/core/objects/object_query.cpp" line="273"/>
         <source>Search</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Suche</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="277"/>
@@ -4989,7 +4989,7 @@ Zoomen ist mit dem Mausrad möglich.</translation>
         <location filename="../src/core/objects/object_query.cpp" line="284"/>
         <source>Symbol</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Symbol</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="288"/>
@@ -5818,7 +5818,7 @@ rationen</translation>
         <location filename="../src/gui/print_widget.cpp" line="1227"/>
         <source>Exported successfully to %1</source>
         <translatorcomment>Check original</translatorcomment>
-        <translation>Erfolgreich nach %1 exportiert.</translation>
+        <translation>Erfolgreich nach %1 exportiert</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1251"/>
@@ -6000,50 +6000,50 @@ rationen</translation>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="100"/>
         <source>Match by symbol name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nach Symbolname zuordnen</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="105"/>
         <source>Assign new symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Neue Symbole zuweisen</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="106"/>
         <source>Pattern</source>
-        <translation type="unfinished"></translation>
+        <translation>Muster</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="118"/>
         <source>Clear replacements</source>
-        <translation type="unfinished"></translation>
+        <translation>Ersetzungen löschen</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="121"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="197"/>
         <source>Open CRT file...</source>
-        <translation type="unfinished"></translation>
+        <translation>CRT-Datei öffnen...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="123"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="290"/>
         <source>Save CRT file...</source>
-        <translation type="unfinished"></translation>
+        <translation>CRT-Datei speichern...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="128"/>
         <source>Symbol mapping</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbol-Zuordnung</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="196"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="289"/>
         <source>CRT file</source>
-        <translation type="unfinished"></translation>
+        <translation>CRT-Datei</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="243"/>
         <source>There are multiple replacements for symbol %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Es gibt mehrere Ersetzungen für das Symbol %1.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="246"/>
@@ -6051,7 +6051,7 @@ rationen</translation>
 %1
 
 %2</source>
-        <translation type="unfinished">Datei kann nicht geöffnet werden:
+        <translation>Datei kann nicht geöffnet werden:
 %1
 
 %2</translation>
@@ -6062,13 +6062,17 @@ rationen</translation>
 %1
 
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Die folgende Datei kann nicht gespeichert werden:
+%1
+
+%2</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="319"/>
         <source>The cross reference table has been modified.
 Do you want to save your changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Querverweis-Tabelle wurde geändert.
+Sollen die Änderungen gesichert werden?</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="476"/>
@@ -6104,7 +6108,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="607"/>
         <source>Cannot load CRT file, aborting.</source>
-        <translation type="unfinished"></translation>
+        <translation>CRT-Datei konnte nicht geladen werden. Abbruch.</translation>
     </message>
 </context>
 <context>
@@ -6567,12 +6571,12 @@ Do you want to save your changes?</source>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="974"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1002"/>
         <source>An internal error occurred, sorry!</source>
-        <translation>Es ist ein interner Fehler aufgetreten.</translation>
+        <translation>Es ist ein interner Fehler aufgetreten!</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="989"/>
         <source>There are no symbols in clipboard which could be pasted!</source>
-        <translation>In der Zwischenablage befinden sich keine einfügbaren Objekte.</translation>
+        <translation>In der Zwischenablage befinden sich keine einfügbaren Objekte!</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1158"/>
@@ -7264,7 +7268,7 @@ Speichern im GIF-Format wird nicht unterstützt. Zeichnungen auf solchen Vorlage
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="728"/>
         <source>Please enter a valid integer number to set a group or leave the field empty to ungroup the template!</source>
-        <translation>Geben Sie eine ganze Zahl ein, um eine Gruppe festzulegen, oder lassen Sie das Feld frei, um die Gruppierung dieser Vorlage aufzuheben.</translation>
+        <translation>Geben Sie eine ganze Zahl ein, um eine Gruppe festzulegen, oder lassen Sie das Feld frei, um die Gruppierung dieser Vorlage aufzuheben!</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="972"/>
