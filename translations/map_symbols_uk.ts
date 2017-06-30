@@ -4,6 +4,146 @@
     <context>
         <name>ISOM2017</name>
         <message>
+            <source>Purple</source>
+            <comment>Color 0</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Black</source>
+            <comment>Color 1</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Opaque White below Black</source>
+            <comment>Color 2</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Black 65%</source>
+            <comment>Color 3</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Black 20%</source>
+            <comment>Color 4</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Brown 50%</source>
+            <comment>Color 5</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Black below light browns</source>
+            <comment>Color 6</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Opaque Blue</source>
+            <comment>Color 7</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Blue</source>
+            <comment>Color 8</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Blue 50%</source>
+            <comment>Color 9</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Brown</source>
+            <comment>Color 10</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>OpenOrienteering Orange</source>
+            <comment>Color 11</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Black 25% (Grey)</source>
+            <comment>Color 12</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Green 50%, Yellow</source>
+            <comment>Color 13</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Green</source>
+            <comment>Color 14</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Opaque Yellow</source>
+            <comment>Color 15</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Opaque White over Green</source>
+            <comment>Color 16</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Opaque Green 20%</source>
+            <comment>Color 17</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Opaque Green 50%</source>
+            <comment>Color 18</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Green, Black 50%</source>
+            <comment>Color 19</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Opaque Green</source>
+            <comment>Color 20</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Green 50%</source>
+            <comment>Color 21</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Green 20%</source>
+            <comment>Color 22</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Green below light greens</source>
+            <comment>Color 23</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Green 50% over Yellow</source>
+            <comment>Color 24</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>White over Yellow</source>
+            <comment>Color 25</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Yellow</source>
+            <comment>Color 26</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Yellow 50%</source>
+            <comment>Color 27</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
             <source>Contour</source>
             <comment>Name of symbol 101</comment>
             <translation type="unfinished"></translation>
@@ -2048,6 +2188,116 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <context>
         <name>ISOM2000</name>
         <message>
+            <source>Purple</source>
+            <comment>Color 0</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Black</source>
+            <comment>Color 1</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Brown 50%</source>
+            <comment>Color 2</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Black below light browns</source>
+            <comment>Color 3</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Opaque Blue</source>
+            <comment>Color 4</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Blue</source>
+            <comment>Color 5</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Blue 50%</source>
+            <comment>Color 6</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Brown</source>
+            <comment>Color 7</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>OpenOrienteering Orange</source>
+            <comment>Color 8</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Black 30%</source>
+            <comment>Color 9</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Green 50%, Yellow</source>
+            <comment>Color 10</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Green over White over Green</source>
+            <comment>Color 11</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Opaque White over Green</source>
+            <comment>Color 12</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Opaque Green</source>
+            <comment>Color 13</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Green</source>
+            <comment>Color 14</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Green 60%</source>
+            <comment>Color 15</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Green 30%</source>
+            <comment>Color 16</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Green below light greens</source>
+            <comment>Color 17</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Yellow</source>
+            <comment>Color 18</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Yellow 50%</source>
+            <comment>Color 19</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>White over Yellow 70%</source>
+            <comment>Color 20</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Yellow 70%</source>
+            <comment>Color 21</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
             <source>Contour</source>
             <comment>Name of symbol 101</comment>
             <translation type="unfinished"></translation>
@@ -3586,6 +3836,186 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     </context>
     <context>
         <name>ISSOM</name>
+        <message>
+            <source>Purple</source>
+            <comment>Color 0</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Purple 50%</source>
+            <comment>Color 1</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Black</source>
+            <comment>Color 2</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Opaque White below Black</source>
+            <comment>Color 3</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Brown for contours</source>
+            <comment>Color 4</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Black 50-65% for buildings</source>
+            <comment>Color 5</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Black 50%</source>
+            <comment>Color 6</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Black 30%</source>
+            <comment>Color 7</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Black 20%</source>
+            <comment>Color 8</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Green, Black 50% above Brown</source>
+            <comment>Color 9</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Opaque Blue above Brown</source>
+            <comment>Color 10</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Blue above Brown</source>
+            <comment>Color 11</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Green above Brown</source>
+            <comment>Color 12</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Brown 20-50% for paved area, non-urban</source>
+            <comment>Color 13</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Brown 0-30% for paved area, urban</source>
+            <comment>Color 14</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Black below light browns</source>
+            <comment>Color 15</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Opaque Blue</source>
+            <comment>Color 16</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Blue</source>
+            <comment>Color 17</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Blue 75%</source>
+            <comment>Color 18</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Blue 30%</source>
+            <comment>Color 19</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>OpenOrienteering Blue 50%</source>
+            <comment>Color 20</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Brown</source>
+            <comment>Color 21</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>OpenOrienteering Orange</source>
+            <comment>Color 22</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Grey</source>
+            <comment>Color 23</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Green 50%, Yellow</source>
+            <comment>Color 24</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>White over Green</source>
+            <comment>Color 25</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Green, Black 50%</source>
+            <comment>Color 26</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Opaque Green</source>
+            <comment>Color 27</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Green</source>
+            <comment>Color 28</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Green 60%</source>
+            <comment>Color 29</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Green 30%</source>
+            <comment>Color 30</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Green below light greens</source>
+            <comment>Color 31</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Yellow</source>
+            <comment>Color 32</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Yellow 50%</source>
+            <comment>Color 33</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>White over Yellow 70%</source>
+            <comment>Color 34</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Yellow 70%</source>
+            <comment>Color 35</comment>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Contour</source>
             <comment>Name of symbol 101</comment>
@@ -5436,6 +5866,131 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <context>
         <name>ISMTBOM</name>
         <message>
+            <source>Purple</source>
+            <comment>Color 0</comment>
+            <translation>Верхній пурпурний</translation>
+        </message>
+        <message>
+            <source>Black</source>
+            <comment>Color 1</comment>
+            <translation>Чорний</translation>
+        </message>
+        <message>
+            <source>Lower Purple</source>
+            <comment>Color 2</comment>
+            <translation>Нижній пурпурний</translation>
+        </message>
+        <message>
+            <source>Black 70%</source>
+            <comment>Color 3</comment>
+            <translation>Чорний 70%</translation>
+        </message>
+        <message>
+            <source>Brown 50%</source>
+            <comment>Color 4</comment>
+            <translation>Коричневий 50%</translation>
+        </message>
+        <message>
+            <source>Black below light browns</source>
+            <comment>Color 5</comment>
+            <translation>Чорний під світлим коричневим</translation>
+        </message>
+        <message>
+            <source>Brown</source>
+            <comment>Color 6</comment>
+            <translation>Коричневий</translation>
+        </message>
+        <message>
+            <source>OpenOrienteering Orange</source>
+            <comment>Color 7</comment>
+            <translation>OpenOrienteering Orange</translation>
+        </message>
+        <message>
+            <source>Opaque Blue</source>
+            <comment>Color 8</comment>
+            <translation>Непрозорий Синій</translation>
+        </message>
+        <message>
+            <source>Blue</source>
+            <comment>Color 9</comment>
+            <translation>Синій</translation>
+        </message>
+        <message>
+            <source>Blue 50%</source>
+            <comment>Color 10</comment>
+            <translation>Синій 50%</translation>
+        </message>
+        <message>
+            <source>Black 30%</source>
+            <comment>Color 11</comment>
+            <translation>Чорний 30%</translation>
+        </message>
+        <message>
+            <source>Green 50%, Yellow</source>
+            <comment>Color 12</comment>
+            <translation>Зелений 50%, Жовтий</translation>
+        </message>
+        <message>
+            <source>Green over White over Green</source>
+            <comment>Color 13</comment>
+            <translation>Зелений поверх Білого поверх Зеленого</translation>
+        </message>
+        <message>
+            <source>Opaque White over Green</source>
+            <comment>Color 14</comment>
+            <translation>Непрозорий Білий поверх Зеленого</translation>
+        </message>
+        <message>
+            <source>Yellow over Green</source>
+            <comment>Color 15</comment>
+            <translation>Жовтий поверх Зеленого</translation>
+        </message>
+        <message>
+            <source>Opaque Green</source>
+            <comment>Color 16</comment>
+            <translation>Непрозорий Зелений</translation>
+        </message>
+        <message>
+            <source>Green</source>
+            <comment>Color 17</comment>
+            <translation>Зелений</translation>
+        </message>
+        <message>
+            <source>Green 60%</source>
+            <comment>Color 18</comment>
+            <translation>Зелений 60%</translation>
+        </message>
+        <message>
+            <source>Green 30%</source>
+            <comment>Color 19</comment>
+            <translation>Зелений 30%</translation>
+        </message>
+        <message>
+            <source>Green below light greens</source>
+            <comment>Color 20</comment>
+            <translation>Зелений під світлим зеленим</translation>
+        </message>
+        <message>
+            <source>Yellow</source>
+            <comment>Color 21</comment>
+            <translation>Жовтий</translation>
+        </message>
+        <message>
+            <source>Yellow 50%</source>
+            <comment>Color 22</comment>
+            <translation>Жовтий 50%</translation>
+        </message>
+        <message>
+            <source>White over Yellow 70%</source>
+            <comment>Color 23</comment>
+            <translation>Білий поверх Жовтого 70%</translation>
+        </message>
+        <message>
+            <source>Yellow 70%</source>
+            <comment>Color 24</comment>
+            <translation>Жовтий 70%</translation>
+        </message>
+        <message>
             <source>Contour</source>
             <comment>Name of symbol 101</comment>
             <translation>Горизонталь</translation>
@@ -7109,6 +7664,126 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     </context>
     <context>
         <name>ISSkiOM</name>
+        <message>
+            <source>Opaque Purple</source>
+            <comment>Color 0</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Purple</source>
+            <comment>Color 1</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Upper Green</source>
+            <comment>Color 2</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Black</source>
+            <comment>Color 3</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Brown 50%</source>
+            <comment>Color 4</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Black below light browns</source>
+            <comment>Color 5</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Brown</source>
+            <comment>Color 6</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>OpenOrienteering Orange</source>
+            <comment>Color 7</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Opaque Blue</source>
+            <comment>Color 8</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Blue</source>
+            <comment>Color 9</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Blue 50%</source>
+            <comment>Color 10</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Black 30%</source>
+            <comment>Color 11</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Green 50%, Yellow</source>
+            <comment>Color 12</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Green over White over Green</source>
+            <comment>Color 13</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Opaque White over Green</source>
+            <comment>Color 14</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Opaque Green</source>
+            <comment>Color 15</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Green</source>
+            <comment>Color 16</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Green 60%</source>
+            <comment>Color 17</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Green 30%</source>
+            <comment>Color 18</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Green below light greens</source>
+            <comment>Color 19</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Yellow</source>
+            <comment>Color 20</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Yellow 50%</source>
+            <comment>Color 21</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>White over Yellow 70%</source>
+            <comment>Color 22</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Yellow 70%</source>
+            <comment>Color 23</comment>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Contour</source>
             <comment>Name of symbol 101</comment>
@@ -8871,6 +9546,36 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     </context>
     <context>
         <name>Course_Design</name>
+        <message>
+            <source>Purple</source>
+            <comment>Color 0</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Black for control descriptions</source>
+            <comment>Color 1</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>White above framing</source>
+            <comment>Color 2</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Black for framing</source>
+            <comment>Color 3</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>White below framing</source>
+            <comment>Color 4</comment>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>Black</source>
+            <comment>Color 5</comment>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Simple Orienteering Course</source>
             <comment>Name of symbol 799</comment>

@@ -486,6 +486,18 @@ void SymbolSetTool::processSymbolSet()
 	else if (tag.endsWith('0'))
 	{
 		// Not scaled and not translated: Register source strings.
+		auto num_colors = map.getNumColors();
+		for (int i = 0; i < num_colors; ++i)
+		{
+			auto color = map.getColor(i);
+			translation_entries.emplace_back(TranslationEntry{
+			                                     name,
+			                                     color->getName(),
+			                                     QLatin1String("Color ") + QString::number(color->getPriority()),
+			                                     {}
+			                                 });
+		}
+		
 		for (int i = 0; i < num_symbols; ++i)
 		{
 			auto symbol = map.getSymbol(i);
@@ -510,6 +522,18 @@ void SymbolSetTool::processSymbolSet()
 		auto language = name.mid(lang_code_index);
 		Q_ASSERT(language.length() == 2);
 		auto context = name.left(lang_code_index-1);
+		
+		auto num_colors = map.getNumColors();
+		for (int i = 0; i < num_colors; ++i)
+		{
+			auto color = map.getColor(i);
+			auto key = QString{QLatin1String("Color ") + QString::number(color->getPriority())};
+			auto found = std::find_if(begin(translation_entries), end(translation_entries), [context, key](auto& entry) {
+				return entry.context == context && entry.comment == key;
+			});
+			QVERIFY(found != end(translation_entries));
+			found->translations.push_back({language, color->getName()});
+		}
 		
 		for (int i = 0; i < num_symbols; ++i)
 		{
