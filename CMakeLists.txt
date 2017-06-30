@@ -56,8 +56,6 @@ if(APPLE)
 	  "Minimum Mac OS X version to build for, recommended: 10.7")
 endif()
 
-option(Mapper_TRANSLATIONS_EMBEDDED "Embed all translations in the program executable")
-
 option(Mapper_DEBUG_TRANSLATIONS "Debug missing translations" OFF)
 
 # Used for some Linux distributions which do not provide the polyclipping lib.

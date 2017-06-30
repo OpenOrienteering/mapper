@@ -56,42 +56,17 @@ set(Mapper_TRANS_TEMPLATE
 )
 
 set(Mapper_TRANS_DIR
- ${CMAKE_CURRENT_SOURCE_DIR}
- CACHE INTERNAL "Translations build directory"
+  ${CMAKE_CURRENT_SOURCE_DIR}
+  CACHE INTERNAL "Translations build directory"
 )
 
-if(Mapper_TRANSLATIONS_EMBEDDED)
-	set(Mapper_TRANS_QRC "${CMAKE_CURRENT_BINARY_DIR}/translations.qrc")
-	file(WRITE "${Mapper_TRANS_QRC}.tmp"
-	  "<!DOCTYPE RCC><RCC version=\"1.0\">\n <qresource>\n")
-	foreach(_qm_file ${Mapper_QM})
-		get_filename_component(_qm_filename "${_qm_file}" NAME)
-		file(APPEND "${Mapper_TRANS_QRC}.tmp"
-		  "  <file alias=\"translations/${_qm_filename}\">${_qm_file}</file>\n")
-	endforeach(_qm_file)
-	file(APPEND "${Mapper_TRANS_QRC}.tmp"
-	  " </qresource>\n</RCC>\n")
-	execute_process(COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${Mapper_TRANS_QRC}.tmp" "${Mapper_TRANS_QRC}")
-	qt5_add_resources(Mapper_TRANSLATIONS_RCC "${Mapper_TRANS_QRC}" OPTIONS -no-compress)
+# A target which builds all translations.
+add_custom_target(Mapper_translations ALL DEPENDS ${Mapper_QM})
 
-	# A library is a top-level target, the generated source file isn't.
-	add_library(Mapper_translations STATIC ${Mapper_TRANSLATIONS_RCC})
-	add_dependencies(Mapper_translations ${Mapper_QM})
-
-	set(Mapper_LIBRARIES 
-	  Mapper_translations 
-	  ${Mapper_LIBRARIES}
-	  PARENT_SCOPE)
-
-else()
-	# A target which builds all translations.
-	add_custom_target(Mapper_translations ALL DEPENDS ${Mapper_QM})
-
-	install(
-	  FILES ${Mapper_QM}
-	  DESTINATION "${MAPPER_DATA_DESTINATION}/translations")
-
-endif(Mapper_TRANSLATIONS_EMBEDDED)
+install(
+  FILES ${Mapper_QM}
+  DESTINATION "${MAPPER_DATA_DESTINATION}/translations"
+)
 
 if(APPLE)
 	# Localized resources just to enable localized native dialogs.

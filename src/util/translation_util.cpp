@@ -26,8 +26,6 @@
 #include <QLocale>
 #include <QTranslator>
 
-#include "mapper_config.h"
-
 
 namespace
 {
@@ -38,13 +36,9 @@ QStringList searchPath()
 	if (search_path.isEmpty())
 	{
 		const auto data_paths = QDir::searchPaths(QLatin1String("data"));
-#if !defined(Mapper_TRANSLATIONS_EMBEDDED)
 		search_path.reserve(data_paths.size() + 1);
 		// Always load embedded translations first if enabled
 		search_path.append(QLatin1String(":/translations"));
-#else
-		search_path.reserve(data_paths.size());
-#endif
 		for (const auto& path : data_paths)
 			search_path.append(path + QLatin1String("/translations"));
 	}
