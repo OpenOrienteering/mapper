@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="cs">
+<TS version="2.1" language="et">
 <context>
     <name>QAbstractSpinBox</name>
     <message>
@@ -217,7 +217,7 @@
 <context>
     <name>QFileDialog</name>
     <message>
-        <location filename="../src/gui/text_browser_dialog.cpp" line="59"></location>
+        <location filename="../src/gui/text_browser_dialog.cpp" line="58"/>
         <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
@@ -672,7 +672,7 @@ Please verify the correct file name was given.</source>
 <context>
     <name>QPlatformTheme</name>
     <message>
-        <location filename="../src/gui/text_browser_dialog.cpp" line="64"></location>
+        <location filename="../src/gui/text_browser_dialog.cpp" line="63"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>

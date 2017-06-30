@@ -55,16 +55,26 @@ set(Mapper_TRANS_TEMPLATE
   CACHE INTERNAL "Translation files which are not deployed"
 )
 
+set(qt_translations
+  qt_eo.ts
+  qt_et.ts
+  qt_id.ts
+  qt_lv.ts
+  qt_nb.ts
+  qt_nl.ts
+)
+qt5_add_translation(qt_qm ${qt_translations})
+
 set(Mapper_TRANS_DIR
   ${CMAKE_CURRENT_SOURCE_DIR}
   CACHE INTERNAL "Translations build directory"
 )
 
 # A target which builds all translations.
-add_custom_target(Mapper_translations ALL DEPENDS ${Mapper_QM})
+add_custom_target(Mapper_translations ALL DEPENDS ${Mapper_QM} ${qt_qm})
 
 install(
-  FILES ${Mapper_QM}
+  FILES ${Mapper_QM} ${qt_qm}
   DESTINATION "${MAPPER_DATA_DESTINATION}/translations"
 )
 
