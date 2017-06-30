@@ -1344,8 +1344,9 @@ Minimum length, green line implementation: 4 dashes (1.8 mm – footprint 27 m).
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Use sparingly, as it is easily mistaken for symbol 109 (small knoll) by the colour vision
-impaired.</source>
+            <source>Use sparingly, as it is easily mistaken for symbol 109 (small knoll) by the colour vision impaired.
+
+Footprint: 7.5 m x 7.5 m.</source>
             <comment>Description of symbol 418</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -1737,7 +1738,12 @@ Vertical black stripes may be used for areas where it is important to show a com
         </message>
         <message>
             <source>A building is shown with its ground plan so far as the scale permits.
-Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m). Buildings within forbidden areas are generalised. Areas totally contained within a building shall not be mapped (they shall be represented as being part of the building). Minimum gap indicating a passage between buildings and between buildings and other impassable features should be 0.25 mm.</source>
+
+Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m). Buildings within forbidden areas are generalised. Areas totally contained within a building shall not be mapped (they shall be represented as being part of the building). Minimum gap indicating a passage between buildings and between buildings and other impassable features should be 0.25 mm.
+
+Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).
+
+Buildings larger than 75 m x 75 m may be represented with a dark grey infill in urban areas.</source>
             <comment>Description of symbol 521</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -1759,9 +1765,11 @@ Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>A building is shown with its ground plan so far as the scale permits.
-Buildings larger than 75 m x 75 m may be represented with a dark grey infill in urban areas.
-Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m). Buildings within forbidden areas are generalised. Areas totally contained within a building shall not be mapped (they shall be represented as being part of the building). Minimum gap indicating a passage between buildings and between buildings and other impassable features should be 0.25 mm.</source>
+            <source>In urban areas, buildings larger than 75 m x 75 m may be represented with a dark grey infill .
+
+Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m). Buildings within forbidden areas are generalised. Areas totally contained within a building shall not be mapped (they shall be represented as being part of the building). Minimum gap indicating a passage between buildings and between buildings and other impassable features should be 0.25 mm.
+
+</source>
             <comment>Description of symbol 521.2</comment>
             <translation type="unfinished"></translation>
         </message>

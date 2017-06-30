@@ -58,6 +58,7 @@ public:
 		{
 			QString language;
 			QString translation;
+			QString type;
 		};
 
 		QString context;
@@ -65,7 +66,7 @@ public:
 		QString comment;
 		std::vector<Translation> translations;
 		
-		void write(QXmlStreamWriter& xml, const QString& key, QString type);
+		void write(QXmlStreamWriter& xml, const QString& language);
 	};
 	
 private slots:

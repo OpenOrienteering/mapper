@@ -22,6 +22,7 @@
 #include <algorithm>
 #include <iterator>
 #include <memory>
+#include <type_traits>
 // IWYU pragma: no_include <ext/alloc_traits.h>
 
 #include <QtGlobal>
@@ -57,14 +58,65 @@
 #include "fileformats/xml_file_format_p.h"
 #include "templates/template.h"
 #include "undo/undo_manager.h"
-#include "util/backports.h"
 
 class QColor;
 
 
-std::vector<SymbolSetTool::TranslationEntry> readTsFile(QIODevice& device, const QString& language)
+static auto Obsolete = QString::fromLatin1("obsolete");
+static auto NeedsReview = QString::fromLatin1("unfinished");
+
+static auto translation_suffix = { "template", "cs", "fi", "ru", "uk" };
+
+using TranslationEntries = std::vector<SymbolSetTool::TranslationEntry>;
+
+
+void addSource(TranslationEntries& entries, const QString& context, const QString& source, const QString& comment)
 {
-	auto result = std::vector<SymbolSetTool::TranslationEntry>{};
+	// Comment must be unique. It is used to match translations.
+	auto found = std::find_if(begin(entries), end(entries), [&context, &comment](auto& entry) {
+		return entry.context == context && entry.comment == comment;
+	});
+	QVERIFY(found == end(entries));
+	entries.push_back({context, source, comment, {} });
+	entries.back().translations.reserve(std::extent<decltype(translation_suffix)>::value);
+}
+
+
+void addTranslation(TranslationEntries& entries, const QString& context, const QString& comment, const QString& language, const QString& translation)
+{
+	// Match source by comment.
+	auto found = std::find_if(begin(entries), end(entries), [&context, &comment](auto& entry) {
+		return entry.context == context && entry.comment == comment;
+	});
+	QVERIFY(found != end(entries));
+	// Translation must be unique.
+	QVERIFY(!std::any_of(begin(found->translations), end(found->translations), [&language](auto& item) {
+	    return item.language == language;
+	}));
+	found->translations.push_back({language, translation, {}});
+}
+
+
+QString findSuggestion(TranslationEntries& translation_entries, const QString& source, const QString& language)
+{
+	for (auto& entry : translation_entries)
+	{
+		if (entry.source != source)
+			continue;
+		
+		auto translation = std::find_if(begin(entry.translations), end(entry.translations), [&language](auto& current) {
+			return current.language == language;
+		});
+		if (translation != end(entry.translations))
+			return translation->translation;
+	}
+	return {};
+}
+
+
+TranslationEntries readTsFile(QIODevice& device, const QString& language)
+{
+	auto result = TranslationEntries{};
 	
 	device.open(QIODevice::ReadOnly);
 	QXmlStreamReader xml{&device};
@@ -73,19 +125,22 @@ std::vector<SymbolSetTool::TranslationEntry> readTsFile(QIODevice& device, const
 	{
 		Q_ASSERT(xml.name() == QLatin1String("TS"));
 		
-		auto entry = SymbolSetTool::TranslationEntry{};
-		
 		while (xml.readNextStartElement())
 		{
 			if (xml.name() == QLatin1String("context"))
 			{
 				xml.readNextStartElement();
 				Q_ASSERT(xml.name() == QLatin1String("name"));
-				entry.context = xml.readElementText();
+				
+				auto context = xml.readElementText();
+				
 				while (xml.readNextStartElement())
 				{
 					if (xml.name() == QLatin1String("message"))
 					{
+						auto entry = SymbolSetTool::TranslationEntry{};
+						entry.context = context;
+						
 						while (xml.readNextStartElement())
 						{
 							if (xml.name() == QLatin1String("source"))
@@ -98,17 +153,18 @@ std::vector<SymbolSetTool::TranslationEntry> readTsFile(QIODevice& device, const
 							}
 							else if (xml.name() == QLatin1String("translation"))
 							{
-								entry.translations.resize(2);
-								auto t = QLatin1String("type");
-								entry.translations.back() = { t, xml.attributes().value(t).toString() };
-								entry.translations.front() = { language, xml.readElementText() };
+								auto type = xml.attributes().value(QLatin1String("type")).toString();
+								auto translation = xml.readElementText();
+								if (!translation.isEmpty())
+									entry.translations.resize(1, { language, translation, type });
 							}
 							else
 							{
 								xml.skipCurrentElement();
 							}
 						}
-						result.push_back(entry);
+						if (!entry.translations.empty())
+							result.push_back(std::move(entry));
 					}
 					else
 					{
@@ -127,7 +183,8 @@ std::vector<SymbolSetTool::TranslationEntry> readTsFile(QIODevice& device, const
 	return result;
 }
 
-void SymbolSetTool::TranslationEntry::write(QXmlStreamWriter& xml, const QString& language, QString type)
+
+void SymbolSetTool::TranslationEntry::write(QXmlStreamWriter& xml, const QString& language)
 {
 	if (source.isEmpty())
 	{
@@ -140,26 +197,20 @@ void SymbolSetTool::TranslationEntry::write(QXmlStreamWriter& xml, const QString
 	xml.writeTextElement(QLatin1String("source"), source);
 	xml.writeTextElement(QLatin1String("comment"), comment);
 	xml.writeStartElement(QLatin1String("translation"));
-	QString translation;
-	for (const auto& entry : qAsConst(translations))
+	for (const auto& translation : translations)
 	{
-		if (entry.language == language)
+		if (translation.language == language)
 		{
-			translation = entry.translation;
+			if (!translation.type.isEmpty())
+			{
+				xml.writeAttribute(QLatin1String("type"), translation.type);
+			}
+			xml.writeCharacters(translation.translation);		
 			break;
 		}
 	}
-	if (type.isEmpty() && translation.isEmpty())
-	{
-		type = QLatin1String("unfinished");
-	}
-	if (!type.isEmpty())
-	{
-		xml.writeAttribute(QLatin1String("type"), type);
-	}
-	xml.writeCharacters(translation);
-	xml.writeEndElement();
-	xml.writeEndElement();
+	xml.writeEndElement();  //  translation
+	xml.writeEndElement();  // message
 }
 
 
@@ -298,6 +349,16 @@ void SymbolSetTool::processSymbolSet()
 	QFETCH(QString, name);
 	QFETCH(unsigned int, source_scale);
 	QFETCH(unsigned int, target_scale);
+	
+	auto id = name;
+	auto language = QString{};
+	if (!tag.endsWith('0'))
+	{
+		auto suffix_index = name.lastIndexOf(QLatin1Char('_'));
+		id = name.left(suffix_index);
+		language = name.mid(suffix_index + 1);
+		Q_ASSERT(language.length() == 2);
+	}
 	
 	QString source_filename = QString::fromLatin1("src/%1_%2.xmap").arg(name, QString::number(source_scale));
 	QVERIFY(symbol_set_dir.exists(source_filename));
@@ -490,65 +551,46 @@ void SymbolSetTool::processSymbolSet()
 		for (int i = 0; i < num_colors; ++i)
 		{
 			auto color = map.getColor(i);
-			translation_entries.emplace_back(TranslationEntry{
-			                                     name,
-			                                     color->getName(),
-			                                     QLatin1String("Color ") + QString::number(color->getPriority()),
-			                                     {}
-			                                 });
+			auto source = color->getName();
+			auto comment = QString{QLatin1String("Color ") + QString::number(color->getPriority())};
+			addSource(translation_entries, id, source, comment);
 		}
 		
 		for (int i = 0; i < num_symbols; ++i)
 		{
 			auto symbol = map.getSymbol(i);
-			translation_entries.emplace_back(TranslationEntry{
-			                                     name,
-			                                     symbol->getName(),
-			                                     QLatin1String("Name of symbol ") + symbol->getNumberAsString(),
-			                                     {}
-			                                 });
-			translation_entries.emplace_back(TranslationEntry{
-			                                     name,
-			                                     symbol->getDescription(),
-			                                     QLatin1String("Description of symbol ") + symbol->getNumberAsString(),
-			                                     {}
-			                                 });
+			auto source = symbol->getName();
+			auto comment = QString{QLatin1String("Name of symbol ") + symbol->getNumberAsString()};
+			addSource(translation_entries, id, source, comment);
+			
+			source = symbol->getDescription();
+			comment = QString{QLatin1String("Description of symbol ") + symbol->getNumberAsString()};
+			addSource(translation_entries, id, source, comment);
 		}
-		qDebug("Translation entries: %d", int(translation_entries.size()));
 	}
-	else if (auto lang_code_index = name.lastIndexOf(QLatin1Char('_')) + 1)
+	else if (!language.isEmpty())
 	{
-		// Not scaled, but translated: Add translation strings.
-		auto language = name.mid(lang_code_index);
-		Q_ASSERT(language.length() == 2);
-		auto context = name.left(lang_code_index-1);
-		
+		// Not scaled, but with language: Add translation strings.
 		auto num_colors = map.getNumColors();
 		for (int i = 0; i < num_colors; ++i)
 		{
 			auto color = map.getColor(i);
-			auto key = QString{QLatin1String("Color ") + QString::number(color->getPriority())};
-			auto found = std::find_if(begin(translation_entries), end(translation_entries), [context, key](auto& entry) {
-				return entry.context == context && entry.comment == key;
-			});
-			QVERIFY(found != end(translation_entries));
-			found->translations.push_back({language, color->getName()});
+			auto comment = QString{QLatin1String("Color ") + QString::number(color->getPriority())};
+			auto translation = color->getName();
+			addTranslation(translation_entries, id, comment, language, translation);
 		}
 		
 		for (int i = 0; i < num_symbols; ++i)
 		{
 			auto symbol = map.getSymbol(i);
 			auto symbol_number = symbol->getNumberAsString();
-			auto key = QString{QLatin1String("Name of symbol ") + symbol_number};
-			auto found = std::find_if(begin(translation_entries), end(translation_entries), [context, key](auto& entry) {
-				return entry.context == context && entry.comment == key;
-			});
-			QVERIFY(found != end(translation_entries));
-			found->translations.push_back({language, symbol->getName()});
-			++found;
-			QVERIFY(found != end(translation_entries));
-			QVERIFY(found->comment.endsWith(symbol_number));
-			found->translations.push_back({language, symbol->getDescription()});
+			auto comment = QString{QLatin1String("Name of symbol ") + symbol_number};
+			auto translation = symbol->getName();
+			addTranslation(translation_entries, id, comment, language, translation);
+			
+			comment = QString{QLatin1String("Description of symbol ") + symbol_number};
+			translation = symbol->getDescription();
+			addTranslation(translation_entries, id, comment, language, translation);
 		}
 	}
 	
@@ -588,13 +630,13 @@ void SymbolSetTool::processSymbolSetTranslations()
 {
 	QVERIFY(translations_complete);
 	
-	for (auto suffix :  { "_template", "_cs", "_fi", "_ru", "_uk" })
+	for (auto suffix : translation_suffix)
 	{
-		auto language = QString::fromLatin1(suffix).mid(1);
+		auto language = QString::fromLatin1(suffix);
 		if (language.length() > 2)
 			language.clear();
 		
-		auto translation_filename = QString::fromLatin1("map_symbols%1.ts").arg(QLatin1String(suffix));
+		auto translation_filename = QString::fromLatin1("map_symbols_%1.ts").arg(QLatin1String(suffix));
 		
 		QByteArray new_data;
 		QByteArray existing_data;
@@ -611,7 +653,7 @@ void SymbolSetTool::processSymbolSetTranslations()
 		}
 		
 		QBuffer buffer(&existing_data);
-		auto current_translations = readTsFile(buffer, language);
+		auto translations_from_ts = readTsFile(buffer, language);
 		QVERIFY(!buffer.isOpen());
 		
 		buffer.setBuffer(&new_data);
@@ -625,58 +667,74 @@ void SymbolSetTool::processSymbolSetTranslations()
 		if (!language.isEmpty())
 			xml.writeAttribute(QLatin1String("language"), language);
 		
-		auto writeEndOfContext = [&xml, &language, &current_translations](const QString& context) {
-			for (auto& entry : current_translations)
-			{
-				if (!entry.translations.empty()
-				    && entry.context == context)
-				{
-					entry.write(xml, language, QLatin1String("obsolete"));
-				}
-			}
-			xml.writeEndElement();
-		};
-		
 		auto context = QString{};
 		for (auto& entry : translation_entries)
 		{
 			if (context != entry.context)
 			{
 				if (!context.isEmpty())
-					writeEndOfContext(context);
+					xml.writeEndElement(); // context
 				xml.writeStartElement(QLatin1String("context"));
 				xml.writeTextElement(QLatin1String("name"), entry.context);
 				context = entry.context;
 			}
-			// Find existing translation even with changed source,
-			// using comment instead of source.
-			auto found = std::find_if(begin(current_translations), end(current_translations), [&entry](auto& current) {
-				return entry.context == current.context && entry.comment == current.comment;
+			
+			auto item = std::find_if(begin(entry.translations), end(entry.translations), [&language](auto& translation) {
+				return translation.language == language;
 			});
-			if (found == end(current_translations))
+			if (item == end(entry.translations))
 			{
-				// New entry
-				entry.write(xml, language, {});
+				entry.translations.push_back({language, {}, NeedsReview});
+				item = --entry.translations.end();
+			}
+			auto& translation = item->translation;
+			auto& type = item->type;
+			
+			auto found = std::find_if(begin(translations_from_ts), end(translations_from_ts), [&entry](auto& current) {
+				return entry.context == current.context && entry.source == current.source;
+			});
+			if (found != end(translations_from_ts))
+			{
+				// Exact context + source match.
+				auto match = found->translations.front();
+				translation = match.translation;
+				if (match.type != Obsolete)
+					type = match.type;
 			}
 			else
 			{
-				// Existing entry, translation from ts file takes precedence.
-				auto &type = found->translations.back().translation;
-				if (found->source != entry.source)
+				// Find existing translation even with changed source,
+				// using comment instead of source.
+				auto found = std::find_if(begin(translations_from_ts), end(translations_from_ts), [&entry](auto& current) {
+					return entry.context == current.context && entry.comment == current.comment;
+				});
+				if (found != end(translations_from_ts))
 				{
-					type = QLatin1String("unfinished"); // i.e. needs review
+					auto match = found->translations.front();
+					translation = match.translation;
+					type = NeedsReview;
 				}
-				else if (type == QLatin1String("obsolete"))
+				else if (translation.isEmpty())
 				{
-					type.clear();
+					// As a suggestion, find an existing translation in any context.
+					// Note: We only take suggestions from the ts file.
+					// So it might take a second run of this tool to get suggestions.
+					auto found = std::find_if(begin(translations_from_ts), end(translations_from_ts), [&entry](auto& current) {
+						return entry.source == current.source;
+					});
+					if (found != end(translations_from_ts))
+					{
+						auto match = found->translations.front();
+						translation = match.translation;
+					}
+					type = NeedsReview;
 				}
-				found->write(xml, language, type);
-				found->translations.clear(); // don't write again as "obsolete"
 			}
+			entry.write(xml, language);
 		}
 		if (!context.isEmpty())
 		{
-			writeEndOfContext(context);
+			xml.writeEndElement();  // context
 		}
 		
 		xml.writeEndElement(); // TS
