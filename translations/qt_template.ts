@@ -1,3 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="cs">
 <context>
     <name>QAbstractSpinBox</name>
     <message>
@@ -1667,3 +1670,4 @@ Please choose a different file name.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
+</TS>
