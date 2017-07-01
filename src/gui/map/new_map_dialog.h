@@ -1,5 +1,6 @@
 /*
- *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2011-2013 Thomas Schöps
+ *    Copyright 2012, 2013, 2015, 2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -18,20 +19,25 @@
  */
 
 
-#ifndef _OPENORIENTEERING_MAP_DIALOG_NEW_H_
-#define _OPENORIENTEERING_MAP_DIALOG_NEW_H_
+#ifndef OPENORIENTEERING_NEW_MAP_DIALOG_H
+#define OPENORIENTEERING_NEW_MAP_DIALOG_H
 
 #include <map>
 
+#include <QtGlobal>
 #include <QDialog>
+#include <QFileInfoList>
+#include <QObject>
 #include <QString>
-#include <QFileInfo>
 
 QT_BEGIN_NAMESPACE
+class QCheckBox;
 class QComboBox;
+class QDir;
 class QListWidget;
 class QListWidgetItem;
-class QCheckBox;
+class QPushButton;
+class QWidget;
 QT_END_NAMESPACE
 
 /**
@@ -43,7 +49,9 @@ class NewMapDialog : public QDialog
 Q_OBJECT
 public:
 	/** Constructs a dialog for scale and symbol set of a new map. */
-	NewMapDialog(QWidget* parent = NULL);
+	NewMapDialog(QWidget* parent = nullptr);
+	
+	~NewMapDialog() override;
 	
 	/** Get the denominator of the chosen map scale.
 	 *  For a scale of 1:10000, this function returns 10000.
@@ -66,7 +74,7 @@ public slots:
 	void createClicked();
 	
 	/** Hides the dialog and accepts the input. */
-	void accept();
+	void accept() override;
 	
 protected:
 	struct SymbolSetKeyCompare

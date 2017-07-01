@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2011-2013 Thomas Schöps
  *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
@@ -21,22 +21,38 @@
 
 #include "new_map_dialog.h"
 
+#include <utility>
+
+#include <Qt>
 #include <QCheckBox>
 #include <QComboBox>
-#include <QCoreApplication>
 #include <QDir>
 #include <QFileDialog>
+#include <QFileInfo>
+#include <QFlags>
 #include <QHBoxLayout>
+#include <QIcon>
 #include <QIntValidator>
 #include <QLabel>
+#include <QLatin1Char>
+#include <QList>
 #include <QListWidget>
+#include <QListWidgetItem>
 #include <QPushButton>
+#include <QRegExp>
 #include <QSettings>
+#include <QStringList>
+#include <QVariant>
 #include <QVBoxLayout>
 
 #include "fileformats/file_format.h"
 #include "fileformats/file_format_registry.h"
 #include "util/util.h"
+
+// IWYU pragma: no_forward_declare QHBoxLayout
+// IWYU pragma: no_forward_declare QLabel
+// IWYU pragma: no_forward_declare QVBoxLayout
+
 
 NewMapDialog::NewMapDialog(QWidget* parent) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
 {
@@ -59,17 +75,17 @@ NewMapDialog::NewMapDialog(QWidget* parent) : QDialog(parent, Qt::WindowSystemMe
 	create_button = new QPushButton(QIcon(QString::fromLatin1(":/images/arrow-right.png")), tr("Create"));
 	create_button->setDefault(true);
 	
-	QHBoxLayout* scale_layout = new QHBoxLayout();
+	auto scale_layout = new QHBoxLayout();
 	scale_layout->addWidget(scale_label);
 	scale_layout->addWidget(scale_combo);
 	scale_layout->addStretch(1);
 	
-	QHBoxLayout* buttons_layout = new QHBoxLayout();
+	auto buttons_layout = new QHBoxLayout();
 	buttons_layout->addWidget(cancel_button);
 	buttons_layout->addStretch(1);
 	buttons_layout->addWidget(create_button);
 	
-	QVBoxLayout* layout = new QVBoxLayout();
+	auto layout = new QVBoxLayout();
 	layout->addWidget(desc_label);
 	layout->addSpacing(16);
 	layout->addLayout(scale_layout);
@@ -81,29 +97,36 @@ NewMapDialog::NewMapDialog(QWidget* parent) : QDialog(parent, Qt::WindowSystemMe
 	setLayout(layout);
 	
 	loadSymbolSetMap();
-	for (SymbolSetMap::iterator it = symbol_set_map.begin(); it != symbol_set_map.end(); ++it)
-		if (it->first.toInt() != 0)
-			scale_combo->addItem(it->first);
+	for (auto& item : symbol_set_map)
+	{
+		if (item.first.toInt() != 0)
+			scale_combo->addItem(item.first);
+	}
 	
 	QSettings settings;
 	settings.beginGroup(QString::fromLatin1("NewMapDialog"));
-	const QString default_scale = settings.value(QString::fromLatin1("DefaultScale"), QVariant(10000)).toString();
-	const bool matching = settings.value(QString::fromLatin1("OnlyMatchingSymbolSets"), QVariant(true)).toBool();
+	const auto default_scale = settings.value(QString::fromLatin1("DefaultScale"), QVariant(10000)).toString();
+	const auto matching = settings.value(QString::fromLatin1("OnlyMatchingSymbolSets"), QVariant(true)).toBool();
 	settings.endGroup();
 	
 	scale_combo->setEditText(default_scale);
 	symbol_set_matching->setChecked(matching);
-	connect(scale_combo, SIGNAL(editTextChanged(QString)), this, SLOT(updateSymbolSetList()));
-	connect(symbol_set_list, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(symbolSetDoubleClicked(QListWidgetItem*)));
-	connect(symbol_set_matching, SIGNAL(stateChanged(int)), this, SLOT(updateSymbolSetList()));
-	connect(cancel_button, SIGNAL(clicked(bool)), this, SLOT(reject()));
-	connect(create_button, SIGNAL(clicked(bool)), this, SLOT(createClicked()));
+	connect(scale_combo, &QComboBox::editTextChanged, this, &NewMapDialog::updateSymbolSetList);
+	connect(symbol_set_list, &QListWidget::itemDoubleClicked, this, &NewMapDialog::symbolSetDoubleClicked);
+	connect(symbol_set_matching, &QCheckBox::stateChanged, this, &NewMapDialog::updateSymbolSetList);
+	connect(cancel_button, &QPushButton::clicked, this, &QDialog::reject);
+	connect(create_button, &QPushButton::clicked, this, &NewMapDialog::createClicked);
 	updateSymbolSetList();
 }
 
+
+NewMapDialog::~NewMapDialog() = default;
+
+
+
 unsigned int NewMapDialog::getSelectedScale() const
 {
-	return scale_combo->currentText().toInt();
+	return scale_combo->currentText().toUInt();
 }
 
 QString NewMapDialog::getSelectedSymbolSetPath() const
@@ -144,13 +167,13 @@ void NewMapDialog::updateSymbolSetList()
 	symbol_set_list->setEnabled(true);
 	symbol_set_list->clear();
 		
-	QListWidgetItem* item = new QListWidgetItem(tr("Empty symbol set"));
+	auto item = new QListWidgetItem(tr("Empty symbol set"));
 	item->setData(Qt::UserRole, QVariant(QString{}));
 	item->setIcon(QIcon(QString::fromLatin1(":/images/new.png")));
 	symbol_set_list->addItem(item);
 	
 	QIcon control(QString::fromLatin1(":/images/control.png"));
-	SymbolSetMap::iterator it = symbol_set_map.find(scale);
+	auto it = symbol_set_map.find(scale);
 	if (it != symbol_set_map.end())
 	{
 		for (auto&& symbol_set : it->second)
@@ -183,7 +206,7 @@ void NewMapDialog::updateSymbolSetList()
 	}
 	
 	load_from_file = new QListWidgetItem(tr("Load symbol set from a file..."));
-	load_from_file->setData(Qt::UserRole, qVariantFromValue<void*>(NULL));
+	load_from_file->setData(Qt::UserRole, qVariantFromValue<void*>(nullptr));
 	load_from_file->setIcon(QIcon(QString::fromLatin1(":/images/open.png")));
 	symbol_set_list->addItem(load_from_file);
 	
