@@ -26,11 +26,12 @@
 #include <Qt>
 #include <QCheckBox>
 #include <QComboBox>
+#include <QDialogButtonBox>
 #include <QDir>
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QFlags>
-#include <QHBoxLayout>
+#include <QFormLayout>
 #include <QIcon>
 #include <QIntValidator>
 #include <QLabel>
@@ -41,6 +42,7 @@
 #include <QPushButton>
 #include <QRegExp>
 #include <QSettings>
+#include <QSpacerItem>
 #include <QStringList>
 #include <QVariant>
 #include <QVBoxLayout>
@@ -48,8 +50,8 @@
 #include "fileformats/file_format.h"
 #include "fileformats/file_format_registry.h"
 #include "util/util.h"
+#include "gui/util_gui.h"
 
-// IWYU pragma: no_forward_declare QHBoxLayout
 // IWYU pragma: no_forward_declare QLabel
 // IWYU pragma: no_forward_declare QVBoxLayout
 
@@ -59,41 +61,36 @@ NewMapDialog::NewMapDialog(QWidget* parent) : QDialog(parent, Qt::WindowSystemMe
 	this->setWhatsThis(Util::makeWhatThis("new_map.html"));
 	setWindowTitle(tr("Create new map"));
 	
-	QLabel* desc_label = new QLabel(tr("Choose the scale and symbol set for the new map."));
+	auto form_layout = new QFormLayout();
 	
-	QLabel* scale_label = new QLabel(tr("Scale:  1 : "));
+	form_layout->addRow(new QLabel(tr("Choose the scale and symbol set for the new map.")));
+	
+	form_layout->addItem(Util::SpacerItem::create(this));
+	
 	scale_combo = new QComboBox();
 	scale_combo->setEditable(true);
 	scale_combo->setValidator(new QIntValidator(1, 9999999, scale_combo));
-	
-	QLabel* symbol_set_label = new QLabel(tr("Symbol sets:"));
-	symbol_set_list = new QListWidget();
-	
-	symbol_set_matching = new QCheckBox(tr("Only show symbol sets matching the selected scale"));
-	
-	QPushButton* cancel_button = new QPushButton(tr("Cancel"));
-	create_button = new QPushButton(QIcon(QString::fromLatin1(":/images/arrow-right.png")), tr("Create"));
-	create_button->setDefault(true);
-	
-	auto scale_layout = new QHBoxLayout();
-	scale_layout->addWidget(scale_label);
-	scale_layout->addWidget(scale_combo);
-	scale_layout->addStretch(1);
-	
-	auto buttons_layout = new QHBoxLayout();
-	buttons_layout->addWidget(cancel_button);
-	buttons_layout->addStretch(1);
-	buttons_layout->addWidget(create_button);
+	form_layout->addRow(tr("Scale:  1 : "), scale_combo); /// \todo Fix form layout dependency
 	
 	auto layout = new QVBoxLayout();
-	layout->addWidget(desc_label);
-	layout->addSpacing(16);
-	layout->addLayout(scale_layout);
-	layout->addWidget(symbol_set_label);
-	layout->addWidget(symbol_set_list);
+	layout->addLayout(form_layout);
+	
+	layout->addWidget(new QLabel(tr("Symbol sets:")));
+	
+	symbol_set_list = new QListWidget();
+	layout->addWidget(symbol_set_list, 1);
+	
+	symbol_set_matching = new QCheckBox(tr("Only show symbol sets matching the selected scale"));
 	layout->addWidget(symbol_set_matching);
-	layout->addSpacing(16);
-	layout->addLayout(buttons_layout);
+	
+	layout->addItem(Util::SpacerItem::create(this));
+	
+	auto button_box = new QDialogButtonBox(QDialogButtonBox::Cancel | QDialogButtonBox::Ok);
+	create_button = button_box->button(QDialogButtonBox::Ok);
+	create_button->setIcon(QIcon(QString::fromLatin1(":/images/arrow-right.png")));
+	create_button->setText(tr("Create"));
+	layout->addWidget(button_box);
+	
 	setLayout(layout);
 	
 	loadSymbolSetMap();
@@ -114,8 +111,8 @@ NewMapDialog::NewMapDialog(QWidget* parent) : QDialog(parent, Qt::WindowSystemMe
 	connect(scale_combo, &QComboBox::editTextChanged, this, &NewMapDialog::updateSymbolSetList);
 	connect(symbol_set_list, &QListWidget::itemDoubleClicked, this, &NewMapDialog::symbolSetDoubleClicked);
 	connect(symbol_set_matching, &QCheckBox::stateChanged, this, &NewMapDialog::updateSymbolSetList);
-	connect(cancel_button, &QPushButton::clicked, this, &QDialog::reject);
-	connect(create_button, &QPushButton::clicked, this, &NewMapDialog::createClicked);
+	connect(button_box, &QDialogButtonBox::rejected, this, &QDialog::reject);
+	connect(button_box, &QDialogButtonBox::accepted, this, &NewMapDialog::createClicked);
 	updateSymbolSetList();
 }
 
