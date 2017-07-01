@@ -19,7 +19,7 @@
  */
 
 
-#include "map_dialog_new.h"
+#include "new_map_dialog.h"
 
 #include <QCheckBox>
 #include <QComboBox>

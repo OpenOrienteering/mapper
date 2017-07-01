@@ -108,7 +108,7 @@ set(Mapper_Common_SRCS
   gui/text_browser_dialog.cpp
   gui/touch_cursor.cpp
   
-  gui/map/map_dialog_new.cpp
+  gui/map/new_map_dialog.cpp
   gui/map/map_dialog_rotate.cpp
   gui/map/map_dialog_scale.cpp
   gui/map/map_editor.cpp

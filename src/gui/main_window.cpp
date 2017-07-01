@@ -52,7 +52,7 @@
 #include "../fileformats/file_format_registry.h"
 #include "../fileformats/file_import_export.h"
 #include "core/map.h"
-#include "gui/map/map_dialog_new.h"
+#include "gui/map/new_map_dialog.h"
 #include "gui/map/map_editor.h"
 #include "../fileformats/file_format.h"
 #include "../settings.h"
