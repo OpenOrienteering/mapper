@@ -29,7 +29,7 @@ edited: 25 February 2013
 
 <ul>
 <li><b>Gauss-Kr&uuml;ger</b>: this is similar to UTM and widely used in Germany, but is being superseded by UTM.</li>
-<li><b>From Proj.4 specification</b>: projections are internally handled by the <a href="http://trac.osgeo.org/proj/">PROJ.4 Cartographic Projections library</a>, so coordinate reference systems can also be given in its internal specification format. Examples may be found at <a href="https://web.archive.org/web/20160802172057/http://www.remotesensing.org/geotiff/proj_list/">http://www.remotesensing.org/geotiff/proj_list/</a> and <a href="http://spatialreference.org/">http://spatialreference.org/</a>. When selecting this option, the specification field will be pre-filled with the specification of the previously selected coordinate reference system.</li>
+<li><b>From Proj.4 specification</b>: projections are internally handled by the <a href="http://proj4.org/">PROJ.4 Cartographic Projections library</a>, so coordinate reference systems can also be given in its internal specification format. Examples may be found at <a href="https://web.archive.org/web/20160802172057/http://www.remotesensing.org/geotiff/proj_list/">http://www.remotesensing.org/geotiff/proj_list/</a> and <a href="http://spatialreference.org/">http://spatialreference.org/</a>. When selecting this option, the specification field will be pre-filled with the specification of the previously selected coordinate reference system.</li>
 <li><b>Local</b>: this enables you to use local projected coordinates without a mapping to global geographic coordinates.</li>
 </ul>
 
