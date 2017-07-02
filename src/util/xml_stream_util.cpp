@@ -20,13 +20,27 @@
 
 #include "xml_stream_util.h"
 
+#include <algorithm>
+#include <exception>
+#include <limits>
+#include <stdexcept>
+
+#include <QtGlobal>
 #include <QBuffer>
-#include <QTextCodec>
-#include <QTextStream>
+#include <QByteArray>
+#include <QChar>
+#include <QIODevice>
+#include <QTextCodec> // IWYU pragma: keep
+// IWYU pragma: no_include <qcoreapplication.h>
+// IWYU pragma: no_include <qobjectdefs.h>
+// IWYU pragma: no_include <qxmlstream.h>
 
 #include "core/map_coord.h"
+#include "fileformats/file_format.h"
 #include "fileformats/file_import_export.h"
 #include "fileformats/xml_file_format.h"
+
+// IWYU pragma: no_forward_declare QTextCodec
 
 
 void writeLineBreak(QXmlStreamWriter& xml)

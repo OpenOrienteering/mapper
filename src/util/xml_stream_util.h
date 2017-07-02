@@ -22,18 +22,23 @@
 
 #include <vector>
 
+#include <QtGlobal>
 #include <QHash>
 #include <QRectF>
+#include <QSizeF>
 #include <QString>
+#include <QStringRef>
+#include <QXmlStreamAttributes>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
-#include "fileformats/file_format.h"
-
-
-// Originally defined in map_coord.h, but we want to avoid the depedency.
 class MapCoord;
-typedef std::vector<MapCoord> MapCoordVector;
+using MapCoordVector = std::vector<MapCoord>;
+
+// IWYU pragma: no_forward_declare QRectF
+// IWYU pragma: no_forward_declare QSizeF
+// IWYU pragma: no_forward_declare QXmlStreamReader
+// IWYU pragma: no_forward_declare QXmlStreamWriter
 
 
 /**
@@ -440,13 +445,13 @@ void XmlElementWriter::writeAttribute(const QLatin1String& qualifiedName, const 
 inline
 void XmlElementWriter::writeAttribute(const QLatin1String& qualifiedName, const float value)
 {
-	xml.writeAttribute(qualifiedName, QString::number(value));
+	xml.writeAttribute(qualifiedName, QString::number(double(value)));
 }
 
 inline
 void XmlElementWriter::writeAttribute(const QLatin1String& qualifiedName, const float value, int precision)
 {
-	xml.writeAttribute(qualifiedName, QString::number(value, 'f', precision));
+	xml.writeAttribute(qualifiedName, QString::number(double(value), 'f', precision));
 }
 
 inline
@@ -617,7 +622,7 @@ long unsigned int XmlElementReader::attribute(const QLatin1String& qualifiedName
 	unsigned int value = 0;
 	const QStringRef ref = attributes.value(qualifiedName);
 	if (ref.size())
-		value = QString::fromRawData(ref.data(), ref.size()).toULong();
+		value = QString::fromRawData(ref.data(), ref.size()).toUInt();
 	return value;
 }
 
