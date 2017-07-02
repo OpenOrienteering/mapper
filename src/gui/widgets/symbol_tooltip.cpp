@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,25 +21,35 @@
 
 #include "symbol_tooltip.h"
 
+#include <Qt>
 #include <QApplication>
+#include <QCursor>
 #include <QDesktopWidget>
+#include <QFlags>
 #include <QHideEvent>
 #include <QLabel>
+#include <QLatin1Char>
 #include <QPainter>
 #include <QPalette>
+#include <QPoint>
 #include <QShortcut>
 #include <QShowEvent>
+#include <QSize>
+#include <QString>
+#include <QStyle>
 #include <QStyleOption>
 #include <QVBoxLayout>
 
 #include "core/symbols/symbol.h"
 
+// IWYU pragma: no_forward_declare QWidget
+
 
 SymbolToolTip::SymbolToolTip(QWidget* parent, QShortcut* shortcut)
- : QWidget(parent),
-   shortcut(shortcut),
-   symbol(NULL),
-   description_shown(false)
+: QWidget{ parent }
+, shortcut{ shortcut }
+, symbol{ nullptr }
+, description_shown{ false }
 {
 	setWindowFlags(Qt::ToolTip | Qt::FramelessWindowHint);
 	setAttribute(Qt::WA_OpaquePaintEvent);
@@ -53,7 +64,7 @@ SymbolToolTip::SymbolToolTip(QWidget* parent, QShortcut* shortcut)
 	description_label->setWordWrap(true);
 	description_label->hide();
 	
-	QVBoxLayout* layout = new QVBoxLayout();
+	auto layout = new QVBoxLayout();
 	QStyleOption style_option;
 	layout->setContentsMargins(
 	  style()->pixelMetric(QStyle::PM_LayoutLeftMargin, &style_option) / 2,
@@ -66,12 +77,12 @@ SymbolToolTip::SymbolToolTip(QWidget* parent, QShortcut* shortcut)
 	setLayout(layout);
 	
 	tooltip_timer.setSingleShot(true);
-	connect(&tooltip_timer, SIGNAL(timeout()), this, SLOT(show()));
+	connect(&tooltip_timer, &QTimer::timeout, this, &QWidget::show);
 	
 	if (shortcut)
 	{
 		shortcut->setEnabled(false);
-		connect(shortcut, SIGNAL(activated()), this, SLOT(showDescription()));
+		connect(shortcut, &QShortcut::activated, this, &SymbolToolTip::showDescription);
 	}
 }
 
@@ -91,7 +102,7 @@ void SymbolToolTip::showDescription()
 
 void SymbolToolTip::reset()
 {
-	symbol = NULL;
+	symbol = nullptr;
 	tooltip_timer.stop();
 	hide();
 	description_label->hide();
@@ -124,8 +135,8 @@ void SymbolToolTip::paintEvent(QPaintEvent* event)
 
 void SymbolToolTip::adjustPosition()
 {
-	QSize size = this->size();
-	QRect desktop = QApplication::desktop()->screenGeometry(QCursor::pos());
+	auto size = this->size();
+	auto desktop = QApplication::desktop()->screenGeometry(QCursor::pos());
 	
 	const int margin = 3;
 	const bool hasRoomToLeft  = (icon_rect.left()   - size.width()  - margin >= desktop.left());
@@ -158,7 +169,7 @@ void SymbolToolTip::scheduleShow(const Symbol* symbol, QRect icon_rect)
 	
 	name_label->setText(symbol->getNumberAsString() + QLatin1String(" <b>") + symbol->getName() + QLatin1String("</b>"));
 	
-	QString help_text(symbol->getDescription());
+	auto help_text = symbol->getDescription();
 	if (help_text.isEmpty())
 	{
 		help_text = tr("No description!");
