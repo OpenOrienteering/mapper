@@ -21,23 +21,46 @@
 
 #include "text_symbol.h"
 
+#include <cmath>
+#include <cstddef>
+#include <memory>
+// IWYU pragma: no_include <ext/alloc_traits.h>
+
+#include <QCoreApplication>
+#include <QFont>
 #include <QIODevice>
+#include <QLatin1Char>
+#include <QPointF>
+#include <QRectF>
+#include <QStringRef>
+#include <QTransform>
+#include <QXmlStreamAttributes>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
 #include "core/map.h"
+#include "core/map_color.h"
+#include "core/map_coord.h"
+#include "core/map_part.h"
+#include "core/objects/object.h"
 #include "core/objects/text_object.h"
+#include "core/renderables/renderable.h"
 #include "core/renderables/renderable_implementation.h"
 #include "core/symbols/area_symbol.h"
 #include "core/symbols/line_symbol.h"
+#include "core/symbols/symbol.h"
+#include "core/virtual_coord_vector.h"
+#include "core/virtual_path.h"
 #include "util/util.h"
 
 
 const float TextSymbol::internal_point_size = 256;
 
-TextSymbol::TextSymbol() : Symbol(Symbol::Text), metrics(QFont())
+TextSymbol::TextSymbol()
+: Symbol(Symbol::Text)
+, metrics(QFont())
 {
-	color = NULL;
+	color = nullptr;
 	font_family = QString::fromLatin1("Arial");
 	font_size = 4 * 1000;
 	bold = false;
@@ -49,25 +72,25 @@ TextSymbol::TextSymbol() : Symbol(Symbol::Text), metrics(QFont())
 	kerning = true;
 	icon_text = QString{};
 	framing = false;
-	framing_color = NULL;
+	framing_color = nullptr;
 	framing_mode = LineFraming;
 	framing_line_half_width = 200;
 	framing_shadow_x_offset = 200;
 	framing_shadow_y_offset = 200;
 	line_below = false;
-	line_below_color = NULL;
+	line_below_color = nullptr;
 	line_below_width = 0;
 	line_below_distance = 0;
 	updateQFont();
 }
 
-TextSymbol::~TextSymbol()
-{
-}
+
+TextSymbol::~TextSymbol() = default;
+
 
 Symbol* TextSymbol::duplicate(const MapColorMap* color_map) const
 {
-	TextSymbol* new_text = new TextSymbol();
+	auto new_text = new TextSymbol();
 	new_text->duplicateImplCommon(this);
 	new_text->color = color_map ? color_map->value(color) : color;
 	new_text->font_family = font_family;
@@ -167,14 +190,14 @@ void TextSymbol::createBaselineRenderables(
 		path.parts().front().setClosed(true, true);
 		path.updatePathCoords();
 		
-		LineRenderable* line_renderable = new LineRenderable(&line_symbol, path.parts().front(), false);
+		auto line_renderable = new LineRenderable(&line_symbol, path.parts().front(), false);
 		output.insertRenderable(line_renderable);
 	}
 }
 
 void TextSymbol::createLineBelowRenderables(const Object* object, ObjectRenderables& output) const
 {
-	const TextObject* text_object = reinterpret_cast<const TextObject*>(object);
+	auto text_object = reinterpret_cast<const TextObject*>(object);
 	if (text_object->getNumLines())
 	{
 		double scale_factor = calculateInternalScaling();
@@ -298,7 +321,7 @@ bool TextSymbol::loadImpl(QIODevice* file, int version, Map* map)
 {
 	int temp;
 	file->read((char*)&temp, sizeof(int));
-	color = (temp >= 0) ? map->getColor(temp) : NULL;
+	color = (temp >= 0) ? map->getColor(temp) : nullptr;
 	loadString(file, font_family);
 	file->read((char*)&font_size, sizeof(int));
 	file->read((char*)&bold, sizeof(bool));
@@ -327,7 +350,7 @@ bool TextSymbol::loadImpl(QIODevice* file, int version, Map* map)
 	{
 		file->read((char*)&line_below, sizeof(bool));
 		file->read((char*)&temp, sizeof(int));
-		line_below_color = (temp >= 0) ? map->getColor(temp) : NULL;
+		line_below_color = (temp >= 0) ? map->getColor(temp) : nullptr;
 		file->read((char*)&line_below_width, sizeof(int));
 		file->read((char*)&line_below_distance, sizeof(int));
 		int num_custom_tabs;
@@ -539,10 +562,10 @@ double TextSymbol::getNextTab(double pos) const
 	{
 		double scaling = calculateInternalScaling();
 		double map_pos = pos / scaling;
-		for (int i = 0; i < (int)custom_tabs.size(); ++i)
+		for (auto tab : custom_tabs)
 		{
-			if (0.001 * custom_tabs[i] > map_pos)
-				return scaling * 0.001 * custom_tabs[i];
+			if (0.001 * tab > map_pos)
+				return scaling * 0.001 * tab;
 		}
 		
 		// After the given positions, OCAD repeats the distance between the last two tab positions

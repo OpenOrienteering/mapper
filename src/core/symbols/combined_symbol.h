@@ -24,6 +24,28 @@
 
 #include "symbol.h"
 
+#include <vector>
+
+#include <Qt>
+#include <QtGlobal>
+
+QT_BEGIN_NAMESPACE
+class QIODevice;
+class QXmlStreamReader;
+class QXmlStreamWriter;
+QT_END_NAMESPACE
+
+class Map;
+class MapColor;
+class MapColorMap;
+class Object;
+class ObjectRenderables;
+class PathObject;
+class PathPartVector;
+class SymbolPropertiesWidget;
+class SymbolSettingDialog;
+class VirtualCoordVector;
+
 
 /**
  * Symbol which can combine other line and area symbols,
@@ -41,7 +63,7 @@ friend class OCAD8FileImport;
 public:
 	CombinedSymbol();
 	virtual ~CombinedSymbol();
-	Symbol* duplicate(const MapColorMap* color_map = NULL) const override;
+	Symbol* duplicate(const MapColorMap* color_map = nullptr) const override;
 	
 	bool validate() const override;
 	
@@ -71,7 +93,7 @@ public:
 	
 	// Getters / Setter
 	inline int getNumParts() const {return (int)parts.size();}
-	inline void setNumParts(int num) {parts.resize(num, NULL); private_parts.resize(num, false);}
+	inline void setNumParts(int num) {parts.resize(num, nullptr); private_parts.resize(num, false);}
 	
 	inline const Symbol* getPart(int i) const {return parts[i];}
 	void setPart(int i, const Symbol* symbol, bool is_private);
@@ -89,8 +111,8 @@ protected:
 	bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict) override;
 	bool equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensitivity) const override;
 	
-	std::vector<const Symbol*> parts;
 	std::vector<bool> private_parts;
+	std::vector<const Symbol*> parts;
 	std::vector<int> temp_part_indices;	// temporary vector of the indices of the 'parts' symbols, used just for loading
 };
 

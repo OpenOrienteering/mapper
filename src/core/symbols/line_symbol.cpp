@@ -21,27 +21,45 @@
 
 #include "line_symbol.h"
 
+#include <algorithm>
+#include <cmath>
+#include <cstddef>
 #include <iterator>
+#include <memory>
+#include <utility>
+// IWYU pragma: no_include <ext/alloc_traits.h>
 
+#include <QtMath>
 #include <QtNumeric>
+#include <QCoreApplication>
 #include <QIODevice>
+#include <QStringRef>
+#include <QXmlStreamAttributes>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
 #include <private/qbezier_p.h>
 
 #include "core/map.h"
+#include "core/map_color.h"
+#include "core/map_coord.h"
+#include "core/map_part.h"
+#include "core/path_coord.h"
+#include "core/objects/object.h"
+#include "core/renderables/renderable.h"
 #include "core/renderables/renderable_implementation.h"
 #include "core/symbols/area_symbol.h"
 #include "core/symbols/point_symbol.h"
-#include "util/util.h"
+#include "core/symbols/symbol.h"
+#include "core/virtual_coord_vector.h"
+#include "core/virtual_path.h"
 
 
 // ### LineSymbolBorder ###
 
-void LineSymbolBorder::reset()
+void LineSymbolBorder::reset() noexcept
 {
-	color = NULL;
+	color = nullptr;
 	width = 0;
 	shift = 0;
 	dashed = false;
@@ -56,7 +74,7 @@ bool LineSymbolBorder::load(QIODevice* file, int version, Map* map)
 	Q_UNUSED(version);
 	int temp;
 	file->read((char*)&temp, sizeof(int));
-	color = (temp >= 0) ? map->getColor(temp) : NULL;
+	color = (temp >= 0) ? map->getColor(temp) : nullptr;
 	file->read((char*)&width, sizeof(int));
 	file->read((char*)&shift, sizeof(int));
 	file->read((char*)&dashed, sizeof(bool));
@@ -129,7 +147,7 @@ void LineSymbolBorder::assign(const LineSymbolBorder& other, const MapColorMap* 
 
 bool LineSymbolBorder::isVisible() const
 {
-	return width > 0 && color != NULL && !(dash_length == 0 && dashed);
+	return width > 0 && color != nullptr && !(dash_length == 0 && dashed);
 }
 
 void LineSymbolBorder::createSymbol(LineSymbol& out) const
@@ -156,19 +174,20 @@ void LineSymbolBorder::scale(double factor)
 
 // ### LineSymbol ###
 
-LineSymbol::LineSymbol() : Symbol(Symbol::Line)
+LineSymbol::LineSymbol() noexcept
+: Symbol(Symbol::Line)
 {
 	line_width = 0;
-	color = NULL;
+	color = nullptr;
 	minimum_length = 0;
 	cap_style = FlatCap;
 	join_style = MiterJoin;
 	pointed_cap_length = 1000;
 	
-	start_symbol = NULL;
-	mid_symbol = NULL;
-	end_symbol = NULL;
-	dash_symbol = NULL;
+	start_symbol = nullptr;
+	mid_symbol = nullptr;
+	end_symbol = nullptr;
+	dash_symbol = nullptr;
 	
 	dashed = false;
 	
@@ -192,6 +211,8 @@ LineSymbol::LineSymbol() : Symbol(Symbol::Line)
 	border.reset();
 	right_border.reset();
 }
+
+
 LineSymbol::~LineSymbol()
 {
 	delete start_symbol;
@@ -200,9 +221,10 @@ LineSymbol::~LineSymbol()
 	delete dash_symbol;
 }
 
+
 Symbol* LineSymbol::duplicate(const MapColorMap* color_map) const
 {
-	LineSymbol* new_line = new LineSymbol();
+	auto new_line = new LineSymbol();
 	new_line->duplicateImplCommon(this);
 	new_line->line_width = line_width;
 	new_line->color = color_map ? color_map->value(color) : color;
@@ -320,7 +342,7 @@ void LineSymbol::createPathCoordRenderables(const Object* object, const VirtualP
 	
 	if (end_symbol && !end_symbol->isEmpty())
 	{
-		size_t last = coords.size() - 1;
+		std::size_t last = coords.size() - 1;
 		auto orientation = 0.0f;
 		if (end_symbol->isRotatable())
 		{
@@ -1467,17 +1489,17 @@ void LineSymbol::colorDeleted(const MapColor* color)
 	}
     if (color == this->color)
 	{
-		this->color = NULL;
+		this->color = nullptr;
 		have_changes = true;
 	}
 	if (color == border.color)
 	{
-		this->border.color = NULL;
+		this->border.color = nullptr;
 		have_changes = true;
 	}
 	if (color == right_border.color)
 	{
-		this->right_border.color = NULL;
+		this->right_border.color = nullptr;
 		have_changes = true;
 	}
 	if (have_changes)
@@ -1544,19 +1566,19 @@ const MapColor* LineSymbol::guessDominantColor() const
 		}
 	}
 	
-	const MapColor* dominant_color = mid_symbol ? mid_symbol->guessDominantColor() : NULL;
+	const MapColor* dominant_color = mid_symbol ? mid_symbol->guessDominantColor() : nullptr;
 	if (dominant_color) return dominant_color;
 	
-	dominant_color = start_symbol ? start_symbol->guessDominantColor() : NULL;
+	dominant_color = start_symbol ? start_symbol->guessDominantColor() : nullptr;
 	if (dominant_color) return dominant_color;
 	
-	dominant_color = end_symbol ? end_symbol->guessDominantColor() : NULL;
+	dominant_color = end_symbol ? end_symbol->guessDominantColor() : nullptr;
 	if (dominant_color) return dominant_color;
 	
-	dominant_color = dash_symbol ? dash_symbol->guessDominantColor() : NULL;
+	dominant_color = dash_symbol ? dash_symbol->guessDominantColor() : nullptr;
 	if (dominant_color) return dominant_color;
 	
-	return NULL;
+	return nullptr;
 }
 
 void LineSymbol::scale(double factor)
@@ -1621,25 +1643,25 @@ void LineSymbol::ensurePointSymbols(const QString& start_name, const QString& mi
 
 void LineSymbol::cleanupPointSymbols()
 {
-	if (start_symbol != NULL && start_symbol->isEmpty())
+	if (start_symbol != nullptr && start_symbol->isEmpty())
 	{
 		delete start_symbol;
-		start_symbol = NULL;
+		start_symbol = nullptr;
 	}
-	if (mid_symbol != NULL && mid_symbol->isEmpty())
+	if (mid_symbol != nullptr && mid_symbol->isEmpty())
 	{
 		delete mid_symbol;
-		mid_symbol = NULL;
+		mid_symbol = nullptr;
 	}
-	if (end_symbol != NULL && end_symbol->isEmpty())
+	if (end_symbol != nullptr && end_symbol->isEmpty())
 	{
 		delete end_symbol;
-		end_symbol = NULL;
+		end_symbol = nullptr;
 	}
-	if (dash_symbol != NULL && dash_symbol->isEmpty())
+	if (dash_symbol != nullptr && dash_symbol->isEmpty())
 	{
 		delete dash_symbol;
-		dash_symbol = NULL;
+		dash_symbol = nullptr;
 	}
 }
 
@@ -1686,7 +1708,7 @@ bool LineSymbol::loadImpl(QIODevice* file, int version, Map* map)
 	file->read((char*)&line_width, sizeof(int));
 	int temp;
 	file->read((char*)&temp, sizeof(int));
-	color = (temp >= 0) ? map->getColor(temp) : NULL;
+	color = (temp >= 0) ? map->getColor(temp) : nullptr;
 	if (version >= 2)
 		file->read((char*)&minimum_length, sizeof(int));
 	file->read((char*)&temp, sizeof(int));
@@ -1747,7 +1769,7 @@ bool LineSymbol::loadImpl(QIODevice* file, int version, Map* map)
 	{
 		if (!border.load(file, version, map))
 			return false;
-		right_border.assign(border, NULL);
+		right_border.assign(border, nullptr);
 	}
 	else
 	{
@@ -1762,7 +1784,7 @@ bool LineSymbol::loadImpl(QIODevice* file, int version, Map* map)
 				return false;
 		}
 		else
-			right_border.assign(border, NULL);
+			right_border.assign(border, nullptr);
 	}
 	
 	cleanupPointSymbols();
@@ -1801,28 +1823,28 @@ void LineSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 	if (suppress_dash_symbol_at_ends)
 		xml.writeAttribute(QString::fromLatin1("suppress_dash_symbol_at_ends"), QString::fromLatin1("true"));
 	
-	if (start_symbol != NULL)
+	if (start_symbol != nullptr)
 	{
 		xml.writeStartElement(QString::fromLatin1("start_symbol"));
 		start_symbol->save(xml, map);
 		xml.writeEndElement();
 	}
 	
-	if (mid_symbol != NULL)
+	if (mid_symbol != nullptr)
 	{
 		xml.writeStartElement(QString::fromLatin1("mid_symbol"));
 		mid_symbol->save(xml, map);
 		xml.writeEndElement();
 	}
 	
-	if (end_symbol != NULL)
+	if (end_symbol != nullptr)
 	{
 		xml.writeStartElement(QString::fromLatin1("end_symbol"));
 		end_symbol->save(xml, map);
 		xml.writeEndElement();
 	}
 	
-	if (dash_symbol != NULL)
+	if (dash_symbol != nullptr)
 	{
 		xml.writeStartElement(QString::fromLatin1("dash_symbol"));
 		dash_symbol->save(xml, map);
@@ -1911,7 +1933,7 @@ bool LineSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionar
 			}
 			
 			if (have_border_lines && !right_border_loaded)
-				right_border.assign(border, NULL);
+				right_border.assign(border, nullptr);
 		}
 		else
 			xml.skipCurrentElement(); // unknown
@@ -1935,7 +1957,7 @@ PointSymbol* LineSymbol::loadPointSymbol(QXmlStreamReader& xml, const Map& map, 
 		else
 			xml.skipCurrentElement();
 	}
-	return NULL;
+	return nullptr;
 }
 
 bool LineSymbol::equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensitivity) const
@@ -1980,26 +2002,26 @@ bool LineSymbol::equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensit
 		}
 	}
 
-	if ((start_symbol == NULL && line->start_symbol != NULL) ||
-		(start_symbol != NULL && line->start_symbol == NULL))
+	if ((start_symbol == nullptr && line->start_symbol != nullptr) ||
+		(start_symbol != nullptr && line->start_symbol == nullptr))
 		return false;
 	if (start_symbol && !start_symbol->equals(line->start_symbol))
 		return false;
 	
-	if ((mid_symbol == NULL && line->mid_symbol != NULL) ||
-		(mid_symbol != NULL && line->mid_symbol == NULL))
+	if ((mid_symbol == nullptr && line->mid_symbol != nullptr) ||
+		(mid_symbol != nullptr && line->mid_symbol == nullptr))
 		return false;
 	if (mid_symbol && !mid_symbol->equals(line->mid_symbol))
 		return false;
 	
-	if ((end_symbol == NULL && line->end_symbol != NULL) ||
-		(end_symbol != NULL && line->end_symbol == NULL))
+	if ((end_symbol == nullptr && line->end_symbol != nullptr) ||
+		(end_symbol != nullptr && line->end_symbol == nullptr))
 		return false;
 	if (end_symbol && !end_symbol->equals(line->end_symbol))
 		return false;
 	
-	if ((dash_symbol == NULL && line->dash_symbol != NULL) ||
-		(dash_symbol != NULL && line->dash_symbol == NULL))
+	if ((dash_symbol == nullptr && line->dash_symbol != nullptr) ||
+		(dash_symbol != nullptr && line->dash_symbol == nullptr))
 		return false;
 	if (dash_symbol && !dash_symbol->equals(line->dash_symbol))
 		return false;

@@ -21,34 +21,61 @@
 
 #include "point_symbol.h"
 
+#include <algorithm>
+#include <cmath>
+#include <iterator>
+// IWYU pragma: no_include <ext/alloc_traits.h>
+
+#include <QtMath>
 #include <QIODevice>
+#include <QPainterPath>
+#include <QPoint>
+#include <QPointF>
+#include <QString>
+#include <QStringRef>
+#include <QXmlStreamAttributes>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
 #include "core/map.h"
+#include "core/map_color.h"
+#include "core/map_coord.h"
+#include "core/map_part.h"
+#include "core/objects/object.h"
+#include "core/renderables/renderable.h"
 #include "core/renderables/renderable_implementation.h"
+#include "core/symbols/symbol.h"
+#include "core/virtual_coord_vector.h"
+
+// IWYU pragma: no_forward_declare QPainterPath
+// IWYU pragma: no_forward_declare QXmlStreamReader
+// IWYU pragma: no_forward_declare QXmlStreamWriter
 
 
-PointSymbol::PointSymbol() : Symbol(Symbol::Point)
+PointSymbol::PointSymbol() noexcept
+: Symbol{Symbol::Point}
+, rotatable{false}
+, inner_radius{1000}
+, inner_color{nullptr}
+, outer_width{0}
+, outer_color{nullptr}
 {
-	rotatable = false;
-	inner_radius = 1000;
-	inner_color = NULL;
-	outer_width = 0;
-	outer_color = NULL;
+	// nothing else
 }
+
+
 PointSymbol::~PointSymbol()
 {
-	int size = objects.size();
-	for (int i = 0; i < size; ++i)
-	{
-		delete objects[i];
-		delete symbols[i];
-	}
+	for (auto object : objects)
+		delete object;
+	for (auto symbol : symbols)
+		delete symbol;
 }
+
+
 Symbol* PointSymbol::duplicate(const MapColorMap* color_map) const
 {
-	PointSymbol* new_point = new PointSymbol();
+	auto new_point = new PointSymbol();
 	new_point->duplicateImplCommon(this);
 	
 	new_point->rotatable = rotatable;
@@ -434,7 +461,7 @@ void PointSymbol::deleteElement(int pos)
 
 bool PointSymbol::isEmpty() const
 {
-	return getNumElements() == 0 && (inner_color == NULL || inner_radius == 0) && (outer_color == NULL || outer_width == 0);
+	return getNumElements() == 0 && (inner_color == nullptr || inner_radius == 0) && (outer_color == nullptr || outer_width == 0);
 }
 bool PointSymbol::isSymmetrical() const
 {
@@ -456,12 +483,12 @@ void PointSymbol::colorDeleted(const MapColor* color)
 	
 	if (color == inner_color)
 	{
-		inner_color = NULL;
+		inner_color = nullptr;
 		change = true;
 	}
 	if (color == outer_color)
 	{
-		outer_color = NULL;
+		outer_color = nullptr;
 		change = true;
 	}
 	
@@ -513,7 +540,7 @@ const MapColor* PointSymbol::guessDominantColor() const
 		if (symbols.size() > 0)
 			return symbols[0]->guessDominantColor();
 		else
-			return NULL;
+			return nullptr;
 	}
 }
 
@@ -541,11 +568,11 @@ bool PointSymbol::loadImpl(QIODevice* file, int version, Map* map)
 	file->read((char*)&inner_radius, sizeof(int));
 	int temp;
 	file->read((char*)&temp, sizeof(int));
-	inner_color = (temp >= 0) ? map->getColor(temp) : NULL;
+	inner_color = (temp >= 0) ? map->getColor(temp) : nullptr;
 	
 	file->read((char*)&outer_width, sizeof(int));
 	file->read((char*)&temp, sizeof(int));
-	outer_color = (temp >= 0) ? map->getColor(temp) : NULL;
+	outer_color = (temp >= 0) ? map->getColor(temp) : nullptr;
 	
 	int num_elements;
 	file->read((char*)&num_elements, sizeof(int));
@@ -565,7 +592,7 @@ bool PointSymbol::loadImpl(QIODevice* file, int version, Map* map)
 		objects[i] = Object::getObjectForType(static_cast<Object::Type>(save_type), symbols[i]);
 		if (!objects[i])
 			return false;
-		objects[i]->load(file, version, NULL);
+		objects[i]->load(file, version, nullptr);
 	}
 	
 	return true;
@@ -603,10 +630,10 @@ bool PointSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictiona
 	rotatable = (attributes.value(QLatin1String("rotatable")) == QLatin1String("true"));
 	inner_radius = attributes.value(QLatin1String("inner_radius")).toInt();
 	int temp = attributes.value(QLatin1String("inner_color")).toInt();
-	inner_color = (temp >= 0) ? map.getColor(temp) : NULL;
+	inner_color = (temp >= 0) ? map.getColor(temp) : nullptr;
 	outer_width = attributes.value(QLatin1String("outer_width")).toInt();
 	temp = attributes.value(QLatin1String("outer_color")).toInt();
-	outer_color = (temp >= 0) ? map.getColor(temp) : NULL;
+	outer_color = (temp >= 0) ? map.getColor(temp) : nullptr;
 	int num_elements = attributes.value(QLatin1String("elements")).toInt();
 	
 	symbols.reserve(qMin(num_elements, 10)); // 10 is not a limit
@@ -620,7 +647,7 @@ bool PointSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictiona
 				if (xml.name() == QLatin1String("symbol"))
 					symbols.push_back(Symbol::load(xml, map, symbol_dict));
 				else if (xml.name() == QLatin1String("object"))
-					objects.push_back(Object::load(xml, NULL, symbol_dict, symbols.back()));
+					objects.push_back(Object::load(xml, nullptr, symbol_dict, symbols.back()));
 				else
 					xml.skipCurrentElement(); // unknown element
 			}

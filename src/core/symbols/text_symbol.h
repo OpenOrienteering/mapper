@@ -24,10 +24,31 @@
 
 #include "symbol.h"
 
-#include <QFontMetricsF>
+#include <vector>
 
+#include <Qt>
+#include <QtGlobal>
+#include <QFont>
+#include <QFontMetricsF>
+#include <QString>
+
+QT_BEGIN_NAMESPACE
+class QIODevice;
+class QXmlStreamReader;
+class QXmlStreamWriter;
+// IWYU pragma: no_forward_declare QFontMetricsF
+QT_END_NAMESPACE
+
+class Map;
+class MapColor;
+class MapColorMap;
+class Object;
+class ObjectRenderables;
+class SymbolPropertiesWidget;
 class SymbolSettingDialog;
 class TextObject;
+class VirtualCoordVector;
+
 
 
 /** Symbol for text, can be applied to TextObjects.
@@ -65,7 +86,7 @@ public:
 	/** Creates an empty text symbol. */
 	TextSymbol();
 	virtual ~TextSymbol();
-	Symbol* duplicate(const MapColorMap* color_map = NULL) const override;
+	Symbol* duplicate(const MapColorMap* color_map = nullptr) const override;
 	
 	void createRenderables(
 	        const Object *object,

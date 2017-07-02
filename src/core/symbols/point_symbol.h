@@ -22,8 +22,29 @@
 #ifndef OPENORIENTEERING_POINT_SYMBOL_H
 #define OPENORIENTEERING_POINT_SYMBOL_H
 
+#include <vector>
+
+#include <Qt>
+#include <QtGlobal>
+
 #include "symbol.h"
-#include "area_symbol.h"
+
+QT_BEGIN_NAMESPACE
+class QIODevice;
+class QPainterPath;
+class QXmlStreamReader;
+class QXmlStreamWriter;
+QT_END_NAMESPACE
+
+class Map;
+class MapColor;
+class MapColorMap;
+class MapCoordF;
+class Object;
+class ObjectRenderables;
+class SymbolPropertiesWidget;
+class SymbolSettingDialog;
+class VirtualCoordVector;
 
 
 /**
@@ -44,9 +65,9 @@ friend class OCAD8FileImport;
 friend class XMLImportExport;
 public:
 	/** Constructs an empty point symbol. */
-	PointSymbol();
+	PointSymbol() noexcept;
 	virtual ~PointSymbol();
-	Symbol* duplicate(const MapColorMap* color_map = NULL) const override;
+	Symbol* duplicate(const MapColorMap* color_map = nullptr) const override;
 	
 	bool validate() const override;
 	

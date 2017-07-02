@@ -22,11 +22,41 @@
 #ifndef OPENORIENTEERING_LINE_SYMBOL_H
 #define OPENORIENTEERING_LINE_SYMBOL_H
 
+#include <vector>
+
+#include <Qt>
+#include <QtGlobal>
+#include <QString>
+
 #include "symbol.h"
 
+QT_BEGIN_NAMESPACE
+class QIODevice;
+class QXmlStreamReader;
+class QXmlStreamWriter;
+QT_END_NAMESPACE
+
+class Map;
+class MapColor;
+class MapColorMap;
+class MapCoord;
+class MapCoordF;
+class Object;
+class ObjectRenderables;
+class PathObject;
+class PathPartVector;
+class PointSymbol;
 class SplitPathCoord;
+class SymbolPropertiesWidget;
+class SymbolSettingDialog;
+class VirtualCoordVector;
 class VirtualPath;
 
+using MapCoordVector = std::vector<MapCoord>;
+using MapCoordVectorF = std::vector<MapCoordF>;
+
+
+class LineSymbol;
 
 /** Settings for a line symbol's border. */
 struct LineSymbolBorder
@@ -38,7 +68,7 @@ struct LineSymbolBorder
 	int dash_length;
 	int break_length;
 	
-	void reset();
+	void reset() noexcept;
 	bool load(QIODevice* file, int version, Map* map);
 	void save(QXmlStreamWriter& xml, const Map& map) const;
 	bool load(QXmlStreamReader& xml, const Map& map);
@@ -74,7 +104,7 @@ public:
 	};
 	
 	/** Constructs an empty line symbol. */
-	LineSymbol();
+	LineSymbol() noexcept;
 	virtual ~LineSymbol();
 	Symbol* duplicate(const MapColorMap* color_map = nullptr) const override;
 	

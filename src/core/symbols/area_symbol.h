@@ -22,10 +22,39 @@
 #ifndef OPENORIENTEERING_AREA_SYMBOL_H
 #define OPENORIENTEERING_AREA_SYMBOL_H
 
+#include <cstddef>
+#include <vector>
+
+#include <Qt>
+#include <QtGlobal>
+#include <QFlags>
+#include <QRectF>
+#include <QString>
+
 #include "symbol.h"
 
+QT_BEGIN_NAMESPACE
+class QIODevice;
+class QRectF;
+class QXmlStreamReader;
+class QXmlStreamWriter;
+QT_END_NAMESPACE
+
 class AreaRenderable;
-class PointObject;
+class LineSymbol;
+class Map;
+class MapColor;
+class MapColorMap;
+class MapCoord;
+class MapCoordF;
+class Object;
+class ObjectRenderables;
+class PathObject;
+class PathPartVector;
+class PointSymbol;
+class SymbolPropertiesWidget;
+class SymbolSettingDialog;
+class VirtualCoordVector;
 
 
 /**
@@ -202,8 +231,8 @@ public:
 		void scale(double factor);
 	};
 	
-	AreaSymbol();
-	virtual ~AreaSymbol();
+	AreaSymbol() noexcept;
+	~AreaSymbol() override;
 	Symbol* duplicate(const MapColorMap* color_map = nullptr) const override;
 	
 	void createRenderables(

@@ -21,30 +21,41 @@
 
 #include "symbol.h"
 
-#include <qmath.h>
+#include <memory>
+
 #include <QIODevice>
+#include <QLatin1Char>
 #include <QPainter>
+#include <QRectF>
+#include <QStringRef>
 #include <QTextDocument>
+#include <QXmlStreamAttributes>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
 #include "core/map.h"
 #include "core/map_color.h"
+#include "core/map_coord.h"
+#include "core/map_part.h"
 #include "core/map_view.h"
 #include "core/objects/object.h"
 #include "core/objects/text_object.h"
+#include "core/renderables/renderable.h"
 #include "core/renderables/renderable_implementation.h"
 #include "core/symbols/area_symbol.h"
 #include "core/symbols/combined_symbol.h"
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/point_symbol.h"
 #include "core/symbols/text_symbol.h"
+#include "fileformats/file_format.h"
 #include "fileformats/file_import_export.h"
 #include "util/util.h"
 #include "settings.h"
 
+// IWYU pragma: no_include <qobjectdefs.h>
 
-Symbol::Symbol(Type type)
+
+Symbol::Symbol(Type type) noexcept
  : type { type }
  , number { -1, -1, -1 }
  , is_helper_symbol(false)
@@ -55,10 +66,7 @@ Symbol::Symbol(Type type)
 }
 
 
-Symbol::~Symbol()
-{
-	// nothing
-}
+Symbol::~Symbol() = default;
 
 
 
@@ -394,13 +402,13 @@ QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, in
 	Symbol* icon_symbol = nullptr;
 	if (type == Point)
 	{
-		PointObject* point = new PointObject(static_cast<const PointSymbol*>(this));
+		auto point = new PointObject(static_cast<const PointSymbol*>(this));
 		point->setPosition(0, 0);
 		object = point;
 	}
 	else if (type == Area || (type == Combined && getContainedTypes() & Area))
 	{
-		PathObject* path = new PathObject(this);
+		auto path = new PathObject(this);
 		path->addCoordinate(0, MapCoord(-max_icon_mm_half, -max_icon_mm_half));
 		path->addCoordinate(1, MapCoord(max_icon_mm_half, -max_icon_mm_half));
 		path->addCoordinate(2, MapCoord(max_icon_mm_half, max_icon_mm_half));
@@ -438,7 +446,7 @@ QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, in
 			}
 		}
 		
-		PathObject* path = new PathObject(symbol_to_use);
+		auto path = new PathObject(symbol_to_use);
 		path->addCoordinate(0, MapCoord(-max_icon_mm_half, 0.0));
 		path->addCoordinate(1, MapCoord(max_icon_mm_half, 0.0));
 		if (show_dash_symbol)
@@ -451,7 +459,7 @@ QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, in
 	}
 	else if (type == Text)
 	{
-		TextObject* text = new TextObject(this);
+		auto text = new TextObject(this);
 		text->setAnchorPosition(0, 0);
 		text->setHorizontalAlignment(TextObject::AlignHCenter);
 		text->setVerticalAlignment(TextObject::AlignVCenter);
@@ -533,13 +541,13 @@ QString Symbol::getPlainTextName() const
 QString Symbol::getNumberAsString() const
 {
 	QString str;
-	for (int i = 0; i < number_components; ++i)
+	for (auto n : number)
 	{
-		if (number[i] < 0)
+		if (n < 0)
 			break;
 		if (!str.isEmpty())
 			str += QLatin1Char('.');
-		str += QString::number(number[i]);
+		str += QString::number(n);
 	}
 	return str;
 }

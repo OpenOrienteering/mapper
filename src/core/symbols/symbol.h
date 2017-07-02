@@ -22,12 +22,14 @@
 #ifndef OPENORIENTEERING_SYMBOL_H
 #define OPENORIENTEERING_SYMBOL_H
 
+#include <Qt>
+#include <QtGlobal>
+#include <QFlags>
 #include <QHash>
 #include <QImage>
+#include <QMetaType>
 #include <QRgb>
-
-#include "core/map_coord.h"
-#include "fileformats/file_format.h"
+#include <QString>
 
 QT_BEGIN_NAMESPACE
 class QIODevice;
@@ -41,13 +43,11 @@ class LineSymbol;
 class Map;
 class MapColor;
 class MapColorMap;
-class MapRenderables;
 class Object;
 class ObjectRenderables;
 class PathObject;
 class PathPartVector;
 class PointSymbol;
-class Renderable;
 class Symbol;
 class SymbolPropertiesWidget;
 class SymbolSettingDialog;
@@ -92,7 +92,7 @@ public:
 	Q_DECLARE_FLAGS(RenderableOptions, RenderableOption)
 	
 	/** Constructs an empty symbol */
-	Symbol(Type type);
+	Symbol(Type type) noexcept;
 	virtual ~Symbol();
 	virtual Symbol* duplicate(const MapColorMap* color_map = nullptr) const = 0;
 	

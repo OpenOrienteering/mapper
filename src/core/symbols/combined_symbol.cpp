@@ -21,20 +21,31 @@
 
 #include "combined_symbol.h"
 
+#include <algorithm>
+#include <cstddef>
+#include <iterator>
+
 #include <QIODevice>
+#include <QString>
+#include <QStringRef>
+#include <QXmlStreamAttributes>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
 #include "core/map.h"
+#include "core/map_color.h"
+#include "core/map_part.h"
 #include "core/objects/object.h"
+#include "core/symbols/symbol.h"
 
 
-CombinedSymbol::CombinedSymbol() : Symbol(Symbol::Combined)
+CombinedSymbol::CombinedSymbol()
+: Symbol{Symbol::Combined}
+, private_parts{ false, false }
+, parts{ private_parts.size(), nullptr }
 {
-	parts.resize(2);
-	parts[0] = NULL;
-	parts[1] = NULL;
-	private_parts.assign(2, false);
+	Q_ASSERT(private_parts.size() == parts.size());
+	// nothing else
 }
 
 CombinedSymbol::~CombinedSymbol()
@@ -48,7 +59,7 @@ CombinedSymbol::~CombinedSymbol()
 
 Symbol* CombinedSymbol::duplicate(const MapColorMap* color_map) const
 {
-	CombinedSymbol* new_symbol = new CombinedSymbol();
+	auto new_symbol = new CombinedSymbol();
 	new_symbol->duplicateImplCommon(this);
 	new_symbol->parts = parts;
 	new_symbol->private_parts = private_parts;
@@ -120,7 +131,7 @@ bool CombinedSymbol::containsColor(const MapColor* color) const
 const MapColor* CombinedSymbol::guessDominantColor() const
 {
 	// Speculative heuristic. Prefers areas and non-white colors.
-	const MapColor* dominant_color = NULL;
+	const MapColor* dominant_color = nullptr;
 	for (int i = 0, size = (int)parts.size(); i < size; ++i)
 	{
 		if (parts[i] && parts[i]->getContainedTypes() & Symbol::Area)
@@ -171,7 +182,7 @@ bool CombinedSymbol::containsSymbol(const Symbol* symbol) const
 	{
 		if (parts[i] == symbol)
 			return true;
-		else if (parts[i] == NULL)
+		else if (parts[i] == nullptr)
 			continue;
 		if (parts[i]->getType() == Symbol::Combined)	// TODO: see TODO in SymbolDropDown constructor.
 		{
@@ -262,7 +273,7 @@ void CombinedSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 		}
 		else
 		{
-			int temp = (parts[i] == NULL) ? -1 : map.findSymbolIndex(parts[i]);
+			int temp = (parts[i] == nullptr) ? -1 : map.findSymbolIndex(parts[i]);
 			xml.writeAttribute(QString::fromLatin1("symbol"), QString::number(temp));
 		}
 		xml.writeEndElement(/*part*/);
@@ -297,7 +308,7 @@ bool CombinedSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDicti
 			{
 				int temp = xml.attributes().value(QLatin1String("symbol")).toInt();
 				temp_part_indices.push_back(temp);
-				parts.push_back(NULL);
+				parts.push_back(nullptr);
 			}
 			xml.skipCurrentElement();
 		}
@@ -314,12 +325,12 @@ bool CombinedSymbol::equalsImpl(const Symbol* other, Qt::CaseSensitivity case_se
 	if (parts.size() != combination->parts.size())
 		return false;
 	// TODO: parts are only compared in order
-	for (size_t i = 0, end = parts.size(); i < end; ++i)
+	for (std::size_t i = 0, end = parts.size(); i < end; ++i)
 	{
 		if (private_parts[i] != combination->private_parts[i])
 			return false;
-		if ((parts[i] == NULL && combination->parts[i] != NULL) ||
-			(parts[i] != NULL && combination->parts[i] == NULL))
+		if ((parts[i] == nullptr && combination->parts[i] != nullptr) ||
+			(parts[i] != nullptr && combination->parts[i] == nullptr))
 			return false;
 		if (parts[i] && !parts[i]->equals(combination->parts[i], case_sensitivity))
 			return false;
@@ -348,7 +359,7 @@ bool CombinedSymbol::loadFinished(Map* map)
 float CombinedSymbol::calculateLargestLineExtent(Map* map) const
 {
 	float result = 0;
-	for (size_t i = 0, end = parts.size(); i < end; ++i)
+	for (std::size_t i = 0, end = parts.size(); i < end; ++i)
 	{
 		if (parts[i])
 			result = qMax(result, parts[i]->calculateLargestLineExtent(map));
@@ -362,5 +373,5 @@ void CombinedSymbol::setPart(int i, const Symbol* symbol, bool is_private)
 		delete parts[i];
 	
 	parts[i] = symbol;
-	private_parts[i] = (symbol == NULL) ? false : is_private;
+	private_parts[i] = (symbol == nullptr) ? false : is_private;
 }

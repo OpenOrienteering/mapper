@@ -22,17 +22,30 @@
 #include "area_symbol.h"
 
 #include <algorithm>
+#include <cmath>
+#include <iterator>
+#include <memory>
 
 #include <QtMath>
 #include <QIODevice>
-#include <QXmlStreamReader>
-#include <QXmlStreamWriter>
+#include <QStringRef>
+#include <QXmlStreamReader> // IWYU pragma: keep
 
 #include "core/map.h"
+#include "core/map_color.h"
+#include "core/map_coord.h"
+#include "core/map_part.h"
+#include "core/objects/object.h"
+#include "core/renderables/renderable.h"
 #include "core/renderables/renderable_implementation.h"
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/point_symbol.h"
+#include "core/symbols/symbol.h"
+#include "core/virtual_coord_vector.h"
 #include "util/xml_stream_util.h"
+
+class QXmlStreamWriter;
+// IWYU pragma: no_forward_declare QXmlStreamReader
 
 
 // ### FillPattern ###
@@ -570,7 +583,7 @@ void AreaSymbol::FillPattern::scale(double factor)
 
 // ### AreaSymbol ###
 
-AreaSymbol::AreaSymbol()
+AreaSymbol::AreaSymbol() noexcept
 : Symbol { Symbol::Area }
 , color { nullptr }
 , minimum_area { 0 }
@@ -589,7 +602,7 @@ AreaSymbol::~AreaSymbol()
 
 Symbol* AreaSymbol::duplicate(const MapColorMap* color_map) const
 {
-	AreaSymbol* new_area = new AreaSymbol();
+	auto new_area = new AreaSymbol();
 	new_area->duplicateImplCommon(this);
 	new_area->color = color_map ? color_map->value(color) : color;
 	new_area->minimum_area = minimum_area;
@@ -647,7 +660,7 @@ void AreaSymbol::createRenderablesNormal(
 {
 	// The shape output is even created if the area is not filled with a color
 	// because the QPainterPath created by it is needed as clip path for the fill objects
-	AreaRenderable* color_fill = new AreaRenderable(this, path_parts);
+	auto color_fill = new AreaRenderable(this, path_parts);
 	output.insertRenderable(color_fill);
 	
 	auto rotation = object->getPatternRotation();
