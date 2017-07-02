@@ -16,7 +16,7 @@
         <message>
             <source>Opaque White below Black</source>
             <comment>Color 2</comment>
-            <translation>Deckendes Weiss über Schwarz</translation>
+            <translation>Deckendes Weiß über Schwarz</translation>
     </message>
         <message>
             <source>Black 65%</source>
@@ -61,7 +61,7 @@
         <message>
             <source>OpenOrienteering Orange</source>
             <comment>Color 11</comment>
-            <translation>OpenOrienteering Orange</translation>
+            <translation>OpenOrienteering-Orange</translation>
     </message>
         <message>
             <source>Black 25% (Grey)</source>
@@ -121,17 +121,17 @@
         <message>
             <source>Green below light greens</source>
             <comment>Color 23</comment>
-            <translation>Grün unterhalb Hellgrün</translation>
+            <translation>Grün unter Hellgrün</translation>
     </message>
         <message>
             <source>Green 50% over Yellow</source>
             <comment>Color 24</comment>
-            <translation>Grün 50% oberhalb Gelb</translation>
+            <translation>Grün 50% über Gelb</translation>
     </message>
         <message>
             <source>White over Yellow</source>
             <comment>Color 25</comment>
-            <translation>Weiss oberhalb Gelb</translation>
+            <translation>Weiß über Gelb</translation>
     </message>
         <message>
             <source>Yellow</source>
@@ -197,7 +197,7 @@
         <message>
             <source>Slope line, formline</source>
             <comment>Name of symbol 103.1</comment>
-            <translation>Fallstrich Hilfshöhenkurve</translation>
+            <translation>Fallstrich, Hilfshöhenkurve</translation>
     </message>
         <message>
             <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
@@ -217,7 +217,7 @@
         <message>
             <source>Earth bank, minimum size</source>
             <comment>Name of symbol 104.1</comment>
-            <translation>Erdböschung, Minimalgrösse</translation>
+            <translation>Erdböschung, Minimalgröße</translation>
     </message>
         <message>
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
@@ -247,7 +247,7 @@
         <message>
             <source>Earth bank, minimum size (from ISOM2000)</source>
             <comment>Name of symbol 104.9</comment>
-            <translation>Erdböschung, Minimalgrösse (ISOM2000)</translation>
+            <translation>Erdböschung, Minimalgröße (aus ISOM2000)</translation>
     </message>
         <message>
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
@@ -272,7 +272,7 @@
         <message>
             <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
             <comment>Description of symbol 106</comment>
-            <translation>Ein niedriger oder teilweise zerfallener Erdwall wird mit einer unterbrochenen Linie gezeichnet. Minimale Höhe: 0.5m.</translation>
+            <translation>Ein niedriger oder teilweise zerfallener Erdwall wird mit einer unterbrochenen Linie gezeichnet. Minimale Höhe: 0,5m.</translation>
     </message>
         <message>
             <source>Erosion gully</source>
@@ -310,7 +310,7 @@ The symbol shall not touch or overlap contours.</source>
         <message>
             <source>Small elongated knoll</source>
             <comment>Name of symbol 110</comment>
-            <translation>Längliche Kuppe</translation>
+            <translation>Kleine längliche Kuppe</translation>
     </message>
         <message>
             <source>An obvious elongated knoll which cannot be drawn to scale with a contour. Minimum height: 1 m.
@@ -454,7 +454,7 @@ When an impassable cliff drops straight into water, making it impossible to pass
         <message>
             <source>Impassable cliff, minimum size (from ISOM2000)</source>
             <comment>Name of symbol 201.9</comment>
-            <translation>Unpassierbare Felswand, Minimalgrösse (ISOM2000)</translation>
+            <translation>Unpassierbare Felswand, Minimalgröße (aus ISOM2000)</translation>
     </message>
         <message>
             <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -479,7 +479,7 @@ Crossing a cliff will normally slow progress.</source>
         <message>
             <source>Cliff, minimum size</source>
             <comment>Name of symbol 202.1</comment>
-            <translation>Felswand, Minimalgrösse</translation>
+            <translation>Felswand, Minimalgröße</translation>
     </message>
         <message>
             <source>A passable, vertical cliff or quarry where the direction of fall of the cliff is apparent from the contours. Minimum height: 1 m.
@@ -504,7 +504,7 @@ Crossing a cliff will normally slow progress.</source>
         <message>
             <source>Cliff, with tags, minimum size</source>
             <comment>Name of symbol 202.3</comment>
-            <translation>Felswand, mit Fallstrichen, Minimalgrösse</translation>
+            <translation>Felswand, mit Fallstrichen, Minimalgröße</translation>
     </message>
         <message>
             <source>A passable cliff or quarry. Minimum height: 1 m.
@@ -517,7 +517,7 @@ Crossing a cliff will normally slow progress.</source>
         <message>
             <source>Cliff, with tags, minimum size (from ISOM2000)</source>
             <comment>Name of symbol 202.9</comment>
-            <translation>Felswand, mit Fallstrichen, Minimalgrösse (ISOM200)</translation>
+            <translation>Felswand, mit Fallstrichen, Minimalgröße (aus ISOM200)</translation>
     </message>
         <message>
             <source>A passable cliff or quarry. Minimum height: 1 m.
@@ -543,7 +543,7 @@ Rocky pits larger than 5 m in diameter should be exaggerated and represented usi
         <message>
             <source>Rocky pit or cave with distinct entrance</source>
             <comment>Name of symbol 203.2</comment>
-            <translation>Felsloch oder Höhle (mit deutlichem Eingang)</translation>
+            <translation>Felsloch oder Höhle mit deutlichem Eingang</translation>
     </message>
         <message>
             <source>Rocky pits, holes, caves or mineshafts with a distinct entrance which may constitute a danger to the competitor. Minimum depth: 1 m.
@@ -555,7 +555,7 @@ Rocky pits larger than 5 m in diameter should be exaggerated and represented usi
         <message>
             <source>Rocky pit or cave with distinct entrance (from ISOM2000)</source>
             <comment>Name of symbol 203.9</comment>
-            <translation>Felsloch oder Höhle (mit deutlichem Eingang; ISOM2000)</translation>
+            <translation>Felsloch oder Höhle mit deutlichem Eingang (aus ISOM2000)</translation>
     </message>
         <message>
             <source>Rocky pits, holes, caves or mineshafts with a distinct entrance which may constitute a danger to the competitor. Minimum depth: 1 m.
