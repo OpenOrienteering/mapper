@@ -29,7 +29,7 @@ edited: 25 February 2013
 
 <ul>
 <li><b>Gauss-Kr&uuml;ger</b>: this is similar to UTM and widely used in Germany, but is being superseded by UTM.</li>
-<li><b>From Proj.4 specification</b>: projections are internally handled by the <a href="http://trac.osgeo.org/proj/">PROJ.4 Cartographic Projections library</a>, so coordinate reference systems can also be given in its internal specification format. Examples may be found at <a href="http://www.remotesensing.org/geotiff/proj_list/">http://www.remotesensing.org/geotiff/proj_list/</a> and <a href="http://spatialreference.org/">http://spatialreference.org/</a>. When selecting this option, the specification field will be pre-filled with the specification of the previously selected coordinate reference system.</li>
+<li><b>From Proj.4 specification</b>: projections are internally handled by the <a href="http://trac.osgeo.org/proj/">PROJ.4 Cartographic Projections library</a>, so coordinate reference systems can also be given in its internal specification format. Examples may be found at <a href="https://web.archive.org/web/20160802172057/http://www.remotesensing.org/geotiff/proj_list/">http://www.remotesensing.org/geotiff/proj_list/</a> and <a href="http://spatialreference.org/">http://spatialreference.org/</a>. When selecting this option, the specification field will be pre-filled with the specification of the previously selected coordinate reference system.</li>
 <li><b>Local</b>: this enables you to use local projected coordinates without a mapping to global geographic coordinates.</li>
 </ul>
 
@@ -67,7 +67,7 @@ latitude and longitude. Latitude and longitude are measured in decimal degrees. 
 
 
 <h4 id="related">Related functions</h4>
-<p>The (mouse) cursor position of the map editor can be displayed in map coordinates, projected coordinates or geographic coordinates (decimal or as degrees/minutes/seconds, DMS). The coordinates of the cursor on the map sheet are discussed <a href="view_menu.md#coords">here</a>.</p>
+<p>The (mouse) cursor position of the map editor can be displayed in map coordinates, projected coordinates or geographic coordinates (decimal or as degrees/minutes/seconds, DMS). The coordinates of the cursor on the map sheet are discussed <a href="view_menu.md#coorddisplay">here</a>.</p>
 
 <h4 id="further_reading">Further reading</h4>
 <ul>
