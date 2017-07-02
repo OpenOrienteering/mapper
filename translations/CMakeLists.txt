@@ -65,13 +65,22 @@ set(qt_translations
 )
 qt5_add_translation(qt_qm ${qt_translations})
 
+set(symbol_set_translation_template map_symbols_template.ts)
+set(symbol_set_translations
+  map_symbols_cs.ts
+  map_symbols_fi.ts
+  map_symbols_ru.ts
+  map_symbols_uk.ts
+)
+qt5_add_translation(symbol_set_qm ${symbol_set_translations})
+
 set(Mapper_TRANS_DIR
   ${CMAKE_CURRENT_SOURCE_DIR}
   CACHE INTERNAL "Translations build directory"
 )
 
 # A target which builds all translations.
-add_custom_target(Mapper_translations ALL DEPENDS ${Mapper_QM} ${qt_qm})
+add_custom_target(Mapper_translations ALL DEPENDS ${Mapper_QM} ${qt_qm} ${symbol_set_translations})
 
 install(
   FILES ${Mapper_QM} ${qt_qm}
