@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012 Kai Pastor
+ *    Copyright 2012-2014, 2016, 2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,13 +22,21 @@
 #ifndef OPENORIENTEERING_SYMBOL_PROPERTIES_WIDGET_H
 #define OPENORIENTEERING_SYMBOL_PROPERTIES_WIDGET_H
 
+
+#include <QtGlobal>
+#include <QObject>
+#include <QString>
 #include <QTabWidget>
 
-#include "core/symbols/symbol.h"
-
+QT_BEGIN_NAMESPACE
+class QCheckBox;
 class QLineEdit;
 class QTextEdit;
-class QCheckBox;
+class QWidget;
+QT_END_NAMESPACE
+
+class Symbol;
+class SymbolSettingDialog;
 
 
 /**
@@ -43,7 +51,7 @@ public:
 	  */
 	SymbolPropertiesWidget(Symbol* symbol, SymbolSettingDialog* dialog);
 	
-	virtual ~SymbolPropertiesWidget();
+	~SymbolPropertiesWidget() override;
 	
 	/** Add a widget as a named group of properties */
 	void addPropertiesGroup(const QString& name, QWidget* widget);

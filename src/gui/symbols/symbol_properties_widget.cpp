@@ -21,14 +21,21 @@
 
 #include "symbol_properties_widget.h"
 
+#include <QAbstractButton>
 #include <QCheckBox>
 #include <QGridLayout>
 #include <QIntValidator>
 #include <QLabel>
+#include <QLatin1Char>
 #include <QLineEdit>
 #include <QTextEdit>
+#include <QWidget>
 
-#include "symbol_setting_dialog.h"
+#include "core/symbols/symbol.h"
+#include "gui/symbols/symbol_setting_dialog.h"
+
+// IWYU pragma: no_forward_declare QGridLayout
+// IWYU pragma: no_forward_declare QLabel
 
 
 // ### Symbol ###
@@ -45,12 +52,12 @@ SymbolPropertiesWidget* Symbol::createPropertiesWidget(SymbolSettingDialog* dial
 SymbolPropertiesWidget::SymbolPropertiesWidget(Symbol* symbol, SymbolSettingDialog* dialog)
 : QTabWidget(), dialog(dialog)
 {
-	QWidget* generalTab = new QWidget();
+	auto generalTab = new QWidget();
 	
-	QGridLayout* layout = new QGridLayout();
+	auto layout = new QGridLayout();
 	generalTab->setLayout(layout);
 	
-	QLabel* number_label = new QLabel(tr("Number:"));
+	auto number_label = new QLabel(tr("Number:"));
 	number_edit = new QLineEdit*[Symbol::number_components];
 	for (int i = 0; i < Symbol::number_components; ++i)
 	{
@@ -58,19 +65,19 @@ SymbolPropertiesWidget::SymbolPropertiesWidget(Symbol* symbol, SymbolSettingDial
 		number_edit[i]->setMaximumWidth(60);
 		number_edit[i]->setValidator(new QIntValidator(0, 99999, number_edit[i]));
 	}
-	QLabel* name_label = new QLabel(tr("Name:"));
+	auto name_label = new QLabel(tr("Name:"));
 	name_edit = new QLineEdit();
-	QLabel* description_label = new QLabel(tr("Description:"));
+	auto description_label = new QLabel(tr("Description:"));
 	description_edit = new QTextEdit();
 	helper_symbol_check = new QCheckBox(tr("Helper symbol (not shown in finished map)"));
 	SymbolPropertiesWidget::reset(symbol);
-	
+
 	for (int i = 0; i < Symbol::number_components; ++i)
-		connect(number_edit[i], SIGNAL(textEdited(QString)), this, SLOT(numberChanged(QString)));
-	connect(name_edit, SIGNAL(textEdited(QString)), this, SLOT(nameChanged(QString)));
-	connect(description_edit, SIGNAL(textChanged()), this, SLOT(descriptionChanged()));
-	connect(helper_symbol_check, SIGNAL(clicked(bool)), this, SLOT(helperSymbolChanged(bool)));
-	connect(this, SIGNAL(propertiesModified()), dialog, SLOT(setSymbolModified()));
+		connect(number_edit[i], &QLineEdit::textEdited, this, &SymbolPropertiesWidget::numberChanged);
+	connect(name_edit, &QLineEdit::textEdited, this, &SymbolPropertiesWidget::nameChanged);
+	connect(description_edit, &QTextEdit::textChanged, this, &SymbolPropertiesWidget::descriptionChanged);
+	connect(helper_symbol_check, &QAbstractButton::clicked, this, &SymbolPropertiesWidget::helperSymbolChanged);
+	connect(this, &SymbolPropertiesWidget::propertiesModified, [dialog]() { dialog->setSymbolModified(true); });
 	
 	int row = 0, col = 0;
 	// 1st col
@@ -117,7 +124,7 @@ void SymbolPropertiesWidget::insertPropertiesGroup(int index, const QString& nam
 
 void SymbolPropertiesWidget::removePropertiesGroup(int index)
 {
-	QWidget* tab_contents = widget(index);
+	auto tab_contents = widget(index);
 	removeTab(index);
 	delete tab_contents;
 }
