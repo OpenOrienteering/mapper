@@ -33,6 +33,7 @@
 #include <QHash>
 #include <QMetaType>
 #include <QObject>
+#include <QPointer>
 #include <QRect>
 #include <QScopedPointer>
 #include <QSharedData>
@@ -48,6 +49,7 @@ class QIODevice;
 class QPainter;
 class QRectF;
 class QTransform;
+class QTranslator;
 class QWidget;
 QT_END_NAMESPACE
 
@@ -69,6 +71,18 @@ class Template;
 class TextSymbol;
 class UndoManager;
 class UndoStep;
+
+
+/**
+ * The translator for color and symbol texts.
+ * 
+ * This translator is used by class Map but kept outside of the
+ * class' namespace in order to allow for forward declaration
+ * instead of including "map.h".
+ */
+extern QPointer<QTranslator> map_symbol_translator;
+
+
 
 /** Central class for an OpenOrienteering map */
 class Map : public QObject
@@ -383,6 +397,21 @@ public:
 	 * See setDrawingBoundingBox() and setActivityBoundingBox().
 	 */
 	void updateDrawing(QRectF map_coords_rect, int pixel_border);
+	
+	
+	
+	// Element translations
+	
+	/**
+	 * Returns a translated symbol text (name or description), or the original text.
+	 */
+	QString translate(const QString& symbol_text) const;
+	
+	/**
+	 * Returns a translated symbol text (name or description), or an empty string.
+	 */
+	QString raw_translation(const QString& symbol_text) const;
+	
 	
 	
 	// Colors

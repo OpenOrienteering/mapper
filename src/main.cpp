@@ -20,17 +20,20 @@
 
 
 #include <clocale>
+#include <memory>
 
 #include <Qt>
 #include <QtGlobal>
 #include <QApplication>
 #include <QLocale>
 #include <QObject>
+#include <QPointer>
 #include <QSettings>  // IWYU pragma: keep
 #include <QString>
 #include <QStringList>
 #include <QStyle>
 #include <QStyleFactory>
+#include <QTranslator>
 
 #include <mapper_config.h>
 
@@ -51,6 +54,10 @@
 #include "util/translation_util.h"
 
 // IWYU pragma: no_forward_declare QTranslator
+
+
+// From map.h
+extern QPointer<QTranslator> map_symbol_translator;
 
 
 int main(int argc, char** argv)
@@ -103,6 +110,9 @@ int main(int argc, char** argv)
 #endif
 	qapp.installTranslator(&translation.getQtTranslator());
 	qapp.installTranslator(&translation.getAppTranslator());
+	map_symbol_translator = translation.load(QString::fromLatin1("map_symbols")).release();
+	if (map_symbol_translator)
+		map_symbol_translator->setParent(&qapp);
 	
 	// Avoid numeric issues in libraries such as GDAL
 	setlocale(LC_NUMERIC, "C");

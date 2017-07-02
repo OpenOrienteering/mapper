@@ -29,6 +29,7 @@
 
 #include <Qt>
 #include <QtMath>
+#include <QByteArray>
 #include <QDebug>
 #include <QDir>
 #include <QFile>
@@ -42,6 +43,7 @@
 #include <QPointF>
 #include <QSaveFile>
 #include <QStringList>
+#include <QTranslator>
 
 #include "core/georeferencing.h"
 #include "core/map_color.h"
@@ -67,6 +69,9 @@
 #include "undo/undo_manager.h"
 #include "util/util.h"
 #include "util/transformation.h"
+
+
+QPointer<QTranslator> map_symbol_translator{};
 
 
 // ### Misc ###
@@ -1392,6 +1397,26 @@ void Map::updateDrawing(QRectF map_coords_rect, int pixel_border)
 	for (MapWidget* widget : widgets)
 		widget->updateDrawing(map_coords_rect, pixel_border);
 }
+
+
+
+QString Map::translate(const QString& symbol_text) const
+{
+	auto result = raw_translation(symbol_text);
+	if (result.isEmpty())
+		result = symbol_text;
+	return result;
+}
+
+QString Map::raw_translation(const QString& symbol_text) const
+{
+	auto result = QString{};
+	if (map_symbol_translator)
+		result = map_symbol_translator->translate(symbol_set_id.toUtf8(), symbol_text.toUtf8());
+	return result;
+}
+
+
 
 void Map::setColor(MapColor* color, int pos)
 {
