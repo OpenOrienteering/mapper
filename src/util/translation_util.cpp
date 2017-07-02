@@ -20,11 +20,17 @@
 
 #include "translation_util.h"
 
+#include <Qt>
+#include <QtGlobal>
 #include <QDir>
 #include <QFileInfo>
+#include <QLatin1Char>
 #include <QLibraryInfo>
 #include <QLocale>
+#include <QStringList>
 #include <QTranslator>
+
+// IWYU pragma: no_forward_declare QTranslator
 
 
 namespace
@@ -73,7 +79,19 @@ TranslationUtil::TranslationUtil(const QString& code, QString translation_file)
 	load(app_translator, translation_file);
 }
 
-bool TranslationUtil::load(QTranslator& translator, QString translation_name) const
+
+std::unique_ptr<QTranslator> TranslationUtil::load(const QString& base_name) const
+{
+	auto translator = std::make_unique<QTranslator>();
+	auto translation_name = QString{base_name + QLatin1Char('_') + language.code};
+	auto success = load(*translator, translation_name);
+	if (!success)
+		translator.reset();
+	return translator;
+}
+
+
+bool TranslationUtil::load(QTranslator& translator, const QString& translation_name) const
 {
 	for (const auto& translation_dir : searchPath())
 	{
@@ -83,7 +101,7 @@ bool TranslationUtil::load(QTranslator& translator, QString translation_name) co
 			return true;
 		}
 	}
-	if(translator.load(translation_name))
+	if (translator.load(translation_name))
 	{
 		qDebug("TranslationUtil: Using %s from %s", qPrintable(translation_name), "default path");
 		return true;
@@ -150,4 +168,3 @@ TranslationUtil::Language TranslationUtil::languageFromCode(const QString& code)
 		language.displayName = QLocale(code).nativeLanguageName();
 	return language;
 }
-

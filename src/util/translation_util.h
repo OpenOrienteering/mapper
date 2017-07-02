@@ -22,9 +22,12 @@
 #define OPENORIENTEERING_TRANSLATION_UTIL_H
 
 #include <vector>
+#include <memory>
 
-#include <QLocale>
+#include <QString>
 #include <QTranslator>
+
+// IWYU pragma: no_forward_declare QTranslator
 
 
 /**
@@ -113,12 +116,20 @@ public:
 	static Language languageFromCode(const QString& code);
 	
 	
+	/**
+	 * Tries to create a QTranslator for the named translation.
+	 * 
+	 * If the named translation cannot be loaded from the search path,
+	 * returns an unset unique_prt.
+	 */
+	std::unique_ptr<QTranslator> load(const QString& translation_name) const;
+	
 protected:
 	/**
 	 * Finds a named translation from the search path and loads it
 	 * to the translator.
 	 */
-	bool load(QTranslator& translator, QString translation_name) const;
+	bool load(QTranslator& translator, const QString& translation_name) const;
 	
 	
 	static QString base_name;
