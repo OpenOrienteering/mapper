@@ -28,6 +28,7 @@
 #include <QLabel>
 #include <QLatin1Char>
 #include <QLineEdit>
+#include <QSignalBlocker>
 #include <QTextEdit>
 #include <QWidget>
 
@@ -50,7 +51,8 @@ SymbolPropertiesWidget* Symbol::createPropertiesWidget(SymbolSettingDialog* dial
 // ### SymbolPropertiesWidget ###
 
 SymbolPropertiesWidget::SymbolPropertiesWidget(Symbol* symbol, SymbolSettingDialog* dialog)
-: QTabWidget(), dialog(dialog)
+: QTabWidget()
+, dialog(dialog)
 {
 	auto generalTab = new QWidget();
 	
@@ -58,12 +60,12 @@ SymbolPropertiesWidget::SymbolPropertiesWidget(Symbol* symbol, SymbolSettingDial
 	generalTab->setLayout(layout);
 	
 	auto number_label = new QLabel(tr("Number:"));
-	number_edit = new QLineEdit*[Symbol::number_components];
-	for (int i = 0; i < Symbol::number_components; ++i)
+	number_editors.resize(Symbol::number_components, nullptr);
+	for (auto& editor : number_editors)
 	{
-		number_edit[i] = new QLineEdit();
-		number_edit[i]->setMaximumWidth(60);
-		number_edit[i]->setValidator(new QIntValidator(0, 99999, number_edit[i]));
+		editor = new QLineEdit{};
+		editor->setMaximumWidth(60);
+		editor->setValidator(new QIntValidator(0, 99999, editor));
 	}
 	auto name_label = new QLabel(tr("Name:"));
 	name_edit = new QLineEdit();
@@ -72,8 +74,8 @@ SymbolPropertiesWidget::SymbolPropertiesWidget(Symbol* symbol, SymbolSettingDial
 	helper_symbol_check = new QCheckBox(tr("Helper symbol (not shown in finished map)"));
 	SymbolPropertiesWidget::reset(symbol);
 
-	for (int i = 0; i < Symbol::number_components; ++i)
-		connect(number_edit[i], &QLineEdit::textEdited, this, &SymbolPropertiesWidget::numberChanged);
+	for (auto editor : number_editors)
+		connect(editor, &QLineEdit::textEdited, this, &SymbolPropertiesWidget::numberChanged);
 	connect(name_edit, &QLineEdit::textEdited, this, &SymbolPropertiesWidget::nameChanged);
 	connect(description_edit, &QTextEdit::textChanged, this, &SymbolPropertiesWidget::descriptionChanged);
 	connect(helper_symbol_check, &QAbstractButton::clicked, this, &SymbolPropertiesWidget::helperSymbolChanged);
@@ -83,34 +85,37 @@ SymbolPropertiesWidget::SymbolPropertiesWidget(Symbol* symbol, SymbolSettingDial
 	// 1st col
 	layout->addWidget(number_label, row, col++);
 	// 5 cols
-	layout->addWidget(number_edit[0], row, col++);
-	layout->addWidget(new QLabel(QString(QLatin1Char{'.'})), row, col++);
-	layout->addWidget(number_edit[1], row, col++);
-	layout->addWidget(new QLabel(QString(QLatin1Char{'.'})), row, col++);
-	layout->addWidget(number_edit[2], row, col++);
+	for (auto editor : number_editors)
+	{
+		layout->addWidget(editor, row, col++);
+		if (editor != number_editors.back())
+			layout->addWidget(new QLabel(QString(QLatin1Char{'.'})), row, col++);
+	}
 	// 7th col
 	layout->setColumnStretch(col, 1);
 	
+	auto last_col = col;
+	
 	row++; col = 0;
 	layout->addWidget(name_label, row, col++);
-	layout->addWidget(name_edit, row, col++, 1, 6);
+	layout->addWidget(name_edit, row, col++, 1, last_col);
 	
 	row++; col = 0;
-	layout->addWidget(description_label, row, col, 1, 7);
+	layout->addWidget(description_label, row, col, 1, last_col+1);
 	
 	row++; col = 0;
-	layout->addWidget(description_edit, row, col, 1, 7);
+	layout->addWidget(description_edit, row, col, 1, last_col+1);
 	
 	row++; col = 0;
-	layout->addWidget(helper_symbol_check, row, col, 1, 7);
+	layout->addWidget(helper_symbol_check, row, col, 1, last_col+1);
 	
 	addPropertiesGroup(tr("General"), generalTab);
 }
 
-SymbolPropertiesWidget::~SymbolPropertiesWidget()
-{
-	delete[] number_edit;
-}
+
+SymbolPropertiesWidget::~SymbolPropertiesWidget() = default;
+
+
 
 void SymbolPropertiesWidget::addPropertiesGroup(const QString& name, QWidget* widget)
 {
@@ -131,7 +136,7 @@ void SymbolPropertiesWidget::removePropertiesGroup(int index)
 
 void SymbolPropertiesWidget::removePropertiesGroup(const QString& name)
 {
-	int index = indexOfPropertiesGroup(name);
+	auto index = indexOfPropertiesGroup(name);
 	removePropertiesGroup(index);
 }
 
@@ -142,7 +147,7 @@ void SymbolPropertiesWidget::renamePropertiesGroup(int index, const QString& new
 
 void SymbolPropertiesWidget::renamePropertiesGroup(const QString& old_name, const QString& new_name)
 {
-	int index = indexOfPropertiesGroup(old_name);
+	auto index = indexOfPropertiesGroup(old_name);
 	setTabText(index, new_name);
 }
 
@@ -159,22 +164,16 @@ int SymbolPropertiesWidget::indexOfPropertiesGroup(const QString& name) const
 void SymbolPropertiesWidget::numberChanged(QString text)
 {
 	Q_UNUSED(text);
-	bool is_valid = true;
+	bool editors_enabled = true;
 	int i = 0;
-	while (i < Symbol::number_components)
+	for (auto editor : number_editors)
 	{
-		QString number_text = number_edit[i]->text();
-		if (is_valid && !number_text.isEmpty())
-			symbol->setNumberComponent(i, number_text.toInt());
-		else
-		{
-			symbol->setNumberComponent(i, -1);
-			is_valid = false;
-		}
-		
+		editor->setEnabled(editors_enabled);
+		if (editor == sender())
+			symbol->setNumberComponent(i, text.isEmpty() ? -1 : text.toInt());
+		if (editors_enabled && editor->text().isEmpty())
+			editors_enabled = false;
 		++i;
-		if (i < Symbol::number_components)
-			number_edit[i]->setEnabled(is_valid);
 	}
 	emit propertiesModified();
 }
@@ -199,18 +198,27 @@ void SymbolPropertiesWidget::helperSymbolChanged(bool checked)
 
 void SymbolPropertiesWidget::reset(Symbol* symbol)
 {
+	QSignalBlocker block(this);
 	this->symbol = symbol;
-	blockSignals(true); // don't send modification signals
-	bool number_edit_enabled = true;
-	for (int i=0; i<Symbol::number_components; i++)
+	bool editors_enabled = true;
+	int i = 0;
+	for (auto editor : number_editors)
 	{
-		int number_edit_value = symbol->getNumberComponent(i);
-		number_edit[i]->setText((number_edit_enabled && number_edit_value >= 0) ? QString::number(number_edit_value) : QString{});
-		number_edit[i]->setEnabled(number_edit_enabled);
-		number_edit_enabled = number_edit_enabled && number_edit_value >= 0;
+		editor->setEnabled(editors_enabled);
+		
+		int value = symbol->getNumberComponent(i);
+		if (value > 0 && editors_enabled)
+		{
+			editor->setText(QString::number(value));
+		}
+		else
+		{
+			editor->setText({});
+			editors_enabled = false;
+		}
+		++i;
 	}
 	name_edit->setText(symbol->getName());
 	description_edit->setText(symbol->getDescription());
 	helper_symbol_check->setChecked(symbol->isHelperSymbol());
-	blockSignals(false);
 }
