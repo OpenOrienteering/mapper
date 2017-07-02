@@ -40,6 +40,7 @@
 #include <QStyleOption>
 #include <QVBoxLayout>
 
+#include "core/map.h"
 #include "core/symbols/symbol.h"
 
 // IWYU pragma: no_forward_declare QWidget
@@ -162,14 +163,18 @@ void SymbolToolTip::adjustPosition()
 	move(QPoint(x, y));
 }
 
-void SymbolToolTip::scheduleShow(const Symbol* symbol, QRect icon_rect)
+void SymbolToolTip::scheduleShow(const Symbol* symbol, const Map* map, QRect icon_rect)
 {
 	this->icon_rect = icon_rect;
 	this->symbol = symbol;
 	
-	name_label->setText(symbol->getNumberAsString() + QLatin1String(" <b>") + symbol->getName() + QLatin1String("</b>"));
+	Q_ASSERT(map);
+	name_label->setText(symbol->getNumberAsString()
+	                    + QLatin1String(" <b>")
+	                    + map->translate(symbol->getName())
+	                    + QLatin1String("</b>"));
 	
-	auto help_text = symbol->getDescription();
+	auto help_text = map->translate(symbol->getDescription());
 	if (help_text.isEmpty())
 	{
 		help_text = tr("No description!");

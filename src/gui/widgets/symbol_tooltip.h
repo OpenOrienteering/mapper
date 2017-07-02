@@ -39,6 +39,7 @@ class QShowEvent;
 // IWYU pragma: no_forward_declare QWidget
 QT_END_NAMESPACE
 
+class Map;
 class Symbol;
 
 
@@ -77,7 +78,7 @@ public:
 	 * Schedules the tooltip for the symbol to be shown close to
 	 * but not covering the region given by rect.
 	 */
-	void scheduleShow(const Symbol* symbol, QRect rect);
+	void scheduleShow(const Symbol* symbol, const Map* map, QRect rect);
 	
 	/**
 	 * Resets the tooltip.
