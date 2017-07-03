@@ -71,7 +71,7 @@
         <message>
             <source>Green 50%, Yellow</source>
             <comment>Color 13</comment>
-            <translation>Grün 50%, Gelb</translation>
+            <translation>Grün 50%, Gelb 100%</translation>
     </message>
         <message>
             <source>Green</source>
@@ -101,7 +101,7 @@
         <message>
             <source>Green, Black 50%</source>
             <comment>Color 19</comment>
-            <translation>Grün mit Schwarz 50%</translation>
+            <translation>Grün 100% mit Schwarz 50%</translation>
     </message>
         <message>
             <source>Opaque Green</source>
@@ -151,8 +151,8 @@
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. A contour interval of 2.5 metres may be used for flat terrains. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
             <comment>Description of symbol 101</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Eine Linie, die Punkte gleicher Höhe verbindet. Die Standard-Äquidistanz zwilschen Höhenlinien ist 5 m. In sehr flachem Gelände kann eine Äquidistanz von 2.5 m verwendet werden.</translation>
+    </message>
         <message>
             <source>Slope line, contour</source>
             <comment>Name of symbol 101.1</comment>
@@ -161,8 +161,8 @@
         <message>
             <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
             <comment>Description of symbol 101.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ein Fallstrich kann auf der tiefergelegenen Seite der Höhenlinie gezeichnet werden, um die Richtung des Gefälles im Gelände zu verdeutlichen. Fallstriche sollten vorzugsweise in Einbuchtungen verwendet werden werden.</translation>
+    </message>
         <message>
             <source>Index contour</source>
             <comment>Name of symbol 102</comment>
@@ -197,7 +197,7 @@
         <message>
             <source>Slope line, formline</source>
             <comment>Name of symbol 103.1</comment>
-            <translation>Fallstrich, Hilfshöhenkurve</translation>
+            <translation>Fallstrich, Hilfshöhenlinie</translation>
     </message>
         <message>
             <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
