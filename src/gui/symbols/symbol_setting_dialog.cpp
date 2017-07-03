@@ -80,6 +80,7 @@ SymbolSettingDialog::SymbolSettingDialog(const Symbol* source_symbol, Map* sourc
 	connect(button_box->button(QDialogButtonBox::Help), &QAbstractButton::clicked, this, &SymbolSettingDialog::showHelp);
 	
 	preview_map = new Map();
+	preview_map->setSymbolSetId(source_map->symbolSetId());
 	preview_map->useColorsFrom(source_map);
 	preview_map->setScaleDenominator(source_map->getScaleDenominator());
 	
