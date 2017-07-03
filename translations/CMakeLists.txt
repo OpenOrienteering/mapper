@@ -83,7 +83,7 @@ set(Mapper_TRANS_DIR
 )
 
 # A target which builds all translations.
-add_custom_target(Mapper_translations ALL DEPENDS ${Mapper_QM} ${qt_qm} ${symbol_set_translations})
+add_custom_target(Mapper_translations ALL DEPENDS ${Mapper_QM} ${qt_qm} ${symbol_set_qm})
 
 install(
   FILES ${Mapper_QM} ${qt_qm}
