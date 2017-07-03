@@ -94,6 +94,8 @@ void addTranslation(TranslationEntries& entries, const QString& context, const Q
 	    return item.language == language;
 	}));
 	found->translations.push_back({language, translation, {}});
+	if (translation == found->source)
+		found->translations.back().type = NeedsReview;
 }
 
 
