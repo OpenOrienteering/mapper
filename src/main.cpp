@@ -21,21 +21,25 @@
 
 #include <clocale>
 
-#include <QLibraryInfo>
+#include <Qt>
+#include <QtGlobal>
+#include <QApplication>
 #include <QLocale>
-#include <QSettings>
+#include <QObject>
+#include <QSettings>  // IWYU pragma: keep
+#include <QString>
+#include <QStringList>
 #include <QStyle>
 #include <QStyleFactory>
-#include <QTranslator>
+#include <QVariant>
 
 #include <mapper_config.h>
 
 #if defined(QT_NETWORK_LIB)
-#define MAPPER_USE_QTSINGLEAPPLICATION 1
-#include <QtSingleApplication>
+#  define MAPPER_USE_QTSINGLEAPPLICATION 1
+#  include <QtSingleApplication>  // IWYU pragma: keep
 #else
-#define MAPPER_USE_QTSINGLEAPPLICATION 0
-#include <QApplication>
+#  define MAPPER_USE_QTSINGLEAPPLICATION 0
 #endif
 
 #include "global.h"
@@ -45,8 +49,10 @@
 #include "gui/main_window.h"
 #include "gui/widgets/mapper_proxystyle.h"
 #include "util/backports.h"
-#include "util/recording_translator.h"
+#include "util/recording_translator.h"  // IWYU pragma: keep
 #include "util/translation_util.h"
+
+// IWYU pragma: no_forward_declare QTranslator
 
 
 int main(int argc, char** argv)
@@ -68,8 +74,8 @@ int main(int argc, char** argv)
 	Q_INIT_RESOURCE(resources);
 	
 	// QSettings on OS X benefits from using an internet domain here.
-	QCoreApplication::setOrganizationName(QString::fromLatin1("OpenOrienteering.org"));
-	QCoreApplication::setApplicationName(QString::fromLatin1("Mapper"));
+	QApplication::setOrganizationName(QString::fromLatin1("OpenOrienteering.org"));
+	QApplication::setApplicationName(QString::fromLatin1("Mapper"));
 	qapp.setApplicationDisplayName(APP_NAME + QString::fromUtf8(" " APP_VERSION));
 	
 	// Set settings defaults
@@ -113,7 +119,7 @@ int main(int argc, char** argv)
 	
 	QStyle* base_style = nullptr;
 #if !defined(Q_OS_WIN) && !defined(Q_OS_MACOS)
-	if (QGuiApplication::platformName() == QLatin1String("xcb"))
+	if (QApplication::platformName() == QLatin1String("xcb"))
 	{
 		// Use the modern 'fusion' style instead of the 
 		// default "windows" style on X11.
