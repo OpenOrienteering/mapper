@@ -32,7 +32,9 @@
 
 QT_BEGIN_NAMESPACE
 class QCheckBox;
+class QComboBox;
 class QLineEdit;
+class QPushButton;
 class QTextEdit;
 class QWidget;
 QT_END_NAMESPACE
@@ -86,15 +88,21 @@ signals:
 	
 protected slots:
 	void numberChanged(QString text);
+	void languageChanged();
+	void editClicked();
 	void nameChanged(QString text);
 	void descriptionChanged();
 	void helperSymbolChanged(bool checked);
 	
 protected:
+	void updateTextEdits();
+	
 	Symbol* symbol;
 	SymbolSettingDialog* const dialog;
 	
 	std::vector<QLineEdit*> number_editors;
+	QComboBox* language_combo;
+	QPushButton* edit_button;
 	QLineEdit* name_edit;
 	QTextEdit* description_edit;
 	QCheckBox* helper_symbol_check;

@@ -23,17 +23,27 @@
 
 #include <QAbstractButton>
 #include <QCheckBox>
+#include <QComboBox>
+#include <QFlags>
 #include <QGridLayout>
 #include <QIntValidator>
 #include <QLabel>
 #include <QLatin1Char>
 #include <QLineEdit>
+#include <QMessageBox>
+#include <QPushButton>
 #include <QSignalBlocker>
+#include <QTextDocument>
 #include <QTextEdit>
+#include <QVariant>
 #include <QWidget>
 
+#include "settings.h"
+#include "core/map.h"
 #include "core/symbols/symbol.h"
 #include "gui/symbols/symbol_setting_dialog.h"
+#include "util/translation_util.h"
+#include "util/backports.h"
 
 // IWYU pragma: no_forward_declare QGridLayout
 // IWYU pragma: no_forward_declare QLabel
@@ -67,6 +77,10 @@ SymbolPropertiesWidget::SymbolPropertiesWidget(Symbol* symbol, SymbolSettingDial
 		editor->setMaximumWidth(60);
 		editor->setValidator(new QIntValidator(0, 99999, editor));
 	}
+	
+	auto language_label = new QLabel(tr("Text source:"));
+	language_combo = new QComboBox();
+	edit_button = new QPushButton(tr("Edit"));
 	auto name_label = new QLabel(tr("Name:"));
 	name_edit = new QLineEdit();
 	auto description_label = new QLabel(tr("Description:"));
@@ -76,6 +90,8 @@ SymbolPropertiesWidget::SymbolPropertiesWidget(Symbol* symbol, SymbolSettingDial
 
 	for (auto editor : number_editors)
 		connect(editor, &QLineEdit::textEdited, this, &SymbolPropertiesWidget::numberChanged);
+	connect(language_combo, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &SymbolPropertiesWidget::languageChanged);
+	connect(edit_button, &QPushButton::clicked, this, &SymbolPropertiesWidget::editClicked);
 	connect(name_edit, &QLineEdit::textEdited, this, &SymbolPropertiesWidget::nameChanged);
 	connect(description_edit, &QTextEdit::textChanged, this, &SymbolPropertiesWidget::descriptionChanged);
 	connect(helper_symbol_check, &QAbstractButton::clicked, this, &SymbolPropertiesWidget::helperSymbolChanged);
@@ -92,22 +108,29 @@ SymbolPropertiesWidget::SymbolPropertiesWidget(Symbol* symbol, SymbolSettingDial
 			layout->addWidget(new QLabel(QString(QLatin1Char{'.'})), row, col++);
 	}
 	// 7th col
-	layout->setColumnStretch(col, 1);
+	++col;
+	// 8th col
+	layout->setColumnStretch(col++, 1);
 	
-	auto last_col = col;
+	auto num_col = col;
+	
+	row++; col = 0;
+	layout->addWidget(language_label, row, col++);
+	layout->addWidget(language_combo, row, col++, 1, num_col-3);
+	layout->addWidget(edit_button, row, num_col-2);
 	
 	row++; col = 0;
 	layout->addWidget(name_label, row, col++);
-	layout->addWidget(name_edit, row, col++, 1, last_col);
+	layout->addWidget(name_edit, row, col++, 1, num_col-1);
 	
 	row++; col = 0;
-	layout->addWidget(description_label, row, col, 1, last_col+1);
+	layout->addWidget(description_label, row, col, 1, num_col);
 	
 	row++; col = 0;
-	layout->addWidget(description_edit, row, col, 1, last_col+1);
+	layout->addWidget(description_edit, row, col, 1, num_col);
 	
 	row++; col = 0;
-	layout->addWidget(helper_symbol_check, row, col, 1, last_col+1);
+	layout->addWidget(helper_symbol_check, row, col, 1, num_col);
 	
 	addPropertiesGroup(tr("General"), generalTab);
 }
@@ -178,6 +201,61 @@ void SymbolPropertiesWidget::numberChanged(QString text)
 	emit propertiesModified();
 }
 
+void SymbolPropertiesWidget::languageChanged()
+{
+	updateTextEdits();
+}
+
+void SymbolPropertiesWidget::editClicked()
+{
+	int result;
+	auto question = QString{};
+	if (language_combo->currentIndex() == 1)
+	{
+		question = tr("Before editing, the symbol's text will be "
+		              "replaced with the current translation. "
+		              "Do you want to continue?");
+	}
+	else
+	{
+		question = tr("After modifying the symbol's text, "
+		              "the translation may no longer be found. "
+		              "Do you want to continue?");
+	}
+	result = QMessageBox::warning(dialog, tr("Warning"), question,
+	                              QMessageBox::Yes | QMessageBox::No,
+	                              QMessageBox::Yes);
+	if (result == QMessageBox::Yes)
+	{
+		language_combo->setEnabled(false);
+		edit_button->setEnabled(false);
+		name_edit->setEnabled(true);
+		description_edit->setEnabled(true);
+		if (language_combo->currentIndex() == 1)
+		{
+			{
+				QSignalBlocker block(language_combo);
+				language_combo->setCurrentIndex(0);
+			}
+			auto name = name_edit->text();
+			if (name.isEmpty())
+			{
+				QSignalBlocker block(name_edit);
+				name = symbol->getName();
+				name_edit->setText(name);
+			}
+			if (description_edit->document()->isEmpty())
+			{
+				QSignalBlocker block(description_edit);
+				description_edit->setText(symbol->getDescription());
+			}
+			symbol->setName(name);
+			symbol->setDescription(description_edit->toPlainText());
+		}
+		emit propertiesModified();
+	}
+}
+
 void SymbolPropertiesWidget::nameChanged(QString text)
 {
 	symbol->setName(text);
@@ -194,6 +272,25 @@ void SymbolPropertiesWidget::helperSymbolChanged(bool checked)
 {
 	symbol->setIsHelperSymbol(checked);
 	emit propertiesModified();
+}
+
+void SymbolPropertiesWidget::updateTextEdits()
+{
+	auto name = symbol->getName();
+	auto description = symbol->getDescription();
+	if (language_combo->currentIndex() == 1)
+	{
+		name = dialog->getSourceMap()->raw_translation(name);
+		description = dialog->getSourceMap()->raw_translation(description);
+	}
+	{
+		QSignalBlocker block(name_edit);
+		name_edit->setText(name);
+	}
+	{
+		QSignalBlocker block(description_edit);
+		description_edit->setText(description);
+	}
 }
 
 void SymbolPropertiesWidget::reset(Symbol* symbol)
@@ -218,7 +315,47 @@ void SymbolPropertiesWidget::reset(Symbol* symbol)
 		}
 		++i;
 	}
-	name_edit->setText(symbol->getName());
-	description_edit->setText(symbol->getDescription());
+	language_combo->clear();
+	auto name_translated = dialog->getSourceMap()->raw_translation(symbol->getName());
+	auto description_translated = dialog->getSourceMap()->raw_translation(symbol->getDescription());
+	///: The language of the symbol name in the map file is not defined explicitly.
+	language_combo->addItem(tr("Map (%1)").arg(tr("undefined language")));
+	if (name_translated.isEmpty() && description_translated.isEmpty())
+	{
+		language_combo->setEnabled(false);
+		edit_button->setEnabled(false);
+		name_edit->setEnabled(true);
+		description_edit->setEnabled(true);
+	}
+	else
+	{
+		auto& settings = Settings::getInstance();
+		auto translation_file = settings.getSetting(Settings::General_TranslationFile).toString();
+		auto language = TranslationUtil::languageFromFilename(translation_file);
+		if (!language.isValid())
+		{
+			auto language_code = settings.getSetting(Settings::General_Language).toString();
+			for (const auto& item : TranslationUtil::availableLanguages())
+			{
+				if (item.code == language_code)
+				{
+					language = item;
+					break;
+				}
+			}
+		}	
+		if (!language.isValid())
+		{
+			language.displayName = tr("undefined language");
+		}
+
+		language_combo->addItem(tr("Translation (%1)").arg(language.displayName));
+		language_combo->setEnabled(true);
+		language_combo->setCurrentIndex(1);
+		edit_button->setEnabled(true);
+		name_edit->setEnabled(false);
+		description_edit->setEnabled(false);
+	}
+	updateTextEdits();
 	helper_symbol_check->setChecked(symbol->isHelperSymbol());
 }

@@ -477,7 +477,7 @@ void SymbolSettingDialog::updateSymbolLabel()
 	QString number = symbol->getNumberAsString();
 	if (number.isEmpty())
 		number = QString::fromLatin1("???");
-	QString name = symbol->getName();
+	QString name = source_map->translate(symbol->getName());
 	if (name.isEmpty())
 		name = tr("- unnamed -");
 	symbol_text_label->setText(QLatin1String("<b>") + number + QLatin1String("  ") + name + QLatin1String("</b>"));
