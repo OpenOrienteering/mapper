@@ -2656,7 +2656,7 @@ Barva: černá.</translation>
         <message>
             <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
             <comment>Description of symbol 203.1</comment>
-            <translation>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</translation>
+            <translation type="unfinished">Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</translation>
         </message>
         <message>
             <source>Passable rock face, no tags, minimum size</source>
@@ -2666,7 +2666,7 @@ Barva: černá.</translation>
         <message>
             <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
             <comment>Description of symbol 203.1.1</comment>
-            <translation>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</translation>
+            <translation type="unfinished">Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</translation>
         </message>
         <message>
             <source>Passable rock face, no tags, rounded</source>
@@ -2676,7 +2676,7 @@ Barva: černá.</translation>
         <message>
             <source>For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
             <comment>Description of symbol 203.2</comment>
-            <translation>For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</translation>
+            <translation type="unfinished">For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</translation>
         </message>
         <message>
             <source>Passable rock face, no tags, rounded, minimum size</source>
@@ -2686,7 +2686,7 @@ Barva: černá.</translation>
         <message>
             <source>For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
             <comment>Description of symbol 203.2.1</comment>
-            <translation>For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</translation>
+            <translation type="unfinished">For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</translation>
         </message>
         <message>
             <source>Rocky pit</source>
@@ -4057,183 +4057,183 @@ Fialová čára se trchu rozšíří do symbolu pro cíl. To je nedostatek tohot
         <message>
             <source>Purple</source>
             <comment>Color 0</comment>
-            <translation>Purple</translation>
-        </message>
+            <translation>Fialová</translation>
+    </message>
         <message>
             <source>Purple 50%</source>
             <comment>Color 1</comment>
-            <translation>Purple 50%</translation>
+            <translation type="unfinished">Purple 50%</translation>
         </message>
         <message>
             <source>Black</source>
             <comment>Color 2</comment>
-            <translation>Black</translation>
-        </message>
+            <translation>Černá</translation>
+    </message>
         <message>
             <source>Opaque White below Black</source>
             <comment>Color 3</comment>
-            <translation>Opaque White below Black</translation>
+            <translation type="unfinished">Opaque White below Black</translation>
         </message>
         <message>
             <source>Brown for contours</source>
             <comment>Color 4</comment>
-            <translation>Brown for contours</translation>
+            <translation type="unfinished">Brown for contours</translation>
         </message>
         <message>
             <source>Black 50-65% for buildings</source>
             <comment>Color 5</comment>
-            <translation>Black 50-65% for buildings</translation>
+            <translation type="unfinished">Black 50-65% for buildings</translation>
         </message>
         <message>
             <source>Black 50%</source>
             <comment>Color 6</comment>
-            <translation>Black 50%</translation>
+            <translation type="unfinished">Black 50%</translation>
         </message>
         <message>
             <source>Black 30%</source>
             <comment>Color 7</comment>
-            <translation>Black 30%</translation>
+            <translation type="unfinished">Black 30%</translation>
         </message>
         <message>
             <source>Black 20%</source>
             <comment>Color 8</comment>
-            <translation>Black 20%</translation>
+            <translation type="unfinished">Black 20%</translation>
         </message>
         <message>
             <source>Green, Black 50% above Brown</source>
             <comment>Color 9</comment>
-            <translation>Green, Black 50% above Brown</translation>
+            <translation type="unfinished">Green, Black 50% above Brown</translation>
         </message>
         <message>
             <source>Opaque Blue above Brown</source>
             <comment>Color 10</comment>
-            <translation>Opaque Blue above Brown</translation>
+            <translation type="unfinished">Opaque Blue above Brown</translation>
         </message>
         <message>
             <source>Blue above Brown</source>
             <comment>Color 11</comment>
-            <translation>Blue above Brown</translation>
+            <translation type="unfinished">Blue above Brown</translation>
         </message>
         <message>
             <source>Green above Brown</source>
             <comment>Color 12</comment>
-            <translation>Green above Brown</translation>
+            <translation type="unfinished">Green above Brown</translation>
         </message>
         <message>
             <source>Brown 20-50% for paved area, non-urban</source>
             <comment>Color 13</comment>
-            <translation>Brown 20-50% for paved area, non-urban</translation>
+            <translation type="unfinished">Brown 20-50% for paved area, non-urban</translation>
         </message>
         <message>
             <source>Brown 0-30% for paved area, urban</source>
             <comment>Color 14</comment>
-            <translation>Brown 0-30% for paved area, urban</translation>
+            <translation type="unfinished">Brown 0-30% for paved area, urban</translation>
         </message>
         <message>
             <source>Black below light browns</source>
             <comment>Color 15</comment>
-            <translation>Black below light browns</translation>
+            <translation type="unfinished">Black below light browns</translation>
         </message>
         <message>
             <source>Opaque Blue</source>
             <comment>Color 16</comment>
-            <translation>Opaque Blue</translation>
+            <translation type="unfinished">Opaque Blue</translation>
         </message>
         <message>
             <source>Blue</source>
             <comment>Color 17</comment>
-            <translation>Blue</translation>
+            <translation type="unfinished">Blue</translation>
         </message>
         <message>
             <source>Blue 75%</source>
             <comment>Color 18</comment>
-            <translation>Blue 75%</translation>
+            <translation type="unfinished">Blue 75%</translation>
         </message>
         <message>
             <source>Blue 30%</source>
             <comment>Color 19</comment>
-            <translation>Blue 30%</translation>
+            <translation type="unfinished">Blue 30%</translation>
         </message>
         <message>
             <source>OpenOrienteering Blue 50%</source>
             <comment>Color 20</comment>
-            <translation>OpenOrienteering Blue 50%</translation>
+            <translation type="unfinished">OpenOrienteering Blue 50%</translation>
         </message>
         <message>
             <source>Brown</source>
             <comment>Color 21</comment>
-            <translation>Brown</translation>
-        </message>
+            <translation>Hnědá</translation>
+    </message>
         <message>
             <source>OpenOrienteering Orange</source>
             <comment>Color 22</comment>
-            <translation>OpenOrienteering Orange</translation>
-        </message>
+            <translation>Oranžová OpenOrienteering</translation>
+    </message>
         <message>
             <source>Grey</source>
             <comment>Color 23</comment>
-            <translation>Grey</translation>
+            <translation type="unfinished">Grey</translation>
         </message>
         <message>
             <source>Green 50%, Yellow</source>
             <comment>Color 24</comment>
-            <translation>Green 50%, Yellow</translation>
-        </message>
+            <translation>Zelená 50%, žlutá</translation>
+    </message>
         <message>
             <source>White over Green</source>
             <comment>Color 25</comment>
-            <translation>White over Green</translation>
+            <translation type="unfinished">White over Green</translation>
         </message>
         <message>
             <source>Green, Black 50%</source>
             <comment>Color 26</comment>
-            <translation>Green, Black 50%</translation>
+            <translation type="unfinished">Green, Black 50%</translation>
         </message>
         <message>
             <source>Opaque Green</source>
             <comment>Color 27</comment>
-            <translation>Opaque Green</translation>
-        </message>
+            <translation>Krycí zelená</translation>
+    </message>
         <message>
             <source>Green</source>
             <comment>Color 28</comment>
-            <translation>Green</translation>
-        </message>
+            <translation>Zelená</translation>
+    </message>
         <message>
             <source>Green 60%</source>
             <comment>Color 29</comment>
-            <translation>Green 60%</translation>
-        </message>
+            <translation>Zelená 60%</translation>
+    </message>
         <message>
             <source>Green 30%</source>
             <comment>Color 30</comment>
-            <translation>Green 30%</translation>
-        </message>
+            <translation>Zelená 30%</translation>
+    </message>
         <message>
             <source>Green below light greens</source>
             <comment>Color 31</comment>
-            <translation>Green below light greens</translation>
-        </message>
+            <translation>Zelená nad světle zelenou</translation>
+    </message>
         <message>
             <source>Yellow</source>
             <comment>Color 32</comment>
-            <translation>Yellow</translation>
-        </message>
+            <translation>Žlutá</translation>
+    </message>
         <message>
             <source>Yellow 50%</source>
             <comment>Color 33</comment>
-            <translation>Yellow 50%</translation>
-        </message>
+            <translation>Žlutá 50%</translation>
+    </message>
         <message>
             <source>White over Yellow 70%</source>
             <comment>Color 34</comment>
-            <translation>White over Yellow 70%</translation>
-        </message>
+            <translation>Bílá nad žlutou 70%</translation>
+    </message>
         <message>
             <source>Yellow 70%</source>
             <comment>Color 35</comment>
-            <translation>Yellow 70%</translation>
-        </message>
+            <translation>Žlutá 70%</translation>
+    </message>
         <message>
             <source>Contour</source>
             <comment>Name of symbol 101</comment>

@@ -1222,7 +1222,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
         <location filename="../src/tools/draw_text_tool.cpp" line="102"/>
         <source>Snap</source>
         <extracomment>Snap to existing objects</extracomment>
-        <translation type="unfinished">Snappa</translation>
+        <translation>Snappa till existerande objekt</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="449"/>
@@ -1232,7 +1232,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="450"/>
         <source>&lt;b&gt;%1+%2&lt;/b&gt;: Cancel editing. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+%2&lt;/b&gt;: Avbryter redigering. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="455"/>
@@ -1609,42 +1609,42 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="48"/>
         <source>Import with GDAL/OGR:</source>
-        <translation type="unfinished"></translation>
+        <translation>Importera med GDAL/OGR:</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="50"/>
         <source>DXF</source>
-        <translation type="unfinished"></translation>
+        <translation>DXF</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="53"/>
         <source>GPX</source>
-        <translation type="unfinished"></translation>
+        <translation>GPX</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="56"/>
         <source>OSM</source>
-        <translation type="unfinished"></translation>
+        <translation>OSM</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="60"/>
         <source>Configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfiguration</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="68"/>
         <source>Parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Parameter</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="68"/>
         <source>Value</source>
-        <translation type="unfinished">Värde</translation>
+        <translation>Värde</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="87"/>
         <source>GDAL/OGR</source>
-        <translation type="unfinished"></translation>
+        <translation>GDAL/OGR</translation>
     </message>
 </context>
 <context>
@@ -1667,7 +1667,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="80"/>
         <source>Pixels per inch:</source>
-        <translation>Pixlar per tum (PPI):</translation>
+        <translation>Pixlar per tum:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="90"/>
@@ -1677,7 +1677,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="99"/>
         <source>Saving files</source>
-        <translation>Sparning av filer</translation>
+        <translation>Sparar filer</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="101"/>
@@ -1719,12 +1719,12 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="116"/>
         <source>Default</source>
-        <translation type="unfinished">Förvald</translation>
+        <translation>Standard</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="139"/>
         <source>Use the new OCD importer also for version 8 files</source>
-        <translation>Använd den nya OCD-filimporteraren även för version 8-filer</translation>
+        <translation type="unfinished">Använd den nya OCD-filimporteraren även för version 8-filer</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="183"/>
@@ -2548,12 +2548,12 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
         <location filename="../src/fileformats/file_import_export.h" line="230"/>
         <source>No such option: %1</source>
         <comment>No such import / export option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Inget sådant alternativ: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="279"/>
         <source>Geospatial vector data</source>
-        <translation type="unfinished"></translation>
+        <translation>Geospatial vektor data</translation>
     </message>
 </context>
 <context>
@@ -2687,7 +2687,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
         <location filename="../src/gdal/ogr_file_format.cpp" line="1211"/>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1252"/>
         <source>Could not read '%1': %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunde inte läsa '%1': %2</translation>
     </message>
 </context>
 <context>
@@ -3192,7 +3192,7 @@ Vill du skala om symbolerna till den valda skalan?</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="151"/>
         <source>You must close the current file before you can open another one.</source>
-        <translation type="unfinished"></translation>
+        <translation>Du måste stänga den nuvarande filen innan du kan öppna en annan.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="721"/>
@@ -3456,7 +3456,8 @@ Skala om den importerade datan?</translation>
         <location filename="../src/gui/map/map_editor.cpp" line="3948"/>
         <source>Symbol replacement was canceled.
 Import the data anyway?</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbol-ersättningen avbröts.
+Importera datan ändå?</translation>
     </message>
 </context>
 <context>
@@ -8205,11 +8206,9 @@ Tänker du inte rita på bakgrunden är det inget problem.</translation>
     <message numerus="yes">
         <location filename="../src/templates/template_track.cpp" line="475"/>
         <source>%n path object(s) could not be imported (reason: missing coordinates).</source>
-        <translation>
-            <numerusform>%n linjeobjekt kunde inte importeras (anledning: koordinater fattas).</numerusform>
-            <numerusform>%n linjeobjekt kunde inte importeras (anledning: koordinater fattas).</numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n linjeobjekt kunde inte importeras (anledning: koordinater saknas).</numerusform>
+        <numerusform>%n linjeobjekt kunde inte importeras (anledning: koordinater saknas).</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/sensors/gps_track.cpp" line="421"/>
         <source>Error reading</source>
