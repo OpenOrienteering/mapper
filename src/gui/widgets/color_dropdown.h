@@ -70,6 +70,7 @@ protected:
 	void onColorChanged(int, const MapColor* color);
 	void onColorDeleted(int, const MapColor* color);
 	
+	const Map* map;
 	const bool spot_colors_only;
 };
 

@@ -34,6 +34,7 @@
 
 ColorDropDown::ColorDropDown(const Map* map, const MapColor* initial_color, bool spot_colors_only, QWidget* parent)
 : QComboBox(parent)
+, map(map)
 , spot_colors_only(spot_colors_only)
 {
 	addItem(tr("- none -"), QVariant::fromValue<const MapColor*>(nullptr));
@@ -53,7 +54,7 @@ ColorDropDown::ColorDropDown(const Map* map, const MapColor* initial_color, bool
 			initial_index = count();
 		
 		pixmap.fill(colorWithOpacity(*color));
-		QString name = spot_colors_only ? color->getSpotColorName() : color->getName();
+		QString name = spot_colors_only ? color->getSpotColorName() : map->translate(color->getName());
 		addItem(QIcon(pixmap), name, QVariant::fromValue(color));
 	}
 	if (!spot_colors_only)
@@ -103,7 +104,7 @@ void ColorDropDown::addColor(const MapColor* color)
 		int icon_size = style()->pixelMetric(QStyle::PM_SmallIconSize);
 		QPixmap pixmap(icon_size, icon_size);
 		pixmap.fill(*color);
-		insertItem(pos, color->getName(), QVariant::fromValue(color));
+		insertItem(pos, map->translate(color->getName()), QVariant::fromValue(color));
 		setItemData(pos, pixmap, Qt::DecorationRole);
 	}
 }
@@ -124,7 +125,7 @@ void ColorDropDown::updateColor(const MapColor* color)
 			int icon_size = style()->pixelMetric(QStyle::PM_SmallIconSize);
 			QPixmap pixmap(icon_size, icon_size);
 			pixmap.fill(*color);
-			setItemText(pos, color->getName());
+			setItemText(pos, map->translate(color->getName()));
 			setItemData(pos, pixmap, Qt::DecorationRole);
 		}
 		else
