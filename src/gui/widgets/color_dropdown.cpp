@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2015 Kai Pastor
+ *    Copyright 2015, 2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,6 +21,13 @@
 
 #include "color_dropdown.h"
 
+#include <Qt>
+#include <QIcon>
+#include <QPixmap>
+#include <QString>
+#include <QStyle>
+#include <QVariant>
+
 #include "core/map.h"
 #include "core/map_color.h"
 
@@ -29,7 +36,7 @@ ColorDropDown::ColorDropDown(const Map* map, const MapColor* initial_color, bool
 : QComboBox(parent)
 , spot_colors_only(spot_colors_only)
 {
-	addItem(tr("- none -"), QVariant::fromValue<const MapColor*>(NULL));
+	addItem(tr("- none -"), QVariant::fromValue<const MapColor*>(nullptr));
 	
 	int icon_size = style()->pixelMetric(QStyle::PM_SmallIconSize);
 	QPixmap pixmap(icon_size, icon_size);
@@ -67,10 +74,10 @@ ColorDropDown::ColorDropDown(const Map* map, const MapColor* initial_color, bool
 	connect(map, &Map::colorDeleted, this, &ColorDropDown::onColorDeleted);
 }
 
-ColorDropDown::~ColorDropDown()
-{
-	// Nothing, not inlined.
-}
+
+ColorDropDown::~ColorDropDown() = default;
+
+
 
 const MapColor* ColorDropDown::color() const
 {

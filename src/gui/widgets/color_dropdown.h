@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2015 Kai Pastor
+ *    Copyright 2015, 2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,13 +19,20 @@
  */
 
 
-#ifndef _OPENORIENTEERING_COLOR_DROPDOWN_H_
-#define _OPENORIENTEERING_COLOR_DROPDOWN_H_
+#ifndef OPENORIENTEERING_COLOR_DROPDOWN_H
+#define OPENORIENTEERING_COLOR_DROPDOWN_H
 
+#include <QtGlobal>
 #include <QComboBox>
+#include <QObject>
+
+QT_BEGIN_NAMESPACE
+class QWidget;
+QT_END_NAMESPACE
 
 class Map;
 class MapColor;
+
 
 /**
  * A combobox which lets the user select a map color.
@@ -41,7 +48,7 @@ public:
 	ColorDropDown(const Map* map, const MapColor* initial_color = nullptr, bool spot_colors_only = false, QWidget* parent = nullptr);
 	
 	/** Destructor. */
-	~ColorDropDown();
+	~ColorDropDown() override;
 	
 	/** Returns the selected color or NULL if no color selected. */
 	const MapColor* color() const;
