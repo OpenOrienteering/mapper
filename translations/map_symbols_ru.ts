@@ -22,12 +22,12 @@
             <source>Black 65%</source>
             <comment>Color 3</comment>
             <translation>Чёрный 65%</translation>
-    </message>
+        </message>
         <message>
             <source>Black 20%</source>
             <comment>Color 4</comment>
             <translation>Чёрный 20%</translation>
-    </message>
+        </message>
         <message>
             <source>Brown 50%</source>
             <comment>Color 5</comment>
@@ -67,7 +67,7 @@
             <source>Black 25% (Grey)</source>
             <comment>Color 12</comment>
             <translation>Чёрный 25% (Серый)</translation>
-    </message>
+        </message>
         <message>
             <source>Green 50%, Yellow</source>
             <comment>Color 13</comment>
@@ -82,7 +82,7 @@
             <source>Opaque Yellow</source>
             <comment>Color 15</comment>
             <translation>Непрозрачный жёлтый</translation>
-    </message>
+        </message>
         <message>
             <source>Opaque White over Green</source>
             <comment>Color 16</comment>
@@ -92,17 +92,17 @@
             <source>Opaque Green 20%</source>
             <comment>Color 17</comment>
             <translation>Непрозрачный зелёный 20%</translation>
-    </message>
+        </message>
         <message>
             <source>Opaque Green 50%</source>
             <comment>Color 18</comment>
             <translation>Непрозрачный зелёный 50%</translation>
-    </message>
+        </message>
         <message>
             <source>Green, Black 50%</source>
             <comment>Color 19</comment>
             <translation>Зелёный, Чёрный 50%</translation>
-    </message>
+        </message>
         <message>
             <source>Opaque Green</source>
             <comment>Color 20</comment>
@@ -112,12 +112,12 @@
             <source>Green 50%</source>
             <comment>Color 21</comment>
             <translation>Зелёный 50%</translation>
-    </message>
+        </message>
         <message>
             <source>Green 20%</source>
             <comment>Color 22</comment>
             <translation>Зелёный 20%</translation>
-    </message>
+        </message>
         <message>
             <source>Green below light greens</source>
             <comment>Color 23</comment>
@@ -127,12 +127,12 @@
             <source>Green 50% over Yellow</source>
             <comment>Color 24</comment>
             <translation>Зелёный 50% поверх Жёлтого</translation>
-    </message>
+        </message>
         <message>
             <source>White over Yellow</source>
             <comment>Color 25</comment>
             <translation>Белый поверх Жёлтого</translation>
-    </message>
+        </message>
         <message>
             <source>Yellow</source>
             <comment>Color 26</comment>
@@ -2754,7 +2754,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
             <source>A runnable area of rock without earth or vegetation is shown as bare rock. An area of rock covered with grass, moss or other low vegetation is shown as open land (401/402).</source>
             <comment>Description of symbol 212</comment>
             <translation>Хорошо пробегаемая скальная поверхность без растительности. Если имеется какая-либо растительность (трава, мох и т. п.), следует использовать знаки 401 или 402.</translation>
-    </message>
+        </message>
         <message>
             <source>Lake</source>
             <comment>Name of symbol 301</comment>
@@ -3336,7 +3336,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
             <source>A stone wall or stone-faced bank.</source>
             <comment>Description of symbol 519</comment>
             <translation>Каменная стена или облицованный камнем вал (насыпь).</translation>
-    </message>
+        </message>
         <message>
             <source>Ruined stone wall</source>
             <comment>Name of symbol 520</comment>
@@ -3887,7 +3887,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Black 20%</source>
             <comment>Color 8</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Чёрный 20%</translation>
         </message>
         <message>
             <source>Green, Black 50% above Brown</source>
@@ -3977,7 +3977,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Green, Black 50%</source>
             <comment>Color 26</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Зелёный, Чёрный 50%</translation>
         </message>
         <message>
             <source>Opaque Green</source>
@@ -9358,7 +9358,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Special vegetation feature</source>
             <comment>Name of symbol 419</comment>
-            <translation>Специальные объекты растительности</translation>
+            <translation type="unfinished">Специальные объекты растительности</translation>
         </message>
         <message>
             <source>Symbols 418, 419 and 420 can be used for special small vegetation features. The definition of the symbol must be given in each case in the map legend.</source>
@@ -9368,7 +9368,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Special vegetation feature</source>
             <comment>Name of symbol 420</comment>
-            <translation>Специальные объекты растительности</translation>
+            <translation type="unfinished">Специальные объекты растительности</translation>
         </message>
         <message>
             <source>Symbols 418, 419 and 420 can be used for special small vegetation features. The definition of the symbol must be given in each case in the map legend.</source>
@@ -9729,7 +9729,7 @@ A bounding line may be drawn if there is no natural boundary, as follows:
             <source>First aid post</source>
             <comment>Name of symbol 712</comment>
             <translation>Пункт первой помощи</translation>
-    </message>
+        </message>
         <message>
             <source>The location of a first aid post.</source>
             <comment>Description of symbol 712</comment>

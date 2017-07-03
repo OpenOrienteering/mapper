@@ -4058,7 +4058,7 @@ Fialová čára se trchu rozšíří do symbolu pro cíl. To je nedostatek tohot
             <source>Purple</source>
             <comment>Color 0</comment>
             <translation>Fialová</translation>
-    </message>
+        </message>
         <message>
             <source>Purple 50%</source>
             <comment>Color 1</comment>
@@ -4068,7 +4068,7 @@ Fialová čára se trchu rozšíří do symbolu pro cíl. To je nedostatek tohot
             <source>Black</source>
             <comment>Color 2</comment>
             <translation>Černá</translation>
-    </message>
+        </message>
         <message>
             <source>Opaque White below Black</source>
             <comment>Color 3</comment>
@@ -4163,12 +4163,12 @@ Fialová čára se trchu rozšíří do symbolu pro cíl. To je nedostatek tohot
             <source>Brown</source>
             <comment>Color 21</comment>
             <translation>Hnědá</translation>
-    </message>
+        </message>
         <message>
             <source>OpenOrienteering Orange</source>
             <comment>Color 22</comment>
             <translation>Oranžová OpenOrienteering</translation>
-    </message>
+        </message>
         <message>
             <source>Grey</source>
             <comment>Color 23</comment>
@@ -4178,7 +4178,7 @@ Fialová čára se trchu rozšíří do symbolu pro cíl. To je nedostatek tohot
             <source>Green 50%, Yellow</source>
             <comment>Color 24</comment>
             <translation>Zelená 50%, žlutá</translation>
-    </message>
+        </message>
         <message>
             <source>White over Green</source>
             <comment>Color 25</comment>
@@ -4193,47 +4193,47 @@ Fialová čára se trchu rozšíří do symbolu pro cíl. To je nedostatek tohot
             <source>Opaque Green</source>
             <comment>Color 27</comment>
             <translation>Krycí zelená</translation>
-    </message>
+        </message>
         <message>
             <source>Green</source>
             <comment>Color 28</comment>
             <translation>Zelená</translation>
-    </message>
+        </message>
         <message>
             <source>Green 60%</source>
             <comment>Color 29</comment>
             <translation>Zelená 60%</translation>
-    </message>
+        </message>
         <message>
             <source>Green 30%</source>
             <comment>Color 30</comment>
             <translation>Zelená 30%</translation>
-    </message>
+        </message>
         <message>
             <source>Green below light greens</source>
             <comment>Color 31</comment>
             <translation>Zelená nad světle zelenou</translation>
-    </message>
+        </message>
         <message>
             <source>Yellow</source>
             <comment>Color 32</comment>
             <translation>Žlutá</translation>
-    </message>
+        </message>
         <message>
             <source>Yellow 50%</source>
             <comment>Color 33</comment>
             <translation>Žlutá 50%</translation>
-    </message>
+        </message>
         <message>
             <source>White over Yellow 70%</source>
             <comment>Color 34</comment>
             <translation>Bílá nad žlutou 70%</translation>
-    </message>
+        </message>
         <message>
             <source>Yellow 70%</source>
             <comment>Color 35</comment>
             <translation>Žlutá 70%</translation>
-    </message>
+        </message>
         <message>
             <source>Contour</source>
             <comment>Name of symbol 101</comment>
