@@ -27,8 +27,10 @@
 #include <QLatin1Char>
 #include <QLibraryInfo>
 #include <QLocale>
+#include <QSettings>
 #include <QStringList>
 #include <QTranslator>
+#include <QVariant>
 
 // IWYU pragma: no_forward_declare QTranslator
 
@@ -51,11 +53,31 @@ QStringList searchPath()
 	return search_path;
 }
 
+QString default_language()
+{
+	return QLocale::system().name().left(2);
+}
+
 } // namespace
 
 
 
 QString TranslationUtil::base_name(QString::fromLatin1("qt_"));
+
+
+TranslationUtil::TranslationUtil()
+: TranslationUtil{ QSettings{} }
+{
+	// nothing else
+}
+
+
+TranslationUtil::TranslationUtil(const QSettings& settings)
+: TranslationUtil{ settings.value(QLatin1String("language"), default_language()).toString(),
+                   settings.value(QLatin1String("translationFile")).toString() }
+{
+	// nothing else
+}
 
 
 TranslationUtil::TranslationUtil(const QString& code, QString translation_file)
@@ -166,5 +188,18 @@ TranslationUtil::Language TranslationUtil::languageFromCode(const QString& code)
 		language.displayName = QLocale::languageToString(QLocale::Esperanto);
 	else
 		language.displayName = QLocale(code).nativeLanguageName();
+	return language;
+}
+
+// static
+TranslationUtil::Language TranslationUtil::languageFromSettings(const QSettings& settings)
+{
+	auto translation_file = settings.value(QLatin1String("translationFile")).toString();
+	auto language = languageFromFilename(translation_file);
+	if (!language.isValid())
+	{
+		auto language_code = settings.value(QLatin1String("language"), default_language()).toString();
+		language = languageFromCode(language_code);
+	}
 	return language;
 }

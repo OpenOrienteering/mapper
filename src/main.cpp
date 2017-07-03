@@ -31,7 +31,6 @@
 #include <QStringList>
 #include <QStyle>
 #include <QStyleFactory>
-#include <QVariant>
 
 #include <mapper_config.h>
 
@@ -44,7 +43,6 @@
 
 #include "global.h"
 #include "mapper_resource.h"
-#include "settings.h"
 #include "gui/home_screen_controller.h"
 #include "gui/main_window.h"
 #include "gui/widgets/mapper_proxystyle.h"
@@ -78,10 +76,6 @@ int main(int argc, char** argv)
 	QApplication::setApplicationName(QString::fromLatin1("Mapper"));
 	qapp.setApplicationDisplayName(APP_NAME + QString::fromUtf8(" " APP_VERSION));
 	
-	// Set settings defaults
-	Settings& settings = Settings::getInstance();
-	settings.applySettings();
-	
 #ifdef WIN32
 	// Load plugins on Windows
 	qapp.addLibraryPath(QCoreApplication::applicationDirPath() + QLatin1String("/plugins"));
@@ -90,16 +84,15 @@ int main(int argc, char** argv)
 	MapperResource::setSeachPaths();
 	
 	// Localization
+	QSettings settings;
 	TranslationUtil::setBaseName(QLatin1String("OpenOrienteering"));
-	auto language = settings.getSetting(Settings::General_Language).toString();
-	auto translation_file = settings.getSetting(Settings::General_TranslationFile).toString();
-	TranslationUtil translation(language, translation_file);
+	TranslationUtil translation(settings);
 	QLocale::setDefault(QLocale(translation.code()));
 #if defined(Q_OS_MACOS)
 	// Normally this is done in Settings::apply() because it is too late here.
 	// But Mapper 0.6.2/0.6.3 accidently wrote a string instead of a list. This
 	// error caused crashes when opening native dialogs (i.e. the open-file dialog!).
-	QSettings().setValue(QString::fromLatin1("AppleLanguages"), QStringList{ translation.code() });
+	settings.setValue(QString::fromLatin1("AppleLanguages"), QStringList{ translation.code() });
 #endif
 #if defined(Mapper_DEBUG_TRANSLATIONS)
 	if (!translation.getAppTranslator().isEmpty())
