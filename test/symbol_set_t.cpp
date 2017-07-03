@@ -65,7 +65,7 @@ class QColor;
 static auto Obsolete = QString::fromLatin1("obsolete");
 static auto NeedsReview = QString::fromLatin1("unfinished");
 
-static auto translation_suffix = { "template", "cs", "fi", "ru", "uk" };
+static auto translation_suffix = { "template", "cs", "de", "fi", "fr", "ru", "sv", "uk" };
 
 using TranslationEntries = std::vector<SymbolSetTool::TranslationEntry>;
 

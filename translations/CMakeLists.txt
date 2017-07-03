@@ -68,8 +68,11 @@ qt5_add_translation(qt_qm ${qt_translations})
 set(symbol_set_translation_template map_symbols_template.ts)
 set(symbol_set_translations
   map_symbols_cs.ts
+  map_symbols_de.ts
   map_symbols_fi.ts
+  map_symbols_fr.ts
   map_symbols_ru.ts
+  map_symbols_sv.ts
   map_symbols_uk.ts
 )
 qt5_add_translation(symbol_set_qm ${symbol_set_translations})
