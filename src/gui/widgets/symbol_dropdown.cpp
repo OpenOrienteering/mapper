@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012, 2013, 2014 Kai Pastor
+ *    Copyright 2012, 2013, 2014, 2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,56 +21,68 @@
 
 #include "symbol_dropdown.h"
 
-#include <qmath.h>
-#include <QDebug>
-#include <QFile>
-#include <QPainter>
-#include <QTextDocument>
-#include <QXmlStreamReader>
-#include <QXmlStreamWriter>
+#include <Qt>
+#include <QAbstractItemModel>
+#include <QImage>
+#include <QLatin1Char>
+#include <QList>
+#include <QMetaType>
+#include <QModelIndex>
+#include <QPixmap>
+#include <QVariant>
+#include <QWidget>
 
-#include "core/symbols/combined_symbol.h"
 #include "core/map.h"
+#include "core/symbols/combined_symbol.h"
+#include "core/symbols/symbol.h"
+#include "util/backports.h"
+
 
 // ### SymbolDropDown ###
 
 // allow explicit use of Symbol pointers in QVariant
 Q_DECLARE_METATYPE(Symbol*)
 
+
 SymbolDropDown::SymbolDropDown(const Map* map, int filter, const Symbol* initial_symbol, const Symbol* excluded_symbol, QWidget* parent)
  : QComboBox(parent)
 {
 	num_custom_items = 0;
-	addItem(tr("- none -"), QVariant::fromValue<Symbol*>(NULL));
+	addItem(tr("- none -"), QVariant::fromValue<Symbol*>(nullptr));
 	
 	int size = map->getNumSymbols();
 	for (int i = 0; i < size; ++i)
 	{
-		const Symbol* symbol = map->getSymbol(i);
+		const auto symbol = map->getSymbol(i);
 		if (!(symbol->getType() & filter))
 			continue;
 		if (symbol == excluded_symbol)
 			continue;
 		if (symbol->getType() == Symbol::Combined)	// TODO: if point objects start to be able to contain objects of other ordinary symbols, add a check for these here, too, to prevent circular references
 		{
-			const CombinedSymbol* combined_symbol = reinterpret_cast<const CombinedSymbol*>(symbol);
+			auto combined_symbol = static_cast<const CombinedSymbol*>(symbol);
 			if (combined_symbol->containsSymbol(excluded_symbol))
 				continue;
 		}
 		
-		QString symbol_name = symbol->getNumberAsString() + QLatin1Char(' ') + symbol->getPlainTextName();
+		auto symbol_name = QString{symbol->getNumberAsString() + QLatin1Char(' ') + symbol->getPlainTextName()};
 		addItem(QPixmap::fromImage(symbol->getIcon(map)), symbol_name, QVariant::fromValue<const Symbol*>(symbol));
 	}
 	setSymbol(initial_symbol);
 }
 
+
+SymbolDropDown::~SymbolDropDown() = default;
+
+
+
 const Symbol* SymbolDropDown::symbol() const
 {
-	QVariant data = itemData(currentIndex());
+	auto data = itemData(currentIndex());
 	if (data.canConvert<const Symbol*>())
 		return data.value<const Symbol*>();
 	else
-		return NULL;
+		return nullptr;
 }
 
 void SymbolDropDown::setSymbol(const Symbol* symbol)
@@ -80,13 +92,13 @@ void SymbolDropDown::setSymbol(const Symbol* symbol)
 
 void SymbolDropDown::addCustomItem(const QString& text, int id)
 {
-	insertItem(1 + num_custom_items, text, QVariant(id));
+	insertItem(1 + num_custom_items, text, QVariant{id});
 	++num_custom_items;
 }
 
 int SymbolDropDown::customID() const
 {
-	QVariant data = itemData(currentIndex());
+	auto data = itemData(currentIndex());
 	if (data.canConvert<int>())
 		return data.value<int>();
 	else
@@ -95,53 +107,61 @@ int SymbolDropDown::customID() const
 
 void SymbolDropDown::setCustomItem(int id)
 {
-	setCurrentIndex(findData(QVariant(id)));
+	setCurrentIndex(findData(QVariant{id}));
 }
+
 
 
 // ### SymbolDropDownDelegate ###
 
 SymbolDropDownDelegate::SymbolDropDownDelegate(int symbol_type_filter, QObject* parent)
- : QItemDelegate(parent), symbol_type_filter(symbol_type_filter)
+: QItemDelegate{parent}
+, symbol_type_filter{symbol_type_filter}
 {
+	// nothing else
 }
+
+
+SymbolDropDownDelegate::~SymbolDropDownDelegate() = default;
+
+
 
 QWidget* SymbolDropDownDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
 	Q_UNUSED(option);
-	QVariantList list = index.data(Qt::UserRole).toList();
-	SymbolDropDown* widget
-		= new SymbolDropDown(list.at(0).value<const Map*>(), symbol_type_filter,
-							 list.at(1).value<const Symbol*>(), NULL, parent);
+	auto list = index.data(Qt::UserRole).toList();
+	auto widget	= new SymbolDropDown(list.at(0).value<const Map*>(), symbol_type_filter,
+	                                 list.at(1).value<const Symbol*>(), nullptr, parent);
 	
-	connect(widget, SIGNAL(currentIndexChanged(int)), this, SLOT(emitCommitData()));
+	connect(widget, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &SymbolDropDownDelegate::emitCommitData);
 	return widget;
 }
 
 void SymbolDropDownDelegate::setEditorData(QWidget* editor, const QModelIndex& index) const
 {
-	SymbolDropDown* widget = static_cast<SymbolDropDown*>(editor);
-	const Symbol* symbol = index.data(Qt::UserRole).toList().at(1).value<const Symbol*>();
+	auto widget = static_cast<SymbolDropDown*>(editor);
+	auto symbol = index.data(Qt::UserRole).toList().at(1).value<const Symbol*>();
 	widget->setSymbol(symbol);
 }
 
 void SymbolDropDownDelegate::setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const
 {
-	SymbolDropDown* widget = static_cast<SymbolDropDown*>(editor);
-	const Symbol* symbol = widget->symbol();
-	QVariantList list = index.data(Qt::UserRole).toList();
+	auto widget = static_cast<SymbolDropDown*>(editor);
+	auto symbol = widget->symbol();
+	auto list = index.data(Qt::UserRole).toList();
 	list[1] = qVariantFromValue<const Symbol*>(symbol);
 	model->setData(index, list, Qt::UserRole);
 	
 	if (symbol)
 	{
-		model->setData(index, QVariant(symbol->getNumberAsString() + QLatin1Char(' ') + symbol->getPlainTextName()), Qt::EditRole);
+		auto text = QString{symbol->getNumberAsString() + QLatin1Char(' ') + symbol->getPlainTextName()};
+		model->setData(index, QVariant{text}, Qt::EditRole);
 		model->setData(index, symbol->getIcon(list[0].value<const Map*>()), Qt::DecorationRole);
 	}
 	else
 	{
 		model->setData(index, tr("- None -"), Qt::EditRole);
-		model->setData(index, QVariant(), Qt::DecorationRole);
+		model->setData(index, {}, Qt::DecorationRole);
 	}
 }
 

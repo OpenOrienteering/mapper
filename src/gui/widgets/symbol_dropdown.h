@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012, 2013, 2014 Kai Pastor
+ *    Copyright 2012, 2013, 2014, 2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,13 +19,25 @@
  */
 
 
-#ifndef _OPENORIENTEERING_SYMBOL_DROPDOWN_H_
-#define _OPENORIENTEERING_SYMBOL_DROPDOWN_H_
+#ifndef OPENORIENTEERING_SYMBOL_DROPDOWN_H
+#define OPENORIENTEERING_SYMBOL_DROPDOWN_H
 
+#include <QtGlobal>
 #include <QComboBox>
 #include <QItemDelegate>
+#include <QObject>
+#include <QString>
+// IWYU pragma: no_include <QStyleOptionViewItem>
 
-#include "core/symbols/symbol.h"
+QT_BEGIN_NAMESPACE
+class QAbstractItemModel;
+class QModelIndex;
+class QStyleOptionViewItem;
+class QWidget;
+QT_END_NAMESPACE
+
+class Map;
+class Symbol;
 
 
 /**
@@ -39,13 +51,16 @@ public:
 	 * Creates a SymbolDropDown.
 	 * @param map Map in which to choose a symbol.
 	 * @param filter Bitwise-or combination of the allowed Symbol::Type types.
-	 * @param initial_symbol Initial choice or NULL for "- none -".
-	 * @param excluded_symbol Symbol to exclude from the list or NULL.
+	 * @param initial_symbol Initial choice or nullptr for "- none -".
+	 * @param excluded_symbol Symbol to exclude from the list or nullptr.
 	 * @param parent QWidget parent.
 	 */
-	SymbolDropDown(const Map* map, int filter, const Symbol* initial_symbol = NULL, const Symbol* excluded_symbol = NULL, QWidget* parent = NULL);
+	SymbolDropDown(const Map* map, int filter, const Symbol* initial_symbol = nullptr, const Symbol* excluded_symbol = nullptr, QWidget* parent = nullptr);
 	
-	/** Returns the selected symbol or NULL if no symbol selected */
+	~SymbolDropDown();
+	
+	
+	/** Returns the selected symbol or nullptr if no symbol selected */
 	const Symbol* symbol() const;
 	
 	/** Sets the selection to the given symbol  */
@@ -79,7 +94,8 @@ class SymbolDropDownDelegate : public QItemDelegate
 {
 Q_OBJECT
 public:
-	SymbolDropDownDelegate(int symbol_type_filter, QObject* parent = 0);
+	SymbolDropDownDelegate(int symbol_type_filter, QObject* parent = nullptr);
+	~SymbolDropDownDelegate();
 	
 	virtual QWidget* createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const;
 	virtual void setEditorData(QWidget* editor, const QModelIndex& index) const;
@@ -90,7 +106,7 @@ private slots:
 	void emitCommitData();
 	
 private:
-	int symbol_type_filter;
+	const int symbol_type_filter;
 };
 
 #endif
