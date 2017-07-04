@@ -244,6 +244,13 @@ namespace Util
 		void setEnabledAndChecked(QCheckBox* checkbox, bool checked);
 	}
 	
+	/**
+	 * Remove any HTML markup from the input text.
+	 * 
+	 * \see QTextDocument::toPlainText
+	 */
+	QString plainText(QString maybe_markup);
+	
 }
 
 #endif

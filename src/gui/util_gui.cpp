@@ -29,6 +29,7 @@
 #include <QLatin1Char>
 #include <QLocale>
 #include <QSpinBox>
+#include <QTextDocument>
 
 
 namespace Util
@@ -114,6 +115,19 @@ namespace Util
 			checkbox->setChecked(checked);
 			checkbox->setTristate(false);
 		}
+	}
+	
+	
+	
+	QString plainText(QString maybe_markup)
+	{
+		if (maybe_markup.contains(QLatin1Char('<')))
+		{
+			QTextDocument doc;
+			doc.setHtml(maybe_markup);
+			maybe_markup = doc.toPlainText();
+		}
+		return maybe_markup;
 	}
 	
 }

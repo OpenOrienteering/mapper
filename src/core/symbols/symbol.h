@@ -56,6 +56,12 @@ class VirtualCoordVector;
 
 typedef QHash<QString, Symbol*> SymbolDictionary;
 
+// From gui/util_gui.h, but avoiding extra dependencies
+namespace Util
+{
+	QString plainText(QString maybe_markup);
+}
+
 
 /**
  * Abstract base class for map symbols.
@@ -279,7 +285,7 @@ public:
 	/** Returns the symbol name. */
 	inline const QString& getName() const {return name;}
 	/** Returns the symbol name after stripping all HTML. */
-	QString getPlainTextName() const;
+	QString getPlainTextName() const { return Util::plainText(name); }
 	/** Sets the symbol name. */
 	inline void setName(const QString& new_name) {name = new_name;}
 	

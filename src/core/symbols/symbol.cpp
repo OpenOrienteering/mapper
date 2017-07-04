@@ -526,17 +526,7 @@ float Symbol::calculateLargestLineExtent(Map* map) const
 	return 0.0f;
 }
 
-QString Symbol::getPlainTextName() const
-{
-	if (name.contains(QLatin1Char('<')))
-	{
-		QTextDocument doc;
-		doc.setHtml(name);
-		return doc.toPlainText();
-	}
-	else
-		return name;
-}
+
 
 QString Symbol::getNumberAsString() const
 {
