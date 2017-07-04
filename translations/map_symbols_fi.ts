@@ -16,8 +16,8 @@
         <message>
             <source>Opaque White below Black</source>
             <comment>Color 2</comment>
-            <translation type="unfinished">Opaque White below Black</translation>
-        </message>
+            <translation>Peittävä valkoinen mustan alla</translation>
+    </message>
         <message>
             <source>Black 65%</source>
             <comment>Color 3</comment>
@@ -36,13 +36,13 @@
         <message>
             <source>Black below light browns</source>
             <comment>Color 6</comment>
-            <translation type="unfinished">Black below light browns</translation>
-        </message>
+            <translation>Musta ruskean alla</translation>
+    </message>
         <message>
             <source>Opaque Blue</source>
             <comment>Color 7</comment>
-            <translation type="unfinished">Opaque Blue</translation>
-        </message>
+            <translation>Peittävä sininen</translation>
+    </message>
         <message>
             <source>Blue</source>
             <comment>Color 8</comment>
@@ -61,8 +61,8 @@
         <message>
             <source>OpenOrienteering Orange</source>
             <comment>Color 11</comment>
-            <translation type="unfinished">OpenOrienteering Orange</translation>
-        </message>
+            <translation>OpenOrienteering Oranssi</translation>
+    </message>
         <message>
             <source>Black 25% (Grey)</source>
             <comment>Color 12</comment>
@@ -81,23 +81,23 @@
         <message>
             <source>Opaque Yellow</source>
             <comment>Color 15</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Peittävä keltainen</translation>
+    </message>
         <message>
             <source>Opaque White over Green</source>
             <comment>Color 16</comment>
-            <translation type="unfinished">Opaque White over Green</translation>
-        </message>
+            <translation>Peittävä valkoinen vihreän päällä</translation>
+    </message>
         <message>
             <source>Opaque Green 20%</source>
             <comment>Color 17</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Peittävä vihreä 20%</translation>
+    </message>
         <message>
             <source>Opaque Green 50%</source>
             <comment>Color 18</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Peittävä vihreä 50%</translation>
+    </message>
         <message>
             <source>Green, Black 50%</source>
             <comment>Color 19</comment>
@@ -106,8 +106,8 @@
         <message>
             <source>Opaque Green</source>
             <comment>Color 20</comment>
-            <translation type="unfinished">Opaque Green</translation>
-        </message>
+            <translation>Peittävä vihreä</translation>
+    </message>
         <message>
             <source>Green 50%</source>
             <comment>Color 21</comment>
@@ -121,18 +121,18 @@
         <message>
             <source>Green below light greens</source>
             <comment>Color 23</comment>
-            <translation type="unfinished">Green below light greens</translation>
-        </message>
+            <translation>Vihreä vaaleanvihreiden alla</translation>
+    </message>
         <message>
             <source>Green 50% over Yellow</source>
             <comment>Color 24</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Vihreä 50% keltaisen päällä</translation>
+    </message>
         <message>
             <source>White over Yellow</source>
             <comment>Color 25</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Valkoinen keltaisen päällä</translation>
+    </message>
         <message>
             <source>Yellow</source>
             <comment>Color 26</comment>
@@ -156,8 +156,8 @@
         <message>
             <source>Slope line, contour</source>
             <comment>Name of symbol 101.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Rinneviiva</translation>
+    </message>
         <message>
             <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
             <comment>Description of symbol 101.1</comment>
@@ -181,8 +181,8 @@
         <message>
             <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
             <comment>Description of symbol 102.1</comment>
-            <translation type="unfinished">Korkeuslukuja käytetään helpottamaan erittäin suurten korkeuserojen lukemista. Ne sijoitetaan lähinnä johtokäyriin ja sellaisiin kohtiin, missä ne eivät häiritse muuta karttakuvausta. Numeroiden yläreunojen on osoitettava nousevan rinteen suuntaan. </translation>
-        </message>
+            <translation>Korkeuslukuja käytetään helpottamaan erittäin suurten korkeuserojen lukemista. Ne sijoitetaan lähinnä johtokäyriin ja sellaisiin kohtiin, missä ne eivät häiritse muuta karttakuvausta. Numeroiden yläreunojen on osoitettava nousevan rinteen suuntaan.</translation>
+    </message>
         <message>
             <source>Form line</source>
             <comment>Name of symbol 103</comment>
@@ -197,8 +197,8 @@
         <message>
             <source>Slope line, formline</source>
             <comment>Name of symbol 103.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Apukäyrän rinneviiva</translation>
+    </message>
         <message>
             <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
             <comment>Description of symbol 103.1</comment>
@@ -227,8 +227,8 @@
         <message>
             <source>Earth bank, top line</source>
             <comment>Name of symbol 104.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Irtomaarinne, kantaviiva</translation>
+    </message>
         <message>
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
             <comment>Description of symbol 104.2</comment>
@@ -247,8 +247,8 @@
         <message>
             <source>Earth bank, minimum size (from ISOM2000)</source>
             <comment>Name of symbol 104.9</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Irtomaarinne, minimileveys (ISOM2000:sta)</translation>
+    </message>
         <message>
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
             <comment>Description of symbol 104.9</comment>
@@ -383,7 +383,7 @@ Density: 8 to 10 dots / mm2 (25-32%).
         <message>
             <source>Prominent landform feature</source>
             <comment>Name of symbol 115</comment>
-            <translation type="unfinished">Huomattava maaston erikoiskohde</translation>
+            <translation>Huomattava maaston erikoiskohde</translation>
         </message>
         <message>
             <source>The feature must be very clearly distinguishable from its surroundings. Location is the centre of gravity of the symbol, which is orientated to north. The symbol may not touch or overlap other brown symbols.</source>
@@ -393,7 +393,7 @@ Density: 8 to 10 dots / mm2 (25-32%).
         <message>
             <source>Impassable cliff</source>
             <comment>Name of symbol 201</comment>
-            <translation type="unfinished">Ylipääsemätön jyrkänne</translation>
+            <translation>Ylipääsemätön jyrkänne</translation>
         </message>
         <message>
             <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -407,7 +407,7 @@ When an impassable cliff drops straight into water, making it impossible to pass
         <message>
             <source>Impassable cliff, minimum size</source>
             <comment>Name of symbol 201.1</comment>
-            <translation type="unfinished">Ylipääsemätön jyrkänne, minimikoko</translation>
+            <translation>Ylipääsemätön jyrkänne, minimikoko</translation>
         </message>
         <message>
             <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -444,7 +444,7 @@ When an impassable cliff drops straight into water, making it impossible to pass
         <message>
             <source>Impassable cliff, tag line</source>
             <comment>Name of symbol 201.4</comment>
-            <translation type="unfinished">Ylipääsemätön jyrkänne, poikkiviiva</translation>
+            <translation>Ylipääsemätön jyrkänne, poikkiviiva</translation>
         </message>
         <message>
             <source>Use this symbol to display the full extent of a wide cliff.</source>
@@ -567,7 +567,7 @@ Rocky pits larger than 5 m in diameter should be exaggerated and represented usi
         <message>
             <source>Boulder</source>
             <comment>Name of symbol 204</comment>
-            <translation type="unfinished">Kivi</translation>
+            <translation>Kivi</translation>
         </message>
         <message>
             <source>A distinct boulder (should be higher than 1 m), which is immediately identifiable on the ground. Groups of boulders are represented using symbol 207 (boulder cluster) or a boulder field symbol (208, 209).
@@ -592,7 +592,7 @@ To be able to show the distinction between neighbouring (closer than 30 metres a
         <message>
             <source>Large boulder</source>
             <comment>Name of symbol 205</comment>
-            <translation type="unfinished">Iso kivi</translation>
+            <translation>Iso kivi</translation>
         </message>
         <message>
             <source>A particularly large and distinct boulder. A large boulder should be more than 2 m high. To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders with significant difference in size, it is permitted to reduce the size of the symbol to 0.5 mm for some of the boulders.</source>
@@ -613,7 +613,7 @@ The gap between gigantic boulders or between gigantic boulders and other impassa
         <message>
             <source>Boulder cluster</source>
             <comment>Name of symbol 207</comment>
-            <translation type="unfinished">Kiviryhmä</translation>
+            <translation>Kiviryhmä</translation>
         </message>
         <message>
             <source>A distinct group of boulders so closely clustered together that they cannot be marked individually. The boulders in the cluster should be higher than 1 metre. A boulder cluster must be easily identifiable as a group of boulders.
@@ -624,7 +624,7 @@ To be able to show the distinction between neighbouring (maximum 30 metres apart
         <message>
             <source>Boulder cluster, large</source>
             <comment>Name of symbol 207.1</comment>
-            <translation type="unfinished">Kiviryhmä, suurennettu</translation>
+            <translation>Kiviryhmä, suurennettu</translation>
         </message>
         <message>
             <source>To be able to show the distinction between neighbouring (maximum 30 metres apart), boulder clusters with significant difference in boulder size, it is permitted to enlarge this symbol by 20% (edge length 0.96 mm) for some of the boulder clusters.</source>
@@ -732,7 +732,7 @@ To avoid confusion with symbol 416 (distinct vegetation boundary), the dots shou
         <message>
             <source>Open sandy ground</source>
             <comment>Name of symbol 213</comment>
-            <translation type="unfinished">Avonainen hietikko</translation>
+            <translation>Avonainen hietikko</translation>
         </message>
         <message>
             <source>An area of soft sandy ground where runnability is reduced to less than 80% of normal speed.</source>
@@ -742,7 +742,7 @@ To avoid confusion with symbol 416 (distinct vegetation boundary), the dots shou
         <message>
             <source>Bare rock</source>
             <comment>Name of symbol 214</comment>
-            <translation type="unfinished">Kallio</translation>
+            <translation>Kallio</translation>
         </message>
         <message>
             <source>A runnable area of rock without earth or vegetation should be shown as bare rock.
@@ -2215,13 +2215,13 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
         <message>
             <source>Black below light browns</source>
             <comment>Color 3</comment>
-            <translation>Black below light browns</translation>
-        </message>
+            <translation>Musta vaaleanruskean alla</translation>
+    </message>
         <message>
             <source>Opaque Blue</source>
             <comment>Color 4</comment>
-            <translation>Opaque Blue</translation>
-        </message>
+            <translation>Peittävä sininen</translation>
+    </message>
         <message>
             <source>Blue</source>
             <comment>Color 5</comment>
@@ -2240,8 +2240,8 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
         <message>
             <source>OpenOrienteering Orange</source>
             <comment>Color 8</comment>
-            <translation>OpenOrienteering Orange</translation>
-        </message>
+            <translation>OpenOrienteering Oranssi</translation>
+    </message>
         <message>
             <source>Black 30%</source>
             <comment>Color 9</comment>
@@ -2260,13 +2260,13 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
         <message>
             <source>Opaque White over Green</source>
             <comment>Color 12</comment>
-            <translation>Opaque White over Green</translation>
-        </message>
+            <translation>Peittävä valkoinen vihreän päällä</translation>
+    </message>
         <message>
             <source>Opaque Green</source>
             <comment>Color 13</comment>
-            <translation>Opaque Green</translation>
-        </message>
+            <translation>Peittävä vihreä</translation>
+    </message>
         <message>
             <source>Green</source>
             <comment>Color 14</comment>
@@ -2285,8 +2285,8 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
         <message>
             <source>Green below light greens</source>
             <comment>Color 17</comment>
-            <translation>Green below light greens</translation>
-        </message>
+            <translation>Vihreä vaaleanvihreiden alla</translation>
+    </message>
         <message>
             <source>Yellow</source>
             <comment>Color 18</comment>
@@ -2300,8 +2300,8 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
         <message>
             <source>White over Yellow 70%</source>
             <comment>Color 20</comment>
-            <translation>White over Yellow 70%</translation>
-        </message>
+            <translation>Valkoinen keltaisen 70% päällä</translation>
+    </message>
         <message>
             <source>Yellow 70%</source>
             <comment>Color 21</comment>
@@ -3248,8 +3248,8 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <message>
             <source>A small path or (temporary) forest extraction track which can be followed at competition speed.</source>
             <comment>Description of symbol 507</comment>
-            <translation>A sPieni jalan liikkumalla syntynyt polku tai vanha metsäkoneiden ajoura jota on helppo seurata kilpailuvauhdilla päivällä. Polkua poikittain ylitettäessä on se helposti havaittava. Maastoon rakennetut portaat kuvataan tällä merkillä.</translation>
-        </message>
+            <translation>Pieni jalan liikkumalla syntynyt polku tai vanha metsäkoneiden ajoura jota on helppo seurata kilpailuvauhdilla päivällä. Polkua poikittain ylitettäessä on se helposti havaittava. Maastoon rakennetut portaat kuvataan tällä merkillä.</translation>
+    </message>
         <message>
             <source>Less distinct small path</source>
             <comment>Name of symbol 508</comment>
@@ -3874,8 +3874,8 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
         <message>
             <source>Opaque White below Black</source>
             <comment>Color 3</comment>
-            <translation>Opaque White below Black</translation>
-        </message>
+            <translation>Peittävä valkoinen mustan alla</translation>
+    </message>
         <message>
             <source>Brown for contours</source>
             <comment>Color 4</comment>
@@ -3904,23 +3904,23 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
         <message>
             <source>Green, Black 50% above Brown</source>
             <comment>Color 9</comment>
-            <translation>Green, Black 50% above Brown</translation>
-        </message>
+            <translation>Vihreä, musta 50% ruskean päällä</translation>
+    </message>
         <message>
             <source>Opaque Blue above Brown</source>
             <comment>Color 10</comment>
-            <translation>Opaque Blue above Brown</translation>
-        </message>
+            <translation>Peittävä sininen ruskean päällä</translation>
+    </message>
         <message>
             <source>Blue above Brown</source>
             <comment>Color 11</comment>
-            <translation>Blue above Brown</translation>
-        </message>
+            <translation>Sininen ruskean päällä</translation>
+    </message>
         <message>
             <source>Green above Brown</source>
             <comment>Color 12</comment>
-            <translation>Green above Brown</translation>
-        </message>
+            <translation>Vihreä ruskean päällä</translation>
+    </message>
         <message>
             <source>Brown 20-50% for paved area, non-urban</source>
             <comment>Color 13</comment>
@@ -3934,13 +3934,13 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
         <message>
             <source>Black below light browns</source>
             <comment>Color 15</comment>
-            <translation>Black below light browns</translation>
-        </message>
+            <translation>Musta vaaleanruskean alla</translation>
+    </message>
         <message>
             <source>Opaque Blue</source>
             <comment>Color 16</comment>
-            <translation>Opaque Blue</translation>
-        </message>
+            <translation>Peittävä sininen</translation>
+    </message>
         <message>
             <source>Blue</source>
             <comment>Color 17</comment>
@@ -3959,8 +3959,8 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
         <message>
             <source>OpenOrienteering Blue 50%</source>
             <comment>Color 20</comment>
-            <translation>OpenOrienteering Blue 50%</translation>
-        </message>
+            <translation>OpenOrienteering Sininen 50%</translation>
+    </message>
         <message>
             <source>Brown</source>
             <comment>Color 21</comment>
@@ -3969,8 +3969,8 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
         <message>
             <source>OpenOrienteering Orange</source>
             <comment>Color 22</comment>
-            <translation>OpenOrienteering Orange</translation>
-        </message>
+            <translation>OpenOrienteering Oranssi</translation>
+    </message>
         <message>
             <source>Grey</source>
             <comment>Color 23</comment>
@@ -3984,8 +3984,8 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
         <message>
             <source>White over Green</source>
             <comment>Color 25</comment>
-            <translation>White over Green</translation>
-        </message>
+            <translation>Valkoinen vihreän päällä</translation>
+    </message>
         <message>
             <source>Green, Black 50%</source>
             <comment>Color 26</comment>
@@ -3994,8 +3994,8 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
         <message>
             <source>Opaque Green</source>
             <comment>Color 27</comment>
-            <translation>Opaque Green</translation>
-        </message>
+            <translation>Peittävä vihreä</translation>
+    </message>
         <message>
             <source>Green</source>
             <comment>Color 28</comment>
@@ -4014,8 +4014,8 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
         <message>
             <source>Green below light greens</source>
             <comment>Color 31</comment>
-            <translation>Green below light greens</translation>
-        </message>
+            <translation>Vihreä vaaleanvihreiden alla</translation>
+    </message>
         <message>
             <source>Yellow</source>
             <comment>Color 32</comment>
@@ -4029,8 +4029,8 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
         <message>
             <source>White over Yellow 70%</source>
             <comment>Color 34</comment>
-            <translation>White over Yellow 70%</translation>
-        </message>
+            <translation>Valkoinen keltaisen 70% päällä</translation>
+    </message>
         <message>
             <source>Yellow 70%</source>
             <comment>Color 35</comment>
@@ -6170,8 +6170,8 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
         <message>
             <source>Opaque Blue</source>
             <comment>Color 8</comment>
-            <translation type="unfinished">Opaque Blue</translation>
-        </message>
+            <translation>Peittävä sininen</translation>
+    </message>
         <message>
             <source>Blue</source>
             <comment>Color 9</comment>
@@ -6200,8 +6200,8 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
         <message>
             <source>Opaque White over Green</source>
             <comment>Color 14</comment>
-            <translation type="unfinished">Opaque White over Green</translation>
-        </message>
+            <translation>Peittävä valkoinen vihreän päällä</translation>
+    </message>
         <message>
             <source>Yellow over Green</source>
             <comment>Color 15</comment>
@@ -6210,8 +6210,8 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
         <message>
             <source>Opaque Green</source>
             <comment>Color 16</comment>
-            <translation type="unfinished">Opaque Green</translation>
-        </message>
+            <translation>Peittävä vihreä</translation>
+    </message>
         <message>
             <source>Green</source>
             <comment>Color 17</comment>
@@ -6230,8 +6230,8 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
         <message>
             <source>Green below light greens</source>
             <comment>Color 20</comment>
-            <translation type="unfinished">Green below light greens</translation>
-        </message>
+            <translation>Vihreä vaaleanvihreiden alla</translation>
+    </message>
         <message>
             <source>Yellow</source>
             <comment>Color 21</comment>
@@ -7436,7 +7436,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
         <message>
             <source>Cave</source>
             <comment>Name of symbol 205</comment>
-            <translation type="unfinished">Luola</translation>
+            <translation>Luola</translation>
         </message>
         <message>
             <source>A cave is represented by the same symbol as a rocky pit. In this case the symbol should be orientated to point up the slope as indicated opposite. The centre of gravity of the symbol marks the opening.</source>
@@ -7446,7 +7446,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
         <message>
             <source>Large boulder</source>
             <comment>Name of symbol 207</comment>
-            <translation type="unfinished">Iso kivi</translation>
+            <translation>Iso kivi</translation>
         </message>
         <message>
             <source>A particularly large and distinct boulder. For gigantic boulders symbol 202 should be used.</source>
@@ -7476,7 +7476,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
         <message>
             <source>Boulder cluster</source>
             <comment>Name of symbol 209</comment>
-            <translation type="unfinished">Kiviryhmä</translation>
+            <translation>Kiviryhmä</translation>
         </message>
         <message>
             <source>A small distinct group of boulders so closely clustered together that they cannot be marked individually. The symbol is an equilateral triangle orientated to the north. To be able to show the distinction between boulder clusters with significant difference in size it is permitted to enlarge this symbol by 25% (1.0 mm).</source>
@@ -7486,7 +7486,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
         <message>
             <source>Boulder cluster, large</source>
             <comment>Name of symbol 209.1</comment>
-            <translation type="unfinished">Kiviryhmä, suurennettu</translation>
+            <translation>Kiviryhmä, suurennettu</translation>
         </message>
         <message>
             <source>To be able to show the distinction between boulder clusters with significant difference in size it is permitted to enlarge this symbol by 25% (1.0 mm).</source>
@@ -7496,7 +7496,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
         <message>
             <source>Waterhole</source>
             <comment>Name of symbol 303</comment>
-            <translation type="unfinished">Vesikuoppa</translation>
+            <translation>Vesikuoppa</translation>
         </message>
         <message>
             <source>A water-filled pit or an area of water which is too small to be shown to scale. Location is the centre of gravity of the symbol, which is orientated to north.</source>
@@ -7531,23 +7531,23 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
         <message>
             <source>Well</source>
             <comment>Name of symbol 312</comment>
-            <translation type="unfinished">Kaivo</translation>
+            <translation>Kaivo</translation>
         </message>
         <message>
             <source>Wells and captive springs, which are clearly visible on the ground.</source>
             <comment>Description of symbol 312</comment>
-            <translation type="unfinished">Kaivo tai katettu lähde joka erottuu selvästi maastosta. Minimikorkeus 0.6 m.</translation>
+            <translation>Kaivo tai katettu lähde joka erottuu selvästi maastosta. Minimikorkeus 0.6 m.</translation>
         </message>
         <message>
             <source>Spring</source>
             <comment>Name of symbol 313</comment>
-            <translation type="unfinished">Lähde</translation>
+            <translation>Lähde</translation>
         </message>
         <message>
             <source>The source of a stream with a distinct outflow. The symbol is orientated to open downstream.</source>
             <comment>Description of symbol 313</comment>
-            <translation type="unfinished">Selvästi maastossa havaittava vesipiste josta virtaa puro. Merkki avautuu puron suuntaan. Jos virtaavaa puroa ei ole avautuu merkki pohjoiseen. </translation>
-        </message>
+            <translation>Selvästi maastossa havaittava vesipiste josta virtaa puro. Merkki avautuu puron suuntaan. Jos virtaavaa puroa ei ole avautuu merkki pohjoiseen.</translation>
+    </message>
         <message>
             <source>Undergrowth: slow running</source>
             <comment>Name of symbol 407</comment>
@@ -7561,7 +7561,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
         <message>
             <source>Forest: difficult to run</source>
             <comment>Name of symbol 408</comment>
-            <translation type="unfinished">Vaikeakulkuinen metsä</translation>
+            <translation>Vaikeakulkuinen metsä</translation>
         </message>
         <message>
             <source>An area with dense trees or thicket (low visibility) which reduce running to ca. 20-60% of normal speed.</source>
@@ -7571,8 +7571,8 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
         <message>
             <source>Undergrowth: difficult to run</source>
             <comment>Name of symbol 409</comment>
-            <translation type="unfinished">Vaikeakulkuinen maapohja</translation>
-        </message>
+            <translation>Maapohja: vaikeasti juostava</translation>
+    </message>
         <message>
             <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 20-60% of normal speed. This symbol may not be combined with 406 or 408.</source>
             <comment>Description of symbol 409</comment>
@@ -7641,7 +7641,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
         <message>
             <source>Cultivated land</source>
             <comment>Name of symbol 415</comment>
-            <translation type="unfinished">Viljelty maa</translation>
+            <translation>Viljelty maa</translation>
         </message>
         <message>
             <source>Cultivated land which is seasonally out-of-bounds due to growing crops may be shown with a black dot screen.</source>
@@ -7661,12 +7661,12 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
         <message>
             <source>Motorway, under construction</source>
             <comment>Name of symbol 501.5</comment>
-            <translation type="unfinished">Moottoritie, rakenteilla</translation>
+            <translation>Moottoritie, rakenteilla</translation>
         </message>
         <message>
             <source>A road under construction may be shown with broken lines.</source>
             <comment>Description of symbol 501.5</comment>
-            <translation type="unfinished">Rakenteilla oleva tie kuvataan katkoviivoin.</translation>
+            <translation>Rakenteilla oleva tie kuvataan katkoviivoin.</translation>
         </message>
         <message>
             <source>Major road, minimum width, under construction</source>
@@ -7676,7 +7676,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
         <message>
             <source>A road under construction may be shown with broken lines.</source>
             <comment>Description of symbol 502.1</comment>
-            <translation type="unfinished">Rakenteilla oleva tie kuvataan katkoviivoin.</translation>
+            <translation>Rakenteilla oleva tie kuvataan katkoviivoin.</translation>
         </message>
         <message>
             <source>Minor road, under construction</source>
@@ -7686,12 +7686,12 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
         <message>
             <source>A road under construction may be shown with broken lines.</source>
             <comment>Description of symbol 503.1</comment>
-            <translation type="unfinished">Rakenteilla oleva tie kuvataan katkoviivoin.</translation>
+            <translation>Rakenteilla oleva tie kuvataan katkoviivoin.</translation>
         </message>
         <message>
             <source>Road</source>
             <comment>Name of symbol 504</comment>
-            <translation type="unfinished">Ajotie</translation>
+            <translation>Ajotie</translation>
         </message>
         <message>
             <source>A maintained road suitable for motor vehicles in all weather. Width less than 3 m.</source>
@@ -7701,7 +7701,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
         <message>
             <source>Vehicle track</source>
             <comment>Name of symbol 505</comment>
-            <translation type="unfinished">Ajopolku</translation>
+            <translation>Ajopolku</translation>
         </message>
         <message>
             <source>A track or poorly maintained road suitable for vehicles only when travelling slowly. Width less than 3 m.</source>
@@ -7711,7 +7711,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
         <message>
             <source>Footpath</source>
             <comment>Name of symbol 506</comment>
-            <translation type="unfinished">Polku</translation>
+            <translation>Polku</translation>
         </message>
         <message>
             <source>A large path, or old vehicle track, which is distinct on the ground.</source>
@@ -7721,13 +7721,13 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
         <message>
             <source>Small path</source>
             <comment>Name of symbol 507</comment>
-            <translation type="unfinished">Pieni polku</translation>
+            <translation>Pieni polku</translation>
         </message>
         <message>
             <source>A small path or (temporary) forest extraction track which can be followed at competition speed.</source>
             <comment>Description of symbol 507</comment>
-            <translation type="unfinished">A sPieni jalan liikkumalla syntynyt polku tai vanha metsäkoneiden ajoura jota on helppo seurata kilpailuvauhdilla päivällä. Polkua poikittain ylitettäessä on se helposti havaittava. Maastoon rakennetut portaat kuvataan tällä merkillä.</translation>
-        </message>
+            <translation>Pieni jalan liikkumalla syntynyt polku tai vanha metsäkoneiden ajoura jota on helppo seurata kilpailuvauhdilla päivällä. Polkua poikittain ylitettäessä on se helposti havaittava. Maastoon rakennetut portaat kuvataan tällä merkillä.</translation>
+    </message>
         <message>
             <source>Less distinct small path</source>
             <comment>Name of symbol 508</comment>
@@ -7971,8 +7971,8 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
         <message>
             <source>Opaque Blue</source>
             <comment>Color 8</comment>
-            <translation type="unfinished">Opaque Blue</translation>
-        </message>
+            <translation>Peittävä sininen</translation>
+    </message>
         <message>
             <source>Blue</source>
             <comment>Color 9</comment>
@@ -8001,13 +8001,13 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
         <message>
             <source>Opaque White over Green</source>
             <comment>Color 14</comment>
-            <translation type="unfinished">Opaque White over Green</translation>
-        </message>
+            <translation>Peittävä valkoinen vihreän päällä</translation>
+    </message>
         <message>
             <source>Opaque Green</source>
             <comment>Color 15</comment>
-            <translation type="unfinished">Opaque Green</translation>
-        </message>
+            <translation>Peittävä vihreä</translation>
+    </message>
         <message>
             <source>Green</source>
             <comment>Color 16</comment>
@@ -8026,8 +8026,8 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
         <message>
             <source>Green below light greens</source>
             <comment>Color 19</comment>
-            <translation type="unfinished">Green below light greens</translation>
-        </message>
+            <translation>Vihreä vaaleanvihreiden alla</translation>
+    </message>
         <message>
             <source>Yellow</source>
             <comment>Color 20</comment>
@@ -9710,8 +9710,8 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
         <message>
             <source>A small path or (temporary) forest extraction track which can be followed at competition speed.</source>
             <comment>Description of symbol 507</comment>
-            <translation type="unfinished">A sPieni jalan liikkumalla syntynyt polku tai vanha metsäkoneiden ajoura jota on helppo seurata kilpailuvauhdilla päivällä. Polkua poikittain ylitettäessä on se helposti havaittava. Maastoon rakennetut portaat kuvataan tällä merkillä.</translation>
-        </message>
+            <translation>Pieni jalan liikkumalla syntynyt polku tai vanha metsäkoneiden ajoura jota on helppo seurata kilpailuvauhdilla päivällä. Polkua poikittain ylitettäessä on se helposti havaittava. Maastoon rakennetut portaat kuvataan tällä merkillä.</translation>
+    </message>
         <message>
             <source>Less distinct small path</source>
             <comment>Name of symbol 508</comment>
@@ -9894,7 +9894,7 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
         <message>
             <source>Control number</source>
             <comment>Name of symbol 703</comment>
-            <translation type="unfinished">Rastin numero</translation>
+            <translation>Rastin numero</translation>
         </message>
         <message>
             <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail. The numbers are orientated to north.</source>
@@ -9954,7 +9954,7 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
         <message>
             <source>Out-of-bounds area</source>
             <comment>Name of symbol 709</comment>
-            <translation type="unfinished">Kielletty alue</translation>
+            <translation>Kielletty alue</translation>
         </message>
         <message>
             <source>An out-of-bounds area, see also symbol 528, is shown with vertical stripes.
@@ -9963,18 +9963,12 @@ A bounding line may be drawn if there is no natural boundary, as follows:
 - a dashed line indicates intermittent marking on the ground,
 - no line indicates no marking on the ground.</source>
             <comment>Description of symbol 709</comment>
-            <translation type="unfinished">
-Kielletty alue (ks. myös merkki 528), merkitään pystysuorin viivoin. Mikäli maastossa ei ole ko. alueen luonnollista rajaa, merkitään raja seuraavasti:
+            <translation>Kielletty alue (ks. myös merkki 528), merkitään pystysuorin viivoin.
+Mikäli maastossa ei ole ko. alueen luonnollista rajaa, merkitään raja seuraavasti:
 - yhtenäinen viiva, jos alue on merkitty maastoon yhtenäisellä nauhalla,
-- katkoviiva, jos alue on merkitty maastoon viitoitusnauhoin ja 
-- ilman rajausta, jos aluetta ei ole merkitty maastoon. 
-
-
-
-
-
-</translation>
-        </message>
+- katkoviiva, jos alue on merkitty maastoon viitoitusnauhoin ja
+- ilman rajausta, jos aluetta ei ole merkitty maastoon.</translation>
+    </message>
         <message>
             <source>Out-of-bounds area, solid boundary</source>
             <comment>Name of symbol 709.1</comment>
@@ -9998,7 +9992,7 @@ Kielletty alue (ks. myös merkki 528), merkitään pystysuorin viivoin. Mikäli 
         <message>
             <source>Dangerous area</source>
             <comment>Name of symbol 710</comment>
-            <translation type="unfinished">Vaarallinen alue</translation>
+            <translation>Vaarallinen alue</translation>
         </message>
         <message>
             <source>An area presenting danger to the competitor is shown with cross-hatched diagonal lines.</source>
@@ -10008,7 +10002,7 @@ Kielletty alue (ks. myös merkki 528), merkitään pystysuorin viivoin. Mikäli 
         <message>
             <source>Forbidden route</source>
             <comment>Name of symbol 711</comment>
-            <translation type="unfinished">Kielletty reitti</translation>
+            <translation>Kielletty reitti</translation>
         </message>
         <message>
             <source>A route which is out-of-bounds is shown with crosses.</source>
@@ -10018,23 +10012,23 @@ Kielletty alue (ks. myös merkki 528), merkitään pystysuorin viivoin. Mikäli 
         <message>
             <source>First aid post</source>
             <comment>Name of symbol 712</comment>
-            <translation type="unfinished">Ensiapupaikka</translation>
+            <translation>Ensiapupaikka</translation>
         </message>
         <message>
             <source>The location of a first aid post.</source>
             <comment>Description of symbol 712</comment>
-            <translation type="unfinished">Merkillä osoitetaan ensiapupaikka. Merkki on sijoitettava kartalle tarkasti siihen kohtaan, jossa ensiapupaikka maastossa sijaitsee.</translation>
+            <translation>Merkillä osoitetaan ensiapupaikka. Merkki on sijoitettava kartalle tarkasti siihen kohtaan, jossa ensiapupaikka maastossa sijaitsee.</translation>
         </message>
         <message>
             <source>Refreshment point</source>
             <comment>Name of symbol 713</comment>
-            <translation type="unfinished">Juomapaikka</translation>
+            <translation>Juomapaikka</translation>
         </message>
         <message>
             <source>The location of a refreshment point which is not at a control.</source>
             <comment>Description of symbol 713</comment>
-            <translation type="unfinished">Merkillä osoitetaan juomapisteen paikka silloin kun se ei ole rastilla tai viitoituksella</translation>
-        </message>
+            <translation>Merkillä osoitetaan juomapisteen paikka silloin kun se ei ole rastilla tai viitoituksella.</translation>
+    </message>
         <message>
             <source>Heading: Single line for event title or classes</source>
             <comment>Name of symbol 99.0</comment>
