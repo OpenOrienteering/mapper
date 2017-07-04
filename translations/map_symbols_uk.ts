@@ -11,7 +11,7 @@
         <message>
             <source>Black</source>
             <comment>Color 1</comment>
-            <translation type="unfinished">Чорний</translation>
+            <translation>Чорний</translation>
         </message>
         <message>
             <source>Opaque White below Black</source>
@@ -31,7 +31,7 @@
         <message>
             <source>Brown 50%</source>
             <comment>Color 5</comment>
-            <translation type="unfinished">Коричневий 50%</translation>
+            <translation>Коричневий 50%</translation>
         </message>
         <message>
             <source>Black below light browns</source>
@@ -41,22 +41,22 @@
         <message>
             <source>Opaque Blue</source>
             <comment>Color 7</comment>
-            <translation type="unfinished">Непрозорий Синій</translation>
+            <translation>Непрозорий Синій</translation>
         </message>
         <message>
             <source>Blue</source>
             <comment>Color 8</comment>
-            <translation type="unfinished">Синій</translation>
+            <translation>Синій</translation>
         </message>
         <message>
             <source>Blue 50%</source>
             <comment>Color 9</comment>
-            <translation type="unfinished">Синій 50%</translation>
+            <translation>Синій 50%</translation>
         </message>
         <message>
             <source>Brown</source>
             <comment>Color 10</comment>
-            <translation type="unfinished">Коричневий</translation>
+            <translation>Коричневий</translation>
         </message>
         <message>
             <source>OpenOrienteering Orange</source>
@@ -71,12 +71,12 @@
         <message>
             <source>Green 50%, Yellow</source>
             <comment>Color 13</comment>
-            <translation type="unfinished">Зелений 50%, Жовтий</translation>
+            <translation type="unfinished">Зелений 50% та Жовтий</translation>
         </message>
         <message>
             <source>Green</source>
             <comment>Color 14</comment>
-            <translation type="unfinished">Зелений</translation>
+            <translation>Зелений</translation>
         </message>
         <message>
             <source>Opaque Yellow</source>
@@ -86,7 +86,7 @@
         <message>
             <source>Opaque White over Green</source>
             <comment>Color 16</comment>
-            <translation type="unfinished">Непрозорий Білий поверх Зеленого</translation>
+            <translation>Непрозорий Білий поверх Зеленого</translation>
         </message>
         <message>
             <source>Opaque Green 20%</source>
@@ -106,7 +106,7 @@
         <message>
             <source>Opaque Green</source>
             <comment>Color 20</comment>
-            <translation type="unfinished">Непрозорий Зелений</translation>
+            <translation>Непрозорий Зелений</translation>
         </message>
         <message>
             <source>Green 50%</source>
@@ -121,7 +121,7 @@
         <message>
             <source>Green below light greens</source>
             <comment>Color 23</comment>
-            <translation type="unfinished">Зелений під світлим зеленим</translation>
+            <translation>Зелений під світлим зеленим</translation>
         </message>
         <message>
             <source>Green 50% over Yellow</source>
@@ -136,17 +136,17 @@
         <message>
             <source>Yellow</source>
             <comment>Color 26</comment>
-            <translation type="unfinished">Жовтий</translation>
+            <translation>Жовтий</translation>
         </message>
         <message>
             <source>Yellow 50%</source>
             <comment>Color 27</comment>
-            <translation type="unfinished">Жовтий 50%</translation>
+            <translation>Жовтий 50%</translation>
         </message>
         <message>
             <source>Contour</source>
             <comment>Name of symbol 101</comment>
-            <translation type="unfinished">Горизонталь</translation>
+            <translation>Горизонталь</translation>
         </message>
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. A contour interval of 2.5 metres may be used for flat terrains. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
@@ -166,7 +166,7 @@
         <message>
             <source>Index contour</source>
             <comment>Name of symbol 102</comment>
-            <translation type="unfinished">Потовщена горизонталь</translation>
+            <translation>Потовщена горизонталь</translation>
         </message>
         <message>
             <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. An index contour may be represented as an ordinary contour line in an area with much detail. Small contour knolls and depressions are normally not represented using index contours.</source>
@@ -176,7 +176,7 @@
         <message>
             <source>Contour value</source>
             <comment>Name of symbol 102.1</comment>
-            <translation type="unfinished">Підпис висоти горизонталі</translation>
+            <translation>Підпис висоти горизонталі</translation>
         </message>
         <message>
             <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>

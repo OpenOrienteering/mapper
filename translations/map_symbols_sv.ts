@@ -6,12 +6,12 @@
         <message>
             <source>Purple</source>
             <comment>Color 0</comment>
-            <translation type="unfinished"></translation>
+            <translation>Violett</translation>
         </message>
         <message>
             <source>Black</source>
             <comment>Color 1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Svart</translation>
         </message>
         <message>
             <source>Opaque White below Black</source>
@@ -21,22 +21,22 @@
         <message>
             <source>Black 65%</source>
             <comment>Color 3</comment>
-            <translation type="unfinished"></translation>
+            <translation>Svart 65%</translation>
         </message>
         <message>
             <source>Black 20%</source>
             <comment>Color 4</comment>
-            <translation type="unfinished"></translation>
+            <translation>Svart 20%</translation>
         </message>
         <message>
             <source>Brown 50%</source>
             <comment>Color 5</comment>
-            <translation type="unfinished"></translation>
+            <translation>Brun 50%</translation>
         </message>
         <message>
             <source>Black below light browns</source>
             <comment>Color 6</comment>
-            <translation type="unfinished"></translation>
+            <translation>Väg sidlinje</translation>
         </message>
         <message>
             <source>Opaque Blue</source>
@@ -46,37 +46,37 @@
         <message>
             <source>Blue</source>
             <comment>Color 8</comment>
-            <translation type="unfinished"></translation>
+            <translation>Blå</translation>
         </message>
         <message>
             <source>Blue 50%</source>
             <comment>Color 9</comment>
-            <translation type="unfinished"></translation>
+            <translation>Blå 50%</translation>
         </message>
         <message>
             <source>Brown</source>
             <comment>Color 10</comment>
-            <translation type="unfinished"></translation>
+            <translation>Brun</translation>
         </message>
         <message>
             <source>OpenOrienteering Orange</source>
             <comment>Color 11</comment>
-            <translation type="unfinished"></translation>
+            <translation>OpenOrienteering Orange</translation>
         </message>
         <message>
             <source>Black 25% (Grey)</source>
             <comment>Color 12</comment>
-            <translation type="unfinished"></translation>
+            <translation>Svart 25% (Grå)</translation>
         </message>
         <message>
             <source>Green 50%, Yellow</source>
             <comment>Color 13</comment>
-            <translation type="unfinished"></translation>
+            <translation>Grön 50%/Gul 100%</translation>
         </message>
         <message>
             <source>Green</source>
             <comment>Color 14</comment>
-            <translation type="unfinished"></translation>
+            <translation>Grön</translation>
         </message>
         <message>
             <source>Opaque Yellow</source>
@@ -101,7 +101,7 @@
         <message>
             <source>Green, Black 50%</source>
             <comment>Color 19</comment>
-            <translation type="unfinished"></translation>
+            <translation>Grön 100%, Svart 50%</translation>
         </message>
         <message>
             <source>Opaque Green</source>
@@ -111,108 +111,129 @@
         <message>
             <source>Green 50%</source>
             <comment>Color 21</comment>
-            <translation type="unfinished"></translation>
+            <translation>Grön 50%</translation>
         </message>
         <message>
             <source>Green 20%</source>
             <comment>Color 22</comment>
-            <translation type="unfinished"></translation>
+            <translation>Grön 20%</translation>
         </message>
         <message>
             <source>Green below light greens</source>
             <comment>Color 23</comment>
-            <translation type="unfinished"></translation>
+            <translation>Grön under Ljusgrön</translation>
         </message>
         <message>
             <source>Green 50% over Yellow</source>
             <comment>Color 24</comment>
-            <translation type="unfinished"></translation>
+            <translation>Grön 50% för Gul</translation>
         </message>
         <message>
             <source>White over Yellow</source>
             <comment>Color 25</comment>
-            <translation type="unfinished"></translation>
+            <translation>Vit för Gul</translation>
         </message>
         <message>
             <source>Yellow</source>
             <comment>Color 26</comment>
-            <translation type="unfinished"></translation>
+            <translation>Gul 100%</translation>
         </message>
         <message>
             <source>Yellow 50%</source>
             <comment>Color 27</comment>
-            <translation type="unfinished"></translation>
+            <translation>Gul 50%</translation>
         </message>
         <message>
             <source>Contour</source>
             <comment>Name of symbol 101</comment>
-            <translation type="unfinished"></translation>
+            <translation>Höjdkurva</translation>
         </message>
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. A contour interval of 2.5 metres may be used for flat terrains. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
             <comment>Description of symbol 101</comment>
-            <translation type="unfinished"></translation>
+            <translation>En linje som sammanbinder punkter med samma höjd.
+Standardekvidistansen mellan höjdkurvor är 5 m.
+2.5 meters ekvidistans kan användas i flack terräng.</translation>
         </message>
         <message>
             <source>Slope line, contour</source>
             <comment>Name of symbol 101.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Lutningsstreck, Höjdkurva</translation>
         </message>
         <message>
             <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
             <comment>Description of symbol 101.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Lutningsstreck kan ritas på den lägre sidan av en kurva för att klarlägga
+markens lutningsförhållande. Lutningsstreck bör ritas i sänkor.</translation>
         </message>
         <message>
             <source>Index contour</source>
             <comment>Name of symbol 102</comment>
-            <translation type="unfinished"></translation>
+            <translation>Stödkurva</translation>
         </message>
         <message>
             <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. An index contour may be represented as an ordinary contour line in an area with much detail. Small contour knolls and depressions are normally not represented using index contours.</source>
             <comment>Description of symbol 102</comment>
-            <translation type="unfinished"></translation>
+            <translation>Var femte höjdkurva ska ritas med bredare linje.
+Stödkurvorna hjälper löparen att snabbt uppskatta höjdskillnader och ge en
+överblick över terrängen i stort. I detaljerade partier kan stödkurvan ritas med
+normal höjdkurva. Mindre höjder och gropar ritas oftast inte med stödkurvor.</translation>
         </message>
         <message>
             <source>Contour value</source>
             <comment>Name of symbol 102.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Höjdsiffra</translation>
         </message>
         <message>
             <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
             <comment>Description of symbol 102.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Höjdsiffror kan placeras på stödkurvorna. Höjdsiffrorna infogas på ställen där
+andra detaljer inte döljs. Siffrorna orienteras så att uppåt är på den högre
+sidan av stödkurvan.</translation>
         </message>
         <message>
             <source>Form line</source>
             <comment>Name of symbol 103</comment>
-            <translation type="unfinished"></translation>
+            <translation>Hjälpkurva</translation>
         </message>
         <message>
             <source>Form lines are used where more information must be given about the shape of the ground. Form lines are added only where representation would be incomplete with ordinary contours. They shall not be used as intermediate contours. Only one form line should be used between neighbouring contours. It is very important that a form line fits logically into the contour system, so the start and end of a form line should be parallel to the neighbouring contours. The gaps between the form line dashes must be placed on reasonably straight sections of the form line. Form lines can be used to differentiate flat knolls and depressions from more distinct ones.
 </source>
             <comment>Description of symbol 103</comment>
-            <translation type="unfinished"></translation>
+            <translation>Hjälpkurvor används för att komplettera kurvinformationen. De används
+enbart när fullständig redovisning med vanliga höjdkurvor inte är möjlig.
+Hjälpkurvor ska inte användas som intermediära kurvor. Endast en
+hjälpkurva ska användas mellan närliggande höjdkurvor.
+Det är mycket viktigt att hjälpkurvorna används logiskt, vilket innebär att
+start- och slut av en hjälpkurva ska vara parallella med närliggande
+höjdkurvor.
+Uppehållen i hjälpkurvorna ska placeras på någorlunda raka delar av
+hjälpkurvan.
+Hjälpkurvor kan användas för att skilja mellan platta och mer tydliga höjder
+och gropar (lägsta höjd /djup bör vara 1 m).
+</translation>
         </message>
         <message>
             <source>Slope line, formline</source>
             <comment>Name of symbol 103.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Lutningsstreck, Hjälpkurva</translation>
         </message>
         <message>
             <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
             <comment>Description of symbol 103.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Lutningsstreck kan ritas på den lägre sidan av en kurva för att klarlägga
+markens lutningsförhållande. Lutningsstreck bör ritas i sänkor.</translation>
         </message>
         <message>
             <source>Earth bank</source>
             <comment>Name of symbol 104</comment>
-            <translation type="unfinished"></translation>
+            <translation>Skärning</translation>
         </message>
         <message>
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
             <comment>Description of symbol 104</comment>
-            <translation type="unfinished"></translation>
+            <translation>En skärning är en kraftig förändring i marknivån som tydligt kan urskiljas från sin omgivning, till exempel grus- och sandtag eller skärningar för vägar och järnvägar. Minsta höjd: 1 m. En skärning kan påverka löpbarheten. Lutningsstrecken ska motsvara skärningens horisontella utsträckning.
+För långa skärningar är det tillåtet att använda kortare taggar vid ändpunkterna. Lutningsstreck kan utelämnas för två närliggande skärningar. Opasserbara skärningar ska ritas med symbol 201 (opasserbar brant).</translation>
         </message>
         <message>
             <source>Earth bank, minimum size</source>
@@ -222,22 +243,24 @@
         <message>
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
             <comment>Description of symbol 104.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>En skärning är en kraftig förändring i marknivån som tydligt kan urskiljas från sin omgivning, till exempel grus- och sandtag eller skärningar för vägar och järnvägar. Minsta höjd: 1 m. En skärning kan påverka löpbarheten. Lutningsstrecken ska motsvara skärningens horisontella utsträckning.
+För långa skärningar är det tillåtet att använda kortare taggar vid ändpunkterna. Lutningsstreck kan utelämnas för två närliggande skärningar. Opasserbara skärningar ska ritas med symbol 201 (opasserbar brant).</translation>
         </message>
         <message>
             <source>Earth bank, top line</source>
             <comment>Name of symbol 104.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Skärning, baslinje</translation>
         </message>
         <message>
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
             <comment>Description of symbol 104.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>En skärning är en kraftig förändring i marknivån som tydligt kan urskiljas från sin omgivning, till exempel grus- och sandtag eller skärningar för vägar och järnvägar. Minsta höjd: 1 m. En skärning kan påverka löpbarheten. Lutningsstrecken ska motsvara skärningens horisontella utsträckning.
+För långa skärningar är det tillåtet att använda kortare taggar vid ändpunkterna. Lutningsstreck kan utelämnas för två närliggande skärningar. Opasserbara skärningar ska ritas med symbol 201 (opasserbar brant).</translation>
         </message>
         <message>
             <source>Earth bank, tag line</source>
             <comment>Name of symbol 104.3</comment>
-            <translation type="unfinished"></translation>
+            <translation>Skärning, tagg</translation>
         </message>
         <message>
             <source>Use this symbol to display the full extent of wide earth banks.</source>
@@ -252,76 +275,81 @@
         <message>
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
             <comment>Description of symbol 104.9</comment>
-            <translation type="unfinished"></translation>
+            <translation>En skärning är en kraftig förändring i marknivån som tydligt kan urskiljas från sin omgivning, till exempel grus- och sandtag eller skärningar för vägar och järnvägar. Minsta höjd: 1 m. En skärning kan påverka löpbarheten. Lutningsstrecken ska motsvara skärningens horisontella utsträckning.
+För långa skärningar är det tillåtet att använda kortare taggar vid ändpunkterna. Lutningsstreck kan utelämnas för två närliggande skärningar. Opasserbara skärningar ska ritas med symbol 201 (opasserbar brant).</translation>
         </message>
         <message>
             <source>Earth wall</source>
             <comment>Name of symbol 105</comment>
-            <translation type="unfinished"></translation>
+            <translation>Jordwall</translation>
         </message>
         <message>
             <source>Distinct earth wall. Minimum height is 1 m.</source>
             <comment>Description of symbol 105</comment>
-            <translation type="unfinished"></translation>
+            <translation>Tydligt jordvall. Lägsta höjd: 1 m.</translation>
         </message>
         <message>
             <source>Small earth wall</source>
             <comment>Name of symbol 106</comment>
-            <translation type="unfinished"></translation>
+            <translation>Otydligt jordvall</translation>
         </message>
         <message>
             <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
             <comment>Description of symbol 106</comment>
-            <translation type="unfinished"></translation>
+            <translation>Otydligt eller raserad jordvall. Lägsta höjd: 0,5 m.</translation>
         </message>
         <message>
             <source>Erosion gully</source>
             <comment>Name of symbol 107</comment>
-            <translation type="unfinished"></translation>
+            <translation>Erosionsfåra</translation>
         </message>
         <message>
             <source>An erosion gully which is too small to be shown using symbol 104 (earth bank) is shown by a single line. Minimum depth: 1 m.
 Contour lines shall not be broken around this symbol.</source>
             <comment>Description of symbol 107</comment>
-            <translation type="unfinished"></translation>
+            <translation>En erosionsfåra som är för liten får att redovisas med symbol 104 (skärning) redovisas med en enkel linje. Minsta djup: 1m.
+Höjdkurvor ska ritas utan uppehåll genom symbolen.</translation>
         </message>
         <message>
             <source>Small erosion gully</source>
             <comment>Name of symbol 108</comment>
-            <translation type="unfinished"></translation>
+            <translation>Liten fåra</translation>
         </message>
         <message>
             <source>A small erosion gully, dry ditch or trench. Minimum depth: 0.5 m.
 Contour lines should be broken around this symbol.</source>
             <comment>Description of symbol 108</comment>
-            <translation type="unfinished"></translation>
+            <translation>En liten erosionsfåra, torrt dike eller fåra. Minsta djup: 0,5 m.
+Höjdkurvor bör ritas med uppehåll omkring symbolen.</translation>
         </message>
         <message>
             <source>Small knoll</source>
             <comment>Name of symbol 109</comment>
-            <translation type="unfinished"></translation>
+            <translation>Punkthöjd</translation>
         </message>
         <message>
             <source>An obvious mound or knoll which cannot be drawn to scale with a contour. Minimum height: 1 m.
 The symbol shall not touch or overlap contours.</source>
             <comment>Description of symbol 109</comment>
-            <translation type="unfinished"></translation>
+            <translation>En tydlig kulle eller topp som inte kan ritas skalriktig med höjdkurva. Lägsta höjd: 1 m.
+Symbolen ska inte vidröra eller överlappa höjdkurvor.</translation>
         </message>
         <message>
             <source>Small elongated knoll</source>
             <comment>Name of symbol 110</comment>
-            <translation type="unfinished"></translation>
+            <translation>Avlång Punkthöjd</translation>
         </message>
         <message>
             <source>An obvious elongated knoll which cannot be drawn to scale with a contour. Minimum height: 1 m.
 The symbol shall not touch or overlap contours.</source>
             <comment>Description of symbol 110</comment>
-            <translation type="unfinished"></translation>
+            <translation>En tydlig avlång höjd som inte kan ritas skalriktig med höjdkurva. Lägsta höjd: 1 m. 
+Symbolen ska inte vidröra eller överlappa höjdkurvor.</translation>
         </message>
         <message>
             <source>Small depression</source>
             <comment>Name of symbol 111</comment>
-            <translation type="unfinished"></translation>
+            <translation>Liten grop</translation>
         </message>
         <message>
             <source>A small depression or hollow without steep sides that is too small to be shown by contours. Minimum depth: 1 m. Minimum width: 2 m.
@@ -2198,22 +2226,22 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Purple</source>
             <comment>Color 0</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Violett</translation>
         </message>
         <message>
             <source>Black</source>
             <comment>Color 1</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Svart</translation>
         </message>
         <message>
             <source>Brown 50%</source>
             <comment>Color 2</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Brun 50%</translation>
         </message>
         <message>
             <source>Black below light browns</source>
             <comment>Color 3</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Väg sidlinje</translation>
         </message>
         <message>
             <source>Opaque Blue</source>
@@ -2223,22 +2251,22 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Blue</source>
             <comment>Color 5</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Blå</translation>
         </message>
         <message>
             <source>Blue 50%</source>
             <comment>Color 6</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Blå 50%</translation>
         </message>
         <message>
             <source>Brown</source>
             <comment>Color 7</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Brun</translation>
         </message>
         <message>
             <source>OpenOrienteering Orange</source>
             <comment>Color 8</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">OpenOrienteering Orange</translation>
         </message>
         <message>
             <source>Black 30%</source>
@@ -2248,7 +2276,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Green 50%, Yellow</source>
             <comment>Color 10</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Grön 50%/Gul 100%</translation>
         </message>
         <message>
             <source>Green over White over Green</source>
@@ -2268,7 +2296,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Green</source>
             <comment>Color 14</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Grön</translation>
         </message>
         <message>
             <source>Green 60%</source>
@@ -2283,17 +2311,17 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Green below light greens</source>
             <comment>Color 17</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Grön under Ljusgrön</translation>
         </message>
         <message>
             <source>Yellow</source>
             <comment>Color 18</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Gul 100%</translation>
         </message>
         <message>
             <source>Yellow 50%</source>
             <comment>Color 19</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Gul 50%</translation>
         </message>
         <message>
             <source>White over Yellow 70%</source>
@@ -2308,7 +2336,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Contour</source>
             <comment>Name of symbol 101</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Höjdkurva</translation>
         </message>
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
@@ -2318,7 +2346,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Index contour</source>
             <comment>Name of symbol 102</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Stödkurva</translation>
         </message>
         <message>
             <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. Where an index contour coincides with an area of much detail, it may be shown with a normal contour line.</source>
@@ -2328,7 +2356,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Form line</source>
             <comment>Name of symbol 103</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Hjälpkurva</translation>
         </message>
         <message>
             <source>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</source>
@@ -2348,17 +2376,19 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Contour value</source>
             <comment>Name of symbol 105</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Höjdsiffra</translation>
         </message>
         <message>
             <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
             <comment>Description of symbol 105</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Höjdsiffror kan placeras på stödkurvorna. Höjdsiffrorna infogas på ställen där
+andra detaljer inte döljs. Siffrorna orienteras så att uppåt är på den högre
+sidan av stödkurvan.</translation>
         </message>
         <message>
             <source>Earth bank</source>
             <comment>Name of symbol 106</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Skärning</translation>
         </message>
         <message>
             <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
@@ -2398,7 +2428,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Earth bank, tag line</source>
             <comment>Name of symbol 106.2</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Skärning, tagg</translation>
         </message>
         <message>
             <source>Use this symbol to display the full extent of wide earth banks.</source>
@@ -2408,27 +2438,27 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Earth wall</source>
             <comment>Name of symbol 107</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Jordwall</translation>
         </message>
         <message>
             <source>Distinct earth wall. Minimum height is 1 m.</source>
             <comment>Description of symbol 107</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Tydligt jordvall. Lägsta höjd: 1 m.</translation>
         </message>
         <message>
             <source>Small earth wall</source>
             <comment>Name of symbol 108</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Otydligt jordvall</translation>
         </message>
         <message>
             <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
             <comment>Description of symbol 108</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Otydligt eller raserad jordvall. Lägsta höjd: 0,5 m.</translation>
         </message>
         <message>
             <source>Erosion gully</source>
             <comment>Name of symbol 109</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Erosionsfåra</translation>
         </message>
         <message>
             <source>An erosion gully or trench which is too small to be shown by symbol 106 is shown by a single line. The line width reflects the size of the gully. Minimum depth 1 m. The end of the line is pointed.</source>
@@ -2438,7 +2468,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Small erosion gully</source>
             <comment>Name of symbol 110</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Liten fåra</translation>
         </message>
         <message>
             <source>A small erosion gully or trench. Minimum depth 0.5 m.</source>
@@ -2448,7 +2478,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Small knoll</source>
             <comment>Name of symbol 112</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Punkthöjd</translation>
         </message>
         <message>
             <source>A small obvious mound or rocky knoll which cannot be drawn to scale with a contour (diameter of mound less than ca. 5 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. The symbol may not touch a contour line.</source>
@@ -2468,7 +2498,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Small depression</source>
             <comment>Name of symbol 115</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Liten grop</translation>
         </message>
         <message>
             <source>Small shallow natural depressions and hollows (minimum diameter 2 m) which cannot be shown to scale by contours are represented by a semicircle. Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol, which is orientated to north. Symbol 116 is used for man-made pits.</source>
@@ -3847,7 +3877,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Purple</source>
             <comment>Color 0</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Violett</translation>
         </message>
         <message>
             <source>Purple 50%</source>
@@ -3857,7 +3887,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Black</source>
             <comment>Color 2</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Svart</translation>
         </message>
         <message>
             <source>Opaque White below Black</source>
@@ -3887,7 +3917,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Black 20%</source>
             <comment>Color 8</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Svart 20%</translation>
         </message>
         <message>
             <source>Green, Black 50% above Brown</source>
@@ -3922,7 +3952,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Black below light browns</source>
             <comment>Color 15</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Väg sidlinje</translation>
         </message>
         <message>
             <source>Opaque Blue</source>
@@ -3932,7 +3962,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Blue</source>
             <comment>Color 17</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Blå</translation>
         </message>
         <message>
             <source>Blue 75%</source>
@@ -3952,12 +3982,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Brown</source>
             <comment>Color 21</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Brun</translation>
         </message>
         <message>
             <source>OpenOrienteering Orange</source>
             <comment>Color 22</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">OpenOrienteering Orange</translation>
         </message>
         <message>
             <source>Grey</source>
@@ -3967,7 +3997,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Green 50%, Yellow</source>
             <comment>Color 24</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Grön 50%/Gul 100%</translation>
         </message>
         <message>
             <source>White over Green</source>
@@ -3977,7 +4007,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Green, Black 50%</source>
             <comment>Color 26</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Grön 100%, Svart 50%</translation>
         </message>
         <message>
             <source>Opaque Green</source>
@@ -3987,7 +4017,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Green</source>
             <comment>Color 28</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Grön</translation>
         </message>
         <message>
             <source>Green 60%</source>
@@ -4002,17 +4032,17 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Green below light greens</source>
             <comment>Color 31</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Grön under Ljusgrön</translation>
         </message>
         <message>
             <source>Yellow</source>
             <comment>Color 32</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Gul 100%</translation>
         </message>
         <message>
             <source>Yellow 50%</source>
             <comment>Color 33</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Gul 50%</translation>
         </message>
         <message>
             <source>White over Yellow 70%</source>
@@ -4027,7 +4057,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Contour</source>
             <comment>Name of symbol 101</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Höjdkurva</translation>
         </message>
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 2 or 2.5 m. To emphasize the 3-dimensional effect of the contour line image, contour lines shall be represented as continuous lines through all symbols, also building (526.1) and canopy (526.2). However, contour lines shall be cut out for better legibility, if they touch the following symbols: small earth wall (108.1), small knoll (112), small elongated knoll (113), small depression (115), pit or hole (116), prominent landform feature (118), step or edge of paved area (529.1). 
@@ -4039,7 +4069,7 @@ The relative height difference between neighbouring features must be represented
         <message>
             <source>Index contour</source>
             <comment>Name of symbol 102</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Stödkurva</translation>
         </message>
         <message>
             <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface.  Where an index contour coincides with an area of much detail, it may be shown with symbol contour (101).</source>
@@ -4049,7 +4079,7 @@ The relative height difference between neighbouring features must be represented
         <message>
             <source>Form line</source>
             <comment>Name of symbol 103</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Hjälpkurva</translation>
         </message>
         <message>
             <source>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</source>
@@ -4069,17 +4099,19 @@ The relative height difference between neighbouring features must be represented
         <message>
             <source>Contour value</source>
             <comment>Name of symbol 105</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Höjdsiffra</translation>
         </message>
         <message>
             <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
             <comment>Description of symbol 105</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Höjdsiffror kan placeras på stödkurvorna. Höjdsiffrorna infogas på ställen där
+andra detaljer inte döljs. Siffrorna orienteras så att uppåt är på den högre
+sidan av stödkurvan.</translation>
         </message>
         <message>
             <source>Earth bank</source>
             <comment>Name of symbol 106.0</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Skärning</translation>
         </message>
         <message>
             <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, roads and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks shall be drawn with the symbol impassable cliff (201). The line width of very high earth banks may be 0.37 mm.</source>
@@ -4099,7 +4131,7 @@ The relative height difference between neighbouring features must be represented
         <message>
             <source>Earth bank, tag line</source>
             <comment>Name of symbol 106.2</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Skärning, tagg</translation>
         </message>
         <message>
             <source>Use this symbol to display the full extent of wide earth banks.</source>
@@ -4109,7 +4141,7 @@ The relative height difference between neighbouring features must be represented
         <message>
             <source>Small earth wall</source>
             <comment>Name of symbol 108.1</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Otydligt jordvall</translation>
         </message>
         <message>
             <source>A small distinct earth wall, usually man made. The minimum height is 0.5 m.  Larger earth walls should be represented with the symbols contour (101), form line (103) or earth bank (106).</source>
@@ -4129,7 +4161,7 @@ The relative height difference between neighbouring features must be represented
         <message>
             <source>Small erosion gully</source>
             <comment>Name of symbol 110</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Liten fåra</translation>
         </message>
         <message>
             <source>Asmall erosion gully or trench. Minimum depth is 0.5 m.</source>
@@ -4139,7 +4171,7 @@ The relative height difference between neighbouring features must be represented
         <message>
             <source>Small knoll</source>
             <comment>Name of symbol 112</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Punkthöjd</translation>
         </message>
         <message>
             <source>A small obvious mound or rocky knoll which cannot be drawn to scale with a contour (101), index contour (102) or form line (103). The height of the knoll should be a minimum of 1 m from the surrounding ground.</source>
@@ -4161,7 +4193,7 @@ The symbol may not be drawn in free form or such that two elongated knoll symbol
         <message>
             <source>Small depression</source>
             <comment>Name of symbol 115</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Liten grop</translation>
         </message>
         <message>
             <source>A small shallow natural depression or hollow which cannot be represented by the symbol contour (101) or form line (103) is represented by a semicircle. The minimum diameter should be 2 m. The minimum depth from the surrounding ground should be 1 m. The symbol is orientated to north.</source>
@@ -5876,12 +5908,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Purple</source>
             <comment>Color 0</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Violett</translation>
         </message>
         <message>
             <source>Black</source>
             <comment>Color 1</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Svart</translation>
         </message>
         <message>
             <source>Lower Purple</source>
@@ -5896,22 +5928,22 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Brown 50%</source>
             <comment>Color 4</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Brun 50%</translation>
         </message>
         <message>
             <source>Black below light browns</source>
             <comment>Color 5</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Väg sidlinje</translation>
         </message>
         <message>
             <source>Brown</source>
             <comment>Color 6</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Brun</translation>
         </message>
         <message>
             <source>OpenOrienteering Orange</source>
             <comment>Color 7</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">OpenOrienteering Orange</translation>
         </message>
         <message>
             <source>Opaque Blue</source>
@@ -5921,12 +5953,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Blue</source>
             <comment>Color 9</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Blå</translation>
         </message>
         <message>
             <source>Blue 50%</source>
             <comment>Color 10</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Blå 50%</translation>
         </message>
         <message>
             <source>Black 30%</source>
@@ -5936,7 +5968,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Green 50%, Yellow</source>
             <comment>Color 12</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Grön 50%/Gul 100%</translation>
         </message>
         <message>
             <source>Green over White over Green</source>
@@ -5961,7 +5993,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Green</source>
             <comment>Color 17</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Grön</translation>
         </message>
         <message>
             <source>Green 60%</source>
@@ -5976,17 +6008,17 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Green below light greens</source>
             <comment>Color 20</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Grön under Ljusgrön</translation>
         </message>
         <message>
             <source>Yellow</source>
             <comment>Color 21</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Gul 100%</translation>
         </message>
         <message>
             <source>Yellow 50%</source>
             <comment>Color 22</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Gul 50%</translation>
         </message>
         <message>
             <source>White over Yellow 70%</source>
@@ -6001,7 +6033,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Contour</source>
             <comment>Name of symbol 101</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Höjdkurva</translation>
         </message>
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
@@ -6011,7 +6043,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Index contour</source>
             <comment>Name of symbol 102</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Stödkurva</translation>
         </message>
         <message>
             <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. Where an index contour coincides with an area of much detail, it may be shown with a normal contour line.</source>
@@ -6031,17 +6063,19 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Contour value</source>
             <comment>Name of symbol 105</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Höjdsiffra</translation>
         </message>
         <message>
             <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
             <comment>Description of symbol 105</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Höjdsiffror kan placeras på stödkurvorna. Höjdsiffrorna infogas på ställen där
+andra detaljer inte döljs. Siffrorna orienteras så att uppåt är på den högre
+sidan av stödkurvan.</translation>
         </message>
         <message>
             <source>Earth bank</source>
             <comment>Name of symbol 106</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Skärning</translation>
         </message>
         <message>
             <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
@@ -6081,7 +6115,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Earth bank, tag line</source>
             <comment>Name of symbol 106.2</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Skärning, tagg</translation>
         </message>
         <message>
             <source>Use this symbol to display the full extent of wide earth banks.</source>
@@ -6091,17 +6125,17 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Earth wall</source>
             <comment>Name of symbol 107</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Jordwall</translation>
         </message>
         <message>
             <source>Distinct earth wall. Minimum height is 1 m.</source>
             <comment>Description of symbol 107</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Tydligt jordvall. Lägsta höjd: 1 m.</translation>
         </message>
         <message>
             <source>Erosion gully</source>
             <comment>Name of symbol 109</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Erosionsfåra</translation>
         </message>
         <message>
             <source>An erosion gully or trench which is too small to be shown by symbol 106 is shown by a single line. The line width reflects the size of the gully. Minimum depth 1 m. The end of the line is pointed.</source>
@@ -7006,7 +7040,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Form line</source>
             <comment>Name of symbol 103</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Hjälpkurva</translation>
         </message>
         <message>
             <source>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</source>
@@ -7016,17 +7050,17 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Small earth wall</source>
             <comment>Name of symbol 108</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Otydligt jordvall</translation>
         </message>
         <message>
             <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
             <comment>Description of symbol 108</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Otydligt eller raserad jordvall. Lägsta höjd: 0,5 m.</translation>
         </message>
         <message>
             <source>Small erosion gully</source>
             <comment>Name of symbol 110</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Liten fåra</translation>
         </message>
         <message>
             <source>A small erosion gully or trench. Minimum depth 0.5 m.</source>
@@ -7036,7 +7070,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Small knoll</source>
             <comment>Name of symbol 112</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Punkthöjd</translation>
         </message>
         <message>
             <source>A small obvious mound or rocky knoll which cannot be drawn to scale with a contour (diameter of mound less than ca. 5 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. The symbol may not touch a contour line.</source>
@@ -7056,7 +7090,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Small depression</source>
             <comment>Name of symbol 115</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Liten grop</translation>
         </message>
         <message>
             <source>Small shallow natural depressions and hollows (minimum diameter 2 m) which cannot be shown to scale by contours are represented by a semicircle. Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol, which is orientated to north. Symbol 116 is used for man-made pits.</source>
@@ -7675,7 +7709,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Purple</source>
             <comment>Color 1</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Violett</translation>
         </message>
         <message>
             <source>Upper Green</source>
@@ -7685,27 +7719,27 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Black</source>
             <comment>Color 3</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Svart</translation>
         </message>
         <message>
             <source>Brown 50%</source>
             <comment>Color 4</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Brun 50%</translation>
         </message>
         <message>
             <source>Black below light browns</source>
             <comment>Color 5</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Väg sidlinje</translation>
         </message>
         <message>
             <source>Brown</source>
             <comment>Color 6</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Brun</translation>
         </message>
         <message>
             <source>OpenOrienteering Orange</source>
             <comment>Color 7</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">OpenOrienteering Orange</translation>
         </message>
         <message>
             <source>Opaque Blue</source>
@@ -7715,12 +7749,12 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Blue</source>
             <comment>Color 9</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Blå</translation>
         </message>
         <message>
             <source>Blue 50%</source>
             <comment>Color 10</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Blå 50%</translation>
         </message>
         <message>
             <source>Black 30%</source>
@@ -7730,7 +7764,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Green 50%, Yellow</source>
             <comment>Color 12</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Grön 50%/Gul 100%</translation>
         </message>
         <message>
             <source>Green over White over Green</source>
@@ -7750,7 +7784,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Green</source>
             <comment>Color 16</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Grön</translation>
         </message>
         <message>
             <source>Green 60%</source>
@@ -7765,17 +7799,17 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Green below light greens</source>
             <comment>Color 19</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Grön under Ljusgrön</translation>
         </message>
         <message>
             <source>Yellow</source>
             <comment>Color 20</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Gul 100%</translation>
         </message>
         <message>
             <source>Yellow 50%</source>
             <comment>Color 21</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Gul 50%</translation>
         </message>
         <message>
             <source>White over Yellow 70%</source>
@@ -7790,7 +7824,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Contour</source>
             <comment>Name of symbol 101</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Höjdkurva</translation>
         </message>
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
@@ -7810,7 +7844,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Index contour</source>
             <comment>Name of symbol 102</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Stödkurva</translation>
         </message>
         <message>
             <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. Where an index contour coincides with an area of much detail, it may be shown with a normal contour line.</source>
@@ -7820,7 +7854,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Form line</source>
             <comment>Name of symbol 103</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Hjälpkurva</translation>
         </message>
         <message>
             <source>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</source>
@@ -7840,17 +7874,19 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Contour value</source>
             <comment>Name of symbol 105</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Höjdsiffra</translation>
         </message>
         <message>
             <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
             <comment>Description of symbol 105</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Höjdsiffror kan placeras på stödkurvorna. Höjdsiffrorna infogas på ställen där
+andra detaljer inte döljs. Siffrorna orienteras så att uppåt är på den högre
+sidan av stödkurvan.</translation>
         </message>
         <message>
             <source>Earth bank</source>
             <comment>Name of symbol 106</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Skärning</translation>
         </message>
         <message>
             <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
@@ -7890,7 +7926,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Earth bank, tag line</source>
             <comment>Name of symbol 106.2</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Skärning, tagg</translation>
         </message>
         <message>
             <source>Use this symbol to display the full extent of wide earth banks.</source>
@@ -7900,17 +7936,17 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Earth wall</source>
             <comment>Name of symbol 107</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Jordwall</translation>
         </message>
         <message>
             <source>Distinct earth wall. Minimum height is 1 m.</source>
             <comment>Description of symbol 107</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Tydligt jordvall. Lägsta höjd: 1 m.</translation>
         </message>
         <message>
             <source>Erosion gully</source>
             <comment>Name of symbol 109</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Erosionsfåra</translation>
         </message>
         <message>
             <source>An erosion gully or trench which is too small to be shown by symbol 106 is shown by a single line. The line width reflects the size of the gully. Minimum depth 1 m. The end of the line is pointed.</source>
@@ -8993,17 +9029,17 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Small earth wall</source>
             <comment>Name of symbol 108</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Otydligt jordvall</translation>
         </message>
         <message>
             <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
             <comment>Description of symbol 108</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Otydligt eller raserad jordvall. Lägsta höjd: 0,5 m.</translation>
         </message>
         <message>
             <source>Small erosion gully</source>
             <comment>Name of symbol 110</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Liten fåra</translation>
         </message>
         <message>
             <source>A small erosion gully or trench. Minimum depth 0.5 m.</source>
@@ -9013,7 +9049,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Small knoll</source>
             <comment>Name of symbol 112</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Punkthöjd</translation>
         </message>
         <message>
             <source>A small obvious mound or rocky knoll which cannot be drawn to scale with a contour (diameter of mound less than ca. 5 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. The symbol may not touch a contour line.</source>
@@ -9033,7 +9069,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Small depression</source>
             <comment>Name of symbol 115</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Liten grop</translation>
         </message>
         <message>
             <source>Small shallow natural depressions and hollows (minimum diameter 2 m) which cannot be shown to scale by contours are represented by a semicircle. Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol, which is orientated to north. Symbol 116 is used for man-made pits.</source>
@@ -9552,7 +9588,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Purple</source>
             <comment>Color 0</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Violett</translation>
         </message>
         <message>
             <source>Black for control descriptions</source>
@@ -9577,7 +9613,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Black</source>
             <comment>Color 5</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Svart</translation>
         </message>
         <message>
             <source>Simple Orienteering Course</source>
