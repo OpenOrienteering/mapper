@@ -32,13 +32,12 @@
 #include <QLineEdit>
 #include <QMessageBox>
 #include <QPushButton>
+#include <QSettings>
 #include <QSignalBlocker>
 #include <QTextDocument>
 #include <QTextEdit>
-#include <QVariant>
 #include <QWidget>
 
-#include "settings.h"
 #include "core/map.h"
 #include "core/symbols/symbol.h"
 #include "gui/symbols/symbol_setting_dialog.h"
@@ -329,21 +328,7 @@ void SymbolPropertiesWidget::reset(Symbol* symbol)
 	}
 	else
 	{
-		auto& settings = Settings::getInstance();
-		auto translation_file = settings.getSetting(Settings::General_TranslationFile).toString();
-		auto language = TranslationUtil::languageFromFilename(translation_file);
-		if (!language.isValid())
-		{
-			auto language_code = settings.getSetting(Settings::General_Language).toString();
-			for (const auto& item : TranslationUtil::availableLanguages())
-			{
-				if (item.code == language_code)
-				{
-					language = item;
-					break;
-				}
-			}
-		}	
+		auto language = TranslationUtil::languageFromSettings(QSettings());
 		if (!language.isValid())
 		{
 			language.displayName = tr("undefined language");
