@@ -20,6 +20,8 @@
 
 #include "map_dialog_scale.h"
 
+#include <QDoubleSpinBox>
+#include <QCheckBox>
 #include <QDialogButtonBox>
 #include <QFormLayout>
 #include <QLabel>

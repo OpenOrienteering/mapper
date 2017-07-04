@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012, 2013, 2015 Kai Pastor
+ *    Copyright 2012, 2013, 2015, 2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -18,19 +18,24 @@
  */
 
 
-#ifndef _OPENORIENTEERING_UTIL_GUI_H_
-#define _OPENORIENTEERING_UTIL_GUI_H_
+#ifndef OPENORIENTEERING_UTIL_GUI_H
+#define OPENORIENTEERING_UTIL_GUI_H
 
-#include <cmath>
-
-#include <QCheckBox>
+#include <QtGlobal>
 #include <QCoreApplication>
-#include <QDebug>
 #include <QLabel>
-#include <QDoubleSpinBox>
 #include <QSpacerItem>
-#include <QSpinBox>
+#include <QString>
 #include <QStyle>
+#include <QWidget>
+
+QT_BEGIN_NAMESPACE
+class QCheckBox;
+class QDoubleSpinBox;
+// IWYU pragma: no_forward_declare QLabel
+class QSpacerItem;
+class QSpinBox;
+QT_END_NAMESPACE
 
 class MapCoordF;
 
@@ -62,19 +67,19 @@ namespace Util
 		typedef double basetype;
 		
 		/** The minimum input value. */
-		inline static double min() noexcept   { return -99999999.99; }
+		constexpr static double min() noexcept { return -99999999.99; }
 		
 		/** The maximum input value. */
-		inline static double max() noexcept   { return +99999999.99; }
+		constexpr static double max() noexcept { return +99999999.99; }
 		
 		/** The spinbox step width. */
-		inline static double step() noexcept  { return 1.0; }
+		constexpr static double step() noexcept { return 1.0; }
 		
 		/** The number of decimals. */
-		inline static int decimals() noexcept { return 2; }
+		constexpr static int decimals() noexcept { return 2; }
 		
 		/** The unit of measurement, translated in context UnitOfMeasurement. */
-		inline static QString unit()
+		static QString unit()
 		{
 			return QCoreApplication::translate("UnitOfMeasurement", "mm", "millimeters");
 		}
@@ -97,19 +102,19 @@ namespace Util
 		typedef double basetype;
 		
 		/** The minimum input value. */
-		inline static double min() noexcept   { return -99999999.99; }
+		static constexpr double min() noexcept { return -99999999.99; }
 		
 		/** The maximum input value. */
-		inline static double max() noexcept   { return +99999999.99; }
+		constexpr static double max() noexcept { return +99999999.99; }
 		
 		/** The spinbox step width. */
-		inline static double step() noexcept  { return 1.0; }
+		constexpr static double step() noexcept { return 1.0; }
 		
 		/** The number of decimals. */
-		inline static int decimals() noexcept { return 2; }
+		constexpr static int decimals() noexcept { return 2; }
 		
 		/** The unit of measurement, translated in context UnitOfMeasurement. */
-		inline static QString unit()
+		static QString unit()
 		{
 			return QCoreApplication::translate("UnitOfMeasurement", "m", "meters");
 		}
@@ -117,22 +122,24 @@ namespace Util
 	
 	namespace Headline
 	{
-		/** 
+		/**
 		 * Creates a QLabel which is styled as a headline.
 		 *
 		 * This headline is intended for use in dialogs.
-		 */ 
-		inline QLabel* create(const QString& text)
+		 */
+		inline
+		QLabel* create(const QString& text)
 		{
 			return new QLabel(QLatin1String("<b>") + text + QLatin1String("</b>"));
 		}
 		
-		/** 
+		/**
 		 * Creates a QLabel which is styled as a headline.
 		 *
 		 * This headline is intended for use in dialogs.
-		 */ 
-		inline QLabel* create(const char* text_utf8)
+		 */
+		inline
+		QLabel* create(const char* text_utf8)
 		{
 			return create(QString::fromUtf8(text_utf8));
 		}
@@ -140,14 +147,15 @@ namespace Util
 	
 	namespace SpacerItem
 	{
-		/** 
+		/**
 		 * Creates a QSpacerItem which takes up a style dependent width
 		 * and height.
 		 *
 		 * This spacer item is intended for use with QFormLayout which
 		 * does not offer a direct mean for extra spacing.
-		 */ 
-		inline QSpacerItem* create(const QWidget* widget)
+		 */
+		inline
+		QSpacerItem* create(const QWidget* widget)
 		{
 			const int spacing = widget->style()->pixelMetric(QStyle::PM_LayoutTopMargin);
 			return new QSpacerItem(spacing, spacing);
@@ -162,7 +170,8 @@ namespace Util
 		 * as normal. Exceedings this number in Util::SpinBox::create() will
 		 * print a runtime warning in development builds.
 		 */
-		inline int max_digits()
+		inline
+		constexpr int max_digits()
 		{
 			return 13;
 		}
@@ -177,29 +186,7 @@ namespace Util
 		 * the unit of measurement (optional),
 		 * the step width of the spinbox buttons (optional).
 		 */
-		inline QSpinBox* create(int min, int max, const QString &unit = QString(), int step = 0)
-		{
-			QSpinBox* box = new QSpinBox();
-			box->setRange(min, max);
-			static const QLatin1Char space { ' ' };
-			if (unit.startsWith(space))
-				box->setSuffix(unit);
-			else if (unit.length() > 0)
-				box->setSuffix(space + unit);
-			if (step > 0)
-				box->setSingleStep(step);
-#ifndef NDEBUG
-			if (box->locale().toString(min).remove(box->locale().groupSeparator()).length() > max_digits())
-				qDebug().nospace()
-				  << "WARNING: Util::SpinBox::create() will create a very large widget because of min="
-			      << box->locale().toString(min);
-			if (box->locale().toString(max).remove(box->locale().groupSeparator()).length() > max_digits())
-				qDebug().nospace()
-				  << "WARNING: Util::SpinBox::create() will create a very large widget because of max="
-			      << box->locale().toString(max);
-#endif
-			return box;
-		}
+		QSpinBox* create(int min, int max, const QString &unit = {}, int step = 0);
 		
 		/**
 		 * Creates and initializes a QDoubleSpinBox.
@@ -209,42 +196,10 @@ namespace Util
 		 * the number of decimals,
 		 * the lower and upper bound of the valid range,
 		 * the unit of measurement (optional),
-		 * the step width of the spinbox buttons (optional; dependent on 
+		 * the step width of the spinbox buttons (optional; dependent on
 		 * the number of decimals if not specified).
 		 */
-		inline QDoubleSpinBox* create(int decimals, double min, double max, const QString &unit = QString(), double step = 0.0)
-		{
-			QDoubleSpinBox* box = new QDoubleSpinBox();
-			box->setDecimals(decimals);
-			box->setRange(min, max);
-			static const QLatin1Char space { ' ' };
-			if (unit.startsWith(space))
-				box->setSuffix(unit);
-			else if (unit.length() > 0)
-				box->setSuffix(space + unit);
-			if (step > 0.0)
-				box->setSingleStep(step);
-			else
-			{
-				switch (decimals)
-				{
-					case 0: 	box->setSingleStep(1.0); break;
-					case 1: 	box->setSingleStep(0.1); break;
-					default: 	box->setSingleStep(5.0 * pow(10.0, -decimals));
-				}
-			}
-#ifndef NDEBUG
-			if (box->textFromValue(min).remove(box->locale().groupSeparator()).length() > max_digits())
-				qDebug().nospace()
-				  << "WARNING: Util::SpinBox::create() will create a very large widget because of min="
-			      << box->locale().toString(min, 'f', decimals);
-			if (box->textFromValue(max).remove(box->locale().groupSeparator()).length() > max_digits())
-				qDebug().nospace()
-				  << "WARNING: Util::SpinBox::create() will create a very large widget because of max="
-			      << box->locale().toString(max, 'f', decimals);
-#endif
-			return box;
-		}
+		QDoubleSpinBox* create(int decimals, double min, double max, const QString &unit = {}, double step = 0.0);
 		
 		/**
 		 * Creates and initializes a QDoubleSpinBox.
@@ -254,7 +209,7 @@ namespace Util
 		 * via InputProperties<T>.
 		 */
 		template< class T >
-		inline QDoubleSpinBox* create()
+		QDoubleSpinBox* create()
 		{
 			typedef InputProperties<T> P;
 			return create(P::decimals(), P::min(), P::max(), P::unit(), P::step());
@@ -275,7 +230,7 @@ namespace Util
 		 * in the context UnitOfMeasurement.
 		 */
 		template< class T >
-		inline QDoubleSpinBox* create(const QString& unit)
+		QDoubleSpinBox* create(const QString& unit)
 		{
 			typedef InputProperties<T> P;
 			return create(P::decimals(), P::min(), P::max(), unit, P::step());
@@ -284,24 +239,11 @@ namespace Util
 	
 	namespace TristateCheckbox
 	{
-		inline
-		void setDisabledAndChecked(QCheckBox* checkbox, bool checked)
-		{
-			Q_ASSERT(checkbox);
-			checkbox->setEnabled(false);
-			checkbox->setTristate(true);
-			checkbox->setCheckState(checked ? Qt::PartiallyChecked : Qt::Unchecked);
-		}
+		void setDisabledAndChecked(QCheckBox* checkbox, bool checked);
 		
-		inline
-		void setEnabledAndChecked(QCheckBox* checkbox, bool checked)
-		{
-			Q_ASSERT(checkbox);
-			checkbox->setEnabled(true);
-			checkbox->setChecked(checked);
-			checkbox->setTristate(false);
-		}
+		void setEnabledAndChecked(QCheckBox* checkbox, bool checked);
 	}
+	
 }
 
 #endif

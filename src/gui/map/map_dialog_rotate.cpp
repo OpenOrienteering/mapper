@@ -20,8 +20,10 @@
 
 #include "map_dialog_rotate.h"
 
-#include <qmath.h>
+#include <QtMath>
+#include <QCheckBox>
 #include <QDialogButtonBox>
+#include <QDoubleSpinBox>
 #include <QFormLayout>
 #include <QLabel>
 #include <QRadioButton>

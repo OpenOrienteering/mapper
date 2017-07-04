@@ -21,7 +21,9 @@
 #include "color_dialog.h"
 
 #include <QButtonGroup>
+#include <QCheckBox>
 #include <QDialogButtonBox>
+#include <QDoubleSpinBox>
 #include <QGridLayout>
 #include <QLineEdit>
 #include <QPushButton>

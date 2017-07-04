@@ -22,8 +22,10 @@
 #include "area_symbol_settings.h"
 
 #include <QtMath>
+#include <QCheckBox>
 #include <QComboBox>
 #include <QDialogButtonBox>
+#include <QDoubleSpinBox>
 #include <QFormLayout>
 #include <QLabel>
 #include <QListWidget>
@@ -462,7 +464,7 @@ void AreaSymbolSettings::deleteActivePattern()
 	int index = pattern_list->currentRow();
 	if (index < 0)
 	{
-		qWarning() << "AreaSymbolSettings::deleteActivePattern(): no fill selected."; // not translated
+		qWarning("AreaSymbolSettings::deleteActivePattern(): no fill selected.");
 		return;
 	}
 	

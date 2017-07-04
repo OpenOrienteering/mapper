@@ -23,6 +23,7 @@
 #include <QCheckBox>
 #include <QComboBox>
 #include <QFormLayout>
+#include <QSpinBox>
 
 #include "../modifier_key.h"
 #include "gui/util_gui.h"

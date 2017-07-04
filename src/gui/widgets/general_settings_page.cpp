@@ -26,12 +26,14 @@
 #include <QComboBox>
 #include <QCompleter>
 #include <QDialogButtonBox>
+#include <QDoubleSpinBox>
 #include <QFileDialog>
 #include <QFormLayout>
 #include <QLineEdit>
 #include <QMessageBox>
 #include <QScreen>
 #include <QSettings>
+#include <QSpinBox>
 #include <QTextCodec>
 #include <QToolButton>
 

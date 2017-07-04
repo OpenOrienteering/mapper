@@ -22,8 +22,11 @@
 #include "distribute_points_tool.h"
 
 #include <qmath.h>
+#include <QCheckBox>
 #include <QDialogButtonBox>
+#include <QDoubleSpinBox>
 #include <QFormLayout>
+#include <QSpinBox>
 
 #include "core/map.h"
 #include "core/symbols/point_symbol.h"

@@ -29,6 +29,7 @@
 #include <QComboBox>
 #include <QDebug>
 #include <QDialogButtonBox>
+#include <QDoubleSpinBox>
 #include <QFormLayout>
 #include <QGroupBox>
 #include <QPushButton>

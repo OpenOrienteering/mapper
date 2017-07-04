@@ -26,8 +26,10 @@
 #include <limits>
 
 #include <QButtonGroup>
-#include <QDialogButtonBox>
+#include <QCheckBox>
 #include <QComboBox>
+#include <QDialogButtonBox>
+#include <QDoubleSpinBox>
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QFormLayout>
@@ -41,6 +43,7 @@
 #include <QRadioButton>
 #include <QScrollArea>
 #include <QScrollBar>
+#include <QSpinBox>
 #include <QToolButton>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>

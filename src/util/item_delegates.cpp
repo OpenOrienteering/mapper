@@ -24,6 +24,7 @@
 #include <QApplication>
 #include <QPainter>
 #include <QSignalMapper>
+#include <QSpinBox>
 #include <QTextDocument>
 
 #include "gui/util_gui.h"

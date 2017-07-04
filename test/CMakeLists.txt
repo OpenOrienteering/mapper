@@ -37,13 +37,13 @@ add_definitions(
   -DQT_USE_QSTRINGBUILDER
 )
 
-# This function defines a test from a list of source file names 
+# This function defines a test from a list of source file names
 # (without ending). For each filename, a .cpp file and .h must exist.
 # The .h file is processed with Qt's moc.
 # The first filename is also used as the name of the executable file and
 # as the name of the test.
 #
-# The test executable is linked only to external libraries by default. 
+# The test executable is linked only to external libraries by default.
 # It only needs to be rebuild and run when one of its components was modified.
 # Additional link libraries may be added to the executable target as usual.
 #
@@ -81,13 +81,13 @@ function(add_test_helper testname autorun)
 endfunction()
 
 
-# This function defines a unit test from a list of source file names 
+# This function defines a unit test from a list of source file names
 # (without ending). For each filename, a .cpp file and .h must exist.
 # The .h file is processed with Qt's moc.
 # The first filename is also used as the name of the executable file and
 # as the name of the test.
 #
-# A unit test executable is linked only to external libraries by default. 
+# A unit test executable is linked only to external libraries by default.
 # It only needs to be rebuild and run when one of its components was modified.
 # Additional link libraries may be added to the executable target as usual.
 #
@@ -96,13 +96,13 @@ function(add_unit_test testname)
 endfunction()
 
 
-# This function defines a system test from a list of source file names 
+# This function defines a system test from a list of source file names
 # (without ending). For each filename, a .cpp file and .h must exist.
 # The .h file is processed with Qt's moc.
 # The first filename is also used as the name of the executable file and
 # as the name of the test.
 #
-# A system test executable is linked to the full Mapper runtime. 
+# A system test executable is linked to the full Mapper runtime.
 # That is why it will be rebuild and run very often.
 #
 function(add_system_test testname)
@@ -124,7 +124,7 @@ include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 add_unit_test(tst_qglobal)
 add_unit_test(autosave_t MANUAL ../src/core/autosave ../src/settings ../src/util/util)
 add_unit_test(encoding_t ../src/util/encoding)
-add_unit_test(georeferencing_t ../src/core/georeferencing
+add_unit_test(georeferencing_t ../src/core/georeferencing ../src/gui/util_gui
 	../src/core/latlon
 	../src/core/crs_template
 	../src/core/crs_template_implementation

@@ -21,7 +21,9 @@
 
 #include "text_symbol_settings.h"
 
+#include <QCheckBox>
 #include <QDialogButtonBox>
+#include <QDoubleSpinBox>
 #include <QFontComboBox>
 #include <QFormLayout>
 #include <QHBoxLayout>

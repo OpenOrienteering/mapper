@@ -21,7 +21,9 @@
 
 #include "line_symbol_settings.h"
 
+#include <QCheckBox>
 #include <QComboBox>
+#include <QDoubleSpinBox>
 #include <QGridLayout>
 #include <QScrollArea>
 #include <QScrollBar>

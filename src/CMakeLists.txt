@@ -107,6 +107,7 @@ set(Mapper_Common_SRCS
   gui/task_dialog.cpp
   gui/text_browser_dialog.cpp
   gui/touch_cursor.cpp
+  gui/util_gui.cpp
   
   gui/map/new_map_dialog.cpp
   gui/map/map_dialog_rotate.cpp
@@ -230,7 +231,6 @@ set(Mapper_Common_HEADERS
   fileformats/ocd_types_v12.h
   fileformats/xml_file_format_p.h
   
-  gui/util_gui.h
   gui/map/map_editor_p.h
   
   templates/world_file.h
