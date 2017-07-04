@@ -400,7 +400,7 @@ void ReplaceSymbolSetDialog::updateMappingTable()
 		    && item.query.symbolOperand())
 		{
 			original_symbol = item.query.symbolOperand();
-			original_string = original_symbol->getPlainTextName();
+			original_string = Util::plainText(object_map.translate(original_symbol->getName()));
 			original_string.prepend(original_symbol->getNumberAsString() + QLatin1Char(' '));
 			original_icon = original_symbol->getIcon(&object_map);
 			compatible_symbols = Symbol::getCompatibleTypes(original_symbol->getType());
@@ -468,7 +468,7 @@ void ReplaceSymbolSetDialog::updateMappingTable()
 				if (unique_symbol)
 				{
 					original_symbol = unique_symbol;
-					original_string = original_symbol->getPlainTextName();
+					original_string = Util::plainText(object_map.translate(original_symbol->getName()));
 					original_string.prepend(original_symbol->getNumberAsString() + QLatin1Char(' '));
 					original_icon = original_symbol->getIcon(&object_map);
 				}
@@ -505,7 +505,8 @@ void ReplaceSymbolSetDialog::updateMappingTable()
 		// Note on const: this is not a const method.
 		QTableWidgetItem* replacement_item;
 		if (replacement_symbol)
-			replacement_item = new QTableWidgetItem(replacement_symbol->getNumberAsString() + QLatin1Char(' ') + replacement_symbol->getPlainTextName());
+			replacement_item = new QTableWidgetItem(replacement_symbol->getNumberAsString() + QLatin1Char(' ')
+			                                        + Util::plainText(symbol_set.translate(replacement_symbol->getName())));
 		else
 			replacement_item = new QTableWidgetItem(tr("- None -"));
 		QVariantList replacement_item_data =
