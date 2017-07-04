@@ -35,6 +35,7 @@
 #include "core/map.h"
 #include "core/symbols/combined_symbol.h"
 #include "core/symbols/symbol.h"
+#include "gui/util_gui.h"
 #include "util/backports.h"
 
 
@@ -65,7 +66,8 @@ SymbolDropDown::SymbolDropDown(const Map* map, int filter, const Symbol* initial
 				continue;
 		}
 		
-		auto symbol_name = QString{symbol->getNumberAsString() + QLatin1Char(' ') + symbol->getPlainTextName()};
+		auto symbol_name = QString{symbol->getNumberAsString() + QLatin1Char(' ')
+		                           + Util::plainText(map->translate(symbol->getName()))};
 		addItem(QPixmap::fromImage(symbol->getIcon(map)), symbol_name, QVariant::fromValue<const Symbol*>(symbol));
 	}
 	setSymbol(initial_symbol);
@@ -154,7 +156,9 @@ void SymbolDropDownDelegate::setModelData(QWidget* editor, QAbstractItemModel* m
 	
 	if (symbol)
 	{
-		auto text = QString{symbol->getNumberAsString() + QLatin1Char(' ') + symbol->getPlainTextName()};
+		auto map = list.at(0).value<const Map*>();
+		auto text = QString{symbol->getNumberAsString() + QLatin1Char(' ')
+		                    + Util::plainText(map->translate(symbol->getName()))};
 		model->setData(index, QVariant{text}, Qt::EditRole);
 		model->setData(index, symbol->getIcon(list[0].value<const Map*>()), Qt::DecorationRole);
 	}
