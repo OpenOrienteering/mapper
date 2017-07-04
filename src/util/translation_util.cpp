@@ -194,12 +194,7 @@ TranslationUtil::Language TranslationUtil::languageFromCode(const QString& code)
 // static
 TranslationUtil::Language TranslationUtil::languageFromSettings(const QSettings& settings)
 {
-	auto translation_file = settings.value(QLatin1String("translationFile")).toString();
-	auto language = languageFromFilename(translation_file);
-	if (!language.isValid())
-	{
-		auto language_code = settings.value(QLatin1String("language"), default_language()).toString();
-		language = languageFromCode(language_code);
-	}
-	return language;
+	// Only the stored code matters. The stored filename must match the code or is inactive.
+	auto language_code = settings.value(QLatin1String("language"), default_language()).toString();
+	return languageFromCode(language_code);
 }
