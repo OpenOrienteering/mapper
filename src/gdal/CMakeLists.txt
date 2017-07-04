@@ -35,9 +35,7 @@ set(MAPPER_GDAL_SOURCES
   mapper-osmconf.ini
 )
 	
-qt5_translations_sources(
-  SOURCES ${MAPPER_GDAL_HEADERS} ${MAPPER_GDAL_SOURCES}
-)
+mapper_translations_sources(${MAPPER_GDAL_HEADERS} ${MAPPER_GDAL_SOURCES})
 
 add_library(mapper-gdal STATIC ${MAPPER_GDAL_HEADERS} ${MAPPER_GDAL_SOURCES})
 

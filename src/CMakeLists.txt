@@ -280,9 +280,7 @@ target_compile_definitions(Mapper_Common PRIVATE
   QT_USE_QSTRINGBUILDER
 )
 
-qt5_translations_sources(
-  SOURCES ${Mapper_Common_SRCS} ${Mapper_Common_HEADERS}
-)
+mapper_translations_sources(${Mapper_Common_SRCS} ${Mapper_Common_HEADERS})
 
 
 # Mapper executable
