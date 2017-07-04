@@ -86,7 +86,7 @@ set(Mapper_TRANS_DIR
 add_custom_target(Mapper_translations ALL DEPENDS ${Mapper_QM} ${qt_qm} ${symbol_set_qm})
 
 install(
-  FILES ${Mapper_QM} ${qt_qm}
+  FILES ${Mapper_QM} ${qt_qm} ${symbol_set_qm}
   DESTINATION "${MAPPER_DATA_DESTINATION}/translations"
 )
 
