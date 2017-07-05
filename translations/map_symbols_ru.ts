@@ -166,7 +166,7 @@
         <message>
             <source>Index contour</source>
             <comment>Name of symbol 102</comment>
-            <translation type="unfinished">Утолщённая горизонталь</translation>
+            <translation>Утолщённая горизонталь</translation>
         </message>
         <message>
             <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. An index contour may be represented as an ordinary contour line in an area with much detail. Small contour knolls and depressions are normally not represented using index contours.</source>
@@ -176,7 +176,7 @@
         <message>
             <source>Contour value</source>
             <comment>Name of symbol 102.1</comment>
-            <translation type="unfinished">Высота горизонтали</translation>
+            <translation>Высота горизонтали</translation>
         </message>
         <message>
             <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
@@ -242,8 +242,8 @@
         <message>
             <source>Use this symbol to display the full extent of wide earth banks.</source>
             <comment>Description of symbol 104.3</comment>
-            <translation>Используется для показа на всем протяжении широкого грунтовго обрыва.</translation>
-        </message>
+            <translation>Используется для показа на всем протяжении широкого грунтового обрыва.</translation>
+    </message>
         <message>
             <source>Earth bank, minimum size (from ISOM2000)</source>
             <comment>Name of symbol 104.9</comment>
@@ -333,7 +333,7 @@ Small depressions with steep sides are represented with symbol 112 (pit). The sy
         <message>
             <source>Pit</source>
             <comment>Name of symbol 112</comment>
-            <translation type="unfinished">Искусственная внемасштабная яма</translation>
+            <translation>Искусственная внемасштабная яма</translation>
         </message>
         <message>
             <source>Pits and holes with distinct steep sides which cannot be shown to scale using symbol 104 (earth bank). Minimum depth: 1 m. Minimum width: 1 m. A pit larger than 5 m x 5 m should normally be exaggerated and drawn using symbol 104 (earth bank). Pits without steep sides are represented with symbol 111 (small depression). The symbol may not touch or overlap other brown symbols. Location is the centre of
@@ -449,7 +449,7 @@ When an impassable cliff drops straight into water, making it impossible to pass
         <message>
             <source>Use this symbol to display the full extent of a wide cliff.</source>
             <comment>Description of symbol 201.4</comment>
-            <translation type="unfinished">Используется на всем протяжении широкой скалы.</translation>
+            <translation>Используется на всем протяжении широкой скалы.</translation>
         </message>
         <message>
             <source>Impassable cliff, minimum size (from ISOM2000)</source>
@@ -850,12 +850,12 @@ Collapsed and easily crossable trenches should be mapped as erosion gullies.</so
         <message>
             <source>Crossable watercourse</source>
             <comment>Name of symbol 304</comment>
-            <translation type="unfinished">Преодолимая река</translation>
+            <translation>Преодолимая река</translation>
         </message>
         <message>
             <source>A crossable watercourse, minimum 2 m wide. The width of watercourses over 5 m wide should be shown to scale.</source>
             <comment>Description of symbol 304</comment>
-            <translation type="unfinished">Преодолимый река или канава шириной минимум 2 метра. Если ширина больше 5 метров, то объект показывается в масштабе карты.</translation>
+            <translation>Преодолимый река или канава шириной минимум 2 метра. Если ширина больше 5 метров, то объект показывается в масштабе карты.</translation>
         </message>
         <message>
             <source>Small crossable watercourse</source>
@@ -875,7 +875,7 @@ Collapsed and easily crossable trenches should be mapped as erosion gullies.</so
         <message>
             <source>A natural or man-made minor water channel which may contain water only intermittently.</source>
             <comment>Description of symbol 306</comment>
-            <translation type="unfinished">Естественная или искусственная пересыхающая канава.</translation>
+            <translation>Естественная или искусственная пересыхающая канава.</translation>
         </message>
         <message>
             <source>Uncrossable marsh, with border line</source>
@@ -1036,7 +1036,7 @@ May not be combined with other area symbols than symbol 113 (broken ground), sym
         <message>
             <source>Rough open land</source>
             <comment>Name of symbol 403</comment>
-            <translation type="unfinished">Неудобное открытое пространство</translation>
+            <translation>Неудобное открытое пространство</translation>
         </message>
         <message>
             <source>Heath, moorland, felled areas, newly planted areas (trees lower than ca. 1 m) or other generally open land with rough ground vegetation, heather or tall grass offering the same runnability as typical open forest.
@@ -1048,7 +1048,7 @@ Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m). Smaller areas must either be 
         <message>
             <source>Rough open land with scattered trees</source>
             <comment>Name of symbol 404</comment>
-            <translation type="unfinished">Неудобное открытое пространство с отдельными деревьями</translation>
+            <translation>Неудобное открытое пространство с отдельными деревьями</translation>
         </message>
         <message>
             <source>Areas with scattered trees or bushes in rough open land may be generalised by using a regular pattern of large dots in the yellow screen.
@@ -1106,7 +1106,7 @@ open land).
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
             <comment>Description of symbol 406.1</comment>
-            <translation type="unfinished">Лес, пробегаемый в определенном направлении. Когда площадь леса обеспечивает хорошую пробегаемость в одном направлении, но хуже в другом, в сетке знака должны быть белые полосы для показа направления хорошей пробегаемости.</translation>
+            <translation>Лес, пробегаемый в определенном направлении. Когда площадь леса обеспечивает хорошую пробегаемость в одном направлении, но хуже в другом, в сетке знака должны быть белые полосы для показа направления хорошей пробегаемости.</translation>
         </message>
         <message>
             <source>Vegetation, slow running, good visibility
@@ -1117,7 +1117,7 @@ open land).
         <message>
             <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 60-80% of normal speed. This symbol may not be combined with 406 or 408.</source>
             <comment>Description of symbol 407</comment>
-            <translation type="unfinished">Густой подлесок, не ограничивающий видимость (ежевика, вереск, низкорослый кустарник), а также валежник или срубленные ветки, снижающие скорость бега до 60 - 80% от нормальной. Не допускается использование этого знака в комбинации со знаками 406 или 408.</translation>
+            <translation>Густой подлесок, не ограничивающий видимость (ежевика, вереск, низкорослый кустарник), а также валежник или срубленные ветки, снижающие скорость бега до 60 - 80% от нормальной. Не допускается использование этого знака в комбинации со знаками 406 или 408.</translation>
         </message>
         <message>
             <source>Vegetation, walk
@@ -1139,7 +1139,7 @@ open land).
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
             <comment>Description of symbol 408.1</comment>
-            <translation type="unfinished">Лес, пробегаемый в определенном направлении. Когда площадь леса обеспечивает хорошую пробегаемость в одном направлении, но хуже в другом, в сетке знака должны быть белые полосы для показа направления хорошей пробегаемости.</translation>
+            <translation>Лес, пробегаемый в определенном направлении. Когда площадь леса обеспечивает хорошую пробегаемость в одном направлении, но хуже в другом, в сетке знака должны быть белые полосы для показа направления хорошей пробегаемости.</translation>
         </message>
         <message>
             <source>Vegetation runnable in one direction, 2, 20%</source>
@@ -1176,12 +1176,12 @@ For fairness reasons, areas that are really difficult to get through (10% and sl
         <message>
             <source>Forest runnable in one direction, 3</source>
             <comment>Name of symbol 410.1</comment>
-            <translation type="unfinished">Лес легкопробегаемый в определенном направлении, 3</translation>
+            <translation>Лес легкопробегаемый в определенном направлении, 3</translation>
         </message>
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
             <comment>Description of symbol 410.1</comment>
-            <translation type="unfinished">Лес, пробегаемый в определенном направлении. Когда площадь леса обеспечивает хорошую пробегаемость в одном направлении, но хуже в другом, в сетке знака должны быть белые полосы для показа направления хорошей пробегаемости.</translation>
+            <translation>Лес, пробегаемый в определенном направлении. Когда площадь леса обеспечивает хорошую пробегаемость в одном направлении, но хуже в другом, в сетке знака должны быть белые полосы для показа направления хорошей пробегаемости.</translation>
         </message>
         <message>
             <source>Forest runnable in one direction, 3, 20%</source>
@@ -1866,7 +1866,7 @@ Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m)
         <message>
             <source>Cairn</source>
             <comment>Name of symbol 526</comment>
-            <translation type="unfinished">Пилон</translation>
+            <translation>Пилон</translation>
         </message>
         <message>
             <source>A prominent cairn, memorial stone, boundary stone or trigonometric point.
@@ -1877,7 +1877,7 @@ Minimum height: 0.5 m.</source>
         <message>
             <source>Fodder rack</source>
             <comment>Name of symbol 527</comment>
-            <translation type="unfinished">Кормушка</translation>
+            <translation>Кормушка</translation>
         </message>
         <message>
             <source>A fodder rack, which is free standing or attached to a tree.
@@ -1943,7 +1943,7 @@ symbols must be given in each case in the map legend.
         <message>
             <source>North lines pattern</source>
             <comment>Name of symbol 601.1.1</comment>
-            <translation type="unfinished">Шаблон меридиана</translation>
+            <translation>Шаблон меридиана</translation>
         </message>
         <message>
             <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map. North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.
@@ -1964,7 +1964,7 @@ symbols must be given in each case in the map legend.
         <message>
             <source>North lines pattern, blue</source>
             <comment>Name of symbol 601.2.1</comment>
-            <translation type="unfinished">Шаблон меридиана, синий</translation>
+            <translation>Шаблон меридиана, синий</translation>
         </message>
         <message>
             <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map. North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.
@@ -1985,7 +1985,7 @@ symbols must be given in each case in the map legend.
         <message>
             <source>Spot height, dot</source>
             <comment>Name of symbol 603.0</comment>
-            <translation type="unfinished">Отметки высот</translation>
+            <translation>Отметки высот</translation>
         </message>
         <message>
             <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. Water levels are given without the dot. Spot heights must only be used where they do not conflict with other symbols.</source>
@@ -1995,7 +1995,7 @@ symbols must be given in each case in the map legend.
         <message>
             <source>Spot height, text</source>
             <comment>Name of symbol 603.1</comment>
-            <translation type="unfinished">Отметки высот, текст</translation>
+            <translation>Отметки высот, текст</translation>
         </message>
         <message>
             <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. Water levels are given without the dot. Spot heights must only be used where they do not conflict with other symbols.</source>
@@ -2041,7 +2041,7 @@ Sections of the circle should be omitted to leave important detail showing.</sou
         <message>
             <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail. The numbers are orientated to north.</source>
             <comment>Description of symbol 704</comment>
-            <translation type="unfinished">Номер КП располагается рядом со знаком КП таким образом, чтобы не закрывались детали карты. Цифра ориентируется на север.</translation>
+            <translation>Номер КП располагается рядом со знаком КП таким образом, чтобы не закрывались детали карты. Цифра ориентируется на север.</translation>
         </message>
         <message>
             <source>Course line</source>
@@ -2066,7 +2066,7 @@ Sections of the circle should be omitted to leave important detail showing.</sou
         <message>
             <source>Marked route</source>
             <comment>Name of symbol 707</comment>
-            <translation type="unfinished">Маркированный участок</translation>
+            <translation>Маркированный участок</translation>
         </message>
         <message>
             <source>A marked route that is a part of the course. It is mandatory to follow the marked route.</source>
@@ -2087,7 +2087,7 @@ An out-of-bounds boundary shall not be crossed.</source>
         <message>
             <source>Out-of-bounds area</source>
             <comment>Name of symbol 709</comment>
-            <translation type="unfinished">Запретная для бега территория</translation>
+            <translation>Запретная для бега территория</translation>
         </message>
         <message>
             <source>An out-of-bounds area. A bounding line may be drawn if there is no natural boundary, as follows:
@@ -2101,7 +2101,7 @@ An out-of-bounds area shall not be entered.</source>
         <message>
             <source>Out-of-bounds area, solid boundary</source>
             <comment>Name of symbol 709.1</comment>
-            <translation type="unfinished">Запретная для бега территория, сплошная ограничивающая линия</translation>
+            <translation>Запретная для бега территория, сплошная ограничивающая линия</translation>
         </message>
         <message>
             <source>A solid line indicates that the boundary is marked continuously (tapes, etc.) on the ground.</source>
@@ -2111,7 +2111,7 @@ An out-of-bounds area shall not be entered.</source>
         <message>
             <source>Out-of-bounds area, dashed boundary</source>
             <comment>Name of symbol 709.2</comment>
-            <translation type="unfinished">Запретная для бега территория, пунктирная ограничивающая линия</translation>
+            <translation>Запретная для бега территория, пунктирная ограничивающая линия</translation>
         </message>
         <message>
             <source>A dashed line indicates intermittent marking on the ground.</source>
@@ -2153,12 +2153,12 @@ An out-of-bounds route shall not be used.</source>
         <message>
             <source>First aid post</source>
             <comment>Name of symbol 712</comment>
-            <translation type="unfinished">Первая помощь</translation>
+            <translation>Первая помощь</translation>
         </message>
         <message>
             <source>The location of a first aid post.</source>
             <comment>Description of symbol 712</comment>
-            <translation type="unfinished">Пункт первой помощи.</translation>
+            <translation>Пункт первой помощи.</translation>
         </message>
         <message>
             <source>Refreshment point</source>
@@ -2180,18 +2180,20 @@ An out-of-bounds route shall not be used.</source>
 
 The purple line will extend a bit into the finish symbol. This is a shortcoming of this simple approach.</source>
             <comment>Description of symbol 799</comment>
-            <translation type="unfinished">Данный знак предоставляет простой и быстрый способ нанести тренировочную дистанцию. Пурпурная линия будет немного заходить на знак финиша - это недостаток данного подхода.</translation>
-        </message>
+            <translation>Данный знак предоставляет простой и быстрый способ нанести тренировочную дистанцию.
+
+Пурпурная линия будет немного заходить на знак финиша - это недостаток данного подхода.</translation>
+    </message>
         <message>
             <source>OpenOrienteering Logo</source>
             <comment>Name of symbol 999</comment>
-            <translation type="unfinished">Логотип OpenOrienteering</translation>
+            <translation>Логотип OpenOrienteering</translation>
         </message>
         <message>
             <source>The OpenOrienteering Logo.</source>
             <comment>Description of symbol 999</comment>
-            <translation type="unfinished">Логотип OpenOrienteering</translation>
-        </message>
+            <translation>Логотип OpenOrienteering.</translation>
+    </message>
     </context>
     <context>
         <name>ISOM2000</name>
@@ -2388,8 +2390,8 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Earth bank, very high, minimum size</source>
             <comment>Name of symbol 106.1.1</comment>
-            <translation>Грунтовый обрыв, очень выский, минимальный размер</translation>
-        </message>
+            <translation>Грунтовый обрыв, очень высокий, минимальный размер</translation>
+    </message>
         <message>
             <source>The line width of very high earth banks may be 0.25 mm.</source>
             <comment>Description of symbol 106.1.1</comment>
@@ -2403,8 +2405,8 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Use this symbol to display the full extent of wide earth banks.</source>
             <comment>Description of symbol 106.2</comment>
-            <translation>Используется для показа на всем протяжении широкого грунтовго обрыва.</translation>
-        </message>
+            <translation>Используется для показа на всем протяжении широкого грунтового обрыва.</translation>
+    </message>
         <message>
             <source>Earth wall</source>
             <comment>Name of symbol 107</comment>
@@ -2483,8 +2485,8 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Pits and holes with distinct steep sides which cannot be shown to scale by symbol 106 (minimum diameter 2 m). Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol which is orientated to north.</source>
             <comment>Description of symbol 116</comment>
-            <translation>Шурф или яма с крутыми краями, не выражающиеся в масштабе каты (диаметром не менее 2 метров). Минимальная глубина от окружающей поверхности 1 метр. Ямы представляющие опасность показываются знаком 204. Центр объекта совпадает с центром тяжести знака. Знак ориентируется разрывом на север.</translation>
-        </message>
+            <translation>Шурф или яма с крутыми краями, не выражающиеся в масштабе карты (диаметром не менее 2 метров). Минимальная глубина от окружающей поверхности 1 метр. Ямы представляющие опасность показываются знаком 204. Центр объекта совпадает с центром тяжести знака. Знак ориентируется разрывом на север.</translation>
+    </message>
         <message>
             <source>Broken ground, small</source>
             <comment>Name of symbol 117.1</comment>
@@ -3847,7 +3849,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Purple</source>
             <comment>Color 0</comment>
-            <translation type="unfinished">Пурпурный</translation>
+            <translation>Пурпурный</translation>
         </message>
         <message>
             <source>Purple 50%</source>
@@ -3857,7 +3859,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Black</source>
             <comment>Color 2</comment>
-            <translation type="unfinished">Чёрный</translation>
+            <translation>Чёрный</translation>
         </message>
         <message>
             <source>Opaque White below Black</source>
@@ -3882,12 +3884,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Black 30%</source>
             <comment>Color 7</comment>
-            <translation type="unfinished">Чёрный 30%</translation>
+            <translation>Чёрный 30%</translation>
         </message>
         <message>
             <source>Black 20%</source>
             <comment>Color 8</comment>
-            <translation type="unfinished">Чёрный 20%</translation>
+            <translation>Чёрный 20%</translation>
         </message>
         <message>
             <source>Green, Black 50% above Brown</source>
@@ -3922,17 +3924,17 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Black below light browns</source>
             <comment>Color 15</comment>
-            <translation type="unfinished">Чёрный под светло-коричневым</translation>
+            <translation>Чёрный под светло-коричневым</translation>
         </message>
         <message>
             <source>Opaque Blue</source>
             <comment>Color 16</comment>
-            <translation type="unfinished">Непрозрачный синий</translation>
+            <translation>Непрозрачный синий</translation>
         </message>
         <message>
             <source>Blue</source>
             <comment>Color 17</comment>
-            <translation type="unfinished">Синий</translation>
+            <translation>Синий</translation>
         </message>
         <message>
             <source>Blue 75%</source>
@@ -3952,12 +3954,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Brown</source>
             <comment>Color 21</comment>
-            <translation type="unfinished">Коричневый</translation>
+            <translation>Коричневый</translation>
         </message>
         <message>
             <source>OpenOrienteering Orange</source>
             <comment>Color 22</comment>
-            <translation type="unfinished">Оранжевый OpenOrienteering</translation>
+            <translation>Оранжевый OpenOrienteering</translation>
         </message>
         <message>
             <source>Grey</source>
@@ -3967,7 +3969,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Green 50%, Yellow</source>
             <comment>Color 24</comment>
-            <translation type="unfinished">Зелёный 50%, Жёлтый</translation>
+            <translation>Зелёный 50%, Жёлтый</translation>
         </message>
         <message>
             <source>White over Green</source>
@@ -3977,57 +3979,57 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Green, Black 50%</source>
             <comment>Color 26</comment>
-            <translation type="unfinished">Зелёный, Чёрный 50%</translation>
+            <translation>Зелёный, Чёрный 50%</translation>
         </message>
         <message>
             <source>Opaque Green</source>
             <comment>Color 27</comment>
-            <translation type="unfinished">Непрозрачный зелёный</translation>
+            <translation>Непрозрачный зелёный</translation>
         </message>
         <message>
             <source>Green</source>
             <comment>Color 28</comment>
-            <translation type="unfinished">Зелёный</translation>
+            <translation>Зелёный</translation>
         </message>
         <message>
             <source>Green 60%</source>
             <comment>Color 29</comment>
-            <translation type="unfinished">Зелёный 60%</translation>
+            <translation>Зелёный 60%</translation>
         </message>
         <message>
             <source>Green 30%</source>
             <comment>Color 30</comment>
-            <translation type="unfinished">Зелёный 30%</translation>
+            <translation>Зелёный 30%</translation>
         </message>
         <message>
             <source>Green below light greens</source>
             <comment>Color 31</comment>
-            <translation type="unfinished">Зелёный под светло-зелёным</translation>
+            <translation>Зелёный под светло-зелёным</translation>
         </message>
         <message>
             <source>Yellow</source>
             <comment>Color 32</comment>
-            <translation type="unfinished">Жёлтый</translation>
+            <translation>Жёлтый</translation>
         </message>
         <message>
             <source>Yellow 50%</source>
             <comment>Color 33</comment>
-            <translation type="unfinished">Жёлтый 50%</translation>
+            <translation>Жёлтый 50%</translation>
         </message>
         <message>
             <source>White over Yellow 70%</source>
             <comment>Color 34</comment>
-            <translation type="unfinished">Белый на жёлтом 70%</translation>
+            <translation>Белый на жёлтом 70%</translation>
         </message>
         <message>
             <source>Yellow 70%</source>
             <comment>Color 35</comment>
-            <translation type="unfinished">Жёлтый 70%</translation>
+            <translation>Жёлтый 70%</translation>
         </message>
         <message>
             <source>Contour</source>
             <comment>Name of symbol 101</comment>
-            <translation type="unfinished">Горизонталь</translation>
+            <translation>Горизонталь</translation>
         </message>
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 2 or 2.5 m. To emphasize the 3-dimensional effect of the contour line image, contour lines shall be represented as continuous lines through all symbols, also building (526.1) and canopy (526.2). However, contour lines shall be cut out for better legibility, if they touch the following symbols: small earth wall (108.1), small knoll (112), small elongated knoll (113), small depression (115), pit or hole (116), prominent landform feature (118), step or edge of paved area (529.1). 
@@ -4039,7 +4041,7 @@ The relative height difference between neighbouring features must be represented
         <message>
             <source>Index contour</source>
             <comment>Name of symbol 102</comment>
-            <translation type="unfinished">Утолщённая горизонталь</translation>
+            <translation>Утолщённая горизонталь</translation>
         </message>
         <message>
             <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface.  Where an index contour coincides with an area of much detail, it may be shown with symbol contour (101).</source>
@@ -4049,7 +4051,7 @@ The relative height difference between neighbouring features must be represented
         <message>
             <source>Form line</source>
             <comment>Name of symbol 103</comment>
-            <translation type="unfinished">Вспомогательная горизонталь</translation>
+            <translation>Вспомогательная горизонталь</translation>
         </message>
         <message>
             <source>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</source>
@@ -4059,7 +4061,7 @@ The relative height difference between neighbouring features must be represented
         <message>
             <source>Slope line</source>
             <comment>Name of symbol 104</comment>
-            <translation type="unfinished">Указатель направления ската (бергштрих)</translation>
+            <translation>Указатель направления ската (бергштрих)</translation>
         </message>
         <message>
             <source>Slope lines should be drawn on the lower side of a contour line where it is necessary to clarify the direction of slope, e.g. along the line of a re-entrant or in a depression.</source>
@@ -4069,7 +4071,7 @@ The relative height difference between neighbouring features must be represented
         <message>
             <source>Contour value</source>
             <comment>Name of symbol 105</comment>
-            <translation type="unfinished">Высота горизонтали</translation>
+            <translation>Высота горизонтали</translation>
         </message>
         <message>
             <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
@@ -4079,7 +4081,7 @@ The relative height difference between neighbouring features must be represented
         <message>
             <source>Earth bank</source>
             <comment>Name of symbol 106.0</comment>
-            <translation type="unfinished">Грунтовый обрыв</translation>
+            <translation>Грунтовый обрыв</translation>
         </message>
         <message>
             <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, roads and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks shall be drawn with the symbol impassable cliff (201). The line width of very high earth banks may be 0.37 mm.</source>
@@ -4089,7 +4091,7 @@ The relative height difference between neighbouring features must be represented
         <message>
             <source>Earth bank, very high</source>
             <comment>Name of symbol 106.1</comment>
-            <translation type="unfinished">Грунтовый обрыв, очень высокий</translation>
+            <translation>Грунтовый обрыв, очень высокий</translation>
         </message>
         <message>
             <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, roads and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks shall be drawn with the symbol impassable cliff (201). The line width of very high earth banks may be 0.37 mm.</source>
@@ -4099,17 +4101,17 @@ The relative height difference between neighbouring features must be represented
         <message>
             <source>Earth bank, tag line</source>
             <comment>Name of symbol 106.2</comment>
-            <translation type="unfinished">Грунтовый обрыв, зубчатая линия</translation>
+            <translation>Грунтовый обрыв, зубчатая линия</translation>
         </message>
         <message>
             <source>Use this symbol to display the full extent of wide earth banks.</source>
             <comment>Description of symbol 106.2</comment>
-            <translation type="unfinished">Используется для показа на всем протяжении широкого грунтовго обрыва.</translation>
-        </message>
+            <translation>Используется для показа на всем протяжении широкого грунтового обрыва.</translation>
+    </message>
         <message>
             <source>Small earth wall</source>
             <comment>Name of symbol 108.1</comment>
-            <translation type="unfinished">Маленький земляной вал</translation>
+            <translation>Маленький земляной вал</translation>
         </message>
         <message>
             <source>A small distinct earth wall, usually man made. The minimum height is 0.5 m.  Larger earth walls should be represented with the symbols contour (101), form line (103) or earth bank (106).</source>
@@ -4129,7 +4131,7 @@ The relative height difference between neighbouring features must be represented
         <message>
             <source>Small erosion gully</source>
             <comment>Name of symbol 110</comment>
-            <translation type="unfinished">Маленькая промоина</translation>
+            <translation>Маленькая промоина</translation>
         </message>
         <message>
             <source>Asmall erosion gully or trench. Minimum depth is 0.5 m.</source>
@@ -4139,7 +4141,7 @@ The relative height difference between neighbouring features must be represented
         <message>
             <source>Small knoll</source>
             <comment>Name of symbol 112</comment>
-            <translation type="unfinished">Внемасштабный бугор</translation>
+            <translation>Внемасштабный бугор</translation>
         </message>
         <message>
             <source>A small obvious mound or rocky knoll which cannot be drawn to scale with a contour (101), index contour (102) or form line (103). The height of the knoll should be a minimum of 1 m from the surrounding ground.</source>
@@ -4149,7 +4151,7 @@ The relative height difference between neighbouring features must be represented
         <message>
             <source>Elongated knoll</source>
             <comment>Name of symbol 113</comment>
-            <translation type="unfinished">Вытянутый внемасштабный бугор</translation>
+            <translation>Вытянутый внемасштабный бугор</translation>
         </message>
         <message>
             <source>A small obvious elongated knoll which cannot be drawn to scale with a contour (101), index contour (102) or form line (103). The maximum length should be 6 m and the maximum width 2 m. The height of the knoll should be a minimum of 1 m from the surrounding ground. Knolls larger than this shall be shown by contours.
@@ -4161,7 +4163,7 @@ The symbol may not be drawn in free form or such that two elongated knoll symbol
         <message>
             <source>Small depression</source>
             <comment>Name of symbol 115</comment>
-            <translation type="unfinished">Внемасштабная яма</translation>
+            <translation>Внемасштабная яма</translation>
         </message>
         <message>
             <source>A small shallow natural depression or hollow which cannot be represented by the symbol contour (101) or form line (103) is represented by a semicircle. The minimum diameter should be 2 m. The minimum depth from the surrounding ground should be 1 m. The symbol is orientated to north.</source>
@@ -4171,7 +4173,7 @@ The symbol may not be drawn in free form or such that two elongated knoll symbol
         <message>
             <source>Pit</source>
             <comment>Name of symbol 116</comment>
-            <translation type="unfinished">Искусственная внемасштабная яма</translation>
+            <translation>Искусственная внемасштабная яма</translation>
         </message>
         <message>
             <source>A pit or hole with distinct steep sides which cannot be represented to scale with the symbol earth bank (106). The minimum diameter shall be 2 m. The minimum depth from the surrounding ground shall be 1 m. The symbol is orientated to north.</source>
@@ -4266,7 +4268,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>Use this symbol to display the full extent of a wide cliff.</source>
             <comment>Description of symbol 201.2</comment>
-            <translation type="unfinished">Используется на всем протяжении широкой скалы.</translation>
+            <translation>Используется на всем протяжении широкой скалы.</translation>
         </message>
         <message>
             <source>Gigantic boulder or rock pillar</source>
@@ -4281,7 +4283,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>Passable rock face</source>
             <comment>Name of symbol 203</comment>
-            <translation type="unfinished">Преодолимый скальный обрыв</translation>
+            <translation>Преодолимый скальный обрыв</translation>
         </message>
         <message>
             <source>A small vertical rock face may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. Minimum height is 1 m. For passable rock faces shown without tags the end of the line may be rounded to improve legibility.</source>
@@ -4291,7 +4293,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>Passable rock face, minimum size</source>
             <comment>Name of symbol 203.0.1</comment>
-            <translation type="unfinished">Преодолимый скальный обрыв, минимальный размер</translation>
+            <translation>Преодолимый скальный обрыв, минимальный размер</translation>
         </message>
         <message>
             <source>A small vertical rock face may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. Minimum height is 1 m. For passable rock faces shown without tags the end of the line may be rounded to improve legibility.</source>
@@ -4301,7 +4303,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>Passable rock face, no tags</source>
             <comment>Name of symbol 203.1</comment>
-            <translation type="unfinished">Преодолимый скальный обрыв, без зубцов</translation>
+            <translation>Преодолимый скальный обрыв, без зубцов</translation>
         </message>
         <message>
             <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
@@ -4311,7 +4313,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>Passable rock face, no tags, minimum size</source>
             <comment>Name of symbol 203.1.1</comment>
-            <translation type="unfinished">Преодолимый скальный обрыв, без зубцов, минимальный размер</translation>
+            <translation>Преодолимый скальный обрыв, без зубцов, минимальный размер</translation>
         </message>
         <message>
             <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
@@ -4321,7 +4323,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>Passable rock face, no tags, rounded</source>
             <comment>Name of symbol 203.2</comment>
-            <translation type="unfinished">Преодолимый скальный обрыв, без зубцов, с закруглением</translation>
+            <translation>Преодолимый скальный обрыв, без зубцов, с закруглением</translation>
         </message>
         <message>
             <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good. For passable rock faces shown without tags the end of the line may be rounded to improve legibility.</source>
@@ -4331,7 +4333,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>Passable rock face, no tags, rounded, minimum size</source>
             <comment>Name of symbol 203.2.1</comment>
-            <translation type="unfinished">Преодолимый скальный обрыв, без зубцов, с закруглением, минимальный размер</translation>
+            <translation>Преодолимый скальный обрыв, без зубцов, с закруглением, минимальный размер</translation>
         </message>
         <message>
             <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good. For passable rock faces shown without tags the end of the line may be rounded to improve legibility.</source>
@@ -4341,7 +4343,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>Rocky pit</source>
             <comment>Name of symbol 204</comment>
-            <translation type="unfinished">Скальная выработка</translation>
+            <translation>Скальная выработка</translation>
         </message>
         <message>
             <source>A rocky pit, hole or mineshaft which may constitute a danger to the competitor. The symbol is orientated to north.</source>
@@ -4351,7 +4353,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>Cave</source>
             <comment>Name of symbol 205</comment>
-            <translation type="unfinished">Пещера</translation>
+            <translation>Пещера</translation>
         </message>
         <message>
             <source>A cave is represented by the same symbol as a rocky pit. In this case the symbol shall be orientated to point up the slope as indicated opposite. This symbol should generally not be used in urban areas. The centre of gravity of the symbol marks the opening.
@@ -4363,7 +4365,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>Boulder</source>
             <comment>Name of symbol 206</comment>
-            <translation type="unfinished">Валун</translation>
+            <translation>Валун</translation>
         </message>
         <message>
             <source>A small distinct boulder. The minimum height is 1 m.  Every boulder marked on the map shall be immediately identifiable on the ground.</source>
@@ -4373,7 +4375,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>Large boulder</source>
             <comment>Name of symbol 207</comment>
-            <translation type="unfinished">Большой валун</translation>
+            <translation>Большой валун</translation>
         </message>
         <message>
             <source>A particularly large and distinct boulder. Gigantic boulders shall be represented in plan shape with the symbol gigantic boulder or rock pillar (202).</source>
@@ -4383,7 +4385,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>Boulder field</source>
             <comment>Name of symbol 208</comment>
-            <translation type="unfinished">Каменистое поле</translation>
+            <translation>Каменистое поле</translation>
         </message>
         <message>
             <source>An area which is covered with so many blocks of stone that they cannot be marked individually is represented with randomly orientated solid triangles. The runnability is reduced and is indicated by the density of the triangles. A minimum of two triangles shall be used. The triangles can be enlarged by up to 20 %.</source>
@@ -4393,7 +4395,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>Boulder field, large</source>
             <comment>Name of symbol 208.1</comment>
-            <translation type="unfinished">Каменистое поле, большое</translation>
+            <translation>Каменистое поле, большое</translation>
         </message>
         <message>
             <source>An area which is covered with so many blocks of stone that they cannot be marked individually is represented with randomly orientated solid triangles. The runnability is reduced and is indicated by the density of the triangles. A minimum of two triangles shall be used. The triangles can be enlarged by up to 20 %.</source>
@@ -4403,7 +4405,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>Stony ground</source>
             <comment>Name of symbol 210.1</comment>
-            <translation type="unfinished">Каменистый грунт</translation>
+            <translation>Каменистый грунт</translation>
         </message>
         <message>
             <source>An area of stony or rocky ground which reduces runnability. The dots shall be randomly distributed with density according to the amount of rock. A minimum of three dots shall be used.</source>
@@ -4423,7 +4425,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>Open sandy ground</source>
             <comment>Name of symbol 211</comment>
-            <translation type="unfinished">Открытый песчаный грунт</translation>
+            <translation>Открытый песчаный грунт</translation>
         </message>
         <message>
             <source>An area of soft sandy ground or gravel with no vegetation which reduces runnability. Where an area of sandy ground is open and has good runnability, it is represented with symbol open land (401), open land with scattered trees (402) or paved area (529).</source>
@@ -4433,7 +4435,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>Bare rock</source>
             <comment>Name of symbol 212</comment>
-            <translation type="unfinished">Чистая скала</translation>
+            <translation>Чистая скала</translation>
         </message>
         <message>
             <source>An area of runnable rock without earth or vegetation. An area of rock covered
@@ -4445,7 +4447,7 @@ openness and runnability (401/402/403/404).</source>
         <message>
             <source>Waterhole</source>
             <comment>Name of symbol 303</comment>
-            <translation type="unfinished">Лужа</translation>
+            <translation>Лужа</translation>
         </message>
         <message>
             <source>A water-filled pit or an area of water which is too small to be shown to scale. The symbol is orientated to north.</source>
@@ -4562,12 +4564,12 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>A natural or man-made minor water channel which may contain water only intermittently.</source>
             <comment>Description of symbol 307</comment>
-            <translation type="unfinished">Естественная или искусственная пересыхающая канава.</translation>
+            <translation>Естественная или искусственная пересыхающая канава.</translation>
         </message>
         <message>
             <source>Narrow marsh</source>
             <comment>Name of symbol 308</comment>
-            <translation type="unfinished">Узкое болото</translation>
+            <translation>Узкое болото</translation>
         </message>
         <message>
             <source>A marsh or trickle of water which is too narrow to be shown with symbol marsh (310).</source>
@@ -4610,7 +4612,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>Marsh</source>
             <comment>Name of symbol 310</comment>
-            <translation type="unfinished">Болото</translation>
+            <translation>Болото</translation>
         </message>
         <message>
             <source>A crossable marsh, usually with a distinct edge. The symbol shall be combined with vegetation symbols to show runnability and openness. 
@@ -4622,12 +4624,12 @@ Minimum size: not less than 2 lines, 5 mm long.</source>
         <message>
             <source>Marsh, minimum size</source>
             <comment>Name of symbol 310.1</comment>
-            <translation type="unfinished">Болото, минимальный размер</translation>
+            <translation>Болото, минимальный размер</translation>
         </message>
         <message>
             <source>Indistinct marsh</source>
             <comment>Name of symbol 311</comment>
-            <translation type="unfinished">Нечёткое болото</translation>
+            <translation>Нечёткое болото</translation>
         </message>
         <message>
             <source>An indistinct or seasonal marsh or area of gradual transition from marsh to firm ground, which is crossable. The edge is generally indistinct and the vegetation similar to that of the surrounding ground. The symbol should be combined with vegetation symbols to show runnability and openness.
@@ -4639,7 +4641,7 @@ Minimum size: 4 dashes.</source>
         <message>
             <source>Indistinct marsh, minimum size</source>
             <comment>Name of symbol 311.1</comment>
-            <translation type="unfinished">Нечёткое болото, минимальный размер</translation>
+            <translation>Нечёткое болото, минимальный размер</translation>
         </message>
         <message>
             <source>Small fountain or well</source>
@@ -4654,7 +4656,7 @@ Minimum size: 4 dashes.</source>
         <message>
             <source>Spring</source>
             <comment>Name of symbol 313</comment>
-            <translation type="unfinished">Родник</translation>
+            <translation>Родник</translation>
         </message>
         <message>
             <source>The source of a stream with a distinct outflow. This symbol should generally not be used in urban areas. The symbol is orientated to open downstream.</source>
@@ -4674,7 +4676,7 @@ Minimum size: 4 dashes.</source>
         <message>
             <source>Open land</source>
             <comment>Name of symbol 401</comment>
-            <translation type="unfinished">Открытое пространство</translation>
+            <translation>Открытое пространство</translation>
         </message>
         <message>
             <source>An area of cultivated land, lawn, field, meadow, grassland, etc. without trees, offering very good runnability.</source>
@@ -4684,7 +4686,7 @@ Minimum size: 4 dashes.</source>
         <message>
             <source>Open land with scattered trees</source>
             <comment>Name of symbol 402</comment>
-            <translation type="unfinished">Открытое пространство с отдельными деревьями</translation>
+            <translation>Открытое пространство с отдельными деревьями</translation>
         </message>
         <message>
             <source>An area of meadows with scattered trees or bushes, with grass or similar ground cover offering very good runnability. Areas smaller than 10 mm2 at the maps scale are shown as open land (401). Symbols prominent large tree (418) and prominent bush or small tree (419) may be added.</source>
@@ -4694,7 +4696,7 @@ Minimum size: 4 dashes.</source>
         <message>
             <source>Rough open land</source>
             <comment>Name of symbol 403</comment>
-            <translation type="unfinished">Неудобное открытое пространство</translation>
+            <translation>Неудобное открытое пространство</translation>
         </message>
         <message>
             <source>An area of heath or moorland, a felled area, a newly planted area (trees lower than ca. 1 m) or other generally open land with rough ground vegetation, i.e. heather or tall grass. This symbol may be combined with symbols undergrowth: slow running (407) and undergrowth: difficult to run (409) to show reduced runnability.</source>
@@ -4704,7 +4706,7 @@ Minimum size: 4 dashes.</source>
         <message>
             <source>Rough open land with scattered trees</source>
             <comment>Name of symbol 404</comment>
-            <translation type="unfinished">Неудобное открытое пространство с отдельными деревьями</translation>
+            <translation>Неудобное открытое пространство с отдельными деревьями</translation>
         </message>
         <message>
             <source>An area of rough open land with scattered trees or bushes. Areas smaller than 16 mm2 in the map scale are either mapped as rough open land (403) or forest: easy running (405). Symbols prominent large tree (418) and prominent bush or small tree (419) may be added.</source>
@@ -4714,7 +4716,7 @@ Minimum size: 4 dashes.</source>
         <message>
             <source>Forest: easy running</source>
             <comment>Name of symbol 405</comment>
-            <translation type="unfinished">Лес: легко пробегаемый</translation>
+            <translation>Лес: легко пробегаемый</translation>
         </message>
         <message>
             <source>An area of typical open runnable forest for the particular type of terrain. If no part of the forest is runnable then no white should appear on the map.</source>
@@ -4724,7 +4726,7 @@ Minimum size: 4 dashes.</source>
         <message>
             <source>Forest: slow running</source>
             <comment>Name of symbol 406</comment>
-            <translation type="unfinished">Лес: медленно пробегаемый</translation>
+            <translation>Лес: медленно пробегаемый</translation>
         </message>
         <message>
             <source>An area with dense trees (low visibility) which reduces running to ca. 60-80% of normal speed.
@@ -4741,7 +4743,7 @@ Minimum width 0.25 mm.</source>
         <message>
             <source>Undergrowth: slow running</source>
             <comment>Name of symbol 407</comment>
-            <translation type="unfinished">Подлесок: медленно пробегаемый</translation>
+            <translation>Подлесок: медленно пробегаемый</translation>
         </message>
         <message>
             <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, cut branches, etc.) which reduces running to ca. 60-80% of normal speed. This symbol shall not be combined with the symbol forest: slow running (406) or forest: difficult to run (408).</source>
@@ -4751,7 +4753,7 @@ Minimum width 0.25 mm.</source>
         <message>
             <source>Forest: difficult to run</source>
             <comment>Name of symbol 408</comment>
-            <translation type="unfinished">Лес: трудно пробегаемый</translation>
+            <translation>Лес: трудно пробегаемый</translation>
         </message>
         <message>
             <source>An area with dense trees or thicket (low visibility) which reduces running to ca. 20-60% of normal speed.</source>
@@ -4766,7 +4768,7 @@ Minimum width 0.25 mm.</source>
         <message>
             <source>Undergrowth: difficult to run</source>
             <comment>Name of symbol 409</comment>
-            <translation type="unfinished">Подлесок: трудно пробегаемый</translation>
+            <translation>Подлесок: трудно пробегаемый</translation>
         </message>
         <message>
             <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 20-60% of normal speed. This symbol may not be combined with 406 or 408.</source>
@@ -4823,7 +4825,7 @@ Minimum width: 0.25 mm.</source>
         <message>
             <source>Orchard</source>
             <comment>Name of symbol 412</comment>
-            <translation type="unfinished">Сад</translation>
+            <translation>Сад</translation>
         </message>
         <message>
             <source>Land planted with fruit trees or bushes. The dot lines may be orientated to represent the direction of planting.</source>
@@ -4843,7 +4845,7 @@ Minimum width: 0.25 mm.</source>
         <message>
             <source>Distinct cultivation boundary</source>
             <comment>Name of symbol 414</comment>
-            <translation type="unfinished">Чёткая граница культивируемых участков</translation>
+            <translation>Чёткая граница культивируемых участков</translation>
         </message>
         <message>
             <source>The boundary of symbol cultivated land (seasonally out of bounds) (415) when not shown with other symbols (fence, wall, path, etc.) is represented with a black line. A permanent boundary between different types of cultivated land is also represented with this symbol.</source>
@@ -4863,7 +4865,7 @@ Minimum width: 0.25 mm.</source>
         <message>
             <source>Distinct vegetation boundary</source>
             <comment>Name of symbol 416</comment>
-            <translation type="unfinished">Чёткая граница растительности</translation>
+            <translation>Чёткая граница растительности</translation>
         </message>
         <message>
             <source>A distinct forest edge or very distinct vegetation boundary within the forest. For indistinct boundaries, the area edges are shown only by the change in colour and/or dot screen.</source>
@@ -4989,7 +4991,7 @@ Colour: black, brown 0%(white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (mi
         <message>
             <source>Less distinct small path</source>
             <comment>Name of symbol 508</comment>
-            <translation type="unfinished">Исчезающая тропинка</translation>
+            <translation>Исчезающая тропинка</translation>
         </message>
         <message>
             <source>Aless distinct path or forestry extraction track. Not to be used in urban areas.</source>
@@ -4999,7 +5001,7 @@ Colour: black, brown 0%(white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (mi
         <message>
             <source>Narrow ride</source>
             <comment>Name of symbol 509</comment>
-            <translation type="unfinished">Узкая просека</translation>
+            <translation>Узкая просека</translation>
         </message>
         <message>
             <source>A distinct ride is a linear break in the forest (usually in a plantation), which does not have a distinct path along it. Where there is a path along a ride, the symbol small unpaved footpath or track (506.1) shall be used. Not to be used in urban areas.</source>
@@ -5029,7 +5031,7 @@ Colour: black, brown 0%(white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (mi
         <message>
             <source>Railway</source>
             <comment>Name of symbol 515.1</comment>
-            <translation type="unfinished">Железная дорога</translation>
+            <translation>Железная дорога</translation>
         </message>
         <message>
             <source>A railway is a permanent track laid with rails on which locomotives, carriages or wagons can travel. If it is forbidden to cross or run along the railroad, the forbidden area around the railway shall be represented with symbol area with forbidden access (528.1).</source>
@@ -5061,7 +5063,7 @@ Colour: black, brown 0%(white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (mi
         <message>
             <source>Major power line</source>
             <comment>Name of symbol 517</comment>
-            <translation type="unfinished">Высоковольтная линия электропередачи</translation>
+            <translation>Высоковольтная линия электропередачи</translation>
         </message>
         <message>
             <source>Major power lines should be drawn with a double line. The gap between the lines may indicate the extent of the powerline.
@@ -5168,7 +5170,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>Crossing point</source>
             <comment>Name of symbol 525</comment>
-            <translation type="unfinished">Проход</translation>
+            <translation>Проход</translation>
         </message>
         <message>
             <source>A crossing point is a gap or an opening in a fence, railing or wall, which can easily be crossed by a competitor.  Small gaps or openings which can not easily be crossed by competitors, shall not be represented on the map and shall be closed during the competition.</source>
@@ -5500,7 +5502,7 @@ Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban
         <message>
             <source>A pipeline (gas, water, oil, etc.) above ground level which can be crossed over or under.</source>
             <comment>Description of symbol 533</comment>
-            <translation type="unfinished">Трубопровод (газ, вода и т.п.) на поверхности, который можно пересечь в любом месте (сверху или снизу).</translation>
+            <translation>Трубопровод (газ, вода и т.п.) на поверхности, который можно пересечь в любом месте (сверху или снизу).</translation>
         </message>
         <message>
             <source>Impassable pipeline &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
@@ -5518,7 +5520,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>High tower</source>
             <comment>Name of symbol 535</comment>
-            <translation type="unfinished">Высокая башня</translation>
+            <translation>Высокая башня</translation>
         </message>
         <message>
             <source>A high tower or large pylon. Very large towers shall be represented in plan shape with the symbol building (526.1). The symbol is orientated to north.</source>
@@ -5528,7 +5530,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>Small tower</source>
             <comment>Name of symbol 536</comment>
-            <translation type="unfinished">Маленькая башня</translation>
+            <translation>Маленькая башня</translation>
         </message>
         <message>
             <source>An obvious small tower, platform or seat . The symbol is orientated to north.</source>
@@ -5548,7 +5550,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>Fodder rack</source>
             <comment>Name of symbol 538</comment>
-            <translation type="unfinished">Кормушка</translation>
+            <translation>Кормушка</translation>
         </message>
         <message>
             <source>A fodder rack, which is free standing or attached to a tree. The symbol is orientated to north.</source>
@@ -5616,7 +5618,7 @@ North lines may be broken where they obscure small features such as boulders, kn
         <message>
             <source>Magnetic north line, blue</source>
             <comment>Name of symbol 601.0.4</comment>
-            <translation type="unfinished">Линии магнитного меридиана, синие</translation>
+            <translation>Линии магнитного меридиана, синие</translation>
         </message>
         <message>
             <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm on the 1:5 000 map so they represent 150 m on the ground.  
@@ -5642,7 +5644,7 @@ North lines may be broken where they obscure small features such as boulders, kn
         <message>
             <source>North lines pattern, blue</source>
             <comment>Name of symbol 601.0.6</comment>
-            <translation type="unfinished">Шаблон меридиана, синий</translation>
+            <translation>Шаблон меридиана, синий</translation>
         </message>
         <message>
             <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm on the 1:5 000 map so they represent 150 m on the ground. 
@@ -5654,7 +5656,7 @@ North lines may be broken where they obscure small features such as boulders, kn
         <message>
             <source>Registration mark</source>
             <comment>Name of symbol 602</comment>
-            <translation type="unfinished">Контрольная метка</translation>
+            <translation>Контрольная метка</translation>
         </message>
         <message>
             <source>At least three registration marks shall be placed within the frame of a map in a non-symmetrical arrangement. In addition, a colour check should be possible.</source>
@@ -5664,7 +5666,7 @@ North lines may be broken where they obscure small features such as boulders, kn
         <message>
             <source>Spot height, dot</source>
             <comment>Name of symbol 603.0.1</comment>
-            <translation type="unfinished">Отметки высот</translation>
+            <translation>Отметки высот</translation>
         </message>
         <message>
             <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
@@ -5684,7 +5686,7 @@ North lines may be broken where they obscure small features such as boulders, kn
         <message>
             <source>Start</source>
             <comment>Name of symbol 701</comment>
-            <translation type="unfinished">Старт</translation>
+            <translation>Старт</translation>
         </message>
         <message>
             <source>The start or map issue point (if not at the start) is shown by an equilateral triangle which points in the direction of the first control. The centre of the triangle shows the precise position of the start point.</source>
@@ -5694,7 +5696,7 @@ North lines may be broken where they obscure small features such as boulders, kn
         <message>
             <source>Control point</source>
             <comment>Name of symbol 702</comment>
-            <translation type="unfinished">Контрольный пункт</translation>
+            <translation>Контрольный пункт</translation>
         </message>
         <message>
             <source>The control points are shown with circles. The centre of the circle shows the precise position of the feature. Sections of circles should be omitted to leave important detail showing.</source>
@@ -5704,17 +5706,17 @@ North lines may be broken where they obscure small features such as boulders, kn
         <message>
             <source>Control number</source>
             <comment>Name of symbol 703</comment>
-            <translation type="unfinished">Номер контрольного пункта</translation>
+            <translation>Номер контрольного пункта</translation>
         </message>
         <message>
             <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail. The numbers are orientated to north.</source>
             <comment>Description of symbol 703</comment>
-            <translation type="unfinished">Номер КП располагается рядом со знаком КП таким образом, чтобы не закрывались детали карты. Цифра ориентируется на север.</translation>
+            <translation>Номер КП располагается рядом со знаком КП таким образом, чтобы не закрывались детали карты. Цифра ориентируется на север.</translation>
         </message>
         <message>
             <source>Line</source>
             <comment>Name of symbol 704</comment>
-            <translation type="unfinished">Линия</translation>
+            <translation>Линия</translation>
         </message>
         <message>
             <source>Where controls are to be visited in order, the start, control points and finish are joined together by straight lines. Sections of lines should be omitted to leave important detail showing.</source>
@@ -5724,7 +5726,7 @@ North lines may be broken where they obscure small features such as boulders, kn
         <message>
             <source>Marked route</source>
             <comment>Name of symbol 705</comment>
-            <translation type="unfinished">Маркированный участок</translation>
+            <translation>Маркированный участок</translation>
         </message>
         <message>
             <source>A marked route is shown on the map with a dashed line.</source>
@@ -5734,7 +5736,7 @@ North lines may be broken where they obscure small features such as boulders, kn
         <message>
             <source>Finish</source>
             <comment>Name of symbol 706</comment>
-            <translation type="unfinished">Финиш</translation>
+            <translation>Финиш</translation>
         </message>
         <message>
             <source>The finish is shown by two concentric circles.</source>
@@ -5757,7 +5759,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>Crossing point</source>
             <comment>Name of symbol 708</comment>
-            <translation type="unfinished">Проход</translation>
+            <translation>Проход</translation>
         </message>
         <message>
             <source>A crossing point through or over a wall or fence, or across a road or railway or through a tunnel or an out-of-bounds area is drawn on the map with two lines curving outwards. 
@@ -5798,7 +5800,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>Out-of-bounds area, solid boundary</source>
             <comment>Name of symbol 709.1</comment>
-            <translation type="unfinished">Запретная для бега территория, сплошная ограничивающая линия</translation>
+            <translation>Запретная для бега территория, сплошная ограничивающая линия</translation>
         </message>
         <message>
             <source>A solid line indicates that the boundary is marked continuously (tapes, etc.) on the ground.</source>
@@ -5818,17 +5820,17 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>First aid post</source>
             <comment>Name of symbol 712</comment>
-            <translation type="unfinished">Первая помощь</translation>
+            <translation>Первая помощь</translation>
         </message>
         <message>
             <source>The location of a first aid post.</source>
             <comment>Description of symbol 712</comment>
-            <translation type="unfinished">Пункт первой помощи.</translation>
+            <translation>Пункт первой помощи.</translation>
         </message>
         <message>
             <source>Refreshment point</source>
             <comment>Name of symbol 713</comment>
-            <translation type="unfinished">Пункт питания</translation>
+            <translation>Пункт питания</translation>
         </message>
         <message>
             <source>The location of a refreshment point which is not at a control or along the marked route.</source>
@@ -5858,30 +5860,32 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
 
 The purple line will extend a bit into the finish symbol. This is a shortcoming of this simple approach.</source>
             <comment>Description of symbol 799</comment>
-            <translation type="unfinished">Данный знак предоставляет простой и быстрый способ нанести тренировочную дистанцию. Пурпурная линия будет немного заходить на знак финиша - это недостаток данного подхода.</translation>
-        </message>
+            <translation>Данный знак предоставляет простой и быстрый способ нанести тренировочную дистанцию.
+
+Пурпурная линия будет немного заходить на знак финиша - это недостаток данного подхода.</translation>
+    </message>
         <message>
             <source>OpenOrienteering Logo</source>
             <comment>Name of symbol 999</comment>
-            <translation type="unfinished">Логотип OpenOrienteering</translation>
+            <translation>Логотип OpenOrienteering</translation>
         </message>
         <message>
             <source>The OpenOrienteering Logo.</source>
             <comment>Description of symbol 999</comment>
-            <translation type="unfinished">Логотип OpenOrienteering</translation>
-        </message>
+            <translation>Логотип OpenOrienteering.</translation>
+    </message>
     </context>
     <context>
         <name>ISMTBOM</name>
         <message>
             <source>Purple</source>
             <comment>Color 0</comment>
-            <translation type="unfinished">Пурпурный</translation>
+            <translation>Пурпурный</translation>
         </message>
         <message>
             <source>Black</source>
             <comment>Color 1</comment>
-            <translation type="unfinished">Чёрный</translation>
+            <translation>Чёрный</translation>
         </message>
         <message>
             <source>Lower Purple</source>
@@ -5896,57 +5900,57 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Brown 50%</source>
             <comment>Color 4</comment>
-            <translation type="unfinished">Коричневый 50%</translation>
+            <translation>Коричневый 50%</translation>
         </message>
         <message>
             <source>Black below light browns</source>
             <comment>Color 5</comment>
-            <translation type="unfinished">Чёрный под светло-коричневым</translation>
+            <translation>Чёрный под светло-коричневым</translation>
         </message>
         <message>
             <source>Brown</source>
             <comment>Color 6</comment>
-            <translation type="unfinished">Коричневый</translation>
+            <translation>Коричневый</translation>
         </message>
         <message>
             <source>OpenOrienteering Orange</source>
             <comment>Color 7</comment>
-            <translation type="unfinished">Оранжевый OpenOrienteering</translation>
+            <translation>Оранжевый OpenOrienteering</translation>
         </message>
         <message>
             <source>Opaque Blue</source>
             <comment>Color 8</comment>
-            <translation type="unfinished">Непрозрачный синий</translation>
+            <translation>Непрозрачный синий</translation>
         </message>
         <message>
             <source>Blue</source>
             <comment>Color 9</comment>
-            <translation type="unfinished">Синий</translation>
+            <translation>Синий</translation>
         </message>
         <message>
             <source>Blue 50%</source>
             <comment>Color 10</comment>
-            <translation type="unfinished">Синий 50%</translation>
+            <translation>Синий 50%</translation>
         </message>
         <message>
             <source>Black 30%</source>
             <comment>Color 11</comment>
-            <translation type="unfinished">Чёрный 30%</translation>
+            <translation>Чёрный 30%</translation>
         </message>
         <message>
             <source>Green 50%, Yellow</source>
             <comment>Color 12</comment>
-            <translation type="unfinished">Зелёный 50%, Жёлтый</translation>
+            <translation>Зелёный 50%, Жёлтый</translation>
         </message>
         <message>
             <source>Green over White over Green</source>
             <comment>Color 13</comment>
-            <translation type="unfinished">Зелёный на белом на зелёном</translation>
+            <translation>Зелёный на белом на зелёном</translation>
         </message>
         <message>
             <source>Opaque White over Green</source>
             <comment>Color 14</comment>
-            <translation type="unfinished">Непрозрачный белый на зелёном</translation>
+            <translation>Непрозрачный белый на зелёном</translation>
         </message>
         <message>
             <source>Yellow over Green</source>
@@ -5956,52 +5960,52 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Opaque Green</source>
             <comment>Color 16</comment>
-            <translation type="unfinished">Непрозрачный зелёный</translation>
+            <translation>Непрозрачный зелёный</translation>
         </message>
         <message>
             <source>Green</source>
             <comment>Color 17</comment>
-            <translation type="unfinished">Зелёный</translation>
+            <translation>Зелёный</translation>
         </message>
         <message>
             <source>Green 60%</source>
             <comment>Color 18</comment>
-            <translation type="unfinished">Зелёный 60%</translation>
+            <translation>Зелёный 60%</translation>
         </message>
         <message>
             <source>Green 30%</source>
             <comment>Color 19</comment>
-            <translation type="unfinished">Зелёный 30%</translation>
+            <translation>Зелёный 30%</translation>
         </message>
         <message>
             <source>Green below light greens</source>
             <comment>Color 20</comment>
-            <translation type="unfinished">Зелёный под светло-зелёным</translation>
+            <translation>Зелёный под светло-зелёным</translation>
         </message>
         <message>
             <source>Yellow</source>
             <comment>Color 21</comment>
-            <translation type="unfinished">Жёлтый</translation>
+            <translation>Жёлтый</translation>
         </message>
         <message>
             <source>Yellow 50%</source>
             <comment>Color 22</comment>
-            <translation type="unfinished">Жёлтый 50%</translation>
+            <translation>Жёлтый 50%</translation>
         </message>
         <message>
             <source>White over Yellow 70%</source>
             <comment>Color 23</comment>
-            <translation type="unfinished">Белый на жёлтом 70%</translation>
+            <translation>Белый на жёлтом 70%</translation>
         </message>
         <message>
             <source>Yellow 70%</source>
             <comment>Color 24</comment>
-            <translation type="unfinished">Жёлтый 70%</translation>
+            <translation>Жёлтый 70%</translation>
         </message>
         <message>
             <source>Contour</source>
             <comment>Name of symbol 101</comment>
-            <translation type="unfinished">Горизонталь</translation>
+            <translation>Горизонталь</translation>
         </message>
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
@@ -6011,7 +6015,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Index contour</source>
             <comment>Name of symbol 102</comment>
-            <translation type="unfinished">Утолщённая горизонталь</translation>
+            <translation>Утолщённая горизонталь</translation>
         </message>
         <message>
             <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. Where an index contour coincides with an area of much detail, it may be shown with a normal contour line.</source>
@@ -6021,7 +6025,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Slope line</source>
             <comment>Name of symbol 104</comment>
-            <translation type="unfinished">Указатель направления ската (бергштрих)</translation>
+            <translation>Указатель направления ската (бергштрих)</translation>
         </message>
         <message>
             <source>Slope lines may be drawn on the lower side of a contour line, e.g. along the line of a re-entrant or in a depression. They are used only where it is necessary to clarify the direction of slope.</source>
@@ -6031,7 +6035,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Contour value</source>
             <comment>Name of symbol 105</comment>
-            <translation type="unfinished">Высота горизонтали</translation>
+            <translation>Высота горизонтали</translation>
         </message>
         <message>
             <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
@@ -6041,7 +6045,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Earth bank</source>
             <comment>Name of symbol 106</comment>
-            <translation type="unfinished">Грунтовый обрыв</translation>
+            <translation>Грунтовый обрыв</translation>
         </message>
         <message>
             <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
@@ -6051,7 +6055,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Earth bank, minimum size</source>
             <comment>Name of symbol 106.0.1</comment>
-            <translation type="unfinished">Грунтовый обрыв, минимальный размер</translation>
+            <translation>Грунтовый обрыв, минимальный размер</translation>
         </message>
         <message>
             <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
@@ -6061,47 +6065,47 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Earth bank, very high</source>
             <comment>Name of symbol 106.1</comment>
-            <translation type="unfinished">Грунтовый обрыв, очень высокий</translation>
+            <translation>Грунтовый обрыв, очень высокий</translation>
         </message>
         <message>
             <source>The line width of very high earth banks may be 0.25 mm.</source>
             <comment>Description of symbol 106.1</comment>
-            <translation type="unfinished">Очень высокие грунтовые обрывы могут быть показаны толщиной линии бровки 0,25 мм.</translation>
+            <translation>Очень высокие грунтовые обрывы могут быть показаны толщиной линии бровки 0,25 мм.</translation>
         </message>
         <message>
             <source>Earth bank, very high, minimum size</source>
             <comment>Name of symbol 106.1.1</comment>
-            <translation type="unfinished">Грунтовый обрыв, очень выский, минимальный размер</translation>
-        </message>
+            <translation>Грунтовый обрыв, очень высокий, минимальный размер</translation>
+    </message>
         <message>
             <source>The line width of very high earth banks may be 0.25 mm.</source>
             <comment>Description of symbol 106.1.1</comment>
-            <translation type="unfinished">Очень высокие грунтовые обрывы могут быть показаны толщиной линии бровки 0,25 мм.</translation>
+            <translation>Очень высокие грунтовые обрывы могут быть показаны толщиной линии бровки 0,25 мм.</translation>
         </message>
         <message>
             <source>Earth bank, tag line</source>
             <comment>Name of symbol 106.2</comment>
-            <translation type="unfinished">Грунтовый обрыв, зубчатая линия</translation>
+            <translation>Грунтовый обрыв, зубчатая линия</translation>
         </message>
         <message>
             <source>Use this symbol to display the full extent of wide earth banks.</source>
             <comment>Description of symbol 106.2</comment>
-            <translation type="unfinished">Используется для показа на всем протяжении широкого грунтовго обрыва.</translation>
-        </message>
+            <translation>Используется для показа на всем протяжении широкого грунтового обрыва.</translation>
+    </message>
         <message>
             <source>Earth wall</source>
             <comment>Name of symbol 107</comment>
-            <translation type="unfinished">Грунтовый вал</translation>
+            <translation>Грунтовый вал</translation>
         </message>
         <message>
             <source>Distinct earth wall. Minimum height is 1 m.</source>
             <comment>Description of symbol 107</comment>
-            <translation type="unfinished">Четко видимая земляная насыпь. Высота минимум 1 метр.</translation>
+            <translation>Четко видимая земляная насыпь. Высота минимум 1 метр.</translation>
         </message>
         <message>
             <source>Erosion gully</source>
             <comment>Name of symbol 109</comment>
-            <translation type="unfinished">Промоина</translation>
+            <translation>Промоина</translation>
         </message>
         <message>
             <source>An erosion gully or trench which is too small to be shown by symbol 106 is shown by a single line. The line width reflects the size of the gully. Minimum depth 1 m. The end of the line is pointed.</source>
@@ -6111,7 +6115,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Impassable cliff</source>
             <comment>Name of symbol 201</comment>
-            <translation type="unfinished">Непреодолимая скала</translation>
+            <translation>Непреодолимая скала</translation>
         </message>
         <message>
             <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
@@ -6121,7 +6125,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Impassable cliff, minimum size</source>
             <comment>Name of symbol 201.0.1</comment>
-            <translation type="unfinished">Непреодолимая скала, минимальный размер</translation>
+            <translation>Непреодолимая скала, минимальный размер</translation>
         </message>
         <message>
             <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
@@ -6131,7 +6135,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Impassable cliff, no tags</source>
             <comment>Name of symbol 201.1</comment>
-            <translation type="unfinished">Непреодолимая скала, без зубцов</translation>
+            <translation>Непреодолимая скала, без зубцов</translation>
         </message>
         <message>
             <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
@@ -6146,7 +6150,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Use this symbol to display the full extent of a wide cliff.</source>
             <comment>Description of symbol 201.2</comment>
-            <translation type="unfinished">Используется на всем протяжении широкой скалы.</translation>
+            <translation>Используется на всем протяжении широкой скалы.</translation>
         </message>
         <message>
             <source>Rock pillars/cliffs</source>
@@ -6161,7 +6165,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Boulder</source>
             <comment>Name of symbol 206</comment>
-            <translation type="unfinished">Валун</translation>
+            <translation>Валун</translation>
         </message>
         <message>
             <source>A small distinct boulder (minimum height 1 m). Every boulder marked on the map should be immediately identifiable on the ground. To be able to show the distinction between boulders with significant difference in size it is permitted to enlarge this symbol by 20% (diameter 0.5 mm).</source>
@@ -6171,7 +6175,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Boulder, enlarged</source>
             <comment>Name of symbol 206.1</comment>
-            <translation type="unfinished">Валун, увеличенный</translation>
+            <translation>Валун, увеличенный</translation>
         </message>
         <message>
             <source>To be able to show the distinction between boulders with significant difference in size it is permitted to enlarge this symbol by 20% (diameter 0.5 mm).</source>
@@ -6201,7 +6205,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Open sandy ground</source>
             <comment>Name of symbol 211</comment>
-            <translation type="unfinished">Открытый песчаный грунт</translation>
+            <translation>Открытый песчаный грунт</translation>
         </message>
         <message>
             <source>An area of soft sandy ground or gravel with no vegetation and where running is slow. Where an area of sandy ground is open but running is good, it is shown as open land (401/402).</source>
@@ -6211,7 +6215,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Bare rock</source>
             <comment>Name of symbol 212</comment>
-            <translation type="unfinished">Чистая скала</translation>
+            <translation>Чистая скала</translation>
         </message>
         <message>
             <source>A runnable area of rock without earth or vegetation is shown as bare rock. An area of rock covered with grass, moss or other low vegetation is shown as open land (401/402).</source>
@@ -6221,7 +6225,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Lake</source>
             <comment>Name of symbol 301</comment>
-            <translation type="unfinished">Озеро</translation>
+            <translation>Озеро</translation>
         </message>
         <message>
             <source>Large areas of water are shown with this symbol (blue 50%). The colour of the bank line is blue 100 %.
@@ -6233,22 +6237,22 @@ Small areas of water should be shown with full colour. Use symbol 302 ("Pond" in
         <message>
             <source>Lake, bank line</source>
             <comment>Name of symbol 301.1</comment>
-            <translation type="unfinished">Озеро, береговая линия</translation>
+            <translation>Озеро, береговая линия</translation>
         </message>
         <message>
             <source>A black bank line indicates that the feature cannot be crossed.</source>
             <comment>Description of symbol 301.1</comment>
-            <translation type="unfinished">Чёрная береговая линия показывает непроходимость объекта.</translation>
+            <translation>Чёрная береговая линия показывает непроходимость объекта.</translation>
         </message>
         <message>
             <source>Lake, with bank line</source>
             <comment>Name of symbol 301.2</comment>
-            <translation type="unfinished">Озеро, с береговой линией</translation>
+            <translation>Озеро, с береговой линией</translation>
         </message>
         <message>
             <source>Pond</source>
             <comment>Name of symbol 302</comment>
-            <translation type="unfinished">Пруд</translation>
+            <translation>Пруд</translation>
         </message>
         <message>
             <source>Small areas of water should be shown with full colour.
@@ -6260,37 +6264,37 @@ This is symbol "302 Pond" in ISOM, but is a variation of "301 Lake" in ISMTBOM.<
         <message>
             <source>Crossable watercourse</source>
             <comment>Name of symbol 305</comment>
-            <translation type="unfinished">Преодолимая река</translation>
+            <translation>Преодолимая река</translation>
         </message>
         <message>
             <source>A crossable watercourse, minimum 2 m wide. The width of watercourses over 5 m wide should be shown to scale.</source>
             <comment>Description of symbol 305</comment>
-            <translation type="unfinished">Преодолимый река или канава шириной минимум 2 метра. Если ширина больше 5 метров, то объект показывается в масштабе карты.</translation>
+            <translation>Преодолимый река или канава шириной минимум 2 метра. Если ширина больше 5 метров, то объект показывается в масштабе карты.</translation>
         </message>
         <message>
             <source>Crossable small watercourse</source>
             <comment>Name of symbol 306</comment>
-            <translation type="unfinished">Преодолимый ручей</translation>
+            <translation>Преодолимый ручей</translation>
         </message>
         <message>
             <source>A crossable watercourse (including a major drainage ditch) less than 2 m wide. For better legibility a ditch in a marsh should be drawn as a crossable watercourse (305).</source>
             <comment>Description of symbol 306</comment>
-            <translation type="unfinished">Преодолимый ручей или канава шириной менее 2 метров. Для лучшей читаемости, канава по болоту должна отображаться знаком 305.</translation>
+            <translation>Преодолимый ручей или канава шириной менее 2 метров. Для лучшей читаемости, канава по болоту должна отображаться знаком 305.</translation>
         </message>
         <message>
             <source>Minor water channel</source>
             <comment>Name of symbol 307</comment>
-            <translation type="unfinished">Канава с водой</translation>
+            <translation>Канава с водой</translation>
         </message>
         <message>
             <source>A natural or man-made minor water channel which may contain water only intermittently.</source>
             <comment>Description of symbol 307</comment>
-            <translation type="unfinished">Естественная или искусственная пересыхающая канава.</translation>
+            <translation>Естественная или искусственная пересыхающая канава.</translation>
         </message>
         <message>
             <source>Uncrossable marsh</source>
             <comment>Name of symbol 309</comment>
-            <translation type="unfinished">Непроходимое болото</translation>
+            <translation>Непроходимое болото</translation>
         </message>
         <message>
             <source>A marsh which is uncrossable or dangerous for the runner. A blue line surrounds the symbol.</source>
@@ -6300,17 +6304,17 @@ This is symbol "302 Pond" in ISOM, but is a variation of "301 Lake" in ISMTBOM.<
         <message>
             <source>Uncrossable marsh, border line</source>
             <comment>Name of symbol 309.1</comment>
-            <translation type="unfinished">Непроходимое болото, ограничивающая линия</translation>
+            <translation>Непроходимое болото, ограничивающая линия</translation>
         </message>
         <message>
             <source>Uncrossable marsh, with border line</source>
             <comment>Name of symbol 309.2</comment>
-            <translation type="unfinished">Непроходимое болото, с ограничивающей линией</translation>
+            <translation>Непроходимое болото, с ограничивающей линией</translation>
         </message>
         <message>
             <source>Marsh</source>
             <comment>Name of symbol 310</comment>
-            <translation type="unfinished">Болото</translation>
+            <translation>Болото</translation>
         </message>
         <message>
             <source>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility</source>
@@ -6320,12 +6324,12 @@ This is symbol "302 Pond" in ISOM, but is a variation of "301 Lake" in ISMTBOM.<
         <message>
             <source>Marsh, minimum size</source>
             <comment>Name of symbol 310.1</comment>
-            <translation type="unfinished">Болото, минимальный размер</translation>
+            <translation>Болото, минимальный размер</translation>
         </message>
         <message>
             <source>Special water feature</source>
             <comment>Name of symbol 314</comment>
-            <translation type="unfinished">Специальный объект гидрографии</translation>
+            <translation>Специальный объект гидрографии</translation>
         </message>
         <message>
             <source>A special small water feature. The definition of the symbol must always be given in the map legend.</source>
@@ -6335,7 +6339,7 @@ This is symbol "302 Pond" in ISOM, but is a variation of "301 Lake" in ISMTBOM.<
         <message>
             <source>Open land</source>
             <comment>Name of symbol 401</comment>
-            <translation type="unfinished">Открытое пространство</translation>
+            <translation>Открытое пространство</translation>
         </message>
         <message>
             <source>Cultivated land, fields, meadows, grassland, etc. without trees, offering easy running. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
@@ -6345,7 +6349,7 @@ This is symbol "302 Pond" in ISOM, but is a variation of "301 Lake" in ISMTBOM.<
         <message>
             <source>Open land with scattered trees</source>
             <comment>Name of symbol 402</comment>
-            <translation type="unfinished">Открытое пространство с отдельными деревьями</translation>
+            <translation>Открытое пространство с отдельными деревьями</translation>
         </message>
         <message>
             <source>Meadows with scattered trees or bushes, with grass or similar ground cover offering easy running. Areas smaller than 10 mm at the maps scale are shown as open land (401). Individual trees may be added (418, 419, 420). If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
@@ -6355,7 +6359,7 @@ This is symbol "302 Pond" in ISOM, but is a variation of "301 Lake" in ISMTBOM.<
         <message>
             <source>Rough open land</source>
             <comment>Name of symbol 403</comment>
-            <translation type="unfinished">Неудобное открытое пространство</translation>
+            <translation>Неудобное открытое пространство</translation>
         </message>
         <message>
             <source>Heath, moorland, felled areas, newly planted areas (trees lower than ca. 1 m) or other generally open land with rough ground vegetation, heather or tall grass. Symbol 403 may be combined with symbols 407 and 409 to show reduced runnability.</source>
@@ -6365,7 +6369,7 @@ This is symbol "302 Pond" in ISOM, but is a variation of "301 Lake" in ISMTBOM.<
         <message>
             <source>Rough open land with scattered trees</source>
             <comment>Name of symbol 404</comment>
-            <translation type="unfinished">Неудобное открытое пространство с отдельными деревьями</translation>
+            <translation>Неудобное открытое пространство с отдельными деревьями</translation>
         </message>
         <message>
             <source>Where there are scattered trees in rough open land, areas of white (or green) should appear in the tone. Such an area may be generalised by using a regular pattern of large white dots in the yellow screen. Areas smaller than 16 mm in the maps scale are shown as rough open land (403). Individual trees may be added (418, 419, 420).</source>
@@ -6395,7 +6399,7 @@ This is symbol "302 Pond" in ISOM, but is a variation of "301 Lake" in ISMTBOM.<
         <message>
             <source>Orchard</source>
             <comment>Name of symbol 412</comment>
-            <translation type="unfinished">Сад</translation>
+            <translation>Сад</translation>
         </message>
         <message>
             <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the
@@ -6406,7 +6410,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <message>
             <source>Vineyard</source>
             <comment>Name of symbol 413</comment>
-            <translation type="unfinished">Виноградник</translation>
+            <translation>Виноградник</translation>
         </message>
         <message>
             <source>The green lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
@@ -6416,7 +6420,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <message>
             <source>Special vegetation feature</source>
             <comment>Name of symbol 418</comment>
-            <translation type="unfinished">Специальные объекты растительности</translation>
+            <translation>Специальные объекты растительности</translation>
         </message>
         <message>
             <source>Symbols 418, 419 and 420 can be used for special small vegetation features. The definition of the symbol must be given in each case in the map legend.</source>
@@ -6426,7 +6430,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <message>
             <source>Special vegetation feature</source>
             <comment>Name of symbol 419</comment>
-            <translation type="unfinished">Специальные объекты растительности</translation>
+            <translation>Специальные объекты растительности</translation>
         </message>
         <message>
             <source>Symbols 418, 419 and 420 can be used for special small vegetation features. The definition of the symbol must be given in each case in the map legend.</source>
@@ -6436,7 +6440,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <message>
             <source>Special vegetation feature</source>
             <comment>Name of symbol 420</comment>
-            <translation type="unfinished">Специальные объекты растительности</translation>
+            <translation>Специальные объекты растительности</translation>
         </message>
         <message>
             <source>Symbols 418, 419 and 420 can be used for special small vegetation features. The definition of the symbol must be given in each case in the map legend.</source>
@@ -6446,7 +6450,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <message>
             <source>Motorway</source>
             <comment>Name of symbol 501.0</comment>
-            <translation type="unfinished">Автомагистраль</translation>
+            <translation>Автомагистраль</translation>
         </message>
         <message>
             <source>A road with two carriageways. The width of the symbol should be drawn to scale but not smaller than the minimum width. The outer boundary lines may be replaced with symbols 519, 521, 522 or 524 if a fence or wall is so close to the motorway edge that it cannot practically be shown as a separate symbol. The space between the black lines must be filled with brown (50%). A road under construction may be shown with broken lines.</source>
@@ -6558,7 +6562,7 @@ required to dismount. Speed max 25 %.</source>
         <message>
             <source>Narrow ride</source>
             <comment>Name of symbol 509.1</comment>
-            <translation type="unfinished">Узкая просека</translation>
+            <translation>Узкая просека</translation>
         </message>
         <message>
             <source>Non-ridable narrow forest rides should be represented.</source>
@@ -6568,27 +6572,27 @@ required to dismount. Speed max 25 %.</source>
         <message>
             <source>Railway</source>
             <comment>Name of symbol 515</comment>
-            <translation type="unfinished">Железная дорога</translation>
+            <translation>Железная дорога</translation>
         </message>
         <message>
             <source>A railway or other kind of railed track (tramway, truckway, etc.).</source>
             <comment>Description of symbol 515</comment>
-            <translation type="unfinished">Железнодорожное полотно, трамвайные пути, узкоколейка и т.п.</translation>
+            <translation>Железнодорожное полотно, трамвайные пути, узкоколейка и т.п.</translation>
         </message>
         <message>
             <source>Power line</source>
             <comment>Name of symbol 516</comment>
-            <translation type="unfinished">Линия электропередачи</translation>
+            <translation>Линия электропередачи</translation>
         </message>
         <message>
             <source>Power line, cableway or skilift. The bars indicate the exact location of the pylons.</source>
             <comment>Description of symbol 516</comment>
-            <translation type="unfinished">ЛЭП, канатная дорога или подъёмник. Поперечные штрихи показывают места опор.</translation>
+            <translation>ЛЭП, канатная дорога или подъёмник. Поперечные штрихи показывают места опор.</translation>
         </message>
         <message>
             <source>Major power line</source>
             <comment>Name of symbol 517</comment>
-            <translation type="unfinished">Высоковольтная линия электропередачи</translation>
+            <translation>Высоковольтная линия электропередачи</translation>
         </message>
         <message>
             <source>Major power lines should be drawn with a double line. The gap between the lines may indicate the extent of the powerline.</source>
@@ -6598,7 +6602,7 @@ required to dismount. Speed max 25 %.</source>
         <message>
             <source>Tunnel</source>
             <comment>Name of symbol 518</comment>
-            <translation type="unfinished">Туннель</translation>
+            <translation>Туннель</translation>
         </message>
         <message>
             <source>A way under roads, railways, etc. which may be used by the runner. This symbol is used whether or not the tunnel has a track leading to it.</source>
@@ -6608,7 +6612,7 @@ required to dismount. Speed max 25 %.</source>
         <message>
             <source>Tunnel, minimum size</source>
             <comment>Name of symbol 518.1</comment>
-            <translation type="unfinished">Туннель, минимальный размер</translation>
+            <translation>Туннель, минимальный размер</translation>
         </message>
         <message>
             <source>A way under roads, railways, etc. which may be used by the runner. This symbol is used whether or not the tunnel has a track leading to it.</source>
@@ -6618,7 +6622,7 @@ required to dismount. Speed max 25 %.</source>
         <message>
             <source>Stone wall</source>
             <comment>Name of symbol 521</comment>
-            <translation type="unfinished">Каменная стена</translation>
+            <translation>Каменная стена</translation>
         </message>
         <message>
             <source>This stone wall symbol should represent all visible walls. If a stone wall is forbidden to
@@ -6629,7 +6633,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <message>
             <source>High fence</source>
             <comment>Name of symbol 524</comment>
-            <translation type="unfinished">Высокая ограда</translation>
+            <translation>Высокая ограда</translation>
         </message>
         <message>
             <source>A boarded or wire fence higher than ca 1.5 m, not crossable to the average orienteer, eg. deer fence.</source>
@@ -6639,7 +6643,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <message>
             <source>Crossing point</source>
             <comment>Name of symbol 525</comment>
-            <translation type="unfinished">Проход</translation>
+            <translation>Проход</translation>
         </message>
         <message>
             <source>All ways through or over high fences or walls must be indicated. The symbol may also be used for a gate through or stile over a stone wall (521) or a fence (524) or a pipeline (534).</source>
@@ -6649,7 +6653,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <message>
             <source>Building</source>
             <comment>Name of symbol 526</comment>
-            <translation type="unfinished">Строение</translation>
+            <translation>Строение</translation>
         </message>
         <message>
             <source>A building is shown with its ground plan so far as the scale permits.</source>
@@ -6659,7 +6663,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <message>
             <source>Building, minimum size</source>
             <comment>Name of symbol 526.1</comment>
-            <translation type="unfinished">Строение, минимальный размер</translation>
+            <translation>Строение, минимальный размер</translation>
         </message>
         <message>
             <source>Settlement</source>
@@ -6704,7 +6708,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <message>
             <source>Grave</source>
             <comment>Name of symbol 532</comment>
-            <translation type="unfinished">Могила</translation>
+            <translation>Могила</translation>
         </message>
         <message>
             <source>A distinct grave marked by a stone or shrine. Location is at the centre of gravity of the symbol, which is orientated to north. A cemetery is shown by using grave symbols as space permits.</source>
@@ -6714,7 +6718,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <message>
             <source>Uncrossable pipeline</source>
             <comment>Name of symbol 534</comment>
-            <translation type="unfinished">Трубопровод непреодолимый</translation>
+            <translation>Трубопровод непреодолимый</translation>
         </message>
         <message>
             <source>A pipeline which cannot be crossed. If an uncrossable pipeline is forbidden to cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
@@ -6724,7 +6728,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <message>
             <source>High tower</source>
             <comment>Name of symbol 535</comment>
-            <translation type="unfinished">Высокая башня</translation>
+            <translation>Высокая башня</translation>
         </message>
         <message>
             <source>A high tower or large pylon, standing above the level of the surrounding forest. Location is at the centre of gravity of the symbol.</source>
@@ -6734,7 +6738,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <message>
             <source>Small tower</source>
             <comment>Name of symbol 536</comment>
-            <translation type="unfinished">Маленькая башня</translation>
+            <translation>Маленькая башня</translation>
         </message>
         <message>
             <source>An obvious shooting platform or seat, or small tower. Location is at the centre of gravity of the symbol.</source>
@@ -6744,7 +6748,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <message>
             <source>Fodder rack</source>
             <comment>Name of symbol 538</comment>
-            <translation type="unfinished">Кормушка</translation>
+            <translation>Кормушка</translation>
         </message>
         <message>
             <source>A fodder rack which is free standing or built on to a tree. Location is at the centre of gravity of the symbol. For land access reasons these may be omitted.</source>
@@ -6754,7 +6758,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <message>
             <source>Special man-made feature</source>
             <comment>Name of symbol 539</comment>
-            <translation type="unfinished">Специальные искусственные объекты</translation>
+            <translation>Специальные искусственные объекты</translation>
         </message>
         <message>
             <source>Special man-made features are shown with these symbols. The definition of the
@@ -6765,7 +6769,7 @@ symbols must be given in each case in the map legend.</source>
         <message>
             <source>Special man-made feature</source>
             <comment>Name of symbol 540</comment>
-            <translation type="unfinished">Специальные искусственные объекты</translation>
+            <translation>Специальные искусственные объекты</translation>
         </message>
         <message>
             <source>Special man-made features are shown with these symbols. The definition of the
@@ -6776,7 +6780,7 @@ symbols must be given in each case in the map legend.</source>
         <message>
             <source>Magnetic north line, blue</source>
             <comment>Name of symbol 601.2</comment>
-            <translation type="unfinished">Линии магнитного меридиана, синие</translation>
+            <translation>Линии магнитного меридиана, синие</translation>
         </message>
         <message>
             <source>Magnetic north lines are lines placed on the map pointing to magnetic north. At the scale of 1:5000, 1:7500 and 1:10000 the spacing of north lines on the map should be 30 mm, while at the scale of 1:15000 and 1:20000 the spacing on the map should be 20 mm. North lines may be broken where they obscure small features such as boulders, cliffs, stream junctions, and path ends.</source>
@@ -6786,12 +6790,12 @@ symbols must be given in each case in the map legend.</source>
         <message>
             <source>North lines pattern, blue</source>
             <comment>Name of symbol 601.3</comment>
-            <translation type="unfinished">Шаблон меридиана, синий</translation>
+            <translation>Шаблон меридиана, синий</translation>
         </message>
         <message>
             <source>Registration mark</source>
             <comment>Name of symbol 602</comment>
-            <translation type="unfinished">Контрольная метка</translation>
+            <translation>Контрольная метка</translation>
         </message>
         <message>
             <source>At least three registration marks must be placed within the frame of a map in a non-symmetrical position. In addition, a colour check should also be possible.</source>
@@ -6822,7 +6826,7 @@ given without the dot.</source>
         <message>
             <source>Start</source>
             <comment>Name of symbol 701</comment>
-            <translation type="unfinished">Старт</translation>
+            <translation>Старт</translation>
         </message>
         <message>
             <source>The start or map issue point (if not at the start) is shown by an equilateral triangle which points in the direction of the first control. The centre of the triangle shows the precise position of the start point.</source>
@@ -6832,7 +6836,7 @@ given without the dot.</source>
         <message>
             <source>Control point</source>
             <comment>Name of symbol 702</comment>
-            <translation type="unfinished">Контрольный пункт</translation>
+            <translation>Контрольный пункт</translation>
         </message>
         <message>
             <source>The control points are shown with circles. The centre of the circle shows the precise position of the feature. Sections of circles should be omitted to leave important detail showing.</source>
@@ -6852,7 +6856,7 @@ given without the dot.</source>
         <message>
             <source>Control number</source>
             <comment>Name of symbol 703</comment>
-            <translation type="unfinished">Номер контрольного пункта</translation>
+            <translation>Номер контрольного пункта</translation>
         </message>
         <message>
             <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail. The numbers are orientated to north.</source>
@@ -6862,7 +6866,7 @@ given without the dot.</source>
         <message>
             <source>Line</source>
             <comment>Name of symbol 704</comment>
-            <translation type="unfinished">Линия</translation>
+            <translation>Линия</translation>
         </message>
         <message>
             <source>Where controls are to be visited in order, the start, control points and finish are joined together by straight lines. Sections of lines should be omitted to leave important detail showing.</source>
@@ -6872,7 +6876,7 @@ given without the dot.</source>
         <message>
             <source>Marked route</source>
             <comment>Name of symbol 705</comment>
-            <translation type="unfinished">Маркированный участок</translation>
+            <translation>Маркированный участок</translation>
         </message>
         <message>
             <source>A marked route is shown on the map with a dashed line. If the symbol is used instead
@@ -6885,12 +6889,12 @@ to represent allowed routes that are marked in the terrain.</source>
         <message>
             <source>Finish</source>
             <comment>Name of symbol 706</comment>
-            <translation type="unfinished">Финиш</translation>
+            <translation>Финиш</translation>
         </message>
         <message>
             <source>The finish is shown by two concentric circles.</source>
             <comment>Description of symbol 706</comment>
-            <translation type="unfinished">Показывается двумя концентрическими окружностями.</translation>
+            <translation>Показывается двумя концентрическими окружностями.</translation>
         </message>
         <message>
             <source>Uncrossable boundary</source>
@@ -6900,12 +6904,12 @@ to represent allowed routes that are marked in the terrain.</source>
         <message>
             <source>Aboundary which it is not permitted to cross.</source>
             <comment>Description of symbol 707</comment>
-            <translation type="unfinished">Линия, которую запрещено пересекать во время соревнований.</translation>
+            <translation>Линия, которую запрещено пересекать во время соревнований.</translation>
         </message>
         <message>
             <source>Crossing point</source>
             <comment>Name of symbol 708</comment>
-            <translation type="unfinished">Проход</translation>
+            <translation>Проход</translation>
         </message>
         <message>
             <source>A crossing point through or over a wall or fence, or across a road or railway or through a tunnel or an out-of-bounds area is drawn on the map with two lines curving outwards.</source>
@@ -6915,7 +6919,7 @@ to represent allowed routes that are marked in the terrain.</source>
         <message>
             <source>Out-of-bounds area</source>
             <comment>Name of symbol 709</comment>
-            <translation type="unfinished">Запретная для бега территория</translation>
+            <translation>Запретная для бега территория</translation>
         </message>
         <message>
             <source>An out-of-bounds area is shown with vertical stripes. A bounding line may be drawn. The areas which may be dangerous to competitors shall be presented by this symbol.</source>
@@ -6930,7 +6934,7 @@ to represent allowed routes that are marked in the terrain.</source>
         <message>
             <source>Forbidden route</source>
             <comment>Name of symbol 711.1</comment>
-            <translation type="unfinished">Запрещённый путь</translation>
+            <translation>Запрещённый путь</translation>
         </message>
         <message>
             <source>A route which is out-of-bounds and forbidden to cross is shown with a zigzag. The
@@ -6944,22 +6948,22 @@ by using the perpendicular lines at the end of the zigzag lines.</source>
         <message>
             <source>First aid post</source>
             <comment>Name of symbol 712</comment>
-            <translation type="unfinished">Первая помощь</translation>
+            <translation>Первая помощь</translation>
         </message>
         <message>
             <source>The location of a first aid post.</source>
             <comment>Description of symbol 712</comment>
-            <translation type="unfinished">Пункт первой помощи.</translation>
+            <translation>Пункт первой помощи.</translation>
         </message>
         <message>
             <source>Refreshment point</source>
             <comment>Name of symbol 713</comment>
-            <translation type="unfinished">Пункт питания</translation>
+            <translation>Пункт питания</translation>
         </message>
         <message>
             <source>The location of a refreshment point which is not at a control.</source>
             <comment>Description of symbol 713</comment>
-            <translation type="unfinished">Пункт питания, не совпадающий с КП.</translation>
+            <translation>Пункт питания, не совпадающий с КП.</translation>
         </message>
         <message>
             <source>Dangerous object across tracks or paths, stairs</source>
@@ -6991,22 +6995,24 @@ by using the perpendicular lines at the end of the zigzag lines.</source>
 
 The purple line will extend a bit into the finish symbol. This is a shortcoming of this simple approach.</source>
             <comment>Description of symbol 799</comment>
-            <translation type="unfinished">Данный знак предоставляет простой и быстрый способ нанести тренировочную дистанцию. Пурпурная линия будет немного заходить на знак финиша - это недостаток данного подхода.</translation>
-        </message>
+            <translation>Данный знак предоставляет простой и быстрый способ нанести тренировочную дистанцию.
+
+Пурпурная линия будет немного заходить на знак финиша - это недостаток данного подхода.</translation>
+    </message>
         <message>
             <source>OpenOrienteering Logo</source>
             <comment>Name of symbol 999</comment>
-            <translation type="unfinished">Логотип OpenOrienteering</translation>
+            <translation>Логотип OpenOrienteering</translation>
         </message>
         <message>
             <source>The OpenOrienteering Logo.</source>
             <comment>Description of symbol 999</comment>
-            <translation type="unfinished">Логотип OpenOrienteering</translation>
-        </message>
+            <translation>Логотип OpenOrienteering.</translation>
+    </message>
         <message>
             <source>Form line</source>
             <comment>Name of symbol 103</comment>
-            <translation type="unfinished">Вспомогательная горизонталь</translation>
+            <translation>Вспомогательная горизонталь</translation>
         </message>
         <message>
             <source>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</source>
@@ -7016,7 +7022,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Small earth wall</source>
             <comment>Name of symbol 108</comment>
-            <translation type="unfinished">Маленький земляной вал</translation>
+            <translation>Маленький земляной вал</translation>
         </message>
         <message>
             <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
@@ -7026,17 +7032,17 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Small erosion gully</source>
             <comment>Name of symbol 110</comment>
-            <translation type="unfinished">Маленькая промоина</translation>
+            <translation>Маленькая промоина</translation>
         </message>
         <message>
             <source>A small erosion gully or trench. Minimum depth 0.5 m.</source>
             <comment>Description of symbol 110</comment>
-            <translation type="unfinished">Маленькая промоина или канава. Минимальная глубина 0,5 метров.</translation>
+            <translation>Маленькая промоина или канава. Минимальная глубина 0,5 метров.</translation>
         </message>
         <message>
             <source>Small knoll</source>
             <comment>Name of symbol 112</comment>
-            <translation type="unfinished">Внемасштабный бугор</translation>
+            <translation>Внемасштабный бугор</translation>
         </message>
         <message>
             <source>A small obvious mound or rocky knoll which cannot be drawn to scale with a contour (diameter of mound less than ca. 5 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. The symbol may not touch a contour line.</source>
@@ -7046,7 +7052,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Elongated knoll</source>
             <comment>Name of symbol 113</comment>
-            <translation type="unfinished">Вытянутый внемасштабный бугор</translation>
+            <translation>Вытянутый внемасштабный бугор</translation>
         </message>
         <message>
             <source>A small obvious elongated knoll which cannot be drawn to scale with a contour (length less than 12 m and width less than 4 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. Knolls larger than this must be shown by contours. The symbol may not be drawn in free form or such that two elongated knoll symbols overlap. The symbol may not touch a contour line.</source>
@@ -7056,7 +7062,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Small depression</source>
             <comment>Name of symbol 115</comment>
-            <translation type="unfinished">Внемасштабная яма</translation>
+            <translation>Внемасштабная яма</translation>
         </message>
         <message>
             <source>Small shallow natural depressions and hollows (minimum diameter 2 m) which cannot be shown to scale by contours are represented by a semicircle. Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol, which is orientated to north. Symbol 116 is used for man-made pits.</source>
@@ -7066,13 +7072,13 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Pit</source>
             <comment>Name of symbol 116</comment>
-            <translation type="unfinished">Искусственная внемасштабная яма</translation>
+            <translation>Искусственная внемасштабная яма</translation>
         </message>
         <message>
             <source>Pits and holes with distinct steep sides which cannot be shown to scale by symbol 106 (minimum diameter 2 m). Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol which is orientated to north.</source>
             <comment>Description of symbol 116</comment>
-            <translation type="unfinished">Шурф или яма с крутыми краями, не выражающиеся в масштабе каты (диаметром не менее 2 метров). Минимальная глубина от окружающей поверхности 1 метр. Ямы представляющие опасность показываются знаком 204. Центр объекта совпадает с центром тяжести знака. Знак ориентируется разрывом на север.</translation>
-        </message>
+            <translation>Шурф или яма с крутыми краями, не выражающиеся в масштабе карты (диаметром не менее 2 метров). Минимальная глубина от окружающей поверхности 1 метр. Ямы представляющие опасность показываются знаком 204. Центр объекта совпадает с центром тяжести знака. Знак ориентируется разрывом на север.</translation>
+    </message>
         <message>
             <source>Broken ground, small</source>
             <comment>Name of symbol 117.1</comment>
@@ -7096,7 +7102,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Special land form feature</source>
             <comment>Name of symbol 118</comment>
-            <translation type="unfinished">Специальные формы рельефа</translation>
+            <translation>Специальные формы рельефа</translation>
         </message>
         <message>
             <source>This symbol can be used for a special small land form feature. The definition of the symbol must be given in the map legend.</source>
@@ -7106,7 +7112,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Passable rock face</source>
             <comment>Name of symbol 203</comment>
-            <translation type="unfinished">Преодолимый скальный обрыв</translation>
+            <translation>Преодолимый скальный обрыв</translation>
         </message>
         <message>
             <source>A small vertical rock face (minimum height 1 m) may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
@@ -7116,7 +7122,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Passable rock face, minimum size</source>
             <comment>Name of symbol 203.0.1</comment>
-            <translation type="unfinished">Преодолимый скальный обрыв, минимальный размер</translation>
+            <translation>Преодолимый скальный обрыв, минимальный размер</translation>
         </message>
         <message>
             <source>A small vertical rock face (minimum height 1 m) may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
@@ -7126,7 +7132,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Passable rock face, no tags</source>
             <comment>Name of symbol 203.1</comment>
-            <translation type="unfinished">Преодолимый скальный обрыв, без зубцов</translation>
+            <translation>Преодолимый скальный обрыв, без зубцов</translation>
         </message>
         <message>
             <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
@@ -7136,7 +7142,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Passable rock face, no tags, minimum size</source>
             <comment>Name of symbol 203.1.1</comment>
-            <translation type="unfinished">Преодолимый скальный обрыв, без зубцов, минимальный размер</translation>
+            <translation>Преодолимый скальный обрыв, без зубцов, минимальный размер</translation>
         </message>
         <message>
             <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
@@ -7146,7 +7152,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Passable rock face, no tags, rounded</source>
             <comment>Name of symbol 203.2</comment>
-            <translation type="unfinished">Преодолимый скальный обрыв, без зубцов, с закруглением</translation>
+            <translation>Преодолимый скальный обрыв, без зубцов, с закруглением</translation>
         </message>
         <message>
             <source>For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
@@ -7156,7 +7162,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Passable rock face, no tags, rounded, minimum size</source>
             <comment>Name of symbol 203.2.1</comment>
-            <translation type="unfinished">Преодолимый скальный обрыв, без зубцов, с закруглением, минимальный размер</translation>
+            <translation>Преодолимый скальный обрыв, без зубцов, с закруглением, минимальный размер</translation>
         </message>
         <message>
             <source>For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
@@ -7166,7 +7172,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Rocky pit</source>
             <comment>Name of symbol 204</comment>
-            <translation type="unfinished">Скальная выработка</translation>
+            <translation>Скальная выработка</translation>
         </message>
         <message>
             <source>Rocky pits, holes or mineshafts which may constitute a danger to the runner. Location is the centre of gravity of the symbol, which is orientated to north.</source>
@@ -7176,7 +7182,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Cave</source>
             <comment>Name of symbol 205</comment>
-            <translation type="unfinished">Пещера</translation>
+            <translation>Пещера</translation>
         </message>
         <message>
             <source>A cave is represented by the same symbol as a rocky pit. In this case the symbol should be orientated to point up the slope as indicated opposite. The centre of gravity of the symbol marks the opening.</source>
@@ -7186,7 +7192,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Large boulder</source>
             <comment>Name of symbol 207</comment>
-            <translation type="unfinished">Большой валун</translation>
+            <translation>Большой валун</translation>
         </message>
         <message>
             <source>A particularly large and distinct boulder. For gigantic boulders symbol 202 should be used.</source>
@@ -7196,7 +7202,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Boulder field</source>
             <comment>Name of symbol 208</comment>
-            <translation type="unfinished">Каменистое поле</translation>
+            <translation>Каменистое поле</translation>
         </message>
         <message>
             <source>An area which is covered with so many blocks of stone that they cannot be marked individually is shown with randomly orientated solid triangles with sides of ratio 8:6:5. A minimum of two triangles should be used. The going is indicated by the density of the triangles. To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
@@ -7206,7 +7212,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Boulder field, large</source>
             <comment>Name of symbol 208.1</comment>
-            <translation type="unfinished">Каменистое поле, большое</translation>
+            <translation>Каменистое поле, большое</translation>
         </message>
         <message>
             <source>To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
@@ -7216,7 +7222,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Boulder cluster</source>
             <comment>Name of symbol 209</comment>
-            <translation type="unfinished">Груда валунов</translation>
+            <translation>Груда валунов</translation>
         </message>
         <message>
             <source>A small distinct group of boulders so closely clustered together that they cannot be marked individually. The symbol is an equilateral triangle orientated to the north. To be able to show the distinction between boulder clusters with significant difference in size it is permitted to enlarge this symbol by 25% (1.0 mm).</source>
@@ -7226,7 +7232,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Boulder cluster, large</source>
             <comment>Name of symbol 209.1</comment>
-            <translation type="unfinished">Груда валунов, большая</translation>
+            <translation>Груда валунов, большая</translation>
         </message>
         <message>
             <source>To be able to show the distinction between boulder clusters with significant difference in size it is permitted to enlarge this symbol by 25% (1.0 mm).</source>
@@ -7236,7 +7242,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Waterhole</source>
             <comment>Name of symbol 303</comment>
-            <translation type="unfinished">Лужа</translation>
+            <translation>Лужа</translation>
         </message>
         <message>
             <source>A water-filled pit or an area of water which is too small to be shown to scale. Location is the centre of gravity of the symbol, which is orientated to north.</source>
@@ -7246,7 +7252,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Narrow marsh</source>
             <comment>Name of symbol 308</comment>
-            <translation type="unfinished">Узкое болото</translation>
+            <translation>Узкое болото</translation>
         </message>
         <message>
             <source>A marsh or trickle of water which is too narrow to be shown with symbol 310 (less than ca. 5 m wide).</source>
@@ -7256,7 +7262,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Indistinct marsh</source>
             <comment>Name of symbol 311</comment>
-            <translation type="unfinished">Нечёткое болото</translation>
+            <translation>Нечёткое болото</translation>
         </message>
         <message>
             <source>An indistinct or seasonal marsh or area of gradual transition from marsh to firm ground, which is crossable. The edge is generally indistinct and the vegetation similar to that of the surrounding ground. The symbol should be combined with vegetation symbols to show runnability and openness.</source>
@@ -7266,32 +7272,32 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Indistinct marsh, minimum size</source>
             <comment>Name of symbol 311.1</comment>
-            <translation type="unfinished">Нечёткое болото, минимальный размер</translation>
+            <translation>Нечёткое болото, минимальный размер</translation>
         </message>
         <message>
             <source>Well</source>
             <comment>Name of symbol 312</comment>
-            <translation type="unfinished">Колодец</translation>
+            <translation>Колодец</translation>
         </message>
         <message>
             <source>Wells and captive springs, which are clearly visible on the ground.</source>
             <comment>Description of symbol 312</comment>
-            <translation type="unfinished">Колодцы скважины или оборудованные источники, четко видимые на местности.</translation>
+            <translation>Колодцы скважины или оборудованные источники, четко видимые на местности.</translation>
         </message>
         <message>
             <source>Spring</source>
             <comment>Name of symbol 313</comment>
-            <translation type="unfinished">Родник</translation>
+            <translation>Родник</translation>
         </message>
         <message>
             <source>The source of a stream with a distinct outflow. The symbol is orientated to open downstream.</source>
             <comment>Description of symbol 313</comment>
-            <translation type="unfinished">Родник или четко видимый исток. Знак ориентируется разрывом вниз по течению.</translation>
+            <translation>Родник или четко видимый исток. Знак ориентируется разрывом вниз по течению.</translation>
         </message>
         <message>
             <source>Undergrowth: slow running</source>
             <comment>Name of symbol 407</comment>
-            <translation type="unfinished">Подлесок: медленно пробегаемый</translation>
+            <translation>Подлесок: медленно пробегаемый</translation>
         </message>
         <message>
             <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 60-80% of normal speed. This symbol may not be combined with 406 or 408.</source>
@@ -7301,17 +7307,17 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Forest: difficult to run</source>
             <comment>Name of symbol 408</comment>
-            <translation type="unfinished">Лес: трудно пробегаемый</translation>
+            <translation>Лес: трудно пробегаемый</translation>
         </message>
         <message>
             <source>An area with dense trees or thicket (low visibility) which reduce running to ca. 20-60% of normal speed.</source>
             <comment>Description of symbol 408</comment>
-            <translation type="unfinished">Густой лес с низкой видимостью, снижающий скорость бега до 20 - 60% от нормальной.</translation>
+            <translation>Густой лес с низкой видимостью, снижающий скорость бега до 20 - 60% от нормальной.</translation>
         </message>
         <message>
             <source>Undergrowth: difficult to run</source>
             <comment>Name of symbol 409</comment>
-            <translation type="unfinished">Подлесок: трудно пробегаемый</translation>
+            <translation>Подлесок: трудно пробегаемый</translation>
         </message>
         <message>
             <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 20-60% of normal speed. This symbol may not be combined with 406 or 408.</source>
@@ -7336,42 +7342,42 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Line of minimum width for symbol 410.</source>
             <comment>Description of symbol 410.1</comment>
-            <translation type="unfinished">Линия минимальной ширины для знака 410.</translation>
+            <translation>Линия минимальной ширины для знака 410.</translation>
         </message>
         <message>
             <source>Forest runnable in one direction, 1</source>
             <comment>Name of symbol 411.0</comment>
-            <translation type="unfinished">Лес легкопробегаемый в определенном направлении, 1</translation>
+            <translation>Лес легкопробегаемый в определенном направлении, 1</translation>
         </message>
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
             <comment>Description of symbol 411.0</comment>
-            <translation type="unfinished">Лес, пробегаемый в определенном направлении. Когда площадь леса обеспечивает хорошую пробегаемость в одном направлении, но хуже в другом, в сетке знака должны быть белые полосы для показа направления хорошей пробегаемости.</translation>
+            <translation>Лес, пробегаемый в определенном направлении. Когда площадь леса обеспечивает хорошую пробегаемость в одном направлении, но хуже в другом, в сетке знака должны быть белые полосы для показа направления хорошей пробегаемости.</translation>
         </message>
         <message>
             <source>Forest runnable in one direction, 2</source>
             <comment>Name of symbol 411.1</comment>
-            <translation type="unfinished">Лес легкопробегаемый в определенном направлении, 2</translation>
+            <translation>Лес легкопробегаемый в определенном направлении, 2</translation>
         </message>
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
             <comment>Description of symbol 411.1</comment>
-            <translation type="unfinished">Лес, пробегаемый в определенном направлении. Когда площадь леса обеспечивает хорошую пробегаемость в одном направлении, но хуже в другом, в сетке знака должны быть белые полосы для показа направления хорошей пробегаемости.</translation>
+            <translation>Лес, пробегаемый в определенном направлении. Когда площадь леса обеспечивает хорошую пробегаемость в одном направлении, но хуже в другом, в сетке знака должны быть белые полосы для показа направления хорошей пробегаемости.</translation>
         </message>
         <message>
             <source>Forest runnable in one direction, 3</source>
             <comment>Name of symbol 411.2</comment>
-            <translation type="unfinished">Лес легкопробегаемый в определенном направлении, 3</translation>
+            <translation>Лес легкопробегаемый в определенном направлении, 3</translation>
         </message>
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
             <comment>Description of symbol 411.2</comment>
-            <translation type="unfinished">Лес, пробегаемый в определенном направлении. Когда площадь леса обеспечивает хорошую пробегаемость в одном направлении, но хуже в другом, в сетке знака должны быть белые полосы для показа направления хорошей пробегаемости.</translation>
+            <translation>Лес, пробегаемый в определенном направлении. Когда площадь леса обеспечивает хорошую пробегаемость в одном направлении, но хуже в другом, в сетке знака должны быть белые полосы для показа направления хорошей пробегаемости.</translation>
         </message>
         <message>
             <source>Distinct cultivation boundary</source>
             <comment>Name of symbol 414</comment>
-            <translation type="unfinished">Чёткая граница культивируемых участков</translation>
+            <translation>Чёткая граница культивируемых участков</translation>
         </message>
         <message>
             <source>The boundary of cultivated land when not shown with other symbols (fence, wall, path, etc.) is shown with a black line. A permanent boundary between different types of cultivated land is also shown with this symbol.</source>
@@ -7880,8 +7886,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Earth bank, very high, minimum size</source>
             <comment>Name of symbol 106.1.1</comment>
-            <translation type="unfinished">Грунтовый обрыв, очень выский, минимальный размер</translation>
-        </message>
+            <translation>Грунтовый обрыв, очень высокий, минимальный размер</translation>
+    </message>
         <message>
             <source>The line width of very high earth banks may be 0.25 mm.</source>
             <comment>Description of symbol 106.1.1</comment>
@@ -7895,8 +7901,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Use this symbol to display the full extent of wide earth banks.</source>
             <comment>Description of symbol 106.2</comment>
-            <translation type="unfinished">Используется для показа на всем протяжении широкого грунтовго обрыва.</translation>
-        </message>
+            <translation>Используется для показа на всем протяжении широкого грунтового обрыва.</translation>
+    </message>
         <message>
             <source>Earth wall</source>
             <comment>Name of symbol 107</comment>
@@ -9048,8 +9054,8 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Pits and holes with distinct steep sides which cannot be shown to scale by symbol 106 (minimum diameter 2 m). Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol which is orientated to north.</source>
             <comment>Description of symbol 116</comment>
-            <translation type="unfinished">Шурф или яма с крутыми краями, не выражающиеся в масштабе каты (диаметром не менее 2 метров). Минимальная глубина от окружающей поверхности 1 метр. Ямы представляющие опасность показываются знаком 204. Центр объекта совпадает с центром тяжести знака. Знак ориентируется разрывом на север.</translation>
-        </message>
+            <translation>Шурф или яма с крутыми краями, не выражающиеся в масштабе карты (диаметром не менее 2 метров). Минимальная глубина от окружающей поверхности 1 метр. Ямы представляющие опасность показываются знаком 204. Центр объекта совпадает с центром тяжести знака. Знак ориентируется разрывом на север.</translation>
+    </message>
         <message>
             <source>Broken ground, small</source>
             <comment>Name of symbol 117.1</comment>
@@ -9213,12 +9219,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Uncrossable marsh, with border line</source>
             <comment>Name of symbol 309.2</comment>
-            <translation type="unfinished">Непроходимое болото, с ограничивающей линией</translation>
+            <translation>Непроходимое болото, с ограничивающей линией</translation>
         </message>
         <message>
             <source>Marsh</source>
             <comment>Name of symbol 310</comment>
-            <translation type="unfinished">Болото</translation>
+            <translation>Болото</translation>
         </message>
         <message>
             <source>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility</source>
@@ -9228,12 +9234,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Marsh, minimum size</source>
             <comment>Name of symbol 310.1</comment>
-            <translation type="unfinished">Болото, минимальный размер</translation>
+            <translation>Болото, минимальный размер</translation>
         </message>
         <message>
             <source>Indistinct marsh</source>
             <comment>Name of symbol 311</comment>
-            <translation type="unfinished">Нечёткое болото</translation>
+            <translation>Нечёткое болото</translation>
         </message>
         <message>
             <source>An indistinct or seasonal marsh or area of gradual transition from marsh to firm ground, which is crossable. The edge is generally indistinct and the vegetation similar to that of the surrounding ground. The symbol should be combined with vegetation symbols to show runnability and openness.</source>
@@ -9243,32 +9249,32 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Indistinct marsh, minimum size</source>
             <comment>Name of symbol 311.1</comment>
-            <translation type="unfinished">Нечёткое болото, минимальный размер</translation>
+            <translation>Нечёткое болото, минимальный размер</translation>
         </message>
         <message>
             <source>Well</source>
             <comment>Name of symbol 312</comment>
-            <translation type="unfinished">Колодец</translation>
+            <translation>Колодец</translation>
         </message>
         <message>
             <source>Wells and captive springs, which are clearly visible on the ground.</source>
             <comment>Description of symbol 312</comment>
-            <translation type="unfinished">Колодцы скважины или оборудованные источники, четко видимые на местности.</translation>
+            <translation>Колодцы скважины или оборудованные источники, четко видимые на местности.</translation>
         </message>
         <message>
             <source>Spring</source>
             <comment>Name of symbol 313</comment>
-            <translation type="unfinished">Родник</translation>
+            <translation>Родник</translation>
         </message>
         <message>
             <source>The source of a stream with a distinct outflow. The symbol is orientated to open downstream.</source>
             <comment>Description of symbol 313</comment>
-            <translation type="unfinished">Родник или четко видимый исток. Знак ориентируется разрывом вниз по течению.</translation>
+            <translation>Родник или четко видимый исток. Знак ориентируется разрывом вниз по течению.</translation>
         </message>
         <message>
             <source>Special water feature</source>
             <comment>Name of symbol 314</comment>
-            <translation type="unfinished">Специальный объект гидрографии</translation>
+            <translation>Специальный объект гидрографии</translation>
         </message>
         <message>
             <source>A special small water feature. The definition of the symbol must always be given in the map legend.</source>
@@ -9278,7 +9284,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Undergrowth: slow running</source>
             <comment>Name of symbol 407</comment>
-            <translation type="unfinished">Подлесок: медленно пробегаемый</translation>
+            <translation>Подлесок: медленно пробегаемый</translation>
         </message>
         <message>
             <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 60-80% of normal speed. This symbol may not be combined with 406 or 408.</source>
@@ -9288,7 +9294,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Undergrowth: difficult to run</source>
             <comment>Name of symbol 409</comment>
-            <translation type="unfinished">Подлесок: трудно пробегаемый</translation>
+            <translation>Подлесок: трудно пробегаемый</translation>
         </message>
         <message>
             <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 20-60% of normal speed. This symbol may not be combined with 406 or 408.</source>
@@ -9313,12 +9319,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Line of minimum width for symbol 410.</source>
             <comment>Description of symbol 410.1</comment>
-            <translation type="unfinished">Линия минимальной ширины для знака 410.</translation>
+            <translation>Линия минимальной ширины для знака 410.</translation>
         </message>
         <message>
             <source>Forest runnable in one direction, 1</source>
             <comment>Name of symbol 411.0</comment>
-            <translation type="unfinished">Лес легкопробегаемый в определенном направлении, 1</translation>
+            <translation>Лес легкопробегаемый в определенном направлении, 1</translation>
         </message>
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
@@ -9328,7 +9334,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Forest runnable in one direction, 2</source>
             <comment>Name of symbol 411.1</comment>
-            <translation type="unfinished">Лес легкопробегаемый в определенном направлении, 2</translation>
+            <translation>Лес легкопробегаемый в определенном направлении, 2</translation>
         </message>
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
@@ -9338,7 +9344,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Forest runnable in one direction, 3</source>
             <comment>Name of symbol 411.2</comment>
-            <translation type="unfinished">Лес легкопробегаемый в определенном направлении, 3</translation>
+            <translation>Лес легкопробегаемый в определенном направлении, 3</translation>
         </message>
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
@@ -9358,7 +9364,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Special vegetation feature</source>
             <comment>Name of symbol 419</comment>
-            <translation type="unfinished">Специальные объекты растительности</translation>
+            <translation>Специальные объекты растительности</translation>
         </message>
         <message>
             <source>Symbols 418, 419 and 420 can be used for special small vegetation features. The definition of the symbol must be given in each case in the map legend.</source>
@@ -9368,7 +9374,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Special vegetation feature</source>
             <comment>Name of symbol 420</comment>
-            <translation type="unfinished">Специальные объекты растительности</translation>
+            <translation>Специальные объекты растительности</translation>
         </message>
         <message>
             <source>Symbols 418, 419 and 420 can be used for special small vegetation features. The definition of the symbol must be given in each case in the map legend.</source>
@@ -9383,17 +9389,17 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>A road under construction may be shown with broken lines.</source>
             <comment>Description of symbol 501.5</comment>
-            <translation type="unfinished">Реконструируемые и строящиеся дороги могут быть показаны прерывистой линией.</translation>
+            <translation>Реконструируемые и строящиеся дороги могут быть показаны прерывистой линией.</translation>
         </message>
         <message>
             <source>Major road, minimum width, under construction</source>
             <comment>Name of symbol 502.1</comment>
-            <translation type="unfinished">Шоссе, минимальная ширина, строящееся</translation>
+            <translation>Шоссе, минимальная ширина, строящееся</translation>
         </message>
         <message>
             <source>A road under construction may be shown with broken lines.</source>
             <comment>Description of symbol 502.1</comment>
-            <translation type="unfinished">Реконструируемые и строящиеся дороги могут быть показаны прерывистой линией.</translation>
+            <translation>Реконструируемые и строящиеся дороги могут быть показаны прерывистой линией.</translation>
         </message>
         <message>
             <source>Minor road, under construction</source>
@@ -9403,17 +9409,17 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>A road under construction may be shown with broken lines.</source>
             <comment>Description of symbol 503.1</comment>
-            <translation type="unfinished">Реконструируемые и строящиеся дороги могут быть показаны прерывистой линией.</translation>
+            <translation>Реконструируемые и строящиеся дороги могут быть показаны прерывистой линией.</translation>
         </message>
         <message>
             <source>Vehicle track</source>
             <comment>Name of symbol 505</comment>
-            <translation type="unfinished">Грунтовая дорога</translation>
+            <translation>Грунтовая дорога</translation>
         </message>
         <message>
             <source>A track or poorly maintained road suitable for vehicles only when travelling slowly. Width less than 3 m.</source>
             <comment>Description of symbol 505</comment>
-            <translation type="unfinished">Плохо обслуживаемая дорога пригодная только для медленной езды на машине. Ширина менее 3 метров.</translation>
+            <translation>Плохо обслуживаемая дорога пригодная только для медленной езды на машине. Ширина менее 3 метров.</translation>
         </message>
         <message>
             <source>Footpath</source>
@@ -9423,7 +9429,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>A large path, or old vehicle track, which is distinct on the ground.</source>
             <comment>Description of symbol 506</comment>
-            <translation type="unfinished">Широкая пешеходная тропа или старая дорога, хорошо видимые на местности.</translation>
+            <translation>Широкая пешеходная тропа или старая дорога, хорошо видимые на местности.</translation>
         </message>
         <message>
             <source>Small path</source>
@@ -9443,7 +9449,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>A less distinct small path or forestry extraction track.</source>
             <comment>Description of symbol 508</comment>
-            <translation type="unfinished">Пропадающая тропа или лесная дорога.</translation>
+            <translation>Пропадающая тропа или лесная дорога.</translation>
         </message>
         <message>
             <source>Footbridge</source>
@@ -9529,17 +9535,17 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Cairn</source>
             <comment>Name of symbol 537</comment>
-            <translation type="unfinished">Пилон</translation>
+            <translation>Пилон</translation>
         </message>
         <message>
             <source>Cairn, memorial stone or boundary stone (or a trigonometric point in some countries) more than 0.5 m high.</source>
             <comment>Description of symbol 537</comment>
-            <translation type="unfinished">Пилон, мемориальный камень или граничный знак высотой больше 0,5 метра.</translation>
+            <translation>Пилон, мемориальный камень или граничный знак высотой больше 0,5 метра.</translation>
         </message>
         <message>
             <source>Fodder rack</source>
             <comment>Name of symbol 538</comment>
-            <translation type="unfinished">Кормушка</translation>
+            <translation>Кормушка</translation>
         </message>
         <message>
             <source>A fodder rack which is free standing or built on to a tree. Location is at the centre of gravity of the symbol. For land access reasons these may be omitted.</source>
@@ -9589,8 +9595,10 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
 
 The purple line will extend a bit into the finish symbol. This is a shortcoming of this simple approach.</source>
             <comment>Description of symbol 799</comment>
-            <translation type="unfinished">Данный знак предоставляет простой и быстрый способ нанести тренировочную дистанцию. Пурпурная линия будет немного заходить на знак финиша - это недостаток данного подхода.</translation>
-        </message>
+            <translation>Данный знак предоставляет простой и быстрый способ нанести тренировочную дистанцию.
+
+Пурпурная линия будет немного заходить на знак финиша - это недостаток данного подхода.</translation>
+    </message>
         <message>
             <source>Start</source>
             <comment>Name of symbol 701</comment>
@@ -9649,7 +9657,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>The finish is shown by two concentric circles.</source>
             <comment>Description of symbol 706</comment>
-            <translation type="unfinished">Показывается двумя концентрическими окружностями.</translation>
+            <translation>Показывается двумя концентрическими окружностями.</translation>
         </message>
         <message>
             <source>Uncrossable boundary</source>
@@ -9659,7 +9667,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Aboundary which it is not permitted to cross.</source>
             <comment>Description of symbol 707</comment>
-            <translation type="unfinished">Линия, которую запрещено пересекать во время соревнований.</translation>
+            <translation>Линия, которую запрещено пересекать во время соревнований.</translation>
         </message>
         <message>
             <source>Crossing point</source>
@@ -9674,7 +9682,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Out-of-bounds area</source>
             <comment>Name of symbol 709</comment>
-            <translation type="unfinished">Запретная для бега территория</translation>
+            <translation>Запретная для бега территория</translation>
         </message>
         <message>
             <source>An out-of-bounds area, see also symbol 528, is shown with vertical stripes.
@@ -9688,7 +9696,7 @@ A bounding line may be drawn if there is no natural boundary, as follows:
         <message>
             <source>Out-of-bounds area, solid boundary</source>
             <comment>Name of symbol 709.1</comment>
-            <translation type="unfinished">Запретная для бега территория, сплошная ограничивающая линия</translation>
+            <translation>Запретная для бега территория, сплошная ограничивающая линия</translation>
         </message>
         <message>
             <source>A solid line indicates that the boundary is marked continuously (tapes, etc.) on the ground.</source>
