@@ -239,11 +239,11 @@
     </message>
     <message>
         <source>Alias</source>
-        <translation type="unfinished"></translation>
+        <translation>Alinomo</translation>
     </message>
     <message>
         <source>Drive</source>
-        <translation type="unfinished"></translation>
+        <translation>Diskingo</translation>
     </message>
     <message>
         <source>Files</source>
@@ -393,7 +393,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Recent Places</source>
-        <translation type="unfinished"></translation>
+        <translation>Lastaj lokoj</translation>
     </message>
     <message>
         <source>Go back</source>
@@ -604,7 +604,7 @@ Please verify the correct file name was given.</source>
     </message>
     <message>
         <source>Paper source:</source>
-        <translation type="unfinished"></translation>
+        <translation>Paperfonto:</translation>
     </message>
     <message>
         <source>Centimeters (cm)</source>
@@ -644,7 +644,7 @@ Please verify the correct file name was given.</source>
     </message>
     <message>
         <source>Page size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Paĝa grandeco:</translation>
     </message>
     <message>
         <source>Reverse portrait</source>
@@ -787,7 +787,7 @@ Please verify the correct file name was given.</source>
     </message>
     <message>
         <source>Print</source>
-        <translation type="unfinished"></translation>
+        <translation>Presi</translation>
     </message>
     <message>
         <source>&amp;Options &lt;&lt;</source>
@@ -803,7 +803,7 @@ Please verify the correct file name was given.</source>
     </message>
     <message>
         <source>&amp;Print</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Presi</translation>
     </message>
     <message>
         <source>%1 already exists.
@@ -872,11 +872,11 @@ Bonvolu elekti malsaman dosiernomon.</translation>
     </message>
     <message>
         <source>Print Preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Aspekto de la presotaĵo</translation>
     </message>
     <message>
         <source>Print</source>
-        <translation type="unfinished"></translation>
+        <translation>Presi</translation>
     </message>
     <message>
         <source>Fit page</source>
@@ -982,7 +982,7 @@ Bonvolu elekti malsaman dosiernomon.</translation>
     </message>
     <message>
         <source>Print all</source>
-        <translation type="unfinished"></translation>
+        <translation>Presi ĉiujn</translation>
     </message>
     <message>
         <source>Current Page</source>
@@ -1073,7 +1073,7 @@ Bonvolu elekti malsaman dosiernomon.</translation>
     </message>
     <message>
         <source>Preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Aspekto</translation>
     </message>
     <message>
         <source>Printer</source>
@@ -1092,7 +1092,7 @@ Bonvolu elekti malsaman dosiernomon.</translation>
     </message>
     <message>
         <source>Resource error (fork failure): %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Risurca eraro (forko malsukcesis): %1</translation>
     </message>
     <message>
         <source>Error reading from process</source>
@@ -1100,7 +1100,7 @@ Bonvolu elekti malsaman dosiernomon.</translation>
     </message>
     <message>
         <source>Process failed to start: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Procezo malsukcesis komenci: %1</translation>
     </message>
     <message>
         <source>Could not open input redirection for reading</source>
@@ -1108,7 +1108,7 @@ Bonvolu elekti malsaman dosiernomon.</translation>
     </message>
     <message>
         <source>No program defined</source>
-        <translation type="unfinished"></translation>
+        <translation>Neniu programo difinita</translation>
     </message>
     <message>
         <source>Could not open output redirection for writing</source>
@@ -1464,7 +1464,7 @@ Bonvolu elekti malsaman dosiernomon.</translation>
     </message>
     <message>
         <source>Cache</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaŝmemoro</translation>
     </message>
     <message>
         <source>Fonts</source>
@@ -1484,11 +1484,11 @@ Bonvolu elekti malsaman dosiernomon.</translation>
     </message>
     <message>
         <source>Download</source>
-        <translation type="unfinished"></translation>
+        <translation>Elŝutejo</translation>
     </message>
     <message>
         <source>Configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Agordo</translation>
     </message>
     <message>
         <source>Application Data</source>
@@ -1508,7 +1508,7 @@ Bonvolu elekti malsaman dosiernomon.</translation>
     </message>
     <message>
         <source>Temporary Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Provizora dosierujo</translation>
     </message>
     <message>
         <source>Shared Data</source>
