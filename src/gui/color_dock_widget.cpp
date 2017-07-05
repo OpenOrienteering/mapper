@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,27 +21,48 @@
 
 #include "color_dock_widget.h"
 
-#include <QApplication>
+#include <Qt>
+#include <QAbstractButton>
+#include <QAbstractItemView>
 #include <QAction>
+#include <QApplication>
+#include <QColor>
+#include <QDialog>
+#include <QFlags>
+#include <QHBoxLayout>
 #include <QHeaderView>
+#include <QIcon>
+#include <QLabel>
+#include <QLatin1Char>
+#include <QLocale>
+#include <QMargins>
 #include <QMenu>
 #include <QMessageBox>
+#include <QPalette>
+#include <QStringList>
+#include <QStyle>
+#include <QStyleOption>
 #include <QTableWidget>
+#include <QTableWidgetItem>
 #include <QToolButton>
+#include <QVBoxLayout>
+#include <QVariant>
 
-#include "core/map_color.h"
 #include "core/map.h"
-#include "util/util.h"
-#include "util_gui.h"
-#include "util/item_delegates.h"
+#include "core/map_color.h"
 #include "gui/color_dialog.h"
 #include "gui/main_window.h"
 #include "gui/widgets/segmented_button_layout.h"
+#include "util/item_delegates.h"
+#include "util/util.h"
+
+// IWYU pragma: no_forward_declare QTableWidgetItem
+
 
 ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent)
-: QWidget(parent), 
-  map(map), 
-  window(window)
+: QWidget(parent)
+, map(map)
+, window(window)
 {
 	react_to_changes = true;
 	
@@ -59,18 +80,18 @@ ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent)
 	color_table->setItemDelegateForColumn(6, new PercentageDelegate(this));
 	color_table->setColumnHidden(6, true);
 	
-	QMenu* new_button_menu = new QMenu(this);
+	auto new_button_menu = new QMenu(this);
 	(void) new_button_menu->addAction(tr("New"), this, SLOT(newColor()));
 	duplicate_action = new_button_menu->addAction(tr("Duplicate"), this, SLOT(duplicateColor()));
 	duplicate_action->setIcon(QIcon(QString::fromLatin1(":/images/tool-duplicate.png")));
 	
 	// Buttons
-	QToolButton* new_button = newToolButton(QIcon(QString::fromLatin1(":/images/plus.png")), tr("New"));
+	auto new_button = newToolButton(QIcon(QString::fromLatin1(":/images/plus.png")), tr("New"));
 	new_button->setPopupMode(QToolButton::DelayedPopup); // or MenuButtonPopup
 	new_button->setMenu(new_button_menu);
 	delete_button = newToolButton(QIcon(QString::fromLatin1(":/images/minus.png")), tr("Delete"));
 	
-	SegmentedButtonLayout* add_remove_layout = new SegmentedButtonLayout();
+	auto add_remove_layout = new SegmentedButtonLayout();
 	add_remove_layout->addWidget(new_button);
 	add_remove_layout->addWidget(delete_button);
 	
@@ -79,7 +100,7 @@ ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent)
 	move_down_button = newToolButton(QIcon(QString::fromLatin1(":/images/arrow-down.png")), tr("Move Down"));
 	move_down_button->setAutoRepeat(true);
 	
-	SegmentedButtonLayout* up_down_layout = new SegmentedButtonLayout();
+	auto up_down_layout = new SegmentedButtonLayout();
 	up_down_layout->addWidget(move_up_button);
 	up_down_layout->addWidget(move_down_button);
 	
@@ -87,11 +108,11 @@ ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent)
 	edit_button = newToolButton(QIcon(QString::fromLatin1(":/images/settings.png")), QApplication::translate("MapEditorController", "&Edit").remove(QLatin1Char('&')));
 	edit_button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	
-	QToolButton* help_button = newToolButton(QIcon(QString::fromLatin1(":/images/help.png")), tr("Help"));
+	auto help_button = newToolButton(QIcon(QString::fromLatin1(":/images/help.png")), tr("Help"));
 	help_button->setAutoRaise(true);
 	
 	// The buttons row layout
-	QBoxLayout* buttons_group_layout = new QHBoxLayout();
+	auto buttons_group_layout = new QHBoxLayout();
 	buttons_group_layout->addLayout(add_remove_layout);
 	buttons_group_layout->addLayout(up_down_layout);
 	buttons_group_layout->addWidget(edit_button);
@@ -99,7 +120,7 @@ ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent)
 	buttons_group_layout->addWidget(help_button);
 	
 	// The layout of all components below the table
-	QBoxLayout* bottom_layout = new QVBoxLayout();
+	auto bottom_layout = new QVBoxLayout();
 	QStyleOption style_option(QStyleOption::Version, QStyleOption::SO_DockWidget);
 	bottom_layout->setContentsMargins(
 		style()->pixelMetric(QStyle::PM_LayoutLeftMargin, &style_option) / 2,
@@ -111,7 +132,7 @@ ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent)
 	bottom_layout->addWidget(new QLabel(tr("Double-click a color value to open a dialog.")));
 	
 	// The main layout
-	QBoxLayout* layout = new QVBoxLayout();
+	auto layout = new QVBoxLayout();
 	layout->setContentsMargins(QMargins());
 	layout->addWidget(color_table, 1);
 	layout->addLayout(bottom_layout);
@@ -120,7 +141,7 @@ ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent)
 	for (int i = 0; i < map->getNumColors(); ++i)
 		addRow(i);
 	
-	QHeaderView* header_view = color_table->horizontalHeader();
+	auto header_view = color_table->horizontalHeader();
 	header_view->setSectionResizeMode(QHeaderView::Interactive);
 	header_view->resizeSections(QHeaderView::ResizeToContents);
 	header_view->setSectionResizeMode(0, QHeaderView::Fixed); // Color
@@ -134,29 +155,30 @@ ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent)
 	currentCellChange(color_table->currentRow(), 0, 0, 0);	// enable / disable move color buttons
 	
 	// Connections
-	connect(color_table, SIGNAL(cellChanged(int,int)), this, SLOT(cellChange(int,int)));
-	connect(color_table, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(currentCellChange(int,int,int,int)));
-	connect(color_table, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(editCurrentColor()));
+	connect(color_table, &QTableWidget::cellChanged, this, &ColorWidget::cellChange);
+	connect(color_table, &QTableWidget::currentCellChanged, this, &ColorWidget::currentCellChange);
+	connect(color_table, &QTableWidget::cellDoubleClicked, this, &ColorWidget::editCurrentColor);
 	
-	connect(new_button, SIGNAL(clicked(bool)), this, SLOT(newColor()));
-	connect(delete_button, SIGNAL(clicked(bool)), this, SLOT(deleteColor()));
-	connect(move_up_button, SIGNAL(clicked(bool)), this, SLOT(moveColorUp()));
-	connect(move_down_button, SIGNAL(clicked(bool)), this, SLOT(moveColorDown()));
-	connect(edit_button, SIGNAL(clicked(bool)), this, SLOT(editCurrentColor()));
-	connect(help_button, SIGNAL(clicked(bool)), this, SLOT(showHelp()));
+	connect(new_button, &QAbstractButton::clicked, this, &ColorWidget::newColor);
+	connect(delete_button, &QAbstractButton::clicked, this, &ColorWidget::deleteColor);
+	connect(move_up_button, &QAbstractButton::clicked, this, &ColorWidget::moveColorUp);
+	connect(move_down_button, &QAbstractButton::clicked, this, &ColorWidget::moveColorDown);
+	connect(edit_button, &QAbstractButton::clicked, this, &ColorWidget::editCurrentColor);
+	connect(help_button, &QAbstractButton::clicked, this, &ColorWidget::showHelp);
 	
-	connect(map, SIGNAL(colorAdded(int, const MapColor*)), this, SLOT(colorAdded(int, const MapColor*)));
-	connect(map, SIGNAL(colorChanged(int, const MapColor*)), this, SLOT(colorChanged(int, const MapColor*)));
-	connect(map, SIGNAL(colorDeleted(int, const MapColor*)), this, SLOT(colorDeleted(int, const MapColor*)));
+	connect(map, &Map::colorAdded, this, &ColorWidget::colorAdded);
+	connect(map, &Map::colorChanged, this, &ColorWidget::colorChanged);
+	connect(map, &Map::colorDeleted, this, &ColorWidget::colorDeleted);
 }
 
-ColorWidget::~ColorWidget()
-{
-}
+
+ColorWidget::~ColorWidget() = default;
+
+
 
 QToolButton* ColorWidget::newToolButton(const QIcon& icon, const QString& text)
 {
-	QToolButton* button = new QToolButton();
+	auto button = new QToolButton();
 	button->setToolButtonStyle(Qt::ToolButtonFollowStyle);
 	button->setToolTip(text);
 	button->setIcon(icon);
@@ -202,7 +224,7 @@ void ColorWidget::duplicateColor()
 	Q_ASSERT(row >= 0);
 	if (row < 0) return; // In release mode
 	
-	MapColor* new_color = new MapColor(*map->getColor(row));
+	auto new_color = new MapColor(*map->getColor(row));
 	new_color->setName(new_color->getName() + tr(" (Duplicate)"));
 	map->addColor(new_color, row);
 	
@@ -217,8 +239,8 @@ void ColorWidget::moveColorUp()
 	Q_ASSERT(row >= 1);
 	if (row < 1) return; // In release mode
 	
-	MapColor* above_color = map->getMapColor(row - 1);
-	MapColor* cur_color = map->getMapColor(row);
+	auto above_color = map->getMapColor(row - 1);
+	auto cur_color = map->getMapColor(row);
 	map->setColor(cur_color, row - 1);
 	map->setColor(above_color, row);
 	updateRow(row - 1);
@@ -236,8 +258,8 @@ void ColorWidget::moveColorDown()
 	Q_ASSERT(row < color_table->rowCount() - 1);
 	if (row >= color_table->rowCount() - 1) return; // In release mode
 	
-	MapColor* below_color = map->getMapColor(row + 1);
-	MapColor* cur_color = map->getMapColor(row);
+	auto below_color = map->getMapColor(row + 1);
+	auto cur_color = map->getMapColor(row);
 	map->setColor(cur_color, row + 1);
 	map->setColor(below_color, row);
 	updateRow(row + 1);
@@ -255,7 +277,7 @@ void ColorWidget::editCurrentColor()
 	int row = color_table->currentRow();
 	if (row >= 0)
 	{
-		MapColor* color = map->getMapColor(row);
+		auto color = map->getMapColor(row);
 		ColorDialog dialog(*map, *color, this);
 		dialog.setWindowModality(Qt::WindowModal);
 		int result = dialog.exec();
@@ -281,8 +303,8 @@ void ColorWidget::cellChange(int row, int column)
 	
 	react_to_changes = false;
 	
-	MapColor* color = map->getMapColor(row);
-	QString text = color_table->item(row, column)->text().trimmed();
+	auto color = map->getMapColor(row);
+	auto text = color_table->item(row, column)->text().trimmed();
 	
 	if (column == 1)
 	{
@@ -383,11 +405,11 @@ void ColorWidget::updateRow(int row)
 {
 	react_to_changes = false;
 	
-	const MapColor* color = map->getColor(row);
+	const auto color = map->getColor(row);
 	auto color_with_opacity = colorWithOpacity(*color);
 	
 	// Color preview
-	QTableWidgetItem* item = color_table->item(row, 0);
+	auto item = color_table->item(row, 0);
 	item->setBackground(color_with_opacity);
 	
 	// Name

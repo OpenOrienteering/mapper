@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012, 2013, 2014 Kai Pastor
+ *    Copyright 2012, 2013, 2014, 2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,22 +19,27 @@
  */
 
 
-#ifndef _OPENORIENTEERING_COLOR_DOCK_WIDGET_H_
-#define _OPENORIENTEERING_COLOR_DOCK_WIDGET_H_
+#ifndef OPENORIENTEERING_COLOR_DOCK_WIDGET_H
+#define OPENORIENTEERING_COLOR_DOCK_WIDGET_H
 
+#include <QtGlobal>
+#include <QObject>
+#include <QString>
 #include <QWidget>
 
+QT_BEGIN_NAMESPACE
 class QAction;
+class QIcon;
 class QTableWidget;
 class QToolButton;
+QT_END_NAMESPACE
 
-class ColorDropDown;
 class MainWindow;
 class Map;
 class MapColor;
-class PaletteColor;
 
-/** 
+
+/**
  * A widget showing the list of map colors and some edit buttons at the bottom.
  * Enables to define new colors and edit or delete existing colors.
  * This widget is used inside a dock widget.
@@ -43,11 +48,11 @@ class ColorWidget : public QWidget
 {
 Q_OBJECT
 public:
-  /** Creates a new ColorWidget for a given map and MainWindow. */
-	ColorWidget(Map* map, MainWindow* window, QWidget* parent = NULL);
-  
-  /** Destroys the ColorWidget. */
-	virtual ~ColorWidget();
+	/** Creates a new ColorWidget for a given map and MainWindow. */
+	ColorWidget(Map* map, MainWindow* window, QWidget* parent = nullptr);
+	
+	/** Destroys the ColorWidget. */
+	~ColorWidget() override;
 	
 protected slots:
 	void newColor();
