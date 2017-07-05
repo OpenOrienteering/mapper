@@ -19,7 +19,7 @@
  */
 
 
-#include "color_dock_widget.h"
+#include "color_list_widget.h"
 
 #include <Qt>
 #include <QAbstractButton>
@@ -59,7 +59,7 @@
 // IWYU pragma: no_forward_declare QTableWidgetItem
 
 
-ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent)
+ColorListWidget::ColorListWidget(Map* map, MainWindow* window, QWidget* parent)
 : QWidget(parent)
 , map(map)
 , window(window)
@@ -155,28 +155,28 @@ ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent)
 	currentCellChange(color_table->currentRow(), 0, 0, 0);	// enable / disable move color buttons
 	
 	// Connections
-	connect(color_table, &QTableWidget::cellChanged, this, &ColorWidget::cellChange);
-	connect(color_table, &QTableWidget::currentCellChanged, this, &ColorWidget::currentCellChange);
-	connect(color_table, &QTableWidget::cellDoubleClicked, this, &ColorWidget::editCurrentColor);
+	connect(color_table, &QTableWidget::cellChanged, this, &ColorListWidget::cellChange);
+	connect(color_table, &QTableWidget::currentCellChanged, this, &ColorListWidget::currentCellChange);
+	connect(color_table, &QTableWidget::cellDoubleClicked, this, &ColorListWidget::editCurrentColor);
 	
-	connect(new_button, &QAbstractButton::clicked, this, &ColorWidget::newColor);
-	connect(delete_button, &QAbstractButton::clicked, this, &ColorWidget::deleteColor);
-	connect(move_up_button, &QAbstractButton::clicked, this, &ColorWidget::moveColorUp);
-	connect(move_down_button, &QAbstractButton::clicked, this, &ColorWidget::moveColorDown);
-	connect(edit_button, &QAbstractButton::clicked, this, &ColorWidget::editCurrentColor);
-	connect(help_button, &QAbstractButton::clicked, this, &ColorWidget::showHelp);
+	connect(new_button, &QAbstractButton::clicked, this, &ColorListWidget::newColor);
+	connect(delete_button, &QAbstractButton::clicked, this, &ColorListWidget::deleteColor);
+	connect(move_up_button, &QAbstractButton::clicked, this, &ColorListWidget::moveColorUp);
+	connect(move_down_button, &QAbstractButton::clicked, this, &ColorListWidget::moveColorDown);
+	connect(edit_button, &QAbstractButton::clicked, this, &ColorListWidget::editCurrentColor);
+	connect(help_button, &QAbstractButton::clicked, this, &ColorListWidget::showHelp);
 	
-	connect(map, &Map::colorAdded, this, &ColorWidget::colorAdded);
-	connect(map, &Map::colorChanged, this, &ColorWidget::colorChanged);
-	connect(map, &Map::colorDeleted, this, &ColorWidget::colorDeleted);
+	connect(map, &Map::colorAdded, this, &ColorListWidget::colorAdded);
+	connect(map, &Map::colorChanged, this, &ColorListWidget::colorChanged);
+	connect(map, &Map::colorDeleted, this, &ColorListWidget::colorDeleted);
 }
 
 
-ColorWidget::~ColorWidget() = default;
+ColorListWidget::~ColorListWidget() = default;
 
 
 
-QToolButton* ColorWidget::newToolButton(const QIcon& icon, const QString& text)
+QToolButton* ColorListWidget::newToolButton(const QIcon& icon, const QString& text)
 {
 	auto button = new QToolButton();
 	button->setToolButtonStyle(Qt::ToolButtonFollowStyle);
@@ -187,7 +187,7 @@ QToolButton* ColorWidget::newToolButton(const QIcon& icon, const QString& text)
 	return button;
 }
 
-void ColorWidget::newColor()
+void ColorListWidget::newColor()
 {
 	int row = color_table->currentRow();
 	if (row < 0)
@@ -199,7 +199,7 @@ void ColorWidget::newColor()
 	editCurrentColor();
 }
 
-void ColorWidget::deleteColor()
+void ColorListWidget::deleteColor()
 {
 	int row = color_table->currentRow();
 	Q_ASSERT(row >= 0);
@@ -218,7 +218,7 @@ void ColorWidget::deleteColor()
 	map->updateAllObjects();
 }
 
-void ColorWidget::duplicateColor()
+void ColorListWidget::duplicateColor()
 {
 	int row = color_table->currentRow();
 	Q_ASSERT(row >= 0);
@@ -233,7 +233,7 @@ void ColorWidget::duplicateColor()
 	editCurrentColor();
 }
 
-void ColorWidget::moveColorUp()
+void ColorListWidget::moveColorUp()
 {
 	int row = color_table->currentRow();
 	Q_ASSERT(row >= 1);
@@ -252,7 +252,7 @@ void ColorWidget::moveColorUp()
 	map->updateAllObjects();
 }
 
-void ColorWidget::moveColorDown()
+void ColorListWidget::moveColorDown()
 {
 	int row = color_table->currentRow();
 	Q_ASSERT(row < color_table->rowCount() - 1);
@@ -272,7 +272,7 @@ void ColorWidget::moveColorDown()
 }
 
 // slot
-void ColorWidget::editCurrentColor()
+void ColorListWidget::editCurrentColor()
 {
 	int row = color_table->currentRow();
 	if (row >= 0)
@@ -291,12 +291,12 @@ void ColorWidget::editCurrentColor()
 	}
 }
 
-void ColorWidget::showHelp() const
+void ColorListWidget::showHelp() const
 {
 	Util::showHelp(window, "color_dock_widget.html");
 }
 
-void ColorWidget::cellChange(int row, int column)
+void ColorListWidget::cellChange(int row, int column)
 {
 	if (!react_to_changes)
 		return;
@@ -332,7 +332,7 @@ void ColorWidget::cellChange(int row, int column)
 	map->updateAllObjects();
 }
 
-void ColorWidget::currentCellChange(int current_row, int current_column, int previous_row, int previous_column)
+void ColorListWidget::currentCellChange(int current_row, int current_column, int previous_row, int previous_column)
 {
 	Q_UNUSED(current_column);
 	Q_UNUSED(previous_row);
@@ -348,7 +348,7 @@ void ColorWidget::currentCellChange(int current_row, int current_column, int pre
 	edit_button->setEnabled(valid_row);
 }
 
-void ColorWidget::colorAdded(int index, const MapColor* color)
+void ColorListWidget::colorAdded(int index, const MapColor* color)
 {
 	Q_UNUSED(color);
 	color_table->insertRow(index);
@@ -360,20 +360,20 @@ void ColorWidget::colorAdded(int index, const MapColor* color)
 	color_table->setCurrentCell(index, 1);
 }
 
-void ColorWidget::colorChanged(int index, const MapColor* color)
+void ColorListWidget::colorChanged(int index, const MapColor* color)
 {
 	Q_UNUSED(color);
 	updateRow(index);
 }
 
-void ColorWidget::colorDeleted(int index, const MapColor* color)
+void ColorListWidget::colorDeleted(int index, const MapColor* color)
 {
 	Q_UNUSED(color);
 	color_table->removeRow(index);
 	currentCellChange(color_table->currentRow(), color_table->currentColumn(), -1, -1);
 }
 
-void ColorWidget::addRow(int row)
+void ColorListWidget::addRow(int row)
 {
 	react_to_changes = false;
 	
@@ -401,7 +401,7 @@ void ColorWidget::addRow(int row)
 	updateRow(row);
 }
 
-void ColorWidget::updateRow(int row)
+void ColorListWidget::updateRow(int row)
 {
 	react_to_changes = false;
 	

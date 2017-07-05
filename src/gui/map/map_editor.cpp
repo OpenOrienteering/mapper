@@ -105,7 +105,6 @@
 #include "core/symbols/symbol.h"
 #include "fileformats/file_format.h"
 #include "fileformats/file_format_registry.h"
-#include "gui/color_dock_widget.h"
 #include "gui/configure_grid_dialog.h"
 #include "gui/georeferencing_dialog.h"
 #include "gui/main_window.h"
@@ -117,6 +116,7 @@
 #include "gui/map/map_widget.h"
 #include "gui/symbols/replace_symbol_set_dialog.h"
 #include "gui/widgets/action_grid_bar.h"
+#include "gui/widgets/color_list_widget.h"
 #include "gui/widgets/compass_display.h"
 #include "gui/widgets/key_button_bar.h" // IWYU pragma: keep
 #include "gui/widgets/measure_widget.h"
@@ -1832,7 +1832,7 @@ void MapEditorController::createColorWindow()
 	Q_ASSERT(!color_dock_widget);
 	
 	color_dock_widget = new EditorDockWidget(tr("Colors"), color_window_act, this, window);
-	color_dock_widget->setWidget(new ColorWidget(map, window, color_dock_widget));
+	color_dock_widget->setWidget(new ColorListWidget(map, window, color_dock_widget));
 	color_dock_widget->widget()->setEnabled(!editing_in_progress);
 	color_dock_widget->setObjectName(QString::fromLatin1("Color dock widget"));
 	if (!window->restoreDockWidget(color_dock_widget))

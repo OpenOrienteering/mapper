@@ -91,7 +91,6 @@ set(Mapper_Common_SRCS
   gui/about_dialog.cpp
   gui/autosave_dialog.cpp
   gui/color_dialog.cpp
-  gui/color_dock_widget.cpp
   gui/configure_grid_dialog.cpp
   gui/georeferencing_dialog.cpp
   gui/home_screen_controller.cpp
@@ -129,6 +128,7 @@ set(Mapper_Common_SRCS
   
   gui/widgets/action_grid_bar.cpp
   gui/widgets/color_dropdown.cpp
+  gui/widgets/color_list_widget.cpp
   gui/widgets/compass_display.cpp
   gui/widgets/crs_param_widgets.cpp
   gui/widgets/crs_selector.cpp

@@ -19,8 +19,8 @@
  */
 
 
-#ifndef OPENORIENTEERING_COLOR_DOCK_WIDGET_H
-#define OPENORIENTEERING_COLOR_DOCK_WIDGET_H
+#ifndef OPENORIENTEERING_COLOR_LIST_WIDGET_H
+#define OPENORIENTEERING_COLOR_LIST_WIDGET_H
 
 #include <QtGlobal>
 #include <QObject>
@@ -44,15 +44,15 @@ class MapColor;
  * Enables to define new colors and edit or delete existing colors.
  * This widget is used inside a dock widget.
  */
-class ColorWidget : public QWidget
+class ColorListWidget : public QWidget
 {
 Q_OBJECT
 public:
 	/** Creates a new ColorWidget for a given map and MainWindow. */
-	ColorWidget(Map* map, MainWindow* window, QWidget* parent = nullptr);
+	ColorListWidget(Map* map, MainWindow* window, QWidget* parent = nullptr);
 	
 	/** Destroys the ColorWidget. */
-	~ColorWidget() override;
+	~ColorListWidget() override;
 	
 protected slots:
 	void newColor();
