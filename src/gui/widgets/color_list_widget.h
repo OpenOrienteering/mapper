@@ -30,6 +30,7 @@
 QT_BEGIN_NAMESPACE
 class QAction;
 class QIcon;
+class QShowEvent;
 class QTableWidget;
 class QToolButton;
 QT_END_NAMESPACE
@@ -71,6 +72,8 @@ protected slots:
 	void colorDeleted(int index, const MapColor* color);
 	
 protected:
+	void showEvent(QShowEvent* event) override;
+	
 	QToolButton* newToolButton(const QIcon& icon, const QString& text);
 	
 private:

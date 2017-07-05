@@ -39,6 +39,7 @@
 #include <QMenu>
 #include <QMessageBox>
 #include <QPalette>
+#include <QShowEvent>
 #include <QStringList>
 #include <QStyle>
 #include <QStyleOption>
@@ -176,6 +177,22 @@ ColorListWidget::~ColorListWidget() = default;
 
 
 
+void ColorListWidget::showEvent(QShowEvent* event)
+{
+	if (!event->spontaneous())
+	{
+		// Update name, because translation may be changed with new symbol set 
+		for (int i = 0, count = color_table->rowCount(); i < count; ++i)
+		{
+			auto color = map->getColor(i);
+			auto item = color_table->item(i, 1);
+			item->setText(map->translate(color->getName()));
+		}
+	}
+}
+
+
+
 QToolButton* ColorListWidget::newToolButton(const QIcon& icon, const QString& text)
 {
 	auto button = new QToolButton();
@@ -225,7 +242,9 @@ void ColorListWidget::duplicateColor()
 	if (row < 0) return; // In release mode
 	
 	auto new_color = new MapColor(*map->getColor(row));
-	new_color->setName(new_color->getName() + tr(" (Duplicate)"));
+	//: Future replacement for COLOR_NAME + " (Duplicate)", for better localization.
+	void(tr("%1 (duplicate)")); /// \todo Switch translation
+	new_color->setName(map->translate(new_color->getName()) + tr(" (Duplicate)"));
 	map->addColor(new_color, row);
 	
 	map->updateAllObjects();
@@ -387,10 +406,12 @@ void ColorListWidget::addRow(int row)
 		color_table->setItem(row, col, item);
 	}
 	
+#if 0 // Interfers with translation
 	// Name
 	item = color_table->item(row, 1);
 	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
 	item->setToolTip(tr("Click to select the name and click again to edit."));
+#endif
 	
 	// Opacity
 	item = color_table->item(row, 6);
@@ -414,7 +435,7 @@ void ColorListWidget::updateRow(int row)
 	
 	// Name
 	item = color_table->item(row, 1);
-	item->setText(color->getName());
+	item->setText(map->translate(color->getName()));
 	
 	// Spot color
 	item = color_table->item(row, 2);
