@@ -62,12 +62,12 @@
 <context>
     <name>AbstractHomeScreenWidget</name>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="92"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="94"/>
         <source>Open most recently used file</source>
         <translation>Avaa viimeisin tiedosto</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="95"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="97"/>
         <source>Show tip of the day</source>
         <translation>Näytä päivän vinkki</translation>
     </message>
@@ -83,166 +83,166 @@
 <context>
     <name>AreaSymbolSettings</name>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="68"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="70"/>
         <source>mm²</source>
         <translation>mm²</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="69"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="71"/>
         <source>Minimum size:</source>
         <translation>Minimikoko:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="76"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="78"/>
         <source>Fills</source>
         <translation>Täyttö</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="89"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="91"/>
         <source>Line fill</source>
         <translation>Viivatäyttö</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="90"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="92"/>
         <source>Pattern fill</source>
         <translation>Kuviotäyttö</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="128"/>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="139"/>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="146"/>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="165"/>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="170"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="130"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="141"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="148"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="167"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="172"/>
         <source>mm</source>
         <translation>mm</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="143"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="145"/>
         <source>Single line</source>
         <translation>Yksittäinen viiva</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="157"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="159"/>
         <source>Parallel lines</source>
         <translation>Samansuuntaiset viivat</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="159"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="161"/>
         <source>Line spacing:</source>
         <translation>Viivojen väli:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="162"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="164"/>
         <source>Single row</source>
         <translation>Yksittäinen rivi</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="164"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="166"/>
         <source>Pattern interval:</source>
         <translation>Kuvion väli:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="169"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="171"/>
         <source>Pattern offset:</source>
         <translation>Kuvion etäisyys:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="174"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="176"/>
         <source>Row offset:</source>
         <translation>Rivin etäisyys:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="176"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="178"/>
         <source>Parallel rows</source>
         <translation>Samansuuntaiset rivit</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="178"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="180"/>
         <source>Row spacing:</source>
         <translation>Rivien väli:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="184"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="186"/>
         <source>Fill rotation</source>
         <translation>Täytön kierto</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="186"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="188"/>
         <source>°</source>
         <translation>°</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="188"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="190"/>
         <source>Angle:</source>
         <translation>Kulma:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="190"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="192"/>
         <source>adjustable per object</source>
         <translation>muokattavissa erikseen</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="210"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="212"/>
         <source>Element drawing at boundary</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="212"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="214"/>
         <source>Clip elements at the boundary.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="213"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="215"/>
         <source>Draw elements if the center is inside the boundary.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="214"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="216"/>
         <source>Draw elements if any point is inside the boundary.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="215"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="217"/>
         <source>Draw elements if all points are inside the boundary.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="230"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="232"/>
         <source>Area settings</source>
         <translation>Alueen asetukset</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="325"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="327"/>
         <source>Pattern fill %1</source>
         <translation>Kuviotäyttö %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="334"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="336"/>
         <source>Line fill %1</source>
         <translation>Viivatäyttö %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="353"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="355"/>
         <source>No fill selected</source>
         <translation>Täyttöä ei ole valittu</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="66"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="68"/>
         <source>Area color:</source>
         <translation>Alueen väri:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="155"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="157"/>
         <source>Line offset:</source>
         <translation>Viivan etäisyys:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="150"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="152"/>
         <source>Line color:</source>
         <translation>Viivan väri:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="145"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="147"/>
         <source>Line width:</source>
         <translation>Viivan leveys:</translation>
     </message>
@@ -287,116 +287,136 @@
 <context>
     <name>ColorDialog</name>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="45"/>
+        <location filename="../src/gui/color_dialog.cpp" line="81"/>
         <source>Edit map color</source>
         <translation>Muokkaa värejä</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="62"/>
+        <location filename="../src/gui/color_dialog.cpp" line="88"/>
+        <source>Edit</source>
+        <translation type="unfinished">Muokkaa</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/color_dialog.cpp" line="101"/>
         <source>Defines a spot color:</source>
         <translation>Määrittelee spottivärin:</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="71"/>
+        <location filename="../src/gui/color_dialog.cpp" line="110"/>
         <source>Mixture of spot colors (screens and overprint):</source>
         <translation>Spottivärien sekoitus (päällepainatus):</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="86"/>
-        <location filename="../src/gui/color_dialog.cpp" line="124"/>
-        <location filename="../src/gui/color_dialog.cpp" line="129"/>
-        <location filename="../src/gui/color_dialog.cpp" line="134"/>
-        <location filename="../src/gui/color_dialog.cpp" line="139"/>
-        <location filename="../src/gui/color_dialog.cpp" line="349"/>
+        <location filename="../src/gui/color_dialog.cpp" line="125"/>
+        <location filename="../src/gui/color_dialog.cpp" line="163"/>
+        <location filename="../src/gui/color_dialog.cpp" line="168"/>
+        <location filename="../src/gui/color_dialog.cpp" line="173"/>
+        <location filename="../src/gui/color_dialog.cpp" line="178"/>
+        <location filename="../src/gui/color_dialog.cpp" line="412"/>
         <source>%</source>
         <translation>%</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="91"/>
+        <location filename="../src/gui/color_dialog.cpp" line="130"/>
         <source>Knockout: erases lower colors</source>
         <translation>Altapoisto: poistaa alle jäävän värin</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="109"/>
-        <location filename="../src/gui/color_dialog.cpp" line="166"/>
+        <location filename="../src/gui/color_dialog.cpp" line="148"/>
+        <location filename="../src/gui/color_dialog.cpp" line="205"/>
         <source>Calculate from spot colors</source>
         <translation>Laske spottiväristä</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="114"/>
+        <location filename="../src/gui/color_dialog.cpp" line="153"/>
         <source>Calculate from RGB color</source>
         <translation>Laske RGB-väristä</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="119"/>
+        <location filename="../src/gui/color_dialog.cpp" line="158"/>
         <source>Custom process color:</source>
         <translation>Yksilöllisesti määritelty väri:</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="125"/>
+        <location filename="../src/gui/color_dialog.cpp" line="164"/>
         <source>Cyan</source>
         <translation>Syaani</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="130"/>
+        <location filename="../src/gui/color_dialog.cpp" line="169"/>
         <source>Magenta</source>
         <translation>Magenta</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="135"/>
+        <location filename="../src/gui/color_dialog.cpp" line="174"/>
         <source>Yellow</source>
         <translation>Keltainen</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="140"/>
+        <location filename="../src/gui/color_dialog.cpp" line="179"/>
         <source>Black</source>
         <translation>Musta</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="171"/>
+        <location filename="../src/gui/color_dialog.cpp" line="210"/>
         <source>Calculate from CMYK color</source>
         <translation>Laske CMYK-väristä</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="176"/>
+        <location filename="../src/gui/color_dialog.cpp" line="215"/>
         <source>Custom RGB color:</source>
         <translation>Määritelty RGB-väri:</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="182"/>
+        <location filename="../src/gui/color_dialog.cpp" line="221"/>
         <source>Red</source>
         <translation>Punainen</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="187"/>
+        <location filename="../src/gui/color_dialog.cpp" line="226"/>
         <source>Green</source>
         <translation>Vihreä</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="192"/>
+        <location filename="../src/gui/color_dialog.cpp" line="231"/>
         <source>Blue</source>
         <translation>Sininen</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="197"/>
+        <location filename="../src/gui/color_dialog.cpp" line="236"/>
         <source>#RRGGBB</source>
         <translation>#RRGGBB</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="215"/>
+        <location filename="../src/gui/color_dialog.cpp" line="254"/>
         <source>Desktop</source>
         <translation>Tulostus</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="216"/>
+        <location filename="../src/gui/color_dialog.cpp" line="255"/>
         <source>Professional printing</source>
         <translation>Erikoistulostus</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/color_dialog.cpp" line="274"/>
+        <source>Name</source>
+        <translation type="unfinished">Nimi</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/color_dialog.cpp" line="326"/>
+        <source>- unnamed -</source>
+        <translation type="unfinished">- nimeämätön -</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/color_dialog.cpp" line="595"/>
+        <source>Warning</source>
+        <translation type="unfinished">Varoitus</translation>
     </message>
 </context>
 <context>
     <name>ColorDropDown</name>
     <message>
-        <location filename="../src/gui/widgets/color_dropdown.cpp" line="32"/>
+        <location filename="../src/gui/widgets/color_dropdown.cpp" line="40"/>
         <source>- none -</source>
         <translation>- tyhjä -</translation>
     </message>
@@ -404,83 +424,89 @@
 <context>
     <name>ColorListWidget</name>
     <message>
-        <location filename="../src/gui/color_dock_widget.cpp" line="57"/>
+        <location filename="../src/gui/widgets/color_list_widget.cpp" line="79"/>
         <source>Name</source>
         <translation>Nimi</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dock_widget.cpp" line="57"/>
+        <location filename="../src/gui/widgets/color_list_widget.cpp" line="79"/>
         <source>Opacity</source>
         <translation>Läpinäkyvyys</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dock_widget.cpp" line="57"/>
+        <location filename="../src/gui/widgets/color_list_widget.cpp" line="79"/>
         <source>Spot color</source>
         <translation>Spottiväri</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dock_widget.cpp" line="57"/>
+        <location filename="../src/gui/widgets/color_list_widget.cpp" line="79"/>
         <source>CMYK</source>
         <translation>CMYK</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dock_widget.cpp" line="57"/>
+        <location filename="../src/gui/widgets/color_list_widget.cpp" line="79"/>
         <source>RGB</source>
         <translation>RGB</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dock_widget.cpp" line="57"/>
+        <location filename="../src/gui/widgets/color_list_widget.cpp" line="79"/>
         <source>K.o.</source>
         <translation>Altapoisto</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dock_widget.cpp" line="63"/>
-        <location filename="../src/gui/color_dock_widget.cpp" line="68"/>
+        <location filename="../src/gui/widgets/color_list_widget.cpp" line="85"/>
+        <location filename="../src/gui/widgets/color_list_widget.cpp" line="90"/>
         <source>New</source>
         <translation>Uusi</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dock_widget.cpp" line="71"/>
+        <location filename="../src/gui/widgets/color_list_widget.cpp" line="93"/>
         <source>Delete</source>
         <translation>Poista</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dock_widget.cpp" line="64"/>
+        <location filename="../src/gui/widgets/color_list_widget.cpp" line="86"/>
         <source>Duplicate</source>
         <translation>Monista</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dock_widget.cpp" line="77"/>
+        <location filename="../src/gui/widgets/color_list_widget.cpp" line="99"/>
         <source>Move Up</source>
         <translation>Siirrä ylös</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dock_widget.cpp" line="79"/>
+        <location filename="../src/gui/widgets/color_list_widget.cpp" line="101"/>
         <source>Move Down</source>
         <translation>Siirrä alas</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dock_widget.cpp" line="90"/>
+        <location filename="../src/gui/widgets/color_list_widget.cpp" line="112"/>
         <source>Help</source>
         <translation>Ohje</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dock_widget.cpp" line="111"/>
+        <location filename="../src/gui/widgets/color_list_widget.cpp" line="133"/>
         <source>Double-click a color value to open a dialog.</source>
         <translation>Tuplaklikkaus avaa värin muokkauksen.</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dock_widget.cpp" line="189"/>
+        <location filename="../src/gui/widgets/color_list_widget.cpp" line="228"/>
         <source>Confirmation</source>
         <translation>Vahvistus</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dock_widget.cpp" line="189"/>
+        <location filename="../src/gui/widgets/color_list_widget.cpp" line="228"/>
         <source>The map contains symbols with this color. Deleting it will remove the color from these objects! Do you really want to do that?</source>
         <translation>Kartassa on symboleita tällä värillä. Sen poisto poistaa värin myös symboleilta! Haluatko todella tehdä niin?</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dock_widget.cpp" line="206"/>
+        <location filename="../src/gui/widgets/color_list_widget.cpp" line="246"/>
+        <source>%1 (duplicate)</source>
+        <extracomment>Future replacement for COLOR_NAME + " (Duplicate)", for better localization.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/widgets/color_list_widget.cpp" line="247"/>
         <source> (Duplicate)</source>
         <translation> (Monista)</translation>
     </message>
@@ -493,13 +519,13 @@
         <translation type="vanished">Aseta prosenttiluku välillä 0%-100%!</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dock_widget.cpp" line="364"/>
-        <location filename="../src/gui/color_dock_widget.cpp" line="411"/>
+        <location filename="../src/gui/widgets/color_list_widget.cpp" line="405"/>
+        <location filename="../src/gui/widgets/color_list_widget.cpp" line="454"/>
         <source>Double click to define the color</source>
         <translation>Tuplaklikkaa määritelläksesi värin</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dock_widget.cpp" line="371"/>
+        <location filename="../src/gui/widgets/color_list_widget.cpp" line="413"/>
         <source>Click to select the name and click again to edit.</source>
         <translation>Klikkaus valitsee värin, toinen klikkaus avaa muokkauksen.</translation>
     </message>
@@ -550,150 +576,150 @@
 <context>
     <name>ConfigureGridDialog</name>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="53"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="54"/>
         <source>Configure grid</source>
         <translation>Ruudukon asetukset</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="55"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="56"/>
         <source>Show grid</source>
         <translation>Näytä ruudukko</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="56"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="57"/>
         <source>Snap to grid</source>
         <translation>Tartu ruudukkoon</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="57"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="58"/>
         <source>Choose...</source>
         <translation>Valitse…</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="60"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="61"/>
         <source>All lines</source>
         <translation>Kaikki viivat</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="61"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="62"/>
         <source>Horizontal lines</source>
         <translation>Vaakaviivat</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="62"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="63"/>
         <source>Vertical lines</source>
         <translation>Pystyviivat</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="114"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="115"/>
         <source>Alignment</source>
         <translation>Suuntaus</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="64"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="65"/>
         <source>Align with magnetic north</source>
         <translation>Suuntaa neulapohjoiseen</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="65"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="66"/>
         <source>Align with grid north</source>
         <translation>Suuntaa karttapohjoiseen</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="66"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="67"/>
         <source>Align with true north</source>
         <translation>Suuntaa napapohjoiseen</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="68"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="69"/>
         <source>Additional rotation (counter-clockwise):</source>
         <translation>Lisäkierto (vastapäivään):</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="69"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="70"/>
         <source>°</source>
         <translation>°</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="121"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="122"/>
         <source>Positioning</source>
         <translation>Asemointi</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="74"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="75"/>
         <source>meters in terrain</source>
         <translation>metrejä maastossa</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="75"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="76"/>
         <source>millimeters on map</source>
         <translation>millimetrejä kartalla</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="77"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="78"/>
         <source>Horizontal spacing:</source>
         <translation>Vaakaviivojen väli:</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="79"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="80"/>
         <source>Vertical spacing:</source>
         <translation>Pystyviivojen väli:</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="83"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="84"/>
         <source>Horizontal offset:</source>
         <translation>Vaakasiirto:</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="85"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="86"/>
         <source>Vertical offset:</source>
         <translation>Pystysiirto:</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="122"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="123"/>
         <source>Unit:</source>
         <comment>measurement unit</comment>
         <translation>Mittayksikkö:</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="110"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="111"/>
         <source>Line color:</source>
         <translation>Viivan väri:</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="111"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="112"/>
         <source>Display:</source>
         <translation>Näytä:</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="159"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="160"/>
         <source>Choose grid line color</source>
         <translation>Valitse ruudukon viivan väri</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="243"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="244"/>
         <source>m</source>
         <comment>meters</comment>
         <translation>m</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="243"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="244"/>
         <source>mm</source>
         <comment>millimeters</comment>
         <translation>mm</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="249"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="250"/>
         <source>Origin at: %1</source>
         <translation>Origo: %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="251"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="252"/>
         <source>paper coordinates origin</source>
         <translation>paperikoordinaattien origossa</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="253"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="254"/>
         <source>projected coordinates origin</source>
         <translation>projektion origossa</translation>
     </message>
@@ -781,12 +807,12 @@
         <translation type="vanished">Määrittele fontin koko</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="87"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="89"/>
         <source>Letter:</source>
         <translation>Kirjain:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="89"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="91"/>
         <source>A</source>
         <extracomment>"A" is the default letter which is used for determining letter height.</extracomment>
         <translation>A</translation>
@@ -800,7 +826,7 @@
         <translation type="vanished">mm</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="95"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="97"/>
         <source>Height:</source>
         <translation>Korkeus:</translation>
     </message>
@@ -808,38 +834,38 @@
 <context>
     <name>DistributePointsSettingsDialog</name>
     <message>
-        <location filename="../src/tools/distribute_points_tool.cpp" line="121"/>
+        <location filename="../src/tools/distribute_points_tool.cpp" line="124"/>
         <source>Distribute points evenly along path</source>
         <translation>Tee pisteitä tasaisesti viivalle</translation>
     </message>
     <message>
-        <location filename="../src/tools/distribute_points_tool.cpp" line="127"/>
+        <location filename="../src/tools/distribute_points_tool.cpp" line="130"/>
         <source>Number of points per path:</source>
         <translation>Pisteitä viivalla:</translation>
     </message>
     <message>
-        <location filename="../src/tools/distribute_points_tool.cpp" line="129"/>
+        <location filename="../src/tools/distribute_points_tool.cpp" line="132"/>
         <source>Also place objects at line end points</source>
         <translation>Lisää kohteet myös viivan loppuun</translation>
     </message>
     <message>
-        <location filename="../src/tools/distribute_points_tool.cpp" line="135"/>
+        <location filename="../src/tools/distribute_points_tool.cpp" line="138"/>
         <source>Rotation settings</source>
         <translation>Kierron asetukset</translation>
     </message>
     <message>
-        <location filename="../src/tools/distribute_points_tool.cpp" line="138"/>
+        <location filename="../src/tools/distribute_points_tool.cpp" line="141"/>
         <source>Align points with direction of line</source>
         <translation>Suuntaa pisteet viivan suuntaisesti</translation>
     </message>
     <message>
-        <location filename="../src/tools/distribute_points_tool.cpp" line="142"/>
+        <location filename="../src/tools/distribute_points_tool.cpp" line="145"/>
         <source>°</source>
         <comment>degrees</comment>
         <translation>°</translation>
     </message>
     <message>
-        <location filename="../src/tools/distribute_points_tool.cpp" line="144"/>
+        <location filename="../src/tools/distribute_points_tool.cpp" line="147"/>
         <source>Additional rotation angle (counter-clockwise):</source>
         <translation>Ylimääräinen kierto (vastapäivään):</translation>
     </message>
@@ -1238,23 +1264,23 @@
 <context>
     <name>EditorSettingsPage</name>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="36"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="37"/>
         <source>High quality map display (antialiasing)</source>
         <translation>Korkelaatuinen karttanäyttö (reunojenpehmennys/antialiasing)</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="37"/>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="41"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="38"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="42"/>
         <source>Antialiasing makes the map look much better, but also slows down the map display</source>
         <translation>Reunojenpehmennys tekee kartasta paremman näköisen mutta hidastaa karttanäyttöä</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="40"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="41"/>
         <source>High quality text display in map (antialiasing), slow</source>
         <translation>Korkealaatuinen teksti kartassa (reunojenpehmennys/antialiasing), hidas</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="45"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="46"/>
         <source>Click tolerance:</source>
         <translation>Klikkauksen tarkkuus:</translation>
     </message>
@@ -1263,95 +1289,95 @@
         <translation type="vanished">px</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="44"/>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="47"/>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="84"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="45"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="48"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="85"/>
         <source>mm</source>
         <comment>millimeters</comment>
         <translation>mm</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="48"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="49"/>
         <source>Snap distance (%1):</source>
         <translation>Tarttumisen etäisyys (%1):</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="51"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="52"/>
         <source>Stepping of fixed angle mode (%1):</source>
         <translation>Kiinteästä suunnasta poikkeaminen (%1):</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="50"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="51"/>
         <source>°</source>
         <comment>Degree sign for angles</comment>
         <translation>°</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="53"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="54"/>
         <source>When selecting an object, automatically select its symbol, too</source>
         <translation>Kun kohde valitaan, valitse automaattisesti myös sen symboli</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="56"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="57"/>
         <source>Zoom away from cursor when zooming out</source>
         <translation>Zoomaa kursorista alkaen kun karttaa loitonnetaan</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="59"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="60"/>
         <source>Drawing tools: set last point on finishing with right click</source>
         <translation>Piirtotyökalut: hiiren oikealla lopeta piirtäminen ja aseta viimeinen piste</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="62"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="63"/>
         <source>Templates: keep settings of closed templates</source>
         <translation>Taustakartat: säilytä asetukset kun taustakartta suljetaan</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="67"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="68"/>
         <source>Edit tool:</source>
         <translation>Muokkaus-työkalu:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="70"/>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="76"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="71"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="77"/>
         <source>Retain old shape</source>
         <translation>Säilytä alkuperäinen muoto</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="71"/>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="77"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="72"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="78"/>
         <source>Reset outer curve handles</source>
         <translation>Palauta ulkopuolen kahvat</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="72"/>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="78"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="73"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="79"/>
         <source>Keep outer curve handles</source>
         <translation>Säilytä ulkopuolen kahvat</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="73"/>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="79"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="74"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="80"/>
         <source>Action on deleting a curve point with %1:</source>
         <translation>Toiminta kun käyräpiste poistetaan (%1):</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="82"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="83"/>
         <source>Rectangle tool:</source>
         <translation>Suorakulmio-työkalu:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="85"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="86"/>
         <source>Radius of helper cross:</source>
         <translation>Apuristikon koko:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="87"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="88"/>
         <source>Preview the width of lines with helper cross</source>
         <translation>Näytä viivan leveyt apuristikolla</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="103"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="104"/>
         <source>Editor</source>
         <translation>Editori</translation>
     </message>
@@ -1473,94 +1499,94 @@
 <context>
     <name>GeneralSettingsPage</name>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="53"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="55"/>
         <source>Appearance</source>
         <translation>Ulkoasu</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="58"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="60"/>
         <source>Language:</source>
         <translation>Kieli:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="75"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="77"/>
         <source>Screen</source>
         <translation>Kuvaruutu</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="80"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="82"/>
         <source>Pixels per inch:</source>
         <translation>Pikseliä tuumalla:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="90"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="92"/>
         <source>Program start</source>
         <translation>Ohjelman käynnistys</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="99"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="101"/>
         <source>Saving files</source>
         <translation>Tiedostojen tallentamista</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="101"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="103"/>
         <source>Retain compatibility with Mapper %1</source>
         <translation>Säilytä yhteensopivuus Mapper %1:n kanssa</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="106"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="108"/>
         <source>Save information for automatic recovery</source>
         <translation>Tallenna tiedot automaattista palauttamista varten</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="110"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="112"/>
         <source>Recovery information saving interval:</source>
         <translation>Tallennusväli:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="109"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="111"/>
         <source>min</source>
         <comment>unit minutes</comment>
         <translation>min</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="113"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="115"/>
         <source>File import and export</source>
         <translation>Tiedostojen tuonti ja vienti</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="137"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="139"/>
         <source>8-bit encoding:</source>
         <translation>8-bittinen koodaus:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="130"/>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="281"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="132"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="283"/>
         <source>More...</source>
         <translation>Lisää…</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="116"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="118"/>
         <source>Default</source>
         <translation>Oletusarvo</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="139"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="141"/>
         <source>Use the new OCD importer also for version 8 files</source>
         <translation>Käytä uutta OCD-tuontia myös version 8 tiedostoille</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="159"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="161"/>
         <source>General</source>
         <translation>Yleinen</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="183"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="185"/>
         <source>Notice</source>
         <translation>Huomautus</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="183"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="185"/>
         <source>The program must be restarted for the language change to take effect!</source>
         <translation>Ohjelma pitää käynnistää uudelleen jotta kieli voidaan vaihtaa!</translation>
     </message>
@@ -1569,33 +1595,33 @@
         <translation type="vanished">Käytä käännöstiedostoa…</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="323"/>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="329"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="325"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="331"/>
         <source>Open translation</source>
         <translation>Avaa käännöstiedosto</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="323"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="325"/>
         <source>Translation files (*.qm)</source>
         <translation>Käännöstiedostot (*.qm)</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="330"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="332"/>
         <source>The selected file is not a valid translation.</source>
         <translation>Tiedosto ei ole käännöstiedosto.</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="360"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="362"/>
         <source>%1 x %2</source>
         <translation>%1 x %2</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="361"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="363"/>
         <source>Primary screen resolution in pixels:</source>
         <translation>Ensisijainen näytön resoluutio pikseleissä:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="365"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="367"/>
         <source>Primary screen size in inches (diagonal):</source>
         <translation>Ensisijainen näytön koko tuumissa (diagonaali):</translation>
     </message>
@@ -1712,72 +1738,72 @@
 <context>
     <name>GeoreferencingDialog</name>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="90"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="91"/>
         <source>Map Georeferencing</source>
         <translation>Kartan georeferointi</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="167"/>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="499"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="168"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="500"/>
         <source>Lookup...</source>
         <translation>Etsi…</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="127"/>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="128"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="129"/>
         <source>m</source>
         <translation>m</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="201"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="202"/>
         <source>Declination:</source>
         <translatorcomment>#729: "Neulaluvun korjaus (NEK)"</translatorcomment>
         <translation>Deklinaatio:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="152"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="153"/>
         <source>Projected coordinates</source>
         <translation>Tasokoordinaatit</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="99"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="100"/>
         <source>Status:</source>
         <translation>Tila:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="105"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="106"/>
         <source>Grid scale factor:</source>
         <extracomment>The grid scale factor is the ratio between a length in the grid plane and the corresponding length on the curved earth model. It is applied as a factor to ground distances to get grid plane distances.</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="153"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="154"/>
         <source>Geographic coordinates</source>
         <translation>Maantieteelliset koordinaatit</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="148"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="149"/>
         <source>Show reference point in:</source>
         <translation>Näytä vertailupiste:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="338"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="339"/>
         <source>valid</source>
         <translation>kelvollinen</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="331"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="332"/>
         <source>&lt;a href="%1"&gt;OpenStreetMap&lt;/a&gt; | &lt;a href="%2"&gt;World of O Maps&lt;/a&gt;</source>
         <translation>&lt;a href="%1"&gt;OpenStreetMap&lt;/a&gt; | &lt;a href="%2"&gt;World of O Maps&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="362"/>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="675"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="363"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="676"/>
         <source>Online declination lookup</source>
         <translation>Etsi deklinaatio netistä</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="94"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="95"/>
         <source>Map coordinate reference system</source>
         <translation>Kartan koordinaattijärjestelmä</translation>
     </message>
@@ -1790,7 +1816,7 @@
         <translation type="vanished">- Proj.4 määrittelyistä -</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="97"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="98"/>
         <source>- local -</source>
         <translation>- paikallinen -</translation>
     </message>
@@ -1799,113 +1825,113 @@
         <translation type="vanished">Koordinaattijärjestelmän määrittely:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="108"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="109"/>
         <source>Reference point</source>
         <translation>Vertailupiste</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="110"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="111"/>
         <source>&amp;Pick on map</source>
         <translation>&amp;Poimi kartalta</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="112"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="113"/>
         <source>(Datum: WGS84)</source>
         <translation>(Datumi: WGS84)</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="115"/>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="116"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="117"/>
         <source>mm</source>
         <translation>mm</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="120"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="121"/>
         <source>X</source>
         <comment>x coordinate</comment>
         <translation>X</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="122"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="123"/>
         <source>Y</source>
         <comment>y coordinate</comment>
         <translation>Y</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="131"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="132"/>
         <source>E</source>
         <comment>west / east</comment>
         <translation>E</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="133"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="134"/>
         <source>N</source>
         <comment>north / south</comment>
         <translation>N</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="137"/>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="138"/>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="166"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="139"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="167"/>
         <source>°</source>
         <translation>°</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="141"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="142"/>
         <source>N</source>
         <comment>north</comment>
         <translation>N</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="143"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="144"/>
         <source>E</source>
         <comment>east</comment>
         <translation>E</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="164"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="165"/>
         <source>Map north</source>
         <translation>Karttapohjoinen</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="184"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="185"/>
         <location filename="../src/gui/select_crs_dialog.cpp" line="84"/>
         <source>&amp;Coordinate reference system:</source>
         <translation>&amp;Koordinaattijärjestelmä:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="191"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="192"/>
         <source>Map coordinates:</source>
         <translation>Karttakoordinaatit:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="193"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="194"/>
         <source>Geographic coordinates:</source>
         <translation>Maantieteelliset koordinaatit:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="196"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="197"/>
         <source>On CRS changes, keep:</source>
         <translation>Muutettaessa säilytä:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="202"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="203"/>
         <source>Grivation:</source>
         <translatorcomment>#729: "Kokonaiskorjaus (KOK)"</translatorcomment>
         <translation>Eranto:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="363"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="364"/>
         <source>The magnetic declination for the reference point %1° %2° will now be retrieved from &lt;a href="%3"&gt;%3&lt;/a&gt;. Do you want to continue?</source>
         <translation>Vertailupisteen magneettinen deklinaatio %1° %2° haetaan nyt &lt;a href="%3"&gt;%3&lt;/a&gt;:sta. Jatketaanko?</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="442"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="443"/>
         <source>Declination change</source>
         <translation>Deklinaation muutos</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="442"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="443"/>
         <source>The declination has been changed. Do you want to rotate the map content accordingly, too?</source>
         <translation>Deklinaatio on muutettu. Kierretäänkö kartan sisältö?</translation>
     </message>
@@ -1914,39 +1940,39 @@
         <translation type="vanished">Tasokoordinaatit:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="472"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="473"/>
         <source>Local coordinates:</source>
         <translation>Paikalliset koordinaatit:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="499"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="500"/>
         <source>Loading...</source>
         <translation>Lataa…</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="506"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="507"/>
         <source>locked</source>
         <translation>lukittu</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="646"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="647"/>
         <source>Could not parse data.</source>
         <translation>Tietoa ei voitu jäsentää.</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="671"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="672"/>
         <source>Declination value not found.</source>
         <translation>Deklinaation arvoa ei löydy.</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="676"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="677"/>
         <source>The online declination lookup failed:
 %1</source>
         <translation>Deklinaation etsiminen epäonnistui:
 %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="504"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="505"/>
         <source>%1 °</source>
         <comment>degree value</comment>
         <translation>%1 °</translation>
@@ -1959,7 +1985,7 @@
         <translation type="vanished">&lt;b&gt;Klikkaa&lt;/b&gt;: Aseta vertailupiste. Valitse toinen painike keskeyttääksesi.</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="704"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="705"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the reference point. &lt;b&gt;Right click&lt;/b&gt;: Cancel.</source>
         <translation>&lt;b&gt;Klikkaa&lt;/b&gt;: Aseta vertailupiste. &lt;b&gt;Klikkaa oikealla&lt;/b&gt;: Peruuta.</translation>
     </message>
@@ -2138,17 +2164,17 @@
 <context>
     <name>ImportExport</name>
     <message>
-        <location filename="../src/core/symbols/symbol.cpp" line="229"/>
+        <location filename="../src/core/symbols/symbol.cpp" line="244"/>
         <source>Error while loading a symbol of type %1 at line %2 column %3.</source>
         <translation>Virhe ladattaessa symbolia %1 rivillä %2 sarakkeessa %3.</translation>
     </message>
     <message>
-        <location filename="../src/core/symbols/symbol.cpp" line="237"/>
+        <location filename="../src/core/symbols/symbol.cpp" line="252"/>
         <source>Symbol ID '%1' not unique at line %2 column %3.</source>
         <translation>Symboli ID '%1' ei yksilöllinen rivillä %2 sarakkeessa %3.</translation>
     </message>
     <message>
-        <location filename="../src/core/symbols/symbol.cpp" line="285"/>
+        <location filename="../src/core/symbols/symbol.cpp" line="300"/>
         <source>Error while loading a symbol of type %1 at line %2 column %3: %4</source>
         <translation>Virhe ladattaessa symboli tyyppiä %1 rivillä %2 sarakkeessa %3:%4</translation>
     </message>
@@ -2157,22 +2183,22 @@
         <translation type="vanished">Virhe ladattaessa symbolia.</translation>
     </message>
     <message>
-        <location filename="../src/core/objects/object.cpp" line="396"/>
+        <location filename="../src/core/objects/object.cpp" line="405"/>
         <source>Error while loading an object of type %1.</source>
         <translation>Virhe ladattaessa kohdetta %1.</translation>
     </message>
     <message>
-        <location filename="../src/core/objects/object.cpp" line="460"/>
+        <location filename="../src/core/objects/object.cpp" line="469"/>
         <source>Error while loading an object of type %1 at %2:%3: %4</source>
         <translation>Virhe ladatessa %1-tyypin objektia kohteessa %2:%3: %4</translation>
     </message>
     <message>
-        <location filename="../src/core/objects/object.cpp" line="428"/>
+        <location filename="../src/core/objects/object.cpp" line="437"/>
         <source>Unable to find symbol for object at %1:%2.</source>
         <translation>Kohteelle ei löydy symbolia: %1:%2.</translation>
     </message>
     <message>
-        <location filename="../src/core/objects/object.cpp" line="440"/>
+        <location filename="../src/core/objects/object.cpp" line="449"/>
         <source>Point object with undefined or wrong symbol at %1:%2.</source>
         <translation>Pistemäisen kohteen symbolia ei ole määritelty tai se on virheellinen: %1:%2.</translation>
     </message>
@@ -2193,24 +2219,24 @@
         <translation>OCAD</translation>
     </message>
     <message>
-        <location filename="../src/util/xml_stream_util.cpp" line="187"/>
-        <location filename="../src/util/xml_stream_util.cpp" line="203"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="201"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="217"/>
         <source>Could not parse the coordinates.</source>
         <translation>Koordinaattien tulkitseminen ei onnistu.</translation>
     </message>
     <message>
-        <location filename="../src/util/xml_stream_util.cpp" line="227"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="241"/>
         <source>Expected %1 coordinates, found %2.</source>
         <translation>Vaaditaan %1 koordinaatteja, löydetty %2.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="926"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="931"/>
         <source>Error while loading the printing configuration at %1:%2: %3</source>
         <translation>Virhe ladattaessa tulostus asetuksia %1:%2: %3</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="939"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="953"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="944"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="958"/>
         <source>Error while loading the undo/redo steps at %1:%2: %3</source>
         <translation>Virhe ladattaessa kumoa / tee uudestaan vaiheita %1:%2: %3</translation>
     </message>
@@ -2286,13 +2312,13 @@ löytääksesi taustakarttatiedoston nimen.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/native_file_format.cpp" line="138"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="454"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="458"/>
         <source>Invalid file format version.</source>
         <translation>Tiedostomuodon versio ei kelpaa.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/native_file_format.cpp" line="142"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="456"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="460"/>
         <source>Unsupported old file format version. Please use an older program version to load and update the file.</source>
         <translation>Näin vanhaa tiedostomuotoa ei tueta. Käytä vanhempaa ohjelmaa päivittääksesi tiedoston.</translation>
     </message>
@@ -2343,12 +2369,12 @@ löytääksesi taustakarttatiedoston nimen.</translation>
         <translation>Tiedostoa %1 ei voitu lukea</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="448"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="452"/>
         <source>Unsupported file format.</source>
         <translation>Tiedostomuotoa ei tueta.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="458"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="462"/>
         <source>Unsupported new file format version. Some map features will not be loaded or saved by this version of the program.</source>
         <translation>Näin uutta tiedostomuotoa ei tueta. Joitain kartan ominaisuuksia ei voida ladata tai tallentaa tällä versiolla.</translation>
     </message>
@@ -2368,274 +2394,274 @@ löytääksesi taustakarttatiedoston nimen.</translation>
 <context>
     <name>LineSymbolSettings</name>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="279"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="281"/>
         <source>Line settings</source>
         <translation>Viivan asetukset</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="59"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="61"/>
         <source>Line width:</source>
         <translation>Viivan leveys:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="60"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="75"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="86"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="129"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="132"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="143"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="181"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="196"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="199"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="506"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="512"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="536"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="539"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="62"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="77"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="88"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="131"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="134"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="145"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="183"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="198"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="201"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="508"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="514"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="538"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="541"/>
         <source>mm</source>
         <translation>mm</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="62"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="64"/>
         <source>Line color:</source>
         <translation>Viivan väri:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="74"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="76"/>
         <source>Minimum line length:</source>
         <translation>Viivan minimipituus:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="77"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="79"/>
         <source>Line cap:</source>
         <translation>Viivanpää:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="79"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="81"/>
         <source>flat</source>
         <translation>tasainen</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="80"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="91"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="82"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="93"/>
         <source>round</source>
         <translation>pyöreä</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="81"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="83"/>
         <source>square</source>
         <translation>neliö</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="82"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="84"/>
         <source>pointed</source>
         <translation>terävä</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="88"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="90"/>
         <source>Line join:</source>
         <translation>Viivan kulmat:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="90"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="92"/>
         <source>miter</source>
         <translation>jiiriliitos</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="92"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="94"/>
         <source>bevel</source>
         <translation>viisto</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="85"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="87"/>
         <source>Cap length:</source>
         <translation>Viivan pään pituus:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="95"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="97"/>
         <source>Line is dashed</source>
         <translation>Katkoviiva</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="201"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="203"/>
         <source>Show at least one mid symbol</source>
         <translation>Näytä vähintään yksi välisymboli</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="204"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="206"/>
         <source>Minimum mid symbol count:</source>
         <translation>Pienin välisymbolien määrä:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="207"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="209"/>
         <source>Minimum mid symbol count when closed:</source>
         <translation>Pieni välisymbolien määrä suljetussa viivassa:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="128"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="130"/>
         <source>Dash length:</source>
         <translation>Katkoviivan pituus:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="124"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="126"/>
         <source>Dashed line</source>
         <translation>Katkoviiva</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="131"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="133"/>
         <source>Break length:</source>
         <translation>Katkon pituus:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="134"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="136"/>
         <source>Dashes grouped together:</source>
         <translation>Katkoviivoja yhdessä ryhmässä:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="136"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="138"/>
         <source>none</source>
         <translation>ei yhtään</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="137"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="139"/>
         <source>2</source>
         <translation>2</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="138"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="140"/>
         <source>3</source>
         <translation>3</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="139"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="141"/>
         <source>4</source>
         <translation>4</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="142"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="144"/>
         <source>In-group break length:</source>
         <translation>Viivan pituus ryhmässä:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="145"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="147"/>
         <source>Half length of first and last dash</source>
         <translation>Ensimmäinen ja viimeinen katkoviiva puolet viivan pituudesta</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="174"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="176"/>
         <source>Mid symbols</source>
         <translation>Välisymbolit</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="177"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="179"/>
         <source>Mid symbols per spot:</source>
         <translation>Välisymboleita pisteessä:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="180"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="182"/>
         <source>Mid symbol distance:</source>
         <translation>Välisymbolien etäisyys:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="236"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="238"/>
         <source>Borders</source>
         <translation>Reunaviivat</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="240"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="242"/>
         <source>Different borders on left and right sides</source>
         <translation>Erilainen reunaviiva vasemmalla ja oikealla</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="245"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="247"/>
         <source>Left border:</source>
         <translation>Vasen reunaviiva:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="250"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="252"/>
         <source>Right border:</source>
         <translation>Oikea reunaviiva:</translation>
     </message>
     <message>
-        <location filename="../src/core/symbols/line_symbol.cpp" line="1643"/>
+        <location filename="../src/core/symbols/line_symbol.cpp" line="1683"/>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="597"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1208"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="284"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="744"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="286"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="746"/>
         <source>Start symbol</source>
         <translation>Aloitussymboli</translation>
     </message>
     <message>
-        <location filename="../src/core/symbols/line_symbol.cpp" line="1647"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="284"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="744"/>
+        <location filename="../src/core/symbols/line_symbol.cpp" line="1687"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="286"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="746"/>
         <source>Mid symbol</source>
         <translation>Välisymboli</translation>
     </message>
     <message>
-        <location filename="../src/core/symbols/line_symbol.cpp" line="1651"/>
+        <location filename="../src/core/symbols/line_symbol.cpp" line="1691"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1215"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="284"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="744"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="286"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="746"/>
         <source>End symbol</source>
         <translation>Lopetussymboli</translation>
     </message>
     <message>
-        <location filename="../src/core/symbols/line_symbol.cpp" line="1655"/>
+        <location filename="../src/core/symbols/line_symbol.cpp" line="1695"/>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="591"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1201"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="262"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="284"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="744"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="264"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="286"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="746"/>
         <source>Dash symbol</source>
         <translation>Solmupisteen symboli</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="98"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="100"/>
         <source>Enable border lines</source>
         <translation>Käytä reunaviivoja</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="195"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="197"/>
         <source>Distance between spots:</source>
         <translation>Pisteiden etäisyys:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="198"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="200"/>
         <source>Distance from line end:</source>
         <translation>Etäisyys viivan lopusta:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="264"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="266"/>
         <source>Suppress the dash symbol at line start and line end</source>
         <translation>Älä tee solmupisteen symbolia viivan alkuun tai loppuun</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="505"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="507"/>
         <source>Border width:</source>
         <translation>Reunaviivan leveys:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="508"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="510"/>
         <source>Border color:</source>
         <translation>Reunaviivan väri:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="511"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="513"/>
         <source>Border shift:</source>
         <translation>Reunaviivan siirto:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="514"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="516"/>
         <source>Border is dashed</source>
         <translation>Reunaviiva on katkotettu</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="535"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="537"/>
         <source>Border dash length:</source>
         <translation>Katkoviivan pituus:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="538"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="540"/>
         <source>Border break length:</source>
         <translation>Katkon pituus:</translation>
     </message>
@@ -2926,21 +2952,21 @@ Paina Ei valitaksesi toisen tiedostomuodon.</translation>
 <context>
     <name>Map</name>
     <message>
-        <location filename="../src/core/map.cpp" line="610"/>
-        <location filename="../src/core/map.cpp" line="615"/>
-        <location filename="../src/core/map.cpp" line="652"/>
-        <location filename="../src/core/map.cpp" line="663"/>
-        <location filename="../src/core/map.cpp" line="694"/>
-        <location filename="../src/core/map.cpp" line="782"/>
-        <location filename="../src/core/map.cpp" line="810"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3941"/>
-        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="245"/>
-        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="303"/>
+        <location filename="../src/core/map.cpp" line="628"/>
+        <location filename="../src/core/map.cpp" line="633"/>
+        <location filename="../src/core/map.cpp" line="670"/>
+        <location filename="../src/core/map.cpp" line="681"/>
+        <location filename="../src/core/map.cpp" line="712"/>
+        <location filename="../src/core/map.cpp" line="800"/>
+        <location filename="../src/core/map.cpp" line="828"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3955"/>
+        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="279"/>
+        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="337"/>
         <source>Error</source>
         <translation>Virhe</translation>
     </message>
     <message>
-        <location filename="../src/core/map.cpp" line="615"/>
+        <location filename="../src/core/map.cpp" line="633"/>
         <source>Cannot export the map as
 "%1"
 because saving as %2 (.%3) is not supported.</source>
@@ -2949,7 +2975,7 @@ because saving as %2 (.%3) is not supported.</source>
 tallentaminen %2 (.%3) ei ole tuettu.</translation>
     </message>
     <message>
-        <location filename="../src/core/map.cpp" line="610"/>
+        <location filename="../src/core/map.cpp" line="628"/>
         <source>Cannot export the map as
 "%1"
 because the format is unknown.</source>
@@ -2964,31 +2990,31 @@ tiedostomuoto on tuntematon.</translation>
 %1</translation>
     </message>
     <message>
-        <location filename="../src/core/map.cpp" line="677"/>
-        <location filename="../src/core/map.cpp" line="746"/>
+        <location filename="../src/core/map.cpp" line="695"/>
+        <location filename="../src/core/map.cpp" line="764"/>
         <source>Warning</source>
         <translation>Varoitus</translation>
     </message>
     <message>
-        <location filename="../src/core/map.cpp" line="677"/>
+        <location filename="../src/core/map.cpp" line="695"/>
         <source>The map export generated warnings.</source>
         <translation>Kartan vienti aiheutti varoituksia.</translation>
     </message>
     <message>
-        <location filename="../src/core/map.cpp" line="652"/>
+        <location filename="../src/core/map.cpp" line="670"/>
         <source>Internal error while saving:
 %1</source>
         <translation>Sisäinen virhe tallennettaessa:
 %1</translation>
     </message>
     <message>
-        <location filename="../src/core/map.cpp" line="747"/>
+        <location filename="../src/core/map.cpp" line="765"/>
         <source>The map import generated warnings.</source>
         <translation>Kartan tuonti aiheutti varoituksia.</translation>
     </message>
     <message>
-        <location filename="../src/core/map.cpp" line="695"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3942"/>
+        <location filename="../src/core/map.cpp" line="713"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3956"/>
         <source>Cannot open file:
 %1
 for reading.</source>
@@ -2997,13 +3023,13 @@ for reading.</source>
 ei voi avata luettavaksi.</translation>
     </message>
     <message>
-        <location filename="../src/core/map.cpp" line="709"/>
+        <location filename="../src/core/map.cpp" line="727"/>
         <source>Invalid file type.</source>
         <translation>Virheellinen tiedostomuoto.</translation>
     </message>
     <message>
-        <location filename="../src/core/map.cpp" line="665"/>
-        <location filename="../src/core/map.cpp" line="783"/>
+        <location filename="../src/core/map.cpp" line="683"/>
+        <location filename="../src/core/map.cpp" line="801"/>
         <source>Cannot open file:
 %1
 
@@ -3014,7 +3040,7 @@ ei voi avata luettavaksi.</translation>
 %2</translation>
     </message>
     <message>
-        <location filename="../src/core/map.cpp" line="666"/>
+        <location filename="../src/core/map.cpp" line="684"/>
         <source>Cannot save file
 %1:
 %2</source>
@@ -3023,17 +3049,17 @@ ei voi avata luettavaksi.</translation>
 %2</translation>
     </message>
     <message>
-        <location filename="../src/core/map.cpp" line="810"/>
+        <location filename="../src/core/map.cpp" line="828"/>
         <source>Nothing to import.</source>
         <translation>Ei tuotavaa.</translation>
     </message>
     <message>
-        <location filename="../src/core/map.cpp" line="819"/>
+        <location filename="../src/core/map.cpp" line="837"/>
         <source>Question</source>
         <translation>Kysymys</translation>
     </message>
     <message>
-        <location filename="../src/core/map.cpp" line="820"/>
+        <location filename="../src/core/map.cpp" line="838"/>
         <source>The scale of the imported data is 1:%1 which is different from this map's scale of 1:%2.
 
 Rescale the imported data?</source>
@@ -3042,7 +3068,7 @@ Rescale the imported data?</source>
 Skaalataanko tuotu tieto?</translation>
     </message>
     <message>
-        <location filename="../src/core/map.cpp" line="441"/>
+        <location filename="../src/core/map.cpp" line="458"/>
         <source>default part</source>
         <translation>virheellinen osa</translation>
     </message>
@@ -3053,12 +3079,12 @@ Skaalataanko tuotu tieto?</translation>
         <translation>Uusi väri</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3947"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3961"/>
         <source>Import...</source>
         <translation>Tuo…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3948"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3962"/>
         <source>Symbol replacement was canceled.
 Import the data anyway?</source>
         <translation>Symbolin korvaaminen peruutettiin.
@@ -3084,384 +3110,384 @@ Haluatko silti tuoda datan?</translation>
 <context>
     <name>MapEditorController</name>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="856"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="858"/>
         <source>Undo</source>
         <translation>Kumoa</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="856"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="858"/>
         <source>Undo the last step</source>
         <translation>Kumoa edellinen</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="857"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="859"/>
         <source>Redo</source>
         <translation>Tee uudelleen</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="857"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="859"/>
         <source>Redo the last step</source>
         <translation>Tee uudelleen edellinen</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="858"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="860"/>
         <source>Cu&amp;t</source>
         <translation>&amp;Leikkaa</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="859"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="861"/>
         <source>C&amp;opy</source>
         <translation>&amp;Kopioi</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="860"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="862"/>
         <source>&amp;Paste</source>
         <translation>Lii&amp;tä</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="862"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="864"/>
         <source>Select all</source>
         <translation>Valitse kaikki</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="863"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="865"/>
         <source>Select nothing</source>
         <translation>Älä valitse mitään</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="864"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="866"/>
         <source>Invert selection</source>
         <translation>Valitse muut</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="876"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="878"/>
         <source>Zoom in</source>
         <translation>Lähennä</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="877"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="879"/>
         <source>Zoom out</source>
         <translation>Loitonna</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="879"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="881"/>
         <source>Toggle fullscreen mode</source>
         <translation>Kokoruututila</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="880"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="882"/>
         <source>Set custom zoom factor...</source>
         <translation>Aseta zoom-kerroin…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="887"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="889"/>
         <source>Symbol window</source>
         <translation>Symboli-ikkuna</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="887"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="889"/>
         <source>Show/Hide the symbol window</source>
         <translation>Näytä/Piilota symboli-ikkuna</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="888"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="890"/>
         <source>Color window</source>
         <translation>Väri-ikkuna</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="888"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="890"/>
         <source>Show/Hide the color window</source>
         <translation>Näytä/Piilota väri-ikkuna</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="889"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="892"/>
         <source>Replace the symbols with those from another map file</source>
         <translation>Korvaa symbolit toisesta tiedostosta</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="893"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="896"/>
         <source>Scale all symbols...</source>
         <translation>Skaalaa symbolit…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="893"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="896"/>
         <source>Scale the whole symbol set</source>
         <translation>Skaalaa kaikki symbolit</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="895"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="898"/>
         <source>Change map scale...</source>
         <translation>Muuta mittakaavaa…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="895"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="898"/>
         <source>Change the map scale and adjust map objects and symbol sizes</source>
         <translation>Muuta kartan mittakaavaa ja säädä kohteita sekä symbolien kokoa</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="897"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="900"/>
         <source>Map notes...</source>
         <translation>Huomioita kartasta…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="899"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="902"/>
         <source>Template setup window</source>
         <translation>Taustakartan asetukset</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="899"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="902"/>
         <source>Show/Hide the template window</source>
         <translation>Näytä/Piilota taustakartta-ikkuna</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="902"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="905"/>
         <source>Open template...</source>
         <translation>Avaa taustakartta…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="878"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="880"/>
         <source>Show whole map</source>
         <translation>Näytä koko kartta</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="909"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="912"/>
         <source>Edit objects</source>
         <translation>Muokkaa kohteita</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="911"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="914"/>
         <source>Set point objects</source>
         <translation>Piirrä pistemäinen kohde</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="912"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="915"/>
         <source>Draw paths</source>
         <translation>Piirrä viivoja</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="913"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="916"/>
         <source>Draw circles and ellipses</source>
         <translation>Piirrä ympyröitä ja ellipsejä</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="917"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="920"/>
         <source>Write text</source>
         <translation>Kirjoita tekstiä</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="918"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="921"/>
         <source>Duplicate</source>
         <translation>Monista</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="919"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="922"/>
         <source>Switch symbol</source>
         <translation>Vaihda symboli</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="920"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="923"/>
         <source>Fill / Create border</source>
         <translation>Täytä / Tee reunaviiva</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="921"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="924"/>
         <source>Switch dash direction</source>
         <translation>Käännä suunta</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="922"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="925"/>
         <source>Connect paths</source>
         <translation>Yhdistä viivat</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="924"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="927"/>
         <source>Cut object</source>
         <translation>Katkaise kohde</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="940"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="943"/>
         <source>Rotate object(s)</source>
         <translation>Kierrä kohteita</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="943"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="946"/>
         <source>Measure lengths and areas</source>
         <translation>Mittaa pituuksia ja pinta-aloja</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="946"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="949"/>
         <source>Cut away from area</source>
         <translation>Leikkaa pois alueelta</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="983"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3553"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="986"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3567"/>
         <source>Add new part...</source>
         <translation>Lisää uusi osa…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="984"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3613"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="987"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3627"/>
         <source>Rename current part...</source>
         <translation>Nimeä nykyinen osa uudelleen…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="985"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3574"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="988"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3588"/>
         <source>Remove current part</source>
         <translation>Poista nykyinen osa</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="986"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="989"/>
         <source>Merge all parts</source>
         <translation>Yhdistä kaikki osat</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="988"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="991"/>
         <source>Import...</source>
         <translation>Tuo…</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dock_widget.cpp" line="87"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1040"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1043"/>
+        <location filename="../src/gui/widgets/color_list_widget.cpp" line="109"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="248"/>
         <source>&amp;Edit</source>
         <translation>&amp;Muokkaa</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1061"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1064"/>
         <source>&amp;View</source>
         <translation>&amp;Näytä</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1091"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1094"/>
         <source>&amp;Tools</source>
         <translation>&amp;Työkalut</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1144"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1147"/>
         <source>Sy&amp;mbols</source>
         <translation>&amp;Symbolit</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1126"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1129"/>
         <source>M&amp;ap</source>
         <translation>&amp;Kartta</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1155"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1159"/>
         <source>&amp;Templates</source>
         <translation>T&amp;austakartat</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1211"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1215"/>
         <source>Drawing</source>
         <translation>Piirtää</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="955"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="958"/>
         <source>Paint on template</source>
         <translation>Piirrä taustakarttaan</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="540"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="542"/>
         <source>Editing in progress</source>
         <translation>Muokkaus käynnissä</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="540"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="542"/>
         <source>The map is currently being edited. Please finish the edit operation before saving.</source>
         <translation>Karttaa muokataan. Lopeta editointi ennen tallentamista.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="870"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="872"/>
         <source>Show grid</source>
         <translation>Näytä ruudukko</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="871"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1186"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="873"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1190"/>
         <source>Configure grid...</source>
         <translation>Ruudukon asetukset…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="882"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="884"/>
         <source>Hatch areas</source>
         <translation>Viivoitetut alueet</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="883"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="885"/>
         <source>Baseline view</source>
         <translation>Viivanäkymä</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="884"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="886"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="110"/>
         <source>Hide all templates</source>
         <translation>Piilota kaikki taustakartat</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="889"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="892"/>
         <source>Replace symbol set...</source>
         <translation>Korvaa symbolit…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="894"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="897"/>
         <source>Georeferencing...</source>
         <translation>Georeferointi…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="896"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="899"/>
         <source>Rotate map...</source>
         <translation>Kierrä karttaa…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="896"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="899"/>
         <source>Rotate the whole map</source>
         <translation>Kierrä koko karttaa</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="903"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="906"/>
         <source>Reopen template...</source>
         <translation>Avaa taustakartta uudelleen…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="914"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="917"/>
         <source>Draw rectangles</source>
         <translation>Piirrä suorakulmioita</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="925"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="928"/>
         <source>Cut free form hole</source>
         <translation>Leikkaa aukko</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="926"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="929"/>
         <source>Cut round hole</source>
         <translation>Leikkaa pyöreä aukko</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="930"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="933"/>
         <source>Cut rectangular hole</source>
         <translation>Leikkaa suorakulmainen aukko</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="941"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="944"/>
         <source>Rotate pattern</source>
         <translation>Kierrä kuviota</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="942"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="945"/>
         <source>Scale object(s)</source>
         <translation>Skaalaa kohteita</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="944"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="947"/>
         <source>Unify areas</source>
         <translation>Yhdistä alueita</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="945"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="948"/>
         <source>Intersect areas</source>
         <translation>Risteävät alueet</translation>
     </message>
@@ -3470,52 +3496,52 @@ Haluatko silti tuoda datan?</translation>
         <translation type="vanished">Päällekkäiset alueet</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="947"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="950"/>
         <source>Area XOr</source>
         <translation>Leikkaa päälleikkäiset alueet</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="951"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="954"/>
         <source>Cutout</source>
         <translation>Leikkaa rajattu alue</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="952"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="955"/>
         <source>Cut away</source>
         <translation>Leikkaa rajaus</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="953"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="956"/>
         <source>Distribute points along path</source>
         <translation>Tee pisteitä viivaan</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="990"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="993"/>
         <source>Map coordinates</source>
         <translation>Karttakoordinaatit</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="992"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="995"/>
         <source>Projected coordinates</source>
         <translation>Projektion koordinaatit</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="994"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="997"/>
         <source>Latitude/Longitude (Dec)</source>
         <translation>Leveysaste/Pituusaste (aste)</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="996"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="999"/>
         <source>Latitude/Longitude (DMS)</source>
         <translation>Leveysaste/Pituusaste (DMS)</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1075"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1078"/>
         <source>Display coordinates as...</source>
         <translation>Näytä koordinaatit…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="934"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="937"/>
         <source>Cut hole</source>
         <translation>Leikkaa reikä</translation>
     </message>
@@ -3524,623 +3550,643 @@ Haluatko silti tuoda datan?</translation>
         <translation type="vanished">Dummy</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1179"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1183"/>
         <source>View</source>
         <translation>Näytä</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1197"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1202"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1297"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3488"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1201"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1206"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1301"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3502"/>
         <source>Map parts</source>
         <translation>Karttaosat</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1229"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1233"/>
         <source>Select template...</source>
         <translation>Valitse taustakartta…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1235"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1239"/>
         <source>Editing</source>
         <translation>Muokkaus</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1260"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1264"/>
         <source>Advanced editing</source>
         <translation>Muokkauksen lisätyökalut</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1557"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1577"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1634"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1654"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1667"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3064"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3070"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3076"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3082"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3091"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3901"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3908"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1561"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1581"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1638"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1658"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1671"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3078"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3084"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3090"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3096"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3105"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3915"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3922"/>
         <source>Error</source>
         <translation>Virhe</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1577"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1581"/>
         <source>No undo steps available.</source>
         <translation>Ei kumottavaa.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1591"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1595"/>
         <source>Cut %1 object(s)</source>
         <extracomment>Past tense. Displayed when an Edit &gt; Cut operation is completed.</extracomment>
         <translation>Leikkaa %1 kohde(tta)</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1634"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1667"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1638"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1671"/>
         <source>An internal error occurred, sorry!</source>
         <translation>Sisäinen virhe, pahoittelut!</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1644"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1648"/>
         <source>Copied %1 object(s)</source>
         <translation>Kopioitu %1 kohde(tta)</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1654"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1658"/>
         <source>There are no objects in clipboard which could be pasted!</source>
         <translation>Leikepöydällä ei ole liitettäviä kohteita!</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1684"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1688"/>
         <source>Pasted %1 object(s)</source>
         <translation>Liitetty %1 kohde(tta)</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1742"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1746"/>
         <source>Set custom zoom factor</source>
         <translation>Aseta zoom-kerroin</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1742"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1746"/>
         <source>Zoom factor:</source>
         <translation>Zoom-kerroin:</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1816"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1820"/>
         <source>Symbols</source>
         <translation>Symbolit</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1830"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1834"/>
         <source>Colors</source>
         <translation>Värit</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1869"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1883"/>
         <source>Scale all symbols</source>
         <translation>Skaalaa kaikki symbolit</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1869"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1883"/>
         <source>Scale to percentage:</source>
         <translation>Skaalaa prosentteina:</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1893"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1907"/>
         <source>Map notes</source>
         <translation>Huomioita kartasta</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1898"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1912"/>
         <source>Cancel</source>
         <translation>Peruuta</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1899"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1913"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1939"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1953"/>
         <source>Templates</source>
         <translation>Taustakartat</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2161"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2175"/>
         <source>Place point objects on the map.</source>
         <translation>Aseta pistemäisiä kohteita kartalle.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2161"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2175"/>
         <source>Select a point symbol to be able to use this tool.</source>
         <translation>Valitse pistemäinen symboli käyttääksesi tätä työkalua.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2163"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2177"/>
         <source>Draw polygonal and curved lines.</source>
         <translation>Piirrä monikulmio- ja käyräviivoja.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2163"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2165"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2167"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2169"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2171"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2177"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2179"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2181"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2183"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2185"/>
         <source>Select a line, area or combined symbol to be able to use this tool.</source>
         <translation>Valitse viiva-, alue- tai yhdistetty symboli käyttääksesi tätä työkalua.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2165"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2179"/>
         <source>Draw circles and ellipses.</source>
         <translation>Piirrä ympyröitä ja ellipsejä.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2277"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2291"/>
         <source>Set the direction of area fill patterns or point objects.</source>
         <translation>Aseta alueen täytön kuvioiden tai pistemäisten kohteiden suunta.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2277"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2291"/>
         <source>Select an area object with rotatable fill pattern or a rotatable point object to activate this tool.</source>
         <translation>Valitse aluemainen kohde kierrettävällä täyttökuviolla tai kierrettävä pistemäinen kohde käyttääksesi tätä työkalua.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2307"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2321"/>
         <source>Resulting symbol: %1 %2.</source>
         <translation>Tuloksena symboli: %1 %2.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2308"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2322"/>
         <source>Select at least two area or path objects activate this tool.</source>
         <translation>Valitse vähintään kaksi aluetta tai reittiä aktivoidaksesi tämän työkalun.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2310"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2324"/>
         <source>Unify overlapping objects.</source>
         <translation>Liitä päällekkäiset objektit.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2312"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2326"/>
         <source>Remove all parts which are not overlaps with the first selected object.</source>
         <translation>Poista kaikki osat, jotka eivät ole päällekkäin ensiksi valitun objektin kanssa.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2314"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2328"/>
         <source>Remove overlapped parts of the first selected object.</source>
         <translation>Poista päällekkäiset osat ensimmäisestä valitusta objektista.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2316"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2330"/>
         <source>Remove all parts which overlap the first selected object.</source>
         <translation>Poista kaikki osat, jotka ovat päällekkäin ensiksi valitun objektin kanssa.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2325"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2339"/>
         <source>Create a cutout of some objects or the whole map.</source>
         <translation>Leikkaa rajattu alue kohteista tai koko kartasta.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2325"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2327"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2339"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2341"/>
         <source>Select a closed path object as cutout shape to activate this tool.</source>
         <translation>Valitse suljettu kohde leikkauksen muodoksi käyttääksesi tätä työkalua.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2327"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2341"/>
         <source>Cut away some objects or everything in a limited area.</source>
         <translation>Leikkaa joitakin kohteita tai kaikki rajatulta alueelta.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2359"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2373"/>
         <source>Places evenly spaced point objects along an existing path object</source>
         <translation>Asettaa tasavälein pistemäisiä kohteita viivamaiseen kohteeseen</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2359"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2373"/>
         <source>Select at least one path object and a single point symbol to activate this tool.</source>
         <translation>Valitse ainakin yksi viivakohde ja pistemäinen symboli käyttääksesi tätä työkalua.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3494"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3508"/>
         <source>Merge this part with</source>
         <translation>Yhdistä tämä viivakohde objektiin</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3500"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3514"/>
         <source>Move selected objects to</source>
         <translation>Siirrä valitut kohteet päälle</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3554"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3614"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3568"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3628"/>
         <source>Enter the name of the map part:</source>
         <translation>Anna karttaosan nimi:</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3630"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3644"/>
         <source>Switched to map part '%1'.</source>
         <translation>Vaihdettiin kartan osaan '%1'.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3652"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3682"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3666"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3696"/>
         <source>Merge map parts</source>
         <translation>Yhdistä karttaosat</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3653"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3667"/>
         <source>Do you want to move all objects from map part "%1" to "%2", and to remove "%1"?</source>
         <translation>Haluatko siirtää kaikki kohteet karttaosasta "%1" "%2":een, ja poistaa "%1"?</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3683"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3697"/>
         <source>Do you want to move all objects to map part "%1", and to remove all other map parts?</source>
         <translation>Haluatko siirtää kaikki kohteet karttaosaan "%1", ja poistaa kaikki muut karttaosat?</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3908"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3922"/>
         <source>Cannot import the selected map file because it could not be loaded.</source>
         <translation>Valittua karttatiedostoa ei voitu tuoda koska sitä ei voitu ladata.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2167"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2181"/>
         <source>Draw rectangles.</source>
         <translation>Piirrä suorakulmioita.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="844"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="846"/>
         <source>Print...</source>
         <translation>Tulosta…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="846"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="848"/>
         <source>&amp;Image</source>
         <translation>&amp;Kuva</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="848"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="850"/>
         <source>&amp;PDF</source>
         <translation>&amp;PDF</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="868"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="870"/>
         <source>Clear undo / redo history</source>
         <translation>Tyhjennä kumoa / tee uudestaan historia</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="868"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="870"/>
         <source>Clear the undo / redo history to reduce map file size.</source>
         <translation>Tyhjennä kumoa / tee uudestaan historia pienentääksesi karttatiedoston kokoa.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="875"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="877"/>
         <source>Pan</source>
         <translation>Siirrä</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="885"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="887"/>
         <source>Overprinting simulation</source>
         <translation>Overprinting simulaatio</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="910"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="913"/>
         <source>Edit lines</source>
         <translation>Muokkaa viivoja</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="949"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="952"/>
         <source>Convert to curves</source>
         <translation>Muuta kaariviivaksi</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="950"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="953"/>
         <source>Simplify path</source>
         <translation>Yksinkertaista viivan jälkeä</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1032"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1035"/>
         <source>&amp;Export as...</source>
         <translation>&amp;Vie tiedostona…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2173"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2187"/>
         <source>Write text on the map.</source>
         <translation>Kirjoita tekstiä kartalle.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2173"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2187"/>
         <source>Select a text symbol to be able to use this tool.</source>
         <translation>Valtise tekstisymboli käyttääksesi tätä työkalua.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2268"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2282"/>
         <source>Duplicate the selected object(s).</source>
         <translation>Monista valittu kohde/kohteet.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2266"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2268"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2270"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2272"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2280"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2282"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2284"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2286"/>
         <source>Select at least one object to activate this tool.</source>
         <translation>Valitse ainakin yksi kohde käyttääksesi tätä työkalua.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="545"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="547"/>
         <source>Map saved</source>
         <translation>Kartta tallennettu</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="905"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="908"/>
         <source>Tag editor</source>
         <translation>Tagieditori</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="905"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="908"/>
         <source>Show/Hide the tag editor window</source>
         <translation>Näytä/Piilota tagieditori-ikkuna</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="915"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="918"/>
         <source>Draw free-handedly</source>
         <translation>Piirrä vapaalla kädellä</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="916"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="919"/>
         <source>Fill bounded areas</source>
         <translation>Täytä ympäröidyt alueet</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="861"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="863"/>
         <source>Delete</source>
         <translation>Poista</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="796"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="798"/>
         <source>Ctrl+A</source>
         <translation>Ctrl+A</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="797"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="799"/>
         <source>Ctrl+Shift+A</source>
         <translation>Ctrl+Shift+A</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="798"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="800"/>
         <source>Ctrl+I</source>
         <translation>Ctrl+I</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="800"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="802"/>
         <source>G</source>
         <translation>G</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="814"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="816"/>
         <source>E</source>
         <translation>E</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="815"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="817"/>
         <source>L</source>
         <translation>L</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="816"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="818"/>
         <source>S</source>
         <translation>S</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="817"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="819"/>
         <source>P</source>
         <translation>P</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="818"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="820"/>
         <source>O</source>
         <translation>O</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="819"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="821"/>
         <source>Ctrl+R</source>
         <translation>Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="820"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="822"/>
         <source>F</source>
         <translation>F</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="821"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="823"/>
         <source>T</source>
         <translation>T</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="823"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="825"/>
         <source>D</source>
         <translation>D</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="824"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="826"/>
         <source>Ctrl+G</source>
         <translation>Ctrl+G</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="825"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="827"/>
         <source>Ctrl+F</source>
         <translation>Ctrl+F</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="826"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="828"/>
         <source>Ctrl+D</source>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="827"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="829"/>
         <source>C</source>
         <translation>C</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="828"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="830"/>
         <source>R</source>
         <translation>R</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="829"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="831"/>
         <source>Z</source>
         <translation>Z</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="830"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="832"/>
         <source>K</source>
         <translation>K</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="831"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="833"/>
         <source>H</source>
         <translation>H</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="832"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="834"/>
         <source>M</source>
         <translation>M</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="833"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="835"/>
         <source>U</source>
         <translation>U</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="834"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="836"/>
         <source>N</source>
         <translation>N</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="835"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="837"/>
         <source>Ctrl+M</source>
         <translation>Ctrl+M</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="890"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="891"/>
+        <source>Symbol set ID...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="891"/>
+        <source>Edit the symbol set ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="893"/>
         <source>Load CRT file...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="890"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="893"/>
         <source>Assign new symbols by cross-reference table</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="907"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="910"/>
         <source>Tag Selection</source>
         <translation>Merkitse valinta</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="907"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="910"/>
         <source>Show/Hide the tag selection window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="948"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="951"/>
         <source>Merge area holes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="960"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="963"/>
         <source>Paint on template settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="966"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="969"/>
         <source>Enable touch cursor</source>
         <translation>Ota kosketuskohdistin käyttöön</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="967"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="970"/>
         <source>Enable GPS display</source>
         <translation>Ota GPS-näyttö käyttöön</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="969"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="972"/>
         <source>Enable GPS distance rings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="971"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="974"/>
         <source>Set point object at GPS position</source>
         <translation>Aseta pistemäinen kohde GPS-kohdalle</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="973"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="976"/>
         <source>Set temporary marker at GPS position</source>
         <translation>Aseta väliaikainen merkki GPS-kohdalle</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="975"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="978"/>
         <source>Create temporary path at GPS position</source>
         <translation>Luo väliaikainen viiva GPS-kohdalle</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="977"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="980"/>
         <source>Clear temporary GPS markers</source>
         <translation>Tyhjennä väliaikaiset GPS-merkit</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="980"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="983"/>
         <source>Enable compass display</source>
         <translation>Ota kompassinäyttö käyttöön</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="981"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="984"/>
         <source>Align map with north</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1008"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1011"/>
         <source>Copy position</source>
         <translation>Kopioi kohdan</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1008"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1011"/>
         <source>Copy position to clipboard.</source>
         <translation>Kopioi kohdan leikepöydälle.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1287"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1291"/>
         <source>Select symbol</source>
         <translation>Valitse symboli</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1290"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1294"/>
         <source>Hide top bar</source>
         <translation>Piilota yläpalkki</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1293"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1297"/>
         <source>Show top bar</source>
         <translation>Näytä yläpalkki</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1557"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1561"/>
         <source>Print / Export is not available in this program version!</source>
         <translation>Tulostus / vienti ei ole käytettävissä tässä ohjelman versiossa!</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2001"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1855"/>
+        <source>Symbol set ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="1856"/>
+        <source>Edit the symbol set ID:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="2015"/>
         <source>Tag Editor</source>
         <translation>Tagieditori</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2023"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2037"/>
         <source>Tag Selector</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2084"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2098"/>
         <source>No
 symbol
 selected</source>
@@ -4150,7 +4196,7 @@ symbolia
 valittu</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2085"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2099"/>
         <source>Multiple
 symbols
 selected</source>
@@ -4160,63 +4206,63 @@ symboleja
 valittu</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2169"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2183"/>
         <source>Draw paths free-handedly.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2171"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2185"/>
         <source>Fill bounded areas.</source>
         <translation>Täytä suljetut alueet.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2266"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2280"/>
         <source>Deletes the selected object(s).</source>
         <translation>Poista valittu kohde/kohteet.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2281"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2295"/>
         <source>Switch the direction of symbols on line objects.</source>
         <translation>Käännä viivamaisen kohteen symbolien suunta.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2281"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2283"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2295"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2297"/>
         <source>Select at least one line object to activate this tool.</source>
         <translation>Valitse ainakin yksi viivamainen kohde käyttääksesi tätä työkalua.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2283"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2297"/>
         <source>Connect endpoints of paths which are close together.</source>
         <translation>Yhdistä kahden lähekkäin olevan viivan päätepisteet.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2287"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2301"/>
         <source>Cut the selected object(s) into smaller parts.</source>
         <translation>Leikkaa valittu kohde useampaan osaan.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2287"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2301"/>
         <source>Select at least one line or area object to activate this tool.</source>
         <translation>Valitse ainakin yksi viivamainen tai aluemainen kohde käyttääksesi tätä työkalua.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2296"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2310"/>
         <source>Cut a hole into the selected area object.</source>
         <translation>Leikkaa reikä valittuun alueeseen.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2296"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2310"/>
         <source>Select a single area object to activate this tool.</source>
         <translation>Valitse aluemainen kohde käyttääksesi tätä työkalua.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2270"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2284"/>
         <source>Rotate the selected object(s).</source>
         <translation>Kierrä valittua kohdetta/kohteita.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2272"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2286"/>
         <source>Scale the selected object(s).</source>
         <translation>Skaalaa valittua kohdetta/kohteita.</translation>
     </message>
@@ -4245,134 +4291,134 @@ valittu</translation>
         <translation type="vanished">Poista alueiden päällekkäiset osat.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2320"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2334"/>
         <source>Merge area holes together, or merge holes with the object boundary to cut out this part.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2320"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2334"/>
         <source>Select one area object with holes to activate this tool.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2289"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2303"/>
         <source>Turn paths made of straight segments into smooth bezier splines.</source>
         <translation>Muuta suorat viivat pehmeiksi bezier-splineiksi.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2289"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2291"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2303"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2305"/>
         <source>Select a path object to activate this tool.</source>
         <translation>Valitse viivamainen kohde käyttääksesi tätä työkalua.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2291"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2305"/>
         <source>Reduce the number of points in path objects while trying to retain their shape.</source>
         <translation>Vähennä viivan pisteiden määrää, viivan muoto pyritään säilyttämään.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2352"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2366"/>
         <source>Switches the symbol of the selected object(s) to the selected symbol.</source>
         <translation>Vaihtaa valittuna olevan kohteen symbolin valituksi symboliksi.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2352"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2354"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2366"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2368"/>
         <source>Select at least one object and a fitting, different symbol to activate this tool.</source>
         <translation>Valitse ainakin yksi kohde ja sopiva eri symboli käyttääksesi tätä työkalua.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2354"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2368"/>
         <source>Fill the selected line(s) or create a border for the selected area(s).</source>
         <translation>Täytä valittu viiva(t) tai tee reunaviiva valitulle alueelle.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2474"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2488"/>
         <source>%1 object(s) duplicated</source>
         <translation>%1 kohde(tta) monistettu</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2688"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2702"/>
         <source>Object selection</source>
         <translation>Kohteiden valinta</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2688"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2702"/>
         <source>No objects were selected because there are no objects with the selected symbol(s).</source>
         <translation>Valitun symboli(e)n kohteita ei ole.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3050"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3064"/>
         <source>Measure</source>
         <translation>Mittaa</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3064"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3078"/>
         <source>Unification failed.</source>
         <translation>Yhdistäminen epäonnistui.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3070"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3084"/>
         <source>Intersection failed.</source>
         <translation>Risteäminen epäonnistui.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3076"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3090"/>
         <source>Difference failed.</source>
         <translation>Päällekkäisyys epäonnistui.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3082"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3096"/>
         <source>XOr failed.</source>
         <translation>Päällekkäisten alueiden leikkaus epäonnistui.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3091"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3105"/>
         <source>Merging holes failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3380"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3394"/>
         <source>Clear temporary markers</source>
         <translation>Tyhjennä väliaikaiset merkit</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3380"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3394"/>
         <source>Are you sure you want to delete all temporary GPS markers? This cannot be undone.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3575"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3589"/>
         <source>Do you want to remove map part "%1" and all its objects?</source>
         <translation>Haluatko poistaa karttaosan "%1" ja kaikki kohteensa?</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3737"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3751"/>
         <source>Paint free-handedly on a template</source>
         <translation>Piirrä vapaasti taustakarttaan</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3739"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3753"/>
         <source>Paint free-handedly on a template. Create or load a template which can be drawn onto to activate this button</source>
         <translation>Piirrä vapaasti taustakarttaan. Luo tai lataa taustakartta johon voi piirtää käyttääksesi painiketta</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3868"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3882"/>
         <source>Import %1, GPX, OSM or DXF file</source>
         <translation>Tuo %1, GPX-, OSM- tai DXF-tiedosto</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3872"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3886"/>
         <source>Importable files</source>
         <translation>Tuotavat tiedostot</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3872"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3886"/>
         <source>All files</source>
         <translation>Kaikki tiedostot</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3901"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3915"/>
         <source>Cannot import the selected file because its file format is not supported.</source>
         <translation>Tiedostoa ei voi tuoda. Tiedostomuotoa ei tueta.</translation>
     </message>
@@ -4568,6 +4614,47 @@ valittu</translation>
     </message>
 </context>
 <context>
+    <name>MapSymbolTranslation</name>
+    <message>
+        <location filename="../src/gui/color_dialog.cpp" line="270"/>
+        <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="81"/>
+        <source>Text source:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/color_dialog.cpp" line="512"/>
+        <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="324"/>
+        <source>Map (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/color_dialog.cpp" line="513"/>
+        <location filename="../src/gui/color_dialog.cpp" line="528"/>
+        <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="325"/>
+        <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="338"/>
+        <source>undefined language</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/color_dialog.cpp" line="531"/>
+        <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="341"/>
+        <source>Translation (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/color_dialog.cpp" line="583"/>
+        <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="215"/>
+        <source>Before editing, the stored text will be replaced with the current translation. Do you want to continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/color_dialog.cpp" line="590"/>
+        <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="222"/>
+        <source>After modifying the stored text, the translation may no longer be found. Do you want to continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MapWidget</name>
     <message>
         <location filename="../src/gui/map/map_widget.cpp" line="562"/>
@@ -4738,58 +4825,57 @@ zoomaa hiiren rullalla.</translation>
 <context>
     <name>NewMapDialog</name>
     <message>
-        <location filename="../src/gui/map/map_dialog_new.cpp" line="44"/>
+        <location filename="../src/gui/map/new_map_dialog.cpp" line="62"/>
         <source>Create new map</source>
         <translation>Tee uusi kartta</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_new.cpp" line="46"/>
+        <location filename="../src/gui/map/new_map_dialog.cpp" line="66"/>
         <source>Choose the scale and symbol set for the new map.</source>
         <translation>Valitse uuden kartan mittakaava ja symbolijoukko.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_new.cpp" line="48"/>
+        <location filename="../src/gui/map/new_map_dialog.cpp" line="73"/>
         <source>Scale:  1 : </source>
         <translation>Mittakaava:  1 : </translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_new.cpp" line="53"/>
+        <location filename="../src/gui/map/new_map_dialog.cpp" line="78"/>
         <source>Symbol sets:</source>
         <translation>Symbolijoukot:</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_new.cpp" line="56"/>
+        <location filename="../src/gui/map/new_map_dialog.cpp" line="83"/>
         <source>Only show symbol sets matching the selected scale</source>
         <translation>Näytä vain valittuun mittakaavaan sopivat symbolijoukot</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_new.cpp" line="58"/>
         <source>Cancel</source>
-        <translation>Peruuta</translation>
+        <translation type="vanished">Peruuta</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_new.cpp" line="59"/>
+        <location filename="../src/gui/map/new_map_dialog.cpp" line="91"/>
         <source>Create</source>
         <translation>Luo</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_new.cpp" line="147"/>
+        <location filename="../src/gui/map/new_map_dialog.cpp" line="167"/>
         <source>Empty symbol set</source>
         <translation>Tyhjä symbolijoukko</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_new.cpp" line="185"/>
-        <location filename="../src/gui/map/map_dialog_new.cpp" line="240"/>
+        <location filename="../src/gui/map/new_map_dialog.cpp" line="205"/>
+        <location filename="../src/gui/map/new_map_dialog.cpp" line="260"/>
         <source>Load symbol set from a file...</source>
         <translation>Lataa symbolijoukko tiedostosta…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_new.cpp" line="236"/>
+        <location filename="../src/gui/map/new_map_dialog.cpp" line="256"/>
         <source>All symbol set files</source>
         <translation>Kaikki symbolijoukko-tiedostot</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_new.cpp" line="238"/>
+        <location filename="../src/gui/map/new_map_dialog.cpp" line="258"/>
         <source>All files</source>
         <translation>Kaikki tiedostot</translation>
     </message>
@@ -5368,8 +5454,8 @@ zoomaa hiiren rullalla.</translation>
 <context>
     <name>PercentageDelegate</name>
     <message>
-        <location filename="../src/util/item_delegates.cpp" line="151"/>
-        <location filename="../src/util/item_delegates.cpp" line="158"/>
+        <location filename="../src/util/item_delegates.cpp" line="152"/>
+        <location filename="../src/util/item_delegates.cpp" line="159"/>
         <source>%</source>
         <translation>%</translation>
     </message>
@@ -5377,7 +5463,7 @@ zoomaa hiiren rullalla.</translation>
 <context>
     <name>PointSymbolEditorTool</name>
     <message>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="966"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="985"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Add a coordinate. &lt;b&gt;%1+Click&lt;/b&gt;: Change the selected coordinate. </source>
         <translation>&lt;b&gt;Klikkaa&lt;/b&gt;: Lisää koordinaatti. &lt;b&gt;%1+Klikkaa&lt;/b&gt;: Muuta valittu koordinaatti. </translation>
     </message>
@@ -5385,158 +5471,158 @@ zoomaa hiiren rullalla.</translation>
 <context>
     <name>PointSymbolEditorWidget</name>
     <message>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="59"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="103"/>
         <source>Always oriented to north (not rotatable)</source>
         <translation>Aina etelä-pohjois-suuntainen (ei kierrettävä)</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="62"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="106"/>
         <source>Elements</source>
         <translation>Elementit</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="74"/>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="928"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="118"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="944"/>
         <source>Point</source>
         <translation>Piste</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="75"/>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="930"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="119"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="946"/>
         <source>Line</source>
         <translation>Viiva</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="76"/>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="932"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="120"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="948"/>
         <source>Area</source>
         <translation>Alue</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="79"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="123"/>
         <source>Center all elements</source>
         <translation>Keskitä kaikki elementit</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="81"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="125"/>
         <source>Current element</source>
         <translation>Valittu elementti</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="87"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="131"/>
         <source>Diameter &lt;b&gt;a&lt;/b&gt;:</source>
         <translation>Halkaisija &lt;b&gt;a&lt;/b&gt;:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="88"/>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="94"/>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="122"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="132"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="138"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="166"/>
         <source>mm</source>
         <translation>mm</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="90"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="134"/>
         <source>Inner color:</source>
         <translation>Sisempi väri:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="93"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="137"/>
         <source>Outer width &lt;b&gt;b&lt;/b&gt;:</source>
         <translation>Ulompi leveys &lt;b&gt;b&lt;/b&gt;:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="96"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="140"/>
         <source>Outer color:</source>
         <translation>Ulompi väri:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="121"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="165"/>
         <source>Line width:</source>
         <translation>Viivan leveys:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="124"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="168"/>
         <source>Line color:</source>
         <translation>Viivan väri:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="127"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="171"/>
         <source>Line cap:</source>
         <translation>Viivanpää:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="129"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="173"/>
         <source>flat</source>
         <translation>tasainen</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="130"/>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="137"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="174"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="181"/>
         <source>round</source>
         <translation>pyöreä</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="131"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="175"/>
         <source>square</source>
         <translation>neliö</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="134"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="178"/>
         <source>Line join:</source>
         <translation>Viivan kulmat:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="136"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="180"/>
         <source>miter</source>
         <translation>jiiriliitos</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="138"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="182"/>
         <source>bevel</source>
         <translation>viisto</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="140"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="184"/>
         <source>Line closed</source>
         <translation>Suljettu viiva</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="160"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="204"/>
         <source>Area color:</source>
         <translation>Alueen väri:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="173"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="217"/>
         <source>Coordinates:</source>
         <translation>Koordinaatit:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="178"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="222"/>
         <source>X</source>
         <translation>X</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="178"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="222"/>
         <source>Y</source>
         <translation>Y</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="178"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="222"/>
         <source>Curve start</source>
         <translation>Kaariviivan alku</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="189"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="233"/>
         <source>Center by coordinate average</source>
         <translation>Keskitä koordinaatin keskiarvoon</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="371"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="417"/>
         <source>[Midpoint]</source>
         <translation>[Keskipiste]</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="935"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="951"/>
         <source>Unknown</source>
         <translation>Tuntematon</translation>
     </message>
@@ -5602,108 +5688,108 @@ zoomaa hiiren rullalla.</translation>
         <translation type="vanished">Vie PDF:ksi tai PS:ksi</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="216"/>
+        <location filename="../src/gui/print_widget.cpp" line="219"/>
         <source>Show templates</source>
         <translation>Näytä taustakartat</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="227"/>
+        <location filename="../src/gui/print_widget.cpp" line="230"/>
         <source>Show grid</source>
         <translation>Näytä ruudukko</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="140"/>
+        <location filename="../src/gui/print_widget.cpp" line="143"/>
         <source>Page orientation:</source>
         <translation>Sivun suunta:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="100"/>
+        <location filename="../src/gui/print_widget.cpp" line="103"/>
         <source>Printer:</source>
         <translation>Tulostin:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="133"/>
+        <location filename="../src/gui/print_widget.cpp" line="136"/>
         <source>Portrait</source>
         <translation>Pysty</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="135"/>
+        <location filename="../src/gui/print_widget.cpp" line="138"/>
         <source>Landscape</source>
         <translation>Vaaka</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="114"/>
+        <location filename="../src/gui/print_widget.cpp" line="117"/>
         <source>Page format:</source>
         <translation>Paperikoko:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="143"/>
+        <location filename="../src/gui/print_widget.cpp" line="146"/>
         <source>Copies:</source>
         <translation>Kopioita:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="156"/>
+        <location filename="../src/gui/print_widget.cpp" line="159"/>
         <source>Left:</source>
         <translation>Vasen:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="159"/>
+        <location filename="../src/gui/print_widget.cpp" line="162"/>
         <source>Top:</source>
         <translation>Yläreuna:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="162"/>
+        <location filename="../src/gui/print_widget.cpp" line="165"/>
         <source>Width:</source>
         <translation>Leveys:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="165"/>
+        <location filename="../src/gui/print_widget.cpp" line="168"/>
         <source>Height:</source>
         <translation>Korkeus:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="259"/>
+        <location filename="../src/gui/print_widget.cpp" line="262"/>
         <source>Preview...</source>
         <translation>Esikatselu…</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="148"/>
+        <location filename="../src/gui/print_widget.cpp" line="151"/>
         <source>Single page</source>
         <translation>Yksi sivu</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="149"/>
+        <location filename="../src/gui/print_widget.cpp" line="152"/>
         <source>Custom area</source>
         <translation>Muokattu alue</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="150"/>
+        <location filename="../src/gui/print_widget.cpp" line="153"/>
         <source>Map area:</source>
         <translation>Tulostusalue:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="152"/>
+        <location filename="../src/gui/print_widget.cpp" line="155"/>
         <source>Center print area</source>
         <translation>Keskitä tulostusalue</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="120"/>
-        <location filename="../src/gui/print_widget.cpp" line="124"/>
-        <location filename="../src/gui/print_widget.cpp" line="155"/>
+        <location filename="../src/gui/print_widget.cpp" line="123"/>
+        <location filename="../src/gui/print_widget.cpp" line="127"/>
         <location filename="../src/gui/print_widget.cpp" line="158"/>
         <location filename="../src/gui/print_widget.cpp" line="161"/>
         <location filename="../src/gui/print_widget.cpp" line="164"/>
         <location filename="../src/gui/print_widget.cpp" line="167"/>
+        <location filename="../src/gui/print_widget.cpp" line="170"/>
         <source>mm</source>
         <translation>mm</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="168"/>
+        <location filename="../src/gui/print_widget.cpp" line="171"/>
         <source>Page overlap:</source>
         <translation>Sivujen limitys:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="172"/>
+        <location filename="../src/gui/print_widget.cpp" line="175"/>
         <source>Options</source>
         <translation>Valinnat</translation>
     </message>
@@ -5716,226 +5802,226 @@ zoomaa hiiren rullalla.</translation>
         <translation type="vanished">Värierottelut</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="200"/>
+        <location filename="../src/gui/print_widget.cpp" line="203"/>
         <source>Resolution:</source>
         <translation>Resoluutio:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="202"/>
+        <location filename="../src/gui/print_widget.cpp" line="205"/>
         <source>Print in different scale:</source>
         <translation>Tulosta eri mittakaavassa:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="223"/>
+        <location filename="../src/gui/print_widget.cpp" line="226"/>
         <source>Template appearance may differ.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="230"/>
+        <location filename="../src/gui/print_widget.cpp" line="233"/>
         <source>Simulate overprinting</source>
         <translation>Simuloi päällepainatus</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="235"/>
+        <location filename="../src/gui/print_widget.cpp" line="238"/>
         <source>Default</source>
         <translation>Oletusarvo</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="236"/>
+        <location filename="../src/gui/print_widget.cpp" line="239"/>
         <source>Device CMYK (experimental)</source>
         <translation>Laitteen CMYK (kokeellinen)</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="237"/>
+        <location filename="../src/gui/print_widget.cpp" line="240"/>
         <source>Color mode:</source>
         <translation>Väritila:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="261"/>
-        <location filename="../src/gui/print_widget.cpp" line="366"/>
+        <location filename="../src/gui/print_widget.cpp" line="264"/>
+        <location filename="../src/gui/print_widget.cpp" line="369"/>
         <source>Print</source>
         <translation>Tulosta</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="265"/>
+        <location filename="../src/gui/print_widget.cpp" line="268"/>
         <source>Export...</source>
         <translation>Vie…</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="371"/>
+        <location filename="../src/gui/print_widget.cpp" line="374"/>
         <source>PDF export</source>
         <translation>PDF vienti</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="382"/>
+        <location filename="../src/gui/print_widget.cpp" line="385"/>
         <source>Image export</source>
         <translation>Kuvan vienti</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="488"/>
+        <location filename="../src/gui/print_widget.cpp" line="491"/>
         <source>Save to PDF</source>
         <translation>Tallenna PDF</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="198"/>
-        <location filename="../src/gui/print_widget.cpp" line="912"/>
-        <location filename="../src/gui/print_widget.cpp" line="953"/>
+        <location filename="../src/gui/print_widget.cpp" line="201"/>
+        <location filename="../src/gui/print_widget.cpp" line="915"/>
+        <location filename="../src/gui/print_widget.cpp" line="956"/>
         <source>dpi</source>
         <translation>dpi</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1082"/>
+        <location filename="../src/gui/print_widget.cpp" line="1085"/>
         <source>Not supported on Android.</source>
         <translation>Ei tueta Androidilla.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1090"/>
+        <location filename="../src/gui/print_widget.cpp" line="1093"/>
         <source>Failed to prepare the preview.</source>
         <translation>Esikastelun valmistelu epäonnistui.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1101"/>
+        <location filename="../src/gui/print_widget.cpp" line="1104"/>
         <source>Print Preview Progress</source>
         <translation>Esikatselun eteneminen</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1118"/>
+        <location filename="../src/gui/print_widget.cpp" line="1121"/>
         <source>Warning</source>
         <translation>Varoitus</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1119"/>
+        <location filename="../src/gui/print_widget.cpp" line="1122"/>
         <source>A non-standard view mode is activated. Are you sure to print / export the map like this?</source>
         <translation>Vakionäkymä ei ole päällä. Haluatko varmasti tulostaa / viedä kartan tällaisena?</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1136"/>
+        <location filename="../src/gui/print_widget.cpp" line="1139"/>
         <source>PNG</source>
         <translation>PNG</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1137"/>
+        <location filename="../src/gui/print_widget.cpp" line="1140"/>
         <source>BMP</source>
         <translation>BMP</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1138"/>
+        <location filename="../src/gui/print_widget.cpp" line="1141"/>
         <source>TIFF</source>
         <translation>TIFF</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1139"/>
+        <location filename="../src/gui/print_widget.cpp" line="1142"/>
         <source>JPEG</source>
         <translation>JPEG</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1193"/>
+        <location filename="../src/gui/print_widget.cpp" line="1196"/>
         <source>Failed to prepare the PDF export.</source>
         <translation>PDF-viennin valmistelu epäonnistui.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1203"/>
+        <location filename="../src/gui/print_widget.cpp" line="1206"/>
         <source>PDF</source>
         <translation>PDF</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1256"/>
+        <location filename="../src/gui/print_widget.cpp" line="1259"/>
         <source>An error occurred during printing.</source>
         <translation>Virhe tapahtui tulostuksen aikana.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1141"/>
-        <location filename="../src/gui/print_widget.cpp" line="1169"/>
-        <location filename="../src/gui/print_widget.cpp" line="1205"/>
-        <location filename="../src/gui/print_widget.cpp" line="1217"/>
+        <location filename="../src/gui/print_widget.cpp" line="1144"/>
+        <location filename="../src/gui/print_widget.cpp" line="1172"/>
+        <location filename="../src/gui/print_widget.cpp" line="1208"/>
+        <location filename="../src/gui/print_widget.cpp" line="1220"/>
         <source>Export map ...</source>
         <translation>Vie kartta …</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1140"/>
-        <location filename="../src/gui/print_widget.cpp" line="1204"/>
+        <location filename="../src/gui/print_widget.cpp" line="1143"/>
+        <location filename="../src/gui/print_widget.cpp" line="1207"/>
         <source>All files (*.*)</source>
         <translation>Kaikki tiedostot (*.*)</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1242"/>
+        <location filename="../src/gui/print_widget.cpp" line="1245"/>
         <source>Failed to prepare the printing.</source>
         <translation>Tulostuksen valmistaminen epäonnistui.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1251"/>
+        <location filename="../src/gui/print_widget.cpp" line="1254"/>
         <source>Printing Progress</source>
         <translation>Tulostuksen eteneminen</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1082"/>
-        <location filename="../src/gui/print_widget.cpp" line="1090"/>
-        <location filename="../src/gui/print_widget.cpp" line="1159"/>
-        <location filename="../src/gui/print_widget.cpp" line="1178"/>
-        <location filename="../src/gui/print_widget.cpp" line="1193"/>
-        <location filename="../src/gui/print_widget.cpp" line="1223"/>
-        <location filename="../src/gui/print_widget.cpp" line="1242"/>
-        <location filename="../src/gui/print_widget.cpp" line="1256"/>
-        <location filename="../src/gui/print_widget.cpp" line="1269"/>
-        <location filename="../src/gui/print_widget.cpp" line="1333"/>
+        <location filename="../src/gui/print_widget.cpp" line="1085"/>
+        <location filename="../src/gui/print_widget.cpp" line="1093"/>
+        <location filename="../src/gui/print_widget.cpp" line="1162"/>
+        <location filename="../src/gui/print_widget.cpp" line="1181"/>
+        <location filename="../src/gui/print_widget.cpp" line="1196"/>
+        <location filename="../src/gui/print_widget.cpp" line="1226"/>
+        <location filename="../src/gui/print_widget.cpp" line="1245"/>
+        <location filename="../src/gui/print_widget.cpp" line="1259"/>
+        <location filename="../src/gui/print_widget.cpp" line="1272"/>
+        <location filename="../src/gui/print_widget.cpp" line="1336"/>
         <source>Error</source>
         <translation>Virhe</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="105"/>
+        <location filename="../src/gui/print_widget.cpp" line="108"/>
         <source>Properties</source>
         <translation>Ominaisuudet</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="179"/>
+        <location filename="../src/gui/print_widget.cpp" line="182"/>
         <source>Vector
 graphics</source>
         <translation>Vektori-
 grafiikka</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="180"/>
+        <location filename="../src/gui/print_widget.cpp" line="183"/>
         <source>Raster
 graphics</source>
         <translation>Bittikartta-
 grafiikka</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="181"/>
+        <location filename="../src/gui/print_widget.cpp" line="184"/>
         <source>Color
 separations</source>
         <translation>Väri
 erottelut</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="194"/>
+        <location filename="../src/gui/print_widget.cpp" line="197"/>
         <source>Mode:</source>
         <translation>Moodi:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1159"/>
+        <location filename="../src/gui/print_widget.cpp" line="1162"/>
         <source>Failed to prepare the image. Not enough memory.</source>
         <translation>Kuvan valmistaminen epäonnistui. Ei tarpeeksi muistia.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1178"/>
+        <location filename="../src/gui/print_widget.cpp" line="1181"/>
         <source>Failed to save the image. Does the path exist? Do you have sufficient rights?</source>
         <translation>Kuvaa ei voitu tallentaa. Onko tiedostopolku oikein? Onko sinulla riittävät oikeudet?</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1182"/>
-        <location filename="../src/gui/print_widget.cpp" line="1227"/>
+        <location filename="../src/gui/print_widget.cpp" line="1185"/>
+        <location filename="../src/gui/print_widget.cpp" line="1230"/>
         <source>Exported successfully to %1</source>
         <translation>Viety onnistuneesti %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1223"/>
+        <location filename="../src/gui/print_widget.cpp" line="1226"/>
         <source>Failed to finish the PDF export.</source>
         <translation>PDF-viennin viimeistely epäonnistui.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1233"/>
-        <location filename="../src/gui/print_widget.cpp" line="1265"/>
+        <location filename="../src/gui/print_widget.cpp" line="1236"/>
+        <location filename="../src/gui/print_widget.cpp" line="1268"/>
         <source>Canceled.</source>
         <translation>Keskeytetty.</translation>
     </message>
@@ -5944,24 +6030,24 @@ erottelut</translation>
         <translation type="vanished">Tulostaa</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1269"/>
+        <location filename="../src/gui/print_widget.cpp" line="1272"/>
         <source>The print job could not be stopped.</source>
         <translation>Tulostustyötä ei voitu pysäyttää.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1260"/>
+        <location filename="../src/gui/print_widget.cpp" line="1263"/>
         <source>Successfully created print job</source>
         <translation>Tulostustyö luotiin onnistuneesti</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1317"/>
-        <location filename="../src/gui/print_widget.cpp" line="1325"/>
+        <location filename="../src/gui/print_widget.cpp" line="1320"/>
+        <location filename="../src/gui/print_widget.cpp" line="1328"/>
         <source>Unknown</source>
         <comment>Paper size</comment>
         <translation>Tuntematon</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1333"/>
+        <location filename="../src/gui/print_widget.cpp" line="1336"/>
         <source>The map area is empty. Output canceled.</source>
         <translation>Kartan alue on tyhjä. Tulostus keskeytettiin.</translation>
     </message>
@@ -6009,106 +6095,111 @@ erottelut</translation>
 <context>
     <name>ReplaceSymbolSetDialog</name>
     <message>
-        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="77"/>
+        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="101"/>
         <source>Replace symbol set</source>
         <translation>Korvaa symbolit</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="79"/>
+        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="103"/>
         <source>Configure how the symbols should be replaced, and which.</source>
         <translation>Määrittele miten ja mitkä symbolit korvataan.</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="82"/>
+        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="106"/>
         <source>Import all new symbols, even if not used as replacement</source>
         <translation>Tuo kaikki uudet symbolit, vaikka ei käytettäisi korvattaessa</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="88"/>
+        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="112"/>
         <source>Delete original symbols which are unused after the replacement</source>
         <translation>Poista käyttämättömät alkuperäiset symbolit korvaamisen jälkeen</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="91"/>
+        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="115"/>
         <source>Delete unused colors after the replacement</source>
         <translation>Poista käyttämättömät värit korvaamisen jälkeen</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="127"/>
+        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="161"/>
         <source>Symbol mapping:</source>
         <translation>Symbolien vertailu:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="85"/>
+        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="109"/>
         <source>Keep the symbols' hidden / protected states of the old symbol set</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="98"/>
+        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="132"/>
         <source>Match replacement symbols by symbol number</source>
         <translation>Korvaa symbolit numeroiden perusteella</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="96"/>
+        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="130"/>
         <source>Original</source>
         <translation>Alkuperäinen</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="96"/>
-        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="106"/>
+        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="127"/>
+        <source>Edit the symbol set ID:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="130"/>
+        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="140"/>
         <source>Replacement</source>
         <translation>Korvaava</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="100"/>
+        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="134"/>
         <source>Match by symbol name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="105"/>
+        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="139"/>
         <source>Assign new symbols</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="106"/>
+        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="140"/>
         <source>Pattern</source>
         <translation>Malli</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="118"/>
+        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="152"/>
         <source>Clear replacements</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="121"/>
-        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="197"/>
+        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="155"/>
+        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="231"/>
         <source>Open CRT file...</source>
         <translation>Avaa CRT-tiedosto…</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="123"/>
-        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="290"/>
+        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="157"/>
+        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="324"/>
         <source>Save CRT file...</source>
         <translation>Tallenna CRT-tiedosto…</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="128"/>
+        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="162"/>
         <source>Symbol mapping</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="196"/>
-        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="289"/>
+        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="230"/>
+        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="323"/>
         <source>CRT file</source>
         <translation>CRT-tiedosto</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="243"/>
+        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="277"/>
         <source>There are multiple replacements for symbol %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="246"/>
+        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="280"/>
         <source>Cannot open file:
 %1
 
@@ -6119,7 +6210,7 @@ erottelut</translation>
 %2</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="304"/>
+        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="338"/>
         <source>Cannot save file:
 %1
 
@@ -6130,44 +6221,44 @@ erottelut</translation>
 %2</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="319"/>
+        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="353"/>
         <source>The cross reference table has been modified.
 Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="476"/>
+        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="511"/>
         <source>- None -</source>
         <translation>- Ei mitään -</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="521"/>
+        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="556"/>
         <source>Choose map file to load symbols from</source>
         <translation>Valitse karttatiedosto josta symbolit ladataan</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="529"/>
-        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="607"/>
+        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="564"/>
+        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="643"/>
         <source>Error</source>
         <translation>Virhe</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="529"/>
+        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="564"/>
         <source>Cannot load map file, aborting.</source>
         <translation>Karttatiedostoa ei voi ladata, keskeytetään.</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="535"/>
+        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="570"/>
         <source>Warning</source>
         <translation>Varoitus</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="536"/>
+        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="571"/>
         <source>The chosen symbol set has a scale of 1:%1, while the map scale is 1:%2. Do you really want to choose this set?</source>
         <translation>Valittujen symbolien mittakaava on 1:%1, kun kartan mittakaava on 1:%2. Haluatko varmasti käyttää tätä?</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="607"/>
+        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="643"/>
         <source>Cannot load CRT file, aborting.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6175,83 +6266,83 @@ Do you want to save your changes?</source>
 <context>
     <name>RotateMapDialog</name>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="36"/>
+        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="38"/>
         <source>Rotate map</source>
         <translation>Kierrä karttaa</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="44"/>
+        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="46"/>
         <source>Angle (counter-clockwise):</source>
         <translation>Kulma (vastapäivään):</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="42"/>
+        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="44"/>
         <source>°</source>
         <translation>°</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="40"/>
+        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="42"/>
         <source>Rotation parameters</source>
         <translation>Kierron parametrit</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="46"/>
+        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="48"/>
         <source>Rotate around:</source>
         <translation>Kierron keskipiste:</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="48"/>
+        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="50"/>
         <source>Map coordinate system origin</source>
         <comment>Rotation center point</comment>
         <translation>Kartan koordinaatiston origo</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="52"/>
+        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="54"/>
         <source>Georeferencing reference point</source>
         <comment>Rotation center point</comment>
         <translation>Georeferoinnin kiintopiste</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="57"/>
+        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="59"/>
         <source>Other point,</source>
         <comment>Rotation center point</comment>
         <translation>Muu piste,</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="58"/>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="59"/>
+        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="60"/>
+        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="61"/>
         <source>mm</source>
         <translation>mm</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="62"/>
+        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="64"/>
         <source>X:</source>
         <comment>x coordinate</comment>
         <translation>X:</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="64"/>
+        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="66"/>
         <source>Y:</source>
         <comment>y coordinate</comment>
         <translation>Y:</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="70"/>
+        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="72"/>
         <source>Options</source>
         <translation>Valinnat</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="72"/>
+        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="74"/>
         <source>Adjust georeferencing reference point</source>
         <translation>Säädä georeferoinnin kiintopistettä</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="79"/>
+        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="81"/>
         <source>Adjust georeferencing declination</source>
         <translation>Säädä gereferoinnin deklinaatiota</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="86"/>
+        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="88"/>
         <source>Rotate non-georeferenced templates</source>
         <translation>Kierrä georeferoimattomat taustakartat</translation>
     </message>
@@ -6300,83 +6391,83 @@ Do you want to save your changes?</source>
 <context>
     <name>ScaleMapDialog</name>
     <message>
-        <location filename="../src/gui/map/map_dialog_scale.cpp" line="36"/>
+        <location filename="../src/gui/map/map_dialog_scale.cpp" line="38"/>
         <source>Change map scale</source>
         <translation>Muuta kartan mittakaavaa</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_scale.cpp" line="40"/>
+        <location filename="../src/gui/map/map_dialog_scale.cpp" line="42"/>
         <source>Scaling parameters</source>
         <translation>Skaalauksen parametrit</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_scale.cpp" line="44"/>
+        <location filename="../src/gui/map/map_dialog_scale.cpp" line="46"/>
         <source>New scale:  1 :</source>
         <translation>Uusi mittakaava:  1 :</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_scale.cpp" line="46"/>
+        <location filename="../src/gui/map/map_dialog_scale.cpp" line="48"/>
         <source>Scaling center:</source>
         <translation>Skaalauksen keskipiste:</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_scale.cpp" line="48"/>
+        <location filename="../src/gui/map/map_dialog_scale.cpp" line="50"/>
         <source>Map coordinate system origin</source>
         <comment>Scaling center point</comment>
         <translation>Kartan koordinaatiston origo</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_scale.cpp" line="52"/>
+        <location filename="../src/gui/map/map_dialog_scale.cpp" line="54"/>
         <source>Georeferencing reference point</source>
         <comment>Scaling center point</comment>
         <translation>Georeferoinnin kiintopiste</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_scale.cpp" line="57"/>
+        <location filename="../src/gui/map/map_dialog_scale.cpp" line="59"/>
         <source>Other point,</source>
         <comment>Scaling center point</comment>
         <translation>Muu piste,</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_scale.cpp" line="58"/>
-        <location filename="../src/gui/map/map_dialog_scale.cpp" line="59"/>
+        <location filename="../src/gui/map/map_dialog_scale.cpp" line="60"/>
+        <location filename="../src/gui/map/map_dialog_scale.cpp" line="61"/>
         <source>mm</source>
         <translation>mm</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_scale.cpp" line="62"/>
+        <location filename="../src/gui/map/map_dialog_scale.cpp" line="64"/>
         <source>X:</source>
         <comment>x coordinate</comment>
         <translation>X:</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_scale.cpp" line="64"/>
+        <location filename="../src/gui/map/map_dialog_scale.cpp" line="66"/>
         <source>Y:</source>
         <comment>y coordinate</comment>
         <translation>Y:</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_scale.cpp" line="69"/>
+        <location filename="../src/gui/map/map_dialog_scale.cpp" line="71"/>
         <source>Options</source>
         <translation>Valinnat</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_scale.cpp" line="71"/>
+        <location filename="../src/gui/map/map_dialog_scale.cpp" line="73"/>
         <source>Scale symbol sizes</source>
         <translation>Skaalaa symbolien koot</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_scale.cpp" line="78"/>
+        <location filename="../src/gui/map/map_dialog_scale.cpp" line="80"/>
         <source>Scale map object positions</source>
         <translation>Skaalaa kartan kohteiden sijainnit</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_scale.cpp" line="85"/>
+        <location filename="../src/gui/map/map_dialog_scale.cpp" line="87"/>
         <source>Adjust georeferencing reference point</source>
         <translation>Säädä georeferoinnin kiintopistettä</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_scale.cpp" line="92"/>
+        <location filename="../src/gui/map/map_dialog_scale.cpp" line="94"/>
         <source>Scale non-georeferenced templates</source>
         <translation>Skaalaa georeferoimattomat taustakartat</translation>
     </message>
@@ -6486,7 +6577,7 @@ Do you want to save your changes?</source>
 <context>
     <name>SymbolDropDown</name>
     <message>
-        <location filename="../src/gui/widgets/symbol_dropdown.cpp" line="44"/>
+        <location filename="../src/gui/widgets/symbol_dropdown.cpp" line="52"/>
         <source>- none -</source>
         <translation>- tyhjä -</translation>
     </message>
@@ -6494,7 +6585,7 @@ Do you want to save your changes?</source>
 <context>
     <name>SymbolDropDownDelegate</name>
     <message>
-        <location filename="../src/gui/widgets/symbol_dropdown.cpp" line="143"/>
+        <location filename="../src/gui/widgets/symbol_dropdown.cpp" line="167"/>
         <source>- None -</source>
         <translation>- Tyhjä -</translation>
     </message>
@@ -6502,29 +6593,39 @@ Do you want to save your changes?</source>
 <context>
     <name>SymbolPropertiesWidget</name>
     <message>
-        <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="53"/>
+        <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="72"/>
         <source>Number:</source>
         <translation>Numero:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="61"/>
+        <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="83"/>
+        <source>Edit</source>
+        <translation type="unfinished">Muokkaa</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="84"/>
         <source>Name:</source>
         <translation>Nimi:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="63"/>
+        <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="86"/>
         <source>Description:</source>
         <translation>Kuvaus:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="65"/>
+        <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="88"/>
         <source>Helper symbol (not shown in finished map)</source>
         <translation>Apusymboli (ei näytetä valmiissa kartassa)</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="100"/>
+        <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="135"/>
         <source>General</source>
         <translation>Yleiset</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="227"/>
+        <source>Warning</source>
+        <translation type="unfinished">Varoitus</translation>
     </message>
 </context>
 <context>
@@ -6540,31 +6641,31 @@ Do you want to save your changes?</source>
         <translation>Uusi symboli</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="397"/>
+        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="431"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="239"/>
         <source>Point</source>
         <translation>Piste</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="392"/>
+        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="426"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="240"/>
         <source>Line</source>
         <translation>Viiva</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="382"/>
+        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="416"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="241"/>
         <source>Area</source>
         <translation>Alue</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="402"/>
+        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="436"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="242"/>
         <source>Text</source>
         <translation>Teksti</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="387"/>
+        <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="421"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="243"/>
         <source>Combined</source>
         <translation>Yhdistetty</translation>
@@ -6744,7 +6845,7 @@ Do you want to save your changes?</source>
         <translation>Kartassa on symbolin "%1" kohteita. Sen poistaminen poistaa myös kohteet ja tyhjentää kumoa-historian! Haluatko todella tehdä niin?</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="865"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="867"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1166"/>
         <source>Select all objects with selected symbols</source>
         <translation>Valitse kaikki valittujen symbolien kohteet</translation>
@@ -6776,47 +6877,47 @@ Do you want to save your changes?</source>
         <translation>Symbolin asetukset</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="104"/>
+        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="105"/>
         <source>Template:</source>
         <translation>Taustakartta:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="105"/>
+        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="106"/>
         <source>&lt;b&gt;Template:&lt;/b&gt; </source>
         <translation>&lt;b&gt;Malli:&lt;/b&gt; </translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="106"/>
+        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="107"/>
         <source>(none)</source>
         <translation>(tyhjä)</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="107"/>
+        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="108"/>
         <source>Open...</source>
         <translation>Avaa…</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="110"/>
+        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="111"/>
         <source>Center template...</source>
         <translation>Keskitä malli…</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="115"/>
+        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="116"/>
         <source>bounding box on origin</source>
         <translation>mallin keskipiste(bbox) origossa</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="116"/>
+        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="117"/>
         <source>center of gravity on origin</source>
         <translation>painopiste origossa</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="233"/>
+        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="234"/>
         <source>Select background color</source>
         <translation>Valitse taustan väri</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="419"/>
+        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="420"/>
         <source>The quick brown fox
 takes the routechoice
 to jump over the lazy dog
@@ -6827,7 +6928,7 @@ jokapäiväinen ilmiö
 1234567890</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="482"/>
+        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="483"/>
         <source>- unnamed -</source>
         <translation>- nimeämätön -</translation>
     </message>
@@ -6835,7 +6936,7 @@ jokapäiväinen ilmiö
 <context>
     <name>SymbolToolTip</name>
     <message>
-        <location filename="../src/gui/widgets/symbol_tooltip.cpp" line="164"/>
+        <location filename="../src/gui/widgets/symbol_tooltip.cpp" line="180"/>
         <source>No description!</source>
         <translation>Ei kuvausta!</translation>
     </message>
@@ -7439,43 +7540,43 @@ Jos et aio piirtää taustakartalle, tämä ei ole ongelma.</translation>
 <context>
     <name>TemplatePositioningDialog</name>
     <message>
-        <location filename="../src/templates/template_positioning_dialog.cpp" line="36"/>
+        <location filename="../src/templates/template_positioning_dialog.cpp" line="37"/>
         <source>Track scaling and positioning</source>
         <translation>Skaalaus ja asemointi</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_positioning_dialog.cpp" line="41"/>
+        <location filename="../src/templates/template_positioning_dialog.cpp" line="42"/>
         <source>Coordinate system</source>
         <translation>Koordinaatisto</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_positioning_dialog.cpp" line="42"/>
+        <location filename="../src/templates/template_positioning_dialog.cpp" line="43"/>
         <source>Real</source>
         <translation>Todellinen</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_positioning_dialog.cpp" line="43"/>
+        <location filename="../src/templates/template_positioning_dialog.cpp" line="44"/>
         <source>Map</source>
         <translation>Kartta</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_positioning_dialog.cpp" line="46"/>
+        <location filename="../src/templates/template_positioning_dialog.cpp" line="47"/>
         <source>m</source>
         <comment>meters</comment>
         <translation>m</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_positioning_dialog.cpp" line="49"/>
+        <location filename="../src/templates/template_positioning_dialog.cpp" line="50"/>
         <source>One coordinate unit equals:</source>
         <translation>Koordinaattiyksikkö vastaa:</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_positioning_dialog.cpp" line="51"/>
+        <location filename="../src/templates/template_positioning_dialog.cpp" line="52"/>
         <source>Position track at given coordinates</source>
         <translation>Asemoi annettuihin koordinaatteihin</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_positioning_dialog.cpp" line="55"/>
+        <location filename="../src/templates/template_positioning_dialog.cpp" line="56"/>
         <source>Position track at view center</source>
         <translation>Asemoi näkymän keskelle</translation>
     </message>
@@ -7657,17 +7758,17 @@ Tuetaan vain versioon %2 asti.</translation>
 <context>
     <name>TextSymbolSettings</name>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="72"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="74"/>
         <source>Text settings</source>
         <translation>Tekstin asetukset</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="78"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="80"/>
         <source>Font family:</source>
         <translation>Fontin nimi:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="82"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="84"/>
         <source>Font size:</source>
         <translation>Fontin koko:</translation>
     </message>
@@ -7676,166 +7777,166 @@ Tuetaan vain versioon %2 asti.</translation>
         <translation type="vanished">Määrittele koko…</translation>
     </message>
     <message>
-        <location filename="../src/core/symbols/text_symbol.cpp" line="532"/>
+        <location filename="../src/core/symbols/text_symbol.cpp" line="555"/>
         <source>A</source>
         <comment>First capital letter of the local alphabet</comment>
         <translation>A</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="96"/>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="121"/>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="181"/>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="187"/>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="452"/>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="469"/>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="562"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="98"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="123"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="183"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="189"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="454"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="471"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="564"/>
         <source>mm</source>
         <translation>mm</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="81"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="83"/>
         <source>pt</source>
         <translation>pt</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="104"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="106"/>
         <source>Text color:</source>
         <translation>Tekstin väri:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="107"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="109"/>
         <source>bold</source>
         <translation>lihavoitu</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="109"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="111"/>
         <source>italic</source>
         <translation>kursivoitu</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="111"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="113"/>
         <source>underlined</source>
         <translation>alleviivattu</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="114"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="116"/>
         <source>Text style:</source>
         <translation>Tekstin tyyli:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="118"/>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="124"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="120"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="126"/>
         <source>%</source>
         <translation>%</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="119"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="121"/>
         <source>Line spacing:</source>
         <translation>Viivojen väli:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="122"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="124"/>
         <source>Paragraph spacing:</source>
         <translation>Kappaleiden väli:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="125"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="127"/>
         <source>Character spacing:</source>
         <translation>Merkkien väli:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="127"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="129"/>
         <source>Kerning</source>
         <translation>Välistys</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="134"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="136"/>
         <source>Symbol icon text:</source>
         <translation>Symbolin kuvakkeen teksti:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="138"/>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="146"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="140"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="148"/>
         <source>Framing</source>
         <translation>Kehykset</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="141"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="143"/>
         <source>OCAD compatibility settings</source>
         <translation>OCAD yhteensopivuuden asetukset</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="152"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="154"/>
         <source>Framing color:</source>
         <translation>Kehyksen väri:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="154"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="156"/>
         <source>Line framing</source>
         <translation>Viivavarjostus</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="158"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="160"/>
         <source>Width:</source>
         <translation>Leveys:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="160"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="162"/>
         <source>Shadow framing</source>
         <translation>Varjostus</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="164"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="166"/>
         <source>Left/Right Offset:</source>
         <translation>Vasen/Oikea Siirto:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="167"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="169"/>
         <source>Top/Down Offset:</source>
         <translation>Ylä/Ala-Siirto:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="171"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="173"/>
         <source>OCAD compatibility</source>
         <translation>OCAD yhteensopivuus</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="178"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="180"/>
         <source>enabled</source>
         <translation>käytössä</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="182"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="184"/>
         <source>Line width:</source>
         <translation>Viivan leveys:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="185"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="187"/>
         <source>Line color:</source>
         <translation>Viivan väri:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="452"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="454"/>
         <source>Position:</source>
         <translation>Sijainti:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="176"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="178"/>
         <source>Line below paragraphs</source>
         <translation>Viiva kappaleiden alla</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="188"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="190"/>
         <source>Distance from baseline:</source>
         <translation>Etäisyys perusviivasta:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="192"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="194"/>
         <source>Custom tabulator positions</source>
         <translation>Muokattu sarkaimen paikka</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="452"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="454"/>
         <source>Add custom tabulator</source>
         <translation>Lisää muokattu sarkain</translation>
     </message>
@@ -7880,16 +7981,14 @@ Tuetaan vain versioon %2 asti.</translation>
 <context>
     <name>UnitOfMeasurement</name>
     <message>
-        <location filename="../src/gui/util_gui.h" line="79"/>
         <source>mm</source>
         <comment>millimeters</comment>
-        <translation>mm</translation>
+        <translation type="vanished">mm</translation>
     </message>
     <message>
-        <location filename="../src/gui/util_gui.h" line="114"/>
         <source>m</source>
         <comment>meters</comment>
-        <translation>m</translation>
+        <translation type="vanished">m</translation>
     </message>
 </context>
 <context>
@@ -7926,7 +8025,7 @@ Tuetaan vain versioon %2 asti.</translation>
 <context>
     <name>XMLFileExporter</name>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="185"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="186"/>
         <source>Older versions of Mapper do not support multiple map parts. To save the map in compatibility mode, you must first merge all map parts.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7934,27 +8033,27 @@ Tuetaan vain versioon %2 asti.</translation>
 <context>
     <name>XMLFileImporter</name>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="437"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="441"/>
         <source>Unsupported element: %1 (line %2 column %3)</source>
         <translation>Elementtiä ei tueta: %1 (rivi %2 sarake %3)</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="468"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="472"/>
         <source>Some coordinates were out of bounds for printing. Map content was adjusted.</source>
         <translation>Jotkin koordinaatit ovat tulostusrajojen ulkopuolella. Kartan sisältöä säädetty.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="518"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="522"/>
         <source>unknown</source>
         <translation>Epämääräinen</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="519"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="523"/>
         <source>Parts of this file cannot be read by this version of Mapper. Minimum required version: %1</source>
         <translation>Osaa tiedostosta ei voida lukea tällä Mapper versiolla. Minimi vaadittu versio: %1</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="553"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="557"/>
         <source>Error at line %1 column %2: %3</source>
         <translation>Virhe rivillä %1 sarakkeessa %2: %3</translation>
     </message>
@@ -7963,44 +8062,44 @@ Tuetaan vain versioon %2 asti.</translation>
         <translation type="vanished">Kartan muistiinpanoja ei voitu lukea.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="565"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="822"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="569"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="827"/>
         <source>Some invalid characters had to be removed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="583"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="587"/>
         <source>Unknown error</source>
         <translation>Tuntematon virhe</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="584"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="588"/>
         <source>Unsupported or invalid georeferencing specification '%1': %2</source>
         <translation>Georeferoinnin määrittelyä '%1' ei tueta tai ei kelpaa: %2</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="716"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="769"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="720"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="773"/>
         <source>Could not set knockout property of color '%1'.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="729"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="733"/>
         <source>Expected %1 colors, found %2.</source>
         <translation>Oletettiin %1 väriä, löydetty %2.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="745"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="749"/>
         <source>Spot color %1 not found while processing %2 (%3).</source>
         <translation>Spottiväriä %1 ei löytynyt käsiteltäessä %2 (%3).</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="800"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="805"/>
         <source>Expected %1 symbols, found %2.</source>
         <translation>Oletettiin %1 symbolia, löydetty %2.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="839"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="844"/>
         <source>Expected %1 map parts, found %2.</source>
         <translation>Oletettiin %1 karttaosaa, löydetty %2.</translation>
     </message>
