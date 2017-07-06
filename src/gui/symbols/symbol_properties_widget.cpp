@@ -22,6 +22,7 @@
 #include "symbol_properties_widget.h"
 
 #include <QAbstractButton>
+#include <QApplication>
 #include <QCheckBox>
 #include <QComboBox>
 #include <QFlags>
@@ -77,7 +78,7 @@ SymbolPropertiesWidget::SymbolPropertiesWidget(Symbol* symbol, SymbolSettingDial
 		editor->setValidator(new QIntValidator(0, 99999, editor));
 	}
 	
-	auto language_label = new QLabel(tr("Text source:"));
+	auto language_label = new QLabel(QApplication::translate("MapSymbolTranslation", "Text source:"));
 	language_combo = new QComboBox();
 	edit_button = new QPushButton(tr("Edit"));
 	auto name_label = new QLabel(tr("Name:"));
@@ -211,15 +212,17 @@ void SymbolPropertiesWidget::editClicked()
 	auto question = QString{};
 	if (language_combo->currentIndex() == 1)
 	{
-		question = tr("Before editing, the symbol's text will be "
-		              "replaced with the current translation. "
-		              "Do you want to continue?");
+		question = QApplication::translate("MapSymbolTranslation",
+		             "Before editing, the stored text will be "
+		             "replaced with the current translation. "
+		             "Do you want to continue?");
 	}
 	else
 	{
-		question = tr("After modifying the symbol's text, "
-		              "the translation may no longer be found. "
-		              "Do you want to continue?");
+		question = QApplication::translate("MapSymbolTranslation",
+		             "After modifying the stored text, "
+		             "the translation may no longer be found. "
+		             "Do you want to continue?");
 	}
 	result = QMessageBox::warning(dialog, tr("Warning"), question,
 	                              QMessageBox::Yes | QMessageBox::No,
@@ -318,7 +321,8 @@ void SymbolPropertiesWidget::reset(Symbol* symbol)
 	auto name_translated = dialog->getSourceMap()->raw_translation(symbol->getName());
 	auto description_translated = dialog->getSourceMap()->raw_translation(symbol->getDescription());
 	///: The language of the symbol name in the map file is not defined explicitly.
-	language_combo->addItem(tr("Map (%1)").arg(tr("undefined language")));
+	language_combo->addItem(QApplication::translate("MapSymbolTranslation", "Map (%1)").
+	                        arg(QApplication::translate("MapSymbolTranslation", "undefined language")));
 	if (name_translated.isEmpty() && description_translated.isEmpty())
 	{
 		language_combo->setEnabled(false);
@@ -331,10 +335,10 @@ void SymbolPropertiesWidget::reset(Symbol* symbol)
 		auto language = TranslationUtil::languageFromSettings(QSettings());
 		if (!language.isValid())
 		{
-			language.displayName = tr("undefined language");
+			language.displayName = QApplication::translate("MapSymbolTranslation", "undefined language");
 		}
 
-		language_combo->addItem(tr("Translation (%1)").arg(language.displayName));
+		language_combo->addItem(QApplication::translate("MapSymbolTranslation", "Translation (%1)").arg(language.displayName));
 		language_combo->setEnabled(true);
 		language_combo->setCurrentIndex(1);
 		edit_button->setEnabled(true);
