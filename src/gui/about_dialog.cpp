@@ -147,9 +147,9 @@ QString AboutDialog::about()
 	  "</tr></table>"
 	  "<h1>%1</h1>"
 	  "<p>"
-	  "<em>%3</em><br/>"
-	  "<a href=\"%4\">%4</a></p>"
-	  "<p>Copyright (C) 2017 The OpenOrienteering developers</p>"
+	  "<em>%2</em><br/>"
+	  "<a href=\"%3\">%3</a></p>"
+	  "<p>%4</p>"
 	  "<p>%5</p>"
 	  "<p>%6</p>"
 	  "<p>%7</p>"
@@ -158,14 +158,14 @@ QString AboutDialog::about()
 	  "</body></html>"
 	).arg(
 	  tr("About %1").arg(APP_NAME), // %0
-	  qApp->applicationDisplayName(),   // %1
-	  tr("A free software for drawing orienteering maps"), // %3
-	  QString::fromLatin1("http://openorienteering.org/apps/mapper/"), // %4
+	  qApp->applicationDisplayName(), // %1
+	  tr("A free software for drawing orienteering maps"), // %2
+	  QString::fromLatin1("http://openorienteering.org/apps/mapper/"), // %3
+	  tr("Copyright &copy; %1 The OpenOrienteering developers").arg(QString::fromLatin1(MAPPER_COPYRIGHT_YEARS)), // %4
 	  tr("This program is free software: you can redistribute it "
 	     "and/or modify it under the terms of the "
 	     "<a %1>GNU General Public License (GPL), version&nbsp;3</a>, "
 	     "as published by the Free Software Foundation.").arg(QString::fromLatin1("href=\"file:doc:/common-licenses/GPL-3.txt\"")), // %5
-	    // %6
 	  tr("This program is distributed in the hope that it will be useful, "
 	     "but WITHOUT ANY WARRANTY; without even the implied warranty of "
 	     "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the "
