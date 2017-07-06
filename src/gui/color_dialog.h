@@ -33,10 +33,12 @@
 QT_BEGIN_NAMESPACE
 class QAbstractButton;
 class QCheckBox;
+class QComboBox;
 class QDoubleSpinBox;
 class QGridLayout;
 class QLabel;
 class QLineEdit;
+class QPushButton;
 class QRadioButton;
 class QTabWidget;
 class QWidget;
@@ -69,6 +71,10 @@ protected slots:
 	
 	void showHelp();
 	
+	void languageChanged();
+	
+	void editClicked();
+	
 	void mapColorNameChanged();
 	
 	void spotColorTypeChanged(int id);
@@ -92,6 +98,8 @@ protected slots:
 protected:
 	void setColorModified(bool modified);
 	
+	void updateColorLabel();
+	
 	void updateWidgets();
 	
 	void updateButtons();
@@ -105,7 +113,10 @@ protected:
 	bool react_to_changes;
 	
 	QLabel* color_preview_label;
+	QLabel* color_name_label;
 	QLineEdit* mc_name_edit;
+	QComboBox* language_combo;
+	QPushButton* name_edit_button;
 	
 	QRadioButton* full_tone_option;
 	QRadioButton* composition_option;

@@ -24,6 +24,7 @@
 #include <memory>
 
 #include <QAbstractButton>
+#include <QApplication>
 #include <QButtonGroup>
 #include <QCheckBox>
 #include <QColor>
@@ -35,10 +36,12 @@
 #include <QLabel>
 #include <QLatin1Char>
 #include <QLineEdit>
+#include <QMessageBox>
 #include <QPixmap>
 #include <QPushButton>
 #include <QRadioButton>
 #include <QSettings>
+#include <QSignalBlocker>
 #include <QSize>
 #include <QSpacerItem>
 #include <QString>
@@ -47,11 +50,13 @@
 #include <QVariant>
 #include <QWidget>
 
+#include "core/map.h"
 #include "core/map_color.h"
 #include "gui/util_gui.h"
 #include "gui/widgets/color_dropdown.h"
 #include "util/backports.h"
 #include "util/util.h"
+#include "util/translation_util.h"
 
 
 namespace
@@ -77,7 +82,10 @@ ColorDialog::ColorDialog(const Map& map, const MapColor& source_color, QWidget* 
 	setSizeGripEnabled(true);
 	
 	color_preview_label = new QLabel();
+	color_name_label = new QLabel();
 	mc_name_edit = new QLineEdit();
+	language_combo = new QComboBox();
+	name_edit_button = new QPushButton(tr("Edit"));
 	
 	prof_color_layout = new QGridLayout();
 	int col = 0;
@@ -255,16 +263,28 @@ ColorDialog::ColorDialog(const Map& map, const MapColor& source_color, QWidget* 
 	connect(button_box->button(QDialogButtonBox::Help), &QAbstractButton::clicked, this, &ColorDialog::showHelp);
 	
 	auto layout = new QGridLayout();
-	layout->addWidget(color_preview_label, 0, 0);
-	layout->addWidget(mc_name_edit, 0, 1);
-	layout->addWidget(properties_widget, 1, 0, 1, 2);
-	layout->addWidget(button_box, 2, 0, 1, 2);
-	layout->setColumnStretch(1, 1);
+	row = 0; col = 0;
+	layout->addWidget(color_preview_label, row, col); col++;
+	layout->addWidget(color_name_label, row, col, 1, 4);
+	row++; col = 0;
+	layout->addWidget(new QLabel(QApplication::translate("MapSymbolTranslation", "Text source:")), row, col, 1, 2); col+=2;
+	layout->addWidget(language_combo, row, col); col++;
+	layout->addWidget(name_edit_button, row, col);
+	row++; col = 0;
+	layout->addWidget(new QLabel(tr("Name")), row, col, 1, 2); col+=2;
+	layout->addWidget(mc_name_edit, row, col, 1, 3);
+	row++; col = 0;
+	layout->addWidget(properties_widget, row, col, 1, 5);
+	row++;
+	layout->addWidget(button_box, row, col, 1, 5);
+	layout->setColumnStretch(4, 1);
 	setLayout(layout);
 	
-	updateWidgets();
+	reset();
 	updateButtons();
 	
+	connect(language_combo, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &ColorDialog::languageChanged);
+	connect(name_edit_button, &QPushButton::clicked, this, &ColorDialog::editClicked);
 	connect(mc_name_edit, &QLineEdit::textChanged, this, &ColorDialog::mapColorNameChanged);
 	
 	connect(spot_color_options, QOverload<int>::of(&QButtonGroup::buttonClicked), this, &ColorDialog::spotColorTypeChanged);
@@ -299,6 +319,15 @@ ColorDialog::~ColorDialog() = default;
 
 
 
+void ColorDialog::updateColorLabel()
+{
+	auto name = map.translate(color.getName());
+	if (name.isEmpty())
+		name = tr("- unnamed -");
+	color_name_label->setText(QLatin1String("<b>") + name + QLatin1String("</b>"));
+}
+
+
 void ColorDialog::updateWidgets()
 {
 	react_to_changes = false;
@@ -306,8 +335,6 @@ void ColorDialog::updateWidgets()
 	QPixmap pixmap(coloriconSize());
 	pixmap.fill(colorWithOpacity(color));
 	color_preview_label->setPixmap(pixmap);
-	
-	mc_name_edit->setText(color.getName());
 	
 	sc_name_edit->setText(color.getSpotColorName());
 	
@@ -480,11 +507,41 @@ void ColorDialog::reset()
 {
 	color = source_color;
 	updateWidgets();
+	
+	language_combo->clear();
+	language_combo->addItem(QApplication::translate("MapSymbolTranslation", "Map (%1)")
+	                        .arg(QApplication::translate("MapSymbolTranslation", "undefined language")));
+	auto name = color.getName();
+	auto display_name = map.raw_translation(name);
+	if (display_name.isEmpty())
+	{
+		language_combo->setEnabled(false);
+		name_edit_button->setEnabled(false);
+		mc_name_edit->setText(name);
+		mc_name_edit->setEnabled(true);
+	}
+	else
+	{
+		auto language = TranslationUtil::languageFromSettings(QSettings());
+		if (!language.isValid())
+		{
+			language.displayName = QApplication::translate("MapSymbolTranslation", "undefined language");
+		}
+
+		language_combo->addItem(QApplication::translate("MapSymbolTranslation", "Translation (%1)").arg(language.displayName));
+		language_combo->setCurrentIndex(1);
+		language_combo->setEnabled(true);
+		name_edit_button->setEnabled(true);
+		mc_name_edit->setText(display_name);
+		mc_name_edit->setEnabled(false);
+	}
+	
 	setColorModified(false);
 }
 
 void ColorDialog::setColorModified(bool modified)
 {
+	updateColorLabel();
 	if (color_modified != modified)
 	{
 		color_modified = modified;
@@ -502,6 +559,67 @@ void ColorDialog::showHelp()
 {
 	Util::showHelp(this, "color_dock_widget.html", "editor");
 }
+
+
+
+void ColorDialog::languageChanged()
+{
+	auto name = color.getName();
+	if (language_combo->currentIndex() == 1)
+	{
+		name = map.raw_translation(name);
+	}
+	QSignalBlocker block(mc_name_edit);
+	mc_name_edit->setText(name);
+}
+
+
+void ColorDialog::editClicked()
+{
+	int result;
+	auto question = QString{};
+	if (language_combo->currentIndex() == 1)
+	{
+		question = QApplication::translate("MapSymbolTranslation",
+		             "Before editing, the stored text will be "
+		             "replaced with the current translation. "
+		             "Do you want to continue?");
+	}
+	else
+	{
+		question = QApplication::translate("MapSymbolTranslation",
+		             "After modifying the stored text, "
+		             "the translation may no longer be found. "
+		             "Do you want to continue?");
+	}
+	result = QMessageBox::warning(this, tr("Warning"), question,
+	                              QMessageBox::Yes | QMessageBox::No,
+	                              QMessageBox::Yes);
+	if (result == QMessageBox::Yes)
+	{
+		language_combo->setEnabled(false);
+		name_edit_button->setEnabled(false);
+		mc_name_edit->setEnabled(true);
+		if (language_combo->currentIndex() == 1)
+		{
+			{
+				QSignalBlocker block(language_combo);
+				language_combo->setCurrentIndex(0);
+			}
+			auto name = mc_name_edit->text();
+			if (name.isEmpty())
+			{
+				QSignalBlocker block(mc_name_edit);
+				name = color.getName();
+				mc_name_edit->setText(name);
+			}
+			color.setName(name);
+		}
+		setColorModified(true);
+	}
+}
+
+
 
 // slot
 void ColorDialog::mapColorNameChanged()
