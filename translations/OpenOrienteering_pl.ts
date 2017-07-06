@@ -419,7 +419,7 @@
     </message>
 </context>
 <context>
-    <name>ColorWidget</name>
+    <name>ColorListWidget</name>
     <message>
         <location filename="../src/gui/color_dock_widget.cpp" line="63"/>
         <location filename="../src/gui/color_dock_widget.cpp" line="68"/>
