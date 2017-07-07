@@ -282,7 +282,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="88"/>
         <source>Edit</source>
-        <translation type="unfinished">Bewerken</translation>
+        <translation>Bewerken</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="101"/>
@@ -337,17 +337,17 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="274"/>
         <source>Name</source>
-        <translation type="unfinished">Naam</translation>
+        <translation>Naam</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="326"/>
         <source>- unnamed -</source>
-        <translation type="unfinished">- zonder naam -</translation>
+        <translation>- naamloos -</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="595"/>
         <source>Warning</source>
-        <translation type="unfinished">Waarschuwing</translation>
+        <translation>Waarschuwing</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="148"/>
@@ -491,7 +491,7 @@
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="246"/>
         <source>%1 (duplicate)</source>
         <extracomment>Future replacement for COLOR_NAME + " (Duplicate)", for better localization.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 (duplicaat)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="247"/>
@@ -3899,12 +3899,12 @@ Desondanks de gegevens importeren?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="891"/>
         <source>Symbol set ID...</source>
-        <translation type="unfinished"></translation>
+        <translation>ID van de symbolenverzameling...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="891"/>
         <source>Edit the symbol set ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Bewerk het ID van de symbolenverzameling</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="893"/>
@@ -4055,12 +4055,12 @@ Desondanks de gegevens importeren?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1855"/>
         <source>Symbol set ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID van de symbolenverzameling</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1856"/>
         <source>Edit the symbol set ID:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bewerk het ID van de symbolenverzameling:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1883"/>
@@ -4736,13 +4736,13 @@ gekozen</translation>
         <location filename="../src/gui/color_dialog.cpp" line="270"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="81"/>
         <source>Text source:</source>
-        <translation type="unfinished"></translation>
+        <translation>Oorspronkelijke tekst:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="512"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="324"/>
         <source>Map (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaart (%!)</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="513"/>
@@ -4750,25 +4750,25 @@ gekozen</translation>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="325"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="338"/>
         <source>undefined language</source>
-        <translation type="unfinished"></translation>
+        <translation>onbekende taal</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="531"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="341"/>
         <source>Translation (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Vertaling (%1)</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="583"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="215"/>
         <source>Before editing, the stored text will be replaced with the current translation. Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Voor het bewerken zal de opgeslagen tekst worden vervangen door de huidige vertaling. Doorgaan?</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="590"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="222"/>
         <source>After modifying the stored text, the translation may no longer be found. Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Na het aanpassen van de opgeslagen tekst kan de vertaling eventueel niet meer teruggevonden worden. Doorgaan?</translation>
     </message>
 </context>
 <context>
@@ -6262,7 +6262,7 @@ separations</source>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="127"/>
         <source>Edit the symbol set ID:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bewerkt het ID van de symbolenverzameling:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="130"/>
@@ -6722,7 +6722,7 @@ Wijzigingen opslaan?</translation>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="83"/>
         <source>Edit</source>
-        <translation type="unfinished">Bewerken</translation>
+        <translation>Bewerken</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="84"/>
@@ -6747,7 +6747,7 @@ Wijzigingen opslaan?</translation>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="227"/>
         <source>Warning</source>
-        <translation type="unfinished">Waarschuwing</translation>
+        <translation>Waarschuwing</translation>
     </message>
 </context>
 <context>
