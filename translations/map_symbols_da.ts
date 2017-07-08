@@ -6,13 +6,13 @@
         <message>
             <source>Purple</source>
             <comment>Color 0</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Lilla</translation>
+    </message>
         <message>
             <source>Black</source>
             <comment>Color 1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Sort</translation>
+    </message>
         <message>
             <source>Opaque White below Black</source>
             <comment>Color 2</comment>
@@ -21,18 +21,18 @@
         <message>
             <source>Black 65%</source>
             <comment>Color 3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Sort 65%</translation>
+    </message>
         <message>
             <source>Black 20%</source>
             <comment>Color 4</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Sort 20%</translation>
+    </message>
         <message>
             <source>Brown 50%</source>
             <comment>Color 5</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Brun 50%</translation>
+    </message>
         <message>
             <source>Black below light browns</source>
             <comment>Color 6</comment>
@@ -46,38 +46,38 @@
         <message>
             <source>Blue</source>
             <comment>Color 8</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Blå</translation>
+    </message>
         <message>
             <source>Blue 50%</source>
             <comment>Color 9</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Blå 50%</translation>
+    </message>
         <message>
             <source>Brown</source>
             <comment>Color 10</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Brun</translation>
+    </message>
         <message>
             <source>OpenOrienteering Orange</source>
             <comment>Color 11</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>OpenOrienteering Orange</translation>
+    </message>
         <message>
             <source>Black 25% (Grey)</source>
             <comment>Color 12</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Sort 25% (Grå)</translation>
+    </message>
         <message>
             <source>Green 50%, Yellow</source>
             <comment>Color 13</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Grøn 50%, Gul</translation>
+    </message>
         <message>
             <source>Green</source>
             <comment>Color 14</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Grøn</translation>
+    </message>
         <message>
             <source>Opaque Yellow</source>
             <comment>Color 15</comment>
@@ -101,8 +101,8 @@
         <message>
             <source>Green, Black 50%</source>
             <comment>Color 19</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Grøn, Sort 50%</translation>
+    </message>
         <message>
             <source>Opaque Green</source>
             <comment>Color 20</comment>
@@ -111,13 +111,13 @@
         <message>
             <source>Green 50%</source>
             <comment>Color 21</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Grøn 50%</translation>
+    </message>
         <message>
             <source>Green 20%</source>
             <comment>Color 22</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Grøn 20%</translation>
+    </message>
         <message>
             <source>Green below light greens</source>
             <comment>Color 23</comment>
@@ -136,18 +136,18 @@
         <message>
             <source>Yellow</source>
             <comment>Color 26</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Gul</translation>
+    </message>
         <message>
             <source>Yellow 50%</source>
             <comment>Color 27</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Gul 50%</translation>
+    </message>
         <message>
             <source>Contour</source>
             <comment>Name of symbol 101</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Højdekurve</translation>
+    </message>
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. A contour interval of 2.5 metres may be used for flat terrains. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
             <comment>Description of symbol 101</comment>
