@@ -2106,7 +2106,7 @@ An out-of-bounds area shall not be entered.</source>
         <message>
             <source>A solid line indicates that the boundary is marked continuously (tapes, etc.) on the ground.</source>
             <comment>Description of symbol 709.1</comment>
-            <translation type="unfinished">Непрерывная линия показывает непрерывно промаркированую границу на местности (лентой и т.п.).</translation>
+            <translation>Непрерывная линия показывает непрерывно промаркированую границу на местности (лентой и т.п.).</translation>
         </message>
         <message>
             <source>Out-of-bounds area, dashed boundary</source>
@@ -2116,7 +2116,7 @@ An out-of-bounds area shall not be entered.</source>
         <message>
             <source>A dashed line indicates intermittent marking on the ground.</source>
             <comment>Description of symbol 709.2</comment>
-            <translation type="unfinished">Пунктирная линия показывает частично промаркированую границу на местности.</translation>
+            <translation>Пунктирная линия показывает частично промаркированую границу на местности.</translation>
         </message>
         <message>
             <source>Crossing point</source>
