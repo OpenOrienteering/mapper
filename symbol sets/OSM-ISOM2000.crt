@@ -27,7 +27,7 @@
 112    natural = knoll
 112    natural = termite_mount
 
-212    natural = bare_rock AND landuse = reservoir
+212    natural = bare_rock
 211    natural = beach AND surface = sand
 205    natural = cave_entrance
 201    natural = cliff
@@ -46,6 +46,7 @@
 309    natural = wetland AND foot = impassable
 
 420    natural = bush
+403    natural = grassland
 408    natural = scrub
 419    natural = tree
 406    natural = wood
@@ -72,13 +73,17 @@
 401    landuse = grass
 527    landuse = industrial
 710    landuse = landfill
+403    landuse = logging
 401    landuse = meadow
 709    landuse = military
 412    landuse = orchard
+301.2  landuse = reservoir
 710    landuse = quarry
 211    landuse = quarry AND resource = sand
 527    landuse = residential
 413    landuse = vineyard
+
+401    leisure = pitch
 
 504    highway = cycleway
 
