@@ -251,8 +251,8 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, bool mobile_mode, QWidget* pare
 	copy_action = context_menu->addAction(QIcon(QStringLiteral(":/images/copy.png")), tr("Copy"), this, SLOT(copySymbols()));
 	paste_action = context_menu->addAction(QIcon(QStringLiteral(":/images/paste.png")), tr("Paste"), this, SLOT(pasteSymbols()));
 	context_menu->addSeparator();
-	switch_symbol_action = context_menu->addAction(QIcon(QStringLiteral(":/images/tool-switch-symbol.png")), tr("Switch symbol of selected object(s)"), this, SIGNAL(switchSymbolClicked()));
-	fill_border_action = context_menu->addAction(QIcon(QStringLiteral(":/images/tool-fill-border.png")), tr("Fill / Create border for selected object(s)"), this, SIGNAL(fillBorderClicked()));
+	switch_symbol_action = context_menu->addAction(QIcon(QStringLiteral(":/images/tool-switch-symbol.png")), tr("Switch symbol of selected objects"), this, SIGNAL(switchSymbolClicked()));
+	fill_border_action = context_menu->addAction(QIcon(QStringLiteral(":/images/tool-fill-border.png")), tr("Fill / Create border for selected objects"), this, SIGNAL(fillBorderClicked()));
 	// text will be filled in by updateContextMenuState()
 	select_objects_action = context_menu->addAction(QIcon(QStringLiteral(":/images/tool-edit.png")), {}, this, SLOT(selectObjectsExclusively()));
 	select_objects_additionally_action = context_menu->addAction(QIcon(QStringLiteral(":/images/tool-edit.png")), {}, this, SLOT(selectObjectsAdditionally()));
@@ -902,7 +902,7 @@ void SymbolRenderWidget::scaleSymbol()
 	Q_ASSERT(!selected_symbols.empty());
 	
 	bool ok;
-	double percent = QInputDialog::getDouble(this, tr("Scale symbol(s)"), tr("Scale to percentage:"), 100, 0, 999999, 6, &ok);
+	double percent = QInputDialog::getDouble(this, tr("Scale symbols"), tr("Scale to percentage:"), 100, 0, 999999, 6, &ok);
 	if (!ok || percent == 100)
 		return;
 	

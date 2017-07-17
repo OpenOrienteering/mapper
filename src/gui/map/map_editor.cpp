@@ -940,9 +940,9 @@ void MapEditorController::createActions()
 	cut_hole_menu->addAction(cut_hole_circle_act);
 	cut_hole_menu->addAction(cut_hole_rectangle_act);
 	
-	rotate_act = newToolAction("rotateobjects", tr("Rotate object(s)"), this, SLOT(rotateClicked()), "tool-rotate.png", QString{}, "toolbars.html#rotate");
+	rotate_act = newToolAction("rotateobjects", tr("Rotate objects"), this, SLOT(rotateClicked()), "tool-rotate.png", QString{}, "toolbars.html#rotate");
 	rotate_pattern_act = newToolAction("rotatepatterns", tr("Rotate pattern"), this, SLOT(rotatePatternClicked()), "tool-rotate-pattern.png", QString{}, "toolbars.html#tool_rotate_pattern");
-	scale_act = newToolAction("scaleobjects", tr("Scale object(s)"), this, SLOT(scaleClicked()), "tool-scale.png", QString{}, "toolbars.html#scale");
+	scale_act = newToolAction("scaleobjects", tr("Scale objects"), this, SLOT(scaleClicked()), "tool-scale.png", QString{}, "toolbars.html#scale");
 	measure_act = newCheckAction("measure", tr("Measure lengths and areas"), this, SLOT(measureClicked(bool)), "tool-measure.png", QString{}, "toolbars.html#measure");
 	boolean_union_act = newAction("booleanunion", tr("Unify areas"), this, SLOT(booleanUnionClicked()), "tool-boolean-union.png", QString{}, "toolbars.html#unify_areas");
 	boolean_intersection_act = newAction("booleanintersection", tr("Intersect areas"), this, SLOT(booleanIntersectionClicked()), "tool-boolean-intersection.png", QString{}, "toolbars.html#intersect_areas");
@@ -1592,7 +1592,7 @@ void MapEditorController::cut()
 {
 	copy();
 	//: Past tense. Displayed when an Edit > Cut operation is completed.
-	window->showStatusBarMessage(tr("Cut %1 object(s)").arg(map->getNumSelectedObjects()), 2000);
+	window->showStatusBarMessage(tr("Cut %n object(s)", nullptr, map->getNumSelectedObjects()), 2000);
 	map->deleteSelectedObjects();
 }
 
@@ -1645,7 +1645,7 @@ void MapEditorController::copy()
 	QApplication::clipboard()->setMimeData(mime_data);
 	
 	// Show message
-	window->showStatusBarMessage(tr("Copied %1 object(s)").arg(map->getNumSelectedObjects()), 2000);
+	window->showStatusBarMessage(tr("Copied %n object(s)", nullptr, map->getNumSelectedObjects()), 2000);
 }
 
 
@@ -1685,7 +1685,7 @@ void MapEditorController::paste()
 	map->importMap(&paste_map, Map::MinimalObjectImport, window);
 	
 	// Show message
-	window->showStatusBarMessage(tr("Pasted %1 object(s)").arg(paste_map.getNumObjects()), 2000);
+	window->showStatusBarMessage(tr("Pasted %n object(s)", nullptr, paste_map.getNumObjects()), 2000);
 }
 
 
@@ -2277,13 +2277,13 @@ void MapEditorController::updateObjectDependentActions()
 	cut_act->setEnabled(have_selection);
 	copy_act->setEnabled(have_selection);
 	delete_act->setEnabled(have_selection);
-	delete_act->setStatusTip(tr("Deletes the selected object(s).") + (delete_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select at least one object to activate this tool."))));
+	delete_act->setStatusTip(tr("Deletes the selected objects.") + (delete_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select at least one object to activate this tool."))));
 	duplicate_act->setEnabled(have_selection);
-	duplicate_act->setStatusTip(tr("Duplicate the selected object(s).") + (duplicate_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select at least one object to activate this tool."))));
+	duplicate_act->setStatusTip(tr("Duplicate the selected objects.") + (duplicate_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select at least one object to activate this tool."))));
 	rotate_act->setEnabled(have_selection);
-	rotate_act->setStatusTip(tr("Rotate the selected object(s).") + (rotate_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select at least one object to activate this tool."))));
+	rotate_act->setStatusTip(tr("Rotate the selected objects.") + (rotate_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select at least one object to activate this tool."))));
 	scale_act->setEnabled(have_selection);
-	scale_act->setStatusTip(tr("Scale the selected object(s).") + (scale_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select at least one object to activate this tool."))));
+	scale_act->setStatusTip(tr("Scale the selected objects.") + (scale_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select at least one object to activate this tool."))));
 	mappart_move_menu->setEnabled(have_selection && have_multiple_parts);
 	
 	// have_rotatable_pattern || have_rotatable_point
@@ -2298,7 +2298,7 @@ void MapEditorController::updateObjectDependentActions()
 	
 	// have_are || have_line
 	cut_tool_act->setEnabled(have_area || have_line);
-	cut_tool_act->setStatusTip(tr("Cut the selected object(s) into smaller parts.") + (cut_tool_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select at least one line or area object to activate this tool."))));
+	cut_tool_act->setStatusTip(tr("Cut the selected objects into smaller parts.") + (cut_tool_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select at least one line or area object to activate this tool."))));
 	convert_to_curves_act->setEnabled(have_area || have_line);
 	convert_to_curves_act->setStatusTip(tr("Turn paths made of straight segments into smooth bezier splines.") + (convert_to_curves_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select a path object to activate this tool."))));
 	simplify_path_act->setEnabled(have_area || have_line);
@@ -2363,9 +2363,9 @@ void MapEditorController::updateSymbolAndObjectDependentActions()
 	}
 	
 	switch_symbol_act->setEnabled(single_symbol_compatible && single_symbol_different);
-	switch_symbol_act->setStatusTip(tr("Switches the symbol of the selected object(s) to the selected symbol.") + (switch_symbol_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select at least one object and a fitting, different symbol to activate this tool."))));
+	switch_symbol_act->setStatusTip(tr("Switches the symbol of the selected objects to the selected symbol.") + (switch_symbol_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select at least one object and a fitting, different symbol to activate this tool."))));
 	fill_border_act->setEnabled(single_symbol_compatible && single_symbol_different);
-	fill_border_act->setStatusTip(tr("Fill the selected line(s) or create a border for the selected area(s).") + (fill_border_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select at least one object and a fitting, different symbol to activate this tool."))));
+	fill_border_act->setStatusTip(tr("Fill the selected lines or create a border for the selected areas.") + (fill_border_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select at least one object and a fitting, different symbol to activate this tool."))));
 	distribute_points_act->setEnabled(
 		single_symbol
 		&& single_symbol->getType() == Symbol::Point
@@ -2485,7 +2485,7 @@ void MapEditorController::duplicateClicked()
 	map->setObjectsDirty();
 	map->push(undo_step);
 	setEditTool();
-	window->showStatusBarMessage(tr("%1 object(s) duplicated").arg((int)new_objects.size()), 2000);
+	window->showStatusBarMessage(tr("Duplicated %n object(s)", nullptr, int(new_objects.size())), 2000);
 }
 
 void MapEditorController::switchSymbolClicked()
@@ -2699,8 +2699,11 @@ void MapEditorController::selectObjectsClicked(bool select_exclusively)
 			setEditTool();
 	}
 	else
-		QMessageBox::warning(window, tr("Object selection"), tr("No objects were selected because there are no objects with the selected symbol(s)."));
+	{
+		QMessageBox::warning(window, tr("Object selection"), tr("No objects were selected because there are no objects with the selected symbols."));
+	}
 }
+
 void MapEditorController::deselectObjectsClicked()
 {
 	bool selection_changed = false;

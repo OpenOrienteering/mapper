@@ -3017,7 +3017,7 @@ Do you want to discard your changes?</source>
         <location filename="../src/core/map.cpp" line="712"/>
         <location filename="../src/core/map.cpp" line="800"/>
         <location filename="../src/core/map.cpp" line="828"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3955"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3958"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="279"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="337"/>
         <source>Error</source>
@@ -3087,7 +3087,7 @@ ponieważ zapisywanie jako %2 (.%3) nie jest obsługiwane.</translation>
     </message>
     <message>
         <location filename="../src/core/map.cpp" line="713"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3956"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3959"/>
         <source>Cannot open file:
 %1
 for reading.</source>
@@ -3135,12 +3135,12 @@ do odczytu.</translation>
         <translation>Nie ma nic co zaimportowania.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3961"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3964"/>
         <source>Import...</source>
         <translation type="unfinished">Importuj...</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3962"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3965"/>
         <source>Symbol replacement was canceled.
 Import the data anyway?</source>
         <translation type="unfinished"></translation>
@@ -3241,13 +3241,13 @@ Import the data anyway?</source>
         <location filename="../src/gui/map/map_editor.cpp" line="1638"/>
         <location filename="../src/gui/map/map_editor.cpp" line="1658"/>
         <location filename="../src/gui/map/map_editor.cpp" line="1671"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3078"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3084"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3090"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3096"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3105"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3915"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3922"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3081"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3087"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3093"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3099"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3108"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3918"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3925"/>
         <source>Error</source>
         <translation>Błąd</translation>
     </message>
@@ -3261,7 +3261,7 @@ Import the data anyway?</source>
         <translation type="vanished">Oblicz nienakładające się części obszaru.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3090"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3093"/>
         <source>Difference failed.</source>
         <translation>Zamiana na różnicę pól nie powiodła się.</translation>
     </message>
@@ -3308,12 +3308,12 @@ Import the data anyway?</source>
         <translation>Zmień skalę mapy, ustaw obiekty na mapie i rozmiary symboli</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3922"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3925"/>
         <source>Cannot import the selected map file because it could not be loaded.</source>
         <translation>Nie można zaimportować wybranej mapy, bo nie może być... załadowana.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3886"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3889"/>
         <source>Importable files</source>
         <translation>Importowalne pliki</translation>
     </message>
@@ -3327,10 +3327,9 @@ Import the data anyway?</source>
         <translation type="vanished">Wybierz przynajmniej dwa obiekty aby aktywować to narzędzie.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1595"/>
         <source>Cut %1 object(s)</source>
         <extracomment>Past tense. Displayed when an Edit &gt; Cut operation is completed.</extracomment>
-        <translation>Wytnij %1 obiekt(ów)</translation>
+        <translation type="vanished">Wytnij %1 obiekt(ów)</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2280"/>
@@ -3396,7 +3395,7 @@ Import the data anyway?</source>
         <translation>Okno kolorów</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3084"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3087"/>
         <source>Intersection failed.</source>
         <translation>Podzielenie nie powiodło się.</translation>
     </message>
@@ -3406,7 +3405,7 @@ Import the data anyway?</source>
         <translation>Uwagi...</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3064"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3067"/>
         <source>Measure</source>
         <translation>Pomiar</translation>
     </message>
@@ -3461,7 +3460,7 @@ Import the data anyway?</source>
         <translation>Anuluj</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3882"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3885"/>
         <source>Import %1, GPX, OSM or DXF file</source>
         <translation>Importuj plik %1, GPX, OSM lub DXF</translation>
     </message>
@@ -3481,9 +3480,8 @@ Import the data anyway?</source>
         <translation>Skaluj procentowo:</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1688"/>
         <source>Pasted %1 object(s)</source>
-        <translation>Wklejono %1 obiekt(ów)</translation>
+        <translation type="vanished">Wklejono %1 obiekt(ów)</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="928"/>
@@ -3502,9 +3500,8 @@ Import the data anyway?</source>
         <translation>Ponów ostatni krok</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2366"/>
         <source>Switches the symbol of the selected object(s) to the selected symbol.</source>
-        <translation>Zamienia symbol z zaznaczonych obiektów na wybrany symbol.</translation>
+        <translation type="vanished">Zamienia symbol z zaznaczonych obiektów na wybrany symbol.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="858"/>
@@ -3517,17 +3514,16 @@ Import the data anyway?</source>
         <translation>Odwróć kierunek symboli na obiektach liniowych.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2368"/>
         <source>Fill the selected line(s) or create a border for the selected area(s).</source>
-        <translation>Wypełnij wybrane linie lub utwórz obramowanie dla wybranych obszarów.</translation>
+        <translation type="vanished">Wypełnij wybrane linie lub utwórz obramowanie dla wybranych obszarów.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3589"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3592"/>
         <source>Do you want to remove map part "%1" and all its objects?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3915"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3918"/>
         <source>Cannot import the selected file because its file format is not supported.</source>
         <translation>Nie można importować wybranego pliku, bo jego format nie jest obsługiwany.</translation>
     </message>
@@ -3607,19 +3603,17 @@ Import the data anyway?</source>
         <translation>Wytnij okrągłą dziurę</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3753"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3756"/>
         <source>Paint free-handedly on a template. Create or load a template which can be drawn onto to activate this button</source>
         <translation>Maluj ręcznie na podkładzie. Utwórz lub załaduj podkład na którym można rysować, aby aktywować ten przycisk</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="943"/>
         <source>Rotate object(s)</source>
-        <translation>Obróć obiekt(y)</translation>
+        <translation type="vanished">Obróć obiekt(y)</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1648"/>
         <source>Copied %1 object(s)</source>
-        <translation>Skopiowano %1 obiekt(ów)</translation>
+        <translation type="vanished">Skopiowano %1 obiekt(ów)</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="946"/>
@@ -3627,12 +3621,11 @@ Import the data anyway?</source>
         <translation>Mierz długości i powierzchnie</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="945"/>
         <source>Scale object(s)</source>
-        <translation>Skaluj obiekty</translation>
+        <translation type="vanished">Skaluj obiekty</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3078"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3081"/>
         <source>Unification failed.</source>
         <translation>Ujednolicenie nie powiodło się.</translation>
     </message>
@@ -3652,14 +3645,13 @@ Import the data anyway?</source>
         <translation>Drukuj...</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2702"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2703"/>
         <source>Object selection</source>
         <translation>Wybór obiektu</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2282"/>
         <source>Duplicate the selected object(s).</source>
-        <translation>Powiel wybrany obiekt.</translation>
+        <translation type="vanished">Powiel wybrany obiekt.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1581"/>
@@ -3796,14 +3788,12 @@ Import the data anyway?</source>
         <translation>Rysowanie</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2301"/>
         <source>Cut the selected object(s) into smaller parts.</source>
-        <translation>Potnij wybrane obiekty na mniejsze części.</translation>
+        <translation type="vanished">Potnij wybrane obiekty na mniejsze części.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2284"/>
         <source>Rotate the selected object(s).</source>
-        <translation>Obróć wybrane obiekty.</translation>
+        <translation type="vanished">Obróć wybrane obiekty.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1239"/>
@@ -3816,9 +3806,8 @@ Import the data anyway?</source>
         <translation>Edytowanie w trakcie</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2702"/>
         <source>No objects were selected because there are no objects with the selected symbol(s).</source>
-        <translation>Żadne obiekty nie zostały wybrane, bo nie było obiektów zawierających ten symbol.</translation>
+        <translation type="vanished">Żadne obiekty nie zostały wybrane, bo nie było obiektów zawierających ten symbol.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1147"/>
@@ -3831,7 +3820,7 @@ Import the data anyway?</source>
         <translation>Połącz linie</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3096"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3099"/>
         <source>XOr failed.</source>
         <translation>Zaznaczenie obszarów oprócz wspólnego pola (XOR) nie powiodło się.</translation>
     </message>
@@ -3926,19 +3915,17 @@ Import the data anyway?</source>
         <translation>Wytnij prostokątną dziurę</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2488"/>
         <source>%1 object(s) duplicated</source>
-        <translation>%1 obiekt został powielony</translation>
+        <translation type="vanished">%1 obiekt został powielony</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3886"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3889"/>
         <source>All files</source>
         <translation>Wszystkie pliki</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2286"/>
         <source>Scale the selected object(s).</source>
-        <translation>Skaluj wybrane obiekty.</translation>
+        <translation type="vanished">Skaluj wybrane obiekty.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2310"/>
@@ -3985,7 +3972,7 @@ Import the data anyway?</source>
         <translation>Wyświetl koordynaty jako...</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3751"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3754"/>
         <source>Paint free-handedly on a template</source>
         <translation>Maluj ręcznie na podkładzie</translation>
     </message>
@@ -4271,19 +4258,19 @@ Import the data anyway?</source>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="986"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3567"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3570"/>
         <source>Add new part...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="987"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3627"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3630"/>
         <source>Rename current part...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="988"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3588"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3591"/>
         <source>Remove current part</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4306,7 +4293,7 @@ Import the data anyway?</source>
         <location filename="../src/gui/map/map_editor.cpp" line="1201"/>
         <location filename="../src/gui/map/map_editor.cpp" line="1206"/>
         <location filename="../src/gui/map/map_editor.cpp" line="1301"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3502"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3505"/>
         <source>Map parts</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4377,11 +4364,6 @@ selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2280"/>
-        <source>Deletes the selected object(s).</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2321"/>
         <source>Resulting symbol: %1 %2.</source>
         <translation type="unfinished"></translation>
@@ -4422,73 +4404,71 @@ selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3105"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3108"/>
         <source>Merging holes failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3394"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3397"/>
         <source>Clear temporary markers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3394"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3397"/>
         <source>Are you sure you want to delete all temporary GPS markers? This cannot be undone.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3508"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3511"/>
         <source>Merge this part with</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3514"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3517"/>
         <source>Move selected objects to</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3568"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3628"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3571"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3631"/>
         <source>Enter the name of the map part:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3644"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3647"/>
         <source>Switched to map part '%1'.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3666"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3696"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3669"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3699"/>
         <source>Merge map parts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3667"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3670"/>
         <source>Do you want to move all objects from map part "%1" to "%2", and to remove "%1"?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3697"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3700"/>
         <source>Do you want to move all objects to map part "%1", and to remove all other map parts?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="future_translations.cpp" line="31"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="943"/>
         <source>Rotate objects</source>
-        <extracomment>To replace existing translation which uses "object(s)".</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="future_translations.cpp" line="34"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="945"/>
         <source>Scale objects</source>
-        <extracomment>To replace existing translation which uses "object(s)".</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="future_translations.cpp" line="37"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1595"/>
         <source>Cut %n object(s)</source>
-        <extracomment>Past tense. Displayed when an Edit &gt; Cut operator is completed.</extracomment>
+        <extracomment>Past tense. Displayed when an Edit &gt; Cut operation is completed.</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -4496,9 +4476,8 @@ selected</source>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="future_translations.cpp" line="40"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1648"/>
         <source>Copied %n object(s)</source>
-        <extracomment>To replace existing translation which doesn't use plural correctly</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -4506,9 +4485,8 @@ selected</source>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="future_translations.cpp" line="43"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1688"/>
         <source>Pasted %n object(s)</source>
-        <extracomment>To replace existing translation which doesn't use plural correctly</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -4516,51 +4494,43 @@ selected</source>
         </translation>
     </message>
     <message>
-        <location filename="future_translations.cpp" line="46"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2280"/>
         <source>Deletes the selected objects.</source>
-        <extracomment>To replace existing translation which uses "object(s)".</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="future_translations.cpp" line="49"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2282"/>
         <source>Duplicate the selected objects.</source>
-        <extracomment>To replace existing translation which uses "object(s)".</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="future_translations.cpp" line="52"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2284"/>
         <source>Rotate the selected objects.</source>
-        <extracomment>To replace existing translation which uses "object(s)".</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="future_translations.cpp" line="55"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2286"/>
         <source>Scale the selected objects.</source>
-        <extracomment>To replace existing translation which uses "object(s)".</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="future_translations.cpp" line="58"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2301"/>
         <source>Cut the selected objects into smaller parts.</source>
-        <extracomment>To replace existing translation which uses "object(s)".</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="future_translations.cpp" line="61"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2366"/>
         <source>Switches the symbol of the selected objects to the selected symbol.</source>
-        <extracomment>To replace existing translation which uses "object(s)".</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="future_translations.cpp" line="64"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2368"/>
         <source>Fill the selected lines or create a border for the selected areas.</source>
-        <extracomment>To replace existing translation which uses "line(s)" and "area(s)".</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="future_translations.cpp" line="67"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2488"/>
         <source>Duplicated %n object(s)</source>
-        <extracomment>To replace existing translation which doesn't use plural correctly</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -4568,9 +4538,8 @@ selected</source>
         </translation>
     </message>
     <message>
-        <location filename="future_translations.cpp" line="70"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2703"/>
         <source>No objects were selected because there are no objects with the selected symbols.</source>
-        <extracomment>To replace existing translation which uses "symbol(s)".</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6922,14 +6891,12 @@ Do you want to save your changes?</source>
         <translation>Dodaj wszystkie obiekty z tym symbolem do zaznaczenia</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="255"/>
         <source>Fill / Create border for selected object(s)</source>
-        <translation>Wypełnij / Stwórz obramowanie dla wybranych obiektów</translation>
+        <translation type="vanished">Wypełnij / Stwórz obramowanie dla wybranych obiektów</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="254"/>
         <source>Switch symbol of selected object(s)</source>
-        <translation>Zamień symbol wybranych obiektów</translation>
+        <translation type="vanished">Zamień symbol wybranych obiektów</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="274"/>
@@ -6948,11 +6915,6 @@ Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="905"/>
-        <source>Scale symbol(s)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1160"/>
         <source>Remove all objects with this symbol from selection</source>
         <translation type="unfinished"></translation>
@@ -6963,21 +6925,18 @@ Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="future_translations.cpp" line="73"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="254"/>
         <source>Switch symbol of selected objects</source>
-        <extracomment>To replace existing translation which uses "object(s)".</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="future_translations.cpp" line="76"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="255"/>
         <source>Fill / Create border for selected objects</source>
-        <extracomment>To replace existing translation which uses "object(s)".</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="future_translations.cpp" line="79"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="905"/>
         <source>Scale symbols</source>
-        <extracomment>To replace existing translation which uses "symbol(s)".</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
