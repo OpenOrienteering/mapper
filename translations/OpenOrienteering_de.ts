@@ -282,7 +282,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="88"/>
         <source>Edit</source>
-        <translation type="unfinished">Bearbeiten</translation>
+        <translation>Bearbeiten</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="101"/>
@@ -337,17 +337,17 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="274"/>
         <source>Name</source>
-        <translation type="unfinished">Name</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="326"/>
         <source>- unnamed -</source>
-        <translation type="unfinished">- unbenannt -</translation>
+        <translation>- unbenannt -</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="595"/>
         <source>Warning</source>
-        <translation type="unfinished">Warnung</translation>
+        <translation>Warnung</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="148"/>
@@ -491,7 +491,7 @@
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="246"/>
         <source>%1 (duplicate)</source>
         <extracomment>Future replacement for COLOR_NAME + " (Duplicate)", for better localization.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 (Kopie)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="247"/>
@@ -3708,12 +3708,12 @@ Daten trotzdem importieren?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="891"/>
         <source>Symbol set ID...</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbolsatz-ID...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="891"/>
         <source>Edit the symbol set ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbolsatz-ID bearbeiten</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="893"/>
@@ -3863,12 +3863,12 @@ Daten trotzdem importieren?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1855"/>
         <source>Symbol set ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbolsatz-ID</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1856"/>
         <source>Edit the symbol set ID:</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbolsatz-ID bearbeiten:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1883"/>
@@ -4521,13 +4521,13 @@ gewählt</translation>
         <location filename="../src/gui/color_dialog.cpp" line="270"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="81"/>
         <source>Text source:</source>
-        <translation type="unfinished"></translation>
+        <translation>Textquelle:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="512"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="324"/>
         <source>Map (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Karte (%1)</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="513"/>
@@ -4535,25 +4535,25 @@ gewählt</translation>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="325"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="338"/>
         <source>undefined language</source>
-        <translation type="unfinished"></translation>
+        <translation>undefinierte Sprache</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="531"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="341"/>
         <source>Translation (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Übersetzung (%1)</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="583"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="215"/>
         <source>Before editing, the stored text will be replaced with the current translation. Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Vor dem Bearbeiten wird der gespeicherte Text mit der aktuellen Übersetzung ersetzt. Möchten Sie fortfahren?</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="590"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="222"/>
         <source>After modifying the stored text, the translation may no longer be found. Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Nach dem Verändern des gespeicherten Texts wird möglicherweise die Übersetzung nicht mehr gefunden. Möchten Sie fortfahren?</translation>
     </message>
 </context>
 <context>
@@ -6053,7 +6053,7 @@ rationen</translation>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="127"/>
         <source>Edit the symbol set ID:</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbolsatz-ID bearbeiten:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="130"/>
@@ -6513,7 +6513,7 @@ Sollen die Änderungen gesichert werden?</translation>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="83"/>
         <source>Edit</source>
-        <translation type="unfinished">Bearbeiten</translation>
+        <translation>Bearbeiten</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="84"/>
@@ -6538,7 +6538,7 @@ Sollen die Änderungen gesichert werden?</translation>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="227"/>
         <source>Warning</source>
-        <translation type="unfinished">Warnung</translation>
+        <translation>Warnung</translation>
     </message>
 </context>
 <context>
