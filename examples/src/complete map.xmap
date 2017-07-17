@@ -2908,14 +2908,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                 </line_symbol>
             </symbol>
             <symbol type="8" id="169" code="799.1" name="Legend text">
-                <description>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</description>
                 <text_symbol icon_text="Leg">
                     <font family="Arial" size="2117"/>
                     <text color="2" line_spacing="1.5" paragraph_spacing="0" character_spacing="0" kerning="true"/>
                 </text_symbol>
             </symbol>
             <symbol type="2" id="170" code="799.2" name="Map frame" is_hidden="true">
-                <description>A crossable watercourse less than 2 m wide.</description>
                 <line_symbol color="12" line_width="210" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
             <symbol type="8" id="171" code="800" name="Title">
@@ -2967,11 +2965,9 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                 </text_symbol>
             </symbol>
             <symbol type="4" id="179" code="899.0.1" name="Map frame">
-                <description>An area of shallow water such as a pond, river or fountain that can be crossed. The body of water shall be less than 0.5 m deep and runnable. If the body of water is not runnable it shall be represented with the symbol impassable body of water (304.1). If no other line symbol touches the border of the passable body of water, the border shall be represented with a blue line. </description>
                 <area_symbol inner_color="38" min_area="1000" patterns="0"/>
             </symbol>
             <symbol type="4" id="180" code="899.0.2" name="Red for logos">
-                <description>An area of shallow water such as a pond, river or fountain that can be crossed. The body of water shall be less than 0.5 m deep and runnable. If the body of water is not runnable it shall be represented with the symbol impassable body of water (304.1). If no other line symbol touches the border of the passable body of water, the border shall be represented with a blue line. </description>
                 <area_symbol inner_color="3" min_area="1000" patterns="0"/>
             </symbol>
             <symbol type="1" id="181" code="999" name="OpenOrienteering Logo">
