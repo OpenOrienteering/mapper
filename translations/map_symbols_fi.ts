@@ -3879,13 +3879,13 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
         <message>
             <source>Brown for contours</source>
             <comment>Color 4</comment>
-            <translation>Brown for contours</translation>
-        </message>
+            <translation type="unfinished"></translation>
+    </message>
         <message>
             <source>Black 50-65% for buildings</source>
             <comment>Color 5</comment>
-            <translation>Black 50-65% for buildings</translation>
-        </message>
+            <translation type="unfinished"></translation>
+    </message>
         <message>
             <source>Black 50%</source>
             <comment>Color 6</comment>
@@ -3924,13 +3924,13 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
         <message>
             <source>Brown 20-50% for paved area, non-urban</source>
             <comment>Color 13</comment>
-            <translation>Brown 20-50% for paved area, non-urban</translation>
-        </message>
+            <translation type="unfinished"></translation>
+    </message>
         <message>
             <source>Brown 0-30% for paved area, urban</source>
             <comment>Color 14</comment>
-            <translation>Brown 0-30% for paved area, urban</translation>
-        </message>
+            <translation type="unfinished"></translation>
+    </message>
         <message>
             <source>Black below light browns</source>
             <comment>Color 15</comment>
