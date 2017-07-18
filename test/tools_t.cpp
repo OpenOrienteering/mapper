@@ -21,20 +21,28 @@
 
 #include "tools_t.h"
 
-#include "../src/core/georeferencing.h"
-#include "core/map_color.h"
-#include "../src/fileformats/file_format.h"
-#include "../src/global.h"
-#include "gui/map/map_editor.h"
-#include "core/map_grid.h"
-#include "gui/map/map_widget.h"
-#include "core/objects/object.h"
-#include "core/symbols/symbol.h"
-#include "core/symbols/line_symbol.h"
-#include "../src/templates/template.h"
-#include "tools/edit_point_tool.h"
+#include <Qt>
+#include <QtGlobal>
+#include <QtTest>
+#include <QApplication>
+#include <QEvent>
+#include <QMouseEvent>
+#include <QPoint>
+#include <QPointF>
+#include <QString>
 
-#include "../src/gui/main_window.h"
+#include "core/map.h"
+#include "core/map_color.h"
+#include "core/map_coord.h"
+#include "core/objects/object.h"
+#include "core/symbols/line_symbol.h"
+#include "global.h"
+#include "gui/main_window.h"
+#include "gui/map/map_editor.h"
+#include "gui/map/map_widget.h"
+#include "tools/edit_point_tool.h"
+#include "tools/edit_tool.h"
+
 
 /// Creates a test map and provides pointers to specific map elements.
 /// NOTE: delete the map manually in case its ownership is not transferred to a MapEditorController or similar!
@@ -75,7 +83,7 @@ TestMap::TestMap()
 	
 	map = new Map();
 	
-	MapColor* black = new MapColor();
+	auto black = new MapColor();
 	black->setCmyk(MapColorCmyk(0.0f, 0.0f, 0.0f, 1.0f));
 	black->setOpacity(1.0f);
 	black->setName(QString::fromLatin1("black"));
@@ -99,9 +107,7 @@ TestMap::TestMap()
 	// TODO: fill map with more content as needed
 }
 
-TestMap::~TestMap()
-{
-}
+TestMap::~TestMap() = default;
 
 
 // ### TestMapEditor ###
@@ -123,7 +129,7 @@ TestMapEditor::~TestMapEditor()
 
 void TestMapEditor::simulateClick(QPoint pos)
 {
-	QTest::mouseClick(map_widget, Qt::LeftButton, 0, pos);
+	QTest::mouseClick(map_widget, Qt::LeftButton, nullptr, pos);
 }
 
 void TestMapEditor::simulateClick(QPointF pos)
@@ -133,7 +139,7 @@ void TestMapEditor::simulateClick(QPointF pos)
 
 void TestMapEditor::simulateDrag(QPoint start_pos, QPoint end_pos)
 {
-	QTest::mousePress(map_widget, Qt::LeftButton, 0, start_pos);
+	QTest::mousePress(map_widget, Qt::LeftButton, nullptr, start_pos);
 	
 	// NOTE: the implementation of QTest::mouseMove() does not seem to work (tries to set the real cursor position ...)
 	//QTest::mouseMove(map_widget, end_pos);
@@ -141,7 +147,7 @@ void TestMapEditor::simulateDrag(QPoint start_pos, QPoint end_pos)
 	QMouseEvent event(QEvent::MouseMove, end_pos, map_widget->mapToGlobal(end_pos), Qt::NoButton, Qt::LeftButton, Qt::NoModifier);
 	QApplication::sendEvent(map_widget, &event);
 	
-	QTest::mouseRelease(map_widget, Qt::LeftButton, 0, end_pos);
+	QTest::mouseRelease(map_widget, Qt::LeftButton, nullptr, end_pos);
 }
 
 void TestMapEditor::simulateDrag(QPointF start_pos, QPointF end_pos)
