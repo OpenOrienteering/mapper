@@ -1,296 +1,294 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="de">
+<TS version="2.1" language="nl">
     <context>
         <name>ISOM2017</name>
         <message>
             <source>Purple</source>
             <comment>Color 0</comment>
-            <translation>Violett</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Black</source>
             <comment>Color 1</comment>
-            <translation>Schwarz</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Opaque White below Black</source>
             <comment>Color 2</comment>
-            <translation>Deckendes Weiß über Schwarz</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Black 65%</source>
             <comment>Color 3</comment>
-            <translation>Schwarz 65%</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Black 20%</source>
             <comment>Color 4</comment>
-            <translation>Schwarz 20%</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Brown 50%</source>
             <comment>Color 5</comment>
-            <translation>Braun 50%</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Black below light browns</source>
             <comment>Color 6</comment>
-            <translation>Schwarz unter Hellbraun</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Opaque Blue</source>
             <comment>Color 7</comment>
-            <translation>Deckendes Blau</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Blue</source>
             <comment>Color 8</comment>
-            <translation>Blau</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Blue 50%</source>
             <comment>Color 9</comment>
-            <translation>Blau 50%</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Brown</source>
             <comment>Color 10</comment>
-            <translation>Braun</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>OpenOrienteering Orange</source>
             <comment>Color 11</comment>
-            <translation>OpenOrienteering-Orange</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Black 25% (Grey)</source>
             <comment>Color 12</comment>
-            <translation>Schwarz 25% (Grau)</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Green 50%, Yellow</source>
             <comment>Color 13</comment>
-            <translation>Grün 50%, Gelb</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Green</source>
             <comment>Color 14</comment>
-            <translation>Grün</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Opaque Yellow</source>
             <comment>Color 15</comment>
-            <translation>Deckendes Gelb</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Opaque White over Green</source>
             <comment>Color 16</comment>
-            <translation>Deckendes Weiß über Grün</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Opaque Green 20%</source>
             <comment>Color 17</comment>
-            <translation>Deckendes Grün 20%</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Opaque Green 50%</source>
             <comment>Color 18</comment>
-            <translation>Deckendes Grün 50%</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Green, Black 50%</source>
             <comment>Color 19</comment>
-            <translation>Grün, Schwarz 50%</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Opaque Green</source>
             <comment>Color 20</comment>
-            <translation>Deckendes Grün</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Green 50%</source>
             <comment>Color 21</comment>
-            <translation>Grün 50%</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Green 20%</source>
             <comment>Color 22</comment>
-            <translation>Grün 20%</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Green below light greens</source>
             <comment>Color 23</comment>
-            <translation>Grün unter Hellgrün</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Green 50% over Yellow</source>
             <comment>Color 24</comment>
-            <translation>Grün 50% über Gelb</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>White over Yellow</source>
             <comment>Color 25</comment>
-            <translation>Weiß über Gelb</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Yellow</source>
             <comment>Color 26</comment>
-            <translation>Gelb</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Yellow 50%</source>
             <comment>Color 27</comment>
-            <translation>Gelb 50%</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Contour</source>
             <comment>Name of symbol 101</comment>
-            <translation>Höhenlinie, Normalkurve</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. A contour interval of 2.5 metres may be used for flat terrains. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
             <comment>Description of symbol 101</comment>
-            <translation>Eine Linie, die Punkte gleicher Höhe verbindet. Die Standard-Äquidistanz zwilschen Höhenlinien ist 5 m. In sehr flachem Gelände kann eine Äquidistanz von 2,5 m verwendet werden.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Slope line, contour</source>
             <comment>Name of symbol 101.1</comment>
-            <translation>Fallstrich</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
             <comment>Description of symbol 101.1</comment>
-            <translation>Ein Fallstrich kann auf der tiefergelegenen Seite der Höhenlinie gezeichnet werden, um die Richtung des Gefälles im Gelände zu verdeutlichen. Fallstriche sollten vorzugsweise in Einbuchtungen verwendet werden werden.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Index contour</source>
             <comment>Name of symbol 102</comment>
-            <translation>Zählkurve</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. An index contour may be represented as an ordinary contour line in an area with much detail. Small contour knolls and depressions are normally not represented using index contours.</source>
             <comment>Description of symbol 102</comment>
-            <translation>Jede fünfte Kurve soll als dickere Linie gezeichnet werden, um Höhenunterschiede und die generelle Geländestruktur zu verdeutlichen. Fällt eine Zählkurve in ein Gebiet mit vielen Details, kann sie als Normalkurve gezeichnet werden. Für kleine Kuppen und Senken werden Zählkurven normalerweise nicht verwendet.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Contour value</source>
             <comment>Name of symbol 102.1</comment>
-            <translation>Höhenkurvenzahl</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
             <comment>Description of symbol 102.1</comment>
-            <translation>Die Kurvenzahlen können zum Abschätzen großer Höhenunterschiede eingefügt werden. Sie werden so in die Zählkurven plaziert, dass andere Objekte nicht verdeckt werden. Die Ziffern sollten so ausgerichtet werden, dass ihr oberer Teil auf der höheren Seite der Höhenlinie liegt.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Form line</source>
             <comment>Name of symbol 103</comment>
-            <translation>Hilfshöhenlinie</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Form lines are used where more information must be given about the shape of the ground. Form lines are added only where representation would be incomplete with ordinary contours. They shall not be used as intermediate contours. Only one form line should be used between neighbouring contours. It is very important that a form line fits logically into the contour system, so the start and end of a form line should be parallel to the neighbouring contours. The gaps between the form line dashes must be placed on reasonably straight sections of the form line. Form lines can be used to differentiate flat knolls and depressions from more distinct ones.
 </source>
             <comment>Description of symbol 103</comment>
-            <translation>Hilfshöhenlinien werden verwendet, wo mehr Information über die Geländeform gegeben werden muss. Sie werden nur dort benutzt, wo eine Darstellung mit Normalkurven unvollständig wäre. Sie dürfen nicht als zusätzlich mittlere Normalkurve verwendet werden. Zwischen benachbarten Normalkurven darf immer nur eine Hilfshöhenlinie gezeichnet werden. Es ist ist wichtig, dass Hilfshöhenlinien in das Normalkurvenbild integriert sind, so dass Anfang und Ende einer Hilfshöhenlinie parallel zu den benachbarten Normalkurven verlaufen. Die Unterbrechungen der Hilfshöhenlinie müssen an ausreichend geraden Abschnitten der Linie platziert werden. Hilfshöhenlinien können verwendet werden, um flache Kuppen oder Senken von auffälligeren zu unterscheiden.
-</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Slope line, formline</source>
             <comment>Name of symbol 103.1</comment>
-            <translation>Fallstrich, Hilfshöhenlinie</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
             <comment>Description of symbol 103.1</comment>
-            <translation>Ein Fallstrich kann auf der tiefergelegenen Seite der Höhenlinie gezeichnet werden, um die Richtung des Gefälles im Gelände zu verdeutlichen. Fallstriche sollten vorzugsweise in Einbuchtungen verwendet werden werden.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Earth bank</source>
             <comment>Name of symbol 104</comment>
-            <translation>Erdböschung</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
             <comment>Description of symbol 104</comment>
-            <translation>Eine Erdböschung ist ein auffälliger Höhenwechsel, der sich deutlich von der Umgebung abhebt, wie z. B. Kies- oder Sandgruben, Einschnitte  von Straßen und Eisenbahnen oder Dämme. Mindesthöhe: 1 m. Eine Erdböschung kann die Belaufbarkeit beeinflussen. Die Fallstriche zeigen die gesamte Ausdehnung der Böschung. An langen Erdböschungen können an den Ende kürzere Fallstriche verwendet werden. Wenn zwei Böschungen eng beieinander liegen, können Fallstriche weggelassen werden. Unpassierbare Böschungen sollten mit der Signatur 201 (unpassierbare Felswand) gezeichnet werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Earth bank, minimum size</source>
             <comment>Name of symbol 104.1</comment>
-            <translation>Erdböschung, Minimalgröße</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
             <comment>Description of symbol 104.1</comment>
-            <translation>Eine Erdböschung ist ein auffälliger Höhenwechsel, der sich deutlich von der Umgebung abhebt, wie z. B. Kies- oder Sandgruben, Einschnitte  von Straßen und Eisenbahnen oder Dämme. Mindesthöhe: 1 m. Eine Erdböschung kann die Belaufbarkeit beeinflussen. Die Fallstriche zeigen die gesamte Ausdehnung der Böschung. An langen Erdböschungen können an den Ende kürzere Fallstriche verwendet werden. Wenn zwei Böschungen eng beieinander liegen, können Fallstriche weggelassen werden. Unpassierbare Böschungen sollten mit der Signatur 201 (unpassierbare Felswand) gezeichnet werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Earth bank, top line</source>
             <comment>Name of symbol 104.2</comment>
-            <translation>Erdböschung, Hauptlinie</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
             <comment>Description of symbol 104.2</comment>
-            <translation>Eine Erdböschung ist ein auffälliger Höhenwechsel, der sich deutlich von der Umgebung abhebt, wie z. B. Kies- oder Sandgruben, Einschnitte  von Straßen und Eisenbahnen oder Dämme. Mindesthöhe: 1 m. Eine Erdböschung kann die Belaufbarkeit beeinflussen. Die Fallstriche zeigen die gesamte Ausdehnung der Böschung. An langen Erdböschungen können an den Ende kürzere Fallstriche verwendet werden. Wenn zwei Böschungen eng beieinander liegen, können Fallstriche weggelassen werden. Unpassierbare Böschungen sollten mit der Signatur 201 (unpassierbare Felswand) gezeichnet werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Earth bank, tag line</source>
             <comment>Name of symbol 104.3</comment>
-            <translation>Erdböschung, Fallstrich</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Use this symbol to display the full extent of wide earth banks.</source>
             <comment>Description of symbol 104.3</comment>
-            <translation>Diese Symbol ist zu benutzen, um die gesamte Ausdehnung der Böschung zu zeigen.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Earth bank, minimum size (from ISOM2000)</source>
             <comment>Name of symbol 104.9</comment>
-            <translation>Erdböschung, Minimalgröße (aus ISOM2000)</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
             <comment>Description of symbol 104.9</comment>
-            <translation>Eine Erdböschung ist ein auffälliger Höhenwechsel, der sich deutlich von der Umgebung abhebt, wie z. B. Kies- oder Sandgruben, Einschnitte  von Straßen und Eisenbahnen oder Dämme. Mindesthöhe: 1 m. Eine Erdböschung kann die Belaufbarkeit beeinflussen. Die Fallstriche zeigen die gesamte Ausdehnung der Böschung. An langen Erdböschungen können an den Ende kürzere Fallstriche verwendet werden. Wenn zwei Böschungen eng beieinander liegen, können Fallstriche weggelassen werden. Unpassierbare Böschungen sollten mit der Signatur 201 (unpassierbare Felswand) gezeichnet werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Earth wall</source>
             <comment>Name of symbol 105</comment>
-            <translation>Erdwall</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Distinct earth wall. Minimum height is 1 m.</source>
             <comment>Description of symbol 105</comment>
-            <translation>Deutlicher Erdwall. Minimale Höhe: 1 m.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Small earth wall</source>
             <comment>Name of symbol 106</comment>
-            <translation>Kleiner Erdwall</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
             <comment>Description of symbol 106</comment>
-            <translation>Ein niedriger oder teilweise zerfallener Erdwall wird mit einer unterbrochenen Linie gezeichnet. Minimale Höhe: 0,5m.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Erosion gully</source>
             <comment>Name of symbol 107</comment>
-            <translation>Graben</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An erosion gully which is too small to be shown using symbol 104 (earth bank) is shown by a single line. Minimum depth: 1 m.
 Contour lines shall not be broken around this symbol.</source>
             <comment>Description of symbol 107</comment>
-            <translation>Eine Erosionsrinne oder Graben, die für eine Darstellung mit der Signatur 104 (Erdböschung) zu klein sind, werden durch eine einzelne Linie dargestellt. Mindesttiefe: 1 m.
-Normalkurven (Höhenlinien) sollen an diesem Symbol nicht unterbrochen werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Small erosion gully</source>
             <comment>Name of symbol 108</comment>
-            <translation>Kleiner Graben</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A small erosion gully, dry ditch or trench. Minimum depth: 0.5 m.
@@ -301,7 +299,7 @@ Contour lines should be broken around this symbol.</source>
         <message>
             <source>Small knoll</source>
             <comment>Name of symbol 109</comment>
-            <translation>Kleine Kuppe</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An obvious mound or knoll which cannot be drawn to scale with a contour. Minimum height: 1 m.
@@ -312,7 +310,7 @@ The symbol shall not touch or overlap contours.</source>
         <message>
             <source>Small elongated knoll</source>
             <comment>Name of symbol 110</comment>
-            <translation>Kleine längliche Kuppe</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An obvious elongated knoll which cannot be drawn to scale with a contour. Minimum height: 1 m.
@@ -323,7 +321,7 @@ The symbol shall not touch or overlap contours.</source>
         <message>
             <source>Small depression</source>
             <comment>Name of symbol 111</comment>
-            <translation>Kleine Senke</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A small depression or hollow without steep sides that is too small to be shown by contours. Minimum depth: 1 m. Minimum width: 2 m.
@@ -335,7 +333,7 @@ Small depressions with steep sides are represented with symbol 112 (pit). The sy
         <message>
             <source>Pit</source>
             <comment>Name of symbol 112</comment>
-            <translation>Loch oder kleine Grube</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Pits and holes with distinct steep sides which cannot be shown to scale using symbol 104 (earth bank). Minimum depth: 1 m. Minimum width: 1 m. A pit larger than 5 m x 5 m should normally be exaggerated and drawn using symbol 104 (earth bank). Pits without steep sides are represented with symbol 111 (small depression). The symbol may not touch or overlap other brown symbols. Location is the centre of
@@ -346,7 +344,7 @@ gravity of the symbol, and the symbol is orientated to north.</source>
         <message>
             <source>Broken ground</source>
             <comment>Name of symbol 113</comment>
-            <translation>Kleinkupiertes Gelände</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An area of pits and/or knolls which is too intricate to be shown in detail, or other types of rough and uneven ground that is clearly distinguishable but has little impact on runnability.
@@ -360,17 +358,17 @@ Density: 3 to 5 dots / mm2 (9-16%).</source>
         <message>
             <source>Broken ground, individual dot</source>
             <comment>Name of symbol 113.1</comment>
-            <translation>Kleinkupiertes Gelände, Einzelpunkt</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An area of pits or knolls which is too intricate to be shown in detail. The density of randomly placed dots may vary according to the detail on the ground.</source>
             <comment>Description of symbol 113.1</comment>
-            <translation>Ein Gebiet mit Löchern oder Hügeln, das für eine detaillierte Darstellung zu formenreich ist. Die Dichte der Punkte darf entsprechend der Anzahl von Geländeobjekten variieren. Die Größe der Punkte kann variieren.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Very broken ground</source>
             <comment>Name of symbol 114</comment>
-            <translation>Stark kleinkupiertes Gelände</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An area of pits and/or knolls, which is too intricate to be shown in detail, or other types of rough and uneven ground that is clearly distinguishable and affects runnability.
@@ -385,7 +383,7 @@ Density: 8 to 10 dots / mm2 (25-32%).
         <message>
             <source>Prominent landform feature</source>
             <comment>Name of symbol 115</comment>
-            <translation>Markantes Geländeobjekt</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>The feature must be very clearly distinguishable from its surroundings. Location is the centre of gravity of the symbol, which is orientated to north. The symbol may not touch or overlap other brown symbols.</source>
@@ -395,7 +393,7 @@ Density: 8 to 10 dots / mm2 (25-32%).
         <message>
             <source>Impassable cliff</source>
             <comment>Name of symbol 201</comment>
-            <translation>Unpassierbare Felswand</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -409,7 +407,7 @@ When an impassable cliff drops straight into water, making it impossible to pass
         <message>
             <source>Impassable cliff, minimum size</source>
             <comment>Name of symbol 201.1</comment>
-            <translation>Unpassierbare Felswand, Minimalgröße</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -422,7 +420,7 @@ When an impassable cliff drops straight into water, making it impossible to pass
         <message>
             <source>Impassable cliff, plan shape representation</source>
             <comment>Name of symbol 201.2</comment>
-            <translation>Unpassierbare Felswand, flächentreue Darstellung</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -436,7 +434,7 @@ When an impassable cliff drops straight into water, making it impossible to pass
         <message>
             <source>Impassable cliff, top line</source>
             <comment>Name of symbol 201.3</comment>
-            <translation>Unpassierbare Felswand, Hauptlinie</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
@@ -446,7 +444,7 @@ When an impassable cliff drops straight into water, making it impossible to pass
         <message>
             <source>Impassable cliff, tag line</source>
             <comment>Name of symbol 201.4</comment>
-            <translation>Unpassierbare Felswand, Fallstrich</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Use this symbol to display the full extent of a wide cliff.</source>
@@ -456,7 +454,7 @@ When an impassable cliff drops straight into water, making it impossible to pass
         <message>
             <source>Impassable cliff, minimum size (from ISOM2000)</source>
             <comment>Name of symbol 201.9</comment>
-            <translation>Unpassierbare Felswand, Minimalgröße (aus ISOM2000)</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -469,7 +467,7 @@ When an impassable cliff drops straight into water, making it impossible to pass
         <message>
             <source>Cliff</source>
             <comment>Name of symbol 202</comment>
-            <translation>Felswand</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A passable, vertical cliff or quarry where the direction of fall of the cliff is apparent from the contours. Minimum height: 1 m.
@@ -481,7 +479,7 @@ Crossing a cliff will normally slow progress.</source>
         <message>
             <source>Cliff, minimum size</source>
             <comment>Name of symbol 202.1</comment>
-            <translation>Felswand, Minimalgröße</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A passable, vertical cliff or quarry where the direction of fall of the cliff is apparent from the contours. Minimum height: 1 m.
@@ -493,7 +491,7 @@ Crossing a cliff will normally slow progress.</source>
         <message>
             <source>Cliff, with tags</source>
             <comment>Name of symbol 202.2</comment>
-            <translation>Felswand, mit Fallstrichen</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A passable cliff or quarry. Minimum height: 1 m.
@@ -506,7 +504,7 @@ Crossing a cliff will normally slow progress.</source>
         <message>
             <source>Cliff, with tags, minimum size</source>
             <comment>Name of symbol 202.3</comment>
-            <translation>Felswand, mit Fallstrichen, Minimalgröße</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A passable cliff or quarry. Minimum height: 1 m.
@@ -519,7 +517,7 @@ Crossing a cliff will normally slow progress.</source>
         <message>
             <source>Cliff, with tags, minimum size (from ISOM2000)</source>
             <comment>Name of symbol 202.9</comment>
-            <translation>Felswand, mit Fallstrichen, Minimalgröße (aus ISOM200)</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A passable cliff or quarry. Minimum height: 1 m.
@@ -532,7 +530,7 @@ Crossing a cliff will normally slow progress.</source>
         <message>
             <source>Rocky pit or cave (without distinct entrance)</source>
             <comment>Name of symbol 203.1</comment>
-            <translation>Felsloch oder Höhle (ohne deutlichen Eingang)</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Rocky pits, holes, caves or mineshafts which may constitute a danger to the competitor. Minimum depth: 1 m.
@@ -545,7 +543,7 @@ Rocky pits larger than 5 m in diameter should be exaggerated and represented usi
         <message>
             <source>Rocky pit or cave with distinct entrance</source>
             <comment>Name of symbol 203.2</comment>
-            <translation>Felsloch oder Höhle mit deutlichem Eingang</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Rocky pits, holes, caves or mineshafts with a distinct entrance which may constitute a danger to the competitor. Minimum depth: 1 m.
@@ -557,7 +555,7 @@ Rocky pits larger than 5 m in diameter should be exaggerated and represented usi
         <message>
             <source>Rocky pit or cave with distinct entrance (from ISOM2000)</source>
             <comment>Name of symbol 203.9</comment>
-            <translation>Felsloch oder Höhle mit deutlichem Eingang (aus ISOM2000)</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Rocky pits, holes, caves or mineshafts with a distinct entrance which may constitute a danger to the competitor. Minimum depth: 1 m.
@@ -569,7 +567,7 @@ Rocky pits larger than 5 m in diameter should be exaggerated and represented usi
         <message>
             <source>Boulder</source>
             <comment>Name of symbol 204</comment>
-            <translation>Stein</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A distinct boulder (should be higher than 1 m), which is immediately identifiable on the ground. Groups of boulders are represented using symbol 207 (boulder cluster) or a boulder field symbol (208, 209).
@@ -580,7 +578,7 @@ To be able to show the distinction between neighbouring (closer than 30 metres a
         <message>
             <source>Boulder or large boulder, different size</source>
             <comment>Name of symbol 204.5</comment>
-            <translation>Stein (größer) oder großer Stein (kleiner)</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A boulder which is larger than neighboring boulders (204), or a large boulder which is smaller than neighboring large boulders (205).
@@ -2200,1561 +2198,1558 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Purple</source>
             <comment>Color 0</comment>
-            <translation>Violett</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Black</source>
             <comment>Color 1</comment>
-            <translation>Schwarz</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Brown 50%</source>
             <comment>Color 2</comment>
-            <translation>Braun 50%</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Black below light browns</source>
             <comment>Color 3</comment>
-            <translation>Schwarz unter Hellbraun</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Opaque Blue</source>
             <comment>Color 4</comment>
-            <translation>Deckendes Blau</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Blue</source>
             <comment>Color 5</comment>
-            <translation>Blau</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Blue 50%</source>
             <comment>Color 6</comment>
-            <translation>Blau 50%</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Brown</source>
             <comment>Color 7</comment>
-            <translation>Braun</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>OpenOrienteering Orange</source>
             <comment>Color 8</comment>
-            <translation>OpenOrienteering-Orange</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Black 30%</source>
             <comment>Color 9</comment>
-            <translation>Schwarz 30%</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Green 50%, Yellow</source>
             <comment>Color 10</comment>
-            <translation>Grün 50%, Gelb</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Green over White over Green</source>
             <comment>Color 11</comment>
-            <translation>Grün über Weiß-über-Grün</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Opaque White over Green</source>
             <comment>Color 12</comment>
-            <translation>Deckendes Weiß über Grün</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Opaque Green</source>
             <comment>Color 13</comment>
-            <translation>Deckendes Grün</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Green</source>
             <comment>Color 14</comment>
-            <translation>Grün</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Green 60%</source>
             <comment>Color 15</comment>
-            <translation>Grün 60%</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Green 30%</source>
             <comment>Color 16</comment>
-            <translation>Grün 30%</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Green below light greens</source>
             <comment>Color 17</comment>
-            <translation>Grün unter Hellgrün</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Yellow</source>
             <comment>Color 18</comment>
-            <translation>Gelb</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Yellow 50%</source>
             <comment>Color 19</comment>
-            <translation>Gelb 50%</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>White over Yellow 70%</source>
             <comment>Color 20</comment>
-            <translation>Weiß über Gelb 70%</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Yellow 70%</source>
             <comment>Color 21</comment>
-            <translation>Gelb 70%</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Contour</source>
             <comment>Name of symbol 101</comment>
-            <translation>Höhenlinie, Normalkurve</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
             <comment>Description of symbol 101</comment>
-            <translation>Eine Linie, die Punkte gleicher Höhe verbindet. Der normale Abstand zwischen Normalkurven beträgt 5 m. Die kleinste Kurve in einer Höhenlinie hat einen Abstand von 0,25 mm von Linienmitte zu Linienmitte.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Index contour</source>
             <comment>Name of symbol 102</comment>
-            <translation>Zählkurve</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. Where an index contour coincides with an area of much detail, it may be shown with a normal contour line.</source>
             <comment>Description of symbol 102</comment>
-            <translation>Jede fünfte Kurve soll als dickere Linie gezeichnet werden, um Höhenunterschiede und die generelle Geländestruktur zu verdeutlichen. Fällt eine Zählkurve in ein Gebiet mit vielen Details, kann sie als Normalkurve gezeichnet werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Form line</source>
             <comment>Name of symbol 103</comment>
-            <translation>Hilfshöhenlinie</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</source>
             <comment>Description of symbol 103</comment>
-            <translation>Höhenlinie zwischen den Normalkurven. Hilfshöhenlinien werden verwendet, wo mehr Information über die Geländeform gegeben werden kann. Sie werden nur dort benutzt, wo eine Darstellung mit Normalkurven nicht möglich ist. Zwischen benachbarten Normalkurven darf immer nur eine Hilfshöhenlinie gezeichnet werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Slope line</source>
             <comment>Name of symbol 104</comment>
-            <translation>Fallstrich</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Slope lines may be drawn on the lower side of a contour line, e.g. along the line of a re-entrant or in a depression. They are used only where it is necessary to clarify the direction of slope.</source>
             <comment>Description of symbol 104</comment>
-            <translation>Fallstriche können an der tieferen Seite einer Höhenlinie gezeichnet werden wie z. B. entlang einer Muldenlinie oder in einer Senke. Sie werden nur dann gezeichnet, wenn es für die Darstellung der Geländeneigung erforderlich ist.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Contour value</source>
             <comment>Name of symbol 105</comment>
-            <translation>Höhenkurvenzahl</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
             <comment>Description of symbol 105</comment>
-            <translation>Die Kurvenzahlen können zum Abschätzen großer Höhenunterschiede eingefügt werden. Sie werden so in die Zählkurven plaziert, dass andere Objekte nicht verdeckt werden. Die Ziffern sollten so ausgerichtet werden, dass ihr oberer Teil auf der höheren Seite der Höhenlinie liegt.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Earth bank</source>
             <comment>Name of symbol 106</comment>
-            <translation>Erdböschung</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
             <comment>Description of symbol 106</comment>
-            <translation>Eine steile Erdböschung ist ein plötzlicher Bruch der Erdoberfläche, der sich deutlich von der Umgebung abhebt, wie z. B. Kies- oder Sandgruben, Einschnitte  von Straßen und Eisenbahnen oder Dämme. Die Fallstriche sollen die gesamte Fläche der Böschung bedecken, können jedoch weggelassen werden, wenn zwei Böschungen zu eng beieinander liegen. Unpassierbare Böschungen sollten mit der Signatur 201 (unpassierbare Felswand) gezeichnet werden. Für sehr hohe Erdböschungen kann eine Strichstärke von 0,25 mm gewählt werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Earth bank, minimum size</source>
             <comment>Name of symbol 106.0.1</comment>
-            <translation>Erdböschung, Minimalgröße</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
             <comment>Description of symbol 106.0.1</comment>
-            <translation>Eine steile Erdböschung ist ein plötzlicher Bruch der Erdoberfläche, der sich deutlich von der Umgebung abhebt, wie z. B. Kies- oder Sandgruben, Einschnitte  von Straßen und Eisenbahnen oder Dämme. Die Fallstriche sollen die gesamte Fläche der Böschung bedecken, können jedoch weggelassen werden, wenn zwei Böschungen zu eng beieinander liegen. Unpassierbare Böschungen sollten mit der Signatur 201 (unpassierbare Felswand) gezeichnet werden. Für sehr hohe Erdböschungen kann eine Strichstärke von 0,25 mm gewählt werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Earth bank, very high</source>
             <comment>Name of symbol 106.1</comment>
-            <translation>Erdböschung, sehr hoch</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>The line width of very high earth banks may be 0.25 mm.</source>
             <comment>Description of symbol 106.1</comment>
-            <translation>Für sehr hohe Erdböschungen kann eine Strichstärke von 0,25 mm gewählt werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Earth bank, very high, minimum size</source>
             <comment>Name of symbol 106.1.1</comment>
-            <translation>Erdböschung, sehr hoch, Minimalgröße</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>The line width of very high earth banks may be 0.25 mm.</source>
             <comment>Description of symbol 106.1.1</comment>
-            <translation>Für sehr hohe Erdböschungen kann eine Strichstärke von 0,25 mm gewählt werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Earth bank, tag line</source>
             <comment>Name of symbol 106.2</comment>
-            <translation>Erdböschung, Fallstrich</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Use this symbol to display the full extent of wide earth banks.</source>
             <comment>Description of symbol 106.2</comment>
-            <translation>Diese Symbol ist zu benutzen, um die gesamte Ausdehnung der Böschung zu zeigen.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Earth wall</source>
             <comment>Name of symbol 107</comment>
-            <translation>Erdwall</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Distinct earth wall. Minimum height is 1 m.</source>
             <comment>Description of symbol 107</comment>
-            <translation>Deutlicher Erdwall. Minimale Höhe: 1 m.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Small earth wall</source>
             <comment>Name of symbol 108</comment>
-            <translation>Kleiner Erdwall</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
             <comment>Description of symbol 108</comment>
-            <translation>Ein niedriger oder teilweise zerfallener Erdwall wird mit einer unterbrochenen Linie gezeichnet. Minimale Höhe: 0,5 m.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Erosion gully</source>
             <comment>Name of symbol 109</comment>
-            <translation>Graben</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An erosion gully or trench which is too small to be shown by symbol 106 is shown by a single line. The line width reflects the size of the gully. Minimum depth 1 m. The end of the line is pointed.</source>
             <comment>Description of symbol 109</comment>
-            <translation>Eine Erosionsrinne oder ein Graben, der so klein ist, dass er nicht mehr mit der Signatur 106 dargestellt werden kann, wird mit einem Strich gezeichnet. Die Linienbreite spiegelt die Größe des Grabens wieder.  Minimale Tiefe: 1 m.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Small erosion gully</source>
             <comment>Name of symbol 110</comment>
-            <translation>Kleiner Graben</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A small erosion gully or trench. Minimum depth 0.5 m.</source>
             <comment>Description of symbol 110</comment>
-            <translation>Eine kleine Erosionsrinne oder ein kleiner Graben. Mindesttiefe: 0,5 m.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Small knoll</source>
             <comment>Name of symbol 112</comment>
-            <translation>Kleine Kuppe</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A small obvious mound or rocky knoll which cannot be drawn to scale with a contour (diameter of mound less than ca. 5 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. The symbol may not touch a contour line.</source>
             <comment>Description of symbol 112</comment>
-            <translation>Ein kleiner, markanter Erd- oder Felshügel, der mit einer Höhenlinie nicht mehr maßstabsgetreu gezeichnet werden kann (Durchmesser der Erhebung kleiner als ca. 5 m). Der Hügel sollte mindestens 1 m höher als die Umgebung sein. Die Signatur darf keine Höhenlinie berühren.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Elongated knoll</source>
             <comment>Name of symbol 113</comment>
-            <translation>Längliche Kuppe</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A small obvious elongated knoll which cannot be drawn to scale with a contour (length less than 12 m and width less than 4 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. Knolls larger than this must be shown by contours. The symbol may not be drawn in free form or such that two elongated knoll symbols overlap. The symbol may not touch a contour line.</source>
             <comment>Description of symbol 113</comment>
-            <translation>Ein kleiner deutlicher länglicher Hügel, der mit einer Höhenlinie nicht mehr maßstabsgetreu gezeichnet werden kann (Länge weniger als 12 m und Breite weniger als 4 m). Der Hügel sollte mindestens 1 m höher als die Umgebung sein. Größere Hügel müssen mit Höhenlinien gezeichnet werden. Die Signatur darf nicht in anderer Form gezeichnet werden oder derart, dass sich zwei längliche Hügel überdecken. Die Signatur darf keine Höhenlinie berühren.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Small depression</source>
             <comment>Name of symbol 115</comment>
-            <translation>Kleine Senke</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Small shallow natural depressions and hollows (minimum diameter 2 m) which cannot be shown to scale by contours are represented by a semicircle. Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol, which is orientated to north. Symbol 116 is used for man-made pits.</source>
             <comment>Description of symbol 115</comment>
-            <translation>Kleine flache natürliche Senken und Löcher (minimaler Durchmesser 2 m), die mit Höhenlinien nicht mehr maßstabsgetreu gezeichnet werden können, werden durch einen Halbkreis dargestellt. Die Mindesttiefe in Bezug auf das umgebende Gelände sollte 1 m betragen. Die Lage entspricht dem Schwerpunkt der Signatur, die nach Norden ausgerichtet wird. Für künstliche Löcher ist Signatur 116 zu verwenden.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Pit</source>
             <comment>Name of symbol 116</comment>
-            <translation>Loch</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Pits and holes with distinct steep sides which cannot be shown to scale by symbol 106 (minimum diameter 2 m). Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol which is orientated to north.</source>
             <comment>Description of symbol 116</comment>
-            <translation>Trichter und Löcher mit klaren steilen Seiten, die durch die Signatur 106 nicht mehr maßstabsgetreu gezeichnet werden können (minimaler Durchmesser 2 m). Die Mindesttiefe in Bezug auf das umgebende Gelände sollte 1 m betragen. Die Lage entspricht dem Schwerpunkt der Signatur, die nach Norden ausgerichtet wird.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Broken ground, small</source>
             <comment>Name of symbol 117.1</comment>
-            <translation>Kleinkupiertes Gelände, kleiner Punkt</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An area of pits or knolls which is too intricate to be shown in detail. The density of randomly placed dots may vary according to the detail on the ground.</source>
             <comment>Description of symbol 117.1</comment>
-            <translation>Ein Gebiet mit Löchern oder Hügeln, das für eine detaillierte Darstellung zu formenreich ist. Die Dichte der Punkte darf entsprechend der Anzahl von Geländeobjekten variieren. Die Größe der Punkte kann variieren.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Broken ground, big</source>
             <comment>Name of symbol 117.2</comment>
-            <translation>Kleinkupiertes Gelände, großer Punkt</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>The size of the dots may vary.</source>
             <comment>Description of symbol 117.2</comment>
-            <translation>Ein Gebiet mit Löchern oder Hügeln, das für eine detaillierte Darstellung zu formenreich ist. Die Dichte der Punkte darf entsprechend der Anzahl von Geländeobjekten variieren. Die Größe der Punkte kann variieren.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Special land form feature</source>
             <comment>Name of symbol 118</comment>
-            <translation>Besonderes Geländeobjekt</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>This symbol can be used for a special small land form feature. The definition of the symbol must be given in the map legend.</source>
             <comment>Description of symbol 118</comment>
-            <translation>Mit dieser Signatur können besondere kleine Geländeobjekte dargestellt werden. Die Bedeutung der Signatur muss immer in der Kartenlegende angegeben werden.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Impassable cliff</source>
             <comment>Name of symbol 201</comment>
-            <translation>Unpassierbare Felswand</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201</comment>
-            <translation>Eine unpassierbare Felswand, ein unpassierbarer Steinbruch oder eine unpassierbare Erdböschung (vgl. Signatur 106) wird mit einer 0,35 mm breiten Linie gezeichnet, sowie mit Fallstrichen, die ihre volle Ausdehnung von der Oberkante bis zum Fuß angeben. Bei senkrechten Felswänden können die Fallstriche bei Platzmangel weggelassen werden, z. B. bei schmalen Durchgängen zwischen Felswänden (der Durchgang soll mindestens mit einer lichten Breite von 0,3 mm gezeichnet werden). Die Fallstriche können sich auf die Flächensignatur von unmittelbar unter der Felswand liegenden Objekten erstrecken. Wenn eine Felswand direkt am Wasser steht, so dass eine Passage unter der Felswand am Ufer entlang nicht möglich ist, wird die Uferlinie weggelassen, oder die Fallstriche müssen deutlich über die Uferlinie hinausgehen.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Impassable cliff, minimum size</source>
             <comment>Name of symbol 201.0.1</comment>
-            <translation>Unpassierbare Felswand, Minimalgröße</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201.0.1</comment>
-            <translation>Eine unpassierbare Felswand, ein unpassierbarer Steinbruch oder eine unpassierbare Erdböschung (vgl. Signatur 106) wird mit einer 0,35 mm breiten Linie gezeichnet, sowie mit Fallstrichen, die ihre volle Ausdehnung von der Oberkante bis zum Fuß angeben. Bei senkrechten Felswänden können die Fallstriche bei Platzmangel weggelassen werden, z. B. bei schmalen Durchgängen zwischen Felswänden (der Durchgang soll mindestens mit einer lichten Breite von 0,3 mm gezeichnet werden). Die Fallstriche können sich auf die Flächensignatur von unmittelbar unter der Felswand liegenden Objekten erstrecken. Wenn eine Felswand direkt am Wasser steht, so dass eine Passage unter der Felswand am Ufer entlang nicht möglich ist, wird die Uferlinie weggelassen, oder die Fallstriche müssen deutlich über die Uferlinie hinausgehen.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Impassable cliff, no tags</source>
             <comment>Name of symbol 201.1</comment>
-            <translation>Unpassierbare Felswand, ohne Fallstriche</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
             <comment>Description of symbol 201.1</comment>
-            <translation>Bei senkrechten Felswänden können die Fallstriche bei Platzmangel weggelassen werden, z. B. bei schmalen Durchgängen zwischen Felswänden. (Der Durchgang soll mindestens mit einer lichten Breite von 0,3 mm gezeichnet werden.)</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Impassable cliff, tag line</source>
             <comment>Name of symbol 201.2</comment>
-            <translation>Unpassierbare Felswand, Fallstrich</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Use this symbol to display the full extent of a wide cliff.</source>
             <comment>Description of symbol 201.2</comment>
-            <translation>Fallstrichen geben die volle Ausdehnung der Felswand von der Oberkante bis zum Fuß an. Sie können sich auf die Flächensignatur von unmittelbar unter der Felswand liegenden Objekten erstrecken.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Rock pillars/cliffs</source>
             <comment>Name of symbol 202</comment>
-            <translation>Felstürme/-wände</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>In the case of unusual features such as rock pillars or massive cliffs or gigantic boulders, the rocks shall be shown in plan shape without tags.</source>
             <comment>Description of symbol 202</comment>
-            <translation>Ungewöhnliche Objekte wie Felstürme, massive Felswände oder riesige Felsen werden mit ihrer flächentreuen Projektion ohne Fallstriche dargestellt.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Passable rock face</source>
             <comment>Name of symbol 203</comment>
-            <translation>Passierbare Felswand</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A small vertical rock face (minimum height 1 m) may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
             <comment>Description of symbol 203</comment>
-            <translation>Eine kleine senkrechte Felswand (minimale Höhe 1 m) kann ohne Fallstriche gezeichnet werden. Falls die Richtung des Gefälles der Felswand aus den Höhenlinien nicht deutlich wird, oder zur Verbesserung der Lesbarkeit, sollten Fallstriche in die Fallrichtung gezeichnet werden. Bei passierbaren Felswänden ohne Fallstriche sollten die Linienenden zur Verbesserung der Lesbarkeit abgerundet gezeichnet werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Passable rock face, minimum size</source>
             <comment>Name of symbol 203.0.1</comment>
-            <translation>Passierbare Felswand, Minimalgröße</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A small vertical rock face (minimum height 1 m) may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
             <comment>Description of symbol 203.0.1</comment>
-            <translation>Eine kleine senkrechte Felswand (minimale Höhe 1 m) kann ohne Fallstriche gezeichnet werden. Falls die Richtung des Gefälles der Felswand aus den Höhenlinien nicht deutlich wird, oder zur Verbesserung der Lesbarkeit, sollten Fallstriche in die Fallrichtung gezeichnet werden. Bei passierbaren Felswänden ohne Fallstriche sollten die Linienenden zur Verbesserung der Lesbarkeit abgerundet gezeichnet werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Passable rock face, no tags</source>
             <comment>Name of symbol 203.1</comment>
-            <translation>Passierbare Felswand, ohne Fallstriche</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
             <comment>Description of symbol 203.1</comment>
-            <translation>Eine kleine senkrechte Felswand (minimale Höhe 1 m) wird ohne Fallstriche gezeichnet, wenn die Richtung des Gefälles der Felswand aus den Höhenlinien deutlich wird und die Lesbarkeit gut ist.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Passable rock face, no tags, minimum size</source>
             <comment>Name of symbol 203.1.1</comment>
-            <translation>Passierbare Felswand, ohne Fallstriche, Minimalgröße</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
             <comment>Description of symbol 203.1.1</comment>
-            <translation>Eine kleine senkrechte Felswand (minimale Höhe 1 m) wird ohne Fallstriche gezeichnet, wenn die Richtung des Gefälles der Felswand aus den Höhenlinien deutlich wird und die Lesbarkeit gut ist.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Passable rock face, no tags, rounded</source>
             <comment>Name of symbol 203.2</comment>
-            <translation>Passierbare Felswand, ohne Fallstriche, abgerundet</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
             <comment>Description of symbol 203.2</comment>
-            <translation>Bei passierbaren Felswänden ohne Fallstrichen können die Linienenden zur Verbesserung der Lesbarkeit abgerundet gezeichnet werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Passable rock face, no tags, rounded, minimum size</source>
             <comment>Name of symbol 203.2.1</comment>
-            <translation>Passierbare Felswand, ohne Fallstriche, abgerundet, Minimalgröße</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
             <comment>Description of symbol 203.2.1</comment>
-            <translation>Bei passierbaren Felswänden ohne Fallstrichen können die Linienenden zur Verbesserung der Lesbarkeit abgerundet gezeichnet werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Rocky pit</source>
             <comment>Name of symbol 204</comment>
-            <translation>Felsloch</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Rocky pits, holes or mineshafts which may constitute a danger to the runner. Location is the centre of gravity of the symbol, which is orientated to north.</source>
             <comment>Description of symbol 204</comment>
-            <translation>Felslöcher, Trichter oder Bergwerksschächte, die für den Läufer eine Gefahr bedeuten können. Die Lage entspricht dem Schwerpunkt der Signatur, die nach Norden ausgerichtet wird.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Cave</source>
             <comment>Name of symbol 205</comment>
-            <translation>Höhle</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A cave is represented by the same symbol as a rocky pit. In this case the symbol should be orientated to point up the slope as indicated opposite. The centre of gravity of the symbol marks the opening.</source>
             <comment>Description of symbol 205</comment>
-            <translation>Eine Höhle wird mit der gleichen Signatur dargestellt wie das Felsloch. In diesem Fall soll die Signatur hangabwärts orientiert werden. Der Schwerpunkt der Signatur entspricht dem Höhleneingang.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Boulder</source>
             <comment>Name of symbol 206</comment>
-            <translation>Stein</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A small distinct boulder (minimum height 1 m). Every boulder marked on the map should be immediately identifiable on the ground. To be able to show the distinction between boulders with significant difference in size it is permitted to enlarge this symbol by 20% (diameter 0.5 mm).</source>
             <comment>Description of symbol 206</comment>
-            <translation>Ein kleiner deutlicher Stein (Minimalhöhe 1 m). Jeder in der Karte dargestellte Stein soll im Gelände sofort erkennbar sein. Um deutliche Größenunterschiede zwischen Steinen darstellen zu können, darf die Signatur um bis zu 20% vergrößert werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Boulder, enlarged</source>
             <comment>Name of symbol 206.1</comment>
-            <translation>Stein, vergrößert</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>To be able to show the distinction between boulders with significant difference in size it is permitted to enlarge this symbol by 20% (diameter 0.5 mm).</source>
             <comment>Description of symbol 206.1</comment>
-            <translation>Vergrößerte Variante von Signatur 206. Um deutliche Größenunterschiede zwischen Steinen darstellen zu können, darf die Signatur um bis zu 20% vergrößert werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Large boulder</source>
             <comment>Name of symbol 207</comment>
-            <translation>Großer Stein</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A particularly large and distinct boulder. For gigantic boulders symbol 202 should be used.</source>
             <comment>Description of symbol 207</comment>
-            <translation>Ein besonders großer und auffallender Stein. Für riesige Steine sollte die Signatur 202 verwendet werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Boulder field</source>
             <comment>Name of symbol 208</comment>
-            <translation>Blockfeld</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>An area which is covered with so many blocks of stone that they cannot be marked individually is shown with randomly orientated solid triangles with sides of ratio 8:6:5. A minimum of two triangles should be used. The going is indicated by the density of the triangles. To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
             <comment>Description of symbol 208</comment>
-            <translation>Eine Fläche, die mit so vielen Steinblöcken bedeckt ist, dass sie nicht mehr einzeln dargestellt werden können, wird mit unregelmäßig orientierten Dreiecken mit einem Seitenverhältnis von 8:6:5 gezeichnet. Es sollen mindestens zwei Dreiecke verwendet werden. Die Belaufbarkeit wird durch die Dichte der Dreiecke angegeben. Um den Unterschied zwischen Blockfeldern mit deutlich unterschiedlichen Steingrößen darstellen zu können, dürfen die Dreiecke um bis zu 20% vergrößert werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Boulder field, large</source>
             <comment>Name of symbol 208.1</comment>
-            <translation>Blockfeld, groß</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
             <comment>Description of symbol 208.1</comment>
-            <translation>Vergrößerte Variante von Signatur 208. Um den Unterschied zwischen Blockfeldern mit deutlich unterschiedlichen Steingrößen darstellen zu können, dürfen die Dreiecke um bis zu 20% vergrößert werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Boulder cluster</source>
             <comment>Name of symbol 209</comment>
-            <translation>Steingruppe</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A small distinct group of boulders so closely clustered together that they cannot be marked individually. The symbol is an equilateral triangle orientated to the north. To be able to show the distinction between boulder clusters with significant difference in size it is permitted to enlarge this symbol by 25% (1.0 mm).</source>
             <comment>Description of symbol 209</comment>
-            <translation>Eine kleine deutliche Gruppe von Steinen, die so eng zusammen liegen, daß sie nicht einzeln dargestellt werden können. Die Signatur ist ein nach Norden orientiertes gleichseitiges Dreieck. Um den Unterschied zwischen Steingruppen mit deutlich unterschiedlichen Steingrößen darstellen zu können, darf die Signatur um bis zu 25% vergrößert werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Boulder cluster, large</source>
             <comment>Name of symbol 209.1</comment>
-            <translation>Steingruppe, vergrößert</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>To be able to show the distinction between boulder clusters with significant difference in size it is permitted to enlarge this symbol by 25% (1.0 mm).</source>
             <comment>Description of symbol 209.1</comment>
-            <translation>Variante von Signatur 209. Um den Unterschied zwischen Steingruppen mit deutlich unterschiedlichen Steingrößen darstellen zu können, darf die Signatur um bis zu 25% vergrößert werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Stony ground, small</source>
             <comment>Name of symbol 210</comment>
-            <translation>Steingebiet, klein</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Stony or rocky ground which affects going should be shown on the map. The dots should be randomly distributed with density according to the amount of rock. A minimum of three dots should be used.</source>
             <comment>Description of symbol 210</comment>
-            <translation>Steiniger oder felsiger Boden, der die Belaufbarkeit beeinflusst, soll in der Karte dargestellt werden. Die Punkte sollen entsprechend der Anzahl der Felsen unregelmäßig verteilt werden. Es sollten mindestens drei Punkte gezeichnet werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Stony ground</source>
             <comment>Name of symbol 210.1</comment>
-            <translation>Steingebiet</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Stony or rocky ground which affects going should be shown on the map. The dots should be randomly distributed with density according to the amount of rock. A minimum of three dots should be used.</source>
             <comment>Description of symbol 210.1</comment>
-            <translation>Steiniger oder felsiger Boden, der die Belaufbarkeit beeinflusst, soll in der Karte dargestellt werden. Die Punkte sollen entsprechend der Anzahl der Felsen unregelmäßig verteilt werden. Es sollten mindestens drei Punkte gezeichnet werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Open sandy ground</source>
             <comment>Name of symbol 211</comment>
-            <translation>Offene Sandfläche</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>An area of soft sandy ground or gravel with no vegetation and where running is slow. Where an area of sandy ground is open but running is good, it is shown as open land (401/402).</source>
             <comment>Description of symbol 211</comment>
-            <translation>Eine Fläche mit weichem Sandboden oder Kies ohne Vegetation, die langsam belaufbar ist. Wenn eine offene Sandfläche gut belaufbar ist, wird sie als offenes Gebiet dargestellt (Signaturen 401/402).</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Bare rock</source>
             <comment>Name of symbol 212</comment>
-            <translation>Nackte Felsplatte</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A runnable area of rock without earth or vegetation is shown as bare rock. An area of rock covered with grass, moss or other low vegetation is shown as open land (401/402).</source>
             <comment>Description of symbol 212</comment>
-            <translation>Ein belaufbares Felsgebiet ohne Boden oder Vegetation wird als nackter Fels dargestellt. Mit Gras, Moos oder niedriger Vegetation bedeckte Felsplatten werden als offenes Gebiet dargestellt (Signaturen 401/402).</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Lake</source>
             <comment>Name of symbol 301</comment>
-            <translation>See</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Large areas of water are shown with dot screen. Small areas of water should be shown with full colour. A black bank line indicates that the feature cannot be crossed.</source>
             <comment>Description of symbol 301</comment>
-            <translation>Große Wasserflächen werden heller dargestellt. Kleine Gewässer sollen mit Vollton gezeichnet werden. Eine schwarze Umrisslinie gibt an, dass das Objekt nicht überquert werden kann.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Lake, bank line</source>
             <comment>Name of symbol 301.1</comment>
-            <translation>See, Uferlinie</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A black bank line indicates that the feature cannot be crossed.</source>
             <comment>Description of symbol 301.1</comment>
-            <translation>Eine schwarze Umrisslinie gibt an, dass das Objekt nicht überquert werden kann.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Lake, with bank line</source>
             <comment>Name of symbol 301.2</comment>
-            <translation>See, mit Uferlinie</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Pond</source>
             <comment>Name of symbol 302</comment>
-            <translation>Teich</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Where the lake or pond is smaller than 1mm² on the printed map, the bank line is omitted.</source>
             <comment>Description of symbol 302</comment>
-            <translation>Wenn der See oder Teich auf der gedruckten Karte kleiner als 1 mm² ist, wird die Uferlinie weggelassen.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Waterhole</source>
             <comment>Name of symbol 303</comment>
-            <translation>Wasserloch</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A water-filled pit or an area of water which is too small to be shown to scale. Location is the centre of gravity of the symbol, which is orientated to north.</source>
             <comment>Description of symbol 303</comment>
-            <translation>Ein mit Wasser gefülltes Loch oder eine Wasserfläche, die zu klein ist, um sie maß­stäblich darzustellen. Die Lage entspricht dem Schwerpunkt der Signatur, die nach Norden ausgerichtet wird.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Crossable watercourse</source>
             <comment>Name of symbol 305</comment>
-            <translation>Passierbarer Wasserlauf</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A crossable watercourse, minimum 2 m wide. The width of watercourses over 5 m wide should be shown to scale.</source>
             <comment>Description of symbol 305</comment>
-            <translation>Ein passierbarer Wasserlauf mit einer minimalen Breite von 2 m. Flüsse mit einer Breite von mehr als 5 m sollen maßstäblich dargestellt werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Crossable small watercourse</source>
             <comment>Name of symbol 306</comment>
-            <translation>Passierbarer kleiner Wasserlauf</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A crossable watercourse (including a major drainage ditch) less than 2 m wide. For better legibility a ditch in a marsh should be drawn as a crossable watercourse (305).</source>
             <comment>Description of symbol 306</comment>
-            <translation>Ein passierbarer Wasserlauf (einschließlich große Drainagegräben) von weniger als 2 m Breite. Zur besseren Lesbarkeit sollen passierbare kleine Wasserläufe in Sümpfen als passierbare Wasserläufe gezeichnet werden (Signatur 305).</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Minor water channel</source>
             <comment>Name of symbol 307</comment>
-            <translation>Kleiner Wassergraben</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A natural or man-made minor water channel which may contain water only intermittently.</source>
             <comment>Description of symbol 307</comment>
-            <translation>Ein natürlicher oder künstlicher Wassergraben, der nur zeitweise Wasser führen kann.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Narrow marsh</source>
             <comment>Name of symbol 308</comment>
-            <translation>Schmaler Sumpfstreifen</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A marsh or trickle of water which is too narrow to be shown with symbol 310 (less than ca. 5 m wide).</source>
             <comment>Description of symbol 308</comment>
-            <translation>Ein Sumpf oder Sickerbach, der zu schmal ist, um ihn mit der Signatur 310 darzu­stellen (weniger als ca. 5 m breit).</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Uncrossable marsh</source>
             <comment>Name of symbol 309</comment>
-            <translation>Unpassierbarer Sumpf</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A marsh which is uncrossable or dangerous for the runner. A black line surrounds the symbol.</source>
             <comment>Description of symbol 309</comment>
-            <translation>Ein Sumpf (oder Moor), der für den Läufer unpassierbar oder gefährlich ist. Eine schwarze Linie begrenzt die Signatur.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Uncrossable marsh, border line</source>
             <comment>Name of symbol 309.1</comment>
-            <translation>Unpassierbarer Sumpf, Umrisslinie</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A black line surrounds the symbol.</source>
             <comment>Description of symbol 309.1</comment>
-            <translation>Eine schwarze Linie begrenzt die Signatur.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Uncrossable marsh, with border line</source>
             <comment>Name of symbol 309.2</comment>
-            <translation>Unpassierbarer Sumpf, mit Umrisslinie</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Marsh</source>
             <comment>Name of symbol 310</comment>
-            <translation>Sumpf</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility</source>
             <comment>Description of symbol 310</comment>
-            <translation>Ein passierbarer Sumpf, im Allgemeinen mit deutlicher Begrenzung. Die Signatur sollte mit Vegetationssignaturen kombiniert werden, um die Belaufbarkeit und Offenheit darzustellen. Wenn kleine Sumpfflächen mit den Signaturen 403/404 kombiniert werden sollen, ist zur Verbesserung der Lesbarkeit die Verwendung der Signaturen 401/402 zulässig.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Marsh, minimum size</source>
             <comment>Name of symbol 310.1</comment>
-            <translation>Sumpf, Minimalgröße</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Indistinct marsh</source>
             <comment>Name of symbol 311</comment>
-            <translation>Undeutlicher Sumpf</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>An indistinct or seasonal marsh or area of gradual transition from marsh to firm ground, which is crossable. The edge is generally indistinct and the vegetation similar to that of the surrounding ground. The symbol should be combined with vegetation symbols to show runnability and openness.</source>
             <comment>Description of symbol 311</comment>
-            <translation>Ein undeutlicher oder zeitweise vorhandener Sumpf, oder eine Übergangsform vom Sumpf zum festen Untergrund, der bzw. die passierbar ist. Die Begrenzung ist in der Regel undeutlich und die Vegetation ähnlich wie die des umgebenden Geländes. Die Signatur kann mit Vegetationssignaturen kombiniert werden, um die Belaufbarkeit und Offenheit darzustellen.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Indistinct marsh, minimum size</source>
             <comment>Name of symbol 311.1</comment>
-            <translation>Undeutlicher Sumpf, Minimalgröße</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Well</source>
             <comment>Name of symbol 312</comment>
-            <translation>Brunnen</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Wells and captive springs, which are clearly visible on the ground.</source>
             <comment>Description of symbol 312</comment>
-            <translation>Brunnen und gefasste Quellen, die im Gelände deutlich sichtbar sind.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Spring</source>
             <comment>Name of symbol 313</comment>
-            <translation>Quelle</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>The source of a stream with a distinct outflow. The symbol is orientated to open downstream.</source>
             <comment>Description of symbol 313</comment>
-            <translation>Ein Bachanfang mit deutlichem Abfluss. Die Signatur wird mit der Öffnung zum Abfluss hin orientiert.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Special water feature</source>
             <comment>Name of symbol 314</comment>
-            <translation>Besonderes Gewässerobjekt</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A special small water feature. The definition of the symbol must always be given in the map legend.</source>
             <comment>Description of symbol 314</comment>
-            <translation>Ein besonderes kleines Gewässerobjekt. Die Bedeutung der Signatur muss immer in der Kartenlegende angegeben werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Open land</source>
             <comment>Name of symbol 401</comment>
-            <translation>Offenes Gebiet</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Cultivated land, fields, meadows, grassland, etc. without trees, offering easy running. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
             <comment>Description of symbol 401</comment>
-            <translation>Kultiviertes Land, Felder, Wiesen, Weideland usw. ohne Bäume, das leicht belaufbar ist. Wenn gelbe Flächen zu dominant werden, kann ein Raster (75%) anstelle des gelben Volltons gewählt werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Open land with scattered trees</source>
             <comment>Name of symbol 402</comment>
-            <translation>Offenes Gebiet mit einzelnen Bäumen</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Meadows with scattered trees or bushes, with grass or similar ground cover offering easy running. Areas smaller than 10 mm at the maps scale are shown as open land (401). Individual trees may be added (418, 419, 420). If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
             <comment>Description of symbol 402</comment>
-            <translation>Wiesen mit einzelnen Bäumen oder Büschen, Gras oder ähnlicher Bodenvegetation, die leicht belaufbar sind. Gebiete, die kleiner sind als 10 mm² im Kartenmaßstab, werden als offenes Gebiet (Signatur 401) dargestellt. Einzelne Bäume können hinzugefügt werden (Signaturen 418, 419, 420). Wenn gelbe Flächen zu dominant werden, kann ein Raster (75%) anstelle des gelben Volltons gewählt werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Rough open land</source>
             <comment>Name of symbol 403</comment>
-            <translation>Raues offenes Gebiet</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Heath, moorland, felled areas, newly planted areas (trees lower than ca. 1 m) or other generally open land with rough ground vegetation, heather or tall grass. Symbol 403 may be combined with symbols 407 and 409 to show reduced runnability.</source>
             <comment>Description of symbol 403</comment>
-            <translation>Heide, Moorflächen, Kahlschläge, Neuanpflanzungen (Bäume kleiner als ca. 1 m) oder anderes überwiegend offenes Gelände mit rauer Bodenvegetation, Heidekraut oder hohem Gras. Die Signatur 403 kann mit den Signaturen 407 und 409 kombiniert werden, um langsame Belaufbarkeit darzustellen.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Rough open land with scattered trees</source>
             <comment>Name of symbol 404</comment>
-            <translation>Raues offenes Gebiet mit einzelnen Bäumen</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Where there are scattered trees in rough open land, areas of white (or green) should appear in the tone. Such an area may be generalised by using a regular pattern of large white dots in the yellow screen. Areas smaller than 16 mm in the maps scale are shown as rough open land (403). Individual trees may be added (418, 419, 420).</source>
             <comment>Description of symbol 404</comment>
-            <translation>Wo in rauem offenen Gebiet einzelne Bäume stehen, sollen weiße (oder grüne) Flächen im Gelbton erscheinen. Solche Gebiete können durch ein regelmäßiges Muster von großen weißen Punkten generalisiert werden. Gebiete, die kleiner sind als 16 mm² im Kartenmaßstab, werden als raues offenes Gebiet (Signatur 403) dargestellt. Einzelne Bäume können hinzugefügt werden (Signaturen 418, 419, 420).</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Forest: easy running</source>
             <comment>Name of symbol 405</comment>
-            <translation>Wald: leicht belaufbar</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Typically open runnable forest for the particular type of terrain. If no part of the forest is runnable then no white should appear on the map.</source>
             <comment>Description of symbol 405</comment>
-            <translation>Für die jeweilige Geländeart typischer offener Wald. Wenn kein Teil des Waldes belaufbar ist, sollte Weiß in der Karte nicht erscheinen.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Forest: slow running</source>
             <comment>Name of symbol 406</comment>
-            <translation>Wald: langsam belaufbar</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>An area with dense trees (low visibility) which reduces running to ca. 60-80% of normal speed.</source>
             <comment>Description of symbol 406</comment>
-            <translation>Ein Gebiet mit dichten Bäumen (geringe Sichtweite), die das Lauftempo auf ca. 60-80% der normalen Geschwindigkeit verringern.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Undergrowth: slow running</source>
             <comment>Name of symbol 407</comment>
-            <translation>Bodenbewuchs: langsam belaufbar</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 60-80% of normal speed. This symbol may not be combined with 406 or 408.</source>
             <comment>Description of symbol 407</comment>
-            <translation>Ein Gebiet mit dichter Bodenvegetation, jedoch sonst guter Sichtweite (Brombeersträucher, Heidekraut, niedrige Büsche, einschließlich abgeschlagene Äste), wodurch das Lauftempo auf ca. 60-80% der normalen Geschwindigkeit verringert ist. Diese Signatur kann nicht mit Signatur 406 oder 408 kombiniert werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Forest: difficult to run</source>
             <comment>Name of symbol 408</comment>
-            <translation>Wald: schwer belaufbar</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>An area with dense trees or thicket (low visibility) which reduce running to ca. 20-60% of normal speed.</source>
             <comment>Description of symbol 408</comment>
-            <translation>Ein Gebiet mit dichten Bäumen oder Dickicht (geringe Sichtweite), wodurch das Lauftempo auf ca. 20-60% der normalen Geschwindigkeit verringert ist.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Undergrowth: difficult to run</source>
             <comment>Name of symbol 409</comment>
-            <translation>Bodenbewuchs: schwer belaufbar</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 20-60% of normal speed. This symbol may not be combined with 406 or 408.</source>
             <comment>Description of symbol 409</comment>
-            <translation>Ein Gebiet mit dichter Bodenvegetation, jedoch sonst guter Sichtweite (Brombeersträucher, Heidekraut, niedrige Büsche, einschließlich abgeschlagene Äste), wodurch das Lauftempo auf ca. 20-60% der normalen Geschwindigkeit verringert ist. Diese Signatur kann nicht mit Signatur 406 oder 408 kombiniert werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Vegetation: very difficult to run, impassable</source>
             <comment>Name of symbol 410</comment>
-            <translation>Vegetation: sehr schwer belaufbar, undurchdringlich</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>An area of dense vegetation (trees or undergrowth) which is barely passable. Running reduced to ca. 0-20% of normal speed.</source>
             <comment>Description of symbol 410</comment>
-            <translation>Ein Gebiet mit dichter Vegetation (Bäume oder Bodenbewuchs), das kaum passierbar ist. Das Lauftempo ist auf ca. 0-20% der normalen Geschwindigkeit verringert.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Vegetation: very difficult to run, impassable, line</source>
             <comment>Name of symbol 410.1</comment>
-            <translation>Vegetation: sehr schwer belaufbar, undurchdringlich, Linie</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Line of minimum width for symbol 410.</source>
             <comment>Description of symbol 410.1</comment>
-            <translation>Linienvariante von Signatur 410, minimale Breite.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Forest runnable in one direction, 1</source>
             <comment>Name of symbol 411.0</comment>
-            <translation>Wald, in einer Richtung belaufbar, 1</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
             <comment>Description of symbol 411.0</comment>
-            <translation>Wenn ein Waldgebiet in einer Richtung gut, in anderer Richtung jedoch schlecht belaufbar ist, zeigen weiße Streifen im Grünton die Richtung der guten Belaufbarkeit an.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Forest runnable in one direction, 2</source>
             <comment>Name of symbol 411.1</comment>
-            <translation>Wald, in einer Richtung belaufbar, 2</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
             <comment>Description of symbol 411.1</comment>
-            <translation>Wenn ein Waldgebiet in einer Richtung gut, in anderer Richtung jedoch schlecht belaufbar ist, zeigen weiße Streifen im Grünton die Richtung der guten Belaufbarkeit an.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Forest runnable in one direction, 3</source>
             <comment>Name of symbol 411.2</comment>
-            <translation>Wald, in einer Richtung belaufbar, 3</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
             <comment>Description of symbol 411.2</comment>
-            <translation>Wenn ein Waldgebiet in einer Richtung gut, in anderer Richtung jedoch schlecht belaufbar ist, zeigen weiße Streifen im Grünton die Richtung der guten Belaufbarkeit an.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Orchard</source>
             <comment>Name of symbol 412</comment>
-            <translation>Obstgarten</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the
 direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
             <comment>Description of symbol 412</comment>
-            <translation>Land, das mit Obstbäumen und -büschen bepflanzt ist. Die Punktlinie kann zur Angabe der Pflanzrichtung danach orientiert werden. Wenn gelbe Flächen zu dominant werden, kann ein Raster (75%) anstelle des gelben Volltons gewählt werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Vineyard</source>
             <comment>Name of symbol 413</comment>
-            <translation>Weinberg</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>The green lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
             <comment>Description of symbol 413</comment>
-            <translation>Die grünen Linien können zur Angabe der Pflanzrichtung danach orientiert werden. Wenn gelbe Flächen zu dominant werden, kann ein Raster (75%) anstelle des gelben Volltons gewählt werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Distinct cultivation boundary</source>
             <comment>Name of symbol 414</comment>
-            <translation>Deutliche Kulturgrenze</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>The boundary of cultivated land when not shown with other symbols (fence, wall, path, etc.) is shown with a black line. A permanent boundary between different types of cultivated land is also shown with this symbol.</source>
             <comment>Description of symbol 414</comment>
-            <translation>Die Grenze von Kulturland wird mit einem schwarzen Strich gezeichnet, wenn sie nicht durch andere Signaturen (Zaun, Wall, Pfad usw.) dargestellt ist. Eine dauerhafte Grenze zwischen verschiedenen Kulturlandarten wird ebenfalls mit dieser Signatur dargestellt.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Cultivated land</source>
             <comment>Name of symbol 415</comment>
-            <translation>Kulturland</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Cultivated land which is seasonally out-of-bounds due to growing crops may be shown with a black dot screen.</source>
             <comment>Description of symbol 415</comment>
-            <translation>Felder, die wegen der heranwachsenden Nutzpflanzen zeitweise Sperrgebiete sind, können mit einem schwarzen Punktraster dargestellt werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Distinct vegetation boundary</source>
             <comment>Name of symbol 416</comment>
-            <translation>Deutliche Vegetationsgrenze</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A distinct forest edge or very distinct vegetation boundary within the forest.</source>
             <comment>Description of symbol 416</comment>
-            <translation>Ein deutlicher Waldrand oder eine sehr deutliche Vegetationsgrenze im Wald.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Special vegetation feature</source>
             <comment>Name of symbol 418</comment>
-            <translation>Besonderes Vegetationsobjekt</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Symbols 418, 419 and 420 can be used for special small vegetation features. The definition of the symbol must be given in each case in the map legend.</source>
             <comment>Description of symbol 418</comment>
-            <translation>Mit Signatur 418 kann ein kleines Vegetationsobjekt dargestellt werden. Die Beschreibung der Signatur muss immer in der Kartenlegende angegeben werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Special vegetation feature</source>
             <comment>Name of symbol 419</comment>
-            <translation>Besonderes Vegetationsobjekt</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Symbols 418, 419 and 420 can be used for special small vegetation features. The definition of the symbol must be given in each case in the map legend.</source>
             <comment>Description of symbol 419</comment>
-            <translation>Mit Signatur 419 kann ein kleines Vegetationsobjekt dargestellt werden. Die Beschreibung der Signatur muss immer in der Kartenlegende angegeben werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Special vegetation feature</source>
             <comment>Name of symbol 420</comment>
-            <translation>Besonderes Vegetationsobjekt</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Symbols 418, 419 and 420 can be used for special small vegetation features. The definition of the symbol must be given in each case in the map legend.</source>
             <comment>Description of symbol 420</comment>
-            <translation>Mit Signatur 420 kann ein kleines Vegetationsobjekt dargestellt werden. Die Beschreibung der Signatur muss immer in der Kartenlegende angegeben werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Motorway</source>
             <comment>Name of symbol 501.0</comment>
-            <translation>Autobahn</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A road with two carriageways. The width of the symbol should be drawn to scale but not smaller than the minimum width. The outer boundary lines may be replaced with symbols 519, 521, 522 or 524 if a fence or wall is so close to the motorway edge that it cannot practically be shown as a separate symbol. The space between the black lines must be filled with brown (50%). A road under construction may be shown with broken lines.</source>
             <comment>Description of symbol 501.0</comment>
-            <translation>Eine Straße mit zwei Fahrbahnen. Die Breite der Signatur soll maßstabsgetreu gezeichnet werden, jedoch nicht schmaler als die minimale Breite. Die äußeren Begrenzungslinien können durch die Signaturen 519, 521, 522 oder 524 ersetzt werden, wenn ein Zaun oder eine Mauer so nahe an dem Autobahnrand steht, dass sie nicht als eigene Signatur gezeichnet werden können. Der Raum zwischen den schwarzen Linien muss mit Braun (50%) ausgefüllt werden. Eine im Bau befindliche Straße kann mit unterbrochenen Linien dargestellt werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Motorway, under construction</source>
             <comment>Name of symbol 501.5</comment>
-            <translation>Autobahn, im Bau</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A road under construction may be shown with broken lines.</source>
             <comment>Description of symbol 501.5</comment>
-            <translation>Eine im Bau befindliche Straße kann mit unterbrochenen Linien dargestellt werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Major road, minimum width</source>
             <comment>Name of symbol 502</comment>
-            <translation>Hauptstraße, Mindestbreite</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Road wider than 5m. The width of the symbol should be drawn to scale but not smaller than the minimum width. The outer boundary lines may be replaced with symbols 519, 521, 522 or 524 if a fence or wall is so close to the motorway edge that it cannot practically be shown as a separate symbol. The space between the black lines must be filled with brown (50%). A road under construction may be shown with broken lines.</source>
             <comment>Description of symbol 502</comment>
-            <translation>Eine Straße breiter als 5 m. Die Breite der Signatur soll maßstabsgetreu gezeichnet werden, jedoch nicht schmaler als die minimale Breite. Die äußeren Begrenzungslinien können durch die Signaturen 519, 521, 522 oder 524 ersetzt werden, wenn ein Zaun oder eine Mauer so nahe am Straßenrand steht, dass sie nicht als eigene Signatur gezeichnet werden können. Der Raum zwischen den schwarzen Linien muss mit Braun (50%) ausgefüllt werden. Eine im Bau befindliche Straße kann mit unterbrochenen Linien dargestellt werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Major road, minimum width, under construction</source>
             <comment>Name of symbol 502.1</comment>
-            <translation>Hauptstraße, Mindestbreite, im Bau</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A road under construction may be shown with broken lines.</source>
             <comment>Description of symbol 502.1</comment>
-            <translation>Eine im Bau befindliche Straße kann mit unterbrochenen Linien dargestellt werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Minor road</source>
             <comment>Name of symbol 503</comment>
-            <translation>Nebenstraße</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Road 3-5 m wide. The space between the black lines must be filled with brown (50%). A road under construction may be shown with broken lines.</source>
             <comment>Description of symbol 503</comment>
-            <translation>Eine Straße mit 3-5 m Breite. Der Raum zwischen den schwarzen Linien muss mit Braun (50%) ausgefüllt werden. Eine im Bau befindliche Straße kann mit unterbrochenen Linien dargestellt werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Minor road, under construction</source>
             <comment>Name of symbol 503.1</comment>
-            <translation>Nebenstraße, im Bau</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A road under construction may be shown with broken lines.</source>
             <comment>Description of symbol 503.1</comment>
-            <translation>Eine im Bau befindliche Straße kann mit unterbrochenen Linien dargestellt werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Road</source>
             <comment>Name of symbol 504</comment>
-            <translation>Fahrweg</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A maintained road suitable for motor vehicles in all weather. Width less than 3 m.</source>
             <comment>Description of symbol 504</comment>
-            <translation>Ein unterhaltener Weg, der bei jeder Witterung mit Motorfahrzeugen befahrbar ist. Breite weniger als 3 m.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Vehicle track</source>
             <comment>Name of symbol 505</comment>
-            <translation>Karrweg</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A track or poorly maintained road suitable for vehicles only when travelling slowly. Width less than 3 m.</source>
             <comment>Description of symbol 505</comment>
-            <translation>Ein Weg oder eine schlecht unterhaltene Straße, die nur langsam mit Fahrzeugen befahrbar sind. Breite weniger als 3 m.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Footpath</source>
             <comment>Name of symbol 506</comment>
-            <translation>Fußweg</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A large path, or old vehicle track, which is distinct on the ground.</source>
             <comment>Description of symbol 506</comment>
-            <translation>Ein breiter Pfad oder eine Fahrzeugspur, der bzw. die im Gelände deutlich erkennbar ist.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Small path</source>
             <comment>Name of symbol 507</comment>
-            <translation>Kleiner Pfad</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A small path or (temporary) forest extraction track which can be followed at competition speed.</source>
             <comment>Description of symbol 507</comment>
-            <translation>Ein kleiner Pfad oder eine (vorübergehende) Schleifspur, denen im Wettkampftempo gefolgt werden kann.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Less distinct small path</source>
             <comment>Name of symbol 508</comment>
-            <translation>Undeutlicher kleiner Pfad</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A less distinct small path or forestry extraction track.</source>
             <comment>Description of symbol 508</comment>
-            <translation>Ein undeutlicher kleiner Pfad oder Schleifspur.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Narrow ride</source>
             <comment>Name of symbol 509</comment>
-            <translation>Schmale Schneise</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A distinct ride, less than ca. 5 m wide. A ride is a linear break in the forest (usually plantation) which does not have a distinct path along it. Where there is a path along a ride, symbols 507 or 508 should be used in place of symbol 509.</source>
             <comment>Description of symbol 509</comment>
-            <translation>Eine deutliche Schneise mit weniger als 5 m Breite. Eine Schneise ist eine geradlinige Unterbrechung des Waldes (in der Regel Anpflanzung), in der kein deutlicher Pfad verläuft. Wenn ein Pfad entlang einer Schneise verläuft, sollen stattdessen die Signaturen 507 oder 508 verwendet werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Footbridge</source>
             <comment>Name of symbol 512</comment>
-            <translation>Steg</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A footbridge with no path leading to it.
 Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm over both sides of the stream!</source>
             <comment>Description of symbol 512</comment>
-            <translation>Ein Steg ohne abgehenden Weg.
-Hinweis: Wenn der Bach breiter ist, muss das Symbol angepasst werden, so dass es 0,5 mm über beide Seiten des Baches hinausreicht.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Railway</source>
             <comment>Name of symbol 515</comment>
-            <translation>Eisenbahn</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A railway or other kind of railed track (tramway, truckway, etc.).</source>
             <comment>Description of symbol 515</comment>
-            <translation>Eine Eisenbahn oder andere Arten von Schienenweg (Straßenbahn, Feldbahn usw.).</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Power line</source>
             <comment>Name of symbol 516</comment>
-            <translation>Stromleitung</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Power line, cableway or skilift. The bars indicate the exact location of the pylons.</source>
             <comment>Description of symbol 516</comment>
-            <translation>Stromleitung, Seilbahn oder Skilift. Die Querstriche bezeichnen den genauen Standort der Masten.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Major power line</source>
             <comment>Name of symbol 517</comment>
-            <translation>Überlandleitung</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Major power lines should be drawn with a double line. The gap between the lines may indicate the extent of the powerline.</source>
             <comment>Description of symbol 517</comment>
-            <translation>Überlandleitungen sollen mit einer Doppellinie gezeichnet werden. Der Abstand zwischen den Linien soll de Breite der Überlandleitung entsprechen.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Tunnel</source>
             <comment>Name of symbol 518</comment>
-            <translation>Tunnel</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A way under roads, railways, etc. which may be used by the runner. This symbol is used whether or not the tunnel has a track leading to it.</source>
             <comment>Description of symbol 518</comment>
-            <translation>Durchgänge unter Straßen, Eisenbahnen usw., die vom Läufer benutzt werden können. Die Signatur ist unabhängig davon, ob ein Weg zum Tunnel führt oder nicht.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Tunnel, minimum size</source>
             <comment>Name of symbol 518.1</comment>
-            <translation>Tunnel, Minimalgröße</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A way under roads, railways, etc. which may be used by the runner. This symbol is used whether or not the tunnel has a track leading to it.</source>
             <comment>Description of symbol 518.1</comment>
-            <translation>Durchgänge unter Straßen, Eisenbahnen usw., die vom Läufer benutzt werden können. Die Signatur ist unabhängig davon, ob ein Weg zum Tunnel führt oder nicht.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Stone wall</source>
             <comment>Name of symbol 519</comment>
-            <translation>Steinmauer</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A stone wall or stone-faced bank.</source>
             <comment>Description of symbol 519</comment>
-            <translation>Eine Steinmauer oder ein Steinwall.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Ruined stone wall</source>
             <comment>Name of symbol 520</comment>
-            <translation>Verfallene Steinmauer</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A ruined stone wall may be shown by a dashed line.</source>
             <comment>Description of symbol 520</comment>
-            <translation>Eine verfallene Steinmauer kann mit einer unterbrochenen Linie dargestellt werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>High stone wall</source>
             <comment>Name of symbol 521</comment>
-            <translation>Hohe Steinmauer</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A stone wall higher than ca 1.5 m, not crossable to the average orienteer.</source>
             <comment>Description of symbol 521</comment>
-            <translation>Eine Steinmauer von mehr als 1,5 m Höhe, die von einem durchschnittlichen Orientierungsläufer nicht überquert werden kann.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Fence</source>
             <comment>Name of symbol 522</comment>
-            <translation>Zaun</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A wooden or wire fence less than ca. 1.5 m high.</source>
             <comment>Description of symbol 522</comment>
-            <translation>Ein Holz- oder Drahtzaun von weniger als 1,5 m Höhe.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Ruined fence</source>
             <comment>Name of symbol 523</comment>
-            <translation>Verfallener Zaun</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A ruined fence may be shown with a dashed line.</source>
             <comment>Description of symbol 523</comment>
-            <translation>Ein verfallener Zaun kann mit einer unterbrochenen Linie gezeichnet werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>High fence</source>
             <comment>Name of symbol 524</comment>
-            <translation>Hoher Zaun</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A boarded or wire fence higher than ca 1.5 m, not crossable to the average orienteer, eg. deer fence.</source>
             <comment>Description of symbol 524</comment>
-            <translation>Ein Bretter- oder Drahtzaun mit mehr als 1,5 m Höhe, wie z. B. ein Wildzaun, der von einem durchschnittlichen Orientierungsläufer nicht überquert werden kann.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Crossing point</source>
             <comment>Name of symbol 525</comment>
-            <translation>Durchgang</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>All ways through or over high fences or walls must be indicated. The symbol may also be used for a gate through or stile over a stone wall (519) or a fence (522) or a pipeline (534).</source>
             <comment>Description of symbol 525</comment>
-            <translation>Alle Durch- und Übergänge in hohen Zäunen oder Mauern müssen angegeben werden. Die Signatur kann auch für ein Tor in oder eine Leiter über eine Steinmauer (519), einen Zaun (522) oder eine Pipeline (534) verwendet werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Building</source>
             <comment>Name of symbol 526</comment>
-            <translation>Gebäude</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A building is shown with its ground plan so far as the scale permits.</source>
             <comment>Description of symbol 526</comment>
-            <translation>Ein Gebäude wird mit seinem Grundriss gezeichnet, sofern es der Maßstab erlaubt.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Building, minimum size</source>
             <comment>Name of symbol 526.1</comment>
-            <translation>Gebäude, Minimalgröße</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Settlement</source>
             <comment>Name of symbol 527</comment>
-            <translation>Siedlungsgebiet</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Houses and gardens and other built up areas. Roads, buildings and other significant features within a settlement must be shown. If all buildings cannot be shown, an alternative symbol (black line screen) may be used.</source>
             <comment>Description of symbol 527</comment>
-            <translation>Häuser, Gärten und andere bebaute Gebiete. Straßen, Gebäude und andere markante Objekte in einem Siedlungsgebiet müssen dargestellt werden. Wenn nicht alle Gebäude gezeichnet werden können, kann die alternative Signatur (schwarzer Linienraster) herangezogen werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Settlement</source>
             <comment>Name of symbol 527.1</comment>
-            <translation>Siedlungsgebiet</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Houses and gardens and other built up areas. Roads, buildings and other significant features within a settlement must be shown. If all buildings cannot be shown, an alternative symbol (black line screen) may be used.</source>
             <comment>Description of symbol 527.1</comment>
-            <translation>Häuser, Gärten und andere bebaute Gebiete. Straßen, Gebäude und andere markante Objekte in einem Siedlungsgebiet müssen dargestellt werden. Wenn nicht alle Gebäude gezeichnet werden können, kann die alternative Signatur (schwarzer Linienraster) herangezogen werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Permanently out of bounds</source>
             <comment>Name of symbol 528</comment>
-            <translation>Sperrgebiet</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Areas which are permanently forbidden to the runner are shown as out of bounds. The screen is superimposed on the normal map detail. A bounding line may be drawn if there is no natural boundary (see 709).</source>
             <comment>Description of symbol 528</comment>
-            <translation>Gebiete, die für den Läufer dauernd verboten sind, werden als Sperrgebiet dargestellt. Der Raster wird über den normalen Karteninhalt gedruckt. Falls es keine natürliche Begrenzung gibt, kann eine Randlinie gezeichnet werden (vgl. 709).</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Permanently out of bounds, bounding line</source>
             <comment>Name of symbol 528.1</comment>
-            <translation>Sperrgebiet, Randlinie</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A bounding line may be drawn if there is no natural boundary (see 709).</source>
             <comment>Description of symbol 528.1</comment>
-            <translation>Falls es keine natürliche Begrenzung gibt, kann eine Randlinie gezeichnet werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Paved area</source>
             <comment>Name of symbol 529</comment>
-            <translation>Befestigte Fläche</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>An area of hard standing used for parking or other purposes.</source>
             <comment>Description of symbol 529</comment>
-            <translation>Eine Fläche mit fester Oberfläche zum Parken oder zu anderen Zwecken.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Paved area, bounding line</source>
             <comment>Name of symbol 529.1</comment>
-            <translation>Befestigte Fläche, Randlinie</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Paved area, with bounding line</source>
             <comment>Name of symbol 529.2</comment>
-            <translation>Befestigte Fläche, mit Randlinie</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Ruin</source>
             <comment>Name of symbol 530</comment>
-            <translation>Ruine</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>The ground plan of a ruin is shown to scale, down to the minimum size shown opposite. Very small ruins may be drawn with a solid line.</source>
             <comment>Description of symbol 530</comment>
-            <translation>Der Grundriss von Ruinen wird bis zur Minimaldimension wie nebenstehend maßstäblich dargestellt. Sehr kleine Ruinen können mit einer durchgehenden Linie gezeichnet werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Ruin, no dashes</source>
             <comment>Name of symbol 530.1</comment>
-            <translation>Ruine, ohne Strichelung</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Very small ruins may be drawn with a solid line.</source>
             <comment>Description of symbol 530.1</comment>
-            <translation>Variante von Signatur 530. Sehr kleine Ruinen können mit einer durchgehenden Linie gezeichnet werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Ruin, minimum size</source>
             <comment>Name of symbol 530.2</comment>
-            <translation>Ruine, Minimalgröße</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Very small ruins may be drawn with a solid line.</source>
             <comment>Description of symbol 530.2</comment>
-            <translation>Sehr kleine Ruinen können mit einer durchgehenden Linie gezeichnet werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Firing range</source>
             <comment>Name of symbol 531</comment>
-            <translation>Schießplatz</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A firing range is shown with a special symbol to indicate the need for caution. Associated buildings are individually marked.</source>
             <comment>Description of symbol 531</comment>
-            <translation>Ein Schießplatz wird mit einer Spezialsignatur dargestellt, um auf die nötige Vorsicht hinzuweisen. Dazugehörende Gebäude werden gesondert gezeichnet.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Grave</source>
             <comment>Name of symbol 532</comment>
-            <translation>Grab</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A distinct grave marked by a stone or shrine. Location is at the centre of gravity of the symbol, which is orientated to north. A cemetery is shown by using grave symbols as space permits.</source>
             <comment>Description of symbol 532</comment>
-            <translation>Ein deutliches Grab mit Kreuz oder Schrein. Die Lage entspricht dem Schwerpunkt der Signatur, die nach Norden orientiert ist. Ein Friedhof wird durch Grabsignaturen dargestellt, sofern genügend Platz ist.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Crossable pipeline</source>
             <comment>Name of symbol 533</comment>
-            <translation>Überquerbare Pipeline</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A pipeline (gas, water, oil, etc.) above ground level which can be crossed over or under.</source>
             <comment>Description of symbol 533</comment>
-            <translation>Eine überirdische Pipeline (Gas, Wasser, Öl usw.), die über- oder unterquert werden kann.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Uncrossable pipeline</source>
             <comment>Name of symbol 534</comment>
-            <translation>Unpassierbare Pipeline</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A pipeline which cannot be crossed.</source>
             <comment>Description of symbol 534</comment>
-            <translation>Eine Pipeline, die nicht passiert werden kann.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>High tower</source>
             <comment>Name of symbol 535</comment>
-            <translation>Hoher Turm</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A high tower or large pylon, standing above the level of the surrounding forest. Location is at the centre of gravity of the symbol.</source>
             <comment>Description of symbol 535</comment>
-            <translation>Ein hoher Turm oder großer Mast, der über die Höhe des umgebenden Waldes hinausragt. Die Lage entspricht dem Schwerpunkt der Signatur.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Small tower</source>
             <comment>Name of symbol 536</comment>
-            <translation>Kleiner Turm</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>An obvious shooting platform or seat, or small tower. Location is at the centre of gravity of the symbol.</source>
             <comment>Description of symbol 536</comment>
-            <translation>Ein markanter Hochsitz oder kleiner Turm. Die Lage entspricht dem Schwerpunkt der Signatur.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Cairn</source>
             <comment>Name of symbol 537</comment>
-            <translation>Grenz- oder Gedenkstein</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Cairn, memorial stone or boundary stone (or a trigonometric point in some countries) more than 0.5 m high.</source>
             <comment>Description of symbol 537</comment>
-            <translation>Grenz- oder Gedenkstein (oder in einigen Ländern ein trigonometrischer Punkt) höher als 0,5 m.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Fodder rack</source>
             <comment>Name of symbol 538</comment>
-            <translation>Futterkrippe</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A fodder rack which is free standing or built on to a tree. Location is at the centre of gravity of the symbol. For land access reasons these may be omitted.</source>
             <comment>Description of symbol 538</comment>
-            <translation>Eine freistehende oder an einen Baum gebaute Futterkrippe. Die Lage entspricht dem Schwerpunkt der Signatur. Aus Gründen des Waldbetretungsrechts können sie weggelassen werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Special man-made feature</source>
             <comment>Name of symbol 539</comment>
-            <translation>Besonderes künstliches Objekt</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Special man-made features are shown with these symbols. The definition of the
 symbols must be given in each case in the map legend.</source>
             <comment>Description of symbol 539</comment>
-            <translation>Die Beschreibung der Signatur muss immer in der Kartenlegende angegeben werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Special man-made feature</source>
             <comment>Name of symbol 540</comment>
-            <translation>Besonderes künstliches Objekt</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Special man-made features are shown with these symbols. The definition of the
 symbols must be given in each case in the map legend.</source>
             <comment>Description of symbol 540</comment>
-            <translation>Die Beschreibung der Signatur muss immer in der Kartenlegende angegeben werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Magnetic north line</source>
             <comment>Name of symbol 601</comment>
-            <translation>Magnetisch-Nordlinien</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing on the map should be 33.33 mm which represents 500 m on the ground at the scale of 1:15 000. For maps with other scales lines placing should be at intervals which represents a round number of meters (e.g. 50 m, 100 m, 250 m, 500 m) and the spacing should be between 20 mm and 40 mm on the map. North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. In areas with very few water features, blue lines may be used.</source>
             <comment>Description of symbol 601</comment>
-            <translation>Magnetisch-Nordlinien werden auf der Karte nach magnetisch Nord ausgerichtet. Ihr Abstand auf der Karte soll 33,33 mm betragen, was im Maßstab 1:15.000 einer Entfernung von 500 m im Gelände entspricht. Für Karten mit anderen Maßstäben soll ein Linienabstand gewählt werden, der einer runden Meterzahl entspricht (z. B. 50 m, 100 m, 250 m, 500 m) und auf der Karte einen Abstand zwischen 20 mm und 40 mm ergibt. Nordlinien können unterbrochen werden, wenn sie kleine Objekte verdecken, wie z.B. Steine, Hügel, Felswände, Bachgabeln, Wegenden usw. In Gebieten mit sehr wenig Gewässerobjekten können blaue Linien verwendet werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>North lines pattern</source>
             <comment>Name of symbol 601.1</comment>
-            <translation>Nordlinien-Raster</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Magnetic north line, blue</source>
             <comment>Name of symbol 601.2</comment>
-            <translation>Magnetisch-Nordlinien, blau</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing on the map should be 33.33 mm which represents 500 m on the ground at the scale of 1:15 000. For maps with other scales lines placing should be at intervals which represents a round number of meters (e.g. 50 m, 100 m, 250 m, 500 m) and the spacing should be between 20 mm and 40 mm on the map. North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. In areas with very few water features, blue lines may be used.</source>
             <comment>Description of symbol 601.2</comment>
-            <translation>Magnetisch-Nordlinien werden auf der Karte nach magnetisch Nord ausgerichtet. Ihr Abstand auf der Karte soll 33,33 mm betragen, was im Maßstab 1:15.000 einer Entfernung von 500 m im Gelände entspricht. Für Karten mit anderen Maßstäben soll ein Linienabstand gewählt werden, der einer runden Meterzahl entspricht (z. B. 50 m, 100 m, 250 m, 500 m) und auf der Karte einen Abstand zwischen 20 mm und 40 mm ergibt. Nordlinien können unterbrochen werden, wenn sie kleine Objekte verdecken, wie z.B. Steine, Hügel, Felswände, Bachgabeln, Wegenden usw. In Gebieten mit sehr wenig Gewässerobjekten können blaue Linien verwendet werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>North lines pattern, blue</source>
             <comment>Name of symbol 601.3</comment>
-            <translation>Nordlinien-Raster, blau</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Registration mark</source>
             <comment>Name of symbol 602</comment>
-            <translation>Passkreuz</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>At least three registration marks must be placed within the frame of a map in a non-symmetrical position. In addition, a colour check should also be possible.</source>
             <comment>Description of symbol 602</comment>
-            <translation>Drei Passkreuze müssen innerhalb des zu druckenden Teils einer Karte in einer asymmetrischen Position angebracht werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Spot height, dot</source>
             <comment>Name of symbol 603.0</comment>
-            <translation>Höhenkote, Punkt</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are
 given without the dot.</source>
             <comment>Description of symbol 603.0</comment>
-            <translation>Höhenkoten dienen der Abschätzung großer Höhenunterschiede. Die Höhe wird auf ganze Meter gerundet angegeben. Die Ziffern werden nach Norden orientiert.
-
-Achtung: Gewässertiefen werden ohne den Punkt angegeben.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Spot height, text</source>
             <comment>Name of symbol 603.1</comment>
-            <translation>Höhenkote, Text</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
             <comment>Description of symbol 603.1</comment>
-            <translation>Höhenkoten dienen der Abschätzung großer Höhenunterschiede. Die Höhe wird auf ganze Meter gerundet angegeben. Die Ziffern werden nach Norden orientiert. Gewässertiefen werden ohne den Punkt angegeben.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Start</source>
             <comment>Name of symbol 701</comment>
-            <translation>Start</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>The start or map issue point (if not at the start) is shown by an equilateral triangle which points in the direction of the first control. The centre of the triangle shows the precise position of the start point.</source>
             <comment>Description of symbol 701</comment>
-            <translation>Der Start- oder Kartenausgabepunkt (falls nicht am Start) wird durch ein gleichseitiges Dreieck dargestellt, das in die Richtung zum ersten Posten zeigt. Der Mittelpunkt des Dreiecks gibt die genaue Lage des Objektes an.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Control point</source>
             <comment>Name of symbol 702</comment>
-            <translation>Kontrollposten</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>The control points are shown with circles. The centre of the circle shows the precise position of the feature. Sections of circles should be omitted to leave important detail showing.</source>
             <comment>Description of symbol 702</comment>
-            <translation>Die Kontrollposten werden mit Kreisen dargestellt. Der Mittelpunkt des Kreises gibt die genaue Lage des Objektes an. Teile der Kreise können weggelassen werden, damit wichtige Details sichtbar bleiben.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Control number</source>
             <comment>Name of symbol 703</comment>
-            <translation>Postennummer</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail. The numbers are orientated to north.</source>
             <comment>Description of symbol 703</comment>
-            <translation>Die Nummer des Kontrollpostens ist so in der Nähe des Kontrollposten-Kreises zu platzieren, dass wichtige Details nicht verdeckt werden. Die Nummern sind nach Norden orientiert.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Line</source>
             <comment>Name of symbol 704</comment>
-            <translation>Verbindungslinie</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Where controls are to be visited in order, the start, control points and finish are joined together by straight lines. Sections of lines should be omitted to leave important detail showing.</source>
             <comment>Description of symbol 704</comment>
-            <translation>Wenn Kontrollposten in einer bestimmten Reihenfolge anzulaufen sind, werden sie mit geraden Linien verbunden. Teile der Verbindungslinie können weggelassen werden, damit wichtige Details sichtbar bleiben.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Marked route</source>
             <comment>Name of symbol 705</comment>
-            <translation>Markierte Strecke</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A marked route is shown on the map with a dashed line.</source>
             <comment>Description of symbol 705</comment>
-            <translation>Eine markierte Strecke wird auf der Karte mit einer unterbrochenen Linie dargestellt.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Finish</source>
             <comment>Name of symbol 706</comment>
-            <translation>Ziel</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>The finish is shown by two concentric circles.</source>
             <comment>Description of symbol 706</comment>
-            <translation>Das Ziel wird durch zwei konzentrische Kreise dargestellt.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Uncrossable boundary</source>
             <comment>Name of symbol 707</comment>
-            <translation>Unpassierbare Grenze</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Aboundary which it is not permitted to cross.</source>
             <comment>Description of symbol 707</comment>
-            <translation>Eine Grenze, die nicht überquert werden darf.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Crossing point</source>
             <comment>Name of symbol 708</comment>
-            <translation>Durchgang</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A crossing point through or over a wall or fence, or across a road or railway or through a tunnel or an out-of-bounds area is drawn on the map with two lines curving outwards.</source>
             <comment>Description of symbol 708</comment>
-            <translation>Eine Passage durch oder über eine Mauer oder einen Zaun, über eine Straße oder Eisenbahn, oder durch einen Tunnel oder ein verbotenes Gebiet wird auf der Karte mit zwei nach außen gerichteten Bögen gezeichnet.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Out-of-bounds area</source>
             <comment>Name of symbol 709</comment>
-            <translation>Verbotenes Gebiet</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>An out-of-bounds area, see also symbol 528, is shown with vertical stripes.
 A bounding line may be drawn if there is no natural boundary, as follows:
@@ -3762,101 +3757,97 @@ A bounding line may be drawn if there is no natural boundary, as follows:
 - a dashed line indicates intermittent marking on the ground,
 - no line indicates no marking on the ground.</source>
             <comment>Description of symbol 709</comment>
-            <translation>Ein verbotenes Gebiet, vgl. Signatur 528, wird mit senkrechten Streifen gezeichnet. 
-Falls es keine natürliche Begrenzung gibt, kann eine Randlinie wie folgt gezeichnet werden:
-- Eine durchgehende Linie bedeutet eine permanente Markierung (Band o. Ä.) im Gelände.
-- Eine gestrichelte Linie bedeutet eine unterbrochene Markierung im Gelände.
-- Keine Linie bedeutet keine Markierung im Gelände.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Out-of-bounds area, solid boundary</source>
             <comment>Name of symbol 709.1</comment>
-            <translation>Verbotenes Gebiet, durchgehende Randlinie</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A solid line indicates that the boundary is marked continuously (tapes, etc.) on the ground.</source>
             <comment>Description of symbol 709.1</comment>
-            <translation>Eine durchgehende Linie bedeutet eine permanente Markierung (Band o. Ä.) im Gelände.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Out-of-bounds area, dashed boundary</source>
             <comment>Name of symbol 709.2</comment>
-            <translation>Verbotenes Gebiet, gestrichelte Randlinie</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A dashed line indicates intermittent marking on the ground.</source>
             <comment>Description of symbol 709.2</comment>
-            <translation>Eine gestrichelte Linie bedeutet eine unterbrochene Markierung im Gelände.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Dangerous area</source>
             <comment>Name of symbol 710</comment>
-            <translation>Gefährliches Gebiet</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>An area presenting danger to the competitor is shown with cross-hatched diagonal lines.</source>
             <comment>Description of symbol 710</comment>
-            <translation>Ein Gebiet, das für den Wettkämpfer eine Gefahr bedeutet, wird mit gekreuzten Linien dargestellt.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Forbidden route</source>
             <comment>Name of symbol 711</comment>
-            <translation>Verbotene Strecke</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>A route which is out-of-bounds is shown with crosses.</source>
             <comment>Description of symbol 711</comment>
-            <translation>Eine Strecke, die nicht belaufen werden darf, wird mit Kreuzen dargestellt.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>First aid post</source>
             <comment>Name of symbol 712</comment>
-            <translation>Erste-Hilfe-Posten</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>The location of a first aid post.</source>
             <comment>Description of symbol 712</comment>
-            <translation>Die Lage eines Erste-Hilfe-Postens.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Refreshment point</source>
             <comment>Name of symbol 713</comment>
-            <translation>Getränkepunkt</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>The location of a refreshment point which is not at a control.</source>
             <comment>Description of symbol 713</comment>
-            <translation>Die Lage eines Getränkepunktes, der nicht gleichzeitig Kontrollposten ist.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Simple Orienteering Course</source>
             <comment>Name of symbol 799</comment>
-            <translation>Einfache Orientierungslauf-Bahn</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>This symbol provides a simple and quick way to make training courses.
 
 The purple line will extend a bit into the finish symbol. This is a shortcoming of this simple approach.</source>
             <comment>Description of symbol 799</comment>
-            <translation>Dieses Symbol stellt eine einfache Möglichkeit zum Erstellen von Trainingsbahnen dar.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>OpenOrienteering Logo</source>
             <comment>Name of symbol 999</comment>
-            <translation>OpenOrienteering-Logo</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>The OpenOrienteering Logo.</source>
             <comment>Description of symbol 999</comment>
-            <translation>Das Logo von OpenOrienteering.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
     </context>
     <context>
         <name>ISSOM</name>
         <message>
             <source>Purple</source>
             <comment>Color 0</comment>
-            <translation>Violett</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Purple 50%</source>
@@ -3866,12 +3857,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Black</source>
             <comment>Color 2</comment>
-            <translation>Schwarz</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Opaque White below Black</source>
             <comment>Color 3</comment>
-            <translation>Deckendes Weiß über Schwarz</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Brown for contours</source>
@@ -3891,12 +3882,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Black 30%</source>
             <comment>Color 7</comment>
-            <translation>Schwarz 30%</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Black 20%</source>
             <comment>Color 8</comment>
-            <translation>Schwarz 20%</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Green, Black 50% above Brown</source>
@@ -3931,17 +3922,17 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Black below light browns</source>
             <comment>Color 15</comment>
-            <translation>Schwarz unter Hellbraun</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Opaque Blue</source>
             <comment>Color 16</comment>
-            <translation>Deckendes Blau</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Blue</source>
             <comment>Color 17</comment>
-            <translation>Blau</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Blue 75%</source>
@@ -3961,12 +3952,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Brown</source>
             <comment>Color 21</comment>
-            <translation>Braun</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>OpenOrienteering Orange</source>
             <comment>Color 22</comment>
-            <translation>OpenOrienteering-Orange</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Grey</source>
@@ -3976,7 +3967,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Green 50%, Yellow</source>
             <comment>Color 24</comment>
-            <translation>Grün 50%, Gelb</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>White over Green</source>
@@ -3986,57 +3977,57 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Green, Black 50%</source>
             <comment>Color 26</comment>
-            <translation>Grün, Schwarz 50%</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Opaque Green</source>
             <comment>Color 27</comment>
-            <translation>Deckendes Grün</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Green</source>
             <comment>Color 28</comment>
-            <translation>Grün</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Green 60%</source>
             <comment>Color 29</comment>
-            <translation>Grün 60%</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Green 30%</source>
             <comment>Color 30</comment>
-            <translation>Grün 30%</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Green below light greens</source>
             <comment>Color 31</comment>
-            <translation>Grün unter Hellgrün</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Yellow</source>
             <comment>Color 32</comment>
-            <translation>Gelb</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Yellow 50%</source>
             <comment>Color 33</comment>
-            <translation>Gelb 50%</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>White over Yellow 70%</source>
             <comment>Color 34</comment>
-            <translation>Weiß über Gelb 70%</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Yellow 70%</source>
             <comment>Color 35</comment>
-            <translation>Gelb 70%</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Contour</source>
             <comment>Name of symbol 101</comment>
-            <translation>Höhenlinie, Normalkurve</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 2 or 2.5 m. To emphasize the 3-dimensional effect of the contour line image, contour lines shall be represented as continuous lines through all symbols, also building (526.1) and canopy (526.2). However, contour lines shall be cut out for better legibility, if they touch the following symbols: small earth wall (108.1), small knoll (112), small elongated knoll (113), small depression (115), pit or hole (116), prominent landform feature (118), step or edge of paved area (529.1). 
@@ -4048,7 +4039,7 @@ The relative height difference between neighbouring features must be represented
         <message>
             <source>Index contour</source>
             <comment>Name of symbol 102</comment>
-            <translation>Zählkurve</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface.  Where an index contour coincides with an area of much detail, it may be shown with symbol contour (101).</source>
@@ -4058,7 +4049,7 @@ The relative height difference between neighbouring features must be represented
         <message>
             <source>Form line</source>
             <comment>Name of symbol 103</comment>
-            <translation>Hilfshöhenlinie</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</source>
@@ -4068,7 +4059,7 @@ The relative height difference between neighbouring features must be represented
         <message>
             <source>Slope line</source>
             <comment>Name of symbol 104</comment>
-            <translation>Fallstrich</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Slope lines should be drawn on the lower side of a contour line where it is necessary to clarify the direction of slope, e.g. along the line of a re-entrant or in a depression.</source>
@@ -4078,17 +4069,17 @@ The relative height difference between neighbouring features must be represented
         <message>
             <source>Contour value</source>
             <comment>Name of symbol 105</comment>
-            <translation>Höhenkurvenzahl</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
             <comment>Description of symbol 105</comment>
-            <translation>Die Kurvenzahlen können zum Abschätzen großer Höhenunterschiede eingefügt werden. Sie werden so in die Zählkurven plaziert, dass andere Objekte nicht verdeckt werden. Die Ziffern sollten so ausgerichtet werden, dass ihr oberer Teil auf der höheren Seite der Höhenlinie liegt.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Earth bank</source>
             <comment>Name of symbol 106.0</comment>
-            <translation>Erdböschung</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, roads and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks shall be drawn with the symbol impassable cliff (201). The line width of very high earth banks may be 0.37 mm.</source>
@@ -4098,7 +4089,7 @@ The relative height difference between neighbouring features must be represented
         <message>
             <source>Earth bank, very high</source>
             <comment>Name of symbol 106.1</comment>
-            <translation>Erdböschung, sehr hoch</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, roads and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks shall be drawn with the symbol impassable cliff (201). The line width of very high earth banks may be 0.37 mm.</source>
@@ -4108,17 +4099,17 @@ The relative height difference between neighbouring features must be represented
         <message>
             <source>Earth bank, tag line</source>
             <comment>Name of symbol 106.2</comment>
-            <translation>Erdböschung, Fallstrich</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Use this symbol to display the full extent of wide earth banks.</source>
             <comment>Description of symbol 106.2</comment>
-            <translation>Diese Symbol ist zu benutzen, um die gesamte Ausdehnung der Böschung zu zeigen.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Small earth wall</source>
             <comment>Name of symbol 108.1</comment>
-            <translation>Kleiner Erdwall</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A small distinct earth wall, usually man made. The minimum height is 0.5 m.  Larger earth walls should be represented with the symbols contour (101), form line (103) or earth bank (106).</source>
@@ -4138,7 +4129,7 @@ The relative height difference between neighbouring features must be represented
         <message>
             <source>Small erosion gully</source>
             <comment>Name of symbol 110</comment>
-            <translation>Kleiner Graben</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Asmall erosion gully or trench. Minimum depth is 0.5 m.</source>
@@ -4148,7 +4139,7 @@ The relative height difference between neighbouring features must be represented
         <message>
             <source>Small knoll</source>
             <comment>Name of symbol 112</comment>
-            <translation>Kleine Kuppe</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A small obvious mound or rocky knoll which cannot be drawn to scale with a contour (101), index contour (102) or form line (103). The height of the knoll should be a minimum of 1 m from the surrounding ground.</source>
@@ -4158,7 +4149,7 @@ The relative height difference between neighbouring features must be represented
         <message>
             <source>Elongated knoll</source>
             <comment>Name of symbol 113</comment>
-            <translation>Längliche Kuppe</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A small obvious elongated knoll which cannot be drawn to scale with a contour (101), index contour (102) or form line (103). The maximum length should be 6 m and the maximum width 2 m. The height of the knoll should be a minimum of 1 m from the surrounding ground. Knolls larger than this shall be shown by contours.
@@ -4170,7 +4161,7 @@ The symbol may not be drawn in free form or such that two elongated knoll symbol
         <message>
             <source>Small depression</source>
             <comment>Name of symbol 115</comment>
-            <translation>Kleine Senke</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A small shallow natural depression or hollow which cannot be represented by the symbol contour (101) or form line (103) is represented by a semicircle. The minimum diameter should be 2 m. The minimum depth from the surrounding ground should be 1 m. The symbol is orientated to north.</source>
@@ -4180,7 +4171,7 @@ The symbol may not be drawn in free form or such that two elongated knoll symbol
         <message>
             <source>Pit</source>
             <comment>Name of symbol 116</comment>
-            <translation>Loch oder kleine Grube</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A pit or hole with distinct steep sides which cannot be represented to scale with the symbol earth bank (106). The minimum diameter shall be 2 m. The minimum depth from the surrounding ground shall be 1 m. The symbol is orientated to north.</source>
@@ -4190,7 +4181,7 @@ The symbol may not be drawn in free form or such that two elongated knoll symbol
         <message>
             <source>Broken ground, small</source>
             <comment>Name of symbol 117.1</comment>
-            <translation>Kleinkupiertes Gelände, kleiner Punkt</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An area of pits or knolls, which is too complex to be represented in detail. The density of randomly placed dots may vary according to the detail on the ground.</source>
@@ -4200,7 +4191,7 @@ The symbol may not be drawn in free form or such that two elongated knoll symbol
         <message>
             <source>Broken ground</source>
             <comment>Name of symbol 117.2</comment>
-            <translation>Kleinkupiertes Gelände</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An area of pits or knolls, which is too complex to be represented in detail. The density of randomly placed dots may vary according to the detail on the ground.</source>
@@ -4210,7 +4201,7 @@ The symbol may not be drawn in free form or such that two elongated knoll symbol
         <message>
             <source>Prominent landform feature</source>
             <comment>Name of symbol 118</comment>
-            <translation>Markantes Geländeobjekt</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A small landform feature which is significant or prominent. The definition of the symbol shall always be given in the map legend. The symbol is orientated to north.</source>
@@ -4270,7 +4261,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>Impassable cliff, tag line</source>
             <comment>Name of symbol 201.2</comment>
-            <translation>Unpassierbare Felswand, Fallstrich</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Use this symbol to display the full extent of a wide cliff.</source>
@@ -4372,7 +4363,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>Boulder</source>
             <comment>Name of symbol 206</comment>
-            <translation>Stein</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A small distinct boulder. The minimum height is 1 m.  Every boulder marked on the map shall be immediately identifiable on the ground.</source>
@@ -5885,12 +5876,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Purple</source>
             <comment>Color 0</comment>
-            <translation>Violett</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Black</source>
             <comment>Color 1</comment>
-            <translation>Schwarz</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Lower Purple</source>
@@ -5905,57 +5896,57 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Brown 50%</source>
             <comment>Color 4</comment>
-            <translation>Braun 50%</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Black below light browns</source>
             <comment>Color 5</comment>
-            <translation>Schwarz unter Hellbraun</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Brown</source>
             <comment>Color 6</comment>
-            <translation>Braun</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>OpenOrienteering Orange</source>
             <comment>Color 7</comment>
-            <translation>OpenOrienteering-Orange</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Opaque Blue</source>
             <comment>Color 8</comment>
-            <translation>Deckendes Blau</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Blue</source>
             <comment>Color 9</comment>
-            <translation>Blau</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Blue 50%</source>
             <comment>Color 10</comment>
-            <translation>Blau 50%</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Black 30%</source>
             <comment>Color 11</comment>
-            <translation>Schwarz 30%</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Green 50%, Yellow</source>
             <comment>Color 12</comment>
-            <translation>Grün 50%, Gelb</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Green over White over Green</source>
             <comment>Color 13</comment>
-            <translation>Grün über Weiß-über-Grün</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Opaque White over Green</source>
             <comment>Color 14</comment>
-            <translation>Deckendes Weiss über Grün</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Yellow over Green</source>
@@ -5965,162 +5956,162 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Opaque Green</source>
             <comment>Color 16</comment>
-            <translation>Deckendes Grün</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Green</source>
             <comment>Color 17</comment>
-            <translation>Grün</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Green 60%</source>
             <comment>Color 18</comment>
-            <translation>Grün 60%</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Green 30%</source>
             <comment>Color 19</comment>
-            <translation>Grün 30%</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Green below light greens</source>
             <comment>Color 20</comment>
-            <translation>Grün unter Hellgrün</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Yellow</source>
             <comment>Color 21</comment>
-            <translation>Gelb</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Yellow 50%</source>
             <comment>Color 22</comment>
-            <translation>Gelb 50%</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>White over Yellow 70%</source>
             <comment>Color 23</comment>
-            <translation>Weiß über Gelb 70%</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Yellow 70%</source>
             <comment>Color 24</comment>
-            <translation>Gelb 70%</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Contour</source>
             <comment>Name of symbol 101</comment>
-            <translation>Höhenlinie, Normalkurve</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
             <comment>Description of symbol 101</comment>
-            <translation>Eine Linie, die Punkte gleicher Höhe verbindet. Der normale Abstand zwischen Normalkurven beträgt 5 m. Die kleinste Kurve in einer Höhenlinie hat einen Abstand von 0,25 mm von Linienmitte zu Linienmitte.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Index contour</source>
             <comment>Name of symbol 102</comment>
-            <translation>Zählkurve</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. Where an index contour coincides with an area of much detail, it may be shown with a normal contour line.</source>
             <comment>Description of symbol 102</comment>
-            <translation>Jede fünfte Kurve soll als dickere Linie gezeichnet werden, um Höhenunterschiede und die generelle Geländestruktur zu verdeutlichen. Fällt eine Zählkurve in ein Gebiet mit vielen Details, kann sie als Normalkurve gezeichnet werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Slope line</source>
             <comment>Name of symbol 104</comment>
-            <translation>Fallstrich</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Slope lines may be drawn on the lower side of a contour line, e.g. along the line of a re-entrant or in a depression. They are used only where it is necessary to clarify the direction of slope.</source>
             <comment>Description of symbol 104</comment>
-            <translation>Fallstriche können an der tieferen Seite einer Höhenlinie gezeichnet werden wie z. B. entlang einer Muldenlinie oder in einer Senke. Sie werden nur dann gezeichnet, wenn es für die Darstellung der Geländeneigung erforderlich ist.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Contour value</source>
             <comment>Name of symbol 105</comment>
-            <translation>Höhenkurvenzahl</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
             <comment>Description of symbol 105</comment>
-            <translation>Die Kurvenzahlen können zum Abschätzen großer Höhenunterschiede eingefügt werden. Sie werden so in die Zählkurven plaziert, dass andere Objekte nicht verdeckt werden. Die Ziffern sollten so ausgerichtet werden, dass ihr oberer Teil auf der höheren Seite der Höhenlinie liegt.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Earth bank</source>
             <comment>Name of symbol 106</comment>
-            <translation>Erdböschung</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
             <comment>Description of symbol 106</comment>
-            <translation>Eine steile Erdböschung ist ein plötzlicher Bruch der Erdoberfläche, der sich deutlich von der Umgebung abhebt, wie z. B. Kies- oder Sandgruben, Einschnitte  von Straßen und Eisenbahnen oder Dämme. Die Fallstriche sollen die gesamte Fläche der Böschung bedecken, können jedoch weggelassen werden, wenn zwei Böschungen zu eng beieinander liegen. Unpassierbare Böschungen sollten mit der Signatur 201 (unpassierbare Felswand) gezeichnet werden. Für sehr hohe Erdböschungen kann eine Strichstärke von 0,25 mm gewählt werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Earth bank, minimum size</source>
             <comment>Name of symbol 106.0.1</comment>
-            <translation>Erdböschung, Minimalgröße</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
             <comment>Description of symbol 106.0.1</comment>
-            <translation>Eine steile Erdböschung ist ein plötzlicher Bruch der Erdoberfläche, der sich deutlich von der Umgebung abhebt, wie z. B. Kies- oder Sandgruben, Einschnitte  von Straßen und Eisenbahnen oder Dämme. Die Fallstriche sollen die gesamte Fläche der Böschung bedecken, können jedoch weggelassen werden, wenn zwei Böschungen zu eng beieinander liegen. Unpassierbare Böschungen sollten mit der Signatur 201 (unpassierbare Felswand) gezeichnet werden. Für sehr hohe Erdböschungen kann eine Strichstärke von 0,25 mm gewählt werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Earth bank, very high</source>
             <comment>Name of symbol 106.1</comment>
-            <translation>Erdböschung, sehr hoch</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>The line width of very high earth banks may be 0.25 mm.</source>
             <comment>Description of symbol 106.1</comment>
-            <translation>Für sehr hohe Erdböschungen kann eine Strichstärke von 0,25 mm gewählt werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Earth bank, very high, minimum size</source>
             <comment>Name of symbol 106.1.1</comment>
-            <translation>Erdböschung, sehr hoch, Minimalgröße</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>The line width of very high earth banks may be 0.25 mm.</source>
             <comment>Description of symbol 106.1.1</comment>
-            <translation>Für sehr hohe Erdböschungen kann eine Strichstärke von 0,25 mm gewählt werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Earth bank, tag line</source>
             <comment>Name of symbol 106.2</comment>
-            <translation>Erdböschung, Fallstrich</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Use this symbol to display the full extent of wide earth banks.</source>
             <comment>Description of symbol 106.2</comment>
-            <translation>Diese Symbol ist zu benutzen, um die gesamte Ausdehnung der Böschung zu zeigen.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Earth wall</source>
             <comment>Name of symbol 107</comment>
-            <translation>Erdwall</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Distinct earth wall. Minimum height is 1 m.</source>
             <comment>Description of symbol 107</comment>
-            <translation>Deutlicher Erdwall. Minimale Höhe: 1 m.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Erosion gully</source>
             <comment>Name of symbol 109</comment>
-            <translation>Graben</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An erosion gully or trench which is too small to be shown by symbol 106 is shown by a single line. The line width reflects the size of the gully. Minimum depth 1 m. The end of the line is pointed.</source>
             <comment>Description of symbol 109</comment>
-            <translation>Eine Erosionsrinne oder ein Graben, der so klein ist, dass er nicht mehr mit der Signatur 106 dargestellt werden kann, wird mit einem Strich gezeichnet. Die Linienbreite spiegelt die Größe des Grabens wieder.  Minimale Tiefe: 1 m.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Impassable cliff</source>
             <comment>Name of symbol 201</comment>
-            <translation>Unpassierbare Felswand</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
@@ -6130,7 +6121,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Impassable cliff, minimum size</source>
             <comment>Name of symbol 201.0.1</comment>
-            <translation>Unpassierbare Felswand, Minimalgröße</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
@@ -6150,7 +6141,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Impassable cliff, tag line</source>
             <comment>Name of symbol 201.2</comment>
-            <translation>Unpassierbare Felswand, Fallstrich</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Use this symbol to display the full extent of a wide cliff.</source>
@@ -6170,7 +6161,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Boulder</source>
             <comment>Name of symbol 206</comment>
-            <translation>Stein</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A small distinct boulder (minimum height 1 m). Every boulder marked on the map should be immediately identifiable on the ground. To be able to show the distinction between boulders with significant difference in size it is permitted to enlarge this symbol by 20% (diameter 0.5 mm).</source>
@@ -7015,7 +7006,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Form line</source>
             <comment>Name of symbol 103</comment>
-            <translation>Hilfshöhenlinie</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</source>
@@ -7025,92 +7016,92 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Small earth wall</source>
             <comment>Name of symbol 108</comment>
-            <translation>Kleiner Erdwall</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
             <comment>Description of symbol 108</comment>
-            <translation>Ein niedriger oder teilweise zerfallener Erdwall wird mit einer unterbrochenen Linie gezeichnet. Minimale Höhe: 0,5m.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Small erosion gully</source>
             <comment>Name of symbol 110</comment>
-            <translation>Kleiner Graben</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A small erosion gully or trench. Minimum depth 0.5 m.</source>
             <comment>Description of symbol 110</comment>
-            <translation>Eine kleine Erosionsrinne oder ein kleiner Graben. Mindesttiefe: 0,5 m.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Small knoll</source>
             <comment>Name of symbol 112</comment>
-            <translation>Kleine Kuppe</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A small obvious mound or rocky knoll which cannot be drawn to scale with a contour (diameter of mound less than ca. 5 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. The symbol may not touch a contour line.</source>
             <comment>Description of symbol 112</comment>
-            <translation>Ein kleiner, markanter Erd- oder Felshügel, der mit einer Höhenlinie nicht mehr maßstabsgetreu gezeichnet werden kann (Durchmesser der Erhebung kleiner als ca. 5 m). Der Hügel sollte mindestens 1 m höher als die Umgebung sein. Die Signatur darf keine Höhenlinie berühren.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Elongated knoll</source>
             <comment>Name of symbol 113</comment>
-            <translation>Längliche Kuppe</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A small obvious elongated knoll which cannot be drawn to scale with a contour (length less than 12 m and width less than 4 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. Knolls larger than this must be shown by contours. The symbol may not be drawn in free form or such that two elongated knoll symbols overlap. The symbol may not touch a contour line.</source>
             <comment>Description of symbol 113</comment>
-            <translation>Ein kleiner deutlicher länglicher Hügel, der mit einer Höhenlinie nicht mehr maßstabsgetreu gezeichnet werden kann (Länge weniger als 12 m und Breite weniger als 4 m). Der Hügel sollte mindestens 1 m höher als die Umgebung sein. Größere Hügel müssen mit Höhenlinien gezeichnet werden. Die Signatur darf nicht in anderer Form gezeichnet werden oder derart, dass sich zwei längliche Hügel überdecken. Die Signatur darf keine Höhenlinie berühren.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Small depression</source>
             <comment>Name of symbol 115</comment>
-            <translation>Kleine Senke</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Small shallow natural depressions and hollows (minimum diameter 2 m) which cannot be shown to scale by contours are represented by a semicircle. Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol, which is orientated to north. Symbol 116 is used for man-made pits.</source>
             <comment>Description of symbol 115</comment>
-            <translation>Kleine flache natürliche Senken und Löcher (minimaler Durchmesser 2 m), die mit Höhenlinien nicht mehr maßstabsgetreu gezeichnet werden können, werden durch einen Halbkreis dargestellt. Die Mindesttiefe in Bezug auf das umgebende Gelände sollte 1 m betragen. Die Lage entspricht dem Schwerpunkt der Signatur, die nach Norden ausgerichtet wird. Für künstliche Löcher ist Signatur 116 zu verwenden.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Pit</source>
             <comment>Name of symbol 116</comment>
-            <translation>Loch oder kleine Grube</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Pits and holes with distinct steep sides which cannot be shown to scale by symbol 106 (minimum diameter 2 m). Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol which is orientated to north.</source>
             <comment>Description of symbol 116</comment>
-            <translation>Trichter und Löcher mit klaren steilen Seiten, die durch die Signatur 106 nicht mehr maßstabsgetreu gezeichnet werden können (minimaler Durchmesser 2 m). Die Mindesttiefe in Bezug auf das umgebende Gelände sollte 1 m betragen. Die Lage entspricht dem Schwerpunkt der Signatur, die nach Norden ausgerichtet wird.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Broken ground, small</source>
             <comment>Name of symbol 117.1</comment>
-            <translation>Kleinkupiertes Gelände, kleiner Punkt</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An area of pits or knolls which is too intricate to be shown in detail. The density of randomly placed dots may vary according to the detail on the ground.</source>
             <comment>Description of symbol 117.1</comment>
-            <translation>Ein Gebiet mit Löchern oder Hügeln, das für eine detaillierte Darstellung zu formenreich ist. Die Dichte der Punkte darf entsprechend der Anzahl von Geländeobjekten variieren. Die Größe der Punkte kann variieren.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Broken ground, big</source>
             <comment>Name of symbol 117.2</comment>
-            <translation>Kleinkupiertes Gelände, großer Punkt</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>The size of the dots may vary.</source>
             <comment>Description of symbol 117.2</comment>
-            <translation>Die Größe der Punkte kann variieren.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Special land form feature</source>
             <comment>Name of symbol 118</comment>
-            <translation>Besonderes Geländeobjekt</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>This symbol can be used for a special small land form feature. The definition of the symbol must be given in the map legend.</source>
             <comment>Description of symbol 118</comment>
-            <translation>Mit dieser Signatur können besondere kleine Geländeobjekte dargestellt werden. Die Bedeutung der Signatur muss immer in der Kartenlegende angegeben werden.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Passable rock face</source>
@@ -7684,7 +7675,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Purple</source>
             <comment>Color 1</comment>
-            <translation>Violett</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Upper Green</source>
@@ -7694,117 +7685,117 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Black</source>
             <comment>Color 3</comment>
-            <translation>Schwarz</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Brown 50%</source>
             <comment>Color 4</comment>
-            <translation>Braun 50%</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Black below light browns</source>
             <comment>Color 5</comment>
-            <translation>Schwarz unter Hellbraun</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Brown</source>
             <comment>Color 6</comment>
-            <translation>Braun</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>OpenOrienteering Orange</source>
             <comment>Color 7</comment>
-            <translation>OpenOrienteering-Orange</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Opaque Blue</source>
             <comment>Color 8</comment>
-            <translation>Deckendes Blau</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Blue</source>
             <comment>Color 9</comment>
-            <translation>Blau</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Blue 50%</source>
             <comment>Color 10</comment>
-            <translation>Blau 50%</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Black 30%</source>
             <comment>Color 11</comment>
-            <translation>Schwarz 30%</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Green 50%, Yellow</source>
             <comment>Color 12</comment>
-            <translation>Grün 50%, Gelb</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Green over White over Green</source>
             <comment>Color 13</comment>
-            <translation>Grün über Weiß-über-Grün</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Opaque White over Green</source>
             <comment>Color 14</comment>
-            <translation>Deckendes Weiß über Grün</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Opaque Green</source>
             <comment>Color 15</comment>
-            <translation>Deckendes Grün</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Green</source>
             <comment>Color 16</comment>
-            <translation>Grün</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Green 60%</source>
             <comment>Color 17</comment>
-            <translation>Grün 60%</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Green 30%</source>
             <comment>Color 18</comment>
-            <translation>Grün 30%</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Green below light greens</source>
             <comment>Color 19</comment>
-            <translation>Grün unter Hellgrün</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Yellow</source>
             <comment>Color 20</comment>
-            <translation>Gelb</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Yellow 50%</source>
             <comment>Color 21</comment>
-            <translation>Gelb 50%</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>White over Yellow 70%</source>
             <comment>Color 22</comment>
-            <translation>Weiß über Gelb 70%</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Yellow 70%</source>
             <comment>Color 23</comment>
-            <translation>Gelb 70%</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Contour</source>
             <comment>Name of symbol 101</comment>
-            <translation>Höhenlinie, Normalkurve</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
             <comment>Description of symbol 101</comment>
-            <translation>Eine Linie, die Punkte gleicher Höhe verbindet. Der normale Abstand zwischen Normalkurven beträgt 5 m. Die kleinste Kurve in einer Höhenlinie hat einen Abstand von 0,25 mm von Linienmitte zu Linienmitte.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Contour (narrow)</source>
@@ -7814,22 +7805,22 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
             <comment>Description of symbol 101.1</comment>
-            <translation>Eine Linie, die Punkte gleicher Höhe verbindet. Der normale Abstand zwischen Normalkurven beträgt 5 m. Die kleinste Kurve in einer Höhenlinie hat einen Abstand von 0,25 mm von Linienmitte zu Linienmitte.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Index contour</source>
             <comment>Name of symbol 102</comment>
-            <translation>Zählkurve</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. Where an index contour coincides with an area of much detail, it may be shown with a normal contour line.</source>
             <comment>Description of symbol 102</comment>
-            <translation>Jede fünfte Kurve soll als dickere Linie gezeichnet werden, um Höhenunterschiede und die generelle Geländestruktur zu verdeutlichen. Fällt eine Zählkurve in ein Gebiet mit vielen Details, kann sie als Normalkurve gezeichnet werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Form line</source>
             <comment>Name of symbol 103</comment>
-            <translation>Hilfshöhenlinie</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</source>
@@ -7839,97 +7830,97 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Slope line</source>
             <comment>Name of symbol 104</comment>
-            <translation>Fallstrich</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Slope lines may be drawn on the lower side of a contour line, e.g. along the line of a re-entrant or in a depression. They are used only where it is necessary to clarify the direction of slope.</source>
             <comment>Description of symbol 104</comment>
-            <translation>Fallstriche können an der tieferen Seite einer Höhenlinie gezeichnet werden wie z. B. entlang einer Muldenlinie oder in einer Senke. Sie werden nur dann gezeichnet, wenn es für die Darstellung der Geländeneigung erforderlich ist.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Contour value</source>
             <comment>Name of symbol 105</comment>
-            <translation>Höhenkurvenzahl</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
             <comment>Description of symbol 105</comment>
-            <translation>Die Kurvenzahlen können zum Abschätzen großer Höhenunterschiede eingefügt werden. Sie werden so in die Zählkurven plaziert, dass andere Objekte nicht verdeckt werden. Die Ziffern sollten so ausgerichtet werden, dass ihr oberer Teil auf der höheren Seite der Höhenlinie liegt.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Earth bank</source>
             <comment>Name of symbol 106</comment>
-            <translation>Erdböschung</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
             <comment>Description of symbol 106</comment>
-            <translation>Eine steile Erdböschung ist ein plötzlicher Bruch der Erdoberfläche, der sich deutlich von der Umgebung abhebt, wie z. B. Kies- oder Sandgruben, Einschnitte  von Straßen und Eisenbahnen oder Dämme. Die Fallstriche sollen die gesamte Fläche der Böschung bedecken, können jedoch weggelassen werden, wenn zwei Böschungen zu eng beieinander liegen. Unpassierbare Böschungen sollten mit der Signatur 201 (unpassierbare Felswand) gezeichnet werden. Für sehr hohe Erdböschungen kann eine Strichstärke von 0,25 mm gewählt werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Earth bank, minimum size</source>
             <comment>Name of symbol 106.0.1</comment>
-            <translation>Erdböschung, Minimalgröße</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
             <comment>Description of symbol 106.0.1</comment>
-            <translation>Eine steile Erdböschung ist ein plötzlicher Bruch der Erdoberfläche, der sich deutlich von der Umgebung abhebt, wie z. B. Kies- oder Sandgruben, Einschnitte  von Straßen und Eisenbahnen oder Dämme. Die Fallstriche sollen die gesamte Fläche der Böschung bedecken, können jedoch weggelassen werden, wenn zwei Böschungen zu eng beieinander liegen. Unpassierbare Böschungen sollten mit der Signatur 201 (unpassierbare Felswand) gezeichnet werden. Für sehr hohe Erdböschungen kann eine Strichstärke von 0,25 mm gewählt werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Earth bank, very high</source>
             <comment>Name of symbol 106.1</comment>
-            <translation>Erdböschung, sehr hoch</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>The line width of very high earth banks may be 0.25 mm.</source>
             <comment>Description of symbol 106.1</comment>
-            <translation>Für sehr hohe Erdböschungen kann eine Strichstärke von 0,25 mm gewählt werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Earth bank, very high, minimum size</source>
             <comment>Name of symbol 106.1.1</comment>
-            <translation>Erdböschung, sehr hoch, Minimalgröße</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>The line width of very high earth banks may be 0.25 mm.</source>
             <comment>Description of symbol 106.1.1</comment>
-            <translation>Für sehr hohe Erdböschungen kann eine Strichstärke von 0,25 mm gewählt werden.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Earth bank, tag line</source>
             <comment>Name of symbol 106.2</comment>
-            <translation>Erdböschung, Fallstrich</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Use this symbol to display the full extent of wide earth banks.</source>
             <comment>Description of symbol 106.2</comment>
-            <translation>Diese Symbol ist zu benutzen, um die gesamte Ausdehnung der Böschung zu zeigen.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Earth wall</source>
             <comment>Name of symbol 107</comment>
-            <translation>Erdwall</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Distinct earth wall. Minimum height is 1 m.</source>
             <comment>Description of symbol 107</comment>
-            <translation>Deutlicher Erdwall. Minimale Höhe: 1 m.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Erosion gully</source>
             <comment>Name of symbol 109</comment>
-            <translation>Graben</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An erosion gully or trench which is too small to be shown by symbol 106 is shown by a single line. The line width reflects the size of the gully. Minimum depth 1 m. The end of the line is pointed.</source>
             <comment>Description of symbol 109</comment>
-            <translation>Eine Erosionsrinne oder ein Graben, der so klein ist, dass er nicht mehr mit der Signatur 106 dargestellt werden kann, wird mit einem Strich gezeichnet. Die Linienbreite spiegelt die Größe des Grabens wieder.  Minimale Tiefe: 1 m.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Impassable cliff</source>
             <comment>Name of symbol 201</comment>
-            <translation>Unpassierbare Felswand</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
@@ -7939,7 +7930,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Impassable cliff, minimum size</source>
             <comment>Name of symbol 201.0.1</comment>
-            <translation>Unpassierbare Felswand, Minimalgröße</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
@@ -7959,7 +7950,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Impassable cliff, tag line</source>
             <comment>Name of symbol 201.2</comment>
-            <translation>Unpassierbare Felswand, Fallstrich</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Use this symbol to display the full extent of a wide cliff.</source>
@@ -8039,7 +8030,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Boulder</source>
             <comment>Name of symbol 206</comment>
-            <translation>Stein</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A small distinct boulder (minimum height 1 m). Every boulder marked on the map should be immediately identifiable on the ground. To be able to show the distinction between boulders with significant difference in size it is permitted to enlarge this symbol by 20% (diameter 0.5 mm).</source>
@@ -9002,92 +8993,92 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Small earth wall</source>
             <comment>Name of symbol 108</comment>
-            <translation>Kleiner Erdwall</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
             <comment>Description of symbol 108</comment>
-            <translation>Ein niedriger oder teilweise zerfallener Erdwall wird mit einer unterbrochenen Linie gezeichnet. Minimale Höhe: 0,5m.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Small erosion gully</source>
             <comment>Name of symbol 110</comment>
-            <translation>Kleiner Graben</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A small erosion gully or trench. Minimum depth 0.5 m.</source>
             <comment>Description of symbol 110</comment>
-            <translation>Eine kleine Erosionsrinne oder ein kleiner Graben. Mindesttiefe: 0,5 m.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Small knoll</source>
             <comment>Name of symbol 112</comment>
-            <translation>Kleine Kuppe</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A small obvious mound or rocky knoll which cannot be drawn to scale with a contour (diameter of mound less than ca. 5 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. The symbol may not touch a contour line.</source>
             <comment>Description of symbol 112</comment>
-            <translation>Ein kleiner, markanter Erd- oder Felshügel, der mit einer Höhenlinie nicht mehr maßstabsgetreu gezeichnet werden kann (Durchmesser der Erhebung kleiner als ca. 5 m). Der Hügel sollte mindestens 1 m höher als die Umgebung sein. Die Signatur darf keine Höhenlinie berühren.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Elongated knoll</source>
             <comment>Name of symbol 113</comment>
-            <translation>Längliche Kuppe</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A small obvious elongated knoll which cannot be drawn to scale with a contour (length less than 12 m and width less than 4 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. Knolls larger than this must be shown by contours. The symbol may not be drawn in free form or such that two elongated knoll symbols overlap. The symbol may not touch a contour line.</source>
             <comment>Description of symbol 113</comment>
-            <translation>Ein kleiner deutlicher länglicher Hügel, der mit einer Höhenlinie nicht mehr maßstabsgetreu gezeichnet werden kann (Länge weniger als 12 m und Breite weniger als 4 m). Der Hügel sollte mindestens 1 m höher als die Umgebung sein. Größere Hügel müssen mit Höhenlinien gezeichnet werden. Die Signatur darf nicht in anderer Form gezeichnet werden oder derart, dass sich zwei längliche Hügel überdecken. Die Signatur darf keine Höhenlinie berühren.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Small depression</source>
             <comment>Name of symbol 115</comment>
-            <translation>Kleine Senke</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Small shallow natural depressions and hollows (minimum diameter 2 m) which cannot be shown to scale by contours are represented by a semicircle. Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol, which is orientated to north. Symbol 116 is used for man-made pits.</source>
             <comment>Description of symbol 115</comment>
-            <translation>Kleine flache natürliche Senken und Löcher (minimaler Durchmesser 2 m), die mit Höhenlinien nicht mehr maßstabsgetreu gezeichnet werden können, werden durch einen Halbkreis dargestellt. Die Mindesttiefe in Bezug auf das umgebende Gelände sollte 1 m betragen. Die Lage entspricht dem Schwerpunkt der Signatur, die nach Norden ausgerichtet wird. Für künstliche Löcher ist Signatur 116 zu verwenden.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Pit</source>
             <comment>Name of symbol 116</comment>
-            <translation>Loch oder kleine Grube</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Pits and holes with distinct steep sides which cannot be shown to scale by symbol 106 (minimum diameter 2 m). Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol which is orientated to north.</source>
             <comment>Description of symbol 116</comment>
-            <translation>Trichter und Löcher mit klaren steilen Seiten, die durch die Signatur 106 nicht mehr maßstabsgetreu gezeichnet werden können (minimaler Durchmesser 2 m). Die Mindesttiefe in Bezug auf das umgebende Gelände sollte 1 m betragen. Die Lage entspricht dem Schwerpunkt der Signatur, die nach Norden ausgerichtet wird.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Broken ground, small</source>
             <comment>Name of symbol 117.1</comment>
-            <translation>Kleinkupiertes Gelände, kleiner Punkt</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An area of pits or knolls which is too intricate to be shown in detail. The density of randomly placed dots may vary according to the detail on the ground.</source>
             <comment>Description of symbol 117.1</comment>
-            <translation>Ein Gebiet mit Löchern oder Hügeln, das für eine detaillierte Darstellung zu formenreich ist. Die Dichte der Punkte darf entsprechend der Anzahl von Geländeobjekten variieren. Die Größe der Punkte kann variieren.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Broken ground, big</source>
             <comment>Name of symbol 117.2</comment>
-            <translation>Kleinkupiertes Gelände, großer Punkt</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>The size of the dots may vary.</source>
             <comment>Description of symbol 117.2</comment>
-            <translation>Die Größe der Punkte kann variieren.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Special land form feature</source>
             <comment>Name of symbol 118</comment>
-            <translation>Besonderes Geländeobjekt</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>This symbol can be used for a special small land form feature. The definition of the symbol must be given in the map legend.</source>
             <comment>Description of symbol 118</comment>
-            <translation>Mit dieser Signatur können besondere kleine Geländeobjekte dargestellt werden. Die Bedeutung der Signatur muss immer in der Kartenlegende angegeben werden.</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Rocky pit</source>
@@ -9561,7 +9552,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Purple</source>
             <comment>Color 0</comment>
-            <translation>Violett</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Black for control descriptions</source>
@@ -9586,7 +9577,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Black</source>
             <comment>Color 5</comment>
-            <translation>Schwarz</translation>
+            <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Simple Orienteering Course</source>
