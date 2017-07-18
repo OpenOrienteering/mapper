@@ -116,7 +116,9 @@ TestMapEditor::TestMapEditor(Map* map)
 
 TestMapEditor::~TestMapEditor()
 {
-	delete window;
+	// The window may still be refered to by tools which are scheduled for
+	// deleteLater(), so we need to postpone the window deletion, too.
+	window->deleteLater();
 }
 
 void TestMapEditor::simulateClick(QPoint pos)
