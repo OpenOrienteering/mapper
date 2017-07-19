@@ -11838,8 +11838,8 @@ Map Exchange</source>
         <message>
             <source>Taped Route from last control to Finish</source>
             <comment>Name of symbol 14.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Lint van laatste post tot finish</translation>
+    </message>
         <message>
             <source>Mandatory route from the last control to the Finish. Re-emphasises what is shown on the map. Gives the distance from the last control to Finish.</source>
             <comment>Description of symbol 14.1</comment>
