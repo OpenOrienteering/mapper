@@ -24,13 +24,36 @@ if(ANDROID)
 endif()
 
 set(Mapper_SYMBOL_SETS
-  4000/ISSOM_4000.omap
-  5000/ISSOM_5000.omap
-  10000/ISOM2000_10000.omap
   10000/ISOM2017_10000.omap
-  15000/ISOM2000_15000.omap
   15000/ISOM2017_15000.omap
   
+  10000/ISOM2000_10000.omap
+  15000/ISOM2000_15000.omap
+  
+  4000/ISSOM_4000.omap
+  5000/ISSOM_5000.omap
+  
+  5000/ISMTBOM_5000.omap
+  7500/ISMTBOM_7500.omap
+  10000/ISMTBOM_10000.omap
+  15000/ISMTBOM_15000.omap
+  20000/ISMTBOM_20000.omap
+  
+  5000/ISSkiOM_5000.omap
+  10000/ISSkiOM_10000.omap
+  15000/ISSkiOM_15000.omap
+  
+  4000/Course_Design_4000.omap
+  5000/Course_Design_5000.omap
+  10000/Course_Design_10000.omap
+  15000/Course_Design_15000.omap
+  
+  ./ISOM2017.crt
+  ./OSM-ISOM2000.crt
+)
+
+# Translations which are no longer deployed
+set(Mapper_SYMBOL_SETS_UNUSED
   4000/ISSOM_cs_4000.omap
   5000/ISSOM_cs_5000.omap
   10000/ISOM2000_cs_10000.omap
@@ -47,29 +70,11 @@ set(Mapper_SYMBOL_SETS
   10000/ISOM2000_ru_10000.omap
   15000/ISOM2000_ru_15000.omap
   
-  5000/ISMTBOM_5000.omap
-  7500/ISMTBOM_7500.omap
-  10000/ISMTBOM_10000.omap
-  15000/ISMTBOM_15000.omap
-  20000/ISMTBOM_20000.omap
-  
   5000/ISMTBOM_uk_5000.omap
   7500/ISMTBOM_uk_7500.omap
   10000/ISMTBOM_uk_10000.omap
   15000/ISMTBOM_uk_15000.omap
   20000/ISMTBOM_uk_20000.omap
-  
-  5000/ISSkiOM_5000.omap
-  10000/ISSkiOM_10000.omap
-  15000/ISSkiOM_15000.omap
-  
-  4000/Course_Design_4000.omap
-  5000/Course_Design_5000.omap
-  10000/Course_Design_10000.omap
-  15000/Course_Design_15000.omap
-  
-  ./ISOM2017.crt
-  ./OSM-ISOM2000.crt
 )
 
 set(_symbol_sets)
