@@ -294,7 +294,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="88"/>
         <source>Edit</source>
-        <translation type="unfinished">Muokkaa</translation>
+        <translation>Muokkaa</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="101"/>
@@ -400,17 +400,17 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="274"/>
         <source>Name</source>
-        <translation type="unfinished">Nimi</translation>
+        <translation>Nimi</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="326"/>
         <source>- unnamed -</source>
-        <translation type="unfinished">- nimeämätön -</translation>
+        <translation>- nimeämätön -</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="595"/>
         <source>Warning</source>
-        <translation type="unfinished">Varoitus</translation>
+        <translation>Varoitus</translation>
     </message>
 </context>
 <context>
@@ -503,12 +503,12 @@
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="246"/>
         <source>%1 (duplicate)</source>
         <extracomment>Future replacement for COLOR_NAME + " (Duplicate)", for better localization.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 (kaksoiskappale)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="247"/>
         <source> (Duplicate)</source>
-        <translation> (Monista)</translation>
+        <translation> (Kaksoiskappale)</translation>
     </message>
     <message>
         <source>Error</source>
@@ -4530,12 +4530,12 @@ valittu</translation>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="50"/>
         <source>&amp;Find...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Etsi…</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="56"/>
         <source>Find &amp;next</source>
-        <translation type="unfinished"></translation>
+        <translation>Etsi &amp;seuraava</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="94"/>
@@ -4545,12 +4545,12 @@ valittu</translation>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="99"/>
         <source>&amp;Find next</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Etsi seuraava</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="102"/>
         <source>Find &amp;all</source>
-        <translation type="unfinished"></translation>
+        <translation>Etsi &amp;kaikki</translation>
     </message>
 </context>
 <context>
@@ -4592,13 +4592,13 @@ valittu</translation>
         <location filename="../src/gui/color_dialog.cpp" line="270"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="81"/>
         <source>Text source:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tekstin lähde:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="512"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="324"/>
         <source>Map (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kartta (%1)</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="513"/>
@@ -4606,13 +4606,13 @@ valittu</translation>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="325"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="338"/>
         <source>undefined language</source>
-        <translation type="unfinished"></translation>
+        <translation>määrittelemätön kieli</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="531"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="341"/>
         <source>Translation (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Käännös (%1)</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="583"/>
@@ -5092,7 +5092,7 @@ zoomaa hiiren rullalla.</translation>
         <location filename="../src/core/objects/object_query.cpp" line="273"/>
         <source>Search</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Haku</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="277"/>
@@ -5110,7 +5110,7 @@ zoomaa hiiren rullalla.</translation>
         <location filename="../src/core/objects/object_query.cpp" line="284"/>
         <source>Symbol</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Symboli</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="288"/>
@@ -6573,7 +6573,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="83"/>
         <source>Edit</source>
-        <translation type="unfinished">Muokkaa</translation>
+        <translation>Muokkaa</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="84"/>
@@ -6598,7 +6598,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="227"/>
         <source>Warning</source>
-        <translation type="unfinished">Varoitus</translation>
+        <translation>Varoitus</translation>
     </message>
 </context>
 <context>

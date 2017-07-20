@@ -3420,22 +3420,8 @@ Barva: černá.</translation>
 Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm over both sides of the stream!</source>
             <comment>Description of symbol 512</comment>
             <translation>Lávka k níž nevede žádná pěšina.
-Barva: černá.
-
-Poznámka: Pokud je proud širší než 0.25 mm, upravte tento symbol tak, že se rozšiřuje 0.5 mm na obou stranách proudu!
-
-Poznámka:
-
-Číslo 513 Křížení s mostem
-
-Pěšina nebo cesta křižující řeku, potok nebo strouhu mostem.
-Barva: černá.
-
-Číslo 514 Křížení bez mostu
-
-Pěšina nebo cesta křižující řeku, potok nebo strouhu bez mostu {brod}.
-Barva: černá.</translation>
-        </message>
+Poznámka: Pokud je proud širší než 0.25 mm, upravte tento symbol tak, že se rozšiřuje 0.5 mm na obou stranách proudu!</translation>
+    </message>
         <message>
             <source>Railway</source>
             <comment>Name of symbol 515</comment>
@@ -5420,11 +5406,8 @@ Barva: černá, hnědá 0 {%} (bílá), 10%, 20% nebo 30% (urban) / 20%, 30%, 40
         <message>
             <source>A small unpaved footpath or track. Not to be used in urban areas.</source>
             <comment>Description of symbol 507</comment>
-            <translation>Úzká nezpevněná pěší nebo vozová cesta. Nesmí být užita v urbanizovaných oblastech.
-
-Barva: černá.
-</translation>
-        </message>
+            <translation>Úzká nezpevněná pěší nebo vozová cesta. Nesmí být užita v urbanizovaných oblastech.</translation>
+    </message>
         <message>
             <source>Less distinct small path</source>
             <comment>Name of symbol 508</comment>

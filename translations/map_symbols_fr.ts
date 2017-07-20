@@ -5063,8 +5063,8 @@ pavée) ou 529.1 (escalier en zone pavée).</translation>
         <message>
             <source>A small unpaved footpath or track. Not to be used in urban areas.</source>
             <comment>Description of symbol 507</comment>
-            <translation>Petit sentier non pavé ou une trace. Ne pas utiliser en zone urbaine</translation>
-        </message>
+            <translation>Petit sentier non pavé ou une trace. Ne pas utiliser en zone urbaine.</translation>
+    </message>
         <message>
             <source>Less distinct small path</source>
             <comment>Name of symbol 508</comment>
