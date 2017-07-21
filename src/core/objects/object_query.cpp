@@ -101,6 +101,9 @@ ObjectQuery::LogicalOperands::LogicalOperands(const ObjectQuery::LogicalOperands
 }
 
 
+ObjectQuery::LogicalOperands::~LogicalOperands() = default;
+
+
 ObjectQuery::LogicalOperands& ObjectQuery::LogicalOperands::operator=(const ObjectQuery::LogicalOperands& proto)
 {
 	if (proto.first)
@@ -109,6 +112,12 @@ ObjectQuery::LogicalOperands& ObjectQuery::LogicalOperands::operator=(const Obje
 		second = std::make_unique<ObjectQuery>(*proto.second);
 	return *this;
 }
+
+
+
+// ### ObjectQuery::TagOperands ###
+
+ObjectQuery::TagOperands::~TagOperands() = default;
 
 
 

@@ -76,7 +76,7 @@ public:
 		LogicalOperands() = default;
 		LogicalOperands(const LogicalOperands& proto);
 		LogicalOperands(LogicalOperands&&) = default;
-		~LogicalOperands() = default;
+		~LogicalOperands();
 		LogicalOperands& operator=(const LogicalOperands& proto);
 		LogicalOperands& operator=(LogicalOperands&&) = default;
 	 };
@@ -86,6 +86,8 @@ public:
 	{
 		QString key;
 		QString value;
+		
+		~TagOperands();
 	};
 
 	ObjectQuery() noexcept;
