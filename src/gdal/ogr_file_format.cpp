@@ -1186,12 +1186,12 @@ AreaSymbol* OgrFileImport::getSymbolForBrush(OGRStyleToolH tool, const QByteArra
 
 MapCoord OgrFileImport::fromDrawing(double x, double y) const
 {
-	return MapCoord::load(x, -y, 0);
+	return MapCoord::load(x, -y, MapCoord::Flags{});
 }
 
 MapCoord OgrFileImport::fromProjected(double x, double y) const
 {
-	return MapCoord::load(map->getGeoreferencing().toMapCoordF(QPointF{ x, y }), 0);
+	return MapCoord::load(map->getGeoreferencing().toMapCoordF(QPointF{ x, y }), MapCoord::Flags{});
 }
 
 

@@ -96,12 +96,12 @@ static_assert(MapCoord(0.0, 0.0, MapCoord::GapPoint).isGapPoint(),
 
 static_assert(MapCoord(-1.0, 2.0).x() == -1,
               "MapCoord::x() must return original value (w/o flags)");
-static_assert(MapCoord(-1.0, 2.0, 255).x() == -1.0,
+static_assert(MapCoord(-1.0, 2.0, MapCoord::Flags{255}).x() == -1.0,
               "MapCoord::x() must return original value (with flags)");
 
 static_assert(MapCoord::fromNative(-1, 2).nativeX() == -1,
               "MapCoord::nativeX() must return original value (w/o flags)");
-static_assert(MapCoord::fromNative(-1, 2, 255).nativeX() == -1,
+static_assert(MapCoord::fromNative(-1, 2, MapCoord::Flags{255}).nativeX() == -1,
               "MapCoord::nativeX() must return original value (with flags)");
 
 #ifndef MAPPER_NO_QREAL_CHECK
@@ -228,14 +228,14 @@ MapCoord MapCoord::load(QXmlStreamReader& xml)
 	XmlElementReader element(xml);
 	auto x64 = element.attribute<qint64>(literal::x);
 	auto y64 = element.attribute<qint64>(literal::y);
-	auto flags = element.attribute<Flags::Int>(literal::flags);
+	auto flags = Flags{element.attribute<Flags::Int>(literal::flags)};
 	
 	handleBoundsOffset(x64, y64);
 	ensureBoundsForQint32(x64, y64);
 	return MapCoord { static_cast<qint32>(x64), static_cast<qint32>(y64), flags };
 }
 
-MapCoord MapCoord::load(qreal x, qreal y, int flags)
+MapCoord MapCoord::load(qreal x, qreal y, Flags flags)
 {
 	auto x64 = qRound64(x * 1000);
 	auto y64 = qRound64(y * 1000);
@@ -245,14 +245,14 @@ MapCoord MapCoord::load(qreal x, qreal y, int flags)
 	return MapCoord { static_cast<qint32>(x64), static_cast<qint32>(y64), flags };
 }
 
-MapCoord MapCoord::load(QPointF p, int flags)
+MapCoord MapCoord::load(QPointF p, MapCoord::Flags flags)
 {
 	return MapCoord::load(p.x(), p.y(), flags);
 }
 
 #ifndef NO_NATIVE_FILE_FORMAT
 	
-MapCoord::MapCoord(const LegacyMapCoord& coord)
+MapCoord::MapCoord(const LegacyMapCoord& coord) noexcept
  : xp{ decltype(xp)(coord.x >> 4) }
  , yp{ decltype(yp)(coord.y >> 4) }
  , fp{ Flags::Int((coord.x & 0xf) | ((coord.y & 0xf) << 4)) }
@@ -288,7 +288,7 @@ QString MapCoord::toString() const
 	buffer[j] = QLatin1Char{';'};
 	--j;
 	
-	int flags = fp;
+	auto flags = Flags::Int(fp);
 	if (flags > 0)
 	{
 		do

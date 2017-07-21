@@ -353,8 +353,8 @@ void FileFormatTest::mapCoordtoString()
 	auto native_x = MapCoord().nativeX();
 	using bounds = std::numeric_limits<decltype(native_x)>;
 	static_assert(sizeof(decltype(native_x)) == sizeof(qint32), "This test assumes qint32 native coordinates");
-	QCOMPARE(MapCoord::fromNative(bounds::max(), bounds::max(), 8).toString(), QString::fromLatin1("2147483647 2147483647 8;"));
-	QCOMPARE(MapCoord::fromNative(bounds::min(), bounds::min(), 1).toString(), QString::fromLatin1("-2147483648 -2147483648 1;"));
+	QCOMPARE(MapCoord::fromNative(bounds::max(), bounds::max(), MapCoord::Flags{MapCoord::Flags::Int(8)}).toString(), QString::fromLatin1("2147483647 2147483647 8;"));
+	QCOMPARE(MapCoord::fromNative(bounds::min(), bounds::min(), MapCoord::Flags{MapCoord::Flags::Int(1)}).toString(), QString::fromLatin1("-2147483648 -2147483648 1;"));
 }
 
 

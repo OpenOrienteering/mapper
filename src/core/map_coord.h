@@ -177,7 +177,7 @@ public:
 	 * 
 	 * @deprecated
 	 */
-	MapCoord(const LegacyMapCoord& coord);
+	MapCoord(const LegacyMapCoord& coord) noexcept;
 
 #endif	
 	
@@ -189,7 +189,7 @@ public:
 	 * you need to use other argument types than int if the compiler complains
 	 * about ambiguity.
 	 */
-	constexpr MapCoord(int x, int y);
+	constexpr MapCoord(int x, int y) noexcept;
 	
 private:
 	/** Creates a MapCoord from native map coordinates.
@@ -197,27 +197,51 @@ private:
 	 * This is exposed via fromNative() - you must be explicit when you want to
 	 * use native units.
 	 */
-	constexpr MapCoord(qint32 x, qint32 y, int flags);
+	constexpr MapCoord(qint32 x, qint32 y, Flags flags) noexcept;
+	
+	/** Creates a MapCoord from native map coordinates.
+	 *
+	 * This is exposed via fromNative() - you must be explicit when you want to
+	 * use native units.
+	 */
+	constexpr MapCoord(qint32 x, qint32 y, Flag flag) noexcept;
+	
+	// Prevent selection of MapCoord(qreal, qreal, int)
+	MapCoord(qint32, qint32, int) = delete;
 	
 public:
 	/** Creates a MapCoord from a position given in millimeters on the map. */
-	constexpr MapCoord(qreal x, qreal y);
+	constexpr MapCoord(qreal x, qreal y) noexcept;
 	
 	/** Creates a MapCoord with the given flags from a position given in millimeters on the map. */
-	constexpr MapCoord(qreal x, qreal y, int flags);
+	constexpr MapCoord(qreal x, qreal y, Flags flags) noexcept;
+	
+	/** Creates a MapCoord with the given flags from a position given in millimeters on the map. */
+	constexpr MapCoord(qreal x, qreal y, Flag flag) noexcept;
+	
+	MapCoord(qreal x, qreal y, int flags) = delete;
 	
 	/** Creates a MapCoord with the position taken from a QPointF. */
-	explicit constexpr MapCoord(QPointF point);
+	explicit constexpr MapCoord(QPointF point) noexcept;
 	
 	/** Creates a MapCoord with the given flags and with the position taken from a QPointF. */
-	constexpr MapCoord(QPointF point, int flags);
+	constexpr MapCoord(QPointF point, Flags flags) noexcept;
 	
+	/** Creates a MapCoord with the given flags and with the position taken from a QPointF. */
+	constexpr MapCoord(QPointF point, Flag flag) noexcept;
+	
+	MapCoord(QPointF point, int flags) = delete;
 	
 	/** Creates a MapCoord from native map coordinates. */
-	static constexpr MapCoord fromNative(qint32 x, qint32 y);
+	static constexpr MapCoord fromNative(qint32 x, qint32 y) noexcept;
 	
 	/** Creates a MapCoord from native map coordinates. */
-	static constexpr MapCoord fromNative(qint32 x, qint32 y, int flags);
+	static constexpr MapCoord fromNative(qint32 x, qint32 y, Flags flags) noexcept;
+	
+	/** Creates a MapCoord from native map coordinates. */
+	static constexpr MapCoord fromNative(qint32 x, qint32 y, Flag flag) noexcept;
+	
+	static MapCoord fromNative(qint32 x, qint32 y, int flags) = delete;
 	
 	/** It is illegal to call MapCoord::fromNative with qint64 arguments.
 	 *
@@ -273,10 +297,10 @@ public:
 	
 	
 	/** Returns the coord's flags separately, merged into the lowest 8 bits of an int. */
-	constexpr int flags() const;
+	constexpr Flags::Int flags() const noexcept;
 	
 	/** Sets the flags as retrieved by flags(). */
-	void setFlags(int flags);
+	void setFlags(Flags::Int flags) noexcept;
 	
 	
 	/**
@@ -416,7 +440,9 @@ public:
 	 * apply the BoundsOffset() and throw a std::range_error if the adjusted
 	 * coordinates are out of bounds for qint32.
 	 */
-	static MapCoord load(qreal x, qreal y, int flags);
+	static MapCoord load(qreal x, qreal y, MapCoord::Flags flags);
+	
+	static MapCoord load(qreal x, qreal y, int flags) = delete;
 	
 	/** Creates a MapCoord from map coordinates in millimeters, with offset handling.
 	 * 
@@ -424,7 +450,9 @@ public:
 	 * apply the BoundsOffset() and throw a std::range_error if the adjusted
 	 * coordinates are out of bounds for qint32.
 	 */
-	static MapCoord load(QPointF p, int flags);
+	static MapCoord load(QPointF p, MapCoord::Flags flags);
+	
+	static MapCoord load(QPointF p, int flags) = delete;
 	
 	
 	friend constexpr bool operator==(const MapCoord& lhs, const MapCoord& rhs);
@@ -660,7 +688,7 @@ constexpr MapCoord::MapCoord() noexcept
 	// nothing else
 }
 
-constexpr MapCoord::MapCoord(int x, int y)
+constexpr MapCoord::MapCoord(int x, int y) noexcept
  : xp{ x*1000 }
  , yp{ y*1000 }
  , fp{ 0 }
@@ -668,7 +696,7 @@ constexpr MapCoord::MapCoord(int x, int y)
 	// nothing else
 }
 
-constexpr MapCoord::MapCoord(qint32 x, qint32 y, int flags)
+constexpr MapCoord::MapCoord(qint32 x, qint32 y, Flags flags) noexcept
  : xp{ x }
  , yp{ y }
  , fp{ flags }
@@ -676,7 +704,15 @@ constexpr MapCoord::MapCoord(qint32 x, qint32 y, int flags)
 	// nothing else
 }
 
-constexpr MapCoord::MapCoord(qreal x, qreal y)
+constexpr MapCoord::MapCoord(qint32 x, qint32 y, Flag flag) noexcept
+ : xp{ x }
+ , yp{ y }
+ , fp{ flag }
+{
+	// nothing else
+}
+
+constexpr MapCoord::MapCoord(qreal x, qreal y) noexcept
  : xp{ qRound(x*1000) }
  , yp{ qRound(y*1000) }
  , fp{ 0 }
@@ -684,7 +720,7 @@ constexpr MapCoord::MapCoord(qreal x, qreal y)
 	// nothing else
 }
 
-constexpr MapCoord::MapCoord(qreal x, qreal y, int flags)
+constexpr MapCoord::MapCoord(qreal x, qreal y, Flags flags) noexcept
  : xp{ qRound(x*1000) }
  , yp{ qRound(y*1000) }
  , fp{ flags }
@@ -692,26 +728,45 @@ constexpr MapCoord::MapCoord(qreal x, qreal y, int flags)
 	// nothing else
 }
 
-constexpr MapCoord::MapCoord(QPointF point)
+constexpr MapCoord::MapCoord(qreal x, qreal y, Flag flag) noexcept
+ : xp{ qRound(x*1000) }
+ , yp{ qRound(y*1000) }
+ , fp{ flag }
+{
+	// nothing else
+}
+
+constexpr MapCoord::MapCoord(QPointF point) noexcept
  : MapCoord { point.x(), point.y() }
 {
 	// nothing else
 }
 
-constexpr MapCoord::MapCoord(QPointF point, int flags)
+constexpr MapCoord::MapCoord(QPointF point, Flags flags) noexcept
  : MapCoord { point.x(), point.y(), flags }
 {
 	// nothing else
 }
 
-constexpr MapCoord MapCoord::fromNative(qint32 x, qint32 y)
+constexpr MapCoord::MapCoord(QPointF point, Flag flag) noexcept
+ : MapCoord { point.x(), point.y(), flag }
+{
+	// nothing else
+}
+
+constexpr MapCoord MapCoord::fromNative(qint32 x, qint32 y) noexcept
 {
 	return MapCoord{ x, y, Flags() };
 }
 
-constexpr MapCoord MapCoord::fromNative(qint32 x, qint32 y, int flags)
+constexpr MapCoord MapCoord::fromNative(qint32 x, qint32 y, Flags flags) noexcept
 {
 	return MapCoord{ x, y, flags };
+}
+
+constexpr MapCoord MapCoord::fromNative(qint32 x, qint32 y, Flag flag) noexcept
+{
+	return MapCoord{ x, y, flag };
 }
 
 constexpr qreal MapCoord::x() const
@@ -758,13 +813,13 @@ void MapCoord::setNativeY(qint32 new_y)
 	yp = new_y;
 }
 
-constexpr int MapCoord::flags() const
+constexpr MapCoord::Flags::Int MapCoord::flags() const noexcept
 {
 	return fp;
 }
 
 inline
-void MapCoord::setFlags(int flags)
+void MapCoord::setFlags(Flags::Int flags) noexcept
 {
 	fp = Flags(flags);
 }
