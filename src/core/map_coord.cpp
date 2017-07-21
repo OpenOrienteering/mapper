@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014, 2015 Kai Pastor
+ *    Copyright 2014-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,12 +20,14 @@
 
 #include "map_coord.h"
 
+#include <cstddef>
+#include <limits>
+#include <stdexcept>
 #include <type_traits>
 
+#include <QChar>
 #include <QLineF>
-#include <QTextStream>
-#include <QXmlStreamReader>
-#include <QXmlStreamWriter>
+#include <QStringRef>
 
 #include "util/xml_stream_util.h"
 

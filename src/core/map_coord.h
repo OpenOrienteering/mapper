@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2015 Kai Pastor
+ *    Copyright 2013-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,20 +19,23 @@
  */
 
 
-#ifndef _OPENORIENTEERING_MAP_COORD_H_
-#define _OPENORIENTEERING_MAP_COORD_H_
+#ifndef OPENORIENTEERING_MAP_COORD_H
+#define OPENORIENTEERING_MAP_COORD_H
 
 #include <cmath>
 #include <vector>
 
+#include <QtGlobal>
 #include <QCoreApplication>
 #include <QFlags>
+#include <QPoint>
 #include <QPointF>
+#include <QString>
 
-class QString;
-class QTextStream;
+QT_BEGIN_NAMESPACE
 class QXmlStreamReader;
 class QXmlStreamWriter;
+QT_END_NAMESPACE
 
 #ifndef NO_NATIVE_FILE_FORMAT
 	
