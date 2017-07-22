@@ -21,18 +21,16 @@
 
 #include "map_part.h"
 
-#include <algorithm>
-
-#include <qmath.h>
+#include <QIODevice>
+#include <QObject>
+#include <QStringRef>
 #include <QTransform>
 #include <QXmlStreamReader>
-#include <QXmlStreamWriter>
 
-#include "map.h"
+#include "core/map.h"
+#include "core/map_coord.h"
 #include "core/objects/object.h"
-#include "core/objects/object_operations.h"
-#include "core/renderables/renderable.h"
-#include "fileformats/file_format.h"
+#include "core/symbols/symbol.h"
 #include "undo/object_undo.h"
 #include "util/util.h"
 #include "util/xml_stream_util.h"
@@ -116,7 +114,7 @@ MapPart* MapPart::load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol
 	Q_ASSERT(xml.name() == literal::part);
 	
 	XmlElementReader part_element(xml);
-	MapPart* part = new MapPart(part_element.attribute<QString>(literal::name), &map);
+	auto part = new MapPart(part_element.attribute<QString>(literal::name), &map);
 	
 	while (xml.readNextStartElement())
 	{
@@ -126,7 +124,7 @@ MapPart* MapPart::load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol
 			
 			std::size_t num_objects = objects_element.attribute<std::size_t>(literal::count);
 			if (num_objects > 0)
-				part->objects.reserve(qMin(num_objects, (std::size_t)20000)); // 20000 is not a limit
+				part->objects.reserve(qMin(num_objects, std::size_t(20000))); // 20000 is not a limit
 			
 			while (xml.readNextStartElement())
 			{
@@ -215,7 +213,7 @@ void MapPart::importPart(const MapPart* other, const QHash<const Symbol*, Symbol
 		return;
 	
 	bool first_objects = map->getNumObjects() == 0;
-	DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(map);
+	auto undo_step = new DeleteObjectsUndoStep(map);
 	if (select_new_objects)
 		map->clearObjectSelection(false);
 	
