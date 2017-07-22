@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schoeps
+ *    Copyright 2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -18,12 +19,12 @@
  */
 
 
-#ifndef _OPENORIENTEERING_OBJECT_OPERATIONS_H_
-#define _OPENORIENTEERING_OBJECT_OPERATIONS_H_
+#ifndef OPENORIENTEERING_OBJECT_OPERATIONS_H
+#define OPENORIENTEERING_OBJECT_OPERATIONS_H
 
-#include "core/symbols/symbol.h"
-#include "object.h"
 #include "core/map.h"
+#include "core/objects/object.h"
+#include "core/symbols/symbol.h"
 
 /**
  * Object conditions and processors,
@@ -36,10 +37,8 @@ namespace ObjectOp
 	/** Returns true for all objects. */
 	struct NoCondition
 	{
-		inline NoCondition() {}
-		inline bool operator()(Object* object) const
+		bool operator()(const Object*) const noexcept
 		{
-			Q_UNUSED(object);
 			return true;
 		}
 	};
@@ -47,37 +46,34 @@ namespace ObjectOp
 	/** Returns true for objects with the given symbol. */
 	struct HasSymbol
 	{
-		inline HasSymbol(const Symbol* symbol) : symbol(symbol) {}
-		inline bool operator()(Object* object) const
+		const Symbol* symbol;
+		
+		bool operator()(const Object* object) const noexcept
 		{
 			return object->getSymbol() == symbol;
 		}
-	private:
-		const Symbol* symbol;
 	};
 	
 	/** Returns true for objects with the given symbol type. */
 	struct HasSymbolType
 	{
-		inline HasSymbolType(Symbol::Type type) : type(type) {}
-		inline bool operator()(Object* object) const
+		Symbol::Type type;
+		
+		bool operator()(const Object* object) const noexcept
 		{
 			return object->getSymbol()->getType() == type;
 		}
-	private:
-		Symbol::Type type;
 	};
 	
 	/** Returns true for objects where the symbol type contains the given type. */
 	struct ContainsSymbolType
 	{
-		inline ContainsSymbolType(Symbol::Type type) : type(type) {}
-		inline bool operator()(Object* object) const
+		Symbol::Type type;
+		
+		bool operator()(const Object* object) const noexcept
 		{
 			return object->getSymbol()->getContainedTypes() & type;
 		}
-	private:
-		Symbol::Type type;
 	};
 	
 	
@@ -86,44 +82,36 @@ namespace ObjectOp
 	/** Scales objects by the given factor. */
 	struct Scale
 	{
-		inline Scale(double factor, const MapCoord& scaling_center) : factor(factor), center(scaling_center) {}
-		inline bool operator()(Object* object, MapPart* part, int object_index) const
+		double factor;
+		MapCoordF center;
+		
+		bool operator()(Object* object, MapPart*, int) const
 		{
-			Q_UNUSED(part);
-			Q_UNUSED(object_index);
 			object->scale(center, factor);
 			object->update();
 			return true;
 		}
-	private:
-		double factor;
-		MapCoordF center;
 	};
 	
 	/** Rotates objects by the given angle (in radians). */
 	struct Rotate
 	{
-		inline Rotate(double angle, const MapCoord& center) : angle(angle), center(center) {}
-		inline bool operator()(Object* object, MapPart* part, int object_index) const
+		double angle;
+		MapCoordF center;
+		
+		bool operator()(Object* object, MapPart*, int) const
 		{
-			Q_UNUSED(part);
-			Q_UNUSED(object_index);
 			object->rotateAround(center, angle);
 			object->update();
 			return true;
 		}
-	private:
-		double angle;
-		MapCoordF center;
 	};
 	
 	/** Calls update() on the objects. */
 	struct Update
 	{
-		inline bool operator()(Object* object, MapPart* part, int object_index) const
+		bool operator()(Object* object, MapPart*, int) const
 		{
-			Q_UNUSED(part);
-			Q_UNUSED(object_index);
 			object->update();
 			return true;
 		}
@@ -132,10 +120,8 @@ namespace ObjectOp
 	/** Calls update() on the objects. */
 	struct ForceUpdate
 	{
-		inline bool operator()(Object* object, MapPart* part, int object_index) const
+		bool operator()(Object* object, MapPart*, int) const
 		{
-			Q_UNUSED(part);
-			Q_UNUSED(object_index);
 			object->setOutputDirty();
 			object->update();
 			return true;
@@ -148,8 +134,9 @@ namespace ObjectOp
 	 */
 	struct ChangeSymbol
 	{
-		inline ChangeSymbol(const Symbol* new_symbol) : new_symbol(new_symbol) {}
-		inline bool operator()(Object* object, MapPart* part, int object_index) const
+		const Symbol* new_symbol;
+		
+		bool operator()(Object* object, MapPart* part, int object_index) const
 		{
 			if (!object->setSymbol(new_symbol, false))
 				part->deleteObject(object_index, false);
@@ -157,17 +144,13 @@ namespace ObjectOp
 				object->update();
 			return true;
 		}
-	private:
-		const Symbol* new_symbol;
 	};
 	
 	/** Delete objects. */
 	struct Delete
 	{
-		inline Delete() {}
-		inline bool operator()(Object* object, MapPart* part, int object_index) const
+		bool operator()(const Object*, MapPart* part, int object_index) const
 		{
-			Q_UNUSED(object);
 			part->deleteObject(object_index, false);
 			return true;
 		}
@@ -180,12 +163,8 @@ namespace ObjectOp
 	 */
 	struct NoOp
 	{
-		inline NoOp() {}
-		inline bool operator()(Object* object, MapPart* part, int object_index) const
+		bool operator()(const Object*, const MapPart*, int) const noexcept
 		{
-			Q_UNUSED(object);
-			Q_UNUSED(part);
-			Q_UNUSED(object_index);
 			// Abort
 			return false;
 		}
