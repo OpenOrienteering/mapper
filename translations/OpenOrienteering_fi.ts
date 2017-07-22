@@ -1774,7 +1774,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="106"/>
         <source>Grid scale factor:</source>
         <extracomment>The grid scale factor is the ratio between a length in the grid plane and the corresponding length on the curved earth model. It is applied as a factor to ground distances to get grid plane distances.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Mittakerroin:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="154"/>
@@ -4047,12 +4047,12 @@ Haluatko silti tuoda datan?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="891"/>
         <source>Symbol set ID...</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbolijoukon ID…</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="891"/>
         <source>Edit the symbol set ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Muokkaa symbolijoukon ID</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="893"/>
@@ -4162,12 +4162,12 @@ Haluatko silti tuoda datan?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1855"/>
         <source>Symbol set ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbolijoukon ID</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1856"/>
         <source>Edit the symbol set ID:</source>
-        <translation type="unfinished"></translation>
+        <translation>Muokkaa symbolijoukon ID:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2015"/>
@@ -6115,7 +6115,7 @@ erottelut</translation>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="127"/>
         <source>Edit the symbol set ID:</source>
-        <translation type="unfinished"></translation>
+        <translation>Muokkaa symbolijoukon ID:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="130"/>
