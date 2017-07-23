@@ -661,6 +661,9 @@ void SymbolSetTool::processSymbolSetTranslations()
 		QCOMPARE(file.error(), QFileDevice::NoError);
 		file.close();
 		
+		// Workaround Weblate quirk
+		existing_data.replace("\n    </message>", "\n        </message>");
+		
 		new_data.reserve(existing_data.size()*2);
 	}
 	
