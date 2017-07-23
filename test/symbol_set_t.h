@@ -73,6 +73,7 @@ private slots:
 	void initTestCase();
 	void processSymbolSet_data();
 	void processSymbolSet();
+	void processSymbolSetTranslations_data();
 	void processSymbolSetTranslations();
 	void processExamples_data();
 	void processExamples();

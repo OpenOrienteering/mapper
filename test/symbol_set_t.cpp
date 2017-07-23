@@ -69,6 +69,9 @@ static auto translation_suffix = { "template", "cs", "de", "fi", "fr", "ru", "sv
 
 using TranslationEntries = std::vector<SymbolSetTool::TranslationEntry>;
 
+// No longer update map symbols ts files from translated symbol sets.
+constexpr bool update_translations_from_symbolsets = false;
+
 
 void addSource(TranslationEntries& entries, const QString& context, const QString& source, const QString& comment)
 {
@@ -191,7 +194,6 @@ void SymbolSetTool::TranslationEntry::write(QXmlStreamWriter& xml, const QString
 	if (source.isEmpty())
 	{
 		QVERIFY(!comment.isEmpty());
-		qWarning("%s %s, %s: empty", qPrintable(language), qPrintable(context), qPrintable(comment));
 		return;
 	}
 	
@@ -568,10 +570,13 @@ void SymbolSetTool::processSymbolSet()
 			
 			source = symbol->getDescription();
 			comment = QString{QLatin1String("Description of symbol ") + symbol->getNumberAsString()};
-			addSource(translation_entries, id, source, comment);
+			if (source.isEmpty())
+				qWarning("%s: empty", qPrintable(comment));
+			else
+				addSource(translation_entries, id, source, comment);
 		}
 	}
-	else if (!language.isEmpty())
+	else if (!language.isEmpty() && update_translations_from_symbolsets)
 	{
 		// Not scaled, but with language: Add translation strings.
 		auto num_colors = map.getNumColors();
@@ -629,152 +634,155 @@ void SymbolSetTool::processSymbolSet()
 }
 
 
+void SymbolSetTool::processSymbolSetTranslations_data()
+{
+	QTest::addColumn<int>("unused");
+	for (auto suffix : translation_suffix)
+		QTest::newRow(suffix) << 0;
+}
+	
 void SymbolSetTool::processSymbolSetTranslations()
 {
-	QVERIFY(translations_complete);
+	auto suffix = QTest::currentDataTag();
+	auto language = QString::fromLatin1(suffix);
+	if (language.length() > 2)
+		language.clear();
 	
-	for (auto suffix : translation_suffix)
+	auto translation_filename = QString::fromLatin1("map_symbols_%1.ts").arg(QLatin1String(suffix));
+	
+	QByteArray new_data;
+	QByteArray existing_data;
+	QFile file(translations_dir.absoluteFilePath(translation_filename));
+	if (file.exists())
 	{
-		auto language = QString::fromLatin1(suffix);
-		if (language.length() > 2)
-			language.clear();
+		QVERIFY(file.open(QIODevice::ReadOnly));
+		existing_data.reserve(int(file.size()+1));
+		existing_data = file.readAll();
+		QCOMPARE(file.error(), QFileDevice::NoError);
+		file.close();
 		
-		auto translation_filename = QString::fromLatin1("map_symbols_%1.ts").arg(QLatin1String(suffix));
-		
-		QByteArray new_data;
-		QByteArray existing_data;
-		QFile file(translations_dir.absoluteFilePath(translation_filename));
-		if (file.exists())
+		new_data.reserve(existing_data.size()*2);
+	}
+	
+	QBuffer buffer(&existing_data);
+	auto translations_from_ts = readTsFile(buffer, language);
+	QVERIFY(!buffer.isOpen());
+	
+	buffer.setBuffer(&new_data);
+	QVERIFY(buffer.open(QIODevice::WriteOnly | QIODevice::Truncate));
+	QXmlStreamWriter xml(&buffer);
+	xml.setAutoFormatting(true);
+	xml.writeStartDocument();
+	xml.writeDTD(QLatin1String("<!DOCTYPE TS>"));
+	xml.writeStartElement(QLatin1String("TS"));
+	xml.writeAttribute(QLatin1String("version"), QLatin1String("2.1"));
+	if (!language.isEmpty())
+		xml.writeAttribute(QLatin1String("language"), language);
+	
+	auto context = QString{};
+	for (auto& entry : translation_entries)
+	{
+		if (context != entry.context)
 		{
-			QVERIFY(file.open(QIODevice::ReadOnly));
-			existing_data.reserve(int(file.size()+1));
-			existing_data = file.readAll();
-			QCOMPARE(file.error(), QFileDevice::NoError);
-			file.close();
-			
-			new_data.reserve(existing_data.size()*2);
+			if (!context.isEmpty())
+				xml.writeEndElement(); // context
+			xml.writeStartElement(QLatin1String("context"));
+			xml.writeTextElement(QLatin1String("name"), entry.context);
+			context = entry.context;
 		}
 		
-		QBuffer buffer(&existing_data);
-		auto translations_from_ts = readTsFile(buffer, language);
-		QVERIFY(!buffer.isOpen());
-		
-		buffer.setBuffer(&new_data);
-		QVERIFY(buffer.open(QIODevice::WriteOnly | QIODevice::Truncate));
-		QXmlStreamWriter xml(&buffer);
-		xml.setAutoFormatting(true);
-		xml.writeStartDocument();
-		xml.writeDTD(QLatin1String("<!DOCTYPE TS>"));
-		xml.writeStartElement(QLatin1String("TS"));
-		xml.writeAttribute(QLatin1String("version"), QLatin1String("2.1"));
-		if (!language.isEmpty())
-			xml.writeAttribute(QLatin1String("language"), language);
-		
-		auto context = QString{};
-		for (auto& entry : translation_entries)
+		auto item = std::find_if(begin(entry.translations), end(entry.translations), [&language](auto& translation) {
+			return translation.language == language;
+		});
+		if (item == end(entry.translations))
 		{
-			if (context != entry.context)
-			{
-				if (!context.isEmpty())
-					xml.writeEndElement(); // context
-				xml.writeStartElement(QLatin1String("context"));
-				xml.writeTextElement(QLatin1String("name"), entry.context);
-				context = entry.context;
-			}
-			
-			auto item = std::find_if(begin(entry.translations), end(entry.translations), [&language](auto& translation) {
-				return translation.language == language;
+			entry.translations.push_back({language, {}, NeedsReview});
+			item = --entry.translations.end();
+		}
+		auto& translation = item->translation;
+		auto& type = item->type;
+		
+		
+		// First attempt: exact context + source + comment (symbol number!) match.
+		auto found = std::find_if(begin(translations_from_ts), end(translations_from_ts), [&entry](auto& current) {
+			return entry.context == current.context && entry.source == current.source && entry.comment == current.comment;
+		});
+		if (found == end(translations_from_ts))
+		{
+			// Second attempt: exact context + source match.
+			found = std::find_if(begin(translations_from_ts), end(translations_from_ts), [&entry](auto& current) {
+				return entry.context == current.context && entry.source == current.source;
 			});
-			if (item == end(entry.translations))
-			{
-				entry.translations.push_back({language, {}, NeedsReview});
-				item = --entry.translations.end();
-			}
-			auto& translation = item->translation;
-			auto& type = item->type;
-			
-			
-			// First attempt: exact context + source + comment (symbol number!) match.
+		}
+		if (found == end(translations_from_ts))
+		{
+			// Third attempt: exact source match.
+			found = std::find_if(begin(translations_from_ts), end(translations_from_ts), [&entry](auto& current) {
+				return entry.source == current.source;
+			});
+		}
+		if (found != end(translations_from_ts))
+		{
+			// If any of the previous attempts to find a translation succeeded,
+			// the translation is chosen and marked as not being obsolete.
+			auto match = found->translations.front();
+			translation = match.translation;
+			if (match.type != Obsolete)
+				type = match.type;
+		}
+		else
+		{
+			// Find an existing translation even with changed source,
+			// using the comment (symbol number!) instead of source.
 			auto found = std::find_if(begin(translations_from_ts), end(translations_from_ts), [&entry](auto& current) {
-				return entry.context == current.context && entry.source == current.source && entry.comment == current.comment;
+				return entry.context == current.context && entry.comment == current.comment;
 			});
-			if (found == end(translations_from_ts))
-			{
-				// Second attempt: exact context + source match.
-				found = std::find_if(begin(translations_from_ts), end(translations_from_ts), [&entry](auto& current) {
-					return entry.context == current.context && entry.source == current.source;
-				});
-			}
-			if (found == end(translations_from_ts))
-			{
-				// Third attempt: exact source match.
-				found = std::find_if(begin(translations_from_ts), end(translations_from_ts), [&entry](auto& current) {
-					return entry.source == current.source;
-				});
-			}
 			if (found != end(translations_from_ts))
 			{
-				// If any of the previous attempts to find a translation succeeded,
-				// the translation is chosen and marked as not being obsolete.
 				auto match = found->translations.front();
 				translation = match.translation;
-				if (match.type != Obsolete)
-					type = match.type;
 			}
-			else
-			{
-				// Find an existing translation even with changed source,
-				// using the comment (symbol number!) instead of source.
-				auto found = std::find_if(begin(translations_from_ts), end(translations_from_ts), [&entry](auto& current) {
-					return entry.context == current.context && entry.comment == current.comment;
-				});
-				if (found != end(translations_from_ts))
-				{
-					auto match = found->translations.front();
-					translation = match.translation;
-				}
-				// Anyway, this translation needs review.
-				type = NeedsReview;
-			}
-			entry.write(xml, language);
+			// Anyway, this translation needs review.
+			type = NeedsReview;
 		}
-		if (!context.isEmpty())
-		{
-			xml.writeEndElement();  // context
-		}
-		
-		xml.writeEndElement(); // TS
-		xml.writeEndDocument();
-		buffer.close();
-		
-		// Weblate uses lower-case "utf-8".
-		static auto lower_case_xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
-		if (!new_data.startsWith(lower_case_xml))
-		{
-			auto pos = new_data.indexOf('>');
-			new_data.replace(0, pos+1, lower_case_xml);
-		}
-		
-		// Use '"', not "&quot;"
-		auto first = -1;
-		for (first = new_data.indexOf('>', first+1); first > 0; first = new_data.indexOf('>', first+1))
-		{
-			auto last = new_data.indexOf('<', first+1);
-			if (last < 0)
-				break;
-			auto text = new_data.mid(first, last - first);
-			text.replace("&quot;", "\"");
-			new_data.replace(first, last - first, text);
-		}
-		
-		if (new_data != existing_data)
-		{
-			QVERIFY(file.open(QIODevice::WriteOnly | QIODevice::Truncate));
-			file.write(new_data);
-			QVERIFY(file.flush());
-			file.close();
-			QCOMPARE(file.error(), QFileDevice::NoError);
-		}
+		entry.write(xml, language);
+	}
+	if (!context.isEmpty())
+	{
+		xml.writeEndElement();  // context
+	}
+	
+	xml.writeEndElement(); // TS
+	xml.writeEndDocument();
+	buffer.close();
+	
+	// Weblate uses lower-case "utf-8".
+	static auto lower_case_xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
+	if (!new_data.startsWith(lower_case_xml))
+	{
+		auto pos = new_data.indexOf('>');
+		new_data.replace(0, pos+1, lower_case_xml);
+	}
+	
+	// Use '"', not "&quot;"
+	auto first = -1;
+	for (first = new_data.indexOf('>', first+1); first > 0; first = new_data.indexOf('>', first+1))
+	{
+		auto last = new_data.indexOf('<', first+1);
+		if (last < 0)
+			break;
+		auto text = new_data.mid(first, last - first);
+		text.replace("&quot;", "\"");
+		new_data.replace(first, last - first, text);
+	}
+	
+	if (new_data != existing_data)
+	{
+		QVERIFY(file.open(QIODevice::WriteOnly | QIODevice::Truncate));
+		file.write(new_data);
+		QVERIFY(file.flush());
+		file.close();
+		QCOMPARE(file.error(), QFileDevice::NoError);
 	}
 }
 
