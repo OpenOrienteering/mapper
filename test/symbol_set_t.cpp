@@ -693,12 +693,29 @@ void SymbolSetTool::processSymbolSetTranslations()
 			auto& translation = item->translation;
 			auto& type = item->type;
 			
+			
+			// First attempt: exact context + source + comment (symbol number!) match.
 			auto found = std::find_if(begin(translations_from_ts), end(translations_from_ts), [&entry](auto& current) {
-				return entry.context == current.context && entry.source == current.source;
+				return entry.context == current.context && entry.source == current.source && entry.comment == current.comment;
 			});
+			if (found == end(translations_from_ts))
+			{
+				// Second attempt: exact context + source match.
+				found = std::find_if(begin(translations_from_ts), end(translations_from_ts), [&entry](auto& current) {
+					return entry.context == current.context && entry.source == current.source;
+				});
+			}
+			if (found == end(translations_from_ts))
+			{
+				// Third attempt: exact source match.
+				found = std::find_if(begin(translations_from_ts), end(translations_from_ts), [&entry](auto& current) {
+					return entry.source == current.source;
+				});
+			}
 			if (found != end(translations_from_ts))
 			{
-				// Exact context + source match.
+				// If any of the previous attempts to find a translation succeeded,
+				// the translation is chosen and marked as not being obsolete.
 				auto match = found->translations.front();
 				translation = match.translation;
 				if (match.type != Obsolete)
@@ -706,8 +723,8 @@ void SymbolSetTool::processSymbolSetTranslations()
 			}
 			else
 			{
-				// Find existing translation even with changed source,
-				// using comment instead of source.
+				// Find an existing translation even with changed source,
+				// using the comment (symbol number!) instead of source.
 				auto found = std::find_if(begin(translations_from_ts), end(translations_from_ts), [&entry](auto& current) {
 					return entry.context == current.context && entry.comment == current.comment;
 				});
@@ -715,23 +732,9 @@ void SymbolSetTool::processSymbolSetTranslations()
 				{
 					auto match = found->translations.front();
 					translation = match.translation;
-					type = NeedsReview;
 				}
-				else if (translation.isEmpty())
-				{
-					// As a suggestion, find an existing translation in any context.
-					// Note: We only take suggestions from the ts file.
-					// So it might take a second run of this tool to get suggestions.
-					auto found = std::find_if(begin(translations_from_ts), end(translations_from_ts), [&entry](auto& current) {
-						return entry.source == current.source;
-					});
-					if (found != end(translations_from_ts))
-					{
-						auto match = found->translations.front();
-						translation = match.translation;
-					}
-					type = NeedsReview;
-				}
+				// Anyway, this translation needs review.
+				type = NeedsReview;
 			}
 			entry.write(xml, language);
 		}
