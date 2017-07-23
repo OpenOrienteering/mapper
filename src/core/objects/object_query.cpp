@@ -349,17 +349,15 @@ void ObjectQuery::selectMatchingObjects(Map* map, MapEditorController* controlle
 	map->clearObjectSelection(false);
 
 	// Lambda to add objects to the selection
-	auto select_object = [map](Object* const object, MapPart*, int)
+	auto select_object = [map](Object* object)
 	{
 		map->addObjectToSelection(object, false);
-		return false; // applyOnMatchingObjects tells us if this op fails, so if we fail we made a selection
 	};
 
-	MapPart *part = map->getCurrentPart();
+	auto part = map->getCurrentPart();
+	part->applyOnMatchingObjects(select_object, *this);
 
-	// This reports failure if we made a selection
-	auto object_selected = !part->applyOnMatchingObjects(select_object, *this);
-
+	auto object_selected = !map->selectedObjects().empty();
 	if (object_selected || had_selection)
 		map->emitSelectionChanged();
 

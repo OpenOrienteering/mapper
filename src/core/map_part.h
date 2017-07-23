@@ -23,6 +23,7 @@
 #define OPENORIENTEERING_MAP_PART_H
 
 #include <cstddef>
+#include <functional>
 #include <vector>
 #include <utility>
 
@@ -209,29 +210,32 @@ public:
 	 * 
 	 * @return True if there is an object matching the condition, false otherwise.
 	 */
-	template<typename Condition>
-	bool existsObject(const Condition& condition) const;
+	bool existsObject(const std::function<bool (const Object*)>& condition) const;
+	
+	/**
+	 * @copybrief   Map::applyOnMatchingObjects()
+	 * @copydetails Map::applyOnMatchingObjects()
+	 */
+	void applyOnMatchingObjects(const std::function<void (Object*)>& operation, const std::function<bool (const Object*)>& condition);
+	
+	/**
+	 * @copybrief   Map::applyOnMatchingObjects()
+	 * @copydetails Map::applyOnMatchingObjects()
+	 */
+	void applyOnMatchingObjects(const std::function<void (Object*, MapPart*, int)>& operation, const std::function<bool (const Object*)>& condition);
 	
 	/**
 	 * @copybrief   Map::applyOnAllObjects()
 	 * @copydetails Map::applyOnAllObjects()
 	 */
-	template<typename Operation, typename Condition>
-	bool applyOnMatchingObjects(const Operation& operation, const Condition& condition);
+	void applyOnAllObjects(const std::function<void (Object*)>& operation);
 	
 	/**
 	 * @copybrief   Map::applyOnAllObjects()
 	 * @copydetails Map::applyOnAllObjects()
 	 */
-	template<typename Operation>
-	bool applyOnAllObjects(const Operation& operation);
+	void applyOnAllObjects(const std::function<void (Object*, MapPart*, int)>& operation);
 	
-	/**
-	 * @copybrief   Map::applyOnAllObjects()
-	 * @copydetails Map::applyOnAllObjects()
-	 */
-	template<typename Operation>
-	bool applyOnAllObjects(Operation& operation);
 	
 private:
 	typedef std::vector<Object*> ObjectList;
@@ -269,62 +273,5 @@ const Object* MapPart::getObject(int i) const
 	return objects[std::size_t(i)];
 }
 
-template<typename Condition>
-bool MapPart::existsObject(const Condition& condition) const
-{
-	for (const auto* object : objects)
-	{
-		if (condition(object))
-			return true;
-	}
-	return false;
-}
-
-template<typename Operation, typename Condition>
-bool MapPart::applyOnMatchingObjects(const Operation& operation, const Condition& condition)
-{
-	bool result = true;
-	if (!objects.empty())
-	{
-		for (auto i = objects.size(); i > 0; )
-		{
-			--i;
-			Object* const object = objects[i];
-			if (condition(object))
-				result &= operation(object, this, i);
-		}
-	}
-	return result;
-}
-
-template<typename Operation>
-bool MapPart::applyOnAllObjects(const Operation& operation)
-{
-	bool result = true;
-	if (!objects.empty())
-	{
-		for (auto i = objects.size(); i > 0; )
-		{
-			--i;
-			result &= operation(objects[i], this, i);
-		}
-	}
-	return result;
-}
-
-template<typename Operation>
-bool MapPart::applyOnAllObjects(Operation& operation)
-{
-	bool result = true;
-	if (!objects.empty())
-	{
-		for (auto i = objects.size(); i > 0; )
-		{
-			--i;
-			result &= operation(objects[i], this, i);
-		}
-	}
-	return result;
-}
 
 #endif

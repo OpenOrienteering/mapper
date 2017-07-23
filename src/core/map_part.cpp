@@ -21,6 +21,9 @@
 
 #include "map_part.h"
 
+#include <algorithm>
+#include <iterator>
+
 #include <QIODevice>
 #include <QObject>
 #include <QStringRef>
@@ -317,4 +320,48 @@ QRectF MapPart::calculateExtent(bool include_helper_symbols) const
 		}
 	}
 	return rect;
+}
+
+
+
+bool MapPart::existsObject(const std::function<bool(const Object*)>& condition) const
+{
+	return std::any_of(begin(objects), end(objects), condition);
+}
+
+
+void MapPart::applyOnMatchingObjects(const std::function<void (Object*)>& operation, const std::function<bool (const Object*)>& condition)
+{
+	std::for_each(objects.rbegin(), objects.rend(), [&operation, &condition](auto object) {
+		if (condition(object))
+			operation(object);
+	});
+}
+
+
+void MapPart::applyOnMatchingObjects(const std::function<void (Object*, MapPart*, int)>& operation, const std::function<bool (const Object*)>& condition)
+{
+	for (auto i = objects.size(); i > 0; )
+	{
+		--i;
+		Object* const object = objects[i];
+		if (condition(object))
+			operation(object, this, int(i));
+	}
+}
+
+
+void MapPart::applyOnAllObjects(const std::function<void (Object*)>& operation)
+{
+	std::for_each(objects.rbegin(), objects.rend(), operation);
+}
+
+
+void MapPart::applyOnAllObjects(const std::function<void (Object*, MapPart*, int)>& operation)
+{
+	for (auto i = objects.size(); i > 0; )
+	{
+		--i;
+		operation(objects[i], this, int(i));
+	}
 }

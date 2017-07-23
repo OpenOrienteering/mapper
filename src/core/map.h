@@ -24,6 +24,7 @@
 
 #include <algorithm>
 #include <cstddef>
+#include <functional>
 #include <set>
 #include <vector>
 
@@ -34,7 +35,7 @@
 #include <QMetaType>
 #include <QObject>
 #include <QPointer>
-#include <QRect>
+#include <QRectF>
 #include <QScopedPointer>
 #include <QSharedData>
 #include <QString>
@@ -47,10 +48,10 @@
 QT_BEGIN_NAMESPACE
 class QIODevice;
 class QPainter;
-class QRectF;
 class QTransform;
 class QTranslator;
 class QWidget;
+// IWYU pragma: no_forward_declare QRectF
 QT_END_NAMESPACE
 
 class CombinedSymbol;
@@ -907,29 +908,34 @@ public:
 	 */
 	int countObjectsInRect(QRectF map_coord_rect, bool include_hidden_objects);
 	
+	
 	/**
-	 * Applies a condition on all objects (until the first match is found).
+	 * Applies a condition on all objects until the first match is found.
 	 * 
 	 * @return True if there is an object matching the condition, false otherwise.
 	 */
-	template<typename Condition>
-	bool existsObject(const Condition& condition) const;
+	bool existsObject(const std::function<bool (const Object*)>& condition) const;
 	
 	/**
 	 * Applies an operation on all objects which match a particular condition.
-	 * 
-	 * @return False if the operation fails for any matching object, true otherwise.
 	 */
-	template<typename Operation, typename Condition>
-	bool applyOnMatchingObjects(const Operation& operation, const Condition& condition);
+	void applyOnMatchingObjects(const std::function<void (Object*)>& operation, const std::function<bool (const Object*)>& condition);
+	
+	/**
+	 * Applies an operation on all objects which match a particular condition.
+	 */
+	void applyOnMatchingObjects(const std::function<void (Object*, MapPart*, int)>& operation, const std::function<bool (const Object*)>& condition);
 	
 	/**
 	 * Applies an operation on all objects.
-	 * 
-	 * @return False if the operation fails for any object, true otherwise.
 	 */
-	template<typename Operation>
-	bool applyOnAllObjects(const Operation& operation);
+	void applyOnAllObjects(const std::function<void (Object*)>& operation);
+	
+	/**
+	 * Applies an operation on all objects.
+	 */
+	void applyOnAllObjects(const std::function<void (Object*, MapPart*, int)>& operation);
+	
 	
 	/** Scales all objects by the given factor. */
 	void scaleAllObjects(double factor, const MapCoord& scaling_center);
@@ -1719,33 +1725,6 @@ inline
 Map::ObjectSelection::const_iterator Map::selectedObjectsEnd() const
 {
 	return object_selection.cend();
-}
-
-template<typename Condition>
-bool Map::existsObject(const Condition& condition) const
-{
-	for (const MapPart* part : parts)
-		if (part->existsObject<Condition>(condition))
-			return true;
-	return false;
-}
-
-template<typename Operation, typename Condition>
-bool Map::applyOnMatchingObjects(const Operation& operation, const Condition& condition)
-{
-	bool result = true;
-	for (MapPart* part : parts)
-		result &= part->applyOnMatchingObjects(operation, condition);
-	return result;
-}
-
-template<typename Operation>
-bool Map::applyOnAllObjects(const Operation& operation)
-{
-	bool result = true;
-	for (MapPart* part : parts)
-		result &= part->applyOnAllObjects(operation);
-	return result;
 }
 
 inline

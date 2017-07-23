@@ -133,23 +133,22 @@ void MapFindFeature::findNext()
 		auto map = controller.getMap();
 		auto first_object = map->getFirstSelectedObject();
 		Object* next_object = nullptr;
-		auto search = [&first_object, &next_object, &query, &text](Object* o, MapPart*, int)->bool {
+		auto search = [&first_object, &next_object, &query, &text](Object* object) {
 			if (!next_object)
 			{
 				if (first_object)
 				{
-					if (o == first_object)
+					if (object == first_object)
 						first_object = nullptr;
 				}
-				else if (query(o)
+				else if (query(object)
 				        || (!text.isEmpty()
-				            && o->getType() == Object::Text
-				            && static_cast<const TextObject*>(o)->getText().contains(text, Qt::CaseInsensitive)))
+				            && object->getType() == Object::Text
+				            && static_cast<const TextObject*>(object)->getText().contains(text, Qt::CaseInsensitive)))
 				{
-					next_object = o;
+					next_object = object;
 				}
 			}
-			return true;
 		};
 		
 		if (first_object)
@@ -178,15 +177,14 @@ void MapFindFeature::findAll()
 		
 		auto map = controller.getMap();
 		map->clearObjectSelection(false);
-		map->getCurrentPart()->applyOnAllObjects([map, &query, &text](Object* o, MapPart*, int)->bool {
-			if (query(o)
+		map->getCurrentPart()->applyOnAllObjects([map, &query, &text](Object* object) {
+			if (query(object)
 			    || (!text.isEmpty()
-			        && o->getType() == Object::Text
-			        && static_cast<const TextObject*>(o)->getText().contains(text, Qt::CaseInsensitive)))
+			        && object->getType() == Object::Text
+			        && static_cast<const TextObject*>(object)->getText().contains(text, Qt::CaseInsensitive)))
 			{
-				map->addObjectToSelection(o, false);
+				map->addObjectToSelection(object, false);
 			}
-			return true;
 		});
 		map->emitSelectionChanged();
 	}

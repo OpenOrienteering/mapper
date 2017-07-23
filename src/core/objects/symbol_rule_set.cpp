@@ -294,7 +294,7 @@ void SymbolRuleSet::writeCrt(QTextStream& stream) const
 
 
 
-bool SymbolRuleSet::operator()(Object* object, MapPart*, int) const
+void SymbolRuleSet::operator()(Object* object) const
 {
 	for (const auto& item : *this)
 	{
@@ -304,7 +304,6 @@ bool SymbolRuleSet::operator()(Object* object, MapPart*, int) const
 			break;
 		}
 	}
-	return true;
 }
 
 

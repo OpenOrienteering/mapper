@@ -444,7 +444,7 @@ void ReplaceSymbolSetDialog::updateMappingTable()
 			
 			const Symbol* unique_symbol = nullptr;
 			auto matching_types = int(Symbol::NoSymbol);
-			auto update_matching = [&unique_symbol, &matching_types](Object* object, MapPart*, int)->bool {
+			auto update_matching = [&unique_symbol, &matching_types](Object* object) {
 				if (auto symbol = object->getSymbol())
 				{
 					if (matching_types == Symbol::NoSymbol)
@@ -459,7 +459,6 @@ void ReplaceSymbolSetDialog::updateMappingTable()
 						matching_types |= Symbol::getCompatibleTypes(symbol->getType());
 					}
 				}
-				return true;
 			};
 			object_map.applyOnMatchingObjects(update_matching, item.query);
 			if (matching_types != Symbol::NoSymbol)

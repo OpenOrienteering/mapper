@@ -34,15 +34,6 @@ namespace ObjectOp
 {
 	// Conditions
 	
-	/** Returns true for all objects. */
-	struct NoCondition
-	{
-		bool operator()(const Object*) const noexcept
-		{
-			return true;
-		}
-	};
-	
 	/** Returns true for objects with the given symbol. */
 	struct HasSymbol
 	{
@@ -85,11 +76,10 @@ namespace ObjectOp
 		double factor;
 		MapCoordF center;
 		
-		bool operator()(Object* object, MapPart*, int) const
+		void operator()(Object* object) const
 		{
 			object->scale(center, factor);
 			object->update();
-			return true;
 		}
 	};
 	
@@ -99,32 +89,10 @@ namespace ObjectOp
 		double angle;
 		MapCoordF center;
 		
-		bool operator()(Object* object, MapPart*, int) const
+		void operator()(Object* object) const
 		{
 			object->rotateAround(center, angle);
 			object->update();
-			return true;
-		}
-	};
-	
-	/** Calls update() on the objects. */
-	struct Update
-	{
-		bool operator()(Object* object, MapPart*, int) const
-		{
-			object->update();
-			return true;
-		}
-	};
-	
-	/** Calls update() on the objects. */
-	struct ForceUpdate
-	{
-		bool operator()(Object* object, MapPart*, int) const
-		{
-			object->setOutputDirty();
-			object->update();
-			return true;
 		}
 	};
 	
@@ -136,37 +104,21 @@ namespace ObjectOp
 	{
 		const Symbol* new_symbol;
 		
-		bool operator()(Object* object, MapPart* part, int object_index) const
+		void operator()(Object* object, MapPart* part, int object_index) const
 		{
 			if (!object->setSymbol(new_symbol, false))
 				part->deleteObject(object_index, false);
 			else
 				object->update();
-			return true;
 		}
 	};
 	
 	/** Delete objects. */
 	struct Delete
 	{
-		bool operator()(const Object*, MapPart* part, int object_index) const
+		void operator()(const Object*, MapPart* part, int object_index) const
 		{
 			part->deleteObject(object_index, false);
-			return true;
-		}
-	};
-	
-	/**
-	 * Can be used to check for the existence of certain types of objects
-	 * by checking if this operation would be applied to any object
-	 * under a given condition.
-	 */
-	struct NoOp
-	{
-		bool operator()(const Object*, const MapPart*, int) const noexcept
-		{
-			// Abort
-			return false;
 		}
 	};
 }

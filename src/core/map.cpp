@@ -1097,7 +1097,7 @@ void Map::drawTemplates(QPainter* painter, QRectF bounding_box, int first_templa
 void Map::updateObjects()
 {
 	// TODO: It maybe would be better if the objects entered themselves into a separate list when they get dirty so not all objects have to be traversed here
-	applyOnAllObjects(ObjectOp::Update());
+	applyOnAllObjects(&Object::update);
 }
 
 void Map::removeRenderablesOfObject(const Object* object, bool mark_area_as_dirty)
@@ -2397,6 +2397,43 @@ int Map::countObjectsInRect(QRectF map_coord_rect, bool include_hidden_objects)
 	return count;
 }
 
+
+
+bool Map::existsObject(const std::function<bool (const Object*)>& condition) const
+{
+	return std::any_of(begin(parts), end(parts), [&condition](auto part) { return part->existsObject(condition); });
+}
+
+
+void Map::applyOnMatchingObjects(const std::function<void (Object*)>& operation, const std::function<bool (const Object*)>& condition)
+{
+	for (auto part : parts)
+		part->applyOnMatchingObjects(operation, condition);
+}
+
+
+void Map::applyOnMatchingObjects(const std::function<void (Object*, MapPart*, int)>& operation, const std::function<bool (const Object*)>& condition)
+{
+	for (auto part : parts)
+		part->applyOnMatchingObjects(operation, condition);
+}
+
+
+void Map::applyOnAllObjects(const std::function<void (Object*)>& operation)
+{
+	for (auto part : parts)
+		part->applyOnAllObjects(operation);
+}
+
+
+void Map::applyOnAllObjects(const std::function<void (Object*, MapPart*, int)>& operation)
+{
+	for (auto part : parts)
+		part->applyOnAllObjects(operation);
+}
+
+
+
 void Map::scaleAllObjects(double factor, const MapCoord& scaling_center)
 {
 	applyOnAllObjects(ObjectOp::Scale{factor, MapCoordF{scaling_center}});
@@ -2409,12 +2446,12 @@ void Map::rotateAllObjects(double rotation, const MapCoord& center)
 
 void Map::updateAllObjects()
 {
-	applyOnAllObjects(ObjectOp::ForceUpdate());
+	applyOnAllObjects(&Object::forceUpdate);
 }
 
 void Map::updateAllObjectsWithSymbol(const Symbol* symbol)
 {
-	applyOnMatchingObjects(ObjectOp::ForceUpdate(), ObjectOp::HasSymbol{symbol});
+	applyOnMatchingObjects(&Object::forceUpdate, ObjectOp::HasSymbol{symbol});
 }
 
 void Map::changeSymbolForAllObjects(const Symbol* old_symbol, const Symbol* new_symbol)

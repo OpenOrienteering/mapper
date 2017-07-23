@@ -166,7 +166,7 @@ public:
 	 * 
 	 * \see apply
 	 */
-	bool operator()(Object* object, MapPart*, int) const;
+	void operator()(Object* object) const;
 	
 	
 	/**

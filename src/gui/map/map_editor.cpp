@@ -1754,7 +1754,7 @@ void MapEditorController::hatchAreas(bool checked)
 {
 	map->setAreaHatchingEnabled(checked);
 	// Update all areas
-	map->applyOnMatchingObjects(ObjectOp::ForceUpdate(), ObjectOp::ContainsSymbolType{Symbol::Area});
+	map->applyOnMatchingObjects(&Object::forceUpdate, ObjectOp::ContainsSymbolType{Symbol::Area});
 }
 
 void MapEditorController::baselineView(bool checked)
@@ -2732,9 +2732,8 @@ void MapEditorController::selectAll()
 {
 	auto num_selected_objects = map->getNumSelectedObjects();
 	map->clearObjectSelection(false);
-	map->getCurrentPart()->applyOnAllObjects([this](Object* object, MapPart*, int) {
+	map->getCurrentPart()->applyOnAllObjects([this](Object* object) {
 		map->addObjectToSelection(object, false);
-		return true;
 	});
 	
 	if (map->getNumSelectedObjects() != num_selected_objects)
@@ -2755,12 +2754,9 @@ void MapEditorController::invertSelection()
 {
 	auto selection = Map::ObjectSelection{ map->selectedObjects() };
 	map->clearObjectSelection(false);
-	map->getCurrentPart()->applyOnAllObjects([this, &selection](Object* object, MapPart*, int) {
+	map->getCurrentPart()->applyOnAllObjects([this, &selection](Object* object) {
 		if (selection.find(object) == end(selection))
-		{
 			map->addObjectToSelection(object, false);
-		}
-		return true;
 	});
 	
 	if (map->getCurrentPart()->getNumObjects() > 0)

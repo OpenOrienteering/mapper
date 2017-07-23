@@ -60,24 +60,15 @@
  */
 struct ApplyTemplateTransform
 {
-	constexpr ApplyTemplateTransform(const TemplateTransform& transform)
-	 : transform(transform)
-	{
-		// nothing else
-	}
+	const TemplateTransform& transform;
 	
-	inline bool operator()(Object* object, MapPart* part, int object_index) const
+	void operator()(Object* object) const
 	{ 
-		Q_UNUSED(part);
-		Q_UNUSED(object_index);
 		object->rotate(transform.template_rotation);
 		object->scale(transform.template_scale_x, transform.template_scale_y);
 		object->move(transform.template_x, transform.template_y);
 		object->update();
-		return true;
 	}
-private:
-	const TemplateTransform& transform;
 };
 
 
@@ -951,13 +942,13 @@ void TemplateListWidget::importClicked()
 	{
 		template_map.setGeoreferencing(prototype->templateMap()->getGeoreferencing());
 		template_map.importMap(prototype->templateMap(), Map::MinimalObjectImport, window());
-		template_map.applyOnAllObjects(ApplyTemplateTransform(transform));
+		template_map.applyOnAllObjects(ApplyTemplateTransform{transform});
 	}
 	else if (qstrcmp(prototype->getTemplateType(), "TemplateMap") == 0
 	         && template_map.loadFrom(prototype->getTemplatePath(), this, nullptr, false, true))
 	{
 		if (!prototype->isTemplateGeoreferenced())
-			template_map.applyOnAllObjects(ApplyTemplateTransform(transform));
+			template_map.applyOnAllObjects(ApplyTemplateTransform{transform});
 		
 		double nominal_scale = (double)template_map.getScaleDenominator() / (double)map->getScaleDenominator();
 		double current_scale = 0.5 * (transform.template_scale_x + transform.template_scale_y);

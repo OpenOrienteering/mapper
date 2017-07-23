@@ -175,31 +175,30 @@ void CutoutTool::dragFinish()
 
 struct PhysicalCutoutOperation
 {
-	inline PhysicalCutoutOperation(Map* map, PathObject* cutout_object, bool cut_away)
-	: map(map), cutout_object(cutout_object), cut_away(cut_away)
+	PhysicalCutoutOperation(Map* map, PathObject* cutout_object, bool cut_away)
+	: map(map)
+	, cutout_object(cutout_object)
+	, cut_away(cut_away)
 	{
 		add_step = new AddObjectsUndoStep(map);
 		delete_step = new DeleteObjectsUndoStep(map);
 	}
 	
-	inline bool operator()(Object* object, MapPart* part, int object_index)
+	void operator()(Object* object)
 	{
-		Q_UNUSED(part);
-		Q_UNUSED(object_index);
-		
 		// If there is a selection, only clip selected objects
 		if (map->getNumSelectedObjects() > 0 && !map->isObjectSelected(object))
-			return true;
+			return;
 		// Don't clip object itself
 		if (object == cutout_object)
-			return true;
+			return;
 		
 		// Early out
 		if (!object->getExtent().intersects(cutout_object->getExtent()))
 		{
 			if (!cut_away)
 				add_step->addObject(object, object);
-			return true;
+			return;
 		}
 		
 		if (object->getType() == Object::Point ||
@@ -220,7 +219,7 @@ struct PhysicalCutoutOperation
 				in_objects.push_back(object->asPath());
 				BooleanTool::PathObjects out_objects;
 				if (!boolean_tool.executeForObjects(object->asPath(), in_objects, out_objects))
-					return true;
+					return;
 				
 				add_step->addObject(object, object);
 				new_objects.insert(new_objects.end(), out_objects.begin(), out_objects.end());
@@ -237,7 +236,7 @@ struct PhysicalCutoutOperation
 			}
 		}
 		
-		return true;
+		return;
 	}
 	
 	UndoStep* finish()
