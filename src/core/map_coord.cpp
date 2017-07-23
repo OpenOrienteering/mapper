@@ -71,27 +71,27 @@ static_assert(-MapCoord(-2, 1) == MapCoord(2, -1),
 
 static_assert(!MapCoord(0.0, 0.0).isCurveStart(),
               "MapCoord::isCurveStart() must return false by default.");
-static_assert(MapCoord(0.0, 0.0, MapCoord::CurveStart).isCurveStart(),
+static_assert(MapCoord(0.0, 0.0, MapCoord::Flags(MapCoord::CurveStart)).isCurveStart(),
               "MapCoord::CurveStart must result in MapCoord::isCurveStart() returning true.");
 
 static_assert(!MapCoord(0.0, 0.0).isClosePoint(),
               "MapCoord::isClosePoint() must return false by default.");
-static_assert(MapCoord(0.0, 0.0, MapCoord::ClosePoint).isClosePoint(),
+static_assert(MapCoord(0.0, 0.0, MapCoord::Flags(MapCoord::ClosePoint)).isClosePoint(),
               "MapCoord::ClosePoint must result in MapCoord::isClosePoint() returning true.");
 
 static_assert(!MapCoord(0.0, 0.0).isHolePoint(),
               "MapCoord::isHolePoint() must return false by default.");
-static_assert(MapCoord(0.0, 0.0, MapCoord::HolePoint).isHolePoint(),
+static_assert(MapCoord(0.0, 0.0, MapCoord::Flags(MapCoord::HolePoint)).isHolePoint(),
               "MapCoord::HolePoint must result in MapCoord::isHolePoint() returning true.");
 
 static_assert(!MapCoord(0.0, 0.0).isDashPoint(),
               "MapCoord::isDashPoint() must return false by default.");
-static_assert(MapCoord(0.0, 0.0, MapCoord::DashPoint).isDashPoint(),
+static_assert(MapCoord(0.0, 0.0, MapCoord::Flags(MapCoord::DashPoint)).isDashPoint(),
               "MapCoord::DashPoint must result in MapCoord::isDashPoint() returning true.");
 
 static_assert(!MapCoord(0.0, 0.0).isGapPoint(),
               "MapCoord::isGapPoint() must return false by default.");
-static_assert(MapCoord(0.0, 0.0, MapCoord::GapPoint).isGapPoint(),
+static_assert(MapCoord(0.0, 0.0, MapCoord::Flags(MapCoord::GapPoint)).isGapPoint(),
               "MapCoord::GapPoint must result in MapCoord::isGapPoint() returning true.");
 
 static_assert(MapCoord(-1.0, 2.0).x() == -1,
