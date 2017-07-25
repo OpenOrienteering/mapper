@@ -1,5 +1,6 @@
 .DS_Store
 CMakeLists.txt.user
+.idea
 *.kdev4
 *.pro.user*
 CMakeLists.txt.user*
