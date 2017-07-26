@@ -18,18 +18,17 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_FILE_FORMAT_OCAD_P_H
-#define _OPENORIENTEERING_FILE_FORMAT_OCAD_P_H
-
-#include "file_import_export.h"
+#ifndef OPENORIENTEERING_FILE_FORMAT_OCAD_P_H
+#define OPENORIENTEERING_FILE_FORMAT_OCAD_P_H
 
 #include <set>
 
 #include <QRgb>
 
+#include "core/map_coord.h"
+#include "fileformats/file_import_export.h"
 #include "libocad/libocad.h"
 
-#include "core/map_coord.h"
 
 class Map;
 class MapColor;
@@ -106,8 +105,8 @@ protected:
 
 	// Unit conversion functions
 	QString convertPascalString(const char *p);
-	QString convertCString(const char *p, size_t n, bool ignore_first_newline);
-	QString convertWideCString(const char *p, size_t n, bool ignore_first_newline);
+	QString convertCString(const char *p, std::size_t n, bool ignore_first_newline);
+	QString convertWideCString(const char *p, std::size_t n, bool ignore_first_newline);
 	float convertRotation(int angle);
 	void convertPoint(MapCoord &c, s32 ocad_x, s32 ocad_y);
 	qint32 convertSize(int ocad_size);
@@ -169,7 +168,7 @@ protected:
 	std::set<s16> exportCombinedSymbol(const CombinedSymbol* combination);
 	
 	// Helper functions
-	/// Returns the number of exported coordinates. If not NULL, the given symbol is used to determine the meaning of dash points.
+	/// Returns the number of exported coordinates. If not nullptr, the given symbol is used to determine the meaning of dash points.
 	u16 exportCoordinates(const MapCoordVector& coords, OCADPoint** buffer, const Symbol* symbol);
 	u16 exportTextCoordinates(TextObject* object, OCADPoint** buffer);
 	int getOcadColor(QRgb rgb);

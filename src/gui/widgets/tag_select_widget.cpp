@@ -24,19 +24,15 @@
 #include <QGuiApplication>
 #include <QHeaderView>
 #include <QLabel>
-#include <QMessageBox>
 #include <QShowEvent>
 #include <QTableWidget>
 #include <QToolButton>
 
-#include "segmented_button_layout.h"
-#include "../main_window.h"
 #include "core/map.h"
-#include "gui/map/map_editor.h"
-#include "core/map_part.h"
-#include "core/objects/object.h"
 #include "core/objects/object_query.h"
-#include "tools/tool.h"
+#include "gui/main_window.h"
+#include "gui/map/map_editor.h"
+#include "gui/widgets/segmented_button_layout.h"
 #include "util/util.h"
 
 

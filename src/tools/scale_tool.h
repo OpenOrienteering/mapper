@@ -22,7 +22,17 @@
 #ifndef OPENORIENTEERING_SCALE_TOOL_H
 #define OPENORIENTEERING_SCALE_TOOL_H
 
-#include "tool_base.h"
+#include <QObject>
+
+#include "core/map_coord.h"
+#include "tools/tool_base.h"
+
+class QAction;
+class QPainter;
+class QRectF;
+
+class MapEditorController;
+class MapWidget;
 
 
 /**

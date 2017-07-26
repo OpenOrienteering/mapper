@@ -20,6 +20,18 @@
 
 #include "map_color_t.h"
 
+#include <memory>
+
+#include <Qt>
+#include <QtTest>
+#include <QByteArray>
+#include <QColor>
+#include <QLatin1String>
+#include <QScopedPointer>
+#include <QString>
+
+#include "core/map_color.h"
+
 
 namespace QTest
 {
@@ -118,7 +130,7 @@ void MapColorTest::constructorTest()
 	QCOMPARE(named_color.getName(),            QString::fromLatin1("Name of the color"));
 	
 	MapColor* duplicate_color = named_color.duplicate();
-	QVERIFY(duplicate_color != NULL);
+	QVERIFY(duplicate_color != nullptr);
 	QVERIFY(duplicate_color->isBlack());
 	QVERIFY(duplicate_color->getCmyk().isBlack());
 	QVERIFY(duplicate_color->getRgb().isBlack());
@@ -134,7 +146,7 @@ void MapColorTest::constructorTest()
 	// Test default copy constructor.
 	MapColor copy_constructed_color(named_color);
 	duplicate_color = &copy_constructed_color;
-	QVERIFY(duplicate_color != NULL);
+	QVERIFY(duplicate_color != nullptr);
 	QVERIFY(duplicate_color->isBlack());
 	QVERIFY(duplicate_color->getCmyk().isBlack());
 	QVERIFY(duplicate_color->getRgb().isBlack());
@@ -145,7 +157,7 @@ void MapColorTest::constructorTest()
 	QCOMPARE(duplicate_color->getPriority(),        7);
 	QCOMPARE(duplicate_color->getName(),            QString::fromLatin1("Name of the color"));
 	QVERIFY(duplicate_color->equals(named_color, true));
-	duplicate_color = NULL;
+	duplicate_color = nullptr;
 }
 
 void MapColorTest::equalsTest()

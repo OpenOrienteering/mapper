@@ -18,16 +18,23 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_POINT_HANDLES_H
-#define _OPENORIENTEERING_POINT_HANDLES_H
+#ifndef OPENORIENTEERING_POINT_HANDLES_H
+#define OPENORIENTEERING_POINT_HANDLES_H
+
+#include <limits>
 
 #include <QImage>
 #include <QPointF>
+#include <QRgb>
 
 #include "core/map_coord.h"
 
+class QPainter;
+// IWYU pragma: no_forward_declare QPointF
+
 class MapWidget;
 class Object;
+
 
 /**
  * @brief This class deals with anchor and control points for objects.
@@ -149,4 +156,4 @@ const QImage PointHandles::image() const
 	return handle_image;
 }
 
-#endif // _OPENORIENTEERING_POINT_HANDLES_H
+#endif // OPENORIENTEERING_POINT_HANDLES_H

@@ -24,6 +24,7 @@
 #include <utility>
 
 #include <Qt>
+#include <QtGlobal>
 #include <QCheckBox>
 #include <QComboBox>
 #include <QDialogButtonBox>
@@ -36,6 +37,7 @@
 #include <QIntValidator>
 #include <QLabel>
 #include <QLatin1Char>
+#include <QLatin1String>
 #include <QList>
 #include <QListWidget>
 #include <QListWidgetItem>

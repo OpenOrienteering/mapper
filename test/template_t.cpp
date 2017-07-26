@@ -18,9 +18,14 @@
  */
 
 
-#include <QtTest/QtTest>
-
+#include <QtGlobal>
+#include <QtMath>
+#include <QtTest>
 #include <QDir>
+#include <QFileInfo>
+#include <QObject>
+#include <QString>
+#include <QTransform>
 
 #include "global.h"
 #include "core/georeferencing.h"
@@ -106,4 +111,4 @@ namespace  {
 
 
 QTEST_MAIN(TemplateTest)
-#include "template_t.moc"
+#include "template_t.moc"  // IWYU pragma: keep

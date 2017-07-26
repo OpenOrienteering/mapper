@@ -17,12 +17,12 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_GEOREFERENCING_TEST_H
-#define _OPENORIENTEERING_GEOREFERENCING_TEST_H
+#ifndef OPENORIENTEERING_GEOREFERENCING_TEST_H
+#define OPENORIENTEERING_GEOREFERENCING_TEST_H
 
-#include <QtTest/QtTest>
+#include <QObject>
 
-#include "../src/core/georeferencing.h"
+#include "core/georeferencing.h"
 
 
 /**

@@ -19,7 +19,10 @@
 
 #include "map_part_undo.h"
 
-#include <vector>
+#include <QtGlobal>
+#include <QLatin1String>
+#include <QStringRef>
+#include <QXmlStreamReader>
 
 #include "core/map.h"
 #include "core/map_part.h"
@@ -78,7 +81,7 @@ bool MapPartUndoStep::isValid() const
 // virtual
 UndoStep* MapPartUndoStep::undo()
 {
-	UndoStep* redo_step = NULL;
+	UndoStep* redo_step = nullptr;
 	switch (change)
 	{
 	case AddMapPart:

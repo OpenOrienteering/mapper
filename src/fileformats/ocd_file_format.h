@@ -20,7 +20,17 @@
 #ifndef OPENORIENTEERING_OCD_FILE_FORMAT
 #define OPENORIENTEERING_OCD_FILE_FORMAT
 
-#include "file_format.h"
+#include <cstddef>
+
+#include "fileformats/file_format.h"
+
+class QIODevice;
+
+class Exporter;
+class Importer;
+class Map;
+class MapView;
+
 
 /**
  * The map file format known as OC*D.
@@ -39,7 +49,7 @@ public:
 	 * At the moment, it requires at least two bytes of data.
 	 * It will return false if compiled for a big endian system.
 	 */
-	bool understands(const unsigned char *buffer, size_t sz) const override;
+	bool understands(const unsigned char *buffer, std::size_t sz) const override;
 	
 	/// \copydoc FileFormat::createImporter()
 	virtual Importer* createImporter(QIODevice* stream, Map *map, MapView *view) const override;

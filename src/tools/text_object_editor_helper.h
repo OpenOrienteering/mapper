@@ -24,18 +24,22 @@
 
 #include <functional>
 
+#include <Qt>
 #include <QObject>
+#include <QString>
 
-#include "tool.h"
-
-QT_BEGIN_NAMESPACE
+class QEvent;
+class QInputMethodEvent;
 class QKeyEvent;
 class QMouseEvent;
 class QPainter;
-class QTimer;
-QT_END_NAMESPACE
+class QRectF;
+class QVariant;
+class QWidget;
 
+class MapCoordF;
 class MapEditorController;
+class MapWidget;
 class TextObject;
 class TextObjectAlignmentDockWidget;
 

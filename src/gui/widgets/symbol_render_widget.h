@@ -19,22 +19,35 @@
  */
 
 
-#ifndef _OPENORIENTEERING_SYMBOL_RENDER_WIDGET_H_
-#define _OPENORIENTEERING_SYMBOL_RENDER_WIDGET_H_
+#ifndef OPENORIENTEERING_SYMBOL_RENDER_WIDGET_H
+#define OPENORIENTEERING_SYMBOL_RENDER_WIDGET_H
 
 #include <set>
 
+#include <QObject>
+#include <QPoint>
+#include <QRect>
 #include <QScopedPointer>
+#include <QSize>
 #include <QWidget>
 
-QT_BEGIN_NAMESPACE
+class QAction;
+class QContextMenuEvent;
+class QDragEnterEvent;
+class QDragMoveEvent;
+class QDropEvent;
+class QEvent;
 class QMenu;
-QT_END_NAMESPACE
+class QMouseEvent;
+class QPaintEvent;
+class QPainter;
+class QResizeEvent;
 
 class Map;
 class Symbol;
 class SymbolToolTip;
 class SymbolIconDecorator;
+
 
 /**
  * @brief Shows all symbols from a map in a size-constrained widget.
@@ -50,11 +63,11 @@ Q_OBJECT
 public:
 	/**
 	 * @brief Constructs a new SymbolRenderWidget.
-	 * @param map         The map which provides the symbols. Must not be NULL.
+	 * @param map         The map which provides the symbols. Must not be nullptr.
 	 * @param mobile_mode If true, enables a special mode for mobile devices.
 	 * @param parent      The parent QWidget.
 	 */
-	SymbolRenderWidget(Map* map, bool mobile_mode, QWidget* parent = NULL);
+	SymbolRenderWidget(Map* map, bool mobile_mode, QWidget* parent = nullptr);
 	
 	/**
 	 * @brief Destroys the SymbolRenderWidget.
@@ -79,14 +92,14 @@ public:
 	/**
 	 * @brief If exactly one symbol is selected, returns this symbol.
 	 * 
-	 * Otherwise returns NULL.
+	 * Otherwise returns nullptr.
 	 */
 	const Symbol* singleSelectedSymbol() const;
 	
 	/**
 	 * @brief If exactly one symbol is selected, returns this symbol.
 	 * 
-	 * Otherwise returns NULL.
+	 * Otherwise returns nullptr.
 	 */
 	Symbol* singleSelectedSymbol();
 	

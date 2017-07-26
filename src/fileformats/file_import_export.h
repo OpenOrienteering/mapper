@@ -17,21 +17,18 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_IMPORT_EXPORT_H
-#define _OPENORIENTEERING_IMPORT_EXPORT_H
+#ifndef OPENORIENTEERING_IMPORT_EXPORT_H
+#define OPENORIENTEERING_IMPORT_EXPORT_H
 
 #include <vector>
 
 #include <QHash>
 #include <QObject>
+#include <QString>
 #include <QVariant>
-
-#include "file_format.h"
 
 class QIODevice;
 
-class Importer;
-class Exporter;
 class Map;
 class MapView;
 
@@ -223,13 +220,7 @@ void ImportExport::setOption(const QString& name, QVariant value)
 	options[name] = value;
 }
 
-inline
-QVariant ImportExport::option(const QString& name) const
-{
-	if (!options.contains(name))
-		throw FileFormatException(ImportExport::tr("No such option: %1", "No such import / export option").arg(name));
-	return options[name];
-}
+
 
 
 // ### Importer inline code ###
@@ -264,4 +255,4 @@ Exporter::Exporter(QIODevice* stream, Map* map, MapView* view)
 }
 
 
-#endif // _OPENORIENTEERING_IMPORT_EXPORT_H
+#endif // OPENORIENTEERING_IMPORT_EXPORT_H

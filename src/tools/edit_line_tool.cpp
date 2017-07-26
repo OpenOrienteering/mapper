@@ -21,29 +21,24 @@
 
 #include "edit_line_tool.h"
 
-#include <algorithm>
 #include <limits>
 
 #include <QKeyEvent>
 
+#include "settings.h"
 #include "core/map.h"
-#include "undo/object_undo.h"
-#include "gui/map/map_widget.h"
 #include "core/objects/object.h"
 #include "core/objects/text_object.h"
 #include "core/renderables/renderable.h"
 #include "core/symbols/combined_symbol.h"
-#include "core/symbols/line_symbol.h"
-#include "settings.h"
 #include "core/symbols/symbol.h"
-#include "tool_helpers.h"
-#include "util/util.h"
-#include "gui/map/map_editor.h"
-#include "gui/main_window.h"
 #include "gui/modifier_key.h"
+#include "gui/map/map_editor.h"
+#include "gui/map/map_widget.h"
 #include "gui/widgets/key_button_bar.h"
+#include "tools/tool_helpers.h"
+#include "util/util.h"
 
-class SymbolWidget;
 
 namespace
 {

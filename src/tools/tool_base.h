@@ -22,20 +22,37 @@
 #ifndef OPENORIENTEERING_MAP_EDITOR_TOOL_BASE_H
 #define OPENORIENTEERING_MAP_EDITOR_TOOL_BASE_H
 
+#include <algorithm>
 #include <memory>
 #include <set>
 #include <vector>
 
-#include <QAction>
-#include <QHash>
+#include <Qt>
+#include <QCursor>
+#include <QObject>
+#include <QPoint>
+#include <QPointF>
+
 #include <QPointer>
 #include <QScopedPointer>
 
-#include "tool.h"
+#include "core/map_coord.h"
+#include "core/objects/object.h"
+#include "tools/tool.h"
 
-class KeyButtonBar;
+class QAction;
+class QKeyEvent;
+class QMouseEvent;
+class QPainter;
+class QRectF;
+
 class ConstrainAngleToolHelper;
+class KeyButtonBar;
+class MapEditorController;
+class MapRenderables;
+class MapWidget;
 class SnappingToolHelper;
+
 
 /**
  * Provides a simple interface to base tools on.
@@ -271,7 +288,7 @@ protected:
 	QScopedPointer<ConstrainAngleToolHelper> angle_helper;
 	/// Snapping tool helper. If a non-null filter is set, it is included in the dirty rect and drawn automatically.
 	QScopedPointer<SnappingToolHelper> snap_helper;
-	/// An object to exclude from snapping, or NULL to snap to all objects.
+	/// An object to exclude from snapping, or nullptr to snap to all objects.
 	Object* snap_exclude_object;
 	
 	// Key handling

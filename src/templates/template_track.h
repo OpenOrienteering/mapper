@@ -22,12 +22,29 @@
 #ifndef OPENORIENTEERING_TEMPLATE_TRACK_H
 #define OPENORIENTEERING_TEMPLATE_TRACK_H
 
-#include "template.h"
+#include <vector>
 
+#include <QtGlobal>
+#include <QObject>
+#include <QRectF>
+#include <QString>
+
+#include "templates/template.h"
 #include "sensors/gps_track.h"
 
+class QByteArray;
+class QIODevice;
+class QPainter;
+class QRectF;
+class QWidget;
+class QXmlStreamReader;
+class QXmlStreamWriter;
+
+class Map;
+class MapCoordF;
 class PathObject;
 class PointObject;
+
 
 /** A template consisting of a set of tracks (polylines) and waypoints */
 class TemplateTrack : public Template
@@ -64,7 +81,7 @@ public:
 	
 	/// Import the track as map object(s), returns true if something has been imported.
 	/// TODO: should this be moved to the Track class?
-	bool import(QWidget* dialog_parent = NULL);
+	bool import(QWidget* dialog_parent = nullptr);
 	
 	/// Replaces the calls to pre/postLoadConfiguration() if creating a new GPS track.
 	/// Assumes that the map's georeferencing is valid.

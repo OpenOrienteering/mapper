@@ -27,12 +27,12 @@
 #include <iterator>
 #include <memory>
 #include <utility>
-// IWYU pragma: no_include <ext/alloc_traits.h>
 
 #include <QtMath>
 #include <QtNumeric>
 #include <QCoreApplication>
 #include <QIODevice>
+#include <QLatin1String>
 #include <QStringRef>
 #include <QXmlStreamAttributes>
 #include <QXmlStreamReader>
@@ -43,7 +43,6 @@
 #include "core/map.h"
 #include "core/map_color.h"
 #include "core/map_coord.h"
-#include "core/map_part.h"
 #include "core/path_coord.h"
 #include "core/objects/object.h"
 #include "core/renderables/renderable.h"
@@ -147,7 +146,7 @@ void LineSymbolBorder::assign(const LineSymbolBorder& other, const MapColorMap* 
 
 bool LineSymbolBorder::isVisible() const
 {
-	return width > 0 && color != nullptr && !(dash_length == 0 && dashed);
+	return width > 0 && color && !(dash_length == 0 && dashed);
 }
 
 void LineSymbolBorder::createSymbol(LineSymbol& out) const
@@ -1643,22 +1642,22 @@ void LineSymbol::ensurePointSymbols(const QString& start_name, const QString& mi
 
 void LineSymbol::cleanupPointSymbols()
 {
-	if (start_symbol != nullptr && start_symbol->isEmpty())
+	if (start_symbol && start_symbol->isEmpty())
 	{
 		delete start_symbol;
 		start_symbol = nullptr;
 	}
-	if (mid_symbol != nullptr && mid_symbol->isEmpty())
+	if (mid_symbol && mid_symbol->isEmpty())
 	{
 		delete mid_symbol;
 		mid_symbol = nullptr;
 	}
-	if (end_symbol != nullptr && end_symbol->isEmpty())
+	if (end_symbol && end_symbol->isEmpty())
 	{
 		delete end_symbol;
 		end_symbol = nullptr;
 	}
-	if (dash_symbol != nullptr && dash_symbol->isEmpty())
+	if (dash_symbol && dash_symbol->isEmpty())
 	{
 		delete dash_symbol;
 		dash_symbol = nullptr;
@@ -1823,28 +1822,28 @@ void LineSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 	if (suppress_dash_symbol_at_ends)
 		xml.writeAttribute(QString::fromLatin1("suppress_dash_symbol_at_ends"), QString::fromLatin1("true"));
 	
-	if (start_symbol != nullptr)
+	if (start_symbol)
 	{
 		xml.writeStartElement(QString::fromLatin1("start_symbol"));
 		start_symbol->save(xml, map);
 		xml.writeEndElement();
 	}
 	
-	if (mid_symbol != nullptr)
+	if (mid_symbol)
 	{
 		xml.writeStartElement(QString::fromLatin1("mid_symbol"));
 		mid_symbol->save(xml, map);
 		xml.writeEndElement();
 	}
 	
-	if (end_symbol != nullptr)
+	if (end_symbol)
 	{
 		xml.writeStartElement(QString::fromLatin1("end_symbol"));
 		end_symbol->save(xml, map);
 		xml.writeEndElement();
 	}
 	
-	if (dash_symbol != nullptr)
+	if (dash_symbol)
 	{
 		xml.writeStartElement(QString::fromLatin1("dash_symbol"));
 		dash_symbol->save(xml, map);
@@ -2002,26 +2001,26 @@ bool LineSymbol::equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensit
 		}
 	}
 
-	if ((start_symbol == nullptr && line->start_symbol != nullptr) ||
-		(start_symbol != nullptr && line->start_symbol == nullptr))
+	if ((!start_symbol && line->start_symbol) ||
+	    (start_symbol && !line->start_symbol))
 		return false;
 	if (start_symbol && !start_symbol->equals(line->start_symbol))
 		return false;
 	
-	if ((mid_symbol == nullptr && line->mid_symbol != nullptr) ||
-		(mid_symbol != nullptr && line->mid_symbol == nullptr))
+	if ((!mid_symbol && line->mid_symbol) ||
+	    (mid_symbol && !line->mid_symbol))
 		return false;
 	if (mid_symbol && !mid_symbol->equals(line->mid_symbol))
 		return false;
 	
-	if ((end_symbol == nullptr && line->end_symbol != nullptr) ||
-		(end_symbol != nullptr && line->end_symbol == nullptr))
+	if ((!end_symbol && line->end_symbol) ||
+	    (end_symbol && !line->end_symbol))
 		return false;
 	if (end_symbol && !end_symbol->equals(line->end_symbol))
 		return false;
 	
-	if ((dash_symbol == nullptr && line->dash_symbol != nullptr) ||
-		(dash_symbol != nullptr && line->dash_symbol == nullptr))
+	if ((!dash_symbol && line->dash_symbol) ||
+	    (dash_symbol && !line->dash_symbol))
 		return false;
 	if (dash_symbol && !dash_symbol->equals(line->dash_symbol))
 		return false;

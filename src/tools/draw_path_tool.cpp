@@ -25,20 +25,19 @@
 #include <QMouseEvent>
 #include <QPainter>
 
+#include "settings.h"
 #include "core/map.h"
-#include "gui/map/map_editor.h"
-#include "undo/object_undo.h"
-#include "gui/map/map_widget.h"
+#include "core/symbols/line_symbol.h"
+#include "core/symbols/symbol.h"
 #include "core/objects/object.h"
 #include "core/renderables/renderable.h"
-#include "settings.h"
-#include "core/symbols/symbol.h"
-#include "core/symbols/line_symbol.h"
+#include "gui/modifier_key.h"
+#include "gui/map/map_editor.h"
+#include "gui/map/map_widget.h"
+#include "gui/widgets/key_button_bar.h"
 #include "tool_helpers.h"
 #include "util/util.h"
-#include "gui/modifier_key.h"
-#include "gui/widgets/key_button_bar.h"
-#include "gui/map/map_editor.h"
+#include "undo/object_undo.h"
 
 
 DrawPathTool::DrawPathTool(MapEditorController* editor, QAction* tool_button, bool is_helper_tool, bool allow_closing_paths)
@@ -49,7 +48,7 @@ DrawPathTool::DrawPathTool(MapEditorController* editor, QAction* tool_button, bo
 , angle_helper(new ConstrainAngleToolHelper())
 , snap_helper(new SnappingToolHelper(this))
 , follow_helper(new FollowPathToolHelper())
-, key_button_bar(NULL)
+, key_button_bar(nullptr)
 {
 	angle_helper->setActive(false);
 	connect(angle_helper.data(), SIGNAL(displayChanged()), this, SLOT(updateDirtyRect()));
@@ -801,7 +800,7 @@ void DrawPathTool::finishDrawing()
 	{
 		renderables->removeRenderablesOfObject(preview_path, false);
 		delete preview_path;
-		preview_path = NULL;
+		preview_path = nullptr;
 	}
 	
 	dragging = false;
@@ -813,7 +812,7 @@ void DrawPathTool::finishDrawing()
 	updateStatusText();
 	hidePreviewPoints();
 	
-	DrawLineAndAreaTool::finishDrawing(appending ? append_to_object : NULL);
+	DrawLineAndAreaTool::finishDrawing(appending ? append_to_object : nullptr);
 	
 	finished_path_is_selected = true;
 }
@@ -1047,7 +1046,7 @@ void DrawPathTool::updateDashPointDrawing()
 		// Auto-activate dash points depending on if the selected symbol has a dash symbol.
 		// TODO: instead of just looking if it is a line symbol with dash points,
 		// could also check for combined symbols containing lines with dash points
-		draw_dash_points = (symbol->asLine()->getDashSymbol() != NULL);
+		draw_dash_points = (symbol->asLine()->getDashSymbol());
 		
 		updateStatusText();
 	}

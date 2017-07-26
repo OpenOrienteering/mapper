@@ -21,13 +21,26 @@
 
 #include "object_query.h"
 
+#include <algorithm>
+#include <iterator>
+#include <new>
+
+#include <Qt>
+#include <QtGlobal>
+#include <QChar>
+#include <QCoreApplication>
+#include <QHash>
+#include <QLatin1Char>
+#include <QLatin1String>
+#include <QString>
+#include <QVarLengthArray>
+
 #include "object.h"
 #include "core/map.h"
 #include "core/map_part.h"
+#include "core/symbols/symbol.h"
 #include "gui/map/map_editor.h"
 #include "tools/tool.h"
-
-#include <QVarLengthArray>
 
 
 // ### Local utilites ###

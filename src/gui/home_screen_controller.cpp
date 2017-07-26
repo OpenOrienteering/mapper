@@ -23,22 +23,20 @@
 #include <QFile>
 #include <QStatusBar>
 
-#include "main_window.h"
-#include "widgets/home_screen_widget.h"
-#include "../settings.h"
+#include "settings.h"
+#include "gui/main_window.h"
+#include "gui/widgets/home_screen_widget.h"
 
 
 HomeScreenController::HomeScreenController()
-: widget(NULL),
+: widget(nullptr),
   current_tip(-1)
 {
 	// nothing
 }
 
-HomeScreenController::~HomeScreenController()
-{
-	// nothing
-}
+HomeScreenController::~HomeScreenController() = default;
+
 
 void HomeScreenController::attach(MainWindow* window)
 {
@@ -68,7 +66,7 @@ void HomeScreenController::detach()
 	{
 		window->statusBar()->show();
 	}
-	window->setCentralWidget(NULL);
+	window->setCentralWidget(nullptr);
 	widget->deleteLater();
 	
 	Settings::getInstance().setSetting(Settings::HomeScreen_CurrentTip, current_tip);

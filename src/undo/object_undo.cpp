@@ -211,7 +211,7 @@ bool ObjectCreatingUndoStep::load(QIODevice* file, int version)
 	{
 		int save_type;
 		file->read((char*)&save_type, sizeof(int));
-		objects[i] = Object::getObjectForType(static_cast<Object::Type>(save_type), NULL);
+		objects[i] = Object::getObjectForType(static_cast<Object::Type>(save_type), nullptr);
 		if (!objects[i])
 			return false;
 		objects[i]->load(file, version, map);

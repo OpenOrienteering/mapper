@@ -19,14 +19,14 @@
 
 #include "key_button_bar.h"
 
+#include <Qt>
+#include <QCoreApplication>
+#include <QEvent>
+#include <QFlag>
+#include <QKeyEvent>
 #include <QHBoxLayout>
 #include <QToolButton>
-#include <QVariant>
-#include <QCoreApplication>
-#include <QKeyEvent>
 
-#include "tools/tool.h"
-#include "gui/map/map_editor.h"
 #include "gui/map/map_widget.h"
 
 

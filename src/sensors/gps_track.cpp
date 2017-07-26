@@ -24,10 +24,10 @@
 #include <QApplication>
 #include <QFile>
 #include <QHash>
-#include <QInputDialog> // TODO: get rid of this
 #include <QMessageBox>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
+// IWYU pragma: no_include <qxmlstream.h>
 
 #include "util/dxfparser.h"
 #include "templates/template_track.h"
@@ -77,12 +77,12 @@ void TrackPoint::save(QXmlStreamWriter* stream) const
 
 // ### Track ###
 
-Track::Track() : track_crs(NULL)
+Track::Track() : track_crs(nullptr)
 {
 	current_segment_finished = true;
 }
 
-Track::Track(const Georeferencing& map_georef) : track_crs(NULL), map_georef(map_georef)
+Track::Track(const Georeferencing& map_georef) : track_crs(nullptr), map_georef(map_georef)
 {
 	current_segment_finished = true;
 }
@@ -102,7 +102,7 @@ Track::Track(const Track& other)
 	
 	map_georef = other.map_georef;
 	
-	if (other.track_crs != NULL)
+	if (other.track_crs)
 	{
 		track_crs = new Georeferencing(*other.track_crs);
 	}
@@ -130,7 +130,7 @@ Track& Track::operator=(const Track& rhs)
 	
 	map_georef = rhs.map_georef;
 	
-	if (rhs.track_crs != NULL)
+	if (rhs.track_crs)
 	{
 		track_crs = new Georeferencing(*rhs.track_crs);
 	}
@@ -148,7 +148,7 @@ void Track::clear()
 	current_segment_finished = true;
 	element_tags.clear();
 	delete track_crs;
-	track_crs = NULL;
+	track_crs = nullptr;
 }
 
 bool Track::loadFrom(const QString& path, bool project_points, QWidget* dialog_parent)
@@ -227,7 +227,7 @@ bool Track::saveTo(const QString& path) const
 
 void Track::appendTrackPoint(TrackPoint& point)
 {
-	point.map_coord = map_georef.toMapCoordF(point.gps_coord, NULL); // TODO: check for errors
+	point.map_coord = map_georef.toMapCoordF(point.gps_coord, nullptr); // TODO: check for errors
 	segment_points.push_back(point);
 	
 	if (current_segment_finished)
@@ -243,7 +243,7 @@ void Track::finishCurrentSegment()
 
 void Track::appendWaypoint(TrackPoint& point, const QString& name)
 {
-	point.map_coord = map_georef.toMapCoordF(point.gps_coord, NULL); // TODO: check for errors
+	point.map_coord = map_georef.toMapCoordF(point.gps_coord, nullptr); // TODO: check for errors
 	waypoints.push_back(point);
 	waypoint_names.push_back(name);
 }
@@ -624,20 +624,20 @@ void Track::projectPoints()
 	{
 		int size = waypoints.size();
 		for (int i = 0; i < size; ++i)
-			waypoints[i].map_coord = map_georef.toMapCoordF(waypoints[i].gps_coord, NULL); // FIXME: check for errors
+			waypoints[i].map_coord = map_georef.toMapCoordF(waypoints[i].gps_coord, nullptr); // FIXME: check for errors
 			
 		size = segment_points.size();
 		for (int i = 0; i < size; ++i)
-			segment_points[i].map_coord = map_georef.toMapCoordF(segment_points[i].gps_coord, NULL); // FIXME: check for errors
+			segment_points[i].map_coord = map_georef.toMapCoordF(segment_points[i].gps_coord, nullptr); // FIXME: check for errors
 	}
 	else
 	{
 		int size = waypoints.size();
 		for (int i = 0; i < size; ++i)
-			waypoints[i].map_coord = map_georef.toMapCoordF(track_crs, fakeMapCoordF(waypoints[i].gps_coord), NULL); // FIXME: check for errors
+			waypoints[i].map_coord = map_georef.toMapCoordF(track_crs, fakeMapCoordF(waypoints[i].gps_coord), nullptr); // FIXME: check for errors
 			
 		size = segment_points.size();
 		for (int i = 0; i < size; ++i)
-			segment_points[i].map_coord = map_georef.toMapCoordF(track_crs, fakeMapCoordF(segment_points[i].gps_coord), NULL); // FIXME: check for errors
+			segment_points[i].map_coord = map_georef.toMapCoordF(track_crs, fakeMapCoordF(segment_points[i].gps_coord), nullptr); // FIXME: check for errors
 	}
 }

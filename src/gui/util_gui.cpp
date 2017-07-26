@@ -23,6 +23,7 @@
 #include <cmath>
 
 #include <Qt>
+#include <QtGlobal>
 #include <QCheckBox>
 #include <QDebug>
 #include <QDoubleSpinBox>

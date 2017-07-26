@@ -22,15 +22,15 @@
 #ifndef OPENORIENTEERING_TEMPLATE_POSITIIONING_DIALOG_H
 #define OPENORIENTEERING_TEMPLATE_POSITIIONING_DIALOG_H
 
+#include <QtGlobal>
 #include <QDialog>
+#include <QObject>
 
-QT_BEGIN_NAMESPACE
 class QComboBox;
 class QDoubleSpinBox;
 class QRadioButton;
-QT_END_NAMESPACE
+class QWidget;
 
-class TemplateTrack;
 
 /**
  * Dialog allowing for positioning of a template.

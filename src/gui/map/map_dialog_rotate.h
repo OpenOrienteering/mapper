@@ -18,18 +18,19 @@
  */
 
 
-#ifndef _OPENORIENTEERING_MAP_DIALOG_ROTATE_H_
-#define _OPENORIENTEERING_MAP_DIALOG_ROTATE_H_
+#ifndef OPENORIENTEERING_MAP_DIALOG_ROTATE_H
+#define OPENORIENTEERING_MAP_DIALOG_ROTATE_H
 
 #include <QDialog>
+#include <QObject>
 
-QT_BEGIN_NAMESPACE
 class QDoubleSpinBox;
 class QCheckBox;
 class QRadioButton;
-QT_END_NAMESPACE
+class QWidget;
 
 class Map;
+
 
 /**
  * Dialog for rotating the whole map around a point.

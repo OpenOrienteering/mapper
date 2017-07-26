@@ -20,6 +20,7 @@
 
 #include "gdal_settings_page.h"
 
+#include <QtGlobal>
 #include <QAbstractItemModel>
 #include <QCheckBox>
 #include <QFormLayout>

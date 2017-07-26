@@ -20,9 +20,13 @@
 
 #include "path_object_t.h"
 
+#include <QtTest>
+
 #include "global.h"
 #include "core/map.h"
+#include "core/objects/object.h"
 #include "core/symbols/line_symbol.h"
+
 
 class DummyPathObject : public PathObject
 {

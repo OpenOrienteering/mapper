@@ -23,11 +23,13 @@
 #define OPENORIENTEERING_TEXT_ALIGNMENT_WIDGET_H
 
 #include <QDockWidget>
+#include <QObject>
+#include <QString>
 
-
-QT_BEGIN_NAMESPACE
+class QEvent;
+class QKeyEvent;
 class QPushButton;
-QT_END_NAMESPACE
+class QWidget;
 
 class TextObjectEditorHelper;
 

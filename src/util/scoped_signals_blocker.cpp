@@ -20,6 +20,10 @@
 
 #include "scoped_signals_blocker.h"
 
+#include <QtGlobal>
+#include <QObject>
+
+
 ScopedMultiSignalsBlocker::~ScopedMultiSignalsBlocker()
 {
 #ifdef MAPPER_DEVELOPMENT_BUILD

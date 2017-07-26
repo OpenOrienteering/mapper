@@ -18,17 +18,18 @@
  */
 
 
-#ifndef _OPENORIENTEERING_GPS_TEMPORARY_MARKERS_H_
-#define _OPENORIENTEERING_GPS_TEMPORARY_MARKERS_H_
+#ifndef OPENORIENTEERING_GPS_TEMPORARY_MARKERS_H
+#define OPENORIENTEERING_GPS_TEMPORARY_MARKERS_H
+
+#include <vector>
 
 #include <QObject>
+#include <QPointF>
 
-#include "core/map_coord.h"
-
-QT_BEGIN_NAMESPACE
 class QPainter;
-QT_END_NAMESPACE
+// IWYU pragma: no_forward_declare QPointF
 
+class MapCoordF;
 class MapWidget;
 class GPSDisplay;
 

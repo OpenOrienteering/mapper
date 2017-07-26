@@ -22,22 +22,18 @@
 #ifndef OPENORIENTEERING_SYMBOL_TOOLTIP_H
 #define OPENORIENTEERING_SYMBOL_TOOLTIP_H
 
-#include <QtGlobal>
 #include <QObject>
 #include <QRect>
 #include <QTimer>
 #include <QWidget>
 
-QT_BEGIN_NAMESPACE
 class QEvent;
 class QHideEvent;
 class QLabel;
 class QPaintEvent;
-class QRect;
 class QShortcut;
 class QShowEvent;
 // IWYU pragma: no_forward_declare QWidget
-QT_END_NAMESPACE
 
 class Map;
 class Symbol;

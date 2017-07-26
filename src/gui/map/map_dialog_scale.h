@@ -18,19 +18,18 @@
  */
 
 
-#ifndef _OPENORIENTEERING_MAP_DIALOG_SCALE_H_
-#define _OPENORIENTEERING_MAP_DIALOG_SCALE_H_
-
-#include <map>
+#ifndef OPENORIENTEERING_MAP_DIALOG_SCALE_H
+#define OPENORIENTEERING_MAP_DIALOG_SCALE_H
 
 #include <QDialog>
+#include <QObject>
 
-QT_BEGIN_NAMESPACE
 class QLineEdit;
 class QCheckBox;
+class QPushButton;
 class QRadioButton;
 class QDoubleSpinBox;
-QT_END_NAMESPACE
+class QWidget;
 
 class Map;
 

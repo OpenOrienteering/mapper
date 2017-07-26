@@ -27,23 +27,22 @@
 #include <QMouseEvent>
 #include <QPainter>
 
-#include "util/util.h"
-#include "core/objects/object.h"
-#include "gui/map/map_widget.h"
 #include "settings.h"
-#include "tool_helpers.h"
+#include "core/map.h"
+#include "core/objects/object.h"
 #include "gui/modifier_key.h"
-#include "gui/widgets/key_button_bar.h"
 #include "gui/map/map_editor.h"
-
-class SymbolWidget;
+#include "gui/map/map_widget.h"
+#include "gui/widgets/key_button_bar.h"
+#include "tools/tool_helpers.h"
+#include "util/util.h"
 
 
 DrawRectangleTool::DrawRectangleTool(MapEditorController* editor, QAction* tool_button, bool is_helper_tool)
 : DrawLineAndAreaTool(editor, DrawRectangle, tool_button, is_helper_tool)
 , angle_helper(new ConstrainAngleToolHelper())
 , snap_helper(new SnappingToolHelper(this))
-, key_button_bar(NULL)
+, key_button_bar(nullptr)
 {
 	cur_map_widget = mapWidget();
 	draw_dash_points = true;

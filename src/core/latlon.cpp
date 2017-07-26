@@ -21,7 +21,6 @@
 
 #include <QDebug>
 
-#include "georeferencing.h"
 
 QDebug operator<<(QDebug dbg, const LatLon& lat_lon)
 {

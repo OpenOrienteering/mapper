@@ -21,37 +21,35 @@
 
 #include "georeferencing_dialog.h"
 
-#include <QComboBox>
 #include <QDate>
 #include <QDebug>
-#include <QDesktopServices>
+#include <QDesktopServices>  // IWYU pragma: keep
 #include <QDialogButtonBox>
 #include <QDoubleSpinBox>
 #include <QHBoxLayout>
 #include <QFormLayout>
-#include <QLineEdit>
 #include <QMessageBox>
 #include <QMouseEvent>
 #include <QPushButton>
 #include <QRadioButton>
 #include <QUrlQuery>
 #include <QXmlStreamReader>
+// IWYU pragma: no_include <qxmlstream.h>
 
 #if defined(QT_NETWORK_LIB)
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #endif
 
-#include "../core/crs_template.h"
-#include "../core/georeferencing.h"
-#include "main_window.h"
+#include "core/georeferencing.h"
 #include "core/map.h"
-#include "gui/map/map_editor.h"
+#include "gui/main_window.h"
 #include "gui/map/map_dialog_rotate.h"
-#include "util_gui.h"
+#include "gui/map/map_editor.h"
+#include "gui/widgets/crs_selector.h"
+#include "gui/util_gui.h"
+#include "util/scoped_signals_blocker.h"
 #include "util/util.h"
-#include "../util/scoped_signals_blocker.h"
-#include "widgets/crs_selector.h"
 
 
 // ### GeoreferencingDialog ###
@@ -115,7 +113,7 @@ GeoreferencingDialog::GeoreferencingDialog(
 	
 	map_x_edit = Util::SpinBox::create<MapCoordF>(tr("mm"));
 	map_y_edit = Util::SpinBox::create<MapCoordF>(tr("mm"));
-	ref_point_button->setEnabled(controller != nullptr);
+	ref_point_button->setEnabled(controller);
 	QHBoxLayout* map_ref_layout = new QHBoxLayout();
 	map_ref_layout->addWidget(map_x_edit, 1);
 	map_ref_layout->addWidget(new QLabel(tr("X", "x coordinate")), 0);
@@ -176,7 +174,7 @@ GeoreferencingDialog::GeoreferencingDialog(
 	  QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Reset | QDialogButtonBox::Help,
 	  Qt::Horizontal);
 	reset_button = buttons_box->button(QDialogButtonBox::Reset);
-	reset_button->setEnabled(initial != nullptr);
+	reset_button->setEnabled(initial);
 	QPushButton* help_button = buttons_box->button(QDialogButtonBox::Help);
 	
 	auto edit_layout = new QFormLayout();
@@ -465,7 +463,7 @@ void GeoreferencingDialog::accept()
 
 void GeoreferencingDialog::updateWidgets()
 {
-	ref_point_button->setEnabled(controller != nullptr);
+	ref_point_button->setEnabled(controller);
 	
 	if (crs_selector->currentCRSTemplate())
 		projected_ref_label->setText(crs_selector->currentCRSTemplate()->coordinatesName(crs_selector->parameters()) + QLatin1Char(':'));

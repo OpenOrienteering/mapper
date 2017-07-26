@@ -25,12 +25,26 @@
 #include <QElapsedTimer>
 #include <QScopedPointer>
 
-#include "edit_tool.h"
+#include <Qt>
+#include <QObject>
+#include <QRectF>
+#include <QString>
+#include <QVariant>
 
+#include "core/map_coord.h"
+#include "tools/edit_tool.h"
+
+class QAction;
+class QFocusEvent;
+class QInputMethodEvent;
+class QKeyEvent;
+class QMouseEvent;
+class QPainter;
+class QRectF;
+
+class MapEditorController;
 class MapWidget;
-class CombinedSymbol;
-class PointObject;
-class Symbol;
+class Object;
 class TextObjectEditorHelper;
 
 

@@ -26,6 +26,7 @@
 #include <iterator>
 
 #include <Qt>
+#include <QtGlobal>
 #include <QAbstractItemView>
 #include <QAction>
 #include <QCheckBox>
@@ -43,6 +44,7 @@
 #include <QIODevice>
 #include <QLabel>
 #include <QLatin1Char>
+#include <QLatin1String>
 #include <QList>
 #include <QMenu>
 #include <QMessageBox>
@@ -73,7 +75,6 @@
 #include "gui/widgets/symbol_dropdown.h"
 #include "util/util.h"
 
-class MapPart;
 // IWYU pragma: no_forward_declare QColor
 // IWYU pragma: no_forward_declare QFormLayout
 // IWYU pragma: no_forward_declare QLabel

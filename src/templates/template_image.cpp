@@ -22,7 +22,6 @@
 #include "template_image.h"
 
 #include <QDebug>
-#include <QFile>
 #include <QHBoxLayout>
 #include <QImageReader>
 #include <QLabel>

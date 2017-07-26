@@ -24,7 +24,9 @@
 #include <algorithm>
 #include <iterator>
 
+#include <QtGlobal>
 #include <QIODevice>
+#include <QLatin1String>
 #include <QObject>
 #include <QStringRef>
 #include <QTransform>

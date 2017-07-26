@@ -23,9 +23,10 @@
 #include <memory>
 
 #include <QtMath>
+#include <QtGlobal>
 #include <QDialog>
 #include <QFile>
-#include <QLatin1Char>
+#include <QLatin1String>
 #include <QPointF>
 #include <QStringRef>
 #include <QTransform>
@@ -192,7 +193,7 @@ bool OgrTemplate::loadTemplateFileImpl(bool configuring)
 		for (const auto& warning : warnings)
 		{
 			message.append(warning);
-			message.append(QLatin1Char{'\n'});
+			message.append(QLatin1String{"\n"});
 		}
 		message.chop(1);
 		setErrorString(message);

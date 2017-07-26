@@ -34,19 +34,18 @@
 #include <QResizeEvent>
 #include <QScopedValueRollback>
 
-#include "core/map_color.h"
+#include "settings.h"
 #include "core/map.h"
 #include "core/objects/object.h"
-#include "../../settings.h"
-#include "core/symbols/symbol.h"
 #include "core/symbols/area_symbol.h"
 #include "core/symbols/combined_symbol.h"
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/point_symbol.h"
-#include "gui/symbols/symbol_setting_dialog.h"
+#include "core/symbols/symbol.h"
 #include "core/symbols/text_symbol.h"
-#include "../../util/overriding_shortcut.h"
-#include "symbol_tooltip.h"
+#include "gui/symbols/symbol_setting_dialog.h"
+#include "gui/widgets/symbol_tooltip.h"
+#include "util/overriding_shortcut.h"
 
 
 namespace MimeType {
@@ -369,14 +368,14 @@ void SymbolRenderWidget::emitGuarded_selectedSymbolsChanged()
 const Symbol* SymbolRenderWidget::singleSelectedSymbol() const
 {
 	if (selected_symbols.size() != 1)
-		return NULL;
+		return nullptr;
 	return static_cast<const Map*>(map)->getSymbol(*(selected_symbols.begin()));
 }
 
 Symbol* SymbolRenderWidget::singleSelectedSymbol()
 {
 	if (selected_symbols.size() != 1)
-		return NULL;
+		return nullptr;
 	return map->getSymbol(*(selected_symbols.begin()));
 }
 
@@ -971,7 +970,7 @@ void SymbolRenderWidget::copySymbols()
 	if (!copy_map->exportToIODevice(&buffer))
 	{
 		delete copy_map;
-		QMessageBox::warning(NULL, tr("Error"), tr("An internal error occurred, sorry!"));
+		QMessageBox::warning(nullptr, tr("Error"), tr("An internal error occurred, sorry!"));
 		return;
 	}
 	delete copy_map;
@@ -986,7 +985,7 @@ void SymbolRenderWidget::pasteSymbols()
 {
 	if (!QApplication::clipboard()->mimeData()->hasFormat(MimeType::oo_symbols))
 	{
-		QMessageBox::warning(NULL, tr("Error"), tr("There are no symbols in clipboard which could be pasted!"));
+		QMessageBox::warning(nullptr, tr("Error"), tr("There are no symbols in clipboard which could be pasted!"));
 		return;
 	}
 	
@@ -999,7 +998,7 @@ void SymbolRenderWidget::pasteSymbols()
 	Map* paste_map = new Map();
 	if (!paste_map->importFromIODevice(&buffer))
 	{
-		QMessageBox::warning(NULL, tr("Error"), tr("An internal error occurred, sorry!"));
+		QMessageBox::warning(nullptr, tr("Error"), tr("An internal error occurred, sorry!"));
 		return;
 	}
 	
@@ -1007,7 +1006,7 @@ void SymbolRenderWidget::pasteSymbols()
 	selectSingleSymbol(-1);
 	
 	// Import pasted map
-	map->importMap(paste_map, Map::MinimalSymbolImport, this, NULL, current_symbol_index, false);
+	map->importMap(paste_map, Map::MinimalSymbolImport, this, nullptr, current_symbol_index, false);
 	delete paste_map;
 	
 	selectSingleSymbol(current_symbol_index);

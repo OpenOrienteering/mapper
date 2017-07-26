@@ -20,13 +20,13 @@
 
 #include "renderable_implementation.h"
 
-#include <qmath.h>
+#include <QtMath>
+#include <QPainter>
+#include <QPen>
 
-#include "core/map_color.h"
-#include "core/map.h"
+#include "settings.h"
 #include "core/objects/object.h"
 #include "core/objects/text_object.h"
-#include "settings.h"
 #include "core/symbols/area_symbol.h"
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/point_symbol.h"

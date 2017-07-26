@@ -21,8 +21,10 @@
 
 #include <algorithm>
 
-#include "../src/fileformats/xml_file_format.h"
-#include "../src/util/xml_stream_util.h"
+#include <QtTest>
+
+#include "fileformats/xml_file_format.h"
+#include "util/xml_stream_util.h"
 
 namespace literal
 {
@@ -393,7 +395,7 @@ void CoordXmlTest::readXml()
 		writeXml_implementation(coords, xml);
 		xml.writeEndElement(/* coords */);
 		
-		xml.setDevice(NULL);
+		xml.setDevice(nullptr);
 		
 		buffer.close();
 		header.close();
@@ -475,7 +477,7 @@ void CoordXmlTest::readHumanReadableStream()
 		writeHumanReadableString_implementation(coords, xml);
 		xml.writeEndElement();
 		
-		xml.setDevice(NULL);
+		xml.setDevice(nullptr);
 		
 		buffer.close();
 		header.close();
@@ -588,7 +590,7 @@ void CoordXmlTest::readHumanReadableStringRef()
 		writeHumanReadableString_implementation(coords, xml);
 		xml.writeEndElement();
 		
-		xml.setDevice(NULL);
+		xml.setDevice(nullptr);
 		
 		buffer.close();
 		header.close();
@@ -778,7 +780,7 @@ void CoordXmlTest::readCompressed()
 		writeCompressed_implementation(coords, xml);
 		xml.writeEndElement();
 		
-		xml.setDevice(NULL);
+		xml.setDevice(nullptr);
 		
 		buffer.close();
 		header.close();
@@ -1017,7 +1019,7 @@ void CoordXmlTest::readFastImplementation()
 			element.write(coords);
 		}
 		
-		xml.setDevice(NULL);
+		xml.setDevice(nullptr);
 		
 		buffer.close();
 		header.close();

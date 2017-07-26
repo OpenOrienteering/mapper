@@ -24,13 +24,11 @@
 #include <vector>
 
 #include <Qt>
-#include <QtGlobal>
 #include <QDialog>
 #include <QObject>
 
 #include "core/map_color.h"
 
-QT_BEGIN_NAMESPACE
 class QAbstractButton;
 class QCheckBox;
 class QComboBox;
@@ -42,7 +40,6 @@ class QPushButton;
 class QRadioButton;
 class QTabWidget;
 class QWidget;
-QT_END_NAMESPACE
 
 class ColorDropDown;
 class Map;

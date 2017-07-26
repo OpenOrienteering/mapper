@@ -22,7 +22,10 @@
 #ifndef OPENORIENTEERING_MEASURE_WIDGET_H
 #define OPENORIENTEERING_MEASURE_WIDGET_H
 
+#include <QObject>
 #include <QTextBrowser>
+
+class QWidget;
 
 class Map;
 

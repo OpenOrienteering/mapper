@@ -18,18 +18,18 @@
  */
 
 
-#ifndef _WORDS_MATRIX_H_
-#define _WORDS_MATRIX_H_
+#ifndef OPENORIENTEERING_UTIL_MATRIX_H
+#define OPENORIENTEERING_UTIL_MATRIX_H
 
 #include <cstring>
 
-#include <QtNumeric>
+#include <QtGlobal>
 
-QT_BEGIN_NAMESPACE
 class QIODevice;
+class QString;
 class QXmlStreamReader;
 class QXmlStreamWriter;
-QT_END_NAMESPACE
+
 
 /** Dynamically sized matrix of doubles. */
 class Matrix
@@ -37,7 +37,7 @@ class Matrix
 public:
 	
 	/** Constructs a 0x0 matrix. */
-	inline Matrix() : d(NULL), n(0), m(0) {}
+	inline Matrix() : d(nullptr), n(0), m(0) {}
 	
 	/** Copy constructor. */
 	Matrix(const Matrix& other)

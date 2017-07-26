@@ -21,11 +21,14 @@
 
 #include "template_positioning_dialog.h"
 
+#include <Qt>
 #include <QComboBox>
 #include <QDialogButtonBox>
 #include <QDoubleSpinBox>
+#include <QFlags>
 #include <QFormLayout>
 #include <QRadioButton>
+#include <QSpacerItem>
 
 #include "gui/util_gui.h"
 

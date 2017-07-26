@@ -17,10 +17,10 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_MODIFIER_KEY_H
-#define _OPENORIENTEERING_MODIFIER_KEY_H
+#ifndef OPENORIENTEERING_MODIFIER_KEY_H
+#define OPENORIENTEERING_MODIFIER_KEY_H
 
-#include <QKeySequence>
+#include <Qt>
 #include <QString>
 
 /**

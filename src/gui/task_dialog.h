@@ -18,17 +18,21 @@
  */
 
 
-#ifndef _OPENORIENTEERING_UTIL_TASK_DIALOG_H_
-#define _OPENORIENTEERING_UTIL_TASK_DIALOG_H_
+#ifndef OPENORIENTEERING_UTIL_TASK_DIALOG_H
+#define OPENORIENTEERING_UTIL_TASK_DIALOG_H
 
 #include <QDialog>
 #include <QDialogButtonBox>
+#include <QObject>
+#include <QString>
 
-QT_BEGIN_NAMESPACE
+class QAbstractButton;
+class QPushButton;
+class QWidget;
+
 class QVBoxLayout;
 class QCommandLinkButton;
 class QSignalMapper;
-QT_END_NAMESPACE
 
 /**
  * Shows a dialog similar to a message box, but with the option to add

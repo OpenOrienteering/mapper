@@ -21,7 +21,7 @@
 
 #include "rotate_pattern_tool.h"
 
-#include <qmath.h>
+#include <QtMath>
 #include <QGuiApplication>
 #include <QKeyEvent>
 #include <QLocale>
@@ -30,7 +30,6 @@
 #include "core/map.h"
 #include "gui/map/map_widget.h"
 #include "core/objects/object.h"
-#include "core/renderables/renderable.h"
 #include "core/symbols/symbol.h"
 #include "core/symbols/point_symbol.h"
 #include "tool_helpers.h"

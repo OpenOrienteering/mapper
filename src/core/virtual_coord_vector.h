@@ -21,8 +21,9 @@
 #ifndef OPENORIENTEERING_VIRTUAL_COORD_VECTOR_H
 #define OPENORIENTEERING_VIRTUAL_COORD_VECTOR_H
 
-#include "map_coord.h"
+#include <QtGlobal>
 
+#include "map_coord.h"
 
 
 /**

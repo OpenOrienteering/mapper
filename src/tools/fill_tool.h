@@ -19,14 +19,28 @@
  */
 
 
-#ifndef _OPENORIENTEERING_TOOL_FILL_H_
-#define _OPENORIENTEERING_TOOL_FILL_H_
+#ifndef OPENORIENTEERING_FILL_TOOL_H
+#define OPENORIENTEERING_FILL_TOOL_H
+
+#include <vector>
+
+#include <QImage>
+#include <QObject>
+// IWYU pragma: no_include <QRectF>
+#include <QTransform>
 
 #include "tool_base.h"
 
-class MapView;
+class QAction;
+class QPainter;
+class QPoint;
+class QRectF;
+
+class Map;
+class MapEditorController;
 class PathObject;
 class RenderConfig;
+class Symbol;
 
 /** 
  * Tool to fill bounded areas with PathObjects.

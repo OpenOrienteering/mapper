@@ -29,12 +29,10 @@
 
 #include "symbol.h"
 
-QT_BEGIN_NAMESPACE
 class QIODevice;
 class QPainterPath;
 class QXmlStreamReader;
 class QXmlStreamWriter;
-QT_END_NAMESPACE
 
 class Map;
 class MapColor;

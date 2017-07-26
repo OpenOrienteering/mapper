@@ -23,11 +23,12 @@
 
 #include <QPainter>
 
-#include "core/map_grid.h"
-#include "gui/map/map_widget.h"
-#include "core/objects/object.h"
 #include "settings.h"
-#include "draw_text_tool.h"
+#include "core/map.h"
+#include "core/map_grid.h"
+#include "core/objects/object.h"
+#include "gui/map/map_widget.h"
+#include "tools/tool.h"
 #include "util/util.h"
 
 
@@ -268,7 +269,7 @@ void ConstrainAngleToolHelper::settingsChanged()
 // ### SnappingToolHelper ###
 
 SnappingToolHelper::SnappingToolHelper(MapEditorTool* tool, SnapObjects filter)
- : QObject(NULL),
+ : QObject(nullptr),
    filter(filter),
    snapped_type(NoSnapping),
    map(tool->map()),
@@ -295,7 +296,7 @@ MapCoord SnappingToolHelper::snapToObject(MapCoordF position, MapWidget* widget,
 	auto result_position = MapCoord { position };
 	SnappingToolHelperSnapInfo result_info;
 	result_info.type = NoSnapping;
-	result_info.object = NULL;
+	result_info.object = nullptr;
 	result_info.coord_index = -1;
 	result_info.path_coord.pos = MapCoordF(0, 0);
 	result_info.path_coord.index = -1;
@@ -387,7 +388,7 @@ MapCoord SnappingToolHelper::snapToObject(MapCoordF position, MapWidget* widget,
 			closest_distance_sq = distance_sq;
 			result_position = MapCoord(closest_grid_point);
 			result_info.type = GridCorners;
-			result_info.object = NULL;
+			result_info.object = nullptr;
 			result_info.coord_index = -1;
 		}
 	}
@@ -400,7 +401,7 @@ MapCoord SnappingToolHelper::snapToObject(MapCoordF position, MapWidget* widget,
 		emit displayChanged();
 	}
 	
-	if (info != NULL)
+	if (info)
 		*info = result_info;
 	return result_position;
 }

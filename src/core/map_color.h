@@ -18,18 +18,19 @@
  */
 
 
-#ifndef _OPENORIENTEERING_MAP_COLOR_H_
-#define _OPENORIENTEERING_MAP_COLOR_H_
+#ifndef OPENORIENTEERING_MAP_COLOR_H
+#define OPENORIENTEERING_MAP_COLOR_H
 
 #include <vector>
 
-#include <qmath.h>
+#include <QtGlobal>
+#include <QtMath>
 #include <QColor>
 #include <QHash>
 #include <QMetaType>
+#include <QRgb>
 #include <QString>
 
-class Map;
 class MapColor;
 
 /**
@@ -382,7 +383,7 @@ public:
 	bool equals(const MapColor& other, bool compare_priority) const;
 	
 	/** Compares two colors given by pointers.
-	 *  Returns true if the colors are equal or if both pointers are NULL. */
+	 *  Returns true if the colors are equal or if both pointers are nullptr. */
 	static bool equal(const MapColor* color, const MapColor* other);
 	
 	/** Returns true if this color's priority is less than the other's. */
@@ -474,7 +475,7 @@ public:
 	 * 
 	 * Returns the user-defined value for the key color if it is defined.
 	 * Otherwise, if the key color's priority is from the RESERVED domain,
-	 * returns key. Otherwise returns NULL.
+	 * returns key. Otherwise returns nullptr.
 	 */
 	const MapColor* value(const MapColor* key) const;
 	
@@ -482,7 +483,7 @@ public:
 	 * 
 	 * Returns the user-defined value for the key color if it is defined.
 	 * Otherwise, if the key color's priority is from the RESERVED domain,
-	 * returns key. Otherwise returns NULL.
+	 * returns key. Otherwise returns nullptr.
 	 */
 	const MapColor* operator[](const MapColor* key) const;
 	
@@ -667,7 +668,7 @@ bool operator!=(const MapColorRgb& lhs, const MapColorRgb& rhs)
 
 inline
 SpotColorComponent::SpotColorComponent()
- : spot_color(NULL),
+ : spot_color(nullptr),
    factor(0.0f)
 {
 	// Nothing
@@ -684,7 +685,7 @@ SpotColorComponent::SpotColorComponent(const MapColor* spot_color, float factor)
 inline
 bool SpotColorComponent::isValid() const
 {
-	return spot_color != NULL;
+	return spot_color;
 }
 
 
@@ -844,13 +845,13 @@ const MapColor* MapColorMap::value(const MapColor* key) const
 	{
 		return mapping.value(key);
 	}
-	else if (key != NULL && key->getPriority() < 0)
+	else if (key && key->getPriority() < 0)
 	{
 		return key;
 	}
 	else
 	{
-		return NULL;
+		return nullptr;
 	}
 }
 

@@ -26,10 +26,10 @@
 #include <QMouseEvent>
 #include <QPainter>
 
-#include "../core/map_printer.h"
+#include "core/map.h"
+#include "core/map_printer.h"
 #include "gui/map/map_editor.h"
 #include "gui/map/map_widget.h"
-#include "print_widget.h"
 
 
 PrintTool::PrintTool(MapEditorController* editor, MapPrinter* map_printer)

@@ -22,13 +22,9 @@
 
 #include <cstddef>
 
-#include <QtGlobal>
-
 #include "fileformats/file_format.h"
 
-QT_BEGIN_NAMESPACE
 class QIODevice;
-QT_END_NAMESPACE
 
 class Importer;
 class Map;
@@ -56,7 +52,7 @@ public:
 	 * 
 	 * There is no cheap way to determine the answer via OGR.
 	 */
-	bool understands(const unsigned char *, size_t) const override;
+	bool understands(const unsigned char *, std::size_t) const override;
 	
 	/**
 	 * Creates an importer object and configures it for the given input stream

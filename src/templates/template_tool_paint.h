@@ -18,22 +18,38 @@
  */
 
 
-#ifndef _OPENORIENTEERING_TEMPLATE_TOOL_PAINT_H_
-#define _OPENORIENTEERING_TEMPLATE_TOOL_PAINT_H_
+#ifndef OPENORIENTEERING_TEMPLATE_TOOL_PAINT_H
+#define OPENORIENTEERING_TEMPLATE_TOOL_PAINT_H
 
+#include <vector>
+
+#include <QColor>
 #include <QDialog>
+#include <QObject>
 #include <QPointer>
+#include <QRectF>
+#include <QSize>
+#include <QString>
+#include <QWidget>
 
+#include "core/map_coord.h"
 #include "tools/tool.h"
 
-QT_BEGIN_NAMESPACE
+class QAction;
+class QCursor;
 class QListWidgetItem;
-class QDockWidget;
-QT_END_NAMESPACE
+class QMouseEvent;
+class QPaintEvent;
+class QPainter;
+class QPushButton;
+class QRect;
 
 class Map;
+class MapEditorController;
+class MapWidget;
 class Template;
 class PaintOnTemplatePaletteWidget;
+
 
 /** Tool to paint on image templates. */
 class PaintOnTemplateTool : public MapEditorTool

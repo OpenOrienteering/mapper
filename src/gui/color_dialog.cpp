@@ -23,6 +23,7 @@
 #include <cstddef>
 #include <memory>
 
+#include <Qt>
 #include <QAbstractButton>
 #include <QApplication>
 #include <QButtonGroup>
@@ -35,6 +36,7 @@
 #include <QGridLayout>
 #include <QLabel>
 #include <QLatin1Char>
+#include <QLatin1String>
 #include <QLineEdit>
 #include <QMessageBox>
 #include <QPixmap>
@@ -686,7 +688,7 @@ void ColorDialog::spotColorCompositionChanged()
 			break;
 		
 		const MapColor* spot_color = component_colors[i]->color();
-		if (spot_color == nullptr)
+		if (!spot_color)
 			continue;
 		
 		component.spot_color = spot_color;

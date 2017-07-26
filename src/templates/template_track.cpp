@@ -27,13 +27,13 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
+#include "core/map.h"
 #include "core/objects/object.h"
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/point_symbol.h"
 #include "gui/georeferencing_dialog.h"
 #include "gui/select_crs_dialog.h"
 #include "gui/task_dialog.h"
-#include "gui/map/map_widget.h"
 #include "templates/template_positioning_dialog.h"
 #include "undo/object_undo.h"
 #include "util/util.h"

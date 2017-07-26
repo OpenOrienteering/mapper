@@ -22,19 +22,16 @@
 #ifndef OPENORIENTEERING_SYMBOL_DROPDOWN_H
 #define OPENORIENTEERING_SYMBOL_DROPDOWN_H
 
-#include <QtGlobal>
 #include <QComboBox>
 #include <QItemDelegate>
 #include <QObject>
 #include <QString>
 // IWYU pragma: no_include <QStyleOptionViewItem>
 
-QT_BEGIN_NAMESPACE
 class QAbstractItemModel;
 class QModelIndex;
 class QStyleOptionViewItem;
 class QWidget;
-QT_END_NAMESPACE
 
 class Map;
 class Symbol;

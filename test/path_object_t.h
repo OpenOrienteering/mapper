@@ -22,9 +22,7 @@
 #ifndef OPENORIENTEERING_PATH_OBJECT_T_H
 #define OPENORIENTEERING_PATH_OBJECT_T_H
 
-#include <QtTest/QtTest>
-
-#include "core/objects/object.h"
+#include <QObject>
 
 
 /**

@@ -44,10 +44,8 @@ MeasureWidget::MeasureWidget(Map* map, QWidget* parent)
 	objectSelectionChanged();
 }
 
-MeasureWidget::~MeasureWidget()
-{
-	// nothing
-}
+MeasureWidget::~MeasureWidget() = default;
+
 
 void MeasureWidget::objectSelectionChanged()
 {

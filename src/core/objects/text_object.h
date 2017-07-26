@@ -19,20 +19,28 @@
  */
 
 
-#ifndef _OPENORIENTEERING_OBJECT_TEXT_H_
-#define _OPENORIENTEERING_OBJECT_TEXT_H_
+#ifndef OPENORIENTEERING_OBJECT_TEXT_H
+#define OPENORIENTEERING_OBJECT_TEXT_H
 
+#include <memory>
 #include <vector>
 
+#include <QtGlobal>
 #include <QString>
 #include <QFontMetricsF>
 #include <QPointF>
+#include <QRectF>
 #include <QTransform>
 
-#include "object.h"
+#include "core/map_coord.h"
+#include "core/objects/object.h"
 
-class MapCoordF;
+// IWYU pragma: no_forward_declare QPointF
+// IWYU pragma: no_forward_declare QRectF
+// IWYU pragma: no_forward_declare QTransform
+
 class Symbol;
+
 
 /** 
  * TextObjectPartInfo contains layout information for a continuous sequence of printable characters

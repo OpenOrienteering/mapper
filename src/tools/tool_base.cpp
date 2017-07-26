@@ -21,22 +21,17 @@
 
 #include "tool_base.h"
 
-#include <QApplication>
-#include <QPainter>
 #include <QMouseEvent>
 #include <QTimer>
 
-#include "gui/main_window.h"
-#include "gui/widgets/key_button_bar.h"
-#include "core/map.h"
-#include "gui/map/map_editor.h"
-#include "undo/object_undo.h"
-#include "gui/map/map_widget.h"
-#include "core/objects/object.h"
-#include "core/objects/text_object.h"
 #include "settings.h"
+#include "core/map.h"
+#include "core/objects/object.h"
+#include "gui/map/map_editor.h"
+#include "gui/map/map_widget.h"
+#include "gui/widgets/key_button_bar.h"
 #include "tool_helpers.h"
-#include "util/util.h"
+#include "undo/object_undo.h"
 
 
 // ### MapEditorToolBase::EditedItem ###

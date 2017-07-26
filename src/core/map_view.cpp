@@ -21,12 +21,25 @@
 
 #include "map_view.h"
 
+#include <algorithm>
+#include <cmath>
+#include <iterator>
+#include <stdexcept>
+
 #include <QRectF>
 
-#include "map.h"
-#include "../templates/template.h"
+#include <Qt>
+#include <QIODevice>
+#include <QLatin1String>
+#include <QString>
+#include <QStringRef>
+#include <QXmlStreamReader>
+
+#include "core/map.h"
+#include "core/map_coord.h"
+#include "templates/template.h" // IWYU pragma: keep
 #include "util/util.h"
-#include "../util/xml_stream_util.h"
+#include "util/xml_stream_util.h"
 
 
 namespace literal

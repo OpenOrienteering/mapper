@@ -18,16 +18,15 @@
  */
 
 
-#ifndef _OPENORIENTEERING_MAP_EDITOR_ACTIVITY_H_
-#define _OPENORIENTEERING_MAP_EDITOR_ACTIVITY_H_
+#ifndef OPENORIENTEERING_MAP_EDITOR_ACTIVITY_H
+#define OPENORIENTEERING_MAP_EDITOR_ACTIVITY_H
 
 #include <QObject>
 
-QT_BEGIN_NAMESPACE
 class QPainter;
-QT_END_NAMESPACE
 
 class MapWidget;
+
 
 /**
  * Represents a type of editing activity, e.g. template position adjustment.

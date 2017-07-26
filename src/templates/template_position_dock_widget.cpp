@@ -20,8 +20,7 @@
 
 #include "template_position_dock_widget.h"
 
-#include <qmath.h>
-#include <QDoubleValidator>
+#include <QtMath>
 #include <QEvent>
 #include <QGridLayout>
 #include <QLabel>

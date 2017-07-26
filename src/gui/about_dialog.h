@@ -21,7 +21,14 @@
 #ifndef OPENORIENTEERING_ABOUT_DIALOG_H
 #define OPENORIENTEERING_ABOUT_DIALOG_H
 
-#include "text_browser_dialog.h"
+#include <QObject>
+#include <QString>
+
+class QUrl;
+class QWidget;
+
+#include "gui/text_browser_dialog.h"
+
 
 /**
  * @brief A dialog which shows information about Mapper and its components.

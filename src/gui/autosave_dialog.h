@@ -18,16 +18,21 @@
  */
 
 
-#ifndef _OPENORIENTEERING_AUTOSAVE_DIALOG_H_
-#define _OPENORIENTEERING_AUTOSAVE_DIALOG_H_
+#ifndef OPENORIENTEERING_AUTOSAVE_DIALOG_H
+#define OPENORIENTEERING_AUTOSAVE_DIALOG_H
 
+#include <Qt>
 #include <QDialog>
+#include <QObject>
+#include <QString>
 #include <QTextDocument>
 
-#include "../util/item_delegates.h"
+#include "util/item_delegates.h"
 
 class QBoxLayout;
+class QCloseEvent;
 class QListWidget;
+class QModelIndex;
 
 class MainWindow;
 
@@ -50,7 +55,7 @@ public:
 	 * @param actual_path    The path which is currently selected.
 	 * @param parent         The parent window.
 	 */
-	AutosaveDialog(QString original_path, QString autosave_path, QString actual_path, MainWindow* parent = NULL, Qt::WindowFlags f = 0);
+	AutosaveDialog(QString original_path, QString autosave_path, QString actual_path, MainWindow* parent = nullptr, Qt::WindowFlags f = 0);
 	
 	/**
 	 * Destructor.
@@ -66,7 +71,7 @@ public:
 	 * @brief Provides the text documents for the list widget items.
 	 * 
 	 * @param index The model index for which the text documents is requested for.
-	 * @return      A QTextDocument representing the list item, or NULL.
+	 * @return      A QTextDocument representing the list item, or nullptr.
 	 */
 	const QTextDocument* textDoc(const QModelIndex& index) const;
 	
@@ -128,4 +133,4 @@ private:
 	QListWidget* list_widget;
 };
 
-#endif // _OPENORIENTEERING_AUTOSAVE_DIALOG_H_
+#endif // OPENORIENTEERING_AUTOSAVE_DIALOG_H

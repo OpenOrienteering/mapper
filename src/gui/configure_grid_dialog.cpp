@@ -21,9 +21,7 @@
 
 #include "configure_grid_dialog.h"
 
-#include <limits>
-
-#include <qmath.h>
+#include <QtMath>
 #include <QCheckBox>
 #include <QColorDialog>
 #include <QComboBox>
@@ -31,16 +29,13 @@
 #include <QDialogButtonBox>
 #include <QDoubleSpinBox>
 #include <QFormLayout>
-#include <QGroupBox>
 #include <QPushButton>
 #include <QRadioButton>
-#include <QXmlStreamReader>
-#include <QXmlStreamWriter>
 
-#include "../core/georeferencing.h"
+#include "core/georeferencing.h"
 #include "core/map.h"
+#include "gui/util_gui.h"
 #include "util/util.h"
-#include "util_gui.h"
 
 
 ConfigureGridDialog::ConfigureGridDialog(QWidget* parent, const Map& map, bool grid_visible)

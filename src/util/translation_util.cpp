@@ -25,6 +25,7 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QLatin1Char>
+#include <QLatin1String>
 #include <QLibraryInfo>
 #include <QLocale>
 #include <QSettings>

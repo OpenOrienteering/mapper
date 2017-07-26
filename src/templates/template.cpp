@@ -29,7 +29,6 @@
 #include <QFileInfo>
 #include <QMessageBox>
 #include <QPainter>
-#include <QPixmap>
 #include <QScopedValueRollback>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
@@ -40,7 +39,7 @@
 #include "template_map.h"
 #include "template_track.h"
 #include "gdal/ogr_template.h"
-#include "util/backports.h"          // Reason: std::hypot on Android
+#include "util/backports.h"  // IWYU pragma: keep
 #include "util/util.h"
 #include "util/xml_stream_util.h"
 

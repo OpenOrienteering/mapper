@@ -23,12 +23,13 @@
 
 #include <memory>
 
+#include <QtGlobal>
 #include <QIODevice>
 #include <QLatin1Char>
+#include <QLatin1String>
 #include <QPainter>
 #include <QRectF>
 #include <QStringRef>
-#include <QTextDocument>
 #include <QXmlStreamAttributes>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
@@ -36,7 +37,6 @@
 #include "core/map.h"
 #include "core/map_color.h"
 #include "core/map_coord.h"
-#include "core/map_part.h"
 #include "core/map_view.h"
 #include "core/objects/object.h"
 #include "core/objects/text_object.h"
@@ -52,7 +52,7 @@
 #include "util/util.h"
 #include "settings.h"
 
-// IWYU pragma: no_include <qobjectdefs.h>
+// IWYU pragma: no_include <QObject>
 
 
 Symbol::Symbol(Type type) noexcept

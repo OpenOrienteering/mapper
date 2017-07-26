@@ -20,7 +20,7 @@
 #ifndef OPENORIENTEERING_ENCODING_T_H
 #define OPENORIENTEERING_ENCODING_T_H
 
-#include <QtTest/QtTest>
+#include <QObject>
 
 
 /**
@@ -30,7 +30,7 @@ class EncodingTest : public QObject
 {
 Q_OBJECT
 public:
-	explicit EncodingTest(QObject* parent = NULL);
+	explicit EncodingTest(QObject* parent = nullptr);
 	
 private slots:
 	/**

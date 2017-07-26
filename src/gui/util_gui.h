@@ -21,21 +21,19 @@
 #ifndef OPENORIENTEERING_UTIL_GUI_H
 #define OPENORIENTEERING_UTIL_GUI_H
 
-#include <QtGlobal>
 #include <QCoreApplication>
 #include <QLabel>
+#include <QLatin1String>
 #include <QSpacerItem>
 #include <QString>
 #include <QStyle>
 #include <QWidget>
 
-QT_BEGIN_NAMESPACE
 class QCheckBox;
 class QDoubleSpinBox;
 // IWYU pragma: no_forward_declare QLabel
 class QSpacerItem;
 class QSpinBox;
-QT_END_NAMESPACE
 
 class MapCoordF;
 

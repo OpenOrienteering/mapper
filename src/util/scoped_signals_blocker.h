@@ -21,10 +21,9 @@
 #ifndef OPENORIENTEERING_UTIL_SCOPED_SIGNALS_BLOCKER_H
 #define OPENORIENTEERING_UTIL_SCOPED_SIGNALS_BLOCKER_H
 
-#include <utility>
-
-#include <QObject>
 #include <QVarLengthArray>
+
+class QObject;
 
 
 /**

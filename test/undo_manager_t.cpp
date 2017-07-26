@@ -19,14 +19,18 @@
 
 #include "undo_manager_t.h"
 
+#include <QtTest>
 
+#include "undo/undo.h"
 #include "undo/undo_manager.h"
+
+class Map;
 
 
 // test
 void UndoManagerTest::testUndoRedo()
 {
-	Map* const map = NULL;
+	Map* const map = nullptr;
 	UndoManager undo_manager(map);
 	connect(&undo_manager, SIGNAL(loadedChanged(bool)),  this, SLOT(loadedChanged(bool)));
 	connect(&undo_manager, SIGNAL(cleanChanged(bool)),   this, SLOT(cleanChanged(bool)));

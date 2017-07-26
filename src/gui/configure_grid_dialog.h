@@ -19,21 +19,22 @@
  */
 
 
-#ifndef _OPENORIENTEERING_CONFIGURE_GRID_DIALOG_H_
-#define _OPENORIENTEERING_CONFIGURE_GRID_DIALOG_H_
+#ifndef OPENORIENTEERING_CONFIGURE_GRID_DIALOG_H
+#define OPENORIENTEERING_CONFIGURE_GRID_DIALOG_H
 
 #include <QDialog>
+#include <QObject>
+#include <QRgb>
 
 #include "core/map_grid.h"
 
-QT_BEGIN_NAMESPACE
 class QCheckBox;
 class QComboBox;
 class QDoubleSpinBox;
 class QLabel;
-class QLineEdit;
+class QPushButton;
 class QRadioButton;
-QT_END_NAMESPACE
+class QWidget;
 
 class Map;
 

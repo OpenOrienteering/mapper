@@ -21,11 +21,17 @@
 
 #include "text_object.h"
 
-#include <qmath.h>
+#include <QtMath>
+#include <QChar>
+#include <QLatin1Char>
+#include <QPointF>
 
-#include "core/symbols/symbol.h"
-#include "core/symbols/text_symbol.h"
 #include "settings.h"
+#include "core/objects/object.h"
+#include "core/symbols/text_symbol.h"
+#include "core/symbols/symbol.h"
+
+// IWYU pragma: no_forward_declare QPointF
 
 // ### TextObjectPartInfo ###
 
@@ -201,7 +207,7 @@ std::vector<QPointF> TextObject::controlPoints() const
 	else
 	{
 		QTransform transform;
-		transform.rotate(-180.0 * getRotation() / M_PI);
+		transform.rotate(-qRadiansToDegrees(qreal(getRotation())));
 		
 		handles[0] += transform.map(QPointF(+getBoxWidth() / 2, -getBoxHeight() / 2));
 		handles[1] += transform.map(QPointF(+getBoxWidth() / 2, +getBoxHeight() / 2));

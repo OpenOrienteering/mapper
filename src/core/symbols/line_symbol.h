@@ -22,25 +22,22 @@
 #ifndef OPENORIENTEERING_LINE_SYMBOL_H
 #define OPENORIENTEERING_LINE_SYMBOL_H
 
-#include <vector>
+#include <vector>  // IWYU pragma: keep
 
 #include <Qt>
 #include <QtGlobal>
 #include <QString>
 
-#include "symbol.h"
+#include "core/map_coord.h"  // IWYU pragma: keep
+#include "core/symbols/symbol.h"
 
-QT_BEGIN_NAMESPACE
 class QIODevice;
 class QXmlStreamReader;
 class QXmlStreamWriter;
-QT_END_NAMESPACE
 
 class Map;
 class MapColor;
 class MapColorMap;
-class MapCoord;
-class MapCoordF;
 class Object;
 class ObjectRenderables;
 class PathObject;

@@ -21,12 +21,24 @@
 
 #include "crs_template.h"
 
+#include <algorithm>
+#include <iterator>
+
+#include <QtGlobal>
+#include <QLatin1Char>
+
 
 // From crs_template_implementation.h/.cpp
 namespace CRSTemplates
 {
 	CRSTemplateRegistry::TemplateList defaultList();
 }
+
+
+
+// ### CRSParameterWidgetObserver ###
+
+CRSParameterWidgetObserver::~CRSParameterWidgetObserver() = default;
 
 
 

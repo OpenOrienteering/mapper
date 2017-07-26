@@ -19,15 +19,18 @@
  */
 
 
-#ifndef _OPENORIENTEERING_CRS_TEMPLATE_IMPLEMENTATION_H_
-#define _OPENORIENTEERING_CRS_TEMPLATE_IMPLEMENTATION_H_
+#ifndef OPENORIENTEERING_CRS_TEMPLATE_IMPLEMENTATION_H
+#define OPENORIENTEERING_CRS_TEMPLATE_IMPLEMENTATION_H
 
 #include "crs_template.h"
 
-#include <memory>
+#include <utility>
+#include <vector>
 
-class QLineEdit;
-class QVariant;
+#include <QLineEdit>
+#include <QString>
+#include <QVariant>
+
 class QWidget;
 
 class LatLon;
@@ -60,6 +63,7 @@ public:
 protected:
 	/// The type of editor widget returned from createEditor.
 	using Editor = QLineEdit;
+	
 };
 
 

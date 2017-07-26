@@ -20,6 +20,8 @@
 
 #include "duplicate_equals_t.h"
 
+#include <QtTest>
+
 #include "global.h"
 #include "core/map.h"
 #include "core/objects/object.h"

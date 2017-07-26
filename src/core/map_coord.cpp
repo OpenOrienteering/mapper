@@ -26,6 +26,8 @@
 #include <type_traits>
 
 #include <QChar>
+#include <QLatin1Char>
+#include <QLatin1String>
 #include <QLineF>
 #include <QStringRef>
 

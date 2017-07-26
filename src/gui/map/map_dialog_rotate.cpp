@@ -20,18 +20,24 @@
 
 #include "map_dialog_rotate.h"
 
+#include <Qt>
 #include <QtMath>
 #include <QCheckBox>
 #include <QDialogButtonBox>
 #include <QDoubleSpinBox>
+#include <QFlags>
 #include <QFormLayout>
+#include <QHBoxLayout>
 #include <QLabel>
 #include <QRadioButton>
+#include <QSpacerItem>
 
 #include "core/georeferencing.h"
 #include "core/map.h"
+#include "core/map_coord.h"
 #include "templates/template.h"
 #include "gui/util_gui.h"
+
 
 RotateMapDialog::RotateMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), map(map)
 {
@@ -59,7 +65,7 @@ RotateMapDialog::RotateMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt
 	center_other_radio = new QRadioButton(tr("Other point,", "Rotation center point"));
 	other_x_edit = Util::SpinBox::create<MapCoordF>(tr("mm"));
 	other_y_edit = Util::SpinBox::create<MapCoordF>(tr("mm"));
-	QHBoxLayout* other_center_layout = new QHBoxLayout();
+	auto other_center_layout = new QHBoxLayout();
 	other_center_layout->addWidget(center_other_radio);
 	other_center_layout->addWidget(new QLabel(tr("X:", "x coordinate")), 0);
 	other_center_layout->addWidget(other_x_edit, 1);

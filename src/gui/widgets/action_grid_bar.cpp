@@ -20,19 +20,15 @@
 
 #include "action_grid_bar.h"
 
-#include <qmath.h>
-#include <QApplication>
-#include <QGridLayout>
-#include <QToolButton>
+#include <QtMath>
 #include <QAction>
-#include <QScreen>
-#include <QKeyEvent>
-#include <QPainter>
-#include <QDebug>
+#include <QGridLayout>
 #include <QMenu>
+#include <QResizeEvent>
+#include <QToolButton>
 
+#include "settings.h"
 #include "util/util.h"
-#include "../../settings.h"
 
 ActionGridBar::ActionGridBar(Direction direction, int rows, QWidget* parent)
 : QWidget(parent)
@@ -52,7 +48,7 @@ ActionGridBar::ActionGridBar(Direction direction, int rows, QWidget* parent)
 	// Create overflow action
 	overflow_action = new QAction(QIcon(QString::fromLatin1(":/images/three-dots.png")), tr("Show remaining items"), this);
  	connect(overflow_action, SIGNAL(triggered()), this, SLOT(overflowActionClicked()));
-	overflow_button = NULL;
+	overflow_button = nullptr;
 	overflow_menu = new QMenu(this);
 	include_overflow_from_list.push_back(this);
 }
@@ -140,9 +136,9 @@ QToolButton* ActionGridBar::getButtonForAction(QAction* action)
 	{
 		GridItem& item = items[i];
 		if (item.action == action)
-			return item.button_hidden ? NULL : item.button;
+			return item.button_hidden ? nullptr : item.button;
 	}
-	return NULL;
+	return nullptr;
 }
 
 QSize ActionGridBar::sizeHint() const
@@ -204,7 +200,7 @@ void ActionGridBar::resizeEvent(QResizeEvent* event)
 				{
 					// Check which item "wins" this spot and which will be hidden
 					if (item.at_end == other.at_end)
-						qDebug() << "Warning: two items set to same position in ActionGridBar, this case is not handled!";
+						qDebug("Warning: two items set to same position in ActionGridBar, this case is not handled!");
 					if ((item.at_end && resulting_col <= cols / 2)
 						|| (! item.at_end && resulting_col > cols / 2))
 					{

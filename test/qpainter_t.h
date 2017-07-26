@@ -17,12 +17,11 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_QPAINTER_T_H
-#define _OPENORIENTEERING_QPAINTER_T_H
-
-#include <QtTest/QtTest>
+#ifndef OPENORIENTEERING_QPAINTER_T_H
+#define OPENORIENTEERING_QPAINTER_T_H
 
 #include <QImage>
+#include <QObject>
 #include <QPainter>
 
 
@@ -37,7 +36,7 @@ public:
 	 * The constructor initializes a number of single pixel images (black, 
 	 * white, transparent) which are used by the tests.
 	 */
-	explicit QPainterTest(QObject* parent = NULL);
+	explicit QPainterTest(QObject* parent = nullptr);
 	
 private slots:
 	/**

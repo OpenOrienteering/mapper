@@ -18,9 +18,11 @@
  */
 
 
-#ifndef _UTIL_RECORDING_TRANSLATOR_H_
-#define _UTIL_RECORDING_TRANSLATOR_H_
+#ifndef OPENORIENTEERING_UTIL_RECORDING_TRANSLATOR_H
+#define OPENORIENTEERING_UTIL_RECORDING_TRANSLATOR_H
 
+#include <QObject>
+#include <QString>
 #include <QTranslator>
 
 

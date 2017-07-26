@@ -24,11 +24,11 @@
 
 #include <vector>
 
+#include <QtGlobal>
+
 #include "map_coord.h"
 
 class PathCoordVector;
-class SplitPathCoord;
-
 
 
 /**

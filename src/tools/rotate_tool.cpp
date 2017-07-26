@@ -21,17 +21,16 @@
 
 #include "rotate_tool.h"
 
-#include <qmath.h>
+#include <QtMath>
 #include <QKeyEvent>
 #include <QPainter>
 
 #include "core/map.h"
-#include "gui/map/map_widget.h"
 #include "core/objects/object.h"
-#include "core/renderables/renderable.h"
+#include "gui/modifier_key.h"
+#include "gui/map/map_widget.h"
 #include "tool_helpers.h"
 #include "util/util.h"
-#include "gui/modifier_key.h"
 
 
 RotateTool::RotateTool(MapEditorController* editor, QAction* tool_button)

@@ -26,28 +26,21 @@
 #include <QKeyEvent>
 #include <QMouseEvent>
 #include <QPainter>
-#include <QScopedValueRollback>
 
 #include "settings.h"
 #include "core/map.h"
 #include "core/objects/object.h"
 #include "core/objects/text_object.h"
 #include "core/symbols/line_symbol.h"
-#include "core/symbols/text_symbol.h"
-#include "core/renderables/renderable.h"
 #include "core/symbols/symbol.h"
-#include "gui/main_window.h"
 #include "gui/modifier_key.h"
 #include "gui/map/map_editor.h"
 #include "gui/map/map_widget.h"
 #include "gui/widgets/key_button_bar.h"
 #include "tools/tool_helpers.h"
-#include "tools/draw_text_tool.h"
 #include "tools/text_object_editor_helper.h"
 #include "undo/object_undo.h"
 #include "util/util.h"
-
-class SymbolWidget;
 
 
 namespace
@@ -574,7 +567,7 @@ void EditPointTool::drawImpl(QPainter* painter, MapWidget* widget)
 	auto num_selected_objects = map()->selectedObjects().size();
 	if (num_selected_objects > 0)
 	{
-		drawSelectionOrPreviewObjects(painter, widget, text_editor != nullptr);
+		drawSelectionOrPreviewObjects(painter, widget, text_editor);
 		
 		if (!text_editor)
 		{
@@ -828,7 +821,7 @@ void EditPointTool::updateHoverState(MapCoordF cursor_pos)
 		updateDirtyRect();
 	}
 	
-	Q_ASSERT((hover_state.testFlag(OverObjectNode) || hover_state.testFlag(OverPathEdge)) == (hover_object != nullptr));
+	Q_ASSERT((hover_state.testFlag(OverObjectNode) || hover_state.testFlag(OverPathEdge)) == bool(hover_object));
 }
 
 void EditPointTool::setupAngleHelperFromHoverObject()

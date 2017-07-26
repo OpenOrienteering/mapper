@@ -20,6 +20,8 @@
 
 #include "file_format_t.h"
 
+#include <QtTest>
+
 #include "global.h"
 #include "settings.h"
 #include "core/georeferencing.h"
@@ -35,8 +37,6 @@
 #include "fileformats/xml_file_format.h"
 #include "templates/template.h"
 #include "undo/undo_manager.h"
-#include "util/backports.h"
-
 
 
 #ifdef QT_PRINTSUPPORT_LIB

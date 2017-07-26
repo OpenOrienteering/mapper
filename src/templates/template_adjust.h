@@ -18,26 +18,38 @@
  */
 
 
-#ifndef _OPENORIENTEERING_TEMPLATE_ADJUST_H_
-#define _OPENORIENTEERING_TEMPLATE_ADJUST_H_
+#ifndef OPENORIENTEERING_TEMPLATE_ADJUST_H
+#define OPENORIENTEERING_TEMPLATE_ADJUST_H
 
 #include <QWidget>
 #include <QDockWidget>
 
+#include <QColor>
+#include <QObject>
+#include <QString>
+
+#include "core/map_coord.h"
 #include "gui/map/map_editor_activity.h"
-#include "template.h"
 #include "tools/tool.h"
 
-QT_BEGIN_NAMESPACE
-class QGridLayout;
+class QAction;
+class QCloseEvent;
+class QCursor;
+class QEvent;
+class QKeyEvent;
+class QMouseEvent;
+class QPainter;
+class QPoint;
 class QPushButton;
 class QTableWidget;
 class QCheckBox;
-QT_END_NAMESPACE
 
+class MapEditorController;
+class MapWidget;
 class Template;
 class TemplateAdjustDockWidget;
 class TemplateAdjustWidget;
+struct TemplateTransform;
 
 /**
  * Activity which allows the positioning of a template by
@@ -92,7 +104,7 @@ class TemplateAdjustWidget : public QWidget
 {
 Q_OBJECT
 public:
-	TemplateAdjustWidget(Template* temp, MapEditorController* controller, QWidget* parent = NULL);
+	TemplateAdjustWidget(Template* temp, MapEditorController* controller, QWidget* parent = nullptr);
 	virtual ~TemplateAdjustWidget();
 	
 	void addPassPoint(MapCoordF src, MapCoordF dest);

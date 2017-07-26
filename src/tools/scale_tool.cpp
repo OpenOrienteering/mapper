@@ -21,13 +21,11 @@
 
 #include "scale_tool.h"
 
-#include <qmath.h>
 #include <QPainter>
 
 #include "core/map.h"
 #include "gui/map/map_widget.h"
 #include "core/objects/object.h"
-#include "core/renderables/renderable.h"
 #include "util/util.h"
 
 

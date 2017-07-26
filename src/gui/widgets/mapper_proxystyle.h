@@ -18,10 +18,19 @@
  */
 
 
-#ifndef OPENORIENTEERING_MAPPER_PROXYSTYLE_H_
-#define OPENORIENTEERING_MAPPER_PROXYSTYLE_H_
+#ifndef OPENORIENTEERING_MAPPER_PROXYSTYLE_H
+#define OPENORIENTEERING_MAPPER_PROXYSTYLE_H
 
+#include <QtGlobal>
+#include <QObject>
 #include <QProxyStyle>
+#include <QStyle>
+
+class QPainter;
+class QStyleHintReturn;
+class QStyleOption;
+class QWidget;
+
 
 /**
  * MapperProxyStyle customizes the platform's base style.
@@ -82,4 +91,4 @@ private:
 	Q_DISABLE_COPY(MapperProxyStyle)
 };
 
-#endif // OPENORIENTEERING_MAPPER_PROXYSTYLE_H_
+#endif // OPENORIENTEERING_MAPPER_PROXYSTYLE_H

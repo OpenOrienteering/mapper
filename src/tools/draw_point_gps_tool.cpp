@@ -26,27 +26,25 @@
 #include <QPainter>
 
 #include "core/map.h"
-#include "gui/map/map_editor.h"
-#include "undo/object_undo.h"
-#include "gui/map/map_widget.h"
 #include "core/objects/object.h"
 #include "core/renderables/renderable.h"
-#include "core/symbols/symbol.h"
 #include "core/symbols/point_symbol.h"
-#include "tool_helpers.h"
-#include "util/util.h"
-#include "sensors/gps_display.h"
+#include "core/symbols/symbol.h"
 #include "gui/map/map_editor.h"
+#include "gui/map/map_widget.h"
+#include "sensors/gps_display.h"
+#include "undo/object_undo.h"
+#include "util/util.h"
 
 
 DrawPointGPSTool::DrawPointGPSTool(GPSDisplay* gps_display, MapEditorController* editor, QAction* tool_button)
 : MapEditorToolBase(QCursor(QPixmap(QString::fromLatin1(":/images/cursor-draw-point.png")), 11, 11), DrawPoint, editor, tool_button)
 , renderables(new MapRenderables(map()))
-, help_label(NULL)
+, help_label(nullptr)
 {
 	useTouchCursor(false);
 	
-	preview_object = NULL;
+	preview_object = nullptr;
 	if (gps_display->hasValidPosition())
 		newGPSPosition(gps_display->getLatestGPSCoord(), gps_display->getLatestGPSCoordAccuracy());
 	
@@ -192,7 +190,7 @@ void DrawPointGPSTool::objectSelectionChangedImpl()
 
 void DrawPointGPSTool::activeSymbolChanged(const Symbol* symbol)
 {
-	if (symbol == NULL || symbol->getType() != Symbol::Point || symbol->isHidden())
+	if (!symbol || symbol->getType() != Symbol::Point || symbol->isHidden())
 	{
 		if (symbol && symbol->isHidden())
 			deactivate();

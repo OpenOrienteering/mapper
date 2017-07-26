@@ -38,11 +38,11 @@
 DrawLineAndAreaTool::DrawLineAndAreaTool(MapEditorController* editor, Type type, QAction* tool_action, bool is_helper_tool)
 : MapEditorTool(editor, type, tool_action)
 , is_helper_tool(is_helper_tool)
-, drawing_symbol(NULL)
+, drawing_symbol(nullptr)
 , preview_point_radius(0)
 , preview_points_shown(false)
 , path_combination(Map::getCoveringCombinedLine()->duplicate()->asCombined())
-, preview_path(NULL)
+, preview_path(nullptr)
 , renderables(new MapRenderables(map()))
 {
 	// Helper tools don't draw the active symbol.
@@ -74,7 +74,7 @@ void DrawLineAndAreaTool::setDrawingSymbol(const Symbol* symbol)
 {
 	// Avoid using deleted symbol
 	if (map()->findSymbolIndex(drawing_symbol) == -1)
-		symbol = NULL;
+		symbol = nullptr;
 	
 	// End current editing
 	if (editingInProgress())
@@ -209,7 +209,7 @@ void DrawLineAndAreaTool::abortDrawing()
 	delete preview_path;
 	map()->clearDrawingBoundingBox();
 	
-	preview_path = NULL;
+	preview_path = nullptr;
 	
 	setEditingInProgress(false);
 	
@@ -218,7 +218,7 @@ void DrawLineAndAreaTool::abortDrawing()
 
 void DrawLineAndAreaTool::finishDrawing()
 {
-    finishDrawing(NULL);
+    finishDrawing(nullptr);
 }
 
 void DrawLineAndAreaTool::finishDrawing(PathObject* append_to_object)
@@ -271,7 +271,7 @@ void DrawLineAndAreaTool::finishDrawing(PathObject* append_to_object)
 		{
 			// Ugly HACK to make it possible to delete this tool as response to pathFinished
 			PathObject* temp_path = preview_path;
-			preview_path = NULL;
+			preview_path = nullptr;
 			emit(pathFinished(temp_path));
 			delete temp_path;
 		}
@@ -279,7 +279,7 @@ void DrawLineAndAreaTool::finishDrawing(PathObject* append_to_object)
 			emit(pathAborted());
 	}
 	else
-		preview_path = NULL;
+		preview_path = nullptr;
 }
 
 void DrawLineAndAreaTool::deletePreviewObjects()
@@ -308,7 +308,7 @@ void DrawLineAndAreaTool::deletePreviewObjects()
 	{
 		renderables->removeRenderablesOfObject(preview_path, false);
 		delete preview_path;
-		preview_path = NULL;
+		preview_path = nullptr;
 	}
 	//drawing_in_progress = false; // FIXME: does not belong here
 }
@@ -324,7 +324,7 @@ void DrawLineAndAreaTool::addPreviewPointSymbols(const Symbol* symbol)
 	{
 		const LineSymbol* line = reinterpret_cast<const LineSymbol*>(symbol);
 		
-		bool has_main_line = line->getLineWidth() > 0 && line->getColor() != NULL;
+		bool has_main_line = line->getLineWidth() > 0 && line->getColor();
 		bool has_border_line = line->hasBorder() && (line->getBorder().isVisible() || line->getRightBorder().isVisible());
 		if (has_main_line || has_border_line)
 		{
@@ -335,7 +335,7 @@ void DrawLineAndAreaTool::addPreviewPointSymbols(const Symbol* symbol)
 				preview->setInnerColor(line->getColor());
 				preview_point_symbols.push_back(preview);
 				preview_point_symbols_external.push_back(false);
-				if (preview->getInnerColor() != NULL)
+				if (preview->getInnerColor())
 					preview_point_radius = qMax(preview_point_radius, preview->getInnerRadius());
 			}
 			if (has_border_line)
@@ -349,9 +349,9 @@ void DrawLineAndAreaTool::addPreviewPointSymbols(const Symbol* symbol)
 		{
 			preview_point_symbols.push_back(line->getMidSymbol());
 			preview_point_symbols_external.push_back(true);
-			if (line->getMidSymbol()->getOuterColor() != NULL)
+			if (line->getMidSymbol()->getOuterColor())
 				preview_point_radius = qMax(preview_point_radius, line->getMidSymbol()->getInnerRadius() + line->getMidSymbol()->getOuterWidth());
-			else if (line->getMidSymbol()->getInnerColor() != NULL)
+			else if (line->getMidSymbol()->getInnerColor())
 				preview_point_radius = qMax(preview_point_radius, line->getMidSymbol()->getInnerRadius());
 		}
 	}
@@ -381,7 +381,7 @@ void DrawLineAndAreaTool::addPreviewPointSymbolsForBorder(const LineSymbol* line
 	preview_point_symbols.push_back(preview);
 	preview_point_symbols_external.push_back(false);
 	
-	if (preview->getOuterColor() != NULL)
+	if (preview->getOuterColor())
 		preview_point_radius = qMax(preview_point_radius, preview->getInnerRadius() + preview->getOuterWidth());
 }
 

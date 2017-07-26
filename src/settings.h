@@ -19,11 +19,12 @@
  */
 
 
-#ifndef _OPENORIENTEERING_SETTINGS_H_
-#define _OPENORIENTEERING_SETTINGS_H_
+#ifndef OPENORIENTEERING_SETTINGS_H
+#define OPENORIENTEERING_SETTINGS_H
 
 #include <QHash>
 #include <QObject>
+#include <QString>
 #include <QVariant>
 
 class QSettings;

@@ -25,7 +25,9 @@
 #include <cstddef>
 #include <iterator>
 
+#include <QtGlobal>
 #include <QIODevice>
+#include <QLatin1String>
 #include <QString>
 #include <QStringRef>
 #include <QXmlStreamAttributes>
@@ -34,7 +36,6 @@
 
 #include "core/map.h"
 #include "core/map_color.h"
-#include "core/map_part.h"
 #include "core/objects/object.h"
 #include "core/symbols/symbol.h"
 
@@ -373,5 +374,5 @@ void CombinedSymbol::setPart(int i, const Symbol* symbol, bool is_private)
 		delete parts[i];
 	
 	parts[i] = symbol;
-	private_parts[i] = (symbol == nullptr) ? false : is_private;
+	private_parts[i] = (!symbol) ? false : is_private;
 }

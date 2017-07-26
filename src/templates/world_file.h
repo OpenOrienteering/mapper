@@ -22,11 +22,8 @@
 #ifndef OPENORIENTEERING_WORLD_FILE_H
 #define OPENORIENTEERING_WORLD_FILE_H
 
+#include <QString>
 #include <QTransform>
-
-QT_BEGIN_NAMESPACE
-class QString;
-QT_END_NAMESPACE
 
 
 /**

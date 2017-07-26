@@ -23,26 +23,25 @@
 
 #include <cmath>
 
-#include <qmath.h>
-#include <QtCore/qnumeric.h>
-#include <QDebug>
+#include <QtMath>
+#include <QtNumeric>
 #include <QIODevice>
-#include <QXmlStreamAttributes>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
 #include <private/qbezier_p.h>
 
-#include "util/util.h"
-#include "fileformats/file_import_export.h"
-#include "core/symbols/symbol.h"
-#include "core/symbols/point_symbol.h"
-#include "core/symbols/line_symbol.h"
-#include "core/symbols/text_symbol.h"
-#include "core/map.h"
-#include "text_object.h"
-#include "core/renderables/renderable.h"
 #include "settings.h"
+#include "core/map.h"
+#include "core/objects/text_object.h"
+#include "core/renderables/renderable.h"
+#include "core/symbols/line_symbol.h"
+#include "core/symbols/point_symbol.h"
+#include "core/symbols/symbol.h"
+#include "core/symbols/text_symbol.h"
+#include "fileformats/file_format.h"
+#include "fileformats/file_import_export.h"
+#include "util/util.h"
 #include "util/xml_stream_util.h"
 
 
@@ -412,7 +411,7 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 	{
 		QString symbol_id =  object_element.attribute<QString>(literal::symbol);
 		object->symbol = symbol_dict[symbol_id]; // FIXME: cannot work for forward references
-		// NOTE: object->symbol may be NULL.
+		// NOTE: object->symbol may be nullptr.
 	}
 	
 	if (!object->symbol || !object->symbol->isTypeCompatibleTo(object))

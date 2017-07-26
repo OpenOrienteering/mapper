@@ -22,10 +22,9 @@
 
 #include <QPainter>
 
-#include "gui/map/map_widget.h"
 #include "core/objects/object.h"
 #include "core/objects/text_object.h"
-#include "../settings.h"
+#include "gui/map/map_widget.h"
 
 PointHandles::PointHandles(int scale_factor)
 : scale_factor(scale_factor)

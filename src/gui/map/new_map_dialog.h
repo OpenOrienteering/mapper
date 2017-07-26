@@ -24,13 +24,11 @@
 
 #include <map>
 
-#include <QtGlobal>
 #include <QDialog>
 #include <QFileInfoList>
 #include <QObject>
 #include <QString>
 
-QT_BEGIN_NAMESPACE
 class QCheckBox;
 class QComboBox;
 class QDir;
@@ -38,7 +36,6 @@ class QListWidget;
 class QListWidgetItem;
 class QPushButton;
 class QWidget;
-QT_END_NAMESPACE
 
 /**
  * Dialog for creating a new map.

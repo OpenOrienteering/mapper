@@ -27,7 +27,4 @@ SettingsPage::SettingsPage(QWidget* parent)
 	// nothing
 }
 
-SettingsPage::~SettingsPage()
-{
-	// nothing, not inlined
-}
+SettingsPage::~SettingsPage() = default;

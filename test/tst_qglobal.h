@@ -30,7 +30,8 @@
 #ifndef OPENORIENTEERING_TST_QGLOBAL_H
 #define OPENORIENTEERING_TST_QGLOBAL_H
 
-#include <QtTest/QtTest>
+#include <QObject>
+
 
 class tst_QGlobal: public QObject
 {

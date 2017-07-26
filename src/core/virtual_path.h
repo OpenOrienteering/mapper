@@ -22,17 +22,17 @@
 #ifndef OPENORIENTEERING_VIRTUAL_PATH_H
 #define OPENORIENTEERING_VIRTUAL_PATH_H
 
+#include <memory>
+#include <utility>
 #include <vector>
 
 #include <QRectF>
 
-#include "map_coord.h"
-#include "path_coord.h"
-#include "virtual_coord_vector.h"
+#include "core/map_coord.h"
+#include "core/path_coord.h"
+#include "core/virtual_coord_vector.h"
 
-
-class SplitPathCoord;
-
+// IWYU pragma: no_forward_declare QRectF
 
 
 class PathCoordVector : public std::vector<PathCoord>

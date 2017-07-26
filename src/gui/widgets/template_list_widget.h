@@ -24,18 +24,23 @@
 #include <memory>
 
 #include <QWidget>
+#include <QObject>
+#include <QString>
 
-#include "../../core/map_view.h"
+#include "core/map_view.h"
 
+class QAction;
 class QBoxLayout;
 class QCheckBox;
+class QEvent;
+class QIcon;
 class QTableWidget;
 class QToolButton;
 
 class Map;
 class MapEditorController;
-class MapView;
 class Template;
+
 
 /**
  * Widget showing the list of templates, including the map layer.

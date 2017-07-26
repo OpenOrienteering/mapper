@@ -27,6 +27,7 @@
 #include <QLabel>
 #include <QPainter>
 #include <QPinchGesture>
+#include <QPixmap>
 #include <QTimer>
 #include <QTouchEvent>
 #include <QVariant>
@@ -34,7 +35,6 @@
 #include "settings.h"
 #include "core/georeferencing.h"
 #include "core/map.h"
-#include "core/map_color.h"
 #include "core/objects/object.h"
 #include "gui/touch_cursor.h"
 #include "gui/map/map_editor_activity.h"
@@ -43,7 +43,7 @@
 #include "gui/widgets/pie_menu.h"
 #include "sensors/gps_display.h"
 #include "sensors/gps_temporary_markers.h"
-#include "templates/template.h"
+#include "templates/template.h" // IWYU pragma: keep
 #include "tools/edit_tool.h"
 #include "tools/tool.h"
 #include "util/backports.h"

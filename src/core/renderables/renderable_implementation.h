@@ -19,28 +19,30 @@
  */
 
 
-#ifndef _OPENORIENTEERING_RENDERABLE_IMPLENTATION_H_
-#define _OPENORIENTEERING_RENDERABLE_IMPLENTATION_H_
+#ifndef OPENORIENTEERING_RENDERABLE_IMPLENTATION_H
+#define OPENORIENTEERING_RENDERABLE_IMPLENTATION_H
 
-#include <QPainter>
+#include <Qt>
+#include <QtGlobal>
+#include <QPainterPath>
+#include <QPointF>
+#include <QRectF>
 
-#include "core/objects/object.h"
 #include "renderable.h"
 
-class QPainterPath;
+class QPainter;
+class QPointF;
 
 class AreaSymbol;
 class LineSymbol;
-class Map;
 class MapColor;
 class MapCoordF;
-class Object;
-class PathCoordVector;
+class PathPartVector;
 class PointSymbol;
-class Symbol;
 class TextObject;
-struct TextObjectLineInfo;
 class TextSymbol;
+class VirtualPath;
+
 
 /** Renderable for displaying a filled dot. */
 class DotRenderable : public Renderable

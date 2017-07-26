@@ -19,10 +19,17 @@
  */
 
 
-#ifndef _OPENORIENTEERING_TOOL_PAN_H_
-#define _OPENORIENTEERING_TOOL_PAN_H_
+#ifndef OPENORIENTEERING_TOOL_PAN_H
+#define OPENORIENTEERING_TOOL_PAN_H
 
-#include "tool_base.h"
+#include <QObject>
+
+#include "tools/tool_base.h"
+
+class QAction;
+
+class MapEditorController;
+
 
 /** 
  * Tool to pan the map.

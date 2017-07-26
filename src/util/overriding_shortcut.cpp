@@ -19,8 +19,11 @@
 
 #include "overriding_shortcut.h"
 
-#include <QDebug>
+#include <QtGlobal>
+#include <QEvent>
+#include <QKeyEvent>
 #include <QShortcutEvent>
+#include <QWidget>
 
 
 // ### OverridingShortcut ###
@@ -28,7 +31,7 @@
 OverridingShortcut::OverridingShortcut(QWidget* parent)
  : QShortcut(parent)
 {
-	Q_ASSERT(parent != NULL);
+	Q_ASSERT(parent);
 	parent->window()->installEventFilter(this);
 	time.start();
 }
@@ -36,7 +39,7 @@ OverridingShortcut::OverridingShortcut(QWidget* parent)
 OverridingShortcut::OverridingShortcut(const QKeySequence& key, QWidget* parent, const char* member, const char* ambiguousMember, Qt::ShortcutContext context)
  : QShortcut(key, parent, member, ambiguousMember, context)
 {
-	Q_ASSERT(parent != NULL);
+	Q_ASSERT(parent);
 	parent->window()->installEventFilter(this);
 	time.start();
 }

@@ -19,18 +19,16 @@
  */
 
 
-#ifndef _OPENORIENTEERING_MAP_GRID_H_
-#define _OPENORIENTEERING_MAP_GRID_H_
+#ifndef OPENORIENTEERING_MAP_GRID_H
+#define OPENORIENTEERING_MAP_GRID_H
 
-#include <QColor>
+#include <QRgb>
 
-QT_BEGIN_NAMESPACE
 class QIODevice;
 class QPainter;
 class QRectF;
 class QXmlStreamReader;
 class QXmlStreamWriter;
-QT_END_NAMESPACE
 
 class Map;
 class MapCoordF;

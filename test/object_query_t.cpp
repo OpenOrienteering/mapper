@@ -20,6 +20,13 @@
 
 #include "object_query_t.h"
 
+#include <memory>
+#include <algorithm>
+
+#include <QtGlobal>
+#include <QtTest>
+#include <QByteArray>
+#include <QLatin1String>
 #include <QString>
 
 #include "core/objects/object.h"

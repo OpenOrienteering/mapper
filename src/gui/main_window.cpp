@@ -24,7 +24,6 @@
 #include <QApplication>
 #include <QCloseEvent>
 #include <QDesktopServices>
-#include <QDesktopWidget>
 #include <QDir>
 #include <QFileDialog>
 #include <QLabel>
@@ -39,27 +38,27 @@
 #if defined(Q_OS_ANDROID)
 #  include <QtAndroid>
 #  include <QAndroidJniObject>
+#  include <QDesktopWidget>
 #  include <QUrl>
 #endif
 
 #include <mapper_config.h>
 
-#include "about_dialog.h"
-#include "autosave_dialog.h"
-#include "home_screen_controller.h"
-#include "settings_dialog.h"
-#include "../core/map_view.h"
-#include "../fileformats/file_format_registry.h"
-#include "../fileformats/file_import_export.h"
+#include "settings.h"
 #include "core/map.h"
-#include "gui/map/new_map_dialog.h"
-#include "gui/map/map_editor.h"
-#include "../fileformats/file_format.h"
-#include "../settings.h"
+#include "core/map_view.h"
 #include "core/symbols/symbol.h"
+#include "fileformats/file_format.h"
+#include "fileformats/file_format_registry.h"
+#include "gui/about_dialog.h"
+#include "gui/autosave_dialog.h"
+#include "gui/home_screen_controller.h"
+#include "gui/settings_dialog.h"
+#include "gui/map/map_editor.h"
+#include "gui/map/new_map_dialog.h"
 #include "undo/undo_manager.h"
 #include "util/util.h"
-#include "../util/backports.h"
+#include "util/backports.h"
 
 
 constexpr int MainWindow::max_recent_files;

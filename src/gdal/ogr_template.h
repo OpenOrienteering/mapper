@@ -22,18 +22,15 @@
 
 #include <vector>
 
-#include <QtGlobal>
 #include <QObject>
 #include <QString>
 
 #include "templates/template_map.h"
 
-QT_BEGIN_NAMESPACE
 class QByteArray;
 class QWidget;
 class QXmlStreamReader;
 class QXmlStreamWriter;
-QT_END_NAMESPACE
 
 class Map;
 class Template;

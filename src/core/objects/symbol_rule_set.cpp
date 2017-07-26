@@ -20,8 +20,19 @@
 
 #include "symbol_rule_set.h"
 
+#include <algorithm>
+#include <cstddef>
+#include <iterator>
+#include <memory>
+#include <type_traits>
 #include <unordered_set>
 
+#include <QtGlobal>
+#include <QChar>
+#include <QHash>
+#include <QLatin1Char>
+#include <QLatin1String>
+#include <QString>
 #include <QTextStream>
 
 #include "core/map.h"

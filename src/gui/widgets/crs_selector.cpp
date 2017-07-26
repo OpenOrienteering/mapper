@@ -21,14 +21,21 @@
 
 #include "crs_selector.h"
 
+#include <iterator>
+#include <memory>
+
+#include <QtGlobal>
 #include <QEvent>
 #include <QFormLayout>
 #include <QLabel>
+#include <QLatin1Char>
+#include <QLayoutItem>
 #include <QSignalBlocker>
+#include <QVariant>
+#include <QWidget>
 
 #include "core/crs_template.h"
 #include "core/georeferencing.h"
-#include "gui/georeferencing_dialog.h"
 
 
 // Helper functions for parameter widgets
@@ -78,11 +85,7 @@ CRSSelector::CRSSelector(const Georeferencing& georef, QWidget* parent)
 	}
 }
 
-CRSSelector::~CRSSelector()
-{
-	// nothing, not inlined
-}
-
+CRSSelector::~CRSSelector() = default;
 
 void CRSSelector::setDialogLayout(QFormLayout* dialog_layout)
 {

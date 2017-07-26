@@ -21,13 +21,15 @@
 #ifndef OPENORIENTEERING_EDITOR_SETTINGS_PAGE_H
 #define OPENORIENTEERING_EDITOR_SETTINGS_PAGE_H
 
+#include <QObject>
+#include <QString>
+
 #include "settings_page.h"
 
 class QCheckBox;
 class QComboBox;
 class QSpinBox;
-
-class MainWindow;
+class QWidget;
 
 
 class EditorSettingsPage : public SettingsPage

@@ -25,18 +25,14 @@
 #include <memory>
 #include <vector>
 
-#include <QtGlobal>
 #include <QObject>
 #include <QDialog>
 
-
-QT_BEGIN_NAMESPACE
 class QCheckBox;
 class QIODevice;
 class QComboBox;
 class QTableWidget;
 class QWidget;
-QT_END_NAMESPACE
 
 class Map;
 class SymbolDropDownDelegate;

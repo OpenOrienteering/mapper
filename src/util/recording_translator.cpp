@@ -20,6 +20,7 @@
 
 #include "recording_translator.h"
 
+#include <QtGlobal>
 #include <QDebug>
 
 

@@ -24,8 +24,16 @@
 #ifndef OPENORIENTEERING_PRINT_WIDGET_H
 #define OPENORIENTEERING_PRINT_WIDGET_H
 
-#include <QPrinterInfo>
+#include <QFlags>
+#include <QList>
+#include <QObject>
+#include <QPrinter>
+#include <QRectF>
+#include <QSize>
+#include <QString>
+#include <QStringList>
 #include <QWidget>
+
 
 class QAbstractButton;
 class QButtonGroup;
@@ -36,6 +44,8 @@ class QDoubleSpinBox;
 class QFormLayout;
 class QLabel;
 class QPushButton;
+class QPrinterInfo;
+// IWYU pragma: no_forward_declare QRectF
 class QScrollArea;
 class QSpinBox;
 class QToolButton;
@@ -301,11 +311,7 @@ private:
 	QPushButton* print_button;
 	QPushButton* export_button;
 	
-#if QT_VERSION < 0x050300
-	QList<QPrinterInfo> printers;
-#else
 	QStringList printers;
-#endif
 	
 	PrintAreaPolicy policy;
 	

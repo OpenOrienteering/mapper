@@ -22,7 +22,10 @@
 
 #include <QScopedPointer>
 
+class QString;
+
 class AutosavePrivate;
+
 
 /**
  * @brief Class Autosave implements autosaving behaviour.

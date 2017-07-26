@@ -26,6 +26,7 @@
 #include <QCoreApplication>
 #include <QMetaType>
 #include <QString>
+#include <QStringRef>
 
 class Map;
 class MapEditorController;

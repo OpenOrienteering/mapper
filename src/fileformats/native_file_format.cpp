@@ -23,19 +23,18 @@
 
 #include "native_file_format.h"
 
-#include <QFile>
 #include <QScopedValueRollback>
 
 #include "core/georeferencing.h"
+#include "core/map.h"
 #include "core/map_color.h"
 #include "core/map_grid.h"
 #include "core/map_printer.h"
 #include "core/map_view.h"
-#include "file_import_export.h"
-#include "core/map.h"
 #include "core/symbols/symbol.h"
-#include "../templates/template.h"
-#include "../templates/template_image.h"
+#include "fileformats/file_import_export.h"
+#include "templates/template.h"
+#include "templates/template_image.h"
 #include "undo/undo_manager.h"
 #include "util/util.h"
 
@@ -97,7 +96,7 @@ NativeFileFormat::NativeFileFormat()
 	// Nothing
 }
 
-bool NativeFileFormat::understands(const unsigned char *buffer, size_t sz) const
+bool NativeFileFormat::understands(const unsigned char *buffer, std::size_t sz) const
 {
 	// The first four bytes of the file must be 'OMAP'.
 	return (sz >= 4 && memcmp(buffer, magic_bytes, 4) == 0);

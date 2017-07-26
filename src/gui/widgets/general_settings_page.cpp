@@ -32,18 +32,17 @@
 #include <QLineEdit>
 #include <QMessageBox>
 #include <QScreen>
-#include <QSettings>
+#include <QSettings> // IWYU pragma: keep
 #include <QSpinBox>
 #include <QTextCodec>
 #include <QToolButton>
 
-#include "home_screen_widget.h"
-#include "../main_window.h"
+#include "settings.h"
+#include "gui/main_window.h"
 #include "gui/util_gui.h"
+#include "gui/widgets/home_screen_widget.h"
+#include "gui/widgets/settings_page.h"
 #include "util/translation_util.h"
-#include "../../util/backports.h"
-#include "../../util/encoding.h"
-#include "../../util/scoped_signals_blocker.h"
 
 
 GeneralSettingsPage::GeneralSettingsPage(QWidget* parent)

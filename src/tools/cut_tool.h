@@ -22,10 +22,28 @@
 #ifndef OPENORIENTEERING_CUT_TOOL_H
 #define OPENORIENTEERING_CUT_TOOL_H
 
-#include "tool_base.h"
+#include <vector>
 
-#include "edit_tool.h"
+#include <QObject>
+#include <QRectF>
+#include <QScopedPointer>
+
+class MapEditorController;
+class MapRenderables;
+class MapWidget;
+class QAction;
+class QEvent;
+class QFocusEvent;
+class QKeyEvent;
+class QMouseEvent;
+class QPainter;
+class QRectF;
+
+#include "core/map_coord.h"
+#include "core/path_coord.h"
 #include "core/objects/object.h"
+#include "tools/tool_base.h"
+#include "tools/edit_tool.h"
 
 class DrawPathTool;
 

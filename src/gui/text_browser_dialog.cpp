@@ -23,7 +23,7 @@
 #include <QApplication>
 #include <QPushButton>
 #include <QScrollBar>
-#include <QScroller>
+#include <QScroller>  // IWYU pragma: keep
 #include <QTextBrowser>
 #include <QToolTip>
 #include <QVBoxLayout>

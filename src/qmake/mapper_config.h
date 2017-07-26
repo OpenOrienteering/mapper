@@ -19,8 +19,8 @@
 
 /** This file is used by qmake-driven builds only. */
 
-#ifndef _OPENORIENTEERING_MAPPER_CONFIG_H_
-#define _OPENORIENTEERING_MAPPER_CONFIG_H_
+#ifndef OPENORIENTEERING_MAPPER_CONFIG_H
+#define OPENORIENTEERING_MAPPER_CONFIG_H
 
 #if !defined(APP_NAME)
 #define APP_NAME qApp->translate("Global", QT_TRANSLATE_NOOP("Global", "OpenOrienteering Mapper"))

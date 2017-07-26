@@ -21,10 +21,14 @@
 
 #include "point_symbol_settings.h"
 
+#include <QtGlobal>
 #include <QVBoxLayout>
+#include <QWidget>
 
-#include "gui/symbols/symbol_setting_dialog.h"
+#include "core/symbols/point_symbol.h"
+#include "core/symbols/symbol.h"
 #include "gui/symbols/point_symbol_editor_widget.h"
+#include "gui/symbols/symbol_setting_dialog.h"
 
 
 // ### PointSymbol ###

@@ -21,30 +21,36 @@
 
 #include "file_import_export.h"
 
-#include <QFileInfo>
+#include <QLatin1Char>
 
 #include "core/map.h"
-#include "core/symbols/symbol.h"
-#include "../templates/template.h"
+#include "core/map_part.h"
 #include "core/objects/object.h"
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/point_symbol.h"
+#include "core/symbols/symbol.h"
+#include "fileformats/file_format.h"
+#include "templates/template.h"
 
 
 // ### ImportExport ###
 
-ImportExport::~ImportExport()
+ImportExport::~ImportExport() = default;
+
+
+QVariant ImportExport::option(const QString& name) const
 {
-	// Nothing, not inlined
+	if (!options.contains(name))
+		throw FileFormatException(ImportExport::tr("No such option: %1", "No such import / export option").arg(name));
+	return options[name];
 }
+
 
 
 // ### Importer ###
 
-Importer::~Importer()
-{
-	// Nothing, not inlined
-}
+Importer::~Importer() = default;
+
 
 void Importer::doImport(bool load_symbols_only, const QString& map_path)
 {
@@ -60,7 +66,7 @@ void Importer::doImport(bool load_symbols_only, const QString& map_path)
 		for (int o = 0; o < part->getNumObjects(); ++o)
 		{
 			Object* object = part->getObject(o);
-			if (object->getSymbol() == NULL)
+			if (object->getSymbol() == nullptr)
 			{
 				addWarning(Importer::tr("Found an object without symbol."));
 				if (object->getType() == Object::Point)
@@ -143,9 +149,7 @@ void Importer::finishImport()
 }
 
 
+
 // ### Exporter ###
 
-Exporter::~Exporter()
-{
-	// Nothing, not inlined
-}
+Exporter::~Exporter() = default;

@@ -17,8 +17,8 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_IMAGE_TRANSPARENCY_FIXUP_H_
-#define _OPENORIENTEERING_IMAGE_TRANSPARENCY_FIXUP_H_
+#ifndef OPENORIENTEERING_IMAGE_TRANSPARENCY_FIXUP_H
+#define OPENORIENTEERING_IMAGE_TRANSPARENCY_FIXUP_H
 
 #include <QImage>
 
@@ -60,7 +60,7 @@ public:
 	{
 		// NOTE: Here we may add a check for a setting which disables the 
 		//       fixup (for better application performance)
-		if (image != NULL)
+		if (image)
 		{
 			dest = (QRgb*)image->bits();
 			dest_end = dest + image->byteCount() / sizeof(QRgb);

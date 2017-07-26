@@ -20,7 +20,11 @@
 
 #include "storage_location.h"
 
+#include <cstddef>
+
+#include <QtGlobal>
 #include <QStandardPaths>
+#include <QStringList>
 #include <QTemporaryFile>
 
 

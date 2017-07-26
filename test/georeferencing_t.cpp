@@ -19,10 +19,12 @@
 
 #include "georeferencing_t.h"
 
+#include <QtTest>
+
 #include <proj_api.h>
 
-#include "../src/core/crs_template.h"
-#include "../src/fileformats/xml_file_format.h"
+#include "core/crs_template.h"
+#include "fileformats/xml_file_format.h"
 
 
 int XMLFileFormat::active_version = 6;

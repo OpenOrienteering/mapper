@@ -25,10 +25,9 @@
 #include <QIcon>
 #include <QKeyEvent>
 #include <QPushButton>
-#include <QSignalMapper>
 
 #include "core/objects/text_object.h"
-#include "../../tools/text_object_editor_helper.h"
+#include "tools/text_object_editor_helper.h"
 
 
 namespace

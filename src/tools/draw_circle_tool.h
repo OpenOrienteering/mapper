@@ -18,14 +18,25 @@
  */
 
 
-#ifndef _OPENORIENTEERING_DRAW_CIRCLE_H_
-#define _OPENORIENTEERING_DRAW_CIRCLE_H_
+#ifndef OPENORIENTEERING_DRAW_CIRCLE_H
+#define OPENORIENTEERING_DRAW_CIRCLE_H
 
+#include <QObject>
+#include <QPoint>
 #include <QPointer>
 
-#include "draw_line_and_area_tool.h"
+#include "core/map_coord.h"
+#include "tools/draw_line_and_area_tool.h"
+
+class QAction;
+class QCursor;
+class QKeyEvent;
+class QMouseEvent;
+class QPainter;
 
 class KeyButtonBar;
+class MapEditorController;
+class MapWidget;
 
 
 /** Tool to draw circles and ellipses. */

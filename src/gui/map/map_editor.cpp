@@ -20,7 +20,7 @@
 
 
 #include "map_editor.h"
-#include "map_editor_p.h"  // IWYU pragma: associated
+#include "map_editor_p.h"
 
 #include <cstddef>
 #include <iterator>
@@ -30,13 +30,13 @@
 // IWYU pragma: no_include <ext/alloc_traits.h>
 
 #include <Qt>
+#include <QtGlobal>
 #include <QtMath>
 #include <QAction>
 #include <QActionGroup>
 #include <QApplication>
 #include <QBuffer>
 #include <QByteArray>
-#include <QChar>
 #include <QComboBox>
 #include <QDate>
 #include <QDialog>
@@ -51,14 +51,15 @@
 #include <QFontMetrics>
 #include <QFrame>
 #include <QHBoxLayout>
-#include <QInputDialog>
-#include <QIODevice>
 #include <QIcon>
 #include <QImage>
 #include <QInputDialog>
+#include <QIODevice>
 #include <QKeyEvent> // IWYU pragma: keep
 #include <QKeySequence>
 #include <QLabel>
+#include <QLatin1Char>
+#include <QLatin1String>
 #include <QLineEdit>
 #include <QList>
 #include <QMenu>
@@ -71,6 +72,7 @@
 #include <QPoint>
 #include <QPushButton>
 #include <QRect>
+#include <QRectF>
 #include <QSettings>
 #include <QSignalBlocker>
 #include <QSignalMapper>
@@ -158,15 +160,6 @@
 #include "undo/undo_manager.h"
 #include "util/util.h"
 #include "util/backports.h" // IWYU pragma: keep
-
-class QResizeEvent;
-// Included, but demanded by IWYU
-// IWYU pragma: no_forward_declare QActionGroup
-// IWYU pragma: no_forward_declare QHBoxLayout
-// IWYU pragma: no_forward_declare QMimeData
-// IWYU pragma: no_forward_declare QPushButton
-// IWYU pragma: no_forward_declare QSplitter
-// IWYU pragma: no_forward_declare QVBoxLayout
 
 
 namespace
@@ -633,7 +626,7 @@ void MapEditorController::attach(MainWindow* window)
 #else
 		statusbar_zoom_frame->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
 #endif
-		QHBoxLayout* statusbar_zoom_frame_layout = new QHBoxLayout();
+		auto statusbar_zoom_frame_layout = new QHBoxLayout();
 		statusbar_zoom_frame_layout->setMargin(0);
 		statusbar_zoom_frame_layout->setSpacing(0);
 		statusbar_zoom_frame_layout->addSpacing(1);
@@ -1429,7 +1422,7 @@ void MapEditorController::createMobileGUI()
 	top_action_bar->setParent(map_widget);
 	
 	QWidget* container_widget = new QWidget();
-	QVBoxLayout* layout = new QVBoxLayout();
+	auto layout = new QVBoxLayout();
 	layout->setMargin(0);
 	layout->setSpacing(0);
 	layout->addWidget(map_widget, 1);
@@ -1697,7 +1690,7 @@ void MapEditorController::clearUndoRedoHistory()
 
 void MapEditorController::spotColorPresenceChanged(bool has_spot_colors)
 {
-	if (overprinting_simulation_act != nullptr)
+	if (overprinting_simulation_act)
 	{
 		if (has_spot_colors)
 		{
@@ -1913,12 +1906,12 @@ void MapEditorController::mapNotesClicked()
 	QPushButton* ok_button = new QPushButton(QIcon(QString::fromLatin1(":/images/arrow-right.png")), tr("OK"));
 	ok_button->setDefault(true);
 	
-	QHBoxLayout* buttons_layout = new QHBoxLayout();
+	auto buttons_layout = new QHBoxLayout();
 	buttons_layout->addWidget(cancel_button);
 	buttons_layout->addStretch(1);
 	buttons_layout->addWidget(ok_button);
 	
-	QVBoxLayout* layout = new QVBoxLayout();
+	auto layout = new QVBoxLayout();
 	layout->addWidget(text_edit);
 	layout->addLayout(buttons_layout);
 	dialog.setLayout(layout);

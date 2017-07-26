@@ -21,21 +21,21 @@
 
 #include "pie_menu.h"
 
-#include <qmath.h>
+#include <QtMath>
 #include <QAction>
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QMouseEvent>
 #include <QPainter>
-#include <QStyleOption>
+#include <QStyleOptionMenuItem>
 
-#include "../../settings.h"
+#include "settings.h"
 
 PieMenu::PieMenu(QWidget* parent)
 : QWidget(parent, Qt::Popup | Qt::FramelessWindowHint),	// NOTE: use Qt::Window for debugging to avoid mouse grab
    minimum_action_count(3),
    icon_size(24),
-   active_action(NULL),
+   active_action(nullptr),
    actions_changed(true),
    clicked(false)
 {
@@ -126,7 +126,7 @@ QAction* PieMenu::actionAt(const QPoint& pos) const
 			return action;
 		}
 	}
-	return NULL;
+	return nullptr;
 }
 
 PieMenu::ItemGeometry PieMenu::actionGeometry(QAction* action) const
@@ -146,7 +146,7 @@ QAction* PieMenu::activeAction() const
 void PieMenu::setActiveAction(QAction* action)
 {
 	QAction* const prev_action = active_action;
-	active_action = (action && action->isEnabled() && action->isVisible() && !action->isSeparator()) ? action : NULL;
+	active_action = (action && action->isEnabled() && action->isVisible() && !action->isSeparator()) ? action : nullptr;
 	if (isVisible())
 	{
 		if (active_action && active_action != prev_action)
@@ -185,7 +185,7 @@ void PieMenu::popup(const QPoint pos)
 	setGeometry(pos.x() - total_radius, pos.y() - total_radius, 2 * total_radius, 2 * total_radius);
 	
 	clicked = false;
-	active_action = NULL;
+	active_action = nullptr;
 	
 	emit aboutToShow();
 	show();
@@ -198,7 +198,7 @@ void PieMenu::actionEvent(QActionEvent* event)
 		QAction* const action = event->action();
 		geometries.remove(action);
 		if (action == active_action)
-			setActiveAction(NULL);
+			setActiveAction(nullptr);
 	}
 	
 	actions_changed = true;
@@ -211,7 +211,7 @@ void PieMenu::hideEvent(QHideEvent* event)
 	if (!event->spontaneous())
 	{
 		emit aboutToHide();
-		setActiveAction(NULL);
+		setActiveAction(nullptr);
 		QString empty_string;
 		QStatusTipEvent e(empty_string);
 		QApplication::sendEvent(parent(), &e);

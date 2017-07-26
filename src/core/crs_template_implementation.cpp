@@ -21,14 +21,21 @@
 
 #include "crs_template_implementation.h"
 
-#include <QCompleter>
+#include <cmath>
+#include <memory>
+
+#include <QtGlobal>
+#include <QLatin1String>
 #include <QLineEdit>
+#include <QObject>
 #include <QSignalBlocker>
 #include <QSpinBox>
 #include <QVariant>
+#include <QWidget>
 
+#include "core/crs_template.h"
 #include "core/georeferencing.h"
-#include "gui/georeferencing_dialog.h"
+#include "core/latlon.h"
 #include "gui/util_gui.h"
 #include "gui/widgets/crs_param_widgets.h"
 
@@ -102,7 +109,7 @@ TextParameter::TextParameter(const QString& key, const QString& name)
 
 QWidget* TextParameter::createEditor(WidgetObserver& observer) const
 {
-	auto widget = new TextParameter::Editor();
+	auto widget = new Editor();
 	QObject::connect(widget, &TextParameter::Editor::textChanged, [&observer](){ observer.crsParameterEdited(); });
 	return widget;
 }
@@ -110,7 +117,7 @@ QWidget* TextParameter::createEditor(WidgetObserver& observer) const
 QString TextParameter::value(const QWidget* edit_widget) const
 {
 	QString value;
-	auto field = qobject_cast<const QLineEdit*>(edit_widget);
+	auto field = qobject_cast<const Editor*>(edit_widget);
 	if (field)
 		value = field->text();
 	return value;
@@ -118,7 +125,7 @@ QString TextParameter::value(const QWidget* edit_widget) const
 
 void TextParameter::setValue(QWidget* edit_widget, const QString& value)
 {
-	auto field = qobject_cast<QLineEdit*>(edit_widget);
+	auto field = qobject_cast<Editor*>(edit_widget);
 	if (field)
 		field->setText(value);
 }
@@ -213,7 +220,7 @@ QVariant UTMZoneParameter::calculateUTMZone(const LatLon lat_lon)
 			zone_no = 2 * (int(floor(lon) + 3.0) / 12) + 31; // Svalbard
 		QString zone = QString::number(zone_no);
 		if (zone_no < 10)
-			zone.prepend(QLatin1Char('0'));
+			zone.prepend(QLatin1String("0"));
 		zone.append((lat >= 0.0) ? QLatin1String(" N") : QLatin1String(" S"));
 		ret = zone;
 	}

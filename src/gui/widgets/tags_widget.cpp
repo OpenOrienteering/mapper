@@ -27,11 +27,11 @@
 #include <QToolButton>
 #include <QVBoxLayout>
 
-#include "../main_window.h"
 #include "core/map.h"
+#include "core/objects/object.h"
+#include "gui/main_window.h"
 #include "gui/map/map_editor.h"
 #include "undo/object_undo.h"
-#include "core/objects/object.h"
 #include "util/util.h"
 
 

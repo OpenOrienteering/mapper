@@ -22,7 +22,19 @@
 #ifndef OPENORIENTEERING_TOOL_ROTATE_H
 #define OPENORIENTEERING_TOOL_ROTATE_H
 
-#include "tool_base.h"
+#include <QtGlobal>
+#include <QObject>
+
+#include "core/map_coord.h"
+#include "tools/tool_base.h"
+
+class QAction;
+class QKeyEvent;
+class QPainter;
+class QRectF;
+
+class MapEditorController;
+class MapWidget;
 
 
 /**

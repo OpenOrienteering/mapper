@@ -22,20 +22,18 @@
 #include "util.h"
 
 #include <QApplication>
-#include <QDebug>
 #include <QDir>
 #include <QIODevice>
 #include <QMessageBox>
 #include <QProcess>
-#include <QSettings>
 #include <QScreen>
 #include <QStandardPaths>
-#include <QUrl>
+#include <QUrl> // IWYU pragma: keep
 
 #include "mapper_config.h"
 #include "settings.h"
 #include "core/map_coord.h"
-#include "gui/text_browser_dialog.h"
+#include "gui/text_browser_dialog.h" // IWYU pragma: keep
 
 DoubleValidator::DoubleValidator(double bottom, double top, QObject* parent, int decimals) : QDoubleValidator(bottom, top, decimals, parent)
 {

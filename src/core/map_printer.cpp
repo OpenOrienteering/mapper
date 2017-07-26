@@ -21,18 +21,27 @@
 
 #include "map_printer.h"
 
-#include <limits>
+#include <cmath>
 
+#include <Qt>
+#include <QtMath>
+#include <QColor>
 #include <QDebug>
-#include <QPaintEngine>
+#include <QHash>
+#include <QImage>
+#include <QLatin1String>
+#include <QPagedPaintDevice>
+#include <QPaintDevice>
+#include <QPaintEngine> // IWYU pragma: keep
 #include <QPainter>
-#include <QScopedValueRollback>
-#include <QXmlStreamAttributes>
+#include <QPointF>
+#include <QStringRef>
+#include <QTransform>
 #include <QXmlStreamReader>
-#include <QXmlStreamWriter>
 
 
 #if defined(QT_PRINTSUPPORT_LIB)
+#  include <QPrinter>
 #  include <advanced_pdf_printer.h>
 #  include <printer_properties.h>
 #  if defined(Q_OS_WIN)
@@ -40,15 +49,13 @@
 #  endif
 #endif
 
-#include "../core/georeferencing.h"
-#include "map_color.h"
-#include "../core/map_view.h"
-#include "map.h"
+#include "core/georeferencing.h"
+#include "core/map.h"
+#include "core/map_color.h"
+#include "core/map_view.h"
 #include "core/renderables/renderable.h"
-#include "../settings.h"
-#include "../templates/template.h"
-#include "util/util.h"
-#include "../util/xml_stream_util.h"
+#include "templates/template.h"
+#include "util/xml_stream_util.h"
 
 
 // ### A namespace which collects various string constants of type QLatin1String. ###

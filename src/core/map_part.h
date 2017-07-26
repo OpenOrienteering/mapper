@@ -27,18 +27,15 @@
 #include <vector>
 #include <utility>
 
-#include <QtGlobal>
 #include <QHash>
 #include <QRectF>
 #include <QString>
 
-QT_BEGIN_NAMESPACE
 class QIODevice;
 class QTransform;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 // IWYU pragma: no_forward_declare QRectF
-QT_END_NAMESPACE
 
 class Map;
 class MapCoordF;

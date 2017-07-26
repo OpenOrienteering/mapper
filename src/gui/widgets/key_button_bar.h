@@ -18,18 +18,18 @@
  */
 
 
-#ifndef _OPENORIENTEERING_KEY_BUTTON_BAR_H_
-#define _OPENORIENTEERING_KEY_BUTTON_BAR_H_
+#ifndef OPENORIENTEERING_KEY_BUTTON_BAR_H
+#define OPENORIENTEERING_KEY_BUTTON_BAR_H
 
-#include <QWidget>
+#include <QHash>
 #include <QIcon>
+#include <QObject>
+#include <QString>
+#include <QWidget>
 
-QT_BEGIN_NAMESPACE
 class QHBoxLayout;
 class QToolButton;
-QT_END_NAMESPACE
 
-class MapEditorController;
 class MapEditorTool;
 class MapWidget;
 
@@ -77,4 +77,4 @@ private:
 	MapEditorTool* tool;
 };
 
-#endif // _OPENORIENTEERING_KEY_BUTTON_BAR_H_
+#endif // OPENORIENTEERING_KEY_BUTTON_BAR_H

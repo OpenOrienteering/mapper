@@ -44,7 +44,7 @@ Transform;
 
 
 /** Allocates a path with room for a given number of points. The first parameter can be
- *  non-null for a preallocated Path structure, or NULL to create a new structure on the
+ *  non-null for a preallocated Path structure, or nullptr to create a new structure on the
  *  heap.
  */
 int path_alloc(Path **ppath, u32 npts);

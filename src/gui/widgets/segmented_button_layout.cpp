@@ -19,10 +19,9 @@
 
 #include "segmented_button_layout.h"
 
-#include <QVariant>
+#include <QLayoutItem>
+#include <QVariant>  // IWYU pragma: keep
 #include <QWidget>
-
-#include "mapper_proxystyle.h"
 
 
 SegmentedButtonLayout::SegmentedButtonLayout()
@@ -47,8 +46,8 @@ SegmentedButtonLayout::~SegmentedButtonLayout()
 void SegmentedButtonLayout::invalidate()
 {
 	int num_items = count();
-	QWidget* first_widget = NULL;
-	QWidget* widget = NULL;
+	QWidget* first_widget = nullptr;
+	QWidget* widget = nullptr;
 	for (int i = 0; i < num_items; ++i)
 	{
 		widget = itemAt(i)->widget();

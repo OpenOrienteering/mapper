@@ -20,13 +20,19 @@
 
 #include "editor_settings_page.h"
 
+#include <QAbstractButton>
 #include <QCheckBox>
 #include <QComboBox>
 #include <QFormLayout>
+#include <QLabel>
+#include <QSpacerItem>
 #include <QSpinBox>
+#include <QVariant>
 
-#include "../modifier_key.h"
+#include "settings.h"
+#include "gui/modifier_key.h"
 #include "gui/util_gui.h"
+#include "gui/widgets/settings_page.h"
 
 
 EditorSettingsPage::EditorSettingsPage(QWidget* parent)

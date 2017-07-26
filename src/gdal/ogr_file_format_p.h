@@ -30,12 +30,10 @@
 #include <ogr_srs_api.h>
 
 #include "core/map_coord.h"
-#include "fileformats/file_import_export.h"
 #include "core/symbols/symbol.h"
+#include "fileformats/file_import_export.h"
 
-QT_BEGIN_NAMESPACE
 class QFile;
-QT_END_NAMESPACE
 
 class AreaSymbol;
 class Georeferencing;

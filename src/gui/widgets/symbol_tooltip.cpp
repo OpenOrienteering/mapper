@@ -22,6 +22,7 @@
 #include "symbol_tooltip.h"
 
 #include <Qt>
+#include <QtGlobal>
 #include <QApplication>
 #include <QCursor>
 #include <QDesktopWidget>
@@ -29,6 +30,7 @@
 #include <QHideEvent>
 #include <QLabel>
 #include <QLatin1Char>
+#include <QLatin1String>
 #include <QPainter>
 #include <QPalette>
 #include <QPoint>

@@ -25,6 +25,7 @@
 #include <Qt>
 #include <QtGlobal>
 #include <QApplication>
+#include <QLatin1String>
 #include <QLocale>
 #include <QObject>
 #include <QPointer>

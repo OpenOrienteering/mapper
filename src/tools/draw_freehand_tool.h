@@ -18,10 +18,25 @@
  */
 
 
-#ifndef _OPENORIENTEERING_DRAW_FREEHAND_H_
-#define _OPENORIENTEERING_DRAW_FREEHAND_H_
+#ifndef OPENORIENTEERING_DRAW_FREEHAND_H
+#define OPENORIENTEERING_DRAW_FREEHAND_H
 
-#include "draw_line_and_area_tool.h"
+#include <vector>
+
+#include <QObject>
+#include <QPoint>
+
+#include "tools/draw_line_and_area_tool.h"
+#include "core/map_coord.h"
+
+class QAction;
+class QCursor;
+class QKeyEvent;
+class QMouseEvent;
+class QPainter;
+
+class MapEditorController;
+class MapWidget;
 
 
 /** Tool for free-hand drawing. */

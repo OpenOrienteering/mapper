@@ -19,9 +19,12 @@
 
 #include "encoding.h"
 
+#include <QByteArray>
 #include <QLocale>
 #include <QString>
+#include <QStringRef>
 #include <QTextCodec>
+
 
 namespace
 {

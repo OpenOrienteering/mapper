@@ -18,14 +18,25 @@
  */
 
 
-#ifndef _OPENORIENTEERING_TEMPLATE_MAP_H_
-#define _OPENORIENTEERING_TEMPLATE_MAP_H_
-
-#include "template.h"
+#ifndef OPENORIENTEERING_TEMPLATE_MAP_H
+#define OPENORIENTEERING_TEMPLATE_MAP_H
 
 #include <memory>
+#include <vector>
 
-#include <QStringList>
+#include <QObject>
+#include <QString>
+
+#include "templates/template.h"
+
+class QByteArray;
+class QPainter;
+class QRectF;
+class QStringList;
+class QWidget;
+
+class Map;
+
 
 /**
  * Template displaying a map file.

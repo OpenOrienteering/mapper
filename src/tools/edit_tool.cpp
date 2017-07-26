@@ -22,20 +22,17 @@
 
 #include <limits>
 
-#include <qmath.h>
+#include <QtMath>
 #include <QPainter>
 
 #include "core/map.h"
-#include "gui/map/map_widget.h"
-#include "undo/object_undo.h"
 #include "core/objects/object.h"
-#include "settings.h"
-#include "tool_helpers.h"
 #include "core/objects/text_object.h"
 #include "core/symbols/text_symbol.h"
+#include "gui/map/map_widget.h"
+#include "tools/tool_helpers.h"
+#include "undo/object_undo.h"
 #include "util/util.h"
-
-class SymbolWidget;
 
 
 // ### ObjectSelector ###
@@ -50,7 +47,7 @@ bool ObjectSelector::selectAt(MapCoordF position, double tolerance, bool toggle)
 	bool selection_changed;
 	
 	bool single_object_selected = map->getNumSelectedObjects() == 1;
-	Object* single_selected_object = NULL;
+	Object* single_selected_object = nullptr;
 	if (single_object_selected)
 		single_selected_object = *map->selectedObjectsBegin();
 	

@@ -21,18 +21,15 @@
 
 #include "distribute_points_tool.h"
 
-#include <qmath.h>
+#include <QtMath>
 #include <QCheckBox>
 #include <QDialogButtonBox>
 #include <QDoubleSpinBox>
 #include <QFormLayout>
 #include <QSpinBox>
 
-#include "core/map.h"
 #include "core/symbols/point_symbol.h"
 #include "core/objects/object.h"
-#include "undo/object_undo.h"
-#include "util/util.h"
 #include "gui/util_gui.h"
 
 

@@ -22,32 +22,22 @@
 #include "xml_file_format.h"
 #include "xml_file_format_p.h"
 
-#include <QBuffer>
 #include <QDebug>
-#include <QFile>
+#include <QFileDevice>
 #include <QScopedValueRollback>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
-
-#ifdef QT_PRINTSUPPORT_LIB
-#  include <QPrinter>
-#endif
 
 #include "file_import_export.h"
 #include "settings.h"
 #include "core/georeferencing.h"
 #include "core/map_color.h"
 #include "core/map_grid.h"
-#include "core/map_printer.h"
+#include "core/map_printer.h"  // IWYU pragma: keep
 #include "core/map_view.h"
 #include "core/map.h"
-#include "core/objects/object.h"
-#include "core/objects/text_object.h"
-#include "core/symbols/area_symbol.h"
-#include "core/symbols/combined_symbol.h"
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/point_symbol.h"
-#include "core/symbols/text_symbol.h"
 #include "templates/template.h"
 #include "undo/undo_manager.h"
 #include "util/xml_stream_util.h"
@@ -72,7 +62,7 @@ XMLFileFormat::XMLFileFormat()
 	addExtension(QString::fromLatin1("xmap"));
 }
 
-bool XMLFileFormat::understands(const unsigned char *buffer, size_t sz) const
+bool XMLFileFormat::understands(const unsigned char *buffer, std::size_t sz) const
 {
 	static const uint len = qstrlen(magic_string);
 	return (sz >= len && memcmp(buffer, magic_string, len) == 0);
@@ -202,7 +192,7 @@ void XMLFileExporter::doExport()
 		exportColors();
 		writeLineBreak(xml);
 
-		XmlElementWriter* barrier = NULL;
+		XmlElementWriter* barrier = nullptr;
 		if (XMLFileFormat::active_version >= 6)
 		{
 			// Prevent Mapper versions < 0.6.0 from crashing
@@ -744,7 +734,7 @@ void XMLFileImporter::importColors()
 		for (auto&& in_component : item.components)
 		{
 			const MapColor* out_color = map->getColor(in_component.spot_color->getPriority());
-			if (out_color == NULL || out_color->getSpotColorMethod() != MapColor::SpotColor)
+			if (!out_color || out_color->getSpotColorMethod() != MapColor::SpotColor)
 			{
 				addWarning(tr("Spot color %1 not found while processing %2 (%3).").
 				  arg(in_component.spot_color->getPriority()).

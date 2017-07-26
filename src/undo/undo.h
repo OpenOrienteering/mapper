@@ -19,17 +19,21 @@
  */
 
 
-#ifndef _OPENORIENTEERING_UNDO_H_
-#define _OPENORIENTEERING_UNDO_H_
+#ifndef OPENORIENTEERING_UNDO_H
+#define OPENORIENTEERING_UNDO_H
 
 #include "core/symbols/symbol.h"
 
 #include <set>
 #include <vector>
 
-class Map;
+class QIODevice;
 class QXmlStreamReader;
 class QXmlStreamWriter;
+
+class Map;
+class Object;
+
 
 /**
  * Abstract base class for map editing undo steps.

@@ -21,10 +21,8 @@
 
 #include "touch_cursor.h"
 
-#include <QApplication>
 #include <QMouseEvent>
 #include <QPainter>
-#include <QScreen>
 
 #include "gui/map/map_widget.h"
 #include "util/util.h"

@@ -21,13 +21,13 @@
 #ifndef OPENORIENTEERING_CRS_PARAM_WIDGETS_H
 #define OPENORIENTEERING_CRS_PARAM_WIDGETS_H
 
+#include <QObject>
+#include <QString>
 #include <QWidget>
 
 class QLineEdit;
 
-class BaseGeoreferencingDialog;
 class CRSParameterWidgetObserver;
-class LatLon;
 
 
 class UTMZoneEdit : public QWidget

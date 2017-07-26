@@ -26,14 +26,13 @@
 
 #include "core/map_coord.h"
 
-QT_BEGIN_NAMESPACE
 class QIODevice;
 class QTransform;
 class QXmlStreamReader;
 class QXmlStreamWriter;
-QT_END_NAMESPACE
 
 struct TemplateTransform;
+
 
 /** Pair of source and destination coordinates used to calculate transformations. */
 struct PassPoint

@@ -17,15 +17,25 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_ITEM_DELEGATES_H_
-#define _OPENORIENTEERING_ITEM_DELEGATES_H_
+#ifndef OPENORIENTEERING_ITEM_DELEGATES_H
+#define OPENORIENTEERING_ITEM_DELEGATES_H
 
 #include <QItemDelegate>
+#include <QLocale>
+#include <QObject>
+#include <QSize>
+#include <QString>
 #include <QStyledItemDelegate>
+#include <QStyleOptionViewItem>
+#include <QVariant>
 
-QT_BEGIN_NAMESPACE
+class QAbstractItemModel;
+class QModelIndex;
+class QPainter;
 class QTextDocument;
-QT_END_NAMESPACE
+class QStyleOptionViewItem;
+class QWidget;
+
 
 /**
  * An item delegate which respects colors from the model even when the item is selected.
@@ -40,7 +50,7 @@ Q_OBJECT
 
 public:
 	/** Constructs a new ColorItemDelegate. */
-	ColorItemDelegate(QObject* parent = NULL);
+	ColorItemDelegate(QObject* parent = nullptr);
 	
 	/** Renders the delegate. Reimplemented from QStyledItemDelegate. */
 	virtual void paint (QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
@@ -189,7 +199,7 @@ public:
 	{
 	public:
 		/**
-		 * Returns the QTextDocument corresponding to the given index, or NULL.
+		 * Returns the QTextDocument corresponding to the given index, or nullptr.
 		 */
 		virtual const QTextDocument* textDoc(const QModelIndex& index) const = 0;
 	};
@@ -197,7 +207,7 @@ public:
 	/**
 	 * Constructs a new delegate.
 	 * 
-	 * The provider must not be NULL.
+	 * The provider must not be nullptr.
 	 */
 	TextDocItemDelegate(QObject* parent, const Provider* provider);
 	

@@ -37,6 +37,7 @@
 #include <QFlags>
 #include <QIODevice>
 #include <QLatin1Char>
+#include <QLatin1String>
 #include <QPagedPaintDevice>
 #include <QPrinter>
 #include <QRectF>
@@ -58,8 +59,6 @@
 #include "fileformats/xml_file_format_p.h"
 #include "templates/template.h"
 #include "undo/undo_manager.h"
-
-class QColor;
 
 
 static auto Obsolete = QString::fromLatin1("obsolete");

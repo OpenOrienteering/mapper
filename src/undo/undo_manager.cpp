@@ -21,16 +21,11 @@
 
 #include "undo_manager.h"
 
-#include <vector>
-
 #include <QMessageBox>
-#include <QWidget>
-
 #include <QXmlStreamReader>
-#include <QXmlStreamWriter>
 
 #include "core/map.h"
-#include "object_undo.h"
+#include "undo/undo.h"
 #include "util/xml_stream_util.h"
 
 

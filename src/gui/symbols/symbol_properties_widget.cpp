@@ -186,7 +186,6 @@ int SymbolPropertiesWidget::indexOfPropertiesGroup(const QString& name) const
 
 void SymbolPropertiesWidget::numberChanged(QString text)
 {
-	Q_UNUSED(text);
 	bool editors_enabled = true;
 	int i = 0;
 	for (auto editor : number_editors)

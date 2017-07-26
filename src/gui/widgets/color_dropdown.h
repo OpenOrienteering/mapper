@@ -22,13 +22,10 @@
 #ifndef OPENORIENTEERING_COLOR_DROPDOWN_H
 #define OPENORIENTEERING_COLOR_DROPDOWN_H
 
-#include <QtGlobal>
 #include <QComboBox>
 #include <QObject>
 
-QT_BEGIN_NAMESPACE
 class QWidget;
-QT_END_NAMESPACE
 
 class Map;
 class MapColor;
@@ -50,7 +47,7 @@ public:
 	/** Destructor. */
 	~ColorDropDown() override;
 	
-	/** Returns the selected color or NULL if no color selected. */
+	/** Returns the selected color or nullptr if no color selected. */
 	const MapColor* color() const;
 	
 	/** Sets the selection to the given color. */

@@ -25,7 +25,6 @@
 #include <QAction>
 #include <QDockWidget>
 
-QT_BEGIN_NAMESPACE
 class QEvent;
 class QIcon;
 class QObject;
@@ -33,7 +32,6 @@ class QResizeEvent;
 class QSizeGrip; // IWYU pragma: keep
 class QString;
 class QWidget;
-QT_END_NAMESPACE
 
 class MapEditorController;
 class Template;

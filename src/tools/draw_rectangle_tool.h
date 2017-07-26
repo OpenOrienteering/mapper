@@ -19,17 +19,32 @@
  */
 
 
-#ifndef _OPENORIENTEERING_DRAW_RECTANGLE_H_
-#define _OPENORIENTEERING_DRAW_RECTANGLE_H_
+#ifndef OPENORIENTEERING_DRAW_RECTANGLE_H
+#define OPENORIENTEERING_DRAW_RECTANGLE_H
 
-#include "draw_line_and_area_tool.h"
+#include <vector>
+
+#include <QObject>
+#include <QPoint>
+
+#include "core/map_coord.h"
+#include "tools/draw_line_and_area_tool.h"
 
 #include <QPointer>
 #include <QScopedPointer>
 
+class QAction;
+class QCursor;
+class QKeyEvent;
+class QMouseEvent;
+class QPainter;
+
 class ConstrainAngleToolHelper;
-class SnappingToolHelper;
 class KeyButtonBar;
+class MapEditorController;
+class MapWidget;
+class SnappingToolHelper;
+
 
 /**
  * Tool to draw rectangular PathObjects (but also 45 degree angles).

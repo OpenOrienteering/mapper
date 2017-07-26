@@ -24,10 +24,11 @@
 #include <algorithm>
 #include <cmath>
 #include <iterator>
-// IWYU pragma: no_include <ext/alloc_traits.h>
+#include <memory>
 
 #include <QtMath>
 #include <QIODevice>
+#include <QLatin1String>
 #include <QPainterPath>
 #include <QPoint>
 #include <QPointF>
@@ -40,7 +41,6 @@
 #include "core/map.h"
 #include "core/map_color.h"
 #include "core/map_coord.h"
-#include "core/map_part.h"
 #include "core/objects/object.h"
 #include "core/renderables/renderable.h"
 #include "core/renderables/renderable_implementation.h"
@@ -461,7 +461,7 @@ void PointSymbol::deleteElement(int pos)
 
 bool PointSymbol::isEmpty() const
 {
-	return getNumElements() == 0 && (inner_color == nullptr || inner_radius == 0) && (outer_color == nullptr || outer_width == 0);
+	return getNumElements() == 0 && (!inner_color || inner_radius == 0) && (!outer_color || outer_width == 0);
 }
 bool PointSymbol::isSymmetrical() const
 {

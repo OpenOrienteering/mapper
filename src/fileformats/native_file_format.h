@@ -22,7 +22,15 @@
 
 #ifndef NO_NATIVE_FILE_FORMAT
 
-#include "file_format.h"
+#include <cstddef>
+
+#include "fileformats/file_format.h"
+
+class Importer;
+class Map;
+class MapView;
+class QIODevice;
+
 
 /** Provides a description of the old native file format. 
  *  This is an (architecture-dependent) binary packed format
@@ -39,7 +47,7 @@ public:
 	
 	/** Returns true if the file starts with the magic byte sequence "OMAP" (0x4f 0x4d 0x41 0x50).
 	 */
-	bool understands(const unsigned char *buffer, size_t sz) const;
+	bool understands(const unsigned char *buffer, std::size_t sz) const;
 	
 	/** Creates an importer for this file type.
 	 */

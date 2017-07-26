@@ -26,7 +26,7 @@
 
 QString DXFParser::parse()
 {
-	Q_ASSERT(device != NULL); // Programmer's responsibility
+	Q_ASSERT(device); // Programmer's responsibility
 	
 	bool must_close_device = false;
 	if (!device->isOpen())

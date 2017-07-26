@@ -22,20 +22,36 @@
 #ifndef OPENORIENTEERING_TEMPLATE_IMAGE_H
 #define OPENORIENTEERING_TEMPLATE_IMAGE_H
 
-#include "template.h"
+#include <vector>
 
+#include <QColor>
 #include <QDialog>
 #include <QImage>
-#include <QLineEdit>
+#include <QObject>
+#include <QPointF>
+#include <QRectF>
+#include <QRgb>
+#include <QScopedPointer>
+#include <QString>
 
-QT_BEGIN_NAMESPACE
-class QCheckBox;
+#include "templates/template.h"
+
+class QByteArray;
+class QIODevice;
+class QLineEdit;
+class QPainter;
+class QPointF;
+class QPushButton;
 class QRadioButton;
+class QRectF;
+class QWidget;
 class QXmlStreamReader;
 class QXmlStreamWriter;
-QT_END_NAMESPACE
 
 class Georeferencing;
+class Map;
+class MapCoordF;
+
 
 /**
  * Template showing a raster image.

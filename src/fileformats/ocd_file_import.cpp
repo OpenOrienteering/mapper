@@ -33,12 +33,6 @@
 #include <QImageReader>
 
 #include "settings.h"
-#include "ocad8_file_format.h"
-#include "ocad8_file_format_p.h"
-#include "ocd_types_v9.h"
-#include "ocd_types_v10.h"
-#include "ocd_types_v11.h"
-#include "ocd_types_v12.h"
 #include "core/crs_template.h"
 #include "core/georeferencing.h"
 #include "core/map.h"
@@ -50,6 +44,12 @@
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/point_symbol.h"
 #include "core/symbols/text_symbol.h"
+#include "fileformats/file_format.h"
+#include "fileformats/ocad8_file_format_p.h"
+#include "fileformats/ocd_types_v9.h"
+#include "fileformats/ocd_types_v10.h"
+#include "fileformats/ocd_types_v11.h"
+#include "fileformats/ocd_types_v12.h"
 #include "templates/template.h"
 #include "templates/template_image.h"
 #include "templates/template_map.h"
@@ -913,7 +913,7 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol, int ocd_version)
 	
 	// Create point symbols along line; middle ("normal") dash, corners, start, and end.
 	OcdImportedLineSymbol* symbol_line = main_line ? main_line : double_line;	// Find the line to attach the symbols to
-	if (symbol_line == nullptr)
+	if (!symbol_line)
 	{
 		main_line = new OcdImportedLineSymbol();
 		symbol_line = main_line;
@@ -927,15 +927,15 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol, int ocd_version)
 	
 	// TODO: taper fields (tmode and tlast)
 	
-	if (main_line == nullptr && framing_line == nullptr)
+	if (!main_line && !framing_line)
 	{
 		return double_line;
 	}
-	else if (double_line == nullptr && framing_line == nullptr)
+	else if (!double_line && !framing_line)
 	{
 		return main_line;
 	}
-	else if (main_line == nullptr && double_line == nullptr)
+	else if (!main_line && !double_line)
 	{
 		return framing_line;
 	}
@@ -1441,7 +1441,7 @@ LineSymbol* OcdFileImport::importRectangleSymbol(const S& ocd_symbol)
 
 void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t data_size, const Ocd::PointSymbolElementV8* elements, int version)
 {
-	Q_ASSERT(symbol != nullptr);
+	Q_ASSERT(symbol);
 	
 	symbol->setRotatable(true);
 	bool base_symbol_used = false;

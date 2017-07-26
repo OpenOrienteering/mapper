@@ -27,17 +27,14 @@
 #include <vector>
 
 #include <Qt>
-#include <QtGlobal>
 #include <QFont>
 #include <QFontMetricsF>
 #include <QString>
 
-QT_BEGIN_NAMESPACE
 class QIODevice;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 // IWYU pragma: no_forward_declare QFontMetricsF
-QT_END_NAMESPACE
 
 class Map;
 class MapColor;

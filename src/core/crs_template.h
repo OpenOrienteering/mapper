@@ -19,18 +19,18 @@
  */
 
 
-#ifndef _OPENORIENTEERING_CRS_TEMPLATE_H_
-#define _OPENORIENTEERING_CRS_TEMPLATE_H_
+#ifndef OPENORIENTEERING_CRS_TEMPLATE_H
+#define OPENORIENTEERING_CRS_TEMPLATE_H
 
 #include <memory>
 #include <vector>
 
 #include <QString>
 
-class QObject;
 class QWidget;
 
 class Georeferencing;
+
 
 /**
  * Abstract base class for users of CRS parameter widgets.
@@ -38,6 +38,8 @@ class Georeferencing;
 class CRSParameterWidgetObserver
 {
 public:
+	virtual ~CRSParameterWidgetObserver();
+	
 	/**
 	 * Informs the observer about a change in a CRS parameter widget.
 	 */

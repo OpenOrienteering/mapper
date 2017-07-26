@@ -21,10 +21,12 @@
 #ifndef OPENORIENTEERING_SETTINGS_PAGE_H
 #define OPENORIENTEERING_SETTINGS_PAGE_H
 
-#include <QWidget>
+#include <QObject>
+#include <QString>
 #include <QVariant>
+#include <QWidget>
 
-#include "../../settings.h"
+#include "settings.h"
 
 
 /**

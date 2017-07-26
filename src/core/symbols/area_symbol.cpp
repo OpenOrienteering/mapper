@@ -28,13 +28,13 @@
 
 #include <QtMath>
 #include <QIODevice>
+#include <QLatin1String>
 #include <QStringRef>
 #include <QXmlStreamReader> // IWYU pragma: keep
 
 #include "core/map.h"
 #include "core/map_color.h"
 #include "core/map_coord.h"
-#include "core/map_part.h"
 #include "core/objects/object.h"
 #include "core/renderables/renderable.h"
 #include "core/renderables/renderable_implementation.h"
@@ -199,8 +199,8 @@ bool AreaSymbol::FillPattern::equals(const AreaSymbol::FillPattern& other, Qt::C
 			return false;
 		if (point_distance != other.point_distance)
 			return false;
-		if ((point == nullptr && other.point != nullptr) ||
-		    (point != nullptr && other.point == nullptr))
+		if ((!point && other.point) ||
+		    (point && !other.point))
 			return false;
 		if (point && !point->equals(other.point, case_sensitivity))
 			return false;

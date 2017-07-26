@@ -21,7 +21,6 @@
 #include "renderable.h"
 
 #include <QPainter>
-#include <qmath.h>
 
 #include "core/image_transparency_fixup.h"
 #include "core/map_color.h"
@@ -95,7 +94,7 @@ void SharedRenderables::deleteRenderables()
 			delete renderable;
 		}
 		renderables->second.clear();
-		if (renderables->first.clip_path != NULL)
+		if (renderables->first.clip_path)
 		{
 			iterator it = renderables;
 			++renderables;
@@ -126,7 +125,7 @@ void SharedRenderables::compact()
 
 ObjectRenderables::ObjectRenderables(Object& object)
 : extent(object.extent),
-  clip_path(NULL)
+  clip_path(nullptr)
 {
 	;
 }
@@ -176,7 +175,7 @@ void ObjectRenderables::insertRenderable(Renderable* r, PainterConfig state)
 	if (!container)
 		container = new SharedRenderables();
 	container->operator[](state).push_back(r);
-	if (clip_path == NULL)
+	if (!clip_path)
 	{
 		if (extent.isValid())
 			rectInclude(extent, r->getExtent());
@@ -241,7 +240,7 @@ void MapRenderables::draw(QPainter *painter, const RenderConfig &config) const
 #endif
 	
 	QPainterPath initial_clip = painter->clipPath();
-	const QPainterPath* current_clip = NULL;
+	const QPainterPath* current_clip = nullptr;
 	
 	painter->save();
 	const_reverse_iterator end_of_colors = rend();
@@ -500,7 +499,7 @@ void MapRenderables::drawColorSeparation(QPainter* painter, const RenderConfig& 
 				continue; // treated per spot color
 			else if (color->first == MapColor::Reserved)
 				continue; // never drawn
-			else if (drawing_color.spot_color == NULL)
+			else if (!drawing_color.spot_color)
 			{
 				Q_ASSERT(!"Invalid reserved color!");                // in development build
 				drawing_color.spot_color = Map::getUndefinedColor(); // in release build

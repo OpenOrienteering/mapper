@@ -19,6 +19,10 @@
 
 #include "modifier_key.h"
 
+#include <QFlags>
+#include <QLatin1Char>
+#include <QKeySequence>
+
 
 ModifierKey::ModifierKey(int key)
  : native_text { QKeySequence((int)key).toString(QKeySequence::NativeText) }

@@ -22,7 +22,6 @@
 #include "text_symbol_settings.h"
 
 #include <QCheckBox>
-#include <QDialogButtonBox>
 #include <QDoubleSpinBox>
 #include <QFontComboBox>
 #include <QFormLayout>
@@ -34,6 +33,7 @@
 #include <QRadioButton>
 #include <QSignalBlocker>
 
+#include "core/symbols/text_symbol.h"
 #include "gui/util_gui.h"
 #include "gui/symbols/symbol_setting_dialog.h"
 #include "gui/widgets/color_dropdown.h"
@@ -416,7 +416,7 @@ void TextSymbolSettings::lineBelowCheckClicked(bool checked)
 		// Set defaults such that the line becomes visible
 		if (symbol->line_below_width == 0)
 			line_below_width_edit->setValue(0.1);
-		if (symbol->line_below_color == NULL)
+		if (!symbol->line_below_color)
 			line_below_color_edit->setCurrentIndex(1);
 	}
 	
@@ -529,9 +529,9 @@ void TextSymbolSettings::updateFramingContents()
 	framing_shadow_y_offset_edit->setValue(-0.001 * symbol->framing_shadow_y_offset);
 	
 	
-	framing_line_radio->setEnabled(symbol->framing_color != NULL);
-	framing_shadow_radio->setEnabled(symbol->framing_color != NULL);
-	if (symbol->framing_color == NULL)
+	framing_line_radio->setEnabled(symbol->framing_color);
+	framing_shadow_radio->setEnabled(symbol->framing_color);
+	if (!symbol->framing_color)
 	{
 		framing_line_half_width_edit->setEnabled(false);
 		framing_shadow_x_offset_edit->setEnabled(false);

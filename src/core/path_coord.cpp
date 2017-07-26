@@ -21,8 +21,15 @@
 
 #include "path_coord.h"
 
-#include "virtual_path.h"
-#include "util/util.h"
+#include <algorithm>
+#include <cstddef>
+#include <iterator>
+#include <memory>
+#include <type_traits>
+
+#include "core/map_coord.h"
+#include "core/virtual_coord_vector.h"
+#include "core/virtual_path.h"
 
 
 static_assert(std::is_nothrow_default_constructible<PathCoord>::value,

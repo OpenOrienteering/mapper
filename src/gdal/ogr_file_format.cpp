@@ -24,13 +24,12 @@
 #include <iterator>
 #include <memory>
 #include <vector>
-// IWYU pragma: no_include <type_traits>
+#include <type_traits>
 
 #include <cpl_error.h>
 #include <cpl_conv.h>
 #include <ogr_api.h>
 #include <ogr_srs_api.h>
-// IWYU pragma: no_include "ogr_core.h"
 
 #include <QtGlobal>
 #include <QtMath>
@@ -40,9 +39,11 @@
 #include <QHash>
 #include <QIODevice>
 #include <QLatin1Char>
+#include <QLatin1String>
 #include <QObject>
 #include <QPointF>
 #include <QRegularExpression>
+#include <QRegularExpressionMatch>
 #include <QScopedValueRollback>
 #include <QString>
 #include <QStringRef>
@@ -282,7 +283,7 @@ OgrFileFormat::OgrFileFormat()
 		addExtension(QString::fromLatin1(extension));
 }
 
-bool OgrFileFormat::understands(const unsigned char*, size_t) const
+bool OgrFileFormat::understands(const unsigned char*, std::size_t) const
 {
 	return true;
 }
@@ -388,7 +389,7 @@ void OgrFileImport::import(bool load_symbols_only)
 	auto filename = file->fileName();
 	// GDAL 2.0: ... = GDALOpenEx(template_path.toLatin1(), GDAL_OF_VECTOR, nullptr, nullptr, nullptr);
 	auto data_source = ogr::unique_datasource(OGROpen(filename.toUtf8().constData(), 0, nullptr));
-	if (data_source == nullptr)
+	if (!data_source)
 	{
 		throw FileFormatException(Importer::tr("Could not read '%1': %2")
 		                          .arg(filename, QString::fromLatin1(CPLGetLastErrorMsg())));
@@ -1206,7 +1207,7 @@ bool OgrFileImport::checkGeoreferencing(QFile& file, const Georeferencing& geore
 	auto filename = file.fileName();
 	// GDAL 2.0: ... = GDALOpenEx(template_path.toLatin1(), GDAL_OF_VECTOR, nullptr, nullptr, nullptr);
 	auto data_source = ogr::unique_datasource(OGROpen(filename.toUtf8().constData(), 0, nullptr));
-	if (data_source == nullptr)
+	if (!data_source)
 	{
 		throw FileFormatException(Importer::tr("Could not read '%1': %2")
 		                          .arg(filename, QString::fromLatin1(CPLGetLastErrorMsg())));
@@ -1247,7 +1248,7 @@ LatLon OgrFileImport::calcAverageLatLon(QFile& file)
 	auto filename = file.fileName();
 	// GDAL 2.0: ... = GDALOpenEx(template_path.toLatin1(), GDAL_OF_VECTOR, nullptr, nullptr, nullptr);
 	auto data_source = ogr::unique_datasource(OGROpen(filename.toUtf8().constData(), 0, nullptr));
-	if (data_source == nullptr)
+	if (!data_source)
 	{
 		throw FileFormatException(Importer::tr("Could not read '%1': %2")
 		                          .arg(filename, QString::fromLatin1(CPLGetLastErrorMsg())));

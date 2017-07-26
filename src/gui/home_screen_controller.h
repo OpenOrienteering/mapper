@@ -18,12 +18,15 @@
  */
 
 
-#ifndef _OPENORIENTEERING_HOME_SCREEN_CONTROLLER_H_
-#define _OPENORIENTEERING_HOME_SCREEN_CONTROLLER_H_
+#ifndef OPENORIENTEERING_HOME_SCREEN_CONTROLLER_H
+#define OPENORIENTEERING_HOME_SCREEN_CONTROLLER_H
 
 #include "main_window_controller.h"
 
+#include <QObject>
+
 class AbstractHomeScreenWidget;
+class MainWindow;
 
 /**
  * The controller of the OpenOrienteering Mapper home screen.

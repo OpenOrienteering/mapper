@@ -19,6 +19,7 @@
 
 #include "map_t.h"
 
+#include <QtTest>
 #include <QBuffer>
 #include <QMessageBox>
 #include <QTextStream>
@@ -26,9 +27,11 @@
 #include "global.h"
 #include "core/map.h"
 #include "core/map_color.h"
-#include "core/map_printer.h"
+#include "core/map_printer.h" // IWYU pragma: keep
 #include "core/map_view.h"
 #include "core/objects/symbol_rule_set.h"
+#include "core/symbols/symbol.h"
+
 
 namespace
 {

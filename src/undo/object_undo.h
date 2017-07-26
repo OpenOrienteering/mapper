@@ -19,21 +19,25 @@
  */
 
 
-#ifndef _OPENORIENTEERING_MAP_UNDO_H_
-#define _OPENORIENTEERING_MAP_UNDO_H_
+#ifndef OPENORIENTEERING_MAP_UNDO_H
+#define OPENORIENTEERING_MAP_UNDO_H
 
+#include <cstddef>
 #include <map>
+#include <utility>
+#include <vector>
+
+#include <QObject>
 
 #include "core/objects/object.h"
 #include "core/symbols/symbol.h"
-#include "undo.h"
+#include "undo/undo.h"
 
-QT_BEGIN_NAMESPACE
 class QIODevice;
 class QXmlStreamReader;
 class QXmlStreamWriter;
-QT_END_NAMESPACE
 
+class Map;
 
 /** 
  * Base class for undo steps which modify objects of a single map part.

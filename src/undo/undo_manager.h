@@ -19,23 +19,27 @@
  */
 
 
-#ifndef _OPENORIENTEERING_UNDO_MANAGER_H_
-#define _OPENORIENTEERING_UNDO_MANAGER_H_
+#ifndef OPENORIENTEERING_UNDO_MANAGER_H
+#define OPENORIENTEERING_UNDO_MANAGER_H
 
 #include <QObject>
 
+#include <cstddef>
 #include <deque>
+#include <memory>
+
+#include <QtGlobal>
 
 #include "core/symbols/symbol.h"
-#include "undo.h"
+#include "undo/undo.h"
 
-QT_BEGIN_NAMESPACE
 class QIODevice;
+class QWidget;
 class QXmlStreamReader;
 class QXmlStreamWriter;
-QT_END_NAMESPACE
 
 class Map;
+
 
 /**
  * Manages the history of steps for undoing and redoing changes to a map.
@@ -90,7 +94,7 @@ public:
 	 *      shown by the method.
 	 *  @returns True if an undo step actually has been executed, false otherwise.
 	 */
-	bool undo(QWidget* dialog_parent = NULL);
+	bool undo(QWidget* dialog_parent = nullptr);
 	
 	
 	/**
@@ -101,7 +105,7 @@ public:
 	/**
 	 * Executes the current redo step.
 	 */
-	bool redo(QWidget* dialog_parent = NULL);
+	bool redo(QWidget* dialog_parent = nullptr);
 	
 	
 	/**

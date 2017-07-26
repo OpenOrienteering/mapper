@@ -19,9 +19,13 @@
 
 #include "compass.h"
 
-#include <qmath.h>
+#include <cmath>
+
+#include <QtMath>  // IWYU pragma: keep
+#include <QtGlobal>  // IWYU pragma: keep
 #include <QMetaMethod>
-#include <QMutex>
+#include <QMetaObject>
+#include <QMutex>  // IWYU pragma: keep
 #include <QTime>
 
 
@@ -367,8 +371,8 @@ private:
 		
 		void filter()
 		{
-			if (p->accelerometer.reading() == NULL ||
-				p->magnetometer.reading() == NULL)
+			if (p->accelerometer.reading() == nullptr ||
+				p->magnetometer.reading() == nullptr)
 				return;
 			
 			// Make copies of the sensor readings (and hope that the reading thread
@@ -504,7 +508,7 @@ Compass::Compass(): QObject()
 #ifdef QT_SENSORS_LIB
 	p = new CompassPrivate(this);
 #else
-	p = NULL;
+	p = nullptr;
 #endif
 }
 

@@ -22,26 +22,36 @@
 #ifndef OPENORIENTEERING_MAP_EDITOR_TOOL_H
 #define OPENORIENTEERING_MAP_EDITOR_TOOL_H
 
+#include <Qt>
 #include <QAction>
+#include <QCursor>
+#include <QObject>
 #include <QPointer>
+#include <QPointF>
+#include <QRgb>
+#include <QString>
+#include <QVariant>
 
 #include "core/map_coord.h"
 #include "gui/point_handles.h"
 
-class QAction;
+class QEvent;
 class QFocusEvent;
 class QGestureEvent;
+class QInputMethodEvent;
 class QKeyEvent;
 class QMouseEvent;
+class QPainter;
+class QPointF;
+class QWidget;
 
 class MainWindow;
 class Map;
 class MapEditorController;
-class MapRenderables;
 class MapWidget;
 class Object;
-class Renderable;
 class Symbol;
+
 
 /** 
  * @brief An abstract tool for editing a map.

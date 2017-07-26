@@ -23,10 +23,10 @@
 
 #include <QPainter>
 
-#include "core/georeferencing.h"
-#include "gui/map/map_widget.h"
-#include "core/renderables/renderable.h"
 #include "settings.h"
+#include "core/georeferencing.h"
+#include "core/map.h"
+#include "core/renderables/renderable.h"
 #include "util/util.h"
 
 QStringList TemplateMap::locked_maps;

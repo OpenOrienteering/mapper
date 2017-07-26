@@ -22,11 +22,11 @@
 
 #include "print_progress_dialog.h"
 
+#include <QtGlobal>
 #include <QApplication>
 #include <QMessageBox>
-#include <QPrintPreviewDialog>
 
-#include "../core/map_printer.h"
+#include "core/map_printer.h"
 
 
 PrintProgressDialog::PrintProgressDialog(MapPrinter* map_printer, QWidget* parent, Qt::WindowFlags f)

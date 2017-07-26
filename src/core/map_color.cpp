@@ -21,7 +21,13 @@
 
 #include "map_color.h"
 
+#include <algorithm>
+#include <iterator>
+
+#include <Qt>
 #include <QCoreApplication>
+#include <QLatin1Char>
+#include <QLatin1String>
 
 
 MapColor::MapColor()

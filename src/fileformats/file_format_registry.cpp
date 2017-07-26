@@ -22,16 +22,30 @@
 
 #include <QFileInfo>
 
-#include "core/map.h"
-#include "core/symbols/symbol.h"
-#include "../templates/template.h"
-#include "core/objects/object.h"
+#include "fileformats/file_format.h"
 
 
 FileFormatRegistry FileFormats;
 
 
 // ### FormatRegistry ###
+
+FileFormatRegistry::FileFormatRegistry() noexcept
+: default_format_id{ nullptr }
+{
+	// nothing else
+}
+
+
+FileFormatRegistry::~FileFormatRegistry()
+{
+	for (std::vector<FileFormat *>::reverse_iterator it = fmts.rbegin(); it != fmts.rend(); ++it)
+	{
+		delete *it;
+	}
+}
+
+
 
 void FileFormatRegistry::registerFormat(FileFormat *format)
 {
@@ -59,7 +73,7 @@ const FileFormat *FileFormatRegistry::findFormat(const char* id) const
 	{
 		if (qstrcmp(format->id(), id) == 0) return format;
 	}
-	return NULL;
+	return nullptr;
 }
 
 const FileFormat *FileFormatRegistry::findFormatByFilter(const QString& filter) const
@@ -68,7 +82,7 @@ const FileFormat *FileFormatRegistry::findFormatByFilter(const QString& filter) 
 	{
 		if (format->filter() == filter) return format;
 	}
-	return NULL;
+	return nullptr;
 }
 
 const FileFormat *FileFormatRegistry::findFormatForFilename(const QString& filename) const
@@ -78,13 +92,5 @@ const FileFormat *FileFormatRegistry::findFormatForFilename(const QString& filen
 	{
 		if (format->fileExtensions().contains(file_extension, Qt::CaseInsensitive)) return format;
 	}
-	return NULL;
-}
-
-FileFormatRegistry::~FileFormatRegistry()
-{
-	for (std::vector<FileFormat *>::reverse_iterator it = fmts.rbegin(); it != fmts.rend(); ++it)
-	{
-		delete *it;
-	}
+	return nullptr;
 }

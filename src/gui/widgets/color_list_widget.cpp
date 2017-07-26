@@ -22,6 +22,7 @@
 #include "color_list_widget.h"
 
 #include <Qt>
+#include <QtGlobal>
 #include <QAbstractButton>
 #include <QAbstractItemView>
 #include <QAction>

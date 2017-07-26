@@ -23,14 +23,18 @@
 #include <QHBoxLayout>
 #include <QLineEdit>
 #include <QPushButton>
+#include <QRegExp>
 #include <QRegExpValidator>
+#include <QStringList>
+#include <QVariant>
 
-#include "../../core/crs_template.h"
-#include "../../core/crs_template_implementation.h"
-#include "../../core/georeferencing.h"
-#include "../../core/latlon.h"
-#include "../georeferencing_dialog.h"
+#include "core/crs_template.h"
+#include "core/crs_template_implementation.h"
+#include "core/georeferencing.h"
 
+// IWYU pragma: no_forward_declare QCompleter
+// IWYU pragma: no_forward_declare QHBoxLayout
+// IWYU pragma: no_forward_declare QPushButton
 
 
 UTMZoneEdit::UTMZoneEdit(CRSParameterWidgetObserver& observer, QWidget* parent)

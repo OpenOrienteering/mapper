@@ -20,7 +20,10 @@
 
 #include "locale_t.h"
 
-#include <QtTest/QtTest>
+#include <QtTest>
+#include <QLatin1String>
+#include <QLocale>
+#include <QString>
 
 #include "util/translation_util.h"
 

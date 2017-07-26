@@ -22,24 +22,25 @@
 #ifndef OPENORIENTEERING_LINE_SYMBOL_SETTINGS_H
 #define OPENORIENTEERING_LINE_SYMBOL_SETTINGS_H
 
+#include <QList>
+#include <QObject>
+
 #include "gui/symbols/symbol_properties_widget.h"
 
-#include "core/symbols/line_symbol.h"
-
-QT_BEGIN_NAMESPACE
 class QCheckBox;
 class QComboBox;
 class QDoubleSpinBox;
 class QGridLayout;
 class QLabel;
-class QLineEdit;
 class QScrollArea;
 class QSpinBox;
-QT_END_NAMESPACE
+class QWidget;
 
 class ColorDropDown;
-class PointSymbolEditorWidget;
-class PointSymbol;
+class LineSymbol;
+struct LineSymbolBorder;
+class Map;
+class Symbol;
 class SymbolSettingDialog;
 
 
@@ -138,7 +139,7 @@ private:
 	ColorDropDown* color_edit;
 	QDoubleSpinBox* minimum_length_edit;
 	
-	// enabled if line_width > 0 && color != NULL
+	// enabled if line_width > 0 && color
 	QList<QWidget *> line_settings_list;
 	QComboBox* line_cap_combo;
 	QComboBox* line_join_combo;

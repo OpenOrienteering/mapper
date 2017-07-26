@@ -27,13 +27,10 @@
 #include <vector>
 
 #include <Qt>
-#include <QtGlobal>
 
-QT_BEGIN_NAMESPACE
 class QIODevice;
 class QXmlStreamReader;
 class QXmlStreamWriter;
-QT_END_NAMESPACE
 
 class Map;
 class MapColor;

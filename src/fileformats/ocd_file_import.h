@@ -23,28 +23,43 @@
 #ifndef OPENORIENTEERING_OCD_FILE_IMPORT
 #define OPENORIENTEERING_OCD_FILE_IMPORT
 
-#include "file_import_export.h"
+#include <cstddef>
+#include <initializer_list>
+#include <limits>
 
-#include <cmath>
-
+#include <QtGlobal>
+#include <QtMath>
+#include <QByteArray>
+#include <QHash>
 #include <QLocale>
+#include <QObject>
+#include <QScopedPointer>
+#include <QString>
 #include <QTextCodec>
 
-#include "ocd_types.h"
-#include "ocd_types_v8.h"
+#include "core/map_coord.h"
 #include "core/objects/object.h"
 #include "core/objects/text_object.h"
-#include "core/symbols/symbol.h"
 #include "core/symbols/area_symbol.h"
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/point_symbol.h"
 #include "core/symbols/text_symbol.h"
+#include "fileformats/file_import_export.h"
+#include "fileformats/ocd_types.h"
+#include "fileformats/ocd_types_v8.h" // IWYU pragma: keep
 
+class QChar;
+class QIODevice;
+
+class CombinedSymbol;
 class Georeferencing;
+class Map;
 class MapColor;
 class MapPart;
+class MapView;
 class OCAD8FileImport;
-class Template;
+class Symbol;
+
 
 /**
  * An map file importer for OC*D files.

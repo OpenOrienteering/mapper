@@ -19,22 +19,29 @@
  */
 
 
-#ifndef UTIL_H
-#define UTIL_H
+#ifndef OPENORIENTEERING_UTIL_H
+#define OPENORIENTEERING_UTIL_H
 
+#include <cmath>
 #include <type_traits>
 
-#include <qmath.h>
+#include <QtGlobal>
+#include <QtMath>
 #include <QDoubleValidator>
+#include <QPointF>
 #include <QRectF>
+#include <QString>
+#include <QValidator>
 
-QT_BEGIN_NAMESPACE
 class QIODevice;
-QT_END_NAMESPACE
+class QObject;
+class QRect;
+class QWidget;
+// IWYU pragma: no_forward_declare QPointF
+// IWYU pragma: no_forward_declare QRectF
 
-class MapCoord;
 class MapCoordF;
-class Settings;
+
 
 /** Value to calculate the optimum handle distance of 4 cubic bezier curves
  *  used to approximate a circle. */
@@ -79,7 +86,7 @@ namespace std
 class DoubleValidator : public QDoubleValidator
 {
 public:
-	DoubleValidator(double bottom, double top = 10e10, QObject* parent = NULL, int decimals = 20);
+	DoubleValidator(double bottom, double top = 10e10, QObject* parent = nullptr, int decimals = 20);
 	
 	virtual State validate(QString& input, int& pos) const;
 };

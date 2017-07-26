@@ -21,9 +21,14 @@
 
 #include "symbol_widget.h"
 
+#include <Qt>
+#include <QPalette>
 #include <QContextMenuEvent>
 
 #include "symbol_render_widget.h"
+
+// IWYU pragma: no_forward_declare QContextMenuEvent
+// IWYU pragma: no_forward_declare QWidget
 
 
 SymbolWidget::SymbolWidget(Map* map, bool mobile_mode, QWidget* parent)

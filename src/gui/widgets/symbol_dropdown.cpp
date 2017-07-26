@@ -128,9 +128,8 @@ SymbolDropDownDelegate::~SymbolDropDownDelegate() = default;
 
 
 
-QWidget* SymbolDropDownDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const
+QWidget* SymbolDropDownDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem&, const QModelIndex& index) const
 {
-	Q_UNUSED(option);
 	auto list = index.data(Qt::UserRole).toList();
 	auto widget	= new SymbolDropDown(list.at(0).value<const Map*>(), symbol_type_filter,
 	                                 list.at(1).value<const Symbol*>(), nullptr, parent);
@@ -169,9 +168,8 @@ void SymbolDropDownDelegate::setModelData(QWidget* editor, QAbstractItemModel* m
 	}
 }
 
-void SymbolDropDownDelegate::updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& index) const
+void SymbolDropDownDelegate::updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex&) const
 {
-	Q_UNUSED(index);
 	editor->setGeometry(option.rect);
 }
 

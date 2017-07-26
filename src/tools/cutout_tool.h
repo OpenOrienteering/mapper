@@ -19,14 +19,25 @@
  */
 
 
-#ifndef _OPENORIENTEERING_TOOL_CUTOUT_H_
-#define _OPENORIENTEERING_TOOL_CUTOUT_H_
+#ifndef OPENORIENTEERING_TOOL_CUTOUT_H
+#define OPENORIENTEERING_TOOL_CUTOUT_H
+
+#include <QObject>
+#include <QScopedPointer>
 
 #include "tool_base.h"
 
-class PathObject;
-class Symbol;
+class QAction;
+class QKeyEvent;
+class QPainter;
+class QRectF;
+
+class Map;
+class MapEditorController;
+class MapWidget;
 class ObjectSelector;
+class PathObject;
+
 
 /** Tool to make map cutouts */
 class CutoutTool : public MapEditorToolBase

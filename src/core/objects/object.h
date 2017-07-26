@@ -22,29 +22,34 @@
 #ifndef OPENORIENTEERING_OBJECT_H
 #define OPENORIENTEERING_OBJECT_H
 
+#include <algorithm>
 #include <limits>
 #include <vector>
 
-#include <QRectF>
+#include <QtGlobal>
 #include <QHash>
+#include <QRectF>
+#include <QString>
+// IWYU pragma: no_include <QTransform>
 
 #include "core/map_coord.h"
 #include "core/path_coord.h"
 #include "core/virtual_path.h"
-#include "fileformats/file_format.h"
 #include "core/renderables/renderable.h"
 #include "core/symbols/symbol.h"
 
-QT_BEGIN_NAMESPACE
 class QIODevice;
+class QTransform;
 class QXmlStreamReader;
 class QXmlStreamWriter;
-QT_END_NAMESPACE
+// IWYU pragma: no_forward_declare QRectF
 
 class Map;
 class PointObject;
 class PathObject;
 class TextObject;
+class VirtualCoordVector;
+
 
 /**
  * Abstract base class which combines coordinates and a symbol to form an object

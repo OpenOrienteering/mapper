@@ -18,15 +18,39 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_EDIT_TOOL_H_
-#define _OPENORIENTEERING_EDIT_TOOL_H_
+#ifndef OPENORIENTEERING_EDIT_TOOL_H
+#define OPENORIENTEERING_EDIT_TOOL_H
 
-#include "tool_base.h"
+#include <utility>
+#include <vector>
+
+#include <Qt>
+#include <QtGlobal>
+#include <QFlags>
+#include <QHash>
+#include <QObject>
+#include <QPointF>
+#include <QRectF>
+#include <QRgb>
+#include <QScopedPointer>
 
 #include <QSet>
 
-class TextObject;
+#include "core/map_coord.h"
+#include "tools/tool.h"
+#include "tools/tool_base.h"
+
+class QAction;
+class QPainter;
+class QPointF;
+class QRectF;
+
+class Map;
+class MapEditorController;
+class MapWidget;
+class Object;
 class PathObject;
+class TextObject;
 typedef std::vector< std::pair< int, Object* > > SelectionInfoVector;
 
 
@@ -101,7 +125,7 @@ public:
 	 * @param out_dx returns the move along the x coordinate in map units
 	 * @param out_dy returns the move along the y coordinate in map units
 	 */
-	void move(const MapCoordF& cursor_pos, bool move_opposite_handles, qint32* out_dx = NULL, qint32* out_dy = NULL);
+	void move(const MapCoordF& cursor_pos, bool move_opposite_handles, qint32* out_dx = nullptr, qint32* out_dy = nullptr);
 	
 	/** Overload of move() taking delta values. */
 	void move(qint32 dx, qint32 dy, bool move_opposite_handles);

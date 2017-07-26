@@ -21,18 +21,22 @@
 #ifndef OPENORIENTEERING_TAG_SELECT_WIDGET_H
 #define OPENORIENTEERING_TAG_SELECT_WIDGET_H
 
+#include <QObject>
+#include <QString>
 #include <QWidget>
 
 class QBoxLayout;
+class QIcon;
 class QLabel;
+class QShowEvent;
 class QTableWidget;
 class QToolButton;
 
 class Map;
 class MapEditorController;
 class MapView;
-class Object;
 class ObjectQuery;
+
 
 /**
  * This widget allows the user to make selections based on an objects tags.

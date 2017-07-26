@@ -17,12 +17,10 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_MAP_COLOR_T_H
-#define _OPENORIENTEERING_MAP_COLOR_T_H
+#ifndef OPENORIENTEERING_MAP_COLOR_T_H
+#define OPENORIENTEERING_MAP_COLOR_T_H
 
-#include <QtTest/QtTest>
-
-#include "core/map_color.h"
+#include <QObject>
 
 
 /**
@@ -33,7 +31,7 @@ class MapColorTest : public QObject
 Q_OBJECT
 public:
 	/** Constructor */
-	explicit MapColorTest(QObject* parent = NULL);
+	explicit MapColorTest(QObject* parent = nullptr);
 	
 private slots:
 	/** Tests the constructors. */

@@ -17,12 +17,21 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_MAP_PART_UNDO_H_
-#define _OPENORIENTEERING_MAP_PART_UNDO_H_
+#ifndef OPENORIENTEERING_MAP_PART_UNDO_H
+#define OPENORIENTEERING_MAP_PART_UNDO_H
 
-#include "undo.h"
+#include <QString>
 
+#include "core/symbols/symbol.h"
+#include "undo/undo.h"
+
+class QIODevice;
+class QXmlStreamReader;
+class QXmlStreamWriter;
+
+class Map;
 class MapPart;
+
 
 /**
  * @brief A map part undo step handles addition, deletion and renaming of map parts.

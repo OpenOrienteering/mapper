@@ -165,7 +165,7 @@ void AutosaveDialog::currentRowChanged(int row)
 
 const QTextDocument* AutosaveDialog::textDoc(const QModelIndex& index) const
 {
-	const QTextDocument* ret = NULL;
+	const QTextDocument* ret = nullptr;
 	
 	bool ok = true;
 	int i = index.data(Qt::UserRole).toInt(&ok);

@@ -22,21 +22,14 @@
 #include "tool.h"
 
 #include <QAction>
-#include <QApplication>
-#include <QMouseEvent>
 #include <QPainter>
-#include <QTimer>
 
 #include "settings.h"
-#include "core/map.h"
 #include "core/objects/object.h"
 #include "core/objects/text_object.h"
 #include "gui/main_window.h"
 #include "gui/map/map_editor.h"
 #include "gui/map/map_widget.h"
-#include "tool_helpers.h"
-#include "undo/object_undo.h"
-#include "util/util.h"
 
 
 namespace {

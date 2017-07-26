@@ -21,17 +21,21 @@
 #ifndef OPENORIENTEERING_GEOREFERENCING_H
 #define OPENORIENTEERING_GEOREFERENCING_H
 
+#include <cmath>
+#include <vector>
+
+#include <QObject>
 #include <QPointF>
 #include <QString>
 #include <QTransform>
 
-#include "latlon.h"
-#include "map_coord.h"
-#include "../fileformats/file_format.h"
+#include "core/latlon.h"
+#include "core/map_coord.h"
 
 class QDebug;
 class QXmlStreamReader;
 class QXmlStreamWriter;
+// IWYU pragma: no_forward_declare QPointF
 
 typedef void* projPJ;
 
@@ -425,19 +429,19 @@ public:
 	/**
 	 * Transforms geographic coordinates (lat/lon) to map coordinates.
 	 */
-	MapCoord toMapCoords(const LatLon& lat_lon, bool* ok = NULL) const;
+	MapCoord toMapCoords(const LatLon& lat_lon, bool* ok = nullptr) const;
 	
 	/**
 	 * Transforms geographic coordinates (lat/lon) to map coordinates.
 	 */
-	MapCoordF toMapCoordF(const LatLon& lat_lon, bool* ok = NULL) const;
+	MapCoordF toMapCoordF(const LatLon& lat_lon, bool* ok = nullptr) const;
 	
 	
 	/**
 	 * Transforms map coordinates from the other georeferencing to
 	 * map coordinates of this georeferencing, if possible. 
 	 */
-	MapCoordF toMapCoordF(const Georeferencing* other, const MapCoordF& map_coords, bool* ok = NULL) const;
+	MapCoordF toMapCoordF(const Georeferencing* other, const MapCoordF& map_coords, bool* ok = nullptr) const;
 	
 	
 	/**
@@ -592,7 +596,7 @@ double Georeferencing::roundDeclination(double value)
 inline
 bool Georeferencing::isValid() const
 {
-	return state == Local || projected_crs != NULL;
+	return state == Local || projected_crs;
 }
 
 inline

@@ -18,19 +18,25 @@
  */
 
 
-#ifndef _OPENORIENTEERING_DXFPARSER_H_
-#define _OPENORIENTEERING_DXFPARSER_H_
+#ifndef OPENORIENTEERING_DXFPARSER_H
+#define OPENORIENTEERING_DXFPARSER_H
 
+#include <QtGlobal>
+#include <QChar>
 #include <QColor>
 #include <QFont>
-#include <QIODevice>
+#include <QLatin1Char>
 #include <QList>
 #include <QRectF>
 #include <QString>
 
+class QIODevice;
+class QPointF;
+
+
 struct DXFCoordinate
 {
-	DXFCoordinate();
+	constexpr DXFCoordinate() noexcept;
 	
 	qreal x;
 	qreal y;
@@ -117,7 +123,7 @@ private:
 // ### Public inline code ###
 
 inline
-DXFCoordinate::DXFCoordinate()
+constexpr DXFCoordinate::DXFCoordinate() noexcept
  : x(0.0),
    y(0.0),
    z(0.0)

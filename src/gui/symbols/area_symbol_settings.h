@@ -22,33 +22,27 @@
 #ifndef OPENORIENTEERING_AREA_SYMBOL_SETTINGS_H
 #define OPENORIENTEERING_AREA_SYMBOL_SETTINGS_H
 
-#include "gui/symbols/symbol_properties_widget.h"
+#include <vector>
+
+#include <QObject>
 
 #include "core/symbols/area_symbol.h"
+#include "gui/symbols/symbol_properties_widget.h"
 
-QT_BEGIN_NAMESPACE
 class QCheckBox;
 class QComboBox;
 class QDoubleSpinBox;
 class QLabel;
 class QListWidget;
 class QPushButton;
-class QSpinBox;
 class QToolButton;
-class QXmlStreamReader;
-class QXmlStreamWriter;
-QT_END_NAMESPACE
 
 class ColorDropDown;
-class SymbolSettingDialog;
-class PointSymbolEditorWidget;
-class PathObject;
-class PointObject;
-class LineSymbol;
-class PointSymbol;
-class SymbolPropertiesWidget;
-class SymbolSettingDialog;
+class Map;
 class MapEditorController;
+class Symbol;
+class SymbolSettingDialog;
+
 
 class AreaSymbolSettings : public SymbolPropertiesWidget
 {

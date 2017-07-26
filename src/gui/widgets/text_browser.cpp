@@ -28,10 +28,8 @@ TextBrowser::TextBrowser(QWidget* parent)
 }
 
 
-TextBrowser::~TextBrowser()
-{
-	// nothing, not inlined
-}
+TextBrowser::~TextBrowser() = default;
+
 
 
 QVariant TextBrowser::loadResource(int type, const QUrl& name)

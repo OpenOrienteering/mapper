@@ -19,11 +19,14 @@
 
 #include "task_dialog.h"
 
+#include <Qt>
+#include <QAbstractButton>
 #include <QCommandLinkButton>
-#include <QLabel>
 #include <QDialogButtonBox>
-#include <QVBoxLayout>
+#include <QFlags>
+#include <QLabel>
 #include <QSignalMapper>
+#include <QVBoxLayout>
 
 
 TaskDialog::TaskDialog(QWidget* parent, const QString& title, const QString& text, QDialogButtonBox::StandardButtons buttons)
@@ -31,11 +34,11 @@ TaskDialog::TaskDialog(QWidget* parent, const QString& title, const QString& tex
 {
 	setWindowTitle(title);
 	
-	QLabel* text_label = NULL;
+	QLabel* text_label = nullptr;
 	if (!text.isEmpty())
 		text_label = new QLabel(text);
 	
-	button_box = NULL;
+	button_box = nullptr;
 	if (buttons != QDialogButtonBox::NoButton)
 		button_box = new QDialogButtonBox(buttons);
 	

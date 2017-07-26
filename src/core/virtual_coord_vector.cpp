@@ -19,6 +19,7 @@
 
 #include "virtual_coord_vector.h"
 
+#include "core/map_coord.h"
 
 
 //### VirtualCoordVector ###

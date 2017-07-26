@@ -20,12 +20,17 @@
 
 #ifdef QT_PRINTSUPPORT_LIB
 
-#ifndef _OPENORIENTEERING_PRINT_WIDGET_P_H_
-#define _OPENORIENTEERING_PRINT_WIDGET_P_H_
+#ifndef OPENORIENTEERING_PRINT_WIDGET_P_H
+#define OPENORIENTEERING_PRINT_WIDGET_P_H
 
+#include <Qt>
+#include <QObject>
 #include <QProgressDialog>
+#include <QString>
 
 class QPrinter;
+class QWidget;
+
 class MapPrinter;
 
 /**

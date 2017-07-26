@@ -21,29 +21,25 @@
 
 #include "home_screen_widget.h"
 
-#include <QApplication>
+#include <QApplication> // IWYU pragma: keep
 #include <QAbstractButton>
 #include <QCheckBox>
 #include <QCommandLinkButton>
-#include <QDialogButtonBox>
 #include <QDirIterator>
 #include <QFileInfo>
-#include <QFormLayout>
 #include <QGridLayout>
 #include <QLabel>
 #include <QListWidget>
 #include <QMessageBox>
 #include <QPainter>
-#include <QProcessEnvironment>
-#include <QScrollArea>
 #include <QScroller>
 #include <QStackedLayout>
 
-#include "../home_screen_controller.h"
-#include "../main_window.h"
-#include "../settings_dialog.h"
-#include "../../core/storage_location.h"
-#include "../../fileformats/file_format_registry.h"
+#include "core/storage_location.h" // IWYU pragma: keep
+#include "fileformats/file_format_registry.h"
+#include "gui/home_screen_controller.h"
+#include "gui/main_window.h"
+#include "gui/settings_dialog.h"
 
 
 //### AbstractHomeScreenWidget ###
@@ -52,7 +48,7 @@ AbstractHomeScreenWidget::AbstractHomeScreenWidget(HomeScreenController* control
 : QWidget(parent),
   controller(controller)
 {
-	Q_ASSERT(controller->getWindow() != NULL);
+	Q_ASSERT(controller->getWindow());
 }
 
 AbstractHomeScreenWidget::~AbstractHomeScreenWidget()
@@ -309,7 +305,7 @@ void HomeScreenWidgetDesktop::setTipsVisible(bool state)
 	{
 		widget->setVisible(state);
 	}
-	if (layout != NULL)
+	if (layout)
 		layout->setRowStretch(2, state ? 3 : 0);
 	
 	tips_check->setChecked(state);
@@ -558,7 +554,7 @@ void HomeScreenWidgetMobile::addFilesToFileList(QListWidget* file_list, const QS
 	QDirIterator it(path, QDir::Files | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
 	while (it.hasNext()) {
 		it.next();
-		if (FileFormats.findFormatForFilename(it.filePath()) == NULL)
+		if (FileFormats.findFormatForFilename(it.filePath()) == nullptr)
 			continue;
 		
 		QListWidgetItem* new_item = new QListWidgetItem(it.fileInfo().fileName());

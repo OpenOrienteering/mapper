@@ -24,16 +24,25 @@
 
 #include <memory>
 
+#include <QtGlobal>
+#include <QObject>
+#include <QPointF>
+#include <QString>
+#include <vector>
+
+#include "core/map_coord.h"
 #include "util/matrix.h"
 #include "util/transformation.h"
 
-QT_BEGIN_NAMESPACE
+class QByteArray;
+class QColor;
 class QIODevice;
 class QPainter;
 class QRectF;
+class QTransform;
+class QWidget;
 class QXmlStreamReader;
 class QXmlStreamWriter;
-QT_END_NAMESPACE
 
 class Map;
 class MapView;

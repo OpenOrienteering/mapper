@@ -20,9 +20,15 @@
 
 #include "mapper_proxystyle.h"
 
-#include <QFormLayout>
+#include <Qt>
+#include <QBrush>
+#include <QFlags>
+#include <QFormLayout>  // IWYU pragma: keep
 #include <QPainter>
+#include <QPalette>
+#include <QRect>
 #include <QStyleOption>
+#include <QVariant>
 #include <QWidget>
 
 #include "segmented_button_layout.h"

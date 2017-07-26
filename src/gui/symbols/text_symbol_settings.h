@@ -22,23 +22,26 @@
 #ifndef OPENORIENTEERING_TEXT_SYMBOL_SETTINGS_H
 #define OPENORIENTEERING_TEXT_SYMBOL_SETTINGS_H
 
+#include <QtGlobal>
+#include <QObject>
+#include <QString>
+
 #include "gui/symbols/symbol_properties_widget.h"
 
-#include "core/symbols/text_symbol.h"
-
-
-QT_BEGIN_NAMESPACE
 class QCheckBox;
 class QDoubleSpinBox;
+class QFont;
 class QFontComboBox;
 class QLineEdit;
 class QListWidget;
 class QPushButton;
 class QRadioButton;
-QT_END_NAMESPACE
+class QWidget;
 
 class ColorDropDown;
+class Symbol;
 class SymbolSettingDialog;
+class TextSymbol;
 
 
 class TextSymbolSettings : public SymbolPropertiesWidget

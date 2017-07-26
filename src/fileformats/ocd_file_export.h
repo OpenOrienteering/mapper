@@ -23,7 +23,13 @@
 #ifndef OPENORIENTEERING_OCD_FILE_EXPORT_H
 #define OPENORIENTEERING_OCD_FILE_EXPORT_H
 
-#include "file_import_export.h"
+#include <QObject>
+
+#include "fileformats/file_import_export.h"
+
+class Map;
+class MapView;
+class QIODevice;
 
 
 /**

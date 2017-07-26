@@ -32,10 +32,9 @@
 #include <QPointF>
 #include <QString>
 
-QT_BEGIN_NAMESPACE
 class QXmlStreamReader;
 class QXmlStreamWriter;
-QT_END_NAMESPACE
+
 
 #ifndef NO_NATIVE_FILE_FORMAT
 	

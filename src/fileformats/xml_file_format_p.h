@@ -18,15 +18,15 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_FILE_FORMAT_XML_P_H
-#define _OPENORIENTEERING_FILE_FORMAT_XML_P_H
-
-#include "file_import_export.h"
+#ifndef OPENORIENTEERING_FILE_FORMAT_XML_P_H
+#define OPENORIENTEERING_FILE_FORMAT_XML_P_H
 
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
 #include "core/symbols/symbol.h"
+#include "fileformats/file_import_export.h"
+
 
 /** Map exporter for the xml based map format. */
 class XMLFileExporter : public Exporter

@@ -42,7 +42,6 @@ class QPainter;
 class QPushButton;
 class QStackedWidget;
 class QTableWidget;
-class QWidget;
 
 class ColorDropDown;
 class Map;

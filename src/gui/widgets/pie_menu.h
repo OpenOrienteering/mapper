@@ -19,12 +19,24 @@
  */
 
 
-#ifndef _OPENORIENTEERING_PIE_MENU_H_
-#define _OPENORIENTEERING_PIE_MENU_H_
+#ifndef OPENORIENTEERING_PIE_MENU_H
+#define OPENORIENTEERING_PIE_MENU_H
 
 #include <cmath>
 
+#include <QtGlobal>
+#include <QHash>
+#include <QObject>
+#include <QPoint>
+#include <QPolygon>
 #include <QWidget>
+
+class QAction;
+class QActionEvent;
+class QHideEvent;
+class QMouseEvent;
+class QPaintEvent;
+
 
 /** 
  * Displays a pie menu.
@@ -47,7 +59,7 @@ public:
 	};
 	
 	/** Constructs a pie menu with default settings. */
-	PieMenu(QWidget* parent = NULL);
+	PieMenu(QWidget* parent = nullptr);
 	
 	/** Returns the minimum number of actions in the menu. */
 	int minimumActionCount() const;
@@ -78,7 +90,7 @@ public:
 	void setIconSize(int icon_size);
 	
 	/** Returns the action at pos.
-	 *  Returns NULL if there is no action at this place. */
+	 *  Returns nullptr if there is no action at this place. */
 	QAction* actionAt(const QPoint& pos) const;
 	
 	/** Returns the geometry of the given action.
@@ -88,7 +100,7 @@ public:
 	ItemGeometry actionGeometry(QAction* action) const;
 	
 	/** Returns the currently highlighted action.
-	 *  Returns NULL if no action is highlighted.
+	 *  Returns nullptr if no action is highlighted.
 	 *  @see QMenu::activeAction */
 	QAction* activeAction() const;
 	

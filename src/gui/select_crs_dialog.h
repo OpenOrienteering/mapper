@@ -19,16 +19,17 @@
  */
 
 
-#ifndef _OPENORIENTEERING_SELECT_CRS_DIALOG_H_
-#define _OPENORIENTEERING_SELECT_CRS_DIALOG_H_
+#ifndef OPENORIENTEERING_SELECT_CRS_DIALOG_H
+#define OPENORIENTEERING_SELECT_CRS_DIALOG_H
 
 #include <QDialog>
+#include <QFlags>
+#include <QObject>
 #include <QString>
 
-QT_BEGIN_NAMESPACE
 class QDialogButtonBox;
 class QLabel;
-QT_END_NAMESPACE
+class QWidget;
 
 class CRSSelector;
 class Georeferencing;

@@ -20,7 +20,7 @@
 
 #include "settings_dialog.h"
 
-#include <QAbstractButton>
+#include <QAbstractButton> // IWYU pragma: keep
 #include <QAction>
 #include <QDialogButtonBox>
 #include <QFormLayout>
@@ -30,18 +30,17 @@
 #include <QScroller>
 #include <QStackedWidget>
 #include <QTabWidget>
-#include <QTabBar>
 #include <QToolBar>
 #include <QVBoxLayout>
 
+#include "gui/main_window.h"
+#include "gui/widgets/editor_settings_page.h"
+#include "gui/widgets/general_settings_page.h"
 #include "util/util.h"
-#include "../util/backports.h"
+#include "util/backports.h" // IWYU pragma: keep
 
-#include "main_window.h"
-#include "widgets/editor_settings_page.h"
-#include "widgets/general_settings_page.h"
 #ifdef MAPPER_USE_GDAL
-#  include "../gdal/gdal_settings_page.h"
+#  include "gdal/gdal_settings_page.h"
 #endif
 
 

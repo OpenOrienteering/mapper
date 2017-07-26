@@ -23,10 +23,9 @@
 
 #include <QKeyEvent>
 
-#include "settings.h"
 #include "core/map.h"
-#include "core/objects/object.h"
 #include "core/objects/boolean_tool.h"
+#include "core/objects/object.h"
 #include "core/symbols/combined_symbol.h"
 #include "gui/modifier_key.h"
 #include "gui/map/map_editor.h"
@@ -43,10 +42,8 @@ CutoutTool::CutoutTool(MapEditorController* editor, QAction* tool_button, bool c
 
 }
 
-CutoutTool::~CutoutTool()
-{
+CutoutTool::~CutoutTool() = default;
 
-}
 
 void CutoutTool::finishEditing()
 {
@@ -79,7 +76,7 @@ void CutoutTool::initImpl()
 void CutoutTool::drawImpl(QPainter* painter, MapWidget* widget)
 {
 	// Draw selection renderables
-	map()->drawSelection(painter, true, widget, NULL, false);
+	map()->drawSelection(painter, true, widget, nullptr, false);
 	
 	// Draw cutout shape renderables
 	drawSelectionOrPreviewObjects(painter, widget, true);
@@ -266,7 +263,7 @@ struct PhysicalCutoutOperation
 			if (add_step->isEmpty())
 			{
 				delete add_step;
-				return NULL;
+				return nullptr;
 			}
 			else
 				return add_step;

@@ -22,16 +22,19 @@
 #ifndef OPENORIENTEERING_CRS_SELECTOR_H
 #define OPENORIENTEERING_CRS_SELECTOR_H
 
+#include <vector>
+
 #include <QComboBox>
+#include <QObject>
+#include <QString>
 
-#include "../../core/crs_template.h"
+#include "core/crs_template.h"
 
-QT_BEGIN_NAMESPACE
+class QEvent;
 class QFormLayout;
-QT_END_NAMESPACE
+class QWidget;
 
-class BaseGeoreferencingDialog;
-class CRSTemplate;
+class Georeferencing;
 
 
 /** 

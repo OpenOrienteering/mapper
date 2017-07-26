@@ -24,10 +24,13 @@
 
 #include <QDialog>
 #include <QListWidget>
+#include <QObject>
+#include <QString>
 
-QT_BEGIN_NAMESPACE
 class QAbstractButton;
-QT_END_NAMESPACE
+class QDropEvent;
+class QPushButton;
+class QWidget;
 
 class Map;
 

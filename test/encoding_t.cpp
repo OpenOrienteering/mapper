@@ -20,10 +20,13 @@
 
 #include "encoding_t.h"
 
-#include <QtTest/QtTest>
+#include <QtTest>
+#include <QLatin1String>
+#include <QLocale>
 #include <QString>
+#include <QTextCodec>
 
-#include "../src/util/encoding.h"
+#include "util/encoding.h"
 
 
 EncodingTest::EncodingTest(QObject* parent)

@@ -19,11 +19,19 @@
  */
 
 
-#ifndef _OPENORIENTEERING_COMPASS_DISPLAY_H_
-#define _OPENORIENTEERING_COMPASS_DISPLAY_H_
+#ifndef OPENORIENTEERING_COMPASS_DISPLAY_H
+#define OPENORIENTEERING_COMPASS_DISPLAY_H
 
+#include <QtGlobal>
+#include <QObject>
+#include <QSize>
 #include <QTime>
 #include <QWidget>
+
+class QHideEvent;
+class QPaintEvent;
+class QShowEvent;
+
 
 /**
  * A widget which displays a compass.

@@ -28,7 +28,6 @@
 #include <set>
 #include <vector>
 
-#include <QtGlobal>
 #include <QExplicitlySharedDataPointer>
 #include <QFlags>
 #include <QHash>
@@ -45,14 +44,11 @@
 #include "map_grid.h"
 #include "map_part.h"
 
-QT_BEGIN_NAMESPACE
 class QIODevice;
 class QPainter;
-class QTransform;
 class QTranslator;
 class QWidget;
 // IWYU pragma: no_forward_declare QRectF
-QT_END_NAMESPACE
 
 class CombinedSymbol;
 class FileFormat;

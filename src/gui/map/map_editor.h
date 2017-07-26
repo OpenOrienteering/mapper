@@ -24,7 +24,6 @@
 
 #include <memory>
 
-#include <QtGlobal>
 #include <QClipboard>
 #include <QHash>
 #include <QObject>
@@ -35,7 +34,6 @@
 
 #include "gui/main_window_controller.h"
 
-QT_BEGIN_NAMESPACE
 class QAction;
 class QByteArray;
 class QComboBox;
@@ -49,7 +47,6 @@ class QSignalMapper;
 class QToolBar;
 class QToolButton;
 class QWidget;
-QT_END_NAMESPACE
 
 class ActionGridBar;
 class CompassDisplay;

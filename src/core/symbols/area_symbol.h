@@ -33,12 +33,10 @@
 
 #include "symbol.h"
 
-QT_BEGIN_NAMESPACE
 class QIODevice;
 class QRectF;
 class QXmlStreamReader;
 class QXmlStreamWriter;
-QT_END_NAMESPACE
 
 class AreaRenderable;
 class LineSymbol;

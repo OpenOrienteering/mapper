@@ -19,10 +19,14 @@
  */
 
 
-#ifndef _OPENORIENTEERING_MAIN_WINDOW_CONTROLLER_H_
-#define _OPENORIENTEERING_MAIN_WINDOW_CONTROLLER_H_
+#ifndef OPENORIENTEERING_MAIN_WINDOW_CONTROLLER_H
+#define OPENORIENTEERING_MAIN_WINDOW_CONTROLLER_H
 
-#include <QWidget>
+#include <QObject>
+#include <QString>
+
+class QKeyEvent;
+class QWidget;
 
 class MainWindow;
 class FileFormat;
@@ -48,18 +52,18 @@ public:
 	/** Export to a file, but don't change modified state
 	 *  with regard to the original file.
 	 *  @param path the path to export to
-	 *  @param format the file format (automatically determined if NULL)
+	 *  @param format the file format (automatically determined if nullptr)
 	 *  @return true if saving was sucessful, false on errors
 	 */
-	virtual bool exportTo(const QString& path, const FileFormat* format = NULL);
+	virtual bool exportTo(const QString& path, const FileFormat* format = nullptr);
 
 	/** Load from a file.
 	 *  @param path the path to load from
 	 *  @param dialog_parent Alternative parent widget for all dialogs.
-	 *      If NULL, implementations should use MainWindowController::window.
+	 *      If nullptr, implementations should use MainWindowController::window.
 	 *  @return true if loading was sucessful, false on errors
 	 */
-	virtual bool load(const QString& path, QWidget* dialog_parent = NULL);
+	virtual bool load(const QString& path, QWidget* dialog_parent = nullptr);
 	
 	/** Attach the controller to a main window. 
 	 *  The controller should create its user interface here.

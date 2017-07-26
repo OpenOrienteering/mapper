@@ -22,14 +22,11 @@
 
 #include <memory>
 
-#include <QtGlobal>
 #include <QObject>
 
-QT_BEGIN_NAMESPACE
 class QAction;
 class QDialog;
 class QTextEdit;
-QT_END_NAMESPACE
 
 class MainWindow;
 class MapEditorController;

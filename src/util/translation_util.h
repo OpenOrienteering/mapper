@@ -24,14 +24,11 @@
 #include <vector>
 #include <memory>
 
-#include <QtGlobal>
 #include <QString>
 #include <QTranslator>
 
-QT_BEGIN_NAMESPACE
 class QSettings;
 // IWYU pragma: no_forward_declare QTranslator
-QT_END_NAMESPACE
 
 
 /**

@@ -35,7 +35,7 @@ OcdFileFormat::OcdFileFormat()
 	// Nothing
 }
 
-bool OcdFileFormat::understands(const unsigned char* buffer, size_t sz) const
+bool OcdFileFormat::understands(const unsigned char* buffer, std::size_t sz) const
 {
 	// The first two bytes of the file must be 0x0cad in litte endian ordner.
 	// This test will refuse to understand OCD files on big endian systems:

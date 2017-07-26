@@ -20,7 +20,13 @@
 #include "autosave.h"
 #include "autosave_p.h"
 
-#include "../settings.h"
+#include <QtGlobal>
+#include <QLatin1String>
+#include <QString>
+#include <QTimer>
+#include <QVariant>
+
+#include "settings.h"
 
 AutosavePrivate::AutosavePrivate(Autosave& document)
 : document(document)

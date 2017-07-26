@@ -22,17 +22,16 @@
 #ifndef OPENORIENTEERING_COMBINED_SYMBOL_SETTINGS_H
 #define OPENORIENTEERING_COMBINED_SYMBOL_SETTINGS_H
 
+#include <QObject>
+
 #include "gui/symbols/symbol_properties_widget.h"
 
-#include "core/symbols/combined_symbol.h"
-
-QT_BEGIN_NAMESPACE
-class QComboBox;
 class QLabel;
 class QPushButton;
 class QSpinBox;
-QT_END_NAMESPACE
 
+class CombinedSymbol;
+class Symbol;
 class SymbolDropDown;
 class SymbolSettingDialog;
 

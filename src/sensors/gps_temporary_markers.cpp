@@ -26,7 +26,6 @@
 #include "gui/map/map_widget.h"
 #include "gps_display.h"
 #include "tools/tool.h"
-#include "util/util.h"
 
 
 GPSTemporaryMarkers::GPSTemporaryMarkers(MapWidget* widget, GPSDisplay* gps_display): QObject()
@@ -42,7 +41,7 @@ GPSTemporaryMarkers::GPSTemporaryMarkers(MapWidget* widget, GPSDisplay* gps_disp
 
 GPSTemporaryMarkers::~GPSTemporaryMarkers()
 {
-	widget->setTemporaryMarkerDisplay(NULL);
+	widget->setTemporaryMarkerDisplay(nullptr);
 }
 
 bool GPSTemporaryMarkers::addPoint()

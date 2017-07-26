@@ -24,6 +24,7 @@
  */
 
 #include <QProcess>
+#include <QString>
 
 int main(int, char**)
 {

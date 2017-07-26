@@ -17,12 +17,17 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_FILE_FORMAT_H
-#define _OPENORIENTEERING_FILE_FORMAT_H
+#ifndef OPENORIENTEERING_FILE_FORMAT_H
+#define OPENORIENTEERING_FILE_FORMAT_H
 
+#include <cstddef>
 #include <exception>
 
+#include <QtGlobal>
+#include <QByteArray>
 #include <QFlags>
+#include <QList>
+#include <QString>
 #include <QStringList>
 
 class QIODevice;
@@ -31,6 +36,7 @@ class Exporter;
 class Importer;
 class Map;
 class MapView;
+
 
 /** An exception type thrown by an importer or exporter if it encounters a fatal error.
  */
@@ -195,7 +201,7 @@ public:
 	 *  for a suitable Importer. If there is any doubt about whether the file format can successfully
 	 *  process a file, this method should return false.
 	 */
-	virtual bool understands(const unsigned char *buffer, size_t sz) const;
+	virtual bool understands(const unsigned char *buffer, std::size_t sz) const;
 	
 	/** Creates an Importer that will read a map file from the given stream into the given map and view.
 	 *  The caller can then call doImport() in the returned object to start the import process. The caller
@@ -318,4 +324,4 @@ bool FileFormat::isExportLossy() const
 }
 
 
-#endif // _OPENORIENTEERING_FILE_FORMAT_H
+#endif // OPENORIENTEERING_FILE_FORMAT_H

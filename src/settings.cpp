@@ -21,8 +21,10 @@
 
 #include "settings.h"
 
+#include <QtGlobal>
 #include <QApplication>
-#include <QDebug>
+#include <QByteArray>
+#include <QLatin1String>
 #include <QLocale>
 #include <QScreen>
 #include <QSettings>

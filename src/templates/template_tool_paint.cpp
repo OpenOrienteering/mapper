@@ -29,10 +29,11 @@
 #include <QSettings>
 #include <QVBoxLayout>
 
-#include "gui/map/map_widget.h"
-#include "template.h"
-#include "util/util.h"
+#include "core/map.h"
 #include "gui/map/map_editor.h"
+#include "gui/map/map_widget.h"
+#include "templates/template.h"
+#include "util/util.h"
 
 
 // ### PaintOnTemplateTool ###
@@ -357,16 +358,16 @@ PaintOnTemplateSelectDialog::PaintOnTemplateSelectDialog(Map* map, QWidget* pare
 	connect(draw_button, SIGNAL(clicked(bool)), this, SLOT(accept()));
 	connect(template_list, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)), this, SLOT(currentTemplateChanged(QListWidgetItem*,QListWidgetItem*)));
 	
-	selection = NULL;
+	selection = nullptr;
 	template_list->setCurrentRow(0);
-	draw_button->setEnabled(selection != NULL);
+	draw_button->setEnabled(selection);
 }
 
 void PaintOnTemplateSelectDialog::currentTemplateChanged(QListWidgetItem* current, QListWidgetItem* previous)
 {
 	Q_UNUSED(previous);
 	
-	draw_button->setEnabled(current != NULL);
+	draw_button->setEnabled(current);
 	if (current)
 		selection = reinterpret_cast<Template*>(current->data(Qt::UserRole).value<void*>());
 }

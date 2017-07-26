@@ -47,7 +47,6 @@
 #include "templates/template.h"
 #include "templates/template_adjust.h"
 #include "templates/template_map.h"
-#include "templates/template_position_dock_widget.h"
 #include "templates/template_tool_move.h"
 #include "util/item_delegates.h"
 #include "util/util.h"

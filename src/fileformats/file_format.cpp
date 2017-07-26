@@ -25,10 +25,7 @@
 // ### FileFormatException ###
 
 // virtual
-FileFormatException::~FileFormatException() noexcept
-{
-	// Nothing, not inlined
-}
+FileFormatException::~FileFormatException() noexcept = default;
 
 // virtual
 const char* FileFormatException::what() const noexcept
@@ -53,10 +50,8 @@ FileFormat::FileFormat(FileFormat::FileType file_type, const char* id, const QSt
 		addExtension(file_extension);
 }
 
-FileFormat::~FileFormat()
-{
-	// Nothing
-}
+FileFormat::~FileFormat() = default;
+
 
 void FileFormat::addExtension(const QString& file_extension)
 {
@@ -64,7 +59,7 @@ void FileFormat::addExtension(const QString& file_extension)
 	format_filter = QString::fromLatin1("%1 (*.%2)").arg(format_description, file_extensions.join(QString::fromLatin1(" *.")));
 }
 
-bool FileFormat::understands(const unsigned char *buffer, size_t sz) const
+bool FileFormat::understands(const unsigned char *buffer, std::size_t sz) const
 {
 	Q_UNUSED(buffer);
 	Q_UNUSED(sz);

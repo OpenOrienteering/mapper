@@ -24,27 +24,44 @@
 
 #include <type_traits>
 
+#include <Qt>
+#include <QtGlobal>
+#include <QCursor>
 #include <QImage>
-#include <QPixmap>
+#include <QObject>
+#include <QPoint>
+#include <QPointF>
+#include <QRect>
+#include <QRectF>
+#include <QScopedPointer>
+#include <QSize>
+#include <QString>
 #include <QTime>
 #include <QVariant>
 #include <QWidget>
 
-#include "core/map.h"
+#include "core/map_coord.h"
 #include "core/map_view.h"
 
-QT_BEGIN_NAMESPACE
+class QContextMenuEvent;
+class QEvent;
+class QFocusEvent;
 class QGestureEvent;
+class QInputMethodEvent;
+class QKeyEvent;
 class QLabel;
-QT_END_NAMESPACE
+class QMouseEvent;
+class QPaintEvent;
+class QPainter;
+class QPixmap;
+class QResizeEvent;
+class QWheelEvent;
 
 class MapEditorActivity;
 class MapEditorTool;
-class MapView;
 class PieMenu;
 class TouchCursor;
 class GPSDisplay;
-class CompassDisplay;
 class GPSTemporaryMarkers;
 
 /**

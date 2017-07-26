@@ -18,12 +18,14 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_RENDERABLE_H_
-#define _OPENORIENTEERING_RENDERABLE_H_
+#ifndef OPENORIENTEERING_RENDERABLE_H
+#define OPENORIENTEERING_RENDERABLE_H
 
 #include <map>
 #include <vector>
 
+#include <QtGlobal>
+#include <QFlags>
 #include <QRectF>
 #include <QSharedData>
 #include <QExplicitlySharedDataPointer>
@@ -33,6 +35,7 @@
 class QColor;
 class QPainter;
 class QPainterPath;
+// IWYU pragma: no_forward_declare QRectF
 
 class Map;
 class Object;

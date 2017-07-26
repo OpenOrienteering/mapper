@@ -34,13 +34,14 @@
 #include <QToolBar>
 #include <QVBoxLayout>
 
+#include "core/map.h"
 #include "gui/main_window.h"
+#include "gui/modifier_key.h"
 #include "gui/map/map_editor.h"
 #include "gui/map/map_widget.h"
-#include "template.h"
+#include "templates/template.h"
 #include "util/transformation.h"
 #include "util/util.h"
-#include "gui/modifier_key.h"
 
 float TemplateAdjustActivity::cross_radius = 4;
 
@@ -157,7 +158,7 @@ void TemplateAdjustActivity::templateDeleted(int index, const Template* temp)
 {
 	Q_UNUSED(index);
 	if ((Template*)activity_object == temp)
-		controller->setEditorActivity(NULL);
+		controller->setEditorActivity(nullptr);
 }
 
 // ### TemplateAdjustDockWidget ###
@@ -179,7 +180,7 @@ void TemplateAdjustDockWidget::closeEvent(QCloseEvent* event)
 {
 	Q_UNUSED(event);
 	emit(closed());
-	controller->setEditorActivity(NULL);
+	controller->setEditorActivity(nullptr);
 }
 
 TemplateAdjustWidget::TemplateAdjustWidget(Template* temp, MapEditorController* controller, QWidget* parent): QWidget(parent), temp(temp), controller(controller)
@@ -320,7 +321,7 @@ void TemplateAdjustWidget::stopTemplateAdjust()
 	// If one of these is checked, the corresponding tool should be set. The last condition is just to be sure.
 	if ((new_act->isChecked() || move_act->isChecked() || delete_act->isChecked()) && controller->getTool())
 	{
-		controller->setTool(NULL);
+		controller->setTool(nullptr);
 	}
 }
 
@@ -663,8 +664,8 @@ void TemplateAdjustAddTool::setDirtyRect(MapCoordF mouse_pos)
 
 // ### TemplateAdjustMoveTool ###
 
-QCursor* TemplateAdjustMoveTool::cursor = NULL;
-QCursor* TemplateAdjustMoveTool::cursor_invisible = NULL;
+QCursor* TemplateAdjustMoveTool::cursor = nullptr;
+QCursor* TemplateAdjustMoveTool::cursor_invisible = nullptr;
 
 TemplateAdjustMoveTool::TemplateAdjustMoveTool(MapEditorController* editor, QAction* tool_button, TemplateAdjustWidget* widget): TemplateAdjustEditTool(editor, tool_button, widget)
 {

@@ -22,14 +22,25 @@
 #include "boolean_tool.h"
 
 #include <algorithm>
+#include <cmath>
+#include <cstddef>
 #include <memory>
+#include <stdexcept>
+#include <type_traits>
 
+#include <QtGlobal>
 #include <QDebug>
+#include <QScopedPointer>
 
 #include "core/map.h"
-#include "core/symbols/symbol.h"
+#include "core/map_coord.h"
+#include "core/map_part.h"
+#include "core/path_coord.h"
+#include "core/virtual_path.h"
 #include "core/objects/object.h"
+#include "core/symbols/symbol.h"
 #include "undo/object_undo.h"
+#include "undo/undo.h"
 #include "util/util.h"
 
 
@@ -347,8 +358,8 @@ void BooleanTool::executeForLine(const PathObject* area, const PathObject* line,
 	line->calcAllIntersectionsWith(area, intersections);
 	intersections.normalize();
 	
-	PathObject* first_segment = NULL;
-	PathObject* last_segment = NULL;
+	PathObject* first_segment = nullptr;
+	PathObject* last_segment = nullptr;
 	
 	const auto& part        = line->parts().front();
 	const auto& path_coords = part.path_coords;

@@ -20,8 +20,8 @@
 
 #include "mapper_resource.h"
 
-#include <QChar>
 #include <QDir>
+#include <QLatin1String>
 #include <QString>
 #include <QStringList>
 
@@ -70,7 +70,7 @@ void setSeachPaths()
 #endif
 	
 	// General default path: Qt resource system
-	auto resources = QString{ QLatin1Char{':'} };
+	auto resources = QString{ QLatin1String{":"} };
 	data_paths.append(resources);
 	doc_paths.append(resources + QLatin1String("/doc"));
 	

@@ -20,9 +20,9 @@
 #ifndef OPENORIENTEERING_AUTO_SAVE_T_H
 #define OPENORIENTEERING_AUTO_SAVE_T_H
 
-#include <QtTest/QtTest>
+#include <QObject>
 
-#include "../src/core/autosave.h"
+#include "core/autosave.h"
 
 
 /**

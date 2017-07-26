@@ -21,9 +21,10 @@
 #ifndef OPENORIENTEERING_OBJECT_QUERY_T_H
 #define OPENORIENTEERING_OBJECT_QUERY_T_H
 
-#include <QtTest/QtTest>
+#include <QObject>
 
 class Object;
+
 
 /**
  * @test Tests object query

@@ -29,7 +29,7 @@
 #include <QScrollBar>
 #include <QTimer>
 
-#include "core/map.h"
+#include "core/symbols/line_symbol.h"
 #include "core/symbols/point_symbol.h"
 #include "gui/util_gui.h"
 #include "gui/symbols/point_symbol_editor_widget.h"
@@ -374,14 +374,14 @@ void LineSymbolSettings::pointedLineCapLengthChanged(double value)
 void LineSymbolSettings::dashedChanged(bool checked)
 {
 	symbol->dashed = checked;
-	if (symbol->color == NULL)
+	if (!symbol->color)
 	{
 		symbol->break_length = 0;
 		break_length_edit->setValue(0);
 	}
 	emit propertiesModified();
 	updateStates();
-	if (checked && symbol->color != NULL)
+	if (checked && symbol->color)
 		ensureWidgetVisible(half_outer_dashes_check);
 }
 
@@ -479,7 +479,7 @@ void LineSymbolSettings::differentBordersClicked(bool checked)
 	}
 	else
 	{
-		symbol->getRightBorder().assign(symbol->getBorder(), NULL);
+		symbol->getRightBorder().assign(symbol->getBorder(), nullptr);
 		emit propertiesModified();
 		updateStates();
 	}
@@ -491,7 +491,7 @@ void LineSymbolSettings::borderChanged()
 	if (different_borders_check->isChecked())
 		updateBorder(symbol->getRightBorder(), right_border_widgets);
 	else
-		symbol->getRightBorder().assign(symbol->getBorder(), NULL);
+		symbol->getRightBorder().assign(symbol->getBorder(), nullptr);
 	
 	emit propertiesModified();
 }
@@ -606,7 +606,7 @@ void LineSymbolSettings::updateStates()
 	const bool symbol_active = symbol->line_width > 0;
 	color_edit->setEnabled(symbol_active);
 	
-	const bool line_active = symbol_active && symbol->color != NULL;
+	const bool line_active = symbol_active && symbol->color;
 	for (auto line_settings_widget : line_settings_list)
 	{
 		line_settings_widget->setEnabled(line_active);
@@ -617,7 +617,7 @@ void LineSymbolSettings::updateStates()
 		pointed_cap_length_edit->setEnabled(false);
 	}
 	
-	const bool line_dashed = symbol->dashed && symbol->color != NULL;
+	const bool line_dashed = symbol->dashed && symbol->color;
 	if (line_dashed)
 	{
 		for (auto undashed_widget : undashed_widget_list)

@@ -18,11 +18,26 @@
  */
 
 
-#ifndef _OPENORIENTEERING_TOOL_CUT_HOLE_H_
-#define _OPENORIENTEERING_TOOL_CUT_HOLE_H_
+#ifndef OPENORIENTEERING_TOOL_CUT_HOLE_H
+#define OPENORIENTEERING_TOOL_CUT_HOLE_H
+
+#include <QObject>
+#include <QRectF>
 
 #include "tool.h"
 
+class QAction;
+class QCursor;
+class QEvent;
+class QFocusEvent;
+class QKeyEvent;
+class QMouseEvent;
+class QPainter;
+class QRectF;
+
+class MapCoordF;
+class MapEditorController;
+class MapWidget;
 class PathObject;
 class DrawLineAndAreaTool;
 
@@ -66,7 +81,7 @@ public slots:
 	
 protected:
 	void updateStatusText();
-	void updateDirtyRect(const QRectF* path_rect = NULL);
+	void updateDirtyRect(const QRectF* path_rect = nullptr);
 	void updateDragging(MapCoordF cursor_pos_map, MapWidget* widget);
 	
 	CutHoleTool::HoleType hole_type;

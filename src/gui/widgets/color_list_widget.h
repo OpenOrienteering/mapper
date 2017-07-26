@@ -22,18 +22,15 @@
 #ifndef OPENORIENTEERING_COLOR_LIST_WIDGET_H
 #define OPENORIENTEERING_COLOR_LIST_WIDGET_H
 
-#include <QtGlobal>
 #include <QObject>
 #include <QString>
 #include <QWidget>
 
-QT_BEGIN_NAMESPACE
 class QAction;
 class QIcon;
 class QShowEvent;
 class QTableWidget;
 class QToolButton;
-QT_END_NAMESPACE
 
 class MainWindow;
 class Map;

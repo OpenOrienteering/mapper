@@ -18,13 +18,19 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_TEXT_BROWSER_DIALOG_H_
-#define _OPENORIENTEERING_TEXT_BROWSER_DIALOG_H_
+#ifndef OPENORIENTEERING_TEXT_BROWSER_DIALOG_H
+#define OPENORIENTEERING_TEXT_BROWSER_DIALOG_H
 
 #include <QDialog>
+#include <QObject>
+#include <QSize>
+#include <QString>
+
+class QWidget;
 
 class QTextBrowser;
 class QUrl;
+
 
 /**
  * @brief A dialog for basic browsing of HTML pages.

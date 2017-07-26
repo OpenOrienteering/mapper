@@ -28,6 +28,7 @@
 #include <memory>
 
 #include <Qt>
+#include <QtGlobal>
 #include <QtMath>
 #include <QByteArray>
 #include <QDebug>
@@ -35,7 +36,7 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QIODevice>
-#include <QLatin1Char>
+#include <QLatin1String>
 #include <QLocale>
 #include <QMessageBox>
 #include <QPainter>
@@ -69,6 +70,8 @@
 #include "undo/undo_manager.h"
 #include "util/util.h"
 #include "util/transformation.h"
+
+// IWYU pragma: no_forward_declare QRectF
 
 
 QPointer<QTranslator> map_symbol_translator{};
@@ -565,7 +568,7 @@ void Map::rotateMap(double rotation, const MapCoord& center, bool adjust_georefe
 	}
 	if (adjust_declination)
 	{
-		double rotation_degrees = 180 * rotation / M_PI;
+		auto rotation_degrees = qRadiansToDegrees(rotation);
 		georeferencing->setDeclination(georeferencing->getDeclination() + rotation_degrees);
 	}
 	if (adjust_templates)
@@ -689,7 +692,7 @@ bool Map::exportTo(const QString& path, MapView* view, const FileFormat* format)
 		QString warnings;
 		for (std::vector<QString>::const_iterator it = exporter->warnings().begin(); it != exporter->warnings().end(); ++it) {
 			if (!warnings.isEmpty())
-				warnings += QLatin1Char('\n');
+				warnings += QLatin1String("\n");
 			warnings += *it;
 		}
 		QMessageBox msgBox(QMessageBox::Warning, tr("Warning"), tr("The map export generated warnings."), QMessageBox::Ok);
@@ -756,7 +759,7 @@ bool Map::loadFrom(const QString& path, QWidget* dialog_parent, MapView* view, b
 					QString warnings;
 					for (std::vector<QString>::const_iterator it = importer->warnings().begin(); it != importer->warnings().end(); ++it) {
 						if (!warnings.isEmpty())
-							warnings += QLatin1Char('\n');
+							warnings += QLatin1String("\n");
 						warnings += *it;
 					}
 					QMessageBox msgBox(
@@ -969,7 +972,7 @@ QHash<const Symbol*, Symbol*> Map::importMap(
 							break;
 						}
 					}
-					if (dest_part == nullptr)
+					if (!dest_part)
 					{
 						// Import as new part
 						dest_part = new MapPart(part_to_import->getName(), this);

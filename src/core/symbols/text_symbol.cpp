@@ -26,10 +26,11 @@
 #include <memory>
 // IWYU pragma: no_include <ext/alloc_traits.h>
 
+#include <QtGlobal>
 #include <QCoreApplication>
 #include <QFont>
 #include <QIODevice>
-#include <QLatin1Char>
+#include <QLatin1String>
 #include <QPointF>
 #include <QRectF>
 #include <QStringRef>
@@ -41,7 +42,6 @@
 #include "core/map.h"
 #include "core/map_color.h"
 #include "core/map_coord.h"
-#include "core/map_part.h"
 #include "core/objects/object.h"
 #include "core/objects/text_object.h"
 #include "core/renderables/renderable.h"
@@ -307,7 +307,7 @@ void TextSymbol::updateQFont()
 	qfont.setHintingPreference(QFont::PreferNoHinting);
 	qfont.setKerning(kerning);
 	metrics = QFontMetricsF(qfont);
-	qfont.setLetterSpacing(QFont::AbsoluteSpacing, metrics.width(QString(QLatin1Char{' '})) * character_spacing);
+	qfont.setLetterSpacing(QFont::AbsoluteSpacing, metrics.width(QString(QLatin1String{" "})) * character_spacing);
 	
 	qfont.setStyleStrategy(QFont::ForceOutline);
 

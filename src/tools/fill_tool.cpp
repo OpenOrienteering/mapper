@@ -21,16 +21,13 @@
 
 #include "fill_tool.h"
 
-#include <limits>
-
 #include <QMessageBox>
-#include <QLabel>
 #include <QPainter>
 
+#include "core/map.h"
+#include "core/objects/object.h"
 #include "gui/map/map_editor.h"
 #include "gui/map/map_widget.h"
-#include "core/objects/object.h"
-#include "tool_helpers.h"
 #include "undo/object_undo.h"
 
 
@@ -53,7 +50,7 @@ void FillTool::setDrawingSymbol(const Symbol* symbol)
 {
 	// Avoid using deleted symbol
 	if (map()->findSymbolIndex(drawing_symbol) == -1)
-		symbol = NULL;
+		symbol = nullptr;
 	
 	if (!symbol)
 		deactivate();
@@ -481,7 +478,7 @@ bool FillTool::fillBoundary(const QImage& image, const std::vector< QPoint >& bo
 	path->closeAllParts();
 	
 	const auto simplify_epsilon = 1e-2;
-	path->simplify(NULL, simplify_epsilon);
+	path->simplify(nullptr, simplify_epsilon);
 	
 	int index = map()->addObject(path);
 	map()->clearObjectSelection(false);

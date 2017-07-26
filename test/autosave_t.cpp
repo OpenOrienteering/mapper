@@ -19,7 +19,14 @@
 
 #include "autosave_t.h"
 
-#include "../src/settings.h"
+#include <QtGlobal>
+#include <QtTest>
+#include <QCoreApplication>
+#include <QString>
+#include <QThread>
+
+
+#include "settings.h"
 
 
 namespace {

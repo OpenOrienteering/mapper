@@ -24,6 +24,7 @@
 
 #include <QtGlobal>
 #include <QHash>
+#include <QLatin1String>
 #include <QRectF>
 #include <QSizeF>
 #include <QString>
@@ -32,13 +33,14 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
-class MapCoord;
-using MapCoordVector = std::vector<MapCoord>;
+class QRectF;
+class QSizeF;
+class QXmlStreamReader;
+class QXmlStreamWriter;
 
-// IWYU pragma: no_forward_declare QRectF
-// IWYU pragma: no_forward_declare QSizeF
-// IWYU pragma: no_forward_declare QXmlStreamReader
-// IWYU pragma: no_forward_declare QXmlStreamWriter
+// IWYU pragma: no_include "core/map_coord.h"
+class MapCoord;  // IWYU pragma: keep
+using MapCoordVector = std::vector<MapCoord>;
 
 
 /**

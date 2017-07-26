@@ -30,9 +30,13 @@
 
 #include "tst_qglobal.h"
 
-#include "../src/util/backports.h"
+#include <QtGlobal>
+#include <QtTest>
+#include <QByteArray>
+#include <QString>
 
-#include <QtCore/qtypetraits.h>
+#include "util/backports.h"
+
 
 struct Overloaded
 {

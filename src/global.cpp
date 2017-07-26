@@ -21,7 +21,7 @@
 
 #include "global.h"
 
-#include "mapper_config.h"
+#include "mapper_config.h" // IWYU pragma: keep
 
 #include "fileformats/file_format_registry.h"
 #include "fileformats/native_file_format.h"

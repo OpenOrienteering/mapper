@@ -21,12 +21,11 @@
 
 #include "cut_tool.h"
 
-#include <QApplication>
+#include <QGuiApplication>
 #include <QMessageBox>
 #include <QMouseEvent>
 #include <QPainter>
 
-#include "settings.h"
 #include "core/map.h"
 #include "core/objects/boolean_tool.h"
 #include "core/renderables/renderable.h"

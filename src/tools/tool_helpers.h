@@ -22,22 +22,24 @@
 #ifndef OPENORIENTEERING_TOOL_HELPERS_H
 #define OPENORIENTEERING_TOOL_HELPERS_H
 
+#include <cstddef>
 #include <memory>
 #include <set>
 
 #include <QObject>
 
+#include "core/map_coord.h"
 #include "core/path_coord.h"
-#include "tool.h"
+#include "gui/point_handles.h"
 
-QT_BEGIN_NAMESPACE
 class QPainter;
+class QPoint;
+class QPointF;
 class QRectF;
-QT_END_NAMESPACE
 
 class Map;
+class MapEditorTool;
 class MapWidget;
-class MapEditorController;
 class Object;
 class PathObject;
 
@@ -208,7 +210,7 @@ public:
 	 * 
 	 * TODO: widget parameter is only used for getMapView(). Replace by view parameter?
 	 */
-	MapCoord snapToObject(MapCoordF position, MapWidget* widget, SnappingToolHelperSnapInfo* info = NULL, Object* exclude_object = NULL, float snap_distance = -1);
+	MapCoord snapToObject(MapCoordF position, MapWidget* widget, SnappingToolHelperSnapInfo* info = nullptr, Object* exclude_object = nullptr, float snap_distance = -1);
 	
 	/**
 	 * Checks for existing objects in map at position and if one is found,
@@ -216,7 +218,7 @@ public:
 	 * Internally remembers the position so the next call to draw() will
 	 * draw the snap mark there.
 	 */
-	bool snapToDirection(MapCoordF position, MapWidget* widget, ConstrainAngleToolHelper* angle_tool, MapCoord* out_snap_position = NULL);
+	bool snapToDirection(MapCoordF position, MapWidget* widget, ConstrainAngleToolHelper* angle_tool, MapCoord* out_snap_position = nullptr);
 	
 	/** Draws the snap mark which was last returned by snapToObject(). */
 	void draw(QPainter* painter, MapWidget* widget);
@@ -252,7 +254,7 @@ class SnappingToolHelperSnapInfo
 public:
 	/** Type of object snapped onto */
 	SnappingToolHelper::SnapObjects type;
-	/** Object snapped onto, if type is ObjectCorners or ObjectPaths, else NULL */
+	/** Object snapped onto, if type is ObjectCorners or ObjectPaths, else nullptr */
 	Object* object;
 	/** Index of the map coordinate which was snapped onto if type is ObjectCorners,
 	 *  else -1 (not snapped to a specific coordinate) */

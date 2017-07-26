@@ -21,21 +21,21 @@
 #include "gps_display.h"
 
 #if defined(QT_POSITIONING_LIB)
-#  include <QtPositioning/QGeoPositionInfoSource>
+#  include <QtPositioning/QGeoPositionInfoSource>  // IWYU pragma: keep
 #endif
 #if defined(Q_OS_ANDROID)
 #  include <jni.h>
 #  include <QtAndroidExtras/QAndroidJniObject>
 #endif
-#include <qmath.h>
+#include <QtMath>
 #include <QPainter>
-#include <QTimer>
+#include <QTimer>  // IWYU pragma: keep
 
 #include "core/georeferencing.h"
-#include "compass.h"
 #include "gui/map/map_widget.h"
-#include "util/util.h"
+#include "sensors/compass.h"
 #include "util/backports.h"
+#include "util/util.h"
 
 GPSDisplay::GPSDisplay(MapWidget* widget, const Georeferencing& georeferencing, QObject* parent)
  : QObject(parent)

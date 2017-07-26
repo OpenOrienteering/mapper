@@ -18,22 +18,29 @@
  */
 
 
-#ifndef _OPENORIENTEERING_DRAW_POINT_GPS_H_
-#define _OPENORIENTEERING_DRAW_POINT_GPS_H_
+#ifndef OPENORIENTEERING_DRAW_POINT_GPS_H
+#define OPENORIENTEERING_DRAW_POINT_GPS_H
 
+#include <QObject>
 #include <QPointer>
 #include <QScopedPointer>
 
-#include "tool_base.h"
+#include "tools/tool_base.h"
 
-QT_BEGIN_NAMESPACE
+class QAction;
+class QKeyEvent;
 class QLabel;
-QT_END_NAMESPACE
+class QPainter;
+class QRectF;
+
 class GPSDisplay;
+class MapCoordF;
+class MapEditorController;
+class MapRenderables;
 class MapWidget;
 class PointObject;
 class Symbol;
-class SymbolWidget;
+
 
 /**
  * Tool to draw a PointObject at the GPS position.
