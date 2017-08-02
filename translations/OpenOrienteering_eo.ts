@@ -2753,7 +2753,7 @@ Premu Ne por elekti malsaman dosierformon.</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1076"/>
         <source>There was a problem in determining the file format.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tie estis problemo de determinado de la dosierformo.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1077"/>
