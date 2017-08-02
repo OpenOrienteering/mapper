@@ -200,7 +200,7 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="212"/>
         <source>Element drawing at boundary</source>
-        <translation type="unfinished">Dibujo de objeto en el borde.</translation>
+        <translation>Dibujo de objeto en el límite </translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="214"/>
