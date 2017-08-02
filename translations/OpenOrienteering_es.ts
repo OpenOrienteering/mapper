@@ -200,7 +200,7 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="212"/>
         <source>Element drawing at boundary</source>
-        <translation>Dibujo de objeto en el límite </translation>
+        <translation>Dibujo de objeto en el límite</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="214"/>
@@ -220,7 +220,7 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="217"/>
         <source>Draw elements if all points are inside the boundary.</source>
-        <translation type="unfinished">Dibujar objeto si todos los puntos están dentro del límite.</translation>
+        <translation>Dibujar objeto si todos los puntos están dentro del límite.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="232"/>
@@ -310,7 +310,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="88"/>
         <source>Edit</source>
-        <translation type="unfinished">Editar</translation>
+        <translation>Editar</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="101"/>
@@ -416,17 +416,17 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="274"/>
         <source>Name</source>
-        <translation type="unfinished">Nombre</translation>
+        <translation>Nombre</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="326"/>
         <source>- unnamed -</source>
-        <translation type="unfinished">- sin nombre -</translation>
+        <translation>- sin nombre -</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="595"/>
         <source>Warning</source>
-        <translation type="unfinished">Aviso</translation>
+        <translation>Aviso</translation>
     </message>
 </context>
 <context>
@@ -519,7 +519,7 @@
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="246"/>
         <source>%1 (duplicate)</source>
         <extracomment>Future replacement for COLOR_NAME + " (Duplicate)", for better localization.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 (duplicado)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="247"/>
@@ -3429,12 +3429,12 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="891"/>
         <source>Symbol set ID...</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre del conjunto de símbolos...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="891"/>
         <source>Edit the symbol set ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Editar el nombre del conjunto de símbolos</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="893"/>
@@ -3959,12 +3959,12 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1855"/>
         <source>Symbol set ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre del conjunto de símbolos</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1856"/>
         <source>Edit the symbol set ID:</source>
-        <translation type="unfinished"></translation>
+        <translation>Editar el conjunto de símbolos:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1883"/>
@@ -4652,13 +4652,13 @@ selecc</translation>
         <location filename="../src/gui/color_dialog.cpp" line="270"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="81"/>
         <source>Text source:</source>
-        <translation type="unfinished"></translation>
+        <translation>Texto fuente:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="512"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="324"/>
         <source>Map (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Mapa (%1)</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="513"/>
@@ -4666,25 +4666,25 @@ selecc</translation>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="325"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="338"/>
         <source>undefined language</source>
-        <translation type="unfinished"></translation>
+        <translation>lenguaje no definido</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="531"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="341"/>
         <source>Translation (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Traducción (%1)</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="583"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="215"/>
         <source>Before editing, the stored text will be replaced with the current translation. Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Antes de editar, el texto almacenado será remplazado con la traducción actual. ¿Desea continuar?</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="590"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="222"/>
         <source>After modifying the stored text, the translation may no longer be found. Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Después de modificar el texto almacenado, es posible que la traducción no se pueda encontrar. ¿Desea continuar?</translation>
     </message>
 </context>
 <context>
@@ -5368,7 +5368,7 @@ zoom usando la rueda del ratón, si dispone de esos elementos.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="320"/>
         <source>Unable to setup "%1" SRS for GDAL: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>No se puede establecer "%1" SRS para GDAL: %2</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="327"/>
@@ -5407,11 +5407,9 @@ zoom usando la rueda del ratón, si dispone de esos elementos.</translation>
         <location filename="../src/gdal/ogr_file_format.cpp" line="482"/>
         <location filename="../src/gdal/ogr_file_format.cpp" line="487"/>
         <source>Unable to load %n objects, reason: %1</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>No se puede cargar %n objeto, razón: %1</numerusform>
+        <numerusform>No se pueden cargar %n objetos, razón: %1</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="468"/>
         <source>Empty geometry.</source>
@@ -6185,7 +6183,7 @@ de color</translation>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="127"/>
         <source>Edit the symbol set ID:</source>
-        <translation type="unfinished"></translation>
+        <translation>Editar el conjunto de símbolos:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="130"/>
@@ -6211,7 +6209,7 @@ de color</translation>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="152"/>
         <source>Clear replacements</source>
-        <translation type="unfinished"></translation>
+        <translation>Limpiar sustituciones</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="155"/>
@@ -6228,7 +6226,7 @@ de color</translation>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="162"/>
         <source>Symbol mapping</source>
-        <translation type="unfinished"></translation>
+        <translation>Mapear símbolos</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="230"/>
@@ -6247,7 +6245,7 @@ de color</translation>
 %1
 
 %2</source>
-        <translation type="unfinished">No se puede abrir el archivo:
+        <translation>No se puede abrir el archivo:
 %1
 
 %2</translation>
@@ -6267,8 +6265,8 @@ de color</translation>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="353"/>
         <source>The cross reference table has been modified.
 Do you want to save your changes?</source>
-        <translation type="unfinished">La tabla de referencia ha sido modificada.
-Quieres guardar los cambios?</translation>
+        <translation>La tabla de referencia ha sido modificada.
+¿Quieres guardar los cambios?</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="511"/>
@@ -6644,7 +6642,7 @@ Quieres guardar los cambios?</translation>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="83"/>
         <source>Edit</source>
-        <translation type="unfinished">Editar</translation>
+        <translation>Editar</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="84"/>
@@ -6669,7 +6667,7 @@ Quieres guardar los cambios?</translation>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="227"/>
         <source>Warning</source>
-        <translation type="unfinished">Aviso</translation>
+        <translation>Aviso</translation>
     </message>
 </context>
 <context>
