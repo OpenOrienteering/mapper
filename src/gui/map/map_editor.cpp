@@ -261,7 +261,6 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map, MapView* 
 	
 	statusbar_zoom_frame = nullptr;
 	statusbar_cursorpos_label = nullptr;
-	statusbar_objecttag_label = nullptr;
 	
 	gps_display = nullptr;
 	gps_track_recorder = nullptr;
@@ -645,18 +644,6 @@ void MapEditorController::attach(MainWindow* window)
 		
 		window->statusBar()->addPermanentWidget(statusbar_zoom_frame);
 		window->statusBar()->addPermanentWidget(statusbar_cursorpos_label);
-		
-		if (mode == MapEditor)
-		{
-			statusbar_objecttag_label = new QLabel();
-#ifdef Q_OS_WIN
-			statusbar_objecttag_label->setFrameShape(QFrame::NoFrame);
-#else
-			statusbar_objecttag_label->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
-#endif
-			statusbar_objecttag_label->setMinimumWidth(statusbar_cursorpos_label->minimumWidth());
-			statusbar_objecttag_label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
-		}
 	}
 	
 	// Create map widget
@@ -680,7 +667,6 @@ void MapEditorController::attach(MainWindow* window)
 		{
 			map_widget->setZoomLabel(statusbar_zoom_label);
 			map_widget->setCursorposLabel(statusbar_cursorpos_label);
-			map_widget->setObjectTagLabel(statusbar_objecttag_label);
 			window->setCentralWidget(map_widget);
 			
 			createMenuAndToolbars();
@@ -1461,7 +1447,6 @@ void MapEditorController::detach()
 	
 	delete statusbar_zoom_frame;
 	delete statusbar_cursorpos_label;
-	delete statusbar_objecttag_label;
 	
 #ifdef Q_OS_ANDROID
 	QAndroidJniObject::callStaticMethod<void>("org/openorienteering/mapper/MapperActivity",

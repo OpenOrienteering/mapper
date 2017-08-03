@@ -294,8 +294,6 @@ public:
 	void setZoomLabel(QLabel* zoom_label);
 	/** Specify the label where the MapWidget will display cursor position information. */
 	void setCursorposLabel(QLabel* cursorpos_label);
-	/** Specify the label where the MapWidget will display object tag information. */
-	void setObjectTagLabel(QLabel* objecttag_label);
 	/**
 	 * Specify the system and format for displaying coordinates in
 	 * the cursorpos label. See CoordsType for the available types.
@@ -355,7 +353,6 @@ signals:
 	void cursorPositionChanged();
 	
 private slots:
-	void updateObjectTagLabel();
 	void updateDrawingLaterSlot();
 	
 protected:
@@ -456,8 +453,6 @@ private:
 	void updateZoomLabel();
 	/** Updates the content of the cursorpos label, set by setCursorposLabel(). */
 	void updateCursorposLabel(const MapCoordF pos);
-	/** Updates the content of the object tag label, set by setObjectTagLabel(). */
-	void updateObjectTagLabel(const MapCoordF pos);
 	
 	MapView* view;
 	MapEditorTool* tool;
