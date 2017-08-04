@@ -181,8 +181,10 @@ protected:
 	int convertWideCString(const QString& text, unsigned char* buffer, int buffer_size);
 	int convertRotation(float angle);
 	OCADPoint convertPoint(qint32 x, qint32 y);
+	OCADPoint convertPointWarn(qint32 x, qint32 y);
 	/// Attention: this ignores the coordinate flags!
 	OCADPoint convertPoint(const MapCoord& coord);
+	OCADPoint convertPointWarn(const MapCoord &coord);
 	s32 convertSize(qint32 size);
 	s16 convertColor(const MapColor* color) const;
 	double convertTemplateScale(double mapper_scale);
@@ -222,6 +224,9 @@ private:
 	/// Helper object for pattern export
 	PointObject* origin_point_object;
 	
+	/// Keep coordinate bounds warning status so that we issue the warning only once
+	bool coord_bounds_warned;
+
 	void addStringTruncationWarning(const QString& text, int truncation_pos);
 };
 

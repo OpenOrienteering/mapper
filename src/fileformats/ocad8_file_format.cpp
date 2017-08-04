@@ -1533,7 +1533,8 @@ double OCAD8FileImport::convertTemplateScale(double ocad_scale)
 OCAD8FileExport::OCAD8FileExport(QIODevice* stream, Map* map, MapView* view)
  : Exporter(stream, map, view),
    uses_registration_color(false),
-   file(nullptr)
+   file(nullptr),
+   coord_bounds_warned(false)
 {
 	ocad_init();
 	encoding_1byte = QTextCodec::codecForName("Windows-1252");
@@ -2398,7 +2399,8 @@ u16 OCAD8FileExport::exportCoordinates(const MapCoordVector& coords, OCADPoint**
 	for (size_t i = 0, end = coords.size(); i < end; ++i)
 	{
 		const MapCoord& point = coords[i];
-		OCADPoint p = convertPoint(point);
+		OCADPoint p = convertPointWarn(point);
+
 		if (point.isDashPoint())
 		{
 			if (!symbol || symbol->getType() != Symbol::Line)
@@ -2462,13 +2464,13 @@ u16 OCAD8FileExport::exportTextCoordinates(TextObject* object, OCADPoint** buffe
 			rectIncludeSafe(bounding_box_text, QPointF(info->line_x + info->width, info->line_y + info->descent));
 		}
 		
-		**buffer = convertPoint(MapCoord(text_to_map.map(bounding_box_text.bottomLeft())));
+		**buffer = convertPointWarn(MapCoord(text_to_map.map(bounding_box_text.bottomLeft())));
 		++(*buffer);
-		**buffer = convertPoint(MapCoord(text_to_map.map(bounding_box_text.bottomRight())));
+		**buffer = convertPointWarn(MapCoord(text_to_map.map(bounding_box_text.bottomRight())));
 		++(*buffer);
-		**buffer = convertPoint(MapCoord(text_to_map.map(bounding_box_text.topRight())));
+		**buffer = convertPointWarn(MapCoord(text_to_map.map(bounding_box_text.topRight())));
 		++(*buffer);
-		**buffer = convertPoint(MapCoord(text_to_map.map(bounding_box_text.topLeft())));
+		**buffer = convertPointWarn(MapCoord(text_to_map.map(bounding_box_text.topLeft())));
 		++(*buffer);
 		
 		return 5;
@@ -2488,13 +2490,13 @@ u16 OCAD8FileExport::exportTextCoordinates(TextObject* object, OCADPoint** buffe
 		
 		QTransform transform;
 		transform.rotate(-object->getRotation() * 180 / M_PI);
-		**buffer = convertPoint(MapCoord(transform.map(QPointF(-object->getBoxWidth() / 2, object->getBoxHeight() / 2)) + object->getAnchorCoordF()));
+		**buffer = convertPointWarn(MapCoord(transform.map(QPointF(-object->getBoxWidth() / 2, object->getBoxHeight() / 2)) + object->getAnchorCoordF()));
 		++(*buffer);
-		**buffer = convertPoint(MapCoord(transform.map(QPointF(object->getBoxWidth() / 2, object->getBoxHeight() / 2)) + object->getAnchorCoordF()));
+		**buffer = convertPointWarn(MapCoord(transform.map(QPointF(object->getBoxWidth() / 2, object->getBoxHeight() / 2)) + object->getAnchorCoordF()));
 		++(*buffer);
-		**buffer = convertPoint(MapCoord(transform.map(QPointF(object->getBoxWidth() / 2, new_top)) + object->getAnchorCoordF()));
+		**buffer = convertPointWarn(MapCoord(transform.map(QPointF(object->getBoxWidth() / 2, new_top)) + object->getAnchorCoordF()));
 		++(*buffer);
-		**buffer = convertPoint(MapCoord(transform.map(QPointF(-object->getBoxWidth() / 2, new_top)) + object->getAnchorCoordF()));
+		**buffer = convertPointWarn(MapCoord(transform.map(QPointF(-object->getBoxWidth() / 2, new_top)) + object->getAnchorCoordF()));
 		++(*buffer);
 		
 		return 4;
@@ -2695,9 +2697,25 @@ OCADPoint OCAD8FileExport::convertPoint(qint32 x, qint32 y)
 	return { convertPointMember(x), convertPointMember(-y) };
 }
 
+OCADPoint OCAD8FileExport::convertPointWarn(qint32 x, qint32 y)
+{
+	if (!coord_bounds_warned && (abs(x) >= 2000000 || abs(y) >= 2000000))
+	{
+		addWarning(tr("Some object points are outside of OCAD 8 drawing area (-2m..2m). They might be unreachable in OCAD."));
+		coord_bounds_warned = true;
+	}
+
+	return convertPoint(x, y);
+}
+
 OCADPoint OCAD8FileExport::convertPoint(const MapCoord& coord)
 {
 	return convertPoint(coord.nativeX(), coord.nativeY());
+}
+
+OCADPoint OCAD8FileExport::convertPointWarn(const MapCoord& coord)
+{
+	return convertPointWarn(coord.nativeX(), coord.nativeY());
 }
 
 s32 OCAD8FileExport::convertSize(qint32 size)
