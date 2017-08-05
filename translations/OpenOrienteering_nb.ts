@@ -311,7 +311,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="88"/>
         <source>Edit</source>
-        <translation type="unfinished">Rediger</translation>
+        <translation>Rediger</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="101"/>
@@ -420,17 +420,17 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="274"/>
         <source>Name</source>
-        <translation type="unfinished">Navn</translation>
+        <translation>Navn</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="326"/>
         <source>- unnamed -</source>
-        <translation type="unfinished">- ikke navngitt -</translation>
+        <translation>- ikke navngitt -</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="595"/>
         <source>Warning</source>
-        <translation type="unfinished">Advarsel</translation>
+        <translation>Advarsel</translation>
     </message>
 </context>
 <context>
@@ -524,7 +524,7 @@
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="246"/>
         <source>%1 (duplicate)</source>
         <extracomment>Future replacement for COLOR_NAME + " (Duplicate)", for better localization.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 (duplikat)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="247"/>
@@ -3424,17 +3424,17 @@ Importer data likevel?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="891"/>
         <source>Symbol set ID...</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbolsett-ID...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="891"/>
         <source>Edit the symbol set ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Rediger symbolsett-ID-en</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="893"/>
         <source>Load CRT file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Last CRT-fil...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="893"/>
@@ -3790,12 +3790,12 @@ Importer data likevel?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1855"/>
         <source>Symbol set ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbolsett-ID</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1856"/>
         <source>Edit the symbol set ID:</source>
-        <translation type="unfinished"></translation>
+        <translation>Rediger symbolsett-ID-en:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1883"/>
@@ -4532,11 +4532,9 @@ er valgt</translation>
     <message numerus="yes">
         <location filename="../src/gui/map/map_editor.cpp" line="2488"/>
         <source>Duplicated %n object(s)</source>
-        <translation>
-            <numerusform>Kopiert %n objekt(er)</numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n objekt kopiert</numerusform>
+        <numerusform>%n objekter kopiert</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2703"/>
         <source>No objects were selected because there are no objects with the selected symbols.</source>
@@ -4643,7 +4641,7 @@ er valgt</translation>
         <location filename="../src/gui/color_dialog.cpp" line="270"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="81"/>
         <source>Text source:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tekstkilde:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="512"/>
@@ -4657,13 +4655,13 @@ er valgt</translation>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="325"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="338"/>
         <source>undefined language</source>
-        <translation type="unfinished"></translation>
+        <translation>udefinert språk</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="531"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="341"/>
         <source>Translation (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Oversettelse (%1)</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="583"/>
@@ -6654,7 +6652,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="227"/>
         <source>Warning</source>
-        <translation type="unfinished">Advarsel</translation>
+        <translation>Advarsel</translation>
     </message>
 </context>
 <context>
