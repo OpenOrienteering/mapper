@@ -319,7 +319,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="130"/>
         <source>Knockout: erases lower colors</source>
-        <translation>Altapoisto: poistaa alle jäävän värin</translation>
+        <translation>Aukotus: poistaa alle jäävän värin</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="148"/>
