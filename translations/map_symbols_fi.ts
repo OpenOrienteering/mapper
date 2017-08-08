@@ -2187,13 +2187,13 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
         <message>
             <source>OpenOrienteering Logo</source>
             <comment>Name of symbol 999</comment>
-            <translation type="unfinished">OpenOrienteering Logo</translation>
-        </message>
+            <translation>OpenOrienteering:n logo.</translation>
+    </message>
         <message>
             <source>The OpenOrienteering Logo.</source>
             <comment>Description of symbol 999</comment>
-            <translation type="unfinished">Logo</translation>
-        </message>
+            <translation>OpenOrienteering:n logo.</translation>
+    </message>
     </context>
     <context>
         <name>ISOM2000</name>
@@ -2862,8 +2862,8 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
         <message>
             <source>A black line surrounds the symbol.</source>
             <comment>Description of symbol 309.1</comment>
-            <translation>A black line surrounds the symbol.</translation>
-        </message>
+            <translation>Ympäröidään mustalla rantaviivalla.</translation>
+    </message>
         <message>
             <source>Uncrossable marsh, with border line</source>
             <comment>Name of symbol 309.2</comment>
@@ -3846,13 +3846,13 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
         <message>
             <source>OpenOrienteering Logo</source>
             <comment>Name of symbol 999</comment>
-            <translation>OpenOrienteering Logo</translation>
-        </message>
+            <translation>OpenOrienteering:n logo.</translation>
+    </message>
         <message>
             <source>The OpenOrienteering Logo.</source>
             <comment>Description of symbol 999</comment>
-            <translation type="unfinished">Logo</translation>
-        </message>
+            <translation>OpenOrienteering:n logo.</translation>
+    </message>
     </context>
     <context>
         <name>ISSOM</name>
@@ -6117,13 +6117,13 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
         <message>
             <source>OpenOrienteering Logo</source>
             <comment>Name of symbol 999</comment>
-            <translation>OpenOrienteering Logo</translation>
-        </message>
+            <translation>OpenOrienteering:n logo</translation>
+    </message>
         <message>
             <source>The OpenOrienteering Logo.</source>
             <comment>Description of symbol 999</comment>
-            <translation>Logo</translation>
-        </message>
+            <translation>OpenOrienteering:n logo.</translation>
+    </message>
     </context>
     <context>
         <name>ISMTBOM</name>
@@ -7254,13 +7254,13 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
         <message>
             <source>OpenOrienteering Logo</source>
             <comment>Name of symbol 999</comment>
-            <translation type="unfinished">OpenOrienteering Logo</translation>
-        </message>
+            <translation>OpenOrienteering:n logo</translation>
+    </message>
         <message>
             <source>The OpenOrienteering Logo.</source>
             <comment>Description of symbol 999</comment>
-            <translation type="unfinished">Logo</translation>
-        </message>
+            <translation>OpenOrienteering:n logo.</translation>
+    </message>
         <message>
             <source>Form line</source>
             <comment>Name of symbol 103</comment>
@@ -9258,13 +9258,13 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
         <message>
             <source>OpenOrienteering Logo</source>
             <comment>Name of symbol 999</comment>
-            <translation type="unfinished">OpenOrienteering Logo</translation>
-        </message>
+            <translation>OpenOrienteering:n logo</translation>
+    </message>
         <message>
             <source>The OpenOrienteering Logo.</source>
             <comment>Description of symbol 999</comment>
-            <translation type="unfinished">Logo</translation>
-        </message>
+            <translation>OpenOrienteering:n logo.</translation>
+    </message>
         <message>
             <source>Small earth wall</source>
             <comment>Name of symbol 108</comment>
