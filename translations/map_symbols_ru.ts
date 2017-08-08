@@ -16,8 +16,8 @@
         <message>
             <source>Opaque White below Black</source>
             <comment>Color 2</comment>
-            <translation>Непрозрачный белый под черным</translation>
-        </message>
+            <translation>Непрозрачный белый под чёрным</translation>
+    </message>
         <message>
             <source>Black 65%</source>
             <comment>Color 3</comment>
@@ -126,13 +126,13 @@
         <message>
             <source>Green 50% over Yellow</source>
             <comment>Color 24</comment>
-            <translation>Зелёный 50% поверх Жёлтого</translation>
-        </message>
+            <translation>Зелёный 50% поверх жёлтого</translation>
+    </message>
         <message>
             <source>White over Yellow</source>
             <comment>Color 25</comment>
-            <translation>Белый поверх Жёлтого</translation>
-        </message>
+            <translation>Белый поверх жёлтого</translation>
+    </message>
         <message>
             <source>Yellow</source>
             <comment>Color 26</comment>
@@ -1505,8 +1505,8 @@ Runnability: easy running.</source>
         <message>
             <source>Narrow ride, green 20% background</source>
             <comment>Name of symbol 508.2</comment>
-            <translation>Узкая просека, зеленый фон 20%</translation>
-        </message>
+            <translation>Узкая просека, зелёный фон 20%</translation>
+    </message>
         <message>
             <source>A forest ride or a prominent trace (forestry extraction track, sandy track, ski track) through the terrain which does not have a distinct runnable path along it. The definition of the symbol must be given on the map.
 The definition of the symbol must be given on the map.
@@ -1517,8 +1517,8 @@ Runnability: slow running.</source>
         <message>
             <source>Narrow ride, green 50% background</source>
             <comment>Name of symbol 508.3</comment>
-            <translation>Узкая просека, зеленый фон 50%</translation>
-        </message>
+            <translation>Узкая просека, зелёный фон 50%</translation>
+    </message>
         <message>
             <source>A forest ride or a prominent trace (forestry extraction track, sandy track, ski track) through the terrain which does not have a distinct runnable path along it. The definition of the symbol must be given on the map.
 The definition of the symbol must be given on the map.
@@ -1794,8 +1794,8 @@ Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m)
         <message>
             <source>A black line surrounds the symbol 521.1.1.</source>
             <comment>Description of symbol 521.4</comment>
-            <translation>Черная линия, ограничивающая символ 521.1.1.</translation>
-        </message>
+            <translation>Чёрная линия, ограничивающая символ 521.1.1.</translation>
+    </message>
         <message>
             <source>Canopy with outline</source>
             <comment>Name of symbol 522</comment>
@@ -1824,8 +1824,8 @@ Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m)
         <message>
             <source>A black line surrounds the symbol 522.0.1.</source>
             <comment>Description of symbol 522.2</comment>
-            <translation>Черная линия, ограничивающая символ 522.0.1.</translation>
-        </message>
+            <translation>Чёрная линия, ограничивающая символ 522.0.1.</translation>
+    </message>
         <message>
             <source>Ruin</source>
             <comment>Name of symbol 523</comment>
@@ -3109,8 +3109,8 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <message>
             <source>Cultivated land which is seasonally out-of-bounds due to growing crops may be shown with a black dot screen.</source>
             <comment>Description of symbol 415</comment>
-            <translation>Культурная земля, которая сезонно запрещена для бега (растущие злаки). Может быть показана черной точечной сеткой.</translation>
-        </message>
+            <translation>Культурная земля, которая сезонно запрещена для бега (растущие злаки). Может быть показана чёрной точечной сеткой.</translation>
+    </message>
         <message>
             <source>Distinct vegetation boundary</source>
             <comment>Name of symbol 416</comment>
@@ -3425,8 +3425,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Houses and gardens and other built up areas. Roads, buildings and other significant features within a settlement must be shown. If all buildings cannot be shown, an alternative symbol (black line screen) may be used.</source>
             <comment>Description of symbol 527</comment>
-            <translation>Жилые кварталы, сады. Дороги, отдельные строения, и другие выделяющиеся объекты должны быть показаны. Если это невозможно, то может быть использован альтернативный знак (черная вертикальная штриховка).</translation>
-        </message>
+            <translation>Жилые кварталы, сады. Дороги, отдельные строения, и другие выделяющиеся объекты должны быть показаны. Если это невозможно, то может быть использован альтернативный знак (чёрная вертикальная штриховка).</translation>
+    </message>
         <message>
             <source>Settlement</source>
             <comment>Name of symbol 527.1</comment>
@@ -3435,8 +3435,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Houses and gardens and other built up areas. Roads, buildings and other significant features within a settlement must be shown. If all buildings cannot be shown, an alternative symbol (black line screen) may be used.</source>
             <comment>Description of symbol 527.1</comment>
-            <translation>Жилые кварталы, сады. Дороги, отдельные строения, и другие выделяющиеся объекты должны быть показаны. Если это невозможно, то может быть использован альтернативный знак (черная вертикальная штриховка).</translation>
-        </message>
+            <translation>Жилые кварталы, сады. Дороги, отдельные строения, и другие выделяющиеся объекты должны быть показаны. Если это невозможно, то может быть использован альтернативный знак (чёрная вертикальная штриховка).</translation>
+    </message>
         <message>
             <source>Permanently out of bounds</source>
             <comment>Name of symbol 528</comment>
@@ -3844,8 +3844,8 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>The OpenOrienteering Logo.</source>
             <comment>Description of symbol 999</comment>
-            <translation>Логотип OpenOrienteering</translation>
-        </message>
+            <translation>Логотип OpenOrienteering.</translation>
+    </message>
     </context>
     <context>
         <name>ISSOM</name>
@@ -3867,8 +3867,8 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Opaque White below Black</source>
             <comment>Color 3</comment>
-            <translation type="unfinished">Непрозрачный белый под черным</translation>
-        </message>
+            <translation>Непрозрачный белый под чёрным</translation>
+    </message>
         <message>
             <source>Brown for contours</source>
             <comment>Color 4</comment>
@@ -4863,8 +4863,8 @@ Minimum width: 0.25 mm.</source>
         <message>
             <source>Cultivated land which is seasonally out-of-bounds due to growing crops may be shown with a black dot screen.</source>
             <comment>Description of symbol 415</comment>
-            <translation type="unfinished">Культурная земля, которая сезонно запрещена для бега (растущие злаки). Может быть показана черной точечной сеткой.</translation>
-        </message>
+            <translation>Культурная земля, которая сезонно запрещена для бега (растущие злаки). Может быть показана чёрной точечной сеткой.</translation>
+    </message>
         <message>
             <source>Distinct vegetation boundary</source>
             <comment>Name of symbol 416</comment>
@@ -6676,8 +6676,8 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <message>
             <source>Houses and gardens and other built up areas. Roads, buildings and other significant features within a settlement must be shown. If all buildings cannot be shown, an alternative symbol (black line screen) may be used.</source>
             <comment>Description of symbol 527</comment>
-            <translation type="unfinished">Жилые кварталы, сады. Дороги, отдельные строения, и другие выделяющиеся объекты должны быть показаны. Если это невозможно, то может быть использован альтернативный знак (черная вертикальная штриховка).</translation>
-        </message>
+            <translation>Жилые кварталы, сады. Дороги, отдельные строения, и другие выделяющиеся объекты должны быть показаны. Если это невозможно, то может быть использован альтернативный знак (чёрная вертикальная штриховка).</translation>
+    </message>
         <message>
             <source>Paved area</source>
             <comment>Name of symbol 529</comment>
@@ -7395,8 +7395,8 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Cultivated land which is seasonally out-of-bounds due to growing crops may be shown with a black dot screen.</source>
             <comment>Description of symbol 415</comment>
-            <translation type="unfinished">Культурная земля, которая сезонно запрещена для бега (растущие злаки). Может быть показана черной точечной сеткой.</translation>
-        </message>
+            <translation>Культурная земля, которая сезонно запрещена для бега (растущие злаки). Может быть показана чёрной точечной сеткой.</translation>
+    </message>
         <message>
             <source>Distinct vegetation boundary</source>
             <comment>Name of symbol 416</comment>
@@ -7556,8 +7556,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Houses and gardens and other built up areas. Roads, buildings and other significant features within a settlement must be shown. If all buildings cannot be shown, an alternative symbol (black line screen) may be used.</source>
             <comment>Description of symbol 527.1</comment>
-            <translation type="unfinished">Жилые кварталы, сады. Дороги, отдельные строения, и другие выделяющиеся объекты должны быть показаны. Если это невозможно, то может быть использован альтернативный знак (черная вертикальная штриховка).</translation>
-        </message>
+            <translation>Жилые кварталы, сады. Дороги, отдельные строения, и другие выделяющиеся объекты должны быть показаны. Если это невозможно, то может быть использован альтернативный знак (чёрная вертикальная штриховка).</translation>
+    </message>
         <message>
             <source>Permanently out of bounds</source>
             <comment>Name of symbol 528</comment>
@@ -7739,62 +7739,62 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Green 50%, Yellow</source>
             <comment>Color 12</comment>
-            <translation type="unfinished">Зелёный 50%, Жёлтый</translation>
-        </message>
+            <translation>Зелёный 50%, жёлтый</translation>
+    </message>
         <message>
             <source>Green over White over Green</source>
             <comment>Color 13</comment>
-            <translation type="unfinished">Зелёный на белом на зелёном</translation>
+            <translation>Зелёный на белом на зелёном</translation>
         </message>
         <message>
             <source>Opaque White over Green</source>
             <comment>Color 14</comment>
-            <translation type="unfinished">Непрозрачный белый на зелёном</translation>
+            <translation>Непрозрачный белый на зелёном</translation>
         </message>
         <message>
             <source>Opaque Green</source>
             <comment>Color 15</comment>
-            <translation type="unfinished">Непрозрачный зелёный</translation>
+            <translation>Непрозрачный зелёный</translation>
         </message>
         <message>
             <source>Green</source>
             <comment>Color 16</comment>
-            <translation type="unfinished">Зелёный</translation>
+            <translation>Зелёный</translation>
         </message>
         <message>
             <source>Green 60%</source>
             <comment>Color 17</comment>
-            <translation type="unfinished">Зелёный 60%</translation>
+            <translation>Зелёный 60%</translation>
         </message>
         <message>
             <source>Green 30%</source>
             <comment>Color 18</comment>
-            <translation type="unfinished">Зелёный 30%</translation>
+            <translation>Зелёный 30%</translation>
         </message>
         <message>
             <source>Green below light greens</source>
             <comment>Color 19</comment>
-            <translation type="unfinished">Зелёный под светло-зелёным</translation>
+            <translation>Зелёный под светло-зелёным</translation>
         </message>
         <message>
             <source>Yellow</source>
             <comment>Color 20</comment>
-            <translation type="unfinished">Жёлтый</translation>
+            <translation>Жёлтый</translation>
         </message>
         <message>
             <source>Yellow 50%</source>
             <comment>Color 21</comment>
-            <translation type="unfinished">Жёлтый 50%</translation>
+            <translation>Жёлтый 50%</translation>
         </message>
         <message>
             <source>White over Yellow 70%</source>
             <comment>Color 22</comment>
-            <translation type="unfinished">Белый на жёлтом 70%</translation>
+            <translation>Белый на жёлтом 70%</translation>
         </message>
         <message>
             <source>Yellow 70%</source>
             <comment>Color 23</comment>
-            <translation type="unfinished">Жёлтый 70%</translation>
+            <translation>Жёлтый 70%</translation>
         </message>
         <message>
             <source>Contour</source>
@@ -8460,8 +8460,8 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <message>
             <source>Houses and gardens and other built up areas. Roads, buildings and other significant features within a settlement must be shown. If all buildings cannot be shown, an alternative symbol (black line screen) may be used.</source>
             <comment>Description of symbol 527</comment>
-            <translation type="unfinished">Жилые кварталы, сады. Дороги, отдельные строения, и другие выделяющиеся объекты должны быть показаны. Если это невозможно, то может быть использован альтернативный знак (черная вертикальная штриховка).</translation>
-        </message>
+            <translation>Жилые кварталы, сады. Дороги, отдельные строения, и другие выделяющиеся объекты должны быть показаны. Если это невозможно, то может быть использован альтернативный знак (чёрная вертикальная штриховка).</translation>
+    </message>
         <message>
             <source>Settlement</source>
             <comment>Name of symbol 527.1</comment>
@@ -8470,8 +8470,8 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <message>
             <source>Houses and gardens and other built up areas. Roads, buildings and other significant features within a settlement must be shown. If all buildings cannot be shown, an alternative symbol (black line screen) may be used.</source>
             <comment>Description of symbol 527.1</comment>
-            <translation type="unfinished">Жилые кварталы, сады. Дороги, отдельные строения, и другие выделяющиеся объекты должны быть показаны. Если это невозможно, то может быть использован альтернативный знак (черная вертикальная штриховка).</translation>
-        </message>
+            <translation>Жилые кварталы, сады. Дороги, отдельные строения, и другие выделяющиеся объекты должны быть показаны. Если это невозможно, то может быть использован альтернативный знак (чёрная вертикальная штриховка).</translation>
+    </message>
         <message>
             <source>Permanently out of bounds</source>
             <comment>Name of symbol 528</comment>
@@ -9207,7 +9207,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>A marsh which is uncrossable or dangerous for the runner. A black line surrounds the symbol.</source>
             <comment>Description of symbol 309</comment>
-            <translation type="unfinished">Болото непроходимое или опасное для спортсменов. Чёрная линия дается по контуру.</translation>
+            <translation>Болото непроходимое или опасное для спортсменов. Чёрная линия дается по контуру.</translation>
         </message>
         <message>
             <source>Uncrossable marsh, border line</source>
@@ -9217,7 +9217,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>A black line surrounds the symbol.</source>
             <comment>Description of symbol 309.1</comment>
-            <translation type="unfinished">Чёрная линия дается по контуру.</translation>
+            <translation>Чёрная линия дается по контуру.</translation>
         </message>
         <message>
             <source>Uncrossable marsh, with border line</source>
@@ -9362,8 +9362,8 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Cultivated land which is seasonally out-of-bounds due to growing crops may be shown with a black dot screen.</source>
             <comment>Description of symbol 415</comment>
-            <translation type="unfinished">Культурная земля, которая сезонно запрещена для бега (растущие злаки). Может быть показана черной точечной сеткой.</translation>
-        </message>
+            <translation>Культурная земля, которая сезонно запрещена для бега (растущие злаки). Может быть показана чёрной точечной сеткой.</translation>
+    </message>
         <message>
             <source>Special vegetation feature</source>
             <comment>Name of symbol 419</comment>
