@@ -21,6 +21,8 @@
 
 #include "cutout_tool.h"
 
+#include <functional>
+
 #include <QKeyEvent>
 
 #include "core/map.h"
@@ -181,6 +183,10 @@ struct PhysicalCutoutOperation
 		delete_step = new DeleteObjectsUndoStep(map);
 	}
 	
+	// This functor must not be copied. If it is to be used via std::function,
+	// std::ref can be used to explicitly create a copyable reference.
+	PhysicalCutoutOperation(const PhysicalCutoutOperation&) = delete;
+	
 	void operator()(Object* object)
 	{
 		// If there is a selection, only clip selected objects
@@ -297,7 +303,7 @@ private:
 void CutoutTool::apply(Map* map, PathObject* cutout_object, bool cut_away)
 {
 	PhysicalCutoutOperation operation(map, cutout_object, cut_away);
-	map->getCurrentPart()->applyOnAllObjects(operation);
+	map->getCurrentPart()->applyOnAllObjects(std::ref(operation));
 	UndoStep* undo_step = operation.finish();
 	if (undo_step)
 	{
