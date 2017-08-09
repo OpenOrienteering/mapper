@@ -450,6 +450,12 @@ void SymbolSetTool::processSymbolSet()
 			QCOMPARE(symbols_changed, 139);
 			QCOMPARE(north_lines_changed, 2);
 		}
+		else if (name.startsWith(QLatin1String("ISOM2017")))
+		{
+			const auto factor = double(source_scale) / double(target_scale);
+			map.scaleAllObjects(factor, MapCoord{});
+			map.scaleAllSymbols(factor);
+		}
 		else if (name.startsWith(QLatin1String("ISSOM")))
 		{
 			int north_lines_changed = 0;
@@ -537,8 +543,7 @@ void SymbolSetTool::processSymbolSet()
 			QCOMPARE(symbols_changed, 152);
 			QCOMPARE(north_lines_changed, 2);
 		}
-		else if (name.startsWith(QLatin1String("Course_Design"))
-		         || name.startsWith(QLatin1String("ISOM2017")))
+		else if (name.startsWith(QLatin1String("Course_Design")))
 		{
 			const double factor = double(source_scale) / double(target_scale);
 			map.scaleAllObjects(factor, MapCoord());
