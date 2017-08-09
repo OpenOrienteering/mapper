@@ -755,7 +755,6 @@ private:
 	
 	QFrame* statusbar_zoom_frame;
 	QLabel* statusbar_cursorpos_label;
-	QLabel* statusbar_objecttag_label;
 	QAction* copy_coords_act;
 	
 	QToolBar* toolbar_view;

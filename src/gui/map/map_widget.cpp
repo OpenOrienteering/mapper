@@ -58,7 +58,6 @@ MapWidget::MapWidget(bool show_help, bool force_antialiasing, QWidget* parent)
  , coords_type(MAP_COORDS)
  , zoom_label(nullptr)
  , cursorpos_label(nullptr)
- , objecttag_label(nullptr)
  , show_help(show_help)
  , force_antialiasing(force_antialiasing)
  , dragging(false)
@@ -100,7 +99,6 @@ void MapWidget::setMapView(MapView* view)
 		{
 			auto map = view->getMap();
 			map->removeMapWidget(this);
-			disconnect(map, &Map::objectSelectionChanged, this,  QOverload<>::of(&MapWidget::updateObjectTagLabel));
 			
 			disconnect(this->view, &MapView::viewChanged, this, &MapWidget::viewChanged);
 			disconnect(this->view, &MapView::panOffsetChanged, this, &MapWidget::setPanOffset);
@@ -116,7 +114,6 @@ void MapWidget::setMapView(MapView* view)
 			connect(this->view, &MapView::visibilityChanged, this, &MapWidget::updateEverything);
 			
 			auto map = this->view->getMap();
-			connect(map, &Map::objectSelectionChanged, this,  QOverload<>::of(&MapWidget::updateObjectTagLabel));
 			map->addMapWidget(this);
 		}
 		
@@ -551,11 +548,6 @@ void MapWidget::setCursorposLabel(QLabel* cursorpos_label)
 	this->cursorpos_label = cursorpos_label;
 }
 
-void MapWidget::setObjectTagLabel(QLabel *objecttag_label)
-{
-	this->objecttag_label = objecttag_label;
-}
-
 void MapWidget::updateZoomLabel()
 {
 	if (zoom_label)
@@ -635,30 +627,6 @@ void MapWidget::updateCursorposLabel(const MapCoordF pos)
 		if (!ok)
 			cursorpos_label->setText(tr("Error"));
 	}
-}
-
-void MapWidget::updateObjectTagLabel(const MapCoordF pos)
-{
-	if (objecttag_label)
-	{
-		QString text;
-		SelectionInfoVector objects;
-		view->getMap()->findObjectsAt(pos, 0.001f * view->pixelToLength(5), false, false, false, true, objects);
-		if (!objects.empty())
-		{
-			std::sort(objects.begin(), objects.end(), ObjectSelector::sortObjects);
-			Object* object = objects.front().second;
-			static const QString key_name { QStringLiteral("name") };
-			if (object->tags().contains(key_name))
-				text = object->tags()[key_name];
-		}
-		objecttag_label->setText(text);
-	}
-}
-
-void MapWidget::updateObjectTagLabel()
-{
-	updateObjectTagLabel(last_cursor_pos);
 }
 
 int MapWidget::getTimeSinceLastInteraction()
@@ -990,7 +958,6 @@ void MapWidget::_mouseMoveEvent(QMouseEvent* event)
 	else
     {
 		updateCursorposLabel(view->viewToMapF(viewportToView(event->pos())));
-        updateObjectTagLabel(view->viewToMapF(viewportToView(event->pos())));
     }
 	
 	if (tool && tool->mouseMoveEvent(event, view->viewToMapF(viewportToView(event->pos())), this))
