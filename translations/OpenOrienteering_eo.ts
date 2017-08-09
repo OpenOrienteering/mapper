@@ -1361,7 +1361,7 @@
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="100"/>
         <source>The map area is large. Use of the fill tool may be very slow. Do you want to use it anyway?</source>
-        <translation type="unfinished"></translation>
+        <translation>La mapa areo estas granda. Uzo de la plenigilo povas esti tre malrapida. Ĉu vi volas uzi ĝin ĉiuokaze?</translation>
     </message>
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="85"/>
@@ -1373,7 +1373,7 @@
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="86"/>
         <source>The clicked area is not bounded by lines or areas, cannot fill this area.</source>
-        <translation type="unfinished"></translation>
+        <translation>La elektita areo ne estas limigita per linioj aŭ areoj, ne povas plenigi ĉi tiun areon.</translation>
     </message>
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="120"/>
@@ -1497,7 +1497,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="112"/>
         <source>Recovery information saving interval:</source>
-        <translation type="unfinished"></translation>
+        <translation>Intervalo de konservado:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="111"/>
@@ -1529,7 +1529,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="141"/>
         <source>Use the new OCD importer also for version 8 files</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzi la novan OCD-importilon ankaŭ por dosierversio 8</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="161"/>
@@ -1890,7 +1890,8 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="677"/>
         <source>The online declination lookup failed:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Eraro dum la reta serĉo de deklinacio:
+%1</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="505"/>
@@ -2303,7 +2304,7 @@
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="90"/>
         <source>Line join:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kuniĝo de linioj:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="92"/>
@@ -2333,7 +2334,7 @@
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="206"/>
         <source>Minimum mid symbol count:</source>
-        <translation type="unfinished"></translation>
+        <translation>Minimuma kvanto de mezaj simboloj:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="209"/>
@@ -2353,12 +2354,12 @@
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="133"/>
         <source>Break length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Interspaco:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="136"/>
         <source>Dashes grouped together:</source>
-        <translation type="unfinished"></translation>
+        <translation>Grupigo de strekoj:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="138"/>
@@ -2662,7 +2663,7 @@ Do you want to scale the symbols to the selected scale?</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="741"/>
         <source>It seems that %1 crashed the last time this file was opened:&lt;br /&gt;&lt;tt&gt;%2&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Really retry to open it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ŝajnas ke %1 kraŝis la lastan fojon, kiam ĉi tiu dosiero estis malfermita:&lt;br /&gt;&lt;tt&gt;%2&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Ĉu vere reprovi malfermi ĝin?</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="929"/>
@@ -2734,7 +2735,10 @@ Do you want to discard your changes?</source>
 
 Press Yes to save in this format.
 Press No to choose a different format.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ĉi tiu mapo estas konservata kiel "%1"-dosiero. Informo povas esti perdita.
+
+Premu Jes por konservi en ĉi tiu dosierformo.
+Premu Ne por elekti malsaman dosierformon.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1054"/>
@@ -2749,7 +2753,7 @@ Press No to choose a different format.</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1076"/>
         <source>There was a problem in determining the file format.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tie estis problemo de determinado de la dosierformo.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1077"/>
@@ -2778,14 +2782,18 @@ Press No to choose a different format.</source>
         <source>Cannot export the map as
 "%1"
 because saving as %2 (.%3) is not supported.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne povas eksporti la mapon kiel
+"%1"
+ĉar konservado kiel %2 (.%3) estas nesubtenata.</translation>
     </message>
     <message>
         <location filename="../src/core/map.cpp" line="628"/>
         <source>Cannot export the map as
 "%1"
 because the format is unknown.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne povas eksporti la mapon kiel
+"%1"
+ĉar la dosierformo estas nekonata.</translation>
     </message>
     <message>
         <location filename="../src/core/map.cpp" line="695"/>
@@ -2796,7 +2804,7 @@ because the format is unknown.</source>
     <message>
         <location filename="../src/core/map.cpp" line="695"/>
         <source>The map export generated warnings.</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksportado de la mapo kaŭzis avertojn.</translation>
     </message>
     <message>
         <location filename="../src/core/map.cpp" line="670"/>
