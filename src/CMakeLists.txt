@@ -171,6 +171,7 @@ set(Mapper_Common_SRCS
   
   tools/cut_tool.cpp
   tools/cut_hole_tool.cpp
+  tools/cutout_operation.cpp
   tools/cutout_tool.cpp
   tools/distribute_points_tool.cpp
   tools/draw_line_and_area_tool.cpp

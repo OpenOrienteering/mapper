@@ -22,7 +22,6 @@
 #include "cutout_tool.h"
 
 #include <functional>
-#include <vector>
 
 #include <Qt>
 #include <QtGlobal>
@@ -30,25 +29,21 @@
 #include <QFlags>
 #include <QKeyEvent>
 #include <QPixmap>
-#include <QRectF>
 #include <QString>
 
 #include "core/map.h"
 #include "core/map_coord.h"
 #include "core/map_part.h"
 #include "core/map_view.h"
-#include "core/objects/boolean_tool.h"
 #include "core/objects/object.h"
 #include "core/symbols/combined_symbol.h"
-#include "core/symbols/symbol.h"
 #include "gui/modifier_key.h"
 #include "gui/map/map_editor.h"
 #include "gui/map/map_widget.h"
+#include "tools/cutout_operation.h"
 #include "tools/edit_tool.h"
 #include "tools/tool.h"
 #include "tools/tool_base.h"
-#include "undo/object_undo.h"
-#include "undo/undo.h"
 #include "util/util.h"
 
 
@@ -188,144 +183,8 @@ void CutoutTool::dragFinish()
 }
 
 
-
-struct PhysicalCutoutOperation
-{
-	PhysicalCutoutOperation(Map* map, PathObject* cutout_object, bool cut_away)
-	: map(map)
-	, cutout_object(cutout_object)
-	, cut_away(cut_away)
-	{
-		add_step = new AddObjectsUndoStep(map);
-		delete_step = new DeleteObjectsUndoStep(map);
-	}
-	
-	// This functor must not be copied. If it is to be used via std::function,
-	// std::ref can be used to explicitly create a copyable reference.
-	PhysicalCutoutOperation(const PhysicalCutoutOperation&) = delete;
-	
-	void operator()(Object* object)
-	{
-		// If there is a selection, only clip selected objects
-		if (map->getNumSelectedObjects() > 0 && !map->isObjectSelected(object))
-			return;
-		// Don't clip object itself
-		if (object == cutout_object)
-			return;
-		
-		// Early out
-		if (!object->getExtent().intersects(cutout_object->getExtent()))
-		{
-			if (!cut_away)
-				add_step->addObject(object, object);
-			return;
-		}
-		
-		if (object->getType() == Object::Point ||
-			object->getType() == Object::Text)
-		{
-			// Simple check if the (first) point is inside the area
-			if (cutout_object->isPointInsideArea(MapCoordF(object->getRawCoordinateVector().at(0))) == cut_away)
-				add_step->addObject(object, object);
-		}
-		else if (object->getType() == Object::Path)
-		{
-			if (object->getSymbol()->getContainedTypes() & Symbol::Area)
-			{
-				// Use the Clipper library to clip the area
-				BooleanTool boolean_tool(cut_away ? BooleanTool::Difference : BooleanTool::Intersection, map);
-				BooleanTool::PathObjects in_objects;
-				in_objects.push_back(cutout_object);
-				in_objects.push_back(object->asPath());
-				BooleanTool::PathObjects out_objects;
-				if (!boolean_tool.executeForObjects(object->asPath(), in_objects, out_objects))
-					return;
-				
-				add_step->addObject(object, object);
-				new_objects.insert(new_objects.end(), out_objects.begin(), out_objects.end());
-			}
-			else
-			{
-				// Use some custom code to clip the line
-				BooleanTool boolean_tool(cut_away ? BooleanTool::Difference : BooleanTool::Intersection, map);
-				BooleanTool::PathObjects out_objects;
-				boolean_tool.executeForLine(cutout_object, object->asPath(), out_objects);
-				
-				add_step->addObject(object, object);
-				new_objects.insert(new_objects.end(), out_objects.begin(), out_objects.end());
-			}
-		}
-		
-		return;
-	}
-	
-	UndoStep* finish()
-	{
-		auto part = map->getCurrentPart();
-		
-		map->clearObjectSelection(false);
-		add_step->removeContainedObjects(false);
-		for (auto object : new_objects)
-		{
-			map->addObject(object);
-		}
-		// Do not merge this loop into the upper one;
-		// theoretically undo step indices could be wrong this way.
-		for (auto object : new_objects)
-		{
-			delete_step->addObject(part->findObjectIndex(object));
-		}
-		map->emitSelectionChanged();
-		
-		// Return undo step
-		if (delete_step->isEmpty())
-		{
-			delete delete_step;
-			if (add_step->isEmpty())
-			{
-				delete add_step;
-				return nullptr;
-			}
-			else
-				return add_step;
-		}
-		else
-		{
-			if (add_step->isEmpty())
-			{
-				delete add_step;
-				return delete_step;	
-			}
-			else
-			{
-				auto combined_step = new CombinedUndoStep(map);
-				combined_step->push(add_step);
-				combined_step->push(delete_step);
-				return combined_step;
-			}
-		}
-	}
-	
-private:
-	Map* map;
-	PathObject* cutout_object;
-	std::vector<PathObject*> new_objects;
-	AddObjectsUndoStep* add_step;
-	DeleteObjectsUndoStep* delete_step;
-	bool cut_away;
-};
-
-
-
 void CutoutTool::apply(Map* map, PathObject* cutout_object, bool cut_away)
 {
-	PhysicalCutoutOperation operation(map, cutout_object, cut_away);
+	CutoutOperation operation(map, cutout_object, cut_away);
 	map->getCurrentPart()->applyOnAllObjects(std::ref(operation));
-	auto undo_step = operation.finish();
-	if (undo_step)
-	{
-		map->setObjectsDirty();
-		map->push(undo_step);
-		map->emitSelectionEdited();
-	}
 }
