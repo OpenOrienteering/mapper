@@ -179,6 +179,7 @@ struct PhysicalCutoutOperation
 	, cutout_object(cutout_object)
 	, cut_away(cut_away)
 	{
+		new_objects = new std::vector<PathObject*>();
 		add_step = new AddObjectsUndoStep(map);
 		delete_step = new DeleteObjectsUndoStep(map);
 	}
@@ -225,7 +226,7 @@ struct PhysicalCutoutOperation
 					return;
 				
 				add_step->addObject(object, object);
-				new_objects.insert(new_objects.end(), out_objects.begin(), out_objects.end());
+				new_objects->insert(new_objects->end(), out_objects.begin(), out_objects.end());
 			}
 			else
 			{
@@ -235,7 +236,7 @@ struct PhysicalCutoutOperation
 				boolean_tool.executeForLine(cutout_object, object->asPath(), out_objects);
 				
 				add_step->addObject(object, object);
-				new_objects.insert(new_objects.end(), out_objects.begin(), out_objects.end());
+				new_objects->insert(new_objects->end(), out_objects.begin(), out_objects.end());
 			}
 		}
 		
@@ -248,16 +249,16 @@ struct PhysicalCutoutOperation
 		
 		map->clearObjectSelection(false);
 		add_step->removeContainedObjects(false);
-		for (size_t i = 0; i < new_objects.size(); ++i)
+		for (size_t i = 0; i < new_objects->size(); ++i)
 		{
-			Object* object = new_objects[i];
+			Object* object = (*new_objects)[i];
 			map->addObject(object);
 		}
 		// Do not merge this loop into the upper one;
 		// theoretically undo step indices could be wrong this way.
-		for (size_t i = 0; i < new_objects.size(); ++i)
+		for (size_t i = 0; i < new_objects->size(); ++i)
 		{
-			Object* object = new_objects[i];
+			Object* object = (*new_objects)[i];
 			delete_step->addObject(part->findObjectIndex(object));
 		}
 		map->emitSelectionChanged();
@@ -295,7 +296,7 @@ private:
 	PathObject* cutout_object;
 	bool cut_away;
 	
-	std::vector<PathObject*> new_objects;
+	std::vector<PathObject*>* new_objects;
 	AddObjectsUndoStep* add_step;
 	DeleteObjectsUndoStep* delete_step;
 };
