@@ -61,7 +61,7 @@ namespace ClipperLib
  */
 uint qHash(const IntPoint& point, uint seed)
 {
-	qint64 tmp = (point.X & 0xffffffff) | (point.Y << 32);
+	quint64 tmp = (quint64(point.X) & 0xffffffff) | (quint64(point.Y) << 32);
 	return ::qHash(tmp, seed); // must use :: namespace to prevent endless recursion
 }
 
