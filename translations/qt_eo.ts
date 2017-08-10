@@ -265,7 +265,7 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <source>List of places and bookmarks</source>
-        <translation type="unfinished"></translation>
+        <translation>Listo de lokoj kaj legosignoj</translation>
     </message>
     <message>
         <source>File &amp;name:</source>
@@ -331,7 +331,9 @@ Do you want to delete it anyway?</source>
         <source>%1
 Directory not found.
 Please verify the correct directory name was given.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1
+Dosierujo ne trovita.
+Bonvolu kontroli, ke dosierujonomo estis ĝusta.</translation>
     </message>
     <message>
         <source>Sidebar</source>
@@ -419,7 +421,9 @@ Do you want to replace it?</source>
         <source>%1
 File not found.
 Please verify the correct file name was given.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1
+Dosiero ne trovita.
+Bonvolu kontroli, ke dosiernomo estis ĝusta.</translation>
     </message>
     <message>
         <source>Change to list view mode</source>
@@ -924,7 +928,7 @@ Bonvolu elekti malsaman dosiernomon.</translation>
     </message>
     <message>
         <source>Show single page</source>
-        <translation type="unfinished"></translation>
+        <translation>Montri unuopan paĝon</translation>
     </message>
     <message>
         <source>Export to PDF</source>
@@ -1170,7 +1174,7 @@ Bonvolu elekti malsaman dosiernomon.</translation>
     </message>
     <message>
         <source>Left edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Maldekstra rando</translation>
     </message>
     <message>
         <source>Page down</source>
@@ -1182,7 +1186,7 @@ Bonvolu elekti malsaman dosiernomon.</translation>
     </message>
     <message>
         <source>Right edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Dekstra rando</translation>
     </message>
 </context>
 <context>
@@ -1476,7 +1480,7 @@ Bonvolu elekti malsaman dosiernomon.</translation>
     </message>
     <message>
         <source>Shared Cache</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunhavata kaŝmemoro</translation>
     </message>
     <message>
         <source>Movies</source>
@@ -1496,7 +1500,7 @@ Bonvolu elekti malsaman dosiernomon.</translation>
     </message>
     <message>
         <source>Runtime</source>
-        <translation type="unfinished"></translation>
+        <translation>Plenumtempo</translation>
     </message>
     <message>
         <source>Documents</source>
@@ -1504,7 +1508,7 @@ Bonvolu elekti malsaman dosiernomon.</translation>
     </message>
     <message>
         <source>Desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>Labortablo</translation>
     </message>
     <message>
         <source>Temporary Directory</source>
@@ -1512,7 +1516,7 @@ Bonvolu elekti malsaman dosiernomon.</translation>
     </message>
     <message>
         <source>Shared Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunhavata datumo</translation>
     </message>
     <message>
         <source>Applications</source>
@@ -1625,7 +1629,7 @@ Bonvolu elekti malsaman dosiernomon.</translation>
     </message>
     <message>
         <source>Copy &amp;Link Location</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopii &amp;adreson de ligilo</translation>
     </message>
 </context>
 <context>
@@ -1652,7 +1656,7 @@ Bonvolu elekti malsaman dosiernomon.</translation>
     </message>
     <message>
         <source>Commit</source>
-        <translation type="unfinished"></translation>
+        <translation>Enmeti</translation>
     </message>
     <message>
         <source>Continue</source>
@@ -1668,7 +1672,7 @@ Bonvolu elekti malsaman dosiernomon.</translation>
     </message>
     <message>
         <source>Go Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Reiri</translation>
     </message>
     <message>
         <source>&lt; &amp;Back</source>
