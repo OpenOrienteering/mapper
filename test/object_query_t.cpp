@@ -81,7 +81,7 @@ void ObjectQueryTest::testIsQuery()
 	QVERIFY(single_query_is_false_2 != single_query_is_true);
 	QVERIFY(single_query_is_true != single_query_is_false_2);
 	
-	auto query_copy_true = single_query_is_true;
+	auto query_copy_true = ObjectQuery(single_query_is_true);
 	QCOMPARE(query_copy_true.getOperator(), ObjectQuery::OperatorIs);
 	QCOMPARE(query_copy_true, single_query_is_true);
 	QVERIFY(query_copy_true(object) == true);
@@ -197,7 +197,7 @@ void ObjectQueryTest::testAndQuery()
 	QCOMPARE(query_and_invalid_2.getOperator(), ObjectQuery::OperatorInvalid);
 	QVERIFY(!query_and_invalid_2);
 	
-	auto query_copy_true = single_query_and_both_true;
+	auto query_copy_true = ObjectQuery(single_query_and_both_true);
 	QCOMPARE(query_copy_true.getOperator(), ObjectQuery::OperatorAnd);
 	QCOMPARE(query_copy_true, single_query_and_both_true);
 	QVERIFY(query_copy_true(object) == true);
@@ -226,7 +226,7 @@ void ObjectQueryTest::testSearch()
 	ObjectQuery single_query_is_false_2{ObjectQuery::OperatorSearch, QLatin1String("13")};
 	QVERIFY(single_query_is_false_2(object) == false);
 	
-	auto clone = single_query_is_true_1;
+	auto clone = ObjectQuery(single_query_is_true_1);
 	QCOMPARE(clone, single_query_is_true_1);
 	QVERIFY(clone != single_query_is_true_2);
 	auto operands = clone.tagOperands();
@@ -254,7 +254,7 @@ void ObjectQueryTest::testSymbol()
 	QVERIFY(operand);
 	QCOMPARE(operand, &symbol_2);
 	
-	auto clone = symbol_query;
+	auto clone = ObjectQuery(symbol_query);
 	QCOMPARE(clone, symbol_query);
 	QVERIFY(clone != ObjectQuery{});
 	operand = clone.symbolOperand();

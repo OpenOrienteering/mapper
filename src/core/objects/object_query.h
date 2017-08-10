@@ -75,7 +75,7 @@ public:
 		std::unique_ptr<ObjectQuery> second;
 		
 		LogicalOperands() = default;
-		LogicalOperands(const LogicalOperands& proto);
+		explicit LogicalOperands(const LogicalOperands& proto); // maybe expensive copying
 		LogicalOperands(LogicalOperands&&) = default;
 		~LogicalOperands();
 		LogicalOperands& operator=(const LogicalOperands& proto);
@@ -92,7 +92,7 @@ public:
 	};
 
 	ObjectQuery() noexcept;
-	ObjectQuery(const ObjectQuery& query);
+	explicit ObjectQuery(const ObjectQuery& query); // maybe expensive copying
 	ObjectQuery(ObjectQuery&& proto) noexcept;
 	ObjectQuery& operator=(const ObjectQuery& proto) noexcept;
 	ObjectQuery& operator=(ObjectQuery&& proto) noexcept;

@@ -22,6 +22,7 @@
 #include "object_query.h"
 
 #include <algorithm>
+#include <functional>
 #include <iterator>
 #include <new>
 
@@ -368,7 +369,7 @@ void ObjectQuery::selectMatchingObjects(Map* map, MapEditorController* controlle
 	};
 
 	auto part = map->getCurrentPart();
-	part->applyOnMatchingObjects(select_object, *this);
+	part->applyOnMatchingObjects(select_object, std::cref(*this));
 
 	auto object_selected = !map->selectedObjects().empty();
 	if (object_selected || had_selection)

@@ -23,6 +23,7 @@
 
 #include <algorithm>
 #include <cstddef>
+#include <functional>
 #include <iterator>
 
 #include <Qt>
@@ -461,7 +462,7 @@ void ReplaceSymbolSetDialog::updateMappingTable()
 					}
 				}
 			};
-			object_map.applyOnMatchingObjects(update_matching, item.query);
+			object_map.applyOnMatchingObjects(update_matching, std::cref(item.query));
 			if (matching_types != Symbol::NoSymbol)
 			{
 				compatible_symbols = matching_types;
