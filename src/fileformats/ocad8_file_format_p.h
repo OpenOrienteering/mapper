@@ -152,7 +152,10 @@ public:
 	
 	void doExport();
 	
+	
 protected:
+	// Determines an offset for moving objects to the OCD drawing area.
+	MapCoord calculateAreaOffset();
 	
 	// Symbol export
 	void exportCommonSymbolFields(const Symbol* symbol, OCADSymbol* ocad_symbol, int size);

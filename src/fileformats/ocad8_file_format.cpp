@@ -1557,6 +1557,9 @@ void OCAD8FileExport::doExport()
 	int err = ocad_file_new(&file);
 	if (err != 0) throw FileFormatException(Exporter::tr("Could not create new file: %1").arg(tr("libocad returned %1").arg(err)));
 	
+	// Check for a neccessary offset (and add related warnings early).
+	auto area_offset = calculateAreaOffset();
+	
 	// Fill header struct
 	OCADFileHeader* header = file->header;
 	*(((u8*)&header->magic) + 0) = 0xAD;
@@ -1577,7 +1580,7 @@ void OCAD8FileExport::doExport()
 	OCADSetup* setup = file->setup;
 	if (view)
 	{
-		setup->center = convertPoint(view->center());
+		setup->center = convertPoint(view->center() - area_offset);
 		setup->zoom = view->getZoom();
 	}
 	else
@@ -1586,7 +1589,7 @@ void OCAD8FileExport::doExport()
 	// Scale and georeferencing parameters
 	const Georeferencing& georef = map->getGeoreferencing();
 	setup->scale = georef.getScaleDenominator();
-	const QPointF offset(georef.toProjectedCoords(MapCoord {0, 0}));
+	const QPointF offset(georef.toProjectedCoords(area_offset));
 	setup->offsetx = offset.x();
 	setup->offsety = offset.y();
 	setup->angle = georef.getGrivation();
@@ -1673,6 +1676,14 @@ void OCAD8FileExport::doExport()
 		{
 			memset(ocad_object, 0, sizeof(OCADObject) - sizeof(OCADPoint) + 8 * (ocad_object->npts + ocad_object->ntext));
 			Object* object = map->getPart(l)->getObject(o);
+			std::unique_ptr<Object> duplicate;
+			if (area_offset.nativeX() != 0 || area_offset.nativeY() != 0)
+			{
+				// Create a safely managed duplicate and move it as needed.
+				duplicate.reset(object->duplicate());
+				duplicate->move(-area_offset);
+				object = duplicate.get();
+			}
 			object->update();
 			
 			// Fill some common entries of object struct
@@ -1827,7 +1838,7 @@ void OCAD8FileExport::doExport()
 			int p = 0;
 			int s = 1;	// enabled
 			int t = 0;
-			OCADPoint pos = convertPoint(temp->getTemplateX(), temp->getTemplateY());
+			OCADPoint pos = convertPoint(temp->getTemplateX()-area_offset.nativeX(), temp->getTemplateY()-area_offset.nativeY());
 			int x = pos.x >> 8;
 			int y = pos.y >> 8;
 			double u = convertTemplateScale(temp->getTemplateScaleX());
@@ -1854,6 +1865,52 @@ void OCAD8FileExport::doExport()
 	
 	ocad_file_close(file);
 }
+
+
+MapCoord OCAD8FileExport::calculateAreaOffset()
+{
+	auto area_offset = QPointF {};
+	auto objects_extent = map->calculateExtent();
+	if (objects_extent.left() < -2000
+	    || objects_extent.right() > 2000
+	    || objects_extent.top() < -2000
+	    || objects_extent.bottom() > 2000)
+	{
+		// Some or all objects are outside of a 4 m x 4 m area.
+		
+		if (objects_extent.width() < 4000
+		    && objects_extent.height() < 4000)
+		{
+			// The extent fits into the limited area.
+			addWarning(tr("Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m)."));
+			area_offset = objects_extent.center();
+		}
+		else
+		{
+			// The extent is too wide to fit.
+			
+			// Only move the objects if they are completely outside the drawing area.
+			// This avoids repeated moves on open/save/close cycles.
+			if (!objects_extent.intersects(QRectF{QPointF{-2000, -2000}, QPointF{2000, 2000}}))
+			{
+				addWarning(tr("Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m)."));
+				std::size_t count = 0;
+				auto calculate_average_center = [&area_offset, &count](Object* object)
+				{
+					area_offset *= qreal(count)/qreal(count+1);
+					++count;
+					area_offset += object->getExtent().center() / count;
+				};
+				map->applyOnAllObjects(calculate_average_center);
+			}
+			
+			addWarning(tr("Some coordinates remain outside of the OCAD 8 drawing area."
+			              " They might be unreachable in OCAD."));
+		}
+	}
+	return MapCoord{area_offset};
+}
+
 
 void OCAD8FileExport::exportCommonSymbolFields(const Symbol* symbol, OCADSymbol* ocad_symbol, int size)
 {
