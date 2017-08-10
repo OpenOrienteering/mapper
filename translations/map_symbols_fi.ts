@@ -2875,7 +2875,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
             <translation>Suo</translation>
         </message>
         <message>
-            <source>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility</source>
+            <source>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility.</source>
             <comment>Description of symbol 310</comment>
             <translation>Ylitettävä selväreunainen suo, joka selvästi eroaa ympäristöstään tyypillisen suokasvustonsa perustella. Luonnostaan avoin pieni suo kuvataan lisäksi merkillä 401 ja suuret avosuot merkillä 403. Tiheät ja muusta kuin normaalista suokasvillisuudesta johtuva kulkukelpoisuuden hidastavuus kuvataan lisäksi merkeillä 406-410.</translation>
         </message>
@@ -4596,7 +4596,7 @@ Tätä sääntöä rikkovat kilpailijat hylätään.&lt;/span&gt;</translation>
             <translation>Ylitettävissä oleva vesialue, täyttö</translation>
         </message>
         <message>
-            <source>An area of shallow water such as a pond, river or fountain that can be crossed. The body of water shall be less than 0.5 m deep and runnable. If the body of water is not runnable it shall be represented with the symbol impassable body of water (304.1). If no other line symbol touches the border of the passable body of water, the border shall be represented with a blue line. </source>
+            <source>An area of shallow water such as a pond, river or fountain that can be crossed. The body of water shall be less than 0.5 m deep and runnable. If the body of water is not runnable it shall be represented with the symbol impassable body of water (304.1). If no other line symbol touches the border of the passable body of water, the border shall be represented with a blue line.</source>
             <comment>Description of symbol 305.0.1</comment>
             <translation>Matalan veden alue, kuten lampi, joki, lähde tai suihkukaivo, jonka voi ylittää. Veden syvyyden tulee olla alle 0.5 m ja pohjan tulee olla juoksukelpoinen. Mikäli pohja ei ole juoksukelpoinen, alue tulee kuvata ylipääsemättömän vesialueen symbolilla (304.1). Reunaviivan tulee olla sininen niiltä osin kuin mikään muu viivamainen merkki ei kosketa alueen reunaa.</translation>
         </message>
@@ -6567,7 +6567,7 @@ This is symbol "302 Pond" in ISOM, but is a variation of "301 Lake" in ISMTBOM.<
             <translation type="unfinished">Suo</translation>
         </message>
         <message>
-            <source>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility</source>
+            <source>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility.</source>
             <comment>Description of symbol 310</comment>
             <translation type="unfinished">Ylitettävä selväreunainen suo, joka selvästi eroaa ympäristöstään tyypillisen suokasvustonsa perustella. Luonnostaan avoin pieni suo kuvataan lisäksi merkillä 401 ja suuret avosuot merkillä 403. Tiheät ja muusta kuin normaalista suokasvillisuudesta johtuva kulkukelpoisuuden hidastavuus kuvataan lisäksi merkeillä 406-410. </translation>
         </message>
@@ -9498,7 +9498,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
             <translation type="unfinished">Suo</translation>
         </message>
         <message>
-            <source>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility</source>
+            <source>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility.</source>
             <comment>Description of symbol 310</comment>
             <translation type="unfinished">Ylitettävä selväreunainen suo, joka selvästi eroaa ympäristöstään tyypillisen suokasvustonsa perustella. Luonnostaan avoin pieni suo kuvataan lisäksi merkillä 401 ja suuret avosuot merkillä 403. Tiheät ja muusta kuin normaalista suokasvillisuudesta johtuva kulkukelpoisuuden hidastavuus kuvataan lisäksi merkeillä 406-410. </translation>
         </message>

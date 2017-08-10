@@ -2877,7 +2877,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d'arrivée. C
             <translation type="unfinished">Marais</translation>
         </message>
         <message>
-            <source>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility</source>
+            <source>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility.</source>
             <comment>Description of symbol 310</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -4560,7 +4560,7 @@ Le concurrent qui ne respecte pas cette règle sera disqualifié.&lt;/span&gt;</
             <translation>Zone d'eau franchissable, remplissage</translation>
         </message>
         <message>
-            <source>An area of shallow water such as a pond, river or fountain that can be crossed. The body of water shall be less than 0.5 m deep and runnable. If the body of water is not runnable it shall be represented with the symbol impassable body of water (304.1). If no other line symbol touches the border of the passable body of water, the border shall be represented with a blue line. </source>
+            <source>An area of shallow water such as a pond, river or fountain that can be crossed. The body of water shall be less than 0.5 m deep and runnable. If the body of water is not runnable it shall be represented with the symbol impassable body of water (304.1). If no other line symbol touches the border of the passable body of water, the border shall be represented with a blue line.</source>
             <comment>Description of symbol 305.0.1</comment>
             <translation>Zone d'eau peu profonde, telle un étang, une mare, une rivière ou une fontaine qui peut être franchie. La profondeur sera inférieure à 0,5 m et courable. Si l'étendue d'eau n'est pas courable, elle doit être représentée par le symbole 304.1 (infranchissable). Si aucun autre symbole de ligne ne touche le bord de cette étendue d'eau, la rive sera représentée par une ligne bleue.</translation>
         </message>
@@ -6519,7 +6519,7 @@ This is symbol "302 Pond" in ISOM, but is a variation of "301 Lake" in ISMTBOM.<
             <translation type="unfinished">Marais</translation>
         </message>
         <message>
-            <source>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility</source>
+            <source>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility.</source>
             <comment>Description of symbol 310</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -9439,7 +9439,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d'arrivée. C
             <translation type="unfinished">Marais</translation>
         </message>
         <message>
-            <source>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility</source>
+            <source>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility.</source>
             <comment>Description of symbol 310</comment>
             <translation type="unfinished"></translation>
         </message>

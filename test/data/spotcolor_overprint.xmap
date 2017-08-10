@@ -866,7 +866,7 @@
             </combined_symbol>
         </symbol>
         <symbol type="4" id="51" code="310" name="Marsh">
-            <description>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility</description>
+            <description>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility.</description>
             <area_symbol inner_color="-1" min_area="0" patterns="1">
                 <pattern type="1" angle="0" line_spacing="450" line_offset="0" offset_along_line="0" color="4" line_width="150"/>
             </area_symbol>

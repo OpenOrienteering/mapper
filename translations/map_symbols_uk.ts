@@ -2873,7 +2873,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
             <translation type="unfinished">Болото</translation>
         </message>
         <message>
-            <source>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility</source>
+            <source>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility.</source>
             <comment>Description of symbol 310</comment>
             <translation type="unfinished">Болото, що долається, зазвичай з чітким краєм. Знак має бути об'єднаний з УЗ рослинності, щоб показати прохідність або відкритість. Якщо болото малої площі комбінується з УЗ 403 чи 404, дозволяється використовувати замість них відповідно УЗ 401 чи 402, для підвищення розбірливості карти.</translation>
         </message>
@@ -4525,7 +4525,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>An area of shallow water such as a pond, river or fountain that can be crossed. The body of water shall be less than 0.5 m deep and runnable. If the body of water is not runnable it shall be represented with the symbol impassable body of water (304.1). If no other line symbol touches the border of the passable body of water, the border shall be represented with a blue line. </source>
+            <source>An area of shallow water such as a pond, river or fountain that can be crossed. The body of water shall be less than 0.5 m deep and runnable. If the body of water is not runnable it shall be represented with the symbol impassable body of water (304.1). If no other line symbol touches the border of the passable body of water, the border shall be represented with a blue line.</source>
             <comment>Description of symbol 305.0.1</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -6322,7 +6322,7 @@ This is symbol "302 Pond" in ISOM, but is a variation of "301 Lake" in ISMTBOM.<
             <translation>Болото</translation>
         </message>
         <message>
-            <source>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility</source>
+            <source>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility.</source>
             <comment>Description of symbol 310</comment>
             <translation>Болото, що долається, зазвичай з чітким краєм. Знак має бути об'єднаний з УЗ рослинності, щоб показати прохідність або відкритість. Якщо болото малої площі комбінується з УЗ 403 чи 404, дозволяється використовувати замість них відповідно УЗ 401 чи 402, для підвищення розбірливості карти.</translation>
         </message>
@@ -9235,7 +9235,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
             <translation type="unfinished">Болото</translation>
         </message>
         <message>
-            <source>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility</source>
+            <source>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility.</source>
             <comment>Description of symbol 310</comment>
             <translation type="unfinished">Болото, що долається, зазвичай з чітким краєм. Знак має бути об'єднаний з УЗ рослинності, щоб показати прохідність або відкритість. Якщо болото малої площі комбінується з УЗ 403 чи 404, дозволяється використовувати замість них відповідно УЗ 401 чи 402, для підвищення розбірливості карти.</translation>
         </message>

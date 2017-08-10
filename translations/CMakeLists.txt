@@ -57,9 +57,12 @@ set(Mapper_translations_template
 # Translation files which are updated by SymbolSetTool.
 set(map_symbols_translations
   map_symbols_cs.ts
+  map_symbols_da.ts
   map_symbols_de.ts
+  map_symbols_eo.ts
   map_symbols_fi.ts
   map_symbols_fr.ts
+  map_symbols_nl.ts
   map_symbols_ru.ts
   map_symbols_sv.ts
   map_symbols_uk.ts

@@ -2875,7 +2875,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
             <translation>Sumpf</translation>
         </message>
         <message>
-            <source>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility</source>
+            <source>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility.</source>
             <comment>Description of symbol 310</comment>
             <translation>Ein passierbarer Sumpf, im Allgemeinen mit deutlicher Begrenzung. Die Signatur sollte mit Vegetationssignaturen kombiniert werden, um die Belaufbarkeit und Offenheit darzustellen. Wenn kleine Sumpfflächen mit den Signaturen 403/404 kombiniert werden sollen, ist zur Verbesserung der Lesbarkeit die Verwendung der Signaturen 401/402 zulässig.</translation>
         </message>
@@ -4553,9 +4553,9 @@ Missachtung im Wettkampf führt zur Disqualifikation.&lt;/span&gt;</translation>
             <translation>Passierbares Gewässer, Füllung</translation>
     </message>
         <message>
-            <source>An area of shallow water such as a pond, river or fountain that can be crossed. The body of water shall be less than 0.5 m deep and runnable. If the body of water is not runnable it shall be represented with the symbol impassable body of water (304.1). If no other line symbol touches the border of the passable body of water, the border shall be represented with a blue line. </source>
+            <source>An area of shallow water such as a pond, river or fountain that can be crossed. The body of water shall be less than 0.5 m deep and runnable. If the body of water is not runnable it shall be represented with the symbol impassable body of water (304.1). If no other line symbol touches the border of the passable body of water, the border shall be represented with a blue line.</source>
             <comment>Description of symbol 305.0.1</comment>
-            <translation>Ein Gebiet mit flachem Wasser, z. B. Teich, Fluss oder Springbrunnen, welches durchquerbar ist. Das Gewässer soll weniger als 0,5 m tief und belaufbar sein. Wenn das Gewässer nicht belaufbar ist, soll die Signatur Unpassierbares Gewässer (304.1) verwendet werden. Falls keine andere Liniensignatur an das Gewässer angrenzt, wird eine blaue Linie zur Begrenzung verwendet. </translation>
+            <translation>Ein Gebiet mit flachem Wasser, z. B. Teich, Fluss oder Springbrunnen, welches durchquerbar ist. Das Gewässer soll weniger als 0,5 m tief und belaufbar sein. Wenn das Gewässer nicht belaufbar ist, soll die Signatur Unpassierbares Gewässer (304.1) verwendet werden. Falls keine andere Liniensignatur an das Gewässer angrenzt, wird eine blaue Linie zur Begrenzung verwendet.</translation>
     </message>
         <message>
             <source>Passable body of water, bank line</source>
@@ -6499,7 +6499,7 @@ This is symbol "302 Pond" in ISOM, but is a variation of "301 Lake" in ISMTBOM.<
             <translation type="unfinished">Sumpf</translation>
         </message>
         <message>
-            <source>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility</source>
+            <source>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility.</source>
             <comment>Description of symbol 310</comment>
             <translation type="unfinished">Ein passierbarer Sumpf, im Allgemeinen mit deutlicher Begrenzung. Die Signatur sollte mit Vegetationssignaturen kombiniert werden, um die Belaufbarkeit und Offenheit darzustellen. Wenn kleine Sumpfflächen mit den Signaturen 403/404 kombiniert werden sollen, ist zur Verbesserung der Lesbarkeit die Verwendung der Signaturen 401/402 zulässig.</translation>
         </message>
@@ -9416,7 +9416,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
             <translation type="unfinished">Sumpf</translation>
         </message>
         <message>
-            <source>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility</source>
+            <source>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility.</source>
             <comment>Description of symbol 310</comment>
             <translation type="unfinished">Ein passierbarer Sumpf, im Allgemeinen mit deutlicher Begrenzung. Die Signatur sollte mit Vegetationssignaturen kombiniert werden, um die Belaufbarkeit und Offenheit darzustellen. Wenn kleine Sumpfflächen mit den Signaturen 403/404 kombiniert werden sollen, ist zur Verbesserung der Lesbarkeit die Verwendung der Signaturen 401/402 zulässig.</translation>
         </message>
