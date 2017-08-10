@@ -22,26 +22,42 @@
 #include "cutout_tool.h"
 
 #include <functional>
+#include <vector>
 
+#include <Qt>
+#include <QtGlobal>
+#include <QCursor>
+#include <QFlags>
 #include <QKeyEvent>
+#include <QPixmap>
+#include <QRectF>
+#include <QString>
 
 #include "core/map.h"
+#include "core/map_coord.h"
+#include "core/map_part.h"
+#include "core/map_view.h"
 #include "core/objects/boolean_tool.h"
 #include "core/objects/object.h"
 #include "core/symbols/combined_symbol.h"
+#include "core/symbols/symbol.h"
 #include "gui/modifier_key.h"
 #include "gui/map/map_editor.h"
 #include "gui/map/map_widget.h"
 #include "tools/edit_tool.h"
+#include "tools/tool.h"
+#include "tools/tool_base.h"
 #include "undo/object_undo.h"
+#include "undo/undo.h"
 #include "util/util.h"
 
-CutoutTool::CutoutTool(MapEditorController* editor, QAction* tool_button, bool cut_away)
- : MapEditorToolBase(QCursor(QPixmap(QString::fromLatin1(":/images/cursor-hollow.png")), 1, 1), Other, editor, tool_button),
-   cut_away(cut_away),
-   object_selector(new ObjectSelector(map()))
-{
 
+CutoutTool::CutoutTool(MapEditorController* editor, QAction* tool_action, bool cut_away)
+: MapEditorToolBase(QCursor(QPixmap(QString::fromLatin1(":/images/cursor-hollow.png")), 1, 1), Other, editor, tool_action)
+, object_selector(new ObjectSelector(map()))
+, cut_away(cut_away)
+{
+	// nothing else
 }
 
 CutoutTool::~CutoutTool() = default;
@@ -64,7 +80,7 @@ void CutoutTool::initImpl()
 {
 	// Take cutout shape object out of the map
 	Q_ASSERT(map()->getNumSelectedObjects() == 1);
-	cutout_object = (*(map()->selectedObjectsBegin()))->asPath();
+	cutout_object = map()->getFirstSelectedObject()->asPath();
 	
 	startEditing(cutout_object);
 	cutout_object->setSymbol(Map::getCoveringCombinedLine(), true);
@@ -157,7 +173,7 @@ void CutoutTool::clickRelease()
 
 void CutoutTool::dragStart()
 {
-	
+	// nothing
 }
 
 void CutoutTool::dragMove()
@@ -170,6 +186,7 @@ void CutoutTool::dragFinish()
 	object_selector->selectBox(click_pos_map, cur_pos_map, active_modifiers & Qt::ShiftModifier);
 	updateStatusText();
 }
+
 
 
 struct PhysicalCutoutOperation
@@ -244,20 +261,18 @@ struct PhysicalCutoutOperation
 	
 	UndoStep* finish()
 	{
-		MapPart* part = map->getCurrentPart();
+		auto part = map->getCurrentPart();
 		
 		map->clearObjectSelection(false);
 		add_step->removeContainedObjects(false);
-		for (size_t i = 0; i < new_objects.size(); ++i)
+		for (auto object : new_objects)
 		{
-			Object* object = new_objects[i];
 			map->addObject(object);
 		}
 		// Do not merge this loop into the upper one;
 		// theoretically undo step indices could be wrong this way.
-		for (size_t i = 0; i < new_objects.size(); ++i)
+		for (auto object : new_objects)
 		{
-			Object* object = new_objects[i];
 			delete_step->addObject(part->findObjectIndex(object));
 		}
 		map->emitSelectionChanged();
@@ -283,28 +298,30 @@ struct PhysicalCutoutOperation
 			}
 			else
 			{
-				CombinedUndoStep* combined_step = new CombinedUndoStep(map);
+				auto combined_step = new CombinedUndoStep(map);
 				combined_step->push(add_step);
 				combined_step->push(delete_step);
 				return combined_step;
 			}
 		}
 	}
+	
 private:
 	Map* map;
 	PathObject* cutout_object;
-	bool cut_away;
-	
 	std::vector<PathObject*> new_objects;
 	AddObjectsUndoStep* add_step;
 	DeleteObjectsUndoStep* delete_step;
+	bool cut_away;
 };
+
+
 
 void CutoutTool::apply(Map* map, PathObject* cutout_object, bool cut_away)
 {
 	PhysicalCutoutOperation operation(map, cutout_object, cut_away);
 	map->getCurrentPart()->applyOnAllObjects(std::ref(operation));
-	UndoStep* undo_step = operation.finish();
+	auto undo_step = operation.finish();
 	if (undo_step)
 	{
 		map->setObjectsDirty();

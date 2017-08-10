@@ -19,11 +19,12 @@
  */
 
 
-#ifndef OPENORIENTEERING_TOOL_CUTOUT_H
-#define OPENORIENTEERING_TOOL_CUTOUT_H
+#ifndef OPENORIENTEERING_CUTOUT_TOOL_H
+#define OPENORIENTEERING_CUTOUT_TOOL_H
+
+#include <memory>
 
 #include <QObject>
-#include <QScopedPointer>
 
 #include "tool_base.h"
 
@@ -51,11 +52,11 @@ public:
 	 * part inside the cut shape away instead of the part outside.
 	 */
 	CutoutTool(MapEditorController* editor, QAction* tool_action, bool cut_away);
-	virtual ~CutoutTool();
-
-	virtual void drawImpl(QPainter* painter, MapWidget* widget);
-
-	virtual bool keyPress(QKeyEvent* event);
+	
+	CutoutTool(const CutoutTool&) = delete;
+	
+	~CutoutTool() override;
+	
 	
 	/**
 	 * Applies the tool to cut all selected objects in map, or to all objects
@@ -68,27 +69,31 @@ public:
 	 */
 	static void apply(Map* map, PathObject* cutout_object, bool cut_away);
 	
-	virtual void finishEditing();
 	
 protected:
-	virtual void initImpl();
-	virtual int updateDirtyRectImpl(QRectF& rect);
-	virtual void updateStatusText();
-	virtual void objectSelectionChangedImpl();
+	void drawImpl(QPainter* painter, MapWidget* widget) override;
 	
-    virtual void clickRelease();
-    virtual void dragStart();
-    virtual void dragMove();
-    virtual void dragFinish();
+	bool keyPress(QKeyEvent* event) override;
 	
-	/**
-	 * If false, the tool removes all objects outside the cutout area,
-	 * otherwise it removes all objects inside the cutout area
-	 */
-	bool cut_away;
+	void finishEditing() override;
 	
+	void initImpl() override;
+	int updateDirtyRectImpl(QRectF& rect) override;
+	void updateStatusText() override;
+	void objectSelectionChangedImpl() override;
+	
+	void clickRelease() override;
+	void dragStart() override;
+	void dragMove() override;
+	void dragFinish() override;
+	
+	
+private:
 	/** The object which determines the cutout's shape */
 	PathObject* cutout_object;
+	
+	/** Object selection helper */
+	std::unique_ptr<ObjectSelector> object_selector;
 	
 	/**
 	 * The index of the cutout object in its map part, so it can be inserted
@@ -97,8 +102,11 @@ protected:
 	 */
 	int cutout_object_index;
 	
-	/** Object selection helper */
-	QScopedPointer<ObjectSelector> object_selector;
+	/**
+	 * If false, the tool removes all objects outside the cutout area,
+	 * otherwise it removes all objects inside the cutout area
+	 */
+	bool cut_away;
 };
 
 #endif
