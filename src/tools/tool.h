@@ -272,7 +272,7 @@ public:
 	/**
 	 * @brief A value representing how close the user must click or hover to select a point.
 	 */
-	float clickTolerance() const;
+	qreal clickTolerance() const;
 	
 	// General color definitions which are used by all tools
 	
@@ -367,7 +367,7 @@ protected:
 private:	
 	QPointer<QAction> tool_action;
 	Type tool_type;
-	float click_tolerance;
+	qreal click_tolerance;
 	int scale_factor;
 	bool editing_in_progress;
 	bool uses_touch_cursor;
@@ -422,7 +422,7 @@ int MapEditorTool::scaleFactor() const
 }
 
 inline
-float MapEditorTool::clickTolerance() const
+qreal MapEditorTool::clickTolerance() const
 {
 	return click_tolerance;
 }

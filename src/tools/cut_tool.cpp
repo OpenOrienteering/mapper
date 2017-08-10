@@ -393,7 +393,7 @@ void CutTool::finishCuttingArea(PathObject* split_path)
 	float distance_sq;
 	edit_object->calcClosestPointOnPath(MapCoordF(path_end), distance_sq, end_path_coord);
 	
-	auto click_tolerance_map = 0.001 * cur_map_widget->getMapView()->pixelToLength(qreal(clickTolerance()));
+	auto click_tolerance_map = 0.001 * cur_map_widget->getMapView()->pixelToLength(clickTolerance());
 	if (double(distance_sq) > click_tolerance_map*click_tolerance_map)
 	{
 		QMessageBox::warning(window(), tr("Error"), tr("The split line must end on the area boundary!"));
@@ -686,7 +686,7 @@ ObjectPathCoord CutTool::findEditPoint(MapCoordF cursor_pos_map, int with_type, 
 	else
 	{
 		// Check if a line segment was clicked
-		const auto click_tolerance_map = 0.001 * cur_map_widget->getMapView()->pixelToLength(qreal(clickTolerance()));
+		const auto click_tolerance_map = 0.001 * cur_map_widget->getMapView()->pixelToLength(clickTolerance());
 		auto min_distance_sq = float(qMin(999999.9, click_tolerance_map * click_tolerance_map));
 		for (const auto object : map()->selectedObjects())
 		{

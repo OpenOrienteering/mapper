@@ -259,7 +259,7 @@ void MapEditorTool::drawSelectionBox(QPainter* painter, MapWidget* widget, const
 
 MapCoordVector::size_type MapEditorTool::findHoverPoint(QPointF cursor, const MapWidget* widget, const Object* object, bool include_curve_handles, MapCoordF* out_handle_pos) const
 {
-	const float click_tolerance_squared = click_tolerance * click_tolerance;
+	const auto click_tolerance_squared = click_tolerance * click_tolerance;
 	auto best_index = std::numeric_limits<MapCoordVector::size_type>::max();
 	
 	if (object->getType() == Object::Point)
@@ -291,12 +291,12 @@ MapCoordVector::size_type MapEditorTool::findHoverPoint(QPointF cursor, const Ma
 		const PathObject* path = reinterpret_cast<const PathObject*>(object);
 		auto size = path->getCoordinateCount();
 		
-		float best_dist_sq = click_tolerance_squared;
+		auto best_dist_sq = click_tolerance_squared;
 		for (auto i = size - 1; i < size; --i)
 		{
 			if (!path->getCoordinate(i).isClosePoint())
 			{
-				float distance_sq = distanceSquared(widget->mapToViewport(path->getCoordinate(i)), cursor);
+				auto distance_sq = distanceSquared(widget->mapToViewport(path->getCoordinate(i)), cursor);
 				bool is_handle = (i >= 1 && path->getCoordinate(i - 1).isCurveStart()) ||
 									(i >= 2 && path->getCoordinate(i - 2).isCurveStart());
 				if (distance_sq < best_dist_sq || (distance_sq == best_dist_sq && is_handle))

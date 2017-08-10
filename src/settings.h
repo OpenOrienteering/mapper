@@ -112,7 +112,7 @@ public:
 	// Methods related to specific settings
 	
 	int getSymbolWidgetIconSizePx();
-	float getMapEditorClickTolerancePx();
+	qreal getMapEditorClickTolerancePx();
 	float getMapEditorSnapDistancePx();
 	float getRectangleToolHelperCrossRadiusPx();
 	int getStartDragDistancePx();

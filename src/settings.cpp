@@ -241,9 +241,9 @@ int Settings::getSymbolWidgetIconSizePx()
 	return qRound(Util::mmToPixelLogical(getSettingCached(Settings::SymbolWidget_IconSizeMM).toFloat()));
 }
 
-float Settings::getMapEditorClickTolerancePx()
+qreal Settings::getMapEditorClickTolerancePx()
 {
-	return Util::mmToPixelLogical(getSettingCached(Settings::MapEditor_ClickToleranceMM).toFloat());
+	return Util::mmToPixelLogical(getSettingCached(Settings::MapEditor_ClickToleranceMM).toReal());
 }
 
 float Settings::getMapEditorSnapDistancePx()

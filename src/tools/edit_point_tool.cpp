@@ -161,7 +161,7 @@ void EditPointTool::clickPress()
 		PathCoord path_coord;
 		path->calcClosestPointOnPath(cur_pos_map, distance_sq, path_coord);
 		
-		float click_tolerance_map_sq = cur_map_widget->getMapView()->pixelToLength(clickTolerance());
+		auto click_tolerance_map_sq = cur_map_widget->getMapView()->pixelToLength(clickTolerance());
 		click_tolerance_map_sq = click_tolerance_map_sq * click_tolerance_map_sq;
 		
 		if (distance_sq <= click_tolerance_map_sq)
