@@ -22,6 +22,7 @@
 
 #include <algorithm>
 #include <cstddef>
+#include <functional>
 #include <iterator>
 #include <memory>
 #include <type_traits>
@@ -368,7 +369,7 @@ void SymbolRuleSet::apply(Map& object_map, const Map& symbol_set, Options option
 	}
 	
 	// Change symbols for all objects
-	object_map.applyOnAllObjects(*this);
+	object_map.applyOnAllObjects(std::cref(*this));
 	
 	// Delete unused old symbols
 	if (!old_symbols.empty())
