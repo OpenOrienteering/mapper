@@ -5284,7 +5284,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="178"/>
         <source>Line join:</source>
-        <translation type="unfinished">Kuniĝo de linioj:</translation>
+        <translation>Kuniĝo de linioj:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="180"/>
