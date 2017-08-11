@@ -6,148 +6,148 @@
         <message>
             <source>Purple</source>
             <comment>Color 0</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Purpura</translation>
+    </message>
         <message>
             <source>Black</source>
             <comment>Color 1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Nigra</translation>
+    </message>
         <message>
             <source>Opaque White below Black</source>
             <comment>Color 2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Opaka blanka sub nigra</translation>
+    </message>
         <message>
             <source>Black 65%</source>
             <comment>Color 3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Nigra 65%</translation>
+    </message>
         <message>
             <source>Black 20%</source>
             <comment>Color 4</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Nigra 20%</translation>
+    </message>
         <message>
             <source>Brown 50%</source>
             <comment>Color 5</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Bruna 50%</translation>
+    </message>
         <message>
             <source>Black below light browns</source>
             <comment>Color 6</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Nigra sub helbruna</translation>
+    </message>
         <message>
             <source>Opaque Blue</source>
             <comment>Color 7</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Opaka blua</translation>
+    </message>
         <message>
             <source>Blue</source>
             <comment>Color 8</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Blua</translation>
+    </message>
         <message>
             <source>Blue 50%</source>
             <comment>Color 9</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Blua 50%</translation>
+    </message>
         <message>
             <source>Brown</source>
             <comment>Color 10</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Bruna</translation>
+    </message>
         <message>
             <source>OpenOrienteering Orange</source>
             <comment>Color 11</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>OpenOrienteering oranĝkolora</translation>
+    </message>
         <message>
             <source>Black 25% (Grey)</source>
             <comment>Color 12</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Nigra 25% (griza)</translation>
+    </message>
         <message>
             <source>Green 50%, Yellow</source>
             <comment>Color 13</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verda 50%, flava</translation>
+    </message>
         <message>
             <source>Green</source>
             <comment>Color 14</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verda</translation>
+    </message>
         <message>
             <source>Opaque Yellow</source>
             <comment>Color 15</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Opaka flava</translation>
+    </message>
         <message>
             <source>Opaque White over Green</source>
             <comment>Color 16</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Opaka blanka super verda</translation>
+    </message>
         <message>
             <source>Opaque Green 20%</source>
             <comment>Color 17</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Opaka verda 20%</translation>
+    </message>
         <message>
             <source>Opaque Green 50%</source>
             <comment>Color 18</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Opaka verda 50%</translation>
+    </message>
         <message>
             <source>Green, Black 50%</source>
             <comment>Color 19</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verda, nigra 50%</translation>
+    </message>
         <message>
             <source>Opaque Green</source>
             <comment>Color 20</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Opaka verda</translation>
+    </message>
         <message>
             <source>Green 50%</source>
             <comment>Color 21</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verda 50%</translation>
+    </message>
         <message>
             <source>Green 20%</source>
             <comment>Color 22</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verda 20%</translation>
+    </message>
         <message>
             <source>Green below light greens</source>
             <comment>Color 23</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verda sub helverda</translation>
+    </message>
         <message>
             <source>Green 50% over Yellow</source>
             <comment>Color 24</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verda 50% super flava</translation>
+    </message>
         <message>
             <source>White over Yellow</source>
             <comment>Color 25</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Blanka super flava</translation>
+    </message>
         <message>
             <source>Yellow</source>
             <comment>Color 26</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Flava</translation>
+    </message>
         <message>
             <source>Yellow 50%</source>
             <comment>Color 27</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Flava 50%</translation>
+    </message>
         <message>
             <source>Contour</source>
             <comment>Name of symbol 101</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Nivellinio</translation>
+    </message>
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. A contour interval of 2.5 metres may be used for flat terrains. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
             <comment>Description of symbol 101</comment>
@@ -333,8 +333,8 @@ Small depressions with steep sides are represented with symbol 112 (pit). The sy
         <message>
             <source>Pit</source>
             <comment>Name of symbol 112</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Kavo</translation>
+    </message>
         <message>
             <source>Pits and holes with distinct steep sides which cannot be shown to scale using symbol 104 (earth bank). Minimum depth: 1 m. Minimum width: 1 m. A pit larger than 5 m x 5 m should normally be exaggerated and drawn using symbol 104 (earth bank). Pits without steep sides are represented with symbol 111 (small depression). The symbol may not touch or overlap other brown symbols. Location is the centre of
 gravity of the symbol, and the symbol is orientated to north.</source>
@@ -467,8 +467,8 @@ When an impassable cliff drops straight into water, making it impossible to pass
         <message>
             <source>Cliff</source>
             <comment>Name of symbol 202</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Klifo</translation>
+    </message>
         <message>
             <source>A passable, vertical cliff or quarry where the direction of fall of the cliff is apparent from the contours. Minimum height: 1 m.
 Ends of the top line may be rounded or square. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
@@ -479,8 +479,8 @@ Crossing a cliff will normally slow progress.</source>
         <message>
             <source>Cliff, minimum size</source>
             <comment>Name of symbol 202.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Klifo, minimuma grando</translation>
+    </message>
         <message>
             <source>A passable, vertical cliff or quarry where the direction of fall of the cliff is apparent from the contours. Minimum height: 1 m.
 Ends of the top line may be rounded or square. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
@@ -567,8 +567,8 @@ Rocky pits larger than 5 m in diameter should be exaggerated and represented usi
         <message>
             <source>Boulder</source>
             <comment>Name of symbol 204</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Rulŝtono</translation>
+    </message>
         <message>
             <source>A distinct boulder (should be higher than 1 m), which is immediately identifiable on the ground. Groups of boulders are represented using symbol 207 (boulder cluster) or a boulder field symbol (208, 209).
 To be able to show the distinction between neighbouring (closer than 30 metres apart) boulders with significant difference in size, it is permitted to enlarge the symbol to 0.5 mm for some of the boulders.</source>
@@ -592,8 +592,8 @@ To be able to show the distinction between neighbouring (closer than 30 metres a
         <message>
             <source>Large boulder</source>
             <comment>Name of symbol 205</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Granda rulŝtono</translation>
+    </message>
         <message>
             <source>A particularly large and distinct boulder. A large boulder should be more than 2 m high. To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders with significant difference in size, it is permitted to reduce the size of the symbol to 0.5 mm for some of the boulders.</source>
             <comment>Description of symbol 205</comment>
@@ -602,8 +602,8 @@ To be able to show the distinction between neighbouring (closer than 30 metres a
         <message>
             <source>Gigantic boulder</source>
             <comment>Name of symbol 206</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Grandega rulŝtono</translation>
+    </message>
         <message>
             <source>A rock pillar or gigantic boulder that is so high and steep that it is impossible topass/climb.
 The gap between gigantic boulders or between gigantic boulders and other impassable feature symbols must exceed 0.3 mm on the map.</source>
@@ -613,8 +613,8 @@ The gap between gigantic boulders or between gigantic boulders and other impassa
         <message>
             <source>Boulder cluster</source>
             <comment>Name of symbol 207</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Amaso da rulŝtonoj</translation>
+    </message>
         <message>
             <source>A distinct group of boulders so closely clustered together that they cannot be marked individually. The boulders in the cluster should be higher than 1 metre. A boulder cluster must be easily identifiable as a group of boulders.
 To be able to show the distinction between neighbouring (maximum 30 metres apart), boulder clusters with significant difference in boulder size, it is permitted to enlarge this symbol by 20% (edge length 0.96 mm) for some of the boulder clusters.</source>
@@ -624,8 +624,8 @@ To be able to show the distinction between neighbouring (maximum 30 metres apart
         <message>
             <source>Boulder cluster, large</source>
             <comment>Name of symbol 207.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Amaso da rulŝtonoj, granda</translation>
+    </message>
         <message>
             <source>To be able to show the distinction between neighbouring (maximum 30 metres apart), boulder clusters with significant difference in boulder size, it is permitted to enlarge this symbol by 20% (edge length 0.96 mm) for some of the boulder clusters.</source>
             <comment>Description of symbol 207.1</comment>
@@ -634,8 +634,8 @@ To be able to show the distinction between neighbouring (maximum 30 metres apart
         <message>
             <source>Boulder field</source>
             <comment>Name of symbol 208</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Rulŝtonkampo</translation>
+    </message>
         <message>
             <source>An area which is covered with so many scattered blocks of stone that they cannot be marked individually, is shown with randomly placed and orientated solid triangles. A boulder field will generally not impact runnability. If the runnability of the boulder field is reduced, symbol 209 (dense boulder field) should be used or the symbol should be combined with a stony ground symbol.
 A minimum of two triangles should be used. One triangle may be used if it is combined with other rock symbols (for instance directly below cliff symbols (201, 202), adjacent to boulder symbols (204-206) or combined with stony ground symbols (210-212)).
@@ -742,8 +742,8 @@ To avoid confusion with symbol 416 (distinct vegetation boundary), the dots shou
         <message>
             <source>Bare rock</source>
             <comment>Name of symbol 214</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Nuda roko</translation>
+    </message>
         <message>
             <source>A runnable area of rock without earth or vegetation should be shown as bare rock.
 An area of rock covered with grass, moss or other low vegetation, shall not be shown using the bare rock symbol.
@@ -754,8 +754,8 @@ An area of less runnable bare rock should be shown using a stony ground symbol (
         <message>
             <source>Trench</source>
             <comment>Name of symbol 215</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Tranĉeo</translation>
+    </message>
         <message>
             <source>Rocky or artificial trench. Minimum depth should be 1 m.
 Minimum length: 2 mm (footprint 30 m).
@@ -809,8 +809,8 @@ Collapsed and easily crossable trenches should be mapped as erosion gullies.</so
         <message>
             <source>Shallow body of water</source>
             <comment>Name of symbol 302.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Malprofundaĵo</translation>
+    </message>
         <message>
             <source>A shallow seasonal or periodic body of water may be represented using a dashed outline. Small shallow water bodies may be represented as 100% blue (without an outline).</source>
             <comment>Description of symbol 302.1</comment>
@@ -890,8 +890,8 @@ Collapsed and easily crossable trenches should be mapped as erosion gullies.</so
         <message>
             <source>Uncrossable marsh</source>
             <comment>Name of symbol 307.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Netrairebla marĉo</translation>
+    </message>
         <message>
             <source>A marsh which is uncrossable or dangerous for the competitor. The black outline emphasises that the feature is uncrossable. The black outline is omitted for boundaries between uncrossable marsh and symbol 301 (uncrossable body of water). The symbol may be combined with a rough open land symbol (403, 404) to show openness. The symbol is orientated to north.
 </source>
@@ -911,8 +911,8 @@ Collapsed and easily crossable trenches should be mapped as erosion gullies.</so
         <message>
             <source>Marsh</source>
             <comment>Name of symbol 308</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Marĉo</translation>
+    </message>
         <message>
             <source>A crossable marsh, usually with a distinct edge.
 The symbol shall be combined with other symbols to show runnability and openness.
@@ -923,8 +923,8 @@ The symbol is orientated to north.</source>
         <message>
             <source>Marsh, minimum size</source>
             <comment>Name of symbol 308.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Marĉo, minimuma grando</translation>
+    </message>
         <message>
             <source>A crossable marsh, usually with a distinct edge.
 The symbol shall be combined with other symbols to show runnability and openness.
@@ -935,8 +935,8 @@ The symbol is orientated to north.</source>
         <message>
             <source>Narrow marsh</source>
             <comment>Name of symbol 309</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Mallarĝa marĉo</translation>
+    </message>
         <message>
             <source>A marsh or trickle of water which is too narrow (less than about 5 m wide) to be shown with the marsh symbol.</source>
             <comment>Description of symbol 309</comment>
@@ -945,8 +945,8 @@ The symbol is orientated to north.</source>
         <message>
             <source>Indistinct marsh</source>
             <comment>Name of symbol 310</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Nelegebla marĉo</translation>
+    </message>
         <message>
             <source>An indistinct marsh, seasonal marsh or an area of gradual transition from marsh to firm ground, which is crossable. The edge is generally indistinct and the vegetation similar to that of the surrounding ground.
 The symbol shall be combined with other symbols to show runnability and openness.
@@ -957,8 +957,8 @@ The symbol is orientated to north.</source>
         <message>
             <source>Indistinct marsh, minimum size</source>
             <comment>Name of symbol 310.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Nelegebla marĉo, minimuma grando</translation>
+    </message>
         <message>
             <source>An indistinct marsh, seasonal marsh or an area of gradual transition from marsh to firm ground, which is crossable. The edge is generally indistinct and the vegetation similar to that of the surrounding ground.
 The symbol shall be combined with other symbols to show runnability and openness.
@@ -969,8 +969,8 @@ The symbol is orientated to north.</source>
         <message>
             <source>Well, fountain or water tank</source>
             <comment>Name of symbol 311</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Puto, fontano aŭ akvorezervujo</translation>
+    </message>
         <message>
             <source>A prominent well, fountain, water tank or captive spring.</source>
             <comment>Description of symbol 311</comment>
@@ -979,8 +979,8 @@ The symbol is orientated to north.</source>
         <message>
             <source>Spring</source>
             <comment>Name of symbol 312</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Akvofonto</translation>
+    </message>
         <message>
             <source>A source of water.
 Location is the centre of gravity of the symbol, and the symbol is orientated to open downstream.</source>
@@ -1080,8 +1080,8 @@ open land).
         <message>
             <source>Forest</source>
             <comment>Name of symbol 405</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Arbaro</translation>
+    </message>
         <message>
             <source>Typical open forest for the particular type of terrain. If no part of the forest is easily runnable then no white should appear on the map.
 </source>
@@ -1225,8 +1225,8 @@ Minimum width: 0.35 mm</source>
         <message>
             <source>Vegetation, impassable</source>
             <comment>Name of symbol 411.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Plantaro, netrairebla</translation>
+    </message>
         <message>
             <source>An area of dense vegetation (trees or undergrowth) which is effectively impassable. Most useful for narrow and small areas.</source>
             <comment>Description of symbol 411.1</comment>
@@ -1235,8 +1235,8 @@ Minimum width: 0.35 mm</source>
         <message>
             <source>Cultivated land</source>
             <comment>Name of symbol 412</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Agraro</translation>
+    </message>
         <message>
             <source>Cultivated land, normally used for growing crops. Runnability may vary according to the type of crops grown and the time of year. For agroforestry, symbol 405 (forest) or 402 (open land with scattered trees) may be used instead of yellow.
 Since the runnability may vary, such areas should be avoided when setting courses.
@@ -1248,8 +1248,8 @@ The symbol is combined with symbol 709 (out of bounds area) to show cultivated l
         <message>
             <source>Orchard</source>
             <comment>Name of symbol 413</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Fruktarbejo</translation>
+    </message>
         <message>
             <source>Land planted with trees or bushes, normally in a regular pattern.
 The dot lines may be orientated to show the direction of planting.
@@ -1274,8 +1274,8 @@ May be combined with symbol 407 (vegetation, slow running, good visibility) or 4
         <message>
             <source>Vineyard</source>
             <comment>Name of symbol 414</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Vitejo</translation>
+    </message>
         <message>
             <source>A vineyard or similar cultivated land containing dense rows of plants offering good or normal runnability in the direction of planting. The lines shall be orientated to show the direction of planting. Must be combined with either symbol 401 (open land) or symbol 403 (rough open land).</source>
             <comment>Description of symbol 414</comment>
@@ -1409,7 +1409,7 @@ symbol.</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Formerly "502 Major road", provided for migration from ISOM 2000. Use of this symbol is discouraged for new maps.</source>
+            <source>Formerly &quot;502 Major road&quot;, provided for migration from ISOM 2000. Use of this symbol is discouraged for new maps.</source>
             <comment>Description of symbol 502.1</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -1446,8 +1446,8 @@ symbol.</source>
         <message>
             <source>Footpath</source>
             <comment>Name of symbol 505</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Vojeto</translation>
+    </message>
         <message>
             <source>An easily runnable path, bicycle track or old vehicle track.</source>
             <comment>Description of symbol 505</comment>
@@ -1456,8 +1456,8 @@ symbol.</source>
         <message>
             <source>Small footpath</source>
             <comment>Name of symbol 506</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Malgranda vojeto</translation>
+    </message>
         <message>
             <source>A runnable small path or (temporary) forest extraction track which can be followed at competition speed.</source>
             <comment>Description of symbol 506</comment>
@@ -1580,8 +1580,8 @@ The lines may be broken to improve legibility. Very large carrying masts shall b
         <message>
             <source>Bridge / tunnel</source>
             <comment>Name of symbol 512</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ponto / tunelo</translation>
+    </message>
         <message>
             <source>Bridges and tunnels are represented using the same basic symbols.
 If it is not possible to get through a tunnel (or under a bridge), it shall be omitted.
@@ -1615,8 +1615,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Wall</source>
             <comment>Name of symbol 513</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Muro</translation>
+    </message>
         <message>
             <source>A significant wall of stone, concrete, wood or other materials. Minimum height: 1 m.</source>
             <comment>Description of symbol 513</comment>
@@ -1732,8 +1732,8 @@ Vertical black stripes may be used for areas where it is important to show a com
         <message>
             <source>Building</source>
             <comment>Name of symbol 521</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Konstruaĵo</translation>
+    </message>
         <message>
             <source>A building is shown with its ground plan so far as the scale permits.
 
@@ -1748,8 +1748,8 @@ Buildings larger than 75 m x 75 m may be represented with a dark grey infill in 
         <message>
             <source>Building, minimum size</source>
             <comment>Name of symbol 521.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Konstruaĵo, minimuma grando</translation>
+    </message>
         <message>
             <source>A building is shown with its ground plan so far as the scale permits.
 
@@ -1774,8 +1774,8 @@ Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m)
         <message>
             <source>Large building</source>
             <comment>Name of symbol 521.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Granda konstruaĵo</translation>
+    </message>
         <message>
             <source>Buildings larger than 75 m x 75 m may be represented with a dark grey infill in urban areas.</source>
             <comment>Description of symbol 521.3</comment>
@@ -1824,8 +1824,8 @@ Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m)
         <message>
             <source>Ruin</source>
             <comment>Name of symbol 523</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ruino</translation>
+    </message>
         <message>
             <source>A ruined building. The ground plan of a ruin is shown to scale, down to the minimum size.</source>
             <comment>Description of symbol 523</comment>
@@ -1834,8 +1834,8 @@ Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m)
         <message>
             <source>Ruin, minimum size</source>
             <comment>Name of symbol 523.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ruino, minimuma grando</translation>
+    </message>
         <message>
             <source>Ruins that are so small that they cannot be drawn to scale may be represented using a solid line.</source>
             <comment>Description of symbol 523.1</comment>
@@ -1844,8 +1844,8 @@ Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m)
         <message>
             <source>High tower</source>
             <comment>Name of symbol 524</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Alta turo</translation>
+    </message>
         <message>
             <source>A high tower or large pylon. If it is in a forest, it must be visible above the level of the surrounding forest.</source>
             <comment>Description of symbol 524</comment>
@@ -1854,8 +1854,8 @@ Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m)
         <message>
             <source>Small tower</source>
             <comment>Name of symbol 525</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Malgranda turo</translation>
+    </message>
         <message>
             <source>An obvious small tower, platform or seat.</source>
             <comment>Description of symbol 525</comment>
@@ -1875,8 +1875,8 @@ Minimum height: 0.5 m.</source>
         <message>
             <source>Fodder rack</source>
             <comment>Name of symbol 527</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Manĝujo</translation>
+    </message>
         <message>
             <source>A fodder rack, which is free standing or attached to a tree.
 Location is at the centre of gravity of the symbol.</source>
@@ -1996,8 +1996,8 @@ Location is at the centre of gravity of the symbol.</source>
         <message>
             <source>Start</source>
             <comment>Name of symbol 701</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Starto</translation>
+    </message>
         <message>
             <source>The place where the orienteering starts. The centre of the triangle shows the precise position where the orienteering course starts. The start must be on a clearly identifiable point on the map. The triangle points in the direction of the first control.</source>
             <comment>Description of symbol 701</comment>
@@ -2027,8 +2027,8 @@ Sections of the circle should be omitted to leave important detail showing.</sou
         <message>
             <source>Control number</source>
             <comment>Name of symbol 704</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Kontrolejonumero</translation>
+    </message>
         <message>
             <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail. The numbers are orientated to north.</source>
             <comment>Description of symbol 704</comment>
@@ -2047,8 +2047,8 @@ Sections of the circle should be omitted to leave important detail showing.</sou
         <message>
             <source>Finish</source>
             <comment>Name of symbol 706</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Finiŝo</translation>
+    </message>
         <message>
             <source>The end of the course.</source>
             <comment>Description of symbol 706</comment>
@@ -2176,126 +2176,126 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>OpenOrienteering Logo</source>
             <comment>Name of symbol 999</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Markemblemo de OpenOrienteering</translation>
+    </message>
         <message>
             <source>The OpenOrienteering Logo.</source>
             <comment>Description of symbol 999</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Markemblemo de la OpenOrienteering.</translation>
+    </message>
     </context>
     <context>
         <name>ISOM2000</name>
         <message>
             <source>Purple</source>
             <comment>Color 0</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Purpura</translation>
+    </message>
         <message>
             <source>Black</source>
             <comment>Color 1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Nigra</translation>
+    </message>
         <message>
             <source>Brown 50%</source>
             <comment>Color 2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Bruna 50%</translation>
+    </message>
         <message>
             <source>Black below light browns</source>
             <comment>Color 3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Nigra sub helbruna</translation>
+    </message>
         <message>
             <source>Opaque Blue</source>
             <comment>Color 4</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Opaka blua</translation>
+    </message>
         <message>
             <source>Blue</source>
             <comment>Color 5</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Blua</translation>
+    </message>
         <message>
             <source>Blue 50%</source>
             <comment>Color 6</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Blua 50%</translation>
+    </message>
         <message>
             <source>Brown</source>
             <comment>Color 7</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Bruna</translation>
+    </message>
         <message>
             <source>OpenOrienteering Orange</source>
             <comment>Color 8</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>OpenOrienteering oranĝkolora</translation>
+    </message>
         <message>
             <source>Black 30%</source>
             <comment>Color 9</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Nigra 30%</translation>
+    </message>
         <message>
             <source>Green 50%, Yellow</source>
             <comment>Color 10</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verda 50%, flava</translation>
+    </message>
         <message>
             <source>Green over White over Green</source>
             <comment>Color 11</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verda super blanka super verda</translation>
+    </message>
         <message>
             <source>Opaque White over Green</source>
             <comment>Color 12</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Opaka blanka super verda</translation>
+    </message>
         <message>
             <source>Opaque Green</source>
             <comment>Color 13</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Opaka verda</translation>
+    </message>
         <message>
             <source>Green</source>
             <comment>Color 14</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verda</translation>
+    </message>
         <message>
             <source>Green 60%</source>
             <comment>Color 15</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verda 60%</translation>
+    </message>
         <message>
             <source>Green 30%</source>
             <comment>Color 16</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verda 30%</translation>
+    </message>
         <message>
             <source>Green below light greens</source>
             <comment>Color 17</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verda sub helverda</translation>
+    </message>
         <message>
             <source>Yellow</source>
             <comment>Color 18</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Flava</translation>
+    </message>
         <message>
             <source>Yellow 50%</source>
             <comment>Color 19</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Flava 50%</translation>
+    </message>
         <message>
             <source>White over Yellow 70%</source>
             <comment>Color 20</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Blanka super flava 70%</translation>
+    </message>
         <message>
             <source>Yellow 70%</source>
             <comment>Color 21</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Flava 70%</translation>
+    </message>
         <message>
             <source>Contour</source>
             <comment>Name of symbol 101</comment>
@@ -2512,7 +2512,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
+            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -2522,7 +2522,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
+            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201.0.1</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -3391,8 +3391,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Building</source>
             <comment>Name of symbol 526</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Konstruaĵo</translation>
+    </message>
         <message>
             <source>A building is shown with its ground plan so far as the scale permits.</source>
             <comment>Description of symbol 526</comment>
@@ -3401,8 +3401,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Building, minimum size</source>
             <comment>Name of symbol 526.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Konstruaĵo, minimuma grando</translation>
+    </message>
         <message>
             <source>Settlement</source>
             <comment>Name of symbol 527</comment>
@@ -3466,8 +3466,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Ruin</source>
             <comment>Name of symbol 530</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ruino</translation>
+    </message>
         <message>
             <source>The ground plan of a ruin is shown to scale, down to the minimum size shown opposite. Very small ruins may be drawn with a solid line.</source>
             <comment>Description of symbol 530</comment>
@@ -3486,8 +3486,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Ruin, minimum size</source>
             <comment>Name of symbol 530.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ruino, minimuma grando</translation>
+    </message>
         <message>
             <source>Very small ruins may be drawn with a solid line.</source>
             <comment>Description of symbol 530.2</comment>
@@ -3536,8 +3536,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>High tower</source>
             <comment>Name of symbol 535</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Alta turo</translation>
+    </message>
         <message>
             <source>A high tower or large pylon, standing above the level of the surrounding forest. Location is at the centre of gravity of the symbol.</source>
             <comment>Description of symbol 535</comment>
@@ -3546,8 +3546,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Small tower</source>
             <comment>Name of symbol 536</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Malgranda turo</translation>
+    </message>
         <message>
             <source>An obvious shooting platform or seat, or small tower. Location is at the centre of gravity of the symbol.</source>
             <comment>Description of symbol 536</comment>
@@ -3566,8 +3566,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Fodder rack</source>
             <comment>Name of symbol 538</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Manĝujo</translation>
+    </message>
         <message>
             <source>A fodder rack which is free standing or built on to a tree. Location is at the centre of gravity of the symbol. For land access reasons these may be omitted.</source>
             <comment>Description of symbol 538</comment>
@@ -3656,8 +3656,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Start</source>
             <comment>Name of symbol 701</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Starto</translation>
+    </message>
         <message>
             <source>The start or map issue point (if not at the start) is shown by an equilateral triangle which points in the direction of the first control. The centre of the triangle shows the precise position of the start point.</source>
             <comment>Description of symbol 701</comment>
@@ -3676,8 +3676,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Control number</source>
             <comment>Name of symbol 703</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Kontrolejonumero</translation>
+    </message>
         <message>
             <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail. The numbers are orientated to north.</source>
             <comment>Description of symbol 703</comment>
@@ -3706,8 +3706,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Finish</source>
             <comment>Name of symbol 706</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Finiŝo</translation>
+    </message>
         <message>
             <source>The finish is shown by two concentric circles.</source>
             <comment>Description of symbol 706</comment>
@@ -3822,36 +3822,36 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>OpenOrienteering Logo</source>
             <comment>Name of symbol 999</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Markemblemo de OpenOrienteering</translation>
+    </message>
         <message>
             <source>The OpenOrienteering Logo.</source>
             <comment>Description of symbol 999</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Markemblemo de la OpenOrienteering.</translation>
+    </message>
     </context>
     <context>
         <name>ISSOM</name>
         <message>
             <source>Purple</source>
             <comment>Color 0</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Purpura</translation>
+    </message>
         <message>
             <source>Purple 50%</source>
             <comment>Color 1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Purpura 50%</translation>
+    </message>
         <message>
             <source>Black</source>
             <comment>Color 2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Nigra</translation>
+    </message>
         <message>
             <source>Opaque White below Black</source>
             <comment>Color 3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Opaka blanka sub nigra</translation>
+    </message>
         <message>
             <source>Brown for contours</source>
             <comment>Color 4</comment>
@@ -3860,23 +3860,23 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Black 50-65% for buildings</source>
             <comment>Color 5</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Nigra 50-65% por konstruaĵoj</translation>
+    </message>
         <message>
             <source>Black 50%</source>
             <comment>Color 6</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Nigra 50%</translation>
+    </message>
         <message>
             <source>Black 30%</source>
             <comment>Color 7</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Nigra 30%</translation>
+    </message>
         <message>
             <source>Black 20%</source>
             <comment>Color 8</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Nigra 20%</translation>
+    </message>
         <message>
             <source>Green, Black 50% above Brown</source>
             <comment>Color 9</comment>
@@ -3910,13 +3910,13 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Black below light browns</source>
             <comment>Color 15</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Nigra sub helbruna</translation>
+    </message>
         <message>
             <source>Opaque Blue</source>
             <comment>Color 16</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Opaka blua</translation>
+    </message>
         <message>
             <source>Blue</source>
             <comment>Color 17</comment>
@@ -3940,13 +3940,13 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Brown</source>
             <comment>Color 21</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Bruna</translation>
+    </message>
         <message>
             <source>OpenOrienteering Orange</source>
             <comment>Color 22</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>OpenOrienteering oranĝkolora</translation>
+    </message>
         <message>
             <source>Grey</source>
             <comment>Color 23</comment>
@@ -3955,63 +3955,63 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Green 50%, Yellow</source>
             <comment>Color 24</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verda 50%, flava</translation>
+    </message>
         <message>
             <source>White over Green</source>
             <comment>Color 25</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Blanka super verda</translation>
+    </message>
         <message>
             <source>Green, Black 50%</source>
             <comment>Color 26</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verda, nigra 50%</translation>
+    </message>
         <message>
             <source>Opaque Green</source>
             <comment>Color 27</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Opaka verda</translation>
+    </message>
         <message>
             <source>Green</source>
             <comment>Color 28</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verda</translation>
+    </message>
         <message>
             <source>Green 60%</source>
             <comment>Color 29</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verda 60%</translation>
+    </message>
         <message>
             <source>Green 30%</source>
             <comment>Color 30</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verda 30%</translation>
+    </message>
         <message>
             <source>Green below light greens</source>
             <comment>Color 31</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verda sub helverda</translation>
+    </message>
         <message>
             <source>Yellow</source>
             <comment>Color 32</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Flava</translation>
+    </message>
         <message>
             <source>Yellow 50%</source>
             <comment>Color 33</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Flava 50%</translation>
+    </message>
         <message>
             <source>White over Yellow 70%</source>
             <comment>Color 34</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Blanka super flava 70%</translation>
+    </message>
         <message>
             <source>Yellow 70%</source>
             <comment>Color 35</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Flava 70%</translation>
+    </message>
         <message>
             <source>Contour</source>
             <comment>Name of symbol 101</comment>
@@ -4197,37 +4197,37 @@ The symbol may not be drawn in free form or such that two elongated knoll symbol
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Impassable cliff &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable cliff &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 201</comment>
             <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An impassable cliff, quarry or earth bank [see symbol earth bank (106)]. Tags are drawn downwards, showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). 
 
-The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags shall clearly extend over the bank line. Minimum height is 2 meters.
+The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags shall clearly extend over the bank line. Minimum height is 2 meters.
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an impassable cliff!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable cliff!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 201</comment>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Impassable cliff, minimum size &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable cliff, minimum size &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 201.0.1</comment>
             <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An impassable cliff, quarry or earth bank [see symbol earth bank (106)]. Tags are drawn downwards, showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). 
 
-The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags shall clearly extend over the bank line. Minimum height is 2 meters.
+The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags shall clearly extend over the bank line. Minimum height is 2 meters.
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an impassable cliff!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable cliff!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 201.0.1</comment>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Impassable cliff, no tags &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable cliff, no tags &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 201.1</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -4237,7 +4237,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Impassable cliff, no tags, minimum size &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable cliff, no tags, minimum size &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 201.1.1</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -4344,7 +4344,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>A cave is represented by the same symbol as a rocky pit. In this case the symbol shall be orientated to point up the slope as indicated opposite. This symbol should generally not be used in urban areas. The centre of gravity of the symbol marks the opening.
 
-&lt;span style="color:magenta"&gt;Controls may not be placed inside caves!&lt;/span&gt;</source>
+&lt;span style=&quot;color:magenta&quot;&gt;Controls may not be placed inside caves!&lt;/span&gt;</source>
             <comment>Description of symbol 205</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -4439,33 +4439,33 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Impassable body of water, with bank line, 100% blue &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable body of water, with bank line, 100% blue &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 304.1</comment>
             <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An area of deep water such as a lake, pond, river or fountain which may constitute a danger to the competitor or has forbidden access. The dark blue colour and the bordering black line indicates that the feature cannot or shall not be crossed. The minimum dimension is 1 mm².
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an impassable body of water!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable body of water!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 304.1</comment>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Impassable body of water, with bank line, 75% blue &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable body of water, with bank line, 75% blue &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 304.1.1</comment>
             <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An area of deep water such as a lake, pond, river or fountain which may constitute a danger to the competitor or has forbidden access. The dark blue colour and the bordering black line indicates that the feature cannot or shall not be crossed. The minimum dimension is 1 mm².
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an impassable body of water!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable body of water!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 304.1.1</comment>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Impassable body of water, bank line &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable body of water, bank line &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 304.2</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -4475,27 +4475,27 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Impassable body of water, fill, 100% blue &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable body of water, fill, 100% blue &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 304.3</comment>
             <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An area of deep water such as a lake, pond, river or fountain which may constitute a danger to the competitor or has forbidden access. The dark blue colour and the bordering black line indicates that the feature cannot or shall not be crossed. The minimum dimension is 1 mm².
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an impassable body of water!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable body of water!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 304.3</comment>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Impassable body of water, fill, 75% blue &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable body of water, fill, 75% blue &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 304.4</comment>
             <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An area of deep water such as a lake, pond, river or fountain which may constitute a danger to the competitor or has forbidden access. The dark blue colour and the bordering black line indicates that the feature cannot or shall not be crossed. The minimum dimension is 1 mm².
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an impassable body of water!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable body of water!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 304.4</comment>
             <translation type="unfinished"></translation>
@@ -4561,14 +4561,14 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Impassable marsh &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable marsh &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 309</comment>
             <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A marsh which is impassable or which may constitute a danger to the competitor. The feature cannot or shall not be crossed.
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an impassable marsh!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable marsh!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 309</comment>
             <translation type="unfinished"></translation>
@@ -4887,7 +4887,7 @@ Minimum width: 0.25 mm.</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Impassable vegetation &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable vegetation &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 421</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -4896,7 +4896,7 @@ Minimum width: 0.25 mm.</source>
  
 Minimum width: 0.4 mm.
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross impassable vegetation!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross impassable vegetation!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 421</comment>
             <translation type="unfinished"></translation>
@@ -5066,7 +5066,7 @@ Very large carrying masts shall be represented in plan shape or with the symbol 
         <message>
             <source>An underpass or a tunnel is a passage running underneath the ground, especially a passage for pedestrians or vehicles, crossing under for instance a railroad or a road.
 
-&lt;span style="color: magenta"&gt;If underpasses or tunnels etc. are to be used in a competition, they shall be emphasized with the symbol crossing point (708) or crossing section (708.1)!&lt;/span&gt;</source>
+&lt;span style=&quot;color: magenta&quot;&gt;If underpasses or tunnels etc. are to be used in a competition, they shall be emphasized with the symbol crossing point (708) or crossing section (708.1)!&lt;/span&gt;</source>
             <comment>Description of symbol 518.1</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -5101,27 +5101,27 @@ Very large carrying masts shall be represented in plan shape or with the symbol 
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Impassable wall &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable wall &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 521.1.1</comment>
             <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An impassable wall or retaining wall is a wall, which fulfil the function of an enclosure or solid barrier. It shall not be crossed, due to forbidden access or because it may constitute a danger to the competitor due to its height. Very wide impassable walls shall be drawn in plan shape and represented with the symbol building (526.1).
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an impassable wall!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable wall!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 521.1.1</comment>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Impassable wall, plan shape &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable wall, plan shape &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 521.1.2</comment>
             <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An impassable wall or retaining wall is a wall, which fulfil the function of an enclosure or solid barrier. It shall not be crossed, due to forbidden access or because it may constitute a danger to the competitor due to its height. Very wide impassable walls shall be drawn in plan shape and represented with the symbol building (526.1).
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an impassable wall!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable wall!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 521.1.2</comment>
             <translation type="unfinished"></translation>
@@ -5139,14 +5139,14 @@ If a fence or railing is higher than 2 m or very difficult to cross, it shall be
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Impassable fence or railing &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable fence or railing &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 524</comment>
             <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An impassable fence or railing, which shall not be crossed, due to forbidden access or because it may constitute a danger to the competitor because of its height.
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an impassable fence or railing!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable fence or railing!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 524</comment>
             <translation type="unfinished"></translation>
@@ -5162,7 +5162,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Building &lt;span style="color:magenta"&gt;(forbidden to pass through or over)&lt;/span&gt;</source>
+            <source>Building &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to pass through or over)&lt;/span&gt;</source>
             <comment>Name of symbol 526.1</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -5171,7 +5171,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
 
 The minimum gap between buildings and between buildings and other impassable features shall be 0.40 mm. The black screen percentage should be chosen according to the terrain. A dark screen gives a better contrast to passable areas, such as streets, stairways and canopies, while a light screen makes contours and course overprint more clearly visible (which can be important in very densely built up urban terrain and in steep urban terrain). The black screen shall be the same for the whole map. 
 
-&lt;span style="color:magenta"&gt;It is forbidden to pass through or over a building! 
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to pass through or over a building! 
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 526.1</comment>
             <translation type="unfinished"></translation>
@@ -5197,7 +5197,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Building, minimum size &lt;span style="color:magenta"&gt;(forbidden to pass through or over)&lt;/span&gt;</source>
+            <source>Building, minimum size &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to pass through or over)&lt;/span&gt;</source>
             <comment>Name of symbol 526.1.3</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -5206,7 +5206,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
 
 The minimum gap between buildings and between buildings and other impassable features shall be 0.40 mm. The black screen percentage should be chosen according to the terrain. A dark screen gives a better contrast to passable areas, such as streets, stairways and canopies, while a light screen makes contours and course overprint more clearly visible (which can be important in very densely built up urban terrain and in steep urban terrain). The black screen shall be the same for the whole map. 
 
-&lt;span style="color:magenta"&gt;It is forbidden to pass through or over a building! 
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to pass through or over a building! 
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 526.1.3</comment>
             <translation type="unfinished"></translation>
@@ -5256,7 +5256,7 @@ Columns of pillars and pillars along buildings are not represented. However, if 
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Area with forbidden access &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Area with forbidden access &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 528.1</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -5265,7 +5265,7 @@ Columns of pillars and pillars along buildings are not represented. However, if 
 
 Areas with forbidden access totally contained within buildings shall be mapped as being a part of the building.
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an area with forbidden access!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an area with forbidden access!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 528.1</comment>
             <translation type="unfinished"></translation>
@@ -5489,14 +5489,14 @@ Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Impassable pipeline &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable pipeline &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 534</comment>
             <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An impassable pipeline (gas, water, oil, etc.) above ground level which shall not be crossed, due to forbidden access or because it may constitute a danger to the competitor because of its height.
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an impassable pipeline!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable pipeline!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 534</comment>
             <translation type="unfinished"></translation>
@@ -5504,8 +5504,8 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>High tower</source>
             <comment>Name of symbol 535</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Alta turo</translation>
+    </message>
         <message>
             <source>A high tower or large pylon. Very large towers shall be represented in plan shape with the symbol building (526.1). The symbol is orientated to north.</source>
             <comment>Description of symbol 535</comment>
@@ -5514,8 +5514,8 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>Small tower</source>
             <comment>Name of symbol 536</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Malgranda turo</translation>
+    </message>
         <message>
             <source>An obvious small tower, platform or seat. The symbol is orientated to north.</source>
             <comment>Description of symbol 536</comment>
@@ -5534,8 +5534,8 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>Fodder rack</source>
             <comment>Name of symbol 538</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Manĝujo</translation>
+    </message>
         <message>
             <source>A fodder rack, which is free standing or attached to a tree. The symbol is orientated to north.</source>
             <comment>Description of symbol 538</comment>
@@ -5670,8 +5670,8 @@ North lines may be broken where they obscure small features such as boulders, kn
         <message>
             <source>Start</source>
             <comment>Name of symbol 701</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Starto</translation>
+    </message>
         <message>
             <source>The start or map issue point (if not at the start) is shown by an equilateral triangle which points in the direction of the first control. The centre of the triangle shows the precise position of the start point.</source>
             <comment>Description of symbol 701</comment>
@@ -5690,8 +5690,8 @@ North lines may be broken where they obscure small features such as boulders, kn
         <message>
             <source>Control number</source>
             <comment>Name of symbol 703</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Kontrolejonumero</translation>
+    </message>
         <message>
             <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail. The numbers are orientated to north.</source>
             <comment>Description of symbol 703</comment>
@@ -5720,22 +5720,22 @@ North lines may be broken where they obscure small features such as boulders, kn
         <message>
             <source>Finish</source>
             <comment>Name of symbol 706</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Finiŝo</translation>
+    </message>
         <message>
             <source>The finish is shown by two concentric circles.</source>
             <comment>Description of symbol 706</comment>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Uncrossable boundary &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Uncrossable boundary &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 707</comment>
             <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A boundary which it is not permitted to cross. Uncrossable boundaries shall be mapped by using the symbols: impassable cliff (201), impassable body of water (304.1), impassable marsh (309), impassable wall (521.1), impassable fence or railing (524) or impassable pipeline (534) and shall not be overprinted with symbol uncrossable boundary (707). This symbol is to be used only for last minute updates to the competition area, as excessive use of purple for indicating barriers is unfortunate.
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an uncrossable boundary!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an uncrossable boundary!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 707</comment>
             <translation type="unfinished"></translation>
@@ -5743,8 +5743,8 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>Crossing point</source>
             <comment>Name of symbol 708</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Pasejo</translation>
+    </message>
         <message>
             <source>A crossing point through or over a wall or fence, or across a road or railway or through a tunnel or an out-of-bounds area is drawn on the map with two lines curving outwards. 
 
@@ -5765,7 +5765,7 @@ If underpasses or tunnels etc. are to be used in a competition, they shall be em
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Out-of-bounds area &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Out-of-bounds area &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 709</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -5776,7 +5776,7 @@ An out-of-bounds area is shown with vertical stripes. A bounding line may be dra
 - a dashed line indicates intermittent marking on the ground,
 - no line indicates no marking on the ground.
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an out-of-bounds area!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an out-of-bounds area!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 709</comment>
             <translation type="unfinished"></translation>
@@ -5822,14 +5822,14 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Temporary construction or closed area &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Temporary construction or closed area &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 714</comment>
             <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Obvious temporary constructions like platforms for spectators and speaker, closed area for spectators, outside restaurant areas, etc. shall be represented in plan shape.
 
-&lt;span style="color:magenta"&gt;It is forbidden to enter a temporary construction or closed area!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to enter a temporary construction or closed area!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 714</comment>
             <translation type="unfinished"></translation>
@@ -5849,26 +5849,26 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>OpenOrienteering Logo</source>
             <comment>Name of symbol 999</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Markemblemo de OpenOrienteering</translation>
+    </message>
         <message>
             <source>The OpenOrienteering Logo.</source>
             <comment>Description of symbol 999</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Markemblemo de la OpenOrienteering.</translation>
+    </message>
     </context>
     <context>
         <name>ISMTBOM</name>
         <message>
             <source>Purple</source>
             <comment>Color 0</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Purpura</translation>
+    </message>
         <message>
             <source>Black</source>
             <comment>Color 1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Nigra</translation>
+    </message>
         <message>
             <source>Lower Purple</source>
             <comment>Color 2</comment>
@@ -5877,33 +5877,33 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Black 70%</source>
             <comment>Color 3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Nigra 70%</translation>
+    </message>
         <message>
             <source>Brown 50%</source>
             <comment>Color 4</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Bruna 50%</translation>
+    </message>
         <message>
             <source>Black below light browns</source>
             <comment>Color 5</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Nigra sub helbruna</translation>
+    </message>
         <message>
             <source>Brown</source>
             <comment>Color 6</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Bruna</translation>
+    </message>
         <message>
             <source>OpenOrienteering Orange</source>
             <comment>Color 7</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>OpenOrienteering oranĝkolora</translation>
+    </message>
         <message>
             <source>Opaque Blue</source>
             <comment>Color 8</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Opaka blua</translation>
+    </message>
         <message>
             <source>Blue</source>
             <comment>Color 9</comment>
@@ -5917,73 +5917,73 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Black 30%</source>
             <comment>Color 11</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Nigra 30%</translation>
+    </message>
         <message>
             <source>Green 50%, Yellow</source>
             <comment>Color 12</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verda 50%, flava</translation>
+    </message>
         <message>
             <source>Green over White over Green</source>
             <comment>Color 13</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verda super blanka super verda</translation>
+    </message>
         <message>
             <source>Opaque White over Green</source>
             <comment>Color 14</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Opaka blanka super verda</translation>
+    </message>
         <message>
             <source>Yellow over Green</source>
             <comment>Color 15</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Flava super verda</translation>
+    </message>
         <message>
             <source>Opaque Green</source>
             <comment>Color 16</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Opaka verda</translation>
+    </message>
         <message>
             <source>Green</source>
             <comment>Color 17</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verda</translation>
+    </message>
         <message>
             <source>Green 60%</source>
             <comment>Color 18</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verda 60%</translation>
+    </message>
         <message>
             <source>Green 30%</source>
             <comment>Color 19</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verda 30%</translation>
+    </message>
         <message>
             <source>Green below light greens</source>
             <comment>Color 20</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verda sub helverda</translation>
+    </message>
         <message>
             <source>Yellow</source>
             <comment>Color 21</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Flava</translation>
+    </message>
         <message>
             <source>Yellow 50%</source>
             <comment>Color 22</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Flava 50%</translation>
+    </message>
         <message>
             <source>White over Yellow 70%</source>
             <comment>Color 23</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Blanka super flava 70%</translation>
+    </message>
         <message>
             <source>Yellow 70%</source>
             <comment>Color 24</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Flava 70%</translation>
+    </message>
         <message>
             <source>Contour</source>
             <comment>Name of symbol 101</comment>
@@ -6100,7 +6100,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
+            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -6110,7 +6110,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
+            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201.0.1</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -6212,7 +6212,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Large areas of water are shown with this symbol (blue 50%). The colour of the bank line is blue 100 %.
 
-Small areas of water should be shown with full colour. Use symbol 302 ("Pond" in ISOM).</source>
+Small areas of water should be shown with full colour. Use symbol 302 (&quot;Pond&quot; in ISOM).</source>
             <comment>Description of symbol 301</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -6239,7 +6239,7 @@ Small areas of water should be shown with full colour. Use symbol 302 ("Pond" in
         <message>
             <source>Small areas of water should be shown with full colour.
 
-This is symbol "302 Pond" in ISOM, but is a variation of "301 Lake" in ISMTBOM.</source>
+This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lake&quot; in ISMTBOM.</source>
             <comment>Description of symbol 302</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -6635,8 +6635,8 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <message>
             <source>Building</source>
             <comment>Name of symbol 526</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Konstruaĵo</translation>
+    </message>
         <message>
             <source>A building is shown with its ground plan so far as the scale permits.</source>
             <comment>Description of symbol 526</comment>
@@ -6645,8 +6645,8 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <message>
             <source>Building, minimum size</source>
             <comment>Name of symbol 526.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Konstruaĵo, minimuma grando</translation>
+    </message>
         <message>
             <source>Settlement</source>
             <comment>Name of symbol 527</comment>
@@ -6710,8 +6710,8 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <message>
             <source>High tower</source>
             <comment>Name of symbol 535</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Alta turo</translation>
+    </message>
         <message>
             <source>A high tower or large pylon, standing above the level of the surrounding forest. Location is at the centre of gravity of the symbol.</source>
             <comment>Description of symbol 535</comment>
@@ -6720,8 +6720,8 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <message>
             <source>Small tower</source>
             <comment>Name of symbol 536</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Malgranda turo</translation>
+    </message>
         <message>
             <source>An obvious shooting platform or seat, or small tower. Location is at the centre of gravity of the symbol.</source>
             <comment>Description of symbol 536</comment>
@@ -6730,8 +6730,8 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <message>
             <source>Fodder rack</source>
             <comment>Name of symbol 538</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Manĝujo</translation>
+    </message>
         <message>
             <source>A fodder rack which is free standing or built on to a tree. Location is at the centre of gravity of the symbol. For land access reasons these may be omitted.</source>
             <comment>Description of symbol 538</comment>
@@ -6805,8 +6805,8 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <message>
             <source>Start</source>
             <comment>Name of symbol 701</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Starto</translation>
+    </message>
         <message>
             <source>The start or map issue point (if not at the start) is shown by an equilateral triangle which points in the direction of the first control. The centre of the triangle shows the precise position of the start point.</source>
             <comment>Description of symbol 701</comment>
@@ -6835,8 +6835,8 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <message>
             <source>Control number</source>
             <comment>Name of symbol 703</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Kontrolejonumero</translation>
+    </message>
         <message>
             <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail. The numbers are orientated to north.</source>
             <comment>Description of symbol 703</comment>
@@ -6868,8 +6868,8 @@ to represent allowed routes that are marked in the terrain.</source>
         <message>
             <source>Finish</source>
             <comment>Name of symbol 706</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Finiŝo</translation>
+    </message>
         <message>
             <source>The finish is shown by two concentric circles.</source>
             <comment>Description of symbol 706</comment>
@@ -6979,13 +6979,13 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>OpenOrienteering Logo</source>
             <comment>Name of symbol 999</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Markemblemo de OpenOrienteering</translation>
+    </message>
         <message>
             <source>The OpenOrienteering Logo.</source>
             <comment>Description of symbol 999</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Markemblemo de la OpenOrienteering.</translation>
+    </message>
         <message>
             <source>Form line</source>
             <comment>Name of symbol 103</comment>
@@ -7555,8 +7555,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Ruin</source>
             <comment>Name of symbol 530</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ruino</translation>
+    </message>
         <message>
             <source>The ground plan of a ruin is shown to scale, down to the minimum size shown opposite. Very small ruins may be drawn with a solid line.</source>
             <comment>Description of symbol 530</comment>
@@ -7575,8 +7575,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Ruin, minimum size</source>
             <comment>Name of symbol 530.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ruino, minimuma grando</translation>
+    </message>
         <message>
             <source>Very small ruins may be drawn with a solid line.</source>
             <comment>Description of symbol 530.2</comment>
@@ -7653,13 +7653,13 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Opaque Purple</source>
             <comment>Color 0</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Opaka purpura</translation>
+    </message>
         <message>
             <source>Purple</source>
             <comment>Color 1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Purpura</translation>
+    </message>
         <message>
             <source>Upper Green</source>
             <comment>Color 2</comment>
@@ -7668,33 +7668,33 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Black</source>
             <comment>Color 3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Nigra</translation>
+    </message>
         <message>
             <source>Brown 50%</source>
             <comment>Color 4</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Bruna 50%</translation>
+    </message>
         <message>
             <source>Black below light browns</source>
             <comment>Color 5</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Nigra sub helbruna</translation>
+    </message>
         <message>
             <source>Brown</source>
             <comment>Color 6</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Bruna</translation>
+    </message>
         <message>
             <source>OpenOrienteering Orange</source>
             <comment>Color 7</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>OpenOrienteering oranĝkolora</translation>
+    </message>
         <message>
             <source>Opaque Blue</source>
             <comment>Color 8</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Opaka blua</translation>
+    </message>
         <message>
             <source>Blue</source>
             <comment>Color 9</comment>
@@ -7708,68 +7708,68 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Black 30%</source>
             <comment>Color 11</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Nigra 30%</translation>
+    </message>
         <message>
             <source>Green 50%, Yellow</source>
             <comment>Color 12</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verda 50%, flava</translation>
+    </message>
         <message>
             <source>Green over White over Green</source>
             <comment>Color 13</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verda super blanka super verda</translation>
+    </message>
         <message>
             <source>Opaque White over Green</source>
             <comment>Color 14</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Opaka blanka super verda</translation>
+    </message>
         <message>
             <source>Opaque Green</source>
             <comment>Color 15</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Opaka verda</translation>
+    </message>
         <message>
             <source>Green</source>
             <comment>Color 16</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verda</translation>
+    </message>
         <message>
             <source>Green 60%</source>
             <comment>Color 17</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verda 60%</translation>
+    </message>
         <message>
             <source>Green 30%</source>
             <comment>Color 18</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verda 30%</translation>
+    </message>
         <message>
             <source>Green below light greens</source>
             <comment>Color 19</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verda sub helverda</translation>
+    </message>
         <message>
             <source>Yellow</source>
             <comment>Color 20</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Flava</translation>
+    </message>
         <message>
             <source>Yellow 50%</source>
             <comment>Color 21</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Flava 50%</translation>
+    </message>
         <message>
             <source>White over Yellow 70%</source>
             <comment>Color 22</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Blanka super flava 70%</translation>
+    </message>
         <message>
             <source>Yellow 70%</source>
             <comment>Color 23</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Flava 70%</translation>
+    </message>
         <message>
             <source>Contour</source>
             <comment>Name of symbol 101</comment>
@@ -7906,7 +7906,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
+            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -7916,7 +7916,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
+            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201.0.1</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -8414,8 +8414,8 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <message>
             <source>Building</source>
             <comment>Name of symbol 526</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Konstruaĵo</translation>
+    </message>
         <message>
             <source>A building is shown with its ground plan so far as the scale permits.</source>
             <comment>Description of symbol 526</comment>
@@ -8424,8 +8424,8 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <message>
             <source>Building, minimum size</source>
             <comment>Name of symbol 526.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Konstruaĵo, minimuma grando</translation>
+    </message>
         <message>
             <source>Settlement</source>
             <comment>Name of symbol 527</comment>
@@ -8509,8 +8509,8 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <message>
             <source>High tower</source>
             <comment>Name of symbol 535</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Alta turo</translation>
+    </message>
         <message>
             <source>A high tower or large pylon, standing above the level of the surrounding forest. Location is at the centre of gravity of the symbol.</source>
             <comment>Description of symbol 535</comment>
@@ -8519,8 +8519,8 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <message>
             <source>Small tower</source>
             <comment>Name of symbol 536</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Malgranda turo</translation>
+    </message>
         <message>
             <source>An obvious shooting platform or seat, or small tower. Location is at the centre of gravity of the symbol.</source>
             <comment>Description of symbol 536</comment>
@@ -8787,8 +8787,8 @@ that it is more clearly visible in the track network.</source>
         <message>
             <source>Start</source>
             <comment>Name of symbol 701</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Starto</translation>
+    </message>
         <message>
             <source>The start or map issue point (if not at the start) is shown by an equilateral triangle which points in the direction of the first control. The centre of the triangle shows the precise position of the start point.</source>
             <comment>Description of symbol 701</comment>
@@ -8817,8 +8817,8 @@ that it is more clearly visible in the track network.</source>
         <message>
             <source>Control number</source>
             <comment>Name of symbol 703</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Kontrolejonumero</translation>
+    </message>
         <message>
             <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail. The numbers are orientated to north.</source>
             <comment>Description of symbol 703</comment>
@@ -8847,8 +8847,8 @@ that it is more clearly visible in the track network.</source>
         <message>
             <source>Finish</source>
             <comment>Name of symbol 706</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Finiŝo</translation>
+    </message>
         <message>
             <source>The finish is shown by two concentric circles.</source>
             <comment>Description of symbol 706</comment>
@@ -8963,13 +8963,13 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>OpenOrienteering Logo</source>
             <comment>Name of symbol 999</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Markemblemo de OpenOrienteering</translation>
+    </message>
         <message>
             <source>The OpenOrienteering Logo.</source>
             <comment>Description of symbol 999</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Markemblemo de la OpenOrienteering.</translation>
+    </message>
         <message>
             <source>Small earth wall</source>
             <comment>Name of symbol 108</comment>
@@ -9459,8 +9459,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Ruin</source>
             <comment>Name of symbol 530</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ruino</translation>
+    </message>
         <message>
             <source>The ground plan of a ruin is shown to scale, down to the minimum size shown opposite. Very small ruins may be drawn with a solid line.</source>
             <comment>Description of symbol 530</comment>
@@ -9479,8 +9479,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Ruin, minimum size</source>
             <comment>Name of symbol 530.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ruino, minimuma grando</translation>
+    </message>
         <message>
             <source>Very small ruins may be drawn with a solid line.</source>
             <comment>Description of symbol 530.2</comment>
@@ -9519,8 +9519,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Fodder rack</source>
             <comment>Name of symbol 538</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Manĝujo</translation>
+    </message>
         <message>
             <source>A fodder rack which is free standing or built on to a tree. Location is at the centre of gravity of the symbol. For land access reasons these may be omitted.</source>
             <comment>Description of symbol 538</comment>
@@ -9532,8 +9532,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Purple</source>
             <comment>Color 0</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Purpura</translation>
+    </message>
         <message>
             <source>Black for control descriptions</source>
             <comment>Color 1</comment>
@@ -9557,8 +9557,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Black</source>
             <comment>Color 5</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Nigra</translation>
+    </message>
         <message>
             <source>Simple Orienteering Course</source>
             <comment>Name of symbol 799</comment>
@@ -9574,8 +9574,8 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Start</source>
             <comment>Name of symbol 701</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Starto</translation>
+    </message>
         <message>
             <source>The start or map issue point (if not at the start) is shown by an equilateral triangle which points in the direction of the first control. The centre of the triangle shows the precise position of the start point.</source>
             <comment>Description of symbol 701</comment>
@@ -9594,8 +9594,8 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Control number</source>
             <comment>Name of symbol 703</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Kontrolejonumero</translation>
+    </message>
         <message>
             <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail. The numbers are orientated to north.</source>
             <comment>Description of symbol 703</comment>
@@ -9624,8 +9624,8 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Finish</source>
             <comment>Name of symbol 706</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Finiŝo</translation>
+    </message>
         <message>
             <source>The finish is shown by two concentric circles.</source>
             <comment>Description of symbol 706</comment>
@@ -9806,8 +9806,8 @@ In this symbol set, you need to add this symbol manually after the start locatio
         <message>
             <source>|A| Start location</source>
             <comment>Name of symbol 99.6</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|A| Startloko</translation>
+    </message>
         <message>
             <source>Shown in first line of descriptions, using the description as if it were a control feature.
 
@@ -9818,8 +9818,8 @@ Map symbol: ISOM 701</source>
         <message>
             <source>|A| Control number</source>
             <comment>Name of symbol 99.7</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|A| Kontrolejonumero</translation>
+    </message>
         <message>
             <source>Numbering of controls is in the sequence they are to be visited, unless the description is for a Score competition.
 
@@ -10518,8 +10518,8 @@ Map symbol: ISOM 509</source>
         <message>
             <source>|D| Bridge</source>
             <comment>Name of symbol 5.4</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|D| Ponto</translation>
+    </message>
         <message>
             <source>A crossing point over a watercourse, or other linear feature.
 
@@ -10602,8 +10602,8 @@ Map symbol: ISOM 525</source>
         <message>
             <source>|D| Building</source>
             <comment>Name of symbol 5.11</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|D| Konstruaĵo</translation>
+    </message>
         <message>
             <source>A standing brick, wood or stone structure.
 
@@ -10626,8 +10626,8 @@ Map symbol: ISOM 529</source>
         <message>
             <source>|D| Ruin</source>
             <comment>Name of symbol 5.13</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|D| Ruino</translation>
+    </message>
         <message>
             <source>The remains of a building that has fallen down.
 
@@ -10650,8 +10650,8 @@ Map symbols: ISOM 533, 534</source>
         <message>
             <source>|D| Tower</source>
             <comment>Name of symbol 5.15</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|D| Turo</translation>
+    </message>
         <message>
             <source>A tall metal, wooden or brick structure, usually built for forest observation.
 
@@ -10686,8 +10686,8 @@ Map symbol: ISOM 537</source>
         <message>
             <source>|D| Fodder rack</source>
             <comment>Name of symbol 5.18</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|D| Manĝujo</translation>
+    </message>
         <message>
             <source>A construction for holding feed for animals.
 

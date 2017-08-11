@@ -1867,8 +1867,8 @@ Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m)
         <message>
             <source>Cairn</source>
             <comment>Name of symbol 526</comment>
-            <translation>Пилон</translation>
-        </message>
+            <translation>Тур (гурий)</translation>
+    </message>
         <message>
             <source>A prominent cairn, memorial stone, boundary stone or trigonometric point.
 Minimum height: 0.5 m.</source>
@@ -3561,8 +3561,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Cairn</source>
             <comment>Name of symbol 537</comment>
-            <translation>Пилон</translation>
-        </message>
+            <translation>Тур (гурий)</translation>
+    </message>
         <message>
             <source>Cairn, memorial stone or boundary stone (or a trigonometric point in some countries) more than 0.5 m high.</source>
             <comment>Description of symbol 537</comment>
@@ -6847,7 +6847,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <message>
             <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail. The numbers are orientated to north.</source>
             <comment>Description of symbol 703</comment>
-            <translation type="unfinished">Номер КП располагается рядом со знаком КП таким образом, чтобы не закрывались детали карты. Цифра ориентируется на север.</translation>
+            <translation>Номер КП располагается рядом со знаком КП таким образом, чтобы не закрывались детали карты. Цифра ориентируется на север.</translation>
         </message>
         <message>
             <source>Line</source>
@@ -7564,7 +7564,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Ruin</source>
             <comment>Name of symbol 530</comment>
-            <translation type="unfinished">Развалины</translation>
+            <translation>Развалины</translation>
         </message>
         <message>
             <source>The ground plan of a ruin is shown to scale, down to the minimum size shown opposite. Very small ruins may be drawn with a solid line.</source>
@@ -7574,7 +7574,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Ruin, no dashes</source>
             <comment>Name of symbol 530.1</comment>
-            <translation type="unfinished">Развалины, сплошная линия</translation>
+            <translation>Развалины, сплошная линия</translation>
         </message>
         <message>
             <source>Very small ruins may be drawn with a solid line.</source>
@@ -7584,7 +7584,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Ruin, minimum size</source>
             <comment>Name of symbol 530.2</comment>
-            <translation type="unfinished">Развалины, минимальный размер</translation>
+            <translation>Развалины, минимальный размер</translation>
         </message>
         <message>
             <source>Very small ruins may be drawn with a solid line.</source>
@@ -7604,8 +7604,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Cairn</source>
             <comment>Name of symbol 537</comment>
-            <translation type="unfinished">Пилон</translation>
-        </message>
+            <translation>Тур (гурий)</translation>
+    </message>
         <message>
             <source>Cairn, memorial stone or boundary stone (or a trigonometric point in some countries) more than 0.5 m high.</source>
             <comment>Description of symbol 537</comment>
@@ -8518,7 +8518,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <message>
             <source>High tower</source>
             <comment>Name of symbol 535</comment>
-            <translation type="unfinished">Высокая башня</translation>
+            <translation>Высокая башня</translation>
         </message>
         <message>
             <source>A high tower or large pylon, standing above the level of the surrounding forest. Location is at the centre of gravity of the symbol.</source>
@@ -8528,7 +8528,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <message>
             <source>Small tower</source>
             <comment>Name of symbol 536</comment>
-            <translation type="unfinished">Маленькая башня</translation>
+            <translation>Маленькая башня</translation>
         </message>
         <message>
             <source>An obvious shooting platform or seat, or small tower. Location is at the centre of gravity of the symbol.</source>
@@ -8796,7 +8796,7 @@ that it is more clearly visible in the track network.</source>
         <message>
             <source>Start</source>
             <comment>Name of symbol 701</comment>
-            <translation type="unfinished">Старт</translation>
+            <translation>Старт</translation>
         </message>
         <message>
             <source>The start or map issue point (if not at the start) is shown by an equilateral triangle which points in the direction of the first control. The centre of the triangle shows the precise position of the start point.</source>
@@ -8826,12 +8826,12 @@ that it is more clearly visible in the track network.</source>
         <message>
             <source>Control number</source>
             <comment>Name of symbol 703</comment>
-            <translation type="unfinished">Номер контрольного пункта</translation>
+            <translation>Номер контрольного пункта</translation>
         </message>
         <message>
             <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail. The numbers are orientated to north.</source>
             <comment>Description of symbol 703</comment>
-            <translation type="unfinished">Номер КП располагается рядом со знаком КП таким образом, чтобы не закрывались детали карты. Цифра ориентируется на север.</translation>
+            <translation>Номер КП располагается рядом со знаком КП таким образом, чтобы не закрывались детали карты. Цифра ориентируется на север.</translation>
         </message>
         <message>
             <source>Line</source>
@@ -9478,7 +9478,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Ruin, no dashes</source>
             <comment>Name of symbol 530.1</comment>
-            <translation type="unfinished">Развалины, сплошная линия</translation>
+            <translation>Развалины, сплошная линия</translation>
         </message>
         <message>
             <source>Very small ruins may be drawn with a solid line.</source>
@@ -9518,8 +9518,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Cairn</source>
             <comment>Name of symbol 537</comment>
-            <translation>Пилон</translation>
-        </message>
+            <translation>Тур (гурий)</translation>
+    </message>
         <message>
             <source>Cairn, memorial stone or boundary stone (or a trigonometric point in some countries) more than 0.5 m high.</source>
             <comment>Description of symbol 537</comment>
@@ -9610,7 +9610,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail. The numbers are orientated to north.</source>
             <comment>Description of symbol 703</comment>
-            <translation type="unfinished">Номер КП располагается рядом со знаком КП таким образом, чтобы не закрывались детали карты. Цифра ориентируется на север.</translation>
+            <translation>Номер КП располагается рядом со знаком КП таким образом, чтобы не закрывались детали карты. Цифра ориентируется на север.</translation>
         </message>
         <message>
             <source>Line</source>
@@ -9817,8 +9817,8 @@ In this symbol set, you need to add this symbol manually after the start locatio
         <message>
             <source>|A| Start location</source>
             <comment>Name of symbol 99.6</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|A| Место старта</translation>
+    </message>
         <message>
             <source>Shown in first line of descriptions, using the description as if it were a control feature.
 
@@ -9829,8 +9829,8 @@ Map symbol: ISOM 701</source>
         <message>
             <source>|A| Control number</source>
             <comment>Name of symbol 99.7</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|A| Номер контрольного пункта</translation>
+    </message>
         <message>
             <source>Numbering of controls is in the sequence they are to be visited, unless the description is for a Score competition.
 
@@ -10637,8 +10637,8 @@ Map symbol: ISOM 529</source>
         <message>
             <source>|D| Ruin</source>
             <comment>Name of symbol 5.13</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|D| Развалины</translation>
+    </message>
         <message>
             <source>The remains of a building that has fallen down.
 
@@ -10661,8 +10661,8 @@ Map symbols: ISOM 533, 534</source>
         <message>
             <source>|D| Tower</source>
             <comment>Name of symbol 5.15</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|D| Башня</translation>
+    </message>
         <message>
             <source>A tall metal, wooden or brick structure, usually built for forest observation.
 
@@ -10697,8 +10697,8 @@ Map symbol: ISOM 537</source>
         <message>
             <source>|D| Fodder rack</source>
             <comment>Name of symbol 5.18</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|D| Кормушка</translation>
+    </message>
         <message>
             <source>A construction for holding feed for animals.
 
