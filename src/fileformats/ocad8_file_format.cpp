@@ -1905,6 +1905,16 @@ MapCoord OCAD8FileExport::calculateAreaOffset()
 			addWarning(tr("Some coordinates remain outside of the OCAD 8 drawing area."
 			              " They might be unreachable in OCAD."));
 		}
+		
+		if (area_offset.manhattanLength() > 0)
+		{
+			// Round offset to 100 m in projected coordinates, to avoid crude grid offset.
+			constexpr auto unit = 100;
+			auto projected_offset = map->getGeoreferencing().toProjectedCoords(MapCoordF(area_offset));
+			projected_offset.rx() = std::round(projected_offset.x()/unit) * unit;
+			projected_offset.ry() = std::round(projected_offset.y()/unit) * unit;
+			area_offset = map->getGeoreferencing().toMapCoordF(projected_offset);
+		}
 	}
 	
 	return MapCoord{area_offset};
