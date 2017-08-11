@@ -1125,8 +1125,7 @@ open land).
 Barva: zelená, bílá.</translation>
         </message>
         <message>
-            <source>Vegetation, slow running, good visibility
-</source>
+            <source>Vegetation, slow running, good visibility</source>
             <comment>Name of symbol 407</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -1137,8 +1136,7 @@ Barva: zelená, bílá.</translation>
 Barva: zelená 14.3% (11,9 linek/cm).</translation>
         </message>
         <message>
-            <source>Vegetation, walk
-</source>
+            <source>Vegetation, walk</source>
             <comment>Name of symbol 408</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -1930,9 +1928,7 @@ Location is at the centre of gravity of the symbol.</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Special man-made features are shown with these symbols. The definition of the
-symbols must be given in each case in the map legend.
-</source>
+            <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
             <comment>Description of symbol 530</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -1942,9 +1938,7 @@ symbols must be given in each case in the map legend.
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Special man-made features are shown with these symbols. The definition of the
-symbols must be given in each case in the map legend.
-</source>
+            <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
             <comment>Description of symbol 531</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -1954,8 +1948,7 @@ symbols must be given in each case in the map legend.
             <translation type="unfinished">Magnetické poledníky {severníky}</translation>
         </message>
         <message>
-            <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map. North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.
-</source>
+            <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map. North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.</source>
             <comment>Description of symbol 601.1</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -1965,8 +1958,7 @@ symbols must be given in each case in the map legend.
             <translation type="unfinished">Vzor poledníku</translation>
         </message>
         <message>
-            <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map. North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.
-</source>
+            <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map. North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.</source>
             <comment>Description of symbol 601.1.1</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -1986,8 +1978,7 @@ symbols must be given in each case in the map legend.
             <translation type="unfinished">Vzor poledníku, modrý</translation>
         </message>
         <message>
-            <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map. North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.
-</source>
+            <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map. North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.</source>
             <comment>Description of symbol 601.2.1</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -3759,8 +3750,7 @@ Barva: černá.</translation>
             <translation>Zvláštní umělý objekt</translation>
         </message>
         <message>
-            <source>Special man-made features are shown with these symbols. The definition of the
-symbols must be given in each case in the map legend.</source>
+            <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
             <comment>Description of symbol 539</comment>
             <translation>Těmito značkami se zobrazují zvláštní umělé objekty. Definice každé značky musí být uvedena v legendě mapy.
 Barva: černá.</translation>
@@ -3771,8 +3761,7 @@ Barva: černá.</translation>
             <translation>Zvláštní umělý objekt</translation>
         </message>
         <message>
-            <source>Special man-made features are shown with these symbols. The definition of the
-symbols must be given in each case in the map legend.</source>
+            <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
             <comment>Description of symbol 540</comment>
             <translation>Těmito značkami se zobrazují zvláštní umělé objekty. Definice každé značky musí být uvedena v legendě mapy.
 Barva: černá.</translation>
@@ -3826,8 +3815,7 @@ Barva: všechny tiskové barvy.</translation>
             <translation>Výšková kóta, tečka</translation>
         </message>
         <message>
-            <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are
-given without the dot.</source>
+            <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
             <comment>Description of symbol 603.0</comment>
             <translation>Výškové kóty se užívají pro hrubý odhad výškových rozdílů. Výška se zaokrouhluje na metry. Číslice jsou orientovány k severu. Výška vodní hladiny se udává bez tečky.
 Barva: černá.</translation>
@@ -3915,7 +3903,7 @@ Barva: fialová.</translation>
             <translation>Nepřekročitelná hranice</translation>
         </message>
         <message>
-            <source>Aboundary which it is not permitted to cross.</source>
+            <source>A boundary which it is not permitted to cross.</source>
             <comment>Description of symbol 707</comment>
             <translation>Hranice, kterou není povoleno překračovat.
 Barva: fialová.</translation>
@@ -4228,7 +4216,7 @@ Fialová čára se trchu rozšíří do symbolu pro cíl. To je nedostatek tohot
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 2 or 2.5 m. To emphasize the 3-dimensional effect of the contour line image, contour lines shall be represented as continuous lines through all symbols, also building (526.1) and canopy (526.2). However, contour lines shall be cut out for better legibility, if they touch the following symbols: small earth wall (108.1), small knoll (112), small elongated knoll (113), small depression (115), pit or hole (116), prominent landform feature (118), step or edge of paved area (529.1). 
 
-The relative height difference between neighbouring features must be represented on the map as accurately as possible.  Absolute height accuracy is of less importance. It is permissible to alter the height of a contour slightly if this will improve the representation of a feature. This deviation should not exceed 25% of the contour interval and attention must be paid to neighbouring features. The smallest bend in a contour is 0.4 mm from centre to centre of the lines.</source>
+The relative height difference between neighbouring features must be represented on the map as accurately as possible. Absolute height accuracy is of less importance. It is permissible to alter the height of a contour slightly if this will improve the representation of a feature. This deviation should not exceed 25% of the contour interval and attention must be paid to neighbouring features. The smallest bend in a contour is 0.4 mm from centre to centre of the lines.</source>
             <comment>Description of symbol 101</comment>
             <translation>Čára spojující body stejné {nadmořské} výšky. Základní výškový interval mezi vrstevnicemi je 2 nebo 2,5 metru. Ke zdůraznění třídimensionálního efektu obrazu vrstevnic musí být vrstevnice zobrazeny jako spojité čáry procházející všemi značkami, včetně budov (526.1) a canopy (526.2). Vrstevnice nicméně musí být přerušeny z důvodu lepší čitelnosti, pokud se dotýkají následujících značek: {vrstevnicová kóta (105), sráz (106),} malá hráz (108.1), {mělká rýha (110),} malá kupka (112), malá protáhlá kupka (113), malá prohlubeň (115), jáma (116), význačný terénní objekt (118), schod nebo okraj zpevněných ploch (529.1). Relativní výškový rozdíl mezi sousedními objekty musí být zobrazen na mapě tak přesně, jak je možné. Absolutní výšková přesnost je méně důležitá. Je přípustné mírně upravit výšku vrstevnice, pokud to zlepší zobrazení objektu. Odchylka nesmí překročit 25 % intervalu vrstevnic a musí být brán ohled na sousední objekty. Nejmenší ohyb vrstevnice je 0,4 mm od středu ke středu čáry.
 
@@ -4240,7 +4228,7 @@ Barva: hnědá.</translation>
             <translation>Hlavní vrstevnice</translation>
         </message>
         <message>
-            <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface.  Where an index contour coincides with an area of much detail, it may be shown with symbol contour (101).</source>
+            <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. Where an index contour coincides with an area of much detail, it may be shown with symbol contour (101).</source>
             <comment>Description of symbol 102</comment>
             <translation>Každá pátá vrstevnice musí být kreslena širší čarou. To napomáhá rychlému odhadu výškového rozdílu a celkového tvaru terénu. Tam, kde se hlavní vrstevnice vyskytuje v oblasti s mnoha detaily, může být nakreslena značkou vrstevnice (101) {aby byla zachována čitelnost zobrazeného detailu}.
 
@@ -4322,7 +4310,7 @@ Barva: hnědá.</translation>
             <translation>Malá hráz</translation>
         </message>
         <message>
-            <source>A small distinct earth wall, usually man made. The minimum height is 0.5 m.  Larger earth walls should be represented with the symbols contour (101), form line (103) or earth bank (106).</source>
+            <source>A small distinct earth wall, usually man made. The minimum height is 0.5 m. Larger earth walls should be represented with the symbols contour (101), form line (103) or earth bank (106).</source>
             <comment>Description of symbol 108.1</comment>
             <translation>Malý výrazný hliněný val, obvykle uměle vytvořený {úzký násep bez komunikace}. Minimální výška je 0,5 m. Velké hliněné valy se zobrazují značkou vrstevnice (101), pomocné vrstevnice (103) nebo srázu (106).
 
@@ -4346,7 +4334,7 @@ Barva: hnědá.</translation>
             <translation>Mělká rýha</translation>
         </message>
         <message>
-            <source>Asmall erosion gully or trench. Minimum depth is 0.5 m.</source>
+            <source>A small erosion gully or trench. Minimum depth is 0.5 m.</source>
             <comment>Description of symbol 110</comment>
             <translation>Mělká erozní rýha nebo příkop. Minimální hloubka 0,5 m.
 
@@ -4626,7 +4614,7 @@ Barva: černá.
             <translation>Balvan</translation>
         </message>
         <message>
-            <source>A small distinct boulder. The minimum height is 1 m.  Every boulder marked on the map shall be immediately identifiable on the ground.</source>
+            <source>A small distinct boulder. The minimum height is 1 m. Every boulder marked on the map shall be immediately identifiable on the ground.</source>
             <comment>Description of symbol 206</comment>
             <translation>Malý výrazný balvan. Minimální výška je 1 m. Každý balvan zaznamenaný v mapě musí být okamžitě identifikovatelný v terénu.
 
@@ -4710,9 +4698,7 @@ Barva: černá 12,5% (22 linek/cm) a žlutá 50% (viz 403).</translation>
             <translation>Holá skála</translation>
         </message>
         <message>
-            <source>An area of runnable rock without earth or vegetation. An area of rock covered
-with grass, moss or other low vegetation shall be represented according to its
-openness and runnability (401/402/403/404).</source>
+            <source>An area of runnable rock without earth or vegetation. An area of rock covered with grass, moss or other low vegetation shall be represented according to its openness and runnability (401/402/403/404).</source>
             <comment>Description of symbol 212</comment>
             <translation>Průběžná oblast skalního podkladu bez půdy či porostu. Skalnatá oblast pokrytá trávou, mechem nebo jiným nízkým porostem, musí být znázorněna podle své otevřenosti a průběžnosti (401/402/403/404).
 
@@ -4850,7 +4836,7 @@ Barva: modrá 30% (min. 60 linek/cm), modrá.</translation>
             <translation>Překonatelné vodní těleso</translation>
         </message>
         <message>
-            <source>An area of shallow water such as a pond, river or fountain that can be crossed.  The body of water shall be less than 0.5 m deep and runnable. If the body of water is not runnable it shall be represented with the symbol impassable body of water (304.1). If no other line symbol touches the border of the passable body of water, the border shall be represented with a blue line.</source>
+            <source>An area of shallow water such as a pond, river or fountain that can be crossed. The body of water shall be less than 0.5 m deep and runnable. If the body of water is not runnable it shall be represented with the symbol impassable body of water (304.1). If no other line symbol touches the border of the passable body of water, the border shall be represented with a blue line.</source>
             <comment>Description of symbol 305.1</comment>
             <translation>Oblast mělké vody jako je rybník, řeka nebo nádrž, která může být přecházena. Vodní těleso musí mít hloubku menší než 0,5 m a musí být průběžné. Je-li vodní těleso neprůběžné, musí být znázorněno značkou nepřekonatelné vodní těleso (304.1). Pokud žádná liniová značka netvoří okraj překonatelného vodního tělesa, musí být okraj zobrazen modrou čarou.
 
@@ -4898,7 +4884,7 @@ Barva: modrá.</translation>
             <translation>Nepřekonatelná bažina &lt;span style="color:magenta"&gt;(zákaz překonávání)&lt;/span&gt;</translation>
         </message>
         <message>
-            <source>A marsh which is impassable or which may constitute a danger to the competitor.  The feature cannot or shall not be crossed.
+            <source>A marsh which is impassable or which may constitute a danger to the competitor. The feature cannot or shall not be crossed.
 
 &lt;span style="color:magenta"&gt;It is forbidden to cross an impassable marsh!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
@@ -5415,7 +5401,7 @@ Barva: černá, hnědá 0 {%} (bílá), 10%, 20% nebo 30% (urban) / 20%, 30%, 40
 </translation>
         </message>
         <message>
-            <source>Aless distinct path or forestry extraction track. Not to be used in urban areas.</source>
+            <source>A less distinct path or forestry extraction track. Not to be used in urban areas.</source>
             <comment>Description of symbol 508</comment>
             <translation>Nevýrazná pěšina nebo cesta pro těžbu dřeva. Nesmí být užita v urbanizovaných oblastech.
 
@@ -5661,7 +5647,7 @@ Závodníci, kteří porušili toto pravidlo, budou diskvalifikováni.&lt;/span&
             <translation>Průchod</translation>
         </message>
         <message>
-            <source>A crossing point is a gap or an opening in a fence, railing or wall, which can easily be crossed by a competitor.  Small gaps or openings which can not easily be crossed by competitors, shall not be represented on the map and shall be closed during the competition.</source>
+            <source>A crossing point is a gap or an opening in a fence, railing or wall, which can easily be crossed by a competitor. Small gaps or openings which can not easily be crossed by competitors, shall not be represented on the map and shall be closed during the competition.</source>
             <comment>Description of symbol 525</comment>
             <translation>Průchod je mezera či otvor v plotu, ohradě, zdi a podobně {například žebřík přes plot}, která je pro závodníka snadno průchodná. Malé mezery nebo otvory, které pro závodníka nemohou být snadno průchodné, nesmí být v mapě zobrazeny a musí být v průběhu závodu uzavřeny.
 
@@ -6169,7 +6155,7 @@ Barva: černá.</translation>
             <translation>Malá věž</translation>
         </message>
         <message>
-            <source>An obvious small tower, platform or seat . The symbol is orientated to north.</source>
+            <source>An obvious small tower, platform or seat. The symbol is orientated to north.</source>
             <comment>Description of symbol 536</comment>
             <translation>Zřetelná malá věž, plošina nebo sedátko. Značka je orientována k severu.
 
@@ -6181,7 +6167,7 @@ Barva: černá.</translation>
             <translation>Mohyla, pomník, malý památník nebo hraniční kámen</translation>
         </message>
         <message>
-            <source>Cairn, memorial, small monument or boundary stone more than 0.5 m high.  Large massive monuments shall be represented in plan shape with the symbol building (526.1).</source>
+            <source>Cairn, memorial, small monument or boundary stone more than 0.5 m high. Large massive monuments shall be represented in plan shape with the symbol building (526.1).</source>
             <comment>Description of symbol 537</comment>
             <translation>Mohyla, pomník, {socha,} malý památník nebo hraniční kámen vyšší než 0,5 m. Velké masivní památníky musí být zobrazeny v půdorysu značkou budova (526.1).
 
@@ -6266,9 +6252,9 @@ Barva: černá nebo modrá.
             <translation>Vzor magnetického poledníku, černý</translation>
         </message>
         <message>
-            <source>Magnetic north lines are lines placed on the map pointing to magnetic north.  Their spacing shall be 30mm on the 1:5000 map so they represent 150m on the ground.
+            <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30mm on the 1:5000 map so they represent 150m on the ground.
 
-North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc.  Cut holes in the pattern to create these breaks.</source>
+North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. Cut holes in the pattern to create these breaks.</source>
             <comment>Description of symbol 601.0.3</comment>
             <translation>Magnetické poledníky jsou čáry umístěné na mapu tak, aby směřovaly k magnetickému severu. Jejich rozestup musí být 30 mm na mapě 1 : 5 000 a 37,5 mm na mapě 1 : 4 000, takže v obou měřítcích vyjadřuje 150 m ve skutečnosti.
 
@@ -6284,7 +6270,7 @@ Barva: černá nebo modrá.</translation>
             <translation>Magnetický poledník, modrý</translation>
         </message>
         <message>
-            <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm on the 1:5 000 map so they represent 150 m on the ground.  
+            <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm on the 1:5 000 map so they represent 150 m on the ground.
 
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc.</source>
             <comment>Description of symbol 601.0.4</comment>
@@ -6322,7 +6308,7 @@ Barva: černá nebo modrá.
         <message>
             <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm on the 1:5 000 map so they represent 150 m on the ground. 
 
-North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc.  Cut holes in the pattern to create these breaks.</source>
+North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. Cut holes in the pattern to create these breaks.</source>
             <comment>Description of symbol 601.0.6</comment>
             <translation>Magnetické poledníky jsou čáry umístěné na mapu tak, aby směřovaly k magnetickému severu. Jejich rozestup musí být 30 mm na mapě 1 : 5 000 a 37,5 mm na mapě 1 : 4 000, takže v obou měřítcích vyjadřuje 150 m ve skutečnosti.
 
@@ -6498,7 +6484,7 @@ Barva: fialová.</translation>
             <translation>Nepřístupná oblast &lt;span style="color:magenta"&gt;(zákaz překonávání)&lt;/span&gt;</translation>
         </message>
         <message>
-            <source>Out of bounds areas are mapped with the symbol area with forbidden access (528.1).  This symbol shall only be used for last minute updates to the competition map (e.g. for areas that may be dangerous for the competitors during the competition, or very late changes to the competition terrain).
+            <source>Out of bounds areas are mapped with the symbol area with forbidden access (528.1). This symbol shall only be used for last minute updates to the competition map (e.g. for areas that may be dangerous for the competitors during the competition, or very late changes to the competition terrain).
 An out-of-bounds area is shown with vertical stripes. A bounding line may be drawn if there is no natural boundary, as follows:
 - a solid line indicates that the boundary is marked continuously (tapes, etc.) on the ground,
 - a dashed line indicates intermittent marking on the ground,
@@ -7555,8 +7541,7 @@ Barva: černá.</translation>
             <translation type="unfinished">Zvláštní umělý objekt</translation>
         </message>
         <message>
-            <source>Special man-made features are shown with these symbols. The definition of the
-symbols must be given in each case in the map legend.</source>
+            <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
             <comment>Description of symbol 539</comment>
             <translation type="unfinished">Těmito značkami se zobrazují zvláštní umělé objekty. Definice každé značky musí být uvedena v legendě mapy.
 Barva: černá.</translation>
@@ -7567,8 +7552,7 @@ Barva: černá.</translation>
             <translation type="unfinished">Zvláštní umělý objekt</translation>
         </message>
         <message>
-            <source>Special man-made features are shown with these symbols. The definition of the
-symbols must be given in each case in the map legend.</source>
+            <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
             <comment>Description of symbol 540</comment>
             <translation type="unfinished">Těmito značkami se zobrazují zvláštní umělé objekty. Definice každé značky musí být uvedena v legendě mapy.
 Barva: černá.</translation>
@@ -7605,8 +7589,7 @@ Barva: všechny tiskové barvy.</translation>
             <translation type="unfinished">Výšková kóta, tečka</translation>
         </message>
         <message>
-            <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are
-given without the dot.</source>
+            <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
             <comment>Description of symbol 603.0</comment>
             <translation type="unfinished">Výškové kóty se užívají pro hrubý odhad výškových rozdílů. Výška se zaokrouhluje na metry. Číslice jsou orientovány k severu. Výška vodní hladiny se udává bez tečky.
 Barva: černá.</translation>
@@ -7706,7 +7689,7 @@ Barva: fialová.</translation>
             <translation type="unfinished">Nepřekročitelná hranice</translation>
         </message>
         <message>
-            <source>Aboundary which it is not permitted to cross.</source>
+            <source>A boundary which it is not permitted to cross.</source>
             <comment>Description of symbol 707</comment>
             <translation type="unfinished">Hranice, kterou není povoleno překračovat.
 Barva: fialová.</translation>
@@ -9548,8 +9531,7 @@ Barva: černá.</translation>
             <translation type="unfinished">Zvláštní umělý objekt</translation>
         </message>
         <message>
-            <source>Special man-made features are shown with these symbols. The definition of the
-symbols must be given in each case in the map legend.</source>
+            <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
             <comment>Description of symbol 539</comment>
             <translation type="unfinished">Těmito značkami se zobrazují zvláštní umělé objekty. Definice každé značky musí být uvedena v legendě mapy.
 Barva: černá.</translation>
@@ -9560,8 +9542,7 @@ Barva: černá.</translation>
             <translation type="unfinished">Zvláštní umělý objekt</translation>
         </message>
         <message>
-            <source>Special man-made features are shown with these symbols. The definition of the
-symbols must be given in each case in the map legend.</source>
+            <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
             <comment>Description of symbol 540</comment>
             <translation type="unfinished">Těmito značkami se zobrazují zvláštní umělé objekty. Definice každé značky musí být uvedena v legendě mapy.
 Barva: černá.</translation>
@@ -9615,8 +9596,7 @@ Barva: všechny tiskové barvy.</translation>
             <translation type="unfinished">Výšková kóta, tečka</translation>
         </message>
         <message>
-            <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are
-given without the dot.</source>
+            <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
             <comment>Description of symbol 603.0</comment>
             <translation type="unfinished">Výškové kóty se užívají pro hrubý odhad výškových rozdílů. Výška se zaokrouhluje na metry. Číslice jsou orientovány k severu. Výška vodní hladiny se udává bez tečky.
 Barva: černá.</translation>
@@ -9892,7 +9872,7 @@ Barva: fialová.</translation>
             <translation type="unfinished">Nepřekročitelná hranice</translation>
         </message>
         <message>
-            <source>Aboundary which it is not permitted to cross.</source>
+            <source>A boundary which it is not permitted to cross.</source>
             <comment>Description of symbol 707</comment>
             <translation type="unfinished">Hranice, kterou není povoleno překračovat.
 Barva: fialová.</translation>
@@ -10766,7 +10746,7 @@ Barva: fialová.</translation>
             <translation type="unfinished">Nepřekročitelná hranice</translation>
         </message>
         <message>
-            <source>Aboundary which it is not permitted to cross.</source>
+            <source>A boundary which it is not permitted to cross.</source>
             <comment>Description of symbol 707</comment>
             <translation type="unfinished">Hranice, kterou není povoleno překračovat.
 Barva: fialová.</translation>
@@ -12944,8 +12924,7 @@ The orientation of the symbol indicates the direction in which the corner points
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Taped Route from Control to
-Map Exchange</source>
+            <source>Taped Route from Control to Map Exchange</source>
             <comment>Name of symbol 13.5</comment>
             <translation type="unfinished"></translation>
         </message>

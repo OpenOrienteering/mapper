@@ -1111,8 +1111,7 @@ open land).
             <translation>Wenn ein Waldgebiet in einer Richtung gut, in anderer Richtung jedoch schlecht belaufbar ist, zeigen weiße Streifen im Grünton die Richtung der guten Belaufbarkeit an.</translation>
         </message>
         <message>
-            <source>Vegetation, slow running, good visibility
-</source>
+            <source>Vegetation, slow running, good visibility</source>
             <comment>Name of symbol 407</comment>
             <translation>Vegetation, langsam belaufbar, gute Sicht
 </translation>
@@ -1123,8 +1122,7 @@ open land).
             <translation>Ein Gebiet mit dichter Bodenvegetation, jedoch sonst guter Sichtweite (Brombeersträucher, Heidekraut, niedrige Büsche, einschließlich abgeschlagene Äste), wodurch das Lauftempo auf ca. 60-80% der normalen Geschwindigkeit verringert ist. Diese Signatur kann nicht mit Signatur 406 oder 408 kombiniert werden.</translation>
         </message>
         <message>
-            <source>Vegetation, walk
-</source>
+            <source>Vegetation, walk</source>
             <comment>Name of symbol 408</comment>
             <translation>Vegetation, Schritttempo
 </translation>
@@ -1915,9 +1913,7 @@ Location is at the centre of gravity of the symbol.</source>
             <translation>Markantes künstliches Objekt, Kreis</translation>
     </message>
         <message>
-            <source>Special man-made features are shown with these symbols. The definition of the
-symbols must be given in each case in the map legend.
-</source>
+            <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
             <comment>Description of symbol 530</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -1927,9 +1923,7 @@ symbols must be given in each case in the map legend.
             <translation>Markantes künstliches Objekt, Kreuz</translation>
     </message>
         <message>
-            <source>Special man-made features are shown with these symbols. The definition of the
-symbols must be given in each case in the map legend.
-</source>
+            <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
             <comment>Description of symbol 531</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -1939,8 +1933,7 @@ symbols must be given in each case in the map legend.
             <translation>Magnetisch-Nordlinien</translation>
         </message>
         <message>
-            <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map. North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.
-</source>
+            <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map. North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.</source>
             <comment>Description of symbol 601.1</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -1950,8 +1943,7 @@ symbols must be given in each case in the map legend.
             <translation>Nordlinien-Raster</translation>
         </message>
         <message>
-            <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map. North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.
-</source>
+            <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map. North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.</source>
             <comment>Description of symbol 601.1.1</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -1971,8 +1963,7 @@ symbols must be given in each case in the map legend.
             <translation>Nordlinien-Raster, blau</translation>
         </message>
         <message>
-            <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map. North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.
-</source>
+            <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map. North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.</source>
             <comment>Description of symbol 601.2.1</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -3593,8 +3584,7 @@ Hinweis: Wenn der Bach breiter ist, muss das Symbol angepasst werden, so dass es
             <translation>Besonderes künstliches Objekt</translation>
         </message>
         <message>
-            <source>Special man-made features are shown with these symbols. The definition of the
-symbols must be given in each case in the map legend.</source>
+            <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
             <comment>Description of symbol 539</comment>
             <translation>Die Beschreibung der Signatur muss immer in der Kartenlegende angegeben werden.</translation>
         </message>
@@ -3604,8 +3594,7 @@ symbols must be given in each case in the map legend.</source>
             <translation>Besonderes künstliches Objekt</translation>
         </message>
         <message>
-            <source>Special man-made features are shown with these symbols. The definition of the
-symbols must be given in each case in the map legend.</source>
+            <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
             <comment>Description of symbol 540</comment>
             <translation>Die Beschreibung der Signatur muss immer in der Kartenlegende angegeben werden.</translation>
         </message>
@@ -3655,8 +3644,7 @@ symbols must be given in each case in the map legend.</source>
             <translation>Höhenkote, Punkt</translation>
         </message>
         <message>
-            <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are
-given without the dot.</source>
+            <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
             <comment>Description of symbol 603.0</comment>
             <translation>Höhenkoten dienen der Abschätzung großer Höhenunterschiede. Die Höhe wird auf ganze Meter gerundet angegeben. Die Ziffern werden nach Norden orientiert.
 
@@ -3738,7 +3726,7 @@ Achtung: Gewässertiefen werden ohne den Punkt angegeben.</translation>
             <translation>Unpassierbare Grenze</translation>
         </message>
         <message>
-            <source>Aboundary which it is not permitted to cross.</source>
+            <source>A boundary which it is not permitted to cross.</source>
             <comment>Description of symbol 707</comment>
             <translation>Eine Grenze, die nicht überquert werden darf.</translation>
         </message>
@@ -4043,7 +4031,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 2 or 2.5 m. To emphasize the 3-dimensional effect of the contour line image, contour lines shall be represented as continuous lines through all symbols, also building (526.1) and canopy (526.2). However, contour lines shall be cut out for better legibility, if they touch the following symbols: small earth wall (108.1), small knoll (112), small elongated knoll (113), small depression (115), pit or hole (116), prominent landform feature (118), step or edge of paved area (529.1). 
 
-The relative height difference between neighbouring features must be represented on the map as accurately as possible.  Absolute height accuracy is of less importance. It is permissible to alter the height of a contour slightly if this will improve the representation of a feature. This deviation should not exceed 25% of the contour interval and attention must be paid to neighbouring features. The smallest bend in a contour is 0.4 mm from centre to centre of the lines.</source>
+The relative height difference between neighbouring features must be represented on the map as accurately as possible. Absolute height accuracy is of less importance. It is permissible to alter the height of a contour slightly if this will improve the representation of a feature. This deviation should not exceed 25% of the contour interval and attention must be paid to neighbouring features. The smallest bend in a contour is 0.4 mm from centre to centre of the lines.</source>
             <comment>Description of symbol 101</comment>
             <translation>Eine Linie, die Punkte gleicher Höhe verbindet. Die normale Äquidistanz beträgt 2 oder 2,5 m. Um den dreidimensionalen Eindruck des Höhenlinienbildes zu verstärken, sollen die Linien durch alle Signaturen hindurch gezeichnet werden, insbesondere durch Gebäude (526.1) und Überdachungen (526.2). Hingegen sollen Höhenlinien zur besseren Lesbarkeit unterbrochen werden, wenn sie die folgenden Signaturen kreuzen oder berühren würden: Kleiner Erdwall (108.1), Kleine Kuppe (112), Kleine längliche Kuppe (113), Kleine Senke (115), Grube oder Loch (116), Besonderes Geländeobjekt (118), Stufe oder Umriss einer befestigten Fläche (529.1).
 
@@ -4055,7 +4043,7 @@ Auf der Karte sollen die relativen Höhenunterschiede benachbarter Objekte bestm
             <translation>Zählhöhenlinie</translation>
     </message>
         <message>
-            <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface.  Where an index contour coincides with an area of much detail, it may be shown with symbol contour (101).</source>
+            <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. Where an index contour coincides with an area of much detail, it may be shown with symbol contour (101).</source>
             <comment>Description of symbol 102</comment>
             <translation>Jede fünfte Höhenlinie soll stärker gezeichnet werden, um Höhenunterschiede und das generelle Geländerelief besser abschätzen zu können. Fällt eine Zählhöhenlinie in ein Gebiet mit vielen Details, kann sie als normale Höhenlinie (101) gezeichnet werden.</translation>
     </message>
@@ -4125,7 +4113,7 @@ Auf der Karte sollen die relativen Höhenunterschiede benachbarter Objekte bestm
             <translation>Kleiner Erdwall</translation>
         </message>
         <message>
-            <source>A small distinct earth wall, usually man made. The minimum height is 0.5 m.  Larger earth walls should be represented with the symbols contour (101), form line (103) or earth bank (106).</source>
+            <source>A small distinct earth wall, usually man made. The minimum height is 0.5 m. Larger earth walls should be represented with the symbols contour (101), form line (103) or earth bank (106).</source>
             <comment>Description of symbol 108.1</comment>
             <translation>Ein kleiner, deutlicher Erdwall, zumeist künstlich. Die Mindesthöhe beträgt 0,5 m. Größere Erdwälle sollen mit den Signaturen Höhenlinie (101), Hilfshöhenlinie (103) oder Erdböschung (106) dargestellt werden.</translation>
     </message>
@@ -4145,7 +4133,7 @@ Auf der Karte sollen die relativen Höhenunterschiede benachbarter Objekte bestm
             <translation>Kleiner Graben</translation>
         </message>
         <message>
-            <source>Asmall erosion gully or trench. Minimum depth is 0.5 m.</source>
+            <source>A small erosion gully or trench. Minimum depth is 0.5 m.</source>
             <comment>Description of symbol 110</comment>
             <translation>Kleiner Graben oder Trockenrinne. Mindesttiefe: 0,5 m.</translation>
     </message>
@@ -4387,7 +4375,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <translation>Steinblock</translation>
     </message>
         <message>
-            <source>A small distinct boulder. The minimum height is 1 m.  Every boulder marked on the map shall be immediately identifiable on the ground.</source>
+            <source>A small distinct boulder. The minimum height is 1 m. Every boulder marked on the map shall be immediately identifiable on the ground.</source>
             <comment>Description of symbol 206</comment>
             <translation>Ein kleiner, auffallender Steinblock, Mindesthöhe 1 m. Jeder in der Karte dargestellte Steinblock muss im Gelände sofort erkennbar sein.</translation>
     </message>
@@ -4457,9 +4445,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <translation>Nackte Felsplatte</translation>
         </message>
         <message>
-            <source>An area of runnable rock without earth or vegetation. An area of rock covered
-with grass, moss or other low vegetation shall be represented according to its
-openness and runnability (401/402/403/404).</source>
+            <source>An area of runnable rock without earth or vegetation. An area of rock covered with grass, moss or other low vegetation shall be represented according to its openness and runnability (401/402/403/404).</source>
             <comment>Description of symbol 212</comment>
             <translation>Ein belaufbares Felsgebiet ohne Erde oder Vegetation. Mit Gras, Moos oder niedriger Vegetation bedeckte Felsplatten sollen entsprechend ihrer Sichtweite und Belaufbarkeit dargestellt werden (Signaturen 401/402/403/404).</translation>
     </message>
@@ -4573,7 +4559,7 @@ Missachtung im Wettkampf führt zur Disqualifikation.&lt;/span&gt;</translation>
             <translation>Passierbares Gewässer</translation>
     </message>
         <message>
-            <source>An area of shallow water such as a pond, river or fountain that can be crossed.  The body of water shall be less than 0.5 m deep and runnable. If the body of water is not runnable it shall be represented with the symbol impassable body of water (304.1). If no other line symbol touches the border of the passable body of water, the border shall be represented with a blue line.</source>
+            <source>An area of shallow water such as a pond, river or fountain that can be crossed. The body of water shall be less than 0.5 m deep and runnable. If the body of water is not runnable it shall be represented with the symbol impassable body of water (304.1). If no other line symbol touches the border of the passable body of water, the border shall be represented with a blue line.</source>
             <comment>Description of symbol 305.1</comment>
             <translation>Ein Gebiet mit flachem Wasser, z. B. Teich, Fluss oder Springbrunnen, welches durchquerbar ist. Das Gewässer soll weniger als 0,5 m tief und belaufbar sein. Wenn das Gewässer nicht belaufbar ist, soll die Signatur Unpassierbares Gewässer (304.1) verwendet werden. Falls keine andere Liniensignatur an das Gewässer angrenzt, wird eine blaue Linie zur Begrenzung verwendet.</translation>
     </message>
@@ -4613,7 +4599,7 @@ Missachtung im Wettkampf führt zur Disqualifikation.&lt;/span&gt;</translation>
             <translation>Unpassierbarer Sumpf &lt;span style="color:magenta"&gt;(Durchqueren verboten)&lt;/span&gt;</translation>
     </message>
         <message>
-            <source>A marsh which is impassable or which may constitute a danger to the competitor.  The feature cannot or shall not be crossed.
+            <source>A marsh which is impassable or which may constitute a danger to the competitor. The feature cannot or shall not be crossed.
 
 &lt;span style="color:magenta"&gt;It is forbidden to cross an impassable marsh!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
@@ -5052,7 +5038,7 @@ Diese Signatur darf in Siedlungsgebieten nicht verwendet werden.</translation>
             <translation>Undeutlicher kleiner Pfad</translation>
         </message>
         <message>
-            <source>Aless distinct path or forestry extraction track. Not to be used in urban areas.</source>
+            <source>A less distinct path or forestry extraction track. Not to be used in urban areas.</source>
             <comment>Description of symbol 508</comment>
             <translation>Ein undeutlicher Pfad oder eine Forst-Schleifspur.
 
@@ -5254,7 +5240,7 @@ Missachtung im Wettkampf führt zur Disqualifikation.&lt;/span&gt;</translation>
             <translation>Durchgang</translation>
         </message>
         <message>
-            <source>A crossing point is a gap or an opening in a fence, railing or wall, which can easily be crossed by a competitor.  Small gaps or openings which can not easily be crossed by competitors, shall not be represented on the map and shall be closed during the competition.</source>
+            <source>A crossing point is a gap or an opening in a fence, railing or wall, which can easily be crossed by a competitor. Small gaps or openings which can not easily be crossed by competitors, shall not be represented on the map and shall be closed during the competition.</source>
             <comment>Description of symbol 525</comment>
             <translation>Ein Durchgang ist eine Lücke oder Öffnung in Zäunen, Geländern oder Mauern, die von einem Wettkämpfer leicht passiert werden kann. Schmale Lücken Durchgänge, die von einem Wettkämpfer schwierig zu passieren sind, sollen nicht kartiert und während des Wettkampfes geschlossen werden.</translation>
     </message>
@@ -5684,7 +5670,7 @@ Missachtung im Wettkampf führt zur Disqualifikation des Wettkämpfers.&lt;/span
             <translation>Kleiner Turm</translation>
         </message>
         <message>
-            <source>An obvious small tower, platform or seat . The symbol is orientated to north.</source>
+            <source>An obvious small tower, platform or seat. The symbol is orientated to north.</source>
             <comment>Description of symbol 536</comment>
             <translation>Ein markanter kleiner Turm oder Hochsitz. Das Symbol wird nach Norden ausgerichtet.</translation>
     </message>
@@ -5694,7 +5680,7 @@ Missachtung im Wettkampf führt zur Disqualifikation des Wettkämpfers.&lt;/span
             <translation>Grenzstein, Gedenkstein oder kleines Monument</translation>
     </message>
         <message>
-            <source>Cairn, memorial, small monument or boundary stone more than 0.5 m high.  Large massive monuments shall be represented in plan shape with the symbol building (526.1).</source>
+            <source>Cairn, memorial, small monument or boundary stone more than 0.5 m high. Large massive monuments shall be represented in plan shape with the symbol building (526.1).</source>
             <comment>Description of symbol 537</comment>
             <translation>Grenzstein, Gedenkstein oder kleines Monument höher als 0,5 m. Größere Denkmäler werden mit der Signatur Gebäude (526.1) maßstabsgetreu dargestellt.</translation>
     </message>
@@ -5766,9 +5752,9 @@ Nordlinien dürfen unterbrochen werden, wenn sie kleine Objekte wie Steine, Kupp
             <translation>Nordlinien-Raster, schwarz</translation>
     </message>
         <message>
-            <source>Magnetic north lines are lines placed on the map pointing to magnetic north.  Their spacing shall be 30mm on the 1:5000 map so they represent 150m on the ground.
+            <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30mm on the 1:5000 map so they represent 150m on the ground.
 
-North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc.  Cut holes in the pattern to create these breaks.</source>
+North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. Cut holes in the pattern to create these breaks.</source>
             <comment>Description of symbol 601.0.3</comment>
             <translation>Nordlinien sind Linien in der Karte, die die magnetische Nordrichtung anzeigen. Ihr Abstand soll 30 mm in 1:5.000er Karten und 37,5 mm in 1:4000er Karten betragen, so dass er 150 m im Gelände entspricht.
 
@@ -5780,7 +5766,7 @@ Nordlinien dürfen unterbrochen werden, wenn sie kleine Objekte wie Steine, Kupp
             <translation>Magnetisch-Nordlinien, blau</translation>
         </message>
         <message>
-            <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm on the 1:5 000 map so they represent 150 m on the ground.  
+            <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm on the 1:5 000 map so they represent 150 m on the ground.
 
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc.</source>
             <comment>Description of symbol 601.0.4</comment>
@@ -5814,7 +5800,7 @@ Nordlinien dürfen unterbrochen werden, wenn sie kleine Objekte wie Steine, Kupp
         <message>
             <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm on the 1:5 000 map so they represent 150 m on the ground. 
 
-North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc.  Cut holes in the pattern to create these breaks.</source>
+North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. Cut holes in the pattern to create these breaks.</source>
             <comment>Description of symbol 601.0.6</comment>
             <translation>Nordlinien sind Linien in der Karte, die die magnetische Nordrichtung anzeigen. Ihr Abstand soll 30 mm in 1:5.000er Karten und 37,5 mm in 1:4000er Karten betragen, so dass er 150 m im Gelände entspricht.
 
@@ -5960,7 +5946,7 @@ Wenn Unterführungen, Tunnel u. ä. im Wettkampf genutzt werden, sollen sie durc
             <translation>Sperrgebiet &lt;span style="color:magenta"&gt;(Durchqueren verboten)&lt;/span&gt;</translation>
     </message>
         <message>
-            <source>Out of bounds areas are mapped with the symbol area with forbidden access (528.1).  This symbol shall only be used for last minute updates to the competition map (e.g. for areas that may be dangerous for the competitors during the competition, or very late changes to the competition terrain).
+            <source>Out of bounds areas are mapped with the symbol area with forbidden access (528.1). This symbol shall only be used for last minute updates to the competition map (e.g. for areas that may be dangerous for the competitors during the competition, or very late changes to the competition terrain).
 An out-of-bounds area is shown with vertical stripes. A bounding line may be drawn if there is no natural boundary, as follows:
 - a solid line indicates that the boundary is marked continuously (tapes, etc.) on the ground,
 - a dashed line indicates intermittent marking on the ground,
@@ -6943,8 +6929,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
             <translation type="unfinished">Besonderes künstliches Objekt</translation>
         </message>
         <message>
-            <source>Special man-made features are shown with these symbols. The definition of the
-symbols must be given in each case in the map legend.</source>
+            <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
             <comment>Description of symbol 539</comment>
             <translation type="unfinished">Die Beschreibung der Signatur muss immer in der Kartenlegende angegeben werden.</translation>
         </message>
@@ -6954,8 +6939,7 @@ symbols must be given in each case in the map legend.</source>
             <translation type="unfinished">Besonderes künstliches Objekt</translation>
         </message>
         <message>
-            <source>Special man-made features are shown with these symbols. The definition of the
-symbols must be given in each case in the map legend.</source>
+            <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
             <comment>Description of symbol 540</comment>
             <translation type="unfinished">Die Beschreibung der Signatur muss immer in der Kartenlegende angegeben werden.</translation>
         </message>
@@ -6990,8 +6974,7 @@ symbols must be given in each case in the map legend.</source>
             <translation type="unfinished">Höhenkote, Punkt</translation>
         </message>
         <message>
-            <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are
-given without the dot.</source>
+            <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
             <comment>Description of symbol 603.0</comment>
             <translation type="unfinished">Höhenkoten dienen der Abschätzung großer Höhenunterschiede. Die Höhe wird auf ganze Meter gerundet angegeben. Die Ziffern werden nach Norden orientiert.
 
@@ -7086,7 +7069,7 @@ to represent allowed routes that are marked in the terrain.</source>
             <translation type="unfinished">Unpassierbare Grenze</translation>
         </message>
         <message>
-            <source>Aboundary which it is not permitted to cross.</source>
+            <source>A boundary which it is not permitted to cross.</source>
             <comment>Description of symbol 707</comment>
             <translation type="unfinished">Eine Grenze, die nicht überquert werden darf.</translation>
         </message>
@@ -8738,8 +8721,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
             <translation type="unfinished">Besonderes künstliches Objekt</translation>
         </message>
         <message>
-            <source>Special man-made features are shown with these symbols. The definition of the
-symbols must be given in each case in the map legend.</source>
+            <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
             <comment>Description of symbol 539</comment>
             <translation type="unfinished">Die Beschreibung der Signatur muss immer in der Kartenlegende angegeben werden.</translation>
         </message>
@@ -8749,8 +8731,7 @@ symbols must be given in each case in the map legend.</source>
             <translation type="unfinished">Besonderes künstliches Objekt</translation>
         </message>
         <message>
-            <source>Special man-made features are shown with these symbols. The definition of the
-symbols must be given in each case in the map legend.</source>
+            <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
             <comment>Description of symbol 540</comment>
             <translation type="unfinished">Die Beschreibung der Signatur muss immer in der Kartenlegende angegeben werden.</translation>
         </message>
@@ -8800,8 +8781,7 @@ symbols must be given in each case in the map legend.</source>
             <translation type="unfinished">Höhenkote, Punkt</translation>
         </message>
         <message>
-            <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are
-given without the dot.</source>
+            <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
             <comment>Description of symbol 603.0</comment>
             <translation type="unfinished">Höhenkoten dienen der Abschätzung großer Höhenunterschiede. Die Höhe wird auf ganze Meter gerundet angegeben. Die Ziffern werden nach Norden orientiert.
 
@@ -9071,7 +9051,7 @@ that it is more clearly visible in the track network.</source>
             <translation type="unfinished">Unpassierbare Grenze</translation>
         </message>
         <message>
-            <source>Aboundary which it is not permitted to cross.</source>
+            <source>A boundary which it is not permitted to cross.</source>
             <comment>Description of symbol 707</comment>
             <translation type="unfinished">Eine Grenze, die nicht überquert werden darf.</translation>
         </message>
@@ -9853,7 +9833,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
             <translation type="unfinished">Unpassierbare Grenze</translation>
         </message>
         <message>
-            <source>Aboundary which it is not permitted to cross.</source>
+            <source>A boundary which it is not permitted to cross.</source>
             <comment>Description of symbol 707</comment>
             <translation type="unfinished">Eine Grenze, die nicht überquert werden darf.</translation>
         </message>
@@ -12025,8 +12005,7 @@ The orientation of the symbol indicates the direction in which the corner points
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Taped Route from Control to
-Map Exchange</source>
+            <source>Taped Route from Control to Map Exchange</source>
             <comment>Name of symbol 13.5</comment>
             <translation type="unfinished"></translation>
         </message>

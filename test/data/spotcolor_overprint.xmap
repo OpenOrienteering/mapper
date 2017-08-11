@@ -2037,13 +2037,11 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
             </point_symbol>
         </symbol>
         <symbol type="1" id="125" code="539" name="Special man-made feature">
-            <description>Special man-made features are shown with these symbols. The definition of the
-symbols must be given in each case in the map legend.</description>
+            <description>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</description>
             <point_symbol inner_radius="465" inner_color="-1" outer_width="270" outer_color="0" elements="0"/>
         </symbol>
         <symbol type="1" id="126" code="540" name="Special man-made feature">
-            <description>Special man-made features are shown with these symbols. The definition of the
-symbols must be given in each case in the map legend.</description>
+            <description>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</description>
             <point_symbol inner_radius="1500" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
                     <symbol type="2" code="">
@@ -2127,8 +2125,7 @@ symbols must be given in each case in the map legend.</description>
             </point_symbol>
         </symbol>
         <symbol type="1" id="132" code="603.0" name="Spot height, dot">
-            <description>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are
-given without the dot.</description>
+            <description>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</description>
             <point_symbol inner_radius="225" inner_color="0" outer_width="0" outer_color="-1" elements="0"/>
         </symbol>
         <symbol type="8" id="133" code="603.1" name="Spot height, text">
