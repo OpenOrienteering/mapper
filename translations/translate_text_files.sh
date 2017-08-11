@@ -31,10 +31,12 @@ do
 	  p
 	  q
 	'
-done | sed -e '
+done | sed -e "
   s/^[^=]*\]=\(Comment\)/\1/
   /^[^=]*\]=$/ d
-' > desktop_file_comment.txt
+  s/&quot;/\"/
+  s/&apos;/'/
+" > desktop_file_comment.txt
 
 sed -i "../packaging/linux/Mapper.desktop" -e '
   /^Comment=/ r desktop_file_comment.txt
@@ -53,11 +55,13 @@ do
 	  p
 	  q
 	'
-done | sed -e '
+done | sed -e "
   s/^[^>]*>\( *<comment\)/\1/
-  /">$/ d
+  /\">$/ d
   s/$/<\/comment>/
-' > mime_type_comment.txt
+  s/&quot;/\"/
+  s/&apos;/'/
+" > mime_type_comment.txt
 
 sed -i "../packaging/linux/openorienteering-mapper.xml" -e '
   /^ *<comment>/ r mime_type_comment.txt

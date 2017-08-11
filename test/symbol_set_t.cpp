@@ -771,18 +771,6 @@ void SymbolSetTool::processSymbolSetTranslations()
 		new_data.replace(0, pos+1, lower_case_xml);
 	}
 	
-	// Use '"', not "&quot;"
-	auto first = -1;
-	for (first = new_data.indexOf('>', first+1); first > 0; first = new_data.indexOf('>', first+1))
-	{
-		auto last = new_data.indexOf('<', first+1);
-		if (last < 0)
-			break;
-		auto text = new_data.mid(first, last - first);
-		text.replace("&quot;", "\"");
-		new_data.replace(first, last - first, text);
-	}
-	
 	if (new_data != existing_data)
 	{
 		QVERIFY(file.open(QIODevice::WriteOnly | QIODevice::Truncate));

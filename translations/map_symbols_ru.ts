@@ -17,7 +17,7 @@
             <source>Opaque White below Black</source>
             <comment>Color 2</comment>
             <translation>Непрозрачный белый под чёрным</translation>
-    </message>
+        </message>
         <message>
             <source>Black 65%</source>
             <comment>Color 3</comment>
@@ -127,12 +127,12 @@
             <source>Green 50% over Yellow</source>
             <comment>Color 24</comment>
             <translation>Зелёный 50% поверх жёлтого</translation>
-    </message>
+        </message>
         <message>
             <source>White over Yellow</source>
             <comment>Color 25</comment>
             <translation>Белый поверх жёлтого</translation>
-    </message>
+        </message>
         <message>
             <source>Yellow</source>
             <comment>Color 26</comment>
@@ -1412,7 +1412,7 @@ symbol.</source>
             <translation>Широкое шоссе, 0,5 мм</translation>
         </message>
         <message>
-            <source>Formerly "502 Major road", provided for migration from ISOM 2000. Use of this symbol is discouraged for new maps.</source>
+            <source>Formerly &quot;502 Major road&quot;, provided for migration from ISOM 2000. Use of this symbol is discouraged for new maps.</source>
             <comment>Description of symbol 502.1</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -1504,7 +1504,7 @@ Runnability: easy running.</source>
             <source>Narrow ride, green 20% background</source>
             <comment>Name of symbol 508.2</comment>
             <translation>Узкая просека, зелёный фон 20%</translation>
-    </message>
+        </message>
         <message>
             <source>A forest ride or a prominent trace (forestry extraction track, sandy track, ski track) through the terrain which does not have a distinct runnable path along it. The definition of the symbol must be given on the map.
 The definition of the symbol must be given on the map.
@@ -1516,7 +1516,7 @@ Runnability: slow running.</source>
             <source>Narrow ride, green 50% background</source>
             <comment>Name of symbol 508.3</comment>
             <translation>Узкая просека, зелёный фон 50%</translation>
-    </message>
+        </message>
         <message>
             <source>A forest ride or a prominent trace (forestry extraction track, sandy track, ski track) through the terrain which does not have a distinct runnable path along it. The definition of the symbol must be given on the map.
 The definition of the symbol must be given on the map.
@@ -1793,7 +1793,7 @@ Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m)
             <source>A black line surrounds the symbol 521.1.1.</source>
             <comment>Description of symbol 521.4</comment>
             <translation>Чёрная линия, ограничивающая символ 521.1.1.</translation>
-    </message>
+        </message>
         <message>
             <source>Canopy with outline</source>
             <comment>Name of symbol 522</comment>
@@ -1823,7 +1823,7 @@ Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m)
             <source>A black line surrounds the symbol 522.0.1.</source>
             <comment>Description of symbol 522.2</comment>
             <translation>Чёрная линия, ограничивающая символ 522.0.1.</translation>
-    </message>
+        </message>
         <message>
             <source>Ruin</source>
             <comment>Name of symbol 523</comment>
@@ -1868,7 +1868,7 @@ Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m)
             <source>Cairn</source>
             <comment>Name of symbol 526</comment>
             <translation>Тур (гурий)</translation>
-    </message>
+        </message>
         <message>
             <source>A prominent cairn, memorial stone, boundary stone or trigonometric point.
 Minimum height: 0.5 m.</source>
@@ -1914,7 +1914,7 @@ Location is at the centre of gravity of the symbol.</source>
         <message>
             <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
             <comment>Description of symbol 530</comment>
-            <translation type="unfinished"></translation>
+            <translation>Использование знаков должно быть пояснено в легенде карты.</translation>
         </message>
         <message>
             <source>Prominent man-made feature – x</source>
@@ -1924,7 +1924,7 @@ Location is at the centre of gravity of the symbol.</source>
         <message>
             <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
             <comment>Description of symbol 531</comment>
-            <translation type="unfinished"></translation>
+            <translation>Использование знаков должно быть пояснено в легенде карты.</translation>
         </message>
         <message>
             <source>Magnetic north line</source>
@@ -3101,7 +3101,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
             <source>Cultivated land which is seasonally out-of-bounds due to growing crops may be shown with a black dot screen.</source>
             <comment>Description of symbol 415</comment>
             <translation>Культурная земля, которая сезонно запрещена для бега (растущие злаки). Может быть показана чёрной точечной сеткой.</translation>
-    </message>
+        </message>
         <message>
             <source>Distinct vegetation boundary</source>
             <comment>Name of symbol 416</comment>
@@ -3417,7 +3417,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
             <source>Houses and gardens and other built up areas. Roads, buildings and other significant features within a settlement must be shown. If all buildings cannot be shown, an alternative symbol (black line screen) may be used.</source>
             <comment>Description of symbol 527</comment>
             <translation>Жилые кварталы, сады. Дороги, отдельные строения, и другие выделяющиеся объекты должны быть показаны. Если это невозможно, то может быть использован альтернативный знак (чёрная вертикальная штриховка).</translation>
-    </message>
+        </message>
         <message>
             <source>Settlement</source>
             <comment>Name of symbol 527.1</comment>
@@ -3427,7 +3427,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
             <source>Houses and gardens and other built up areas. Roads, buildings and other significant features within a settlement must be shown. If all buildings cannot be shown, an alternative symbol (black line screen) may be used.</source>
             <comment>Description of symbol 527.1</comment>
             <translation>Жилые кварталы, сады. Дороги, отдельные строения, и другие выделяющиеся объекты должны быть показаны. Если это невозможно, то может быть использован альтернативный знак (чёрная вертикальная штриховка).</translation>
-    </message>
+        </message>
         <message>
             <source>Permanently out of bounds</source>
             <comment>Name of symbol 528</comment>
@@ -3562,7 +3562,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
             <source>Cairn</source>
             <comment>Name of symbol 537</comment>
             <translation>Тур (гурий)</translation>
-    </message>
+        </message>
         <message>
             <source>Cairn, memorial stone or boundary stone (or a trigonometric point in some countries) more than 0.5 m high.</source>
             <comment>Description of symbol 537</comment>
@@ -3833,7 +3833,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
             <source>The OpenOrienteering Logo.</source>
             <comment>Description of symbol 999</comment>
             <translation>Логотип OpenOrienteering.</translation>
-    </message>
+        </message>
     </context>
     <context>
         <name>ISSOM</name>
@@ -3856,7 +3856,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
             <source>Opaque White below Black</source>
             <comment>Color 3</comment>
             <translation>Непрозрачный белый под чёрным</translation>
-    </message>
+        </message>
         <message>
             <source>Brown for contours</source>
             <comment>Color 4</comment>
@@ -4202,7 +4202,7 @@ The symbol may not be drawn in free form or such that two elongated knoll symbol
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Impassable cliff &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable cliff &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 201</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -4211,13 +4211,13 @@ The symbol may not be drawn in free form or such that two elongated knoll symbol
 
 The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags shall clearly extend over the bank line. Minimum height is 2 meters.
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an impassable cliff!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable cliff!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 201</comment>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Impassable cliff, minimum size &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable cliff, minimum size &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 201.0.1</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -4226,13 +4226,13 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
 
 The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags shall clearly extend over the bank line. Minimum height is 2 meters.
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an impassable cliff!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable cliff!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 201.0.1</comment>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Impassable cliff, no tags &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable cliff, no tags &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 201.1</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -4242,7 +4242,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <translation type="unfinished">При отображении вертикальных или близко расположенных обрывов зубцы могут быть опущены (ширина прохода должна быть не менее 0,3 мм в масштабе карты).</translation>
         </message>
         <message>
-            <source>Impassable cliff, no tags, minimum size &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable cliff, no tags, minimum size &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 201.1.1</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -4349,7 +4349,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>A cave is represented by the same symbol as a rocky pit. In this case the symbol shall be orientated to point up the slope as indicated opposite. This symbol should generally not be used in urban areas. The centre of gravity of the symbol marks the opening.
 
-&lt;span style="color:magenta"&gt;Controls may not be placed inside caves!&lt;/span&gt;</source>
+&lt;span style=&quot;color:magenta&quot;&gt;Controls may not be placed inside caves!&lt;/span&gt;</source>
             <comment>Description of symbol 205</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -4444,33 +4444,33 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Impassable body of water, with bank line, 100% blue &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable body of water, with bank line, 100% blue &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 304.1</comment>
             <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An area of deep water such as a lake, pond, river or fountain which may constitute a danger to the competitor or has forbidden access. The dark blue colour and the bordering black line indicates that the feature cannot or shall not be crossed. The minimum dimension is 1 mm².
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an impassable body of water!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable body of water!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 304.1</comment>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Impassable body of water, with bank line, 75% blue &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable body of water, with bank line, 75% blue &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 304.1.1</comment>
             <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An area of deep water such as a lake, pond, river or fountain which may constitute a danger to the competitor or has forbidden access. The dark blue colour and the bordering black line indicates that the feature cannot or shall not be crossed. The minimum dimension is 1 mm².
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an impassable body of water!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable body of water!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 304.1.1</comment>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Impassable body of water, bank line &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable body of water, bank line &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 304.2</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -4480,27 +4480,27 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Impassable body of water, fill, 100% blue &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable body of water, fill, 100% blue &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 304.3</comment>
             <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An area of deep water such as a lake, pond, river or fountain which may constitute a danger to the competitor or has forbidden access. The dark blue colour and the bordering black line indicates that the feature cannot or shall not be crossed. The minimum dimension is 1 mm².
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an impassable body of water!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable body of water!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 304.3</comment>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Impassable body of water, fill, 75% blue &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable body of water, fill, 75% blue &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 304.4</comment>
             <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An area of deep water such as a lake, pond, river or fountain which may constitute a danger to the competitor or has forbidden access. The dark blue colour and the bordering black line indicates that the feature cannot or shall not be crossed. The minimum dimension is 1 mm².
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an impassable body of water!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable body of water!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 304.4</comment>
             <translation type="unfinished"></translation>
@@ -4566,14 +4566,14 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Impassable marsh &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable marsh &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 309</comment>
             <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A marsh which is impassable or which may constitute a danger to the competitor. The feature cannot or shall not be crossed.
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an impassable marsh!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable marsh!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 309</comment>
             <translation type="unfinished"></translation>
@@ -4850,7 +4850,7 @@ Minimum width: 0.25 mm.</source>
             <source>Cultivated land which is seasonally out-of-bounds due to growing crops may be shown with a black dot screen.</source>
             <comment>Description of symbol 415</comment>
             <translation>Культурная земля, которая сезонно запрещена для бега (растущие злаки). Может быть показана чёрной точечной сеткой.</translation>
-    </message>
+        </message>
         <message>
             <source>Distinct vegetation boundary</source>
             <comment>Name of symbol 416</comment>
@@ -4892,7 +4892,7 @@ Minimum width: 0.25 mm.</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Impassable vegetation &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable vegetation &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 421</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -4901,7 +4901,7 @@ Minimum width: 0.25 mm.</source>
  
 Minimum width: 0.4 mm.
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross impassable vegetation!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross impassable vegetation!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 421</comment>
             <translation type="unfinished"></translation>
@@ -5071,7 +5071,7 @@ Very large carrying masts shall be represented in plan shape or with the symbol 
         <message>
             <source>An underpass or a tunnel is a passage running underneath the ground, especially a passage for pedestrians or vehicles, crossing under for instance a railroad or a road.
 
-&lt;span style="color: magenta"&gt;If underpasses or tunnels etc. are to be used in a competition, they shall be emphasized with the symbol crossing point (708) or crossing section (708.1)!&lt;/span&gt;</source>
+&lt;span style=&quot;color: magenta&quot;&gt;If underpasses or tunnels etc. are to be used in a competition, they shall be emphasized with the symbol crossing point (708) or crossing section (708.1)!&lt;/span&gt;</source>
             <comment>Description of symbol 518.1</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -5106,27 +5106,27 @@ Very large carrying masts shall be represented in plan shape or with the symbol 
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Impassable wall &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable wall &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 521.1.1</comment>
             <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An impassable wall or retaining wall is a wall, which fulfil the function of an enclosure or solid barrier. It shall not be crossed, due to forbidden access or because it may constitute a danger to the competitor due to its height. Very wide impassable walls shall be drawn in plan shape and represented with the symbol building (526.1).
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an impassable wall!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable wall!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 521.1.1</comment>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Impassable wall, plan shape &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable wall, plan shape &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 521.1.2</comment>
             <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An impassable wall or retaining wall is a wall, which fulfil the function of an enclosure or solid barrier. It shall not be crossed, due to forbidden access or because it may constitute a danger to the competitor due to its height. Very wide impassable walls shall be drawn in plan shape and represented with the symbol building (526.1).
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an impassable wall!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable wall!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 521.1.2</comment>
             <translation type="unfinished"></translation>
@@ -5144,14 +5144,14 @@ If a fence or railing is higher than 2 m or very difficult to cross, it shall be
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Impassable fence or railing &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable fence or railing &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 524</comment>
             <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An impassable fence or railing, which shall not be crossed, due to forbidden access or because it may constitute a danger to the competitor because of its height.
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an impassable fence or railing!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable fence or railing!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 524</comment>
             <translation type="unfinished"></translation>
@@ -5167,7 +5167,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Building &lt;span style="color:magenta"&gt;(forbidden to pass through or over)&lt;/span&gt;</source>
+            <source>Building &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to pass through or over)&lt;/span&gt;</source>
             <comment>Name of symbol 526.1</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -5176,7 +5176,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
 
 The minimum gap between buildings and between buildings and other impassable features shall be 0.40 mm. The black screen percentage should be chosen according to the terrain. A dark screen gives a better contrast to passable areas, such as streets, stairways and canopies, while a light screen makes contours and course overprint more clearly visible (which can be important in very densely built up urban terrain and in steep urban terrain). The black screen shall be the same for the whole map. 
 
-&lt;span style="color:magenta"&gt;It is forbidden to pass through or over a building! 
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to pass through or over a building! 
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 526.1</comment>
             <translation type="unfinished"></translation>
@@ -5202,7 +5202,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Building, minimum size &lt;span style="color:magenta"&gt;(forbidden to pass through or over)&lt;/span&gt;</source>
+            <source>Building, minimum size &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to pass through or over)&lt;/span&gt;</source>
             <comment>Name of symbol 526.1.3</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -5211,7 +5211,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
 
 The minimum gap between buildings and between buildings and other impassable features shall be 0.40 mm. The black screen percentage should be chosen according to the terrain. A dark screen gives a better contrast to passable areas, such as streets, stairways and canopies, while a light screen makes contours and course overprint more clearly visible (which can be important in very densely built up urban terrain and in steep urban terrain). The black screen shall be the same for the whole map. 
 
-&lt;span style="color:magenta"&gt;It is forbidden to pass through or over a building! 
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to pass through or over a building! 
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 526.1.3</comment>
             <translation type="unfinished"></translation>
@@ -5261,7 +5261,7 @@ Columns of pillars and pillars along buildings are not represented. However, if 
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Area with forbidden access &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Area with forbidden access &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 528.1</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -5270,7 +5270,7 @@ Columns of pillars and pillars along buildings are not represented. However, if 
 
 Areas with forbidden access totally contained within buildings shall be mapped as being a part of the building.
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an area with forbidden access!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an area with forbidden access!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 528.1</comment>
             <translation type="unfinished"></translation>
@@ -5494,14 +5494,14 @@ Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban
             <translation>Трубопровод (газ, вода и т.п.) на поверхности, который можно пересечь в любом месте (сверху или снизу).</translation>
         </message>
         <message>
-            <source>Impassable pipeline &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable pipeline &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 534</comment>
             <translation type="unfinished"></translation>
         </message>
         <message>
             <source>An impassable pipeline (gas, water, oil, etc.) above ground level which shall not be crossed, due to forbidden access or because it may constitute a danger to the competitor because of its height.
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an impassable pipeline!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable pipeline!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 534</comment>
             <translation type="unfinished"></translation>
@@ -5733,14 +5733,14 @@ North lines may be broken where they obscure small features such as boulders, kn
             <translation type="unfinished">Показывается двумя концентрическими окружностями.</translation>
         </message>
         <message>
-            <source>Uncrossable boundary &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Uncrossable boundary &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 707</comment>
             <translation type="unfinished"></translation>
         </message>
         <message>
             <source>A boundary which it is not permitted to cross. Uncrossable boundaries shall be mapped by using the symbols: impassable cliff (201), impassable body of water (304.1), impassable marsh (309), impassable wall (521.1), impassable fence or railing (524) or impassable pipeline (534) and shall not be overprinted with symbol uncrossable boundary (707). This symbol is to be used only for last minute updates to the competition area, as excessive use of purple for indicating barriers is unfortunate.
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an uncrossable boundary!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an uncrossable boundary!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 707</comment>
             <translation type="unfinished"></translation>
@@ -5770,7 +5770,7 @@ If underpasses or tunnels etc. are to be used in a competition, they shall be em
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Out-of-bounds area &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Out-of-bounds area &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 709</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -5781,7 +5781,7 @@ An out-of-bounds area is shown with vertical stripes. A bounding line may be dra
 - a dashed line indicates intermittent marking on the ground,
 - no line indicates no marking on the ground.
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an out-of-bounds area!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an out-of-bounds area!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 709</comment>
             <translation type="unfinished"></translation>
@@ -5827,14 +5827,14 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Temporary construction or closed area &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Temporary construction or closed area &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 714</comment>
             <translation type="unfinished"></translation>
         </message>
         <message>
             <source>Obvious temporary constructions like platforms for spectators and speaker, closed area for spectators, outside restaurant areas, etc. shall be represented in plan shape.
 
-&lt;span style="color:magenta"&gt;It is forbidden to enter a temporary construction or closed area!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to enter a temporary construction or closed area!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 714</comment>
             <translation type="unfinished"></translation>
@@ -6219,7 +6219,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Large areas of water are shown with this symbol (blue 50%). The colour of the bank line is blue 100 %.
 
-Small areas of water should be shown with full colour. Use symbol 302 ("Pond" in ISOM).</source>
+Small areas of water should be shown with full colour. Use symbol 302 (&quot;Pond&quot; in ISOM).</source>
             <comment>Description of symbol 301</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -6246,7 +6246,7 @@ Small areas of water should be shown with full colour. Use symbol 302 ("Pond" in
         <message>
             <source>Small areas of water should be shown with full colour.
 
-This is symbol "302 Pond" in ISOM, but is a variation of "301 Lake" in ISMTBOM.</source>
+This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lake&quot; in ISMTBOM.</source>
             <comment>Description of symbol 302</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -6663,7 +6663,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
             <source>Houses and gardens and other built up areas. Roads, buildings and other significant features within a settlement must be shown. If all buildings cannot be shown, an alternative symbol (black line screen) may be used.</source>
             <comment>Description of symbol 527</comment>
             <translation>Жилые кварталы, сады. Дороги, отдельные строения, и другие выделяющиеся объекты должны быть показаны. Если это невозможно, то может быть использован альтернативный знак (чёрная вертикальная штриховка).</translation>
-    </message>
+        </message>
         <message>
             <source>Paved area</source>
             <comment>Name of symbol 529</comment>
@@ -7379,7 +7379,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
             <source>Cultivated land which is seasonally out-of-bounds due to growing crops may be shown with a black dot screen.</source>
             <comment>Description of symbol 415</comment>
             <translation>Культурная земля, которая сезонно запрещена для бега (растущие злаки). Может быть показана чёрной точечной сеткой.</translation>
-    </message>
+        </message>
         <message>
             <source>Distinct vegetation boundary</source>
             <comment>Name of symbol 416</comment>
@@ -7540,7 +7540,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
             <source>Houses and gardens and other built up areas. Roads, buildings and other significant features within a settlement must be shown. If all buildings cannot be shown, an alternative symbol (black line screen) may be used.</source>
             <comment>Description of symbol 527.1</comment>
             <translation>Жилые кварталы, сады. Дороги, отдельные строения, и другие выделяющиеся объекты должны быть показаны. Если это невозможно, то может быть использован альтернативный знак (чёрная вертикальная штриховка).</translation>
-    </message>
+        </message>
         <message>
             <source>Permanently out of bounds</source>
             <comment>Name of symbol 528</comment>
@@ -7605,7 +7605,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
             <source>Cairn</source>
             <comment>Name of symbol 537</comment>
             <translation>Тур (гурий)</translation>
-    </message>
+        </message>
         <message>
             <source>Cairn, memorial stone or boundary stone (or a trigonometric point in some countries) more than 0.5 m high.</source>
             <comment>Description of symbol 537</comment>
@@ -7723,7 +7723,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
             <source>Green 50%, Yellow</source>
             <comment>Color 12</comment>
             <translation>Зелёный 50%, жёлтый</translation>
-    </message>
+        </message>
         <message>
             <source>Green over White over Green</source>
             <comment>Color 13</comment>
@@ -8444,7 +8444,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
             <source>Houses and gardens and other built up areas. Roads, buildings and other significant features within a settlement must be shown. If all buildings cannot be shown, an alternative symbol (black line screen) may be used.</source>
             <comment>Description of symbol 527</comment>
             <translation>Жилые кварталы, сады. Дороги, отдельные строения, и другие выделяющиеся объекты должны быть показаны. Если это невозможно, то может быть использован альтернативный знак (чёрная вертикальная штриховка).</translation>
-    </message>
+        </message>
         <message>
             <source>Settlement</source>
             <comment>Name of symbol 527.1</comment>
@@ -8454,7 +8454,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
             <source>Houses and gardens and other built up areas. Roads, buildings and other significant features within a settlement must be shown. If all buildings cannot be shown, an alternative symbol (black line screen) may be used.</source>
             <comment>Description of symbol 527.1</comment>
             <translation>Жилые кварталы, сады. Дороги, отдельные строения, и другие выделяющиеся объекты должны быть показаны. Если это невозможно, то может быть использован альтернативный знак (чёрная вертикальная штриховка).</translation>
-    </message>
+        </message>
         <message>
             <source>Permanently out of bounds</source>
             <comment>Name of symbol 528</comment>
@@ -9343,7 +9343,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
             <source>Cultivated land which is seasonally out-of-bounds due to growing crops may be shown with a black dot screen.</source>
             <comment>Description of symbol 415</comment>
             <translation>Культурная земля, которая сезонно запрещена для бега (растущие злаки). Может быть показана чёрной точечной сеткой.</translation>
-    </message>
+        </message>
         <message>
             <source>Special vegetation feature</source>
             <comment>Name of symbol 419</comment>
@@ -9519,7 +9519,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
             <source>Cairn</source>
             <comment>Name of symbol 537</comment>
             <translation>Тур (гурий)</translation>
-    </message>
+        </message>
         <message>
             <source>Cairn, memorial stone or boundary stone (or a trigonometric point in some countries) more than 0.5 m high.</source>
             <comment>Description of symbol 537</comment>
@@ -9818,7 +9818,7 @@ In this symbol set, you need to add this symbol manually after the start locatio
             <source>|A| Start location</source>
             <comment>Name of symbol 99.6</comment>
             <translation>|A| Место старта</translation>
-    </message>
+        </message>
         <message>
             <source>Shown in first line of descriptions, using the description as if it were a control feature.
 
@@ -9830,7 +9830,7 @@ Map symbol: ISOM 701</source>
             <source>|A| Control number</source>
             <comment>Name of symbol 99.7</comment>
             <translation>|A| Номер контрольного пункта</translation>
-    </message>
+        </message>
         <message>
             <source>Numbering of controls is in the sequence they are to be visited, unless the description is for a Score competition.
 
@@ -10638,7 +10638,7 @@ Map symbol: ISOM 529</source>
             <source>|D| Ruin</source>
             <comment>Name of symbol 5.13</comment>
             <translation>|D| Развалины</translation>
-    </message>
+        </message>
         <message>
             <source>The remains of a building that has fallen down.
 
@@ -10662,7 +10662,7 @@ Map symbols: ISOM 533, 534</source>
             <source>|D| Tower</source>
             <comment>Name of symbol 5.15</comment>
             <translation>|D| Башня</translation>
-    </message>
+        </message>
         <message>
             <source>A tall metal, wooden or brick structure, usually built for forest observation.
 
@@ -10698,7 +10698,7 @@ Map symbol: ISOM 537</source>
             <source>|D| Fodder rack</source>
             <comment>Name of symbol 5.18</comment>
             <translation>|D| Кормушка</translation>
-    </message>
+        </message>
         <message>
             <source>A construction for holding feed for animals.
 

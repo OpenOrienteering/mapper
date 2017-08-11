@@ -1412,7 +1412,7 @@ symbol.</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Formerly "502 Major road", provided for migration from ISOM 2000. Use of this symbol is discouraged for new maps.</source>
+            <source>Formerly &quot;502 Major road&quot;, provided for migration from ISOM 2000. Use of this symbol is discouraged for new maps.</source>
             <comment>Description of symbol 502.1</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -3650,7 +3650,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
             <comment>Description of symbol 603.0</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Les points d'altitude sont utilisés pour l'estimation des différences d'altitude. Celle-ci est arrondie au mètre. Les chiffres sont orientés vers le nord. Les niveaux d'eau sont représentés sans le point.</translation>
         </message>
         <message>
             <source>Spot height, text</source>
@@ -4213,49 +4213,49 @@ Ce symbole ne peut être dessiné sous forme libre ou de telle manière que deux
             <translation>Ce symbole peut être utilisé pour des détails particuliers de relief. Sa définition doit toujours figurer sur la légende de la carte. Le symbole est orienté au nord.</translation>
         </message>
         <message>
-            <source>Impassable cliff &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable cliff &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 201</comment>
-            <translation>Falaise infranchissable &lt;span style="color:magenta"&gt;(interdit)&lt;/span&gt;</translation>
+            <translation>Falaise infranchissable &lt;span style=&quot;color:magenta&quot;&gt;(interdit)&lt;/span&gt;</translation>
         </message>
         <message>
             <source>An impassable cliff, quarry or earth bank [see symbol earth bank (106)]. Tags are drawn downwards, showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). 
 
 The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags shall clearly extend over the bank line. Minimum height is 2 meters.
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an impassable cliff!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable cliff!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 201</comment>
             <translation>Falaise infranchissable, carrière ou abrupt de terre (voir 106). Des tirets vers l'aval montrent l'importance de l'élément de la ligne de sommet à son pied. Pour des faces verticales, les tirets peuvent être omis s'il n'y a pas assez de place, par ex. un passage étroit entre des falaises. (les passages doivent être représentés par une largeur d'au moins 0,3 mm). 
 
 Les tirets peuvent s'étendre sur un symbole de surface qui représente le détail directement sous la face rocheuse. Quand une falaise tombe directement dans l'eau, rendant impossible le passage au pied de la falaise, soit le trait marquant la rive est omis, soit les tirets doivent nettement le dépasser. La hauteur minimale est 2 m. 
 
-&lt;span style="color:magenta"&gt;Il est interdit de franchir ce type de falaise !
+&lt;span style=&quot;color:magenta&quot;&gt;Il est interdit de franchir ce type de falaise !
 Le concurrent qui ne respecte pas cette règle sera disqualifié.&lt;/span&gt;</translation>
         </message>
         <message>
-            <source>Impassable cliff, minimum size &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable cliff, minimum size &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 201.0.1</comment>
-            <translation>Falaise infranchissable, taille minimum &lt;span style="color:magenta"&gt;(interdit)&lt;/span&gt;</translation>
+            <translation>Falaise infranchissable, taille minimum &lt;span style=&quot;color:magenta&quot;&gt;(interdit)&lt;/span&gt;</translation>
         </message>
         <message>
             <source>An impassable cliff, quarry or earth bank [see symbol earth bank (106)]. Tags are drawn downwards, showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). 
 
 The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags shall clearly extend over the bank line. Minimum height is 2 meters.
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an impassable cliff!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable cliff!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 201.0.1</comment>
             <translation>Falaise infranchissable, carrière ou abrupt de terre (voir 106). Des tirets vers l'aval montrent l'importance de l'élément de la ligne de sommet à son pied. Pour des faces verticales, les tirets peuvent être omis s'il n'y a pas assez de place, par ex. un passage étroit entre des falaises. (les passages doivent être représentés par une largeur d'au moins 0,3 mm). 
 
 Les tirets peuvent s'étendre sur un symbole de surface qui représente le détail directement sous la face rocheuse. Quand une falaise tombe directement dans l'eau, rendant impossible le passage au pied de la falaise, soit le trait marquant la rive est omis, soit les tirets doivent nettement le dépasser. La hauteur minimale est 2 m. 
 
-&lt;span style="color:magenta"&gt;Il est interdit de franchir ce type de falaise !
+&lt;span style=&quot;color:magenta&quot;&gt;Il est interdit de franchir ce type de falaise !
 Le concurrent qui ne respecte pas cette règle sera disqualifié.&lt;/span&gt;</translation>
         </message>
         <message>
-            <source>Impassable cliff, no tags &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable cliff, no tags &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 201.1</comment>
-            <translation>Falaise infranchissable, sans tirets &lt;span style="color:magenta"&gt;(interdit)&lt;/span&gt;</translation>
+            <translation>Falaise infranchissable, sans tirets &lt;span style=&quot;color:magenta&quot;&gt;(interdit)&lt;/span&gt;</translation>
         </message>
         <message>
             <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
@@ -4263,9 +4263,9 @@ Le concurrent qui ne respecte pas cette règle sera disqualifié.&lt;/span&gt;</
             <translation>Pour des faces verticales, les tirets peuvent être omis s'il n'y a pas assez de place, par ex. un passage étroit entre des falaises. (Les passages doivent être représentés par une largeur d'au moins 0.3 mm).</translation>
         </message>
         <message>
-            <source>Impassable cliff, no tags, minimum size &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable cliff, no tags, minimum size &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 201.1.1</comment>
-            <translation>Falaise infranchissable, sans tirets, taille minimum &lt;span style="color:magenta"&gt;(interdit)&lt;/span&gt;</translation>
+            <translation>Falaise infranchissable, sans tirets, taille minimum &lt;span style=&quot;color:magenta&quot;&gt;(interdit)&lt;/span&gt;</translation>
         </message>
         <message>
             <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
@@ -4370,11 +4370,11 @@ Le concurrent qui ne respecte pas cette règle sera disqualifié.&lt;/span&gt;</
         <message>
             <source>A cave is represented by the same symbol as a rocky pit. In this case the symbol shall be orientated to point up the slope as indicated opposite. This symbol should generally not be used in urban areas. The centre of gravity of the symbol marks the opening.
 
-&lt;span style="color:magenta"&gt;Controls may not be placed inside caves!&lt;/span&gt;</source>
+&lt;span style=&quot;color:magenta&quot;&gt;Controls may not be placed inside caves!&lt;/span&gt;</source>
             <comment>Description of symbol 205</comment>
             <translation>Une caverner est reésentée par le même symbole qu'un trou rocheux. Dans ce cas le symbole doit être orienté dans le sens de la pente. Ce symbole ne doit as être utilisé en zone urbaine. Le centre du symbole indique la position de l'entrée de la caverne.
 
-&lt;span style="color:magenta"&gt;Aucun poste de contrôle ne doit être placé à l'intérieur des grottes !&lt;/span&gt;</translation>
+&lt;span style=&quot;color:magenta&quot;&gt;Aucun poste de contrôle ne doit être placé à l'intérieur des grottes !&lt;/span&gt;</translation>
         </message>
         <message>
             <source>Boulder</source>
@@ -4467,41 +4467,41 @@ Le concurrent qui ne respecte pas cette règle sera disqualifié.&lt;/span&gt;</
             <translation>Trou rempli d'eau ou zone d'eau trop petite pour être représentée à l'échelle. Le symbole est orienté au nord.</translation>
         </message>
         <message>
-            <source>Impassable body of water, with bank line, 100% blue &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable body of water, with bank line, 100% blue &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 304.1</comment>
-            <translation>Zone d'eau infranchissable, avec bordure, 100% bleu &lt;span style="color:magenta"&gt;(franchissement interdit)&lt;/span&gt;</translation>
+            <translation>Zone d'eau infranchissable, avec bordure, 100% bleu &lt;span style=&quot;color:magenta&quot;&gt;(franchissement interdit)&lt;/span&gt;</translation>
         </message>
         <message>
             <source>An area of deep water such as a lake, pond, river or fountain which may constitute a danger to the competitor or has forbidden access. The dark blue colour and the bordering black line indicates that the feature cannot or shall not be crossed. The minimum dimension is 1 mm².
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an impassable body of water!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable body of water!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 304.1</comment>
             <translation>Zone d'eau profonde, tel un lac, un étang, une rivière qui peut constituer un danger pour le compétiteur ou est interdite d'accès. La couleur bleue foncé et la limite noire indiquent que l'élément ne peut être franchi. La dimension minimale est 1 mm².
 
-&lt;span style="color:magenta"&gt;Il est interdit de franchir une zone d'eau infranchissable.
+&lt;span style=&quot;color:magenta&quot;&gt;Il est interdit de franchir une zone d'eau infranchissable.
 Le concurrent qui ne respecte pas cette règle sera disqualifié.&lt;/span&gt;</translation>
         </message>
         <message>
-            <source>Impassable body of water, with bank line, 75% blue &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable body of water, with bank line, 75% blue &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 304.1.1</comment>
-            <translation>Zone d'eau infranchissable, avec bordure, 75% bleu &lt;span style="color:magenta"&gt;(franchissement interdit)&lt;/span&gt;</translation>
+            <translation>Zone d'eau infranchissable, avec bordure, 75% bleu &lt;span style=&quot;color:magenta&quot;&gt;(franchissement interdit)&lt;/span&gt;</translation>
         </message>
         <message>
             <source>An area of deep water such as a lake, pond, river or fountain which may constitute a danger to the competitor or has forbidden access. The dark blue colour and the bordering black line indicates that the feature cannot or shall not be crossed. The minimum dimension is 1 mm².
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an impassable body of water!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable body of water!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 304.1.1</comment>
             <translation>Zone d'eau profonde, tel un lac, un étang, une rivière qui peut constituer un danger pour le compétiteur ou est interdite d'accès. La couleur bleue foncé et la limite noire indiquent que l'élément ne peut être franchi. La dimension minimale est 1 mm².
 
-&lt;span style="color:magenta"&gt;Il est interdit de franchir une zone d'eau infranchissable.
+&lt;span style=&quot;color:magenta&quot;&gt;Il est interdit de franchir une zone d'eau infranchissable.
 Le concurrent qui ne respecte pas cette règle sera disqualifié.&lt;/span&gt;</translation>
         </message>
         <message>
-            <source>Impassable body of water, bank line &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable body of water, bank line &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 304.2</comment>
-            <translation>Zone d'eau infranchissable, bordure &lt;span style="color:magenta"&gt;(interdit)&lt;/span&gt;</translation>
+            <translation>Zone d'eau infranchissable, bordure &lt;span style=&quot;color:magenta&quot;&gt;(interdit)&lt;/span&gt;</translation>
         </message>
         <message>
             <source>The bordering black line indicates that the feature cannot or shall not be crossed.</source>
@@ -4509,35 +4509,35 @@ Le concurrent qui ne respecte pas cette règle sera disqualifié.&lt;/span&gt;</
             <translation>Bordure noire indiquant que la zone ne peut ou ne doit pas être franchie.</translation>
         </message>
         <message>
-            <source>Impassable body of water, fill, 100% blue &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable body of water, fill, 100% blue &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 304.3</comment>
-            <translation>Zone d'eau infranchissable, remplissage, 100% bleu &lt;span style="color:magenta"&gt;(franchissement interdit)&lt;/span&gt;</translation>
+            <translation>Zone d'eau infranchissable, remplissage, 100% bleu &lt;span style=&quot;color:magenta&quot;&gt;(franchissement interdit)&lt;/span&gt;</translation>
         </message>
         <message>
             <source>An area of deep water such as a lake, pond, river or fountain which may constitute a danger to the competitor or has forbidden access. The dark blue colour and the bordering black line indicates that the feature cannot or shall not be crossed. The minimum dimension is 1 mm².
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an impassable body of water!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable body of water!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 304.3</comment>
             <translation>Zone d'eau profonde, tel un lac, un étang, une rivière qui peut constituer un danger pour le compétiteur ou est interdite d'accès. La couleur bleue foncé et la limite noire indiquent que l'élément ne peut être franchi. La dimension minimale est 1 mm².
 
-&lt;span style="color:magenta"&gt;Il est interdit de franchir une zone d'eau infranchissable.
+&lt;span style=&quot;color:magenta&quot;&gt;Il est interdit de franchir une zone d'eau infranchissable.
 Le concurrent qui ne respecte pas cette règle sera disqualifié.&lt;/span&gt;</translation>
         </message>
         <message>
-            <source>Impassable body of water, fill, 75% blue &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable body of water, fill, 75% blue &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 304.4</comment>
-            <translation>Zone d'eau infranchissable, remplissage, 75% bleu &lt;span style="color:magenta"&gt;(franchissement interdit)&lt;/span&gt;</translation>
+            <translation>Zone d'eau infranchissable, remplissage, 75% bleu &lt;span style=&quot;color:magenta&quot;&gt;(franchissement interdit)&lt;/span&gt;</translation>
         </message>
         <message>
             <source>An area of deep water such as a lake, pond, river or fountain which may constitute a danger to the competitor or has forbidden access. The dark blue colour and the bordering black line indicates that the feature cannot or shall not be crossed. The minimum dimension is 1 mm².
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an impassable body of water!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable body of water!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 304.4</comment>
             <translation>Zone d'eau profonde, tel un lac, un étang, une rivière qui peut constituer un danger pour le compétiteur ou est interdite d'accès. La couleur bleue foncé et la limite noire indiquent que l'élément ne peut être franchi. La dimension minimale est 1 mm².
 
-&lt;span style="color:magenta"&gt;Il est interdit de franchir une zone d'eau infranchissable.
+&lt;span style=&quot;color:magenta&quot;&gt;Il est interdit de franchir une zone d'eau infranchissable.
 Le concurrent qui ne respecte pas cette règle sera disqualifié.&lt;/span&gt;</translation>
         </message>
         <message>
@@ -4601,19 +4601,19 @@ Le concurrent qui ne respecte pas cette règle sera disqualifié.&lt;/span&gt;</
             <translation>Un marais ou un filet d'eau trop étroit pour être représenté par le symbole 310 (marais).</translation>
         </message>
         <message>
-            <source>Impassable marsh &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable marsh &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 309</comment>
-            <translation>Marais infranchissable &lt;span style="color:magenta"&gt;(franchissement interdit)&lt;/span&gt;</translation>
+            <translation>Marais infranchissable &lt;span style=&quot;color:magenta&quot;&gt;(franchissement interdit)&lt;/span&gt;</translation>
         </message>
         <message>
             <source>A marsh which is impassable or which may constitute a danger to the competitor. The feature cannot or shall not be crossed.
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an impassable marsh!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable marsh!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 309</comment>
             <translation>Marais infranchissable ou qui peut constituer un danger pour le concurrent. Cet élément ne peut être franchi.
 
-&lt;span style="color:magenta"&gt;Il est interdit de franchir un marais infranchissable !
+&lt;span style=&quot;color:magenta&quot;&gt;Il est interdit de franchir un marais infranchissable !
 Le concurrent qui ne respecte pas cette règle sera disqualifié.&lt;/span&gt;</translation>
         </message>
         <message>
@@ -4733,7 +4733,7 @@ arbres dispersés</translation>
         <message>
             <source>An area of heath or moorland, a felled area, a newly planted area (trees lower than ca. 1 m) or other generally open land with rough ground vegetation, i.e. heather or tall grass. This symbol may be combined with symbols undergrowth: slow running (407) and undergrowth: difficult to run (409) to show reduced runnability.</source>
             <comment>Description of symbol 403</comment>
-            <translation>Landes, abattis, jeunes plantations (arbres de moins de 1 m de haut), ou tout autre terrain découvert avec une végétation basse "rugueuse" (bruyère, brande, ou de l'herbe haute). Ce symbole peut être combiné avec les symboles 407 et 409 des végétations au sol pour indiquer une vitesse de course réduite.</translation>
+            <translation>Landes, abattis, jeunes plantations (arbres de moins de 1 m de haut), ou tout autre terrain découvert avec une végétation basse &quot;rugueuse&quot; (bruyère, brande, ou de l'herbe haute). Ce symbole peut être combiné avec les symboles 407 et 409 des végétations au sol pour indiquer une vitesse de course réduite.</translation>
         </message>
         <message>
             <source>Rough open land with scattered trees</source>
@@ -4941,23 +4941,23 @@ Taille minimum : 0,25 mm.</translation>
             <translation>Élément particulier de la végétation significatif ou bien visible. La définition du symbole devra figurer dans la légende de la carte. Le symbole est orienté au nord.</translation>
         </message>
         <message>
-            <source>Impassable vegetation &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable vegetation &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 421</comment>
-            <translation>Végétation infranchissable &lt;span style="color:magenta"&gt;(franchissement interdit)&lt;/span&gt;</translation>
+            <translation>Végétation infranchissable &lt;span style=&quot;color:magenta&quot;&gt;(franchissement interdit)&lt;/span&gt;</translation>
         </message>
         <message>
             <source>An area of dense vegetation (trees or undergrowth) which is impassable or which shall not be crossed, due to forbidden access or because it may constitute a danger to the competitor.
  
 Minimum width: 0.4 mm.
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross impassable vegetation!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross impassable vegetation!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 421</comment>
             <translation>Zone de végétation dense (arbres ou végétation au sol) qui est infranchissable ou ne DOIT être franchie, à cause de l'interdiction de son accès ou parce qu'elle peut constituer un danger pour le coureur.
  
 Taille minimum : 0,4 mm.
 
-&lt;span style="color:magenta"&gt;Il est interdit de pénétrer dans une telle zone ! 
+&lt;span style=&quot;color:magenta&quot;&gt;Il est interdit de pénétrer dans une telle zone ! 
 Les concurrents ne respectant pas cette règle seront disqualifiés.&lt;/span&gt;</translation>
         </message>
         <message>
@@ -5050,7 +5050,7 @@ pavée) ou 529.1 (escalier en zone pavée).</translation>
             <source>A small unpaved footpath or track. Not to be used in urban areas.</source>
             <comment>Description of symbol 507</comment>
             <translation>Petit sentier non pavé ou une trace. Ne pas utiliser en zone urbaine.</translation>
-    </message>
+        </message>
         <message>
             <source>Less distinct small path</source>
             <comment>Name of symbol 508</comment>
@@ -5151,11 +5151,11 @@ Les pylônes très importants seront représentés en plan ou avec le symbole 53
         <message>
             <source>An underpass or a tunnel is a passage running underneath the ground, especially a passage for pedestrians or vehicles, crossing under for instance a railroad or a road.
 
-&lt;span style="color: magenta"&gt;If underpasses or tunnels etc. are to be used in a competition, they shall be emphasized with the symbol crossing point (708) or crossing section (708.1)!&lt;/span&gt;</source>
+&lt;span style=&quot;color: magenta&quot;&gt;If underpasses or tunnels etc. are to be used in a competition, they shall be emphasized with the symbol crossing point (708) or crossing section (708.1)!&lt;/span&gt;</source>
             <comment>Description of symbol 518.1</comment>
             <translation>Un passage souterrain ou un tunnel est situé sous le niveau du sol, spécialement prévu pour les piétons ou véhicule traversant par exemple une voie ferrée ou une route.
 
-&lt;span style="color: magenta"&gt;Si des passages souterrains ou des tunnels doivent être utilisés pendant une compétition, ils seront complétés du symbole 708 (point de passage) ou 708.1 (section de passage) !&lt;/span&gt;</translation>
+&lt;span style=&quot;color: magenta&quot;&gt;Si des passages souterrains ou des tunnels doivent être utilisés pendant une compétition, ils seront complétés du symbole 708 (point de passage) ou 708.1 (section de passage) !&lt;/span&gt;</translation>
         </message>
         <message>
             <source>Passable stone wall</source>
@@ -5188,35 +5188,35 @@ Les pylônes très importants seront représentés en plan ou avec le symbole 53
             <translation>Un mur franchissable ou mur de soutènement est une contruction en pierre, briques, béton, etc. qui peut être franchie. Ce symbole convient en zone urbaine. Si sa hauteur est supérieure à 2 m, il devra être représenté par le symbole 521.1 (mur infranchissable). De larges murs devront être dessinés en plan, selon leur forme.</translation>
         </message>
         <message>
-            <source>Impassable wall &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable wall &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 521.1.1</comment>
-            <translation>Mur infranchissable &lt;span style="color:magenta"&gt;(franchissement interdit)&lt;/span&gt;</translation>
+            <translation>Mur infranchissable &lt;span style=&quot;color:magenta&quot;&gt;(franchissement interdit)&lt;/span&gt;</translation>
         </message>
         <message>
             <source>An impassable wall or retaining wall is a wall, which fulfil the function of an enclosure or solid barrier. It shall not be crossed, due to forbidden access or because it may constitute a danger to the competitor due to its height. Very wide impassable walls shall be drawn in plan shape and represented with the symbol building (526.1).
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an impassable wall!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable wall!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 521.1.1</comment>
             <translation>Un mur infranchissable ou mur de soutènement qui présente les fonction d'encercler une zone ou de constituer une barrière. Il ne peut être franchi soit parce que la zone est interdite d'accès, soit parce que sa hauteur peut constituer un danger pour le coureur. Des murs infranchissables très larges seront dessinés en plan selon leur forme et représentés par le symbole 526.1 (bâtiment).
 
-&lt;span style="color:magenta"&gt;Il est interdit de franchir un tel mur !
+&lt;span style=&quot;color:magenta&quot;&gt;Il est interdit de franchir un tel mur !
 Le concurrent qui ne respecte pas cette règle sera disqualifié.&lt;/span&gt;</translation>
         </message>
         <message>
-            <source>Impassable wall, plan shape &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable wall, plan shape &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 521.1.2</comment>
-            <translation>Mur infranchissable, plan &lt;span style="color:magenta"&gt;(interdit)&lt;/span&gt;</translation>
+            <translation>Mur infranchissable, plan &lt;span style=&quot;color:magenta&quot;&gt;(interdit)&lt;/span&gt;</translation>
         </message>
         <message>
             <source>An impassable wall or retaining wall is a wall, which fulfil the function of an enclosure or solid barrier. It shall not be crossed, due to forbidden access or because it may constitute a danger to the competitor due to its height. Very wide impassable walls shall be drawn in plan shape and represented with the symbol building (526.1).
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an impassable wall!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable wall!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 521.1.2</comment>
             <translation>Un mur infranchissable ou mur de soutènement qui présente les fonction d'encercler une zone ou de constituer une barrière. Il ne peut être franchi soit parce que la zone est interdite d'accès, soit parce que sa hauteur peut constituer un danger pour le coureur. Des murs infranchissables très larges seront dessinés en plan selon leur forme et représentés par le symbole 526.1 (bâtiment).
 
-&lt;span style="color:magenta"&gt;Il est interdit de franchir un tel mur !
+&lt;span style=&quot;color:magenta&quot;&gt;Il est interdit de franchir un tel mur !
 Le concurrent qui ne respecte pas cette règle sera disqualifié.&lt;/span&gt;</translation>
         </message>
         <message>
@@ -5234,19 +5234,19 @@ If a fence or railing is higher than 2 m or very difficult to cross, it shall be
 Si la hauteur est supérieure à 2 m, ou la clôture très difficile à franchir, l'élément devra être représenté par le symbole 524 (clôture ou palissade infranchissable).</translation>
         </message>
         <message>
-            <source>Impassable fence or railing &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable fence or railing &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 524</comment>
-            <translation>Clôture ou balustrade infranchissable &lt;span style="color:magenta"&gt;(franchissement interdit)&lt;/span&gt;</translation>
+            <translation>Clôture ou balustrade infranchissable &lt;span style=&quot;color:magenta&quot;&gt;(franchissement interdit)&lt;/span&gt;</translation>
         </message>
         <message>
             <source>An impassable fence or railing, which shall not be crossed, due to forbidden access or because it may constitute a danger to the competitor because of its height.
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an impassable fence or railing!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable fence or railing!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 524</comment>
             <translation>Une clôture ou palissade infranchissable qui ne peut être franchie suite à une interdiction d'accès ou parce que sa hauteur constitue un danger pour le coureur.
 
-&lt;span style="color:magenta"&gt;Il est interdit de franchir une clôture ou une palissade infranchissable !
+&lt;span style=&quot;color:magenta&quot;&gt;Il est interdit de franchir une clôture ou une palissade infranchissable !
 Le concurrent qui ne respecte pas cette règle sera disqualifié.&lt;/span&gt;</translation>
         </message>
         <message>
@@ -5260,23 +5260,23 @@ Le concurrent qui ne respecte pas cette règle sera disqualifié.&lt;/span&gt;</
             <translation>Un point de passage est un intervalle ou une ouverture dans une clôture, une palissade, un mur qui peut être facilement franchi par le coureur. De petits passages qui ne peuvent être facilement franchis ne doivent pas être représentés sur la carte et doivent être fermés durant la compétition.</translation>
         </message>
         <message>
-            <source>Building &lt;span style="color:magenta"&gt;(forbidden to pass through or over)&lt;/span&gt;</source>
+            <source>Building &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to pass through or over)&lt;/span&gt;</source>
             <comment>Name of symbol 526.1</comment>
-            <translation>Construction infranchissable &lt;span style="color:magenta"&gt;(accès interdit)&lt;/span&gt;</translation>
+            <translation>Construction infranchissable &lt;span style=&quot;color:magenta&quot;&gt;(accès interdit)&lt;/span&gt;</translation>
         </message>
         <message>
             <source>A building is a relatively permanent construction having a roof. Buildings within symbol area with forbidden access (527.1) may just be represented in a simplified manner.Areas totally contained within a building shall be mapped as being a part of the building. 
 
 The minimum gap between buildings and between buildings and other impassable features shall be 0.40 mm. The black screen percentage should be chosen according to the terrain. A dark screen gives a better contrast to passable areas, such as streets, stairways and canopies, while a light screen makes contours and course overprint more clearly visible (which can be important in very densely built up urban terrain and in steep urban terrain). The black screen shall be the same for the whole map. 
 
-&lt;span style="color:magenta"&gt;It is forbidden to pass through or over a building! 
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to pass through or over a building! 
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 526.1</comment>
             <translation>Un bâtiment est une construction permanente avec un toit. Les bâtiment à l'intérieur d'une zone d'accès interdit (528.1) peuvent être représentés d'une manière simplifiée. Les zones entièrement contenues à l'intérieur d'un bâtiment seront dessinées comme en faisant partie.
 
 L'intervalle minimal entre des bâtiment ou entre un bâtiment et d'autres éléments infranchissables est de 0.40 mm. Le pourcentage de la trame noire sera choisie en fonction du terrain. Une trame foncée apporte un contraste meilleur aux zones franchissables (routes, escaliers, auvents) alors qu'une trame plus claire rendra plus visible les courbes de niveau et les surimpressions de parcours (ce qui peut être important dans des zones urbaines avec une grande densité de constructions ou en terrain urbain escarpé). La trame noire doit être identique sur la totalité de la carte.
 
-&lt;span style="color:magenta"&gt;Il est interdit de traverser ou de passer au-dessus d'un batîment !
+&lt;span style=&quot;color:magenta&quot;&gt;Il est interdit de traverser ou de passer au-dessus d'un batîment !
 Le concurrent qui ne respete pas cette règle sera disqualifié.&lt;/span&gt;</translation>
         </message>
         <message>
@@ -5300,23 +5300,23 @@ Le concurrent qui ne respete pas cette règle sera disqualifié.&lt;/span&gt;</t
             <translation>Ne pas utiliser ce symbole en tant que tel.</translation>
         </message>
         <message>
-            <source>Building, minimum size &lt;span style="color:magenta"&gt;(forbidden to pass through or over)&lt;/span&gt;</source>
+            <source>Building, minimum size &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to pass through or over)&lt;/span&gt;</source>
             <comment>Name of symbol 526.1.3</comment>
-            <translation>Construction, taille minimum &lt;span style="color:magenta"&gt;(accès interdit)&lt;/span&gt;</translation>
+            <translation>Construction, taille minimum &lt;span style=&quot;color:magenta&quot;&gt;(accès interdit)&lt;/span&gt;</translation>
         </message>
         <message>
             <source>A building is a relatively permanent construction having a roof. Buildings within symbol area with forbidden access (527.1) may just be represented in a simplified manner.Areas totally contained within a building shall be mapped as being a part of the building. 
 
 The minimum gap between buildings and between buildings and other impassable features shall be 0.40 mm. The black screen percentage should be chosen according to the terrain. A dark screen gives a better contrast to passable areas, such as streets, stairways and canopies, while a light screen makes contours and course overprint more clearly visible (which can be important in very densely built up urban terrain and in steep urban terrain). The black screen shall be the same for the whole map. 
 
-&lt;span style="color:magenta"&gt;It is forbidden to pass through or over a building! 
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to pass through or over a building! 
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 526.1.3</comment>
             <translation>Un bâtiment est une construction permanente avec un toit. Les bâtiment à l'intérieur d'une zone d'accès interdit (528.1) peuvent être représentés d'une manière simplifiée. Les zones entièrement contenues à l'intérieur d'un bâtiment seront dessinées comme en faisant partie.
 
 L'intervalle minimal entre des bâtiment ou entre un bâtiment et d'autres éléments infranchissables est de 0.40 mm. Le pourcentage de la trame noire sera choisie en fonction du terrain. Une trame foncée apporte un contraste meilleur aux zones franchissables (routes, escaliers, auvents) alors qu'une trame plus claire rendra plus visible les courbes de niveau et les surimpressions de parcours (ce qui peut être important dans des zones urbaines avec une grande densité de constructions ou en terrain urbain escarpé). La trame noire doit être identique sur la totalité de la carte.
 
-&lt;span style="color:magenta"&gt;Il est interdit de traverser ou de passer au-dessus d'un batîment !
+&lt;span style=&quot;color:magenta&quot;&gt;Il est interdit de traverser ou de passer au-dessus d'un batîment !
 Le concurrent qui ne respete pas cette règle sera disqualifié.&lt;/span&gt;</translation>
         </message>
         <message>
@@ -5368,23 +5368,23 @@ Columns of pillars and pillars along buildings are not represented. However, if 
 Les colonnes et piliers le long des bâtiments ne sont pas représentés. Ils peuvent cependant l'être s'ils sont important pour la navigation et l'orientation.</translation>
         </message>
         <message>
-            <source>Area with forbidden access &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Area with forbidden access &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 528.1</comment>
-            <translation>Zone interdite &lt;span style="color:magenta"&gt;(franchissement interdit)&lt;/span&gt;</translation>
+            <translation>Zone interdite &lt;span style=&quot;color:magenta&quot;&gt;(franchissement interdit)&lt;/span&gt;</translation>
         </message>
         <message>
             <source>An area with forbidden access such as a private area, a flower bed, a railway area etc. No feature shall be represented in this area, except very prominent features such as railways, large buildings, or very large trees. Road entrances shall be represented clearly.
 
 Areas with forbidden access totally contained within buildings shall be mapped as being a part of the building.
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an area with forbidden access!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an area with forbidden access!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 528.1</comment>
             <translation>Une zone interdite est, par exemple, une propriété privée, un parterre de fleurs, une zone de rails, etc. Aucun élément à l'intérieur d'une telle zone ne sera représenté, excepté les éléments très visibles tels les rails, les grands bâtiments, les très grands arbres. 
 
 Les accès routiers seront clairement représentés. Si ces zones ont entièrement contenues à l'intérieur d'un bâtiment, elles seront dessinées comme en faisant partie.
 
-&lt;span style="color:magenta"&gt;Il est interdit de franchir une zone interdite !
+&lt;span style=&quot;color:magenta&quot;&gt;Il est interdit de franchir une zone interdite !
 Le concurrent qui ne respecte pas cette règle sera disqualifié.&lt;/span&gt;</translation>
         </message>
         <message>
@@ -5654,19 +5654,19 @@ Couleur : brun 0 (blanc), 10%, 20%, 30% (urbain), 20%, 30%,40%,50% (non-urbain) 
             <translation>Une conduite (gaz, eau, pétrole, etc.) au-dessus du niveau du sol et qui peut être franchie par-dessus ou par-dessous.</translation>
         </message>
         <message>
-            <source>Impassable pipeline &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable pipeline &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 534</comment>
-            <translation>Conduite infranchissable &lt;span style="color:magenta"&gt;(franchissement interdit)&lt;/span&gt;</translation>
+            <translation>Conduite infranchissable &lt;span style=&quot;color:magenta&quot;&gt;(franchissement interdit)&lt;/span&gt;</translation>
         </message>
         <message>
             <source>An impassable pipeline (gas, water, oil, etc.) above ground level which shall not be crossed, due to forbidden access or because it may constitute a danger to the competitor because of its height.
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an impassable pipeline!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable pipeline!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 534</comment>
             <translation>Une conduite (gaz, eau, pétrole, etc.) au-dessus du niveau du sol et qui ne peut être franchie à cause d'un accès interdit ou parce qu'elle peut constituer un danger pour le coureur de par sa hauteur.
 
-&lt;span style="color:magenta"&gt;Il est interdit de franchir une telle conduite !
+&lt;span style=&quot;color:magenta&quot;&gt;Il est interdit de franchir une telle conduite !
 Le concurrent qui ne respecte pas cette règle sera disqualifié.&lt;/span&gt;</translation>
         </message>
         <message>
@@ -5912,21 +5912,21 @@ Les lignes du nord peuvent être interrompues lorsqu‘elles cachent un petit é
             <translation>L'arrivée est représentée par deux cercles concentriques.</translation>
         </message>
         <message>
-            <source>Uncrossable boundary &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Uncrossable boundary &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 707</comment>
-            <translation>Limite interdite &lt;span style="color:magenta"&gt;(franchissement interdit)&lt;/span&gt;</translation>
+            <translation>Limite interdite &lt;span style=&quot;color:magenta&quot;&gt;(franchissement interdit)&lt;/span&gt;</translation>
         </message>
         <message>
             <source>A boundary which it is not permitted to cross. Uncrossable boundaries shall be mapped by using the symbols: impassable cliff (201), impassable body of water (304.1), impassable marsh (309), impassable wall (521.1), impassable fence or railing (524) or impassable pipeline (534) and shall not be overprinted with symbol uncrossable boundary (707). This symbol is to be used only for last minute updates to the competition area, as excessive use of purple for indicating barriers is unfortunate.
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an uncrossable boundary!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an uncrossable boundary!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 707</comment>
             <translation>Une limite dont le franchissement est interdit. Les limites infranchissables seront cartographiées en utilisant les symboles 201 (falaise infanchissable), 304.1 (étendue d'eau infranchissable), 309 (marais infranchissable), 521.1 (mur infranchissable), 524 (clôture ou palissade infranchissable) ou 534 (conduite infranchissable) et ne seront pas sur-imprimées avec ce symbole 707. Celui-ci sera uniquement utilisé en dernière minute pour mettre à jour la zone de compétition. Un emploi excessif de violet pour indiquer les obstacles est en effet inadéquat.
 
 A boundary which it is not permitted to cross. Uncrossable boundaries shall be mapped by using the symbols: impassable cliff (201), impassable body of water (304.1), impassable marsh (309), impassable wall (521.1), impassable fence or railing (524) or impassable pipeline (534) and shall not be overprinted with symbol uncrossable boundary (707). This symbol is to be used only for last minute updates to the competition area, as excessive use of purple for indicating barriers is unfortunate.
 
-&lt;span style="color:magenta"&gt;Il est interdit de franchir une limite interdite !
+&lt;span style=&quot;color:magenta&quot;&gt;Il est interdit de franchir une limite interdite !
 Le concurrent qui ne respecte pas cettre règle sera disqualifié.&lt;/span&gt;</translation>
         </message>
         <message>
@@ -5958,9 +5958,9 @@ If underpasses or tunnels etc. are to be used in a competition, they shall be em
 Si des passages souterrains ou tunnels, etc, doivent être utilisés en compétition, ils doivent être renforcés par le symbole 708 (point de passage) ou 708.1 (passage).</translation>
         </message>
         <message>
-            <source>Out-of-bounds area &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Out-of-bounds area &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 709</comment>
-            <translation>Zone interdite &lt;span style="color:magenta"&gt;(franchissement interdit)&lt;/span&gt;</translation>
+            <translation>Zone interdite &lt;span style=&quot;color:magenta&quot;&gt;(franchissement interdit)&lt;/span&gt;</translation>
         </message>
         <message>
             <source>Out of bounds areas are mapped with the symbol area with forbidden access (528.1). This symbol shall only be used for last minute updates to the competition map (e.g. for areas that may be dangerous for the competitors during the competition, or very late changes to the competition terrain).
@@ -5969,7 +5969,7 @@ An out-of-bounds area is shown with vertical stripes. A bounding line may be dra
 - a dashed line indicates intermittent marking on the ground,
 - no line indicates no marking on the ground.
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an out-of-bounds area!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an out-of-bounds area!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 709</comment>
             <translation>Une zone interdite est représentée avec le symbole 528.1 (zone d'accès interdit). Ce symbole doit uniquement être utilisé pour une mise à jour de dernière minute (par ex. pour des zones qui peuvent être dangereuses pour le coureur, ou des modifications très tardives sur le terrain de compétition).
@@ -5978,7 +5978,7 @@ Une zone interdite est représentée par des hachures verticales. En l'absence d
 - une ligne en tirets indique un repérage intermittent sur le terrain
 - l'absence de ligne indique qu'il n'y a aucun repérage sur le terrain.
 
-&lt;span style="color:magenta"&gt;Il est interdit de franchir une telle limite !
+&lt;span style=&quot;color:magenta&quot;&gt;Il est interdit de franchir une telle limite !
 Le concurrent qui ne respecte pas cette règle sera disqualifié.&lt;/span&gt;</translation>
         </message>
         <message>
@@ -6023,19 +6023,19 @@ Le concurrent qui ne respecte pas cette règle sera disqualifié.&lt;/span&gt;</
             <translation>La position d'un poste de ravitaillement quand il n'est pas à un poste de contrôle ou le long d'un itinéraire balisé.</translation>
         </message>
         <message>
-            <source>Temporary construction or closed area &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Temporary construction or closed area &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 714</comment>
-            <translation>Construction temporaire ou zone fermée &lt;span style="color:magenta"&gt;(franchissement interdit)&lt;/span&gt;</translation>
+            <translation>Construction temporaire ou zone fermée &lt;span style=&quot;color:magenta&quot;&gt;(franchissement interdit)&lt;/span&gt;</translation>
         </message>
         <message>
             <source>Obvious temporary constructions like platforms for spectators and speaker, closed area for spectators, outside restaurant areas, etc. shall be represented in plan shape.
 
-&lt;span style="color:magenta"&gt;It is forbidden to enter a temporary construction or closed area!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to enter a temporary construction or closed area!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 714</comment>
             <translation>Des constructions temporaires bien visibles tels que les tribunes des spectateurs et du speaker, les zones fermées des spectateurs, les zones de restaurant extérieurs, etc. seront représentées selon leur forme en plan.
 
-&lt;span style="color:magenta"&gt;Il est interdit de pénétrer dans une construction temporaire ou une zone fermé !
+&lt;span style=&quot;color:magenta&quot;&gt;Il est interdit de pénétrer dans une construction temporaire ou une zone fermé !
 Le concurrent qui ne respecte pas cette règle sera disqualifé.&lt;/span&gt;</translation>
         </message>
         <message>
@@ -6418,7 +6418,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d'arrivée. C
         <message>
             <source>Large areas of water are shown with this symbol (blue 50%). The colour of the bank line is blue 100 %.
 
-Small areas of water should be shown with full colour. Use symbol 302 ("Pond" in ISOM).</source>
+Small areas of water should be shown with full colour. Use symbol 302 (&quot;Pond&quot; in ISOM).</source>
             <comment>Description of symbol 301</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -6445,7 +6445,7 @@ Small areas of water should be shown with full colour. Use symbol 302 ("Pond" in
         <message>
             <source>Small areas of water should be shown with full colour.
 
-This is symbol "302 Pond" in ISOM, but is a variation of "301 Lake" in ISMTBOM.</source>
+This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lake&quot; in ISMTBOM.</source>
             <comment>Description of symbol 302</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -6999,7 +6999,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <message>
             <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
             <comment>Description of symbol 603.0</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Les points d'altitude sont utilisés pour l'estimation des différences d'altitude. Celle-ci est arrondie au mètre. Les chiffres sont orientés vers le nord. Les niveaux d'eau sont représentés sans le point.</translation>
         </message>
         <message>
             <source>Spot height, text</source>
@@ -8809,7 +8809,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <message>
             <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
             <comment>Description of symbol 603.0</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Les points d'altitude sont utilisés pour l'estimation des différences d'altitude. Celle-ci est arrondie au mètre. Les chiffres sont orientés vers le nord. Les niveaux d'eau sont représentés sans le point.</translation>
         </message>
         <message>
             <source>Spot height, text</source>

@@ -1428,7 +1428,7 @@ symbol.</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Formerly "502 Major road", provided for migration from ISOM 2000. Use of this symbol is discouraged for new maps.</source>
+            <source>Formerly &quot;502 Major road&quot;, provided for migration from ISOM 2000. Use of this symbol is discouraged for new maps.</source>
             <comment>Description of symbol 502.1</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -1930,7 +1930,8 @@ Location is at the centre of gravity of the symbol.</source>
         <message>
             <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
             <comment>Description of symbol 530</comment>
-            <translation type="unfinished"></translation>
+            <translation>Těmito značkami se zobrazují zvláštní umělé objekty. Definice každé značky musí být uvedena v legendě mapy.
+Barva: černá.</translation>
         </message>
         <message>
             <source>Prominent man-made feature – x</source>
@@ -1940,7 +1941,8 @@ Location is at the centre of gravity of the symbol.</source>
         <message>
             <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
             <comment>Description of symbol 531</comment>
-            <translation type="unfinished"></translation>
+            <translation>Těmito značkami se zobrazují zvláštní umělé objekty. Definice každé značky musí být uvedena v legendě mapy.
+Barva: černá.</translation>
         </message>
         <message>
             <source>Magnetic north line</source>
@@ -3412,7 +3414,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
             <comment>Description of symbol 512</comment>
             <translation>Lávka k níž nevede žádná pěšina.
 Poznámka: Pokud je proud širší než 0.25 mm, upravte tento symbol tak, že se rozšiřuje 0.5 mm na obou stranách proudu!</translation>
-    </message>
+        </message>
         <message>
             <source>Railway</source>
             <comment>Name of symbol 515</comment>
@@ -4427,16 +4429,16 @@ Barva: hnědá.</translation>
 Barva: hnědá.</translation>
         </message>
         <message>
-            <source>Impassable cliff &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable cliff &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 201</comment>
-            <translation>Neschůdný sráz &lt;span style="color:magenta"&gt;(zákaz překonávání)&lt;/span&gt;</translation>
+            <translation>Neschůdný sráz &lt;span style=&quot;color:magenta&quot;&gt;(zákaz překonávání)&lt;/span&gt;</translation>
         </message>
         <message>
             <source>An impassable cliff, quarry or earth bank [see symbol earth bank (106)]. Tags are drawn downwards, showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). 
 
 The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags shall clearly extend over the bank line. Minimum height is 2 meters.
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an impassable cliff!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable cliff!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 201</comment>
             <translation>Neschůdný sráz, kamenný nebo hliněný sráz (viz značka sráz 106) {nebo opěrná zeď}. Čárky jsou kresleny dolů {ve směru spádu} a ukazují celkový rozsah od vrcholové hrany až k úpatí. Pro svislé skalní srázy mohou být čárky vynechány, byly-li by krátké, například úzké průchody mezi skalami (průchod má být kreslen v šířce alespoň 0,3 mm).
@@ -4445,20 +4447,20 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
 
 Barva: černá.
 
-&lt;span style="color:magenta"&gt;Je zakázáno překonávání neschůdného srázu!
+&lt;span style=&quot;color:magenta&quot;&gt;Je zakázáno překonávání neschůdného srázu!
 Závodníci, kteří porušili toto pravidlo, budou diskvalifikováni..&lt;/span&gt;</translation>
         </message>
         <message>
-            <source>Impassable cliff, minimum size &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable cliff, minimum size &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 201.0.1</comment>
-            <translation>Neschůdný sráz, nejmenší velikost &lt;span style="color:magenta"&gt;(zákaz překonávání)&lt;/span&gt;</translation>
+            <translation>Neschůdný sráz, nejmenší velikost &lt;span style=&quot;color:magenta&quot;&gt;(zákaz překonávání)&lt;/span&gt;</translation>
         </message>
         <message>
             <source>An impassable cliff, quarry or earth bank [see symbol earth bank (106)]. Tags are drawn downwards, showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). 
 
 The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags shall clearly extend over the bank line. Minimum height is 2 meters.
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an impassable cliff!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable cliff!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 201.0.1</comment>
             <translation>Neschůdný sráz, kamenný nebo hliněný sráz (viz značka sráz 106) {nebo opěrná zeď}. Čárky jsou kresleny dolů {ve směru spádu} a ukazují celkový rozsah od vrcholové hrany až k úpatí. Pro svislé skalní srázy mohou být čárky vynechány, byly-li by krátké, například úzké průchody mezi skalami (průchod má být kreslen v šířce alespoň 0,3 mm).
@@ -4467,13 +4469,13 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
 
 Barva: černá.
 
-&lt;span style="color:magenta"&gt;Je zakázáno překonávání neschůdného srázu!
+&lt;span style=&quot;color:magenta&quot;&gt;Je zakázáno překonávání neschůdného srázu!
 Závodníci, kteří porušili toto pravidlo, budou diskvalifikováni..&lt;/span&gt;</translation>
         </message>
         <message>
-            <source>Impassable cliff, no tags &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable cliff, no tags &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 201.1</comment>
-            <translation>Neschůdný sráz, bez čárek &lt;span style="color:magenta"&gt;(zákaz překonávání)&lt;/span&gt;</translation>
+            <translation>Neschůdný sráz, bez čárek &lt;span style=&quot;color:magenta&quot;&gt;(zákaz překonávání)&lt;/span&gt;</translation>
         </message>
         <message>
             <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
@@ -4481,9 +4483,9 @@ Závodníci, kteří porušili toto pravidlo, budou diskvalifikováni..&lt;/span
             <translation>Pro svislé skalní srázy mohou být čárky vynechány, byly-li by krátké, například úzké průchody mezi skalami (průchod má být kreslen v šířce alespoň 0,3 mm).</translation>
         </message>
         <message>
-            <source>Impassable cliff, no tags, minimum size &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable cliff, no tags, minimum size &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 201.1.1</comment>
-            <translation>Neschůdný sráz, bez čárek, nejmenší velikost &lt;span style="color:magenta"&gt;(zákaz překonávání)&lt;/span&gt;</translation>
+            <translation>Neschůdný sráz, bez čárek, nejmenší velikost &lt;span style=&quot;color:magenta&quot;&gt;(zákaz překonávání)&lt;/span&gt;</translation>
         </message>
         <message>
             <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
@@ -4600,13 +4602,13 @@ Barva: černá.</translation>
         <message>
             <source>A cave is represented by the same symbol as a rocky pit. In this case the symbol shall be orientated to point up the slope as indicated opposite. This symbol should generally not be used in urban areas. The centre of gravity of the symbol marks the opening.
 
-&lt;span style="color:magenta"&gt;Controls may not be placed inside caves!&lt;/span&gt;</source>
+&lt;span style=&quot;color:magenta&quot;&gt;Controls may not be placed inside caves!&lt;/span&gt;</source>
             <comment>Description of symbol 205</comment>
             <translation>Jeskyně {sklep, kryt} se znázorňuje stejným symbolem jako kamenná jáma. V tomto případě musí být značka orientována proti svahu, jak je ukázáno vedle {špička značky směřuje dovnitř jeskyně}. Tato značka by obecně neměla být používána v urbanizovaných prostorech. Těžiště značky označuje ústí.
 
 Barva: černá.
 
-&lt;span style="color:magenta"&gt;Kontroly nesmí být umístěny uvnitř jeskyní!&lt;/span&gt;</translation>
+&lt;span style=&quot;color:magenta&quot;&gt;Kontroly nesmí být umístěny uvnitř jeskyní!&lt;/span&gt;</translation>
         </message>
         <message>
             <source>Boulder</source>
@@ -4717,14 +4719,14 @@ Barva: černá 20% (min. 60 linek/cm) nebo šedá.</translation>
 Barva: modrá.</translation>
         </message>
         <message>
-            <source>Impassable body of water, with bank line, 100% blue &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable body of water, with bank line, 100% blue &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 304.1</comment>
-            <translation>Nepřekonatelné vodní těleso, s břehovou čárou, modrá 100 % &lt;span style="color:magenta"&gt;(zákaz překonávání)&lt;/span&gt;</translation>
+            <translation>Nepřekonatelné vodní těleso, s břehovou čárou, modrá 100 % &lt;span style=&quot;color:magenta&quot;&gt;(zákaz překonávání)&lt;/span&gt;</translation>
         </message>
         <message>
             <source>An area of deep water such as a lake, pond, river or fountain which may constitute a danger to the competitor or has forbidden access. The dark blue colour and the bordering black line indicates that the feature cannot or shall not be crossed. The minimum dimension is 1 mm².
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an impassable body of water!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable body of water!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 304.1</comment>
             <translation>Oblast hluboké vody jako je jezero, rybník, řeka nebo nádrž, která může představovat nebezpečí pro závodníka, nebo je do
@@ -4733,18 +4735,18 @@ rozměr je 1 mm².
 
 Barva: modrá 100% nebo 75% (min. 60 linek/cm), černá.
 
-&lt;span style="color:magenta"&gt;Je zakázáno překonávání nepřekonatelného vodního tělesa!
+&lt;span style=&quot;color:magenta&quot;&gt;Je zakázáno překonávání nepřekonatelného vodního tělesa!
 Závodníci, kteří porušili toto pravidlo, budou diskvalifikováni.&lt;/span&gt;</translation>
         </message>
         <message>
-            <source>Impassable body of water, with bank line, 75% blue &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable body of water, with bank line, 75% blue &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 304.1.1</comment>
-            <translation>Nepřekonatelné vodní těleso, s břehovou čárou, modrá 75 % &lt;span style="color:magenta"&gt;(zákaz překonávání)&lt;/span&gt;</translation>
+            <translation>Nepřekonatelné vodní těleso, s břehovou čárou, modrá 75 % &lt;span style=&quot;color:magenta&quot;&gt;(zákaz překonávání)&lt;/span&gt;</translation>
         </message>
         <message>
             <source>An area of deep water such as a lake, pond, river or fountain which may constitute a danger to the competitor or has forbidden access. The dark blue colour and the bordering black line indicates that the feature cannot or shall not be crossed. The minimum dimension is 1 mm².
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an impassable body of water!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable body of water!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 304.1.1</comment>
             <translation>Oblast hluboké vody jako je jezero, rybník, řeka nebo nádrž, která může představovat nebezpečí pro závodníka, nebo je do
@@ -4753,13 +4755,13 @@ rozměr je 1 mm².
 
 Barva: modrá 100% nebo 75% (min. 60 linek/cm), černá.
 
-&lt;span style="color:magenta"&gt;Je zakázáno překonávání nepřekonatelného vodního tělesa!
+&lt;span style=&quot;color:magenta&quot;&gt;Je zakázáno překonávání nepřekonatelného vodního tělesa!
 Závodníci, kteří porušili toto pravidlo, budou diskvalifikováni.&lt;/span&gt;</translation>
         </message>
         <message>
-            <source>Impassable body of water, bank line &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable body of water, bank line &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 304.2</comment>
-            <translation>Nepřekonatelné vodní těleso, břehová čára &lt;span style="color:magenta"&gt;(zákaz překonávání)&lt;/span&gt;</translation>
+            <translation>Nepřekonatelné vodní těleso, břehová čára &lt;span style=&quot;color:magenta&quot;&gt;(zákaz překonávání)&lt;/span&gt;</translation>
         </message>
         <message>
             <source>The bordering black line indicates that the feature cannot or shall not be crossed.</source>
@@ -4767,14 +4769,14 @@ Závodníci, kteří porušili toto pravidlo, budou diskvalifikováni.&lt;/span&
             <translation>Hraniční černá čára ukazuje, že objekt nelze překonat nebo se nemá překročit.</translation>
         </message>
         <message>
-            <source>Impassable body of water, fill, 100% blue &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable body of water, fill, 100% blue &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 304.3</comment>
-            <translation>Nepřekonatelné vodní těleso, výplň, modrá 100 % &lt;span style="color:magenta"&gt;(zákaz překonávání)&lt;/span&gt;</translation>
+            <translation>Nepřekonatelné vodní těleso, výplň, modrá 100 % &lt;span style=&quot;color:magenta&quot;&gt;(zákaz překonávání)&lt;/span&gt;</translation>
         </message>
         <message>
             <source>An area of deep water such as a lake, pond, river or fountain which may constitute a danger to the competitor or has forbidden access. The dark blue colour and the bordering black line indicates that the feature cannot or shall not be crossed. The minimum dimension is 1 mm².
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an impassable body of water!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable body of water!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 304.3</comment>
             <translation>Oblast hluboké vody jako je jezero, rybník, řeka nebo nádrž, která může představovat nebezpečí pro závodníka, nebo je do
@@ -4783,18 +4785,18 @@ rozměr je 1 mm².
 
 Barva: modrá 100% nebo 75% (min. 60 linek/cm), černá.
 
-&lt;span style="color:magenta"&gt;Je zakázáno překonávání nepřekonatelného vodního tělesa!
+&lt;span style=&quot;color:magenta&quot;&gt;Je zakázáno překonávání nepřekonatelného vodního tělesa!
 Závodníci, kteří porušili toto pravidlo, budou diskvalifikováni.&lt;/span&gt;</translation>
         </message>
         <message>
-            <source>Impassable body of water, fill, 75% blue &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable body of water, fill, 75% blue &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 304.4</comment>
-            <translation>Nepřekonatelné vodní těleso, výplň, modrá 75 % &lt;span style="color:magenta"&gt;(zákaz překonávání)&lt;/span&gt;</translation>
+            <translation>Nepřekonatelné vodní těleso, výplň, modrá 75 % &lt;span style=&quot;color:magenta&quot;&gt;(zákaz překonávání)&lt;/span&gt;</translation>
         </message>
         <message>
             <source>An area of deep water such as a lake, pond, river or fountain which may constitute a danger to the competitor or has forbidden access. The dark blue colour and the bordering black line indicates that the feature cannot or shall not be crossed. The minimum dimension is 1 mm².
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an impassable body of water!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable body of water!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 304.4</comment>
             <translation>Oblast hluboké vody jako je jezero, rybník, řeka nebo nádrž, která může představovat nebezpečí pro závodníka, nebo je do
@@ -4803,7 +4805,7 @@ rozměr je 1 mm².
 
 Barva: modrá 100% nebo 75% (min. 60 linek/cm), černá.
 
-&lt;span style="color:magenta"&gt;Je zakázáno překonávání nepřekonatelného vodního tělesa!
+&lt;span style=&quot;color:magenta&quot;&gt;Je zakázáno překonávání nepřekonatelného vodního tělesa!
 Závodníci, kteří porušili toto pravidlo, budou diskvalifikováni.&lt;/span&gt;</translation>
         </message>
         <message>
@@ -4879,20 +4881,20 @@ Barva: modrá.</translation>
 Barva: modrá.</translation>
         </message>
         <message>
-            <source>Impassable marsh &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable marsh &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 309</comment>
-            <translation>Nepřekonatelná bažina &lt;span style="color:magenta"&gt;(zákaz překonávání)&lt;/span&gt;</translation>
+            <translation>Nepřekonatelná bažina &lt;span style=&quot;color:magenta&quot;&gt;(zákaz překonávání)&lt;/span&gt;</translation>
         </message>
         <message>
             <source>A marsh which is impassable or which may constitute a danger to the competitor. The feature cannot or shall not be crossed.
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an impassable marsh!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable marsh!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 309</comment>
             <translation>Bažina, která je nepřekonatelná, nebo může představovat nebezpečí pro závodníka. Objekt nemůže nebo nesmí být překonáván.
 Barva: modrá, černá.
 
-&lt;span style="color:magenta"&gt;Je zakázáno překonávání nepřekonatelné bažiny!
+&lt;span style=&quot;color:magenta&quot;&gt;Je zakázáno překonávání nepřekonatelné bažiny!
 Závodníci, kteří porušili toto pravidlo, budou diskvalifikováni.&lt;/span&gt;</translation>
         </message>
         <message>
@@ -5269,16 +5271,16 @@ Barva: zelená.</translation>
 {Barva: zelená.}</translation>
         </message>
         <message>
-            <source>Impassable vegetation &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable vegetation &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 421</comment>
-            <translation>Nepřekonatelná vegetace &lt;span style="color:magenta"&gt;(zákaz překonávání)&lt;/span&gt;</translation>
+            <translation>Nepřekonatelná vegetace &lt;span style=&quot;color:magenta&quot;&gt;(zákaz překonávání)&lt;/span&gt;</translation>
         </message>
         <message>
             <source>An area of dense vegetation (trees or undergrowth) which is impassable or which shall not be crossed, due to forbidden access or because it may constitute a danger to the competitor.
  
 Minimum width: 0.4 mm.
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross impassable vegetation!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross impassable vegetation!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 421</comment>
             <translation>Oblast husté vegetace (stromů nebo podrostu), která je nepřekonatelná, nebo nesmí být přecházena z důvodu zakázaného přístupu nebo proto, že může představovat nebezpečí pro závodníka.
@@ -5287,7 +5289,7 @@ Barva: zelená 100%, černá 50% (min. 60 linek/cm).
  
 Nejmenší šířka: 0.4 mm.
 
-&lt;span style="color:magenta"&gt;Je zakázáno překonávání nepřekonatelné vegetace!
+&lt;span style=&quot;color:magenta&quot;&gt;Je zakázáno překonávání nepřekonatelné vegetace!
 Závodníci, kteří porušili toto pravidlo, budou diskvalifikováni.&lt;/span&gt;</translation>
         </message>
         <message>
@@ -5393,7 +5395,7 @@ Barva: černá, hnědá 0 {%} (bílá), 10%, 20% nebo 30% (urban) / 20%, 30%, 40
             <source>A small unpaved footpath or track. Not to be used in urban areas.</source>
             <comment>Description of symbol 507</comment>
             <translation>Úzká nezpevněná pěší nebo vozová cesta. Nesmí být užita v urbanizovaných oblastech.</translation>
-    </message>
+        </message>
         <message>
             <source>Less distinct small path</source>
             <comment>Name of symbol 508</comment>
@@ -5523,13 +5525,13 @@ Barva: černá.
         <message>
             <source>An underpass or a tunnel is a passage running underneath the ground, especially a passage for pedestrians or vehicles, crossing under for instance a railroad or a road.
 
-&lt;span style="color: magenta"&gt;If underpasses or tunnels etc. are to be used in a competition, they shall be emphasized with the symbol crossing point (708) or crossing section (708.1)!&lt;/span&gt;</source>
+&lt;span style=&quot;color: magenta&quot;&gt;If underpasses or tunnels etc. are to be used in a competition, they shall be emphasized with the symbol crossing point (708) or crossing section (708.1)!&lt;/span&gt;</source>
             <comment>Description of symbol 518.1</comment>
             <translation>Podchod nebo tunel je pasáž probíhající pod povrchem, zvláště pasáž pro pěší nebo dopravní prostředky křižující spodem železnici nebo silnici.
 
 Barva: černá.
 
-&lt;span style="color: magenta"&gt;Je-li podchod nebo tunel a podobně použit pro závod, musí být
+&lt;span style=&quot;color: magenta&quot;&gt;Je-li podchod nebo tunel a podobně použit pro závod, musí být
 zvýrazněn značkou bod přechodu (708) nebo sekce přechodu (708.1)!&lt;/span&gt;</translation>
         </message>
         <message>
@@ -5571,39 +5573,39 @@ Barva: černá 50%.</translation>
 Barva: černá 50%.</translation>
         </message>
         <message>
-            <source>Impassable wall &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable wall &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 521.1.1</comment>
-            <translation>Nepřekonatelná zeď &lt;span style="color:magenta"&gt;(zákaz překonávání)&lt;/span&gt;</translation>
+            <translation>Nepřekonatelná zeď &lt;span style=&quot;color:magenta&quot;&gt;(zákaz překonávání)&lt;/span&gt;</translation>
         </message>
         <message>
             <source>An impassable wall or retaining wall is a wall, which fulfil the function of an enclosure or solid barrier. It shall not be crossed, due to forbidden access or because it may constitute a danger to the competitor due to its height. Very wide impassable walls shall be drawn in plan shape and represented with the symbol building (526.1).
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an impassable wall!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable wall!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 521.1.1</comment>
             <translation>Nepřekonatelná zeď nebo opěrná zeď je zeď, která plní funkci uzávěry nebo zábrany. Nesmí být překonávána buď z důvodu zakázaného vstupu, nebo proto, že může představovat svou výškou nebezpečí pro závodníka. Velmi rozsáhlé nepřekonatelné zdi musí být kresleny půdorysem a jsou zobrazeny značkou budova (526.1).
 
 Barva: černá.
 
-&lt;span style="color:magenta"&gt;Je zakázáno překonávání nepřekonatelné zdi!
+&lt;span style=&quot;color:magenta&quot;&gt;Je zakázáno překonávání nepřekonatelné zdi!
 Závodníci, kteří porušili toto pravidlo, budou diskvalifikováni.&lt;/span&gt;</translation>
         </message>
         <message>
-            <source>Impassable wall, plan shape &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable wall, plan shape &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 521.1.2</comment>
-            <translation>Nepřekonatelná zeď, půdorys &lt;span style="color:magenta"&gt;(zákaz překonávání)&lt;/span&gt;</translation>
+            <translation>Nepřekonatelná zeď, půdorys &lt;span style=&quot;color:magenta&quot;&gt;(zákaz překonávání)&lt;/span&gt;</translation>
         </message>
         <message>
             <source>An impassable wall or retaining wall is a wall, which fulfil the function of an enclosure or solid barrier. It shall not be crossed, due to forbidden access or because it may constitute a danger to the competitor due to its height. Very wide impassable walls shall be drawn in plan shape and represented with the symbol building (526.1).
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an impassable wall!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable wall!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 521.1.2</comment>
             <translation>Nepřekonatelná zeď nebo opěrná zeď je zeď, která plní funkci uzávěry nebo zábrany. Nesmí být překonávána buď z důvodu zakázaného vstupu, nebo proto, že může představovat svou výškou nebezpečí pro závodníka. Velmi rozsáhlé nepřekonatelné zdi musí být kresleny půdorysem a jsou zobrazeny značkou budova (526.1).
 
 Barva: černá.
 
-&lt;span style="color:magenta"&gt;Je zakázáno překonávání nepřekonatelné zdi!
+&lt;span style=&quot;color:magenta&quot;&gt;Je zakázáno překonávání nepřekonatelné zdi!
 Závodníci, kteří porušili toto pravidlo, budou diskvalifikováni.&lt;/span&gt;</translation>
         </message>
         <message>
@@ -5624,21 +5626,21 @@ Barva: černá.
 </translation>
         </message>
         <message>
-            <source>Impassable fence or railing &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable fence or railing &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 524</comment>
-            <translation>Nepřekonatelný plot nebo ohrada &lt;span style="color:magenta"&gt;(zákaz překonávání)&lt;/span&gt;</translation>
+            <translation>Nepřekonatelný plot nebo ohrada &lt;span style=&quot;color:magenta&quot;&gt;(zákaz překonávání)&lt;/span&gt;</translation>
         </message>
         <message>
             <source>An impassable fence or railing, which shall not be crossed, due to forbidden access or because it may constitute a danger to the competitor because of its height.
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an impassable fence or railing!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable fence or railing!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 524</comment>
             <translation>Nepřekonatelný plot nebo ohrada, který nesmí být překonáván buď z důvodu zakázaného vstupu, nebo protože svou výškou představuje nebezpečí pro závodníka.
 
 Barva: černá.
 
-&lt;span style="color:magenta"&gt;Je zakázáno překonávání nepřekonatelného plotu nebo ohrady!
+&lt;span style=&quot;color:magenta&quot;&gt;Je zakázáno překonávání nepřekonatelného plotu nebo ohrady!
 Závodníci, kteří porušili toto pravidlo, budou diskvalifikováni.&lt;/span&gt;</translation>
         </message>
         <message>
@@ -5654,16 +5656,16 @@ Závodníci, kteří porušili toto pravidlo, budou diskvalifikováni.&lt;/span&
 Barva: černá.</translation>
         </message>
         <message>
-            <source>Building &lt;span style="color:magenta"&gt;(forbidden to pass through or over)&lt;/span&gt;</source>
+            <source>Building &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to pass through or over)&lt;/span&gt;</source>
             <comment>Name of symbol 526.1</comment>
-            <translation>Budova &lt;span style="color:magenta"&gt;(zákaz překonávání skrz nebo přes)&lt;/span&gt;</translation>
+            <translation>Budova &lt;span style=&quot;color:magenta&quot;&gt;(zákaz překonávání skrz nebo přes)&lt;/span&gt;</translation>
         </message>
         <message>
             <source>A building is a relatively permanent construction having a roof. Buildings within symbol area with forbidden access (527.1) may just be represented in a simplified manner.Areas totally contained within a building shall be mapped as being a part of the building. 
 
 The minimum gap between buildings and between buildings and other impassable features shall be 0.40 mm. The black screen percentage should be chosen according to the terrain. A dark screen gives a better contrast to passable areas, such as streets, stairways and canopies, while a light screen makes contours and course overprint more clearly visible (which can be important in very densely built up urban terrain and in steep urban terrain). The black screen shall be the same for the whole map. 
 
-&lt;span style="color:magenta"&gt;It is forbidden to pass through or over a building! 
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to pass through or over a building! 
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 526.1</comment>
             <translation>Budova je relativně trvalá konstrukce mající střechu.
@@ -5675,7 +5677,7 @@ Procenta černého rastru musí být vybrána tak, aby to odpovídalo charakteru
 
 Barva: černá, černá 50-65%.
 
-&lt;span style="color:magenta"&gt;Je zakázáno překonávání budov skrz nebo přes!
+&lt;span style=&quot;color:magenta&quot;&gt;Je zakázáno překonávání budov skrz nebo přes!
 Závodníci, kteří porušili toto pravidlo, budou diskvalifikováni.&lt;/span&gt;</translation>
         </message>
         <message>
@@ -5699,16 +5701,16 @@ Závodníci, kteří porušili toto pravidlo, budou diskvalifikováni.&lt;/span&
             <translation>Tento symbol nepoužívat sám!</translation>
         </message>
         <message>
-            <source>Building, minimum size &lt;span style="color:magenta"&gt;(forbidden to pass through or over)&lt;/span&gt;</source>
+            <source>Building, minimum size &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to pass through or over)&lt;/span&gt;</source>
             <comment>Name of symbol 526.1.3</comment>
-            <translation>Budova, nejmenší velikost &lt;span style="color:magenta"&gt;(zákaz překonávání skrz nebo přes)&lt;/span&gt;</translation>
+            <translation>Budova, nejmenší velikost &lt;span style=&quot;color:magenta&quot;&gt;(zákaz překonávání skrz nebo přes)&lt;/span&gt;</translation>
         </message>
         <message>
             <source>A building is a relatively permanent construction having a roof. Buildings within symbol area with forbidden access (527.1) may just be represented in a simplified manner.Areas totally contained within a building shall be mapped as being a part of the building. 
 
 The minimum gap between buildings and between buildings and other impassable features shall be 0.40 mm. The black screen percentage should be chosen according to the terrain. A dark screen gives a better contrast to passable areas, such as streets, stairways and canopies, while a light screen makes contours and course overprint more clearly visible (which can be important in very densely built up urban terrain and in steep urban terrain). The black screen shall be the same for the whole map. 
 
-&lt;span style="color:magenta"&gt;It is forbidden to pass through or over a building! 
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to pass through or over a building! 
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 526.1.3</comment>
             <translation>Budova je relativně trvalá konstrukce mající střechu.
@@ -5720,7 +5722,7 @@ Procenta černého rastru musí být vybrána tak, aby to odpovídalo charakteru
 
 Barva: černá, černá 50-65%.
 
-&lt;span style="color:magenta"&gt;Je zakázáno překonávání budov skrz nebo přes!
+&lt;span style=&quot;color:magenta&quot;&gt;Je zakázáno překonávání budov skrz nebo přes!
 Závodníci, kteří porušili toto pravidlo, budou diskvalifikováni.&lt;/span&gt;</translation>
         </message>
         <message>
@@ -5781,16 +5783,16 @@ Barva: černá.
 </translation>
         </message>
         <message>
-            <source>Area with forbidden access &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Area with forbidden access &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 528.1</comment>
-            <translation>Oblast se zakázaným vstupem &lt;span style="color:magenta"&gt;(zákaz překonávání)&lt;/span&gt;</translation>
+            <translation>Oblast se zakázaným vstupem &lt;span style=&quot;color:magenta&quot;&gt;(zákaz překonávání)&lt;/span&gt;</translation>
         </message>
         <message>
             <source>An area with forbidden access such as a private area, a flower bed, a railway area etc. No feature shall be represented in this area, except very prominent features such as railways, large buildings, or very large trees. Road entrances shall be represented clearly.
 
 Areas with forbidden access totally contained within buildings shall be mapped as being a part of the building.
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an area with forbidden access!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an area with forbidden access!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 528.1</comment>
             <translation>Oblast se zakázaným vstupem jako je soukromá plocha, květinový záhon, železniční plochy atd. V těchto plochách nesmí být zobrazen žádný objekt s výjimkou velmi významných objektů, jako je železnice, velké budovy nebo velmi velké stromy. Uliční síť musí být zobrazena zřetelně.
@@ -5799,7 +5801,7 @@ Oblasti se zakázaným vstupem úplně uzavřené uvnitř budov musí být mapov
 
 Barva: {kombinace} žlutá 100%, zelená 50%.
 
-&lt;span style="color:magenta"&gt;Je zakázáno překonávání prostoru se zakázaným vstupem!
+&lt;span style=&quot;color:magenta&quot;&gt;Je zakázáno překonávání prostoru se zakázaným vstupem!
 Závodníci, kteří porušili toto pravidlo, budou diskvalifikováni.&lt;/span&gt;</translation>
         </message>
         <message>
@@ -6120,21 +6122,21 @@ Barva: černá.
 </translation>
         </message>
         <message>
-            <source>Impassable pipeline &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Impassable pipeline &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 534</comment>
-            <translation>Nepřekonatelné potrubí &lt;span style="color:magenta"&gt;(zákaz překonávání)&lt;/span&gt;</translation>
+            <translation>Nepřekonatelné potrubí &lt;span style=&quot;color:magenta&quot;&gt;(zákaz překonávání)&lt;/span&gt;</translation>
         </message>
         <message>
             <source>An impassable pipeline (gas, water, oil, etc.) above ground level which shall not be crossed, due to forbidden access or because it may constitute a danger to the competitor because of its height.
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an impassable pipeline!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable pipeline!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 534</comment>
             <translation>Nepřekonatelné potrubí (plyn, voda, ropa, atd.) nad povrchem země, které nesmí být překonáváno buď z důvodu zakázaného přístupu, nebo protože svojí výškou představuje nebezpečí pro závodníka.
 
 Barva: černá.
 
-&lt;span style="color:magenta"&gt;Je zakázáno překonávání nepřekonatelného potrubí!
+&lt;span style=&quot;color:magenta&quot;&gt;Je zakázáno překonávání nepřekonatelného potrubí!
 Závodníci, kteří porušili toto pravidlo, budou diskvalifikováni.&lt;/span&gt;</translation>
         </message>
         <message>
@@ -6429,21 +6431,21 @@ Barva: fialová.</translation>
 Barva: fialová.</translation>
         </message>
         <message>
-            <source>Uncrossable boundary &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Uncrossable boundary &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 707</comment>
-            <translation>Nepřekročitelná hranice &lt;span style="color:magenta"&gt;(zákaz překonávání)&lt;/span&gt;</translation>
+            <translation>Nepřekročitelná hranice &lt;span style=&quot;color:magenta&quot;&gt;(zákaz překonávání)&lt;/span&gt;</translation>
         </message>
         <message>
             <source>A boundary which it is not permitted to cross. Uncrossable boundaries shall be mapped by using the symbols: impassable cliff (201), impassable body of water (304.1), impassable marsh (309), impassable wall (521.1), impassable fence or railing (524) or impassable pipeline (534) and shall not be overprinted with symbol uncrossable boundary (707). This symbol is to be used only for last minute updates to the competition area, as excessive use of purple for indicating barriers is unfortunate.
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an uncrossable boundary!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an uncrossable boundary!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 707</comment>
             <translation>Hranice, kterou není povoleno překonávat. Nepřekročitelné hranice musí být zobrazeny značkami neschůdný sráz (201), nepřekonatelné vodní těleso (304.1), nepřekonatelná bažina (309), nepřekonatelná zeď (521.1), nepřekonatelný plot nebo ohrada (524) nebo nepřekonatelné potrubí (534) a nesmí být přetištěny nepřekročitelnou hranicí (707). Tato značka {(707)} se používá pouze pro aktualizace závodního prostoru na poslední chvíli, neboť rozsáhlé použití fialové barvy pro zábrany není vhodné.
 
 Barva: fialová.
 
-&lt;span style="color:magenta"&gt;Je zakázáno překonávání nepřekročitelné hranice!
+&lt;span style=&quot;color:magenta&quot;&gt;Je zakázáno překonávání nepřekročitelné hranice!
 Závodníci, kteří porušili toto pravidlo, budou diskvalifikováni.&lt;/span&gt;</translation>
         </message>
         <message>
@@ -6479,9 +6481,9 @@ Pokud podchod nebo tunel {nebo most či lávka mimo hlavní běžeckou úroveň}
 Barva: fialová.</translation>
         </message>
         <message>
-            <source>Out-of-bounds area &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Out-of-bounds area &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 709</comment>
-            <translation>Nepřístupná oblast &lt;span style="color:magenta"&gt;(zákaz překonávání)&lt;/span&gt;</translation>
+            <translation>Nepřístupná oblast &lt;span style=&quot;color:magenta&quot;&gt;(zákaz překonávání)&lt;/span&gt;</translation>
         </message>
         <message>
             <source>Out of bounds areas are mapped with the symbol area with forbidden access (528.1). This symbol shall only be used for last minute updates to the competition map (e.g. for areas that may be dangerous for the competitors during the competition, or very late changes to the competition terrain).
@@ -6490,7 +6492,7 @@ An out-of-bounds area is shown with vertical stripes. A bounding line may be dra
 - a dashed line indicates intermittent marking on the ground,
 - no line indicates no marking on the ground.
 
-&lt;span style="color:magenta"&gt;It is forbidden to cross an out-of-bounds area!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an out-of-bounds area!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 709</comment>
             <translation>Nepřístupné oblasti se v mapě zobrazují značkou prostor se zakázaným vstupem (528.1). Tato značka {(709)} musí být použita pouze pro aktualizaci závodní mapy těsně před závodem (například pro oblasti, které mohou být nebezpečné pro závodníky v průběhu závodu nebo změny závodního terénu velmi těsně před závodem).
@@ -6505,7 +6507,7 @@ takto:
 
 Barva: fialová.
 
-&lt;span style="color:magenta"&gt;Je zakázáno překonávání nepřekročitelné hranice!
+&lt;span style=&quot;color:magenta&quot;&gt;Je zakázáno překonávání nepřekročitelné hranice!
 Závodníci, kteří porušili toto pravidlo, budou diskvalifikováni.&lt;/span&gt;</translation>
         </message>
         <message>
@@ -6553,15 +6555,15 @@ Barva: fialová.</translation>
 Barva: fialová.</translation>
         </message>
         <message>
-            <source>Temporary construction or closed area &lt;span style="color:magenta"&gt;(forbidden to cross)&lt;/span&gt;</source>
+            <source>Temporary construction or closed area &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 714</comment>
-            <translation>Dočasná konstrukce nebo uzavřená oblast &lt;span style="color:magenta"&gt;(zákaz
+            <translation>Dočasná konstrukce nebo uzavřená oblast &lt;span style=&quot;color:magenta&quot;&gt;(zákaz
 překonávání)&lt;/span&gt;</translation>
         </message>
         <message>
             <source>Obvious temporary constructions like platforms for spectators and speaker, closed area for spectators, outside restaurant areas, etc. shall be represented in plan shape.
 
-&lt;span style="color:magenta"&gt;It is forbidden to enter a temporary construction or closed area!
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to enter a temporary construction or closed area!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 714</comment>
             <translation>Zřetelné dočasné konstrukce jako prostory pro diváky a komentátory, uzavřené prostory pro diváky, venkovní restaurační plochy a podobně musí být v mapě zobrazeny půdorysem.
@@ -6571,7 +6573,7 @@ mínek jako u značky nepřístupná oblast (709).}
 
 Barva: fialová 50%.
 
-&lt;span style="color:magenta"&gt;Je zakázáno vstupovat do dočasné konstrukce nebo uzavřené
+&lt;span style=&quot;color:magenta&quot;&gt;Je zakázáno vstupovat do dočasné konstrukce nebo uzavřené
 oblasti!
 Závodníci, kteří porušili toto pravidlo, budou diskvalifikováni.&lt;/span&gt;</translation>
         </message>
@@ -6972,7 +6974,7 @@ Barva: černá 30% (60 linek/cm) nebo šedá.</translation>
         <message>
             <source>Large areas of water are shown with this symbol (blue 50%). The colour of the bank line is blue 100 %.
 
-Small areas of water should be shown with full colour. Use symbol 302 ("Pond" in ISOM).</source>
+Small areas of water should be shown with full colour. Use symbol 302 (&quot;Pond&quot; in ISOM).</source>
             <comment>Description of symbol 301</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -6999,7 +7001,7 @@ Small areas of water should be shown with full colour. Use symbol 302 ("Pond" in
         <message>
             <source>Small areas of water should be shown with full colour.
 
-This is symbol "302 Pond" in ISOM, but is a variation of "301 Lake" in ISMTBOM.</source>
+This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lake&quot; in ISMTBOM.</source>
             <comment>Description of symbol 302</comment>
             <translation type="unfinished"></translation>
         </message>
