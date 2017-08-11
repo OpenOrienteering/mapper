@@ -1869,17 +1869,15 @@ void OCAD8FileExport::doExport()
 
 MapCoord OCAD8FileExport::calculateAreaOffset()
 {
-	auto area_offset = QPointF {};
+	auto area_offset = QPointF{};
+	
+	// Attention: When changing ocd_bounds, update the warning messages, too.
+	auto ocd_bounds = QRectF{QPointF{-2000, -2000}, QPointF{2000, 2000}};
 	auto objects_extent = map->calculateExtent();
-	if (objects_extent.left() < -2000
-	    || objects_extent.right() > 2000
-	    || objects_extent.top() < -2000
-	    || objects_extent.bottom() > 2000)
+	if (!ocd_bounds.contains(objects_extent))
 	{
-		// Some or all objects are outside of a 4 m x 4 m area.
-		
-		if (objects_extent.width() < 4000
-		    && objects_extent.height() < 4000)
+		if (objects_extent.width() < ocd_bounds.width()
+		    && objects_extent.height() < ocd_bounds.height())
 		{
 			// The extent fits into the limited area.
 			addWarning(tr("Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m)."));
@@ -1891,7 +1889,7 @@ MapCoord OCAD8FileExport::calculateAreaOffset()
 			
 			// Only move the objects if they are completely outside the drawing area.
 			// This avoids repeated moves on open/save/close cycles.
-			if (!objects_extent.intersects(QRectF{QPointF{-2000, -2000}, QPointF{2000, 2000}}))
+			if (!objects_extent.intersects(ocd_bounds))
 			{
 				addWarning(tr("Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m)."));
 				std::size_t count = 0;
@@ -1908,6 +1906,7 @@ MapCoord OCAD8FileExport::calculateAreaOffset()
 			              " They might be unreachable in OCAD."));
 		}
 	}
+	
 	return MapCoord{area_offset};
 }
 
