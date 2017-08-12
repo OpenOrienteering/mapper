@@ -1911,8 +1911,8 @@ MapCoord OCAD8FileExport::calculateAreaOffset()
 			// Round offset to 100 m in projected coordinates, to avoid crude grid offset.
 			constexpr auto unit = 100;
 			auto projected_offset = map->getGeoreferencing().toProjectedCoords(MapCoordF(area_offset));
-			projected_offset.rx() = std::round(projected_offset.x()/unit) * unit;
-			projected_offset.ry() = std::round(projected_offset.y()/unit) * unit;
+			projected_offset.rx() = qreal(qRound(projected_offset.x()/unit)) * unit;
+			projected_offset.ry() = qreal(qRound(projected_offset.y()/unit)) * unit;
 			area_offset = map->getGeoreferencing().toMapCoordF(projected_offset);
 		}
 	}
