@@ -2749,8 +2749,8 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Lake</source>
             <comment>Name of symbol 301</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Lago</translation>
+    </message>
         <message>
             <source>Large areas of water are shown with dot screen. Small areas of water should be shown with full colour. A black bank line indicates that the feature cannot be crossed.</source>
             <comment>Description of symbol 301</comment>
@@ -6207,8 +6207,8 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Lake</source>
             <comment>Name of symbol 301</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Lago</translation>
+    </message>
         <message>
             <source>Large areas of water are shown with this symbol (blue 50%). The colour of the bank line is blue 100 %.
 
@@ -9950,8 +9950,8 @@ Map symbol: ISOM 703</source>
         <message>
             <source>|D| Terrace</source>
             <comment>Name of symbol 1.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|D| Teraso</translation>
+    </message>
         <message>
             <source>A level area on a slope.</source>
             <comment>Description of symbol 1.1</comment>
@@ -9960,8 +9960,8 @@ Map symbol: ISOM 703</source>
         <message>
             <source>|D| Spur</source>
             <comment>Name of symbol 1.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|D| Montsprono</translation>
+    </message>
         <message>
             <source>A contour projection or “nose” rising from the surrounding ground.</source>
             <comment>Description of symbol 1.2</comment>
@@ -10156,8 +10156,8 @@ Map symbol: ISOM 202</source>
         <message>
             <source>|D| Cave</source>
             <comment>Name of symbol 2.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|D| Kaverno</translation>
+    </message>
         <message>
             <source>A hole in a rock face or hill side, often leading to underground workings.
 
@@ -10238,8 +10238,8 @@ Map symbol: ISOM 212</source>
         <message>
             <source>|D| Lake</source>
             <comment>Name of symbol 3.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|D| Lago</translation>
+    </message>
         <message>
             <source>A high point. Shown on the map with contour lines.
 
@@ -10250,8 +10250,8 @@ Map symbol: ISOM 301</source>
         <message>
             <source>|D| Pond</source>
             <comment>Name of symbol 3.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|D| Lageto</translation>
+    </message>
         <message>
             <source>A small area of water.
 
@@ -10346,8 +10346,8 @@ Map symbol: ISOM 312</source>
         <message>
             <source>|D| Spring</source>
             <comment>Name of symbol 3.10</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|D| Fonto</translation>
+    </message>
         <message>
             <source>The source of a watercourse with a distinct outflow.
 
