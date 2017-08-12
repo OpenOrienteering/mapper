@@ -215,11 +215,11 @@ private:
 	/// In .ocd 8, text alignment needs to be specified in the text symbols instead of objects, so it is possible
 	/// that multiple ocd text symbols have to be created for one native TextSymbol.
 	/// This structure maps text symbols to lists containing information about the already created ocd symbols.
-	/// The TextObject in each pair just gives information about the alignment option used for the symbol indexed by the
+	/// The first member in each pair just gives information about the alignment option used for the symbol indexed by the
 	/// second part of the pair.
 	/// If there is no entry for a TextSymbol in this map yet, no object using this symbol has been encountered yet,
 	/// no no specific formatting was set in the corresponding symbol (which has to be looked up using symbol_index).
-	typedef std::vector< std::pair< TextObject*, s16 > > TextFormatList;
+	typedef std::vector< std::pair< int, s16 > > TextFormatList;
 	QHash<const TextSymbol*, TextFormatList > text_format_map;
 	
 	/// Helper object for pattern export

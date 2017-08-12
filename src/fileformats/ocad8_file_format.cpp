@@ -1743,7 +1743,7 @@ void OCAD8FileExport::doExport()
 						setTextSymbolFormatting(ocad_text_symbol, text_object);
 						
 						TextFormatList new_list;
-						new_list.push_back(std::make_pair(text_object, *it));
+						new_list.push_back(std::make_pair(text_object->getHorizontalAlignment(), *it));
 						text_format_map.insert(text_symbol, new_list);
 					}
 					else
@@ -1754,7 +1754,7 @@ void OCAD8FileExport::doExport()
 						bool found = false;
 						for (size_t i = 0, end = format_list.size(); i < end; ++i)
 						{
-							if (format_list[i].first->getHorizontalAlignment() == text_object->getHorizontalAlignment())
+							if (format_list[i].first == text_object->getHorizontalAlignment())
 							{
 								index_to_use = format_list[i].second;
 								found = true;
@@ -1783,7 +1783,7 @@ void OCAD8FileExport::doExport()
 							// otherwise when compiling for Android this causes the error:
 							// cannot bind packed field 'new_symbol->_OCADTextSymbol::number' to 'short int&'
 							s16 new_symbol_number = new_symbol->number;
-							format_list.push_back(std::make_pair(text_object, new_symbol_number));
+							format_list.push_back(std::make_pair(text_object->getHorizontalAlignment(), new_symbol_number));
 						}
 					}
 				}
