@@ -1836,8 +1836,9 @@ void OCAD8FileExport::doExport()
 			template_path.replace(QLatin1Char('/'), QLatin1Char('\\'));
 			
 			QString string;
+			auto template_path_8bit = encoding_1byte->fromUnicode(template_path);
 			string.sprintf("%s\ts%d\tx%d\ty%d\ta%f\tu%f\tv%f\td%d\tp%d\tt%d\to%d",
-				encoding_1byte->fromUnicode(template_path).data(), s, x, y, a, u, v, d, p, t, o
+				template_path_8bit.data(), s, x, y, a, u, v, d, p, t, o
 			);
 			
 			OCADStringEntry* entry = ocad_string_entry_new(file, string.length() + 1);

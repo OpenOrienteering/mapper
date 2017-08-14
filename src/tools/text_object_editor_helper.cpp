@@ -753,7 +753,7 @@ bool TextObjectEditorHelper::keyPressEvent(QKeyEvent* event)
 		return false;
 	}
 	else if (!event->text().isEmpty()
-	         && event->text()[0].isPrint() )
+	         && event->text().at(0).isPrint() )
 	{
 		replaceSelectionText(event->text());
 	}
