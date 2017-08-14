@@ -1242,7 +1242,7 @@ void Map::addObjectToSelection(Object* object, bool emit_selection_changed)
 	if (!first_selected_object)
 		first_selected_object = object;
 	if (emit_selection_changed)
-		emit(objectSelectionChanged());
+		emit objectSelectionChanged();
 }
 
 void Map::removeObjectFromSelection(Object* object, bool emit_selection_changed)
@@ -1254,7 +1254,7 @@ void Map::removeObjectFromSelection(Object* object, bool emit_selection_changed)
 	if (first_selected_object == object)
 		first_selected_object = object_selection.empty() ? nullptr : *object_selection.begin();
 	if (emit_selection_changed)
-		emit(objectSelectionChanged());
+		emit objectSelectionChanged();
 }
 
 bool Map::removeSymbolFromSelection(const Symbol* symbol, bool emit_selection_changed)
@@ -1277,7 +1277,7 @@ bool Map::removeSymbolFromSelection(const Symbol* symbol, bool emit_selection_ch
 			first_selected_object = object_selection.empty() ? nullptr : *object_selection.begin();
 	}
 	if (emit_selection_changed && removed_at_least_one_object)
-		emit(objectSelectionChanged());
+		emit objectSelectionChanged();
 	return removed_at_least_one_object;
 }
 
@@ -1307,17 +1307,17 @@ void Map::clearObjectSelection(bool emit_selection_changed)
 	first_selected_object = nullptr;
 	
 	if (emit_selection_changed)
-		emit(objectSelectionChanged());
+		emit objectSelectionChanged();
 }
 
 void Map::emitSelectionChanged()
 {
-	emit(objectSelectionChanged());
+	emit objectSelectionChanged();
 }
 
 void Map::emitSelectionEdited()
 {
-	emit(selectedObjectEdited());
+	emit selectedObjectEdited();
 }
 
 void Map::addMapWidget(MapWidget* widget)
@@ -1466,7 +1466,7 @@ void Map::setColor(MapColor* color, int pos)
 	}
 	
 	updateSymbolIcons(color);
-	emit(colorChanged(pos, color));
+	emit colorChanged(pos, color);
 }
 
 void Map::addColor(MapColor* color, int pos)
@@ -1478,7 +1478,7 @@ void Map::addColor(MapColor* color, int pos)
 		updateAllMapWidgets();
 	}
 	setColorsDirty();
-	emit(colorAdded(pos, color));
+	emit colorAdded(pos, color);
 	color->setPriority(pos);
 }
 
@@ -1517,7 +1517,7 @@ void Map::deleteColor(int pos)
 		if (symbol->getType() != Symbol::Combined)
 			symbol->colorDeleted(color);
 	}
-	emit(colorDeleted(pos, color));
+	emit colorDeleted(pos, color);
 	
 	delete color;
 }
@@ -1759,7 +1759,7 @@ void Map::addSymbol(Symbol* symbol, int pos)
 		updateAllMapWidgets();
 	}
 	
-	emit(symbolAdded(pos, symbol));
+	emit symbolAdded(pos, symbol);
 	setSymbolsDirty();
 }
 
@@ -1769,7 +1769,7 @@ void Map::moveSymbol(int from, int to)
 	if (from > to)
 		++from;
 	symbols.erase(symbols.begin() + from);
-	// TODO: emit(symbolChanged(pos, symbol)); ?
+	// TODO: emit symbolChanged(pos, symbol); ?
 	setSymbolsDirty();
 }
 
@@ -1824,7 +1824,7 @@ void Map::setSymbol(Symbol* symbol, int pos)
 	
 	// Change the symbol
 	symbols[pos] = symbol;
-	emit(symbolChanged(pos, symbol, old_symbol));
+	emit symbolChanged(pos, symbol, old_symbol);
 	setSymbolsDirty();
 	delete old_symbol;
 	
@@ -1858,7 +1858,7 @@ void Map::deleteSymbol(int pos)
 		updateAllMapWidgets();
 	}
 	
-	emit(symbolDeleted(pos, temp));
+	emit symbolDeleted(pos, temp);
 	setSymbolsDirty();
 }
 
@@ -1897,7 +1897,7 @@ void Map::updateSymbolIcons(const MapColor* color)
 		if (symbols[i]->containsColor(color))
 		{
 			symbols[i]->resetIcon();
-			emit(symbolIconChanged(i));
+			emit symbolIconChanged(i);
 		}
 	}
 }
@@ -1909,7 +1909,7 @@ void Map::scaleAllSymbols(double factor)
 	{
 		Symbol* symbol = getSymbol(i);
 		symbol->scale(factor);
-		emit(symbolChanged(i, symbol, symbol));
+		emit symbolChanged(i, symbol, symbol);
 	}
 	updateAllObjects();
 	
@@ -1967,7 +1967,7 @@ void Map::determineSymbolUseClosure(std::vector< bool >& symbol_bitfield) const
 void Map::setTemplate(Template* temp, int pos)
 {
 	templates[pos] = temp;
-	emit(templateChanged(pos, templates[pos]));
+	emit templateChanged(pos, templates[pos]);
 }
 
 void Map::addTemplate(Template* temp, int pos)
@@ -1979,7 +1979,7 @@ void Map::addTemplate(Template* temp, int pos)
 		updateAllMapWidgets();
 	}
 	
-	emit(templateAdded(pos, temp));
+	emit templateAdded(pos, temp);
 }
 
 void Map::removeTemplate(int pos)
@@ -2044,7 +2044,7 @@ void Map::setTemplatesDirty()
 
 void Map::emitTemplateChanged(Template* temp)
 {
-	emit(templateChanged(findTemplateIndex(temp), temp));
+	emit templateChanged(findTemplateIndex(temp), temp);
 }
 
 void Map::clearClosedTemplates()

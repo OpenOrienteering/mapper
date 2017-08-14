@@ -1605,7 +1605,7 @@ template<typename T>
 void Map::sortSymbols(T compare)
 {
 	std::stable_sort(symbols.begin(), symbols.end(), compare);
-	// TODO: emit(symbolChanged(pos, symbol)); ? s/b same choice as for moveSymbol()
+	// TODO: emit symbolChanged(pos, symbol); ? s/b same choice as for moveSymbol()
 	setSymbolsDirty();
 }
 

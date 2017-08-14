@@ -676,7 +676,7 @@ void DrawRectangleTool::updateDirtyRect()
 	if (shift_pressed)
 		snap_helper->includeDirtyRect(rect);
 	if (is_helper_tool)
-		emit(dirtyRectChanged(rect));
+		emit dirtyRectChanged(rect);
 	else
 	{
 		if (angle_helper->isActive())

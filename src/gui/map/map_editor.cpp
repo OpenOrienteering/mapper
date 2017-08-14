@@ -473,7 +473,7 @@ void MapEditorController::addTemplatePositionDockWidget(Template* temp)
 
 void MapEditorController::removeTemplatePositionDockWidget(Template* temp)
 {
-	emit(templatePositionDockWidgetClosed(temp));
+	emit templatePositionDockWidgetClosed(temp);
 	
 	delete getTemplatePositionDockWidget(temp);
 	int num_deleted = template_position_widgets.remove(temp);
@@ -4032,7 +4032,7 @@ MapEditorToolAction::MapEditorToolAction(const QIcon& icon, const QString& text,
 void MapEditorToolAction::triggeredImpl(bool checked)
 {
 	if (checked)
-		emit(activated());
+		emit activated();
 	else
 		setChecked(true);
 }

@@ -179,7 +179,7 @@ bool TemplateAdjustDockWidget::event(QEvent* event)
 void TemplateAdjustDockWidget::closeEvent(QCloseEvent* event)
 {
 	Q_UNUSED(event);
-	emit(closed());
+	emit closed();
 	controller->setEditorActivity(nullptr);
 }
 

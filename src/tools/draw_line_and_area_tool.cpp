@@ -272,11 +272,11 @@ void DrawLineAndAreaTool::finishDrawing(PathObject* append_to_object)
 			// Ugly HACK to make it possible to delete this tool as response to pathFinished
 			PathObject* temp_path = preview_path;
 			preview_path = nullptr;
-			emit(pathFinished(temp_path));
+			emit pathFinished(temp_path);
 			delete temp_path;
 		}
 		else
-			emit(pathAborted());
+			emit pathAborted();
 	}
 	else
 		preview_path = nullptr;
