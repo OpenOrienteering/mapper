@@ -30,6 +30,7 @@
 #include <QtGlobal>
 #include <QtMath>
 #include <QByteArray>
+#include <QCoreApplication>
 #include <QHash>
 #include <QLocale>
 #include <QObject>
@@ -66,7 +67,8 @@ class Symbol;
  */
 class OcdFileImport : public Importer
 {
-Q_OBJECT
+	Q_DECLARE_TR_FUNCTIONS(OcdFileImport)
+	
 protected:
 	/// Information about an OC*D rectangle symbol
 	struct RectangleInfo

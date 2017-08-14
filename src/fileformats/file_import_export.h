@@ -22,8 +22,8 @@
 
 #include <vector>
 
+#include <QCoreApplication>
 #include <QHash>
-#include <QObject>
 #include <QString>
 #include <QVariant>
 
@@ -39,12 +39,11 @@ class MapView;
  *  Subclasses should define default values for options they intend to use in their constructors,
  *  by calling setOption() with the relevant values. There is no such thing as an "implicit default"
  *  for options.
- * 
- *  ImportExport inherits QObject for translation purposes.
  */
-class ImportExport : public QObject
+class ImportExport
 {
-Q_OBJECT
+	Q_DECLARE_TR_FUNCTIONS(ImportExport)
+	
 public:
 	/** Creates a new importer or exporter with the given input stream, map, and view.
 	 */
@@ -119,7 +118,8 @@ class ImportAction
  */
 class Importer : public ImportExport
 {
-Q_OBJECT
+	Q_DECLARE_TR_FUNCTIONS(Importer)
+	
 public:
 	/** Creates a new Importer with the given output stream, map, and view.
 	 */
@@ -174,7 +174,8 @@ private:
  */
 class Exporter : public ImportExport
 {
-Q_OBJECT
+	Q_DECLARE_TR_FUNCTIONS(Exporter)
+	
 public:
 	/** Creates a new Importer with the given i/o stream, map, and view.
 	 */

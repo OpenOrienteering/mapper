@@ -21,6 +21,7 @@
 #ifndef OPENORIENTEERING_FILE_FORMAT_XML_P_H
 #define OPENORIENTEERING_FILE_FORMAT_XML_P_H
 
+#include <QCoreApplication>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
@@ -31,7 +32,8 @@
 /** Map exporter for the xml based map format. */
 class XMLFileExporter : public Exporter
 {
-Q_OBJECT
+	Q_DECLARE_TR_FUNCTIONS(XMLFileExporter)
+	
 public:
 	XMLFileExporter(QIODevice* stream, Map *map, MapView *view);
 	virtual ~XMLFileExporter() {}
@@ -57,7 +59,8 @@ private:
 /** Map importer for the xml based map format. */
 class XMLFileImporter : public Importer
 {
-Q_OBJECT
+	Q_DECLARE_TR_FUNCTIONS(XMLFileImporter)
+	
 public:
 	XMLFileImporter(QIODevice* stream, Map *map, MapView *view);
 	virtual ~XMLFileImporter() {}
