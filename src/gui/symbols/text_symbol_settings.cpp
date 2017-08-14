@@ -211,36 +211,36 @@ TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* 
 	updateFramingContents();
 	updateCompatibilityContents();
 	
-	connect(font_edit, SIGNAL(currentFontChanged(QFont)), this, SLOT(fontChanged(QFont)));
-	connect(font_size_edit, SIGNAL(valueChanged(double)), this, SLOT(fontSizeChanged(double)));
+	connect(font_edit, &QFontComboBox::currentFontChanged, this, &TextSymbolSettings::fontChanged);
+	connect(font_size_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &TextSymbolSettings::fontSizeChanged);
 	connect(letter_edit, &QLineEdit::textEdited, this, &TextSymbolSettings::letterSizeChanged);
 	connect(letter_size_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &TextSymbolSettings::letterSizeChanged);
-	connect(color_edit, SIGNAL(currentIndexChanged(int)), this, SLOT(colorChanged()));
-	connect(bold_check, SIGNAL(clicked(bool)), this, SLOT(checkToggled(bool)));
-	connect(italic_check, SIGNAL(clicked(bool)), this, SLOT(checkToggled(bool)));
-	connect(underline_check, SIGNAL(clicked(bool)), this, SLOT(checkToggled(bool)));
-	connect(line_spacing_edit, SIGNAL(valueChanged(double)), this, SLOT(spacingChanged(double)));
-	connect(paragraph_spacing_edit, SIGNAL(valueChanged(double)), this, SLOT(spacingChanged(double)));
-	connect(character_spacing_edit, SIGNAL(valueChanged(double)), this, SLOT(spacingChanged(double)));
-	connect(kerning_check, SIGNAL(clicked(bool)), this, SLOT(checkToggled(bool)));
-	connect(icon_text_edit, SIGNAL(textEdited(QString)), this, SLOT(iconTextEdited(QString)));
-	connect(framing_check, SIGNAL(clicked(bool)), this, SLOT(framingCheckClicked(bool)));
-	connect(ocad_compat_check, SIGNAL(clicked(bool)), this, SLOT(ocadCompatibilityButtonClicked(bool)));
+	connect(color_edit, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &TextSymbolSettings::colorChanged);
+	connect(bold_check, &QAbstractButton::clicked, this, &TextSymbolSettings::checkToggled);
+	connect(italic_check, &QAbstractButton::clicked, this, &TextSymbolSettings::checkToggled);
+	connect(underline_check, &QAbstractButton::clicked, this, &TextSymbolSettings::checkToggled);
+	connect(line_spacing_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &TextSymbolSettings::spacingChanged);
+	connect(paragraph_spacing_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &TextSymbolSettings::spacingChanged);
+	connect(character_spacing_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &TextSymbolSettings::spacingChanged);
+	connect(kerning_check, &QAbstractButton::clicked, this, &TextSymbolSettings::checkToggled);
+	connect(icon_text_edit, &QLineEdit::textEdited, this, &TextSymbolSettings::iconTextEdited);
+	connect(framing_check, &QAbstractButton::clicked, this, &TextSymbolSettings::framingCheckClicked);
+	connect(ocad_compat_check, &QAbstractButton::clicked, this, &TextSymbolSettings::ocadCompatibilityButtonClicked);
 	
-	connect(framing_color_edit, SIGNAL(currentIndexChanged(int)), this, SLOT(framingColorChanged()));
-	connect(framing_line_radio, SIGNAL(clicked(bool)), this, SLOT(framingModeChanged()));
-	connect(framing_line_half_width_edit, SIGNAL(valueChanged(double)), this, SLOT(framingSettingChanged()));
-	connect(framing_shadow_radio, SIGNAL(clicked(bool)), this, SLOT(framingModeChanged()));
-	connect(framing_shadow_x_offset_edit, SIGNAL(valueChanged(double)), this, SLOT(framingSettingChanged()));
-	connect(framing_shadow_y_offset_edit, SIGNAL(valueChanged(double)), this, SLOT(framingSettingChanged()));
+	connect(framing_color_edit, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &TextSymbolSettings::framingColorChanged);
+	connect(framing_line_radio, &QAbstractButton::clicked, this, &TextSymbolSettings::framingModeChanged);
+	connect(framing_line_half_width_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &TextSymbolSettings::framingSettingChanged);
+	connect(framing_shadow_radio, &QAbstractButton::clicked, this, &TextSymbolSettings::framingModeChanged);
+	connect(framing_shadow_x_offset_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &TextSymbolSettings::framingSettingChanged);
+	connect(framing_shadow_y_offset_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &TextSymbolSettings::framingSettingChanged);
 	
-	connect(line_below_check, SIGNAL(clicked(bool)), this, SLOT(lineBelowCheckClicked(bool)));
-	connect(line_below_color_edit, SIGNAL(currentIndexChanged(int)), this, SLOT(lineBelowSettingChanged()));
-	connect(line_below_width_edit, SIGNAL(valueChanged(double)), this, SLOT(lineBelowSettingChanged()));
-	connect(line_below_distance_edit, SIGNAL(valueChanged(double)), this, SLOT(lineBelowSettingChanged()));
-	connect(custom_tab_list, SIGNAL(currentRowChanged(int)), this, SLOT(customTabRowChanged(int)));
-	connect(custom_tab_add, SIGNAL(clicked(bool)), this, SLOT(addCustomTabClicked()));
-	connect(custom_tab_remove, SIGNAL(clicked(bool)), this, SLOT(removeCustomTabClicked()));
+	connect(line_below_check, &QAbstractButton::clicked, this, &TextSymbolSettings::lineBelowCheckClicked);
+	connect(line_below_color_edit, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &TextSymbolSettings::lineBelowSettingChanged);
+	connect(line_below_width_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &TextSymbolSettings::lineBelowSettingChanged);
+	connect(line_below_distance_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &TextSymbolSettings::lineBelowSettingChanged);
+	connect(custom_tab_list, &QListWidget::currentRowChanged, this, &TextSymbolSettings::customTabRowChanged);
+	connect(custom_tab_add, &QAbstractButton::clicked, this, &TextSymbolSettings::addCustomTabClicked);
+	connect(custom_tab_remove, &QAbstractButton::clicked, this, &TextSymbolSettings::removeCustomTabClicked);
 }
 
 TextSymbolSettings::~TextSymbolSettings()

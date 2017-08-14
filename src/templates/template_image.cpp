@@ -59,8 +59,8 @@ TemplateImage::TemplateImage(const QString& path, Map* map) : Template(path, map
 	georef.reset(new Georeferencing());
 	
 	const Georeferencing& georef = map->getGeoreferencing();
-	connect(&georef, SIGNAL(projectionChanged()), this, SLOT(updateGeoreferencing()));
-	connect(&georef, SIGNAL(transformationChanged()), this, SLOT(updateGeoreferencing()));
+	connect(&georef, &Georeferencing::projectionChanged, this, &TemplateImage::updateGeoreferencing);
+	connect(&georef, &Georeferencing::transformationChanged, this, &TemplateImage::updateGeoreferencing);
 }
 TemplateImage::~TemplateImage()
 {
@@ -604,14 +604,14 @@ TemplateImageOpenDialog::TemplateImageOpenDialog(TemplateImage* templ, QWidget* 
 	layout->addLayout(buttons_layout);
 	setLayout(layout);
 	
-	connect(mpp_edit, SIGNAL(textEdited(QString)), this, SLOT(setOpenEnabled()));
-	connect(dpi_edit, SIGNAL(textEdited(QString)), this, SLOT(setOpenEnabled()));
-	connect(scale_edit, SIGNAL(textEdited(QString)), this, SLOT(setOpenEnabled()));
-	connect(cancel_button, SIGNAL(clicked(bool)), this, SLOT(reject()));
-	connect(open_button, SIGNAL(clicked(bool)), this, SLOT(doAccept()));
-	connect(georef_radio, SIGNAL(clicked(bool)), this, SLOT(radioClicked()));
-	connect(mpp_radio, SIGNAL(clicked(bool)), this, SLOT(radioClicked()));
-	connect(dpi_radio, SIGNAL(clicked(bool)), this, SLOT(radioClicked()));
+	connect(mpp_edit, &QLineEdit::textEdited, this, &TemplateImageOpenDialog::setOpenEnabled);
+	connect(dpi_edit, &QLineEdit::textEdited, this, &TemplateImageOpenDialog::setOpenEnabled);
+	connect(scale_edit, &QLineEdit::textEdited, this, &TemplateImageOpenDialog::setOpenEnabled);
+	connect(cancel_button, &QAbstractButton::clicked, this, &QDialog::reject);
+	connect(open_button, &QAbstractButton::clicked, this, &TemplateImageOpenDialog::doAccept);
+	connect(georef_radio, &QAbstractButton::clicked, this, &TemplateImageOpenDialog::radioClicked);
+	connect(mpp_radio, &QAbstractButton::clicked, this, &TemplateImageOpenDialog::radioClicked);
+	connect(dpi_radio, &QAbstractButton::clicked, this, &TemplateImageOpenDialog::radioClicked);
 	
 	radioClicked();
 }

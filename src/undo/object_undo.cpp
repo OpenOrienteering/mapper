@@ -162,8 +162,8 @@ ObjectCreatingUndoStep::ObjectCreatingUndoStep(Type type, Map* map)
 : ObjectModifyingUndoStep(type, map)
 , valid(true)
 {
-	connect(map, SIGNAL(symbolChanged(int, const Symbol*, const Symbol*)), this, SLOT(symbolChanged(int, const Symbol*, const Symbol*)));
-	connect(map, SIGNAL(symbolDeleted(int, const Symbol*)), this, SLOT(symbolDeleted(int, const Symbol*)));
+	connect(map, &Map::symbolChanged, this, &ObjectCreatingUndoStep::symbolChanged);
+	connect(map, &Map::symbolDeleted, this, &ObjectCreatingUndoStep::symbolDeleted);
 }
 
 ObjectCreatingUndoStep::~ObjectCreatingUndoStep()
@@ -515,8 +515,8 @@ SwitchSymbolUndoStep::SwitchSymbolUndoStep(Map* map)
 : ObjectModifyingUndoStep(SwitchSymbolUndoStepType, map)
 , valid(true)
 {
-	connect(map, SIGNAL(symbolChanged(int, const Symbol*, const Symbol*)), this, SLOT(symbolChanged(int, const Symbol*, const Symbol*)));
-	connect(map, SIGNAL(symbolDeleted(int, const Symbol*)), this, SLOT(symbolDeleted(int, const Symbol*)));
+	connect(map, &Map::symbolChanged, this, &SwitchSymbolUndoStep::symbolChanged);
+	connect(map, &Map::symbolDeleted, this, &SwitchSymbolUndoStep::symbolDeleted);
 }
 
 SwitchSymbolUndoStep::~SwitchSymbolUndoStep()

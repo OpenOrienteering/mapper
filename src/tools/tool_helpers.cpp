@@ -40,7 +40,7 @@ ConstrainAngleToolHelper::ConstrainAngleToolHelper()
    active(true),
    have_default_angles_only(false)
 {
-	connect(&Settings::getInstance(), SIGNAL(settingsChanged()), this, SLOT(settingsChanged()));
+	connect(&Settings::getInstance(), &Settings::settingsChanged, this, &ConstrainAngleToolHelper::settingsChanged);
 }
 
 ConstrainAngleToolHelper::ConstrainAngleToolHelper(const MapCoordF& center)

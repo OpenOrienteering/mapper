@@ -54,10 +54,10 @@ DrawRectangleTool::DrawRectangleTool(MapEditorController* editor, QAction* tool_
 	
 	angle_helper->addDefaultAnglesDeg(0);
 	angle_helper->setActive(false);
-	connect(angle_helper.data(), SIGNAL(displayChanged()), this, SLOT(updateDirtyRect()));
+	connect(angle_helper.data(), &ConstrainAngleToolHelper::displayChanged, this, &DrawRectangleTool::updateDirtyRect);
 	
 	snap_helper->setFilter(SnappingToolHelper::AllTypes);
-	connect(snap_helper.data(), SIGNAL(displayChanged()), this, SLOT(updateDirtyRect()));
+	connect(snap_helper.data(), &SnappingToolHelper::displayChanged, this, &DrawRectangleTool::updateDirtyRect);
 }
 
 DrawRectangleTool::~DrawRectangleTool()

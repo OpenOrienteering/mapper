@@ -45,6 +45,7 @@
 #include "core/symbols/text_symbol.h"
 #include "gui/symbols/symbol_setting_dialog.h"
 #include "gui/widgets/symbol_tooltip.h"
+#include "util/backports.h"
 #include "util/overriding_shortcut.h"
 
 
@@ -278,11 +279,11 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, bool mobile_mode, QWidget* pare
 	sort_manual_action->setCheckable(true);
 	context_menu->addMenu(sort_menu);
 	
-	connect(map, SIGNAL(colorDeleted(int, const MapColor*)), this, SLOT(update()));
-	connect(map, SIGNAL(symbolAdded(int, const Symbol*)), this, SLOT(updateAll()));
-	connect(map, SIGNAL(symbolDeleted(int, const Symbol*)), this, SLOT(symbolDeleted(int, const Symbol*)));
-	connect(map, SIGNAL(symbolChanged(int, const Symbol*, const Symbol*)), this, SLOT(symbolChanged(int, const Symbol*, const Symbol*)));
-	connect(map, SIGNAL(symbolIconChanged(int)), this, SLOT(updateSingleIcon(int)));
+	connect(map, &Map::colorDeleted, this, QOverload<>::of(&QWidget::update));
+	connect(map, &Map::symbolAdded, this, &SymbolRenderWidget::updateAll);
+	connect(map, &Map::symbolDeleted, this, &SymbolRenderWidget::symbolDeleted);
+	connect(map, &Map::symbolChanged, this, &SymbolRenderWidget::symbolChanged);
+	connect(map, &Map::symbolIconChanged, this, &SymbolRenderWidget::updateSingleIcon);
 }
 
 SymbolRenderWidget::~SymbolRenderWidget()

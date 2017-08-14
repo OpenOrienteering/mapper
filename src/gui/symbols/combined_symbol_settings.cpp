@@ -31,6 +31,7 @@
 #include "core/symbols/combined_symbol.h"
 #include "gui/widgets/symbol_dropdown.h"
 #include "gui/symbols/symbol_setting_dialog.h"
+#include "util/backports.h"
 
 
 // ### CombinedSymbol ###
@@ -57,13 +58,13 @@ CombinedSymbolSettings::CombinedSymbolSettings(CombinedSymbol* symbol, SymbolSet
 	number_edit = new QSpinBox();
 	number_edit->setRange(2, qMax<int>(max_count, symbol->getNumParts()));
 	number_edit->setValue(symbol->getNumParts());
-	connect(number_edit, SIGNAL(valueChanged(int)), this, SLOT(numberChanged(int)));
+	connect(number_edit, QOverload<int>::of(&QSpinBox::valueChanged), this, &CombinedSymbolSettings::numberChanged);
 	layout->addRow(tr("&Number of parts:"), number_edit);
 	
 	QSignalMapper* button_signal_mapper = new QSignalMapper(this);
-	connect(button_signal_mapper, SIGNAL(mapped(int)), this, SLOT(editClicked(int)));
+	connect(button_signal_mapper, QOverload<int>::of(&QSignalMapper::mapped), this, &CombinedSymbolSettings::editClicked);
 	QSignalMapper* symbol_signal_mapper = new QSignalMapper(this);
-	connect(symbol_signal_mapper, SIGNAL(mapped(int)), this, SLOT(symbolChanged(int)));
+	connect(symbol_signal_mapper, QOverload<int>::of(&QSignalMapper::mapped), this, &CombinedSymbolSettings::symbolChanged);
 	
 	symbol_labels = new QLabel*[max_count];
 	symbol_edits = new SymbolDropDown*[max_count];
@@ -77,12 +78,12 @@ CombinedSymbolSettings::CombinedSymbolSettings(CombinedSymbol* symbol, SymbolSet
 		symbol_edits[i]->addCustomItem(tr("- Private area symbol -"), 2);
 		if (((int)symbol->parts.size() > i) && symbol->isPartPrivate(i))
 			symbol_edits[i]->setCustomItem((symbol->getPart(i)->getType() == Symbol::Line) ? 1 : 2);
-		connect(symbol_edits[i], SIGNAL(currentIndexChanged(int)), symbol_signal_mapper, SLOT(map()));
+		connect(symbol_edits[i], QOverload<int>::of(&SymbolDropDown::currentIndexChanged), symbol_signal_mapper, QOverload<>::of(&QSignalMapper::map));
 		symbol_signal_mapper->setMapping(symbol_edits[i], i);
 		
 		edit_buttons[i] = new QPushButton(tr("Edit private symbol..."));
 		edit_buttons[i]->setEnabled((int)symbol->parts.size() > i && symbol->private_parts[i]);
-		connect(edit_buttons[i], SIGNAL(clicked()), button_signal_mapper, SLOT(map()));
+		connect(edit_buttons[i], QOverload<bool>::of(&QAbstractButton::clicked), button_signal_mapper, QOverload<>::of(&QSignalMapper::map));
 		button_signal_mapper->setMapping(edit_buttons[i], i);
 		
 		QHBoxLayout* row_layout = new QHBoxLayout();

@@ -851,7 +851,7 @@ void MainWindow::switchActualPath(const QString& path)
 void MainWindow::openPathLater(const QString& path)
 {
 	path_backlog.push_back(path);
-	QTimer::singleShot(10, this, SLOT(openPathBacklog()));
+	QTimer::singleShot(10, this, SLOT(openPathBacklog()));  // clazy:exclude=old-style-connect
 }
 
 void MainWindow::openPathBacklog()

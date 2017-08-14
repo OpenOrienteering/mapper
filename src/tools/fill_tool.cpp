@@ -37,7 +37,7 @@ FillTool::FillTool(MapEditorController* editor, QAction* tool_button)
 	drawing_symbol = editor->activeSymbol();
 	setDrawingSymbol(editor->activeSymbol());
 	
-	connect(editor, SIGNAL(activeSymbolChanged(const Symbol*)), this, SLOT(setDrawingSymbol(const Symbol*)));
+	connect(editor, &MapEditorController::activeSymbolChanged, this, &FillTool::setDrawingSymbol);
 }
 
 FillTool::~FillTool()

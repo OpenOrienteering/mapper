@@ -70,14 +70,14 @@ TemplatePositionDockWidget::TemplatePositionDockWidget(Template* temp, MapEditor
 	child_widget->setLayout(layout);
 	setWidget(child_widget);
 	
-	connect(x_edit, SIGNAL(textEdited(QString)), this, SLOT(valueChanged()));
-	connect(y_edit, SIGNAL(textEdited(QString)), this, SLOT(valueChanged()));
-	connect(scale_x_edit, SIGNAL(textEdited(QString)), this, SLOT(valueChanged()));
-	connect(scale_y_edit, SIGNAL(textEdited(QString)), this, SLOT(valueChanged()));
-	connect(rotation_edit, SIGNAL(textEdited(QString)), this, SLOT(valueChanged()));
+	connect(x_edit, &QLineEdit::textEdited, this, &TemplatePositionDockWidget::valueChanged);
+	connect(y_edit, &QLineEdit::textEdited, this, &TemplatePositionDockWidget::valueChanged);
+	connect(scale_x_edit, &QLineEdit::textEdited, this, &TemplatePositionDockWidget::valueChanged);
+	connect(scale_y_edit, &QLineEdit::textEdited, this, &TemplatePositionDockWidget::valueChanged);
+	connect(rotation_edit, &QLineEdit::textEdited, this, &TemplatePositionDockWidget::valueChanged);
 	
-	connect(controller->getMap(), SIGNAL(templateChanged(int, const Template*)), this, SLOT(templateChanged(int, const Template*)));
-	connect(controller->getMap(), SIGNAL(templateDeleted(int, const Template*)), this, SLOT(templateDeleted(int, const Template*)));
+	connect(controller->getMap(), &Map::templateChanged, this, &TemplatePositionDockWidget::templateChanged);
+	connect(controller->getMap(), &Map::templateDeleted, this, &TemplatePositionDockWidget::templateDeleted);
 }
 
 void TemplatePositionDockWidget::updateValues()

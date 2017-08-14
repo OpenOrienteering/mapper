@@ -75,7 +75,7 @@ AutosaveDialog::AutosaveDialog(QString path, QString autosave_path, QString actu
 	
 	setSelectedPath(actual_path);
 	
-	connect(list_widget, SIGNAL(currentRowChanged(int)), this, SLOT(currentRowChanged(int)), Qt::QueuedConnection);
+	connect(list_widget, &QListWidget::currentRowChanged, this, &AutosaveDialog::currentRowChanged, Qt::QueuedConnection);
 	
 #if defined(Q_OS_ANDROID)
 	setWindowState((windowState() & ~(Qt::WindowMinimized | Qt::WindowFullScreen))
@@ -93,8 +93,8 @@ int AutosaveDialog::exec()
 {
 	QDialogButtonBox button_box(QDialogButtonBox::Open | QDialogButtonBox::Cancel);
 	layout->addWidget(&button_box);
-	connect(&button_box, SIGNAL(accepted()), this, SLOT(accept()));
-	connect(&button_box, SIGNAL(rejected()), this, SLOT(reject()));
+	connect(&button_box, &QDialogButtonBox::accepted, this, &QDialog::accept);
+	connect(&button_box, &QDialogButtonBox::rejected, this, &QDialog::reject);
 	const int result = QDialog::exec();
 	resolved = true;
 	return result;

@@ -51,10 +51,10 @@ TemplateTrack::TemplateTrack(const QString& path, Map* map)
 	track_crs_spec = QString::fromLatin1("+proj=latlong +datum=WGS84");
 	
 	const Georeferencing& georef = map->getGeoreferencing();
-	connect(&georef, SIGNAL(projectionChanged()), this, SLOT(updateGeoreferencing()));
-	connect(&georef, SIGNAL(transformationChanged()), this, SLOT(updateGeoreferencing()));
-	connect(&georef, SIGNAL(stateChanged()), this, SLOT(updateGeoreferencing()));
-	connect(&georef, SIGNAL(declinationChanged()), this, SLOT(updateGeoreferencing()));
+	connect(&georef, &Georeferencing::projectionChanged, this, &TemplateTrack::updateGeoreferencing);
+	connect(&georef, &Georeferencing::transformationChanged, this, &TemplateTrack::updateGeoreferencing);
+	connect(&georef, &Georeferencing::stateChanged, this, &TemplateTrack::updateGeoreferencing);
+	connect(&georef, &Georeferencing::declinationChanged, this, &TemplateTrack::updateGeoreferencing);
 }
 
 TemplateTrack::~TemplateTrack()

@@ -51,7 +51,7 @@ public:
 	
 public slots:
 	/** (Re-)reads the settings. */
-	void readSettings(bool init_current_tip = false);
+	void readSettings();
 	
 	/** Clears the application's list of recently opened files. */
 	void clearRecentFiles();

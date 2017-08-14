@@ -500,7 +500,7 @@ void MapWidget::updateDrawingLater(QRectF map_rect, int pixel_border)
 		if (!cached_update_rect.isValid())
 		{
 			// Start the update timer
-			QTimer::singleShot(15, this, SLOT(updateDrawingLaterSlot()));
+			QTimer::singleShot(15, this, SLOT(updateDrawingLaterSlot()));  // clazy:exclude=old-style-connect
 		}
 		
 		// NOTE: this may require a mutex for concurrent access with updateDrawingLaterSlot()?

@@ -34,7 +34,7 @@ GPSTemporaryMarkers::GPSTemporaryMarkers(MapWidget* widget, GPSDisplay* gps_disp
 	this->gps_display = gps_display;
 	recording_path = false;
 	
-	connect(gps_display, SIGNAL(mapPositionUpdated(MapCoordF,float)), this, SLOT(newGPSPosition(MapCoordF,float)));
+	connect(gps_display, &GPSDisplay::mapPositionUpdated, this, &GPSTemporaryMarkers::newGPSPosition);
 	
 	widget->setTemporaryMarkerDisplay(this);
 }

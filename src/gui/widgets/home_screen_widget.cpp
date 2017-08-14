@@ -162,12 +162,12 @@ QWidget* HomeScreenWidgetDesktop::makeMenuWidget(HomeScreenController* controlle
 	  tr("Exit"), QIcon(QString::fromLatin1(":/qt-project.org/styles/commonstyle/images/standardbutton-close-32.png"))); // From Qt5
 	menu_layout->addWidget(button_exit);
 	
-	connect(button_new_map, SIGNAL(clicked(bool)), window, SLOT(showNewMapWizard()));
-	connect(button_open_map, SIGNAL(clicked(bool)), window, SLOT(showOpenDialog()));
-	connect(button_settings, SIGNAL(clicked(bool)), window, SLOT(showSettings()));
-	connect(button_about, SIGNAL(clicked(bool)), window, SLOT(showAbout()));
-	connect(button_help, SIGNAL(clicked(bool)), window, SLOT(showHelp()));
-	connect(button_exit, SIGNAL(clicked(bool)), qApp, SLOT(closeAllWindows()));
+	connect(button_new_map, &QAbstractButton::clicked, window, &MainWindow::showNewMapWizard);
+	connect(button_open_map, &QAbstractButton::clicked, window, &MainWindow::showOpenDialog);
+	connect(button_settings, &QAbstractButton::clicked, window, &MainWindow::showSettings);
+	connect(button_about, &QAbstractButton::clicked, window, &MainWindow::showAbout);
+	connect(button_help, &QAbstractButton::clicked, window, &MainWindow::showHelp);
+	connect(button_exit, &QAbstractButton::clicked, qApp, &QApplication::closeAllWindows);
 	
 	QWidget* menu_widget = new QWidget(parent);
 	menu_widget->setLayout(menu_layout);
@@ -213,9 +213,9 @@ QWidget* HomeScreenWidgetDesktop::makeRecentFilesWidget(HomeScreenController* co
 	recent_files_layout->setRowStretch(1, 1);
 	recent_files_layout->setColumnStretch(0, 1);
 	
-	connect(recent_files_list, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(recentFileClicked(QListWidgetItem*)));
-	connect(open_mru_file_check, SIGNAL(clicked(bool)), controller, SLOT(setOpenMRUFile(bool)));
-	connect(clear_list_button, SIGNAL(clicked(bool)), controller, SLOT(clearRecentFiles()));
+	connect(recent_files_list, &QListWidget::itemClicked, this, &HomeScreenWidgetDesktop::recentFileClicked);
+	connect(open_mru_file_check, &QAbstractButton::clicked, controller, &HomeScreenController::setOpenMRUFile);
+	connect(clear_list_button, &QAbstractButton::clicked, controller, &HomeScreenController::clearRecentFiles);
 	
 	QWidget* recent_files_widget = new QWidget(parent);
 	recent_files_widget->setLayout(recent_files_layout);
@@ -250,10 +250,10 @@ QWidget* HomeScreenWidgetDesktop::makeTipsWidget(HomeScreenController* controlle
 	tips_children.push_back(next_button);
 	
 	MainWindow* window = controller->getWindow();
-	connect(tips_label, SIGNAL(linkActivated(QString)), window, SLOT(linkClicked(QString)));
-	connect(tips_check, SIGNAL(clicked(bool)), controller, SLOT(setTipsVisible(bool)));
-	connect(prev_button, SIGNAL(clicked(bool)), controller, SLOT(goToPreviousTip()));
-	connect(next_button, SIGNAL(clicked(bool)), controller, SLOT(goToNextTip()));
+	connect(tips_label, &QLabel::linkActivated, window, &MainWindow::linkClicked);
+	connect(tips_check, &QAbstractButton::clicked, controller, &HomeScreenController::setTipsVisible);
+	connect(prev_button, &QAbstractButton::clicked, controller, &HomeScreenController::goToPreviousTip);
+	connect(next_button, &QAbstractButton::clicked, controller, &HomeScreenController::goToNextTip);
 	
 	QWidget* tips_widget = new QWidget(parent);
 	tips_widget->setLayout(tips_layout);
@@ -541,7 +541,7 @@ QWidget* HomeScreenWidgetMobile::makeFileListWidget(HomeScreenController* contro
 		file_list_stack->setCurrentWidget(message_label);
 	}
 	
-	connect(file_list, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(fileClicked(QListWidgetItem*)));
+	connect(file_list, &QListWidget::itemClicked, this, &HomeScreenWidgetMobile::fileClicked);
 	
 	QWidget* file_list_widget = new QWidget();
 	file_list_widget->setLayout(file_list_layout);

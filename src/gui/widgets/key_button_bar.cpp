@@ -108,7 +108,7 @@ QToolButton* KeyButtonBar::createButton(int key_code, QString text, QIcon icon, 
 	if (is_checkable)
 		button->setCheckable(true);
 	
-	connect(button, SIGNAL(clicked(bool)), this, SLOT(buttonClicked(bool)));
+	connect(button, &QAbstractButton::clicked, this, &KeyButtonBar::buttonClicked);
 	
 	layout->addWidget(button);
 	

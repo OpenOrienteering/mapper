@@ -110,11 +110,11 @@ RotateMapDialog::RotateMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt
 	
 	setLayout(layout);
 	
-	connect(center_origin_radio, SIGNAL(clicked(bool)), this, SLOT(updateWidgets()));
-	connect(center_georef_radio, SIGNAL(clicked(bool)), this, SLOT(updateWidgets()));
-	connect(center_other_radio, SIGNAL(clicked(bool)), this, SLOT(updateWidgets()));
-	connect(button_box, SIGNAL(accepted()), this, SLOT(okClicked()));
-	connect(button_box, SIGNAL(rejected()), this, SLOT(reject()));
+	connect(center_origin_radio, &QAbstractButton::clicked, this, &RotateMapDialog::updateWidgets);
+	connect(center_georef_radio, &QAbstractButton::clicked, this, &RotateMapDialog::updateWidgets);
+	connect(center_other_radio, &QAbstractButton::clicked, this, &RotateMapDialog::updateWidgets);
+	connect(button_box, &QDialogButtonBox::accepted, this, &RotateMapDialog::okClicked);
+	connect(button_box, &QDialogButtonBox::rejected, this, &QDialog::reject);
 	
 	updateWidgets();
 }

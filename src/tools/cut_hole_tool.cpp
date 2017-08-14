@@ -41,7 +41,7 @@ CutHoleTool::CutHoleTool(MapEditorController* editor, QAction* tool_button, CutH
 
 void CutHoleTool::init()
 {
-	connect(map(), SIGNAL(objectSelectionChanged()), this, SLOT(objectSelectionChanged()));
+	connect(map(), &Map::objectSelectionChanged, this, &CutHoleTool::objectSelectionChanged);
 	updateDirtyRect();
 	updateStatusText();
 	
@@ -84,9 +84,9 @@ bool CutHoleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 	/* no default; watch compiler warnings for unhandled cases! */
 	}
 	
-	connect(path_tool, SIGNAL(dirtyRectChanged(QRectF)), this, SLOT(pathDirtyRectChanged(QRectF)));
-	connect(path_tool, SIGNAL(pathAborted()), this, SLOT(pathAborted()));
-	connect(path_tool, SIGNAL(pathFinished(PathObject*)), this, SLOT(pathFinished(PathObject*)));
+	connect(path_tool, &DrawLineAndAreaTool::dirtyRectChanged, this, &CutHoleTool::pathDirtyRectChanged);
+	connect(path_tool, &DrawLineAndAreaTool::pathAborted, this, &CutHoleTool::pathAborted);
+	connect(path_tool, &DrawLineAndAreaTool::pathFinished, this, &CutHoleTool::pathFinished);
 	
 	path_tool->init();
 	path_tool->mousePressEvent(event, map_coord, widget);

@@ -47,7 +47,7 @@ ActionGridBar::ActionGridBar(Direction direction, int rows, QWidget* parent)
 	
 	// Create overflow action
 	overflow_action = new QAction(QIcon(QString::fromLatin1(":/images/three-dots.png")), tr("Show remaining items"), this);
- 	connect(overflow_action, SIGNAL(triggered()), this, SLOT(overflowActionClicked()));
+ 	connect(overflow_action, &QAction::triggered, this, &ActionGridBar::overflowActionClicked);
 	overflow_button = nullptr;
 	overflow_menu = new QMenu(this);
 	include_overflow_from_list.push_back(this);
