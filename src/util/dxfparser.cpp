@@ -178,9 +178,9 @@ void DXFParser::parseCommon(int code, const QString& value, DXFPath& path)
 	else if (code == 420)
 	{
 		QColor color;
-		color.setRed(value.left(2).toInt());
-		color.setGreen(value.mid(2, 2).toInt());
-		color.setBlue(value.right(2).toInt());
+		color.setRed(value.leftRef(2).toInt());
+		color.setGreen(value.midRef(2, 2).toInt());
+		color.setBlue(value.rightRef(2).toInt());
 		path.color = color;
 	}
 	else if (code == 430)
