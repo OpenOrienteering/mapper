@@ -61,10 +61,13 @@
 #include "undo/undo_manager.h"
 
 
-static auto Obsolete = QString::fromLatin1("obsolete");
-static auto NeedsReview = QString::fromLatin1("unfinished");
+namespace
+{
 
-static auto translation_suffix = { "template", "cs", "de", "fi", "fr", "ru", "sv", "uk" };
+const auto Obsolete = QString::fromLatin1("obsolete");       // clazy:exclude=non-pod-global-static
+const auto NeedsReview = QString::fromLatin1("unfinished");  // clazy:exclude=non-pod-global-static
+
+const auto translation_suffix = { "template", "cs", "de", "fi", "fr", "ru", "sv", "uk" };
 
 using TranslationEntries = std::vector<SymbolSetTool::TranslationEntry>;
 
@@ -186,6 +189,8 @@ TranslationEntries readTsFile(QIODevice& device, const QString& language)
 	device.close();
 	return result;
 }
+
+}  // namespace
 
 
 void SymbolSetTool::TranslationEntry::write(QXmlStreamWriter& xml, const QString& language)
@@ -861,7 +866,9 @@ void SymbolSetTool::processTestData()
  * while running with "minimal" platform plugin.
  */
 #ifndef Q_OS_MACOS
-static auto qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");
+namespace {
+	auto qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");  // clazy:exclude=non-pod-global-static
+}
 #endif
 
 

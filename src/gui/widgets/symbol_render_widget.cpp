@@ -52,12 +52,19 @@
 namespace MimeType {
 
 /// The index of a symbol during drag-and-drop
-static const QString oo_symbol_index { QStringLiteral("openorienteering/symbol_index") };
+const QString OpenOrienteeringSymbolIndex()
+{
+	return QStringLiteral("openorienteering/symbol_index");
+}
 
 /// Symbol definitions
-static const QString oo_symbols      { QStringLiteral("openorienteering/symbols") };
-
+const QString OpenOrienteeringSymbols()
+{
+	return QStringLiteral("openorienteering/symbols");
 }
+
+}  // namespace MimeType
+
 
 //### SymbolIconDecorator ###
 
@@ -642,7 +649,7 @@ void SymbolRenderWidget::mouseMoveEvent(QMouseEvent* event)
 			
 			QByteArray data;
 			data.append((const char*)&current_symbol_index, sizeof(int));
-			mime_data->setData(MimeType::oo_symbol_index, data);
+			mime_data->setData(MimeType::OpenOrienteeringSymbolIndex(), data);
 			drag->setMimeData(mime_data);
 			
 			drag->exec(Qt::MoveAction);
@@ -771,13 +778,13 @@ void SymbolRenderWidget::leaveEvent(QEvent* event)
 
 void SymbolRenderWidget::dragEnterEvent(QDragEnterEvent* event)
 {
-	if (event->mimeData()->hasFormat(MimeType::oo_symbol_index))
+	if (event->mimeData()->hasFormat(MimeType::OpenOrienteeringSymbolIndex()))
 		event->acceptProposedAction();
 }
 
 void SymbolRenderWidget::dragMoveEvent(QDragMoveEvent* event)
 {
-	if (event->mimeData()->hasFormat(MimeType::oo_symbol_index))
+	if (event->mimeData()->hasFormat(MimeType::OpenOrienteeringSymbolIndex()))
 	{
 		int row, pos_in_row;
 		if (!dropPosition(event->pos(), row, pos_in_row))
@@ -978,20 +985,20 @@ void SymbolRenderWidget::copySymbols()
 	
 	// Put buffer into clipboard
 	QMimeData* mime_data = new QMimeData();
-	mime_data->setData(MimeType::oo_symbols, buffer.data());
+	mime_data->setData(MimeType::OpenOrienteeringSymbols(), buffer.data());
 	QApplication::clipboard()->setMimeData(mime_data);
 }
 
 void SymbolRenderWidget::pasteSymbols()
 {
-	if (!QApplication::clipboard()->mimeData()->hasFormat(MimeType::oo_symbols))
+	if (!QApplication::clipboard()->mimeData()->hasFormat(MimeType::OpenOrienteeringSymbols()))
 	{
 		QMessageBox::warning(nullptr, tr("Error"), tr("There are no symbols in clipboard which could be pasted!"));
 		return;
 	}
 	
 	// Get buffer from clipboard
-	QByteArray byte_array = QApplication::clipboard()->mimeData()->data(MimeType::oo_symbols);
+	QByteArray byte_array = QApplication::clipboard()->mimeData()->data(MimeType::OpenOrienteeringSymbols());
 	QBuffer buffer(&byte_array);
 	buffer.open(QIODevice::ReadOnly);
 	
@@ -1143,7 +1150,7 @@ void SymbolRenderWidget::updateContextMenuState()
 	edit_action->setEnabled(single_selection);
 	scale_action->setEnabled(have_selection);
 	copy_action->setEnabled(have_selection);
-	paste_action->setEnabled(QApplication::clipboard()->mimeData()->hasFormat(MimeType::oo_symbols));
+	paste_action->setEnabled(QApplication::clipboard()->mimeData()->hasFormat(MimeType::OpenOrienteeringSymbols()));
 	switch_symbol_action->setEnabled(single_symbol_compatible && single_symbol_different);
 	fill_border_action->setEnabled(single_symbol_compatible && single_symbol_different);
 	hide_action->setEnabled(have_selection);

@@ -207,8 +207,11 @@ namespace
 
 namespace MimeType {
 
-/// The index of a symbol during drag-and-drop
-static const QString oo_objects { QStringLiteral("openorienteering/objects") };
+/// The MIME type of Mapper data
+QString OpenOrienteeringObjects()
+{
+	return QStringLiteral("openorienteering/objects");
+}
 
 }
 
@@ -1613,7 +1616,7 @@ void MapEditorController::copy()
 	
 	// Put buffer into clipboard
 	QMimeData* mime_data = new QMimeData();
-	mime_data->setData(MimeType::oo_objects, buffer.data());
+	mime_data->setData(MimeType::OpenOrienteeringObjects(), buffer.data());
 	QApplication::clipboard()->setMimeData(mime_data);
 	
 	// Show message
@@ -1625,14 +1628,14 @@ void MapEditorController::paste()
 {
 	if (editing_in_progress)
 		return;
-	if (!QApplication::clipboard()->mimeData()->hasFormat(MimeType::oo_objects))
+	if (!QApplication::clipboard()->mimeData()->hasFormat(MimeType::OpenOrienteeringObjects()))
 	{
 		QMessageBox::warning(nullptr, tr("Error"), tr("There are no objects in clipboard which could be pasted!"));
 		return;
 	}
 	
 	// Get buffer from clipboard
-	QByteArray byte_array = QApplication::clipboard()->mimeData()->data(MimeType::oo_objects);
+	QByteArray byte_array = QApplication::clipboard()->mimeData()->data(MimeType::OpenOrienteeringObjects());
 	QBuffer buffer(&byte_array);
 	buffer.open(QIODevice::ReadOnly);
 	
@@ -2367,7 +2370,7 @@ void MapEditorController::updatePasteAvailability()
 	{
 		paste_act->setEnabled(
 			QApplication::clipboard()->mimeData()
-			&& QApplication::clipboard()->mimeData()->hasFormat(MimeType::oo_objects)
+			&& QApplication::clipboard()->mimeData()->hasFormat(MimeType::OpenOrienteeringObjects())
 			&& !editing_in_progress);
 	}
 }

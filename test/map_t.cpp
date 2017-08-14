@@ -35,8 +35,8 @@
 
 namespace
 {
-	static QDir examples_dir;
-	static QDir symbol_set_dir;
+	QDir examples_dir;    // clazy:exclude=non-pod-global-static
+	QDir symbol_set_dir;  // clazy:exclude=non-pod-global-static
 }
 
 
@@ -276,7 +276,7 @@ void MapTest::matchQuerySymbolNumberTest()
  */
 #ifndef Q_OS_MACOS
 namespace  {
-	auto qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");
+	auto qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");  // clazy:exclude=non-pod-global-static
 }
 #endif
 

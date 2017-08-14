@@ -50,10 +50,20 @@ const int XMLFileFormat::current_version = 7;
 
 int XMLFileFormat::active_version = 5; // updated by XMLFileExporter::doExport()
 
+
+
 namespace {
+
 const char* magic_string = "<?xml ";
-const QString mapper_namespace = QString::fromLatin1("http://openorienteering.org/apps/mapper/xml/v2");
+
+QString mapperNamespace()
+{
+	return QStringLiteral("http://openorienteering.org/apps/mapper/xml/v2");
 }
+
+}  // namespace
+
+
 
 XMLFileFormat::XMLFileFormat()
  : FileFormat(MapFile, "XML", ImportExport::tr("OpenOrienteering Mapper"), QString::fromLatin1("omap"),
@@ -176,7 +186,7 @@ void XMLFileExporter::doExport()
 		throw FileFormatException(tr("Older versions of Mapper do not support multiple map parts. To save the map in compatibility mode, you must first merge all map parts."));
 	}
 	
-	xml.writeDefaultNamespace(mapper_namespace);
+	xml.writeDefaultNamespace(mapperNamespace());
 	xml.writeStartDocument();
 	writeLineBreak(xml);
 	

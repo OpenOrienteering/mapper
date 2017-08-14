@@ -517,7 +517,9 @@ void FileFormatTest::pristineMapTest()
  * while running with "minimal" platform plugin.
  */
 #ifndef Q_OS_MACOS
-static auto qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");
+namespace  {
+	auto qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");  // clazy:exclude=non-pod-global-static
+}
 #endif
 
 
