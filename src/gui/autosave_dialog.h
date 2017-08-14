@@ -60,7 +60,7 @@ public:
 	/**
 	 * Destructor.
 	 */
-	virtual ~AutosaveDialog();
+	~AutosaveDialog() override;
 	
 	/**
 	 * @brief Returns the currently selected path.
@@ -73,7 +73,7 @@ public:
 	 * @param index The model index for which the text documents is requested for.
 	 * @return      A QTextDocument representing the list item, or nullptr.
 	 */
-	const QTextDocument* textDoc(const QModelIndex& index) const;
+	const QTextDocument* textDoc(const QModelIndex& index) const override;
 	
 public slots:
 	/**
@@ -83,7 +83,7 @@ public slots:
 	 * 
 	 * @return The result (QDialog::DialogCode).
 	 */
-	virtual int exec();
+	int exec() override;
 	
 	/**
 	 * @brief Sets the selected item to the one representing the given path.
@@ -113,7 +113,7 @@ protected:
 	 * 
 	 * @override
 	 */
-	virtual void closeEvent(QCloseEvent* event);
+	void closeEvent(QCloseEvent* event) override;
 	
 private slots:
 	void currentRowChanged(int row);

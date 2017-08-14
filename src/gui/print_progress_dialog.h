@@ -56,7 +56,7 @@ public:
 	/**
 	 * Destructor.
 	 */
-	~PrintProgressDialog();
+	~PrintProgressDialog() override;
 	
 public slots:
 	/**

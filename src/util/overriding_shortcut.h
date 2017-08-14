@@ -67,7 +67,7 @@ public:
 	 * shortcut's key sequence, and passes them as corresponding
 	 * QShortcutEvent to QShortcut::event().
 	 */
-	virtual bool eventFilter(QObject* watched, QEvent* event);
+	bool eventFilter(QObject* watched, QEvent* event) override;
 	
 private:
 	QTime time;

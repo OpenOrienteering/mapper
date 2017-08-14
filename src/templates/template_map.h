@@ -53,7 +53,7 @@ public:
 	
 	TemplateMap(const QString& path, Map* map);
 	
-	virtual ~TemplateMap() override;
+	~TemplateMap() override;
 	
 	
 	const char* getTemplateType() const override;

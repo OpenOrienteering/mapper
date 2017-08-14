@@ -41,13 +41,13 @@ public:
 	HomeScreenController();
 	
 	/** Destroys the HomeScreenController and its children. */
-	~HomeScreenController();
+	~HomeScreenController() override;
 	
 	/** Activates the HomeScreenController for the given main window. */
-	virtual void attach(MainWindow* window);
+	void attach(MainWindow* window) override;
 	
 	/** Detaches the HomeScreenController from its main window. */
-	virtual void detach();
+	void detach() override;
 	
 public slots:
 	/** (Re-)reads the settings. */

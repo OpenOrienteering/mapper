@@ -36,9 +36,9 @@ class XMLFileExporter : public Exporter
 	
 public:
 	XMLFileExporter(QIODevice* stream, Map *map, MapView *view);
-	virtual ~XMLFileExporter() {}
+	~XMLFileExporter() override {}
 	
-	virtual void doExport();
+	void doExport() override;
 	
 protected:
 	void exportGeoreferencing();
@@ -63,10 +63,10 @@ class XMLFileImporter : public Importer
 	
 public:
 	XMLFileImporter(QIODevice* stream, Map *map, MapView *view);
-	virtual ~XMLFileImporter() {}
+	~XMLFileImporter() override {}
 
 protected:
-	virtual void import(bool load_symbols_only);
+	void import(bool load_symbols_only) override;
 	
 	void importElements(bool load_symbols_only);
 	

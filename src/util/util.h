@@ -91,7 +91,7 @@ class DoubleValidator : public QDoubleValidator
 public:
 	DoubleValidator(double bottom, double top = 10e10, QObject* parent = nullptr, int decimals = 20);
 	
-	virtual State validate(QString& input, int& pos) const;
+	State validate(QString& input, int& pos) const override;
 };
 
 /** (Un-)blocks recursively all signals from a QObject and its child-objects. */

@@ -130,7 +130,7 @@ public:
 	
 	/** Destroys this Importer.
 	 */
-	virtual ~Importer();
+	~Importer() override;
 	
 	/** Returns the current list of action items.
 	 */
@@ -186,7 +186,7 @@ public:
 	
 	/** Destroys the current Exporter.
 	 */
-	virtual ~Exporter();
+	~Exporter() override;
 	
 	/** Exports the map and view to the given file. If a fatal error is encountered (such as a
 	 *  permission problem), than this method should throw a FormatException. If the export can

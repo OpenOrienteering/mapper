@@ -50,7 +50,7 @@ class EditLineTool : public EditTool
 Q_OBJECT
 public:
 	EditLineTool(MapEditorController* editor, QAction* tool_action);
-	virtual ~EditLineTool();
+	~EditLineTool() override;
 	
 	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
 	bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;

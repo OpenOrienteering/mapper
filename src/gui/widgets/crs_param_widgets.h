@@ -35,7 +35,7 @@ class UTMZoneEdit : public QWidget
 	Q_OBJECT
 public:
 	UTMZoneEdit(CRSParameterWidgetObserver& observer, QWidget* parent = nullptr);
-	virtual ~UTMZoneEdit();
+	~UTMZoneEdit() override;
 	
 	QString text() const;
 	void setText(const QString& text);

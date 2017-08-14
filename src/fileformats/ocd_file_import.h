@@ -125,7 +125,7 @@ protected:
 public:
 	OcdFileImport(QIODevice* stream, Map *map, MapView *view);
 	
-	virtual ~OcdFileImport() override;
+	~OcdFileImport() override;
 	
 	
 	void setCustom8BitEncoding(QTextCodec* encoding);
@@ -167,10 +167,10 @@ public:
 	
 	void addSymbolWarning(const TextSymbol* symbol, const QString& warning);
 	
-	virtual void finishImport() override;
+	void finishImport() override;
 	
 protected:
-	virtual void import(bool load_symbols_only) override;
+	void import(bool load_symbols_only) override;
 	
 	void importImplementationLegacy(bool load_symbols_only);
 	

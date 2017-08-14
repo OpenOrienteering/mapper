@@ -226,29 +226,29 @@ public:
 	/**
 	 * Destructor.
 	 */
-	virtual ~CombinedUndoStep();
+	~CombinedUndoStep() override;
 	
 	
 	/**
 	 * Returns true if all sub step can still be undone.
 	 */
-	virtual bool isValid() const;
+	bool isValid() const override;
 	
 	/**
 	 * Undoes all sub steps in-order and returns a corresponding UndoStep.
 	 */
-	virtual UndoStep* undo();
+	UndoStep* undo() override;
 	
 	
 	/**
 	 * Adds the modified parts of all sub steps to the given set.
 	 */
-	virtual bool getModifiedParts(PartSet& out) const;
+	bool getModifiedParts(PartSet& out) const override;
 	
 	/**
 	 * Adds the modified objects of all sub steps to the given set.
 	 */
-	virtual void getModifiedObjects(int part_index, ObjectSet& out) const;
+	void getModifiedObjects(int part_index, ObjectSet& out) const override;
 	
 	
 	/** 
@@ -271,19 +271,19 @@ public:
 	 * @copybrief UndoStep::load()
 	 * @deprecated Old file format.
 	 */
-	virtual bool load(QIODevice* file, int version);
+	bool load(QIODevice* file, int version) override;
 #endif
 	
 protected:
 	/**
 	 * @copybrief UndoStep::saveImpl()
 	 */
-	virtual void saveImpl(QXmlStreamWriter& xml) const;
+	void saveImpl(QXmlStreamWriter& xml) const override;
 	
 	/**
 	 * @copybrief UndoStep::loadImpl()
 	 */
-	virtual void loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict);
+	void loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict) override;
 	
 private:
 	typedef std::vector<UndoStep*> StepList;
@@ -313,13 +313,13 @@ public:
 	/**
 	 * Destructor.
 	 */
-	virtual ~NoOpUndoStep();
+	~NoOpUndoStep() override;
 	
 	
 	/**
 	 * Returns the validness as given to the constructor.
 	 */
-	virtual bool isValid() const;
+	bool isValid() const override;
 	
 	
 	/**
@@ -327,7 +327,7 @@ public:
 	 * 
 	 * Prints a warning if this undo step is not valid.
 	 */
-	virtual UndoStep* undo();
+	UndoStep* undo() override;
 	
 	
 #ifndef NO_NATIVE_FILE_FORMAT
@@ -338,7 +338,7 @@ public:
 	 * This must not be called because the step is neither used nor usable
 	 * for the old format.
 	 */
-	virtual bool load(QIODevice* file, int version);
+	bool load(QIODevice* file, int version) override;
 #endif
 	
 private:

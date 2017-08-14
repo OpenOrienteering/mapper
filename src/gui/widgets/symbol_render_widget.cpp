@@ -103,8 +103,8 @@ class ProtectedSymbolDecorator : public SymbolIconDecorator
 {
 public:
 	explicit ProtectedSymbolDecorator(int icon_size);
-	virtual ~ProtectedSymbolDecorator();
-	virtual void draw(QPainter& p) const;
+	~ProtectedSymbolDecorator() override;
+	void draw(QPainter& p) const override;
 	
 private:
 	int arc_size;
@@ -166,8 +166,8 @@ class HiddenSymbolDecorator : public SymbolIconDecorator
 {
 public:
 	explicit HiddenSymbolDecorator(int icon_size);
-	virtual ~HiddenSymbolDecorator();
-	virtual void draw(QPainter& p) const;
+	~HiddenSymbolDecorator() override;
+	void draw(QPainter& p) const override;
 	
 private:
 	int icon_size;

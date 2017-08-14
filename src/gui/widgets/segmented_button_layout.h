@@ -53,13 +53,13 @@ public:
 	/**
 	 * Destroys the object.
 	 */
-	virtual ~SegmentedButtonLayout();
+	~SegmentedButtonLayout() override;
 	
 	/**
 	 * Resets the information about neighboring segments and any other cached
 	 * information about the layout.
 	 */
-	virtual void invalidate();
+	void invalidate() override;
 	
 	/**
 	 * Types of segment neighborhood.

@@ -45,22 +45,22 @@ class DrawCircleTool : public DrawLineAndAreaTool
 Q_OBJECT
 public:
 	DrawCircleTool(MapEditorController* editor, QAction* tool_action, bool is_helper_tool);
-	virtual ~DrawCircleTool();
+	~DrawCircleTool() override;
 	
-	virtual void init();
-	virtual const QCursor& getCursor() const;
+	void init() override;
+	const QCursor& getCursor() const override;
 	
-	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
 	
-	virtual bool keyPressEvent(QKeyEvent* event);
+	bool keyPressEvent(QKeyEvent* event) override;
 	
-	virtual void draw(QPainter* painter, MapWidget* widget);
+	void draw(QPainter* painter, MapWidget* widget) override;
 	
 protected:
-	virtual void finishDrawing();
-	virtual void abortDrawing();
+	void finishDrawing() override;
+	void abortDrawing() override;
 	
 	void updateCircle();
 	void setDirtyRect();

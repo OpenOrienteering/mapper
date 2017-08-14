@@ -103,7 +103,7 @@ public:
 	/**
 	 * @brief Destructs the MapEditorTool.
 	 */
-	virtual ~MapEditorTool();
+	~MapEditorTool() override;
 	
 	/**
 	 * @brief Performs initialization when the tool becomes active.

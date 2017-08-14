@@ -59,7 +59,7 @@ public:
 	/**
 	 * Destroys the undo manager, deleting all managed steps.
 	 */
-	~UndoManager();
+	~UndoManager() override;
 	
 	
 	/** 

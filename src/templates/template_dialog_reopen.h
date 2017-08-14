@@ -61,7 +61,7 @@ private:
 	// Q_OBJECT not possible in nested classes.
 	public:
 		OpenTemplateList(ReopenTemplateDialog* dialog);
-        virtual void dropEvent(QDropEvent* event);
+        void dropEvent(QDropEvent* event) override;
 	private:
 		ReopenTemplateDialog* dialog;
 	};

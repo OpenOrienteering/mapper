@@ -55,12 +55,12 @@ public:
 
 	/** Destroys this importer.
 	 */
-	~NativeFileImport();
+	~NativeFileImport() override;
 
 protected:
 	/** Imports a native file.
 	 */
-	void import(bool load_symbols_only);
+	void import(bool load_symbols_only) override;
 };
 
 

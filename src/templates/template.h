@@ -143,7 +143,7 @@ protected:
 	Template(const QString& path, not_null<Map*> map);
 
 public:	
-	virtual ~Template();
+	~Template() override;
 	
 	/**
 	 * Creates a duplicate of the template

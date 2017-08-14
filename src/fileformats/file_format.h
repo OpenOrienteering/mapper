@@ -59,7 +59,7 @@ public:
 	
 	/** Destroys the exception object.
 	 */
-	virtual ~FileFormatException() noexcept;
+	~FileFormatException() noexcept override;
 	
 	/** Returns the message as a QString. 
 	 */
@@ -67,7 +67,7 @@ public:
 	
 	/** Returns the message as a C string.
 	 */
-	virtual const char* what() const noexcept;
+	const char* what() const noexcept override;
 	
 private:
 	QString const msg;

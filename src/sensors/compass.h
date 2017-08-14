@@ -33,7 +33,7 @@ class Compass : public QObject
 Q_OBJECT
 friend class CompassPrivate;
 public:
-	~Compass();
+	~Compass() override;
 	
 	/** Singleton accessor method. Constructs the object on first use. */
 	static Compass& getInstance();

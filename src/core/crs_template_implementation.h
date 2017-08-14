@@ -88,7 +88,7 @@ class UTMZoneParameter : public CRSTemplateParameter
 {
 public:
 	UTMZoneParameter(const QString& id, const QString& name);
-	~UTMZoneParameter();
+	~UTMZoneParameter() override;
 	QWidget* createEditor(WidgetObserver& observer) const override;
 	std::vector<QString> specValues(const QString& edit_value) const override;
 	QString value(const QWidget* edit_widget) const override;
@@ -114,7 +114,7 @@ public:
 	
 	IntRangeParameter(const QString& id, const QString& name, int min_value, int max_value);
 	IntRangeParameter(const QString& id, const QString& name, int min_value, int max_value, OutputList&& outputs);
-	~IntRangeParameter();
+	~IntRangeParameter() override;
 	QWidget* createEditor(WidgetObserver& observer) const override;
 	std::vector<QString> specValues(const QString& edit_value) const override;
 	QString value(const QWidget* edit_widget) const override;

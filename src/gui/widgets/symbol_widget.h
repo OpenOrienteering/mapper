@@ -57,7 +57,7 @@ public:
 	/**
 	 * @brief Destroys the SymbolWidget.
 	 */
-	virtual ~SymbolWidget();
+	~SymbolWidget() override;
 	
 	/**
 	 * @brief If exactly one symbol is selected, returns this symbol.
@@ -122,7 +122,7 @@ protected:
 	/**
 	 * @brief Receives context menu events and opens the context menu.
 	 */
-	virtual void contextMenuEvent(QContextMenuEvent* event);
+	void contextMenuEvent(QContextMenuEvent* event) override;
 	
 private:
 	SymbolRenderWidget* render_widget;

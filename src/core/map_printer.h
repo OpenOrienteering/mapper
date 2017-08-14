@@ -228,7 +228,7 @@ public:
 	MapPrinter(Map& map, const MapView* view, QObject* parent = nullptr);
 	
 	/** Destructor. */
-	virtual ~MapPrinter();
+	~MapPrinter() override;
 	
 	/** Returns the configured target printer in terms of QPrinterInfo. */
 	const QPrinterInfo* getTarget() const;

@@ -50,7 +50,7 @@ class FillTool : public MapEditorToolBase
 Q_OBJECT
 public:
 	FillTool(MapEditorController* editor, QAction* tool_action);
-	virtual ~FillTool();
+	~FillTool() override;
 	
 protected slots:
 	void setDrawingSymbol(const Symbol* symbol);
@@ -68,10 +68,10 @@ protected:
 		float end_clen;
 	};
 	
-	virtual void updateStatusText();
-	virtual void objectSelectionChangedImpl();
+	void updateStatusText() override;
+	void objectSelectionChangedImpl() override;
 	
-	virtual void clickPress();
+	void clickPress() override;
 	
 	/**
 	 * Tries to apply the fill tool at the current click position,

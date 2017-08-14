@@ -74,22 +74,22 @@ public:
 	static const std::vector<QByteArray>& supportedExtensions();
 	
 	TemplateImage(const QString& path, Map* map);
-    virtual ~TemplateImage();
-	virtual const char* getTemplateType() const {return "TemplateImage";}
-	virtual bool isRasterGraphics() const {return true;}
+    ~TemplateImage() override;
+	const char* getTemplateType() const override {return "TemplateImage";}
+	bool isRasterGraphics() const override {return true;}
 
-	virtual bool saveTemplateFile() const;
-	virtual bool loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version);
-	virtual void saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const;
-	virtual bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml);
+	bool saveTemplateFile() const override;
+	bool loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version) override;
+	void saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const override;
+	bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml) override;
 
-	virtual bool loadTemplateFileImpl(bool configuring);
-	virtual bool postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view);
-	virtual void unloadTemplateFileImpl();
+	bool loadTemplateFileImpl(bool configuring) override;
+	bool postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view) override;
+	void unloadTemplateFileImpl() override;
 	
-    virtual void drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, float opacity) const;
-	virtual QRectF getTemplateExtent() const;
-	virtual bool canBeDrawnOnto() const {return true;}
+    void drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, float opacity) const override;
+	QRectF getTemplateExtent() const override;
+	bool canBeDrawnOnto() const override {return true;}
 
 	/**
 	 * Calculates the image's center of gravity in template coordinates by
@@ -123,9 +123,9 @@ protected:
 		int y;
 	};
 	
-	virtual Template* duplicateImpl() const;
-	virtual void drawOntoTemplateImpl(MapCoordF* coords, int num_coords, QColor color, float width);
-	virtual void drawOntoTemplateUndo(bool redo);
+	Template* duplicateImpl() const override;
+	void drawOntoTemplateImpl(MapCoordF* coords, int num_coords, QColor color, float width) override;
+	void drawOntoTemplateUndo(bool redo) override;
 	void addUndoStep(const DrawOnImageUndoStep& new_step);
 	void calculateGeoreferencing();
 	void updatePosFromGeoreferencing();

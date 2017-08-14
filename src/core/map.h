@@ -129,7 +129,7 @@ public:
 	Map();
 	
 	/** Destroys the map. */
-	~Map();
+	~Map() override;
 	
 	
 	/**

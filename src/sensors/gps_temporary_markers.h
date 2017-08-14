@@ -40,7 +40,7 @@ class GPSTemporaryMarkers : public QObject
 Q_OBJECT
 public:
 	GPSTemporaryMarkers(MapWidget* widget, GPSDisplay* gps_display);
-	virtual ~GPSTemporaryMarkers();
+	~GPSTemporaryMarkers() override;
 	
 	/** Returns false if no point was added due to not having a valid position yet. */
 	bool addPoint();

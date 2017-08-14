@@ -57,20 +57,20 @@ public:
 	static const std::vector<QByteArray>& supportedExtensions();
 	
 	TemplateTrack(const QString& path, Map* map);
-    virtual ~TemplateTrack();
-	virtual const char* getTemplateType() const {return "TemplateTrack";}
-	virtual bool isRasterGraphics() const {return false;}
+    ~TemplateTrack() override;
+	const char* getTemplateType() const override {return "TemplateTrack";}
+	bool isRasterGraphics() const override {return false;}
 	
-	virtual bool saveTemplateFile() const;
+	bool saveTemplateFile() const override;
 	
-	virtual bool loadTemplateFileImpl(bool configuring);
-	virtual bool postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view);
-	virtual void unloadTemplateFileImpl();
+	bool loadTemplateFileImpl(bool configuring) override;
+	bool postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view) override;
+	void unloadTemplateFileImpl() override;
 	
-    virtual void drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, float opacity) const;
-	virtual QRectF getTemplateExtent() const;
-    virtual QRectF calculateTemplateBoundingBox() const;
-    virtual int getTemplateBoundingBoxPixelBorder();
+    void drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, float opacity) const override;
+	QRectF getTemplateExtent() const override;
+    QRectF calculateTemplateBoundingBox() const override;
+    int getTemplateBoundingBoxPixelBorder() override;
 	
 	
 	/// Draws all tracks.
@@ -94,10 +94,10 @@ public slots:
 	void updateGeoreferencing();
 	
 protected:
-	virtual Template* duplicateImpl() const;
-    virtual bool loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version);
-    virtual void saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const;
-    virtual bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml);
+	Template* duplicateImpl() const override;
+    bool loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version) override;
+    void saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const override;
+    bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml) override;
 	
 	/// Projects the track in non-georeferenced mode
 	void calculateLocalGeoreferencing();

@@ -189,7 +189,7 @@ Q_OBJECT
 public:
 	EditTool(MapEditorController* editor, MapEditorTool::Type tool_type, QAction* tool_action);
 	
-	virtual ~EditTool();
+	~EditTool() override;
 	
 	/**
 	 * The platform's key for deleting selected objects.

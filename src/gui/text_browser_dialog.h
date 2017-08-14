@@ -64,7 +64,7 @@ protected:
 	/**
 	 * @brief Returns a size hint based on the text browser's content.
 	 */
-	virtual QSize sizeHint() const override;
+	QSize sizeHint() const override;
 	
 	/**
 	 * @brief The TextBrowser is the main widget of this dialog.

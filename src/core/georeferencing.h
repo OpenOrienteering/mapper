@@ -145,7 +145,7 @@ public:
 	/** 
 	 * Cleans up memory allocated by the georeferencing 
 	 */
-	~Georeferencing();
+	~Georeferencing() override;
 	
 	
 	/** 

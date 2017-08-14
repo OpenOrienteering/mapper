@@ -188,7 +188,7 @@ protected:
 	/// Called when the mouse is moved without the left mouse button being pressed
 	virtual void mouseMove();
 	
-	virtual void gestureStarted() override;
+	void gestureStarted() override;
 	
 	void startDragging();
 	void updateDragging();

@@ -72,12 +72,12 @@ private:
 	
 public:
 	OCAD8FileImport(QIODevice* stream, Map *map, MapView *view);
-	~OCAD8FileImport();
+	~OCAD8FileImport() override;
 
 	void setStringEncodings(const char *narrow, const char *wide = "UTF-16LE");
 
 protected:
-	void import(bool load_symbols_only);
+	void import(bool load_symbols_only) override;
 	
 	// Symbol import
 	Symbol *importPointSymbol(const OCADPointSymbol *ocad_symbol);
@@ -152,9 +152,9 @@ class OCAD8FileExport : public Exporter
 	
 public:
 	OCAD8FileExport(QIODevice* stream, Map *map, MapView *view);
-	~OCAD8FileExport();
+	~OCAD8FileExport() override;
 	
-	void doExport();
+	void doExport() override;
 	
 protected:
 	

@@ -245,7 +245,7 @@ public:
 		thread.start();
 	}
 	
-	~CompassPrivate()
+	~CompassPrivate() override
 	{
 		thread.keep_running = false;
 		thread.condition.wakeAll();
@@ -283,7 +283,7 @@ public:
 	}
 	
 	/** Called on new gyro readings */
-	virtual bool filter(QGyroscopeReading* reading)
+	bool filter(QGyroscopeReading* reading) override
 	{
 		if (! gyro_orientation_initialized)
 			return false;
@@ -458,7 +458,7 @@ private:
 			p->compass->emitAzimuthChanged(p->latest_azimuth);
 		}
 		
-		void run()
+		void run() override
 		{
 			// Wait until sensors are initialized
 			QThread::msleep(1000);

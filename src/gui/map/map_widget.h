@@ -117,7 +117,7 @@ public:
 	MapWidget(bool show_help, bool force_antialiasing, QWidget* parent = nullptr);
 	
 	/** Destructs the MapWidget. */
-	~MapWidget();
+	~MapWidget() override;
 	
 	/** Sets the map view to use for display. Does not take ownership of the view. */
 	void setMapView(MapView* view);
@@ -315,7 +315,7 @@ public:
 	QWidget* getContextMenu();
 	
 	/** Returns the widget's preferred size. */
-	virtual QSize sizeHint() const override;
+	QSize sizeHint() const override;
 	
 	/**
 	 * @copybrief MainWindowController::keyPressEventFilter
@@ -356,30 +356,30 @@ private slots:
 	void updateDrawingLaterSlot();
 	
 protected:
-	virtual bool event(QEvent *event) override;
+	bool event(QEvent *event) override;
 	
 	virtual void gestureEvent(QGestureEvent* event);
 	
-	virtual void paintEvent(QPaintEvent* event) override;
-	virtual void resizeEvent(QResizeEvent* event) override;
+	void paintEvent(QPaintEvent* event) override;
+	void resizeEvent(QResizeEvent* event) override;
 	
 	// Mouse input
-	virtual void mousePressEvent(QMouseEvent* event) override;
+	void mousePressEvent(QMouseEvent* event) override;
 	void _mousePressEvent(QMouseEvent* event);
-	virtual void mouseMoveEvent(QMouseEvent* event) override;
+	void mouseMoveEvent(QMouseEvent* event) override;
 	void _mouseMoveEvent(QMouseEvent* event);
-	virtual void mouseReleaseEvent(QMouseEvent* event) override;
+	void mouseReleaseEvent(QMouseEvent* event) override;
 	void _mouseReleaseEvent(QMouseEvent* event);
-	virtual void mouseDoubleClickEvent(QMouseEvent* event) override;
+	void mouseDoubleClickEvent(QMouseEvent* event) override;
 	void _mouseDoubleClickEvent(QMouseEvent* event);
-	virtual void wheelEvent(QWheelEvent* event) override;
-	virtual void leaveEvent(QEvent* event) override;
+	void wheelEvent(QWheelEvent* event) override;
+	void leaveEvent(QEvent* event) override;
 	
 	// Key input (see also slots)
-	virtual void inputMethodEvent(QInputMethodEvent *event) override;
-	virtual void focusOutEvent(QFocusEvent* event) override;
+	void inputMethodEvent(QInputMethodEvent *event) override;
+	void focusOutEvent(QFocusEvent* event) override;
 	
-	virtual void contextMenuEvent(QContextMenuEvent* event) override;
+	void contextMenuEvent(QContextMenuEvent* event) override;
 	
 private:
 	/** Checks if there is a visible template in the range

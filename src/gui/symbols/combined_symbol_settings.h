@@ -40,9 +40,9 @@ class CombinedSymbolSettings : public SymbolPropertiesWidget
 Q_OBJECT
 public:
 	CombinedSymbolSettings(CombinedSymbol* symbol, SymbolSettingDialog* dialog);
-	virtual ~CombinedSymbolSettings();
+	~CombinedSymbolSettings() override;
 	
-	void reset(Symbol* symbol);
+	void reset(Symbol* symbol) override;
 	
 	/**
 	 * Updates the content and state of all input fields.

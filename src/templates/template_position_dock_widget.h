@@ -42,8 +42,8 @@ public:
 	
 	void updateValues();
 	
-	virtual bool event(QEvent* event);
-	virtual void closeEvent(QCloseEvent* event);
+	bool event(QEvent* event) override;
+	void closeEvent(QCloseEvent* event) override;
 	
 public slots:
 	void templateChanged(int index, const Template* temp);

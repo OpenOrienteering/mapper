@@ -51,9 +51,9 @@ Q_OBJECT
 public:
 	LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* dialog);
 	
-	virtual ~LineSymbolSettings();
+	~LineSymbolSettings() override;
 	
-	virtual void reset(Symbol* symbol);
+	void reset(Symbol* symbol) override;
 	
 	/**
 	 * Updates the content and state of all input fields.

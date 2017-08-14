@@ -58,7 +58,7 @@ class EditPointTool : public EditTool
 Q_OBJECT
 public:
 	EditPointTool(MapEditorController* editor, QAction* tool_action);
-	virtual ~EditPointTool();
+	~EditPointTool() override;
 	
 	/**
 	 * Returns true if new points shall be added as dash points by default.

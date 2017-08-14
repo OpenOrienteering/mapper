@@ -53,7 +53,7 @@ public:
 	ColorItemDelegate(QObject* parent = nullptr);
 	
 	/** Renders the delegate. Reimplemented from QStyledItemDelegate. */
-	virtual void paint (QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
+	void paint (QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
 };
 
 
@@ -94,19 +94,19 @@ public:
 	/** Returns a new QSpinBox configured according to the delegates properties. 
 	 *  @see QItemDelegate::createEditor().
 	 */
-	virtual QWidget* createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const;
+	QWidget* createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
 	
 	/** Updates the spin box value from the model data with role Qt::UserData.
 	 *  @see QItemDelegate::setEditorData().
 	 */
-	virtual void setEditorData(QWidget* editor, const QModelIndex& index) const;
+	void setEditorData(QWidget* editor, const QModelIndex& index) const override;
 	
 	/** Updates the model from the spin box value. The integer value is stored
 	 *  with role Qt::UserData. Qt::DisplayValue is set to the number followed
 	 *  by a space character and the unit.
 	 *  @see QItemDelegate::setModelData().
 	 */
-	virtual void setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const;
+	void setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const override;
 	
 	/** Updates the model from the given value. The integer value is stored
 	 *  with role Qt::UserData. Qt::DisplayValue is set to the number followed
@@ -118,7 +118,7 @@ public:
 	
 	/** @see QItemDelegate::updateEditorGeometry().
 	 */
-	virtual void updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& index) const;
+	void updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
 	
 private:
 	const int min;
@@ -152,28 +152,28 @@ public:
 	PercentageDelegate(int step = 0);
 	
 	/** Formats the raw value as integer percentage. */
-	virtual QString	displayText(const QVariant& value, const QLocale& locale) const;
+	QString	displayText(const QVariant& value, const QLocale& locale) const override;
 	
 	/** Returns a new QSpinBox configured according to the delegates properties. 
 	 *  @see QItemDelegate::createEditor().
 	 */
-	virtual QWidget* createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const;
+	QWidget* createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
 	
 	/** Updates the spin box value from the model data with role Qt::UserData.
 	 *  @see QItemDelegate::setEditorData().
 	 */
-	virtual void setEditorData(QWidget* editor, const QModelIndex& index) const;
+	void setEditorData(QWidget* editor, const QModelIndex& index) const override;
 	
 	/** Updates the model from the spin box value. The integer value is stored
 	 *  with role Qt::UserData. Qt::DisplayValue is set to the number followed
 	 *  by a space character and the unit.
 	 *  @see QItemDelegate::setModelData().
 	 */
-	virtual void setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const;
+	void setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const override;
 	
 	/** @see QItemDelegate::updateEditorGeometry().
 	 */
-	virtual void updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& index) const;
+	void updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
 	
 private:
 	const int step;
@@ -220,21 +220,21 @@ public:
 	/**
 	 * Destructor.
 	 */
-	virtual ~TextDocItemDelegate();
+	~TextDocItemDelegate() override;
 	
 	/**
 	 * Paints the item using a QTextDocument if one is available from the Provider.
 	 * 
 	 * @override
 	 */
-	virtual void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex & index) const;
+	void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex & index) const override;
 	
 	/**
 	* Determines the size hint from a QTextDocument if one is available from the Provider.
 	* 
 	* @override
 	*/
-	virtual QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const;
+	QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const override;
 	
 protected:
 	/**
