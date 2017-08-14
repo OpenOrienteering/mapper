@@ -935,6 +935,7 @@ void PrintWidget::updateResolutions(const QPrinterInfo* target) const
 	// Resolution list item with unit "dpi"
 	static QString dpi_template(QLatin1String("%1 ") + tr("dpi"));
 	QStringList resolutions;
+	resolutions.reserve(supported_resolutions.size());
 	for (auto resolution : qAsConst(supported_resolutions))
 		resolutions << dpi_template.arg(resolution);
 	

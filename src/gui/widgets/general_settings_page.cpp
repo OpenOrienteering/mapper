@@ -120,6 +120,7 @@ GeneralSettingsPage::GeneralSettingsPage(QWidget* parent)
 	encoding_box->addItem(available_codecs.first());
 	encoding_box->addItem(QString::fromLatin1("Windows-1252")); // Serves as an example, not translated.
 	const auto available_codecs_raw = QTextCodec::availableCodecs();
+	available_codecs.reserve(available_codecs_raw.size());
 	for (const QByteArray& item : available_codecs_raw)
 	{
 		available_codecs.append(QString::fromUtf8(item));

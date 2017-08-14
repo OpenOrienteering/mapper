@@ -45,6 +45,7 @@ UTMZoneEdit::UTMZoneEdit(CRSParameterWidgetObserver& observer, QWidget* parent)
 	static QStringList zone_list;
 	if (zone_list.isEmpty())
 	{
+		zone_list.reserve((60 + 9) * 2);
 		for (int i = 1; i <= 60; ++i)
 		{
 			QString zone = QString::number(i);

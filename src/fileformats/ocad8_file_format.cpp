@@ -189,7 +189,8 @@ void OCAD8FileImport::import(bool load_symbols_only)
 			if (ocad_halftone <= 200)
 			{
 				float halftone = 0.005f * ocad_halftone;
-				components.push_back(SpotColorComponent(separations[j], halftone));
+				components.reserve(std::size_t(num_separations));  // reserves only once for same capacity
+				components.push_back(SpotColorComponent(separations[j], halftone));  // clazy:exclude=reserve-candidates
 			}
 		}
 		if (!components.empty())

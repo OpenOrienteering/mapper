@@ -399,6 +399,7 @@ bool TemplateTrack::import(QWidget* dialog_parent)
 	DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(map);
 	MapPart* part = map->getCurrentPart();
 	std::vector< Object* > result;
+	// clazy:excludeall=reserve-candidates
 	
 	map->clearObjectSelection(false);
 	
