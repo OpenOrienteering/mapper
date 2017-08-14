@@ -3915,7 +3915,7 @@ bool MapEditorController::importMapFile(const QString& filename, bool show_error
 		
 		auto crt_filename = filename;
 		crt_filename.replace(filename.lastIndexOf(QLatin1Char('.')), 4, QLatin1String(".crt"));
-		if (!QFileInfo{crt_filename}.exists())
+		if (!QFileInfo::exists(crt_filename))
 			crt_filename.replace(filename.lastIndexOf(QLatin1Char('.')), 4, QLatin1String(".CRT"));
 		
 		QFile crt_file{ crt_filename };

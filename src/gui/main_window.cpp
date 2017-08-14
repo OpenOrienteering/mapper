@@ -757,7 +757,7 @@ bool MainWindow::openPath(const QString &path)
 	
 	QString new_actual_path = path;
 	QString autosave_path = Autosave::autosavePath(path);
-	bool new_autosave_conflict = QFileInfo(autosave_path).exists();
+	bool new_autosave_conflict = QFileInfo::exists(autosave_path);
 	if (new_autosave_conflict)
 	{
 #if defined(Q_OS_ANDROID)
