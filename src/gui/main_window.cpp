@@ -737,7 +737,10 @@ bool MainWindow::openPath(const QString &path)
 	if (open_in_progress == path)
 	{
 		int result = QMessageBox::warning(this, tr("Crash warning"), 
-		  tr("It seems that %1 crashed the last time this file was opened:<br /><tt>%2</tt><br /><br />Really retry to open it?").arg(appName()).arg(path),
+		  tr("It seems that %1 crashed the last time this file was opened:<br />"
+		     "<tt>%2</tt><br /><br />"
+		     "Really retry to open it?")
+		  .arg(appName(), path),
 		  QMessageBox::Yes | QMessageBox::No);
 		settings.remove(reopen_blocker);
 		if (result == QMessageBox::No)

@@ -195,7 +195,8 @@ namespace
 			MapPart* b_part = b.getPart(part);
 			if (a_part->getName().compare(b_part->getName(), Qt::CaseSensitive) != 0)
 			{
-				error = QString::fromLatin1("The names of part #%1 differ (%2 <-> %3).").arg(part).arg(a_part->getName()).arg(b_part->getName());
+				error = QString::fromLatin1("The names of part #%1 differ (%2 <-> %3).")
+				        .arg(QString::number(part), a_part->getName(), b_part->getName());
 				return false;
 			}
 			if (a_part->getNumObjects() != b_part->getNumObjects())
@@ -207,7 +208,8 @@ namespace
 			{
 				if (!a_part->getObject(i)->equals(b_part->getObject(i), true))
 				{
-					error = QString::fromLatin1("Object #%1 (with symbol %2) in part #%3 differs.").arg(i).arg(a_part->getObject(i)->getSymbol()->getName()).arg(part);
+					error = QString::fromLatin1("Object #%1 (with symbol %2) in part #%3 differs.")
+					        .arg(QString::number(i), a_part->getObject(i)->getSymbol()->getName(), QString::number(part));
 					return false;
 				}
 			}

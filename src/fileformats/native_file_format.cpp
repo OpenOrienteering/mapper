@@ -199,8 +199,7 @@ void NativeFileImport::import(bool load_symbols_only)
 		{
 			addWarning(
 			  Importer::tr("The geographic coordinate reference system of the map was \"%1\". This CRS is not supported. Using \"%2\".").
-			  arg(geographic_crs_spec).
-			  arg(Georeferencing::geographic_crs_spec)
+			  arg(geographic_crs_spec, Georeferencing::geographic_crs_spec)
 			);
 		}
 		if (version <= 17)

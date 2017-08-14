@@ -570,9 +570,9 @@ void MapWidget::updateCursorposLabel(const MapCoordF pos)
 	if (coords_type == MAP_COORDS)
 	{
 		cursorpos_label->setText( QStringLiteral("%1 %2 (%3)").
-		  arg(locale().toString(pos.x(), 'f', 2)).
-		  arg(locale().toString(-pos.y(), 'f', 2)).
-		  arg(tr("mm", "millimeters")));
+		  arg(locale().toString(pos.x(), 'f', 2),
+		      locale().toString(-pos.y(), 'f', 2),
+		      tr("mm", "millimeters")) );
 	}
 	else
 	{
@@ -586,17 +586,17 @@ void MapWidget::updateCursorposLabel(const MapCoordF pos)
 				// Grid unit differs less than 2% from meter.
 				cursorpos_label->setText(
 				  QStringLiteral("%1 %2 (%3)").
-				  arg(QString::number(projected_point.x(), 'f', 0)).
-				  arg(QString::number(projected_point.y(), 'f', 0)).
-				  arg(tr("m", "meters"))
+				  arg(QString::number(projected_point.x(), 'f', 0),
+				      QString::number(projected_point.y(), 'f', 0),
+				      tr("m", "meters"))
 				); 
 			}
 			else
 			{
 				cursorpos_label->setText(
 				  QStringLiteral("%1 %2").
-				  arg(QString::number(projected_point.x(), 'f', 0)).
-				  arg(QString::number(projected_point.y(), 'f', 0))
+				  arg(QString::number(projected_point.x(), 'f', 0),
+				      QString::number(projected_point.y(), 'f', 0))
 				); 
 			}
 		}
@@ -605,8 +605,8 @@ void MapWidget::updateCursorposLabel(const MapCoordF pos)
 			const LatLon lat_lon(georef.toGeographicCoords(pos, &ok));
 			cursorpos_label->setText(
 			  QString::fromUtf8("%1° %2°").
-			  arg(locale().toString(lat_lon.latitude(), 'f', 6)).
-			  arg(locale().toString(lat_lon.longitude(), 'f', 6))
+			  arg(locale().toString(lat_lon.latitude(), 'f', 6),
+			      locale().toString(lat_lon.longitude(), 'f', 6))
 			); 
 		}
 		else if (coords_type == GEOGRAPHIC_COORDS_DMS)
@@ -614,8 +614,8 @@ void MapWidget::updateCursorposLabel(const MapCoordF pos)
 			const LatLon lat_lon(georef.toGeographicCoords(pos, &ok));
 			cursorpos_label->setText(
 			  QStringLiteral("%1 %2").
-			  arg(georef.degToDMS(lat_lon.latitude())).
-			  arg(georef.degToDMS(lat_lon.longitude()))
+			  arg(georef.degToDMS(lat_lon.latitude()),
+			      georef.degToDMS(lat_lon.longitude()))
 			); 
 		}
 		else

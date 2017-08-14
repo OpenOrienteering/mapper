@@ -576,8 +576,7 @@ void XMLFileImporter::importGeoreferencing(bool load_symbols_only)
 		if (error_text.isEmpty())
 			error_text = tr("Unknown error");
 		addWarning(tr("Unsupported or invalid georeferencing specification '%1': %2").
-		           arg(georef.getProjectedCRSSpec()).
-		           arg(error_text));
+		           arg(georef.getProjectedCRSSpec(), error_text));
 	}
 	
 	if (MapCoord::boundsOffset().isZero())

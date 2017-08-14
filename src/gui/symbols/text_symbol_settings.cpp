@@ -451,7 +451,10 @@ void TextSymbolSettings::addCustomTabClicked()
 {
 	bool ok = false;
 	// FIXME: Unit of measurement display in unusual way
-	double position = QInputDialog::getDouble(dialog, tr("Add custom tabulator"), QString::fromLatin1("%1 (%2)").arg(tr("Position:")).arg(tr("mm")), 0, 0, 999999, 3, &ok);
+	double position = QInputDialog::getDouble(dialog, 
+	                                          tr("Add custom tabulator"),
+	                                          QStringLiteral("%1 (%2)").arg(tr("Position:"), tr("mm")),
+	                                          0, 0, 999999, 3, &ok);
 	if (ok)
 	{
 		int int_position = qRound(1000 * position);

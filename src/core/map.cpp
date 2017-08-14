@@ -682,9 +682,7 @@ bool Map::exportTo(const QString& path, MapView* view, const FileFormat* format)
 		QMessageBox::warning(
 		  nullptr,
 		  tr("Error"),
-		  /** @todo: Switch to the latter when translated. */ true ?
-		  tr("Cannot open file:\n%1\n\n%2").arg(path).arg(file.errorString()) :
-		  tr("Cannot save file\n%1:\n%2")
+		  tr("Cannot save file\n%1:\n%2").arg(path, file.errorString())
 		);
 	}
 	else if (!exporter->warnings().empty())
@@ -801,7 +799,7 @@ bool Map::loadFrom(const QString& path, QWidget* dialog_parent, MapView* view, b
 			QMessageBox::warning(
 			 dialog_parent,
 			 tr("Error"),
-			 tr("Cannot open file:\n%1\n\n%2").arg(path).arg(error_msg)
+			 tr("Cannot open file:\n%1\n\n%2").arg(path, error_msg)
 			);
 		return false;
 	}
@@ -838,9 +836,10 @@ void Map::importMap(
 	    && other->getScaleDenominator() != getScaleDenominator())
 	{
 		int answer = QMessageBox::question(dialog_parent, tr("Question"),
-										   tr("The scale of the imported data is 1:%1 which is different from this map's scale of 1:%2.\n\nRescale the imported data?")
-										   .arg(QLocale().toString(other->getScaleDenominator()))
-										   .arg(QLocale().toString(getScaleDenominator())), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+		                                   tr("The scale of the imported data is 1:%1 which is different from this map's scale of 1:%2.\n\nRescale the imported data?")
+		                                   .arg(QLocale().toString(other->getScaleDenominator()),
+		                                        QLocale().toString(getScaleDenominator())),
+		                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 		if (answer == QMessageBox::Yes)
 		{
 			/// \todo No need to clone iff the other map is discarded after import.

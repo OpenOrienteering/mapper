@@ -681,9 +681,9 @@ void EditPointTool::updateStatusText()
 	{
 		MapCoordF drag_vector = constrained_pos_map - click_pos_map;
 		text = EditTool::tr("<b>Coordinate offset:</b> %1, %2 mm  <b>Distance:</b> %3 m ").
-		       arg(QLocale().toString(drag_vector.x(), 'f', 1)).
-		       arg(QLocale().toString(-drag_vector.y(), 'f', 1)).
-		       arg(QLocale().toString(0.001 * map()->getScaleDenominator() * drag_vector.length(), 'f', 1)) +
+		       arg(QLocale().toString(drag_vector.x(), 'f', 1),
+		           QLocale().toString(-drag_vector.y(), 'f', 1),
+		           QLocale().toString(0.001 * map()->getScaleDenominator() * drag_vector.length(), 'f', 1)) +
 		       QLatin1String("| ");
 		
 		if (!angle_helper->isActive())

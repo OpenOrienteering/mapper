@@ -40,15 +40,15 @@ AutosaveDialog::AutosaveDialog(QString path, QString autosave_path, QString actu
 	
 	QFileInfo autosaved_file_info(autosave_path);
 	autosaved_text.setHtml(text_template.
-	   arg(tr("Autosaved file")).
-	   arg(autosaved_file_info.lastModified().toLocalTime().toString()).
-	   arg(tr("%n bytes", 0, autosaved_file_info.size())));
+	   arg(tr("Autosaved file"),
+	       autosaved_file_info.lastModified().toLocalTime().toString(),
+	       tr("%n bytes", 0, autosaved_file_info.size())));
 	
 	QFileInfo user_saved_file_info(path);
 	user_saved_text.setHtml(text_template.
-	   arg(tr("File saved by the user")).
-	   arg(user_saved_file_info.lastModified().toLocalTime().toString()).
-	   arg(tr("%n bytes", 0, user_saved_file_info.size())));
+	   arg(tr("File saved by the user"),
+	       user_saved_file_info.lastModified().toLocalTime().toString(),
+	       tr("%n bytes", 0, user_saved_file_info.size())) );
 	
 	layout = new QVBoxLayout();
 	setLayout(layout);

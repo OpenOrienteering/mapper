@@ -3635,7 +3635,9 @@ void MapEditorController::mergeCurrentMapPartTo(int target)
 	        QMessageBox::question(
 	            window,
                 tr("Merge map parts"),
-                tr("Do you want to move all objects from map part \"%1\" to \"%2\", and to remove \"%1\"?").arg(source_part->getName()).arg(target_part->getName()),
+                tr("Do you want to move all objects from map part \"%1\" to \"%2\", "
+	               "and to remove \"%1\"?")
+	            .arg(source_part->getName(), target_part->getName()),
                 QMessageBox::Yes | QMessageBox::No );
 	
 	if (button == QMessageBox::Yes)
