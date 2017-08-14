@@ -567,7 +567,7 @@ void EditPointTool::drawImpl(QPainter* painter, MapWidget* widget)
 	auto num_selected_objects = map()->selectedObjects().size();
 	if (num_selected_objects > 0)
 	{
-		drawSelectionOrPreviewObjects(painter, widget, text_editor);
+		drawSelectionOrPreviewObjects(painter, widget, bool(text_editor));
 		
 		if (!text_editor)
 		{
