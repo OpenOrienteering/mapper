@@ -70,10 +70,15 @@ public:
 	 */
 	MapPart(const QString& name, Map* map);
 	
+	MapPart(const MapPart&) = delete;
+	
 	/**
 	 * Destroys the map part.
 	 */
 	~MapPart();
+	
+	
+	MapPart& operator=(const MapPart&) = delete;
 	
 	
 	/**

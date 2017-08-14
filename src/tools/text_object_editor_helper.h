@@ -102,6 +102,8 @@ public:
 		 */
 		BatchEdit(not_null<TextObjectEditorHelper*> editor, int actions = CommitPreedit | UpdateInputProperties);
 		
+		BatchEdit(const BatchEdit&) = delete;
+		
 		/**
 		 * Destructor.
 		 * 
@@ -110,6 +112,8 @@ public:
 		 * TextObjectEditorHelper::commitStateChange().
 		 */
 		~BatchEdit();
+		
+		BatchEdit& operator=(const BatchEdit&) = delete;
 		
 	private:
 		TextObjectEditorHelper* const editor;

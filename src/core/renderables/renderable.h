@@ -238,6 +238,9 @@ class SharedRenderables : public QSharedData, public std::map< PainterConfig, Re
 {
 public:
 	typedef QExplicitlySharedDataPointer<SharedRenderables> Pointer;
+	SharedRenderables() = default;
+	SharedRenderables(const SharedRenderables&) = delete;
+	SharedRenderables& operator=(const SharedRenderables&) = delete;
 	~SharedRenderables();
 	void deleteRenderables();
 	void compact(); // release memory which is occupied by unused PainterConfig, FIXME: maybe call this regularly...
@@ -254,6 +257,8 @@ class ObjectRenderables : protected std::map<int, SharedRenderables::Pointer>
 friend class MapRenderables;
 public:
 	ObjectRenderables(Object& object);
+	ObjectRenderables(const ObjectRenderables&) = delete;
+	ObjectRenderables& operator=(const ObjectRenderables&) = delete;
 	~ObjectRenderables();
 	
 	inline void insertRenderable(Renderable* r);

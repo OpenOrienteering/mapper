@@ -88,6 +88,8 @@ Q_OBJECT
 		EditedItem& operator=(const EditedItem& prototype);
 		EditedItem& operator=(EditedItem&& prototype) noexcept;
 		
+		~EditedItem() = default;
+		
 		bool isModified() const;
 	};
 	

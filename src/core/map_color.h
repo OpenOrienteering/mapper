@@ -42,28 +42,28 @@ class MapColor;
 struct MapColorCmyk
 {
 	/** The cyan component. */
-	float c;
+	float c = 0;
 	/** The magenta component. */
-	float m;
+	float m = 0;
 	/** The yellow component. */
-	float y;
+	float y = 0;
 	/** The black component (aka key). */
-	float k;
+	float k = 1;
 	
 	/** Constructs a black color. */
-	MapColorCmyk();
+	MapColorCmyk() noexcept = default;
 	
 	/** Constructs a color with the given components. */
-	MapColorCmyk(float c, float m, float y, float k);
+	MapColorCmyk(float c, float m, float y, float k) noexcept;
 	
 	/** Constructs a copy of the given CMYK color. */
-	MapColorCmyk(const MapColorCmyk& other);
+	MapColorCmyk(const MapColorCmyk& other) noexcept = default;
 	
 	/** Constructs a CMYK color of the given QColor. Used for type conversions. */
-	MapColorCmyk(const QColor& other);
+	MapColorCmyk(const QColor& other) noexcept;
 	
 	/** Assigns another color's value to this color. */
-	void operator=(const MapColorCmyk& other);
+	MapColorCmyk& operator=(const MapColorCmyk& other) = default;
 	
 	/** Converts this color to a QColor. */
 	operator QColor() const;
@@ -91,26 +91,26 @@ bool operator!=(const MapColorCmyk& lhs, const MapColorCmyk& rhs);
 struct MapColorRgb
 {
 	/** The red component. */
-	float r;
+	float r = 0;
 	/** The green component. */
-	float g;
+	float g = 0;
 	/** The blue component. */
-	float b;
+	float b = 0;
 	
 	/** Constructs a black color. */
-	MapColorRgb();
+	MapColorRgb() noexcept = default;
 	
 	/** Constructs a color with the given components. */
-	MapColorRgb(float r, float g, float b);
+	MapColorRgb(float r, float g, float b) noexcept;
 	
 	/** Constructs a copy of the given RGB color. */
-	MapColorRgb(const MapColorRgb& other);
+	MapColorRgb(const MapColorRgb& other) noexcept = default;
 	
 	/** Constructs a RGB color of the given QColor. Used for type conversions. */
-	MapColorRgb(const QColor& other);
+	MapColorRgb(const QColor& other) noexcept;
 	
 	/** Assigns another color's value to this color. */
-	void operator=(const MapColorRgb& other);
+	MapColorRgb& operator=(const MapColorRgb& other) noexcept = default;
 	
 	/** Converts this color to a QColor. */
 	operator QColor() const;
@@ -517,40 +517,17 @@ QColor colorWithOpacity(const MapColor& c);
 // ### MapColorCmyk inline code ###
 
 inline
-MapColorCmyk::MapColorCmyk()
- : c(0.0f), m(0.0f), y(0.0f), k(1.0f)
-{
-	Q_ASSERT(isBlack());
-}
-
-inline
-MapColorCmyk::MapColorCmyk(float c, float m, float y, float k)
+MapColorCmyk::MapColorCmyk(float c, float m, float y, float k) noexcept
  : c(c), m(m), y(y), k(k) 
 {
 	// Nothing
 }
 
 inline
-MapColorCmyk::MapColorCmyk(const MapColorCmyk& other)
- : c(other.c), m(other.m), y(other.y), k(other.k)
-{
-	// Nothing
-}
-
-inline
-MapColorCmyk::MapColorCmyk(const QColor& other)
+MapColorCmyk::MapColorCmyk(const QColor& other) noexcept
  : c(other.cyanF()), m(other.magentaF()), y(other.yellowF()), k(other.blackF())
 {
 	// Nothing
-}
-
-inline
-void MapColorCmyk::operator=(const MapColorCmyk& other)
-{
-	c = other.c;
-	m = other.m;
-	y = other.y;
-	k = other.k;
 }
 
 inline
@@ -593,39 +570,17 @@ bool operator!=(const MapColorCmyk& lhs, const MapColorCmyk& rhs)
 // ### MapColorRgb inline code ###
 
 inline
-MapColorRgb::MapColorRgb()
- : r(0.0f), g(0.0f), b(0.0f)
-{
-	Q_ASSERT(isBlack());
-}
-
-inline
-MapColorRgb::MapColorRgb(float r, float g, float b)
+MapColorRgb::MapColorRgb(float r, float g, float b) noexcept
  : r(r), g(g), b(b)
 {
 	// Nothing
 }
 
 inline
-MapColorRgb::MapColorRgb(const MapColorRgb& other)
- : r(other.r), g(other.g), b(other.b)
-{
-	// Nothing
-}
-
-inline
-MapColorRgb::MapColorRgb(const QColor& other)
+MapColorRgb::MapColorRgb(const QColor& other) noexcept
  : r(other.redF()), g(other.greenF()), b(other.blueF())
 {
 	// Nothing
-}
-
-inline
-void MapColorRgb::operator=(const MapColorRgb& other)
-{
-	r = other.r;
-	g = other.g;
-	b = other.b;
 }
 
 inline

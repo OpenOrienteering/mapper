@@ -346,7 +346,8 @@ public:
 	        const VirtualPath& path
 	);
 	
-public:
+	~PathPart() = default;
+	
 	PathPart& operator=(const PathPart& rhs);
 	
 	/**
