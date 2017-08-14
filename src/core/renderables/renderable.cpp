@@ -169,7 +169,7 @@ void ObjectRenderables::setClipPath(const QPainterPath* path)
 	clip_path = path;
 }
 
-void ObjectRenderables::insertRenderable(Renderable* r, PainterConfig state)
+void ObjectRenderables::insertRenderable(Renderable* r, const PainterConfig& state)
 {
 	SharedRenderables::Pointer& container(operator[](state.color_priority));
 	if (!container)

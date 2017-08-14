@@ -85,7 +85,7 @@ void TemplateTransform::load(QIODevice* file)
 
 #endif
 
-void TemplateTransform::save(QXmlStreamWriter& xml, const QString role) const
+void TemplateTransform::save(QXmlStreamWriter& xml, const QString& role) const
 {
 	xml.writeStartElement(QString::fromLatin1("transformation"));
 	xml.writeAttribute(QString::fromLatin1("role"), role);

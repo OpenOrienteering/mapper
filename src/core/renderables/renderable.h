@@ -257,7 +257,7 @@ public:
 	~ObjectRenderables();
 	
 	inline void insertRenderable(Renderable* r);
-	void insertRenderable(Renderable* r, PainterConfig state);
+	void insertRenderable(Renderable* r, const PainterConfig& state);
 	
 	void clear();
 	void deleteRenderables();

@@ -184,7 +184,7 @@ int SymbolPropertiesWidget::indexOfPropertiesGroup(const QString& name) const
 	return -1;
 }
 
-void SymbolPropertiesWidget::numberChanged(QString text)
+void SymbolPropertiesWidget::numberChanged(const QString& text)
 {
 	bool editors_enabled = true;
 	int i = 0;
@@ -257,7 +257,7 @@ void SymbolPropertiesWidget::editClicked()
 	}
 }
 
-void SymbolPropertiesWidget::nameChanged(QString text)
+void SymbolPropertiesWidget::nameChanged(const QString& text)
 {
 	symbol->setName(text);
 	emit propertiesModified();

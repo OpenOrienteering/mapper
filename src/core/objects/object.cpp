@@ -1110,7 +1110,7 @@ void PathObject::normalize()
 	}
 }
 
-bool PathObject::intersectsBox(QRectF box) const
+bool PathObject::intersectsBox(const QRectF& box) const
 {
 	// Check path parts for an intersection with box
 	if (std::any_of(begin(path_parts), end(path_parts), [&box](const PathPart& part) { return part.intersectsBox(box); }))
@@ -3248,7 +3248,7 @@ void PointObject::setRotation(MapCoordF vector)
 	setRotation(atan2(vector.x(), vector.y()));
 }
 
-bool PointObject::intersectsBox(QRectF box) const
+bool PointObject::intersectsBox(const QRectF& box) const
 {
 	return box.contains(QPointF(coords.front()));
 }

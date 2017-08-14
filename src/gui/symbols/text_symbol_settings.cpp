@@ -247,7 +247,7 @@ TextSymbolSettings::~TextSymbolSettings()
 {
 }
 
-void TextSymbolSettings::fontChanged(QFont font)
+void TextSymbolSettings::fontChanged(const QFont& font)
 {
 	if (!react_to_changes)
 		return;

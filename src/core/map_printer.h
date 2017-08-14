@@ -371,7 +371,7 @@ signals:
 	 *  @param value Reflects the progress in the range from 1 (just started)
 	 *               to 100 (finished).
 	 *  @param status A verbal representation of what printMap() is doing. */
-	void printProgress(int value, QString status) const;
+	void printProgress(int value, const QString& status) const;
 	
 protected:
 	/** Returns true if vector mode is set. */

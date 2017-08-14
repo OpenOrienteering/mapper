@@ -483,7 +483,7 @@ bool EditPointTool::inputMethodEvent(QInputMethodEvent* event)
 	return MapEditorTool::inputMethodEvent(event);
 }
 
-QVariant EditPointTool::inputMethodQuery(Qt::InputMethodQuery property, QVariant argument) const
+QVariant EditPointTool::inputMethodQuery(Qt::InputMethodQuery property, const QVariant& argument) const
 {
 	auto result = QVariant { };
 	if (text_editor)

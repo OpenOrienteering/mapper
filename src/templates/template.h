@@ -98,7 +98,7 @@ struct TemplateTransform
 	
 	void load(QIODevice* file);
 	
-	void save(QXmlStreamWriter& xml, const QString role) const;
+	void save(QXmlStreamWriter& xml, const QString& role) const;
  	void load(QXmlStreamReader& xml);
 };
 
@@ -308,7 +308,7 @@ public:
 	 * The scale is the combined view & template scale. It can be used to give
 	 * a minimum size to elements.
 	 */
-    virtual void drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, bool on_screen, float opacity) const = 0;
+    virtual void drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, float opacity) const = 0;
 	
 	
 	/** 

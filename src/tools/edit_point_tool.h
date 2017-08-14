@@ -93,7 +93,7 @@ protected:
 	bool keyPress(QKeyEvent* event) override;
 	bool keyRelease(QKeyEvent* event) override;
 	bool inputMethodEvent(QInputMethodEvent* event) override;
-	QVariant inputMethodQuery(Qt::InputMethodQuery property, QVariant argument) const override;
+	QVariant inputMethodQuery(Qt::InputMethodQuery property, const QVariant& argument) const override;
 	
 	void initImpl() override;
 	void objectSelectionChangedImpl() override;

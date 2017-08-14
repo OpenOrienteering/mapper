@@ -59,7 +59,7 @@ public:
 	
 	/** Sets an option in this importer or exporter.
 	 */
-	void setOption(const QString& name, QVariant value);
+	void setOption(const QString& name, const QVariant& value);
 	
 	/** Retrieves the value of an options in this importer or exporter. If the option does not have
 	 *  a value - either a default value assigned in the constructor, or a custom value assigned
@@ -216,7 +216,7 @@ void ImportExport::addWarning(const QString& str)
 }
 
 inline
-void ImportExport::setOption(const QString& name, QVariant value)
+void ImportExport::setOption(const QString& name, const QVariant& value)
 {
 	options[name] = value;
 }

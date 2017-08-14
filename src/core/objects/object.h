@@ -218,7 +218,7 @@ public:
 	/**
 	 * Checks if a path point (excluding curve control points) is included in the given box.
 	 */
-	virtual bool intersectsBox(QRectF box) const = 0;
+	virtual bool intersectsBox(const QRectF& box) const = 0;
 	
 	/** Takes ownership of the renderables */
 	void takeRenderables();
@@ -493,7 +493,7 @@ public:
 	void normalize();
 	
 	
-	bool intersectsBox(QRectF box) const override;
+	bool intersectsBox(const QRectF& box) const override;
 	
 	
 	// Coordinate access methods
@@ -997,7 +997,7 @@ public:
 	float getRotation() const;
 	
 	
-	bool intersectsBox(QRectF box) const override;
+	bool intersectsBox(const QRectF& box) const override;
 	
 	
 private:

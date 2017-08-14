@@ -29,7 +29,7 @@
 
 #include "main_window.h"
 
-AutosaveDialog::AutosaveDialog(QString path, QString autosave_path, QString actual_path, MainWindow* parent, Qt::WindowFlags f)
+AutosaveDialog::AutosaveDialog(const QString& path, const QString& autosave_path, const QString& actual_path, MainWindow* parent, Qt::WindowFlags f)
 : QDialog(parent, f)
 , main_window(parent)
 , original_path(path)
@@ -136,7 +136,7 @@ QString AutosaveDialog::selectedPath() const
 }
 
 // slot
-void AutosaveDialog::setSelectedPath(QString path)
+void AutosaveDialog::setSelectedPath(const QString& path)
 {
 	if (path == original_path)
 		list_widget->setCurrentRow(1);

@@ -51,7 +51,7 @@ struct TrackPoint
 	int num_satellites;		// -1 if invalid
 	float hDOP;				// -1 if invalid
 	
-	TrackPoint(LatLon coord = LatLon(), QDateTime datetime = QDateTime(),
+	TrackPoint(LatLon coord = LatLon(), const QDateTime& datetime = QDateTime(),
 			   float elevation = -9999, int num_satellites = -1, float hDOP = -1);
 	void save(QXmlStreamWriter* stream) const;
 };

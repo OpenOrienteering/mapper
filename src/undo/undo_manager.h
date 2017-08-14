@@ -240,7 +240,7 @@ protected:
 	 * 
 	 * begin and end must be iterators on list.
 	 */
-	void clear(StepList& list, StepList::iterator begin, StepList::iterator end);
+	static void clear(StepList& list, StepList::iterator begin, StepList::iterator end);
 	
 	/**
 	 * Deletes all redo steps and removes them from undo_steps.

@@ -77,7 +77,7 @@ protected slots:
 	 * @param value   The progress, from 0 (not started) to 100 (finished).
 	 * @param message The text to be shown as a label to the progress.
 	 */
-	void setProgress(int value, QString message);
+	void setProgress(int value, const QString& message);
 	
 private:
 	MapPrinter* const map_printer;

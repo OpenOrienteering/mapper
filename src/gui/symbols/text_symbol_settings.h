@@ -62,7 +62,7 @@ public:
 	void updateCompatibilityContents();
 	
 protected slots:
-	void fontChanged(QFont font);
+	void fontChanged(const QFont& font);
 	void fontSizeChanged(double value);
 	void letterSizeChanged();
 	void colorChanged();

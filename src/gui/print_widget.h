@@ -130,7 +130,7 @@ signals:
 	 * This signal is emitted when the type of task changes.
 	 * It may be used to set a window title.
 	 */
-	void taskChanged(QString name);
+	void taskChanged(const QString& name);
 	
 	/**
 	 * This signal is emitted when a print or export job has been started 

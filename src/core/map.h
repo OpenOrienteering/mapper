@@ -285,7 +285,7 @@ public:
 	 * @param on_screen If true, uses a cosmetic pen (one pixel wide),
 	 *                  otherwise uses a 0.1 mm wide pen.
 	 */
-	void drawGrid(QPainter* painter, QRectF bounding_box, bool on_screen);
+	void drawGrid(QPainter* painter, const QRectF& bounding_box, bool on_screen);
 	
 	/**
 	 * Draws the templates with indices first_template until last_template which
@@ -304,7 +304,7 @@ public:
 	 * @param on_screen Potentially enables some drawing optimizations which
 	 *     decrease drawing quality. Should be enabled when drawing on-screen.
 	 */
-	void drawTemplates(QPainter* painter, QRectF bounding_box, int first_template,
+	void drawTemplates(QPainter* painter, const QRectF& bounding_box, int first_template,
 					   int last_template, const MapView* view, bool on_screen) const;
 	
 	
@@ -365,7 +365,7 @@ public:
 	 *     3 for pixel_border.
 	 * @param do_update Whether a repaint of the covered area should be triggered.
 	 */
-	void setDrawingBoundingBox(QRectF map_coords_rect, int pixel_border, bool do_update = true);
+	void setDrawingBoundingBox(const QRectF& map_coords_rect, int pixel_border, bool do_update = true);
 	
 	/**
 	 * Removes the drawing bounding box and triggers a repaint. Use this if
@@ -378,7 +378,7 @@ public:
 	 * This is the analogon to setDrawingBoundingBox() for activities.
 	 * See setDrawingBoundingBox().
 	 */
-	void setActivityBoundingBox(QRectF map_coords_rect, int pixel_border, bool do_update = true);
+	void setActivityBoundingBox(const QRectF& map_coords_rect, int pixel_border, bool do_update = true);
 	
 	/**
 	 * This is the analogon to clearDrawingBoundingBox() for activities.
@@ -393,7 +393,7 @@ public:
 	 * 
 	 * See setDrawingBoundingBox() and setActivityBoundingBox().
 	 */
-	void updateDrawing(QRectF map_coords_rect, int pixel_border);
+	void updateDrawing(const QRectF& map_coords_rect, int pixel_border);
 	
 	
 	
@@ -637,7 +637,7 @@ public:
 	 * Warning: does nothing if the template is not visible in a widget!
 	 * So make sure to call this and showing/hiding a template in the correct order!
 	 */
-	void setTemplateAreaDirty(Template* temp, QRectF area, int pixel_border);
+	void setTemplateAreaDirty(Template* temp, const QRectF& area, int pixel_border);
 	
 	/**
 	 * Marks the whole area of the i-th template as "to be repainted".
@@ -841,7 +841,7 @@ public:
 	 * Marks the area given by map_coords_rect as "dirty" in all map widgets,
 	 * i.e. as needing to be redrawn because some object(s) changed there.
 	 */
-	void setObjectAreaDirty(QRectF map_coords_rect);
+	void setObjectAreaDirty(const QRectF& map_coords_rect);
 	
 	/**
 	 * Finds and returns all objects at the given position in the current part.
@@ -902,7 +902,7 @@ public:
 	 * @param map_coord_rect The query rect.
 	 * @param include_hidden_objects Set to true if you want to find hidden objects.
 	 */
-	int countObjectsInRect(QRectF map_coord_rect, bool include_hidden_objects);
+	int countObjectsInRect(const QRectF& map_coord_rect, bool include_hidden_objects);
 	
 	
 	/**

@@ -67,7 +67,7 @@ public:
 	virtual bool postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view);
 	virtual void unloadTemplateFileImpl();
 	
-    virtual void drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, bool on_screen, float opacity) const;
+    virtual void drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, float opacity) const;
 	virtual QRectF getTemplateExtent() const;
     virtual QRectF calculateTemplateBoundingBox() const;
     virtual int getTemplateBoundingBoxPixelBorder();

@@ -397,7 +397,7 @@ void MapWidget::moveDirtyRect(QRect& dirty_rect, qreal x, qreal y)
 		dirty_rect = dirty_rect.translated(x, y).intersected(rect());
 }
 
-void MapWidget::markTemplateCacheDirty(QRectF view_rect, int pixel_border, bool front_cache)
+void MapWidget::markTemplateCacheDirty(const QRectF& view_rect, int pixel_border, bool front_cache)
 {
 	QRect& cache_dirty_rect = front_cache ? above_template_cache_dirty_rect : below_template_cache_dirty_rect;
 	QRectF viewport_rect = viewToViewport(view_rect);
@@ -415,12 +415,12 @@ void MapWidget::markTemplateCacheDirty(QRectF view_rect, int pixel_border, bool 
 	update(integer_rect);
 }
 
-void MapWidget::markObjectAreaDirty(QRectF map_rect)
+void MapWidget::markObjectAreaDirty(const QRectF& map_rect)
 {
 	updateMapRect(map_rect, 0, map_cache_dirty_rect);
 }
 
-void MapWidget::setDrawingBoundingBox(QRectF map_rect, int pixel_border, bool do_update)
+void MapWidget::setDrawingBoundingBox(const QRectF& map_rect, int pixel_border, bool do_update)
 {
 	Q_UNUSED(do_update);
 	clearDrawingBoundingBox();
@@ -442,7 +442,7 @@ void MapWidget::clearDrawingBoundingBox()
 	}
 }
 
-void MapWidget::setActivityBoundingBox(QRectF map_rect, int pixel_border, bool do_update)
+void MapWidget::setActivityBoundingBox(const QRectF& map_rect, int pixel_border, bool do_update)
 {
 	Q_UNUSED(do_update);
 	clearActivityBoundingBox();
@@ -491,7 +491,7 @@ void MapWidget::updateViewportRect(QRect viewport_rect, QRect& dirty_rect)
 	}
 }
 
-void MapWidget::updateDrawingLater(QRectF map_rect, int pixel_border)
+void MapWidget::updateDrawingLater(const QRectF& map_rect, int pixel_border)
 {
 	QRect viewport_rect = calculateViewportBoundingBox(map_rect, pixel_border);
 	
@@ -530,7 +530,7 @@ void MapWidget::updateEverythingInRect(const QRect& dirty_rect)
 	update(dirty_rect);
 }
 
-QRect MapWidget::calculateViewportBoundingBox(QRectF map_rect, int pixel_border)
+QRect MapWidget::calculateViewportBoundingBox(const QRectF& map_rect, int pixel_border)
 {
 	QRectF view_rect = view->calculateViewBoundingBox(map_rect);
 	view_rect.adjust(-pixel_border, -pixel_border, +pixel_border, +pixel_border);
@@ -1110,7 +1110,7 @@ QVariant MapWidget::inputMethodQuery(Qt::InputMethodQuery property) const
 	return inputMethodQuery(property, {});
 }
 
-QVariant MapWidget::inputMethodQuery(Qt::InputMethodQuery property, QVariant argument) const
+QVariant MapWidget::inputMethodQuery(Qt::InputMethodQuery property, const QVariant& argument) const
 {
 	QVariant result;
 	if (tool)

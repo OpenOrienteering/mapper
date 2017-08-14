@@ -224,7 +224,7 @@ void TemplateTrack::unloadTemplateFileImpl()
 	track.clear();
 }
 
-void TemplateTrack::drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, bool on_screen, float opacity) const
+void TemplateTrack::drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, float opacity) const
 {
 	Q_UNUSED(clip_rect);
 	Q_UNUSED(scale);

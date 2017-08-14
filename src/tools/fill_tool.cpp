@@ -271,7 +271,7 @@ void FillTool::drawObjectIDs(Map* map, QPainter* painter, const RenderConfig &co
 	}
 }
 
-int FillTool::traceBoundary(QImage image, QPoint start_pixel, QPoint test_pixel, std::vector< QPoint >& out_boundary)
+int FillTool::traceBoundary(const QImage& image, QPoint start_pixel, QPoint test_pixel, std::vector<QPoint>& out_boundary)
 {
 	out_boundary.clear();
 	out_boundary.reserve(4096);
@@ -346,7 +346,7 @@ int FillTool::traceBoundary(QImage image, QPoint start_pixel, QPoint test_pixel,
 	return inside ? 1 : 0;
 }
 
-bool FillTool::fillBoundary(const QImage& image, const std::vector< QPoint >& boundary, QTransform image_to_map)
+bool FillTool::fillBoundary(const QImage& image, const std::vector<QPoint>& boundary, const QTransform& image_to_map)
 {
 	// Test of simpler implementation,
 	// does not work properly like this (would need fixing of path->simplify() and dilatation of path)

@@ -229,7 +229,7 @@ bool DrawTextTool::inputMethodEvent(QInputMethodEvent* event)
 	return MapEditorTool::inputMethodEvent(event);
 }
 
-QVariant DrawTextTool::inputMethodQuery(Qt::InputMethodQuery property, QVariant argument) const
+QVariant DrawTextTool::inputMethodQuery(Qt::InputMethodQuery property, const QVariant& argument) const
 {
 	auto result = QVariant { };
 	if (text_editor)

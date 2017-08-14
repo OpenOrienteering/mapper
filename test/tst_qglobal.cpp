@@ -38,6 +38,7 @@
 #include "util/backports.h"
 
 
+// clazy:excludeall=function-args-by-ref
 struct Overloaded
 {
     void foo() {}

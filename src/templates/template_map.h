@@ -68,7 +68,7 @@ public:
 	void unloadTemplateFileImpl() override;
 	
 	
-	void drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, bool on_screen, float opacity) const override;
+	void drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, float opacity) const override;
 	
 	QRectF getTemplateExtent() const override;
 	

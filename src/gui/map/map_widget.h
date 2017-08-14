@@ -225,14 +225,14 @@ public:
 	 * @param front_cache If set to true, invalidates the cache for templates
 	 *     in front of the map, else invalidates the cache for templates behind the map.
 	 */
-	void markTemplateCacheDirty(QRectF view_rect, int pixel_border, bool front_cache);
+	void markTemplateCacheDirty(const QRectF& view_rect, int pixel_border, bool front_cache);
 	
 	/**
 	 * Mark a rectangular region given in map coordinates of the map cache
 	 * as dirty, i.e. redraw needed.
 	 * This rect is united with possible previous dirty rects of that cache.
 	 */
-	void markObjectAreaDirty(QRectF map_rect);
+	void markObjectAreaDirty(const QRectF& map_rect);
 	
 	/**
 	 * Set the given rect as bounding box for the current drawing, i.e. the
@@ -246,7 +246,7 @@ public:
 	 *     pixels. Allows to specify zoom-independent extents.
 	 * @param do_update If set to true, triggers a redraw of the widget.
 	 */
-	void setDrawingBoundingBox(QRectF map_rect, int pixel_border, bool do_update);
+	void setDrawingBoundingBox(const QRectF& map_rect, int pixel_border, bool do_update);
 	/**
 	 * Removes the area set with setDrawingBoundingBox() and triggers a redraw
 	 * of the widget, if needed.
@@ -254,7 +254,7 @@ public:
 	void clearDrawingBoundingBox();
 	
 	/** Analogon to setDrawingBoundingBox() for activities. */
-	void setActivityBoundingBox(QRectF map_rect, int pixel_border, bool do_update);
+	void setActivityBoundingBox(const QRectF& map_rect, int pixel_border, bool do_update);
 	/** Analogon to clearDrawingBoundingBox() for activities. */
 	void clearActivityBoundingBox();
 	
@@ -277,7 +277,7 @@ public:
 	 * Variant of updateDrawing() which waits for some milliseconds before
 	 * calling update() in order to avoid excessive redraws.
 	 */
-	void updateDrawingLater(QRectF map_rect, int pixel_border);
+	void updateDrawingLater(const QRectF& map_rect, int pixel_border);
 	
 	/**
 	 * Invalidates all caches and redraws the whole widget. Very slow, try to
@@ -341,7 +341,7 @@ public slots:
 	 * This two-argument form is undocumented but attempted to call in
 	 * QInputMethod::queryFocusObject before doing the query via an event.
 	 */
-	QVariant inputMethodQuery(Qt::InputMethodQuery property, QVariant argument) const;
+	QVariant inputMethodQuery(Qt::InputMethodQuery property, const QVariant& argument) const;
 	
 	/** Enables or disables the touch cursor. */
 	void enableTouchCursor(bool enabled);
@@ -415,7 +415,7 @@ private:
 	 * Calculates the bounding box of the given map coordinates rect and
 	 * additional pixel extent in integer viewport coordinates.
 	 */
-	QRect calculateViewportBoundingBox(QRectF map_rect, int pixel_border);
+	QRect calculateViewportBoundingBox(const QRectF& map_rect, int pixel_border);
 	/** Internal method for setting a part of a cache as dirty. */
 	void setDynamicBoundingBox(QRectF map_rect, int pixel_border, QRect& dirty_rect_old, QRectF& dirty_rect_new, int& dirty_rect_new_border, bool do_update);
 	/** Internal method for removing the dirty state of a cache. */

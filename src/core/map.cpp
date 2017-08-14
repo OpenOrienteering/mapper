@@ -1067,12 +1067,12 @@ void Map::drawColorSeparation(QPainter* painter, const RenderConfig& config, con
 	renderables->drawColorSeparation(painter, config, spot_color, use_color);
 }
 
-void Map::drawGrid(QPainter* painter, QRectF bounding_box, bool on_screen)
+void Map::drawGrid(QPainter* painter, const QRectF& bounding_box, bool on_screen)
 {
 	grid.draw(painter, bounding_box, this, on_screen);
 }
 
-void Map::drawTemplates(QPainter* painter, QRectF bounding_box, int first_template, int last_template, const MapView* view, bool on_screen) const
+void Map::drawTemplates(QPainter* painter, const QRectF& bounding_box, int first_template, int last_template, const MapView* view, bool on_screen) const
 {
 	for (int i = first_template; i <= last_template; ++i)
 	{
@@ -1368,7 +1368,7 @@ void Map::ensureVisibilityOfSelectedObjects(SelectionVisibility visibility)
 }
 
 
-void Map::setDrawingBoundingBox(QRectF map_coords_rect, int pixel_border, bool do_update)
+void Map::setDrawingBoundingBox(const QRectF& map_coords_rect, int pixel_border, bool do_update)
 {
 	for (MapWidget* widget : widgets)
 		widget->setDrawingBoundingBox(map_coords_rect, pixel_border, do_update);
@@ -1381,7 +1381,7 @@ void Map::clearDrawingBoundingBox()
 }
 
 
-void Map::setActivityBoundingBox(QRectF map_coords_rect, int pixel_border, bool do_update)
+void Map::setActivityBoundingBox(const QRectF& map_coords_rect, int pixel_border, bool do_update)
 {
 	for (MapWidget* widget : widgets)
 		widget->setActivityBoundingBox(map_coords_rect, pixel_border, do_update);
@@ -1394,7 +1394,7 @@ void Map::clearActivityBoundingBox()
 }
 
 
-void Map::updateDrawing(QRectF map_coords_rect, int pixel_border)
+void Map::updateDrawing(const QRectF& map_coords_rect, int pixel_border)
 {
 	for (MapWidget* widget : widgets)
 		widget->updateDrawing(map_coords_rect, pixel_border);
@@ -2002,7 +2002,7 @@ void Map::deleteTemplate(int pos)
 	delete temp;
 }
 
-void Map::setTemplateAreaDirty(Template* temp, QRectF area, int pixel_border)
+void Map::setTemplateAreaDirty(Template* temp, const QRectF& area, int pixel_border)
 {
 	bool front_cache = findTemplateIndex(temp) >= getFirstFrontTemplate();	// TODO: is there a better way to find out if that is a front or back template?
 	
@@ -2350,7 +2350,7 @@ QRectF Map::calculateExtent(bool include_helper_symbols, bool include_templates,
 	return rect;
 }
 
-void Map::setObjectAreaDirty(QRectF map_coords_rect)
+void Map::setObjectAreaDirty(const QRectF& map_coords_rect)
 {
 	for (MapWidget* widget : widgets)
 		widget->markObjectAreaDirty(map_coords_rect);
@@ -2391,7 +2391,7 @@ void Map::findObjectsAtBox(
 	getCurrentPart()->findObjectsAtBox(corner1, corner2, include_hidden_objects, include_protected_objects, out);
 }
 
-int Map::countObjectsInRect(QRectF map_coord_rect, bool include_hidden_objects)
+int Map::countObjectsInRect(const QRectF& map_coord_rect, bool include_hidden_objects)
 {
 	int count = 0;
 	for (const MapPart* part : parts)

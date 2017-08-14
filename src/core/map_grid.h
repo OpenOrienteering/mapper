@@ -88,7 +88,7 @@ public:
 	 * @param on_screen If true, uses a cosmetic pen (one pixel wide),
 	 *                  otherwise uses a 0.1 mm wide pen.
 	 */
-	void draw(QPainter* painter, QRectF bounding_box, Map* map, bool on_screen) const;
+	void draw(QPainter* painter, const QRectF& bounding_box, Map* map, bool on_screen) const;
 	
 	/**
 	 * Calculates the "final" parameters with the following properties:

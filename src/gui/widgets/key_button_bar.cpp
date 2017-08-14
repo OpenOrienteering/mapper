@@ -43,17 +43,17 @@ KeyButtonBar::KeyButtonBar(MapEditorTool* tool, MapWidget* map_widget, QWidget* 
 	setLayout(layout);
 }
 
-void KeyButtonBar::addPressKey(int key_code, QString text, QIcon icon)
+void KeyButtonBar::addPressKey(int key_code, const QString& text, const QIcon& icon)
 {
 	createButton(key_code, text, icon, false, 0);
 }
 
-void KeyButtonBar::addPressKeyWithModifier(int key_code, int modifier_code, QString text, QIcon icon)
+void KeyButtonBar::addPressKeyWithModifier(int key_code, int modifier_code, const QString& text, const QIcon& icon)
 {
 	createButton(key_code, text, icon, false, modifier_code);
 }
 
-void KeyButtonBar::addModifierKey(int key_code, int modifier_code, QString text, QIcon icon)
+void KeyButtonBar::addModifierKey(int key_code, int modifier_code, const QString& text, const QIcon& icon)
 {
 	createButton(key_code, text, icon, true, modifier_code);
 }
@@ -99,7 +99,7 @@ void KeyButtonBar::sendKeyReleaseEvent(int key_code, int modifier_code)
 	//tool->keyReleaseEvent(&event);
 }
 
-QToolButton* KeyButtonBar::createButton(int key_code, QString text, QIcon icon, bool is_checkable, int modifier_code)
+QToolButton* KeyButtonBar::createButton(int key_code, const QString& text, const QIcon& icon, bool is_checkable, int modifier_code)
 {
 	QToolButton* button = new QToolButton();
 	button->setText(text);

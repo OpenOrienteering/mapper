@@ -133,7 +133,7 @@ void Settings::registerSetting(Settings::SettingsEnum id, const char* path_latin
 	setting_defaults[id] = default_value;
 }
 
-void Settings::migrateSettings(QSettings& settings, QVariant version)
+void Settings::migrateSettings(QSettings& settings, const QVariant& version)
 {
 	migrateValue("General/language", General_Language, settings);
 	if (migrateValue("MapEditor/click_tolerance", MapEditor_ClickToleranceMM, settings))
@@ -189,12 +189,12 @@ QVariant Settings::getSettingCached(Settings::SettingsEnum setting)
 	return value;
 }
 
-void Settings::setSettingInCache(Settings::SettingsEnum setting, QVariant value)
+void Settings::setSettingInCache(Settings::SettingsEnum setting, const QVariant& value)
 {
 	settings_cache.insert(setting, value);
 }
 
-void Settings::setSetting(Settings::SettingsEnum setting, QVariant value)
+void Settings::setSetting(Settings::SettingsEnum setting, const QVariant& value)
 {
 	bool setting_changed = true;
 	if (settings_cache.contains(setting))

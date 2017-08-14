@@ -333,7 +333,7 @@ int TextObjectEditorHelper::blockEnd() const
 }
 
 
-QVariant TextObjectEditorHelper::inputMethodQuery(Qt::InputMethodQuery property, QVariant argument) const
+QVariant TextObjectEditorHelper::inputMethodQuery(Qt::InputMethodQuery property, const QVariant& argument) const
 {
 	switch (property)
 	{
@@ -861,7 +861,7 @@ QRectF TextObjectEditorHelper::cursorRectangle() const
 }
 
 
-void TextObjectEditorHelper::foreachLineRect(int begin, int end, std::function<void (const QRectF&)> worker) const
+void TextObjectEditorHelper::foreachLineRect(int begin, int end, const std::function<void (const QRectF&)>& worker) const
 {
 	Q_ASSERT(begin <= end);
 	for (int line = 0, num_lines = text_object->getNumLines(); line != num_lines; ++line)

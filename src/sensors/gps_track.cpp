@@ -49,7 +49,7 @@ MapCoordF fakeMapCoordF(const LatLon &latlon)
 	return MapCoordF(latlon.longitude(), latlon.latitude());
 }
 
-TrackPoint::TrackPoint(LatLon coord, QDateTime datetime, float elevation, int num_satellites, float hDOP)
+TrackPoint::TrackPoint(LatLon coord, const QDateTime& datetime, float elevation, int num_satellites, float hDOP)
 {
 	gps_coord = coord;
 	is_curve_start = false;

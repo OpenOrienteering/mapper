@@ -295,7 +295,7 @@ void MapPart::findObjectsAtBox(
 	}
 }
 
-int MapPart::countObjectsInRect(QRectF map_coord_rect, bool include_hidden_objects) const
+int MapPart::countObjectsInRect(const QRectF& map_coord_rect, bool include_hidden_objects) const
 {
 	int count = 0;
 	for (const Object* object : objects)

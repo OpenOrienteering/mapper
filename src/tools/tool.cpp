@@ -159,7 +159,7 @@ bool MapEditorTool::inputMethodEvent(QInputMethodEvent*)
 	return false;
 }
 
-QVariant MapEditorTool::inputMethodQuery(Qt::InputMethodQuery, QVariant) const
+QVariant MapEditorTool::inputMethodQuery(Qt::InputMethodQuery, const QVariant&) const
 {
 	return {};
 }
