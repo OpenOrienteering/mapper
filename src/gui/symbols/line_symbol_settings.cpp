@@ -101,12 +101,13 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	border_check = new QCheckBox(tr("Enable border lines"));
 	border_check->setChecked(symbol->have_border_lines);
 	
-	line_settings_list 
-	  << minimum_length_label << minimum_length_edit
-	  << line_cap_label << line_cap_combo 
-	  << line_join_label << line_join_combo
-	  << pointed_cap_length_label << pointed_cap_length_edit
-	  << border_check;
+	line_settings_list = { 
+	    minimum_length_label, minimum_length_edit,
+	    line_cap_label, line_cap_combo,
+	    line_join_label, line_join_combo,
+	    pointed_cap_length_label, pointed_cap_length_edit,
+	    border_check,
+	};
 	
 	row++; col = 0;
 	layout->addWidget(minimum_length_label, row, col++);
@@ -148,12 +149,13 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	half_outer_dashes_check = new QCheckBox(tr("Half length of first and last dash"));
 	half_outer_dashes_check->setChecked(symbol->half_outer_dashes);
 	
-	dashed_widget_list
-	  << dash_length_label << dash_length_edit
-	  << break_length_label << break_length_edit
-	  << dash_group_label << dash_group_combo
-	  << in_group_break_length_label << in_group_break_length_edit
-	  << half_outer_dashes_check;
+	dashed_widget_list = {
+	    dash_length_label, dash_length_edit,
+	    break_length_label, break_length_edit,
+	    dash_group_label, dash_group_combo,
+	    in_group_break_length_label, in_group_break_length_edit,
+	    half_outer_dashes_check,
+	};
 	
 	row++; col = 0;
 	layout->addWidget(dash_length_label, row, col++);
@@ -183,9 +185,10 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	mid_symbol_distance_label = new QLabel(tr("Mid symbol distance:"));
 	mid_symbol_distance_edit = Util::SpinBox::create(2, 0.0f, 999999.9f, tr("mm"));
 	
-	mid_symbol_widget_list
-	  << mid_symbol_per_spot_label << mid_symbol_per_spot_edit
-	  << mid_symbol_distance_label << mid_symbol_distance_edit;
+	mid_symbol_widget_list = {
+	  mid_symbol_per_spot_label, mid_symbol_per_spot_edit,
+	  mid_symbol_distance_label, mid_symbol_distance_edit,
+	};
 	
 	row++; col = 0;
 	layout->addWidget(mid_symbol_per_spot_label, row, col++);
@@ -210,12 +213,13 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	QLabel* minimum_mid_symbol_count_when_closed_label = new QLabel(tr("Minimum mid symbol count when closed:"));
 	minimum_mid_symbol_count_when_closed_edit = Util::SpinBox::create(0, 99);
 	
-	undashed_widget_list
-	  << segment_length_label << segment_length_edit
-	  << end_length_label << end_length_edit
-	  << show_at_least_one_symbol_check
-	  << minimum_mid_symbol_count_label << minimum_mid_symbol_count_edit
-	  << minimum_mid_symbol_count_when_closed_label << minimum_mid_symbol_count_when_closed_edit;
+	undashed_widget_list = {
+	    segment_length_label, segment_length_edit,
+	    end_length_label, end_length_edit,
+	    show_at_least_one_symbol_check,
+	    minimum_mid_symbol_count_label, minimum_mid_symbol_count_edit,
+	    minimum_mid_symbol_count_when_closed_label, minimum_mid_symbol_count_when_closed_edit,
+	};
 	
 	row++; col = 0;
 	layout->addWidget(segment_length_label, row, col++);
@@ -255,8 +259,14 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	layout->addWidget(right_border_label, row, col++, 1, -1);
 	createBorderWidgets(symbol->getRightBorder(), map, row, col, layout, right_border_widgets);
 	
-	border_widget_list << different_borders_check << border_widgets.widget_list;
-	different_borders_widget_list << left_border_label << right_border_label << right_border_widgets.widget_list;
+	border_widget_list.reserve(1 + border_widgets.widget_list.size());
+	border_widget_list.push_back(different_borders_check);
+	border_widget_list.insert(border_widget_list.end(), begin(border_widgets.widget_list), end(border_widgets.widget_list));
+	
+	different_borders_widget_list.reserve(2 + right_border_widgets.widget_list.size());
+	different_borders_widget_list.push_back(left_border_label);
+	different_borders_widget_list.push_back(right_border_label);
+	different_borders_widget_list.insert(different_borders_widget_list.end(), begin(right_border_widgets.widget_list), end(right_border_widgets.widget_list));
 	
 	
 	row++; col = 0;
@@ -285,9 +295,7 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	MapEditorController* controller = dialog->getPreviewController();
 	
 	symbol->ensurePointSymbols(tr("Start symbol"), tr("Mid symbol"), tr("End symbol"), tr("Dash symbol"));
-	QList<PointSymbol*> point_symbols;
-	point_symbols << symbol->getStartSymbol() << symbol->getMidSymbol() << symbol->getEndSymbol() << symbol->getDashSymbol();
-	for (auto point_symbol : point_symbols)
+	for (auto point_symbol : { symbol->getStartSymbol(), symbol->getMidSymbol(), symbol->getEndSymbol(), symbol->getDashSymbol() })
 	{
 		point_symbol_editor = new PointSymbolEditorWidget(controller, point_symbol, 16);
 		addPropertiesGroup(point_symbol->getName(), point_symbol_editor);
@@ -517,11 +525,12 @@ void LineSymbolSettings::createBorderWidgets(LineSymbolBorder& border, Map* map,
 	widgets.dashed_check = new QCheckBox(tr("Border is dashed"));
 	widgets.dashed_check->setChecked(border.dashed);
 	
-	widgets.widget_list
-		<< width_label << widgets.width_edit
-		<< color_label << widgets.color_edit
-		<< shift_label << widgets.shift_edit
-		<< widgets.dashed_check;
+	widgets.widget_list = {
+		width_label, widgets.width_edit,
+		color_label, widgets.color_edit,
+		shift_label, widgets.shift_edit,
+		widgets.dashed_check
+	};
 	
 	row++; col = 0;
 	layout->addWidget(width_label, row, col++);
@@ -541,9 +550,10 @@ void LineSymbolSettings::createBorderWidgets(LineSymbolBorder& border, Map* map,
 	QLabel* break_length_label = new QLabel(tr("Border break length:"));
 	widgets.break_length_edit = Util::SpinBox::create(2, 0.0f, 999999.9f, tr("mm"));
 	
-	widgets.dash_widget_list
-		<< dash_length_label << widgets.dash_length_edit
-		<< break_length_label << widgets.break_length_edit;
+	widgets.dash_widget_list = {
+		dash_length_label, widgets.dash_length_edit,
+		break_length_label, widgets.break_length_edit,
+	};
 	
 	row++; col = 0;
 	layout->addWidget(dash_length_label, row, col++);
@@ -745,9 +755,7 @@ void LineSymbolSettings::reset(Symbol* symbol)
 	int current = currentIndex();
 	setUpdatesEnabled(false);
 	this->symbol->ensurePointSymbols(tr("Start symbol"), tr("Mid symbol"), tr("End symbol"), tr("Dash symbol"));
-	QList<PointSymbol*> point_symbols;
-	point_symbols << this->symbol->getStartSymbol() << this->symbol->getMidSymbol() << this->symbol->getEndSymbol() << this->symbol->getDashSymbol();
-	for (auto point_symbol : point_symbols)
+	for (auto point_symbol : { this->symbol->getStartSymbol(), this->symbol->getMidSymbol(), this->symbol->getEndSymbol(), this->symbol->getDashSymbol() })
 	{
 		point_symbol_editor = new PointSymbolEditorWidget(controller, point_symbol, 16);
 		connect(point_symbol_editor, &PointSymbolEditorWidget::symbolEdited, this, &LineSymbolSettings::pointSymbolEdited);

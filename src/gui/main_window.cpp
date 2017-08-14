@@ -1086,15 +1086,9 @@ bool MainWindow::showSaveAsDialog()
 // 	QString selected_extension = "." + format->primaryExtension();
 	QStringList selected_extensions(format->fileExtensions());
 	selected_extensions.replaceInStrings(QRegExp(QString::fromLatin1("^")), QString::fromLatin1("."));
-	bool has_extension = false;
-	for (auto selected_extension : qAsConst(selected_extensions))
-	{
-		if (path.endsWith(selected_extension, Qt::CaseInsensitive))
-		{
-			has_extension = true;
-			break;
-		}
-	}
+	bool has_extension = std::any_of(selected_extensions.constBegin(), selected_extensions.constEnd(), [&path](const auto& selected_extension) {
+		return path.endsWith(selected_extension, Qt::CaseInsensitive);
+	});
 	if (!has_extension)
 		path += QLatin1Char('.') + format->primaryExtension();
 	// Ensure that the file name matches the format.

@@ -22,6 +22,7 @@
 #define OPENORIENTEERING_EDIT_TOOL_H
 
 #include <utility>
+#include <unordered_set>
 #include <vector>
 
 #include <Qt>
@@ -131,7 +132,7 @@ public:
 	void move(qint32 dx, qint32 dy, bool move_opposite_handles);
 	
 private:
-	using ObjectSet = QSet<Object*>;
+	using ObjectSet = std::unordered_set<Object*>;
 	using CoordIndexSet = QSet<MapCoordVector::size_type>;
 	
 	CoordIndexSet* insertPointObject(PathObject* object);
