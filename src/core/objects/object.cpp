@@ -1038,7 +1038,7 @@ PathObject::PathObject(const PathPart &proto_part)
 	path_parts.emplace_back(*this, proto_part);
 }
    
-Object* PathObject::duplicate() const
+PathObject* PathObject::duplicate() const
 {
 	return new PathObject(*this);
 }

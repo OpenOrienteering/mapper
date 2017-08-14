@@ -49,6 +49,9 @@ public:
 	 */
 	ImportExport(QIODevice* stream, Map *map, MapView *view);
 	
+	ImportExport(const ImportExport&) = delete;
+	ImportExport(ImportExport&&) = delete;
+	
 	/** Destroys an importer or exporter.
 	 */
 	virtual ~ImportExport();

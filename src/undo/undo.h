@@ -91,10 +91,17 @@ public:
 	 */
 	UndoStep(Type type, Map* map);
 	
+	UndoStep(const UndoStep&) = delete;
+	UndoStep(UndoStep&&) = delete;
+	
 	/**
 	 * Destructor.
 	 */
 	virtual ~UndoStep();
+	
+	
+	UndoStep& operator=(const UndoStep&) = delete;
+	UndoStep& operator=(UndoStep&&) = delete;
 	
 	
 	/**

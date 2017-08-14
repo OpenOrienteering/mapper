@@ -198,6 +198,12 @@ public:
 	class Provider
 	{
 	public:
+		Provider() noexcept = default;
+		Provider(const Provider&) = delete;
+		Provider(Provider&&) = delete;
+		Provider& operator=(const Provider&) = delete;
+		Provider& operator=(Provider&&) = delete;
+		
 		/**
 		 * Returns the QTextDocument corresponding to the given index, or nullptr.
 		 */

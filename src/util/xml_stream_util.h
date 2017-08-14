@@ -136,10 +136,18 @@ public:
 	 */
 	XmlElementWriter(QXmlStreamWriter& xml, const QLatin1String& element_name);
 	
+	XmlElementWriter(const XmlElementWriter&) = delete;
+	XmlElementWriter(XmlElementWriter&&) = delete;
+	
 	/**
 	 * Writes the end tag of the element.
 	 */
 	~XmlElementWriter();
+	
+	
+	XmlElementWriter& operator=(const XmlElementWriter&) = delete;
+	XmlElementWriter& operator=(XmlElementWriter&&) = delete;
+	
 	
 	/**
 	 * Writes an attribute with the given name and value.
@@ -279,12 +287,20 @@ public:
 	 */
 	XmlElementReader(QXmlStreamReader& xml);
 	
+	XmlElementReader(const XmlElementReader&) = delete;
+	XmlElementReader(XmlElementReader&&) = delete;
+	
 	/**
 	 * Destructor.
 	 * 
 	 * Reads until the end of the current element, skipping any child nodes.
 	 */
 	~XmlElementReader();
+	
+	
+	XmlElementReader& operator=(const XmlElementReader&) = delete;
+	XmlElementReader& operator=(XmlElementReader&&) = delete;
+	
 	
 	/**
 	 * Tests whether the element has an attribute with the given name.

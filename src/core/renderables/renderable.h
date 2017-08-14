@@ -111,23 +111,23 @@ public:
  * This is the abstract base class. Inheriting classes must implement the
  * abstract methods, and they must set the extent during construction.
  */
-class Renderable
+class Renderable  // clazy:exclude=copyable-polymorphic
 {
 protected:
 	/** The constructor for new renderables. */
 	explicit Renderable(const MapColor* color);
 	
-	/** The copy constructor is default but protected. */
-	explicit Renderable(const Renderable&) = default;
-	
-	/** The assignment operator is default but protected. */
-	Renderable& operator=(const Renderable&) = default;
-	
 public:
+	Renderable(const Renderable&) = delete;
+	Renderable(Renderable&&) = delete;
+	
 	/**
 	 * The destructor.
 	 */
 	virtual ~Renderable();
+	
+	Renderable& operator=(const Renderable&) = delete;
+	Renderable& operator=(Renderable&&) = delete;
 	
 	/**
 	 * Returns the extent (bounding box).

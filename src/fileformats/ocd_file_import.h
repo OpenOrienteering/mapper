@@ -115,6 +115,10 @@ protected:
 		
 	public:
 		OcdImportedPathObject(Symbol* symbol = nullptr) : PathObject(symbol) { }
+		OcdImportedPathObject(const OcdImportedPathObject&) = delete;
+		OcdImportedPathObject(OcdImportedPathObject&&) = delete;
+		OcdImportedPathObject& operator=(const OcdImportedPathObject&) = delete;
+		OcdImportedPathObject& operator=(OcdImportedPathObject&&) = delete;
 		~OcdImportedPathObject() override;
 	};
 	

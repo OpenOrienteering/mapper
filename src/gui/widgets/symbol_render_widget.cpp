@@ -76,6 +76,11 @@ const QString OpenOrienteeringSymbols()
 class SymbolIconDecorator
 {
 public:
+	SymbolIconDecorator() noexcept = default;
+	SymbolIconDecorator(const SymbolIconDecorator&) = delete;
+	SymbolIconDecorator(SymbolIconDecorator&&) = delete;
+	SymbolIconDecorator& operator=(const SymbolIconDecorator&) = delete;
+	SymbolIconDecorator& operator=(SymbolIconDecorator&&) = delete;
 	virtual ~SymbolIconDecorator();
 	virtual void draw(QPainter& p) const = 0;
 };
