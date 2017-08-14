@@ -224,7 +224,10 @@ void TextDocItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& o
 {
 	const QTextDocument* const text_doc = provider->textDoc(index);
 	if (!text_doc)
-		return QStyledItemDelegate::paint(painter, option, index);
+	{
+		QStyledItemDelegate::paint(painter, option, index);
+		return;
+	}
 	
 	QStyleOptionViewItem options = option;
 	initStyleOption(&options, index);

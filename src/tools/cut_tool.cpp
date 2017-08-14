@@ -171,14 +171,14 @@ bool CutTool::mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, Map
 void CutTool::leaveEvent(QEvent* event)
 {
 	if (path_tool)
-		return path_tool->leaveEvent(event);
+		path_tool->leaveEvent(event);
 }
 
 
 void CutTool::focusOutEvent(QFocusEvent* event)
 {
 	if (path_tool)
-		return path_tool->focusOutEvent(event);
+		path_tool->focusOutEvent(event);
 }
 
 

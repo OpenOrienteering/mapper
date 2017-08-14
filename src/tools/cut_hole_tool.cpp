@@ -120,7 +120,7 @@ bool CutHoleTool::mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord,
 void CutHoleTool::leaveEvent(QEvent* event)
 {
 	if (path_tool)
-		return path_tool->leaveEvent(event);
+		path_tool->leaveEvent(event);
 }
 
 bool CutHoleTool::keyPressEvent(QKeyEvent* event)
@@ -140,7 +140,7 @@ bool CutHoleTool::keyReleaseEvent(QKeyEvent* event)
 void CutHoleTool::focusOutEvent(QFocusEvent* event)
 {
 	if (path_tool)
-		return path_tool->focusOutEvent(event);
+		path_tool->focusOutEvent(event);
 }
 
 void CutHoleTool::draw(QPainter* painter, MapWidget* widget)
