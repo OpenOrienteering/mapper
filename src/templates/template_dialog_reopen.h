@@ -35,6 +35,9 @@ class QWidget;
 class Map;
 
 
+// clazy:excludeall=missing-qobject-macro
+
+
 /**
  * Dialog showing a list of closed templates.
  * 
@@ -55,6 +58,7 @@ private slots:
 private:
 	class OpenTemplateList : public QListWidget
 	{
+	// Q_OBJECT not possible in nested classes.
 	public:
 		OpenTemplateList(ReopenTemplateDialog* dialog);
         virtual void dropEvent(QDropEvent* event);

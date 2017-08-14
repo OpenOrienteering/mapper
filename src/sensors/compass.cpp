@@ -29,6 +29,9 @@
 #include <QTime>
 
 
+// clazy:excludeall=missing-qobject-macro
+
+
 namespace SensorHelpers
 {
 	void matrixMultiplication(float* A, float* B, float* result)
@@ -337,6 +340,7 @@ public:
 	}
 	
 private:
+	/// \todo Review QThread inheritance / Q_OBJECT macro usage
 	class SensorThread : public QThread
 	{
 	// no Q_OBJECT as it is not required here and was problematic in .cpp

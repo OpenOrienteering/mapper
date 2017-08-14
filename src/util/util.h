@@ -43,6 +43,9 @@ class QWidget;
 class MapCoordF;
 
 
+// clazy:excludeall=missing-qobject-macro
+
+
 /** Value to calculate the optimum handle distance of 4 cubic bezier curves
  *  used to approximate a circle. */
 #define BEZIER_KAPPA 0.5522847498
