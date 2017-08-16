@@ -27,7 +27,7 @@
 #include <QDialogButtonBox>
 #include <QFlags>
 #include <QGridLayout>
-#include <QKeySequence>
+#include <QKeySequence>  // IWYU pragma: keep
 #include <QPushButton>
 #include <QString>
 #include <QTextEdit>
@@ -48,13 +48,15 @@ MapFindFeature::MapFindFeature(MainWindow& window, MapEditorController& controll
 , text_edit{nullptr}
 {
 	show_action.reset(new QAction(tr("&Find..."), &window));
-	show_action->setShortcut(QKeySequence::Find);
+	// QKeySequence::Find may be Ctrl+F, which conflicts with "Fill / Create Border"
+	//show_action->setShortcut(QKeySequence::Find);
 	//action->setStatusTip(tr_tip);
 	show_action->setWhatsThis(Util::makeWhatThis("edit_menu.html"));
 	connect(&*show_action, &QAction::triggered, this, &MapFindFeature::showDialog);
 	
 	find_next_action.reset(new QAction(tr("Find &next"), &window));
-	find_next_action->setShortcut(QKeySequence::FindNext);
+	// QKeySequence::FindNext may be F3, which conflicts with "Baseline view"
+	//find_next_action->setShortcut(QKeySequence::FindNext);
 	//action->setStatusTip(tr_tip);
 	find_next_action->setWhatsThis(Util::makeWhatThis("edit_menu.html"));
 	connect(&*find_next_action, &QAction::triggered, this, &MapFindFeature::findNext);
