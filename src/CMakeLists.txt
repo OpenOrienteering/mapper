@@ -340,16 +340,3 @@ foreach(module ${PRIVATE_MODULES})
 	endif()
 	target_include_directories(Mapper_Common PRIVATE ${${qt5_module}_PRIVATE_INCLUDE_DIRS})
 endforeach()
-
-
-# qmake configuration
-
-foreach(cpp_file ${Mapper_Common_SRCS})
-	string(REPLACE ".cpp" ".h" h_file "${cpp_file}")
-	if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${h_file}")
-		list(APPEND Mapper_Common_HEADERS "${h_file}")
-	endif()
-endforeach()
-list(REMOVE_DUPLICATES Mapper_Common_HEADERS)
-list(SORT Mapper_Common_HEADERS)
-list(SORT Mapper_Common_SRCS)
