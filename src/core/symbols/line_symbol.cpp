@@ -1321,8 +1321,9 @@ void LineSymbol::createDashSymbolRenderables(
 		{
 			const auto params = path.calculateTangentScaling(i);
 			//params.first.perpRight();
+			auto rotation = dash_symbol->isRotatable() ? params.first.angle() : 0.0;
 			auto scale = scale_dash_symbol ? qMin(params.second, 2.0 * LineSymbol::miterLimit()) : 1.0;
-			dash_symbol->createRenderablesScaled(coords[i], params.first.angle(), output, scale);
+			dash_symbol->createRenderablesScaled(coords[i], rotation, output, scale);
 		}
 	}
 }
