@@ -124,6 +124,7 @@ protected slots:
 	void differentBordersClicked(bool checked);
 	void borderChanged();
 	void suppressDashSymbolClicked(bool checked);
+	void scaleDashSymbolClicked(bool checked);
 	
 private slots:
 	/** Ensure that a predetermined widget is visible in the scoll area.
@@ -179,6 +180,7 @@ private:
 	BorderWidgets right_border_widgets;
 	
 	QCheckBox* supress_dash_symbol_check;
+	QCheckBox* scale_dash_symbol_check;
 	
 	QScrollArea* scroll_area;
 	QWidget* widget_to_ensure_visible;

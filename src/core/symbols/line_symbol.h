@@ -204,6 +204,8 @@ public:
 	
 	inline bool getSuppressDashSymbolAtLineEnds() const {return suppress_dash_symbol_at_ends;}
 	inline void setSuppressDashSymbolAtLineEnds(bool value) {suppress_dash_symbol_at_ends = value;}
+	bool getScaleDashSymbol() const { return scale_dash_symbol; }
+	void setScaleDashSymbol(bool value) { scale_dash_symbol = value; }
 	
 	inline int getSegmentLength() const {return segment_length;}
 	inline void setSegmentLength(int value) {segment_length = value;}
@@ -343,6 +345,7 @@ protected:
 	int mid_symbols_per_spot;
 	int mid_symbol_distance;
 	bool suppress_dash_symbol_at_ends;
+	bool scale_dash_symbol;
 	
 	// Not dashed
 	int segment_length;
