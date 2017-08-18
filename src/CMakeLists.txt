@@ -279,6 +279,7 @@ target_compile_definitions(Mapper_Common PRIVATE
   QT_NO_CAST_FROM_ASCII
   QT_NO_CAST_TO_ASCII
   QT_USE_QSTRINGBUILDER
+  # MAPPER_ENABLE_COMPATIBILITY
 )
 
 mapper_translations_sources(${Mapper_Common_SRCS} ${Mapper_Common_HEADERS})

@@ -100,7 +100,12 @@ GeneralSettingsPage::GeneralSettingsPage(QWidget* parent)
 	layout->addRow(Util::Headline::create(tr("Saving files")));
 	
 	compatibility_check = new QCheckBox(tr("Retain compatibility with Mapper %1").arg(QLatin1String("0.5")));
+#ifdef MAPPER_ENABLE_COMPATIBILITY
 	layout->addRow(compatibility_check);
+#else
+	// Let compatibility_check be valid, but not leak
+	connect(this, &QObject::destroyed, compatibility_check, &QObject::deleteLater);
+#endif
 	
 	// Possible point: limit size of undo/redo journal
 	
