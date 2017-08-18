@@ -35,6 +35,7 @@
 #include "core/map.h"
 #include "core/objects/object.h"
 #include "core/objects/text_object.h"
+#include "core/symbols/combined_symbol.h"
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/symbol.h"
 #include "core/symbols/text_symbol.h"
@@ -428,9 +429,21 @@ void SymbolSettingDialog::createPreviewMap()
 	{
 		const auto radius = 5.0;
 		
+		auto flags = MapCoord::Flags{};
+		const auto* combined = symbol->asCombined();
+		for (int i = 0; i < combined->getNumParts(); ++i)
+		{
+			auto part = combined->getPart(i);
+			if (part->getType() == Symbol::Line && part->asLine()->getDashSymbol())
+			{
+				flags |= MapCoord::DashPoint;
+				break;
+			}
+		}
+		
 		auto path = new PathObject(&*symbol);
 		for (auto i = 0u; i < 5u; ++i)
-			path->addCoordinate(i, MapCoord(sin(2*M_PI * i/5.0) * radius, -cos(2*M_PI * i/5.0) * radius));
+			path->addCoordinate(i, MapCoord(sin(2*M_PI * i/5.0) * radius, -cos(2*M_PI * i/5.0) * radius, flags));
 		path->parts().front().setClosed(true, false);
 		preview_map->addObject(path);
 		

@@ -445,6 +445,19 @@ QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, in
 				show_dash_symbol = !line->getDashSymbol()->isEmpty();
 			}
 		}
+		else if (type == Combined)
+		{
+			const auto* combined = asCombined();
+			for (int i = 0; i < combined->getNumParts(); ++i)
+			{
+				auto part = combined->getPart(i);
+				if (part->getType() == Line && part->asLine()->getDashSymbol())
+				{
+					show_dash_symbol = true;
+					break;
+				}
+			}
+		}
 		
 		auto path = new PathObject(symbol_to_use);
 		path->addCoordinate(0, MapCoord(-max_icon_mm_half, 0.0));
