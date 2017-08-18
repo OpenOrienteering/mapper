@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013, 2014 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2015, 2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -38,11 +38,21 @@ class QUrl;
 class TextBrowserDialog : public QDialog
 {
 Q_OBJECT
+protected:
+	explicit TextBrowserDialog(QWidget* parent = nullptr);
+	
 public:
 	/**
-	 * @brief Construct a new dialog.
+	 * @brief Construct a new dialog and loads the text from the initial_url.
 	 */
 	TextBrowserDialog(const QUrl& initial_url, QWidget* parent = nullptr);
+	
+	/**
+	 * @brief Construct a new dialog and sets the given text.
+	 */
+	TextBrowserDialog(const QString& text, QWidget* parent = nullptr);
+	
+	~TextBrowserDialog() override;
 	
 protected slots:
 	/**
