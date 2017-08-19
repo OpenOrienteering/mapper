@@ -80,12 +80,14 @@ public:
 	
 	void getModifiedObjects(int part_index, ObjectSet& out) const override;
 	
+#ifndef NO_NATIVE_FILE_FORMAT
 	/**
 	 * Not implemented.
 	 * 
 	 * @deprecated Legacy file format.
 	 */
 	bool load(QIODevice* file, int version) override;
+#endif
 	
 protected:
 	void saveImpl(QXmlStreamWriter& xml) const override;
