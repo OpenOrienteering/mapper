@@ -4077,7 +4077,7 @@ Haluatko silti tuoda datan?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="890"/>
         <source>Show/Hide the tag selection window</source>
-        <translation type="unfinished"></translation>
+        <translation>Näytä/piilota tagit-valintaikkuna</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="931"/>
@@ -4132,7 +4132,7 @@ Haluatko silti tuoda datan?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="964"/>
         <source>Align map with north</source>
-        <translation type="unfinished"></translation>
+        <translation>Kohdista kartta pohjoiseen</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="991"/>
@@ -4366,7 +4366,7 @@ valittu</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3135"/>
         <source>Merging holes failed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Reikien yhdistäminen epäonnistui.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3424"/>
@@ -4376,7 +4376,7 @@ valittu</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3424"/>
         <source>Are you sure you want to delete all temporary GPS markers? This cannot be undone.</source>
-        <translation type="unfinished"></translation>
+        <translation>Oletko varma, että haluat poistaa kaikki väliaikaiset GPS-merkit? Tätä toimintoa ei voi peruuttaa.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3619"/>
@@ -5375,7 +5375,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="479"/>
         <source>Failed to transform the coordinates.</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinaattien muuntaminen epäonnistui.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="484"/>
@@ -5803,7 +5803,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="226"/>
         <source>Template appearance may differ.</source>
-        <translation type="unfinished"></translation>
+        <translation>Taustakartan ulkonäkö voi vaihdella.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="233"/>
@@ -6619,7 +6619,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1276"/>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation>Kuvaus</translation>
     </message>
 </context>
 <context>
