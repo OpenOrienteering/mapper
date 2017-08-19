@@ -68,9 +68,6 @@ static auto translation_suffix = { "template", "cs", "de", "fi", "fr", "ru", "sv
 
 using TranslationEntries = std::vector<SymbolSetTool::TranslationEntry>;
 
-// No longer update map symbols ts files from translated symbol sets.
-constexpr bool update_translations_from_symbolsets = false;
-
 
 void addSource(TranslationEntries& entries, const QString& context, const QString& source, const QString& comment)
 {
@@ -545,9 +542,9 @@ void SymbolSetTool::processSymbolSet()
 			QFAIL("Symbol set not recognized");
 		}
 	}
-	else if (tag.endsWith('0'))
+	else
 	{
-		// Not scaled and not translated: Register source strings.
+		// Not scaled: Collect translation source strings.
 		auto num_colors = map.getNumColors();
 		for (int i = 0; i < num_colors; ++i)
 		{
@@ -570,31 +567,6 @@ void SymbolSetTool::processSymbolSet()
 				qWarning("%s: empty", qPrintable(comment));
 			else
 				addSource(translation_entries, id, source, comment);
-		}
-	}
-	else if (!language.isEmpty() && update_translations_from_symbolsets)
-	{
-		// Not scaled, but with language: Add translation strings.
-		auto num_colors = map.getNumColors();
-		for (int i = 0; i < num_colors; ++i)
-		{
-			auto color = map.getColor(i);
-			auto comment = QString{QLatin1String("Color ") + QString::number(color->getPriority())};
-			auto translation = color->getName();
-			addTranslation(translation_entries, id, comment, language, translation);
-		}
-		
-		for (int i = 0; i < num_symbols; ++i)
-		{
-			auto symbol = map.getSymbol(i);
-			auto symbol_number = symbol->getNumberAsString();
-			auto comment = QString{QLatin1String("Name of symbol ") + symbol_number};
-			auto translation = symbol->getName();
-			addTranslation(translation_entries, id, comment, language, translation);
-			
-			comment = QString{QLatin1String("Description of symbol ") + symbol_number};
-			translation = symbol->getDescription();
-			addTranslation(translation_entries, id, comment, language, translation);
 		}
 	}
 	
