@@ -75,10 +75,10 @@ void ConstrainAngleToolHelper::addAngle(double angle)
 	}
 	
 	// Fuzzy compare for existing angle as otherwise very similar angles will be added
-	for (std::set<double>::const_iterator it = angles.begin(), end = angles.end(); it != end; ++it)
+	for (auto value : angles)
 	{
 		const double min_delta = 0.25 * 2*M_PI / 360;	// minimum 1/4 degree difference
-		if (qAbs(angle - *it) < min_delta || qAbs(angle - *it) > 2*M_PI - min_delta)
+		if (qAbs(angle - value) < min_delta || qAbs(angle - value) > 2*M_PI - min_delta)
 			return;
 	}
 	
@@ -132,20 +132,20 @@ double ConstrainAngleToolHelper::getConstrainedCursorPosMap(const MapCoordF& in_
 	
 	double lower_angle = in_angle, lower_angle_delta = 999;
 	double higher_angle = in_angle, higher_angle_delta = -999;
-	for (std::set<double>::const_iterator it = angles.begin(), end = angles.end(); it != end; ++it)
+	for (auto value : angles)
 	{
-		double delta = in_angle - *it;
+		double delta = in_angle - value;
 		if (delta < -M_PI)
-			delta = in_angle - (*it - 2*M_PI);
+			delta = in_angle - (value - 2*M_PI);
 		else if (delta > M_PI)
-			delta = (in_angle - 2*M_PI) - *it;
+			delta = (in_angle - 2*M_PI) - value;
 		
 		if (delta > 0)
 		{
 			if (delta < lower_angle_delta)
 			{
 				lower_angle_delta = delta;
-				lower_angle = *it;
+				lower_angle = value;
 			}
 		}
 		else
@@ -153,7 +153,7 @@ double ConstrainAngleToolHelper::getConstrainedCursorPosMap(const MapCoordF& in_
 			if (delta > higher_angle_delta)
 			{
 				higher_angle_delta = delta;
-				higher_angle = *it;
+				higher_angle = value;
 			}
 		}
 	}
@@ -231,18 +231,18 @@ void ConstrainAngleToolHelper::draw(QPainter* painter, MapWidget* widget)
 	painter->setOpacity(opacity);
 	painter->setPen(MapEditorTool::inactive_color);
 	painter->setBrush(Qt::NoBrush);
-	for (std::set<double>::const_iterator it = angles.begin(), end = angles.end(); it != end; ++it)
+	for (auto value : angles)
 	{
-		if (*it == active_angle)
+		if (value == active_angle)
 		{
 			painter->setPen(MapEditorTool::active_color);
 			painter->setOpacity(1.0f);
 		}
 		
-		QPointF outer_point = center_point + getDisplayRadius() * QPointF(cos(*it), -sin(*it));
+		QPointF outer_point = center_point + getDisplayRadius() * QPointF(cos(value), -sin(value));
 		painter->drawLine(center_point, outer_point);
 		
-		if (*it == active_angle)
+		if (value == active_angle)
 		{
 			painter->setPen(MapEditorTool::inactive_color);
 			painter->setOpacity(opacity);

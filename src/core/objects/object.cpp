@@ -835,8 +835,8 @@ void Object::includeControlPointsRect(QRectF& rect) const
 	{
 		const TextObject* text = asText();
 		std::vector<QPointF> text_handles(text->controlPoints());
-		for (std::size_t i = 0; i < text_handles.size(); ++i)
-			rectInclude(rect, text_handles[i]);
+		for (auto& text_handle : text_handles)
+			rectInclude(rect, text_handle);
 	}
 }
 

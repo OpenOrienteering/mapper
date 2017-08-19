@@ -688,10 +688,10 @@ bool Map::exportTo(const QString& path, MapView* view, const FileFormat* format)
 	else if (!exporter->warnings().empty())
 	{
 		QString warnings;
-		for (std::vector<QString>::const_iterator it = exporter->warnings().begin(); it != exporter->warnings().end(); ++it) {
+		for (const auto& warning : exporter->warnings()) {
 			if (!warnings.isEmpty())
 				warnings += QLatin1String("\n");
-			warnings += *it;
+			warnings += warning;
 		}
 		QMessageBox msgBox(QMessageBox::Warning, tr("Warning"), tr("The map export generated warnings."), QMessageBox::Ok);
 		msgBox.setDetailedText(warnings);
@@ -755,10 +755,10 @@ bool Map::loadFrom(const QString& path, QWidget* dialog_parent, MapView* view, b
 				if (!importer->warnings().empty() && show_error_messages)
 				{
 					QString warnings;
-					for (std::vector<QString>::const_iterator it = importer->warnings().begin(); it != importer->warnings().end(); ++it) {
+					for (const auto& warning : importer->warnings()) {
 						if (!warnings.isEmpty())
 							warnings += QLatin1String("\n");
-						warnings += *it;
+						warnings += warning;
 					}
 					QMessageBox msgBox(
 					  QMessageBox::Warning,
@@ -1918,11 +1918,11 @@ void Map::scaleAllSymbols(double factor)
 void Map::determineSymbolsInUse(std::vector< bool >& out) const
 {
 	out.assign(symbols.size(), false);
-	for (std::size_t l = 0; l < parts.size(); ++l)
+	for (auto part : parts)
 	{
-		for (int o = 0; o < parts[l]->getNumObjects(); ++o)
+		for (int o = 0; o < part->getNumObjects(); ++o)
 		{
-			const Symbol* symbol = parts[l]->getObject(o)->getSymbol();
+			const Symbol* symbol = part->getObject(o)->getSymbol();
 			int index = findSymbolIndex(symbol);
 			if (index >= 0)
 				out[index] = true;

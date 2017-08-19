@@ -477,8 +477,8 @@ int SymbolRenderWidget::symbolIndexAt(QPoint pos) const
 
 void SymbolRenderWidget::updateSelectedIcons()
 {
-	for (std::set<int>::const_iterator it = selected_symbols.begin(); it != selected_symbols.end(); ++it)
-		updateSingleIcon(*it);
+	for (auto symbol_index : selected_symbols)
+		updateSingleIcon(symbol_index);
 }
 
 bool SymbolRenderWidget::dropPosition(QPoint pos, int& row, int& pos_in_row)
@@ -841,8 +841,8 @@ void SymbolRenderWidget::dropEvent(QDropEvent* event)
 		
         // save selection
         std::set<Symbol *> sel;
-        for (std::set<int>::const_iterator it = selected_symbols.begin(); it != selected_symbols.end(); ++it) {
-            sel.insert(map->getSymbol(*it));
+        for (auto symbol_index : selected_symbols) {
+            sel.insert(map->getSymbol(symbol_index));
         }
 
 		map->moveSymbol(current_symbol_index, pos);
@@ -918,10 +918,9 @@ void SymbolRenderWidget::scaleSymbol()
 	if (!ok || percent == 100)
 		return;
 	
-	for (std::set<int>::const_iterator it = selected_symbols.begin(); it != selected_symbols.end(); ++it)
+	for (auto symbol_index : selected_symbols)
 	{
-		Symbol* symbol = map->getSymbol(*it);
-		
+		auto symbol = map->getSymbol(symbol_index);
 		symbol->scale(percent / 100.0);
 		updateSingleIcon(current_symbol_index);
 		map->changeSymbolForAllObjects(symbol, symbol);	// update the objects
@@ -935,20 +934,20 @@ void SymbolRenderWidget::deleteSymbols()
 	// save selected symbols
 	std::vector<const Symbol*> saved_selection;
 	saved_selection.reserve(selected_symbols.size());
-	for (std::set<int>::const_iterator it = selected_symbols.begin(); it != selected_symbols.end(); ++it)
+	for (auto symbol_index : selected_symbols)
 	{
-		saved_selection.push_back(map->getSymbol(*it));
+		saved_selection.push_back(map->getSymbol(symbol_index));
 	}
 	
 	// delete symbols in order
-	for (std::vector<const Symbol*>::iterator it = saved_selection.begin(); it != saved_selection.end(); ++it)
+	for (const auto symbol : saved_selection)
 	{
-		if (map->existsObjectWithSymbol(*it))
+		if (map->existsObjectWithSymbol(symbol))
 		{
-			if (QMessageBox::warning(this, tr("Confirmation"), tr("The map contains objects with the symbol \"%1\". Deleting it will delete those objects and clear the undo history! Do you really want to do that?").arg((*it)->getName()), QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
+			if (QMessageBox::warning(this, tr("Confirmation"), tr("The map contains objects with the symbol \"%1\". Deleting it will delete those objects and clear the undo history! Do you really want to do that?").arg(symbol->getName()), QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
 				continue;
 		}
-		map->deleteSymbol(map->findSymbolIndex(*it));
+		map->deleteSymbol(map->findSymbolIndex(symbol));
 	}
 	
 	if (selected_symbols.empty() && map->getFirstSelectedObject())
@@ -973,8 +972,8 @@ void SymbolRenderWidget::copySymbols()
 	copy_map->importMap(map, Map::ColorImport, this);
 	
 	std::vector<bool> selection(map->getNumSymbols(), false);
-	for (std::set<int>::const_iterator it = selected_symbols.begin(); it != selected_symbols.end(); ++it)
-		selection[*it] = true;
+	for (auto symbol_index : selected_symbols)
+		selection[symbol_index] = true;
 	
 	copy_map->importMap(map, Map::MinimalSymbolImport, this, &selection);
 	
@@ -1028,13 +1027,13 @@ void SymbolRenderWidget::pasteSymbols()
 void SymbolRenderWidget::setSelectedSymbolVisibility(bool checked)
 {
 	bool selection_changed = false;
-	for (std::set<int>::const_iterator it = selected_symbols.begin(); it != selected_symbols.end(); ++it)
+	for (auto symbol_index : selected_symbols)
 	{
-		Symbol* symbol = map->getSymbol(*it);
+		auto symbol = map->getSymbol(symbol_index);
 		if (symbol->isHidden() != checked)
 		{
 			symbol->setHidden(checked);
-			updateSingleIcon(*it);
+			updateSingleIcon(symbol_index);
 			if (checked)
 				selection_changed |= map->removeSymbolFromSelection(symbol, false);
 		}
@@ -1045,16 +1044,17 @@ void SymbolRenderWidget::setSelectedSymbolVisibility(bool checked)
 	map->setSymbolsDirty();
 	emitGuarded_selectedSymbolsChanged();
 }
+
 void SymbolRenderWidget::setSelectedSymbolProtection(bool checked)
 {
 	bool selection_changed = false;
-	for (std::set<int>::const_iterator it = selected_symbols.begin(); it != selected_symbols.end(); ++it)
+	for (auto symbol_index : selected_symbols)
 	{
-		Symbol* symbol = map->getSymbol(*it);
+		auto symbol = map->getSymbol(symbol_index);
 		if (symbol->isProtected() != checked)
 		{
 			symbol->setProtected(checked);
-			updateSingleIcon(*it);
+			updateSingleIcon(symbol_index);
 			if (checked)
 				selection_changed |= map->removeSymbolFromSelection(symbol, false);
 		}
@@ -1138,11 +1138,11 @@ void SymbolRenderWidget::updateContextMenuState()
 	const Symbol* single_symbol = singleSelectedSymbol();
 	bool all_symbols_hidden = have_selection;
 	bool all_symbols_protected = have_selection;
-	for (std::set<int>::const_iterator it = selected_symbols.begin(); it != selected_symbols.end(); ++it)
+	for (auto symbol_index : selected_symbols)
 	{
-		if (!map->getSymbol(*it)->isHidden())
+		if (!map->getSymbol(symbol_index)->isHidden())
 			all_symbols_hidden = false;
-		if (!map->getSymbol(*it)->isProtected())
+		if (!map->getSymbol(symbol_index)->isProtected())
 			all_symbols_protected = false;
 		if (!all_symbols_hidden && !all_symbols_protected)
 			break;
@@ -1207,9 +1207,9 @@ void SymbolRenderWidget::sort(T compare)
 {
 	// save selection
 	std::set<const Symbol*> saved_selection;
-	for (std::set<int>::const_iterator it = selected_symbols.begin(); it != selected_symbols.end(); ++it)
+	for (auto symbol_index : selected_symbols)
 	{
-		saved_selection.insert(map->getSymbol(*it));
+		saved_selection.insert(map->getSymbol(symbol_index));
 	}
 	
 	map->sortSymbols(compare);

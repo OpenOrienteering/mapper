@@ -55,8 +55,8 @@ void blockSignalsRecursively(QObject* obj, bool block)
 	obj->blockSignals(block);
 	
 	const QObjectList& list = obj->children();
-	for (QObjectList::const_iterator it = list.begin(), end = list.end(); it != end; ++it)
-		blockSignalsRecursively(*it, block);
+	for (auto child : list)
+		blockSignalsRecursively(child, block);
 }
 
 void rectInclude(QRectF& rect, QPointF point)

@@ -459,8 +459,8 @@ bool TemplateTrack::import(QWidget* dialog_parent)
 		result.push_back(path);
 	}
 	
-	for (int i = 0; i < (int)result.size(); ++i) // keep as separate loop to get the correct (final) indices
-		undo_step->addObject(part->findObjectIndex(result[i]));
+	for (const auto& object : result) // keep as separate loop to get the correct (final) indices
+		undo_step->addObject(part->findObjectIndex(object));
 	
 	map->setObjectsDirty();
 	map->push(undo_step);

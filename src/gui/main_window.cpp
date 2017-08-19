@@ -279,10 +279,10 @@ void MainWindow::createFileMenu()
 	
 	open_recent_menu = new QMenu(tr("Open &recent"), this);
 	open_recent_menu->setWhatsThis(Util::makeWhatThis("file_menu.html"));
-	for (int i = 0; i < max_recent_files; ++i)
+	for (auto& action : recent_file_act)
 	{
-		recent_file_act[i] = new QAction(this);
-		connect(recent_file_act[i], &QAction::triggered, this, &MainWindow::openRecentFile);
+		action = new QAction(this);
+		connect(action, &QAction::triggered, this, &MainWindow::openRecentFile);
 	}
 	open_recent_menu_inserted = false;
 	

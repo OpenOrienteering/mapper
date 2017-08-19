@@ -387,10 +387,10 @@ void Georeferencing::save(QXmlStreamWriter& xml) const
 		
 		if (!projected_crs_parameters.empty())
 		{
-			for (size_t i = 0; i < projected_crs_parameters.size(); ++i)
+			for (const auto& projected_crs_parameter : projected_crs_parameters)
 			{
 				XmlElementWriter parameter_element(xml, literal::parameter);
-				xml.writeCharacters(projected_crs_parameters[i]);
+				xml.writeCharacters(projected_crs_parameter);
 				Q_UNUSED(parameter_element); // Suppress compiler warnings
 			}
 		}

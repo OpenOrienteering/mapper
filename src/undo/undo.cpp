@@ -152,18 +152,15 @@ CombinedUndoStep::CombinedUndoStep(Map* map)
 
 CombinedUndoStep::~CombinedUndoStep()
 {
-	for (StepList::iterator step=steps.begin(), end=steps.end(); step != end; ++step)
-		delete *step;
+	for (const auto step : steps)
+		delete step;
 }
 
 bool CombinedUndoStep::isValid() const
 {
-	for (std::size_t i = 0; i < steps.size(); ++i)
-	{
-		if (!steps[i]->isValid())
-			return false;
-	}
-	return true;
+	return std::all_of(begin(steps), end(steps), [](const auto& step) {
+		return step->isValid();
+	});
 }
 
 UndoStep* CombinedUndoStep::undo()
@@ -177,18 +174,18 @@ UndoStep* CombinedUndoStep::undo()
 
 bool CombinedUndoStep::getModifiedParts(PartSet &out) const
 {
-	for (StepList::const_iterator step = steps.begin(), end = steps.end(); step != end; ++step)
+	for (const auto step : steps)
 	{
-		(*step)->getModifiedParts(out);
+		step->getModifiedParts(out);
 	}
 	return !out.empty();
 }
 
 void CombinedUndoStep::getModifiedObjects(int part_index, ObjectSet &out) const
 {
-	for (StepList::const_iterator step = steps.begin(), end = steps.end(); step != end; ++step)
+	for (const auto step : steps)
 	{
-		(*step)->getModifiedObjects(part_index, out);
+		step->getModifiedObjects(part_index, out);
 	}
 }
 
@@ -220,8 +217,8 @@ void CombinedUndoStep::saveImpl(QXmlStreamWriter& xml) const
 	// (A barrier element prevents older versions from loading this element.)
 	XmlElementWriter steps_element(xml, literal::steps);
 	steps_element.writeAttribute(XmlStreamLiteral::count, steps.size());
-	for (StepList::const_iterator step = steps.begin(), end = steps.end(); step != end; ++step)
-		(*step)->save(xml);
+	for (const auto step : steps)
+		step->save(xml);
 }
 
 void CombinedUndoStep::loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict)

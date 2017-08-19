@@ -140,11 +140,10 @@ int FillTool::fill(const QRectF& extent)
 		{
 			// The outline does not contain start_pixel.
 			// Jump to the rightmost pixel of the boundary with same y as the start.
-			for (size_t b = 0, size = boundary.size(); b < size; ++b)
+			for (const auto& point : boundary)
 			{
-				if (boundary[b].y() == start_pixel.y()
-					&& boundary[b].x() > start_pixel.x())
-					start_pixel = boundary[b];
+				if (point.y() == start_pixel.y() && point.x() > start_pixel.x())
+					start_pixel = point;
 			}
 			
 			// Skip over the rest of the floating object.
