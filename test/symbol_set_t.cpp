@@ -432,7 +432,20 @@ void SymbolSetTool::processSymbolSet()
 		{
 			const auto factor = double(source_scale) / double(target_scale);
 			map.scaleAllObjects(factor, MapCoord{});
-			map.scaleAllSymbols(factor);
+			
+			int symbols_changed = 0;
+			for (int i = 0; i < num_symbols; ++i)
+			{
+				Symbol* symbol = map.getSymbol(i);
+				const int code = symbol->getNumberComponent(0);
+				if (code != 602
+				    && code != 999)
+				{
+					symbol->scale(factor);
+					++symbols_changed;
+				}
+			}
+			QCOMPARE(symbols_changed, 184);
 		}
 		else if (name.startsWith(QLatin1String("ISSOM")))
 		{
@@ -471,13 +484,14 @@ void SymbolSetTool::processSymbolSet()
 			{
 				Symbol* symbol = map.getSymbol(i);
 				const int code = symbol->getNumberComponent(0);
-				if (code != 602)
+				if (code != 602
+				    && code != 999)
 				{
 					symbol->scale(factor);
 					++symbols_changed;
 				}
 			}
-			QCOMPARE(symbols_changed, 169);
+			QCOMPARE(symbols_changed, 168);
 		}
 		else if (name.startsWith(QLatin1String("ISSkiOM")))
 		{
