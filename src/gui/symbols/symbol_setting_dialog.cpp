@@ -434,7 +434,7 @@ void SymbolSettingDialog::createPreviewMap()
 		for (int i = 0; i < combined->getNumParts(); ++i)
 		{
 			auto part = combined->getPart(i);
-			if (part->getType() == Symbol::Line && part->asLine()->getDashSymbol())
+			if (part && part->getType() == Symbol::Line && part->asLine()->getDashSymbol())
 			{
 				flags |= MapCoord::DashPoint;
 				break;
