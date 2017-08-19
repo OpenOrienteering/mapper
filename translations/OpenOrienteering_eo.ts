@@ -716,24 +716,24 @@
     <name>CutTool</name>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="352"/>
-        <location filename="../src/tools/cut_tool.cpp" line="399"/>
-        <location filename="../src/tools/cut_tool.cpp" line="405"/>
-        <location filename="../src/tools/cut_tool.cpp" line="411"/>
+        <location filename="../src/tools/cut_tool.cpp" line="400"/>
+        <location filename="../src/tools/cut_tool.cpp" line="406"/>
+        <location filename="../src/tools/cut_tool.cpp" line="412"/>
         <source>Error</source>
         <translation>Eraro</translation>
     </message>
     <message>
-        <location filename="../src/tools/cut_tool.cpp" line="399"/>
+        <location filename="../src/tools/cut_tool.cpp" line="400"/>
         <source>The split line must end on the area boundary!</source>
         <translation>La dividolinio devas finiĝi ĉe limo de la areo!</translation>
     </message>
     <message>
-        <location filename="../src/tools/cut_tool.cpp" line="405"/>
+        <location filename="../src/tools/cut_tool.cpp" line="406"/>
         <source>Start and end of the split line are at different parts of the object!</source>
         <translation>Komenco kaj fino de la dividolinio estas sur diversaj partoj de la objekto!</translation>
     </message>
     <message>
-        <location filename="../src/tools/cut_tool.cpp" line="411"/>
+        <location filename="../src/tools/cut_tool.cpp" line="412"/>
         <source>Start and end of the split line are at the same position!</source>
         <translation>Komenco kaj fino de la dividolinio estas sur sama pozicio!</translation>
     </message>
@@ -883,37 +883,37 @@
 <context>
     <name>DrawLineAndAreaTool</name>
     <message>
-        <location filename="../src/tools/draw_path_tool.cpp" line="1077"/>
+        <location filename="../src/tools/draw_path_tool.cpp" line="1073"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="708"/>
         <source>&lt;b&gt;Dash points on.&lt;/b&gt; </source>
         <translation>&lt;b&gt;Uzi strekpunktojn.&lt;/b&gt; </translation>
     </message>
     <message>
-        <location filename="../src/tools/draw_path_tool.cpp" line="1083"/>
+        <location filename="../src/tools/draw_path_tool.cpp" line="1081"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap or append to existing objects. </source>
         <translation>&lt;b&gt;%1+Klaki&lt;/b&gt;: Kapti aŭ postglui al ekzistantaj objektoj. </translation>
     </message>
     <message>
-        <location filename="../src/tools/draw_path_tool.cpp" line="1088"/>
+        <location filename="../src/tools/draw_path_tool.cpp" line="1089"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="714"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Pick direction from existing objects. </source>
         <translation>&lt;b&gt;%1+Klaki&lt;/b&gt;: Elekti direkton el ekzistantaj objektoj. </translation>
     </message>
     <message>
-        <location filename="../src/tools/draw_path_tool.cpp" line="1101"/>
+        <location filename="../src/tools/draw_path_tool.cpp" line="1105"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="719"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="743"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap to existing objects. </source>
         <translation>&lt;b&gt;%1+Klaki&lt;/b&gt;: Kapti per ekzistantaj objektoj. </translation>
     </message>
     <message>
-        <location filename="../src/tools/draw_path_tool.cpp" line="1107"/>
+        <location filename="../src/tools/draw_path_tool.cpp" line="1114"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="733"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
         <translation>&lt;b&gt;%1&lt;/b&gt;: Fiksaj anguloj. </translation>
     </message>
     <message>
-        <location filename="../src/tools/draw_path_tool.cpp" line="1115"/>
+        <location filename="../src/tools/draw_path_tool.cpp" line="1123"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="749"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Undo last point. </source>
         <translation>&lt;b&gt;%1&lt;/b&gt;: Malfari lastan punkton. </translation>
@@ -960,22 +960,22 @@
         <translation>Ĉesigi</translation>
     </message>
     <message>
-        <location filename="../src/tools/draw_path_tool.cpp" line="1073"/>
+        <location filename="../src/tools/draw_path_tool.cpp" line="1068"/>
         <source>&lt;b&gt;Length:&lt;/b&gt; %1 m </source>
         <translation>&lt;b&gt;Longo:&lt;/b&gt; %1 m </translation>
     </message>
     <message>
-        <location filename="../src/tools/draw_path_tool.cpp" line="1093"/>
+        <location filename="../src/tools/draw_path_tool.cpp" line="1095"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Start a straight line. &lt;b&gt;Drag&lt;/b&gt;: Start a curve. </source>
         <translation>&lt;b&gt;Klaki&lt;/b&gt;: Komenci rektan linion. &lt;b&gt;Treni&lt;/b&gt;: Komenci kurbon. </translation>
     </message>
     <message>
-        <location filename="../src/tools/draw_path_tool.cpp" line="1102"/>
+        <location filename="../src/tools/draw_path_tool.cpp" line="1106"/>
         <source>&lt;b&gt;%1+Drag&lt;/b&gt;: Follow existing objects. </source>
         <translation>&lt;b&gt;%1+Treni&lt;/b&gt;: Daŭrigi ekzistantajn objektojn. </translation>
     </message>
     <message>
-        <location filename="../src/tools/draw_path_tool.cpp" line="1112"/>
+        <location filename="../src/tools/draw_path_tool.cpp" line="1120"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Draw a straight line. &lt;b&gt;Drag&lt;/b&gt;: Draw a curve. &lt;b&gt;Right or double click&lt;/b&gt;: Finish the path. &lt;b&gt;%1&lt;/b&gt;: Close the path. </source>
         <translation>&lt;b&gt;Klaki&lt;/b&gt;: Desegni rektan linion. &lt;b&gt;Treni&lt;/b&gt;: Desegni kurbon. &lt;b&gt;Dekstre aŭ duoble alklaki&lt;/b&gt;: Fini la vojon. &lt;b&gt;%1&lt;/b&gt;: Fermi la vojon. </translation>
     </message>
@@ -1490,90 +1490,90 @@
         <translation>Reteni kongruecon kun Mapper %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="107"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="112"/>
         <source>Save information for automatic recovery</source>
         <translation>Konservi informon por aŭtomata riparado</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="111"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="116"/>
         <source>Recovery information saving interval:</source>
         <translation>Intervalo de konservado:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="110"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="115"/>
         <source>min</source>
         <comment>unit minutes</comment>
         <translation>min</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="114"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="119"/>
         <source>File import and export</source>
         <translation>Dosiera importo kaj eksporto</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="138"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="143"/>
         <source>8-bit encoding:</source>
         <translation>8-bita signaro:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="131"/>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="282"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="136"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="287"/>
         <source>More...</source>
         <translation>Pli…</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="117"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="122"/>
         <source>Default</source>
         <translation>Defaŭlto</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="140"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="145"/>
         <source>Use the new OCD importer also for version 8 files</source>
         <translation>Uzi la novan OCD-importilon ankaŭ por dosierversio 8</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="160"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="165"/>
         <source>General</source>
         <translation>Ĝenerala</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="184"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="189"/>
         <source>Notice</source>
         <translation>Rimarko</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="184"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="189"/>
         <source>The program must be restarted for the language change to take effect!</source>
         <translation>La programo devas esti rekomencita por la lingva ŝanĝo efektiviĝos!</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="324"/>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="330"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="329"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="335"/>
         <source>Open translation</source>
         <translation>Malfermi tradukon</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="324"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="329"/>
         <source>Translation files (*.qm)</source>
         <translation>Tradukaj dosieroj (*.qm)</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="331"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="336"/>
         <source>The selected file is not a valid translation.</source>
         <translation>La elektita dosiero ne estas valida tradukdosiero.</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="361"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="366"/>
         <source>%1 x %2</source>
         <translation>%1 x %2</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="362"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="367"/>
         <source>Primary screen resolution in pixels:</source>
         <translation>Ĉefa ekrandistingivo en bilderoj:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="366"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="371"/>
         <source>Primary screen size in inches (diagonal):</source>
         <translation>Ĉefa ekrangrando en coloj (diagonalo):</translation>
     </message>
@@ -2010,7 +2010,7 @@
         <translation>Dosierlisto</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/home_screen_widget.cpp" line="536"/>
+        <location filename="../src/gui/widgets/home_screen_widget.cpp" line="537"/>
         <source>No map files found!&lt;br/&gt;&lt;br/&gt;Copy map files to a top-level folder named &apos;OOMapper&apos; on the device or a memory card.</source>
         <translation>Neniu dosiero trovita!&lt;br/&gt;&lt;br/&gt; Kopii mapodosierojn al supra dosierujo &apos;OOMapper&apos; sur la aparato aŭ memorkarto.</translation>
     </message>
@@ -2080,13 +2080,13 @@
         <translation>Atendita %1 koordinatoj, %2 estis trovita.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="921"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="925"/>
         <source>Error while loading the printing configuration at %1:%2: %3</source>
         <translation>Eraro dum ŝarĝo de presagordo ĉe %1:%2: %3</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="934"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="948"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="938"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="952"/>
         <source>Error while loading the undo/redo steps at %1:%2: %3</source>
         <translation>Eraro dum ŝarĝo de la malfari/refari paŝoj ĉe %1:%2: %3</translation>
     </message>
@@ -2157,13 +2157,13 @@
     </message>
     <message>
         <location filename="../src/fileformats/native_file_format.cpp" line="137"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="448"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="452"/>
         <source>Invalid file format version.</source>
         <translation>Nevalida versio de dosierformo.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/native_file_format.cpp" line="141"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="450"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="454"/>
         <source>Unsupported old file format version. Please use an older program version to load and update the file.</source>
         <translation>Nesubtenata malnova versio de dosierformo. Bonvolu uzi pli malnovan programversion por ŝargi kaj ĝisdatigi la dosieron.</translation>
     </message>
@@ -2214,12 +2214,12 @@
         <translation>Ne povis legi dosieron: %1</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="442"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="446"/>
         <source>Unsupported file format.</source>
         <translation>Nesubtenata dosierformo.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="452"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="456"/>
         <source>Unsupported new file format version. Some map features will not be loaded or saved by this version of the program.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2239,7 +2239,7 @@
 <context>
     <name>LineSymbolSettings</name>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="281"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="286"/>
         <source>Line settings</source>
         <translation>Agordoj de linio</translation>
     </message>
@@ -2258,10 +2258,10 @@
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="183"/>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="198"/>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="201"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="508"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="514"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="538"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="541"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="520"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="526"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="550"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="553"/>
         <source>mm</source>
         <translation>mm</translation>
     </message>
@@ -2427,36 +2427,36 @@
         <translation>Dekstra limo:</translation>
     </message>
     <message>
-        <location filename="../src/core/symbols/line_symbol.cpp" line="1682"/>
+        <location filename="../src/core/symbols/line_symbol.cpp" line="1685"/>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="596"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1208"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="286"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="746"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="291"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="758"/>
         <source>Start symbol</source>
         <translation>Komenca simbolo</translation>
     </message>
     <message>
-        <location filename="../src/core/symbols/line_symbol.cpp" line="1686"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="286"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="746"/>
+        <location filename="../src/core/symbols/line_symbol.cpp" line="1689"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="291"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="758"/>
         <source>Mid symbol</source>
         <translation>Meza simbolo</translation>
     </message>
     <message>
-        <location filename="../src/core/symbols/line_symbol.cpp" line="1690"/>
+        <location filename="../src/core/symbols/line_symbol.cpp" line="1693"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1215"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="286"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="746"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="291"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="758"/>
         <source>End symbol</source>
         <translation>Fina simbolo</translation>
     </message>
     <message>
-        <location filename="../src/core/symbols/line_symbol.cpp" line="1694"/>
+        <location filename="../src/core/symbols/line_symbol.cpp" line="1697"/>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="590"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1201"/>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="264"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="286"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="746"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="291"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="758"/>
         <source>Dash symbol</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2481,32 +2481,37 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="507"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="271"/>
+        <source>Scale the dash symbol at corners</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="519"/>
         <source>Border width:</source>
         <translation>Larĝo de limo:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="510"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="522"/>
         <source>Border color:</source>
         <translation>Koloro de limo:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="513"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="525"/>
         <source>Border shift:</source>
         <translation>Bordera ŝovo:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="516"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="528"/>
         <source>Border is dashed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="537"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="549"/>
         <source>Border dash length:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="540"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="552"/>
         <source>Border break length:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2764,21 +2769,21 @@ Premu Ne por elekti malsaman dosierformon.</translation>
 <context>
     <name>Map</name>
     <message>
-        <location filename="../src/core/map.cpp" line="631"/>
-        <location filename="../src/core/map.cpp" line="636"/>
-        <location filename="../src/core/map.cpp" line="673"/>
-        <location filename="../src/core/map.cpp" line="684"/>
-        <location filename="../src/core/map.cpp" line="715"/>
-        <location filename="../src/core/map.cpp" line="803"/>
-        <location filename="../src/core/map.cpp" line="831"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3932"/>
+        <location filename="../src/core/map.cpp" line="653"/>
+        <location filename="../src/core/map.cpp" line="658"/>
+        <location filename="../src/core/map.cpp" line="695"/>
+        <location filename="../src/core/map.cpp" line="706"/>
+        <location filename="../src/core/map.cpp" line="732"/>
+        <location filename="../src/core/map.cpp" line="809"/>
+        <location filename="../src/core/map.cpp" line="837"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3985"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="281"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="339"/>
         <source>Error</source>
         <translation>Eraro</translation>
     </message>
     <message>
-        <location filename="../src/core/map.cpp" line="636"/>
+        <location filename="../src/core/map.cpp" line="658"/>
         <source>Cannot export the map as
 &quot;%1&quot;
 because saving as %2 (.%3) is not supported.</source>
@@ -2787,7 +2792,7 @@ because saving as %2 (.%3) is not supported.</source>
 ĉar konservado kiel %2 (.%3) estas nesubtenata.</translation>
     </message>
     <message>
-        <location filename="../src/core/map.cpp" line="631"/>
+        <location filename="../src/core/map.cpp" line="653"/>
         <source>Cannot export the map as
 &quot;%1&quot;
 because the format is unknown.</source>
@@ -2796,31 +2801,31 @@ because the format is unknown.</source>
 ĉar la dosierformo estas nekonata.</translation>
     </message>
     <message>
-        <location filename="../src/core/map.cpp" line="698"/>
-        <location filename="../src/core/map.cpp" line="767"/>
+        <location filename="../src/core/map.cpp" line="715"/>
+        <location filename="../src/core/map.cpp" line="777"/>
         <source>Warning</source>
         <translation>Averto</translation>
     </message>
     <message>
-        <location filename="../src/core/map.cpp" line="698"/>
+        <location filename="../src/core/map.cpp" line="716"/>
         <source>The map export generated warnings.</source>
         <translation>Eksportado de la mapo kaŭzis avertojn.</translation>
     </message>
     <message>
-        <location filename="../src/core/map.cpp" line="673"/>
+        <location filename="../src/core/map.cpp" line="695"/>
         <source>Internal error while saving:
 %1</source>
         <translation>Interna eraro dum konservado:
 %1</translation>
     </message>
     <message>
-        <location filename="../src/core/map.cpp" line="768"/>
+        <location filename="../src/core/map.cpp" line="778"/>
         <source>The map import generated warnings.</source>
         <translation>Mapa importo generis avertojn.</translation>
     </message>
     <message>
-        <location filename="../src/core/map.cpp" line="716"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3933"/>
+        <location filename="../src/core/map.cpp" line="733"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3986"/>
         <source>Cannot open file:
 %1
 for reading.</source>
@@ -2829,13 +2834,13 @@ for reading.</source>
 por legado.</translation>
     </message>
     <message>
-        <location filename="../src/core/map.cpp" line="730"/>
+        <location filename="../src/core/map.cpp" line="747"/>
         <source>Invalid file type.</source>
         <translation>Nevalida dosiertipo.</translation>
     </message>
     <message>
-        <location filename="../src/core/map.cpp" line="686"/>
-        <location filename="../src/core/map.cpp" line="804"/>
+        <location filename="../src/core/map.cpp" line="708"/>
+        <location filename="../src/core/map.cpp" line="810"/>
         <source>Cannot open file:
 %1
 
@@ -2846,7 +2851,7 @@ por legado.</translation>
 %2</translation>
     </message>
     <message>
-        <location filename="../src/core/map.cpp" line="687"/>
+        <location filename="../src/core/map.cpp" line="709"/>
         <source>Cannot save file
 %1:
 %2</source>
@@ -2855,24 +2860,24 @@ por legado.</translation>
 %2</translation>
     </message>
     <message>
-        <location filename="../src/core/map.cpp" line="831"/>
+        <location filename="../src/core/map.cpp" line="837"/>
         <source>Nothing to import.</source>
         <translation>Nenio por importi.</translation>
     </message>
     <message>
-        <location filename="../src/core/map.cpp" line="840"/>
+        <location filename="../src/core/map.cpp" line="846"/>
         <source>Question</source>
         <translation>Demando</translation>
     </message>
     <message>
-        <location filename="../src/core/map.cpp" line="841"/>
+        <location filename="../src/core/map.cpp" line="847"/>
         <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
 
 Rescale the imported data?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/map.cpp" line="461"/>
+        <location filename="../src/core/map.cpp" line="483"/>
         <source>default part</source>
         <translation>defaŭlta parto</translation>
     </message>
@@ -2883,12 +2888,12 @@ Rescale the imported data?</source>
         <translation>Nova koloro</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3938"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3991"/>
         <source>Import...</source>
         <translation>Importi…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3939"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3992"/>
         <source>Symbol replacement was canceled.
 Import the data anyway?</source>
         <translation type="unfinished"></translation>
@@ -2913,182 +2918,182 @@ Import the data anyway?</source>
 <context>
     <name>MapEditorController</name>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="837"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="838"/>
         <source>Undo</source>
         <translation>Malfari</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="837"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="838"/>
         <source>Undo the last step</source>
         <translation>Malfari la lastan paŝon</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="838"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="839"/>
         <source>Redo</source>
         <translation>Refari</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="838"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="839"/>
         <source>Redo the last step</source>
         <translation>Refari la lastan paŝon</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="839"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="840"/>
         <source>Cu&amp;t</source>
         <translation>&amp;Eltondi</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="840"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="841"/>
         <source>C&amp;opy</source>
         <translation>&amp;Kopii</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="841"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="842"/>
         <source>&amp;Paste</source>
         <translation>&amp;Alglui</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="857"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="858"/>
         <source>Zoom in</source>
         <translation>Zomi</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="858"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="859"/>
         <source>Zoom out</source>
         <translation>Malzomi</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="860"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="861"/>
         <source>Toggle fullscreen mode</source>
         <translation>Baskuligi tutekranan reĝimon</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="861"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="862"/>
         <source>Set custom zoom factor...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="868"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="869"/>
         <source>Symbol window</source>
         <translation>Simbola fenestro</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="868"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="869"/>
         <source>Show/Hide the symbol window</source>
         <translation>Montri/Kaŝi la simbolan fenestron</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="869"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="870"/>
         <source>Color window</source>
         <translation>Kolora fenestro</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="869"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="870"/>
         <source>Show/Hide the color window</source>
         <translation>Montri/Kaŝi la koloran fenestron</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="871"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="872"/>
         <source>Replace the symbols with those from another map file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="875"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="876"/>
         <source>Scale all symbols...</source>
         <translation>Skali ĉiujn simbolojn…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="875"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="876"/>
         <source>Scale the whole symbol set</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="877"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="878"/>
         <source>Change map scale...</source>
         <translation>Ŝanĝi mapan skalon…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="877"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="878"/>
         <source>Change the map scale and adjust map objects and symbol sizes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="879"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="880"/>
         <source>Map notes...</source>
         <translation>Mapaj notoj…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="881"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="882"/>
         <source>Template setup window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="881"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="882"/>
         <source>Show/Hide the template window</source>
         <translation>Montri/Kaŝi la ŝablonan fenestron</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="884"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="885"/>
         <source>Open template...</source>
         <translation>Malfermi ŝablonon…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="859"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="860"/>
         <source>Show whole map</source>
         <translation>Montri tutan mapon</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="891"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="892"/>
         <source>Edit objects</source>
         <translation>Redakti objektojn</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="893"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="894"/>
         <source>Set point objects</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="894"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="895"/>
         <source>Draw paths</source>
         <translation>Desegni vojojn</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="895"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="896"/>
         <source>Draw circles and ellipses</source>
         <translation>Desegni cirklojn kaj elipsojn</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="899"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="900"/>
         <source>Write text</source>
         <translation>Skribi tekston</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="900"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="901"/>
         <source>Duplicate</source>
         <translation>Duobligi</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="901"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="902"/>
         <source>Switch symbol</source>
         <translation>Ŝanĝi simbolon</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="902"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="903"/>
         <source>Fill / Create border</source>
         <translation>Plenigi / Krei limon</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="903"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="904"/>
         <source>Switch dash direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="904"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="905"/>
         <source>Connect paths</source>
         <translation>Konekti vojojn</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="906"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="907"/>
         <source>Cut object</source>
         <translation>Eltondi objekton</translation>
     </message>
@@ -3097,254 +3102,254 @@ Import the data anyway?</source>
         <translation type="vanished">Turni objektojn</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="925"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="926"/>
         <source>Measure lengths and areas</source>
         <translation>Mezuri longojn kaj areojn</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="928"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="929"/>
         <source>Cut away from area</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="930"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="931"/>
         <source>Merge area holes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="942"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="943"/>
         <source>Paint on template settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="948"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="949"/>
         <source>Enable touch cursor</source>
         <translation>Ŝalti tuŝkursoron</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="949"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="950"/>
         <source>Enable GPS display</source>
         <translation>Ŝalti GPS-vidigon</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="951"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="952"/>
         <source>Enable GPS distance rings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="953"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="954"/>
         <source>Set point object at GPS position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="955"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="956"/>
         <source>Set temporary marker at GPS position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="957"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="958"/>
         <source>Create temporary path at GPS position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="959"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="960"/>
         <source>Clear temporary GPS markers</source>
         <translation>Vakigi provizorajn GPS-markojn</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="962"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="963"/>
         <source>Enable compass display</source>
         <translation>Ŝalti vidigon de kompaso</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="963"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="964"/>
         <source>Align map with north</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="965"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3544"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="966"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3597"/>
         <source>Add new part...</source>
         <translation>Aldoni novan parton…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="966"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3604"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="967"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3657"/>
         <source>Rename current part...</source>
         <translation>Renomi aktualan parton…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="967"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3565"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="968"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3618"/>
         <source>Remove current part</source>
         <translation>Forigi aktualan parton</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="968"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="969"/>
         <source>Merge all parts</source>
         <translation>Kunfandi ĉiujn partojn</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="970"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="971"/>
         <source>Import...</source>
         <translation>Importi…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1022"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1023"/>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="110"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="238"/>
         <source>&amp;Edit</source>
         <translation>&amp;Redakti</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1043"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1044"/>
         <source>&amp;View</source>
         <translation>&amp;Vido</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1073"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1074"/>
         <source>&amp;Tools</source>
         <translation>&amp;Iloj</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1126"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1127"/>
         <source>Sy&amp;mbols</source>
         <translation>&amp;Simboloj</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1108"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1109"/>
         <source>M&amp;ap</source>
         <translation>&amp;Mapo</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1138"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1139"/>
         <source>&amp;Templates</source>
         <translation>Ŝa&amp;blonoj</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1194"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1195"/>
         <source>Drawing</source>
         <translation>Desegnado</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="937"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="938"/>
         <source>Paint on template</source>
         <translation>Desegni sur la ŝablono</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="534"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="535"/>
         <source>Editing in progress</source>
         <translation>Redaktado en progreso</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="534"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="535"/>
         <source>The map is currently being edited. Please finish the edit operation before saving.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="539"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="540"/>
         <source>Map saved</source>
         <translation>Mapo estis konservita</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="851"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="852"/>
         <source>Show grid</source>
         <translation>Montri reton</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="852"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1169"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="853"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1170"/>
         <source>Configure grid...</source>
         <translation>Konfiguri reton…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="863"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="864"/>
         <source>Hatch areas</source>
         <translation>Haĉitaj areoj</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="864"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="865"/>
         <source>Baseline view</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="865"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="866"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="100"/>
         <source>Hide all templates</source>
         <translation>Kaŝi ĉiujn ŝablonojn</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="871"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="872"/>
         <source>Replace symbol set...</source>
         <translation>Anstataŭigi simbolaron…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="876"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="877"/>
         <source>Georeferencing...</source>
         <translation>Georeferencado…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="878"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="879"/>
         <source>Rotate map...</source>
         <translation>Turni mapon…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="878"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="879"/>
         <source>Rotate the whole map</source>
         <translation>Turni la tutan mapon</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="885"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="886"/>
         <source>Reopen template...</source>
         <translation>Remalfermi ŝablonon…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="887"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="888"/>
         <source>Tag editor</source>
         <translation>Etikeda redaktilo</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="887"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="888"/>
         <source>Show/Hide the tag editor window</source>
         <translation>Montri/Kaŝi la etikedan redaktilan fenestron</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="896"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="897"/>
         <source>Draw rectangles</source>
         <translation>Desegni rektangulojn</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="897"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="898"/>
         <source>Draw free-handedly</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="898"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="899"/>
         <source>Fill bounded areas</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="842"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="843"/>
         <source>Delete</source>
         <translation>Forigi</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="907"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="908"/>
         <source>Cut free form hole</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="908"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="909"/>
         <source>Cut round hole</source>
         <translation>Eltondi rondan truon</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="912"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="913"/>
         <source>Cut rectangular hole</source>
         <translation>Eltondi rektangulan truon</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="923"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="924"/>
         <source>Rotate pattern</source>
         <translation>Turni modelon</translation>
     </message>
@@ -3353,311 +3358,311 @@ Import the data anyway?</source>
         <translation type="vanished">Skali objektojn</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="926"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="927"/>
         <source>Unify areas</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="927"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="928"/>
         <source>Intersect areas</source>
         <translation>Sekci areojn</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="929"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="930"/>
         <source>Area XOr</source>
         <translation>Malinkluziva aŭo de areoj</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="933"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="934"/>
         <source>Cutout</source>
         <translation>Eltondi</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="934"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="935"/>
         <source>Cut away</source>
         <translation>Ĉirkaŭtranĉi</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="935"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="936"/>
         <source>Distribute points along path</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="972"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="973"/>
         <source>Map coordinates</source>
         <translation>Mapaj koordinatoj</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="974"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="975"/>
         <source>Projected coordinates</source>
         <translation>Projekciaj koordinatoj</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="976"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="977"/>
         <source>Latitude/Longitude (Dec)</source>
         <translation>Latitudo/Longitudo (Dec)</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="978"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="979"/>
         <source>Latitude/Longitude (DMS)</source>
         <translation>Latitudo/Longitudo (° ′ ″)</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1057"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1058"/>
         <source>Display coordinates as...</source>
         <translation>Vidigi koordinatojn kiel…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="916"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="917"/>
         <source>Cut hole</source>
         <translation>Eltondi truon</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="777"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="778"/>
         <source>Ctrl+A</source>
         <translation>Ctrl+A</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="778"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="779"/>
         <source>Ctrl+Shift+A</source>
         <translation>Ctrl+Shift+A</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="779"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="780"/>
         <source>Ctrl+I</source>
         <translation>Ctrl+I</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="781"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="782"/>
         <source>G</source>
         <translation>G</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="795"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="796"/>
         <source>E</source>
         <translation>E</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="796"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="797"/>
         <source>L</source>
         <translation>L</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="797"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="798"/>
         <source>S</source>
         <translation>S</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="798"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="799"/>
         <source>P</source>
         <translation>P</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="799"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="800"/>
         <source>O</source>
         <translation>O</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="800"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="801"/>
         <source>Ctrl+R</source>
         <translation>Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="801"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="802"/>
         <source>F</source>
         <translation>F</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="802"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="803"/>
         <source>T</source>
         <translation>T</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="804"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="805"/>
         <source>D</source>
         <translation>D</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="805"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="806"/>
         <source>Ctrl+G</source>
         <translation>Ctrl+G</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="806"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="807"/>
         <source>Ctrl+F</source>
         <translation>Ctrl+F</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="807"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="808"/>
         <source>Ctrl+D</source>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="808"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="809"/>
         <source>C</source>
         <translation>C</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="809"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="810"/>
         <source>R</source>
         <translation>R</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="810"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="811"/>
         <source>Z</source>
         <translation>Z</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="811"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="812"/>
         <source>K</source>
         <translation>K</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="812"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="813"/>
         <source>H</source>
         <translation>H</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="813"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="814"/>
         <source>M</source>
         <translation>M</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="814"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="815"/>
         <source>U</source>
         <translation>U</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="815"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="816"/>
         <source>N</source>
         <translation>N</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="816"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="817"/>
         <source>Ctrl+M</source>
         <translation>Ctrl+M</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="843"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="844"/>
         <source>Select all</source>
         <translation>Elekti ĉiujn</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="844"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="845"/>
         <source>Select nothing</source>
         <translation>Elekti nenion</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="845"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="846"/>
         <source>Invert selection</source>
         <translation>Inversigi elektaĵon</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="870"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="871"/>
         <source>Symbol set ID...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="870"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="871"/>
         <source>Edit the symbol set ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="872"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="873"/>
         <source>Load CRT file...</source>
         <translation>Ŝargi CRT-dosieron…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="872"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="873"/>
         <source>Assign new symbols by cross-reference table</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="889"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="890"/>
         <source>Tag Selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="889"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="890"/>
         <source>Show/Hide the tag selection window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="990"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="991"/>
         <source>Copy position</source>
         <translation>Kopii pozicion</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="990"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="991"/>
         <source>Copy position to clipboard.</source>
         <translation>Kopii pozicion al tondujo.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1162"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1163"/>
         <source>View</source>
         <translation>Vido</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1180"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1185"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1280"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3479"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1181"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1186"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1318"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3532"/>
         <source>Map parts</source>
         <translation>Mapopartoj</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1212"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1213"/>
         <source>Select template...</source>
         <translation>Elekti ŝablonon…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1218"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1219"/>
         <source>Editing</source>
         <translation>Redaktado</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1243"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1244"/>
         <source>Advanced editing</source>
         <translation>Speciala redaktado</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1270"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1271"/>
         <source>Select symbol</source>
         <translation>Elekti simbolon</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1273"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1311"/>
         <source>Hide top bar</source>
         <translation>Kaŝi supran breton</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1276"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1314"/>
         <source>Show top bar</source>
         <translation>Montri supran breton</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1539"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1559"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1616"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1636"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1649"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3055"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3061"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3067"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3073"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3082"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3892"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3899"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1579"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1599"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1656"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1676"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1689"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3108"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3114"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3120"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3126"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3135"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3945"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3952"/>
         <source>Error</source>
         <translation>Eraro</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1539"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1579"/>
         <source>Print / Export is not available in this program version!</source>
         <translation>Preso / eksporto ne estas disponebla en ĉi tiu programversio!</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1559"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1599"/>
         <source>No undo steps available.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3667,8 +3672,8 @@ Import the data anyway?</source>
         <translation type="vanished">Eltondi %1 objekto(j)n</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1616"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1649"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1656"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1689"/>
         <source>An internal error occurred, sorry!</source>
         <translation>Interna eraro okazis, pardonu!</translation>
     </message>
@@ -3677,7 +3682,7 @@ Import the data anyway?</source>
         <translation type="vanished">Kopiita %1 objekto(j)</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1636"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1676"/>
         <source>There are no objects in clipboard which could be pasted!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3686,77 +3691,77 @@ Import the data anyway?</source>
         <translation type="vanished">Algluita %1 objekto(j)</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1724"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1764"/>
         <source>Set custom zoom factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1724"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1764"/>
         <source>Zoom factor:</source>
         <translation>Zoma faktoro:</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1798"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1838"/>
         <source>Symbols</source>
         <translation>Simboloj</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1812"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1852"/>
         <source>Colors</source>
         <translation>Koloroj</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1833"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1873"/>
         <source>Symbol set ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1834"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1874"/>
         <source>Edit the symbol set ID:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1861"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1901"/>
         <source>Scale all symbols</source>
         <translation>Skali ĉiujn simbolojn</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1861"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1901"/>
         <source>Scale to percentage:</source>
         <translation>Skali en elcentoj:</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1885"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1925"/>
         <source>Map notes</source>
         <translation>Mapaj notoj</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1890"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1930"/>
         <source>Cancel</source>
         <translation>Rezigni</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1891"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1931"/>
         <source>OK</source>
         <translation>Bone</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1931"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1971"/>
         <source>Templates</source>
         <translation>Ŝablonoj</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1993"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2033"/>
         <source>Tag Editor</source>
         <translation>Etikeda Redaktilo</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2015"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2055"/>
         <source>Tag Selector</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2076"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2118"/>
         <source>No
 symbol
 selected</source>
@@ -3766,7 +3771,7 @@ simbolo
 estis elektita</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2077"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2119"/>
         <source>Multiple
 symbols
 selected</source>
@@ -3776,41 +3781,41 @@ simboloj
 elektitaj</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2153"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2206"/>
         <source>Place point objects on the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2153"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2206"/>
         <source>Select a point symbol to be able to use this tool.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2155"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2208"/>
         <source>Draw polygonal and curved lines.</source>
         <translation>Desegni plurlaterajn kaj kurbajn liniojn.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2155"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2157"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2159"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2161"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2163"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2208"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2210"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2212"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2214"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2216"/>
         <source>Select a line, area or combined symbol to be able to use this tool.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2157"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2210"/>
         <source>Draw circles and ellipses.</source>
         <translation>Desegni cirklojn kaj elipsojn.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2161"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2214"/>
         <source>Draw paths free-handedly.</source>
         <translation>Desegni libermanan linion.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2163"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2216"/>
         <source>Fill bounded areas.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3819,205 +3824,205 @@ elektitaj</translation>
         <translation type="vanished">Forigi la elektitajn objektojn.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2269"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2322"/>
         <source>Set the direction of area fill patterns or point objects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2269"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2322"/>
         <source>Select an area object with rotatable fill pattern or a rotatable point object to activate this tool.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2299"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2352"/>
         <source>Resulting symbol: %1 %2.</source>
         <translation>Rezultinta simbolo: %1 %2.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2300"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2353"/>
         <source>Select at least two area or path objects activate this tool.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2302"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2355"/>
         <source>Unify overlapping objects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2304"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2357"/>
         <source>Remove all parts which are not overlaps with the first selected object.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2306"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2359"/>
         <source>Remove overlapped parts of the first selected object.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2308"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2361"/>
         <source>Remove all parts which overlap the first selected object.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2312"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2365"/>
         <source>Merge area holes together, or merge holes with the object boundary to cut out this part.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2312"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2365"/>
         <source>Select one area object with holes to activate this tool.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2317"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2370"/>
         <source>Create a cutout of some objects or the whole map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2317"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2319"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2370"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2372"/>
         <source>Select a closed path object as cutout shape to activate this tool.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2319"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2372"/>
         <source>Cut away some objects or everything in a limited area.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2351"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2404"/>
         <source>Places evenly spaced point objects along an existing path object</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2351"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2404"/>
         <source>Select at least one path object and a single point symbol to activate this tool.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3082"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3135"/>
         <source>Merging holes failed.</source>
         <translation>Kunfando de la truoj fiaskis.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3371"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3424"/>
         <source>Clear temporary markers</source>
         <translation>Vakigi provizorajn markojn</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3371"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3424"/>
         <source>Are you sure you want to delete all temporary GPS markers? This cannot be undone.</source>
         <translation>Ĉu vi estas certa, ke vi volas forigi ĉiujn provizorajn GPS-markojn? Tio ne povas esti malfarita.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3485"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3538"/>
         <source>Merge this part with</source>
         <translation>Kunfandi ĉi tiun parton kun</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3491"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3544"/>
         <source>Move selected objects to</source>
         <translation>Movi elektitajn objektojn al</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3545"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3605"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3598"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3658"/>
         <source>Enter the name of the map part:</source>
         <translation>Enigu nomon de la mapoparto:</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3621"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3674"/>
         <source>Switched to map part &apos;%1&apos;.</source>
         <translation>Ŝanĝis al mapoparto &apos;%1&apos;.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3643"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3673"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3696"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3726"/>
         <source>Merge map parts</source>
         <translation>Kunfandi mapopartojn</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3644"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3697"/>
         <source>Do you want to move all objects from map part &quot;%1&quot; to &quot;%2&quot;, and to remove &quot;%1&quot;?</source>
         <translation>Ĉu vi volas movi ĉiujn objektojn el mapoparto &quot;%1&quot; al &quot;%2&quot;, kaj forigi &quot;%1&quot;?</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3674"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3727"/>
         <source>Do you want to move all objects to map part &quot;%1&quot;, and to remove all other map parts?</source>
         <translation>Ĉu vi volas movi ĉiujn objektojn al mapoparto &quot;%1&quot;, kaj forigi ĉiujn aliajn mapopartojn?</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3899"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3952"/>
         <source>Cannot import the selected map file because it could not be loaded.</source>
         <translation>Ne povas importi la elektitan mapodosieron, ĉar ĝi ne povis esti ŝargita.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2159"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2212"/>
         <source>Draw rectangles.</source>
         <translation>Desegni rektangulojn.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="825"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="826"/>
         <source>Print...</source>
         <translation>Presi…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="827"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="828"/>
         <source>&amp;Image</source>
         <translation>&amp;Bildo</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="829"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="830"/>
         <source>&amp;PDF</source>
         <translation>&amp;PDF</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="849"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="850"/>
         <source>Clear undo / redo history</source>
         <translation>Vakigi malfaran / refaran historion</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="849"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="850"/>
         <source>Clear the undo / redo history to reduce map file size.</source>
         <translation>Vakigi malfaran / refaran historion por redukti mapodosiergrandon.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="856"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="857"/>
         <source>Pan</source>
         <translation>Movi</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="866"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="867"/>
         <source>Overprinting simulation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="892"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="893"/>
         <source>Edit lines</source>
         <translation>Redakti liniojn</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="931"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="932"/>
         <source>Convert to curves</source>
         <translation>Konverti en kurbojn</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="932"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="933"/>
         <source>Simplify path</source>
         <translation>Simpligi vojon</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1014"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1015"/>
         <source>&amp;Export as...</source>
         <translation>&amp;Eksporti kiel…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2165"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2218"/>
         <source>Write text on the map.</source>
         <translation>Skribi tekston sur la mapo.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2165"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2218"/>
         <source>Select a text symbol to be able to use this tool.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4026,41 +4031,41 @@ elektitaj</translation>
         <translation type="vanished">Duobligi la elektitajn objektojn.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2258"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2260"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2262"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2264"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2311"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2313"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2315"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2317"/>
         <source>Select at least one object to activate this tool.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2273"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2326"/>
         <source>Switch the direction of symbols on line objects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2273"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2275"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2326"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2328"/>
         <source>Select at least one line object to activate this tool.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2275"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2328"/>
         <source>Connect endpoints of paths which are close together.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2279"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2332"/>
         <source>Select at least one line or area object to activate this tool.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2288"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2341"/>
         <source>Cut a hole into the selected area object.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2288"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2341"/>
         <source>Select a single area object to activate this tool.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4073,24 +4078,24 @@ elektitaj</translation>
         <translation type="vanished">Skali elektitajn objektojn.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2281"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2334"/>
         <source>Turn paths made of straight segments into smooth bezier splines.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2281"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2283"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2334"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2336"/>
         <source>Select a path object to activate this tool.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2283"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2336"/>
         <source>Reduce the number of points in path objects while trying to retain their shape.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2344"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2346"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2397"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2399"/>
         <source>Select at least one object and a fitting, different symbol to activate this tool.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4103,82 +4108,82 @@ elektitaj</translation>
         <translation type="vanished">%1 duobligita(j) objekto(j)</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2681"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2734"/>
         <source>Object selection</source>
         <translation>Objekta elekto</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3041"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3094"/>
         <source>Measure</source>
         <translation>Mezurado</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3055"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3108"/>
         <source>Unification failed.</source>
         <translation>Unuiĝo fiaskis.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3061"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3114"/>
         <source>Intersection failed.</source>
         <translation>Intersekco fiaskis.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3067"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3120"/>
         <source>Difference failed.</source>
         <translation>Diferenco fiaskis.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3073"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3126"/>
         <source>XOr failed.</source>
         <translation>XOr fiaskis.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3566"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3619"/>
         <source>Do you want to remove map part &quot;%1&quot; and all its objects?</source>
         <translation>Ĉu vi volas forigi mapoparton &quot;%1&quot; kaj ĉiujn ĝiajn objektojn?</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3728"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3781"/>
         <source>Paint free-handedly on a template</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3730"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3783"/>
         <source>Paint free-handedly on a template. Create or load a template which can be drawn onto to activate this button</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3859"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3912"/>
         <source>Import %1, GPX, OSM or DXF file</source>
         <translation>Importi %1, GPX, OSM aŭ DXF dosieron</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3863"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3916"/>
         <source>Importable files</source>
         <translation>Importeblaj dosieroj</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3863"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3916"/>
         <source>All files</source>
         <translation>Ĉiuj dosieroj</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3892"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3945"/>
         <source>Cannot import the selected file because its file format is not supported.</source>
         <translation>Ne povas importi la elektitan dosieron, ĉar ĝia dosierformo estas nesubtenata.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="922"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="923"/>
         <source>Rotate objects</source>
         <translation>Turni objektojn</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="924"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="925"/>
         <source>Scale objects</source>
         <translation>Skali objektojn</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="1573"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1613"/>
         <source>Cut %n object(s)</source>
         <extracomment>Past tense. Displayed when an Edit &gt; Cut operation is completed.</extracomment>
         <translation>
@@ -4187,7 +4192,7 @@ elektitaj</translation>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="1626"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1666"/>
         <source>Copied %n object(s)</source>
         <translation>
             <numerusform>Kopiita %n objekto</numerusform>
@@ -4195,7 +4200,7 @@ elektitaj</translation>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="1666"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1706"/>
         <source>Pasted %n object(s)</source>
         <translation>
             <numerusform>Algluita %n objekto</numerusform>
@@ -4203,42 +4208,42 @@ elektitaj</translation>
         </translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2258"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2311"/>
         <source>Deletes the selected objects.</source>
         <translation>Forigi la elektitajn objektojn.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2260"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2313"/>
         <source>Duplicate the selected objects.</source>
         <translation>Duobligi la elektitajn objektojn.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2262"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2315"/>
         <source>Rotate the selected objects.</source>
         <translation>Turni la elektitajn objektojn.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2264"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2317"/>
         <source>Scale the selected objects.</source>
         <translation>Skali elektitajn objektojn.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2279"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2332"/>
         <source>Cut the selected objects into smaller parts.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2344"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2397"/>
         <source>Switches the symbol of the selected objects to the selected symbol.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2346"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2399"/>
         <source>Fill the selected lines or create a border for the selected areas.</source>
         <translation>Plenigi la elektitajn liniojn aŭ krei limon por la elektitaj areoj.</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="2466"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2519"/>
         <source>Duplicated %n object(s)</source>
         <translation>
             <numerusform>Duobligita %n objekto</numerusform>
@@ -4246,7 +4251,7 @@ elektitaj</translation>
         </translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2681"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2734"/>
         <source>No objects were selected because there are no objects with the selected symbols.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4256,7 +4261,7 @@ elektitaj</translation>
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="599"/>
         <location filename="../src/tools/cutout_tool.cpp" line="154"/>
-        <location filename="../src/tools/draw_path_tool.cpp" line="1116"/>
+        <location filename="../src/tools/draw_path_tool.cpp" line="1124"/>
         <location filename="../src/tools/draw_circle_tool.cpp" line="307"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="750"/>
         <location filename="../src/tools/draw_freehand_tool.cpp" line="277"/>
@@ -4264,8 +4269,7 @@ elektitaj</translation>
         <translation>&lt;b&gt;%1&lt;/b&gt;: Ĉesigi. </translation>
     </message>
     <message>
-        <location filename="../src/tools/draw_path_tool.cpp" line="1065"/>
-        <location filename="../src/tools/draw_path_tool.cpp" line="1066"/>
+        <location filename="../src/tools/draw_path_tool.cpp" line="1143"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="703"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="704"/>
         <location filename="../src/tools/edit_point_tool.cpp" line="727"/>
@@ -4273,12 +4277,13 @@ elektitaj</translation>
         <translation>Pli: %1, %2</translation>
     </message>
     <message>
+        <location filename="../src/tools/draw_path_tool.cpp" line="1140"/>
         <location filename="../src/tools/edit_line_tool.cpp" line="520"/>
         <source>More: %1</source>
         <translation>Pli: %1</translation>
     </message>
     <message>
-        <location filename="../src/tools/draw_path_tool.cpp" line="1064"/>
+        <location filename="../src/tools/draw_path_tool.cpp" line="1146"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="702"/>
         <source>More: %1, %2, %3</source>
         <translation>Pli: %1, %2, %3</translation>
@@ -4292,22 +4297,22 @@ elektitaj</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_find_feature.cpp" line="56"/>
+        <location filename="../src/gui/map/map_find_feature.cpp" line="57"/>
         <source>Find &amp;next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_find_feature.cpp" line="94"/>
+        <location filename="../src/gui/map/map_find_feature.cpp" line="96"/>
         <source>Find objects</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_find_feature.cpp" line="99"/>
+        <location filename="../src/gui/map/map_find_feature.cpp" line="101"/>
         <source>&amp;Find next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_find_feature.cpp" line="102"/>
+        <location filename="../src/gui/map/map_find_feature.cpp" line="104"/>
         <source>Find &amp;all</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4612,67 +4617,78 @@ zoom using the mouse wheel, if available.</source>
         <translation>libocad redonis %1</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocad8_file_format.cpp" line="1600"/>
+        <location filename="../src/fileformats/ocad8_file_format.cpp" line="1603"/>
         <source>Registration black is exported as a regular color.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocad8_file_format.cpp" line="1700"/>
+        <location filename="../src/fileformats/ocad8_file_format.cpp" line="1711"/>
         <source>Unable to export fill pattern shift for an area object</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocad8_file_format.cpp" line="1849"/>
+        <location filename="../src/fileformats/ocad8_file_format.cpp" line="1860"/>
         <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
         <translation>Ne eblas eksporti ŝablonon: dosiertipo &quot;%1&quot; ankoraŭ ne estas subtenata</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocad8_file_format.cpp" line="2067"/>
+        <location filename="../src/fileformats/ocad8_file_format.cpp" line="1883"/>
+        <location filename="../src/fileformats/ocad8_file_format.cpp" line="1894"/>
+        <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/fileformats/ocad8_file_format.cpp" line="1905"/>
+        <source>Some coordinates remain outside of the OCAD 8 drawing area. They might be unreachable in OCAD.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/fileformats/ocad8_file_format.cpp" line="2133"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocad8_file_format.cpp" line="2091"/>
+        <location filename="../src/fileformats/ocad8_file_format.cpp" line="2157"/>
         <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocad8_file_format.cpp" line="2102"/>
+        <location filename="../src/fileformats/ocad8_file_format.cpp" line="2168"/>
         <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocad8_file_format.cpp" line="2158"/>
+        <location filename="../src/fileformats/ocad8_file_format.cpp" line="2224"/>
         <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocad8_file_format.cpp" line="2217"/>
+        <location filename="../src/fileformats/ocad8_file_format.cpp" line="2283"/>
         <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocad8_file_format.cpp" line="2264"/>
+        <location filename="../src/fileformats/ocad8_file_format.cpp" line="2330"/>
         <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocad8_file_format.cpp" line="2303"/>
+        <location filename="../src/fileformats/ocad8_file_format.cpp" line="2369"/>
         <source>In text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocad8_file_format.cpp" line="2310"/>
+        <location filename="../src/fileformats/ocad8_file_format.cpp" line="2376"/>
         <source>In text symbol %1: ignoring underlining</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocad8_file_format.cpp" line="2312"/>
+        <location filename="../src/fileformats/ocad8_file_format.cpp" line="2378"/>
         <source>In text symbol %1: ignoring kerning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocad8_file_format.cpp" line="2727"/>
+        <location filename="../src/fileformats/ocad8_file_format.cpp" line="2793"/>
         <source>String truncated (truncation marked with three &apos;|&apos;): %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6299,6 +6315,11 @@ Do you want to save your changes?</source>
         <source>Warning</source>
         <translation>Averto</translation>
     </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="1276"/>
+        <source>Description</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SymbolRenderWidget</name>
@@ -6395,65 +6416,67 @@ Do you want to save your changes?</source>
         <translation type="vanished">Skali simbolo(j)n</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="973"/>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="988"/>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1001"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="982"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="997"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1010"/>
         <source>Error</source>
         <translation>Eraro</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="973"/>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1001"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="982"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1010"/>
         <source>An internal error occurred, sorry!</source>
         <translation>Interna eraro okazis, pardonu!</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="988"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="997"/>
         <source>There are no symbols in clipboard which could be pasted!</source>
         <translation>Ne estas simboloj en tondejo, kiuj povas esti algluitaj!</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1157"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1166"/>
         <source>Select all objects with this symbol</source>
         <translation>Elekti ĉiujn objektojn kun tiu simbolo</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1158"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1167"/>
         <source>Add all objects with this symbol to selection</source>
         <translation>Elekti ĉiujn objektojn kun tiu simbolo al elekto</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1159"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1168"/>
         <source>Remove all objects with this symbol from selection</source>
         <translation>Forigi ĉiujn objektojn kun tiu simbolo el elekto</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1160"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1289"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1169"/>
         <source>Hide objects with this symbol</source>
         <translation>Kaŝi objektojn kun tiu simbolo</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1161"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1300"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1170"/>
         <source>Protect objects with this symbol</source>
         <translation>Protekti objektojn kun tiu simbolo</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1166"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1175"/>
         <source>Add all objects with selected symbols to selection</source>
         <translation>Aldoni ĉiujn objektojn kun elektitaj simboloj al elekto</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1167"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1176"/>
         <source>Remove all objects with selected symbols from selection</source>
         <translation>Forigi ĉiujn objektojn kun elektitaj simboloj el elekto</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1168"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1177"/>
         <source>Hide objects with selected symbols</source>
         <translation>Kaŝi objektojn kun elektitaj simboloj</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1169"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1178"/>
         <source>Protect objects with selected symbols</source>
         <translation>Protekti objektojn kun elektitaj simboloj</translation>
     </message>
@@ -6499,23 +6522,23 @@ Do you want to save your changes?</source>
         <translation>Ordigi laŭ ĉefkolora prioritato</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="904"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="913"/>
         <source>Scale to percentage:</source>
         <translation>Skali en elcentoj:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="935"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="944"/>
         <source>Confirmation</source>
         <translation>Konfirmo</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="935"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="944"/>
         <source>The map contains objects with the symbol &quot;%1&quot;. Deleting it will delete those objects and clear the undo history! Do you really want to do that?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="846"/>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1165"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="847"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1174"/>
         <source>Select all objects with selected symbols</source>
         <translation>Elekti ĉiujn objektojn kun elektitaj simboloj</translation>
     </message>
@@ -6530,7 +6553,7 @@ Do you want to save your changes?</source>
         <translation>Plenigi / Krei limon por elektitaj objektoj</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="904"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="913"/>
         <source>Scale symbols</source>
         <translation>Skali simbolojn</translation>
     </message>
@@ -6538,52 +6561,52 @@ Do you want to save your changes?</source>
 <context>
     <name>SymbolSettingDialog</name>
     <message>
-        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="59"/>
+        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="60"/>
         <source>Symbol settings</source>
         <translation>Agordoj de simbolo</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="101"/>
+        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="102"/>
         <source>Template:</source>
         <translation>Ŝablono:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="102"/>
+        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="103"/>
         <source>&lt;b&gt;Template:&lt;/b&gt; </source>
         <translation>&lt;b&gt;Ŝablono:&lt;/b&gt; </translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="103"/>
+        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="104"/>
         <source>(none)</source>
         <translation>(nenio)</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="104"/>
+        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="105"/>
         <source>Open...</source>
         <translation>Malfermi…</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="107"/>
+        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="108"/>
         <source>Center template...</source>
         <translation>Centrigi ŝablonon…</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="112"/>
+        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="113"/>
         <source>bounding box on origin</source>
         <translation>limiga kesto sur origino</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="113"/>
+        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="114"/>
         <source>center of gravity on origin</source>
         <translation>masocentro sur origino</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="230"/>
+        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="231"/>
         <source>Select background color</source>
         <translation>Elekti fonan koloron</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="416"/>
+        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="417"/>
         <source>The quick brown fox
 takes the routechoice
 to jump over the lazy dog
@@ -6594,7 +6617,7 @@ manĝaĵo kun spicoj
 1234567890</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="479"/>
+        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="492"/>
         <source>- unnamed -</source>
         <translation>- nenomita -</translation>
     </message>
@@ -7648,7 +7671,7 @@ La maksimuma subtenata versio estas %2.</translation>
 <context>
     <name>XMLFileExporter</name>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="176"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="177"/>
         <source>Older versions of Mapper do not support multiple map parts. To save the map in compatibility mode, you must first merge all map parts.</source>
         <translation>Malnovaj versioj de Mapper ne subtenas plurajn mapopartojn. Por konservi la mapon en kongrueca reĝimo, vi devas kunfandi ĉiujn mapopartojn antaŭe.</translation>
     </message>
@@ -7656,69 +7679,69 @@ La maksimuma subtenata versio estas %2.</translation>
 <context>
     <name>XMLFileImporter</name>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="431"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="435"/>
         <source>Unsupported element: %1 (line %2 column %3)</source>
         <translation>Nesubtenata elemento: %1 (linio %2 kolumno %3)</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="462"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="466"/>
         <source>Some coordinates were out of bounds for printing. Map content was adjusted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="512"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="516"/>
         <source>unknown</source>
         <translation>nekonata</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="513"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="517"/>
         <source>Parts of this file cannot be read by this version of Mapper. Minimum required version: %1</source>
         <translation>Partoj de ĉi tiu dosiero ne estas legebla per tiu versio de Mapper. Minimuma postulata versio: %1</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="547"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="551"/>
         <source>Error at line %1 column %2: %3</source>
         <translation>Eraro ĉe linio %1 kolumno %2: %3</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="559"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="817"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="563"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="821"/>
         <source>Some invalid characters had to be removed.</source>
         <translation>Kelkaj nevalidaj simboloj devis esti forigita.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="577"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="581"/>
         <source>Unknown error</source>
         <translation>Nekonata eraro</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="578"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="582"/>
         <source>Unsupported or invalid georeferencing specification &apos;%1&apos;: %2</source>
         <translation>Nesubtenata aŭ nevalida specifo de georeferencado &apos;%1&apos;: %2</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="710"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="763"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="714"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="767"/>
         <source>Could not set knockout property of color &apos;%1&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="723"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="727"/>
         <source>Expected %1 colors, found %2.</source>
         <translation>Atendata %1 koloroj, trovita %2.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="739"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="743"/>
         <source>Spot color %1 not found while processing %2 (%3).</source>
         <translation>Spot-koloro %1 ne trovita dum traktado de %2 (%3).</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="795"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="799"/>
         <source>Expected %1 symbols, found %2.</source>
         <translation>Atendata %1 simboloj, trovita %2.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="834"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="838"/>
         <source>Expected %1 map parts, found %2.</source>
         <translation>Atendata %1 mapopartoj, trovita %2.</translation>
     </message>
