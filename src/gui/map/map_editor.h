@@ -768,6 +768,7 @@ private:
 	ActionGridBar* top_action_bar;
 	QToolButton* show_top_bar_button;
 	QAction* mobile_symbol_selector_action;
+	QMenu* mobile_symbol_button_menu;
 	
 	QComboBox* mappart_selector_box;
 	
