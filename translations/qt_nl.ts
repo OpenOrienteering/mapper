@@ -678,9 +678,25 @@ Controleer of de juiste bestandsnaam is opgegeven.</translation>
 <context>
     <name>QPlatformTheme</name>
     <message>
+        <source>OK</source>
+        <translation></translation>
+    </message>
+    <message>
         <location filename="../src/gui/text_browser_dialog.cpp" line="63"/>
         <source>Close</source>
         <translation>Sluiten</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Help</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation></translation>
     </message>
 </context>
 <context>
