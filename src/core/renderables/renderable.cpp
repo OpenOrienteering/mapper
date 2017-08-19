@@ -93,13 +93,10 @@ void SharedRenderables::deleteRenderables()
 		{
 			delete renderable;
 		}
+		
 		renderables->second.clear();
 		if (renderables->first.clip_path)
-		{
-			iterator it = renderables;
-			++renderables;
-			erase(it);
-		}
+			renderables = erase(renderables);
 		else
 			++renderables;
 	}
@@ -110,11 +107,7 @@ void SharedRenderables::compact()
 	for (iterator renderables = begin(); renderables != end(); )
 	{
 		if (renderables->second.size() == 0)
-		{
-			iterator it = renderables;
-			++renderables;
-			erase(it);
-		}
+			renderables = erase(renderables);
 		else
 			++renderables;
 	}
