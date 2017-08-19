@@ -49,8 +49,8 @@ class DotRenderable : public Renderable
 {
 public:
 	DotRenderable(const PointSymbol* symbol, MapCoordF coord);
-	virtual void render(QPainter& painter, const RenderConfig& config) const override;
-	virtual PainterConfig getPainterConfig(const QPainterPath* clip_path = nullptr) const override;
+	void render(QPainter& painter, const RenderConfig& config) const override;
+	PainterConfig getPainterConfig(const QPainterPath* clip_path = nullptr) const override;
 };
 
 /** Renderable for displaying a circle. */
@@ -58,8 +58,8 @@ class CircleRenderable : public Renderable
 {
 public:
 	CircleRenderable(const PointSymbol* symbol, MapCoordF coord);
-	virtual void render(QPainter& painter, const RenderConfig& config) const override;
-	virtual PainterConfig getPainterConfig(const QPainterPath* clip_path = nullptr) const override;
+	void render(QPainter& painter, const RenderConfig& config) const override;
+	PainterConfig getPainterConfig(const QPainterPath* clip_path = nullptr) const override;
 	
 protected:
 	const float line_width;
@@ -72,8 +72,8 @@ class LineRenderable : public Renderable
 public:
 	LineRenderable(const LineSymbol* symbol, const VirtualPath& virtual_path, bool closed);
 	LineRenderable(const LineSymbol* symbol, QPointF first, QPointF second);
-	virtual void render(QPainter& painter, const RenderConfig& config) const override;
-	virtual PainterConfig getPainterConfig(const QPainterPath* clip_path = nullptr) const override;
+	void render(QPainter& painter, const RenderConfig& config) const override;
+	PainterConfig getPainterConfig(const QPainterPath* clip_path = nullptr) const override;
 	
 protected:
 	void extentIncludeCap(quint32 i, float half_line_width, bool end_cap, const LineSymbol* symbol, const VirtualPath& path);
@@ -92,8 +92,8 @@ class AreaRenderable : public Renderable
 public:
 	AreaRenderable(const AreaSymbol* symbol, const PathPartVector& path_parts);
 	AreaRenderable(const AreaSymbol* symbol, const VirtualPath& path);
-	virtual void render(QPainter& painter, const RenderConfig& config) const override;
-	virtual PainterConfig getPainterConfig(const QPainterPath* clip_path = nullptr) const override;
+	void render(QPainter& painter, const RenderConfig& config) const override;
+	PainterConfig getPainterConfig(const QPainterPath* clip_path = nullptr) const override;
 	
 	inline const QPainterPath* painterPath() const;
 	

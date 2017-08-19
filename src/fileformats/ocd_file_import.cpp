@@ -1001,9 +1001,9 @@ OcdFileImport::OcdImportedLineSymbol* OcdFileImport::importLineSymbolBase(const 
 			ocd_length = (attributes.dist_from_start + attributes.dist_from_end) / 2;
 			addSymbolWarning( symbol,
 			  tr("Different lengths for pointed caps at begin (%1 mm) and end (%2 mm) are not supported. Using %3 mm.").
-			  arg(locale.toString(0.001f * convertLength(attributes.dist_from_start))).
-			  arg(locale.toString(0.001f * convertLength(attributes.dist_from_end))).
-			  arg(locale.toString(0.001f * convertLength(ocd_length))) );
+			  arg(locale.toString(0.001f * convertLength(attributes.dist_from_start)),
+			      locale.toString(0.001f * convertLength(attributes.dist_from_end)),
+			      locale.toString(0.001f * convertLength(ocd_length))) );
 		}
 		symbol->pointed_cap_length = convertLength(ocd_length);
 		symbol->join_style = LineSymbol::RoundJoin;	// NOTE: while the setting may be different (see what is set in the first place), OC*D always draws round joins if the line cap is pointed!
@@ -1032,15 +1032,15 @@ OcdFileImport::OcdImportedLineSymbol* OcdFileImport::importLineSymbolBase(const 
 					// End length not equal to 0.5 * main length
 					addSymbolWarning( symbol,
 					  tr("The dash pattern's end length (%1 mm) cannot be imported correctly. Using %2 mm.").
-					  arg(locale.toString(0.001f * convertLength(attributes.end_length))).
-					  arg(locale.toString(0.001f * symbol->dash_length)) );
+					  arg(locale.toString(0.001f * convertLength(attributes.end_length)),
+					      locale.toString(0.001f * symbol->dash_length)) );
 				}
 				if (attributes.end_gap)
 				{
 					addSymbolWarning( symbol,
 					  tr("The dash pattern's end gap (%1 mm) cannot be imported correctly. Using %2 mm.").
-					  arg(locale.toString(0.001f * convertLength(attributes.end_gap))).
-					  arg(locale.toString(0.001f * symbol->break_length)) );
+					  arg(locale.toString(0.001f * convertLength(attributes.end_gap)),
+					      locale.toString(0.001f * symbol->break_length)) );
 				}
 			}
 		}
@@ -1064,8 +1064,8 @@ OcdFileImport::OcdImportedLineSymbol* OcdFileImport::importLineSymbolBase(const 
 					// End length not equal to 0.5 * main length
 					addSymbolWarning( symbol,
 					  tr("The dash pattern's end length (%1 mm) cannot be imported correctly. Using %2 mm.").
-					  arg(locale.toString(0.001f * convertLength(attributes.end_length))).
-					  arg(locale.toString(0.001f * (symbol->half_outer_dashes ? (symbol->dash_length/2) : symbol->dash_length))) );
+					  arg(locale.toString(0.001f * convertLength(attributes.end_length)),
+					      locale.toString(0.001f * (symbol->half_outer_dashes ? (symbol->dash_length/2) : symbol->dash_length))) );
 				}
 			}
 			
@@ -1079,8 +1079,8 @@ OcdFileImport::OcdImportedLineSymbol* OcdFileImport::importLineSymbolBase(const 
 				{
 					addSymbolWarning( symbol,
 					  tr("The dash pattern's end gap (%1 mm) cannot be imported correctly. Using %2 mm.").
-					  arg(locale.toString(0.001f * convertLength(attributes.end_gap))).
-					  arg(locale.toString(0.001f * symbol->in_group_break_length)) );
+					  arg(locale.toString(0.001f * convertLength(attributes.end_gap)),
+					      locale.toString(0.001f * symbol->in_group_break_length)) );
 				}
 			}
 		}

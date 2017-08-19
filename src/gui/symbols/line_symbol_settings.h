@@ -22,7 +22,8 @@
 #ifndef OPENORIENTEERING_LINE_SYMBOL_SETTINGS_H
 #define OPENORIENTEERING_LINE_SYMBOL_SETTINGS_H
 
-#include <QList>
+#include <vector>
+
 #include <QObject>
 
 #include "gui/symbols/symbol_properties_widget.h"
@@ -50,9 +51,9 @@ Q_OBJECT
 public:
 	LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* dialog);
 	
-	virtual ~LineSymbolSettings();
+	~LineSymbolSettings() override;
 	
-	virtual void reset(Symbol* symbol);
+	void reset(Symbol* symbol) override;
 	
 	/**
 	 * Updates the content and state of all input fields.
@@ -62,13 +63,13 @@ public:
 protected:
 	struct BorderWidgets
 	{
-		QList<QWidget *> widget_list;
+		std::vector<QWidget*> widget_list;
 		QDoubleSpinBox* width_edit;
 		ColorDropDown* color_edit;
 		QDoubleSpinBox* shift_edit;
 		QCheckBox* dashed_check;
 		
-		QList<QWidget *> dash_widget_list;
+		std::vector<QWidget*> dash_widget_list;
 		QDoubleSpinBox* dash_length_edit;
 		QDoubleSpinBox* break_length_edit;
 	};
@@ -141,7 +142,7 @@ private:
 	QDoubleSpinBox* minimum_length_edit;
 	
 	// enabled if line_width > 0 && color
-	QList<QWidget *> line_settings_list;
+	std::vector<QWidget*> line_settings_list;
 	QComboBox* line_cap_combo;
 	QComboBox* line_join_combo;
 	QLabel* pointed_cap_length_label;
@@ -149,7 +150,7 @@ private:
 	QCheckBox* dashed_check;
 	
 	// dashed == false && mid_symbol
-	QList<QWidget *> undashed_widget_list;
+	std::vector<QWidget*> undashed_widget_list;
 	QDoubleSpinBox* segment_length_edit;
 	QDoubleSpinBox* end_length_edit;
 	QCheckBox* show_at_least_one_symbol_check;
@@ -157,7 +158,7 @@ private:
 	QSpinBox* minimum_mid_symbol_count_when_closed_edit;
 	
 	// dashed == true
-	QList<QWidget *> dashed_widget_list;
+	std::vector<QWidget*> dashed_widget_list;
 	QDoubleSpinBox* dash_length_edit;
 	QDoubleSpinBox* break_length_edit;
 	QComboBox* dash_group_combo;
@@ -166,16 +167,16 @@ private:
 	QCheckBox* half_outer_dashes_check;
 	
 	// mid_symbol
-	QList<QWidget *> mid_symbol_widget_list;
+	std::vector<QWidget*> mid_symbol_widget_list;
 	QSpinBox* mid_symbol_per_spot_edit;
 	QLabel* mid_symbol_distance_label;
 	QDoubleSpinBox* mid_symbol_distance_edit;
 	
 	// enabled if line_width > 0
-	QList<QWidget *> border_widget_list;
+	std::vector<QWidget*> border_widget_list;
 	QCheckBox* border_check;
 	QCheckBox* different_borders_check;
-	QList<QWidget *> different_borders_widget_list;
+	std::vector<QWidget*> different_borders_widget_list;
 	BorderWidgets border_widgets;
 	BorderWidgets right_border_widgets;
 	

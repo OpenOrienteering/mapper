@@ -75,7 +75,7 @@ extern "C" void registerProjFileHelper();
  * Conversions between "map coordinates" and "geographic coordinates" use the
  * projected coordinates as intermediate step.
  */
-class Georeferencing : public QObject
+class Georeferencing : public QObject  // clazy:exclude=copyable-polymorphic
 {
 Q_OBJECT
 
@@ -145,7 +145,7 @@ public:
 	/** 
 	 * Cleans up memory allocated by the georeferencing 
 	 */
-	~Georeferencing();
+	~Georeferencing() override;
 	
 	
 	/** 

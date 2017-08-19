@@ -58,7 +58,7 @@ public:
 	/**
 	 * Destructs the dialog and cleans up temporary objects. 
 	 */
-	virtual ~SymbolSettingDialog();
+	~SymbolSettingDialog() override;
 	
 	/**
 	 * Returns a copy of the currently edited symbol. 

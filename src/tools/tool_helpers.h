@@ -58,7 +58,7 @@ public:
 	 */
 	ConstrainAngleToolHelper();
 	ConstrainAngleToolHelper(const MapCoordF& center);
-	~ConstrainAngleToolHelper();
+	~ConstrainAngleToolHelper() override;
 	
 	/** Sets the center of the lines */
 	void setCenter(const MapCoordF& center);

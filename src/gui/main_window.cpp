@@ -279,10 +279,10 @@ void MainWindow::createFileMenu()
 	
 	open_recent_menu = new QMenu(tr("Open &recent"), this);
 	open_recent_menu->setWhatsThis(Util::makeWhatThis("file_menu.html"));
-	for (int i = 0; i < max_recent_files; ++i)
+	for (auto& action : recent_file_act)
 	{
-		recent_file_act[i] = new QAction(this);
-		connect(recent_file_act[i], &QAction::triggered, this, &MainWindow::openRecentFile);
+		action = new QAction(this);
+		connect(action, &QAction::triggered, this, &MainWindow::openRecentFile);
 	}
 	open_recent_menu_inserted = false;
 	
@@ -737,7 +737,10 @@ bool MainWindow::openPath(const QString &path)
 	if (open_in_progress == path)
 	{
 		int result = QMessageBox::warning(this, tr("Crash warning"), 
-		  tr("It seems that %1 crashed the last time this file was opened:<br /><tt>%2</tt><br /><br />Really retry to open it?").arg(appName()).arg(path),
+		  tr("It seems that %1 crashed the last time this file was opened:<br />"
+		     "<tt>%2</tt><br /><br />"
+		     "Really retry to open it?")
+		  .arg(appName(), path),
 		  QMessageBox::Yes | QMessageBox::No);
 		settings.remove(reopen_blocker);
 		if (result == QMessageBox::No)
@@ -757,7 +760,7 @@ bool MainWindow::openPath(const QString &path)
 	
 	QString new_actual_path = path;
 	QString autosave_path = Autosave::autosavePath(path);
-	bool new_autosave_conflict = QFileInfo(autosave_path).exists();
+	bool new_autosave_conflict = QFileInfo::exists(autosave_path);
 	if (new_autosave_conflict)
 	{
 #if defined(Q_OS_ANDROID)
@@ -851,7 +854,7 @@ void MainWindow::switchActualPath(const QString& path)
 void MainWindow::openPathLater(const QString& path)
 {
 	path_backlog.push_back(path);
-	QTimer::singleShot(10, this, SLOT(openPathBacklog()));
+	QTimer::singleShot(10, this, SLOT(openPathBacklog()));  // clazy:exclude=old-style-connect
 }
 
 void MainWindow::openPathBacklog()
@@ -1083,15 +1086,9 @@ bool MainWindow::showSaveAsDialog()
 // 	QString selected_extension = "." + format->primaryExtension();
 	QStringList selected_extensions(format->fileExtensions());
 	selected_extensions.replaceInStrings(QRegExp(QString::fromLatin1("^")), QString::fromLatin1("."));
-	bool has_extension = false;
-	for (auto selected_extension : qAsConst(selected_extensions))
-	{
-		if (path.endsWith(selected_extension, Qt::CaseInsensitive))
-		{
-			has_extension = true;
-			break;
-		}
-	}
+	bool has_extension = std::any_of(selected_extensions.constBegin(), selected_extensions.constEnd(), [&path](const auto& selected_extension) {
+		return path.endsWith(selected_extension, Qt::CaseInsensitive);
+	});
 	if (!has_extension)
 		path += QLatin1Char('.') + format->primaryExtension();
 	// Ensure that the file name matches the format.

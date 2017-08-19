@@ -31,11 +31,17 @@
 class DummyPathObject : public PathObject
 {
 public:
-	DummyPathObject() : PathObject()
+	DummyPathObject()
+	: PathObject()
 	{
 		// Set a dummy symbol to make the object calculate path coordinates
 		setSymbol(Map::getCoveringRedLine(), true);
 	}
+	
+	DummyPathObject(const DummyPathObject&) = delete;
+	DummyPathObject(DummyPathObject&&) = delete;
+	DummyPathObject& operator=(const DummyPathObject&) = delete;
+	DummyPathObject& operator=(DummyPathObject&&) = delete;
 };
 
 PathObjectTest::PathObjectTest(QObject* parent): QObject(parent)

@@ -93,13 +93,10 @@ void SharedRenderables::deleteRenderables()
 		{
 			delete renderable;
 		}
+		
 		renderables->second.clear();
 		if (renderables->first.clip_path)
-		{
-			iterator it = renderables;
-			++renderables;
-			erase(it);
-		}
+			renderables = erase(renderables);
 		else
 			++renderables;
 	}
@@ -110,11 +107,7 @@ void SharedRenderables::compact()
 	for (iterator renderables = begin(); renderables != end(); )
 	{
 		if (renderables->second.size() == 0)
-		{
-			iterator it = renderables;
-			++renderables;
-			erase(it);
-		}
+			renderables = erase(renderables);
 		else
 			++renderables;
 	}
@@ -151,7 +144,7 @@ void ObjectRenderables::draw(const QColor& color, QPainter* painter, const Rende
 			if (!state.activate(painter, current_clip, config, color, initial_clip))
 				continue;
 			
-			for (Renderable* renderable : config_renderables.second)
+			for (const auto renderable : config_renderables.second)
 			{
 				if (renderable->intersects(config.bounding_box))
 				{
@@ -169,7 +162,7 @@ void ObjectRenderables::setClipPath(const QPainterPath* path)
 	clip_path = path;
 }
 
-void ObjectRenderables::insertRenderable(Renderable* r, PainterConfig state)
+void ObjectRenderables::insertRenderable(Renderable* r, const PainterConfig& state)
 {
 	SharedRenderables::Pointer& container(operator[](state.color_priority));
 	if (!container)
@@ -194,24 +187,24 @@ void ObjectRenderables::clear()
 
 void ObjectRenderables::takeRenderables()
 {
-	for (iterator color = begin(); color != end(); ++color)
+	for (auto& color : *this)
 	{
 		SharedRenderables* new_container = new SharedRenderables();
 		
 		// Pre-allocate as much space as in the original container
-		for (SharedRenderables::const_iterator it = color->second->begin(); it != color->second->end(); ++it)
+		for (const auto& renderables : *color.second)
 		{
-			new_container->operator[](it->first).reserve(it->second.size());
+			(*new_container)[renderables.first].reserve(renderables.second.size());
 		}
-		color->second = new_container;
+		color.second = new_container;
 	}
 }
 
 void ObjectRenderables::deleteRenderables()
 {
-	for (const_iterator color = begin(); color != end(); ++color)
+	for (auto& color : *this)
 	{
-		color->second->deleteRenderables();
+		color.second->deleteRenderables();
 	}
 }
 
@@ -257,24 +250,22 @@ void MapRenderables::draw(QPainter *painter, const RenderConfig &config) const
 			continue;
 		}
 		
-		ObjectRenderablesMap::const_iterator end_of_objects = color->second.end();
-		for (ObjectRenderablesMap::const_iterator object = color->second.begin(); object != end_of_objects; ++object)
+		for (const auto& object : color->second)
 		{
 			// Settings check
-			const Symbol* symbol = object->first->getSymbol();
+			const Symbol* symbol = object.first->getSymbol();
 			if (!config.testFlag(RenderConfig::HelperSymbols) && symbol->isHelperSymbol())
 				continue;
 			if (symbol->isHidden())
 				continue;
 			
-			if (!object->first->getExtent().intersects(config.bounding_box))
+			if (!object.first->getExtent().intersects(config.bounding_box))
 				continue;
 			
-			SharedRenderables::const_iterator it_end = object->second->end();
-			for (SharedRenderables::const_iterator it = object->second->begin(); it != it_end; ++it)
+			for (const auto& renderables : *object.second)
 			{
 				// Render the renderables
-				const PainterConfig& state = it->first;
+				const PainterConfig& state = renderables.first;
 				const MapColor* map_color = map->getColor(state.color_priority);
 				if (!map_color)
 				{
@@ -287,7 +278,7 @@ void MapRenderables::draw(QPainter *painter, const RenderConfig &config) const
 				if (!state.activate(painter, current_clip, config, color, initial_clip))
 				    continue;
 				
-				for (Renderable* renderable : it->second)
+				for (const auto renderable : renderables.second)
 				{
 #ifdef Q_OS_ANDROID
 					const QRectF& extent = renderable->getExtent();
@@ -461,14 +452,12 @@ void MapRenderables::drawColorSeparation(QPainter* painter, const RenderConfig& 
 					// First, check if the renderables draw color to this separation
 					// TODO: Use an efficient data structure to avoid reiterating each time a separation is drawn
 					const SpotColorComponents& components = drawing_color.spot_color->getComponents();
-					for ( SpotColorComponents::const_iterator component = components.begin(), c_end = components.end();
-						component != c_end;
-						++component )
+					for (const auto& component : components)
 					{
-						if (component->spot_color == separation)
+						if (component.spot_color == separation)
 						{
 							// The renderables do draw the current spot color
-							drawing_color = *component;
+							drawing_color = component;
 							break;
 						}
 					}
@@ -518,24 +507,22 @@ void MapRenderables::drawColorSeparation(QPainter* painter, const RenderConfig& 
 		}
 		
 		// For each pair of object and its renderables [states] for a particular map color...
-		ObjectRenderablesMap::const_iterator end_of_objects = color->second.end();
-		for (ObjectRenderablesMap::const_iterator object = color->second.begin(); object != end_of_objects; ++object)
+		for (const auto& object : color->second)
 		{
 			// Check whether the symbol and object is to be drawn at all.
-			const Symbol* symbol = object->first->getSymbol();
+			const Symbol* symbol = object.first->getSymbol();
 			if (!config.testFlag(RenderConfig::HelperSymbols) && symbol->isHelperSymbol())
 				continue;
 			if (symbol->isHidden())
 				continue;
 			
-			if (!object->first->getExtent().intersects(config.bounding_box))
+			if (!object.first->getExtent().intersects(config.bounding_box))
 				continue;
 			
 			// For each pair of common rendering attributes and collection of renderables...
-			SharedRenderables::const_iterator it_end = object->second->end();
-			for (SharedRenderables::const_iterator it = object->second->begin(); it != it_end; ++it)
+			for (const auto& renderables : *object.second)
 			{
-				const PainterConfig& state = it->first;
+				const PainterConfig& state = renderables.first;
 				
 				QColor color = *drawing_color.spot_color;
 				bool drawing = (drawing_color.factor >= 0.0005f);
@@ -561,7 +548,7 @@ void MapRenderables::drawColorSeparation(QPainter* painter, const RenderConfig& 
 				
 				// For each renderable that uses the current painter configuration...
 				// Render the renderable
-				for (Renderable* renderable : it->second)
+				for (const auto renderable : renderables.second)
 				{
 					if (renderable->intersects(config.bounding_box))
 					{
@@ -591,11 +578,10 @@ void MapRenderables::insertRenderablesOfObject(const Object* object)
 
 void MapRenderables::removeRenderablesOfObject(const Object* object, bool mark_area_as_dirty)
 {
-	const_iterator end_of_colors = end();
-	for (iterator color = begin(); color != end_of_colors; ++color)
+	for (auto& color : *this)
 	{
-		ObjectRenderablesMap::iterator obj = color->second.find(object);
-		if (obj != color->second.end())
+		ObjectRenderablesMap::iterator obj = color.second.find(object);
+		if (obj != color.second.end())
 		{
 			if (mark_area_as_dirty)
 			{
@@ -604,18 +590,18 @@ void MapRenderables::removeRenderablesOfObject(const Object* object, bool mark_a
 				if (!extent.isValid())
 				{
 					// ... because here it gets expensive
-					for (SharedRenderables::const_iterator renderables = obj->second->begin(); renderables != obj->second->end(); ++renderables)
+					for (const auto& renderables : *obj->second)
 					{
-						for (RenderableVector::const_iterator renderable = renderables->second.begin(); renderable != renderables->second.end(); ++renderable)
+						for (const auto renderable : renderables.second)
 						{
-							extent = extent.isValid() ? extent.united((*renderable)->getExtent()) : (*renderable)->getExtent();
+							extent = extent.isValid() ? extent.united(renderable->getExtent()) : renderable->getExtent();
 						}
 					}
 				}
 				map->setObjectAreaDirty(extent);
 			}
 			
-			color->second.erase(obj);
+			color.second.erase(obj);
 		}
 	}
 }
@@ -624,17 +610,15 @@ void MapRenderables::clear(bool mark_area_as_dirty)
 {
 	if (mark_area_as_dirty)
 	{
-		const_iterator end_of_colors = end();
-		for (const_iterator color = begin(); color != end_of_colors; ++color)
+		for (const auto& color : *this)
 		{
-			ObjectRenderablesMap::const_iterator end_of_objects = color->second.end();
-			for (ObjectRenderablesMap::const_iterator object = color->second.begin(); object != end_of_objects; ++object)
+			for (const auto& object : color.second)
 			{
-				for (SharedRenderables::const_iterator renderables = object->second->begin(); renderables != object->second->end(); ++renderables)
+				for (const auto& renderables : *object.second)
 				{
-					for (RenderableVector::const_iterator renderable = renderables->second.begin(); renderable != renderables->second.end(); ++renderable)
+					for (const auto renderable : renderables.second)
 					{
-						map->setObjectAreaDirty((*renderable)->getExtent());
+						map->setObjectAreaDirty(renderable->getExtent());
 					}
 				}
 			}

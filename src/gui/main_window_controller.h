@@ -41,7 +41,7 @@ class MainWindowController : public QObject
 Q_OBJECT
 public:
 	
-	virtual ~MainWindowController();
+	~MainWindowController() override;
 	
 	/** Save to a file.
 	 *  @param path the path to save to

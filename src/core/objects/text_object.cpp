@@ -272,7 +272,7 @@ void TextObject::setRotation(float new_rotation)
 	setOutputDirty();
 }
 
-bool TextObject::intersectsBox(QRectF box) const
+bool TextObject::intersectsBox(const QRectF& box) const
 {
 	return getExtent().intersects(box);
 }

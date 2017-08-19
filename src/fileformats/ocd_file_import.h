@@ -30,6 +30,7 @@
 #include <QtGlobal>
 #include <QtMath>
 #include <QByteArray>
+#include <QCoreApplication>
 #include <QHash>
 #include <QLocale>
 #include <QObject>
@@ -66,7 +67,8 @@ class Symbol;
  */
 class OcdFileImport : public Importer
 {
-Q_OBJECT
+	Q_DECLARE_TR_FUNCTIONS(OcdFileImport)
+	
 protected:
 	/// Information about an OC*D rectangle symbol
 	struct RectangleInfo
@@ -113,13 +115,17 @@ protected:
 		
 	public:
 		OcdImportedPathObject(Symbol* symbol = nullptr) : PathObject(symbol) { }
+		OcdImportedPathObject(const OcdImportedPathObject&) = delete;
+		OcdImportedPathObject(OcdImportedPathObject&&) = delete;
+		OcdImportedPathObject& operator=(const OcdImportedPathObject&) = delete;
+		OcdImportedPathObject& operator=(OcdImportedPathObject&&) = delete;
 		~OcdImportedPathObject() override;
 	};
 	
 public:
 	OcdFileImport(QIODevice* stream, Map *map, MapView *view);
 	
-	virtual ~OcdFileImport() override;
+	~OcdFileImport() override;
 	
 	
 	void setCustom8BitEncoding(QTextCodec* encoding);
@@ -161,10 +167,10 @@ public:
 	
 	void addSymbolWarning(const TextSymbol* symbol, const QString& warning);
 	
-	virtual void finishImport() override;
+	void finishImport() override;
 	
 protected:
-	virtual void import(bool load_symbols_only) override;
+	void import(bool load_symbols_only) override;
 	
 	void importImplementationLegacy(bool load_symbols_only);
 	

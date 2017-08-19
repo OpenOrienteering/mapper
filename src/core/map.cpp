@@ -704,9 +704,7 @@ bool Map::exportTo(const QString& path, MapView* view, const FileFormat* format)
 		QMessageBox::warning(
 		  nullptr,
 		  tr("Error"),
-		  /** @todo: Switch to the latter when translated. */ true ?
-		  tr("Cannot open file:\n%1\n\n%2").arg(path).arg(file.errorString()) :
-		  tr("Cannot save file\n%1:\n%2")
+		  tr("Cannot save file\n%1:\n%2").arg(path, file.errorString())
 		);
 	}
 	else if (!exporter->warnings().empty())
@@ -807,7 +805,7 @@ bool Map::loadFrom(const QString& path, QWidget* dialog_parent, MapView* view, b
 			QMessageBox::warning(
 			 dialog_parent,
 			 tr("Error"),
-			 tr("Cannot open file:\n%1\n\n%2").arg(path).arg(error_msg)
+			 tr("Cannot open file:\n%1\n\n%2").arg(path, error_msg)
 			);
 		return false;
 	}
@@ -844,9 +842,10 @@ void Map::importMap(
 	    && other->getScaleDenominator() != getScaleDenominator())
 	{
 		int answer = QMessageBox::question(dialog_parent, tr("Question"),
-										   tr("The scale of the imported data is 1:%1 which is different from this map's scale of 1:%2.\n\nRescale the imported data?")
-										   .arg(QLocale().toString(other->getScaleDenominator()))
-										   .arg(QLocale().toString(getScaleDenominator())), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+		                                   tr("The scale of the imported data is 1:%1 which is different from this map's scale of 1:%2.\n\nRescale the imported data?")
+		                                   .arg(QLocale().toString(other->getScaleDenominator()),
+		                                        QLocale().toString(getScaleDenominator())),
+		                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 		if (answer == QMessageBox::Yes)
 		{
 			/// \todo No need to clone iff the other map is discarded after import.
@@ -1074,12 +1073,12 @@ void Map::drawColorSeparation(QPainter* painter, const RenderConfig& config, con
 	renderables->drawColorSeparation(painter, config, spot_color, use_color);
 }
 
-void Map::drawGrid(QPainter* painter, QRectF bounding_box, bool on_screen)
+void Map::drawGrid(QPainter* painter, const QRectF& bounding_box, bool on_screen)
 {
 	grid.draw(painter, bounding_box, this, on_screen);
 }
 
-void Map::drawTemplates(QPainter* painter, QRectF bounding_box, int first_template, int last_template, const MapView* view, bool on_screen) const
+void Map::drawTemplates(QPainter* painter, const QRectF& bounding_box, int first_template, int last_template, const MapView* view, bool on_screen) const
 {
 	for (int i = first_template; i <= last_template; ++i)
 	{
@@ -1248,7 +1247,7 @@ void Map::addObjectToSelection(Object* object, bool emit_selection_changed)
 	if (!first_selected_object)
 		first_selected_object = object;
 	if (emit_selection_changed)
-		emit(objectSelectionChanged());
+		emit objectSelectionChanged();
 }
 
 void Map::removeObjectFromSelection(Object* object, bool emit_selection_changed)
@@ -1260,7 +1259,7 @@ void Map::removeObjectFromSelection(Object* object, bool emit_selection_changed)
 	if (first_selected_object == object)
 		first_selected_object = object_selection.empty() ? nullptr : *object_selection.begin();
 	if (emit_selection_changed)
-		emit(objectSelectionChanged());
+		emit objectSelectionChanged();
 }
 
 bool Map::removeSymbolFromSelection(const Symbol* symbol, bool emit_selection_changed)
@@ -1283,7 +1282,7 @@ bool Map::removeSymbolFromSelection(const Symbol* symbol, bool emit_selection_ch
 			first_selected_object = object_selection.empty() ? nullptr : *object_selection.begin();
 	}
 	if (emit_selection_changed && removed_at_least_one_object)
-		emit(objectSelectionChanged());
+		emit objectSelectionChanged();
 	return removed_at_least_one_object;
 }
 
@@ -1313,17 +1312,17 @@ void Map::clearObjectSelection(bool emit_selection_changed)
 	first_selected_object = nullptr;
 	
 	if (emit_selection_changed)
-		emit(objectSelectionChanged());
+		emit objectSelectionChanged();
 }
 
 void Map::emitSelectionChanged()
 {
-	emit(objectSelectionChanged());
+	emit objectSelectionChanged();
 }
 
 void Map::emitSelectionEdited()
 {
-	emit(selectedObjectEdited());
+	emit selectedObjectEdited();
 }
 
 void Map::addMapWidget(MapWidget* widget)
@@ -1375,7 +1374,7 @@ void Map::ensureVisibilityOfSelectedObjects(SelectionVisibility visibility)
 }
 
 
-void Map::setDrawingBoundingBox(QRectF map_coords_rect, int pixel_border, bool do_update)
+void Map::setDrawingBoundingBox(const QRectF& map_coords_rect, int pixel_border, bool do_update)
 {
 	for (MapWidget* widget : widgets)
 		widget->setDrawingBoundingBox(map_coords_rect, pixel_border, do_update);
@@ -1388,7 +1387,7 @@ void Map::clearDrawingBoundingBox()
 }
 
 
-void Map::setActivityBoundingBox(QRectF map_coords_rect, int pixel_border, bool do_update)
+void Map::setActivityBoundingBox(const QRectF& map_coords_rect, int pixel_border, bool do_update)
 {
 	for (MapWidget* widget : widgets)
 		widget->setActivityBoundingBox(map_coords_rect, pixel_border, do_update);
@@ -1401,7 +1400,7 @@ void Map::clearActivityBoundingBox()
 }
 
 
-void Map::updateDrawing(QRectF map_coords_rect, int pixel_border)
+void Map::updateDrawing(const QRectF& map_coords_rect, int pixel_border)
 {
 	for (MapWidget* widget : widgets)
 		widget->updateDrawing(map_coords_rect, pixel_border);
@@ -1472,7 +1471,7 @@ void Map::setColor(MapColor* color, int pos)
 	}
 	
 	updateSymbolIcons(color);
-	emit(colorChanged(pos, color));
+	emit colorChanged(pos, color);
 }
 
 void Map::addColor(MapColor* color, int pos)
@@ -1484,7 +1483,7 @@ void Map::addColor(MapColor* color, int pos)
 		updateAllMapWidgets();
 	}
 	setColorsDirty();
-	emit(colorAdded(pos, color));
+	emit colorAdded(pos, color);
 	color->setPriority(pos);
 }
 
@@ -1523,7 +1522,7 @@ void Map::deleteColor(int pos)
 		if (symbol->getType() != Symbol::Combined)
 			symbol->colorDeleted(color);
 	}
-	emit(colorDeleted(pos, color));
+	emit colorDeleted(pos, color);
 	
 	delete color;
 }
@@ -1765,7 +1764,7 @@ void Map::addSymbol(Symbol* symbol, int pos)
 		updateAllMapWidgets();
 	}
 	
-	emit(symbolAdded(pos, symbol));
+	emit symbolAdded(pos, symbol);
 	setSymbolsDirty();
 }
 
@@ -1775,7 +1774,7 @@ void Map::moveSymbol(int from, int to)
 	if (from > to)
 		++from;
 	symbols.erase(symbols.begin() + from);
-	// TODO: emit(symbolChanged(pos, symbol)); ?
+	// TODO: emit symbolChanged(pos, symbol); ?
 	setSymbolsDirty();
 }
 
@@ -1830,7 +1829,7 @@ void Map::setSymbol(Symbol* symbol, int pos)
 	
 	// Change the symbol
 	symbols[pos] = symbol;
-	emit(symbolChanged(pos, symbol, old_symbol));
+	emit symbolChanged(pos, symbol, old_symbol);
 	setSymbolsDirty();
 	delete old_symbol;
 	
@@ -1864,7 +1863,7 @@ void Map::deleteSymbol(int pos)
 		updateAllMapWidgets();
 	}
 	
-	emit(symbolDeleted(pos, temp));
+	emit symbolDeleted(pos, temp);
 	setSymbolsDirty();
 }
 
@@ -1903,7 +1902,7 @@ void Map::updateSymbolIcons(const MapColor* color)
 		if (symbols[i]->containsColor(color))
 		{
 			symbols[i]->resetIcon();
-			emit(symbolIconChanged(i));
+			emit symbolIconChanged(i);
 		}
 	}
 }
@@ -1915,7 +1914,7 @@ void Map::scaleAllSymbols(double factor)
 	{
 		Symbol* symbol = getSymbol(i);
 		symbol->scale(factor);
-		emit(symbolChanged(i, symbol, symbol));
+		emit symbolChanged(i, symbol, symbol);
 	}
 	updateAllObjects();
 	
@@ -1925,11 +1924,11 @@ void Map::scaleAllSymbols(double factor)
 void Map::determineSymbolsInUse(std::vector< bool >& out) const
 {
 	out.assign(symbols.size(), false);
-	for (std::size_t l = 0; l < parts.size(); ++l)
+	for (auto part : parts)
 	{
-		for (int o = 0; o < parts[l]->getNumObjects(); ++o)
+		for (int o = 0; o < part->getNumObjects(); ++o)
 		{
-			const Symbol* symbol = parts[l]->getObject(o)->getSymbol();
+			const Symbol* symbol = part->getObject(o)->getSymbol();
 			int index = findSymbolIndex(symbol);
 			if (index >= 0)
 				out[index] = true;
@@ -1973,7 +1972,7 @@ void Map::determineSymbolUseClosure(std::vector< bool >& symbol_bitfield) const
 void Map::setTemplate(Template* temp, int pos)
 {
 	templates[pos] = temp;
-	emit(templateChanged(pos, templates[pos]));
+	emit templateChanged(pos, templates[pos]);
 }
 
 void Map::addTemplate(Template* temp, int pos)
@@ -1985,7 +1984,7 @@ void Map::addTemplate(Template* temp, int pos)
 		updateAllMapWidgets();
 	}
 	
-	emit(templateAdded(pos, temp));
+	emit templateAdded(pos, temp);
 }
 
 void Map::removeTemplate(int pos)
@@ -2009,7 +2008,7 @@ void Map::deleteTemplate(int pos)
 	delete temp;
 }
 
-void Map::setTemplateAreaDirty(Template* temp, QRectF area, int pixel_border)
+void Map::setTemplateAreaDirty(Template* temp, const QRectF& area, int pixel_border)
 {
 	bool front_cache = findTemplateIndex(temp) >= getFirstFrontTemplate();	// TODO: is there a better way to find out if that is a front or back template?
 	
@@ -2050,7 +2049,7 @@ void Map::setTemplatesDirty()
 
 void Map::emitTemplateChanged(Template* temp)
 {
-	emit(templateChanged(findTemplateIndex(temp), temp));
+	emit templateChanged(findTemplateIndex(temp), temp);
 }
 
 void Map::clearClosedTemplates()
@@ -2357,7 +2356,7 @@ QRectF Map::calculateExtent(bool include_helper_symbols, bool include_templates,
 	return rect;
 }
 
-void Map::setObjectAreaDirty(QRectF map_coords_rect)
+void Map::setObjectAreaDirty(const QRectF& map_coords_rect)
 {
 	for (MapWidget* widget : widgets)
 		widget->markObjectAreaDirty(map_coords_rect);
@@ -2398,7 +2397,7 @@ void Map::findObjectsAtBox(
 	getCurrentPart()->findObjectsAtBox(corner1, corner2, include_hidden_objects, include_protected_objects, out);
 }
 
-int Map::countObjectsInRect(QRectF map_coord_rect, bool include_hidden_objects)
+int Map::countObjectsInRect(const QRectF& map_coord_rect, bool include_hidden_objects)
 {
 	int count = 0;
 	for (const MapPart* part : parts)

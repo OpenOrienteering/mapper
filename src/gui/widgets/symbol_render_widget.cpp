@@ -45,18 +45,26 @@
 #include "core/symbols/text_symbol.h"
 #include "gui/symbols/symbol_setting_dialog.h"
 #include "gui/widgets/symbol_tooltip.h"
+#include "util/backports.h"
 #include "util/overriding_shortcut.h"
 
 
 namespace MimeType {
 
 /// The index of a symbol during drag-and-drop
-static const QString oo_symbol_index { QStringLiteral("openorienteering/symbol_index") };
+const QString OpenOrienteeringSymbolIndex()
+{
+	return QStringLiteral("openorienteering/symbol_index");
+}
 
 /// Symbol definitions
-static const QString oo_symbols      { QStringLiteral("openorienteering/symbols") };
-
+const QString OpenOrienteeringSymbols()
+{
+	return QStringLiteral("openorienteering/symbols");
 }
+
+}  // namespace MimeType
+
 
 //### SymbolIconDecorator ###
 
@@ -68,6 +76,11 @@ static const QString oo_symbols      { QStringLiteral("openorienteering/symbols"
 class SymbolIconDecorator
 {
 public:
+	SymbolIconDecorator() noexcept = default;
+	SymbolIconDecorator(const SymbolIconDecorator&) = delete;
+	SymbolIconDecorator(SymbolIconDecorator&&) = delete;
+	SymbolIconDecorator& operator=(const SymbolIconDecorator&) = delete;
+	SymbolIconDecorator& operator=(SymbolIconDecorator&&) = delete;
 	virtual ~SymbolIconDecorator();
 	virtual void draw(QPainter& p) const = 0;
 };
@@ -90,8 +103,8 @@ class ProtectedSymbolDecorator : public SymbolIconDecorator
 {
 public:
 	explicit ProtectedSymbolDecorator(int icon_size);
-	virtual ~ProtectedSymbolDecorator();
-	virtual void draw(QPainter& p) const;
+	~ProtectedSymbolDecorator() override;
+	void draw(QPainter& p) const override;
 	
 private:
 	int arc_size;
@@ -153,8 +166,8 @@ class HiddenSymbolDecorator : public SymbolIconDecorator
 {
 public:
 	explicit HiddenSymbolDecorator(int icon_size);
-	virtual ~HiddenSymbolDecorator();
-	virtual void draw(QPainter& p) const;
+	~HiddenSymbolDecorator() override;
+	void draw(QPainter& p) const override;
 	
 private:
 	int icon_size;
@@ -278,11 +291,11 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, bool mobile_mode, QWidget* pare
 	sort_manual_action->setCheckable(true);
 	context_menu->addMenu(sort_menu);
 	
-	connect(map, SIGNAL(colorDeleted(int, const MapColor*)), this, SLOT(update()));
-	connect(map, SIGNAL(symbolAdded(int, const Symbol*)), this, SLOT(updateAll()));
-	connect(map, SIGNAL(symbolDeleted(int, const Symbol*)), this, SLOT(symbolDeleted(int, const Symbol*)));
-	connect(map, SIGNAL(symbolChanged(int, const Symbol*, const Symbol*)), this, SLOT(symbolChanged(int, const Symbol*, const Symbol*)));
-	connect(map, SIGNAL(symbolIconChanged(int)), this, SLOT(updateSingleIcon(int)));
+	connect(map, &Map::colorDeleted, this, QOverload<>::of(&QWidget::update));
+	connect(map, &Map::symbolAdded, this, &SymbolRenderWidget::updateAll);
+	connect(map, &Map::symbolDeleted, this, &SymbolRenderWidget::symbolDeleted);
+	connect(map, &Map::symbolChanged, this, &SymbolRenderWidget::symbolChanged);
+	connect(map, &Map::symbolIconChanged, this, &SymbolRenderWidget::updateSingleIcon);
 }
 
 SymbolRenderWidget::~SymbolRenderWidget()
@@ -464,8 +477,8 @@ int SymbolRenderWidget::symbolIndexAt(QPoint pos) const
 
 void SymbolRenderWidget::updateSelectedIcons()
 {
-	for (std::set<int>::const_iterator it = selected_symbols.begin(); it != selected_symbols.end(); ++it)
-		updateSingleIcon(*it);
+	for (auto symbol_index : selected_symbols)
+		updateSingleIcon(symbol_index);
 }
 
 bool SymbolRenderWidget::dropPosition(QPoint pos, int& row, int& pos_in_row)
@@ -643,7 +656,7 @@ void SymbolRenderWidget::mouseMoveEvent(QMouseEvent* event)
 			
 			QByteArray data;
 			data.append((const char*)&current_symbol_index, sizeof(int));
-			mime_data->setData(MimeType::oo_symbol_index, data);
+			mime_data->setData(MimeType::OpenOrienteeringSymbolIndex(), data);
 			drag->setMimeData(mime_data);
 			
 			drag->exec(Qt::MoveAction);
@@ -779,13 +792,13 @@ void SymbolRenderWidget::leaveEvent(QEvent* event)
 
 void SymbolRenderWidget::dragEnterEvent(QDragEnterEvent* event)
 {
-	if (event->mimeData()->hasFormat(MimeType::oo_symbol_index))
+	if (event->mimeData()->hasFormat(MimeType::OpenOrienteeringSymbolIndex()))
 		event->acceptProposedAction();
 }
 
 void SymbolRenderWidget::dragMoveEvent(QDragMoveEvent* event)
 {
-	if (event->mimeData()->hasFormat(MimeType::oo_symbol_index))
+	if (event->mimeData()->hasFormat(MimeType::OpenOrienteeringSymbolIndex()))
 	{
 		int row, pos_in_row;
 		if (!dropPosition(event->pos(), row, pos_in_row))
@@ -837,8 +850,8 @@ void SymbolRenderWidget::dropEvent(QDropEvent* event)
 		
         // save selection
         std::set<Symbol *> sel;
-        for (std::set<int>::const_iterator it = selected_symbols.begin(); it != selected_symbols.end(); ++it) {
-            sel.insert(map->getSymbol(*it));
+        for (auto symbol_index : selected_symbols) {
+            sel.insert(map->getSymbol(symbol_index));
         }
 
 		map->moveSymbol(current_symbol_index, pos);
@@ -914,10 +927,9 @@ void SymbolRenderWidget::scaleSymbol()
 	if (!ok || percent == 100)
 		return;
 	
-	for (std::set<int>::const_iterator it = selected_symbols.begin(); it != selected_symbols.end(); ++it)
+	for (auto symbol_index : selected_symbols)
 	{
-		Symbol* symbol = map->getSymbol(*it);
-		
+		auto symbol = map->getSymbol(symbol_index);
 		symbol->scale(percent / 100.0);
 		updateSingleIcon(current_symbol_index);
 		map->changeSymbolForAllObjects(symbol, symbol);	// update the objects
@@ -931,20 +943,20 @@ void SymbolRenderWidget::deleteSymbols()
 	// save selected symbols
 	std::vector<const Symbol*> saved_selection;
 	saved_selection.reserve(selected_symbols.size());
-	for (std::set<int>::const_iterator it = selected_symbols.begin(); it != selected_symbols.end(); ++it)
+	for (auto symbol_index : selected_symbols)
 	{
-		saved_selection.push_back(map->getSymbol(*it));
+		saved_selection.push_back(map->getSymbol(symbol_index));
 	}
 	
 	// delete symbols in order
-	for (std::vector<const Symbol*>::iterator it = saved_selection.begin(); it != saved_selection.end(); ++it)
+	for (const auto symbol : saved_selection)
 	{
-		if (map->existsObjectWithSymbol(*it))
+		if (map->existsObjectWithSymbol(symbol))
 		{
-			if (QMessageBox::warning(this, tr("Confirmation"), tr("The map contains objects with the symbol \"%1\". Deleting it will delete those objects and clear the undo history! Do you really want to do that?").arg((*it)->getName()), QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
+			if (QMessageBox::warning(this, tr("Confirmation"), tr("The map contains objects with the symbol \"%1\". Deleting it will delete those objects and clear the undo history! Do you really want to do that?").arg(symbol->getName()), QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
 				continue;
 		}
-		map->deleteSymbol(map->findSymbolIndex(*it));
+		map->deleteSymbol(map->findSymbolIndex(symbol));
 	}
 	
 	if (selected_symbols.empty() && map->getFirstSelectedObject())
@@ -969,8 +981,8 @@ void SymbolRenderWidget::copySymbols()
 	copy_map->importMap(map, Map::ColorImport, this);
 	
 	std::vector<bool> selection(map->getNumSymbols(), false);
-	for (std::set<int>::const_iterator it = selected_symbols.begin(); it != selected_symbols.end(); ++it)
-		selection[*it] = true;
+	for (auto symbol_index : selected_symbols)
+		selection[symbol_index] = true;
 	
 	copy_map->importMap(map, Map::MinimalSymbolImport, this, &selection);
 	
@@ -986,20 +998,20 @@ void SymbolRenderWidget::copySymbols()
 	
 	// Put buffer into clipboard
 	QMimeData* mime_data = new QMimeData();
-	mime_data->setData(MimeType::oo_symbols, buffer.data());
+	mime_data->setData(MimeType::OpenOrienteeringSymbols(), buffer.data());
 	QApplication::clipboard()->setMimeData(mime_data);
 }
 
 void SymbolRenderWidget::pasteSymbols()
 {
-	if (!QApplication::clipboard()->mimeData()->hasFormat(MimeType::oo_symbols))
+	if (!QApplication::clipboard()->mimeData()->hasFormat(MimeType::OpenOrienteeringSymbols()))
 	{
 		QMessageBox::warning(nullptr, tr("Error"), tr("There are no symbols in clipboard which could be pasted!"));
 		return;
 	}
 	
 	// Get buffer from clipboard
-	QByteArray byte_array = QApplication::clipboard()->mimeData()->data(MimeType::oo_symbols);
+	QByteArray byte_array = QApplication::clipboard()->mimeData()->data(MimeType::OpenOrienteeringSymbols());
 	QBuffer buffer(&byte_array);
 	buffer.open(QIODevice::ReadOnly);
 	
@@ -1024,13 +1036,13 @@ void SymbolRenderWidget::pasteSymbols()
 void SymbolRenderWidget::setSelectedSymbolVisibility(bool checked)
 {
 	bool selection_changed = false;
-	for (std::set<int>::const_iterator it = selected_symbols.begin(); it != selected_symbols.end(); ++it)
+	for (auto symbol_index : selected_symbols)
 	{
-		Symbol* symbol = map->getSymbol(*it);
+		auto symbol = map->getSymbol(symbol_index);
 		if (symbol->isHidden() != checked)
 		{
 			symbol->setHidden(checked);
-			updateSingleIcon(*it);
+			updateSingleIcon(symbol_index);
 			if (checked)
 				selection_changed |= map->removeSymbolFromSelection(symbol, false);
 		}
@@ -1041,16 +1053,17 @@ void SymbolRenderWidget::setSelectedSymbolVisibility(bool checked)
 	map->setSymbolsDirty();
 	emitGuarded_selectedSymbolsChanged();
 }
+
 void SymbolRenderWidget::setSelectedSymbolProtection(bool checked)
 {
 	bool selection_changed = false;
-	for (std::set<int>::const_iterator it = selected_symbols.begin(); it != selected_symbols.end(); ++it)
+	for (auto symbol_index : selected_symbols)
 	{
-		Symbol* symbol = map->getSymbol(*it);
+		auto symbol = map->getSymbol(symbol_index);
 		if (symbol->isProtected() != checked)
 		{
 			symbol->setProtected(checked);
-			updateSingleIcon(*it);
+			updateSingleIcon(symbol_index);
 			if (checked)
 				selection_changed |= map->removeSymbolFromSelection(symbol, false);
 		}
@@ -1134,11 +1147,11 @@ void SymbolRenderWidget::updateContextMenuState()
 	const Symbol* single_symbol = singleSelectedSymbol();
 	bool all_symbols_hidden = have_selection;
 	bool all_symbols_protected = have_selection;
-	for (std::set<int>::const_iterator it = selected_symbols.begin(); it != selected_symbols.end(); ++it)
+	for (auto symbol_index : selected_symbols)
 	{
-		if (!map->getSymbol(*it)->isHidden())
+		if (!map->getSymbol(symbol_index)->isHidden())
 			all_symbols_hidden = false;
-		if (!map->getSymbol(*it)->isProtected())
+		if (!map->getSymbol(symbol_index)->isProtected())
 			all_symbols_protected = false;
 		if (!all_symbols_hidden && !all_symbols_protected)
 			break;
@@ -1151,7 +1164,7 @@ void SymbolRenderWidget::updateContextMenuState()
 	edit_action->setEnabled(single_selection);
 	scale_action->setEnabled(have_selection);
 	copy_action->setEnabled(have_selection);
-	paste_action->setEnabled(QApplication::clipboard()->mimeData()->hasFormat(MimeType::oo_symbols));
+	paste_action->setEnabled(QApplication::clipboard()->mimeData()->hasFormat(MimeType::OpenOrienteeringSymbols()));
 	switch_symbol_action->setEnabled(single_symbol_compatible && single_symbol_different);
 	fill_border_action->setEnabled(single_symbol_compatible && single_symbol_different);
 	hide_action->setEnabled(have_selection);
@@ -1203,9 +1216,9 @@ void SymbolRenderWidget::sort(T compare)
 {
 	// save selection
 	std::set<const Symbol*> saved_selection;
-	for (std::set<int>::const_iterator it = selected_symbols.begin(); it != selected_symbols.end(); ++it)
+	for (auto symbol_index : selected_symbols)
 	{
-		saved_selection.insert(map->getSymbol(*it));
+		saved_selection.insert(map->getSymbol(symbol_index));
 	}
 	
 	map->sortSymbols(compare);

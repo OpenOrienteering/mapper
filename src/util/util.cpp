@@ -55,8 +55,8 @@ void blockSignalsRecursively(QObject* obj, bool block)
 	obj->blockSignals(block);
 	
 	const QObjectList& list = obj->children();
-	for (QObjectList::const_iterator it = list.begin(), end = list.end(); it != end; ++it)
-		blockSignalsRecursively(*it, block);
+	for (auto child : list)
+		blockSignalsRecursively(child, block);
 }
 
 void rectInclude(QRectF& rect, QPointF point)
@@ -228,7 +228,7 @@ void showHelp(QWidget* dialog_parent, const char* file_and_anchor_latin1)
 	showHelp(dialog_parent, QString::fromLatin1(file_and_anchor_latin1));
 }
 
-void showHelp(QWidget* dialog_parent, QString filename)
+void showHelp(QWidget* dialog_parent, const QString& filename)
 {
 #if defined(Q_OS_ANDROID)
 	const QString manual_path = QLatin1String("doc:/manual/") + filename;

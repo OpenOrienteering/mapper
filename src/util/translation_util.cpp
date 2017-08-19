@@ -20,6 +20,8 @@
 
 #include "translation_util.h"
 
+#include <vector>
+
 #include <Qt>
 #include <QtGlobal>
 #include <QDir>
@@ -39,18 +41,21 @@
 namespace
 {
 
-QStringList searchPath()
+std::vector<QString> makeSearchPath()
 {
-	static QStringList search_path;
-	if (search_path.isEmpty())
-	{
-		const auto data_paths = QDir::searchPaths(QLatin1String("data"));
-		search_path.reserve(data_paths.size() + 1);
-		// Always load embedded translations first if enabled
-		search_path.append(QLatin1String(":/translations"));
-		for (const auto& path : data_paths)
-			search_path.append(path + QLatin1String("/translations"));
-	}
+	std::vector<QString> search_path;
+	const auto data_paths = QDir::searchPaths(QLatin1String("data"));
+	search_path.reserve(1 + std::size_t(data_paths.size()));
+	// Always load embedded translations first if enabled
+	search_path.emplace_back(QLatin1String(":/translations"));
+	for (const auto& path : data_paths)
+		search_path.emplace_back(path + QLatin1String("/translations"));
+	return search_path;
+}
+
+const std::vector<QString>& searchPath()
+{
+	static auto search_path = makeSearchPath();
 	return search_path;
 }
 

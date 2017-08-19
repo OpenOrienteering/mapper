@@ -35,9 +35,9 @@
 
 namespace
 {
-	// Shared definition of standard geographic CRS.
-	// TODO: Merge with Georeferencing.
-	static const QString geographic_crs_spec = QString::fromLatin1("+proj=latlong +datum=WGS84");
+	/// Shared definition of standard geographic CRS.
+	/// \todo Merge with Georeferencing.
+	const auto geographic_crs_spec = "+proj=latlong +datum=WGS84";
 }
 
 
@@ -49,7 +49,7 @@ MapCoordF fakeMapCoordF(const LatLon &latlon)
 	return MapCoordF(latlon.longitude(), latlon.latitude());
 }
 
-TrackPoint::TrackPoint(LatLon coord, QDateTime datetime, float elevation, int num_satellites, float hDOP)
+TrackPoint::TrackPoint(LatLon coord, const QDateTime& datetime, float elevation, int num_satellites, float hDOP)
 {
 	gps_coord = coord;
 	is_curve_start = false;
@@ -345,7 +345,7 @@ bool Track::loadFromGPX(QFile* file, bool project_points, QWidget* dialog_parent
 	Q_UNUSED(dialog_parent);
 	
 	track_crs = new Georeferencing();
-	track_crs->setProjectedCRS({}, geographic_crs_spec);
+	track_crs->setProjectedCRS({}, QString::fromLatin1(geographic_crs_spec));
 	track_crs->setTransformationDirectly(QTransform());
 	
 	TrackPoint point;
@@ -481,7 +481,7 @@ bool Track::loadFromDXF(QFile* file, bool project_points, QWidget* dialog_parent
 bool Track::loadFromOSM(QFile* file, bool project_points, QWidget* dialog_parent)
 {
 	track_crs = new Georeferencing();
-	track_crs->setProjectedCRS({}, geographic_crs_spec);
+	track_crs->setProjectedCRS({}, QString::fromLatin1(geographic_crs_spec));
 	track_crs->setTransformationDirectly(QTransform());
 	
 	// Basic OSM file support
@@ -620,7 +620,7 @@ bool Track::loadFromOSM(QFile* file, bool project_points, QWidget* dialog_parent
 
 void Track::projectPoints()
 {
-	if (track_crs->getProjectedCRSSpec() == geographic_crs_spec)
+	if (track_crs->getProjectedCRSSpec() == QLatin1String(geographic_crs_spec))
 	{
 		int size = waypoints.size();
 		for (int i = 0; i < size; ++i)

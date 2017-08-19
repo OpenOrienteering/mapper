@@ -54,7 +54,7 @@ DrawLineAndAreaTool::DrawLineAndAreaTool(MapEditorController* editor, Type type,
 		
 	}
 	
-	connect(editor, SIGNAL(activeSymbolChanged(const Symbol*)), this, SLOT(setDrawingSymbol(const Symbol*)));
+	connect(editor, &MapEditorController::activeSymbolChanged, this, &DrawLineAndAreaTool::setDrawingSymbol);
 }
 
 DrawLineAndAreaTool::~DrawLineAndAreaTool()
@@ -107,25 +107,24 @@ void DrawLineAndAreaTool::createPreviewPoints()
 	addPreviewPointSymbols(drawing_symbol);
 	
 	// Create objects for the new symbols
-	std::size_t size = preview_point_symbols.size();
-	for (std::size_t p = 0; p < 2; ++p)
+	for (auto& preview_point_vector : preview_points)
 	{
-		preview_points[p].resize(size);
-		for (std::size_t i = 0; i < size; ++i)
-			preview_points[p][i] = new PointObject(preview_point_symbols[i]);
+		preview_point_vector.resize(preview_point_symbols.size());
+		std::transform(begin(preview_point_symbols), end(preview_point_symbols), begin(preview_point_vector),
+		               [](const auto symbol) { return new PointObject(symbol); });
 	}
 }
 
 void DrawLineAndAreaTool::setPreviewPointsPosition(MapCoordF map_coord, int index)
 {
-	std::size_t size = preview_points[index].size();
-	for (std::size_t i = 0; i < size; ++i)
+	const auto& preview_point_vector = preview_points[std::size_t(index)];
+	for (const auto preview_point : preview_point_vector)
 	{
 		if (preview_points_shown)
-			renderables->removeRenderablesOfObject(preview_points[index][i], false);
-		preview_points[index][i]->setPosition(map_coord);
-		preview_points[index][i]->update();
-		renderables->insertRenderablesOfObject(preview_points[index][i]);
+			renderables->removeRenderablesOfObject(preview_point, false);
+		preview_point->setPosition(map_coord);
+		preview_point->update();
+		renderables->insertRenderablesOfObject(preview_point);
 	}
 	preview_points_shown = true;
 }
@@ -134,11 +133,10 @@ void DrawLineAndAreaTool::hidePreviewPoints()
 {
 	if (preview_points_shown)
 	{
-		for (std::size_t p = 0; p < 2; ++p)
+		for (const auto& preview_point_vector : preview_points)
 		{
-			std::size_t size = preview_points[p].size();
-			for (std::size_t i = 0; i < size; ++i)
-				renderables->removeRenderablesOfObject(preview_points[p][i], false);
+			for (const auto preview_point : preview_point_vector)
+				renderables->removeRenderablesOfObject(preview_point, false);
 		}
 		
 		preview_points_shown = false;
@@ -152,11 +150,10 @@ void DrawLineAndAreaTool::includePreviewRects(QRectF& rect)
 	
 	if (preview_points_shown)
 	{
-		for (std::size_t p = 0; p < 2; ++p)
+		for (const auto& preview_point_vector : preview_points)
 		{
-			std::size_t size = preview_points[p].size();
-			for (std::size_t i = 0; i < size; ++i)
-				rectIncludeSafe(rect, preview_points[p][i]->getExtent());
+			for (const auto preview_point : preview_point_vector)
+				rectIncludeSafe(rect, preview_point->getExtent());
 		}
 	}
 }
@@ -272,11 +269,11 @@ void DrawLineAndAreaTool::finishDrawing(PathObject* append_to_object)
 			// Ugly HACK to make it possible to delete this tool as response to pathFinished
 			PathObject* temp_path = preview_path;
 			preview_path = nullptr;
-			emit(pathFinished(temp_path));
+			emit pathFinished(temp_path);
 			delete temp_path;
 		}
 		else
-			emit(pathAborted());
+			emit pathAborted();
 	}
 	else
 		preview_path = nullptr;
@@ -284,22 +281,19 @@ void DrawLineAndAreaTool::finishDrawing(PathObject* append_to_object)
 
 void DrawLineAndAreaTool::deletePreviewObjects()
 {
-	for (int p = 0; p < 2; ++p)
+	for (auto& preview_point_vector : preview_points)
 	{
-		int size = (int)preview_points[p].size();
-		for (int i = 0; i < size; ++i)
-		{
-			renderables->removeRenderablesOfObject(preview_points[p][i], false);
-			delete preview_points[p][i];
-		}
-		preview_points[p].clear();
+		for (const auto preview_point : preview_point_vector)
+			renderables->removeRenderablesOfObject(preview_point, false);
+		preview_point_vector.clear();
 	}
 	
-	int size = (int)preview_point_symbols.size();
-	for (int i = 0; i < size; ++i)
+	auto is_external = begin(preview_point_symbols_external);
+	for (const auto symbol : preview_point_symbols)
 	{
-		if (!preview_point_symbols_external[i])
-			delete preview_point_symbols[i];
+		if (!*is_external)
+			delete symbol;
+		++is_external;
 	}
 	preview_point_symbols.clear();
 	preview_point_symbols_external.clear();

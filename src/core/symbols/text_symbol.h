@@ -82,7 +82,7 @@ public:
 	
 	/** Creates an empty text symbol. */
 	TextSymbol();
-	virtual ~TextSymbol();
+	~TextSymbol() override;
 	Symbol* duplicate(const MapColorMap* color_map = nullptr) const override;
 	
 	void createRenderables(

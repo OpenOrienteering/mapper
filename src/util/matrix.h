@@ -65,7 +65,7 @@ public:
 	void load(QIODevice* file);
 	
 	/** Saves the matrix in xml format with the given value of the role attribute. */
-	void save(QXmlStreamWriter& xml, const QString role) const;
+	void save(QXmlStreamWriter& xml, const QString& role) const;
 	/** Loads the matrix in xml format. */
  	void load(QXmlStreamReader& xml);
 	

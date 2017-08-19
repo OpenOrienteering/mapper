@@ -87,7 +87,7 @@ public:
 	 *  or the button is hidden because of a collision. */
 	QToolButton* getButtonForAction(QAction* action);
 	
-	virtual QSize sizeHint() const;
+	QSize sizeHint() const override;
 	
 protected slots:
 	void overflowActionClicked();
@@ -107,7 +107,7 @@ protected:
 	};
 	
 	static bool compareItemPtrId(GridItem* a, GridItem* b);
-	virtual void resizeEvent(QResizeEvent* event);
+	void resizeEvent(QResizeEvent* event) override;
 	
 	Direction direction;
 	int rows;

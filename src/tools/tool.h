@@ -103,7 +103,7 @@ public:
 	/**
 	 * @brief Destructs the MapEditorTool.
 	 */
-	virtual ~MapEditorTool();
+	~MapEditorTool() override;
 	
 	/**
 	 * @brief Performs initialization when the tool becomes active.
@@ -169,7 +169,7 @@ public:
 	
 	// Input method support
 	virtual bool inputMethodEvent(QInputMethodEvent *event);
-	virtual QVariant inputMethodQuery(Qt::InputMethodQuery, QVariant) const;
+	virtual QVariant inputMethodQuery(Qt::InputMethodQuery, const QVariant&) const;
 	
 	// Gesture input
 	virtual bool gestureEvent(QGestureEvent* event, MapWidget* widget);

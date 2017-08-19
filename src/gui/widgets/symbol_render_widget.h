@@ -72,7 +72,7 @@ public:
 	/**
 	 * @brief Destroys the SymbolRenderWidget.
 	 */
-	virtual ~SymbolRenderWidget();
+	~SymbolRenderWidget() override;
 
 	/**
 	 * @brief Returns the number of selected symbols.
@@ -123,7 +123,7 @@ public:
 	 * 
 	 * Reimplemented from QWidget::sizeHint().
 	 */
-	virtual QSize sizeHint() const;
+	QSize sizeHint() const override;
 	
 	/**
 	 * @brief Opens the context menu at the given global position.
@@ -210,7 +210,7 @@ protected slots:
 	void sortByColorPriority();
 	
 protected:
-	virtual void resizeEvent(QResizeEvent* event);
+	void resizeEvent(QResizeEvent* event) override;
 	
 	/**
 	 * @brief Recalculates the layout and size.
@@ -234,7 +234,7 @@ protected:
 	int symbolIndexAt(QPoint pos) const;
 	
 	
-	virtual void paintEvent(QPaintEvent* event);
+	void paintEvent(QPaintEvent* event) override;
 	
 	/**
 	 * @brief Draws the icon and its decoration (hidden, protected).
@@ -246,11 +246,11 @@ protected:
 	void drawIcon(QPainter& painter, int i) const;
 	
 	
-	virtual void mouseMoveEvent(QMouseEvent* event);
-	virtual void mousePressEvent(QMouseEvent* event);
-	virtual void mouseReleaseEvent(QMouseEvent* event);
-	virtual void mouseDoubleClickEvent(QMouseEvent* event);
-	virtual void leaveEvent(QEvent* event);
+	void mouseMoveEvent(QMouseEvent* event) override;
+	void mousePressEvent(QMouseEvent* event) override;
+	void mouseReleaseEvent(QMouseEvent* event) override;
+	void mouseDoubleClickEvent(QMouseEvent* event) override;
+	void leaveEvent(QEvent* event) override;
 	
 	/**
 	 * @brief Handles hovering over the icons, i.e. controlling the tool tip.
@@ -259,9 +259,9 @@ protected:
 	void hover(QPoint pos);
 	
 	
-	virtual void dragEnterEvent(QDragEnterEvent* event);
-	virtual void dragMoveEvent(QDragMoveEvent* event);
-	virtual void dropEvent(QDropEvent* event);
+	void dragEnterEvent(QDragEnterEvent* event) override;
+	void dragMoveEvent(QDragMoveEvent* event) override;
+	void dropEvent(QDropEvent* event) override;
 	
 	/**
 	 * @brief Determines the drop location for a given pointing device position.
@@ -312,7 +312,7 @@ protected:
 	/**
 	 * @brief Receives context menu events and opens the context menu.
 	 */
-	virtual void contextMenuEvent(QContextMenuEvent* event);
+	void contextMenuEvent(QContextMenuEvent* event) override;
 	
 	/** 
 	 * @brief Updates the state of the actions in the context menu.

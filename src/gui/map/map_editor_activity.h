@@ -40,7 +40,7 @@ class MapEditorActivity : public QObject
 {
 Q_OBJECT
 public:
-	virtual ~MapEditorActivity();
+	~MapEditorActivity() override;
 	
 	/**
 	 * All initializations apart from setting variables like the activity object

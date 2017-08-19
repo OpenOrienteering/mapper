@@ -43,13 +43,13 @@ public:
 	KeyButtonBar(MapEditorTool* tool, MapWidget* map_widget, QWidget* parent = 0);
 	
 	/** Adds a non-checkable button. */
-	void addPressKey(int key_code, QString text, QIcon icon = QIcon());
+	void addPressKey(int key_code, const QString& text, const QIcon& icon = QIcon());
 	
 	/** Adds a non-checkable button for which in addition a modifier key is pressed while the key is pressed. */
-	void addPressKeyWithModifier(int key_code, int modifier_code, QString text, QIcon icon = QIcon());
+	void addPressKeyWithModifier(int key_code, int modifier_code, const QString& text, const QIcon& icon = QIcon());
 	
 	/** Adds a checkable button which may add a modifier code while checked. */
-	void addModifierKey(int key_code, int modifier_code, QString text, QIcon icon = QIcon());
+	void addModifierKey(int key_code, int modifier_code, const QString& text, const QIcon& icon = QIcon());
 	
 	/** Returns the active modifier flags. Is intended to be combined with the modifier flags returned by mouse events,
 	 *  because the key simulation cannot insert modifiers there. */
@@ -66,7 +66,7 @@ private:
 		bool is_checkable;
 	};
 	
-	QToolButton* createButton(int key_code, QString text, QIcon icon, bool is_checkable, int modifier_code);
+	QToolButton* createButton(int key_code, const QString& text, const QIcon& icon, bool is_checkable, int modifier_code);
 	void sendKeyPressEvent(int key_code, int modifier_code);
 	void sendKeyReleaseEvent(int key_code, int modifier_code);
 	

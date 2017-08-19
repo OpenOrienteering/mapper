@@ -85,7 +85,7 @@ void TemplateTransform::load(QIODevice* file)
 
 #endif
 
-void TemplateTransform::save(QXmlStreamWriter& xml, const QString role) const
+void TemplateTransform::save(QXmlStreamWriter& xml, const QString& role) const
 {
 	xml.writeStartElement(QString::fromLatin1("transformation"));
 	xml.writeAttribute(QString::fromLatin1("role"), role);
@@ -523,7 +523,7 @@ bool Template::tryToFindAndReloadTemplateFile(QString map_directory, bool* out_l
 	if (!getTemplateRelativePath().isEmpty() && !map_directory.isEmpty())
 	{
 		auto path = QString{ map_directory + getTemplateRelativePath() };
-		if (QFileInfo(path).exists())
+		if (QFileInfo::exists(path))
 		{
 			setTemplatePath(path);
 			return loadTemplateFile(false);
@@ -531,7 +531,7 @@ bool Template::tryToFindAndReloadTemplateFile(QString map_directory, bool* out_l
 	}
 	
 	// Second try absolute path
-	if (QFileInfo(template_path).exists())
+	if (QFileInfo::exists(template_path))
 	{
 		return loadTemplateFile(false);
 	}
@@ -540,7 +540,7 @@ bool Template::tryToFindAndReloadTemplateFile(QString map_directory, bool* out_l
 	if (!map_directory.isEmpty())
 	{
 		auto path = QString{ map_directory + getTemplateFilename() };
-		if (QFileInfo(path).exists())
+		if (QFileInfo::exists(path))
 		{
 			setTemplatePath(path);
 			bool success = loadTemplateFile(false);
@@ -567,7 +567,7 @@ bool Template::loadTemplateFile(bool configuring)
 	Q_ASSERT(template_state != Loaded);
 	
 	const State old_state = template_state;
-	bool result = QFileInfo(template_path).exists();
+	bool result = QFileInfo::exists(template_path);
 	if (!result)
 	{
 		template_state = Invalid;

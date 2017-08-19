@@ -23,6 +23,7 @@
 #include <memory>
 
 #include <QByteArray>
+#include <QCoreApplication>
 #include <QHash>
 
 // The GDAL/OGR C API is more stable than the C++ API.
@@ -108,7 +109,8 @@ namespace ogr
  */
 class OgrFileImport : public Importer
 {
-Q_OBJECT
+	Q_DECLARE_TR_FUNCTIONS(OgrFileImport)
+	
 public:
 	/**
 	 * The unit type indicates the coordinate system the data units refers to.

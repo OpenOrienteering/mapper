@@ -59,7 +59,7 @@ friend class PointSymbolEditorWidget;
 friend class OCAD8FileImport;
 public:
 	CombinedSymbol();
-	virtual ~CombinedSymbol();
+	~CombinedSymbol() override;
 	Symbol* duplicate(const MapColorMap* color_map = nullptr) const override;
 	
 	bool validate() const override;

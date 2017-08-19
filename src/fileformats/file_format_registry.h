@@ -37,9 +37,13 @@ public:
 	 */
 	FileFormatRegistry() noexcept;
 	
+	FileFormatRegistry(const FileFormatRegistry&) = delete;
+	
 	/** Destroys a file format registry.
 	 */
 	~FileFormatRegistry();
+	
+	FileFormatRegistry& operator=(const FileFormatRegistry&) = delete;
 	
 	/** Returns an immutable list of the available file formats.
 	 */

@@ -50,10 +50,20 @@ constexpr int XMLFileFormat::current_version = 7;
 
 int XMLFileFormat::active_version = 5; // updated by XMLFileExporter::doExport()
 
+
+
 namespace {
+
 const char* magic_string = "<?xml ";
-const QString mapper_namespace = QString::fromLatin1("http://openorienteering.org/apps/mapper/xml/v2");
+
+QString mapperNamespace()
+{
+	return QStringLiteral("http://openorienteering.org/apps/mapper/xml/v2");
 }
+
+}  // namespace
+
+
 
 XMLFileFormat::XMLFileFormat()
  : FileFormat(MapFile, "XML", ImportExport::tr("OpenOrienteering Mapper"), QString::fromLatin1("omap"),
@@ -180,7 +190,7 @@ void XMLFileExporter::doExport()
 	XMLFileFormat::active_version = XMLFileFormat::current_version;
 #endif
 	
-	xml.writeDefaultNamespace(mapper_namespace);
+	xml.writeDefaultNamespace(mapperNamespace());
 	xml.writeStartDocument();
 	writeLineBreak(xml);
 	
@@ -580,8 +590,7 @@ void XMLFileImporter::importGeoreferencing(bool load_symbols_only)
 		if (error_text.isEmpty())
 			error_text = tr("Unknown error");
 		addWarning(tr("Unsupported or invalid georeferencing specification '%1': %2").
-		           arg(georef.getProjectedCRSSpec()).
-		           arg(error_text));
+		           arg(georef.getProjectedCRSSpec(), error_text));
 	}
 	
 	if (MapCoord::boundsOffset().isZero())

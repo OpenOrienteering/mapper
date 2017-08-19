@@ -39,10 +39,8 @@ FileFormatRegistry::FileFormatRegistry() noexcept
 
 FileFormatRegistry::~FileFormatRegistry()
 {
-	for (std::vector<FileFormat *>::reverse_iterator it = fmts.rbegin(); it != fmts.rend(); ++it)
-	{
-		delete *it;
-	}
+	for (auto format : fmts)
+		delete format;
 }
 
 

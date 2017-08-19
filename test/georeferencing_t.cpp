@@ -32,6 +32,7 @@ int XMLFileFormat::active_version = 6;
 
 namespace
 {
+	// clazy:excludeall=non-pod-global-static
 	QString epsg5514_spec = QLatin1String("+init=epsg:5514");
 	QString gk2_spec   = QLatin1String("+proj=tmerc +lat_0=0 +lon_0=6 +k=1.000000 +x_0=2500000 +y_0=0 +ellps=bessel +datum=potsdam +units=m +no_defs");
 	QString gk3_spec   = QLatin1String("+proj=tmerc +lat_0=0 +lon_0=9 +k=1.000000 +x_0=3500000 +y_0=0 +ellps=bessel +datum=potsdam +units=m +no_defs");

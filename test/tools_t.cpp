@@ -66,6 +66,8 @@ struct TestMapEditor
 	MapWidget* map_widget;
 	
 	TestMapEditor(Map* map);
+	TestMapEditor(const TestMapEditor&) = delete;
+	TestMapEditor& operator=(const TestMapEditor&) = delete;
 	~TestMapEditor();
 	
 	void simulateClick(QPoint pos);

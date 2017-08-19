@@ -470,7 +470,7 @@ void MapEditorToolBase::updatePreviewObjectsAsynchronously()
 	
 	if (!preview_update_triggered)
 	{
-		QTimer::singleShot(10, this, SLOT(updatePreviewObjectsSlot()));
+		QTimer::singleShot(10, this, SLOT(updatePreviewObjectsSlot()));  // clazy:exclude=old-style-connect
 		preview_update_triggered = true;
 	}
 }

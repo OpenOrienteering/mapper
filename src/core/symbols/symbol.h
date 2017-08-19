@@ -97,8 +97,16 @@ public:
 	
 	/** Constructs an empty symbol */
 	Symbol(Type type) noexcept;
+	
+	Symbol(const Symbol&) = delete;
+	Symbol(Symbol&&) = delete;
+	
 	virtual ~Symbol();
+	
 	virtual Symbol* duplicate(const MapColorMap* color_map = nullptr) const = 0;
+	
+	Symbol& operator=(const Symbol&) = delete;
+	Symbol& operator=(Symbol&&) = delete;
 	
 	virtual bool validate() const;
 	

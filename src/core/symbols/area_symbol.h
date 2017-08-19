@@ -198,7 +198,7 @@ public:
 			const AreaRenderable& outline,
 			float delta_rotation,
 			const MapCoord& pattern_origin,
-			QRectF point_extent,
+			const QRectF& point_extent,
 			LineSymbol* line,
 			qreal rotation,
 			ObjectRenderables& output

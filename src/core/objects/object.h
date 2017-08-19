@@ -62,7 +62,7 @@ class VirtualCoordVector;
  * that is a set of renderables and the calculation of the object's extent (bounding box).
  * The renderables can then be inserted into a map where they are used to display the object.
  */
-class Object
+class Object  // clazy:exclude=copyable-polymorphic
 {
 friend class ObjectRenderables;
 friend class OCAD8FileImport;
@@ -96,6 +96,7 @@ public:
 	/** Creates an empty object with the given type, symbol, coords and (optional) map. */
 	explicit Object(Type type, const Symbol* symbol, const MapCoordVector& coords, Map* map = nullptr);
 	
+protected:
 	/**
 	 * Constructs a Object, initialized from the given prototype.
 	 * 
@@ -104,6 +105,7 @@ public:
 	 */
 	explicit Object(const Object& proto);
 	
+public:
 	/** Destructs the object. */
 	virtual ~Object();
 	
@@ -218,7 +220,7 @@ public:
 	/**
 	 * Checks if a path point (excluding curve control points) is included in the given box.
 	 */
-	virtual bool intersectsBox(QRectF box) const = 0;
+	virtual bool intersectsBox(const QRectF& box) const = 0;
 	
 	/** Takes ownership of the renderables */
 	void takeRenderables();
@@ -344,7 +346,8 @@ public:
 	        const VirtualPath& path
 	);
 	
-public:
+	~PathPart() = default;
+	
 	PathPart& operator=(const PathPart& rhs);
 	
 	/**
@@ -413,7 +416,7 @@ public:
  * is ended by a coordinate with the "hole point" flag. For all types of
  * flags which can be set, see the MapCoord documentation.
  */
-class PathObject : public Object
+class PathObject : public Object  // clazy:exclude=copyable-polymorphic
 {
 	friend class PathPart;
 	
@@ -466,9 +469,11 @@ public:
 	/** Constructs a PathObject, assigning initial coords from a single piece of a line. */
 	PathObject(const Symbol* symbol, const PathObject& proto, MapCoordVector::size_type piece);
 	
+protected:
 	/** Constructs a PathObject, initalized from the given prototype. */
 	explicit PathObject(const PathObject& proto);
 	
+public:
 	/** Constructs a PathObject, initalized from the given part of another object. */
 	explicit PathObject(const PathPart& proto_part);
 	
@@ -477,7 +482,7 @@ public:
 	 * 
 	 * Use asPath() on the result to obtain an object of type PathObject.
 	 */
-	Object* duplicate() const override;
+	PathObject* duplicate() const override;
 	
 	/** Replaces this object's contents by those of the other. */
 	PathObject& operator=(const PathObject& other);
@@ -493,7 +498,7 @@ public:
 	void normalize();
 	
 	
-	bool intersectsBox(QRectF box) const override;
+	bool intersectsBox(const QRectF& box) const override;
 	
 	
 	// Coordinate access methods
@@ -940,15 +945,17 @@ bool operator== (const PathObject::Intersection& lhs, const PathObject::Intersec
  * 
  * Has exactly one coordinate, and additionally a rotation parameter.
  */
-class PointObject : public Object
+class PointObject : public Object  // clazy:exclude=copyable-polymorphic
 {
 public:
 	/** Constructs a PointObject, optionally assigning the symbol. */
 	explicit PointObject(const Symbol* symbol = nullptr);
 	
+protected:
 	/** Constructs a PointObject, initalized from the given prototype. */
 	explicit PointObject(const PointObject& proto);
 	
+public:
 	/**
 	 * Creates a duplicate of the point.
 	 * 
@@ -997,7 +1004,7 @@ public:
 	float getRotation() const;
 	
 	
-	bool intersectsBox(QRectF box) const override;
+	bool intersectsBox(const QRectF& box) const override;
 	
 	
 private:

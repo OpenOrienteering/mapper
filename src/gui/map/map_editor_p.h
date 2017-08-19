@@ -49,8 +49,8 @@ public:
 					 MapEditorController* editor, QWidget* parent = nullptr);
 	
 protected:
-	virtual bool event(QEvent* event) override;
-	virtual void resizeEvent(QResizeEvent *event) override;
+	bool event(QEvent* event) override;
+	void resizeEvent(QResizeEvent *event) override;
 	
 private:
 	QAction* action;

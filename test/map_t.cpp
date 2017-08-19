@@ -35,8 +35,8 @@
 
 namespace
 {
-	static QDir examples_dir;
-	static QDir symbol_set_dir;
+	QDir examples_dir;    // clazy:exclude=non-pod-global-static
+	QDir symbol_set_dir;  // clazy:exclude=non-pod-global-static
 }
 
 
@@ -58,7 +58,7 @@ void MapTest::initTestCase()
 	// Accept any message boxes
 	connect(qApp, &QApplication::focusChanged, [](QWidget*, QWidget* w) {
 		if (w && qobject_cast<QMessageBox*>(w->window()))
-			QTimer::singleShot(0, w->window(), SLOT(accept()));
+			QTimer::singleShot(0, w->window(), SLOT(accept()));  // clazy:exclude=old-style-connect (needs Qt 5.4)
 	});
 }
 
@@ -276,7 +276,7 @@ void MapTest::matchQuerySymbolNumberTest()
  */
 #ifndef Q_OS_MACOS
 namespace  {
-	auto qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");
+	auto qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");  // clazy:exclude=non-pod-global-static
 }
 #endif
 

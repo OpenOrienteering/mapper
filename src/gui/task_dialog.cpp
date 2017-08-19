@@ -28,6 +28,8 @@
 #include <QSignalMapper>
 #include <QVBoxLayout>
 
+#include "util/backports.h"
+
 
 TaskDialog::TaskDialog(QWidget* parent, const QString& title, const QString& text, QDialogButtonBox::StandardButtons buttons)
  : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
@@ -50,15 +52,15 @@ TaskDialog::TaskDialog(QWidget* parent, const QString& title, const QString& tex
 	setLayout(layout);
 	
 	signal_mapper = new QSignalMapper(this);
-	connect(signal_mapper, SIGNAL(mapped(QWidget*)), this, SLOT(buttonClicked(QWidget*)));
-	connect(button_box, SIGNAL(clicked(QAbstractButton*)), this, SLOT(buttonClicked(QAbstractButton*)));
+	connect(signal_mapper, QOverload<QWidget*>::of(&QSignalMapper::mapped), this, QOverload<QWidget*>::of(&TaskDialog::buttonClicked));
+	connect(button_box, &QDialogButtonBox::clicked, this, QOverload<QWidget*>::of(&TaskDialog::buttonClicked));
 }
 
 QCommandLinkButton* TaskDialog::addCommandButton(const QString& text, const QString& description)
 {
 	QCommandLinkButton* button = new QCommandLinkButton(text, description);
 	signal_mapper->setMapping(button, button);
-	connect(button, SIGNAL(clicked()), signal_mapper, SLOT(map()));
+	connect(button, QOverload<bool>::of(&QAbstractButton::clicked), signal_mapper, QOverload<>::of(&QSignalMapper::map));
 	
 	layout->insertWidget(layout->count() - (button_box ? 1 : 0), button);
 	return button;

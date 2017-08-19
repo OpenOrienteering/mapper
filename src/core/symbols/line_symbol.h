@@ -102,7 +102,7 @@ public:
 	
 	/** Constructs an empty line symbol. */
 	LineSymbol() noexcept;
-	virtual ~LineSymbol();
+	~LineSymbol() override;
 	Symbol* duplicate(const MapColorMap* color_map = nullptr) const override;
 	
 	bool validate() const override;

@@ -193,7 +193,7 @@ QRectF PathCoordVector::calculateExtent() const
 	return extent;
 }
 
-bool PathCoordVector::intersectsBox(QRectF box) const
+bool PathCoordVector::intersectsBox(const QRectF& box) const
 {
 	bool result = false;
 	if (!empty())

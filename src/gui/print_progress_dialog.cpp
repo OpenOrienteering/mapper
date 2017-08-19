@@ -59,7 +59,7 @@ void PrintProgressDialog::paintRequested(QPrinter* printer)
 	}
 }
 
-void PrintProgressDialog::setProgress(int value, QString status)
+void PrintProgressDialog::setProgress(int value, const QString& status)
 {
 	setLabelText(status);
 	setValue(value);

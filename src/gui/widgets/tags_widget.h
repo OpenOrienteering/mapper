@@ -46,7 +46,7 @@ public:
 	explicit TagsWidget(Map* map, MapView* main_view, MapEditorController* controller, QWidget* parent = nullptr);
 	
 	/** Destroys the widget. */
-	virtual ~TagsWidget();
+	~TagsWidget() override;
 	
 protected slots:
 	/**

@@ -56,7 +56,7 @@ public:
 	AbstractHomeScreenWidget(HomeScreenController* controller, QWidget* parent = nullptr);
 	
 	/** Destroys the AbstractHomeScreenWidget. */
-	virtual ~AbstractHomeScreenWidget();
+	~AbstractHomeScreenWidget() override;
 	
 public slots:
 	/** Sets the list of recent files. */
@@ -102,22 +102,22 @@ public:
 	HomeScreenWidgetDesktop(HomeScreenController* controller, QWidget* parent = nullptr);
 	
 	/** Destroys the HomeScreenWidgetDesktop. */
-	virtual ~HomeScreenWidgetDesktop();
+	~HomeScreenWidgetDesktop() override;
 	
 public slots:
 	/** Sets the list of recent files. */
-	virtual void setRecentFiles(const QStringList& files);
+	void setRecentFiles(const QStringList& files) override;
 	
 	/** Sets the "checked" state of the control for opening
 	 *  the most recently used file on startup. */
-	virtual void setOpenMRUFileChecked(bool state);
+	void setOpenMRUFileChecked(bool state) override;
 	
 	/** Sets the text of the the tip-of-the-day. */
-	virtual void setTipOfTheDay(const QString& text);
+	void setTipOfTheDay(const QString& text) override;
 	
 	/** Sets the visiblity of the tip-of-the-day, and
 	 *  sets the "checked" state of the control for displaying the tip. */
-	virtual void setTipsVisible(bool state);
+	void setTipsVisible(bool state) override;
 	
 protected slots:
 	/** Opens a file when its is list item is clicked. */
@@ -125,7 +125,7 @@ protected slots:
 	
 protected:
 	/** Draws the home screen background when a paint event occurs. */
-	virtual void paintEvent(QPaintEvent* event);
+	void paintEvent(QPaintEvent* event) override;
 	
 	/** Creates the activities widget. */
 	QWidget* makeMenuWidget(HomeScreenController* controller, QWidget* parent = nullptr);
@@ -156,22 +156,22 @@ public:
 	HomeScreenWidgetMobile(HomeScreenController* controller, QWidget* parent = nullptr);
 	
 	/** Destroys the HomeScreenWidgetMobile. */
-	virtual ~HomeScreenWidgetMobile();
+	~HomeScreenWidgetMobile() override;
 	
 public slots:
 	/** Sets the list of recent files. */
-	virtual void setRecentFiles(const QStringList& files);
+	void setRecentFiles(const QStringList& files) override;
 	
 	/** Sets the "checked" state of the control for opening
 	 *  the most recently used file on startup. */
-	virtual void setOpenMRUFileChecked(bool state);
+	void setOpenMRUFileChecked(bool state) override;
 	
 	/** Sets the text of the the tip-of-the-day. */
-	virtual void setTipOfTheDay(const QString& text);
+	void setTipOfTheDay(const QString& text) override;
 	
 	/** Sets the visiblity of the tip-of-the-day, and
 	 *  sets the "checked" state of the control for displaying the tip. */
-	virtual void setTipsVisible(bool state);
+	void setTipsVisible(bool state) override;
 	
 	/** Adds the examples to the list of files
 	 *  if they are not already there. */
@@ -186,7 +186,7 @@ protected slots:
 	
 protected:
 	/** Triggers title image adjustment on resize events. */
-	virtual void resizeEvent(QResizeEvent* event);
+	void resizeEvent(QResizeEvent* event) override;
 	
 	/** Resizes the title image to fit both the labels width and height */
 	void adjustTitlePixmapSize();

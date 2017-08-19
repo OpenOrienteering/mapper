@@ -189,7 +189,8 @@ void OCAD8FileImport::import(bool load_symbols_only)
 			if (ocad_halftone <= 200)
 			{
 				float halftone = 0.005f * ocad_halftone;
-				components.push_back(SpotColorComponent(separations[j], halftone));
+				components.reserve(std::size_t(num_separations));  // reserves only once for same capacity
+				components.push_back(SpotColorComponent(separations[j], halftone));  // clazy:exclude=reserve-candidates
 			}
 		}
 		if (!components.empty())
@@ -1727,9 +1728,9 @@ void OCAD8FileExport::doExport()
 			else
 				index_set.insert(-1);	// export as undefined symbol
 			
-			for (std::set<s16>::const_iterator it = index_set.begin(), end = index_set.end(); it != end; ++it)
+			for (const auto index : index_set)
 			{
-				s16 index_to_use = *it;
+				s16 index_to_use = index;
 				
 				// For text objects, check if we have to change / create a new text symbol because of the formatting
 				if (object->getType() == Object::Text && symbol_index.contains(object->getSymbol()))
@@ -1739,11 +1740,11 @@ void OCAD8FileExport::doExport()
 					if (!text_format_map.contains(text_symbol))
 					{
 						// Adjust the formatting in the first created symbol to this object
-						OCADTextSymbol* ocad_text_symbol = (OCADTextSymbol*)ocad_symbol(file, *it);
+						OCADTextSymbol* ocad_text_symbol = (OCADTextSymbol*)ocad_symbol(file, index);
 						setTextSymbolFormatting(ocad_text_symbol, text_object);
 						
 						TextFormatList new_list;
-						new_list.push_back(std::make_pair(text_object->getHorizontalAlignment(), *it));
+						new_list.push_back(std::make_pair(text_object->getHorizontalAlignment(), index));
 						text_format_map.insert(text_symbol, new_list);
 					}
 					else
@@ -1765,10 +1766,10 @@ void OCAD8FileExport::doExport()
 						{
 							// Copy the symbol and adjust the formatting
 							// TODO: insert these symbols directly after the original symbols
-							OCADTextSymbol* ocad_text_symbol = (OCADTextSymbol*)ocad_symbol(file, *it);
+							OCADTextSymbol* ocad_text_symbol = (OCADTextSymbol*)ocad_symbol(file, index);
 							OCADTextSymbol* new_symbol = (OCADTextSymbol*)ocad_symbol_new(file, ocad_text_symbol->size);
 							// Get the pointer to the first symbol again as it might have changed during ocad_symbol_new()
-							ocad_text_symbol = (OCADTextSymbol*)ocad_symbol(file, *it);
+							ocad_text_symbol = (OCADTextSymbol*)ocad_symbol(file, index);
 							
 							memcpy(new_symbol, ocad_text_symbol, ocad_text_symbol->size);
 							setTextSymbolFormatting(new_symbol, text_object);
@@ -1847,8 +1848,9 @@ void OCAD8FileExport::doExport()
 			template_path.replace(QLatin1Char('/'), QLatin1Char('\\'));
 			
 			QString string;
+			auto template_path_8bit = encoding_1byte->fromUnicode(template_path);
 			string.sprintf("%s\ts%d\tx%d\ty%d\ta%f\tu%f\tv%f\td%d\tp%d\tt%d\to%d",
-				encoding_1byte->fromUnicode(template_path).data(), s, x, y, a, u, v, d, p, t, o
+				template_path_8bit.data(), s, x, y, a, u, v, d, p, t, o
 			);
 			
 			OCADStringEntry* entry = ocad_string_entry_new(file, string.length() + 1);

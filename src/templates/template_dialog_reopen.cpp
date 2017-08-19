@@ -79,8 +79,8 @@ ReopenTemplateDialog::ReopenTemplateDialog(QWidget* parent, Map* map, const QStr
 	layout->addWidget(button_box, row++, 0, 1, 2);
 	setLayout(layout);
 	
-	connect(clear_button, SIGNAL(clicked()), this, SLOT(clearClicked()));
-	connect(button_box, SIGNAL(clicked(QAbstractButton*)), this, SLOT(doAccept(QAbstractButton*)));
+	connect(clear_button, &QAbstractButton::clicked, this, &ReopenTemplateDialog::clearClicked);
+	connect(button_box, &QDialogButtonBox::clicked, this, &ReopenTemplateDialog::doAccept);
 }
 
 void ReopenTemplateDialog::updateClosedTemplateList()

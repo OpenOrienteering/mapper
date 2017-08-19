@@ -39,16 +39,16 @@ public:
 	explicit RecordingTranslator(QObject* parent = 0);
 	
 	/** Destructs the translator. */
-	virtual ~RecordingTranslator();
+	~RecordingTranslator() override;
 	
 	/** Returns false. */
-	virtual bool isEmpty() const;
+	bool isEmpty() const override;
 	
 	/** Dumps the context, sourceText, disambiguation and n using qDebug().
 	 *  Return a null string. 
 	 *
 	 *  Note: This is the Qt5 signature of translate(). */
-	virtual QString	translate(const char* context, const char* sourceText, const char* disambiguation = 0, int n = -1) const;
+	QString	translate(const char* context, const char* sourceText, const char* disambiguation = 0, int n = -1) const override;
 };
 
 #endif

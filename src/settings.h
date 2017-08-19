@@ -84,13 +84,13 @@ public:
 	QVariant getSettingCached(SettingsEnum setting);
 	
 	/// Change a setting, but only in the cache. Do not use this if in doubt.
-	void setSettingInCache(Settings::SettingsEnum setting, QVariant value);
+	void setSettingInCache(Settings::SettingsEnum setting, const QVariant& value);
 	
 	/// This must be called after cached settings have been changed and on application startup.
 	void applySettings();
 	
 	/// Change a setting immediately.
-	void setSetting(Settings::SettingsEnum setting, QVariant value);
+	void setSetting(Settings::SettingsEnum setting, const QVariant& value);
 	
 	/// Removes a setting immediately. Next reading will return the default value.
 	void remove(Settings::SettingsEnum setting);
@@ -124,7 +124,7 @@ private:
 	Settings();
 	void registerSetting(SettingsEnum id, const char* path_latin1, const QVariant& default_value);
 	
-	void migrateSettings(QSettings& settings, QVariant version);
+	void migrateSettings(QSettings& settings, const QVariant& version);
 	
 	/** Migrates a value from an old key to a new key.
 	 *  Uses the given or a newly constructed QSettings object.

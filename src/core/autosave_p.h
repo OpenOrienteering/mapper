@@ -40,7 +40,7 @@ Q_OBJECT
 public:	
 	AutosavePrivate(Autosave& document);
 	
-	virtual ~AutosavePrivate();
+	~AutosavePrivate() override;
 	
 	bool autosaveNeeded();
 	

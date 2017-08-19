@@ -35,7 +35,7 @@ void TemplateMoveTool::init()
 {
 	setStatusBarText(tr("<b>Drag</b> to move the current template"));
 	
-	connect(map(), SIGNAL(templateDeleted(int, const Template*)), this, SLOT(templateDeleted(int, const Template*)));
+	connect(map(), &Map::templateDeleted, this, &TemplateMoveTool::templateDeleted);
 	
 	MapEditorTool::init();
 }

@@ -100,7 +100,7 @@ public:
 	/**
 	 * Releases resources.
 	 */
-	virtual ~GeoreferencingDialog();
+	~GeoreferencingDialog() override;
 	
 	
 	/**
@@ -298,7 +298,7 @@ public:
 	/**
 	 * Notifies the dialog that the tool is deleted.
 	 */
-	virtual ~GeoreferencingTool();
+	~GeoreferencingTool() override;
 	
 	/**
 	 * Activates the tool.

@@ -46,7 +46,7 @@ PaintOnTemplateTool::PaintOnTemplateTool(MapEditorController* editor, QAction* t
 	dragging = false;
 	
 	this->temp = temp;
-	connect(map(), SIGNAL(templateDeleted(int, const Template*)), this, SLOT(templateDeleted(int, const Template*)));
+	connect(map(), &Map::templateDeleted, this, &PaintOnTemplateTool::templateDeleted);
 }
 
 PaintOnTemplateTool::~PaintOnTemplateTool()
@@ -60,9 +60,9 @@ void PaintOnTemplateTool::init()
 	
 	widget = new PaintOnTemplatePaletteWidget(false);
 	editor->showPopupWidget(widget, tr("Color selection"));
-	connect(widget, SIGNAL(colorSelected(QColor)), this, SLOT(colorSelected(QColor)));
-	connect(widget, SIGNAL(undoSelected()), this, SLOT(undoSelected()));
-	connect(widget, SIGNAL(redoSelected()), this, SLOT(redoSelected()));
+	connect(widget, &PaintOnTemplatePaletteWidget::colorSelected, this, &PaintOnTemplateTool::colorSelected);
+	connect(widget, &PaintOnTemplatePaletteWidget::undoSelected, this, &PaintOnTemplateTool::undoSelected);
+	connect(widget, &PaintOnTemplatePaletteWidget::redoSelected, this, &PaintOnTemplateTool::redoSelected);
 	colorSelected(widget->getSelectedColor());
 	
 	MapEditorTool::init();
@@ -354,9 +354,9 @@ PaintOnTemplateSelectDialog::PaintOnTemplateSelectDialog(Map* map, QWidget* pare
 	layout->addLayout(buttons_layout);
 	setLayout(layout);
 	
-	connect(cancel_button, SIGNAL(clicked(bool)), this, SLOT(reject()));
-	connect(draw_button, SIGNAL(clicked(bool)), this, SLOT(accept()));
-	connect(template_list, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)), this, SLOT(currentTemplateChanged(QListWidgetItem*,QListWidgetItem*)));
+	connect(cancel_button, &QAbstractButton::clicked, this, &QDialog::reject);
+	connect(draw_button, &QAbstractButton::clicked, this, &QDialog::accept);
+	connect(template_list, &QListWidget::currentItemChanged, this, &PaintOnTemplateSelectDialog::currentTemplateChanged);
 	
 	selection = nullptr;
 	template_list->setCurrentRow(0);

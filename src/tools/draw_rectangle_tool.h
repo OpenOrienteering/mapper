@@ -54,27 +54,27 @@ class DrawRectangleTool : public DrawLineAndAreaTool
 Q_OBJECT
 public:
 	DrawRectangleTool(MapEditorController* editor, QAction* tool_action, bool is_helper_tool);
-    virtual ~DrawRectangleTool();
+    ~DrawRectangleTool() override;
 	
-	virtual void init();
-	virtual const QCursor& getCursor() const;
+	void init() override;
+	const QCursor& getCursor() const override;
 	
-	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
 	
-	virtual bool keyPressEvent(QKeyEvent* event);
-    virtual bool keyReleaseEvent(QKeyEvent* event);
+	bool keyPressEvent(QKeyEvent* event) override;
+    bool keyReleaseEvent(QKeyEvent* event) override;
 	
-	virtual void draw(QPainter* painter, MapWidget* widget);
+	void draw(QPainter* painter, MapWidget* widget) override;
 	
 protected slots:
 	void updateDirtyRect();
 	
 protected:
-	virtual void finishDrawing();
-	virtual void abortDrawing();
+	void finishDrawing() override;
+	void abortDrawing() override;
 	
 	/**
 	 * Deletes the last drawn point.

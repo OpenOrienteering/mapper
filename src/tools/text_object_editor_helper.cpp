@@ -123,7 +123,7 @@ TextObjectEditorHelper::TextObjectEditorHelper(not_null<TextObject*> text_object
 #else
 	// Workaround to set the focus to the map widget again after it was lost
 	// to the new dock widget (on X11, at least)
-	QTimer::singleShot(20, this, SLOT(claimFocus()));
+	QTimer::singleShot(20, this, SLOT(claimFocus()));  // clazy:exclude=old-style-connect
 #endif
 }
 
@@ -333,7 +333,7 @@ int TextObjectEditorHelper::blockEnd() const
 }
 
 
-QVariant TextObjectEditorHelper::inputMethodQuery(Qt::InputMethodQuery property, QVariant argument) const
+QVariant TextObjectEditorHelper::inputMethodQuery(Qt::InputMethodQuery property, const QVariant& argument) const
 {
 	switch (property)
 	{
@@ -753,7 +753,7 @@ bool TextObjectEditorHelper::keyPressEvent(QKeyEvent* event)
 		return false;
 	}
 	else if (!event->text().isEmpty()
-	         && event->text()[0].isPrint() )
+	         && event->text().at(0).isPrint() )
 	{
 		replaceSelectionText(event->text());
 	}
@@ -861,7 +861,7 @@ QRectF TextObjectEditorHelper::cursorRectangle() const
 }
 
 
-void TextObjectEditorHelper::foreachLineRect(int begin, int end, std::function<void (const QRectF&)> worker) const
+void TextObjectEditorHelper::foreachLineRect(int begin, int end, const std::function<void (const QRectF&)>& worker) const
 {
 	Q_ASSERT(begin <= end);
 	for (int line = 0, num_lines = text_object->getNumLines(); line != num_lines; ++line)

@@ -49,9 +49,9 @@ class TextSymbolSettings : public SymbolPropertiesWidget
 Q_OBJECT
 public:
 	TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* dialog);
-    virtual ~TextSymbolSettings();
+    ~TextSymbolSettings() override;
 	
-	virtual void reset(Symbol* symbol);
+	void reset(Symbol* symbol) override;
 	
 	void updateGeneralContents();
 	
@@ -62,7 +62,7 @@ public:
 	void updateCompatibilityContents();
 	
 protected slots:
-	void fontChanged(QFont font);
+	void fontChanged(const QFont& font);
 	void fontSizeChanged(double value);
 	void letterSizeChanged();
 	void colorChanged();

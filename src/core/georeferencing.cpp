@@ -123,11 +123,18 @@ namespace
 	/**
 	 * List of substitutions for specifications which are known to be broken in Proj.4.
 	 */
-	std::vector< std::pair<QString, QString> > spec_substitutions {
-		// #542, S-JTSK (Greenwich) / Krovak East North
-		{ QString::fromLatin1("+init=epsg:5514"),
-		  QString::fromLatin1("+proj=krovak +lat_0=49.5 +lon_0=24.83333333333333 +alpha=30.28813972222222 +k=0.9999 +x_0=0 +y_0=0 "
-		                      "+ellps=bessel +towgs84=542.5,89.2,456.9,5.517,2.275,5.516,6.96 +pm=greenwich +units=m +no_defs") },
+	const char* spec_substitutions[][2] = {
+	    // #542, S-JTSK (Greenwich) / Krovak East North
+	    { "+init=epsg:5514", "+proj=krovak"
+	                         " +lat_0=49.5 +lon_0=24.83333333333333"
+	                         " +alpha=30.28813972222222 +k=0.9999"
+	                         " +x_0=0 +y_0=0"
+	                         " +ellps=bessel"
+	                         " +pm=greenwich"
+	                         " +towgs84=542.5,89.2,456.9,5.517,2.275,5.516,6.96"
+	                         " +units=m"
+	                         " +no_defs"
+	    },
 	};
 }
 
@@ -380,10 +387,10 @@ void Georeferencing::save(QXmlStreamWriter& xml) const
 		
 		if (!projected_crs_parameters.empty())
 		{
-			for (size_t i = 0; i < projected_crs_parameters.size(); ++i)
+			for (const auto& projected_crs_parameter : projected_crs_parameters)
 			{
 				XmlElementWriter parameter_element(xml, literal::parameter);
-				xml.writeCharacters(projected_crs_parameters[i]);
+				xml.writeCharacters(projected_crs_parameter);
 				Q_UNUSED(parameter_element); // Suppress compiler warnings
 			}
 		}
@@ -630,9 +637,9 @@ bool Georeferencing::setProjectedCRS(const QString& id, QString spec, std::vecto
 	
 	for (const auto& substitution : spec_substitutions)
 	{
-		if (substitution.first == spec)
+		if (QLatin1String(substitution[0]) == spec)
 		{
-			spec = substitution.second;
+			spec = QString::fromLatin1(substitution[1]);
 			break;
 		}
 	}

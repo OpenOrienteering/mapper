@@ -27,6 +27,7 @@
 #include <QSpinBox>
 #include <QTextDocument>
 
+#include "util/backports.h"
 #include "gui/util_gui.h"
 
 
@@ -106,8 +107,8 @@ QWidget* SpinBoxDelegate::createEditor(QWidget* parent, const QStyleOptionViewIt
 	// Commit each change immediately when returning to event loop
 	QSignalMapper* signal_mapper = new QSignalMapper(spinbox);
 	signal_mapper->setMapping(spinbox, spinbox);
-	connect(spinbox, SIGNAL(valueChanged(int)), signal_mapper, SLOT(map()), Qt::QueuedConnection);
-	connect(signal_mapper, SIGNAL(mapped(QWidget*)), this, SIGNAL(commitData(QWidget*)));
+	connect(spinbox, QOverload<int>::of(&QSpinBox::valueChanged), signal_mapper, QOverload<>::of(&QSignalMapper::map), Qt::QueuedConnection);
+	connect(signal_mapper, QOverload<QWidget*>::of(&QSignalMapper::mapped), this, &QItemDelegate::commitData);
 	
 	return spinbox;
 }
@@ -176,8 +177,8 @@ QWidget* PercentageDelegate::createEditor(QWidget* parent, const QStyleOptionVie
 	// Commit each change immediately when returning to event loop
 	QSignalMapper* signal_mapper = new QSignalMapper(spinbox);
 	signal_mapper->setMapping(spinbox, spinbox);
-	connect(spinbox, SIGNAL(valueChanged(int)), signal_mapper, SLOT(map()), Qt::QueuedConnection);
-	connect(signal_mapper, SIGNAL(mapped(QWidget*)), this, SIGNAL(commitData(QWidget*)));
+	connect(spinbox, QOverload<int>::of(&QSpinBox::valueChanged), signal_mapper, QOverload<>::of(&QSignalMapper::map), Qt::QueuedConnection);
+	connect(signal_mapper, QOverload<QWidget*>::of(&QSignalMapper::mapped), this, &QItemDelegate::commitData);
 	
 	return spinbox;
 }
@@ -223,7 +224,10 @@ void TextDocItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& o
 {
 	const QTextDocument* const text_doc = provider->textDoc(index);
 	if (!text_doc)
-		return QStyledItemDelegate::paint(painter, option, index);
+	{
+		QStyledItemDelegate::paint(painter, option, index);
+		return;
+	}
 	
 	QStyleOptionViewItem options = option;
 	initStyleOption(&options, index);

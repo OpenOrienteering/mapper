@@ -39,13 +39,13 @@ GPSTrackRecorder::GPSTrackRecorder(GPSDisplay* gps_display, TemplateTrack* targe
 	// Start with a new segment
 	target_template->getTrack().finishCurrentSegment();
 	
-	connect(gps_display, SIGNAL(latLonUpdated(double,double,double,float)), this, SLOT(newPosition(double,double,double,float)));
-	connect(gps_display, SIGNAL(positionUpdatesInterrupted()), this, SLOT(positionUpdatesInterrupted()));
-	connect(target_template->getMap(), SIGNAL(templateDeleted(int, const Template*)), this, SLOT(templateDeleted(int, const Template*)));
+	connect(gps_display, &GPSDisplay::latLonUpdated, this, &GPSTrackRecorder::newPosition);
+	connect(gps_display, &GPSDisplay::positionUpdatesInterrupted, this, &GPSTrackRecorder::positionUpdatesInterrupted);
+	connect(target_template->getMap(), &Map::templateDeleted, this, &GPSTrackRecorder::templateDeleted);
 	
 	if (draw_update_interval_milliseconds > 0)
 	{
-		connect(&draw_update_timer, SIGNAL(timeout()), this, SLOT(drawUpdate()));
+		connect(&draw_update_timer, &QTimer::timeout, this, &GPSTrackRecorder::drawUpdate);
 		draw_update_timer.start(draw_update_interval_milliseconds);
 	}
 }

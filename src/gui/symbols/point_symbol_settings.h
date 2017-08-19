@@ -41,7 +41,7 @@ Q_OBJECT
 public:
 	PointSymbolSettings(PointSymbol* symbol, SymbolSettingDialog* dialog);
 	
-	virtual void reset(Symbol* symbol);
+	void reset(Symbol* symbol) override;
 	
 public slots:
 	void tabChanged(int index);

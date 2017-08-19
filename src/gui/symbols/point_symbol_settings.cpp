@@ -46,7 +46,7 @@ PointSymbolSettings::PointSymbolSettings(PointSymbol* symbol, SymbolSettingDialo
   symbol(symbol)
 {
 	symbol_editor = new PointSymbolEditorWidget(dialog->getPreviewController(), symbol, 0, true);
-	connect(symbol_editor, SIGNAL(symbolEdited()), this, SIGNAL(propertiesModified()) );
+	connect(symbol_editor, &PointSymbolEditorWidget::symbolEdited, this, &SymbolPropertiesWidget::propertiesModified );
 	
 	layout = new QVBoxLayout();
 	layout->addWidget(symbol_editor);
@@ -55,7 +55,7 @@ PointSymbolSettings::PointSymbolSettings(PointSymbol* symbol, SymbolSettingDialo
 	point_tab->setLayout(layout);
 	addPropertiesGroup(tr("Point symbol"), point_tab);
 	
-	connect(this, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)));
+	connect(this, &QTabWidget::currentChanged, this, &PointSymbolSettings::tabChanged);
 }
 
 void PointSymbolSettings::reset(Symbol* symbol)
@@ -69,7 +69,7 @@ void PointSymbolSettings::reset(Symbol* symbol)
 	delete(symbol_editor);
 	
 	symbol_editor = new PointSymbolEditorWidget(dialog->getPreviewController(), this->symbol, 0, true);
-	connect(symbol_editor, SIGNAL(symbolEdited()), this, SIGNAL(propertiesModified()) );
+	connect(symbol_editor, &PointSymbolEditorWidget::symbolEdited, this, &SymbolPropertiesWidget::propertiesModified );
 	layout->addWidget(symbol_editor);
 }
 

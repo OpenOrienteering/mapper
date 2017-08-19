@@ -51,10 +51,10 @@ TemplateTrack::TemplateTrack(const QString& path, Map* map)
 	track_crs_spec = QString::fromLatin1("+proj=latlong +datum=WGS84");
 	
 	const Georeferencing& georef = map->getGeoreferencing();
-	connect(&georef, SIGNAL(projectionChanged()), this, SLOT(updateGeoreferencing()));
-	connect(&georef, SIGNAL(transformationChanged()), this, SLOT(updateGeoreferencing()));
-	connect(&georef, SIGNAL(stateChanged()), this, SLOT(updateGeoreferencing()));
-	connect(&georef, SIGNAL(declinationChanged()), this, SLOT(updateGeoreferencing()));
+	connect(&georef, &Georeferencing::projectionChanged, this, &TemplateTrack::updateGeoreferencing);
+	connect(&georef, &Georeferencing::transformationChanged, this, &TemplateTrack::updateGeoreferencing);
+	connect(&georef, &Georeferencing::stateChanged, this, &TemplateTrack::updateGeoreferencing);
+	connect(&georef, &Georeferencing::declinationChanged, this, &TemplateTrack::updateGeoreferencing);
 }
 
 TemplateTrack::~TemplateTrack()
@@ -224,7 +224,7 @@ void TemplateTrack::unloadTemplateFileImpl()
 	track.clear();
 }
 
-void TemplateTrack::drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, bool on_screen, float opacity) const
+void TemplateTrack::drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, float opacity) const
 {
 	Q_UNUSED(clip_rect);
 	Q_UNUSED(scale);
@@ -399,6 +399,7 @@ bool TemplateTrack::import(QWidget* dialog_parent)
 	DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(map);
 	MapPart* part = map->getCurrentPart();
 	std::vector< Object* > result;
+	// clazy:excludeall=reserve-candidates
 	
 	map->clearObjectSelection(false);
 	
@@ -458,8 +459,8 @@ bool TemplateTrack::import(QWidget* dialog_parent)
 		result.push_back(path);
 	}
 	
-	for (int i = 0; i < (int)result.size(); ++i) // keep as separate loop to get the correct (final) indices
-		undo_step->addObject(part->findObjectIndex(result[i]));
+	for (const auto& object : result) // keep as separate loop to get the correct (final) indices
+		undo_step->addObject(part->findObjectIndex(object));
 	
 	map->setObjectsDirty();
 	map->push(undo_step);

@@ -268,7 +268,7 @@ Symbol* Symbol::load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& sy
 			else
 			{
 				int dot = code.indexOf(QLatin1Char('.'), index+1);
-				int num = code.mid(index, (dot == -1) ? -1 : (dot - index)).toInt();
+				int num = code.midRef(index, (dot == -1) ? -1 : (dot - index)).toInt();
 				symbol->number[i] = num;
 				index = dot;
 				if (index != -1)
