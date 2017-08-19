@@ -95,7 +95,7 @@ void SymbolToolTip::showDescription()
 	{
 		description_label->show();
 		adjustSize();
-		adjustPosition();
+		adjustPosition(false);
 		description_shown = true;
 	}
 	
@@ -136,36 +136,54 @@ void SymbolToolTip::paintEvent(QPaintEvent* event)
 	painter.end();
 }
 
-void SymbolToolTip::adjustPosition()
+void SymbolToolTip::adjustPosition(bool mobile_mode)
 {
 	auto size = this->size();
 	auto desktop = QApplication::desktop()->screenGeometry(QCursor::pos());
 	
 	const int margin = 3;
-	const bool hasRoomToLeft  = (icon_rect.left()   - size.width()  - margin >= desktop.left());
-	const bool hasRoomToRight = (icon_rect.right()  + size.width()  + margin <= desktop.right());
-	const bool hasRoomAbove   = (icon_rect.top()    - size.height() - margin >= desktop.top());
-	const bool hasRoomBelow   = (icon_rect.bottom() + size.height() + margin <= desktop.bottom());
-	if (!hasRoomAbove && !hasRoomBelow && !hasRoomToLeft && !hasRoomToRight) {
+	bool has_room_to_left  = (icon_rect.left()   - size.width()  - margin >= desktop.left());
+	bool has_room_to_right = (icon_rect.right()  + size.width()  + margin <= desktop.right());
+	bool has_room_above    = (icon_rect.top()    - size.height() - margin >= desktop.top());
+	bool has_room_below    = (icon_rect.bottom() + size.height() + margin <= desktop.bottom());
+	if (!has_room_above && !has_room_below && !has_room_to_left && !has_room_to_right) {
 		return;
 	}
 	
+	if (mobile_mode)
+	{
+		// Change precedence.
+		if (has_room_above)
+		{
+			has_room_below = false;
+		}
+		else if (has_room_to_left)
+		{
+			has_room_below = false;
+			has_room_to_right = false;
+		}
+		else if (has_room_to_right)
+		{
+			has_room_below = false;
+		}
+	}
+		
 	int x = 0;
 	int y = 0;
 	
-	if (hasRoomBelow || hasRoomAbove) {
-		y = hasRoomBelow ? icon_rect.bottom() + margin : icon_rect.top() - size.height() - margin;
+	if (has_room_below || has_room_above)
+	{
+		y = has_room_below ? icon_rect.bottom() + margin : icon_rect.top() - size.height() - margin;
 		x = qMin(qMax(desktop.left() + margin, icon_rect.center().x() - size.width() / 2), desktop.right() - size.width() - margin);
 	} else {
-		Q_ASSERT(hasRoomToLeft || hasRoomToRight);
-		x = hasRoomToRight ? icon_rect.right() + margin : icon_rect.left() - size.width() - margin;
+		x = has_room_to_right ? icon_rect.right() + margin : icon_rect.left() - size.width() - margin;
 		y = qMin(qMax(desktop.top() + margin, icon_rect.center().y() - size.height() / 2), desktop.bottom() - size.height() - margin);
 	}
 	
 	move(QPoint(x, y));
 }
 
-void SymbolToolTip::scheduleShow(const Symbol* symbol, const Map* map, QRect icon_rect)
+void SymbolToolTip::scheduleShow(const Symbol* symbol, const Map* map, QRect icon_rect, bool mobile_mode)
 {
 	this->icon_rect = icon_rect;
 	this->symbol = symbol;
@@ -192,7 +210,7 @@ void SymbolToolTip::scheduleShow(const Symbol* symbol, const Map* map, QRect ico
 	shortcut->setEnabled(isVisible());
 	
 	adjustSize();
-	adjustPosition();
+	adjustPosition(mobile_mode);
 	
 	static const int delay = 150;
 	tooltip_timer.start(delay);

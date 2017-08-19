@@ -432,7 +432,7 @@ void SymbolRenderWidget::hover(QPoint pos)
 			if (tooltip->getSymbol() != symbol)
 			{
 				const QRect icon_rect(mapToGlobal(iconPosition(hover_symbol_index)), QSize(icon_size, icon_size));
-				tooltip->scheduleShow(symbol, map, icon_rect);
+				tooltip->scheduleShow(symbol, map, icon_rect, mobile_mode);
 			}
 		}
 		else
