@@ -77,6 +77,9 @@ public:
 	/** Assignment */
 	void operator=(const Matrix& other)
 	{
+		if (this == &other)
+			return *this;
+		
 		delete[] d;
 		n = other.n;
 		m = other.m;

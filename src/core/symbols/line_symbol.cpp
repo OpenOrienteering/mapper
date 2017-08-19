@@ -2007,26 +2007,22 @@ bool LineSymbol::equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensit
 		}
 	}
 
-	if ((!start_symbol && line->start_symbol) ||
-	    (start_symbol && !line->start_symbol))
+	if (bool(start_symbol) != bool(line->start_symbol))
 		return false;
 	if (start_symbol && !start_symbol->equals(line->start_symbol))
 		return false;
 	
-	if ((!mid_symbol && line->mid_symbol) ||
-	    (mid_symbol && !line->mid_symbol))
+	if (bool(mid_symbol) != bool(line->mid_symbol))
 		return false;
 	if (mid_symbol && !mid_symbol->equals(line->mid_symbol))
 		return false;
 	
-	if ((!end_symbol && line->end_symbol) ||
-	    (end_symbol && !line->end_symbol))
+	if (bool(end_symbol) != bool(line->end_symbol))
 		return false;
 	if (end_symbol && !end_symbol->equals(line->end_symbol))
 		return false;
 	
-	if ((!dash_symbol && line->dash_symbol) ||
-	    (dash_symbol && !line->dash_symbol))
+	if (bool(dash_symbol) != bool(line->dash_symbol))
 		return false;
 	if (dash_symbol && !dash_symbol->equals(line->dash_symbol))
 		return false;

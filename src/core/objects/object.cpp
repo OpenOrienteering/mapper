@@ -125,8 +125,7 @@ bool Object::equals(const Object* other, bool compare_symbol) const
 		return false;
 	if (compare_symbol)
 	{
-		if ((!symbol && other->symbol) ||
-			(symbol && !other->symbol))
+		if (bool(symbol) != bool(other->symbol))
 			return false;
 		if (symbol && !symbol->equals(other->symbol))
 			return false;
