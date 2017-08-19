@@ -201,6 +201,14 @@ namespace
 		return splitter;
 	}
 	
+	template<class T>
+	bool containsPathObject(const T& container)
+	{
+		return std::any_of(begin(container), end(container), [](const auto object) {
+			return object->getType() == Object::Path;
+		});
+	}
+	
 } // namespace
 
 
@@ -302,8 +310,8 @@ MapEditorController::~MapEditorController()
 	delete mappart_merge_act;
 	delete mappart_merge_menu;
 	delete mappart_move_menu;
-	for (QHash<Template*, TemplatePositionDockWidget*>::iterator it = template_position_widgets.begin(); it != template_position_widgets.end(); ++it)
-		delete it.value();
+	for (TemplatePositionDockWidget* widget : qAsConst(template_position_widgets))
+		delete widget;
 	delete gps_display;
 	delete gps_track_recorder;
 	delete compass_display;
@@ -1582,9 +1590,9 @@ void MapEditorController::copy()
 	
 	std::vector<bool> symbol_filter;
 	symbol_filter.assign(map->getNumSymbols(), false);
-	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(), end = map->selectedObjectsEnd(); it != end; ++it)
+	for (const auto object : map->selectedObjects())
 	{
-		int symbol_index = map->findSymbolIndex((*it)->getSymbol());
+		int symbol_index = map->findSymbolIndex(object->getSymbol());
 		if (symbol_index >= 0)
 			symbol_filter[symbol_index] = true;
 	}
@@ -1597,9 +1605,9 @@ void MapEditorController::copy()
 	copy_map.importMap(map, Map::MinimalSymbolImport, window, &symbol_filter, -1, true, &symbol_map);
 	
 	// Duplicate all selected objects into copy map
-	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(), end = map->selectedObjectsEnd(); it != end; ++it)
+	for (const auto object : map->selectedObjects())
 	{
-		Object* new_object = (*it)->duplicate();
+		auto new_object = object->duplicate();
 		if (symbol_map.contains(new_object->getSymbol()))
 			new_object->setSymbol(symbol_map.value(new_object->getSymbol()), true);
 		
@@ -2119,10 +2127,9 @@ void MapEditorController::objectSelectionChanged()
 	{
 		bool uniform_symbol_selected = true;
 		const Symbol* uniform_symbol = nullptr;
-		Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
-		for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
+		for (const auto object : map->selectedObjects())
 		{
-			const Symbol* symbol = (*it)->getSymbol();
+			const auto symbol = object->getSymbol();
 			if (!uniform_symbol)
 			{
 				uniform_symbol = symbol;
@@ -2181,10 +2188,9 @@ void MapEditorController::updateObjectDependentActions()
 	
 	if (!editing_in_progress)
 	{
-		Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
-		for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
+		for (const auto object : map->selectedObjects())
 		{
-			const Symbol* symbol = (*it)->getSymbol();
+			const auto symbol = object->getSymbol();
 			int symbol_index = map->findSymbolIndex(symbol);
 			if (symbol_index >= 0 && symbol_index < (int)symbols_in_selection.size())
 				symbols_in_selection[symbol_index] = true;
@@ -2225,7 +2231,7 @@ void MapEditorController::updateObjectDependentActions()
 				if (contained_types & Symbol::Area)
 				{
 					have_area = true;
-					have_area_with_holes |= (*it)->asPath()->parts().size() > 1;
+					have_area_with_holes |= object->asPath()->parts().size() > 1;
 				}
 			}
 		}
@@ -2319,21 +2325,10 @@ void MapEditorController::updateObjectDependentActions()
 void MapEditorController::updateSymbolAndObjectDependentActions()
 {
 	const Symbol* single_symbol = activeSymbol();
-	bool path_object_among_selection = false;
 	bool single_symbol_compatible = false;
 	bool single_symbol_different  = false;
 	if (!editing_in_progress)
 	{
-		Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
-		for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
-		{
-			if ((*it)->getType() == Object::Path)
-			{
-				path_object_among_selection = true;
-				break;
-			}
-		}
-		
 		map->getSelectionToSymbolCompatibility(single_symbol, single_symbol_compatible, single_symbol_different);
 	}
 	
@@ -2341,10 +2336,8 @@ void MapEditorController::updateSymbolAndObjectDependentActions()
 	switch_symbol_act->setStatusTip(tr("Switches the symbol of the selected objects to the selected symbol.") + (switch_symbol_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select at least one object and a fitting, different symbol to activate this tool."))));
 	fill_border_act->setEnabled(single_symbol_compatible && single_symbol_different);
 	fill_border_act->setStatusTip(tr("Fill the selected lines or create a border for the selected areas.") + (fill_border_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select at least one object and a fitting, different symbol to activate this tool."))));
-	distribute_points_act->setEnabled(
-		single_symbol
-		&& single_symbol->getType() == Symbol::Point
-		&& path_object_among_selection);
+	distribute_points_act->setEnabled(single_symbol && single_symbol->getType() == Symbol::Point
+	                                  && containsPathObject(map->selectedObjects()));
 	distribute_points_act->setStatusTip(tr("Places evenly spaced point objects along an existing path object") + (distribute_points_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select at least one path object and a single point symbol to activate this tool."))));
 }
 
@@ -2436,13 +2429,14 @@ void MapEditorController::deleteClicked()
 
 void MapEditorController::duplicateClicked()
 {
+	Q_ASSERT(!map->selectedObjects().empty());
+	
 	std::vector<Object*> new_objects;
 	new_objects.reserve(map->getNumSelectedObjects());
 	
-	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
-	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
+	for (const auto object : map->selectedObjects())
 	{
-		Object* duplicate = (*it)->duplicate();
+		Object* duplicate = object->duplicate();
 		map->addObject(duplicate);
 		new_objects.push_back(duplicate);
 	}
@@ -2451,10 +2445,10 @@ void MapEditorController::duplicateClicked()
 	MapPart* part = map->getCurrentPart();
 	
 	map->clearObjectSelection(false);
-	for (int i = 0; i < (int)new_objects.size(); ++i)
+	for (const auto object : new_objects)
 	{
-		undo_step->addObject(part->findObjectIndex(new_objects[i]));
-		map->addObjectToSelection(new_objects[i], i == (int)new_objects.size() - 1);
+		undo_step->addObject(part->findObjectIndex(object));
+		map->addObjectToSelection(object, object == new_objects.back());
 	}
 	
 	map->setObjectsDirty();
@@ -2495,11 +2489,8 @@ void MapEditorController::switchSymbolClicked()
 		switch_step = new SwitchSymbolUndoStep(map);
 	}
 	
-	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
-	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
+	for (const auto object : map->selectedObjects())
 	{
-		Object* object = *it;
-		
 		if (close_paths)
 		{
 			replace_step->addObject(part->findObjectIndex(object), object->duplicate());
@@ -2604,10 +2595,8 @@ void MapEditorController::fillBorderClicked()
 	DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(map);
 	MapPart* part = map->getCurrentPart();
 	
-	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
-	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
+	for (const auto object : map->selectedObjects())
 	{
-		Object* object = *it;
 		if (split_up && object->getType() == Object::Path)
 		{
 			PathObject* path_object = object->asPath();
@@ -2752,16 +2741,15 @@ void MapEditorController::switchDashesClicked()
 	SwitchDashesUndoStep* undo_step = new SwitchDashesUndoStep(map);
 	MapPart* part = map->getCurrentPart();
 	
-	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
-	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
+	for (const auto object : map->selectedObjects())
 	{
-		if ((*it)->getSymbol()->getContainedTypes() & Symbol::Line)
+		if (object->getSymbol()->getContainedTypes() & Symbol::Line)
 		{
-			PathObject* path = reinterpret_cast<PathObject*>(*it);
+			PathObject* path = reinterpret_cast<PathObject*>(object);
 			path->reverse();
-			(*it)->update();
+			object->update();
 			
-			undo_step->addObject(part->findObjectIndex(*it));
+			undo_step->addObject(part->findObjectIndex(object));
 		}
 	}
 	
@@ -2821,13 +2809,12 @@ void MapEditorController::connectPathsClicked()
 	// Collect all objects in question
 	objects.reserve(map->getNumSelectedObjects());
 	undo_objects.reserve(map->getNumSelectedObjects());
-	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
-	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
+	for (const auto object : map->selectedObjects())
 	{
-		if ((*it)->getSymbol()->getContainedTypes() & Symbol::Line && (*it)->getType() == Object::Path)
+		if (object->getSymbol()->getContainedTypes() & Symbol::Line && object->getType() == Object::Path)
 		{
-			(*it)->update();
-			objects.push_back(*it);
+			object->update();
+			objects.push_back(object);
 			undo_objects.push_back(nullptr);
 		}
 	}
@@ -3084,13 +3071,12 @@ void MapEditorController::convertToCurvesClicked()
 	ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(map);
 	MapPart* part = map->getCurrentPart();
 	
-	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
-	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
+	for (const auto object : map->selectedObjects())
 	{
-		if ((*it)->getType() != Object::Path)
+		if (object->getType() != Object::Path)
 			continue;
 		
-		PathObject* path = (*it)->asPath();
+		PathObject* path = object->asPath();
 		PathObject* undo_duplicate = nullptr;
 		if (path->convertToCurves(&undo_duplicate))
 		{
@@ -3120,13 +3106,12 @@ void MapEditorController::simplifyPathClicked()
 	ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(map);
 	MapPart* part = map->getCurrentPart();
 	
-	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
-	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
+	for (const auto object : map->selectedObjects())
 	{
-		if ((*it)->getType() != Object::Path)
+		if (object->getType() != Object::Path)
 			continue;
 		
-		PathObject* path = (*it)->asPath();
+		PathObject* path = object->asPath();
 		PathObject* undo_duplicate = nullptr;
 		if (path->simplify(&undo_duplicate, threshold))
 			undo_step->addObject(part->findObjectIndex(path), undo_duplicate);
@@ -3164,13 +3149,10 @@ void MapEditorController::distributePointsClicked()
 	
 	// Create points along paths
 	std::vector<PointObject*> created_objects;
-	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
-	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
+	for (const auto object : map->selectedObjects())
 	{
-		if ((*it)->getType() != Object::Path)
-			continue;
-		
-		DistributePointsTool::execute((*it)->asPath(), point, settings, created_objects);
+		if (object->getType() == Object::Path)
+			DistributePointsTool::execute(object->asPath(), point, settings, created_objects);
 	}
 	if (created_objects.empty())
 		return;

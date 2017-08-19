@@ -310,9 +310,9 @@ MapCoord SnappingToolHelper::snapToObject(MapCoordF position, MapWidget* widget,
 		map->findAllObjectsAt(position, snap_distance, true, false, false, true, objects);
 		
 		// Find closest snap spot from map objects
-		for (SelectionInfoVector::const_iterator it = objects.begin(), end = objects.end(); it != end; ++it)
+		for (const auto& info : objects)
 		{
-			Object* object = it->second;
+			Object* object = info.second;
 			if (object == exclude_object)
 				continue;
 			

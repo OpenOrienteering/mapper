@@ -37,6 +37,7 @@
 #include "fileformats/xml_file_format.h"
 #include "templates/template.h"
 #include "undo/undo_manager.h"
+#include "util/backports.h"
 
 
 #ifdef QT_PRINTSUPPORT_LIB
@@ -228,9 +229,9 @@ namespace
 			error = QString::fromLatin1("The first selected object differs.");
 			return false;
 		}
-		for (Map::ObjectSelection::const_iterator it = a.selectedObjectsBegin(), end = a.selectedObjectsEnd(); it != end; ++it)
+		for (auto object_index : qAsConst(a.selectedObjects()))
 		{
-			if (!b.isObjectSelected(b.getCurrentPart()->getObject(a.getCurrentPart()->findObjectIndex(*it))))
+			if (!b.isObjectSelected(b.getCurrentPart()->getObject(a.getCurrentPart()->findObjectIndex(object_index))))
 			{
 				error = QString::fromLatin1("The selected objects differ.");
 				return false;

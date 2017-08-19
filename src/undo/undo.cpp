@@ -167,8 +167,9 @@ UndoStep* CombinedUndoStep::undo()
 {
 	CombinedUndoStep* undo_step = new CombinedUndoStep(map);
 	undo_step->steps.reserve(steps.size());
-	for (StepList::reverse_iterator step = steps.rbegin(), end = steps.rend(); step != end; ++step)
-		undo_step->push((*step)->undo());
+	std::for_each(rbegin(steps), rend(steps), [undo_step](auto step) {
+		undo_step->push(step->undo());
+	});
 	return undo_step;
 }
 

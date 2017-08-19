@@ -544,8 +544,8 @@ int EditPointTool::updateDirtyRectImpl(QRectF& rect)
 	// Control points
 	if (show_object_points)
 	{
-		for (Map::ObjectSelection::const_iterator it = map()->selectedObjectsBegin(), end = map()->selectedObjectsEnd(); it != end; ++it)
-			(*it)->includeControlPointsRect(rect);
+		for (auto object : map()->selectedObjects())
+			object->includeControlPointsRect(rect);
 	}
 	
 	// Text selection
