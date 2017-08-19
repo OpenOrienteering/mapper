@@ -111,6 +111,7 @@
 #include "gui/georeferencing_dialog.h"
 #include "gui/main_window.h"
 #include "gui/print_widget.h"
+#include "gui/text_browser_dialog.h"
 #include "gui/map/map_dialog_rotate.h"
 #include "gui/map/map_dialog_scale.h"
 #include "gui/map/map_editor_activity.h"
@@ -1270,6 +1271,43 @@ void MapEditorController::createMobileGUI()
 	mobile_symbol_selector_action = new QAction(tr("Select symbol"), this);
 	connect(mobile_symbol_selector_action, SIGNAL(triggered()), this, SLOT(mobileSymbolSelectorClicked()));
 	
+	mobile_symbol_button_menu = new QMenu(window);
+	mobile_symbol_button_menu->addAction(QString{}); // reserved for symbol name
+	auto description_action = mobile_symbol_button_menu->addAction(QApplication::translate("SymbolPropertiesWidget", "Description"));
+	connect(description_action, &QAction::triggered, [this]() {
+		auto symbol = symbol_widget->getSingleSelectedSymbol();
+		auto document = QString{ symbol->getNumberAsString() + QLatin1Char(' ')
+		                         + QLatin1String("<b>") + symbol->getName() + QLatin1String("</b>\n\n")
+		                         + symbol->getDescription() };
+		// Cf. SymbolToolTip::scheduleShow
+		document.replace(QLatin1Char('\n'), QStringLiteral("<br>"));
+		document.remove(QLatin1Char('\r'));
+		TextBrowserDialog description_dialog(document, window);
+		description_dialog.exec();
+	});
+	mobile_symbol_button_menu->addSeparator();
+	auto hide_symbol_action = mobile_symbol_button_menu->addAction(QApplication::translate("SymbolRenderWidget", "Hide objects with this symbol"));
+	hide_symbol_action->setCheckable(true);
+	connect(hide_symbol_action, &QAction::triggered, [this](bool value) {
+		auto symbol = symbol_widget->getSingleSelectedSymbol();
+		symbol->setHidden(value);
+		if (!value && map->removeSymbolFromSelection(symbol, false))
+		    map->emitSelectionChanged();
+		map->updateAllMapWidgets();
+		map->setSymbolsDirty();
+		selectedSymbolsChanged();
+	});
+	auto protected_symbol_action = mobile_symbol_button_menu->addAction(QApplication::translate("SymbolRenderWidget", "Protect objects with this symbol"));
+	protected_symbol_action->setCheckable(true);
+	connect(protected_symbol_action, &QAction::triggered, [this](bool value) {
+		auto symbol = symbol_widget->getSingleSelectedSymbol();
+		symbol->setProtected(value);
+		if (!value && map->removeSymbolFromSelection(symbol, false))
+		    map->emitSelectionChanged();
+		map->setSymbolsDirty();
+		selectedSymbolsChanged();
+	});
+	
 	QAction* hide_top_bar_action = new QAction(QIcon(QString::fromLatin1(":/images/arrow-thin-upleft.png")), tr("Hide top bar"), this);
  	connect(hide_top_bar_action, SIGNAL(triggered()), this, SLOT(hideTopActionBar()));
 	
@@ -1328,6 +1366,8 @@ void MapEditorController::createMobileGUI()
 	
 	// Right side
 	bottom_action_bar->addActionAtEnd(mobile_symbol_selector_action, 0, 1, 2, 2);
+	auto button = bottom_action_bar->getButtonForAction(mobile_symbol_selector_action);
+	button->setPopupMode(QToolButton::DelayedPopup);
 	
 	col = 2;
 	bottom_action_bar->addActionAtEnd(draw_point_act, 0, col);
@@ -2062,6 +2102,8 @@ void MapEditorController::selectedSymbolsChanged()
 	
 	if (mobile_mode)
 	{
+		auto symbol_button = bottom_action_bar->getButtonForAction(mobile_symbol_selector_action);
+		        
 		// (Re-)create the mobile_symbol_selector_action icon
 		QSize icon_size = bottom_action_bar->getIconSize(2, 2);
 		QPixmap pixmap(icon_size);
@@ -2076,12 +2118,23 @@ void MapEditorController::selectedSymbolsChanged()
 				tr("No\nsymbol\nselected", "Keep it short. Should not be much longer per line than the longest word in the original.") :
 				tr("Multiple\nsymbols\nselected", "Keep it short. Should not be much longer per line than the longest word in the original.");
 			painter.drawText(pixmap.rect(), Qt::AlignCenter, text);
+			
+			symbol_button->setMenu(nullptr);
 		}
 		else //if (symbol_widget->getNumSelectedSymbols() == 1)
 		{
 			QImage image = symbol->createIcon(map, qMin(icon_size.width(), icon_size.height()), Util::isAntialiasingRequired(), 0, 4);
 			QPainter painter(&pixmap);
 			painter.drawImage(pixmap.rect(), image);
+			
+			symbol_button->setMenu(mobile_symbol_button_menu);
+			const auto actions = mobile_symbol_button_menu->actions();
+			int i = 0;
+			actions[i]->setText(symbol->getNumberAsString() + QLatin1Char(' ') + symbol->getPlainTextName());
+			actions[++i]->setVisible(!symbol->getDescription().isEmpty());
+			++i;  // separator
+			actions[++i]->setChecked(symbol->isHidden());
+			actions[++i]->setChecked(symbol->isProtected());
 		}
 		mobile_symbol_selector_action->setIcon(QIcon(pixmap));
 	}

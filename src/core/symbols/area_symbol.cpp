@@ -701,7 +701,7 @@ void AreaSymbol::createHatchingRenderables(
 			{
 				const AreaSymbol::FillPattern& orig_pattern = orig_symbol->getFillPattern(0);
 				pattern.angle = orig_pattern.angle;
-				pattern.flags = orig_pattern.flags;
+				pattern.flags = orig_pattern.flags & ~FillPattern::AlternativeToClipping;
 				if (orig_pattern.type == AreaSymbol::FillPattern::LinePattern)
 				{
 					pattern.line_spacing = std::max(1000, orig_pattern.line_spacing);

@@ -620,6 +620,8 @@ void SymbolRenderWidget::mouseMoveEvent(QMouseEvent* event)
 	{
 		if (event->buttons() & Qt::LeftButton)
 		{
+			hover(event->pos());
+			
 			if ((event->pos() - last_click_pos).manhattanLength() < Settings::getInstance().getStartDragDistancePx())
 				return;
 			dragging = sort_manual_action->isChecked();
@@ -660,7 +662,10 @@ void SymbolRenderWidget::mousePressEvent(QMouseEvent* event)
 	
 	if (mobile_mode)
 	{
+		tooltip->hide();
+		
 		last_click_pos = event->pos();
+		hover(event->pos());
 		return;
 	}
 	
@@ -732,6 +737,10 @@ void SymbolRenderWidget::mouseReleaseEvent(QMouseEvent* event)
 			dragging = false;
 			return;
 		}
+		
+		hover(event->pos());
+		if (tooltip->isVisible())
+			return;
 		
 		updateSingleIcon(current_symbol_index);
 		current_symbol_index = symbolIndexAt(event->pos());

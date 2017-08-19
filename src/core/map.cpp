@@ -44,6 +44,7 @@
 #include <QPointF>
 #include <QSaveFile>
 #include <QStringList>
+#include <QTextDocument>
 #include <QTranslator>
 
 #include "core/georeferencing.h"
@@ -65,6 +66,7 @@
 #include "fileformats/file_format_registry.h"
 #include "fileformats/file_import_export.h"
 #include "gui/map/map_widget.h"
+#include "gui/text_browser_dialog.h"
 #include "templates/template.h"
 #include "undo/object_undo.h"
 #include "undo/undo_manager.h"
@@ -111,6 +113,26 @@ struct MapColorSetMergeItem
 /** The mapping of all colors in a source MapColorSet
  *  to colors in a destination MapColorSet. */
 typedef std::vector<MapColorSetMergeItem> MapColorSetMergeList;
+
+
+/**
+ * Shows a message box for a list of unformatted messages.
+ */
+void showMessageBox(QWidget* parent, const QString& title, const QString& headline, const std::vector<QString>& messages)
+{
+	QString document;
+	if (!headline.isEmpty())
+		document += QLatin1String("<p><b>") + headline + QLatin1String("</b></p>");
+	for (const auto& message : messages)
+		document += Qt::convertFromPlainText(message, Qt::WhiteSpaceNormal);
+	
+	TextBrowserDialog dialog(document, parent);
+	dialog.setWindowTitle(title);
+	dialog.setWindowModality(Qt::WindowModal);
+	dialog.exec();
+	// Let Android update the screen.
+	qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
+}
 
 } // namespace
 
@@ -689,15 +711,10 @@ bool Map::exportTo(const QString& path, MapView* view, const FileFormat* format)
 	}
 	else if (!exporter->warnings().empty())
 	{
-		QString warnings;
-		for (std::vector<QString>::const_iterator it = exporter->warnings().begin(); it != exporter->warnings().end(); ++it) {
-			if (!warnings.isEmpty())
-				warnings += QLatin1String("\n");
-			warnings += *it;
-		}
-		QMessageBox msgBox(QMessageBox::Warning, tr("Warning"), tr("The map export generated warnings."), QMessageBox::Ok);
-		msgBox.setDetailedText(warnings);
-		msgBox.exec();
+		showMessageBox(nullptr,
+		               tr("Warning"),
+		               tr("The map export generated warnings."),
+		               exporter->warnings() );
 	}
 	
 	return success;
@@ -756,21 +773,10 @@ bool Map::loadFrom(const QString& path, QWidget* dialog_parent, MapView* view, b
 				// Display any warnings.
 				if (!importer->warnings().empty() && show_error_messages)
 				{
-					QString warnings;
-					for (std::vector<QString>::const_iterator it = importer->warnings().begin(); it != importer->warnings().end(); ++it) {
-						if (!warnings.isEmpty())
-							warnings += QLatin1String("\n");
-						warnings += *it;
-					}
-					QMessageBox msgBox(
-					  QMessageBox::Warning,
-					  tr("Warning"),
-					  tr("The map import generated warnings."),
-					  QMessageBox::Ok,
-					  dialog_parent
-					);
-					msgBox.setDetailedText(warnings);
-					msgBox.exec();
+					showMessageBox(nullptr,
+					               tr("Warning"),
+					               tr("The map import generated warnings."),
+					               importer->warnings() );
 				}
 
 				import_complete = true;

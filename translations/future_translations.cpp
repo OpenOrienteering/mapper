@@ -26,8 +26,5 @@
 
 auto future_translations =
 {
-    //: To replace existing translation which uses "symbol(s)".
-	//SymbolRenderWidget::tr("Scale symbols"),
-    
     QString {},
 };

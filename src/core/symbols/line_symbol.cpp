@@ -204,6 +204,7 @@ LineSymbol::LineSymbol() noexcept
 	mid_symbols_per_spot = 1;
 	mid_symbol_distance = 0;
 	suppress_dash_symbol_at_ends = false;
+	scale_dash_symbol = true;
 	
 	// Border lines
 	have_border_lines = false;
@@ -254,6 +255,7 @@ Symbol* LineSymbol::duplicate(const MapColorMap* color_map) const
 	new_line->mid_symbols_per_spot = mid_symbols_per_spot;
 	new_line->mid_symbol_distance = mid_symbol_distance;
 	new_line->suppress_dash_symbol_at_ends = suppress_dash_symbol_at_ends;
+	new_line->scale_dash_symbol = scale_dash_symbol;
 	new_line->have_border_lines = have_border_lines;
 	new_line->border.assign(border, color_map);
 	new_line->right_border.assign(right_border, color_map);
@@ -1317,10 +1319,11 @@ void LineSymbol::createDashSymbolRenderables(
 	{
 		if (flags[i].isDashPoint())
 		{
-			auto params = path.calculateTangentScaling(i);
+			const auto params = path.calculateTangentScaling(i);
 			//params.first.perpRight();
-			params.second = qMin(params.second, 2.0 * LineSymbol::miterLimit());
-			dash_symbol->createRenderablesScaled(coords[i], params.first.angle(), output, params.second);
+			auto rotation = dash_symbol->isRotatable() ? params.first.angle() : 0.0;
+			auto scale = scale_dash_symbol ? qMin(params.second, 2.0 * LineSymbol::miterLimit()) : 1.0;
+			dash_symbol->createRenderablesScaled(coords[i], rotation, output, scale);
 		}
 	}
 }
@@ -1821,6 +1824,8 @@ void LineSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 	xml.writeAttribute(QString::fromLatin1("mid_symbol_distance"), QString::number(mid_symbol_distance));
 	if (suppress_dash_symbol_at_ends)
 		xml.writeAttribute(QString::fromLatin1("suppress_dash_symbol_at_ends"), QString::fromLatin1("true"));
+	if (!scale_dash_symbol)
+		xml.writeAttribute(QString::fromLatin1("scale_dash_symbol"), QString::fromLatin1("false"));
 	
 	if (start_symbol)
 	{
@@ -1893,6 +1898,7 @@ bool LineSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionar
 	mid_symbols_per_spot = attributes.value(QLatin1String("mid_symbols_per_spot")).toInt();
 	mid_symbol_distance = attributes.value(QLatin1String("mid_symbol_distance")).toInt();
 	suppress_dash_symbol_at_ends = (attributes.value(QLatin1String("suppress_dash_symbol_at_ends")) == QLatin1String("true"));
+	scale_dash_symbol = (attributes.value(QLatin1String("scale_dash_symbol")) != QLatin1String("false"));
 	
 	have_border_lines = false;
 	while (xml.readNextStartElement())
@@ -2025,6 +2031,8 @@ bool LineSymbol::equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensit
 	if (dash_symbol && !dash_symbol->equals(line->dash_symbol))
 		return false;
 	if (suppress_dash_symbol_at_ends != line->suppress_dash_symbol_at_ends)
+		return false;
+	if (scale_dash_symbol != line->scale_dash_symbol)
 		return false;
 	
 	if (mid_symbol)

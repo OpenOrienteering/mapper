@@ -45,8 +45,8 @@
 
 // ### XMLFileFormat definition ###
 
-const int XMLFileFormat::minimum_version = 2;
-const int XMLFileFormat::current_version = 7;
+constexpr int XMLFileFormat::minimum_version = 2;
+constexpr int XMLFileFormat::current_version = 7;
 
 int XMLFileFormat::active_version = 5; // updated by XMLFileExporter::doExport()
 
@@ -167,6 +167,7 @@ void XMLFileExporter::doExport()
 	if (option(QString::fromLatin1("autoFormatting")).toBool())
 		xml.setAutoFormatting(true);
 	
+#ifdef MAPPER_ENABLE_COMPATIBILITY
 	int current_version = XMLFileFormat::current_version;
 	bool retain_compatibility = Settings::getInstance().getSetting(Settings::General_RetainCompatiblity).toBool();
 	XMLFileFormat::active_version = retain_compatibility ? 5 : current_version;
@@ -175,6 +176,9 @@ void XMLFileExporter::doExport()
 	{
 		throw FileFormatException(tr("Older versions of Mapper do not support multiple map parts. To save the map in compatibility mode, you must first merge all map parts."));
 	}
+#else
+	XMLFileFormat::active_version = XMLFileFormat::current_version;
+#endif
 	
 	xml.writeDefaultNamespace(mapper_namespace);
 	xml.writeStartDocument();

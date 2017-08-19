@@ -268,6 +268,11 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	row++; col = 0;
 	layout->addWidget(supress_dash_symbol_check, row, col, 1, -1);
 	
+	scale_dash_symbol_check = new QCheckBox(tr("Scale the dash symbol at corners"));
+	scale_dash_symbol_check->setChecked(symbol->getScaleDashSymbol());
+	row++; col = 0;
+	layout->addWidget(scale_dash_symbol_check, row, col, 1, -1);
+	
 	row++;
 	layout->setRowStretch(row, 1);
 	
@@ -318,6 +323,7 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	connect(border_check, SIGNAL(clicked(bool)), this, SLOT(borderCheckClicked(bool)));
 	connect(different_borders_check, SIGNAL(clicked(bool)), this, SLOT(differentBordersClicked(bool)));
 	connect(supress_dash_symbol_check, SIGNAL(clicked(bool)), this, SLOT(suppressDashSymbolClicked(bool)));
+	connect(scale_dash_symbol_check, &QCheckBox::clicked, this, &LineSymbolSettings::scaleDashSymbolClicked);
 }
 
 LineSymbolSettings::~LineSymbolSettings()
@@ -499,6 +505,12 @@ void LineSymbolSettings::borderChanged()
 void LineSymbolSettings::suppressDashSymbolClicked(bool checked)
 {
 	symbol->suppress_dash_symbol_at_ends = checked;
+	emit propertiesModified();
+}
+
+void LineSymbolSettings::scaleDashSymbolClicked(bool checked)
+{
+	symbol->setScaleDashSymbol(checked);
 	emit propertiesModified();
 }
 

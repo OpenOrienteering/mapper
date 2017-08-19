@@ -363,6 +363,7 @@ bool CutTool::startCuttingArea(const ObjectPathCoord& point)
 	});
 	connect(path_tool, &DrawLineAndAreaTool::pathAborted, this, &CutTool::abortCuttingArea);
 	connect(path_tool, &DrawLineAndAreaTool::pathFinished, this, &CutTool::finishCuttingArea);
+	path_tool->init();
 	
 	QMouseEvent event { QEvent::MouseButtonPress, cur_map_widget->mapToViewport(point.pos), Qt::LeftButton, QGuiApplication::mouseButtons(), active_modifiers };
 	path_tool->mousePressEvent(&event, point.pos, cur_map_widget);

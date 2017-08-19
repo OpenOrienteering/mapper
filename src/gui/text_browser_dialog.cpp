@@ -32,9 +32,9 @@
 #include "util/backports.h"
 
 
-TextBrowserDialog::TextBrowserDialog(const QUrl& initial_url, QWidget* parent)
- : QDialog(parent)
- , text_browser(new TextBrowser())
+TextBrowserDialog::TextBrowserDialog(QWidget* parent)
+: QDialog(parent)
+, text_browser(new TextBrowser())
 {
 	if (parent)
 	{
@@ -56,6 +56,7 @@ TextBrowserDialog::TextBrowserDialog(const QUrl& initial_url, QWidget* parent)
 	buttons_layout->setContentsMargins(left, top, right, bottom);
 	
 	QPushButton* back_button  = new QPushButton(QIcon(QStringLiteral(":/images/arrow-left.png")), QApplication::translate("QFileDialog", "Back"));
+	back_button->setEnabled(false);
 	buttons_layout->addWidget(back_button);
 	
 	buttons_layout->addStretch(1);
@@ -73,9 +74,6 @@ TextBrowserDialog::TextBrowserDialog(const QUrl& initial_url, QWidget* parent)
 	connect(back_button,  &QPushButton::clicked, text_browser, &QTextBrowser::backward);
 	connect(close_button, &QPushButton::clicked, this, &TextBrowserDialog::accept);
 	
-	text_browser->setSource(initial_url);
-	text_browser->document()->adjustSize();  // needed for sizeHint()
-	
 #if defined(Q_OS_ANDROID)
 	QScroller::grabGesture(text_browser->viewport(), QScroller::TouchGesture);
 	// Disable selection, so that it doesn't interfere with scrolling
@@ -88,6 +86,27 @@ TextBrowserDialog::TextBrowserDialog(const QUrl& initial_url, QWidget* parent)
                    | Qt::WindowMaximized);
 #endif
 }
+
+
+TextBrowserDialog::TextBrowserDialog(const QUrl& initial_url, QWidget* parent)
+: TextBrowserDialog(parent)
+{
+	text_browser->setSource(initial_url);
+	text_browser->document()->adjustSize();  // needed for sizeHint()
+}
+
+
+TextBrowserDialog::TextBrowserDialog(const QString& text, QWidget* parent)
+ : TextBrowserDialog(parent)
+{
+	text_browser->setText(text);
+	text_browser->document()->adjustSize();  // needed for sizeHint()
+}
+
+
+TextBrowserDialog::~TextBrowserDialog() = default;
+
+
 
 QSize TextBrowserDialog::sizeHint() const
 {

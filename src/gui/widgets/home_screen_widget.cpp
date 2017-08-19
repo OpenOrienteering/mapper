@@ -506,7 +506,8 @@ QWidget* HomeScreenWidgetMobile::makeFileListWidget(HomeScreenController* contro
 		QDirIterator it(location.path(), QDir::Files | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
 		while (it.hasNext()) {
 			it.next();
-			if (!FileFormats.findFormatForFilename(it.filePath()))
+			auto format = FileFormats.findFormatForFilename(it.filePath());
+			if (!format || !format->supportsExport())
 				continue;
 			
 			QListWidgetItem* new_item = new QListWidgetItem(it.fileInfo().fileName());

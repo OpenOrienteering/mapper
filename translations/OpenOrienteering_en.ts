@@ -27,7 +27,7 @@
 <context>
     <name>MapEditorController</name>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="1573"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1613"/>
         <source>Cut %n object(s)</source>
         <extracomment>Past tense. Displayed when an Edit &gt; Cut operation is completed.</extracomment>
         <translation>
@@ -36,7 +36,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="1626"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1666"/>
         <source>Copied %n object(s)</source>
         <translation>
             <numerusform>Copied one object</numerusform>
@@ -44,7 +44,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="1666"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1706"/>
         <source>Pasted %n object(s)</source>
         <translation>
             <numerusform>Pasted one object</numerusform>
@@ -52,7 +52,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="2466"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2519"/>
         <source>Duplicated %n object(s)</source>
         <translation>
             <numerusform>Duplicated one object</numerusform>

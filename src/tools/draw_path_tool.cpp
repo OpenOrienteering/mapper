@@ -1061,63 +1061,95 @@ void DrawPathTool::updateDashPointDrawing()
 void DrawPathTool::updateStatusText()
 {
 	QString text;
-	static const QString text_more_shift_control_space(MapEditorTool::tr("More: %1, %2, %3").arg(ModifierKey::shift(), ModifierKey::control(), ModifierKey::space()));
-	static const QString text_more_shift_space(MapEditorTool::tr("More: %1, %2").arg(ModifierKey::shift(), ModifierKey::space()));
-	static const QString text_more_control_space(MapEditorTool::tr("More: %1, %2").arg(ModifierKey::control(), ModifierKey::space()));
-	QString text_more(text_more_shift_control_space);
-	
 	if (editingInProgress() && preview_path && preview_path->getCoordinateCount() >= 2)
 	{
 		//Q_ASSERT(!preview_path->isDirty());
 		float length = map()->getScaleDenominator() * preview_path->parts().front().path_coords.back().clen * 0.001f;
-		text = text + tr("<b>Length:</b> %1 m ").arg(QLocale().toString(length, 'f', 1)) + QLatin1String("| ");
+		text += tr("<b>Length:</b> %1 m ").arg(QLocale().toString(length, 'f', 1)) + QLatin1String("| ");
 	}
 	
 	if (draw_dash_points && !is_helper_tool)
+	{
 		text += DrawLineAndAreaTool::tr("<b>Dash points on.</b> ") + QLatin1String("| ");
+	}
 	
+	QVarLengthArray<QString, 3> modifier_keys;
 	if (!editingInProgress())
 	{
 		if (shift_pressed)
 		{
 			text += DrawLineAndAreaTool::tr("<b>%1+Click</b>: Snap or append to existing objects. ").arg(ModifierKey::shift());
-			text_more = text_more_control_space;
-		}
-		else if (ctrl_pressed)
-		{
-			text += DrawLineAndAreaTool::tr("<b>%1+Click</b>: Pick direction from existing objects. ").arg(ModifierKey::control());
-			text_more = text_more_shift_space;
 		}
 		else
 		{
-			text += tr("<b>Click</b>: Start a straight line. <b>Drag</b>: Start a curve. ");
-// 			text += DrawLineAndAreaTool::tr(draw_dash_points ? "<b>%1</b> Disable dash points. " : "<b>%1</b>: Enable dash points. ").arg(ModifierKey::space());
+			modifier_keys.append(ModifierKey::shift());
+		
+			if (ctrl_pressed)
+			{
+				text += DrawLineAndAreaTool::tr("<b>%1+Click</b>: Pick direction from existing objects. ").arg(ModifierKey::control());
+			}
+			else
+			{
+				modifier_keys.append(ModifierKey::control());
+			
+				text += tr("<b>Click</b>: Start a straight line. <b>Drag</b>: Start a curve. ");
+				
+				// text += DrawLineAndAreaTool::tr(draw_dash_points ? "<b>%1</b> Disable dash points. " : "<b>%1</b>: Enable dash points. ").arg(ModifierKey::space());
+			}
 		}
 	}
 	else
 	{
 		if (shift_pressed)
 		{
-			text += DrawLineAndAreaTool::tr("<b>%1+Click</b>: Snap to existing objects. ").arg(ModifierKey::shift());
-			text += tr("<b>%1+Drag</b>: Follow existing objects. ").arg(ModifierKey::shift());
-			text_more = text_more_control_space;
-		}
-		else if (ctrl_pressed && angle_helper->isActive())
-		{
-			text += DrawLineAndAreaTool::tr("<b>%1</b>: Fixed angles. ").arg(ModifierKey::control());
-			text_more = text_more_shift_space;
+			text += DrawLineAndAreaTool::tr("<b>%1+Click</b>: Snap to existing objects. ").arg(ModifierKey::shift())
+			        + tr("<b>%1+Drag</b>: Follow existing objects. ").arg(ModifierKey::shift());
 		}
 		else
 		{
-			text += tr("<b>Click</b>: Draw a straight line. <b>Drag</b>: Draw a curve. "
-			           "<b>Right or double click</b>: Finish the path. "
-			           "<b>%1</b>: Close the path. ").arg(ModifierKey::return_key());
-			text += DrawLineAndAreaTool::tr("<b>%1</b>: Undo last point. ").arg(ModifierKey::backspace());
-			text += MapEditorTool::tr("<b>%1</b>: Abort. ").arg(ModifierKey::escape());
+			modifier_keys.append(ModifierKey::shift());
+			
+			if (ctrl_pressed && angle_helper->isActive())
+			{
+				text += DrawLineAndAreaTool::tr("<b>%1</b>: Fixed angles. ").arg(ModifierKey::control());
+			}
+			else
+			{
+				modifier_keys.append(ModifierKey::control());
+				
+				text += tr("<b>Click</b>: Draw a straight line. <b>Drag</b>: Draw a curve. "
+				           "<b>Right or double click</b>: Finish the path. "
+				           "<b>%1</b>: Close the path. ").arg(ModifierKey::return_key())
+				        + DrawLineAndAreaTool::tr("<b>%1</b>: Undo last point. ").arg(ModifierKey::backspace())
+				        + MapEditorTool::tr("<b>%1</b>: Abort. ").arg(ModifierKey::escape());
+			}
 		}
 	}
 	
-	text += QLatin1String("| ") + text_more;
+	if (!is_helper_tool)
+	{
+		modifier_keys.append(ModifierKey::space());
+	}
+	
+	if (!modifier_keys.isEmpty())
+	{
+		QString text_more;
+		switch (modifier_keys.length())
+		{
+		case 1:
+			text_more = MapEditorTool::tr("More: %1").arg(modifier_keys[0]);
+			break;
+		case 2:
+			text_more = MapEditorTool::tr("More: %1, %2").arg(modifier_keys[0], modifier_keys[1]);
+			break;
+		case 3:
+			text_more = MapEditorTool::tr("More: %1, %2, %3").arg(modifier_keys[0], modifier_keys[1], modifier_keys[2]);
+			break;
+		default:
+			Q_UNREACHABLE();
+		}
+		text += QLatin1String("| ") + text_more;
+	}
 	
 	setStatusBarText(text);
 }

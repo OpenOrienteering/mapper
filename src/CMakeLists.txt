@@ -279,6 +279,7 @@ target_compile_definitions(Mapper_Common PRIVATE
   QT_NO_CAST_FROM_ASCII
   QT_NO_CAST_TO_ASCII
   QT_USE_QSTRINGBUILDER
+  # MAPPER_ENABLE_COMPATIBILITY
 )
 
 mapper_translations_sources(${Mapper_Common_SRCS} ${Mapper_Common_HEADERS})
@@ -340,16 +341,3 @@ foreach(module ${PRIVATE_MODULES})
 	endif()
 	target_include_directories(Mapper_Common PRIVATE ${${qt5_module}_PRIVATE_INCLUDE_DIRS})
 endforeach()
-
-
-# qmake configuration
-
-foreach(cpp_file ${Mapper_Common_SRCS})
-	string(REPLACE ".cpp" ".h" h_file "${cpp_file}")
-	if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${h_file}")
-		list(APPEND Mapper_Common_HEADERS "${h_file}")
-	endif()
-endforeach()
-list(REMOVE_DUPLICATES Mapper_Common_HEADERS)
-list(SORT Mapper_Common_HEADERS)
-list(SORT Mapper_Common_SRCS)
