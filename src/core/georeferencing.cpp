@@ -226,6 +226,15 @@ Georeferencing& Georeferencing::operator=(const Georeferencing& other)
 	return *this;
 }
 
+
+
+bool Georeferencing::isGeographic() const
+{
+	return projected_crs && pj_is_latlong(projected_crs);
+}
+
+
+
 void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only)
 {
 	Q_ASSERT(xml.name() == literal::georeferencing);
