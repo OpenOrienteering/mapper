@@ -172,27 +172,27 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="211"/>
         <source>Element drawing at boundary</source>
-        <translation type="unfinished"></translation>
+        <translation>Відображення елементів на межі</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="213"/>
         <source>Clip elements at the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Обрізати елементи на межі.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="214"/>
         <source>Draw elements if the center is inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Відображати елементи якщо центр всередині межі.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="215"/>
         <source>Draw elements if any point is inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Відображати елементи якщо будь-яка точка всередині межі.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="216"/>
         <source>Draw elements if all points are inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Відображати елементи якщо всі точки всередині межі.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="231"/>
@@ -492,7 +492,7 @@
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="247"/>
         <source>%1 (duplicate)</source>
         <extracomment>Future replacement for COLOR_NAME + &quot; (Duplicate)&quot;, for better localization.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 (дублікат)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="248"/>
@@ -1435,32 +1435,32 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="49"/>
         <source>Import with GDAL/OGR:</source>
-        <translation type="unfinished"></translation>
+        <translation>Імпорт з GDAL/OGR:</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="51"/>
         <source>DXF</source>
-        <translation type="unfinished"></translation>
+        <translation>DXF</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="54"/>
         <source>GPX</source>
-        <translation type="unfinished"></translation>
+        <translation>GPX</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="57"/>
         <source>OSM</source>
-        <translation type="unfinished"></translation>
+        <translation>OSM</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="61"/>
         <source>Configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Конфігурація</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="69"/>
         <source>Parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Параметер</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="69"/>
@@ -1470,7 +1470,7 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="88"/>
         <source>GDAL/OGR</source>
-        <translation type="unfinished"></translation>
+        <translation>GDAL/OGR</translation>
     </message>
 </context>
 <context>
@@ -2120,7 +2120,7 @@
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="280"/>
         <source>Geospatial vector data</source>
-        <translation type="unfinished"></translation>
+        <translation>Геопросторові векторні дані</translation>
     </message>
 </context>
 <context>
@@ -2255,7 +2255,7 @@
         <location filename="../src/gdal/ogr_file_format.cpp" line="1212"/>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1253"/>
         <source>Could not read &apos;%1&apos;: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Неможливо прочитати &apos;%1&apos;: %2</translation>
     </message>
 </context>
 <context>
@@ -2505,7 +2505,7 @@
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="271"/>
         <source>Scale the dash symbol at corners</source>
-        <translation type="unfinished"></translation>
+        <translation>Масштабувати знак кінця відрізку у вуглах</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="519"/>
@@ -2922,7 +2922,8 @@ Rescale the imported data?</source>
         <location filename="../src/gui/map/map_editor.cpp" line="3992"/>
         <source>Symbol replacement was canceled.
 Import the data anyway?</source>
-        <translation type="unfinished"></translation>
+        <translation>Заміну знаку скасовано.
+Імпортувати дані незважаючи на це?</translation>
     </message>
 </context>
 <context>
@@ -3938,17 +3939,17 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="871"/>
         <source>Symbol set ID...</source>
-        <translation type="unfinished"></translation>
+        <translation>ID набору умовних знаків...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="871"/>
         <source>Edit the symbol set ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Редагувати ID набору умовних знаків</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="873"/>
         <source>Load CRT file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Застосувати CRT файл...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="873"/>
@@ -3978,12 +3979,12 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1873"/>
         <source>Symbol set ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID набору умовних знаків</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1874"/>
         <source>Edit the symbol set ID:</source>
-        <translation type="unfinished"></translation>
+        <translation>Редагувати ID набору умовних знаків:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2055"/>
@@ -4336,27 +4337,27 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="50"/>
         <source>&amp;Find...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Пошук...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="57"/>
         <source>Find &amp;next</source>
-        <translation type="unfinished"></translation>
+        <translation>Шукати &amp;наступний</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="96"/>
         <source>Find objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Пошук обʼєктів</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="101"/>
         <source>&amp;Find next</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Шукати наступний</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="104"/>
         <source>Find &amp;all</source>
-        <translation type="unfinished"></translation>
+        <translation>Шукати &amp;всі</translation>
     </message>
 </context>
 <context>
@@ -4398,13 +4399,13 @@ selected</source>
         <location filename="../src/gui/color_dialog.cpp" line="272"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="81"/>
         <source>Text source:</source>
-        <translation type="unfinished"></translation>
+        <translation>Джерело тексту:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="514"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="323"/>
         <source>Map (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Мапа (%1)</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="515"/>
@@ -4412,13 +4413,13 @@ selected</source>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="324"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="337"/>
         <source>undefined language</source>
-        <translation type="unfinished"></translation>
+        <translation>невизначена мова</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="533"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="340"/>
         <source>Translation (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Переклад (%1)</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="585"/>
@@ -4698,12 +4699,12 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1883"/>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1894"/>
         <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
-        <translation type="unfinished"></translation>
+        <translation>Координати обмежено щоб вмістити в зону креслення OCAD 8 (-2 м ... 2 м).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1905"/>
         <source>Some coordinates remain outside of the OCAD 8 drawing area. They might be unreachable in OCAD.</source>
-        <translation type="unfinished"></translation>
+        <translation>Деякі координати виходять за межі зони креслення OCAD 8. Вони можуть бути недоступними в OCAD.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="2133"/>
@@ -4918,7 +4919,7 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/core/objects/object_query.cpp" line="296"/>
         <source>Search</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Пошук</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="300"/>
@@ -4936,7 +4937,7 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/core/objects/object_query.cpp" line="307"/>
         <source>Symbol</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Знак</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="311"/>
@@ -5124,12 +5125,12 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="321"/>
         <source>Unable to setup &quot;%1&quot; SRS for GDAL: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Неможливо встановити &quot;%1&quot; SRS для GDAL: %2</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="328"/>
         <source>Purple</source>
-        <translation type="unfinished"></translation>
+        <translation>Пурпурний</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="341"/>
@@ -5154,7 +5155,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="420"/>
         <source>Unable to load layer %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Неможливо завантажити шар %1.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gdal/ogr_file_format.cpp" line="468"/>
@@ -5163,36 +5164,34 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gdal/ogr_file_format.cpp" line="483"/>
         <location filename="../src/gdal/ogr_file_format.cpp" line="488"/>
         <source>Unable to load %n objects, reason: %1</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>Неможливо заватажити %n обʼєкт, причина: %1</numerusform>
+        <numerusform>Неможливо заватажити %n обʼєкти, причина: %1</numerusform>
+        <numerusform>Неможливо заватажити %n обʼєктів, причина: %1</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="469"/>
         <source>Empty geometry.</source>
-        <translation type="unfinished"></translation>
+        <translation>Вісутня геометрія.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="474"/>
         <source>Can&apos;t determine the coordinate transformation: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Неможливо визначити трансформацію координат: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="479"/>
         <source>Failed to transform the coordinates.</source>
-        <translation type="unfinished"></translation>
+        <translation>Невдається трасформувати координати.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="484"/>
         <source>Unknown or unsupported geometry type.</source>
-        <translation type="unfinished"></translation>
+        <translation>Невідомий або непідримуваний тип геометрії.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="489"/>
         <source>Not enough coordinates.</source>
-        <translation type="unfinished"></translation>
+        <translation>Недостатньо координат.</translation>
     </message>
 </context>
 <context>
@@ -5915,7 +5914,7 @@ separations</source>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="129"/>
         <source>Edit the symbol set ID:</source>
-        <translation type="unfinished"></translation>
+        <translation>Редагувати ID набору умовних знаків:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="132"/>
@@ -5926,12 +5925,12 @@ separations</source>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="136"/>
         <source>Match by symbol name</source>
-        <translation type="unfinished"></translation>
+        <translation>Співпадіння по імені знаку</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="141"/>
         <source>Assign new symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Застосувати нові знаки</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="142"/>
@@ -5947,13 +5946,13 @@ separations</source>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="157"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="233"/>
         <source>Open CRT file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Відкрити CRT файл...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="159"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="326"/>
         <source>Save CRT file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Зберегти CRT файл...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="164"/>
@@ -5964,12 +5963,12 @@ separations</source>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="232"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="325"/>
         <source>CRT file</source>
-        <translation type="unfinished"></translation>
+        <translation>CRT файл</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="279"/>
         <source>There are multiple replacements for symbol %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Виявлено кілька замін для знаку %1.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="282"/>
@@ -5977,7 +5976,7 @@ separations</source>
 %1
 
 %2</source>
-        <translation type="unfinished">Неможливо відкрити файл:
+        <translation>Неможливо відкрити файл:
 %1
 
 %2</translation>
@@ -5988,7 +5987,10 @@ separations</source>
 %1
 
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Неможливо зберегти файл:
+%1
+
+%2</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="355"/>
@@ -6030,7 +6032,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="644"/>
         <source>Cannot load CRT file, aborting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Неможливо завантажити CRT файл, скасовано.</translation>
     </message>
 </context>
 <context>
@@ -6380,7 +6382,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1276"/>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation>Опис</translation>
     </message>
 </context>
 <context>
