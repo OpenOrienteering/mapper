@@ -209,12 +209,12 @@ public:
 	/**
 	 * Adjusts the viewport so the given rect is inside the view.
 	 */
-	void ensureVisibilityOfRect(const QRectF& map_rect, ZoomOption zoom_option);
+	void ensureVisibilityOfRect(QRectF map_rect, ZoomOption zoom_option);  // clazy:exclude=function-args-by-ref
 	
 	/**
 	 * Sets the view so the rect is centered and zooomed to fill the widget.
 	 */
-	void adjustViewToRect(const QRectF& map_rect, ZoomOption zoom_option);
+	void adjustViewToRect(QRectF map_rect, ZoomOption zoom_option);  // clazy:exclude=function-args-by-ref
 	
 	/**
 	 * Mark a rectangular region of a template cache as "dirty", i.e. redraw needed.
@@ -246,7 +246,7 @@ public:
 	 *     pixels. Allows to specify zoom-independent extents.
 	 * @param do_update If set to true, triggers a redraw of the widget.
 	 */
-	void setDrawingBoundingBox(const QRectF& map_rect, int pixel_border, bool do_update);
+	void setDrawingBoundingBox(QRectF map_rect, int pixel_border, bool do_update);  // clazy:exclude=function-args-by-ref
 	/**
 	 * Removes the area set with setDrawingBoundingBox() and triggers a redraw
 	 * of the widget, if needed.
@@ -254,7 +254,7 @@ public:
 	void clearDrawingBoundingBox();
 	
 	/** Analogon to setDrawingBoundingBox() for activities. */
-	void setActivityBoundingBox(const QRectF& map_rect, int pixel_border, bool do_update);
+	void setActivityBoundingBox(QRectF map_rect, int pixel_border, bool do_update);  // clazy:exclude=function-args-by-ref
 	/** Analogon to clearDrawingBoundingBox() for activities. */
 	void clearActivityBoundingBox();
 	
@@ -415,7 +415,7 @@ private:
 	 * Calculates the bounding box of the given map coordinates rect and
 	 * additional pixel extent in integer viewport coordinates.
 	 */
-	QRect calculateViewportBoundingBox(const QRectF& map_rect, int pixel_border);
+	QRect calculateViewportBoundingBox(const QRectF& map_rect, int pixel_border) const;
 	/** Internal method for setting a part of a cache as dirty. */
 	void setDynamicBoundingBox(QRectF map_rect, int pixel_border, QRect& dirty_rect_old, QRectF& dirty_rect_new, int& dirty_rect_new_border, bool do_update);
 	/** Internal method for removing the dirty state of a cache. */

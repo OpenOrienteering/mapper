@@ -335,7 +335,7 @@ void MapWidget::moveMap(int steps_x, int steps_y)
 	}
 }
 
-void MapWidget::ensureVisibilityOfRect(const QRectF& map_rect, ZoomOption zoom_option)
+void MapWidget::ensureVisibilityOfRect(QRectF map_rect, ZoomOption zoom_option)
 {
 	// Amount in pixels that is scrolled "too much" if the rect is not completely visible
 	// TODO: change to absolute size using dpi value
@@ -368,7 +368,7 @@ void MapWidget::ensureVisibilityOfRect(const QRectF& map_rect, ZoomOption zoom_o
 		adjustViewToRect(map_rect, zoom_option);
 }
 
-void MapWidget::adjustViewToRect(const QRectF& map_rect, ZoomOption zoom_option)
+void MapWidget::adjustViewToRect(QRectF map_rect, ZoomOption zoom_option)
 {
 	view->setCenter(MapCoord{ map_rect.center() });
 	
@@ -420,7 +420,7 @@ void MapWidget::markObjectAreaDirty(const QRectF& map_rect)
 	updateMapRect(map_rect, 0, map_cache_dirty_rect);
 }
 
-void MapWidget::setDrawingBoundingBox(const QRectF& map_rect, int pixel_border, bool do_update)
+void MapWidget::setDrawingBoundingBox(QRectF map_rect, int pixel_border, bool do_update)
 {
 	Q_UNUSED(do_update);
 	clearDrawingBoundingBox();
@@ -442,7 +442,7 @@ void MapWidget::clearDrawingBoundingBox()
 	}
 }
 
-void MapWidget::setActivityBoundingBox(const QRectF& map_rect, int pixel_border, bool do_update)
+void MapWidget::setActivityBoundingBox(QRectF map_rect, int pixel_border, bool do_update)
 {
 	Q_UNUSED(do_update);
 	clearActivityBoundingBox();
@@ -530,7 +530,7 @@ void MapWidget::updateEverythingInRect(const QRect& dirty_rect)
 	update(dirty_rect);
 }
 
-QRect MapWidget::calculateViewportBoundingBox(const QRectF& map_rect, int pixel_border)
+QRect MapWidget::calculateViewportBoundingBox(const QRectF& map_rect, int pixel_border) const
 {
 	QRectF view_rect = view->calculateViewBoundingBox(map_rect);
 	view_rect.adjust(-pixel_border, -pixel_border, +pixel_border, +pixel_border);
