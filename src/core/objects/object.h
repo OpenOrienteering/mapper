@@ -96,6 +96,7 @@ public:
 	/** Creates an empty object with the given type, symbol, coords and (optional) map. */
 	explicit Object(Type type, const Symbol* symbol, const MapCoordVector& coords, Map* map = nullptr);
 	
+protected:
 	/**
 	 * Constructs a Object, initialized from the given prototype.
 	 * 
@@ -104,11 +105,13 @@ public:
 	 */
 	explicit Object(const Object& proto);
 	
+public:
 	/** Destructs the object. */
 	virtual ~Object();
 	
-	/** Assignment, replaces this object's content with that of the other. */
-	virtual Object& operator= (const Object& other);
+	Object& operator=(const Object& other) = delete;
+	
+	virtual void copyFrom(const Object& other);
 	
 	/** Creates an identical copy of the object.
 	 *
@@ -466,9 +469,11 @@ public:
 	/** Constructs a PathObject, assigning initial coords from a single piece of a line. */
 	PathObject(const Symbol* symbol, const PathObject& proto, MapCoordVector::size_type piece);
 	
+protected:
 	/** Constructs a PathObject, initalized from the given prototype. */
 	explicit PathObject(const PathObject& proto);
 	
+public:
 	/** Constructs a PathObject, initalized from the given part of another object. */
 	explicit PathObject(const PathPart& proto_part);
 	
@@ -477,13 +482,12 @@ public:
 	 * 
 	 * Use asPath() on the result to obtain an object of type PathObject.
 	 */
-	Object* duplicate() const override;
+	PathObject* duplicate() const override;
+	
+	PathObject& operator=(const PathObject& other) = delete;
 	
 	/** Replaces this object's contents by those of the other. */
-	PathObject& operator=(const PathObject& other);
-	
-	/** Replaces this object's contents by those of the other. */
-	Object& operator=(const Object& other) override;
+	void copyFrom(const Object& other) override;
 	
 	
 	bool validate() const override;
@@ -946,18 +950,22 @@ public:
 	/** Constructs a PointObject, optionally assigning the symbol. */
 	explicit PointObject(const Symbol* symbol = nullptr);
 	
+protected:
 	/** Constructs a PointObject, initalized from the given prototype. */
 	explicit PointObject(const PointObject& proto);
 	
+public:
 	/**
 	 * Creates a duplicate of the point.
 	 * 
 	 * Use asPoint() on the result to obtain an object of type PointObject.
 	 */
-	Object* duplicate() const override;
+	PointObject* duplicate() const override;
+	
+	PointObject& operator=(const PointObject& other) = delete;
 	
 	/** Replaces the content of this object by that of anothe. */
-	Object& operator=(const Object& other) override;
+	void copyFrom(const Object& other) override;
 	
 	
 	/** Sets the point's position to a new position given in native map coordinates. */

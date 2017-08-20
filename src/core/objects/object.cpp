@@ -107,16 +107,20 @@ Object::~Object()
 	// nothing
 }
 
-Object& Object::operator=(const Object& other)
+void Object::copyFrom(const Object& other)
 {
-	Q_ASSERT(type == other.type);
+	if (&other == this)
+		return;
+	
+	if (type != other.type)
+		throw std::invalid_argument(Q_FUNC_INFO);
+	
 	symbol = other.symbol;
 	coords = other.coords;
 	// map unchanged!
 	object_tags = other.object_tags;
 	output_dirty = true;
 	extent = other.extent;
-	return *this;
 }
 
 bool Object::equals(const Object* other, bool compare_symbol) const
@@ -1037,19 +1041,18 @@ PathObject::PathObject(const PathPart &proto_part)
 	path_parts.emplace_back(*this, proto_part);
 }
    
-Object* PathObject::duplicate() const
+PathObject* PathObject::duplicate() const
 {
 	return new PathObject(*this);
 }
 
-PathObject& PathObject::operator=(const PathObject& other)
+void PathObject::copyFrom(const Object& other)
 {
-	return static_cast<PathObject&>(operator=(static_cast<const Object&>(other)));
-}
-
-Object& PathObject::operator=(const Object& other)
-{
-	Object::operator=(other);
+	if (&other == this)
+		return;
+	
+	Object::copyFrom(other);
+	
 	const PathObject& other_path = *other.asPath();
 	pattern_rotation = other_path.getPatternRotation();
 	pattern_origin = other_path.getPatternOrigin();
@@ -1060,7 +1063,6 @@ Object& PathObject::operator=(const Object& other)
 	{
 		path_parts.emplace_back(*this, part);
 	}
-	return *this;
 }
 
 
@@ -3188,20 +3190,23 @@ PointObject::PointObject(const PointObject& proto)
 	// nothing
 }
 
-Object* PointObject::duplicate() const
+PointObject* PointObject::duplicate() const
 {
 	return new PointObject(*this);
 }
 
-Object& PointObject::operator=(const Object& other)
+void PointObject::copyFrom(const Object& other)
 {
-	Object::operator=(other);
+	if (&other == this)
+		return;
+	
+	Object::copyFrom(other);
 	const PointObject* point_other = other.asPoint();
 	const PointSymbol* point_symbol = getSymbol()->asPoint();
 	if (point_symbol && point_symbol->isRotatable())
 		setRotation(point_other->getRotation());
-	return *this;
 }
+
 
 void PointObject::setPosition(qint32 x, qint32 y)
 {

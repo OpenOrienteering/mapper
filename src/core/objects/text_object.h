@@ -145,15 +145,19 @@ public:
 	 */
 	explicit TextObject(const Symbol* symbol = nullptr);
 	
+protected:
 	/** Constructs a TextObject, initalized from the given prototype. */
 	explicit TextObject(const TextObject& proto);
 	
+public:
 	/** Creates a duplicate of the text object.
 	 *  @return a new object with same text, symbol and formatting.
 	 */
-	Object* duplicate() const override;
+	TextObject* duplicate() const override;
+
+	TextObject& operator=(const TextObject&) = delete;
 	
-	Object& operator=(const Object& other) override;
+	void copyFrom(const Object& other) override;
 	
 	
 	/** Returns true if the text object has a single anchor, false if it has as word wrap box

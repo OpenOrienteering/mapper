@@ -538,7 +538,7 @@ void MapEditorToolBase::abortEditing()
 	for (auto& edited_item : edited_items)
 	{
 		auto object = edited_item.active_object;
-		*object = *edited_item.duplicate;
+		object->copyFrom(*edited_item.duplicate);
 		object->setMap(map());
 		object->update();
 	}
@@ -592,7 +592,7 @@ void MapEditorToolBase::resetEditedObjects()
 	for (auto& edited_item : edited_items)
 	{
 		auto object = edited_item.active_object;
-		*object = *edited_item.duplicate;
+		object->copyFrom(*edited_item.duplicate);
 		object->setMap(nullptr); // This is to keep the renderables out of the normal map.
 	}
 }
