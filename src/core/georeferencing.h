@@ -187,6 +187,13 @@ public:
 	 */
 	bool isLocal() const;
 	
+	/**
+	 * Returns true if the "projected CRS" is actually geographic.
+	 * 
+	 * \see pj_is_latlong(projPJ pj) in PROJ.4
+	 */
+	bool isGeographic() const;
+	
 	
 	/**
 	 * Returns the georeferencing state.

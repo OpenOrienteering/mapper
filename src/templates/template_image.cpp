@@ -456,9 +456,17 @@ void TemplateImage::calculateGeoreferencing()
 			// TODO: world file lost, disable georeferencing or unload template
 			return;
 		}
-		if (!temp_crs_spec.isEmpty())
-			georef->setProjectedCRS(QString{}, temp_crs_spec);
-		georef->setTransformationDirectly(world_file.pixel_to_world);
+		auto pixel_to_world = world_file.pixel_to_world;
+		if (georef->isGeographic())
+		{
+			constexpr auto factor = qDegreesToRadians(1.0);
+			pixel_to_world = {
+			    pixel_to_world.m11() * factor, pixel_to_world.m12() * factor, 0,
+			    pixel_to_world.m21() * factor, pixel_to_world.m22() * factor, 0,
+			    pixel_to_world.m31() * factor, pixel_to_world.m32() * factor, 1
+			};
+		}
+		georef->setTransformationDirectly(pixel_to_world);
 	}
 	else if (available_georef == Georeferencing_GeoTiff)
 	{
