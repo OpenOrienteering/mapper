@@ -199,8 +199,7 @@ bool AreaSymbol::FillPattern::equals(const AreaSymbol::FillPattern& other, Qt::C
 			return false;
 		if (point_distance != other.point_distance)
 			return false;
-		if ((!point && other.point) ||
-		    (point && !other.point))
+		if (bool(point) != bool(other.point))
 			return false;
 		if (point && !point->equals(other.point, case_sensitivity))
 			return false;

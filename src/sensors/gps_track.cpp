@@ -115,6 +115,9 @@ Track::~Track()
 
 Track& Track::operator=(const Track& rhs)
 {
+	if (this == &rhs)
+		return *this;
+	
 	clear();
 	
 	waypoints = rhs.waypoints;
