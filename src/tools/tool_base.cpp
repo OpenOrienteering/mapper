@@ -69,14 +69,20 @@ MapEditorToolBase::EditedItem::EditedItem(EditedItem&& prototype) noexcept
 
 MapEditorToolBase::EditedItem& MapEditorToolBase::EditedItem::operator=(const EditedItem& prototype)
 {
+	if (&prototype == this)
+		return *this;
+	
 	active_object = prototype.active_object;
-	duplicate.reset(active_object ? active_object->duplicate() : nullptr);
+	duplicate.reset(prototype.duplicate ? prototype.duplicate->duplicate() : nullptr);
 	return *this;
 }
 
 
 MapEditorToolBase::EditedItem& MapEditorToolBase::EditedItem::operator=(EditedItem&& prototype) noexcept
 {
+	if (&prototype == this)
+		return *this;
+	
 	active_object = prototype.active_object;
 	duplicate = std::move(prototype.duplicate);
 	return *this;
@@ -538,7 +544,7 @@ void MapEditorToolBase::abortEditing()
 	for (auto& edited_item : edited_items)
 	{
 		auto object = edited_item.active_object;
-		*object = *edited_item.duplicate;
+		object->copyFrom(*edited_item.duplicate);
 		object->setMap(map());
 		object->update();
 	}
@@ -592,7 +598,7 @@ void MapEditorToolBase::resetEditedObjects()
 	for (auto& edited_item : edited_items)
 	{
 		auto object = edited_item.active_object;
-		*object = *edited_item.duplicate;
+		object->copyFrom(*edited_item.duplicate);
 		object->setMap(nullptr); // This is to keep the renderables out of the normal map.
 	}
 }

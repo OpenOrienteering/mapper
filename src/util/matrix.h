@@ -75,7 +75,7 @@ public:
 	inline int getCols() const {return m;}
 	
 	/** Assignment */
-	void operator=(const Matrix& other)
+	Matrix& operator=(const Matrix& other)
 	{
 		if (this == &other)
 			return *this;
@@ -85,6 +85,7 @@ public:
 		m = other.m;
 		d = new double[n * m];
 		memcpy(d, other.d, n * m * sizeof(double));
+		return *this;
 	}
 	
 	/**

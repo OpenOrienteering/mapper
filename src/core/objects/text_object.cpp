@@ -141,21 +141,23 @@ TextObject::TextObject(const TextObject& proto)
 	// nothing
 }
 
-Object* TextObject::duplicate() const
+TextObject* TextObject::duplicate() const
 {
 	return new TextObject(*this);
 }
 
-Object& TextObject::operator=(const Object& other)
+void TextObject::copyFrom(const Object& other)
 {
-	Object::operator=(other);
+	if (&other == this)
+		return;
+	
+	Object::copyFrom(other);
 	const TextObject& other_text = *other.asText();
 	text = other_text.text;
 	h_align = other_text.h_align;
 	v_align = other_text.v_align;
 	rotation = other_text.rotation;
 	line_infos = other_text.line_infos;
-	return *this;
 }
 
 void TextObject::setAnchorPosition(qint32 x, qint32 y)

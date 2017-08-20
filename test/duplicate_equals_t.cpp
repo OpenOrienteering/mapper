@@ -107,7 +107,7 @@ void DuplicateEqualsTest::objects()
 			
 			Object* assigned = Object::getObjectForType(original->getType(), original->getSymbol());
 			QVERIFY(assigned);
-			*assigned = *original;
+			assigned->copyFrom(*original);
 			QVERIFY(original->equals(assigned, true));
 			QVERIFY(!assigned->getMap());
 		}

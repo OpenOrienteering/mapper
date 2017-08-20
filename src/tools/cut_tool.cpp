@@ -433,7 +433,7 @@ void CutTool::finishCuttingArea(PathObject* split_path)
 	const PathPart& drag_part = edit_object->parts()[drag_part_index];
 	if (drag_part.isClosed())
 	{
-		out_paths[1] =out_paths[0]->duplicate();
+		out_paths[1] = out_paths[0]->duplicate();
 		
 		out_paths[0]->changePathBounds(drag_part_index, drag_start_len, end_path_coord.clen);
 		ok = out_paths[0]->connectIfClose(split_path, split_threshold);

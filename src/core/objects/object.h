@@ -109,8 +109,9 @@ public:
 	/** Destructs the object. */
 	virtual ~Object();
 	
-	/** Assignment, replaces this object's content with that of the other. */
-	virtual Object& operator= (const Object& other);
+	Object& operator=(const Object& other) = delete;
+	
+	virtual void copyFrom(const Object& other);
 	
 	/** Creates an identical copy of the object.
 	 *
@@ -484,11 +485,10 @@ public:
 	 */
 	PathObject* duplicate() const override;
 	
-	/** Replaces this object's contents by those of the other. */
-	PathObject& operator=(const PathObject& other);
+	PathObject& operator=(const PathObject& other) = delete;
 	
 	/** Replaces this object's contents by those of the other. */
-	Object& operator=(const Object& other) override;
+	void copyFrom(const Object& other) override;
 	
 	
 	bool validate() const override;
@@ -961,10 +961,12 @@ public:
 	 * 
 	 * Use asPoint() on the result to obtain an object of type PointObject.
 	 */
-	Object* duplicate() const override;
+	PointObject* duplicate() const override;
+	
+	PointObject& operator=(const PointObject& other) = delete;
 	
 	/** Replaces the content of this object by that of anothe. */
-	Object& operator=(const Object& other) override;
+	void copyFrom(const Object& other) override;
 	
 	
 	/** Sets the point's position to a new position given in native map coordinates. */
