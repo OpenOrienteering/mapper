@@ -73,8 +73,13 @@ public:
 	/**
 	 * Schedules the tooltip for the symbol to be shown close to
 	 * but not covering the region given by rect.
+	 * 
+	 * In mobile mode, tooltip placement relative to the symbol icon is tried
+	 * in the order: above, left, right, below.
+	 * Otherwise, placement is tried in the order: below, above, right, left.
+	 * (desktop mode).
 	 */
-	void scheduleShow(const Symbol* symbol, const Map* map, QRect rect);
+	void scheduleShow(const Symbol* symbol, const Map* map, QRect rect, bool mobile_mode);
 	
 	/**
 	 * Resets the tooltip.
@@ -123,7 +128,7 @@ private:
 	 * Moves the tooltip so that it is nicely placed close the region given
 	 * to scheduleShow().
 	 */
-	void adjustPosition();
+	void adjustPosition(bool mobile_mode);
 	
 	QTimer tooltip_timer;      /// The timer which triggers the delayed showing.
 	QShortcut* shortcut;       /// An optional shortcut for showing the description.

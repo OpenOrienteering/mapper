@@ -451,7 +451,7 @@ QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, in
 			for (int i = 0; i < combined->getNumParts(); ++i)
 			{
 				auto part = combined->getPart(i);
-				if (part->getType() == Line && part->asLine()->getDashSymbol())
+				if (part && part->getType() == Line && part->asLine()->getDashSymbol())
 				{
 					show_dash_symbol = true;
 					break;

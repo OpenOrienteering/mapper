@@ -382,7 +382,7 @@ bool DrawRectangleTool::keyReleaseEvent(QKeyEvent* event)
 	{
 	case Qt::Key_Control:
 		ctrl_pressed = false;
-		if (!picked_direction && (!editingInProgress() || (editingInProgress() && angles.size() == 1)))
+		if (!picked_direction && (!editingInProgress() || angles.size() == 1))
 		{
 			angle_helper->setActive(false);
 			if (dragging && editingInProgress())
