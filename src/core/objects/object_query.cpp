@@ -120,6 +120,9 @@ ObjectQuery::LogicalOperands::~LogicalOperands() = default;
 
 ObjectQuery::LogicalOperands& ObjectQuery::LogicalOperands::operator=(const ObjectQuery::LogicalOperands& proto)
 {
+	if (&proto == this)
+		return *this;
+	
 	if (proto.first)
 		first = std::make_unique<ObjectQuery>(*proto.first);
 	if (proto.second)
@@ -175,6 +178,9 @@ ObjectQuery::ObjectQuery(ObjectQuery&& proto) noexcept
 
 ObjectQuery& ObjectQuery::operator=(const ObjectQuery& proto) noexcept
 {
+	if (&proto == this)
+		return *this;
+	
 	reset();
 	consume(ObjectQuery{proto});
 	return *this;
@@ -183,6 +189,9 @@ ObjectQuery& ObjectQuery::operator=(const ObjectQuery& proto) noexcept
 
 ObjectQuery& ObjectQuery::operator=(ObjectQuery&& proto) noexcept
 {
+	if (&proto == this)
+		return *this;
+	
 	reset();
 	consume(std::move(proto));	
 	return *this;

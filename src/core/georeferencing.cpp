@@ -188,6 +188,9 @@ Georeferencing::~Georeferencing()
 
 Georeferencing& Georeferencing::operator=(const Georeferencing& other)
 {
+	if (&other == this)
+		return *this;
+	
 	state                    = other.state;
 	scale_denominator        = other.scale_denominator;
 	grid_scale_factor        = other.grid_scale_factor;

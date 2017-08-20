@@ -69,14 +69,20 @@ MapEditorToolBase::EditedItem::EditedItem(EditedItem&& prototype) noexcept
 
 MapEditorToolBase::EditedItem& MapEditorToolBase::EditedItem::operator=(const EditedItem& prototype)
 {
+	if (&prototype == this)
+		return *this;
+	
 	active_object = prototype.active_object;
-	duplicate.reset(active_object ? active_object->duplicate() : nullptr);
+	duplicate.reset(prototype.duplicate ? prototype.duplicate->duplicate() : nullptr);
 	return *this;
 }
 
 
 MapEditorToolBase::EditedItem& MapEditorToolBase::EditedItem::operator=(EditedItem&& prototype) noexcept
 {
+	if (&prototype == this)
+		return *this;
+	
 	active_object = prototype.active_object;
 	duplicate = std::move(prototype.duplicate);
 	return *this;
