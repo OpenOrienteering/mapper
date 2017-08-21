@@ -2601,13 +2601,13 @@ void Map::setHasUnsavedChanges(bool has_unsaved_changes)
 		if (unsaved_changes)
 		{
 			unsaved_changes = false;
-			emit hasUnsavedChanges(unsaved_changes);
+			emit hasUnsavedChanged(unsaved_changes);
 		}
 	}
 	else if (!unsaved_changes)
 	{
 		unsaved_changes = true;
-		emit hasUnsavedChanges(unsaved_changes);
+		emit hasUnsavedChanged(unsaved_changes);
 	}
 }
 

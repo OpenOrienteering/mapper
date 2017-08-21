@@ -441,7 +441,7 @@ void FileFormatTest::saveAndLoad()
 	// Load the test map
 	auto original = std::make_unique<Map>();
 	original->loadFrom(map_filename, nullptr, nullptr, false, false);
-	QVERIFY(!original->hasUnsavedChanged());
+	QVERIFY(!original->hasUnsavedChanges());
 	
 	// Fix precision of grid rotation
 	MapGrid grid = original->getGrid();

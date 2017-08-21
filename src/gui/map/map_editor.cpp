@@ -602,9 +602,9 @@ void MapEditorController::attach(MainWindow* window)
 	this->window = window;
 	if (mode == MapEditor)
 	{
-		window->setHasUnsavedChanges(map->hasUnsavedChanged());
+		window->setHasUnsavedChanges(map->hasUnsavedChanges());
 	}
-	connect(map, &Map::hasUnsavedChanges, window, &MainWindow::setHasUnsavedChanges);
+	connect(map, &Map::hasUnsavedChanged, window, &MainWindow::setHasUnsavedChanges);
 	
 #ifdef Q_OS_ANDROID
 	QAndroidJniObject::callStaticMethod<void>("org/openorienteering/mapper/MapperActivity",

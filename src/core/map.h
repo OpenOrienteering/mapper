@@ -467,7 +467,7 @@ public:
 	
 	/**
 	 * Marks the colors as "dirty", i.e. as having unsaved changes.
-	 * Emits hasUnsavedChanges(true) if the map did not have unsaved changed before.
+	 * Emits hasUnsavedChanged(true) if the map did not have unsaved changed before.
 	 */
 	void setColorsDirty();
 	
@@ -553,7 +553,7 @@ public:
 	
 	/**
 	 * Marks the symbols as "dirty", i.e. as having unsaved changes.
-	 * Emits hasUnsavedChanges(true) if the map did not have unsaved changed before.
+	 * Emits hasUnsavedChanged(true) if the map did not have unsaved changed before.
 	 */
 	void setSymbolsDirty();
 	
@@ -655,7 +655,7 @@ public:
 	
 	/**
 	 * Marks the template settings as "dirty", i.e. as having unsaved changes.
-	 * Emits hasUnsavedChanges(true) if the map did not have unsaved changed before.
+	 * Emits hasUnsavedChanged(true) if the map did not have unsaved changed before.
 	 */
 	void setTemplatesDirty();
 	
@@ -833,7 +833,7 @@ public:
 	
 	/**
 	 * Marks the objects as "dirty", i.e. as having unsaved changes.
-	 * Emits hasUnsavedChanges(true) if the map did not have unsaved changed before.
+	 * Emits hasUnsavedChanged(true) if the map did not have unsaved changed before.
 	 */
 	void setObjectsDirty();
 	
@@ -1255,7 +1255,7 @@ public:
 	 * setHasUnsavedChanges() alone followed by a map change and an undo would
 	 * result in no changed flag.
 	 */
-	bool hasUnsavedChanged() const;
+	bool hasUnsavedChanges() const;
 	
 	/** Do not use this in usual cases, see hasUnsavedChanged(). */
 	void setHasUnsavedChanges(bool has_unsaved_changes);
@@ -1277,7 +1277,7 @@ public:
 	
 	/**
 	 * Marks somthing unspecific in the map as "dirty", i.e. as having unsaved changes.
-	 * Emits hasUnsavedChanges(true) if the map did not have unsaved changed before.
+	 * Emits hasUnsavedChanged(true) if the map did not have unsaved changed before.
 	 * 
 	 * Use setColorsDirty(), setSymbolsDirty(), setTemplatesDirty() or
 	 * setObjectsDirty() if you know more specificly what has changed.
@@ -1322,7 +1322,7 @@ signals:
 	/**
 	 * Emitted when a the map enters or leaves the state which is saved on map.
 	 */
-	void hasUnsavedChanges(bool is_clean);
+	void hasUnsavedChanged(bool is_clean);
 	
 	
 	/** Emitted when a color is added to the map, gives the color's index and pointer. */
@@ -1766,7 +1766,7 @@ bool Map::hasPrinterConfig()
 }
 
 inline
-bool Map::hasUnsavedChanged() const
+bool Map::hasUnsavedChanges() const
 {
 	return unsaved_changes;
 }
