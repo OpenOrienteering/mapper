@@ -22,6 +22,7 @@
 #include "template.h"
 
 #include <cmath>
+#include <new>
 
 #include <QCoreApplication>
 #include <QDebug>
@@ -35,10 +36,11 @@
 
 #include "core/map_view.h"
 #include "core/map.h"
+#include "fileformats/file_format.h"
+#include "gdal/ogr_template.h"
 #include "template_image.h"
 #include "template_map.h"
 #include "template_track.h"
-#include "gdal/ogr_template.h"
 #include "util/backports.h"  // IWYU pragma: keep
 #include "util/util.h"
 #include "util/xml_stream_util.h"
@@ -575,17 +577,16 @@ bool Template::loadTemplateFile(bool configuring)
 	Q_ASSERT(template_state != Loaded);
 	
 	const State old_state = template_state;
-	bool result = QFileInfo::exists(template_path);
-	if (!result)
+	
+	setErrorString(QString());
+	try
 	{
-		template_state = Invalid;
-		setErrorString(tr("No such file."));
-	}
-	else
-	{
-		setErrorString(QString());
-		result = loadTemplateFileImpl(configuring);
-		if (result)
+		if (!QFileInfo::exists(template_path))
+		{
+			template_state = Invalid;
+			setErrorString(tr("No such file."));
+		}
+		else if (loadTemplateFileImpl(configuring))
 		{
 			template_state = Loaded;
 		}
@@ -600,13 +601,22 @@ bool Template::loadTemplateFile(bool configuring)
 				setErrorString(tr("Is the format of the file correct for this template type?"));
 			}
 		}
-		
+	}
+	catch (std::bad_alloc&)
+	{
+		template_state = Invalid;
+		setErrorString(tr("Not enough free memory."));
+	}
+	catch (FileFormatException& e)
+	{
+		template_state = Invalid;
+		setErrorString(e.message());
 	}
 	
 	if (old_state != template_state)
 		emit templateStateChanged();
 		
-	return result;
+	return template_state == Loaded;
 }
 
 bool Template::postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view)
