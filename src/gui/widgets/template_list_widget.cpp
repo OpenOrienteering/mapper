@@ -35,6 +35,7 @@
 #include <QSignalBlocker>
 #include <QTableWidget>
 #include <QToolButton>
+#include <QToolTip>
 
 #include "settings.h"
 #include "core/georeferencing.h"
@@ -640,7 +641,7 @@ void TemplateListWidget::cellChange(int row, int column)
 		visibility = main_view->getTemplateVisibility(temp);
 	}
 	
-	auto updateVisibility = [this](const Template* temp, TemplateVisibility vis)
+	auto updateVisibility = [this](Template* temp, TemplateVisibility vis)
 	{
 		if (temp)
 			main_view->setTemplateVisibility(temp, vis);
@@ -679,9 +680,31 @@ void TemplateListWidget::cellChange(int row, int column)
 					}
 					else
 					{
+						if (state != Template::Loaded)
+						{
+							// Ensure feedback before slow loading/drawing
+							QSignalBlocker block(template_table);
+							template_table->item(row, 0)->setCheckState(Qt::PartiallyChecked);
+							auto item_rect = template_table->visualItemRect(template_table->item(row, 1));
+							QToolTip::showText(template_table->mapToGlobal(item_rect.bottomLeft()),
+							                   qApp->translate("MainWindow", "Opening %1").arg(temp->getTemplateFilename()) );
+							// QToolTip seems to need to event loop runs.
+							qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
+							qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
+						}
 						visibility.visible = true;
 						updateVisibility(temp, visibility);
 						setAreaDirty();
+						if (state != Template::Loaded)
+						{
+							QToolTip::hideText();
+							if (temp->getTemplateState() != Template::Loaded)
+							{
+								QMessageBox::warning(this, qApp->translate("MainWindow", "Error"),
+								                     qApp->translate("Importer", "Failed to load template '%1', reason: %2")
+								                     .arg(temp->getTemplateFilename(), temp->errorString()) );
+							}
+						}
 					}
 					updateRow(row);
 					updateButtons();
@@ -1226,6 +1249,7 @@ void TemplateListWidget::updateRow(int row)
 		name_item->setForeground(foreground);
 		name_item->setText(name);
 		name_item->setData(Qt::ToolTipRole, path);
+		name_item->setData(Qt::DecorationRole, {});
 		auto prev_checkable = name_item->flags() & Qt::ItemIsUserCheckable;
 		name_item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | prev_checkable);
 	}

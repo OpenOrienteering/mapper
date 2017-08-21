@@ -1352,10 +1352,10 @@ signals:
 	
 	
 	/** Emitted when a template is added to the map, gives the template's index and pointer. */
-	void templateAdded(int pos, const Template* temp);
+	void templateAdded(int pos, Template* temp);
 	
 	/** Emitted when a template in the map is changed, gives the template's index and pointer. */
-	void templateChanged(int pos, const Template* temp);
+	void templateChanged(int pos, Template* temp);
 	
 	/** Emitted when a template in the map is deleted, gives the template's index and pointer. */
 	void templateDeleted(int pos, const Template* old_temp);

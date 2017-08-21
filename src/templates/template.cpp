@@ -509,13 +509,15 @@ bool Template::configureAndLoad(QWidget* dialog_parent, MapView* view)
 	return true;
 }
 
-bool Template::tryToFindAndReloadTemplateFile(QString map_directory, bool* out_loaded_from_map_dir)
+
+
+bool Template::tryToFindTemplateFile(QString map_directory, bool* out_found_in_map_dir)
 {
 	if (!map_directory.isEmpty() && !map_directory.endsWith(QLatin1Char('/')))
 		map_directory.append(QLatin1Char('/'));
 	
-	if (out_loaded_from_map_dir)
-		*out_loaded_from_map_dir = false;
+	if (out_found_in_map_dir)
+		*out_found_in_map_dir = false;
 	
 	const QString old_absolute_path = getTemplatePath();
 	
@@ -526,14 +528,14 @@ bool Template::tryToFindAndReloadTemplateFile(QString map_directory, bool* out_l
 		if (QFileInfo::exists(path))
 		{
 			setTemplatePath(path);
-			return loadTemplateFile(false);
+			return true;
 		}
 	}
 	
 	// Second try absolute path
 	if (QFileInfo::exists(template_path))
 	{
-		return loadTemplateFile(false);
+		return true;
 	}
 	
 	// Third try the template filename in the map's directory
@@ -543,10 +545,9 @@ bool Template::tryToFindAndReloadTemplateFile(QString map_directory, bool* out_l
 		if (QFileInfo::exists(path))
 		{
 			setTemplatePath(path);
-			bool success = loadTemplateFile(false);
-			if (out_loaded_from_map_dir)
-				*out_loaded_from_map_dir = true;
-			return success;
+			if (out_found_in_map_dir)
+				*out_found_in_map_dir = true;
+			return true;
 		}
 	}
 	
@@ -554,6 +555,13 @@ bool Template::tryToFindAndReloadTemplateFile(QString map_directory, bool* out_l
 	template_state = Invalid;
 	setErrorString(tr("No such file."));
 	return false;
+}
+
+
+bool Template::tryToFindAndReloadTemplateFile(QString map_directory, bool* out_loaded_from_map_dir)
+{
+	return tryToFindTemplateFile(map_directory, out_loaded_from_map_dir)
+	       && loadTemplateFile(false);
 }
 
 bool Template::preLoadConfiguration(QWidget* dialog_parent)

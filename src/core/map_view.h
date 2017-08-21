@@ -294,7 +294,7 @@ public:
 	/**
 	 * Sets the template visibility, and emits a change signal.
 	 */
-	void setTemplateVisibility(const Template* temp, TemplateVisibility vis);
+	void setTemplateVisibility(Template* temp, TemplateVisibility vis);
 	
 	
 	/** Enables or disables hiding all templates in this view */
@@ -361,7 +361,7 @@ protected:
 	/**
 	 * Creates the visibility data when a template is added to the map.
 	 */
-	void onTemplateAdded(int pos, const Template* temp);
+	void onTemplateAdded(int pos, Template* temp);
 	
 	/**
 	 * Removes the visibility data when a template is deleted.
