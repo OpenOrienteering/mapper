@@ -79,7 +79,9 @@ public:
 	bool isRasterGraphics() const override {return true;}
 
 	bool saveTemplateFile() const override;
+#ifndef NO_NATIVE_FILE_FORMAT
 	bool loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version) override;
+#endif
 	void saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const override;
 	bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml) override;
 

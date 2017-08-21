@@ -63,6 +63,8 @@ TemplateTrack::~TemplateTrack()
 		unloadTemplateFile();
 }
 
+
+#ifndef NO_NATIVE_FILE_FORMAT
 bool TemplateTrack::loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version)
 {
 	if (version >= 30)
@@ -71,6 +73,8 @@ bool TemplateTrack::loadTypeSpecificTemplateConfiguration(QIODevice* stream, int
 		track_crs_spec = QString::fromLatin1("+proj=latlong +datum=WGS84");
 	return true;
 }
+#endif
+
 
 void TemplateTrack::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const
 {

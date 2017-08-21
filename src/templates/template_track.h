@@ -95,7 +95,9 @@ public slots:
 	
 protected:
 	Template* duplicateImpl() const override;
+#ifndef NO_NATIVE_FILE_FORMAT
     bool loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version) override;
+#endif
     void saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const override;
     bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml) override;
 	

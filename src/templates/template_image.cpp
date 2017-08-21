@@ -73,6 +73,8 @@ bool TemplateImage::saveTemplateFile() const
 	return image.save(template_path);
 }
 
+
+#ifndef NO_NATIVE_FILE_FORMAT
 bool TemplateImage::loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version)
 {
 	Q_UNUSED(version);
@@ -84,6 +86,8 @@ bool TemplateImage::loadTypeSpecificTemplateConfiguration(QIODevice* stream, int
 	
 	return true;
 }
+#endif
+
 
 void TemplateImage::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const
 {

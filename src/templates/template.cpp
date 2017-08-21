@@ -831,12 +831,16 @@ std::unique_ptr<Template> Template::templateForFile(const QString& path, Map* ma
 	return t;
 }
 
+
+#ifndef NO_NATIVE_FILE_FORMAT
 bool Template::loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version)
 {
 	Q_UNUSED(stream);
 	Q_UNUSED(version);
 	return true;
 }
+#endif
+
 
 void Template::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const
 {

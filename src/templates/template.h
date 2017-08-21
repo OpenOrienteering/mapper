@@ -545,6 +545,7 @@ protected:
 	virtual Template* duplicateImpl() const = 0;
 	
 	
+#ifndef NO_NATIVE_FILE_FORMAT
 	/**
 	 * Hook for loading parameters needed by the actual template type.
 	 * 
@@ -553,6 +554,7 @@ protected:
 	 * Returns true on success.
 	 */
 	virtual bool loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version);
+#endif
 	
 	
 	/** 
