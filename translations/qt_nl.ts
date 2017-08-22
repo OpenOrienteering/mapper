@@ -34,7 +34,7 @@
 <context>
     <name>QDialog</name>
     <message>
-        <source>What's This?</source>
+        <source>What&apos;s This?</source>
         <translation>Wat is dit?</translation>
     </message>
 </context>
@@ -133,7 +133,7 @@
         <translation>J&amp;a op alles</translation>
     </message>
     <message>
-        <source>Don't Save</source>
+        <source>Don&apos;t Save</source>
         <translation>Niet opslaan</translation>
     </message>
 </context>
@@ -254,14 +254,14 @@
         <translation>Tonen </translation>
     </message>
     <message>
-        <source>'%1' is write protected.
+        <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
-        <translation>'%1' is tegen schrijven beveiligd.
+        <translation>&apos;%1&apos; is tegen schrijven beveiligd.
 Wilt u het toch verwijderen?</translation>
     </message>
     <message>
-        <source>Are you sure you want to delete '%1'?</source>
-        <translation>Weet u zeker dat u '%1' wilt verwijderen?</translation>
+        <source>Are you sure you want to delete &apos;%1&apos;?</source>
+        <translation>Weet u zeker dat u &apos;%1&apos; wilt verwijderen?</translation>
     </message>
     <message>
         <source>List of places and bookmarks</source>
@@ -465,8 +465,8 @@ Controleer of de juiste bestandsnaam is opgegeven.</translation>
         <translation>%1 TB</translation>
     </message>
     <message>
-        <source>&lt;b&gt;The name "%1" can not be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuations marks.</source>
-        <translation>&lt;b&gt;De naam "%1" kan niet worden gebruikt.&lt;/b&gt;&lt;p&gt;Probeer een andere naam, met minder tekens of zonder leestekens.</translation>
+        <source>&lt;b&gt;The name &quot;%1&quot; can not be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuations marks.</source>
+        <translation>&lt;b&gt;De naam &quot;%1&quot; kan niet worden gebruikt.&lt;/b&gt;&lt;p&gt;Probeer een andere naam, met minder tekens of zonder leestekens.</translation>
     </message>
     <message>
         <source>%1 bytes</source>
@@ -688,7 +688,7 @@ Controleer of de juiste bestandsnaam is opgegeven.</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation></translation>
+        <translation>Annuleer</translation>
     </message>
     <message>
         <source>Help</source>
@@ -696,7 +696,7 @@ Controleer of de juiste bestandsnaam is opgegeven.</translation>
     </message>
     <message>
         <source>Reset</source>
-        <translation></translation>
+        <translation>Herstellen</translation>
     </message>
 </context>
 <context>
@@ -864,8 +864,8 @@ Wilt u het overschrijven?</translation>
         <translation>Executive</translation>
     </message>
     <message>
-        <source>The 'From' value cannot be greater than the 'To' value.</source>
-        <translation>De waarde 'Van' kan niet groter zijn dan de waarde 'Tot'.</translation>
+        <source>The &apos;From&apos; value cannot be greater than the &apos;To&apos; value.</source>
+        <translation>De waarde &apos;Van&apos; kan niet groter zijn dan de waarde &apos;Tot&apos;.</translation>
     </message>
     <message>
         <source>US Common #10 Envelope</source>
@@ -1516,7 +1516,7 @@ Kies een andere bestandsnaam.</translation>
     </message>
     <message>
         <source>Runtime</source>
-        <translation>Evaluatie tijdens uitvoeren ('runtime')</translation>
+        <translation>Evaluatie tijdens uitvoeren (&apos;runtime&apos;)</translation>
     </message>
     <message>
         <source>Documents</source>
@@ -1540,7 +1540,7 @@ Kies een andere bestandsnaam.</translation>
     </message>
     <message>
         <source>Pictures</source>
-        <translation>Foto's</translation>
+        <translation>Foto&apos;s</translation>
     </message>
 </context>
 <context>
@@ -1602,7 +1602,7 @@ Kies een andere bestandsnaam.</translation>
 <context>
     <name>QWhatsThisAction</name>
     <message>
-        <source>What's This?</source>
+        <source>What&apos;s This?</source>
         <translation>Wat is dit?</translation>
     </message>
 </context>
