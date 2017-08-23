@@ -1708,7 +1708,7 @@
     <message>
         <location filename="../src/core/georeferencing.cpp" line="238"/>
         <source>Invalid grid scale factor: %1</source>
-        <translation>Virheellinen mittakaavan skaalauskerroin</translation>
+        <translation>Virheellinen ruudukon skaalauskerroin: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="275"/>
@@ -1774,7 +1774,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="104"/>
         <source>Grid scale factor:</source>
         <extracomment>The grid scale factor is the ratio between a length in the grid plane and the corresponding length on the curved earth model. It is applied as a factor to ground distances to get grid plane distances.</extracomment>
-        <translation type="unfinished">Mittakerroin:</translation>
+        <translation>Ruudukon skaalauskerroin:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="152"/>
@@ -6174,7 +6174,7 @@ erottelut</translation>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="164"/>
         <source>Symbol mapping</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbolien kuvaus</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="232"/>
@@ -6213,7 +6213,8 @@ erottelut</translation>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="355"/>
         <source>The cross reference table has been modified.
 Do you want to save your changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ristiviittaustaulukkoa on muokattu.
+Haluatko tallentaa muutokset?</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="512"/>
@@ -6249,7 +6250,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="644"/>
         <source>Cannot load CRT file, aborting.</source>
-        <translation type="unfinished"></translation>
+        <translation>CRT-tiedostoa ei voi ladata, keskeytetään.</translation>
     </message>
 </context>
 <context>
