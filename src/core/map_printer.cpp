@@ -1155,12 +1155,42 @@ bool MapPrinter::printMap(QPrinter* printer)
 		return false;
 	}
 	
-	if (printer->paintEngine()->type() == QPaintEngine::Windows)
+	/* Non-opaque drawing of vector data to the raw printer will trigger
+	 * internal rasterization in Qt.
+	 */
+	auto engine_will_rasterize = [](const Map& map, const MapView* view, const MapPrinterOptions& options)->bool {
+		if (!view)
+			return false;
+		
+		if (options.mode != MapPrinterOptions::Raster)
+		{
+			auto visibility = view->effectiveMapVisibility();
+			if (visibility.visible && visibility.opacity < 1.0)
+				return true;
+		}
+			
+		for (int i = 0; i < map.getNumTemplates(); ++i)
+		{
+			auto temp = map.getTemplate(i);
+			if (temp->isRasterGraphics())
+				continue;
+			auto visibility = view->getTemplateVisibility(temp);
+			if (visibility.visible && visibility.opacity < 1.0)
+				return true;
+		}
+		
+		return false;
+	};
+
+	if (printer->paintEngine()->type() == QPaintEngine::Windows
+	    && !engine_will_rasterize(map, view, options) )
 	{
 		/* QWin32PrintEngine will (have to) do rounding when passing coordinates
 		 * to GDI, using the device's reported logical resolution.
 		 * We establish an MM_ISOTROPIC transformation from a higher resolution
 		 * to avoid the loss of precision due to this rounding.
+		 * However, output of rasterization produced by Qt fails when the
+		 * MM_ISOTROPIC transformation is active.
 		 */
 		
 		QWin32PrintEngine* engine = static_cast<QWin32PrintEngine*>(printer->printEngine());
