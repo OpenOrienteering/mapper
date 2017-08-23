@@ -127,7 +127,7 @@ void HomeScreenController::goToTip(int index)
 	if (tips.isEmpty())
 	{
 		// Normally, this will be read only once.
-		QFile file(QString::fromLatin1(":/help/tip-of-the-day/tips.txt"));
+		QFile file(QString::fromLatin1("doc:tip-of-the-day/tips.txt"));
 		if (file.open(QIODevice::ReadOnly))
 		{
 			while (!file.atEnd())
