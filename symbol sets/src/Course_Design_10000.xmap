@@ -587,8 +587,7 @@ D: Control feature
 E: Appearance
 F: Dimensions, combinations
 G: Location of the control flag
-H: Other information
-</description>
+H: Other information</description>
                 <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="12">
                     <element>
                         <symbol type="4" code="">
@@ -6185,8 +6184,7 @@ The default line shows a box of 5 mm by 5mm and can be removed from the final sy
                 </point_symbol>
             </symbol>
             <symbol type="1" id="115" code="8.8" name="|E| Sandy">
-                <description>Where the feature is in an area of sandy ground not indicated on the map; e.g. Spur, sandy.
-</description>
+                <description>Where the feature is in an area of sandy ground not indicated on the map; e.g. Spur, sandy.</description>
                 <point_symbol inner_radius="150" inner_color="1" outer_width="0" outer_color="-1" elements="24">
                     <element>
                         <symbol type="1" code="">
@@ -7214,8 +7212,7 @@ b) The feature extends over a significant area and the control is situated on th
                 <description>Used where:
 a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open land, east corner (inside).
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
-The orientation of the symbol indicates the direction in which the corner points.
-</description>
+The orientation of the symbol indicates the direction in which the corner points.</description>
                 <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                     <element>
                         <symbol type="2" code="">
