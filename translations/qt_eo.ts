@@ -1132,7 +1132,7 @@ Bonvolu elekti malsaman dosiernomon.</translation>
     </message>
     <message>
         <source>Could not open output redirection for writing</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne povas malfermi eligan alidirekton por skribado</translation>
     </message>
     <message>
         <source>Process operation timed out</source>
@@ -1140,7 +1140,7 @@ Bonvolu elekti malsaman dosiernomon.</translation>
     </message>
     <message>
         <source>Process crashed</source>
-        <translation type="unfinished"></translation>
+        <translation>Procezo kolapsis</translation>
     </message>
 </context>
 <context>
@@ -1512,7 +1512,7 @@ Bonvolu elekti malsaman dosiernomon.</translation>
     </message>
     <message>
         <source>Application Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Aplikaĵaj datumoj</translation>
     </message>
     <message>
         <source>Runtime</source>
