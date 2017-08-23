@@ -172,27 +172,27 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="211"/>
         <source>Element drawing at boundary</source>
-        <translation type="unfinished"></translation>
+        <translation>Отображение элемента на границе</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="213"/>
         <source>Clip elements at the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Обрезать элементы на границе.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="214"/>
         <source>Draw elements if the center is inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Отображать елементы, если центр находится внутри границы.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="215"/>
         <source>Draw elements if any point is inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Отображать елементы, если какая-нибудь точка находится внутри границы.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="216"/>
         <source>Draw elements if all points are inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Отображать елементы, если все точки находятся внутри границы.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="231"/>
@@ -2509,7 +2509,7 @@
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="271"/>
         <source>Scale the dash symbol at corners</source>
-        <translation type="unfinished"></translation>
+        <translation>Масштабировать знак конца отрезка в углах</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="519"/>
@@ -3626,12 +3626,12 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="871"/>
         <source>Symbol set ID...</source>
-        <translation type="unfinished"></translation>
+        <translation>ID набора символов…</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="871"/>
         <source>Edit the symbol set ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Редактировать ID набора символов</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="873"/>
@@ -3779,12 +3779,12 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1873"/>
         <source>Symbol set ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID набора символов</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1874"/>
         <source>Edit the symbol set ID:</source>
-        <translation type="unfinished"></translation>
+        <translation>Редактировать ID набора символов:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1901"/>
@@ -4731,12 +4731,12 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1883"/>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1894"/>
         <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
-        <translation type="unfinished"></translation>
+        <translation>Координаты поправлены так, чтобы вписываться в зону рисования OCAD 8 (-2 м … 2 м).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1905"/>
         <source>Some coordinates remain outside of the OCAD 8 drawing area. They might be unreachable in OCAD.</source>
-        <translation type="unfinished"></translation>
+        <translation>Некоторые координаты выходят за границы зоны рисования OCAD 8. Они могут быть недоступны в OCAD.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="2133"/>
@@ -5952,7 +5952,7 @@ separations</source>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="129"/>
         <source>Edit the symbol set ID:</source>
-        <translation type="unfinished"></translation>
+        <translation>Редактировать ID набора символов:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="132"/>
@@ -5963,7 +5963,7 @@ separations</source>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="136"/>
         <source>Match by symbol name</source>
-        <translation type="unfinished"></translation>
+        <translation>Совпадение по имени символа</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="141"/>
