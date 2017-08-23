@@ -6461,7 +6461,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                 <area_symbol inner_color="11" min_area="500" patterns="0"/>
             </symbol>
             <symbol type="4" id="135" code="302" name="Pond" is_hidden="true">
-                <description>Where the lake or pond is smaller than 1mm² on the printed map, the bank line is omitted.</description>
+                <description>Where the lake or pond is smaller than 1 mm² on the printed map, the bank line is omitted.</description>
                 <area_symbol inner_color="8" min_area="500" patterns="0"/>
             </symbol>
             <symbol type="1" id="136" code="303" name="Waterhole" is_hidden="true">

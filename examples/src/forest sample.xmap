@@ -1050,7 +1050,7 @@
                 </combined_symbol>
             </symbol>
             <symbol type="4" id="48" code="302" name="Pond">
-                <description>Where the lake or pond is smaller than 1mm² on the printed map, the bank line is omitted.</description>
+                <description>Where the lake or pond is smaller than 1 mm² on the printed map, the bank line is omitted.</description>
                 <area_symbol inner_color="4" min_area="1125" patterns="0"/>
             </symbol>
             <symbol type="1" id="49" code="303" name="Waterhole">

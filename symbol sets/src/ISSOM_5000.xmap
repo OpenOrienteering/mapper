@@ -1183,7 +1183,7 @@ Minimum size: 4 dashes.</description>
                 <area_symbol inner_color="32" min_area="500" patterns="0"/>
             </symbol>
             <symbol type="4" id="63" code="402" name="Open land with scattered trees">
-                <description>An area of meadows with scattered trees or bushes, with grass or similar ground cover offering very good runnability. Areas smaller than 10 mm2 at the maps scale are shown as open land (401). Symbols prominent large tree (418) and prominent bush or small tree (419) may be added.</description>
+                <description>An area of meadows with scattered trees or bushes, with grass or similar ground cover offering very good runnability. Areas smaller than 10 mm² at the maps scale are shown as open land (401). Symbols prominent large tree (418) and prominent bush or small tree (419) may be added.</description>
                 <area_symbol inner_color="-1" min_area="10000" patterns="1">
                     <pattern type="2" angle="0.785398" line_spacing="500" line_offset="0" offset_along_line="0" point_distance="500">
                         <symbol type="1" code="" name="Pattern fill 1">
@@ -1197,7 +1197,7 @@ Minimum size: 4 dashes.</description>
                 <area_symbol inner_color="33" min_area="1000" patterns="0"/>
             </symbol>
             <symbol type="4" id="65" code="404" name="Rough open land with scattered trees">
-                <description>An area of rough open land with scattered trees or bushes. Areas smaller than 16 mm2 in the map scale are either mapped as rough open land (403) or forest: easy running (405). Symbols prominent large tree (418) and prominent bush or small tree (419) may be added.</description>
+                <description>An area of rough open land with scattered trees or bushes. Areas smaller than 16 mm² in the map scale are either mapped as rough open land (403) or forest: easy running (405). Symbols prominent large tree (418) and prominent bush or small tree (419) may be added.</description>
                 <area_symbol inner_color="35" min_area="16000" patterns="1">
                     <pattern type="2" angle="0.785398" line_spacing="700" line_offset="0" offset_along_line="0" point_distance="700">
                         <symbol type="1" code="" name="Pattern fill 1">
@@ -2378,7 +2378,7 @@ North lines may be broken where they obscure small features such as boulders, kn
                 </line_symbol>
             </symbol>
             <symbol type="4" id="145" code="601.0.3" name="North lines pattern - black">
-                <description>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30mm on the 1:5000 map so they represent 150m on the ground.
+                <description>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm on the 1:5000 map so they represent 150 m on the ground.
 
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. Cut holes in the pattern to create these breaks.</description>
                 <area_symbol inner_color="-1" min_area="0" patterns="1">
