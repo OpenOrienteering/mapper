@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,13 +20,29 @@
 
 #include "renderable_implementation.h"
 
+#include <cstddef>
+#include <iterator>
+#include <memory>
+#include <vector>
+
 #include <QtMath>
+#include <QtNumeric>
+#include <QFont>
+#include <QFontMetricsF>
+#include <QPaintEngine>
 #include <QPainter>
 #include <QPen>
+#include <QPoint>
+#include <QTransform>
+// IWYU pragma: no_include <QVariant>
 
 #include "settings.h"
+#include "core/map_coord.h"
+#include "core/virtual_coord_vector.h"
+#include "core/virtual_path.h"
 #include "core/objects/object.h"
 #include "core/objects/text_object.h"
+#include "core/renderables/renderable.h"
 #include "core/symbols/area_symbol.h"
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/point_symbol.h"
@@ -36,6 +52,9 @@
 #ifdef QT_PRINTSUPPORT_LIB
 #  include "advanced_pdf_printer.h"
 #endif
+
+// IWYU pragma: no_forward_declare QFontMetricsF
+
 
 namespace {
 
@@ -595,11 +614,11 @@ AreaRenderable::AreaRenderable(const AreaSymbol* symbol, const PathPartVector& p
 	Q_ASSERT(extent.right() < 60000000);	// assert if bogus values are returned
 }
 
-AreaRenderable::AreaRenderable(const AreaSymbol* symbol, const VirtualPath& virtual_path)
+AreaRenderable::AreaRenderable(const AreaSymbol* symbol, const VirtualPath& path)
  : Renderable(symbol->getColor())
 {
-	extent = virtual_path.path_coords.calculateExtent();
-	addSubpath(virtual_path);
+	extent = path.path_coords.calculateExtent();
+	addSubpath(path);
 }
 
 void AreaRenderable::addSubpath(const VirtualPath& virtual_path)
@@ -631,7 +650,7 @@ PainterConfig AreaRenderable::getPainterConfig(const QPainterPath* clip_path) co
 	return { color_priority, PainterConfig::BrushOnly, 0, clip_path };
 }
 
-void AreaRenderable::render(QPainter &painter, const RenderConfig &) const
+void AreaRenderable::render(QPainter &painter, const RenderConfig &/*config*/) const
 {
 	painter.drawPath(path);
 	
@@ -678,7 +697,7 @@ TextRenderable::TextRenderable(const TextSymbol* symbol, const TextObject* text_
 		double underline_y1 = underline_y0 + metrics.lineWidth();
 		
 		auto num_parts = line_info->part_infos.size();
-		for (size_t j=0; j < num_parts; j++)
+		for (std::size_t j=0; j < num_parts; j++)
 		{
 			const TextObjectPartInfo& part(line_info->part_infos.at(j));
 			if (font.underline())

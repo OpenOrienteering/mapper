@@ -20,7 +20,18 @@
 
 #include "renderable.h"
 
+#include <iterator>
+#include <utility>
+
+#include <Qt>
+#include <QBrush>
+#include <QColor>
+#include <QImage>
 #include <QPainter>
+#include <QPainterPath>
+#include <QPen>
+#include <QRgb>
+#include <QTransform>
 
 #include "core/image_transparency_fixup.h"
 #include "core/map_color.h"
@@ -71,10 +82,7 @@ static_assert(false, "This file needs to be modified for correct printing on And
 
 // ### Renderable ###
 
-Renderable::~Renderable()
-{
-	; // nothing, not inlined
-}
+Renderable::~Renderable() = default;
 
 
 
@@ -87,9 +95,9 @@ SharedRenderables::~SharedRenderables()
 
 void SharedRenderables::deleteRenderables()
 {
-	for (iterator renderables = begin(); renderables != end(); )
+	for (auto renderables = begin(); renderables != end(); )
 	{
-		for (Renderable* renderable : renderables->second)
+		for (auto renderable : renderables->second)
 		{
 			delete renderable;
 		}
@@ -104,9 +112,9 @@ void SharedRenderables::deleteRenderables()
 
 void SharedRenderables::compact()
 {
-	for (iterator renderables = begin(); renderables != end(); )
+	for (auto renderables = begin(); renderables != end(); )
 	{
-		if (renderables->second.size() == 0)
+		if (renderables->second.empty())
 			renderables = erase(renderables);
 		else
 			++renderables;
@@ -123,10 +131,7 @@ ObjectRenderables::ObjectRenderables(Object& object)
 	;
 }
 
-ObjectRenderables::~ObjectRenderables()
-{
-	;
-}
+ObjectRenderables::~ObjectRenderables() = default;
 
 void ObjectRenderables::draw(const QColor& color, QPainter* painter, const RenderConfig& config) const
 {
@@ -189,7 +194,7 @@ void ObjectRenderables::takeRenderables()
 {
 	for (auto& color : *this)
 	{
-		SharedRenderables* new_container = new SharedRenderables();
+		auto new_container = new SharedRenderables();
 		
 		// Pre-allocate as much space as in the original container
 		for (const auto& renderables : *color.second)
@@ -236,8 +241,8 @@ void MapRenderables::draw(QPainter *painter, const RenderConfig &config) const
 	const QPainterPath* current_clip = nullptr;
 	
 	painter->save();
-	const_reverse_iterator end_of_colors = rend();
-	const_reverse_iterator color = rbegin();
+	auto end_of_colors = rend();
+	auto color = rbegin();
 	while (color != end_of_colors && color->first >= map->getNumColors())
 	{
 		++color;
@@ -273,7 +278,7 @@ void MapRenderables::draw(QPainter *painter, const RenderConfig &config) const
 					continue; // in release build
 				}
 				QColor color = *map_color;
-				if (state.color_priority >= 0 && map_color->getOpacity() < 1.0)
+				if (state.color_priority >= 0 && map_color->getOpacity() < 1)
 					color.setAlphaF(map_color->getOpacity());
 				if (!state.activate(painter, current_clip, config, color, initial_clip))
 				    continue;
@@ -315,13 +320,13 @@ void MapRenderables::drawOverprintingSimulation(QPainter* painter, const RenderC
 	
 	QImage separation(image->size(), QImage::Format_ARGB32_Premultiplied);
 	
-	for (Map::ColorVector::reverse_iterator map_color = map->color_set->colors.rbegin();
+	for (auto map_color = map->color_set->colors.rbegin();
 	     map_color != map->color_set->colors.rend();
 	     map_color++)
 	{
 		if ((*map_color)->getSpotColorMethod() == MapColor::SpotColor)
 		{
-			separation.fill((Qt::GlobalColor)Qt::transparent);
+			separation.fill(Qt::GlobalColor(Qt::transparent));
 			
 			// Collect all halftones and knockouts of a single color
 			QPainter p(&separation);
@@ -360,7 +365,7 @@ void MapRenderables::drawOverprintingSimulation(QPainter* painter, const RenderC
 	painter->setCompositionMode(QPainter::CompositionMode_SourceOver);
 	
 #if MAPPER_OVERPRINTING_CORRECTION > 0
-	separation.fill((Qt::GlobalColor)Qt::transparent);
+	separation.fill(Qt::GlobalColor(Qt::transparent));
 	QPainter p(&separation);
 	p.setRenderHints(hints);
 	p.setWorldTransform(t, false);
@@ -368,7 +373,7 @@ void MapRenderables::drawOverprintingSimulation(QPainter* painter, const RenderC
 	config_copy.options |= RenderConfig::RequireSpotColor;
 	draw(&p, config_copy);
 	p.end();
-	QRgb* dest = (QRgb*)separation.bits();
+	QRgb* dest = reinterpret_cast<QRgb*>(separation.bits());
 	const QRgb* dest_end = dest + separation.byteCount() / sizeof(QRgb);
 	for (QRgb* px = dest; px < dest_end; ++px)
 	{
@@ -408,8 +413,8 @@ void MapRenderables::drawColorSeparation(QPainter* painter, const RenderConfig& 
 	bool drawing_started = false;
 	
 	// For each pair of color priority and its renderables collection...
-	const_reverse_iterator end_of_colors = rend();
-	const_reverse_iterator color = rbegin();
+	auto end_of_colors = rend();
+	auto color = rbegin();
 	while (color != end_of_colors && color->first >= map->getNumColors())
 	{
 		++color;
@@ -536,11 +541,11 @@ void MapRenderables::drawColorSeparation(QPainter* painter, const RenderConfig& 
 				{
 					qreal c, m, y, k;
 					color.getCmykF(&c, &m, &y, &k);
-					color.setCmykF(c*drawing_color.factor, m*drawing_color.factor, y*drawing_color.factor, k*drawing_color.factor, 1.0f);
+					color.setCmykF(c*drawing_color.factor, m*drawing_color.factor, y*drawing_color.factor, k*drawing_color.factor, 1.0);
 				}
 				else
 				{
-					color.setCmykF(0.0f, 0.0f, 0.0f, drawing_color.factor, 1.0f);
+					color.setCmykF(0.0, 0.0, 0.0, drawing_color.factor, 1.0);
 				}
 				
 				if (!state.activate(painter, current_clip, config, color, initial_clip))
@@ -568,8 +573,8 @@ void MapRenderables::drawColorSeparation(QPainter* painter, const RenderConfig& 
 
 void MapRenderables::insertRenderablesOfObject(const Object* object)
 {
-	ObjectRenderables::const_iterator end_of_colors = object->renderables().end();
-	ObjectRenderables::const_iterator color = object->renderables().begin();
+	auto end_of_colors = object->renderables().end();
+	auto color = object->renderables().begin();
 	for (; color != end_of_colors; ++color)
 	{
 		operator[](color->first)[object] = color->second;
@@ -580,7 +585,7 @@ void MapRenderables::removeRenderablesOfObject(const Object* object, bool mark_a
 {
 	for (auto& color : *this)
 	{
-		ObjectRenderablesMap::iterator obj = color.second.find(object);
+		auto obj = color.second.find(object);
 		if (obj != color.second.end())
 		{
 			if (mark_area_as_dirty)
@@ -637,12 +642,12 @@ namespace {
 		
 		if (original.value() > 127)
 		{
-			const float factor = 0.35f;
+			const qreal factor = 0.35;
 			return QColor(factor * original.red(), factor * original.green(), factor * original.blue(), highlight_alpha);
 		}
 		else
 		{
-			const float factor = 0.15f;
+			const qreal factor = 0.15;
 			return QColor(255 - factor * (255 - original.red()), 255 - factor * (255 - original.green()), 255 - factor * (255 - original.blue()), highlight_alpha);
 		}
 	}
