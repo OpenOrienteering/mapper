@@ -912,7 +912,7 @@ The symbol is orientated to north.</source>
             <source>Marsh, minimum size</source>
             <comment>Name of symbol 308.1</comment>
             <translation>Suo, minimikoko</translation>
-    </message>
+        </message>
         <message>
             <source>A crossable marsh, usually with a distinct edge.
 The symbol shall be combined with other symbols to show runnability and openness.
@@ -2502,7 +2502,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
             <translation>Ylipääsemätön jyrkänne</translation>
         </message>
         <message>
-            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
+            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201</comment>
             <translation>Ylipääsemätön jyrkänne, pato, louhos tai korkea irtomaarinne (ks. 106) kuvataan taitekohtaan sijoitetulla tukevalla (0.35 mm) selkäviivalla josta viettosuuntaviivoilla osoitetaan jyrkänteen korkeus yläreunasta alareunaan. Tilanpuutteen takia viettosuuntaviivat voidaan jättää pois. Tämä tulee kyseeseen erikoisesti solissa. Solissa selkäviivaa voidaan ohentaa 0.30 mm. Kun jyrkänne on vesistön rannalla siten, että rantaa pitkin ei jyrkänteen alapuolelta voida kulkea, piirretään viettosuuntaviivat selvästi vesistön päälle. Rantaviiva on tältä kohtaa katkaistava. Padossa ylitysmahdollisuus kuvataan polku- tai tiemerkinnöin. Minimimitat: korkeus 3 m ja pituus 4 m.</translation>
         </message>
@@ -2512,7 +2512,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
             <translation>Ylipääsemätön jyrkänne, minimikoko</translation>
         </message>
         <message>
-            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
+            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201.0.1</comment>
             <translation>Ylipääsemätön jyrkänne, pato, louhos tai korkea irtomaarinne (ks. 106) kuvataan taitekohtaan sijoitetulla tukevalla (0.35 mm) selkäviivalla josta viettosuuntaviivoilla osoitetaan jyrkänteen korkeus yläreunasta alareunaan. Tilanpuutteen takia viettosuuntaviivat voidaan jättää pois. Tämä tulee kyseeseen erikoisesti solissa. Solissa selkäviivaa voidaan ohentaa 0.30 mm. Kun jyrkänne on vesistön rannalla siten, että rantaa pitkin ei jyrkänteen alapuolelta voida kulkea, piirretään viettosuuntaviivat selvästi vesistön päälle. Rantaviiva on tältä kohtaa katkaistava. Padossa ylitysmahdollisuus kuvataan polku- tai tiemerkinnöin. Minimimitat: korkeus 3 m ja pituus 4 m.</translation>
         </message>
@@ -4224,7 +4224,7 @@ tiheästi alueella on yksityiskohtia.</translation>
         <message>
             <source>An impassable cliff, quarry or earth bank [see symbol earth bank (106)]. Tags are drawn downwards, showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). 
 
-The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags shall clearly extend over the bank line. Minimum height is 2 meters.
+The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags shall clearly extend over the bank line. Minimum height is 2 meters.
 
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable cliff!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
@@ -4244,7 +4244,7 @@ Tätä sääntöä rikkovat kilpailijat hylätään.&lt;/span&gt;</translation>
         <message>
             <source>An impassable cliff, quarry or earth bank [see symbol earth bank (106)]. Tags are drawn downwards, showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). 
 
-The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags shall clearly extend over the bank line. Minimum height is 2 meters.
+The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags shall clearly extend over the bank line. Minimum height is 2 meters.
 
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable cliff!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
@@ -5864,7 +5864,7 @@ Suunnanottoviivat katkaistaan kohdista, joissa ne peittäisivät karttamerkkejä
 Väri: kaikki painettavat värit
 
 Symboli sisältää kaikki painettavat värit - älä laita värejä erillisinä symboleina koska virheellinen sijoittelu johtaa epäselvään painojälkeen (misregistration).  Testi toimii vain offset-painamisessa (vaatii värierottelun).</translation>
-    </message>
+        </message>
         <message>
             <source>Spot height, dot</source>
             <comment>Name of symbol 603.0.1</comment>
@@ -6340,7 +6340,7 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
             <translation type="unfinished">Ylipääsemätön jyrkänne</translation>
         </message>
         <message>
-            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
+            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201</comment>
             <translation type="unfinished">Ylipääsemätön jyrkänne, pato, louhos tai korkea irtomaarinne (ks. 106) kuvataan taitekohtaan sijoitetulla tukevalla (0.35 mm) selkäviivalla josta viettosuuntaviivoilla osoitetaan jyrkänteen korkeus yläreunasta alareunaan. Tilanpuutteen takia viettosuuntaviivat voidaan jättää pois. Tämä tulee kyseeseen erikoisesti solissa. Solissa selkäviivaa voidaan ohentaa 0.30 mm. Kun jyrkänne on vesistön rannalla siten, että rantaa pitkin ei jyrkänteen alapuolelta voida kulkea, piirretään viettosuuntaviivat selvästi vesistön päälle. Rantaviiva on tältä kohtaa katkaistava. Padossa ylitysmahdollisuus kuvataan polku- tai tiemerkinnöin. Minimimitat: korkeus 3 m ja pituus 4 m.</translation>
         </message>
@@ -6350,7 +6350,7 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
             <translation type="unfinished">Ylipääsemätön jyrkänne, minimikoko</translation>
         </message>
         <message>
-            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
+            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201.0.1</comment>
             <translation type="unfinished">Ylipääsemätön jyrkänne, pato, louhos tai korkea irtomaarinne (ks. 106) kuvataan taitekohtaan sijoitetulla tukevalla (0.35 mm) selkäviivalla josta viettosuuntaviivoilla osoitetaan jyrkänteen korkeus yläreunasta alareunaan. Tilanpuutteen takia viettosuuntaviivat voidaan jättää pois. Tämä tulee kyseeseen erikoisesti solissa. Solissa selkäviivaa voidaan ohentaa 0.30 mm. Kun jyrkänne on vesistön rannalla siten, että rantaa pitkin ei jyrkänteen alapuolelta voida kulkea, piirretään viettosuuntaviivat selvästi vesistön päälle. Rantaviiva on tältä kohtaa katkaistava. Padossa ylitysmahdollisuus kuvataan polku- tai tiemerkinnöin. Minimimitat: korkeus 3 m ja pituus 4 m.</translation>
         </message>
@@ -8153,7 +8153,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
             <translation type="unfinished">Ylipääsemätön jyrkänne</translation>
         </message>
         <message>
-            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
+            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201</comment>
             <translation type="unfinished">Ylipääsemätön jyrkänne, pato, louhos tai korkea irtomaarinne (ks. 106) kuvataan taitekohtaan sijoitetulla tukevalla (0.35 mm) selkäviivalla josta viettosuuntaviivoilla osoitetaan jyrkänteen korkeus yläreunasta alareunaan. Tilanpuutteen takia viettosuuntaviivat voidaan jättää pois. Tämä tulee kyseeseen erikoisesti solissa. Solissa selkäviivaa voidaan ohentaa 0.30 mm. Kun jyrkänne on vesistön rannalla siten, että rantaa pitkin ei jyrkänteen alapuolelta voida kulkea, piirretään viettosuuntaviivat selvästi vesistön päälle. Rantaviiva on tältä kohtaa katkaistava. Padossa ylitysmahdollisuus kuvataan polku- tai tiemerkinnöin. Minimimitat: korkeus 3 m ja pituus 4 m.</translation>
         </message>
@@ -8163,7 +8163,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
             <translation type="unfinished">Ylipääsemätön jyrkänne, minimikoko</translation>
         </message>
         <message>
-            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
+            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201.0.1</comment>
             <translation type="unfinished">Ylipääsemätön jyrkänne, pato, louhos tai korkea irtomaarinne (ks. 106) kuvataan taitekohtaan sijoitetulla tukevalla (0.35 mm) selkäviivalla josta viettosuuntaviivoilla osoitetaan jyrkänteen korkeus yläreunasta alareunaan. Tilanpuutteen takia viettosuuntaviivat voidaan jättää pois. Tämä tulee kyseeseen erikoisesti solissa. Solissa selkäviivaa voidaan ohentaa 0.30 mm. Kun jyrkänne on vesistön rannalla siten, että rantaa pitkin ei jyrkänteen alapuolelta voida kulkea, piirretään viettosuuntaviivat selvästi vesistön päälle. Rantaviiva on tältä kohtaa katkaistava. Padossa ylitysmahdollisuus kuvataan polku- tai tiemerkinnöin. Minimimitat: korkeus 3 m ja pituus 4 m.</translation>
         </message>
@@ -10220,7 +10220,7 @@ Map symbol: ISOM 703</source>
             <source>|D| Terrace</source>
             <comment>Name of symbol 1.1</comment>
             <translation>|D| Terassi</translation>
-    </message>
+        </message>
         <message>
             <source>A level area on a slope.</source>
             <comment>Description of symbol 1.1</comment>
@@ -10426,7 +10426,7 @@ Map symbol: ISOM 202</source>
             <source>|D| Cave</source>
             <comment>Name of symbol 2.3</comment>
             <translation>|D| Luola</translation>
-    </message>
+        </message>
         <message>
             <source>A hole in a rock face or hill side, often leading to underground workings.
 
@@ -10508,7 +10508,7 @@ Map symbol: ISOM 212</source>
             <source>|D| Lake</source>
             <comment>Name of symbol 3.1</comment>
             <translation>|D| Järvi</translation>
-    </message>
+        </message>
         <message>
             <source>A high point. Shown on the map with contour lines.
 
@@ -10520,7 +10520,7 @@ Map symbol: ISOM 301</source>
             <source>|D| Pond</source>
             <comment>Name of symbol 3.2</comment>
             <translation>|D| Lampi</translation>
-    </message>
+        </message>
         <message>
             <source>A small area of water.
 
@@ -10616,7 +10616,7 @@ Map symbol: ISOM 312</source>
             <source>|D| Spring</source>
             <comment>Name of symbol 3.10</comment>
             <translation>|D| Lähde</translation>
-    </message>
+        </message>
         <message>
             <source>The source of a watercourse with a distinct outflow.
 
