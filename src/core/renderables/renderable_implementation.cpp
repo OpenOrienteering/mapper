@@ -275,36 +275,36 @@ LineRenderable::LineRenderable(const LineSymbol* symbol, QPointF first, QPointF 
 
 void LineRenderable::extentIncludeCap(quint32 i, qreal half_line_width, bool end_cap, const LineSymbol* symbol, const VirtualPath& path)
 {
-	auto coords = path.coords;
+	const auto& coord = path.coords[i];
 	if (symbol->getCapStyle() == LineSymbol::RoundCap)
 	{
-		rectInclude(extent, QPointF(coords[i].x() - half_line_width, coords[i].y() - half_line_width));
-		rectInclude(extent, QPointF(coords[i].x() + half_line_width, coords[i].y() + half_line_width));
+		rectInclude(extent, QPointF(coord.x() - half_line_width, coord.y() - half_line_width));
+		rectInclude(extent, QPointF(coord.x() + half_line_width, coord.y() + half_line_width));
 		return;
 	}
 	
 	auto right = path.calculateTangent(i).perpRight();
 	right.normalize();
-	rectInclude(extent, coords[i] + half_line_width * right);
-	rectInclude(extent, coords[i] - half_line_width * right);
+	rectInclude(extent, coord + half_line_width * right);
+	rectInclude(extent, coord - half_line_width * right);
 	
 	if (symbol->getCapStyle() == LineSymbol::SquareCap)
 	{
 		auto back = right.perpRight();
 		if (end_cap)
 		    back = -back;
-		rectInclude(extent, coords[i] + half_line_width * (back - right));
-		rectInclude(extent, coords[i] + half_line_width * (back + right));
+		rectInclude(extent, coord + half_line_width * (back - right));
+		rectInclude(extent, coord + half_line_width * (back + right));
 	}
 }
 
 void LineRenderable::extentIncludeJoin(quint32 i, qreal half_line_width, const LineSymbol* symbol, const VirtualPath& path)
 {
-	auto coords = path.coords;
+	const auto& coord = path.coords[i];
 	if (symbol->getJoinStyle() == LineSymbol::RoundJoin)
 	{
-		rectInclude(extent, QPointF(coords[i].x() - half_line_width, coords[i].y() - half_line_width));
-		rectInclude(extent, QPointF(coords[i].x() + half_line_width, coords[i].y() + half_line_width));
+		rectInclude(extent, QPointF(coord.x() - half_line_width, coord.y() - half_line_width));
+		rectInclude(extent, QPointF(coord.x() + half_line_width, coord.y() + half_line_width));
 		return;
 	}
 	
@@ -316,8 +316,8 @@ void LineRenderable::extentIncludeJoin(quint32 i, qreal half_line_width, const L
 		offset_length *= qMin(params.second, 2.0 * LineSymbol::miterLimit());
 	}
 	offset.setLength(offset_length);
-	rectInclude(extent, coords[i] + offset);
-	rectInclude(extent, coords[i] - offset);
+	rectInclude(extent, coord + offset);
+	rectInclude(extent, coord - offset);
 }
 
 PainterConfig LineRenderable::getPainterConfig(const QPainterPath* clip_path) const
