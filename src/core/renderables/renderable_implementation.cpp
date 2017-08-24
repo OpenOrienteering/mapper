@@ -276,6 +276,12 @@ LineRenderable::LineRenderable(const LineSymbol* symbol, QPointF first, QPointF 
 void LineRenderable::extentIncludeCap(quint32 i, qreal half_line_width, bool end_cap, const LineSymbol* symbol, const VirtualPath& path)
 {
 	const auto& coord = path.coords[i];
+	if (half_line_width < 0.0005)
+	{
+		rectInclude(extent, coord);
+		return;
+	}
+	
 	if (symbol->getCapStyle() == LineSymbol::RoundCap)
 	{
 		rectInclude(extent, QPointF(coord.x() - half_line_width, coord.y() - half_line_width));
@@ -301,6 +307,12 @@ void LineRenderable::extentIncludeCap(quint32 i, qreal half_line_width, bool end
 void LineRenderable::extentIncludeJoin(quint32 i, qreal half_line_width, const LineSymbol* symbol, const VirtualPath& path)
 {
 	const auto& coord = path.coords[i];
+	if (half_line_width < 0.0005)
+	{
+		rectInclude(extent, coord);
+		return;
+	}
+	
 	if (symbol->getJoinStyle() == LineSymbol::RoundJoin)
 	{
 		rectInclude(extent, QPointF(coord.x() - half_line_width, coord.y() - half_line_width));
@@ -308,16 +320,87 @@ void LineRenderable::extentIncludeJoin(quint32 i, qreal half_line_width, const L
 		return;
 	}
 	
-	auto offset_length = half_line_width;
-	auto params = path.calculateTangentScaling(i);
-	auto& offset = params.first;
-	if (symbol->getJoinStyle() == LineSymbol::MiterJoin)
+	bool ok_to_coord, ok_to_next;
+	MapCoordF to_coord = path.calculateIncomingTangent(i, ok_to_coord);
+	MapCoordF to_next = path.calculateOutgoingTangent(i, ok_to_next);
+	if (!ok_to_next)
 	{
-		offset_length *= qMin(params.second, 2.0 * LineSymbol::miterLimit());
+		if (!ok_to_coord)
+			return;
+		to_next = to_coord;
 	}
-	offset.setLength(offset_length);
-	rectInclude(extent, coord + offset);
-	rectInclude(extent, coord - offset);
+	else if (!ok_to_coord)
+	{
+		to_coord = to_next;
+	}
+	
+	auto r0 = to_coord.perpRight();
+	r0.setLength(half_line_width);
+	auto r1 = to_next.perpRight();
+	r1.setLength(half_line_width);
+	
+	auto to_coord_rhs = coord + r0;
+	auto to_coord_lhs = coord - r0;
+	auto to_next_rhs  = coord + r1;
+	auto to_next_lhs  = coord - r1;
+	if (symbol->getJoinStyle() == LineSymbol::BevelJoin)
+	{
+		rectInclude(extent, to_coord_rhs);
+		rectInclude(extent, to_coord_lhs);
+		rectInclude(extent, to_next_rhs);
+		rectInclude(extent, to_next_lhs);
+		return;
+	}
+	
+	auto limit = line_width * LineSymbol::miterLimit();
+	to_coord.setLength(limit);
+	to_next.setLength(limit);
+	
+	const auto scaling = to_coord.y() * to_next.x() - to_coord.x() * to_next.y();
+	if (qIsNull(scaling) || !qIsFinite(scaling))
+		return; // straight line, no impact on extent
+	
+	// rhs boundary
+	auto p = to_coord_rhs - to_next_rhs;
+	auto factor = (to_next.y() * p.x() - to_next.x() * p.y()) / scaling;
+	if (factor > 1)
+	{
+		// outer boundary, intersection exceeds miter limit
+		rectInclude(extent, to_coord_rhs + to_coord);
+		rectInclude(extent, to_next_rhs - to_next);
+	}
+	else if (factor > 0)
+	{
+		// outer boundary, intersection within miter limit
+		rectInclude(extent, to_coord_rhs + to_coord * factor);
+	}
+	else
+	{
+		// inner boundary
+		rectInclude(extent, to_coord_rhs);
+		rectInclude(extent, to_next_rhs);
+	}
+	
+	// lhs boundary
+	p = to_coord_lhs - to_next_lhs;
+	factor = (to_next.y() * p.x() - to_next.x() * p.y()) / scaling;
+	if (factor > 1)
+	{
+		// outer boundary, intersection exceeds miter limit
+		rectInclude(extent, to_coord_lhs + to_coord);
+		rectInclude(extent, to_next_lhs - to_next);
+	}
+	else if (factor > 0)
+	{
+		// outer boundary, intersection within miter limit
+		rectInclude(extent, to_coord_lhs + to_coord * factor);
+	}
+	else
+	{
+		// inner boundary, catch rare cases
+		rectInclude(extent, to_coord_lhs);
+		rectInclude(extent, to_next_lhs);
+	}
 }
 
 PainterConfig LineRenderable::getPainterConfig(const QPainterPath* clip_path) const
