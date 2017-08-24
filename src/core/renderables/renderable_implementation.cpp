@@ -86,8 +86,8 @@ PainterConfig DotRenderable::getPainterConfig(const QPainterPath* clip_path) con
 
 void DotRenderable::render(QPainter &painter, const RenderConfig &config) const
 {
-	if (config.options.testFlag(RenderConfig::ForceMinSize) && extent.width() * config.scaling < 1.5f)
-		painter.drawEllipse(extent.center(), 0.5f / config.scaling, 0.5f * config.scaling);
+	if (config.options.testFlag(RenderConfig::ForceMinSize) && extent.width() * config.scaling < 1.5)
+		painter.drawEllipse(extent.center(), 0.5 / config.scaling, 0.5 * config.scaling);
 	else
 		painter.drawEllipse(extent);
 }
@@ -98,11 +98,11 @@ void DotRenderable::render(QPainter &painter, const RenderConfig &config) const
 
 CircleRenderable::CircleRenderable(const PointSymbol* symbol, MapCoordF coord)
  : Renderable(symbol->getOuterColor())
- , line_width(0.001f * symbol->getOuterWidth())
+ , line_width(0.001 * symbol->getOuterWidth())
 {
 	double x = coord.x();
 	double y = coord.y();
-	double radius = (0.001 * symbol->getInnerRadius()) + 0.5f * line_width;
+	double radius = (0.001 * symbol->getInnerRadius()) + line_width/2;
 	rect = QRectF(x - radius, y - radius, 2 * radius, 2 * radius);
 	extent = QRectF(rect.x() - 0.5*line_width, rect.y() - 0.5*line_width, rect.width() + line_width, rect.height() + line_width);
 }
@@ -114,8 +114,8 @@ PainterConfig CircleRenderable::getPainterConfig(const QPainterPath* clip_path) 
 
 void CircleRenderable::render(QPainter &painter, const RenderConfig &config) const
 {
-	if (config.options.testFlag(RenderConfig::ForceMinSize) && rect.width() * config.scaling < 1.5f)
-		painter.drawEllipse(rect.center(), 0.5f / config.scaling, 0.5f / config.scaling);
+	if (config.options.testFlag(RenderConfig::ForceMinSize) && rect.width() * config.scaling < 1.5)
+		painter.drawEllipse(rect.center(), 0.5 / config.scaling, 0.5 / config.scaling);
 	else
 		painter.drawEllipse(rect);
 }
@@ -126,11 +126,11 @@ void CircleRenderable::render(QPainter &painter, const RenderConfig &config) con
 
 LineRenderable::LineRenderable(const LineSymbol* symbol, const VirtualPath& virtual_path, bool closed)
  : Renderable(symbol->getColor())
- , line_width(0.001f * symbol->getLineWidth())
+ , line_width(0.001 * symbol->getLineWidth())
 {
 	Q_ASSERT(virtual_path.size() >= 2);
 	
-	float half_line_width = (color_priority < 0) ? 0.0f : 0.5f * line_width;
+	qreal half_line_width = (color_priority < 0) ? 0 : line_width/2;
 	
 	switch (symbol->getCapStyle())
 	{
@@ -156,7 +156,7 @@ LineRenderable::LineRenderable(const LineSymbol* symbol, const VirtualPath& virt
 	
 	auto i = virtual_path.first_index;
 	path.moveTo(coords[i]);
-	extent = QRectF(coords[i].x(), coords[i].y(), 0.0001f, 0.0001f);
+	extent = QRectF(coords[i].x(), coords[i].y(), 0.0001, 0.0001);
 	extentIncludeCap(i, half_line_width, false, symbol, virtual_path);
 	
 	for (++i; i <= virtual_path.last_index; ++i)
@@ -230,11 +230,11 @@ LineRenderable::LineRenderable(const LineSymbol* symbol, const VirtualPath& virt
 	{
 		//  This happens for point symbols with curved lines in them.
 		const auto& path_coords = virtual_path.path_coords;
-		Q_ASSERT(path_coords.front().param == 0.0);
-		Q_ASSERT(path_coords.back().param == 0.0);
+		Q_ASSERT(path_coords.front().param == 0.0f);
+		Q_ASSERT(path_coords.back().param == 0.0f);
 		for (auto i = path_coords.size()-1; i > 0; --i)
 		{
-			if (path_coords[i].param != 0.0)
+			if (path_coords[i].param != 0.0f)
 			{
 				const auto& pos = path_coords[i].pos;
 				auto to_coord   = pos - path_coords[i-1].pos;
@@ -254,11 +254,11 @@ LineRenderable::LineRenderable(const LineSymbol* symbol, const VirtualPath& virt
 
 LineRenderable::LineRenderable(const LineSymbol* symbol, QPointF first, QPointF second)
  : Renderable(symbol->getColor())
- , line_width(0.001f * symbol->getLineWidth())
+ , line_width(0.001 * symbol->getLineWidth())
  , cap_style(Qt::FlatCap)
  , join_style(Qt::MiterJoin)
 {
-	qreal half_line_width = (color_priority < 0) ? 0.0f : 0.5f * line_width;
+	qreal half_line_width = (color_priority < 0) ? 0 : line_width/2;
 	
 	auto right = MapCoordF(second - first).perpRight();
 	right.normalize();
@@ -273,7 +273,7 @@ LineRenderable::LineRenderable(const LineSymbol* symbol, QPointF first, QPointF 
 	path.lineTo(second);
 }
 
-void LineRenderable::extentIncludeCap(quint32 i, float half_line_width, bool end_cap, const LineSymbol* symbol, const VirtualPath& path)
+void LineRenderable::extentIncludeCap(quint32 i, qreal half_line_width, bool end_cap, const LineSymbol* symbol, const VirtualPath& path)
 {
 	auto coords = path.coords;
 	if (symbol->getCapStyle() == LineSymbol::RoundCap)
@@ -291,14 +291,14 @@ void LineRenderable::extentIncludeCap(quint32 i, float half_line_width, bool end
 	if (symbol->getCapStyle() == LineSymbol::SquareCap)
 	{
 		auto back = right.perpRight();
-		
-		float sign = end_cap ? -1 : 1;
-		rectInclude(extent, coords[i] + half_line_width * (sign*back - right));
-		rectInclude(extent, coords[i] + half_line_width * (sign*back + right));
+		if (end_cap)
+		    back = -back;
+		rectInclude(extent, coords[i] + half_line_width * (back - right));
+		rectInclude(extent, coords[i] + half_line_width * (back + right));
 	}
 }
 
-void LineRenderable::extentIncludeJoin(quint32 i, float half_line_width, const LineSymbol* symbol, const VirtualPath& path)
+void LineRenderable::extentIncludeJoin(quint32 i, qreal half_line_width, const LineSymbol* symbol, const VirtualPath& path)
 {
 	auto coords = path.coords;
 	if (symbol->getJoinStyle() == LineSymbol::RoundJoin)
@@ -619,7 +619,7 @@ TextRenderable::TextRenderable(const TextSymbol* symbol, const TextObject* text_
 	QTransform t { 1.0, 0.0, 0.0, 1.0, anchor_x, anchor_y };
 	t.scale(scale_factor, scale_factor);
 	
-	auto rotation_rad = text_object->getRotation();
+	auto rotation_rad = qreal(text_object->getRotation());
 	if (!qIsNull(rotation_rad))
 	{
 		rotation = -qRadiansToDegrees(rotation_rad);

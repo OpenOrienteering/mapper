@@ -291,7 +291,7 @@ qreal TextSymbolSettings::calculateLetterHeight() const
 {
 	QPainterPath path;
 	path.addText(0.0, 0.0, symbol->getQFont(), letter_edit->text());
-	return path.boundingRect().height() / qreal(TextSymbol::internal_point_size);
+	return path.boundingRect().height() / TextSymbol::internal_point_size;
 }
 
 void TextSymbolSettings::updateLetterSizeEdit()

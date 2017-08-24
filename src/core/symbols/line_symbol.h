@@ -170,7 +170,7 @@ public:
 	 * TODO: Should that better be a line property?
 	 * FIXME: shall be 0 for border lines.
 	 */
-	static float miterLimit() {return 1;}
+	static constexpr qreal miterLimit() { return 1; }
 	
 	// Getters / Setters
 	inline int getLineWidth() const {return line_width;}

@@ -54,8 +54,6 @@
 #include "util/util.h"
 
 
-const float TextSymbol::internal_point_size = 256;
-
 TextSymbol::TextSymbol()
 : Symbol(Symbol::Text)
 , metrics(QFont())

@@ -62,7 +62,7 @@ public:
 	PainterConfig getPainterConfig(const QPainterPath* clip_path = nullptr) const override;
 	
 protected:
-	const float line_width;
+	const qreal line_width;
 	QRectF rect;
 };
 
@@ -76,11 +76,11 @@ public:
 	PainterConfig getPainterConfig(const QPainterPath* clip_path = nullptr) const override;
 	
 protected:
-	void extentIncludeCap(quint32 i, float half_line_width, bool end_cap, const LineSymbol* symbol, const VirtualPath& path);
+	void extentIncludeCap(quint32 i, qreal half_line_width, bool end_cap, const LineSymbol* symbol, const VirtualPath& path);
 	
-	void extentIncludeJoin(quint32 i, float half_line_width, const LineSymbol* symbol, const VirtualPath& path);
+	void extentIncludeJoin(quint32 i, qreal half_line_width, const LineSymbol* symbol, const VirtualPath& path);
 	
-	const float line_width;
+	const qreal line_width;
 	QPainterPath path;
 	Qt::PenCapStyle cap_style;
 	Qt::PenJoinStyle join_style;
@@ -115,10 +115,10 @@ protected:
 	void renderCommon(QPainter& painter, const RenderConfig& config) const;
 	
 	QPainterPath path;
-	double anchor_x;
-	double anchor_y;
-	double rotation;
-	double scale_factor;
+	qreal anchor_x;
+	qreal anchor_y;
+	qreal rotation;
+	qreal scale_factor;
 };
 
 /** Renderable for displaying framing line for text. */
@@ -130,7 +130,7 @@ public:
 	void render(QPainter& painter, const RenderConfig& config) const override;
 	
 protected:
-	double framing_line_width;
+	qreal framing_line_width;
 };
 
 
