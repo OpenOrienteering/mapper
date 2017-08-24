@@ -2751,7 +2751,7 @@
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="271"/>
         <source>Scale the dash symbol at corners</source>
-        <translation type="unfinished"></translation>
+        <translation>Schaal het streep-symbool op de hoeken</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="519"/>
@@ -5010,12 +5010,12 @@ en gebruik -indien beschikbaar- het muiswiel om uit te vergroten/verkleinen.</tr
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1883"/>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1894"/>
         <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
-        <translation type="unfinished"></translation>
+        <translation>Coördinaten zijn aangepast om binnen het OCAD 8 werkgebied te passen (-2 m ... 2 m).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1905"/>
         <source>Some coordinates remain outside of the OCAD 8 drawing area. They might be unreachable in OCAD.</source>
-        <translation type="unfinished"></translation>
+        <translation>Enkele coördinaten vallen nog buiten het OCAD 8 werkgebied. Deze zouden niet bereikbaar kunnen zijn in OCAD.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="2133"/>
@@ -6741,7 +6741,7 @@ Wijzigingen opslaan?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1276"/>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation>Beschrijving</translation>
     </message>
 </context>
 <context>

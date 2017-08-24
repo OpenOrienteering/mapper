@@ -1708,7 +1708,7 @@
     <message>
         <location filename="../src/core/georeferencing.cpp" line="238"/>
         <source>Invalid grid scale factor: %1</source>
-        <translation>Virheellinen mittakaavan skaalauskerroin</translation>
+        <translation>Virheellinen ruudukon skaalauskerroin: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="275"/>
@@ -1774,7 +1774,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="104"/>
         <source>Grid scale factor:</source>
         <extracomment>The grid scale factor is the ratio between a length in the grid plane and the corresponding length on the curved earth model. It is applied as a factor to ground distances to get grid plane distances.</extracomment>
-        <translation type="unfinished">Mittakerroin:</translation>
+        <translation>Ruudukon skaalauskerroin:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="152"/>
@@ -4077,7 +4077,7 @@ Haluatko silti tuoda datan?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="890"/>
         <source>Show/Hide the tag selection window</source>
-        <translation type="unfinished"></translation>
+        <translation>Näytä/piilota tagit-valintaikkuna</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="931"/>
@@ -4132,7 +4132,7 @@ Haluatko silti tuoda datan?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="964"/>
         <source>Align map with north</source>
-        <translation type="unfinished"></translation>
+        <translation>Kohdista kartta pohjoiseen</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="991"/>
@@ -4366,7 +4366,7 @@ valittu</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3135"/>
         <source>Merging holes failed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Reikien yhdistäminen epäonnistui.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3424"/>
@@ -4376,7 +4376,7 @@ valittu</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3424"/>
         <source>Are you sure you want to delete all temporary GPS markers? This cannot be undone.</source>
-        <translation type="unfinished"></translation>
+        <translation>Oletko varma, että haluat poistaa kaikki väliaikaiset GPS-merkit? Tätä toimintoa ei voi peruuttaa.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3619"/>
@@ -5375,7 +5375,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="479"/>
         <source>Failed to transform the coordinates.</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinaattien muuntaminen epäonnistui.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="484"/>
@@ -5803,7 +5803,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="226"/>
         <source>Template appearance may differ.</source>
-        <translation type="unfinished"></translation>
+        <translation>Taustakartan ulkonäkö voi vaihdella.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="233"/>
@@ -6174,7 +6174,7 @@ erottelut</translation>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="164"/>
         <source>Symbol mapping</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbolien kuvaus</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="232"/>
@@ -6213,7 +6213,8 @@ erottelut</translation>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="355"/>
         <source>The cross reference table has been modified.
 Do you want to save your changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ristiviittaustaulukkoa on muokattu.
+Haluatko tallentaa muutokset?</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="512"/>
@@ -6249,7 +6250,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="644"/>
         <source>Cannot load CRT file, aborting.</source>
-        <translation type="unfinished"></translation>
+        <translation>CRT-tiedostoa ei voi ladata, keskeytetään.</translation>
     </message>
 </context>
 <context>
@@ -6619,7 +6620,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1276"/>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation>Kuvaus</translation>
     </message>
 </context>
 <context>

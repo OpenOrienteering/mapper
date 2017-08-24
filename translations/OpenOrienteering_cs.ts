@@ -2672,7 +2672,7 @@
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="271"/>
         <source>Scale the dash symbol at corners</source>
-        <translation type="unfinished"></translation>
+        <translation>Zvětšovat symbol čárky v rozích</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="519"/>
@@ -4956,12 +4956,12 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1883"/>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1894"/>
         <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
-        <translation type="unfinished"></translation>
+        <translation>Souřadnice jsou upraveny aby odpovídaly oblasti kresby v OCAD 8 (-2 m ... 2 m).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1905"/>
         <source>Some coordinates remain outside of the OCAD 8 drawing area. They might be unreachable in OCAD.</source>
-        <translation type="unfinished"></translation>
+        <translation>Některé souřadnice zůstávají mimo oblast kresby v OCAD 8. Mohou být v OCADu nedosažitelné.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="2133"/>
@@ -6725,7 +6725,7 @@ Chcete uložit vaše změny?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1276"/>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation>Popis</translation>
     </message>
 </context>
 <context>

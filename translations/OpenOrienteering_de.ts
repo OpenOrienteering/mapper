@@ -2571,7 +2571,7 @@
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="271"/>
         <source>Scale the dash symbol at corners</source>
-        <translation type="unfinished"></translation>
+        <translation>Strichelungssymbol an Ecken skalieren</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="519"/>
@@ -4827,12 +4827,12 @@ Zoomen ist mit dem Mausrad möglich.</translation>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1883"/>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1894"/>
         <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Koordinaten wurden angepasst, um in die OCAD-8-Zeichenfläche zu passen (-2 m…2 m).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1905"/>
         <source>Some coordinates remain outside of the OCAD 8 drawing area. They might be unreachable in OCAD.</source>
-        <translation type="unfinished"></translation>
+        <translation>Einige Koordinaten bleiben außerhalb der OCAD-8-Zeichenfläche. Sie könnten in OCAD nicht erreichbar sein.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="2133"/>
@@ -6559,7 +6559,7 @@ Sollen die Änderungen gesichert werden?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1276"/>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation>Beschreibung</translation>
     </message>
 </context>
 <context>

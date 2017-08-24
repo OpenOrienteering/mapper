@@ -5300,7 +5300,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="178"/>
         <source>Line join:</source>
-        <translation type="unfinished">Kuniĝo de linioj:</translation>
+        <translation>Kuniĝo de linioj:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="180"/>
@@ -6318,7 +6318,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1276"/>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation>Priskribo</translation>
     </message>
 </context>
 <context>
