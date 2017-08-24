@@ -208,8 +208,8 @@ void EditLineTool::dragStart()
 		object_mover.reset(new ObjectMover(map, click_pos_map));
 		if (hoveringOverFrame())
 		{
-			for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(), it_end = map->selectedObjectsEnd(); it != it_end; ++it)
-				object_mover->addObject(*it);
+			for (auto object : map->selectedObjects())
+				object_mover->addObject(object);
 		}
 		else
 		{
@@ -419,8 +419,8 @@ int EditLineTool::updateDirtyRectImpl(QRectF& rect)
 	// Control points
 	if (show_object_points)
 	{
-		for (Map::ObjectSelection::const_iterator it = map()->selectedObjectsBegin(), end = map()->selectedObjectsEnd(); it != end; ++it)
-			(*it)->includeControlPointsRect(rect);
+		for (auto object : map()->selectedObjects())
+			object->includeControlPointsRect(rect);
 	}
 	
 	// Box selection

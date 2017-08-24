@@ -64,7 +64,7 @@ friend class XMLImportExport;
 public:
 	/** Constructs an empty point symbol. */
 	PointSymbol() noexcept;
-	virtual ~PointSymbol();
+	~PointSymbol() override;
 	Symbol* duplicate(const MapColorMap* color_map = nullptr) const override;
 	
 	bool validate() const override;

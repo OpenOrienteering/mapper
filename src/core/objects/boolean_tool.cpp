@@ -441,6 +441,7 @@ void BooleanTool::pathObjectToPolygons(
 			--path_coords_end;
 		
 		ClipperLib::Path polygon;
+		polygon.reserve(path_coords_end);
 		for (auto i = 0u; i < path_coords_end; ++i)
 		{
 			auto& path_coord = path_coords[i];

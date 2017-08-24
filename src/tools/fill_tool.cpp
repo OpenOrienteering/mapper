@@ -37,7 +37,7 @@ FillTool::FillTool(MapEditorController* editor, QAction* tool_button)
 	drawing_symbol = editor->activeSymbol();
 	setDrawingSymbol(editor->activeSymbol());
 	
-	connect(editor, SIGNAL(activeSymbolChanged(const Symbol*)), this, SLOT(setDrawingSymbol(const Symbol*)));
+	connect(editor, &MapEditorController::activeSymbolChanged, this, &FillTool::setDrawingSymbol);
 }
 
 FillTool::~FillTool()
@@ -140,11 +140,10 @@ int FillTool::fill(const QRectF& extent)
 		{
 			// The outline does not contain start_pixel.
 			// Jump to the rightmost pixel of the boundary with same y as the start.
-			for (size_t b = 0, size = boundary.size(); b < size; ++b)
+			for (const auto& point : boundary)
 			{
-				if (boundary[b].y() == start_pixel.y()
-					&& boundary[b].x() > start_pixel.x())
-					start_pixel = boundary[b];
+				if (point.y() == start_pixel.y() && point.x() > start_pixel.x())
+					start_pixel = point;
 			}
 			
 			// Skip over the rest of the floating object.
@@ -271,7 +270,7 @@ void FillTool::drawObjectIDs(Map* map, QPainter* painter, const RenderConfig &co
 	}
 }
 
-int FillTool::traceBoundary(QImage image, QPoint start_pixel, QPoint test_pixel, std::vector< QPoint >& out_boundary)
+int FillTool::traceBoundary(const QImage& image, QPoint start_pixel, QPoint test_pixel, std::vector<QPoint>& out_boundary)
 {
 	out_boundary.clear();
 	out_boundary.reserve(4096);
@@ -346,7 +345,7 @@ int FillTool::traceBoundary(QImage image, QPoint start_pixel, QPoint test_pixel,
 	return inside ? 1 : 0;
 }
 
-bool FillTool::fillBoundary(const QImage& image, const std::vector< QPoint >& boundary, QTransform image_to_map)
+bool FillTool::fillBoundary(const QImage& image, const std::vector<QPoint>& boundary, const QTransform& image_to_map)
 {
 	// Test of simpler implementation,
 	// does not work properly like this (would need fixing of path->simplify() and dilatation of path)

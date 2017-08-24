@@ -22,8 +22,8 @@
 
 #include <vector>
 
+#include <QCoreApplication>
 #include <QHash>
-#include <QObject>
 #include <QString>
 #include <QVariant>
 
@@ -39,16 +39,18 @@ class MapView;
  *  Subclasses should define default values for options they intend to use in their constructors,
  *  by calling setOption() with the relevant values. There is no such thing as an "implicit default"
  *  for options.
- * 
- *  ImportExport inherits QObject for translation purposes.
  */
-class ImportExport : public QObject
+class ImportExport
 {
-Q_OBJECT
+	Q_DECLARE_TR_FUNCTIONS(ImportExport)
+	
 public:
 	/** Creates a new importer or exporter with the given input stream, map, and view.
 	 */
 	ImportExport(QIODevice* stream, Map *map, MapView *view);
+	
+	ImportExport(const ImportExport&) = delete;
+	ImportExport(ImportExport&&) = delete;
 	
 	/** Destroys an importer or exporter.
 	 */
@@ -60,7 +62,7 @@ public:
 	
 	/** Sets an option in this importer or exporter.
 	 */
-	void setOption(const QString& name, QVariant value);
+	void setOption(const QString& name, const QVariant& value);
 	
 	/** Retrieves the value of an options in this importer or exporter. If the option does not have
 	 *  a value - either a default value assigned in the constructor, or a custom value assigned
@@ -119,7 +121,8 @@ class ImportAction
  */
 class Importer : public ImportExport
 {
-Q_OBJECT
+	Q_DECLARE_TR_FUNCTIONS(Importer)
+	
 public:
 	/** Creates a new Importer with the given output stream, map, and view.
 	 */
@@ -127,7 +130,7 @@ public:
 	
 	/** Destroys this Importer.
 	 */
-	virtual ~Importer();
+	~Importer() override;
 	
 	/** Returns the current list of action items.
 	 */
@@ -174,7 +177,8 @@ private:
  */
 class Exporter : public ImportExport
 {
-Q_OBJECT
+	Q_DECLARE_TR_FUNCTIONS(Exporter)
+	
 public:
 	/** Creates a new Importer with the given i/o stream, map, and view.
 	 */
@@ -182,7 +186,7 @@ public:
 	
 	/** Destroys the current Exporter.
 	 */
-	virtual ~Exporter();
+	~Exporter() override;
 	
 	/** Exports the map and view to the given file. If a fatal error is encountered (such as a
 	 *  permission problem), than this method should throw a FormatException. If the export can
@@ -215,7 +219,7 @@ void ImportExport::addWarning(const QString& str)
 }
 
 inline
-void ImportExport::setOption(const QString& name, QVariant value)
+void ImportExport::setOption(const QString& name, const QVariant& value)
 {
 	options[name] = value;
 }

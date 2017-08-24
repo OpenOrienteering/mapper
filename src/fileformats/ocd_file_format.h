@@ -52,10 +52,10 @@ public:
 	bool understands(const unsigned char *buffer, std::size_t sz) const override;
 	
 	/// \copydoc FileFormat::createImporter()
-	virtual Importer* createImporter(QIODevice* stream, Map *map, MapView *view) const override;
+	Importer* createImporter(QIODevice* stream, Map *map, MapView *view) const override;
 	
 	/// \copydoc FileFormat::createExporter()
-	virtual Exporter* createExporter(QIODevice* stream, Map* map, MapView* view) const override;
+	Exporter* createExporter(QIODevice* stream, Map* map, MapView* view) const override;
 };
 
 #endif // OPENORIENTEERING_OCD_FILE_FORMAT

@@ -838,8 +838,8 @@ void Object::includeControlPointsRect(QRectF& rect) const
 	{
 		const TextObject* text = asText();
 		std::vector<QPointF> text_handles(text->controlPoints());
-		for (std::size_t i = 0; i < text_handles.size(); ++i)
-			rectInclude(rect, text_handles[i]);
+		for (auto& text_handle : text_handles)
+			rectInclude(rect, text_handle);
 	}
 }
 
@@ -1111,7 +1111,7 @@ void PathObject::normalize()
 	}
 }
 
-bool PathObject::intersectsBox(QRectF box) const
+bool PathObject::intersectsBox(const QRectF& box) const
 {
 	// Check path parts for an intersection with box
 	if (std::any_of(begin(path_parts), end(path_parts), [&box](const PathPart& part) { return part.intersectsBox(box); }))
@@ -3252,7 +3252,7 @@ void PointObject::setRotation(MapCoordF vector)
 	setRotation(atan2(vector.x(), vector.y()));
 }
 
-bool PointObject::intersectsBox(QRectF box) const
+bool PointObject::intersectsBox(const QRectF& box) const
 {
 	return box.contains(QPointF(coords.front()));
 }

@@ -58,9 +58,9 @@ class DrawLineAndAreaTool : public MapEditorTool
 Q_OBJECT
 public:
 	DrawLineAndAreaTool(MapEditorController* editor, Type tool_type, QAction* tool_action, bool is_helper_tool);
-	virtual ~DrawLineAndAreaTool();
+	~DrawLineAndAreaTool() override;
 	
-	virtual void leaveEvent(QEvent* event);
+	void leaveEvent(QEvent* event) override;
 	
 signals:
 	void dirtyRectChanged(const QRectF& rect);

@@ -116,7 +116,7 @@ public:
 	
 	QRectF calculateExtent() const;
 	
-	bool intersectsBox(QRectF box) const;
+	bool intersectsBox(const QRectF& box) const;
 	
 	bool isPointInside(MapCoordF coord) const;
 	
@@ -232,7 +232,7 @@ public:
 	
 	QRectF calculateExtent() const;
 	
-	bool intersectsBox(QRectF box) const;
+	bool intersectsBox(const QRectF& box) const;
 	
 	bool isPointInside(MapCoordF coord) const;
 	
@@ -407,7 +407,7 @@ QRectF VirtualPath::calculateExtent() const
 }
 
 inline
-bool VirtualPath::intersectsBox(QRectF box) const
+bool VirtualPath::intersectsBox(const QRectF& box) const
 {
 	return path_coords.intersectsBox(box);
 }

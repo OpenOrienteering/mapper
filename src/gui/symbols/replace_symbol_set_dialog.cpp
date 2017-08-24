@@ -279,7 +279,7 @@ void ReplaceSymbolSetDialog::openCrtFile()
 					auto error_msg = tr("There are multiple replacements for symbol %1.")
 					                 .arg(item.query.symbolOperand()->getNumberAsString());
 					QMessageBox::warning(this, Map::tr("Error"),
-					  tr("Cannot open file:\n%1\n\n%2").arg(path).arg(error_msg) );
+					  tr("Cannot open file:\n%1\n\n%2").arg(path, error_msg) );
 					return;
 				}
 			}
@@ -337,7 +337,8 @@ bool ReplaceSymbolSetDialog::saveCrtFile()
 		}
 		/// \todo Reused translation, consider generalized context
 		QMessageBox::warning(this, Map::tr("Error"),
-		                     tr("Cannot save file:\n%1\n\n%2").arg(path).arg(crt_file.errorString()) );
+		                     tr("Cannot save file:\n%1\n\n%2")
+		                     .arg(path, crt_file.errorString()) );
 	}
 	return false;
 }

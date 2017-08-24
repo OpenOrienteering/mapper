@@ -206,7 +206,7 @@ void UndoManager::clearRedoSteps()
 	}
 }
 
-void UndoManager::clear(StepList &list, StepList::iterator begin, StepList::iterator end)
+void UndoManager::clear(StepList &list, StepList::iterator begin, StepList::iterator end)  // clazy:exclude=function-args-by-ref
 {
 	for (StepList::iterator step = begin; step != end; ++step)
 		delete *step;

@@ -39,16 +39,16 @@ class PanTool : public MapEditorToolBase
 Q_OBJECT
 public:
 	PanTool(MapEditorController* editor, QAction* tool_action);
-	virtual ~PanTool();
+	~PanTool() override;
 	
 protected:
-	virtual void updateStatusText() override;
-	virtual void objectSelectionChangedImpl() override;
-	virtual void clickPress() override;
-	virtual void dragStart() override;
-	virtual void dragMove() override;
-	virtual void dragFinish() override;
-	virtual void dragCanceled() override;
+	void updateStatusText() override;
+	void objectSelectionChangedImpl() override;
+	void clickPress() override;
+	void dragStart() override;
+	void dragMove() override;
+	void dragFinish() override;
+	void dragCanceled() override;
 };
 
 #endif

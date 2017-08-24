@@ -328,8 +328,7 @@ void GeoreferencingDialog::projectionChanged()
 	  arg(latitude).arg(longitude);
 	link_label->setText(
 	  tr("<a href=\"%1\">OpenStreetMap</a> | <a href=\"%2\">World of O Maps</a>").
-	  arg(osm_link).
-	  arg(worldofo_link)
+	  arg(osm_link, worldofo_link)
 	);
 	
 	QString error = georef->getErrorText();
@@ -729,7 +728,7 @@ bool GeoreferencingTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coo
 		dialog->setMapRefPoint(MapCoord(map_coord));
 		// fall through
 	case Qt::RightButton:
-		QTimer::singleShot(0, dialog, SIGNAL(exec()));
+		QTimer::singleShot(0, dialog, SIGNAL(exec()));  // clazy:exclude=old-style-connect
 		handled = true;
 		break;
 	default:

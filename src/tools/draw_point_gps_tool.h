@@ -50,7 +50,7 @@ class DrawPointGPSTool : public MapEditorToolBase
 Q_OBJECT
 public:
 	DrawPointGPSTool(GPSDisplay* gps_display, MapEditorController* editor, QAction* tool_action);
-	virtual ~DrawPointGPSTool();
+	~DrawPointGPSTool() override;
 	
 public slots:
 	void newGPSPosition(MapCoordF coord, float accuracy);
@@ -60,14 +60,14 @@ protected slots:
 	void symbolDeleted(int pos, const Symbol* old_symbol);
 	
 protected:
-	virtual void initImpl();
-	virtual int updateDirtyRectImpl(QRectF& rect);
-	virtual void drawImpl(QPainter* painter, MapWidget* widget);
-	virtual void updateStatusText();
-	virtual void objectSelectionChangedImpl();
+	void initImpl() override;
+	int updateDirtyRectImpl(QRectF& rect) override;
+	void drawImpl(QPainter* painter, MapWidget* widget) override;
+	void updateStatusText() override;
+	void objectSelectionChangedImpl() override;
 	
-	virtual void clickRelease();
-	virtual bool keyPress(QKeyEvent* event);
+	void clickRelease() override;
+	bool keyPress(QKeyEvent* event) override;
 	
 	double x_sum;
 	double y_sum;

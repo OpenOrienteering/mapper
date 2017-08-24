@@ -32,10 +32,10 @@ void UndoManagerTest::testUndoRedo()
 {
 	Map* const map = nullptr;
 	UndoManager undo_manager(map);
-	connect(&undo_manager, SIGNAL(loadedChanged(bool)),  this, SLOT(loadedChanged(bool)));
-	connect(&undo_manager, SIGNAL(cleanChanged(bool)),   this, SLOT(cleanChanged(bool)));
-	connect(&undo_manager, SIGNAL(canRedoChanged(bool)), this, SLOT(canRedoChanged(bool)));
-	connect(&undo_manager, SIGNAL(canUndoChanged(bool)), this, SLOT(canUndoChanged(bool)));
+	connect(&undo_manager, &UndoManager::loadedChanged,  this, &UndoManagerTest::loadedChanged);
+	connect(&undo_manager, &UndoManager::cleanChanged,   this, &UndoManagerTest::cleanChanged);
+	connect(&undo_manager, &UndoManager::canRedoChanged, this, &UndoManagerTest::canRedoChanged);
+	connect(&undo_manager, &UndoManager::canUndoChanged, this, &UndoManagerTest::canUndoChanged);
 	
 	undo_manager.setClean();
 	QVERIFY(undo_manager.isClean());

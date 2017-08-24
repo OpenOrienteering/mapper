@@ -30,6 +30,7 @@
 #include <QStyleOptionMenuItem>
 
 #include "settings.h"
+#include "util/backports.h"
 
 PieMenu::PieMenu(QWidget* parent)
 : QWidget(parent, Qt::Popup | Qt::FramelessWindowHint),	// NOTE: use Qt::Window for debugging to avoid mouse grab
@@ -71,33 +72,22 @@ void PieMenu::setMinimumActionCount(int count)
 
 int PieMenu::visibleActionCount() const
 {
-	int count = 0;
-	for (int i = 0, end = actions().size(); i < end; ++i)
-	{
-		const QAction* action = actions()[i];
-		if (action->isVisible() && !action->isSeparator())
-			++count;
-	}
-	return count;
+	const auto actions = this->actions();
+	return int(std::count_if(actions.begin(), actions.end(), [](const auto action) {
+		return action->isVisible() && !action->isSeparator();
+	}));
 }
 
 bool PieMenu::isEmpty() const
 {
-	for (int i = 0, end = actions().size(); i < end; ++i)
-	{
-		const QAction* action = actions()[i];
-		if (action->isVisible() && !action->isSeparator())
-			return false;
-	}
-	return true;
+	return visibleActionCount() == 0;
 }
 
 void PieMenu::clear()
 {
-	while (!actions().isEmpty())
-	{
-		removeAction(actions().last());
-	}
+	const auto actions = this->actions();
+	for (auto action : actions)
+		removeAction(action);
 }
 
 int PieMenu::iconSize() const
@@ -117,9 +107,9 @@ void PieMenu::setIconSize(int icon_size)
 
 QAction* PieMenu::actionAt(const QPoint& pos) const
 {
-	for (size_t i = 0, end = actions().size(); i < end; ++i)
+	const auto actions = this->actions();
+	for (auto action : actions)
 	{
-		QAction* action = actions()[i];
 		if (geometries.contains(action) &&
 		    geometries[action].area.containsPoint(pos, Qt::WindingFill))
 		{
@@ -295,9 +285,9 @@ void PieMenu::paintEvent(QPaintEvent* event)
 	painter.drawConvexPolygon(inner_border);
 	
 	// Items
-	for (int i = 0, end = actions().size(); i < end; ++i)
+	const auto actions = this->actions();
+	for (auto action : actions)
 	{
-		QAction* const action = actions()[i];
 		if (!geometries.contains(action))
 			continue;
 		
@@ -371,9 +361,10 @@ void PieMenu::updateCachedState()
 		setMask(outer_border.subtracted(inner_border));
 		
 		// The items
-		for (int i = 0, j = 0, end = actions().size(); j < end; ++j)
+		int i = 0;
+		const auto actions = this->actions();
+		for (auto action : actions)
 		{
-			QAction* const action = actions()[j];
 			if (action->isVisible() && !action->isSeparator())
 			{
 				ItemGeometry geometry;

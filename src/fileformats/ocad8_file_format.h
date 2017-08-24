@@ -39,9 +39,9 @@ class OCAD8FileFormat : public FileFormat
 public:
 	OCAD8FileFormat();
 	
-	bool understands(const unsigned char *buffer, std::size_t sz) const;
-	virtual Importer* createImporter(QIODevice* stream, Map *map, MapView *view) const;
-	virtual Exporter* createExporter(QIODevice* stream, Map* map, MapView* view) const;
+	bool understands(const unsigned char *buffer, std::size_t sz) const override;
+	Importer* createImporter(QIODevice* stream, Map *map, MapView *view) const override;
+	Exporter* createExporter(QIODevice* stream, Map* map, MapView* view) const override;
 };
 
 #endif // OCAD8_FILE_IMPORT_H

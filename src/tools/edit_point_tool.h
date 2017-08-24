@@ -58,7 +58,7 @@ class EditPointTool : public EditTool
 Q_OBJECT
 public:
 	EditPointTool(MapEditorController* editor, QAction* tool_action);
-	virtual ~EditPointTool();
+	~EditPointTool() override;
 	
 	/**
 	 * Returns true if new points shall be added as dash points by default.
@@ -93,7 +93,7 @@ protected:
 	bool keyPress(QKeyEvent* event) override;
 	bool keyRelease(QKeyEvent* event) override;
 	bool inputMethodEvent(QInputMethodEvent* event) override;
-	QVariant inputMethodQuery(Qt::InputMethodQuery property, QVariant argument) const override;
+	QVariant inputMethodQuery(Qt::InputMethodQuery property, const QVariant& argument) const override;
 	
 	void initImpl() override;
 	void objectSelectionChangedImpl() override;

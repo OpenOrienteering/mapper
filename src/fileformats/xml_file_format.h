@@ -45,15 +45,15 @@ public:
 	 * 
 	 *  @todo Needs to deal with different encodings. Provide test cases.
 	 */
-	bool understands(const unsigned char *buffer, std::size_t sz) const;
+	bool understands(const unsigned char *buffer, std::size_t sz) const override;
 	
 	/** @brief Creates an importer for XML files.
 	 */
-	Importer *createImporter(QIODevice* stream, Map *map, MapView *view) const;
+	Importer *createImporter(QIODevice* stream, Map *map, MapView *view) const override;
 	
 	/** @brief Creates an exporter for XML files.
 	 */
-	Exporter *createExporter(QIODevice* stream, Map *map, MapView *view) const;
+	Exporter *createExporter(QIODevice* stream, Map *map, MapView *view) const override;
 	
 	/** @brief The minimum XML file format version supported by this implementation.
 	 */

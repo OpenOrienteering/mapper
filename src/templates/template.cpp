@@ -22,6 +22,7 @@
 #include "template.h"
 
 #include <cmath>
+#include <new>
 
 #include <QCoreApplication>
 #include <QDebug>
@@ -35,10 +36,11 @@
 
 #include "core/map_view.h"
 #include "core/map.h"
+#include "fileformats/file_format.h"
+#include "gdal/ogr_template.h"
 #include "template_image.h"
 #include "template_map.h"
 #include "template_track.h"
-#include "gdal/ogr_template.h"
 #include "util/backports.h"  // IWYU pragma: keep
 #include "util/util.h"
 #include "util/xml_stream_util.h"
@@ -85,7 +87,7 @@ void TemplateTransform::load(QIODevice* file)
 
 #endif
 
-void TemplateTransform::save(QXmlStreamWriter& xml, const QString role) const
+void TemplateTransform::save(QXmlStreamWriter& xml, const QString& role) const
 {
 	xml.writeStartElement(QString::fromLatin1("transformation"));
 	xml.writeAttribute(QString::fromLatin1("role"), role);
@@ -509,13 +511,15 @@ bool Template::configureAndLoad(QWidget* dialog_parent, MapView* view)
 	return true;
 }
 
-bool Template::tryToFindAndReloadTemplateFile(QString map_directory, bool* out_loaded_from_map_dir)
+
+
+bool Template::tryToFindTemplateFile(QString map_directory, bool* out_found_in_map_dir)
 {
 	if (!map_directory.isEmpty() && !map_directory.endsWith(QLatin1Char('/')))
 		map_directory.append(QLatin1Char('/'));
 	
-	if (out_loaded_from_map_dir)
-		*out_loaded_from_map_dir = false;
+	if (out_found_in_map_dir)
+		*out_found_in_map_dir = false;
 	
 	const QString old_absolute_path = getTemplatePath();
 	
@@ -523,30 +527,29 @@ bool Template::tryToFindAndReloadTemplateFile(QString map_directory, bool* out_l
 	if (!getTemplateRelativePath().isEmpty() && !map_directory.isEmpty())
 	{
 		auto path = QString{ map_directory + getTemplateRelativePath() };
-		if (QFileInfo(path).exists())
+		if (QFileInfo::exists(path))
 		{
 			setTemplatePath(path);
-			return loadTemplateFile(false);
+			return true;
 		}
 	}
 	
 	// Second try absolute path
-	if (QFileInfo(template_path).exists())
+	if (QFileInfo::exists(template_path))
 	{
-		return loadTemplateFile(false);
+		return true;
 	}
 	
 	// Third try the template filename in the map's directory
 	if (!map_directory.isEmpty())
 	{
 		auto path = QString{ map_directory + getTemplateFilename() };
-		if (QFileInfo(path).exists())
+		if (QFileInfo::exists(path))
 		{
 			setTemplatePath(path);
-			bool success = loadTemplateFile(false);
-			if (out_loaded_from_map_dir)
-				*out_loaded_from_map_dir = true;
-			return success;
+			if (out_found_in_map_dir)
+				*out_found_in_map_dir = true;
+			return true;
 		}
 	}
 	
@@ -554,6 +557,13 @@ bool Template::tryToFindAndReloadTemplateFile(QString map_directory, bool* out_l
 	template_state = Invalid;
 	setErrorString(tr("No such file."));
 	return false;
+}
+
+
+bool Template::tryToFindAndReloadTemplateFile(QString map_directory, bool* out_loaded_from_map_dir)
+{
+	return tryToFindTemplateFile(map_directory, out_loaded_from_map_dir)
+	       && loadTemplateFile(false);
 }
 
 bool Template::preLoadConfiguration(QWidget* dialog_parent)
@@ -567,17 +577,16 @@ bool Template::loadTemplateFile(bool configuring)
 	Q_ASSERT(template_state != Loaded);
 	
 	const State old_state = template_state;
-	bool result = QFileInfo(template_path).exists();
-	if (!result)
+	
+	setErrorString(QString());
+	try
 	{
-		template_state = Invalid;
-		setErrorString(tr("No such file."));
-	}
-	else
-	{
-		setErrorString(QString());
-		result = loadTemplateFileImpl(configuring);
-		if (result)
+		if (!QFileInfo::exists(template_path))
+		{
+			template_state = Invalid;
+			setErrorString(tr("No such file."));
+		}
+		else if (loadTemplateFileImpl(configuring))
 		{
 			template_state = Loaded;
 		}
@@ -592,13 +601,22 @@ bool Template::loadTemplateFile(bool configuring)
 				setErrorString(tr("Is the format of the file correct for this template type?"));
 			}
 		}
-		
+	}
+	catch (std::bad_alloc&)
+	{
+		template_state = Invalid;
+		setErrorString(tr("Not enough free memory."));
+	}
+	catch (FileFormatException& e)
+	{
+		template_state = Invalid;
+		setErrorString(e.message());
 	}
 	
 	if (old_state != template_state)
 		emit templateStateChanged();
 		
-	return result;
+	return template_state == Loaded;
 }
 
 bool Template::postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view)
@@ -831,12 +849,16 @@ std::unique_ptr<Template> Template::templateForFile(const QString& path, Map* ma
 	return t;
 }
 
+
+#ifndef NO_NATIVE_FILE_FORMAT
 bool Template::loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version)
 {
 	Q_UNUSED(stream);
 	Q_UNUSED(version);
 	return true;
 }
+#endif
+
 
 void Template::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const
 {

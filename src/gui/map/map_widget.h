@@ -117,7 +117,7 @@ public:
 	MapWidget(bool show_help, bool force_antialiasing, QWidget* parent = nullptr);
 	
 	/** Destructs the MapWidget. */
-	~MapWidget();
+	~MapWidget() override;
 	
 	/** Sets the map view to use for display. Does not take ownership of the view. */
 	void setMapView(MapView* view);
@@ -209,12 +209,12 @@ public:
 	/**
 	 * Adjusts the viewport so the given rect is inside the view.
 	 */
-	void ensureVisibilityOfRect(const QRectF& map_rect, ZoomOption zoom_option);
+	void ensureVisibilityOfRect(QRectF map_rect, ZoomOption zoom_option);  // clazy:exclude=function-args-by-ref
 	
 	/**
 	 * Sets the view so the rect is centered and zooomed to fill the widget.
 	 */
-	void adjustViewToRect(const QRectF& map_rect, ZoomOption zoom_option);
+	void adjustViewToRect(QRectF map_rect, ZoomOption zoom_option);  // clazy:exclude=function-args-by-ref
 	
 	/**
 	 * Mark a rectangular region of a template cache as "dirty", i.e. redraw needed.
@@ -225,14 +225,14 @@ public:
 	 * @param front_cache If set to true, invalidates the cache for templates
 	 *     in front of the map, else invalidates the cache for templates behind the map.
 	 */
-	void markTemplateCacheDirty(QRectF view_rect, int pixel_border, bool front_cache);
+	void markTemplateCacheDirty(const QRectF& view_rect, int pixel_border, bool front_cache);
 	
 	/**
 	 * Mark a rectangular region given in map coordinates of the map cache
 	 * as dirty, i.e. redraw needed.
 	 * This rect is united with possible previous dirty rects of that cache.
 	 */
-	void markObjectAreaDirty(QRectF map_rect);
+	void markObjectAreaDirty(const QRectF& map_rect);
 	
 	/**
 	 * Set the given rect as bounding box for the current drawing, i.e. the
@@ -246,7 +246,7 @@ public:
 	 *     pixels. Allows to specify zoom-independent extents.
 	 * @param do_update If set to true, triggers a redraw of the widget.
 	 */
-	void setDrawingBoundingBox(QRectF map_rect, int pixel_border, bool do_update);
+	void setDrawingBoundingBox(QRectF map_rect, int pixel_border, bool do_update);  // clazy:exclude=function-args-by-ref
 	/**
 	 * Removes the area set with setDrawingBoundingBox() and triggers a redraw
 	 * of the widget, if needed.
@@ -254,7 +254,7 @@ public:
 	void clearDrawingBoundingBox();
 	
 	/** Analogon to setDrawingBoundingBox() for activities. */
-	void setActivityBoundingBox(QRectF map_rect, int pixel_border, bool do_update);
+	void setActivityBoundingBox(QRectF map_rect, int pixel_border, bool do_update);  // clazy:exclude=function-args-by-ref
 	/** Analogon to clearDrawingBoundingBox() for activities. */
 	void clearActivityBoundingBox();
 	
@@ -277,7 +277,7 @@ public:
 	 * Variant of updateDrawing() which waits for some milliseconds before
 	 * calling update() in order to avoid excessive redraws.
 	 */
-	void updateDrawingLater(QRectF map_rect, int pixel_border);
+	void updateDrawingLater(const QRectF& map_rect, int pixel_border);
 	
 	/**
 	 * Invalidates all caches and redraws the whole widget. Very slow, try to
@@ -315,7 +315,7 @@ public:
 	QWidget* getContextMenu();
 	
 	/** Returns the widget's preferred size. */
-	virtual QSize sizeHint() const override;
+	QSize sizeHint() const override;
 	
 	/**
 	 * @copybrief MainWindowController::keyPressEventFilter
@@ -341,7 +341,7 @@ public slots:
 	 * This two-argument form is undocumented but attempted to call in
 	 * QInputMethod::queryFocusObject before doing the query via an event.
 	 */
-	QVariant inputMethodQuery(Qt::InputMethodQuery property, QVariant argument) const;
+	QVariant inputMethodQuery(Qt::InputMethodQuery property, const QVariant& argument) const;
 	
 	/** Enables or disables the touch cursor. */
 	void enableTouchCursor(bool enabled);
@@ -356,30 +356,30 @@ private slots:
 	void updateDrawingLaterSlot();
 	
 protected:
-	virtual bool event(QEvent *event) override;
+	bool event(QEvent *event) override;
 	
 	virtual void gestureEvent(QGestureEvent* event);
 	
-	virtual void paintEvent(QPaintEvent* event) override;
-	virtual void resizeEvent(QResizeEvent* event) override;
+	void paintEvent(QPaintEvent* event) override;
+	void resizeEvent(QResizeEvent* event) override;
 	
 	// Mouse input
-	virtual void mousePressEvent(QMouseEvent* event) override;
+	void mousePressEvent(QMouseEvent* event) override;
 	void _mousePressEvent(QMouseEvent* event);
-	virtual void mouseMoveEvent(QMouseEvent* event) override;
+	void mouseMoveEvent(QMouseEvent* event) override;
 	void _mouseMoveEvent(QMouseEvent* event);
-	virtual void mouseReleaseEvent(QMouseEvent* event) override;
+	void mouseReleaseEvent(QMouseEvent* event) override;
 	void _mouseReleaseEvent(QMouseEvent* event);
-	virtual void mouseDoubleClickEvent(QMouseEvent* event) override;
+	void mouseDoubleClickEvent(QMouseEvent* event) override;
 	void _mouseDoubleClickEvent(QMouseEvent* event);
-	virtual void wheelEvent(QWheelEvent* event) override;
-	virtual void leaveEvent(QEvent* event) override;
+	void wheelEvent(QWheelEvent* event) override;
+	void leaveEvent(QEvent* event) override;
 	
 	// Key input (see also slots)
-	virtual void inputMethodEvent(QInputMethodEvent *event) override;
-	virtual void focusOutEvent(QFocusEvent* event) override;
+	void inputMethodEvent(QInputMethodEvent *event) override;
+	void focusOutEvent(QFocusEvent* event) override;
 	
-	virtual void contextMenuEvent(QContextMenuEvent* event) override;
+	void contextMenuEvent(QContextMenuEvent* event) override;
 	
 private:
 	/** Checks if there is a visible template in the range
@@ -415,7 +415,7 @@ private:
 	 * Calculates the bounding box of the given map coordinates rect and
 	 * additional pixel extent in integer viewport coordinates.
 	 */
-	QRect calculateViewportBoundingBox(QRectF map_rect, int pixel_border);
+	QRect calculateViewportBoundingBox(const QRectF& map_rect, int pixel_border) const;
 	/** Internal method for setting a part of a cache as dirty. */
 	void setDynamicBoundingBox(QRectF map_rect, int pixel_border, QRect& dirty_rect_old, QRectF& dirty_rect_new, int& dirty_rect_new_border, bool do_update);
 	/** Internal method for removing the dirty state of a cache. */

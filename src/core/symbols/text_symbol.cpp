@@ -54,8 +54,6 @@
 #include "util/util.h"
 
 
-const float TextSymbol::internal_point_size = 256;
-
 TextSymbol::TextSymbol()
 : Symbol(Symbol::Text)
 , metrics(QFont())
@@ -286,7 +284,7 @@ const MapColor* TextSymbol::guessDominantColor() const
 
 void TextSymbol::scale(double factor)
 {
-	font_size = qRound(factor * font_size);
+	font_size = qMax(10, qRound(factor * font_size)); // minimum 0.01 mm
 	framing_line_half_width = qRound(factor * framing_line_half_width);
 	framing_shadow_x_offset = qRound(factor * framing_shadow_x_offset);
 	framing_shadow_y_offset = qRound(factor * framing_shadow_y_offset);

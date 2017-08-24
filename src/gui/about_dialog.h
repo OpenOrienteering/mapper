@@ -52,7 +52,7 @@ protected:
 	/**
 	 * @brief Sets custom HTML content when the URL identifies the first page.
 	 */
-	virtual void sourceChanged(const QUrl& url) override;
+	void sourceChanged(const QUrl& url) override;
 	
 	/**
 	 * @brief Updates the window title from the current document title.

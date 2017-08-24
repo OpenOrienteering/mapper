@@ -29,6 +29,9 @@
 #include <QTime>
 
 
+// clazy:excludeall=missing-qobject-macro
+
+
 namespace SensorHelpers
 {
 	void matrixMultiplication(float* A, float* B, float* result)
@@ -242,7 +245,7 @@ public:
 		thread.start();
 	}
 	
-	~CompassPrivate()
+	~CompassPrivate() override
 	{
 		thread.keep_running = false;
 		thread.condition.wakeAll();
@@ -280,7 +283,7 @@ public:
 	}
 	
 	/** Called on new gyro readings */
-	virtual bool filter(QGyroscopeReading* reading)
+	bool filter(QGyroscopeReading* reading) override
 	{
 		if (! gyro_orientation_initialized)
 			return false;
@@ -337,6 +340,7 @@ public:
 	}
 	
 private:
+	/// \todo Review QThread inheritance / Q_OBJECT macro usage
 	class SensorThread : public QThread
 	{
 	// no Q_OBJECT as it is not required here and was problematic in .cpp
@@ -454,7 +458,7 @@ private:
 			p->compass->emitAzimuthChanged(p->latest_azimuth);
 		}
 		
-		void run()
+		void run() override
 		{
 			// Wait until sensors are initialized
 			QThread::msleep(1000);

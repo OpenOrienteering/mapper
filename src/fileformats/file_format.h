@@ -40,7 +40,7 @@ class MapView;
 
 /** An exception type thrown by an importer or exporter if it encounters a fatal error.
  */
-class FileFormatException : public std::exception
+class FileFormatException : public std::exception  // clazy:exclude=copyable-polymorphic
 {
 public:
 	/** Creates a new exception with the given message
@@ -59,7 +59,7 @@ public:
 	
 	/** Destroys the exception object.
 	 */
-	virtual ~FileFormatException() noexcept;
+	~FileFormatException() noexcept override;
 	
 	/** Returns the message as a QString. 
 	 */
@@ -67,7 +67,7 @@ public:
 	
 	/** Returns the message as a C string.
 	 */
-	virtual const char* what() const noexcept;
+	const char* what() const noexcept override;
 	
 private:
 	QString const msg;
@@ -146,8 +146,14 @@ public:
 	 */
 	FileFormat(FileType file_type, const char* id, const QString& description, const QString& file_extension, FormatFeatures features);
 	
+	FileFormat(const FileFormat&) = delete;
+	FileFormat(FileFormat&&) = delete;
+	
 	/** Destroys the file format information. */
 	virtual ~FileFormat();
+	
+	FileFormat& operator=(const FileFormat&) = delete;
+	FileFormat& operator=(FileFormat&&) = delete;
 	
 	/** Registers an alternative file name extension.
 	 *  It is used by the filter.

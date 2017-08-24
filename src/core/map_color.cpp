@@ -125,50 +125,24 @@ bool MapColor::isWhite() const
 }
 
 
-bool operator==(const SpotColorComponents &lhs, const SpotColorComponents& rhs)
+bool operator==(const SpotColorComponents& lhs, const SpotColorComponents& rhs)
 {
-	if (lhs.size() != rhs.size())
-		return false;
-	
-	// Not efficient, but correct.
-	SpotColorComponents::const_iterator rhs_it, rhs_end = rhs.end();
-	for (SpotColorComponents::const_iterator lhs_it = lhs.begin(), lhs_end = lhs.end(); lhs_it != lhs_end; ++lhs_it)
-	{
-		for (rhs_it = rhs.begin(); rhs_it != rhs_end; ++rhs_it)
-		{
-			if (*lhs_it->spot_color != *rhs_it->spot_color)
-				continue;
-			if (qAbs(lhs_it->factor - rhs_it->factor) < 1e-03)
-				break;
-		}
-		if (rhs_it == rhs_end)
-			return false; // No match for *lhs_it
-	}
-	return true;
+	return lhs.size() == rhs.size()
+	       && std::is_permutation(begin(lhs), end(lhs), begin(rhs), [](const auto& left, const auto& right) {
+		return *left.spot_color == *right.spot_color
+		       && qAbs(left.factor - right.factor) < 1e-03;
+	});
 }
 
 bool MapColor::componentsEqual(const MapColor& other, bool compare_priority) const
 {
 	const SpotColorComponents& lhs(components);
 	const SpotColorComponents& rhs(other.components);
-	if (lhs.size() != rhs.size())
-		return false;
-	
-	// Not efficient, but correct.
-	SpotColorComponents::const_iterator rhs_it, rhs_end = rhs.end();
-	for (SpotColorComponents::const_iterator lhs_it = lhs.begin(), lhs_end = lhs.end(); lhs_it != lhs_end; ++lhs_it)
-	{
-		for (rhs_it = rhs.begin(); rhs_it != rhs_end; ++rhs_it)
-		{
-			if (!lhs_it->spot_color->equals(*rhs_it->spot_color, compare_priority))
-				continue;
-			if (qAbs(lhs_it->factor - rhs_it->factor) < 1e-03)
-				break;
-		}
-		if (rhs_it == rhs_end)
-			return false; // No match for *lhs_it
-	}
-	return true;
+	return lhs.size() == rhs.size()
+	       && std::is_permutation(begin(lhs), end(lhs), begin(rhs), [compare_priority](const auto& left, const auto& right) {
+		return left.spot_color->equals(*right.spot_color, compare_priority)
+		       && qAbs(left.factor - right.factor) < 1e-03;
+	});
 }
 
 bool MapColor::equals(const MapColor& other, bool compare_priority) const

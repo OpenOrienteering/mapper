@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,13 +20,29 @@
 
 #include "renderable_implementation.h"
 
+#include <cstddef>
+#include <iterator>
+#include <memory>
+#include <vector>
+
 #include <QtMath>
+#include <QtNumeric>
+#include <QFont>
+#include <QFontMetricsF>
+#include <QPaintEngine>
 #include <QPainter>
 #include <QPen>
+#include <QPoint>
+#include <QTransform>
+// IWYU pragma: no_include <QVariant>
 
 #include "settings.h"
+#include "core/map_coord.h"
+#include "core/virtual_coord_vector.h"
+#include "core/virtual_path.h"
 #include "core/objects/object.h"
 #include "core/objects/text_object.h"
+#include "core/renderables/renderable.h"
 #include "core/symbols/area_symbol.h"
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/point_symbol.h"
@@ -36,6 +52,9 @@
 #ifdef QT_PRINTSUPPORT_LIB
 #  include "advanced_pdf_printer.h"
 #endif
+
+// IWYU pragma: no_forward_declare QFontMetricsF
+
 
 namespace {
 
@@ -86,8 +105,8 @@ PainterConfig DotRenderable::getPainterConfig(const QPainterPath* clip_path) con
 
 void DotRenderable::render(QPainter &painter, const RenderConfig &config) const
 {
-	if (config.options.testFlag(RenderConfig::ForceMinSize) && extent.width() * config.scaling < 1.5f)
-		painter.drawEllipse(extent.center(), 0.5f / config.scaling, 0.5f * config.scaling);
+	if (config.options.testFlag(RenderConfig::ForceMinSize) && extent.width() * config.scaling < 1.5)
+		painter.drawEllipse(extent.center(), 0.5 / config.scaling, 0.5 * config.scaling);
 	else
 		painter.drawEllipse(extent);
 }
@@ -98,11 +117,11 @@ void DotRenderable::render(QPainter &painter, const RenderConfig &config) const
 
 CircleRenderable::CircleRenderable(const PointSymbol* symbol, MapCoordF coord)
  : Renderable(symbol->getOuterColor())
- , line_width(0.001f * symbol->getOuterWidth())
+ , line_width(0.001 * symbol->getOuterWidth())
 {
 	double x = coord.x();
 	double y = coord.y();
-	double radius = (0.001 * symbol->getInnerRadius()) + 0.5f * line_width;
+	double radius = (0.001 * symbol->getInnerRadius()) + line_width/2;
 	rect = QRectF(x - radius, y - radius, 2 * radius, 2 * radius);
 	extent = QRectF(rect.x() - 0.5*line_width, rect.y() - 0.5*line_width, rect.width() + line_width, rect.height() + line_width);
 }
@@ -114,8 +133,8 @@ PainterConfig CircleRenderable::getPainterConfig(const QPainterPath* clip_path) 
 
 void CircleRenderable::render(QPainter &painter, const RenderConfig &config) const
 {
-	if (config.options.testFlag(RenderConfig::ForceMinSize) && rect.width() * config.scaling < 1.5f)
-		painter.drawEllipse(rect.center(), 0.5f / config.scaling, 0.5f / config.scaling);
+	if (config.options.testFlag(RenderConfig::ForceMinSize) && rect.width() * config.scaling < 1.5)
+		painter.drawEllipse(rect.center(), 0.5 / config.scaling, 0.5 / config.scaling);
 	else
 		painter.drawEllipse(rect);
 }
@@ -126,11 +145,11 @@ void CircleRenderable::render(QPainter &painter, const RenderConfig &config) con
 
 LineRenderable::LineRenderable(const LineSymbol* symbol, const VirtualPath& virtual_path, bool closed)
  : Renderable(symbol->getColor())
- , line_width(0.001f * symbol->getLineWidth())
+ , line_width(0.001 * symbol->getLineWidth())
 {
 	Q_ASSERT(virtual_path.size() >= 2);
 	
-	float half_line_width = (color_priority < 0) ? 0.0f : 0.5f * line_width;
+	qreal half_line_width = (color_priority < 0) ? 0 : line_width/2;
 	
 	switch (symbol->getCapStyle())
 	{
@@ -156,7 +175,7 @@ LineRenderable::LineRenderable(const LineSymbol* symbol, const VirtualPath& virt
 	
 	auto i = virtual_path.first_index;
 	path.moveTo(coords[i]);
-	extent = QRectF(coords[i].x(), coords[i].y(), 0.0001f, 0.0001f);
+	extent = QRectF(coords[i].x(), coords[i].y(), 0.0001, 0.0001);
 	extentIncludeCap(i, half_line_width, false, symbol, virtual_path);
 	
 	for (++i; i <= virtual_path.last_index; ++i)
@@ -230,11 +249,11 @@ LineRenderable::LineRenderable(const LineSymbol* symbol, const VirtualPath& virt
 	{
 		//  This happens for point symbols with curved lines in them.
 		const auto& path_coords = virtual_path.path_coords;
-		Q_ASSERT(path_coords.front().param == 0.0);
-		Q_ASSERT(path_coords.back().param == 0.0);
+		Q_ASSERT(path_coords.front().param == 0.0f);
+		Q_ASSERT(path_coords.back().param == 0.0f);
 		for (auto i = path_coords.size()-1; i > 0; --i)
 		{
-			if (path_coords[i].param != 0.0)
+			if (path_coords[i].param != 0.0f)
 			{
 				const auto& pos = path_coords[i].pos;
 				auto to_coord   = pos - path_coords[i-1].pos;
@@ -254,11 +273,11 @@ LineRenderable::LineRenderable(const LineSymbol* symbol, const VirtualPath& virt
 
 LineRenderable::LineRenderable(const LineSymbol* symbol, QPointF first, QPointF second)
  : Renderable(symbol->getColor())
- , line_width(0.001f * symbol->getLineWidth())
+ , line_width(0.001 * symbol->getLineWidth())
  , cap_style(Qt::FlatCap)
  , join_style(Qt::MiterJoin)
 {
-	qreal half_line_width = (color_priority < 0) ? 0.0f : 0.5f * line_width;
+	qreal half_line_width = (color_priority < 0) ? 0 : line_width/2;
 	
 	auto right = MapCoordF(second - first).perpRight();
 	right.normalize();
@@ -273,51 +292,134 @@ LineRenderable::LineRenderable(const LineSymbol* symbol, QPointF first, QPointF 
 	path.lineTo(second);
 }
 
-void LineRenderable::extentIncludeCap(quint32 i, float half_line_width, bool end_cap, const LineSymbol* symbol, const VirtualPath& path)
+void LineRenderable::extentIncludeCap(quint32 i, qreal half_line_width, bool end_cap, const LineSymbol* symbol, const VirtualPath& path)
 {
-	auto coords = path.coords;
+	const auto& coord = path.coords[i];
+	if (half_line_width < 0.0005)
+	{
+		rectInclude(extent, coord);
+		return;
+	}
+	
 	if (symbol->getCapStyle() == LineSymbol::RoundCap)
 	{
-		rectInclude(extent, QPointF(coords[i].x() - half_line_width, coords[i].y() - half_line_width));
-		rectInclude(extent, QPointF(coords[i].x() + half_line_width, coords[i].y() + half_line_width));
+		rectInclude(extent, QPointF(coord.x() - half_line_width, coord.y() - half_line_width));
+		rectInclude(extent, QPointF(coord.x() + half_line_width, coord.y() + half_line_width));
 		return;
 	}
 	
 	auto right = path.calculateTangent(i).perpRight();
 	right.normalize();
-	rectInclude(extent, coords[i] + half_line_width * right);
-	rectInclude(extent, coords[i] - half_line_width * right);
+	rectInclude(extent, coord + half_line_width * right);
+	rectInclude(extent, coord - half_line_width * right);
 	
 	if (symbol->getCapStyle() == LineSymbol::SquareCap)
 	{
 		auto back = right.perpRight();
-		
-		float sign = end_cap ? -1 : 1;
-		rectInclude(extent, coords[i] + half_line_width * (sign*back - right));
-		rectInclude(extent, coords[i] + half_line_width * (sign*back + right));
+		if (end_cap)
+		    back = -back;
+		rectInclude(extent, coord + half_line_width * (back - right));
+		rectInclude(extent, coord + half_line_width * (back + right));
 	}
 }
 
-void LineRenderable::extentIncludeJoin(quint32 i, float half_line_width, const LineSymbol* symbol, const VirtualPath& path)
+void LineRenderable::extentIncludeJoin(quint32 i, qreal half_line_width, const LineSymbol* symbol, const VirtualPath& path)
 {
-	auto coords = path.coords;
-	if (symbol->getJoinStyle() == LineSymbol::RoundJoin)
+	const auto& coord = path.coords[i];
+	if (half_line_width < 0.0005)
 	{
-		rectInclude(extent, QPointF(coords[i].x() - half_line_width, coords[i].y() - half_line_width));
-		rectInclude(extent, QPointF(coords[i].x() + half_line_width, coords[i].y() + half_line_width));
+		rectInclude(extent, coord);
 		return;
 	}
 	
-	auto offset_length = half_line_width;
-	auto params = path.calculateTangentScaling(i);
-	auto& offset = params.first;
-	if (symbol->getJoinStyle() == LineSymbol::MiterJoin)
+	if (symbol->getJoinStyle() == LineSymbol::RoundJoin)
 	{
-		offset_length *= qMin(params.second, 2.0 * LineSymbol::miterLimit());
+		rectInclude(extent, QPointF(coord.x() - half_line_width, coord.y() - half_line_width));
+		rectInclude(extent, QPointF(coord.x() + half_line_width, coord.y() + half_line_width));
+		return;
 	}
-	offset.setLength(offset_length);
-	rectInclude(extent, coords[i] + offset);
-	rectInclude(extent, coords[i] - offset);
+	
+	bool ok_to_coord, ok_to_next;
+	MapCoordF to_coord = path.calculateIncomingTangent(i, ok_to_coord);
+	MapCoordF to_next = path.calculateOutgoingTangent(i, ok_to_next);
+	if (!ok_to_next)
+	{
+		if (!ok_to_coord)
+			return;
+		to_next = to_coord;
+	}
+	else if (!ok_to_coord)
+	{
+		to_coord = to_next;
+	}
+	
+	auto r0 = to_coord.perpRight();
+	r0.setLength(half_line_width);
+	auto r1 = to_next.perpRight();
+	r1.setLength(half_line_width);
+	
+	auto to_coord_rhs = coord + r0;
+	auto to_coord_lhs = coord - r0;
+	auto to_next_rhs  = coord + r1;
+	auto to_next_lhs  = coord - r1;
+	if (symbol->getJoinStyle() == LineSymbol::BevelJoin)
+	{
+		rectInclude(extent, to_coord_rhs);
+		rectInclude(extent, to_coord_lhs);
+		rectInclude(extent, to_next_rhs);
+		rectInclude(extent, to_next_lhs);
+		return;
+	}
+	
+	auto limit = line_width * LineSymbol::miterLimit();
+	to_coord.setLength(limit);
+	to_next.setLength(limit);
+	
+	const auto scaling = to_coord.y() * to_next.x() - to_coord.x() * to_next.y();
+	if (qIsNull(scaling) || !qIsFinite(scaling))
+		return; // straight line, no impact on extent
+	
+	// rhs boundary
+	auto p = to_coord_rhs - to_next_rhs;
+	auto factor = (to_next.y() * p.x() - to_next.x() * p.y()) / scaling;
+	if (factor > 1)
+	{
+		// outer boundary, intersection exceeds miter limit
+		rectInclude(extent, to_coord_rhs + to_coord);
+		rectInclude(extent, to_next_rhs - to_next);
+	}
+	else if (factor > 0)
+	{
+		// outer boundary, intersection within miter limit
+		rectInclude(extent, to_coord_rhs + to_coord * factor);
+	}
+	else
+	{
+		// inner boundary
+		rectInclude(extent, to_coord_rhs);
+		rectInclude(extent, to_next_rhs);
+	}
+	
+	// lhs boundary
+	p = to_coord_lhs - to_next_lhs;
+	factor = (to_next.y() * p.x() - to_next.x() * p.y()) / scaling;
+	if (factor > 1)
+	{
+		// outer boundary, intersection exceeds miter limit
+		rectInclude(extent, to_coord_lhs + to_coord);
+		rectInclude(extent, to_next_lhs - to_next);
+	}
+	else if (factor > 0)
+	{
+		// outer boundary, intersection within miter limit
+		rectInclude(extent, to_coord_lhs + to_coord * factor);
+	}
+	else
+	{
+		// inner boundary, catch rare cases
+		rectInclude(extent, to_coord_lhs);
+		rectInclude(extent, to_next_lhs);
+	}
 }
 
 PainterConfig LineRenderable::getPainterConfig(const QPainterPath* clip_path) const
@@ -512,11 +614,11 @@ AreaRenderable::AreaRenderable(const AreaSymbol* symbol, const PathPartVector& p
 	Q_ASSERT(extent.right() < 60000000);	// assert if bogus values are returned
 }
 
-AreaRenderable::AreaRenderable(const AreaSymbol* symbol, const VirtualPath& virtual_path)
+AreaRenderable::AreaRenderable(const AreaSymbol* symbol, const VirtualPath& path)
  : Renderable(symbol->getColor())
 {
-	extent = virtual_path.path_coords.calculateExtent();
-	addSubpath(virtual_path);
+	extent = path.path_coords.calculateExtent();
+	addSubpath(path);
 }
 
 void AreaRenderable::addSubpath(const VirtualPath& virtual_path)
@@ -548,7 +650,7 @@ PainterConfig AreaRenderable::getPainterConfig(const QPainterPath* clip_path) co
 	return { color_priority, PainterConfig::BrushOnly, 0, clip_path };
 }
 
-void AreaRenderable::render(QPainter &painter, const RenderConfig &) const
+void AreaRenderable::render(QPainter &painter, const RenderConfig &/*config*/) const
 {
 	painter.drawPath(path);
 	
@@ -595,7 +697,7 @@ TextRenderable::TextRenderable(const TextSymbol* symbol, const TextObject* text_
 		double underline_y1 = underline_y0 + metrics.lineWidth();
 		
 		auto num_parts = line_info->part_infos.size();
-		for (size_t j=0; j < num_parts; j++)
+		for (std::size_t j=0; j < num_parts; j++)
 		{
 			const TextObjectPartInfo& part(line_info->part_infos.at(j));
 			if (font.underline())
@@ -619,7 +721,7 @@ TextRenderable::TextRenderable(const TextSymbol* symbol, const TextObject* text_
 	QTransform t { 1.0, 0.0, 0.0, 1.0, anchor_x, anchor_y };
 	t.scale(scale_factor, scale_factor);
 	
-	auto rotation_rad = text_object->getRotation();
+	auto rotation_rad = qreal(text_object->getRotation());
 	if (!qIsNull(rotation_rad))
 	{
 		rotation = -qRadiansToDegrees(rotation_rad);

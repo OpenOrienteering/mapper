@@ -23,6 +23,7 @@
 
 #include <set>
 
+#include <QCoreApplication>
 #include <QRgb>
 
 #include "core/map_coord.h"
@@ -48,7 +49,9 @@ class TextSymbol;
 class OCAD8FileImport : public Importer
 {
 	friend class OcdFileImport;
-Q_OBJECT
+	
+	Q_DECLARE_TR_FUNCTIONS(OCAD8FileImport)
+	
 private:
 	/// Information about an OCAD rectangle symbol
 	struct RectangleInfo
@@ -69,12 +72,12 @@ private:
 	
 public:
 	OCAD8FileImport(QIODevice* stream, Map *map, MapView *view);
-	~OCAD8FileImport();
+	~OCAD8FileImport() override;
 
 	void setStringEncodings(const char *narrow, const char *wide = "UTF-16LE");
 
 protected:
-	void import(bool load_symbols_only);
+	void import(bool load_symbols_only) override;
 	
 	// Symbol import
 	Symbol *importPointSymbol(const OCADPointSymbol *ocad_symbol);
@@ -145,12 +148,13 @@ private:
 /** Exporter for OCD version 8 files. */
 class OCAD8FileExport : public Exporter
 {
-Q_OBJECT
+	Q_DECLARE_TR_FUNCTIONS(OCAD8FileExport)
+	
 public:
 	OCAD8FileExport(QIODevice* stream, Map *map, MapView *view);
-	~OCAD8FileExport();
+	~OCAD8FileExport() override;
 	
-	void doExport();
+	void doExport() override;
 	
 	
 protected:

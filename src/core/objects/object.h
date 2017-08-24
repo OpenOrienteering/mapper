@@ -62,7 +62,7 @@ class VirtualCoordVector;
  * that is a set of renderables and the calculation of the object's extent (bounding box).
  * The renderables can then be inserted into a map where they are used to display the object.
  */
-class Object
+class Object  // clazy:exclude=copyable-polymorphic
 {
 friend class ObjectRenderables;
 friend class OCAD8FileImport;
@@ -221,7 +221,7 @@ public:
 	/**
 	 * Checks if a path point (excluding curve control points) is included in the given box.
 	 */
-	virtual bool intersectsBox(QRectF box) const = 0;
+	virtual bool intersectsBox(const QRectF& box) const = 0;
 	
 	/** Takes ownership of the renderables */
 	void takeRenderables();
@@ -347,7 +347,8 @@ public:
 	        const VirtualPath& path
 	);
 	
-public:
+	~PathPart() = default;
+	
 	PathPart& operator=(const PathPart& rhs);
 	
 	/**
@@ -416,7 +417,7 @@ public:
  * is ended by a coordinate with the "hole point" flag. For all types of
  * flags which can be set, see the MapCoord documentation.
  */
-class PathObject : public Object
+class PathObject : public Object  // clazy:exclude=copyable-polymorphic
 {
 	friend class PathPart;
 	
@@ -497,7 +498,7 @@ public:
 	void normalize();
 	
 	
-	bool intersectsBox(QRectF box) const override;
+	bool intersectsBox(const QRectF& box) const override;
 	
 	
 	// Coordinate access methods
@@ -944,7 +945,7 @@ bool operator== (const PathObject::Intersection& lhs, const PathObject::Intersec
  * 
  * Has exactly one coordinate, and additionally a rotation parameter.
  */
-class PointObject : public Object
+class PointObject : public Object  // clazy:exclude=copyable-polymorphic
 {
 public:
 	/** Constructs a PointObject, optionally assigning the symbol. */
@@ -1005,7 +1006,7 @@ public:
 	float getRotation() const;
 	
 	
-	bool intersectsBox(QRectF box) const override;
+	bool intersectsBox(const QRectF& box) const override;
 	
 	
 private:

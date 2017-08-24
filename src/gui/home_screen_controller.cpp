@@ -29,8 +29,8 @@
 
 
 HomeScreenController::HomeScreenController()
-: widget(nullptr),
-  current_tip(-1)
+: widget(nullptr)
+, current_tip(-1)
 {
 	// nothing
 }
@@ -55,9 +55,9 @@ void HomeScreenController::attach(MainWindow* window)
 	
 	window->setCentralWidget(widget);
 	
-	connect(&Settings::getInstance(), SIGNAL(settingsChanged()), this, SLOT(readSettings()));
+	connect(&Settings::getInstance(), &Settings::settingsChanged, this, &HomeScreenController::readSettings);
 	
-	readSettings(true);
+	readSettings();
 }
 
 void HomeScreenController::detach()
@@ -72,7 +72,7 @@ void HomeScreenController::detach()
 	Settings::getInstance().setSetting(Settings::HomeScreen_CurrentTip, current_tip);
 }
 
-void HomeScreenController::readSettings(bool init_current_tip)
+void HomeScreenController::readSettings()
 {
 	Settings& settings = Settings::getInstance(); // FIXME: settings should be const
 	
@@ -81,16 +81,19 @@ void HomeScreenController::readSettings(bool init_current_tip)
 	
 	bool tips_visible = settings.getSettingCached(Settings::HomeScreen_TipsVisible).toBool();
 	widget->setTipsVisible(tips_visible);
-	if (init_current_tip)
+	if (tips_visible)
 	{
-		// The home screen becomes active.
-		current_tip = settings.getSettingCached(Settings::HomeScreen_CurrentTip).toInt();
-		if (tips_visible)
+		if (current_tip < 0)
+		{
+			current_tip = settings.getSettingCached(Settings::HomeScreen_CurrentTip).toInt();
 			goToNextTip();
+		}
+		else
+		{
+			// Settings changed.
+			goToTip(current_tip);
+		}
 	}
-	else if (tips_visible)
-		// Settings changed.
-		goToTip(current_tip);
 }
 
 void HomeScreenController::setOpenMRUFile(bool state)
@@ -124,7 +127,7 @@ void HomeScreenController::goToTip(int index)
 	if (tips.isEmpty())
 	{
 		// Normally, this will be read only once.
-		QFile file(QString::fromLatin1(":/help/tip-of-the-day/tips.txt"));
+		QFile file(QString::fromLatin1("doc:tip-of-the-day/tips.txt"));
 		if (file.open(QIODevice::ReadOnly))
 		{
 			while (!file.atEnd())

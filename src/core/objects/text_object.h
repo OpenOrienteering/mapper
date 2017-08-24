@@ -117,7 +117,7 @@ struct TextObjectLineInfo
  * coordinate does not specify a real coordinate in this case, but is misused
  * as extent. Change this?
  */
-class TextObject : public Object
+class TextObject : public Object  // clazy:exclude=copyable-polymorphic
 {
 public:
 	enum HorizontalAlignment
@@ -243,7 +243,7 @@ public:
 	float getRotation() const;
 	
 	
-	bool intersectsBox(QRectF box) const override;
+	bool intersectsBox(const QRectF& box) const override;
 	
 	
 	/** Returns a QTransform from text coordinates to map coordinates.

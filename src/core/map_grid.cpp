@@ -121,7 +121,7 @@ const MapGrid& MapGrid::load(QXmlStreamReader& xml)
 	return *this;
 }
 
-void MapGrid::draw(QPainter* painter, QRectF bounding_box, Map* map, bool on_screen) const
+void MapGrid::draw(QPainter* painter, const QRectF& bounding_box, Map* map, bool on_screen) const
 {
 	double final_horz_spacing, final_vert_spacing;
 	double final_horz_offset, final_vert_offset;

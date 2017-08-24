@@ -55,7 +55,7 @@ class DrawPathTool : public DrawLineAndAreaTool
 Q_OBJECT
 public:
 	DrawPathTool(MapEditorController* editor, QAction* tool_action, bool is_helper_tool, bool allow_closing_paths);
-	virtual ~DrawPathTool();
+	~DrawPathTool() override;
 	
 	void init() override;
 	const QCursor& getCursor() const override;

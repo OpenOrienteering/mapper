@@ -47,11 +47,11 @@ public:
 	
 	/** Returns true if the file starts with the magic byte sequence "OMAP" (0x4f 0x4d 0x41 0x50).
 	 */
-	bool understands(const unsigned char *buffer, std::size_t sz) const;
+	bool understands(const unsigned char *buffer, std::size_t sz) const override;
 	
 	/** Creates an importer for this file type.
 	 */
-	Importer *createImporter(QIODevice* stream, Map *map, MapView *view) const;
+	Importer *createImporter(QIODevice* stream, Map *map, MapView *view) const override;
 	
 #ifdef MAPPER_ENABLE_NATIVE_EXPORTER
 	/** Creates an exporter for this file type.

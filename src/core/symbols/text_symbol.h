@@ -82,7 +82,7 @@ public:
 	
 	/** Creates an empty text symbol. */
 	TextSymbol();
-	virtual ~TextSymbol();
+	~TextSymbol() override;
 	Symbol* duplicate(const MapColorMap* color_map = nullptr) const override;
 	
 	void createRenderables(
@@ -139,7 +139,7 @@ public:
 	
 	double getNextTab(double pos) const;
 	
-	static const float internal_point_size;
+	constexpr static qreal internal_point_size = 256;
 	
 	SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog) override;
 	

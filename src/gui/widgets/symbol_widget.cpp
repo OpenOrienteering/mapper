@@ -43,11 +43,11 @@ SymbolWidget::SymbolWidget(Map* map, bool mobile_mode, QWidget* parent)
 	setBackgroundRole(QPalette::Base);
 	
 	// Relay render_widget signals
-	connect(render_widget, SIGNAL(selectedSymbolsChanged()), this, SIGNAL(selectedSymbolsChanged()));
-	connect(render_widget, SIGNAL(fillBorderClicked()), this, SIGNAL(fillBorderClicked()));
-	connect(render_widget, SIGNAL(switchSymbolClicked()), this, SIGNAL(switchSymbolClicked()));
-	connect(render_widget, SIGNAL(selectObjectsClicked(bool)), this, SIGNAL(selectObjectsClicked(bool)));
-	connect(render_widget, SIGNAL(deselectObjectsClicked()), this, SIGNAL(deselectObjectsClicked()));
+	connect(render_widget, &SymbolRenderWidget::selectedSymbolsChanged, this, &SymbolWidget::selectedSymbolsChanged);
+	connect(render_widget, &SymbolRenderWidget::fillBorderClicked, this, &SymbolWidget::fillBorderClicked);
+	connect(render_widget, &SymbolRenderWidget::switchSymbolClicked, this, &SymbolWidget::switchSymbolClicked);
+	connect(render_widget, &SymbolRenderWidget::selectObjectsClicked, this, &SymbolWidget::selectObjectsClicked);
+	connect(render_widget, &SymbolRenderWidget::deselectObjectsClicked, this, &SymbolWidget::deselectObjectsClicked);
 }
 
 SymbolWidget::~SymbolWidget()

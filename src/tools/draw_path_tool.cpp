@@ -51,10 +51,10 @@ DrawPathTool::DrawPathTool(MapEditorController* editor, QAction* tool_button, bo
 , key_button_bar(nullptr)
 {
 	angle_helper->setActive(false);
-	connect(angle_helper.data(), SIGNAL(displayChanged()), this, SLOT(updateDirtyRect()));
+	connect(angle_helper.data(), &ConstrainAngleToolHelper::displayChanged, this, &DrawPathTool::updateDirtyRect);
 	
 	updateSnapHelper();
-	connect(snap_helper.data(), SIGNAL(displayChanged()), this, SLOT(updateDirtyRect()));
+	connect(snap_helper.data(), &SnappingToolHelper::displayChanged, this, &DrawPathTool::updateDirtyRect);
 	
 	dragging = false;
 	appending = false;
@@ -65,7 +65,7 @@ DrawPathTool::DrawPathTool(MapEditorController* editor, QAction* tool_button, bo
 	shift_pressed = false;
 	ctrl_pressed = false;
 	
-	connect(map(), SIGNAL(objectSelectionChanged()), this, SLOT(objectSelectionChanged()));
+	connect(map(), &Map::objectSelectionChanged, this, &DrawPathTool::objectSelectionChanged);
 }
 
 DrawPathTool::~DrawPathTool()
@@ -856,7 +856,7 @@ void DrawPathTool::updateDirtyRect()
 	includePreviewRects(rect);
 	
 	if (is_helper_tool)
-		emit(dirtyRectChanged(rect));
+		emit dirtyRectChanged(rect);
 	else
 	{
 		if (rect.isValid())

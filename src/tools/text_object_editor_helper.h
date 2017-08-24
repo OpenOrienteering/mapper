@@ -102,6 +102,8 @@ public:
 		 */
 		BatchEdit(not_null<TextObjectEditorHelper*> editor, int actions = CommitPreedit | UpdateInputProperties);
 		
+		BatchEdit(const BatchEdit&) = delete;
+		
 		/**
 		 * Destructor.
 		 * 
@@ -110,6 +112,8 @@ public:
 		 * TextObjectEditorHelper::commitStateChange().
 		 */
 		~BatchEdit();
+		
+		BatchEdit& operator=(const BatchEdit&) = delete;
 		
 	private:
 		TextObjectEditorHelper* const editor;
@@ -221,7 +225,7 @@ protected:
 	
 	
 public:
-	QVariant inputMethodQuery(Qt::InputMethodQuery property, QVariant argument) const;
+	QVariant inputMethodQuery(Qt::InputMethodQuery property, const QVariant& argument) const;
 	bool inputMethodEvent(QInputMethodEvent* event);
 	
 	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
@@ -283,7 +287,7 @@ private:
 	/**
 	 * Calls the worker function for the given range's rectangle of each line.
 	 */
-	void foreachLineRect(int begin, int end, std::function<void(const QRectF&)> worker) const;
+	void foreachLineRect(int begin, int end, const std::function<void(const QRectF&)>& worker) const;
 	
 	TextObject* text_object;
 	MapEditorController* editor;

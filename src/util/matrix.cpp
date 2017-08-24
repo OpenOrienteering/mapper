@@ -48,7 +48,7 @@ void Matrix::load(QIODevice* file)
 
 #endif
 
-void Matrix::save(QXmlStreamWriter& xml, const QString role) const
+void Matrix::save(QXmlStreamWriter& xml, const QString& role) const
 {
 	XmlElementWriter matrix{xml, QLatin1String("matrix")};
 	matrix.writeAttribute(QLatin1String("role"), role);

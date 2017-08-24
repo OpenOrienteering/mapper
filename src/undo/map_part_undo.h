@@ -67,30 +67,32 @@ public:
 	 */
 	MapPartUndoStep(Map* map);
 	
-	virtual ~MapPartUndoStep();
+	~MapPartUndoStep() override;
 	
 	/**
 	 * Returns true unless this step's type is UndefinedChange.
 	 */
-	virtual bool isValid() const;
+	bool isValid() const override;
 	
-	virtual UndoStep* undo();
+	UndoStep* undo() override;
 
-	virtual bool getModifiedParts(PartSet& out) const;
+	bool getModifiedParts(PartSet& out) const override;
 	
-	virtual void getModifiedObjects(int part_index, ObjectSet& out) const;
+	void getModifiedObjects(int part_index, ObjectSet& out) const override;
 	
+#ifndef NO_NATIVE_FILE_FORMAT
 	/**
 	 * Not implemented.
 	 * 
 	 * @deprecated Legacy file format.
 	 */
-	virtual bool load(QIODevice* file, int version);
+	bool load(QIODevice* file, int version) override;
+#endif
 	
 protected:
-	virtual void saveImpl(QXmlStreamWriter& xml) const;
+	void saveImpl(QXmlStreamWriter& xml) const override;
 	
-	virtual void loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict);
+	void loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict) override;
 	
 	MapPartChange change;
 	

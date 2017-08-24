@@ -36,28 +36,23 @@
 #include "util/backports.h"
 
 
-
-namespace
-{
-	const QString gdal_manager_group{ QString::fromLatin1("GdalManager") };
-	const QString gdal_configuration_group{ QString::fromLatin1("GdalConfiguration") };
-	const QString gdal_dxf_key{ QString::fromLatin1("dxf") };
-	const QString gdal_gpx_key{ QString::fromLatin1("gpx") };
-	const QString gdal_osm_key{ QString::fromLatin1("osm") };
-	
-}
-
-
-
 class GdalManager::GdalManagerPrivate
 {
 public:
-	GdalManagerPrivate() noexcept
+	const QString gdal_manager_group{ QStringLiteral("GdalManager") };
+	const QString gdal_configuration_group{ QStringLiteral("GdalConfiguration") };
+	const QString gdal_dxf_key{ QStringLiteral("dxf") };
+	const QString gdal_gpx_key{ QStringLiteral("gpx") };
+	const QString gdal_osm_key{ QStringLiteral("osm") };
+	
+	GdalManagerPrivate()
 	: dirty{ true }
 	{
 		// GDAL 2.0: GDALAllRegister();
 		OGRRegisterAll();
 	}
+	
+	GdalManagerPrivate(const GdalManagerPrivate&) = delete;
 	
 	void configure()
 	{

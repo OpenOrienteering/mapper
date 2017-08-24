@@ -48,9 +48,9 @@ DrawPointGPSTool::DrawPointGPSTool(GPSDisplay* gps_display, MapEditorController*
 	if (gps_display->hasValidPosition())
 		newGPSPosition(gps_display->getLatestGPSCoord(), gps_display->getLatestGPSCoordAccuracy());
 	
-	connect(gps_display, SIGNAL(mapPositionUpdated(MapCoordF,float)), this, SLOT(newGPSPosition(MapCoordF,float)));
-	connect(editor, SIGNAL(activeSymbolChanged(const Symbol*)), this, SLOT(activeSymbolChanged(const Symbol*)));
-	connect(map(), SIGNAL(symbolDeleted(int, const Symbol*)), this, SLOT(symbolDeleted(int, const Symbol*)));
+	connect(gps_display, &GPSDisplay::mapPositionUpdated, this, &DrawPointGPSTool::newGPSPosition);
+	connect(editor, &MapEditorController::activeSymbolChanged, this, &DrawPointGPSTool::activeSymbolChanged);
+	connect(map(), &Map::symbolDeleted, this, &DrawPointGPSTool::symbolDeleted);
 }
 
 DrawPointGPSTool::~DrawPointGPSTool()

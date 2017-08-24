@@ -459,10 +459,18 @@ TemplateVisibility MapView::getTemplateVisibility(const Template* temp) const
 		return { 1.0f, false };
 }
 
-void MapView::setTemplateVisibility(const Template* temp, TemplateVisibility vis)
+void MapView::setTemplateVisibility(Template* temp, TemplateVisibility vis)
 {
+	auto visible = vis.visible && vis.opacity > 0;
+	if (visible && temp->getTemplateState() != Template::Loaded)
+	{
+		vis.visible = visible = temp->loadTemplateFile(false);
+	}
+	
 	if (setTemplateVisibilityHelper(temp, vis))
-		emit visibilityChanged(VisibilityFeature::TemplateVisible, vis.visible && vis.opacity > 0, temp);
+	{
+		emit visibilityChanged(VisibilityFeature::TemplateVisible, visible, temp);
+	}
 }
 
 bool MapView::setTemplateVisibilityHelper(const Template *temp, TemplateVisibility vis)
@@ -482,7 +490,7 @@ bool MapView::setTemplateVisibilityHelper(const Template *temp, TemplateVisibili
 	return false;
 }
 
-void MapView::onTemplateAdded(int, const Template* temp)
+void MapView::onTemplateAdded(int, Template* temp)
 {
 	setTemplateVisibility(temp, { 1.0f, true });
 }

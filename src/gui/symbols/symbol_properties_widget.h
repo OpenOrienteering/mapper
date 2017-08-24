@@ -84,10 +84,10 @@ signals:
 	void propertiesModified();
 	
 protected slots:
-	void numberChanged(QString text);
+	void numberChanged(const QString& text);
 	void languageChanged();
 	void editClicked();
-	void nameChanged(QString text);
+	void nameChanged(const QString& text);
 	void descriptionChanged();
 	void helperSymbolChanged(bool checked);
 	

@@ -280,7 +280,7 @@ void DrawCircleTool::setDirtyRect()
 	includePreviewRects(rect);
 	
 	if (is_helper_tool)
-		emit(dirtyRectChanged(rect));
+		emit dirtyRectChanged(rect);
 	else
 	{
 		if (rect.isValid())

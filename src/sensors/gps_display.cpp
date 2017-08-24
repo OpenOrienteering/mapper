@@ -65,7 +65,7 @@ GPSDisplay::GPSDisplay(MapWidget* widget, const Georeferencing& georeferencing, 
 #elif defined(MAPPER_DEVELOPMENT_BUILD)
 	// DEBUG
 	QTimer* debug_timer = new QTimer(this);
-	connect(debug_timer, SIGNAL(timeout()), this, SLOT(debugPositionUpdate()));
+	connect(debug_timer, &QTimer::timeout, this, &GPSDisplay::debugPositionUpdate);
 	debug_timer->start(500);
 	visible = true;
 #endif

@@ -114,18 +114,18 @@
         <file>images/view-zoom-out.png</file>
         <file>images/window-new.png</file>
         <file>images/mapper-icon/Mapper-128.png</file>
-        <file alias="help/tip-of-the-day/tips.txt">help/tip-of-the-day/tips_en.txt</file>
+        <file alias="doc/tip-of-the-day/tips.txt">doc/tip-of-the-day/tips_en.txt</file>
     </qresource>
     <qresource prefix="/" lang="de">
-        <file alias="help/tip-of-the-day/tips.txt">help/tip-of-the-day/tips_de.txt</file>
+        <file alias="doc/tip-of-the-day/tips.txt">doc/tip-of-the-day/tips_de.txt</file>
     </qresource>
     <qresource prefix="/" lang="fr">
-        <file alias="help/tip-of-the-day/tips.txt">help/tip-of-the-day/tips_fr.txt</file>
+        <file alias="doc/tip-of-the-day/tips.txt">doc/tip-of-the-day/tips_fr.txt</file>
     </qresource>
     <qresource prefix="/" lang="ru">
-        <file alias="help/tip-of-the-day/tips.txt">help/tip-of-the-day/tips_ru.txt</file>
+        <file alias="doc/tip-of-the-day/tips.txt">doc/tip-of-the-day/tips_ru.txt</file>
     </qresource>
     <qresource prefix="/" lang="uk">
-        <file alias="help/tip-of-the-day/tips.txt">help/tip-of-the-day/tips_uk.txt</file>
+        <file alias="doc/tip-of-the-day/tips.txt">doc/tip-of-the-day/tips_uk.txt</file>
     </qresource>
 </RCC>

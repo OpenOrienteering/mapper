@@ -335,7 +335,7 @@ void MapWidget::moveMap(int steps_x, int steps_y)
 	}
 }
 
-void MapWidget::ensureVisibilityOfRect(const QRectF& map_rect, ZoomOption zoom_option)
+void MapWidget::ensureVisibilityOfRect(QRectF map_rect, ZoomOption zoom_option)
 {
 	// Amount in pixels that is scrolled "too much" if the rect is not completely visible
 	// TODO: change to absolute size using dpi value
@@ -368,7 +368,7 @@ void MapWidget::ensureVisibilityOfRect(const QRectF& map_rect, ZoomOption zoom_o
 		adjustViewToRect(map_rect, zoom_option);
 }
 
-void MapWidget::adjustViewToRect(const QRectF& map_rect, ZoomOption zoom_option)
+void MapWidget::adjustViewToRect(QRectF map_rect, ZoomOption zoom_option)
 {
 	view->setCenter(MapCoord{ map_rect.center() });
 	
@@ -397,7 +397,7 @@ void MapWidget::moveDirtyRect(QRect& dirty_rect, qreal x, qreal y)
 		dirty_rect = dirty_rect.translated(x, y).intersected(rect());
 }
 
-void MapWidget::markTemplateCacheDirty(QRectF view_rect, int pixel_border, bool front_cache)
+void MapWidget::markTemplateCacheDirty(const QRectF& view_rect, int pixel_border, bool front_cache)
 {
 	QRect& cache_dirty_rect = front_cache ? above_template_cache_dirty_rect : below_template_cache_dirty_rect;
 	QRectF viewport_rect = viewToViewport(view_rect);
@@ -415,7 +415,7 @@ void MapWidget::markTemplateCacheDirty(QRectF view_rect, int pixel_border, bool 
 	update(integer_rect);
 }
 
-void MapWidget::markObjectAreaDirty(QRectF map_rect)
+void MapWidget::markObjectAreaDirty(const QRectF& map_rect)
 {
 	updateMapRect(map_rect, 0, map_cache_dirty_rect);
 }
@@ -491,7 +491,7 @@ void MapWidget::updateViewportRect(QRect viewport_rect, QRect& dirty_rect)
 	}
 }
 
-void MapWidget::updateDrawingLater(QRectF map_rect, int pixel_border)
+void MapWidget::updateDrawingLater(const QRectF& map_rect, int pixel_border)
 {
 	QRect viewport_rect = calculateViewportBoundingBox(map_rect, pixel_border);
 	
@@ -500,7 +500,7 @@ void MapWidget::updateDrawingLater(QRectF map_rect, int pixel_border)
 		if (!cached_update_rect.isValid())
 		{
 			// Start the update timer
-			QTimer::singleShot(15, this, SLOT(updateDrawingLaterSlot()));
+			QTimer::singleShot(15, this, SLOT(updateDrawingLaterSlot()));  // clazy:exclude=old-style-connect
 		}
 		
 		// NOTE: this may require a mutex for concurrent access with updateDrawingLaterSlot()?
@@ -530,7 +530,7 @@ void MapWidget::updateEverythingInRect(const QRect& dirty_rect)
 	update(dirty_rect);
 }
 
-QRect MapWidget::calculateViewportBoundingBox(QRectF map_rect, int pixel_border)
+QRect MapWidget::calculateViewportBoundingBox(const QRectF& map_rect, int pixel_border) const
 {
 	QRectF view_rect = view->calculateViewBoundingBox(map_rect);
 	view_rect.adjust(-pixel_border, -pixel_border, +pixel_border, +pixel_border);
@@ -570,9 +570,9 @@ void MapWidget::updateCursorposLabel(const MapCoordF pos)
 	if (coords_type == MAP_COORDS)
 	{
 		cursorpos_label->setText( QStringLiteral("%1 %2 (%3)").
-		  arg(locale().toString(pos.x(), 'f', 2)).
-		  arg(locale().toString(-pos.y(), 'f', 2)).
-		  arg(tr("mm", "millimeters")));
+		  arg(locale().toString(pos.x(), 'f', 2),
+		      locale().toString(-pos.y(), 'f', 2),
+		      tr("mm", "millimeters")) );
 	}
 	else
 	{
@@ -586,17 +586,17 @@ void MapWidget::updateCursorposLabel(const MapCoordF pos)
 				// Grid unit differs less than 2% from meter.
 				cursorpos_label->setText(
 				  QStringLiteral("%1 %2 (%3)").
-				  arg(QString::number(projected_point.x(), 'f', 0)).
-				  arg(QString::number(projected_point.y(), 'f', 0)).
-				  arg(tr("m", "meters"))
+				  arg(QString::number(projected_point.x(), 'f', 0),
+				      QString::number(projected_point.y(), 'f', 0),
+				      tr("m", "meters"))
 				); 
 			}
 			else
 			{
 				cursorpos_label->setText(
 				  QStringLiteral("%1 %2").
-				  arg(QString::number(projected_point.x(), 'f', 0)).
-				  arg(QString::number(projected_point.y(), 'f', 0))
+				  arg(QString::number(projected_point.x(), 'f', 0),
+				      QString::number(projected_point.y(), 'f', 0))
 				); 
 			}
 		}
@@ -605,8 +605,8 @@ void MapWidget::updateCursorposLabel(const MapCoordF pos)
 			const LatLon lat_lon(georef.toGeographicCoords(pos, &ok));
 			cursorpos_label->setText(
 			  QString::fromUtf8("%1° %2°").
-			  arg(locale().toString(lat_lon.latitude(), 'f', 6)).
-			  arg(locale().toString(lat_lon.longitude(), 'f', 6))
+			  arg(locale().toString(lat_lon.latitude(), 'f', 6),
+			      locale().toString(lat_lon.longitude(), 'f', 6))
 			); 
 		}
 		else if (coords_type == GEOGRAPHIC_COORDS_DMS)
@@ -614,8 +614,8 @@ void MapWidget::updateCursorposLabel(const MapCoordF pos)
 			const LatLon lat_lon(georef.toGeographicCoords(pos, &ok));
 			cursorpos_label->setText(
 			  QStringLiteral("%1 %2").
-			  arg(georef.degToDMS(lat_lon.latitude())).
-			  arg(georef.degToDMS(lat_lon.longitude()))
+			  arg(georef.degToDMS(lat_lon.latitude()),
+			      georef.degToDMS(lat_lon.longitude()))
 			); 
 		}
 		else
@@ -1110,7 +1110,7 @@ QVariant MapWidget::inputMethodQuery(Qt::InputMethodQuery property) const
 	return inputMethodQuery(property, {});
 }
 
-QVariant MapWidget::inputMethodQuery(Qt::InputMethodQuery property, QVariant argument) const
+QVariant MapWidget::inputMethodQuery(Qt::InputMethodQuery property, const QVariant& argument) const
 {
 	QVariant result;
 	if (tool)

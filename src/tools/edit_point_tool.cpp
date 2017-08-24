@@ -483,7 +483,7 @@ bool EditPointTool::inputMethodEvent(QInputMethodEvent* event)
 	return MapEditorTool::inputMethodEvent(event);
 }
 
-QVariant EditPointTool::inputMethodQuery(Qt::InputMethodQuery property, QVariant argument) const
+QVariant EditPointTool::inputMethodQuery(Qt::InputMethodQuery property, const QVariant& argument) const
 {
 	auto result = QVariant { };
 	if (text_editor)
@@ -544,8 +544,8 @@ int EditPointTool::updateDirtyRectImpl(QRectF& rect)
 	// Control points
 	if (show_object_points)
 	{
-		for (Map::ObjectSelection::const_iterator it = map()->selectedObjectsBegin(), end = map()->selectedObjectsEnd(); it != end; ++it)
-			(*it)->includeControlPointsRect(rect);
+		for (auto object : map()->selectedObjects())
+			object->includeControlPointsRect(rect);
 	}
 	
 	// Text selection
@@ -567,7 +567,7 @@ void EditPointTool::drawImpl(QPainter* painter, MapWidget* widget)
 	auto num_selected_objects = map()->selectedObjects().size();
 	if (num_selected_objects > 0)
 	{
-		drawSelectionOrPreviewObjects(painter, widget, text_editor);
+		drawSelectionOrPreviewObjects(painter, widget, bool(text_editor));
 		
 		if (!text_editor)
 		{
@@ -681,9 +681,9 @@ void EditPointTool::updateStatusText()
 	{
 		MapCoordF drag_vector = constrained_pos_map - click_pos_map;
 		text = EditTool::tr("<b>Coordinate offset:</b> %1, %2 mm  <b>Distance:</b> %3 m ").
-		       arg(QLocale().toString(drag_vector.x(), 'f', 1)).
-		       arg(QLocale().toString(-drag_vector.y(), 'f', 1)).
-		       arg(QLocale().toString(0.001 * map()->getScaleDenominator() * drag_vector.length(), 'f', 1)) +
+		       arg(QLocale().toString(drag_vector.x(), 'f', 1),
+		           QLocale().toString(-drag_vector.y(), 'f', 1),
+		           QLocale().toString(0.001 * map()->getScaleDenominator() * drag_vector.length(), 'f', 1)) +
 		       QLatin1String("| ");
 		
 		if (!angle_helper->isActive())

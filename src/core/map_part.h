@@ -70,10 +70,15 @@ public:
 	 */
 	MapPart(const QString& name, Map* map);
 	
+	MapPart(const MapPart&) = delete;
+	
 	/**
 	 * Destroys the map part.
 	 */
 	~MapPart();
+	
+	
+	MapPart& operator=(const MapPart&) = delete;
 	
 	
 	/**
@@ -194,7 +199,7 @@ public:
 	/** 
 	 * @see Map::countObjectsInRect().
 	 */
-	int countObjectsInRect(QRectF map_coord_rect, bool include_hidden_objects) const;
+	int countObjectsInRect(const QRectF& map_coord_rect, bool include_hidden_objects) const;
 	
 	/**
 	 * Calculates and returns the bounding box of all objects in this map part.

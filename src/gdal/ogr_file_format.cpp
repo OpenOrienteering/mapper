@@ -643,22 +643,26 @@ OgrFileImport::ObjectList OgrFileImport::importGeometry(OGRFeatureH feature, OGR
 	switch (geometry_type)
 	{
 	case OGRwkbGeometryType::wkbPoint:
-		result = { importPointGeometry(feature, geometry) };
+		if (auto object = importPointGeometry(feature, geometry))
+			result = { object };
 		break;
 		
 	case OGRwkbGeometryType::wkbLineString:
-		result = { importLineStringGeometry(feature, geometry) };
+		if (auto object = importLineStringGeometry(feature, geometry))
+			result = { object };
 		break;
 		
 	case OGRwkbGeometryType::wkbPolygon:
-		result = { importPolygonGeometry(feature, geometry) };
-		return result;
+		if (auto object = importPolygonGeometry(feature, geometry))
+			result = { object };
+		break;
 		
 	case OGRwkbGeometryType::wkbGeometryCollection:
 	case OGRwkbGeometryType::wkbMultiLineString:
 	case OGRwkbGeometryType::wkbMultiPoint:
 	case OGRwkbGeometryType::wkbMultiPolygon:
-		return importGeometryCollection(feature, geometry);
+		result = importGeometryCollection(feature, geometry);
+		break;
 		
 	default:
 		qDebug("OgrFileImport: Unknown or unsupported geometry type: %d", geometry_type);

@@ -67,7 +67,7 @@ public:
 	/**
 	 * Destructor.
 	 */
-	virtual ~CRSSelector();
+	~CRSSelector() override;
 	
 	
 	/**
