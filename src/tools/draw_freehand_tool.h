@@ -1,5 +1,6 @@
 /*
  *    Copyright 2014 Thomas Schöps
+ *    Copyright 2014, 2015, 2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -18,16 +19,16 @@
  */
 
 
-#ifndef OPENORIENTEERING_DRAW_FREEHAND_H
-#define OPENORIENTEERING_DRAW_FREEHAND_H
+#ifndef OPENORIENTEERING_DRAW_FREEHAND_TOOL_H
+#define OPENORIENTEERING_DRAW_FREEHAND_TOOL_H
 
 #include <vector>
 
 #include <QObject>
 #include <QPoint>
 
-#include "tools/draw_line_and_area_tool.h"
 #include "core/map_coord.h"
+#include "tools/draw_line_and_area_tool.h"
 
 class QAction;
 class QCursor;
@@ -66,13 +67,15 @@ protected:
 	void setDirtyRect();
 	void updateStatusText();
 	
-	void checkLineSegment(int a, int b, std::vector<bool>& point_mask);
+private:
+	void checkLineSegment(std::size_t a, std::size_t b);
 	
-	QPoint click_pos;
-	MapCoordF last_pos_map;
+	std::vector<bool> point_mask;
+	qreal split_distance_sq;
+	
+	QPoint last_pos;
 	QPoint cur_pos;
 	MapCoordF cur_pos_map;
-	bool dragging;
 };
 
 #endif

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2014 Thomas Schöps
- *    Copyright 2014, 2015 Kai Pastor
+ *    Copyright 2014-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -25,15 +25,19 @@
 #include <QMouseEvent>
 
 #include "core/map.h"
+#include "core/map_view.h"
 #include "core/objects/object.h"
 #include "gui/modifier_key.h"
+#include "gui/map/map_editor.h"
+#include "gui/map/map_widget.h"
 
 
 DrawFreehandTool::DrawFreehandTool(MapEditorController* editor, QAction* tool_button, bool is_helper_tool)
 : DrawLineAndAreaTool(editor, DrawFreehand, tool_button, is_helper_tool)
 {
-	dragging = false;
+	// nothing else
 }
+
 
 DrawFreehandTool::~DrawFreehandTool() = default;
 
@@ -45,11 +49,14 @@ void DrawFreehandTool::init()
 	MapEditorTool::init();
 }
 
+
 const QCursor& DrawFreehandTool::getCursor() const
 {
 	static auto const cursor = scaledToScreen(QCursor{ QPixmap(QString::fromLatin1(":/images/cursor-draw-path.png")), 11, 11 });
 	return cursor;
 }
+
+
 
 bool DrawFreehandTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
@@ -57,69 +64,59 @@ bool DrawFreehandTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, 
 	
 	if (event->button() == Qt::LeftButton && !editingInProgress())
 	{
-		cur_pos = event->pos();
+		last_pos = cur_pos = event->pos();
 		cur_pos_map = map_coord;
 		
-		click_pos = event->pos();
-		dragging = false;
 		startDrawing();
-		updatePath();
-		
+		preview_path->addCoordinate(MapCoord(cur_pos_map));
 		hidePreviewPoints();
 		return true;
 	}
+	
 	return false;
 }
+
 
 bool DrawFreehandTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
 	Q_UNUSED(widget);
 	
-	bool mouse_down = containsDrawingButtons(event->buttons());
-	
-	if (!mouse_down)
+	if (editingInProgress())
 	{
-		if (!editingInProgress())
-		{
-			setPreviewPointsPosition(map_coord);
-			setDirtyRect();
-		}
-	}
-	else
-	{
-		if (!editingInProgress())
-			return false;
-		
-		dragging = true;
 		cur_pos = event->pos();
 		cur_pos_map = map_coord;
 		updatePath();
+		return true;
 	}
-	return true;
+	
+	setPreviewPointsPosition(map_coord);
+	setDirtyRect();
+	return false;
 }
+
 
 bool DrawFreehandTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
 	Q_UNUSED(widget);
 	
-	if (!editingInProgress())
-		return false;
-	
-	if (!dragging)
-	{
-		abortDrawing();
-		return true;
-	}
-	else if (dragging && event->button() == Qt::LeftButton)
-	{
+	if (event->button() == Qt::LeftButton && editingInProgress())
+	{	
+		if (preview_path->getCoordinateCount() < 2)
+		{
+			abortDrawing();
+			return true;
+		}
+		
 		cur_pos = event->pos();
 		cur_pos_map = map_coord;
 		updatePath();
 		finishDrawing();
 		return true;
 	}
+	
 	return false;
 }
+
 
 bool DrawFreehandTool::keyPressEvent(QKeyEvent* event)
 {
@@ -137,27 +134,35 @@ bool DrawFreehandTool::keyPressEvent(QKeyEvent* event)
 	return false;
 }
 
+
+
 void DrawFreehandTool::draw(QPainter* painter, MapWidget* widget)
 {
 	drawPreviewObjects(painter, widget);
 }
 
+
+
 void DrawFreehandTool::finishDrawing()
 {
-	dragging = false;
 	updateStatusText();
 	
 	// Clean up path: remove superfluous points
 	if (preview_path->getCoordinateCount() > 2)
 	{
-		std::vector<bool> point_mask(preview_path->getCoordinateCount(), false);
-		point_mask[0] = true;
-		point_mask[point_mask.size() - 1] = true;
-		checkLineSegment(0, point_mask.size() - 1, point_mask);
+		// Use 999 instead of 1000, and save the rounding.
+		split_distance_sq = editor->getMainWidget()->getMapView()->pixelToLength(1) / 999;
+		split_distance_sq *= split_distance_sq;
 		
-		for (int i = (int)(point_mask.size() - 2); i > 0; -- i)
+		point_mask.assign(preview_path->getCoordinateCount(), false);
+		point_mask.front() = true;
+		point_mask.back() = true;
+		checkLineSegment(0, point_mask.size() - 1);
+		
+		for (auto i = point_mask.size() - 1; i != 0; )
 		{
-			if (! point_mask[i])
+			--i;
+			if (!point_mask[i])
 				preview_path->deleteCoordinate(i, false);
 		}
 	}
@@ -165,47 +170,49 @@ void DrawFreehandTool::finishDrawing()
 	DrawLineAndAreaTool::finishDrawing();
 	// Do not add stuff here as the tool might get deleted in DrawLineAndAreaTool::finishDrawing()!
 }
+
+
 void DrawFreehandTool::abortDrawing()
 {
-	dragging = false;
 	updateStatusText();
 	
 	DrawLineAndAreaTool::abortDrawing();
 }
 
-void DrawFreehandTool::checkLineSegment(int a, int b, std::vector< bool >& point_mask)
+
+
+void DrawFreehandTool::checkLineSegment(std::size_t first, std::size_t last)
 {
-	if (b <= a + 1)
+	if (last <= first + 1)
 		return;
 	
-	const MapCoord& start_coord = preview_path->getRawCoordinateVector()[a];
-	const MapCoord& end_coord = preview_path->getRawCoordinateVector()[b];
+	// 'best_index' indicates the point on the path between first and last
+	// with the highest distance from the direct line between first and last.
+	auto best_index = first;
 	
-	// Find point between a and b with highest distance from line segment
-	float max_distance_sq = -1;
-	int best_index = a + 1;
-	for (int i = a + 1; i < b; ++ i)
+	// This block ensures the stack is cleaned up before going into recursion.
 	{
-		const MapCoord& coord = preview_path->getRawCoordinateVector()[i];
-		
-		MapCoordF to_coord = MapCoordF(coord.x() - start_coord.x(), coord.y() - start_coord.y());
-		MapCoordF to_next = MapCoordF(end_coord.x() - start_coord.x(), end_coord.y() - start_coord.y());
-		MapCoordF tangent = to_next;
+		auto max_distance_sq = qreal(0);
+		const auto start_coord = MapCoordF(preview_path->getRawCoordinateVector()[first]);
+		const auto end_coord = MapCoordF(preview_path->getRawCoordinateVector()[last]);
+		auto tangent = end_coord - start_coord;
 		tangent.normalize();
 		
-		float distance_sq;
-		
-		float dist_along_line = MapCoordF::dotProduct(to_coord, tangent);
-		if (dist_along_line <= 0)
+		for (auto i = first + 1; i < last; ++i)
 		{
-			distance_sq = to_coord.lengthSquared();
-		}
-		else
-		{
-			float line_length = MapCoordF(end_coord).distanceTo(MapCoordF(start_coord));
-			if (dist_along_line >= line_length)
+			const auto coord = MapCoordF(preview_path->getRawCoordinateVector()[i]);
+			const auto to_coord = coord - start_coord;
+			
+			qreal distance_sq;
+			
+			auto dist_along_line = MapCoordF::dotProduct(to_coord, tangent);
+			if (dist_along_line <= 0)
 			{
-				distance_sq = MapCoordF(coord).distanceSquaredTo(MapCoordF(end_coord));
+				distance_sq = to_coord.lengthSquared();
+			}
+			else if (dist_along_line >= end_coord.distanceTo(start_coord))
+			{
+				distance_sq = coord.distanceSquaredTo(end_coord);
 			}
 			else
 			{
@@ -213,46 +220,39 @@ void DrawFreehandTool::checkLineSegment(int a, int b, std::vector< bool >& point
 				distance_sq = qAbs(MapCoordF::dotProduct(right, to_coord));
 				distance_sq = distance_sq*distance_sq;
 			}
+			
+			if (distance_sq > max_distance_sq)
+			{
+				max_distance_sq = distance_sq;
+				best_index = i;
+			}
 		}
 		
-		if (distance_sq > max_distance_sq)
-		{
-			max_distance_sq = distance_sq;
-			best_index = i;
-		}
-	}
+		// Make new segment?
+		if (max_distance_sq < split_distance_sq)
+			return;
+	}		
 	
-	// Make new segment?
-	const float split_distance_sq = 0.09f*0.09f;
-	
-	if (max_distance_sq > split_distance_sq)
-	{
-		point_mask[best_index] = true;
-		checkLineSegment(a, best_index, point_mask);
-		checkLineSegment(best_index, b, point_mask);
-	}
+	point_mask[best_index] = true;
+	checkLineSegment(first, best_index);
+	checkLineSegment(best_index, last);
 }
+
+
 
 void DrawFreehandTool::updatePath()
 {
-	float length_threshold_sq = 0.06f*0.06f; // minimum point distance in mm
+	if ((last_pos - cur_pos).manhattanLength() <= 2)
+		return;
 	
-	if (!dragging)
-	{
-		preview_path->clearCoordinates();
-		preview_path->addCoordinate(MapCoord(cur_pos_map));
-	}
-	else
-	{
-		if (last_pos_map.distanceSquaredTo(cur_pos_map) < length_threshold_sq)
-			return;
-		preview_path->addCoordinate(MapCoord(cur_pos_map));
-	}
-	last_pos_map = cur_pos_map;
+	preview_path->addCoordinate(MapCoord(cur_pos_map));
+	last_pos = cur_pos;
 	
 	updatePreviewPath();
 	setDirtyRect();
 }
+
+
 
 void DrawFreehandTool::setDirtyRect()
 {
@@ -260,15 +260,20 @@ void DrawFreehandTool::setDirtyRect()
 	includePreviewRects(rect);
 	
 	if (is_helper_tool)
+	{
 		emit dirtyRectChanged(rect);
+	}
+	else if (rect.isValid())
+	{
+		map()->setDrawingBoundingBox(rect, 0, true);
+	}
 	else
 	{
-		if (rect.isValid())
-			map()->setDrawingBoundingBox(rect, 0, true);
-		else
-			map()->clearDrawingBoundingBox();
+		map()->clearDrawingBoundingBox();
 	}
 }
+
+
 
 void DrawFreehandTool::updateStatusText()
 {
