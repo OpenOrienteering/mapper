@@ -73,8 +73,7 @@ private:
 	std::vector<bool> point_mask;
 	qreal split_distance_sq;
 	
-	QPoint click_pos;
-	MapCoordF last_pos_map;
+	QPoint last_pos;
 	QPoint cur_pos;
 	MapCoordF cur_pos_map;
 };

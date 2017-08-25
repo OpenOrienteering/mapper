@@ -64,10 +64,9 @@ bool DrawFreehandTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, 
 	
 	if (event->button() == Qt::LeftButton && !editingInProgress())
 	{
-		cur_pos = event->pos();
+		last_pos = cur_pos = event->pos();
 		cur_pos_map = map_coord;
 		
-		click_pos = event->pos();
 		startDrawing();
 		preview_path->addCoordinate(MapCoord(cur_pos_map));
 		hidePreviewPoints();
@@ -243,12 +242,11 @@ void DrawFreehandTool::checkLineSegment(std::size_t first, std::size_t last)
 
 void DrawFreehandTool::updatePath()
 {
-	constexpr auto length_threshold_sq = qreal(0.06*0.06); // minimum point distance in mm
-	if (last_pos_map.distanceSquaredTo(cur_pos_map) < length_threshold_sq)
+	if ((last_pos - cur_pos).manhattanLength() <= 2)
 		return;
 	
 	preview_path->addCoordinate(MapCoord(cur_pos_map));
-	last_pos_map = cur_pos_map;
+	last_pos = cur_pos;
 	
 	updatePreviewPath();
 	setDirtyRect();
