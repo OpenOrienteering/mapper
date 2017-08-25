@@ -25,8 +25,11 @@
 #include <QMouseEvent>
 
 #include "core/map.h"
+#include "core/map_view.h"
 #include "core/objects/object.h"
 #include "gui/modifier_key.h"
+#include "gui/map/map_editor.h"
+#include "gui/map/map_widget.h"
 
 
 DrawFreehandTool::DrawFreehandTool(MapEditorController* editor, QAction* tool_button, bool is_helper_tool)
@@ -148,6 +151,10 @@ void DrawFreehandTool::finishDrawing()
 	// Clean up path: remove superfluous points
 	if (preview_path->getCoordinateCount() > 2)
 	{
+		// Use 999 instead of 1000, and save the rounding.
+		split_distance_sq = editor->getMainWidget()->getMapView()->pixelToLength(1) / 999;
+		split_distance_sq *= split_distance_sq;
+		
 		point_mask.assign(preview_path->getCoordinateCount(), false);
 		point_mask.front() = true;
 		point_mask.back() = true;
@@ -223,7 +230,6 @@ void DrawFreehandTool::checkLineSegment(std::size_t first, std::size_t last)
 		}
 		
 		// Make new segment?
-		constexpr auto split_distance_sq = qreal(0.09*0.09);
 		if (max_distance_sq < split_distance_sq)
 			return;
 	}		

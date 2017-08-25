@@ -71,6 +71,7 @@ private:
 	void checkLineSegment(std::size_t a, std::size_t b);
 	
 	std::vector<bool> point_mask;
+	qreal split_distance_sq;
 	
 	QPoint click_pos;
 	MapCoordF last_pos_map;
