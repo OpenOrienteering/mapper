@@ -82,6 +82,7 @@ private:
 	QCheckBox* tips_visible_check;
 	
 	QCheckBox* compatibility_check;
+	QCheckBox* undo_check;
 	QCheckBox* autosave_check;
 	QSpinBox*  autosave_interval_edit;
 	

@@ -80,6 +80,7 @@ Settings::Settings()
 	registerSetting(SymbolWidget_IconSizeMM, "SymbolWidget/icon_size_mm", symbol_widget_icon_size_mm_default);
 	
 	registerSetting(General_RetainCompatiblity, "retainCompatiblity", false);
+	registerSetting(General_SaveUndoRedo, "saveUndoRedo", true);
 	registerSetting(General_AutosaveInterval, "autosave", 15); // unit: minutes
 	registerSetting(General_Language, "language", QLocale::system().name().left(2));
 	registerSetting(General_PixelsPerInch, "pixelsPerInch", ppi);

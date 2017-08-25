@@ -56,6 +56,7 @@ public:
 		SymbolWidget_IconSizeMM,
 		ActionGridBar_ButtonSizeMM,
 		General_RetainCompatiblity,
+		General_SaveUndoRedo,
 		General_AutosaveInterval,
 		General_Language,
 		General_PixelsPerInch,

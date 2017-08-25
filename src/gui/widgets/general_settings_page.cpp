@@ -107,7 +107,8 @@ GeneralSettingsPage::GeneralSettingsPage(QWidget* parent)
 	connect(this, &QObject::destroyed, compatibility_check, &QObject::deleteLater);
 #endif
 	
-	// Possible point: limit size of undo/redo journal
+	undo_check = new QCheckBox(tr("Save undo/redo history"));
+	layout->addRow(undo_check);
 	
 	autosave_check = new QCheckBox(tr("Save information for automatic recovery"));
 	layout->addRow(autosave_check);
@@ -207,6 +208,7 @@ void GeneralSettingsPage::apply()
 	setSetting(Settings::HomeScreen_TipsVisible, tips_visible_check->isChecked());
 	setSetting(Settings::General_NewOcd8Implementation, ocd_importer_check->isChecked());
 	setSetting(Settings::General_RetainCompatiblity, compatibility_check->isChecked());
+	setSetting(Settings::General_SaveUndoRedo, undo_check->isChecked());
 	setSetting(Settings::General_PixelsPerInch, ppi_edit->value());
 	
 	auto encoding = encoding_box->currentText().toLatin1();
@@ -266,7 +268,7 @@ void GeneralSettingsPage::updateWidgets()
 	open_mru_check->setChecked(getSetting(Settings::General_OpenMRUFile).toBool());
 	tips_visible_check->setChecked(getSetting(Settings::HomeScreen_TipsVisible).toBool());
 	compatibility_check->setChecked(getSetting(Settings::General_RetainCompatiblity).toBool());
-	
+	undo_check->setChecked(getSetting(Settings::General_SaveUndoRedo).toBool());
 	int autosave_interval = getSetting(Settings::General_AutosaveInterval).toInt();
 	autosave_check->setChecked(autosave_interval > 0);
 	autosave_interval_edit->setEnabled(autosave_interval > 0);

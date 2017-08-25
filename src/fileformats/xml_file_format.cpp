@@ -229,17 +229,21 @@ void XMLFileExporter::doExport()
 		delete barrier;
 		writeLineBreak(xml);
 
-		// Prevent Mapper versions < 0.6.0 from crashing
-		// when compatibilty mode IS activated
-		// Incompatible feature: new undo step types
-		barrier = new XmlElementWriter(xml, literal::barrier);
-		barrier->writeAttribute(literal::version, 6);
-		barrier->writeAttribute(literal::required, "0.6.0");
-		writeLineBreak(xml);
-		exportUndo();
-		exportRedo();
-		delete barrier;
-		writeLineBreak(xml);
+		if (Settings::getInstance().getSetting(Settings::General_SaveUndoRedo).toBool())
+		{
+			{
+				// Prevent Mapper versions < 0.6.0 from crashing
+				// when compatibilty mode IS activated
+				// Incompatible feature: new undo step types
+				XmlElementWriter barrier(xml, literal::barrier);
+				barrier.writeAttribute(literal::version, 6);
+				barrier.writeAttribute(literal::required, "0.6.0");
+				writeLineBreak(xml);
+				exportUndo();
+				exportRedo();
+			}
+			writeLineBreak(xml);
+		}
 	}
 	
 	xml.writeEndDocument();
@@ -938,6 +942,12 @@ void XMLFileImporter::importPrint()
 
 void XMLFileImporter::importUndo()
 {
+	if (!Settings::getInstance().getSetting(Settings::General_SaveUndoRedo).toBool())
+	{
+		xml.skipCurrentElement();
+		return;
+	}
+	
 	try
 	{
 		map->undoManager().loadUndo(xml, symbol_dict);
@@ -952,6 +962,12 @@ void XMLFileImporter::importUndo()
 
 void XMLFileImporter::importRedo()
 {
+	if (!Settings::getInstance().getSetting(Settings::General_SaveUndoRedo).toBool())
+	{
+		xml.skipCurrentElement();
+		return;
+	}
+	
 	try
 	{
 		map->undoManager().loadRedo(xml, symbol_dict);
