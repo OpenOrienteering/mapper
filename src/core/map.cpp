@@ -2109,7 +2109,7 @@ bool Map::reloadClosedTemplate(int i, int target_pos, QWidget* dialog_parent, co
 
 void Map::push(UndoStep *step)
 {
-	undo_manager->push(step);
+	undo_manager->push(std::unique_ptr<UndoStep>(step));
 }
 
 

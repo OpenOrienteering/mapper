@@ -24,6 +24,7 @@
 
 
 #include <cstddef>
+#include <memory>
 #include <vector>
 
 #include <QObject>
@@ -74,7 +75,7 @@ public:
 	 * 
 	 * All recorded redo steps will be deleted.
 	 */
-	void push(UndoStep* step);
+	void push(std::unique_ptr<UndoStep>&& step);
 	
 	
 	/**
@@ -231,14 +232,7 @@ protected:
 	/**
 	 * A list of UndoSteps.
 	 */
-	using StepList = std::vector<UndoStep*>;
-	
-	/**
-	 * Deletes steps and removes them from the given list.
-	 * 
-	 * begin and end must be iterators on list.
-	 */
-	static void clear(StepList& list, StepList::iterator first, StepList::iterator last);
+	using StepList = std::vector<std::unique_ptr<UndoStep>>;
 	
 	/**
 	 * Deletes all redo steps and removes them from undo_steps.
