@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2014, 2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -26,7 +26,6 @@
 
 #include <cstddef>
 #include <deque>
-#include <memory>
 
 #include <QtGlobal>
 
@@ -206,7 +205,7 @@ public:
 	 * 
 	 * @todo Make this configurable (maybe by used memory instead of step count)
 	 */
-	static const std::size_t max_undo_steps = 128;
+	static constexpr std::size_t max_undo_steps = 128;
 	
 signals:
 	/**
@@ -233,14 +232,14 @@ protected:
 	/**
 	 * A list of UndoSteps.
 	 */
-	typedef std::deque< UndoStep* > StepList;
+	using StepList = std::deque<UndoStep*>;
 	
 	/**
 	 * Deletes steps and removes them from the given list.
 	 * 
 	 * begin and end must be iterators on list.
 	 */
-	static void clear(StepList& list, StepList::iterator begin, StepList::iterator end);
+	static void clear(StepList& list, StepList::iterator first, StepList::iterator last);
 	
 	/**
 	 * Deletes all redo steps and removes them from undo_steps.
@@ -306,9 +305,6 @@ private:
 	bool loadSteps(StepList& steps, QIODevice* file, int version);
 	
 	bool loadSteps(StepList& steps, QXmlStreamReader& xml, SymbolDictionary& symbol_dict);
-	
-	template <class iterator>
-	void saveSteps(iterator begin, iterator end, QXmlStreamWriter& xml);
 	
 	/**
 	 * The list of all steps available for undo() and redo().

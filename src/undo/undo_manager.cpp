@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2014-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,12 +21,34 @@
 
 #include "undo_manager.h"
 
+#include <algorithm>
+#include <iterator>
+#include <set>
+
+#include <QFlags>
+#include <QIODevice>
+#include <QLatin1String>
 #include <QMessageBox>
+#include <QString>
+#include <QStringRef>
 #include <QXmlStreamReader>
 
 #include "core/map.h"
 #include "undo/undo.h"
 #include "util/xml_stream_util.h"
+
+
+namespace
+{
+
+template <class iterator>
+void saveSteps(QXmlStreamWriter& xml, iterator first, iterator last)
+{
+	for (auto step = first; step != last; ++step)
+		(*step)->save(xml);
+}
+
+}  // namespace
 
 
 
@@ -67,7 +89,7 @@ void UndoManager::clear()
 	{
 		UndoManager::State const old_state(this);
 		
-		clear(undo_steps, undo_steps.begin(), undo_steps.end());
+		clear(undo_steps, begin(undo_steps), end(undo_steps));
 		
 		current_index = 0;
 		
@@ -106,7 +128,7 @@ bool UndoManager::undo(QWidget* dialog_parent)
 	
 	if (!old_state.can_undo)
 	{
-		Q_ASSERT(false && "Undo must not be called when no step is available");
+		Q_ASSERT(!bool("Undo must not be called when no step is available"));
 		return false;
 	}
 	
@@ -130,8 +152,7 @@ bool UndoManager::undo(QWidget* dialog_parent)
 	delete step;
 	
 	--current_index;
-	StepList::iterator entry = undo_steps.begin() + current_index;
-	*entry = redo_step;
+	undo_steps[current_index] = redo_step;
 	
 	emitChangedSignals(old_state);
 	
@@ -144,7 +165,7 @@ bool UndoManager::redo(QWidget* dialog_parent)
 	
 	if (!old_state.can_redo)
 	{
-		Q_ASSERT(false && "redo must not be called when no step is available");
+		Q_ASSERT(!bool("redo must not be called when no step is available"));
 		return false;
 	}
 	
@@ -159,8 +180,7 @@ bool UndoManager::redo(QWidget* dialog_parent)
 	updateMapState(step);
 	delete step;
 	
-	StepList::iterator entry = undo_steps.begin() + current_index;
-	*entry = undo_step;
+	undo_steps[current_index] = undo_step;
 	++current_index;
 	
 	emitChangedSignals(old_state);
@@ -177,19 +197,16 @@ void UndoManager::updateMapState(const UndoStep *step) const
 	// Make a modified part the current one
 	UndoStep::PartSet result_parts;
 	bool have_modified_objects = step->getModifiedParts(result_parts);
-	if (have_modified_objects && result_parts.find(map->getCurrentPartIndex()) == result_parts.end())
-		map->setCurrentPartIndex(*result_parts.begin());
+	if (have_modified_objects && result_parts.find(map->getCurrentPartIndex()) == end(result_parts))
+		map->setCurrentPartIndex(*begin(result_parts));
 	
 	// Select affected objects and ensure that they are visible
 	UndoStep::ObjectSet result_objects;
 	step->getModifiedObjects(map->getCurrentPartIndex(), result_objects);
-	map->clearObjectSelection(result_objects.size() == (std::size_t)0);
-	
-	UndoStep::ObjectSet::iterator object = result_objects.begin();
-	for (std::size_t i = 1, size = result_objects.size(); i <= size; ++i, ++object)
-	{
-		map->addObjectToSelection(*object, i == size);
-	}
+	map->clearObjectSelection(false);
+	for (auto object : result_objects)
+		map->addObjectToSelection(object, false);
+	emit map->objectSelectionChanged();
 	
 	map->ensureVisibilityOfSelectedObjects(Map::PartialVisibility);
 }
@@ -199,19 +216,19 @@ void UndoManager::clearRedoSteps()
 {
 	if (canRedo())
 	{
-		clear(undo_steps, undo_steps.begin() + current_index, undo_steps.end());
+		clear(undo_steps, begin(undo_steps) + StepList::difference_type(current_index), end(undo_steps));
 		clean_state_reachable  &= (clean_state_index <= current_index);
 		loaded_state_reachable &= (loaded_state_index <= current_index);
 		emit canRedoChanged(false);
 	}
 }
 
-void UndoManager::clear(StepList &list, StepList::iterator begin, StepList::iterator end)  // clazy:exclude=function-args-by-ref
+void UndoManager::clear(StepList &list, StepList::iterator first, StepList::iterator last)  // clazy:exclude=function-args-by-ref
 {
-	for (StepList::iterator step = begin; step != end; ++step)
+	for (auto step = first; step != last; ++step)
 		delete *step;
 	
-	list.erase(begin, end);
+	list.erase(first, last);
 }
 
 
@@ -242,16 +259,16 @@ void UndoManager::validateUndoSteps()
 	if (canUndo())
 	{
 		std::size_t count = 0;
-		StepList::reverse_iterator step = undo_steps.rbegin() + redoStepCount(),
-		                           end  = undo_steps.rend();
+		auto step = undo_steps.rbegin() + StepList::difference_type(redoStepCount());
+		auto last = undo_steps.rend();
 		
-		while (count < max_undo_steps && step != end && (*step)->isValid())
+		while (count < max_undo_steps && step != last && (*step)->isValid())
 		{
 			++count;
 			++step;
 		}
 		
-		for (; step != end; ++step)
+		for (; step != last; ++step)
 		{
 			if ((*step)->getType() != UndoStep::InvalidUndoStepType)
 			{
@@ -276,16 +293,16 @@ void UndoManager::validateRedoSteps()
 	if (canRedo())
 	{
 		std::size_t count = 0;
-		StepList::iterator step = undo_steps.begin() + current_index,
-		                   end  = undo_steps.end();
+		auto step = begin(undo_steps) + StepList::difference_type(current_index);
+		auto last = end(undo_steps);
 		
-		while (count < max_undo_steps && step != end && (*step)->isValid())
+		while (count < max_undo_steps && step != last && (*step)->isValid())
 		{
 			++count;
 			++step;
 		}
 		
-		clear(undo_steps, step, end);
+		clear(undo_steps, step, last);
 		
 		if (clean_state_reachable)
 			clean_state_reachable = (clean_state_index <= undo_steps.size());
@@ -337,7 +354,7 @@ bool UndoManager::load(QIODevice* file, int version)
 		success = loadSteps(loaded_steps, file, version);
 		if (success)
 		{
-			undo_steps.insert(undo_steps.end(), loaded_steps.rbegin(), loaded_steps.rend());
+			undo_steps.insert(end(undo_steps), loaded_steps.rbegin(), loaded_steps.rend());
 		}
 		
 		emitChangedSignals(old_state);
@@ -370,12 +387,10 @@ void UndoManager::saveUndo(QXmlStreamWriter& xml)
 	XmlElementWriter undo_element(xml, QLatin1String("undo"));
 	
 	validateUndoSteps();
-	StepList::iterator begin = undo_steps.begin();
-	StepList::iterator end   = begin + undoStepCount();
-	while (begin != end && !(*begin)->isValid())
-		++begin;
-	
-	saveSteps(begin, end, xml);
+	auto first = begin(undo_steps);
+	auto last  = first + StepList::difference_type(undoStepCount());
+	first = std::find_if(first, last, [](auto undo_step) { return undo_step->isValid(); });
+	saveSteps(xml, first, last);
 }
 
 void UndoManager::saveRedo(QXmlStreamWriter& xml)
@@ -383,14 +398,9 @@ void UndoManager::saveRedo(QXmlStreamWriter& xml)
 	XmlElementWriter redo_element(xml, QLatin1String("redo"));
 	
 	validateRedoSteps();
-	saveSteps(undo_steps.rbegin(), undo_steps.rbegin() + redoStepCount(), xml);
-}
-
-template <class iterator>
-void UndoManager::saveSteps(iterator begin, iterator end, QXmlStreamWriter& xml)
-{
-	for (iterator step = begin; step != end; ++step)
-		(*step)->save(xml);
+	auto first = undo_steps.rbegin();
+	auto last  = undo_steps.rbegin() + StepList::difference_type(redoStepCount());
+	saveSteps(xml, first, last);
 }
 
 
@@ -405,7 +415,7 @@ bool UndoManager::loadUndo(QXmlStreamReader& xml, SymbolDictionary& symbol_dict)
 	if (success)
 	{
 		if (loaded_steps.size() > max_undo_steps)
-			clear(loaded_steps, loaded_steps.begin(), loaded_steps.begin() + (loaded_steps.size() - max_undo_steps));
+			clear(loaded_steps, begin(loaded_steps), begin(loaded_steps) + StepList::difference_type(loaded_steps.size() - max_undo_steps));
 		
 		UndoManager::State old_state(this);
 		undo_steps.swap(loaded_steps);
@@ -428,10 +438,10 @@ bool UndoManager::loadRedo(QXmlStreamReader& xml, SymbolDictionary& symbol_dict)
 	if (success)
 	{
 		if (loaded_steps.size() > max_undo_steps)
-			clear(loaded_steps, loaded_steps.begin() + (loaded_steps.size() - max_undo_steps), loaded_steps.end());
+			clear(loaded_steps, begin(loaded_steps) + StepList::difference_type(loaded_steps.size() - max_undo_steps), end(loaded_steps));
 		
 		UndoManager::State old_state(this);
-		undo_steps.insert(undo_steps.end(), loaded_steps.rbegin(), loaded_steps.rend());
+		undo_steps.insert(end(undo_steps), loaded_steps.rbegin(), loaded_steps.rend());
 		emitChangedSignals(old_state);
 	}
 	return success;
