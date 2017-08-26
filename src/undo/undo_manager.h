@@ -22,15 +22,13 @@
 #ifndef OPENORIENTEERING_UNDO_MANAGER_H
 #define OPENORIENTEERING_UNDO_MANAGER_H
 
-#include <QObject>
 
 #include <cstddef>
-#include <deque>
+#include <vector>
 
-#include <QtGlobal>
+#include <QObject>
 
 #include "core/symbols/symbol.h"
-#include "undo/undo.h"
 
 class QIODevice;
 class QWidget;
@@ -38,6 +36,7 @@ class QXmlStreamReader;
 class QXmlStreamWriter;
 
 class Map;
+class UndoStep;
 
 
 /**
@@ -146,7 +145,7 @@ public:
 	 * This figure may include invalid steps.
 	 * So canUndo() may return false even if undoStepCount() is positive.
 	 */
-	std::size_t undoStepCount() const;
+	int undoStepCount() const;
 	
 	/**
 	 * Returns the step performed by the next call to undo().
@@ -160,7 +159,7 @@ public:
 	 * This figure may include invalid steps.
 	 * So canRedo() may return false even if redoStepCount() is positive.
 	 */
-	std::size_t redoStepCount() const;
+	int redoStepCount() const;
 	
 	/**
 	 * Returns the step performed by the next call to redo().
@@ -232,7 +231,7 @@ protected:
 	/**
 	 * A list of UndoSteps.
 	 */
-	using StepList = std::deque<UndoStep*>;
+	using StepList = std::vector<UndoStep*>;
 	
 	/**
 	 * Deletes steps and removes them from the given list.
@@ -319,90 +318,35 @@ private:
 	Map* const map;
 	
 	/**
-	 * The index of the current (redo) step.
+	 * The index where push will place the next undo step.
 	 * 
-	 * The current step is the one which will be executed on the next call to redo().
-	 * It is also the index where push() will place the next undo step.
+	 * The latest undo step (if any) is just before this index.
+	 * The current redo step (if any) is just at this index.
+	 * This redo step will be executed on the next call to redo().
 	 */
-	std::size_t current_index;
+	int current_index;
 	
 	/**
 	 * The index of the clean state.
 	 * 
+	 * A negative value indicates that the state clean state is not reachable
+	 * through undo() or redo().
+	 * 
 	 * @see setClean()
 	 */
-	std::size_t clean_state_index;
+	int clean_state_index;
 	
 	/**
 	 * The index of the loaded state.
 	 * 
+	 * A negative value indicates that the loaded clean state is not reachable
+	 * through undo() or redo().
+	 * 
 	 * @see setLoaded()
 	 */
-	std::size_t loaded_state_index;
+	int loaded_state_index;
 	
-	/**
-	 * Indicates whether the clean state is reachable through undo() or redo().
-	 */
-	bool clean_state_reachable;
-	
-	/**
-	 * Indicates whether the loaded state is reachable through undo() or redo().
-	 */
-	bool loaded_state_reachable;
 };
 
-
-
-// ### UndoManager inline code ###
-
-inline
-bool UndoManager::canUndo() const
-{
-	return current_index > 0 && nextUndoStep()->isValid();
-}
-
-inline
-bool UndoManager::canRedo() const
-{
-	return current_index < undo_steps.size() && nextRedoStep()->isValid();
-}
-
-inline
-std::size_t UndoManager::undoStepCount() const
-{
-	return current_index;
-}
-
-inline
-UndoStep* UndoManager::nextUndoStep() const
-{
-	Q_ASSERT(current_index > 0);
-	return undo_steps[current_index - 1];
-}
-
-inline
-std::size_t UndoManager::redoStepCount() const
-{
-	return undo_steps.size() - current_index;
-}
-
-inline
-UndoStep* UndoManager::nextRedoStep() const
-{
-	Q_ASSERT(current_index < undo_steps.size());
-	return undo_steps[current_index];
-}
-
-inline
-bool UndoManager::isClean() const
-{
-	return clean_state_reachable && clean_state_index == current_index;
-}
-
-inline
-bool UndoManager::isLoaded() const
-{
-	return loaded_state_reachable && loaded_state_index == current_index;
-}
 
 #endif

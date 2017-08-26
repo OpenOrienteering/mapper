@@ -23,8 +23,10 @@
 
 #include <algorithm>
 #include <iterator>
+#include <limits>
 #include <set>
 
+#include <QtGlobal>
 #include <QFlags>
 #include <QIODevice>
 #include <QLatin1String>
@@ -36,6 +38,9 @@
 #include "core/map.h"
 #include "undo/undo.h"
 #include "util/xml_stream_util.h"
+
+
+Q_STATIC_ASSERT(UndoManager::max_undo_steps < std::numeric_limits<int>::max());
 
 
 namespace
@@ -71,16 +76,18 @@ UndoManager::UndoManager(Map* map)
 : QObject()
 , map(map)
 , current_index(0)
-, clean_state_reachable(false)
-, loaded_state_reachable(false)
+, clean_state_index(-1)
+, loaded_state_index(-1)
 {
-	; // nothing else
+	undo_steps.reserve(max_undo_steps + 1);  // +1 is for push before trim
 }
+
 
 UndoManager::~UndoManager()
 {
 	clear();
 }
+
 
 
 void UndoManager::clear()
@@ -90,24 +97,17 @@ void UndoManager::clear()
 		UndoManager::State const old_state(this);
 		
 		clear(undo_steps, begin(undo_steps), end(undo_steps));
-		
 		current_index = 0;
-		
-		if (old_state.is_clean)
-			clean_state_index = 0;
-		else
-			clean_state_reachable = false;
-		
-		if (old_state.is_loaded)
-			loaded_state_index = 0;
-		else
-			loaded_state_reachable = false;
+		clean_state_index = old_state.is_clean ? 0 : -1;
+		loaded_state_index = old_state.is_loaded ? 0 : -1;
 		
 		emitChangedSignals(old_state);
 	}
 	
 	Q_ASSERT(undo_steps.empty());
 }
+
+
 
 void UndoManager::push(UndoStep* step)
 {
@@ -121,6 +121,14 @@ void UndoManager::push(UndoStep* step)
 	validateUndoSteps();
 	emitChangedSignals(old_state);
 }
+
+
+
+bool UndoManager::canUndo() const
+{
+	return current_index > 0 && nextUndoStep()->isValid();
+}
+
 
 bool UndoManager::undo(QWidget* dialog_parent)
 {
@@ -136,6 +144,7 @@ bool UndoManager::undo(QWidget* dialog_parent)
 	if (!step->isValid())
 	{
 		QMessageBox::warning(dialog_parent, tr("Error"), tr("Cannot undo because the last undo step became invalid. This can for example happen if you change the symbol of an object to another and then delete the old symbol."));
+		validateUndoSteps();  // removes all undo steps and updates the state.
 		return false;
 	}
 	
@@ -152,12 +161,20 @@ bool UndoManager::undo(QWidget* dialog_parent)
 	delete step;
 	
 	--current_index;
-	undo_steps[current_index] = redo_step;
+	undo_steps[StepList::size_type(current_index)] = redo_step;
 	
 	emitChangedSignals(old_state);
 	
 	return true;
 }
+
+
+
+bool UndoManager::canRedo() const
+{
+	return current_index < int(undo_steps.size()) && nextRedoStep()->isValid();
+}
+
 
 bool UndoManager::redo(QWidget* dialog_parent)
 {
@@ -173,6 +190,7 @@ bool UndoManager::redo(QWidget* dialog_parent)
 	if (!step->isValid())
 	{
 		QMessageBox::warning(dialog_parent, tr("Error"), tr("Cannot redo because the first redo step became invalid. This can for example happen if you delete the symbol of an object you have drawn."));
+		validateRedoSteps();
 		return false;
 	}
 	
@@ -180,13 +198,77 @@ bool UndoManager::redo(QWidget* dialog_parent)
 	updateMapState(step);
 	delete step;
 	
-	undo_steps[current_index] = undo_step;
+	undo_steps[StepList::size_type(current_index)] = undo_step;
 	++current_index;
 	
 	emitChangedSignals(old_state);
 	
 	return true;
 }
+
+
+
+bool UndoManager::isClean() const
+{
+	return clean_state_index == UndoManager::StepList::difference_type(current_index);
+}
+
+
+void UndoManager::setClean()
+{
+	if (!isClean())
+	{
+		clean_state_index = current_index;
+		emit cleanChanged(true);
+	}
+}
+
+
+
+bool UndoManager::isLoaded() const
+{
+	return loaded_state_index == UndoManager::StepList::difference_type(current_index);
+}
+
+
+void UndoManager::setLoaded()
+{
+	if (!isLoaded())
+	{
+		loaded_state_index = current_index;
+		emit loadedChanged(true);
+	}
+}
+
+
+
+int UndoManager::undoStepCount() const
+{
+	return current_index;
+}
+
+
+UndoStep* UndoManager::nextUndoStep() const
+{
+	Q_ASSERT(current_index > 0);
+	return undo_steps[StepList::size_type(current_index) - 1];
+}
+
+
+
+int UndoManager::redoStepCount() const
+{
+	return int(undo_steps.size()) - current_index;
+}
+
+
+UndoStep* UndoManager::nextRedoStep() const
+{
+	Q_ASSERT(StepList::size_type(current_index) < undo_steps.size());
+	return undo_steps[StepList::size_type(current_index)];
+}
+
+
 
 void UndoManager::updateMapState(const UndoStep *step) const
 {
@@ -217,8 +299,10 @@ void UndoManager::clearRedoSteps()
 	if (canRedo())
 	{
 		clear(undo_steps, begin(undo_steps) + StepList::difference_type(current_index), end(undo_steps));
-		clean_state_reachable  &= (clean_state_index <= current_index);
-		loaded_state_reachable &= (loaded_state_index <= current_index);
+		if (clean_state_index > StepList::difference_type(current_index))
+			clean_state_index = -1;
+		if (loaded_state_index > StepList::difference_type(current_index))
+			loaded_state_index = -1;
 		emit canRedoChanged(false);
 	}
 }
@@ -233,55 +317,31 @@ void UndoManager::clear(StepList &list, StepList::iterator first, StepList::iter
 
 
 
-void UndoManager::setClean()
-{
-	if (!isClean())
-	{
-		clean_state_reachable = true;
-		clean_state_index = current_index;
-		emit cleanChanged(true);
-	}
-}
-
-void UndoManager::setLoaded()
-{
-	if (!isLoaded())
-	{
-		loaded_state_reachable = true;
-		loaded_state_index = current_index;
-		emit loadedChanged(true);
-	}
-}
-
-
 void UndoManager::validateUndoSteps()
 {
 	if (canUndo())
 	{
-		std::size_t count = 0;
-		auto step = undo_steps.rbegin() + StepList::difference_type(redoStepCount());
-		auto last = undo_steps.rend();
+		int num_removed_undo_steps = 0;
+		if (current_index > int(max_undo_steps))
+			num_removed_undo_steps += current_index - int(max_undo_steps);
 		
-		while (count < max_undo_steps && step != last && (*step)->isValid())
-		{
-			++count;
-			++step;
-		}
+		auto rlast = undo_steps.rend() - num_removed_undo_steps;
+		auto rfirst = std::find_if(undo_steps.rbegin(), rlast, [](auto step) { return !step->isValid(); });
+		if (rfirst != rlast)
+			num_removed_undo_steps += std::distance(rfirst, rlast);
 		
-		for (; step != last; ++step)
-		{
-			if ((*step)->getType() != UndoStep::InvalidUndoStepType)
-			{
-				delete *step;
-				*step = new NoOpUndoStep(map, false);
-			}
-		}
+		if (num_removed_undo_steps == 0)
+			return;
 		
-		if (clean_state_reachable)
-			clean_state_reachable = (clean_state_index  >= current_index) || undo_steps[clean_state_index]->isValid();
+		auto first = begin(undo_steps);
+		clear(undo_steps, first, first + num_removed_undo_steps);
+		current_index -= StepList::size_type(num_removed_undo_steps);
 		
-		if (loaded_state_reachable)
-			loaded_state_reachable = (loaded_state_index >= current_index) || undo_steps[loaded_state_index]->isValid();
+		if (clean_state_index >= 0)
+			clean_state_index -= num_removed_undo_steps;
+		
+		if (loaded_state_index >= 0)
+			loaded_state_index -= num_removed_undo_steps;
 		
 		if (!canUndo())
 			emit canUndoChanged(false);
@@ -292,23 +352,24 @@ void UndoManager::validateRedoSteps()
 {
 	if (canRedo())
 	{
-		std::size_t count = 0;
-		auto step = begin(undo_steps) + StepList::difference_type(current_index);
+		auto num_removed_redo_steps = StepList::difference_type(0);
+		
+		auto first = begin(undo_steps) + StepList::difference_type(current_index);
 		auto last = end(undo_steps);
+		first = std::find_if(first, last, [](auto step) { return !step->isValid(); });
+		if (first != last)
+			num_removed_redo_steps += std::distance(first, last);
 		
-		while (count < max_undo_steps && step != last && (*step)->isValid())
-		{
-			++count;
-			++step;
-		}
+		if (num_removed_redo_steps == 0)
+			return;
 		
-		clear(undo_steps, step, last);
+		clear(undo_steps, first, last);
 		
-		if (clean_state_reachable)
-			clean_state_reachable = (clean_state_index <= undo_steps.size());
+		if (clean_state_index > StepList::difference_type(undo_steps.size()))
+			clean_state_index = -1;
 		
-		if (loaded_state_reachable)
-			loaded_state_reachable = (loaded_state_index <= undo_steps.size());
+		if (loaded_state_index > StepList::difference_type(undo_steps.size()))
+			loaded_state_index = -1;
 		
 		if (!canRedo())
 			emit canRedoChanged(false);
@@ -419,7 +480,7 @@ bool UndoManager::loadUndo(QXmlStreamReader& xml, SymbolDictionary& symbol_dict)
 		
 		UndoManager::State old_state(this);
 		undo_steps.swap(loaded_steps);
-		current_index = undo_steps.size();
+		current_index = int(undo_steps.size());
 		setLoaded();
 		setClean();
 		emitChangedSignals(old_state);
