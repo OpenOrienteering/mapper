@@ -455,51 +455,45 @@ void UndoManager::saveRedo(QXmlStreamWriter& xml)
 }
 
 
-bool UndoManager::loadUndo(QXmlStreamReader& xml, SymbolDictionary& symbol_dict)
+void UndoManager::loadUndo(QXmlStreamReader& xml, SymbolDictionary& symbol_dict)
 {
 	Q_ASSERT(xml.name() == QLatin1String("undo"));
 	
-	clear();
+	auto loaded_steps = loadSteps(xml, symbol_dict);
+	if (loaded_steps.size() > max_undo_steps)
+		loaded_steps.erase(begin(loaded_steps), begin(loaded_steps) + StepList::difference_type(loaded_steps.size() - max_undo_steps));
 	
-	StepList loaded_steps;
-	bool success = loadSteps(loaded_steps, xml, symbol_dict);
-	if (success)
-	{
-		if (loaded_steps.size() > max_undo_steps)
-			loaded_steps.erase(begin(loaded_steps), begin(loaded_steps) + StepList::difference_type(loaded_steps.size() - max_undo_steps));
-		
-		UndoManager::State old_state(this);
-		undo_steps.swap(loaded_steps);
-		current_index = int(undo_steps.size());
-		setLoaded();
-		setClean();
-		emitChangedSignals(old_state);
-	}
-	return success;
+	clear();
+	UndoManager::State old_state(this);
+	using std::swap;
+	swap(undo_steps, loaded_steps);
+	current_index = int(undo_steps.size());
+	setLoaded();
+	setClean();
+	emitChangedSignals(old_state);
 }
 
-bool UndoManager::loadRedo(QXmlStreamReader& xml, SymbolDictionary& symbol_dict)
+
+void UndoManager::loadRedo(QXmlStreamReader& xml, SymbolDictionary& symbol_dict)
 {
 	Q_ASSERT(xml.name() == QLatin1String("redo"));
 	
-	clearRedoSteps();
-	
-	StepList loaded_steps;
-	bool success = loadSteps(loaded_steps, xml, symbol_dict);
-	if (success)
-	{
-		if (loaded_steps.size() > max_undo_steps)
-			loaded_steps.erase(begin(loaded_steps) + StepList::difference_type(loaded_steps.size() - max_undo_steps), end(loaded_steps));
+	auto loaded_steps = loadSteps(xml, symbol_dict);
+	auto capacity = max_undo_steps - undo_steps.size();
+	if (loaded_steps.size() > capacity)
+		loaded_steps.erase(begin(loaded_steps) + StepList::difference_type(loaded_steps.size() - capacity), end(loaded_steps));
 		
-		UndoManager::State old_state(this);
-		std::move(loaded_steps.rbegin(), loaded_steps.rend(), std::back_inserter(undo_steps)); 
-		emitChangedSignals(old_state);
-	}
-	return success;
+	clearRedoSteps();
+	UndoManager::State old_state(this);
+	std::move(loaded_steps.rbegin(), loaded_steps.rend(), std::back_inserter(undo_steps)); 
+	emitChangedSignals(old_state);
 }
 
-bool UndoManager::loadSteps(StepList& steps, QXmlStreamReader& xml, SymbolDictionary& symbol_dict)
+
+UndoManager::StepList UndoManager::loadSteps(QXmlStreamReader& xml, SymbolDictionary& symbol_dict) const
 {
+	StepList steps;
+	steps.reserve(max_undo_steps + 1);
 	while (xml.readNextStartElement())
 	{
 		if (xml.name() == QLatin1String("step"))
@@ -507,5 +501,5 @@ bool UndoManager::loadSteps(StepList& steps, QXmlStreamReader& xml, SymbolDictio
 		else
 			xml.skipCurrentElement(); // unknown
 	}
-	return true;
+	return steps;
 }

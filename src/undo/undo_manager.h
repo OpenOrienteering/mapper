@@ -186,16 +186,16 @@ public:
 	/**
 	 * Loads the undo steps from the file in xml format.
 	 * 
-	 * Any existing undo/redo steps will be deleted first.
+	 * Any existing undo steps and redo steps will be deleted first.
 	 */
-	bool loadUndo(QXmlStreamReader& xml, SymbolDictionary& symbol_dict);
+	void loadUndo(QXmlStreamReader& xml, SymbolDictionary& symbol_dict);
 	
 	/**
 	 * Loads the redo steps from the file in xml format.
 	 * 
 	 * Any existing redo steps will be deleted first, but undo steps are left untouched.
 	 */
-	bool loadRedo(QXmlStreamReader& xml, SymbolDictionary& symbol_dict);
+	void loadRedo(QXmlStreamReader& xml, SymbolDictionary& symbol_dict);
 	
 	
 	/**
@@ -297,7 +297,7 @@ protected:
 private:
 	bool loadSteps(StepList& steps, QIODevice* file, int version);
 	
-	bool loadSteps(StepList& steps, QXmlStreamReader& xml, SymbolDictionary& symbol_dict);
+	StepList loadSteps(QXmlStreamReader& xml, SymbolDictionary& symbol_dict) const;
 	
 	/**
 	 * The list of all steps available for undo() and redo().
