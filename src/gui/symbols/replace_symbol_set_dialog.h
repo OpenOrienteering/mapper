@@ -70,6 +70,12 @@ public:
 	 */
 	static bool showDialogForCRT(QWidget* parent, Map& object_map, const Map& symbol_set, QIODevice& crt_file);
 	
+	/**
+	 * Returns the suggested path (including name) for finding a CRT file
+	 * for the given symbol set IDs.
+	 */
+	static QString discoverCrtFile(const QString& source_id, const QString& target_id);
+	
 private:
 	enum Mode
 	{
@@ -87,6 +93,7 @@ private:
 	void resetReplacements();
 	
 	void openCrtFile();
+	void openCrtFile(const QString& path);
 	bool saveCrtFile();
 	
 	void done(int r) override;

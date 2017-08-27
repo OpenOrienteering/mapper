@@ -3959,15 +3959,7 @@ bool MapEditorController::importMapFile(const QString& filename, bool show_error
 		if (!QFileInfo::exists(crt_filename))
 			crt_filename.replace(filename.lastIndexOf(QLatin1Char('.')), 4, QLatin1String(".CRT"));
 		if (!QFileInfo::exists(crt_filename))
-			crt_filename = QLatin1String("data:/symbol sets/")
-			               + imported_map.symbolSetId() + QLatin1Char('-')
-			               + map->symbolSetId() + QLatin1String(".crt");
-#ifdef MAPPER_DEVELOPMENT_BUILD
-		if (!QFileInfo::exists(crt_filename))
-			crt_filename = QLatin1String("data:/symbol sets/COPY_OF_")
-			               + imported_map.symbolSetId() + QLatin1Char('-')
-			               + map->symbolSetId() + QLatin1String(".crt");
-#endif
+			crt_filename = ReplaceSymbolSetDialog::discoverCrtFile(imported_map.symbolSetId(), map->symbolSetId());
 		
 		if (QFileInfo::exists(crt_filename))
 		{
