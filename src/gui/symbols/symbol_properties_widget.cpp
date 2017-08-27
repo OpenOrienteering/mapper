@@ -305,7 +305,7 @@ void SymbolPropertiesWidget::reset(Symbol* symbol)
 		editor->setEnabled(editors_enabled);
 		
 		int value = symbol->getNumberComponent(i);
-		if (value > 0 && editors_enabled)
+		if (value >= 0 && editors_enabled)
 		{
 			editor->setText(QString::number(value));
 		}
