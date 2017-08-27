@@ -1460,7 +1460,7 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="69"/>
         <source>Parameter</source>
-        <translation>Параметер</translation>
+        <translation>Параметр</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="69"/>
