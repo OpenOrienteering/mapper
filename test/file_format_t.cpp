@@ -36,6 +36,7 @@
 #include "fileformats/ocad8_file_format.h"
 #include "fileformats/xml_file_format.h"
 #include "templates/template.h"
+#include "undo/undo.h"
 #include "undo/undo_manager.h"
 #include "util/backports.h"
 

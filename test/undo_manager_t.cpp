@@ -49,7 +49,7 @@ void UndoManagerTest::testUndoRedo()
 	
 	// Add undo step A
 	resetAllChanged();
-	undo_manager.push(new NoOpUndoStep(map, true));
+	undo_manager.push(std::unique_ptr<UndoStep>(new NoOpUndoStep(map, true)));
 	
 	// State: [current, loaded]:A, [clean]:EOL
 	QVERIFY(loaded_changed);
@@ -66,7 +66,7 @@ void UndoManagerTest::testUndoRedo()
 	
 	// Add undo step B
 	resetAllChanged();
-	undo_manager.push(new NoOpUndoStep(map, true));
+	undo_manager.push(std::unique_ptr<UndoStep>(new NoOpUndoStep(map, true)));
 	
 	// State: [loaded,clean]:A, B, [current]:EOL
 	QVERIFY(!loaded_changed);
@@ -140,7 +140,7 @@ void UndoManagerTest::testUndoRedo()
 	
 	// Add undo step C
 	resetAllChanged();
-	undo_manager.push(new NoOpUndoStep(map, true));
+	undo_manager.push(std::unique_ptr<UndoStep>(new NoOpUndoStep(map, true)));
 	
 	// State: [loaded]:A, [clean]:B, [current]:C, EOL
 	QVERIFY(!loaded_changed);
@@ -189,7 +189,7 @@ void UndoManagerTest::testUndoRedo()
 	
 	// Add undo step D: clean state now no longer reachable
 	resetAllChanged();
-	undo_manager.push(new NoOpUndoStep(map, true));
+	undo_manager.push(std::unique_ptr<UndoStep>(new NoOpUndoStep(map, true)));
 	
 	// State: [loaded,current]:D, EOL [clean:invalid]
 	QVERIFY(loaded_changed);
