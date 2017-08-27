@@ -1923,7 +1923,7 @@ Location is at the centre of gravity of the symbol.</source>
         <message>
             <source>North lines pattern</source>
             <comment>Name of symbol 601.2</comment>
-            <translation type="unfinished">Lignes du nord magnétique, bleu</translation>
+            <translation>Lignes du nord magnétique</translation>
         </message>
         <message>
             <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map. North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.</source>
@@ -1933,7 +1933,7 @@ Location is at the centre of gravity of the symbol.</source>
         <message>
             <source>Magnetic north line, blue</source>
             <comment>Name of symbol 601.3</comment>
-            <translation type="unfinished">Lignes du nord magnétique, bleu</translation>
+            <translation>Lignes du nord magnétique, bleu</translation>
         </message>
         <message>
             <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map. North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.</source>
@@ -3599,12 +3599,12 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>North lines pattern</source>
             <comment>Name of symbol 601.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Lignes du nord magnétique</translation>
         </message>
         <message>
             <source>Magnetic north line, blue</source>
             <comment>Name of symbol 601.2</comment>
-            <translation type="unfinished">Lignes du nord magnétique, bleu</translation>
+            <translation>Lignes du nord magnétique, bleu</translation>
         </message>
         <message>
             <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing on the map should be 33.33 mm which represents 500 m on the ground at the scale of 1:15 000. For maps with other scales lines placing should be at intervals which represents a round number of meters (e.g. 50 m, 100 m, 250 m, 500 m) and the spacing should be between 20 mm and 40 mm on the map. North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. In areas with very few water features, blue lines may be used.</source>
@@ -7810,7 +7810,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>North lines pattern</source>
             <comment>Name of symbol 601.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Lignes du nord magnétique</translation>
         </message>
         <message>
             <source>Out-of-bounds area, dashed boundary</source>
@@ -8758,7 +8758,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <message>
             <source>North lines pattern</source>
             <comment>Name of symbol 601.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Lignes du nord magnétique</translation>
         </message>
         <message>
             <source>Magnetic north line, blue</source>
