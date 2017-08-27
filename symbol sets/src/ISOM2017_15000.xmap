@@ -2454,12 +2454,7 @@ For fairness reasons, areas that are really difficult to get through (10% and sl
                 <description>An area of dense vegetation (trees or undergrowth) which is effectively impassable. Most useful for narrow and small areas.</description>
                 <area_symbol inner_color="19" min_area="600" patterns="0"/>
             </symbol>
-            <symbol type="2" id="95" code="411.0.1" name="Vegetation, impassable, minimum width">
-                <description>An area of dense vegetation (trees or undergrowth) which is effectively impassable.
-Minimum width: 0.35 mm</description>
-                <line_symbol color="19" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
-            </symbol>
-            <symbol type="4" id="96" code="411.1" name="Vegetation, impassable">
+            <symbol type="4" id="95" code="411.1" name="Vegetation, impassable">
                 <description>An area of dense vegetation (trees or undergrowth) which is effectively impassable. Most useful for narrow and small areas.</description>
                 <area_symbol inner_color="14" min_area="600" patterns="1">
                     <pattern type="2" angle="0" line_spacing="200" line_offset="0" offset_along_line="0" point_distance="200">
@@ -2468,6 +2463,11 @@ Minimum width: 0.35 mm</description>
                         </symbol>
                     </pattern>
                 </area_symbol>
+            </symbol>
+            <symbol type="2" id="96" code="411.2" name="Vegetation, impassable, minimum width">
+                <description>An area of dense vegetation (trees or undergrowth) which is effectively impassable.
+Minimum width: 0.35 mm</description>
+                <line_symbol color="19" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
             <symbol type="4" id="97" code="412" name="Cultivated land">
                 <description>Cultivated land, normally used for growing crops. Runnability may vary according to the type of crops grown and the time of year. For agroforestry, symbol 405 (forest) or 402 (open land with scattered trees) may be used instead of yellow.
@@ -3527,17 +3527,17 @@ Location is at the centre of gravity of the symbol.</description>
                 <description>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map. North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.</description>
                 <line_symbol color="1" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="4" id="162" code="601.1.1" name="North lines pattern">
+            <symbol type="4" id="162" code="601.2" name="North lines pattern">
                 <description>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map. North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.</description>
                 <area_symbol inner_color="-1" min_area="0" patterns="1">
                     <pattern type="1" angle="1.5708" rotatable="true" line_spacing="20000" line_offset="0" offset_along_line="0" color="1" line_width="100"/>
                 </area_symbol>
             </symbol>
-            <symbol type="2" id="163" code="601.2" name="Magnetic north line, blue">
+            <symbol type="2" id="163" code="601.3" name="Magnetic north line, blue">
                 <description>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map. North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.</description>
                 <line_symbol color="8" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="4" id="164" code="601.2.1" name="North lines pattern, blue">
+            <symbol type="4" id="164" code="601.4" name="North lines pattern, blue">
                 <description>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map. North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.</description>
                 <area_symbol inner_color="-1" min_area="0" patterns="1">
                     <pattern type="1" angle="1.5708" rotatable="true" line_spacing="20000" line_offset="0" offset_along_line="0" color="8" line_width="180"/>
@@ -8377,7 +8377,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                             <coord x="0" y="0"/>
                         </pattern>
                     </object>
-                    <object type="1" symbol="95">
+                    <object type="1" symbol="96">
                         <coords count="2">
                             <coord x="-9807" y="-27306"/>
                             <coord x="-10815" y="-27306"/>
@@ -8386,7 +8386,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                             <coord x="0" y="0"/>
                         </pattern>
                     </object>
-                    <object type="1" symbol="95">
+                    <object type="1" symbol="96">
                         <coords count="2">
                             <coord x="-12840" y="-27325"/>
                             <coord x="-11568" y="-27325"/>
