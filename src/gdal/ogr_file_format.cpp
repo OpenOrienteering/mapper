@@ -395,6 +395,14 @@ void OgrFileImport::import(bool load_symbols_only)
 		                          .arg(filename, QString::fromLatin1(CPLGetLastErrorMsg())));
 	}
 	
+	if (auto driver = OGR_DS_GetDriver(data_source.get()))
+	{
+		if (auto driver_name = OGR_Dr_GetName(driver))
+		{
+			map->setSymbolSetId(QString::fromLatin1(driver_name));
+		}
+	}
+	
 	empty_geometries = 0;
 	no_transformation = 0;
 	failed_transformation = 0;

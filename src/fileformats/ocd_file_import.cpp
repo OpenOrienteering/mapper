@@ -208,6 +208,7 @@ void OcdFileImport::importImplementation(bool load_symbols_only)
 	}
 #endif
 	
+	map->setSymbolSetId(QStringLiteral("OCD"));
 	importGeoreferencing(file);
 	importColors(file);
 	importSymbols(file);
