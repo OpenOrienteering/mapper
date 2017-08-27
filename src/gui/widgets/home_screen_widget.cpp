@@ -275,8 +275,11 @@ void HomeScreenWidgetDesktop::setRecentFiles(const QStringList& files)
 
 void HomeScreenWidgetDesktop::recentFileClicked(QListWidgetItem* item)
 {
+	setEnabled(false);
+	qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
 	QString path = item->data(Qt::UserRole).toString();
 	controller->getWindow()->openPath(path);
+	setEnabled(true);
 }
 
 void HomeScreenWidgetDesktop::paintEvent(QPaintEvent*)
@@ -439,8 +442,11 @@ void HomeScreenWidgetMobile::fileClicked(QListWidgetItem* item)
 	if (!hint_text.isEmpty())
 		QMessageBox::warning(this, MainWindow::tr("Warning"), hint_text.arg(item->data(Qt::DisplayRole).toString()));
 	
+	setEnabled(false);
+	qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
 	QString path = item->data(Qt::UserRole).toString();
 	controller->getWindow()->openPath(path);
+	setEnabled(true);
 }
 
 QWidget* HomeScreenWidgetMobile::makeFileListWidget(HomeScreenController* controller, QWidget* parent)
