@@ -52,6 +52,7 @@ set(Mapper_SYMBOL_SETS
 set(Mapper_CRT_FILES
   ./ISOM2000-ISOM2017.crt
   ./OSM-ISOM2000.crt
+  ./OSM-ISOM2017.crt
 )
 
 set(symbol_sets)
