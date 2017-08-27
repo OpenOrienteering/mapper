@@ -2158,6 +2158,9 @@ void MapEditorController::selectedSymbolsChanged()
 				current_tool->switchToDefaultDrawTool(active_symbol);
 			}
 		}
+		
+		if (symbol)
+			window->showStatusBarMessage(symbol->getNumberAsString() + QLatin1Char(' ') + symbol->getPlainTextName(), 1000);
 	}
 	
 	// Even when the symbol (pointer) hasn't changed,
