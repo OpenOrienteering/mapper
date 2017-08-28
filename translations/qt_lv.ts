@@ -42,7 +42,7 @@
 <context>
     <name>QDialog</name>
     <message>
-        <source>What's This?</source>
+        <source>What&apos;s This?</source>
         <translation>Kas tas?</translation>
     </message>
     <message>
@@ -145,7 +145,7 @@
         <translation>Jā &amp;visiem</translation>
     </message>
     <message>
-        <source>Don't Save</source>
+        <source>Don&apos;t Save</source>
         <translation>Nesaglabāt</translation>
     </message>
 </context>
@@ -280,14 +280,14 @@
         <translation>Rādīt </translation>
     </message>
     <message>
-        <source>'%1' is write protected.
+        <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
         <translation>%1 ir aizsargāts pret ierakstu.
 Vai vēlies to dzēst?</translation>
     </message>
     <message>
-        <source>Are you sure you want to delete '%1'?</source>
-        <translation>Vai tiešām vēlies dzēst '%1'?</translation>
+        <source>Are you sure you want to delete &apos;%1&apos;?</source>
+        <translation>Vai tiešām vēlies dzēst &apos;%1&apos;?</translation>
     </message>
     <message>
         <source>List of places and bookmarks</source>
@@ -480,8 +480,8 @@ Pārbaudi vai datnes nosaukums ir uzrādīts korekti.</translation>
         <translation>Visas datnes (*.*)</translation>
     </message>
     <message>
-        <source>Are sure you want to delete '%1'?</source>
-        <translation>Vai tiešām vēlies dzēst '%1'?</translation>
+        <source>Are sure you want to delete &apos;%1&apos;?</source>
+        <translation>Vai tiešām vēlies dzēst &apos;%1&apos;?</translation>
     </message>
 </context>
 <context>
@@ -519,8 +519,8 @@ Pārbaudi vai datnes nosaukums ir uzrādīts korekti.</translation>
         <translation>%1 TB</translation>
     </message>
     <message>
-        <source>&lt;b&gt;The name "%1" can not be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuations marks.</source>
-        <translation>&lt;b&gt; Nosaukumu "%1" nevar izmantot.&lt;/b&gt;&lt;p&gt;Mēģini izmantot citu nosaukumu, lietojot mazāk simbolus un bez pieturzīmēm.</translation>
+        <source>&lt;b&gt;The name &quot;%1&quot; can not be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuations marks.</source>
+        <translation>&lt;b&gt; Nosaukumu &quot;%1&quot; nevar izmantot.&lt;/b&gt;&lt;p&gt;Mēģini izmantot citu nosaukumu, lietojot mazāk simbolus un bez pieturzīmēm.</translation>
     </message>
     <message>
         <source>%1 bytes</source>
@@ -555,6 +555,14 @@ Pārbaudi vai datnes nosaukums ir uzrādīts korekti.</translation>
         <source>Type</source>
         <comment>All other platforms</comment>
         <translation>Tips</translation>
+    </message>
+</context>
+<context>
+    <name>QGuiApplication</name>
+    <message>
+        <source>QT_LAYOUT_DIRECTION</source>
+        <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
+        <translation>LTR</translation>
     </message>
 </context>
 <context>
@@ -598,36 +606,36 @@ Pārbaudi vai datnes nosaukums ir uzrādīts korekti.</translation>
         <translation>Neizdevās ielasīt bibliotēku %1: %2</translation>
     </message>
     <message>
-        <source>'%1' is not an ELF object (%2)</source>
-        <translation>'%1' nav ELF objekts (%2)</translation>
+        <source>&apos;%1&apos; is not an ELF object (%2)</source>
+        <translation>&apos;%1&apos; nav ELF objekts (%2)</translation>
     </message>
     <message>
-        <source>The plugin '%1' uses incompatible Qt library. (%2.%3.%4) [%5]</source>
-        <translation>Spraudnis '%1' lieto nesaderīgu Qt bibliotēku. (%2.%3.%4) [%5]</translation>
+        <source>The plugin &apos;%1&apos; uses incompatible Qt library. (%2.%3.%4) [%5]</source>
+        <translation>Spraudnis &apos;%1&apos; lieto nesaderīgu Qt bibliotēku. (%2.%3.%4) [%5]</translation>
     </message>
     <message>
-        <source>Cannot resolve symbol "%1" in %2: %3</source>
-        <translation>Neizdevās izšķirt simbolu "%1", kas atradās %2: %3</translation>
+        <source>Cannot resolve symbol &quot;%1&quot; in %2: %3</source>
+        <translation>Neizdevās izšķirt simbolu &quot;%1&quot;, kas atradās %2: %3</translation>
     </message>
     <message>
-        <source>Plugin verification data mismatch in '%1'</source>
-        <translation>Spraudņa pārbaudes datu nesaderība '%1'</translation>
+        <source>Plugin verification data mismatch in &apos;%1&apos;</source>
+        <translation>Spraudņa pārbaudes datu nesaderība &apos;%1&apos;</translation>
     </message>
     <message>
-        <source>'%1' is an invalid ELF object (%2)</source>
-        <translation>'%1' ir nepieļaujams ELF objekts (%2)</translation>
+        <source>&apos;%1&apos; is an invalid ELF object (%2)</source>
+        <translation>&apos;%1&apos; ir nepieļaujams ELF objekts (%2)</translation>
     </message>
     <message>
-        <source>The plugin '%1' uses incompatible Qt library. (Cannot mix debug and release libraries.)</source>
-        <translation>Spraudnis '%1' lieto nesaderīgu Qt bibliotēku. (Nevar miksēt skaņošanas un izlaides bibliotēkas.)</translation>
+        <source>The plugin &apos;%1&apos; uses incompatible Qt library. (Cannot mix debug and release libraries.)</source>
+        <translation>Spraudnis &apos;%1&apos; lieto nesaderīgu Qt bibliotēku. (Nevar miksēt skaņošanas un izlaides bibliotēkas.)</translation>
     </message>
     <message>
-        <source>'%1' is not an ELF object</source>
-        <translation>'%1' nav ELF objekts</translation>
+        <source>&apos;%1&apos; is not an ELF object</source>
+        <translation>&apos;%1&apos; nav ELF objekts</translation>
     </message>
     <message>
-        <source>The file '%1' is not a valid Qt plugin.</source>
-        <translation>Datne '%1' nav pieļaujams Qt spraudnis.</translation>
+        <source>The file &apos;%1&apos; is not a valid Qt plugin.</source>
+        <translation>Datne &apos;%1&apos; nav pieļaujams Qt spraudnis.</translation>
     </message>
     <message>
         <source>The shared library was not found.</source>
@@ -638,8 +646,8 @@ Pārbaudi vai datnes nosaukums ir uzrādīts korekti.</translation>
         <translation>Nezināma kļūda</translation>
     </message>
     <message>
-        <source>The plugin '%1' uses incompatible Qt library. Expected build key "%2", got "%3"</source>
-        <translation>Spraudnis '%1' lieto nesaderīgu Qt bibliotēku. Izveides atslēgas "%2" vietā bija "%3"</translation>
+        <source>The plugin &apos;%1&apos; uses incompatible Qt library. Expected build key &quot;%2&quot;, got &quot;%3&quot;</source>
+        <translation>Spraudnis &apos;%1&apos; lieto nesaderīgu Qt bibliotēku. Izveides atslēgas &quot;%2&quot; vietā bija &quot;%3&quot;</translation>
     </message>
 </context>
 <context>
@@ -803,6 +811,14 @@ Pārbaudi vai datnes nosaukums ir uzrādīts korekti.</translation>
     <message>
         <source>OK</source>
         <translation></translation>
+    </message>
+    <message>
+        <source>&amp;Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;No</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/gui/text_browser_dialog.cpp" line="63"/>
@@ -998,8 +1014,8 @@ Vai vēlies to pārrakstīt?</translation>
         <translation>Executive</translation>
     </message>
     <message>
-        <source>The 'From' value cannot be greater than the 'To' value.</source>
-        <translation>'No' vērtība nevar būt lielāka par 'Līdz' vērtibu.</translation>
+        <source>The &apos;From&apos; value cannot be greater than the &apos;To&apos; value.</source>
+        <translation>&apos;No&apos; vērtība nevar būt lielāka par &apos;Līdz&apos; vērtibu.</translation>
     </message>
     <message>
         <source>US Common #10 Envelope</source>
@@ -1985,7 +2001,7 @@ Izvēlies citu datnes nosaukumu.</translation>
 <context>
     <name>QWhatsThisAction</name>
     <message>
-        <source>What's This?</source>
+        <source>What&apos;s This?</source>
         <translation>Kas tas?</translation>
     </message>
 </context>

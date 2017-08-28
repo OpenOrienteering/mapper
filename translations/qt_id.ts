@@ -34,7 +34,7 @@
 <context>
     <name>QDialog</name>
     <message>
-        <source>What's This?</source>
+        <source>What&apos;s This?</source>
         <translation>Apa ini?</translation>
     </message>
 </context>
@@ -133,7 +133,7 @@
         <translation>Ya untuk &amp;semua</translation>
     </message>
     <message>
-        <source>Don't Save</source>
+        <source>Don&apos;t Save</source>
         <translation>Jangan Simpan</translation>
     </message>
 </context>
@@ -254,14 +254,14 @@
         <translation>Tampilkan </translation>
     </message>
     <message>
-        <source>'%1' is write protected.
+        <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
-        <translation>'%1' adalah menulis yang dilindungi.
+        <translation>&apos;%1&apos; adalah menulis yang dilindungi.
 Apakah Anda ingin menghapus bagaimanapun itu?</translation>
     </message>
     <message>
-        <source>Are you sure you want to delete '%1'?</source>
-        <translation>Apakah Anda yakin mau menghapus '%1'?</translation>
+        <source>Are you sure you want to delete &apos;%1&apos;?</source>
+        <translation>Apakah Anda yakin mau menghapus &apos;%1&apos;?</translation>
     </message>
     <message>
         <source>List of places and bookmarks</source>
@@ -464,8 +464,8 @@ Pastikan nama file benar diberikan.</translation>
         <translation>%1 TB</translation>
     </message>
     <message>
-        <source>&lt;b&gt;The name "%1" can not be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuations marks.</source>
-        <translation>&lt;b&gt;Nama "%1" tidak dapat digunakan.&lt;/b&gt;&lt;p&gt;Coba gunakan nama lain, dengan karakter lebih sedikit atau tidak ada tanda tanda.</translation>
+        <source>&lt;b&gt;The name &quot;%1&quot; can not be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuations marks.</source>
+        <translation>&lt;b&gt;Nama &quot;%1&quot; tidak dapat digunakan.&lt;/b&gt;&lt;p&gt;Coba gunakan nama lain, dengan karakter lebih sedikit atau tidak ada tanda tanda.</translation>
     </message>
     <message>
         <source>%1 bytes</source>
@@ -490,6 +490,14 @@ Pastikan nama file benar diberikan.</translation>
     <message>
         <source>Date Modified</source>
         <translation>Tanggal dimodifikasi</translation>
+    </message>
+</context>
+<context>
+    <name>QGuiApplication</name>
+    <message>
+        <source>QT_LAYOUT_DIRECTION</source>
+        <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
+        <translation>LTR</translation>
     </message>
 </context>
 <context>
@@ -578,6 +586,10 @@ Pastikan nama file benar diberikan.</translation>
     <message>
         <source>&lt;h3&gt;About Qt&lt;/h3&gt;&lt;p&gt;This program uses Qt version %1.&lt;/p&gt;</source>
         <translation>&lt;h3&gt;Tentang Qt&lt;/h3&gt;&lt;p&gt;Program ini menggunakan Qt versi %1.&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;Qt is a C++ toolkit for cross-platform application development.&lt;/p&gt;&lt;p&gt;Qt provides single-source portability across all major desktop operating systems. It is also available for embedded Linux and other embedded and mobile operating systems.&lt;/p&gt;&lt;p&gt;Qt is available under three different licensing options designed to accommodate the needs of our various users.&lt;/p&gt;&lt;p&gt;Qt licensed under our commercial license agreement is appropriate for development of proprietary/commercial software where you do not want to share any source code with third parties or otherwise cannot comply with the terms of the GNU LGPL version 3 or GNU LGPL version 2.1.&lt;/p&gt;&lt;p&gt;Qt licensed under the GNU LGPL version 3 is appropriate for the development of Qt&amp;nbsp;applications provided you can comply with the terms and conditions of the GNU LGPL version 3.&lt;/p&gt;&lt;p&gt;Qt licensed under the GNU LGPL version 2.1 is appropriate for the development of Qt&amp;nbsp;applications provided you can comply with the terms and conditions of the GNU LGPL version 2.1.&lt;/p&gt;&lt;p&gt;Please see &lt;a href=&quot;http://%2/&quot;&gt;%2&lt;/a&gt; for an overview of Qt licensing.&lt;/p&gt;&lt;p&gt;Copyright (C) %1 The Qt Company Ltd and other contributors.&lt;/p&gt;&lt;p&gt;Qt and the Qt logo are trademarks of The Qt Company Ltd.&lt;/p&gt;&lt;p&gt;Qt is The Qt Company Ltd product developed as an open source project. See &lt;a href=&quot;http://%3/&quot;&gt;%3&lt;/a&gt; for more information.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -679,6 +691,14 @@ Pastikan nama file benar diberikan.</translation>
     <message>
         <source>OK</source>
         <translation></translation>
+    </message>
+    <message>
+        <source>&amp;Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;No</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/gui/text_browser_dialog.cpp" line="63"/>
@@ -863,8 +883,8 @@ Apakah Anda ingin menimpa itu?</translation>
         <translation>Eksekutif</translation>
     </message>
     <message>
-        <source>The 'From' value cannot be greater than the 'To' value.</source>
-        <translation>Nilai 'Dari' tidak dapat lebih besar dari nilai 'Ke'.</translation>
+        <source>The &apos;From&apos; value cannot be greater than the &apos;To&apos; value.</source>
+        <translation>Nilai &apos;Dari&apos; tidak dapat lebih besar dari nilai &apos;Ke&apos;.</translation>
     </message>
     <message>
         <source>US Common #10 Envelope</source>
@@ -1601,7 +1621,7 @@ Silakan pilih nama file yang berbeda.</translation>
 <context>
     <name>QWhatsThisAction</name>
     <message>
-        <source>What's This?</source>
+        <source>What&apos;s This?</source>
         <translation>Apa ini?</translation>
     </message>
 </context>
