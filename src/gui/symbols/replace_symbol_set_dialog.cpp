@@ -75,6 +75,7 @@
 #include "gui/util_gui.h"
 #include "gui/widgets/symbol_dropdown.h"
 #include "util/util.h"
+#include "util/backports.h"
 
 // IWYU pragma: no_forward_declare QColor
 // IWYU pragma: no_forward_declare QFormLayout
@@ -155,7 +156,7 @@ ReplaceSymbolSetDialog::ReplaceSymbolSetDialog(QWidget* parent, Map& object_map,
 	connect(action, &QAction::triggered, this, &ReplaceSymbolSetDialog::resetReplacements);
 	mapping_menu->addSeparator();
 	action = mapping_menu->addAction(QIcon{QLatin1String{":/images/open.png"}}, tr("Open CRT file..."));
-	connect(action, &QAction::triggered, this, &ReplaceSymbolSetDialog::openCrtFile);
+	connect(action, &QAction::triggered, this, QOverload<>::of(&ReplaceSymbolSetDialog::openCrtFile));
 	action = mapping_menu->addAction(QIcon{QLatin1String{":/images/save.png"}}, tr("Save CRT file..."));
 	connect(action, &QAction::triggered, this, &ReplaceSymbolSetDialog::saveCrtFile);
 	
@@ -231,9 +232,12 @@ void ReplaceSymbolSetDialog::openCrtFile()
 	auto dir = QLatin1String{"data:/symbol sets"};
 	auto filter = QString{tr("CRT file") + QLatin1String{" (*.crt *.CRT)"}};
 	QString path = QFileDialog::getOpenFileName(this, tr("Open CRT file..."), dir, filter);
-	if (path.isEmpty())
-		return;
+	if (!path.isEmpty())
+		openCrtFile(path);
+}
 	
+void ReplaceSymbolSetDialog::openCrtFile(const QString& path)
+{
 	QFile crt_file{path};
 	crt_file.open(QIODevice::ReadOnly);
 	QTextStream stream{ &crt_file };
@@ -596,6 +600,12 @@ bool ReplaceSymbolSetDialog::showDialog(QWidget* parent, Map& object_map)
 
 	ReplaceSymbolSetDialog dialog(parent, object_map, *symbol_set, replacements, ReplaceSymbolSet);
 	dialog.setWindowModality(Qt::WindowModal);
+	auto crt_file = discoverCrtFile(object_map.symbolSetId(), symbol_set->symbolSetId());
+	if (QFileInfo::exists(crt_file))
+	{
+		dialog.show();
+		dialog.openCrtFile(crt_file);
+	}
 	auto result = dialog.exec();
 	switch (result)
 	{
@@ -677,3 +687,18 @@ bool ReplaceSymbolSetDialog::showDialogForCRT(QWidget* parent, Map& object_map, 
 	Q_UNREACHABLE();
 }
 
+
+// static
+QString ReplaceSymbolSetDialog::discoverCrtFile(const QString& source_id, const QString& target_id)
+{
+	QString name = QLatin1String("data:/symbol sets/")
+	               + source_id + QLatin1Char('-')
+	               + target_id + QLatin1String(".crt");
+#ifdef MAPPER_DEVELOPMENT_BUILD
+	if (!QFileInfo::exists(name))
+		name = QLatin1String("data:/symbol sets/COPY_OF_")
+		       + source_id + QLatin1Char('-')
+		       + target_id + QLatin1String(".crt");
+#endif
+	return name;
+}
