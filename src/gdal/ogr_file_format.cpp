@@ -1275,7 +1275,7 @@ bool OgrFileImport::checkGeoreferencing(OGRDataSourceH data_source, const Georef
 				auto transformation = OCTNewCoordinateTransformation(spatial_reference, map_srs.get());
 				if (!transformation)
 				{
-					qDebug("Failed to transform this SRS:\n%s", qUtf8Printable(toPrettyWkt(spatial_reference)));
+					qDebug("Failed to transform this SRS:\n%s", qPrintable(toPrettyWkt(spatial_reference)));
 					return false;
 				}
 				
