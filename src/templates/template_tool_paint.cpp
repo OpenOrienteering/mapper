@@ -227,15 +227,22 @@ void PaintOnTemplatePaletteWidget::paintEvent(QPaintEvent* event)
 				drawIcon(&painter, QString::fromLatin1(":/images/undo.png"), field_rect);
 			else if (isRedoField(x, y))
 				drawIcon(&painter, QString::fromLatin1(":/images/redo.png"), field_rect);
-			else if (selected_color == x + getNumFieldsX()*y)
-			{
-				int line_width = qMax(1, qRound(Util::mmToPixelLogical(0.2f)));
-				painter.fillRect(field_rect, Qt::black);
-				painter.fillRect(field_rect.adjusted(line_width, line_width, -1 * line_width, -field_rect.height() / 2), Qt::white);
-				painter.fillRect(field_rect.adjusted(2 * line_width, 2 * line_width, -2 * line_width, -2 * line_width), getFieldColor(x, y));
-			}
 			else
+			{
+				if (selected_color == x + getNumFieldsX()*y)
+				{
+					int line_width = qMax(1, qRound(Util::mmToPixelLogical(0.5)));
+					painter.fillRect(field_rect, Qt::black);
+					QPen pen(Qt::white);
+					pen.setStyle(Qt::DotLine);
+					pen.setWidth(line_width);
+					painter.setPen(pen);
+					field_rect.adjust(line_width, line_width, -line_width, -line_width);
+					painter.drawRect(field_rect);
+					field_rect.adjust(line_width, line_width, -line_width, -line_width);
+				}
 				painter.fillRect(field_rect, getFieldColor(x, y));
+			}
 		}
 	}
 	
