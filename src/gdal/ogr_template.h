@@ -33,7 +33,7 @@ class QXmlStreamReader;
 class QXmlStreamWriter;
 
 class Map;
-class Template;
+
 
 /**
  * Template displaying a file supported by OGR.
@@ -59,7 +59,7 @@ public:
 	bool postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view) override;
 	
 protected:
-	Template* duplicateImpl() const override;
+	OgrTemplate* duplicateImpl() const override;
 	
 	bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml) override;
 	
@@ -67,9 +67,9 @@ protected:
 	
 private:
 	QString crs_spec;
-	bool migrating_from_pre_v07;  /// Some files saved with unstable snapshots < v0.7
-	bool use_real_coords;
-	bool center_in_view;
+	bool use_real_coords        { true };
+	bool center_in_view         { false };
+	bool migrating_from_pre_v07 { true };  /// Some files saved with unstable snapshots < v0.7
 };
 
 #endif // OPENORIENTEERING_OGR_TEMPLATE_H

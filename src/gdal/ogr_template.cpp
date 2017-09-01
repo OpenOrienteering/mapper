@@ -52,9 +52,6 @@ const std::vector<QByteArray>& OgrTemplate::supportedExtensions()
 
 OgrTemplate::OgrTemplate(const QString& path, Map* map)
 : TemplateMap(path, map)
-, migrating_from_pre_v07{ true }
-, use_real_coords{ true }
-, center_in_view{ false }
 {
 	// nothing else
 }
@@ -73,46 +70,41 @@ const char* OgrTemplate::getTemplateType() const
 
 
 bool OgrTemplate::preLoadConfiguration(QWidget* dialog_parent)
+try
 {
 	migrating_from_pre_v07 = false;
 	
-	auto show_dialog = true;
-	
 	QFile file{ template_path };
-	try
-	{
-		show_dialog = !OgrFileImport::checkGeoreferencing(file, map->getGeoreferencing());
-	}
-	catch (FileFormatException& e)
-	{
-		setErrorString(e.message());
+	if (OgrFileImport::checkGeoreferencing(file, map->getGeoreferencing()))
+	    return true;
+	    
+	TemplatePositioningDialog dialog(dialog_parent);
+	if (dialog.exec() == QDialog::Rejected)
 		return false;
-	}
 	
-	if (show_dialog)
+	center_in_view  = dialog.centerOnView();
+	use_real_coords = dialog.useRealCoords();
+	if (use_real_coords)
 	{
-		TemplatePositioningDialog dialog(dialog_parent);
-		if (dialog.exec() == QDialog::Rejected)
-			return false;
-		
-		use_real_coords = dialog.useRealCoords();
-		if (use_real_coords)
-		{
-			transform.template_scale_x = transform.template_scale_y = dialog.getUnitScale();
-			updateTransformationMatrices();
-		}
-		center_in_view = dialog.centerOnView();
+		transform.template_scale_x = transform.template_scale_y = dialog.getUnitScale();
+		updateTransformationMatrices();
 	}
 	return true;
+}
+catch (FileFormatException& e)
+{
+	setErrorString(e.message());
+	return false;
 }
 
 
 bool OgrTemplate::loadTemplateFileImpl(bool configuring)
+try
 {
 	if (migrating_from_pre_v07) 
 		configuring = true;
 	
-	std::unique_ptr<Map> new_template_map{ new Map() };
+	auto new_template_map = std::make_unique<Map>();
 	const auto& georef = map->getGeoreferencing();
 	new_template_map->setGeoreferencing(georef);
 	
@@ -125,7 +117,7 @@ bool OgrTemplate::loadTemplateFileImpl(bool configuring)
 	    && !is_georeferenced
 	    && is_geographic(crs_spec))
 	{
-		// Handle non-georeferenced geographic TemplateTrack data
+		// Handle non-georeferenced geographic OgrTemplate data
 		// by orthographic projection.
 		// See TemplateTrack::calculateLocalGeoreferencing()
 		auto center = OgrFileImport::calcAverageLatLon(file);
@@ -141,15 +133,7 @@ bool OgrTemplate::loadTemplateFileImpl(bool configuring)
 	OgrFileImport importer{ &file, new_template_map.get(), nullptr, unit_type };
 	importer.setGeoreferencingImportEnabled(georef.isLocal() && configuring);
 	
-	try
-	{
-		importer.doImport(false, template_path);
-	}
-	catch (FileFormatException& e)
-	{
-		setErrorString(e.message());
-		return false;
-	}
+	importer.doImport(false, template_path);
 	
 	if (configuring)
 	{
@@ -201,6 +185,11 @@ bool OgrTemplate::loadTemplateFileImpl(bool configuring)
 	
 	return true;
 }
+catch (FileFormatException& e)
+{
+	setErrorString(e.message());
+	return false;
+}
 
 
 bool OgrTemplate::postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view)
@@ -212,9 +201,9 @@ bool OgrTemplate::postLoadConfiguration(QWidget* dialog_parent, bool& out_center
 }
 
 
-Template* OgrTemplate::duplicateImpl() const
+OgrTemplate* OgrTemplate::duplicateImpl() const
 {
-	OgrTemplate* copy = new OgrTemplate(template_path, map);
+	auto copy = new OgrTemplate(template_path, map);
 	if (template_state == Loaded)
 		copy->loadTemplateFileImpl(false);
 	return copy;
