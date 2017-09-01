@@ -153,6 +153,15 @@ public:
 	
 	
 protected:
+	/**
+	 * Tests if the file's spatial references can be used with the given georeferencing.
+	 * 
+	 * This returns true only if all layers' spatial references can be
+	 * transformed to the spatial reference systems represented by georef.
+	 * It will always return false for a local or invalid Georeferencing.
+	 */
+	static bool checkGeoreferencing(OGRDataSourceH data_source, const Georeferencing& georef);
+	
 	void import(bool load_symbols_only) override;
 	
 	void importGeoreferencing(OGRDataSourceH data_source);

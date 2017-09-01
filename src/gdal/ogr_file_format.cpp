@@ -270,6 +270,16 @@ namespace
 			Q_UNREACHABLE();
 		}
 	}
+
+	QString toPrettyWkt(OGRSpatialReferenceH spatial_reference)
+	{
+		char* srs_wkt_raw = nullptr;
+		OSRExportToPrettyWkt(spatial_reference, &srs_wkt_raw, 0);
+		auto srs_wkt = QString::fromLocal8Bit(srs_wkt_raw);
+		CPLFree(srs_wkt_raw);
+		return srs_wkt;
+	};
+	
 }
 
 
@@ -502,10 +512,10 @@ void OgrFileImport::import(bool load_symbols_only)
 
 void OgrFileImport::importGeoreferencing(OGRDataSourceH data_source)
 {
+	char* projected_srs_spec =  { nullptr };
+	auto suitable_srs = ogr::unique_srs { nullptr };
 	auto wgs84 = ogr::unique_srs { OSRNewSpatialReference(nullptr) };
 	OSRSetWellKnownGeogCS(wgs84.get(), "WGS84");
-	
-	auto data_srs = ogr::unique_srs { nullptr };
 	
 	// Find any SRS which can be transformed to WGS84,
 	// but prefer projected SRS.
@@ -521,21 +531,46 @@ void OgrFileImport::importGeoreferencing(OGRDataSourceH data_source)
 			continue;
 		
 		auto transformation = OCTNewCoordinateTransformation(spatial_reference, wgs84.get());
-		if (transformation)
+		if (!transformation)
 		{
-			OCTDestroyCoordinateTransformation(transformation);
-			if (!data_srs)
-			{
-				data_srs.reset(OSRClone(spatial_reference));
-				if (OSRIsProjected(spatial_reference))
-					break;
-			}
+			addWarning(tr("Cannot use this spatial reference:\n%s").arg(toPrettyWkt(spatial_reference)));
+			continue;
 		}
+		OCTDestroyCoordinateTransformation(transformation);
+		
+		if (OSRIsProjected(spatial_reference))
+		{
+			char *srs_spec = nullptr;
+			auto error = OSRExportToProj4(spatial_reference, &srs_spec);
+			if (!error)
+			{
+				projected_srs_spec = srs_spec;  // transfer ownership
+				suitable_srs.reset(OSRClone(spatial_reference));
+				break;
+			}
+			CPLFree(srs_spec);
+		}
+		
+		if (!suitable_srs)
+			suitable_srs.reset(OSRClone(spatial_reference));
 	}
 	
-	if (data_srs && !OSRIsProjected(data_srs.get()))
+	if (projected_srs_spec)
+	{
+		// Found a suitable projected SRS
+		map_srs = std::move(suitable_srs);
+		
+		auto georef = map->getGeoreferencing();  // copy
+		georef.setProjectedCRS(QString::fromLatin1(projected_srs_spec));
+		map->setGeoreferencing(georef);
+		
+		CPLFree(projected_srs_spec);
+	}
+	else if (suitable_srs)
 	{
 		// Found a suitable SRS but it is not projected.
+		map_srs = std::move(suitable_srs);
+		
 		// Setting up a local orthographic projection.
 		auto center = calcAverageLatLon(data_source);
 		auto latitude = 0.001 * qRound(1000 * center.latitude());
@@ -545,20 +580,13 @@ void OgrFileImport::importGeoreferencing(OGRDataSourceH data_source)
 		ortho_georef.setProjectedCRS(QString{}, QString::fromLatin1("+proj=ortho +datum=WGS84 +lat_0=%1 +lon_0=%2")
 		                                        .arg(latitude).arg(longitude));
 		ortho_georef.setGeographicRefPoint(LatLon{ latitude, longitude }, false);
+		ortho_georef.setDeclination(map->getGeoreferencing().getDeclination());
 		map->setGeoreferencing(ortho_georef);
 		OSRImportFromProj4(map_srs.get(), ortho_georef.getProjectedCRSSpec().toLatin1());
 	}
-	else if (data_srs) {
-		char* data = nullptr;
-		auto error = OSRExportToProj4(data_srs.get(), &data);
-		if (!error)
-		{
-			auto georef = map->getGeoreferencing();
-			georef.setProjectedCRS(QString::fromLatin1(data));
-			CPLFree(data);
-			map->setGeoreferencing(georef);
-			map_srs = std::move(data_srs);
-		}
+	else
+	{
+		addWarning(tr("The geospatial data has no suitable spatial reference."));
 	}
 }
 
@@ -1225,21 +1253,31 @@ bool OgrFileImport::checkGeoreferencing(QFile& file, const Georeferencing& geore
 		                          .arg(filename, QString::fromLatin1(CPLGetLastErrorMsg())));
 	}
 	
+	return checkGeoreferencing(data_source.get(), georef);
+}
+
+
+// static
+bool OgrFileImport::checkGeoreferencing(OGRDataSourceH data_source, const Georeferencing& georef)
+{
 	auto spec = georef.getProjectedCRSSpec().toLatin1();
 	auto map_srs = ogr::unique_srs { OSRNewSpatialReference(nullptr) };
 	OSRImportFromProj4(map_srs.get(), spec.constData());
 	
 	bool suitable_srs_found = false;
-	auto num_layers = OGR_DS_GetLayerCount(data_source.get());
+	auto num_layers = OGR_DS_GetLayerCount(data_source);
 	for (int i = 0; i < num_layers; ++i)
 	{
-		if (auto layer = OGR_DS_GetLayer(data_source.get(), i))
+		if (auto layer = OGR_DS_GetLayer(data_source, i))
 		{
 			if (auto spatial_reference = OGR_L_GetSpatialRef(layer))
 			{
 				auto transformation = OCTNewCoordinateTransformation(spatial_reference, map_srs.get());
 				if (!transformation)
+				{
+					qDebug("Failed to transform this SRS:\n%s", qUtf8Printable(toPrettyWkt(spatial_reference)));
 					return false;
+				}
 				
 				OCTDestroyCoordinateTransformation(transformation);
 				suitable_srs_found = true;

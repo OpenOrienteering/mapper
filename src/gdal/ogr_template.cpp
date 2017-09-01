@@ -28,6 +28,7 @@
 #include <QFile>
 #include <QLatin1String>
 #include <QPointF>
+#include <QRectF>
 #include <QStringRef>
 #include <QTransform>
 #include <QXmlStreamReader>
@@ -40,6 +41,7 @@
 #include "fileformats/file_format.h"
 #include "gdal/gdal_manager.h"
 #include "gdal/ogr_file_format_p.h"
+#include "gui/georeferencing_dialog.h"
 #include "templates/template.h"
 #include "templates/template_positioning_dialog.h"
 
@@ -72,12 +74,58 @@ const char* OgrTemplate::getTemplateType() const
 bool OgrTemplate::preLoadConfiguration(QWidget* dialog_parent)
 try
 {
+	Q_ASSERT(!is_georeferenced);
+	
 	migrating_from_pre_v07 = false;
 	
-	QFile file{ template_path };
-	if (OgrFileImport::checkGeoreferencing(file, map->getGeoreferencing()))
-	    return true;
-	    
+	auto& initial_georef = map->getGeoreferencing();
+	if (!initial_georef.isValid() || initial_georef.isLocal())
+	{
+		// The map doesn't have a proper georeferencing.
+		// Is there a good SRS in the data?
+		QFile file{ template_path };
+		Map tmp_map;
+		tmp_map.setGeoreferencing(initial_georef);
+		OgrFileImport importer{ &file, &tmp_map, nullptr, OgrFileImport::UnitOnGround};
+		importer.setGeoreferencingImportEnabled(true);
+		importer.doImport(true, template_path);
+		
+		auto& data_georef = tmp_map.getGeoreferencing();
+		if (data_georef.isValid() && !data_georef.isLocal())
+		{
+			// If yes, does the user want to use this for the map?
+			Georeferencing georef(data_georef);
+			georef.setGeographicRefPoint(georef.toGeographicCoords(MapCoordF(map->calculateExtent().center())));
+			GeoreferencingDialog dialog(dialog_parent, map, &georef);
+			dialog.setKeepGeographicRefCoords();
+			dialog.exec();
+		}
+	}
+	
+	auto& georef = map->getGeoreferencing();
+	if (georef.isValid() && !georef.isLocal())
+	{
+		// Can the template's SRS be converted to the map's CRS?
+		QFile file{ template_path };
+		if (OgrFileImport::checkGeoreferencing(file, map->getGeoreferencing()))
+		{
+			is_georeferenced = true;
+			crs_spec = georef.getProjectedCRSSpec();
+			return true;
+		}
+		
+		// Can the template's SRS be converted to WGS84?
+		Georeferencing geographic_georef;
+		geographic_georef.setScaleDenominator(int(georef.getScaleDenominator()));
+		geographic_georef.setProjectedCRS(QString{}, QString::fromLatin1("+proj=latlong +datum=WGS84"));
+		if (OgrFileImport::checkGeoreferencing(file, geographic_georef))
+		{
+			is_georeferenced = true;
+			crs_spec = georef.getProjectedCRSSpec();
+			return true;
+		}
+	}
+	
 	TemplatePositioningDialog dialog(dialog_parent);
 	if (dialog.exec() == QDialog::Rejected)
 		return false;
@@ -195,7 +243,6 @@ catch (FileFormatException& e)
 bool OgrTemplate::postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view)
 {
 	Q_UNUSED(dialog_parent)
-	is_georeferenced = false;
 	out_center_in_view = center_in_view;
 	return true;
 }
