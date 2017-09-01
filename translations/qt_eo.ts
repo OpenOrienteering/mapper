@@ -695,11 +695,11 @@ Bonvolu kontroli, ke dosiernomo estis ĝusta.</translation>
     </message>
     <message>
         <source>&amp;Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Jes</translation>
     </message>
     <message>
         <source>&amp;No</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ne</translation>
     </message>
     <message>
         <location filename="../src/gui/text_browser_dialog.cpp" line="63"/>

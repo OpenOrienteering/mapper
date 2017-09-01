@@ -6862,7 +6862,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template.cpp" line="608"/>
         <source>Not enough free memory.</source>
-        <translation type="unfinished"></translation>
+        <translation>Недостаточно свободной памяти.</translation>
     </message>
 </context>
 <context>

@@ -590,7 +590,7 @@ Controleer of de juiste bestandsnaam is opgegeven.</translation>
     </message>
     <message>
         <source>&lt;p&gt;Qt is a C++ toolkit for cross-platform application development.&lt;/p&gt;&lt;p&gt;Qt provides single-source portability across all major desktop operating systems. It is also available for embedded Linux and other embedded and mobile operating systems.&lt;/p&gt;&lt;p&gt;Qt is available under three different licensing options designed to accommodate the needs of our various users.&lt;/p&gt;&lt;p&gt;Qt licensed under our commercial license agreement is appropriate for development of proprietary/commercial software where you do not want to share any source code with third parties or otherwise cannot comply with the terms of the GNU LGPL version 3 or GNU LGPL version 2.1.&lt;/p&gt;&lt;p&gt;Qt licensed under the GNU LGPL version 3 is appropriate for the development of Qt&amp;nbsp;applications provided you can comply with the terms and conditions of the GNU LGPL version 3.&lt;/p&gt;&lt;p&gt;Qt licensed under the GNU LGPL version 2.1 is appropriate for the development of Qt&amp;nbsp;applications provided you can comply with the terms and conditions of the GNU LGPL version 2.1.&lt;/p&gt;&lt;p&gt;Please see &lt;a href=&quot;http://%2/&quot;&gt;%2&lt;/a&gt; for an overview of Qt licensing.&lt;/p&gt;&lt;p&gt;Copyright (C) %1 The Qt Company Ltd and other contributors.&lt;/p&gt;&lt;p&gt;Qt and the Qt logo are trademarks of The Qt Company Ltd.&lt;/p&gt;&lt;p&gt;Qt is The Qt Company Ltd product developed as an open source project. See &lt;a href=&quot;http://%3/&quot;&gt;%3&lt;/a&gt; for more information.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;Qt is een C++ toolkit voor cross-platform applicatieontwikkeling.&lt;/p&gt;&lt;p&gt;Qt werkt vanuit één bron op alle grote besturingssystemen, zonder dat de code aangepast hoeft te worden. Het is ook beschikbaar voor embedded Linux en andere embedded of mobiele besturingssystemen.&lt;/p&gt;&lt;p&gt;Qt is beschikbaar onder drie verschillende licentie constructies, zodat het voldoet aan de eisen van verschillende gebruikers.&lt;/p&gt;&lt;p&gt;Qt gelicentieerd onder onze commerciële licentieovereenkomst is geschikt voor de ontwikkeling van gepatenteerd/commerciële software wanneer u niet alle broncode wilt delen met derden, of anderszins niet kan overeenkomen met de voorwaarden van GNU LGPL versie 3 of GNU LGPL versie 2.1. &lt;/p&gt;&lt;p&gt;Qt gelicentieerd onder GNU LGPL versie 3 is geschikt voor ontwikkeling van Qt toepassingen vooropgesteld dat u kan voldoen aan de bepalingen en voorwaarden van GNU LGPL version 3.&lt;/p&gt;&lt;p&gt;Qt gelicentieerd onder GNU LGPL versie 2.1 is geschikt voor ontwikkeling van Qt toepassingen vooropgesteld dat u kan voldoen aan de bepalingen en voorwaarden van GNU LGPL version 2.1.&lt;/p&gt;&lt;p&gt;Zie &lt;a href=&quot;http://%2/&quot;&gt; %2&lt;/a&gt; voor een overzicht van Qt licentieverlening.&lt;/p&gt;&lt;p&gt;Copyright (C) %1 de Qt Company Ltd en andere bijdragers.&lt;/p&gt;&lt;p&gt;Qt en het Qt-logo zijn handelsmerken van de Qt Company Ltd.&lt;/p&gt; &lt;p&gt;Qt is het product van de Qt Company Ltd ontwikkeld als een open source project. Zie &lt;a href=&quot;http://%3/&quot;&gt; %3&lt;/a&gt; voor meer informatie.&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -695,11 +695,11 @@ Controleer of de juiste bestandsnaam is opgegeven.</translation>
     </message>
     <message>
         <source>&amp;Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ja</translation>
     </message>
     <message>
         <source>&amp;No</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Nee</translation>
     </message>
     <message>
         <location filename="../src/gui/text_browser_dialog.cpp" line="63"/>
