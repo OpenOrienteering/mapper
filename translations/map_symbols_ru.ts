@@ -332,8 +332,8 @@ Small depressions with steep sides are represented with symbol 112 (pit). The sy
         <message>
             <source>Pit</source>
             <comment>Name of symbol 112</comment>
-            <translation>Воронка</translation>
-        </message>
+            <translation>Искусственная внемасштабная яма</translation>
+    </message>
         <message>
             <source>Pits and holes with distinct steep sides which cannot be shown to scale using symbol 104 (earth bank). Minimum depth: 1 m. Minimum width: 1 m. A pit larger than 5 m x 5 m should normally be exaggerated and drawn using symbol 104 (earth bank). Pits without steep sides are represented with symbol 111 (small depression). The symbol may not touch or overlap other brown symbols. Location is the centre of
 gravity of the symbol, and the symbol is orientated to north.</source>
@@ -2499,7 +2499,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
             <translation>Непреодолимая скала</translation>
         </message>
         <message>
-            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
+            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201</comment>
             <translation>Непреодолимая (опасная) скала, карьер или опасный грунтовый обрыв (см. 106) показывается линией толщиной 0,35 мм вдоль бровки и зубцами, покрывающими площадь проекции обрыва от верхней кромки до подножья. При отображении вертикальных или близко расположенных обрывов зубцы могут быть опущены (ширина прохода должна быть не менее 0,3 мм в масштабе карты). Зубцы могут быть удлинены, если это необходимо. Например, если обрывом и береговой линией нет прохода, то зубцы обрыва должны пересекать береговую линию и накладываться на край изображения водоема.</translation>
         </message>
@@ -2509,7 +2509,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
             <translation>Непреодолимая скала, минимальный размер</translation>
         </message>
         <message>
-            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
+            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201.0.1</comment>
             <translation>Непреодолимая (опасная) скала, карьер или опасный грунтовый обрыв (см. 106) показывается линией толщиной 0,35 мм вдоль бровки и зубцами, покрывающими площадь проекции обрыва от верхней кромки до подножья. При отображении вертикальных или близко расположенных обрывов зубцы могут быть опущены (ширина прохода должна быть не менее 0,3 мм в масштабе карты). Зубцы могут быть удлинены, если это необходимо. Например, если обрывом и береговой линией нет прохода, то зубцы обрыва должны пересекать береговую линию и накладываться на край изображения водоема.</translation>
         </message>
@@ -4191,7 +4191,7 @@ The symbol may not be drawn in free form or such that two elongated knoll symbol
         <message>
             <source>An impassable cliff, quarry or earth bank [see symbol earth bank (106)]. Tags are drawn downwards, showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). 
 
-The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags shall clearly extend over the bank line. Minimum height is 2 meters.
+The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags shall clearly extend over the bank line. Minimum height is 2 meters.
 
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable cliff!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
@@ -4206,7 +4206,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>An impassable cliff, quarry or earth bank [see symbol earth bank (106)]. Tags are drawn downwards, showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). 
 
-The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags shall clearly extend over the bank line. Minimum height is 2 meters.
+The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags shall clearly extend over the bank line. Minimum height is 2 meters.
 
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable cliff!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
@@ -6089,7 +6089,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
             <translation>Непреодолимая скала</translation>
         </message>
         <message>
-            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
+            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201</comment>
             <translation type="unfinished">Непреодолимая (опасная) скала, карьер или опасный грунтовый обрыв (см. 106) показывается линией толщиной 0,35 мм вдоль бровки и зубцами, покрывающими площадь проекции обрыва от верхней кромки до подножья. При отображении вертикальных или близко расположенных обрывов зубцы могут быть опущены (ширина прохода должна быть не менее 0,3 мм в масштабе карты). Зубцы могут быть удлинены, если это необходимо. Например, если обрывом и береговой линией нет прохода, то зубцы обрыва должны пересекать береговую линию и накладываться на край изображения водоема.</translation>
         </message>
@@ -6099,7 +6099,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
             <translation>Непреодолимая скала, минимальный размер</translation>
         </message>
         <message>
-            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
+            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201.0.1</comment>
             <translation type="unfinished">Непреодолимая (опасная) скала, карьер или опасный грунтовый обрыв (см. 106) показывается линией толщиной 0,35 мм вдоль бровки и зубцами, покрывающими площадь проекции обрыва от верхней кромки до подножья. При отображении вертикальных или близко расположенных обрывов зубцы могут быть опущены (ширина прохода должна быть не менее 0,3 мм в масштабе карты). Зубцы могут быть удлинены, если это необходимо. Например, если обрывом и береговой линией нет прохода, то зубцы обрыва должны пересекать береговую линию и накладываться на край изображения водоема.</translation>
         </message>
@@ -7897,7 +7897,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
             <translation type="unfinished">Непреодолимая скала</translation>
         </message>
         <message>
-            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
+            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201</comment>
             <translation type="unfinished">Непреодолимая (опасная) скала, карьер или опасный грунтовый обрыв (см. 106) показывается линией толщиной 0,35 мм вдоль бровки и зубцами, покрывающими площадь проекции обрыва от верхней кромки до подножья. При отображении вертикальных или близко расположенных обрывов зубцы могут быть опущены (ширина прохода должна быть не менее 0,3 мм в масштабе карты). Зубцы могут быть удлинены, если это необходимо. Например, если обрывом и береговой линией нет прохода, то зубцы обрыва должны пересекать береговую линию и накладываться на край изображения водоема.</translation>
         </message>
@@ -7907,7 +7907,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
             <translation type="unfinished">Непреодолимая скала, минимальный размер</translation>
         </message>
         <message>
-            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
+            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201.0.1</comment>
             <translation type="unfinished">Непреодолимая (опасная) скала, карьер или опасный грунтовый обрыв (см. 106) показывается линией толщиной 0,35 мм вдоль бровки и зубцами, покрывающими площадь проекции обрыва от верхней кромки до подножья. При отображении вертикальных или близко расположенных обрывов зубцы могут быть опущены (ширина прохода должна быть не менее 0,3 мм в масштабе карты). Зубцы могут быть удлинены, если это необходимо. Например, если обрывом и береговой линией нет прохода, то зубцы обрыва должны пересекать береговую линию и накладываться на край изображения водоема.</translation>
         </message>
@@ -9014,7 +9014,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Pit</source>
             <comment>Name of symbol 116</comment>
-            <translation type="unfinished">Искусственная внемасштабная яма</translation>
+            <translation>Искусственная внемасштабная яма</translation>
         </message>
         <message>
             <source>Pits and holes with distinct steep sides which cannot be shown to scale by symbol 106 (minimum diameter 2 m). Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol which is orientated to north.</source>
@@ -10090,8 +10090,8 @@ Map symbol: ISOM 115</source>
         <message>
             <source>|D| Pit</source>
             <comment>Name of symbol 1.14</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|D| Искусственная внемасштабная яма</translation>
+    </message>
         <message>
             <source>A pit or hole with distinct steep-sides. Usually man made. Used with symbol 8.6 to indicate a rocky pit.
 
