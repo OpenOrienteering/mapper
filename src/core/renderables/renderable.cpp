@@ -392,13 +392,13 @@ void MapRenderables::drawOverprintingSimulation(QPainter* painter, const RenderC
 	painter->drawImage(0, 0, separation);
 #endif
 	
+	painter->restore();
+	
 	if (config.testFlag(RenderConfig::Screen))
 	{
 		static MapColor reserved_color(MapColor::Reserved);
 		drawColorSeparation(painter, config, &reserved_color, true);
 	}
-	
-	painter->restore();
 }
 
 void MapRenderables::drawColorSeparation(QPainter* painter, const RenderConfig& config, const MapColor* separation, bool use_color) const
