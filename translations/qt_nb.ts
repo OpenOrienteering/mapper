@@ -763,11 +763,11 @@ Vennligst sjekk at riktig filnavn ble angitt.</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation></translation>
+        <translation>Hjelp</translation>
     </message>
     <message>
         <source>Reset</source>
-        <translation></translation>
+        <translation>Tilbakestill</translation>
     </message>
 </context>
 <context>
