@@ -52,6 +52,7 @@
 #include "fileformats/file_format_registry.h"
 #include "gui/about_dialog.h"
 #include "gui/autosave_dialog.h"
+#include "gui/file_dialog.h"
 #include "gui/home_screen_controller.h"
 #include "gui/settings_dialog.h"
 #include "gui/map/map_editor.h"
@@ -1019,7 +1020,7 @@ QString MainWindow::getOpenFileName(QWidget* parent, const QString& title, FileF
 	
 	filters += tr("All files") + QLatin1String(" (*.*)");
 	
-	QString path = QFileDialog::getOpenFileName(parent, title, open_directory, filters);
+	QString path = FileDialog::getOpenFileName(parent, title, open_directory, filters);
 	QFileInfo info(path);
 	return info.canonicalFilePath();
 }
@@ -1053,7 +1054,7 @@ bool MainWindow::showSaveAsDialog()
 	}
 	
 	QString filter; // will be set to the selected filter by QFileDialog
-	QString path = QFileDialog::getSaveFileName(this, tr("Save file"), save_directory, filters, &filter);
+	QString path = FileDialog::getSaveFileName(this, tr("Save file"), save_directory, filters, &filter);
 	
 	// On Windows, when the user enters "sample", we get "sample.omap *.xmap".
 	// (Fixed in upstream qtbase/src/plugins/platforms/windows/qwindowsdialoghelpers.cpp

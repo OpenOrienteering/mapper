@@ -44,7 +44,6 @@
 #include <QDockWidget>
 #include <QEvent>
 #include <QFile>
-#include <QFileDialog>
 #include <QFileInfo>
 #include <QFlags>
 #include <QFont>
@@ -108,6 +107,7 @@
 #include "fileformats/file_format.h"
 #include "fileformats/file_format_registry.h"
 #include "gui/configure_grid_dialog.h"
+#include "gui/file_dialog.h"
 #include "gui/georeferencing_dialog.h"
 #include "gui/main_window.h"
 #include "gui/print_widget.h"
@@ -3891,13 +3891,13 @@ void MapEditorController::importClicked()
 	map_names.removeDuplicates();
 	map_extensions.removeDuplicates();
 	
-	QString filename = QFileDialog::getOpenFileName(
-		window,
-		tr("Import %1, GPX, OSM or DXF file").arg(
-	      map_names.join(QString::fromLatin1(", "))),
-		import_directory,
-		QString::fromLatin1("%1 (%2 *.gpx *.osm *.dxf);;%3 (*.*)").arg(
-	      tr("Importable files"), QLatin1String("*.") + map_extensions.join(QString::fromLatin1(" *.")), tr("All files")) );
+	QString filename = FileDialog::getOpenFileName(
+	                       window,
+	                       tr("Import %1, GPX, OSM or DXF file").arg(
+	                           map_names.join(QString::fromLatin1(", "))),
+	                       import_directory,
+	                       QString::fromLatin1("%1 (%2 *.gpx *.osm *.dxf);;%3 (*.*)").arg(
+	                           tr("Importable files"), QLatin1String("*.") + map_extensions.join(QString::fromLatin1(" *.")), tr("All files")) );
 	if (filename.isEmpty() || filename.isNull())
 		return;
 	

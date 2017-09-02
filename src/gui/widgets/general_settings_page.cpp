@@ -27,7 +27,6 @@
 #include <QCompleter>
 #include <QDialogButtonBox>
 #include <QDoubleSpinBox>
-#include <QFileDialog>
 #include <QFormLayout>
 #include <QLineEdit>
 #include <QMessageBox>
@@ -38,6 +37,7 @@
 #include <QToolButton>
 
 #include "settings.h"
+#include "gui/file_dialog.h"
 #include "gui/main_window.h"
 #include "gui/util_gui.h"
 #include "gui/widgets/home_screen_widget.h"
@@ -328,7 +328,7 @@ void GeneralSettingsPage::openTranslationFileDialog()
 	if (filename.isEmpty())
 		filename = getSetting(Settings::General_TranslationFile).toString();
 	
-	filename = QFileDialog::getOpenFileName(this,
+	filename = FileDialog::getOpenFileName(this,
 	  tr("Open translation"), filename, tr("Translation files (*.qm)"));
 	if (!filename.isNull())
 	{

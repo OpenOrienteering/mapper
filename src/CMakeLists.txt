@@ -92,6 +92,7 @@ set(Mapper_Common_SRCS
   gui/autosave_dialog.cpp
   gui/color_dialog.cpp
   gui/configure_grid_dialog.cpp
+  gui/file_dialog.cpp
   gui/georeferencing_dialog.cpp
   gui/home_screen_controller.cpp
   gui/main_window.cpp
@@ -324,10 +325,9 @@ install(TARGETS Mapper
 # Workaround Qt private include dir issue
 # Cf. https://bugreports.qt.io/browse/QTBUG-37417
 
+set(PRIVATE_MODULES Core Gui)
 if(WIN32)
-	set(PRIVATE_MODULES Core Gui PrintSupport)
-else()
-	set(PRIVATE_MODULES)
+	list(APPEND PRIVATE_MODULES PrintSupport)
 endif()
 foreach(module ${PRIVATE_MODULES})
 	set(qt_module Qt${module})

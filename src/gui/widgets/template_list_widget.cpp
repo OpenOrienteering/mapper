@@ -22,7 +22,6 @@
 #include "template_list_widget.h"
 
 #include <QCheckBox>
-#include <QFileDialog>
 #include <QHeaderView>
 #include <QInputDialog>
 #include <QKeyEvent>
@@ -41,10 +40,11 @@
 #include "core/georeferencing.h"
 #include "core/map.h"
 #include "core/objects/object.h"
-#include "gui/widgets/segmented_button_layout.h"
+#include "gui/file_dialog.h"
 #include "gui/main_window.h"
 #include "gui/map/map_editor.h"
 #include "gui/map/map_widget.h"
+#include "gui/widgets/segmented_button_layout.h"
 #include "templates/template.h"
 #include "templates/template_adjust.h"
 #include "templates/template_map.h"
@@ -370,15 +370,13 @@ std::unique_ptr<Template> TemplateListWidget::showOpenTemplateDialog(QWidget* di
 	{
 		pattern.append(QLatin1String(" *."));
 		pattern.append(QLatin1String(extension));
-		pattern.append(QLatin1String(" *."));
-		pattern.append(QString(QLatin1String(extension)).toUpper());
 	}
 	pattern.remove(0, 1);
-	QString path = QFileDialog::getOpenFileName(dialog_parent,
-	                                            tr("Open image, GPS track or DXF file"),
-	                                            template_directory,
-	                                            QString::fromLatin1("%1 (%2);;%3 (*.*)").arg(
-	                                                tr("Template files"), pattern, tr("All files")));
+	QString path = FileDialog::getOpenFileName(dialog_parent,
+	                                           tr("Open image, GPS track or DXF file"),
+	                                           template_directory,
+	                                           QString::fromLatin1("%1 (%2);;%3 (*.*)").arg(
+	                                               tr("Template files"), pattern, tr("All files")));
 	path = QFileInfo(path).canonicalFilePath();
 	
 	if (path.isEmpty())

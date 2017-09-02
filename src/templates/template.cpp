@@ -26,7 +26,6 @@
 
 #include <QCoreApplication>
 #include <QDebug>
-#include <QFileDialog>
 #include <QFileInfo>
 #include <QMessageBox>
 #include <QPainter>
@@ -38,9 +37,10 @@
 #include "core/map.h"
 #include "fileformats/file_format.h"
 #include "gdal/ogr_template.h"
-#include "template_image.h"
-#include "template_map.h"
-#include "template_track.h"
+#include "gui/file_dialog.h"
+#include "templates/template_image.h"
+#include "templates/template_map.h"
+#include "templates/template_track.h"
 #include "util/backports.h"  // IWYU pragma: keep
 #include "util/util.h"
 #include "util/xml_stream_util.h"
@@ -454,10 +454,10 @@ void Template::switchTemplateFile(const QString& new_path, bool load_file)
 
 bool Template::execSwitchTemplateFileDialog(QWidget* dialog_parent)
 {
-	QString new_path = QFileDialog::getOpenFileName(dialog_parent,
-	                                                tr("Find the moved template file"),
-												    QString(),
-	                                                tr("All files (*.*)") );
+	QString new_path = FileDialog::getOpenFileName(dialog_parent,
+	                                               tr("Find the moved template file"),
+	                                               QString(),
+	                                               tr("All files (*.*)") );
 	new_path = QFileInfo(new_path).canonicalFilePath();
 	if (new_path.isEmpty())
 		return false;

@@ -31,7 +31,6 @@
 #include <QComboBox>
 #include <QDialogButtonBox>
 #include <QDoubleSpinBox>
-#include <QFileDialog>
 #include <QFileInfo>
 #include <QFormLayout>
 #include <QHBoxLayout>
@@ -54,6 +53,7 @@
 
 #include "core/map.h"
 #include "core/map_printer.h"
+#include "gui/file_dialog.h"
 #include "gui/main_window.h"
 #include "gui/print_progress_dialog.h"
 #include "gui/print_tool.h"
@@ -1122,7 +1122,7 @@ void PrintWidget::exportToImage()
 	                        filter_template.arg(tr("TIFF"), QString::fromLatin1("*.tif *.tiff")),
 	                        filter_template.arg(tr("JPEG"), QString::fromLatin1("*.jpg *.jpeg")),
 	                        tr("All files (*.*)") };
-	QString path = QFileDialog::getSaveFileName(this, tr("Export map ..."), {}, filters.join(QString::fromLatin1(";;")));
+	QString path = FileDialog::getSaveFileName(this, tr("Export map ..."), {}, filters.join(QString::fromLatin1(";;")));
 	if (path.isEmpty())
 		return;
 	
@@ -1186,7 +1186,7 @@ void PrintWidget::exportToPdf()
 	static const QString filter_template(QString::fromLatin1("%1 (%2)"));
 	QStringList filters = { filter_template.arg(tr("PDF"), QString::fromLatin1("*.pdf")),
 	                        tr("All files (*.*)") };
-	QString path = QFileDialog::getSaveFileName(this, tr("Export map ..."), {}, filters.join(QString::fromLatin1(";;")));
+	QString path = FileDialog::getSaveFileName(this, tr("Export map ..."), {}, filters.join(QString::fromLatin1(";;")));
 	if (path.isEmpty())
 	{
 		return;

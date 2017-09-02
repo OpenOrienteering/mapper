@@ -35,7 +35,6 @@
 #include <QColor>
 #include <QDialogButtonBox>
 #include <QFile>
-#include <QFileDialog>
 #include <QFlags>
 #include <QFormLayout>
 #include <QGuiApplication>
@@ -71,6 +70,7 @@
 #include "core/symbols/symbol.h"
 #include "core/symbols/text_symbol.h"
 #include "fileformats/file_format.h"
+#include "gui/file_dialog.h"
 #include "gui/main_window.h"
 #include "gui/util_gui.h"
 #include "gui/widgets/symbol_dropdown.h"
@@ -230,8 +230,8 @@ void ReplaceSymbolSetDialog::resetReplacements()
 void ReplaceSymbolSetDialog::openCrtFile()
 {
 	auto dir = QLatin1String{"data:/symbol sets"};
-	auto filter = QString{tr("CRT file") + QLatin1String{" (*.crt *.CRT)"}};
-	QString path = QFileDialog::getOpenFileName(this, tr("Open CRT file..."), dir, filter);
+	auto filter = QString{tr("CRT file") + QLatin1String{" (*.crt)"}};
+	QString path = FileDialog::getOpenFileName(this, tr("Open CRT file..."), dir, filter);
 	if (!path.isEmpty())
 		openCrtFile(path);
 }
@@ -326,8 +326,8 @@ bool ReplaceSymbolSetDialog::saveCrtFile()
 {
 	/// \todo Choose user-writable directory.
 	auto dir = QLatin1String{"data:/symbol sets"};
-	auto filter = QString{tr("CRT file") + QLatin1String{" (*.crt *.CRT)"}};
-	QString path = QFileDialog::getSaveFileName(this, tr("Save CRT file..."), dir, filter);
+	auto filter = QString{tr("CRT file") + QLatin1String{" (*.crt)"}};
+	QString path = FileDialog::getSaveFileName(this, tr("Save CRT file..."), dir, filter);
 	if (!path.isEmpty())
 	{
 		updateMappingFromTable();

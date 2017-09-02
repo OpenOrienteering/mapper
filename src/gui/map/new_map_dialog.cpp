@@ -29,7 +29,6 @@
 #include <QComboBox>
 #include <QDialogButtonBox>
 #include <QDir>
-#include <QFileDialog>
 #include <QFileInfo>
 #include <QFlags>
 #include <QFormLayout>
@@ -51,8 +50,9 @@
 
 #include "fileformats/file_format.h"
 #include "fileformats/file_format_registry.h"
-#include "util/util.h"
+#include "gui/file_dialog.h"
 #include "gui/util_gui.h"
+#include "util/util.h"
 
 // IWYU pragma: no_forward_declare QLabel
 // IWYU pragma: no_forward_declare QVBoxLayout
@@ -259,7 +259,7 @@ void NewMapDialog::showFileDialog()
 	  filters         + QLatin1String(";;") +
 	  tr("All files") + QLatin1String(" (*.*)");
 
-	QString path = QFileDialog::getOpenFileName(this, tr("Load symbol set from a file..."), open_directory, filters);
+	QString path = FileDialog::getOpenFileName(this, tr("Load symbol set from a file..."), open_directory, filters);
 	path = QFileInfo(path).canonicalFilePath();
 	if (path.isEmpty())
 		return;
