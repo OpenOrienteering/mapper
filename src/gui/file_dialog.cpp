@@ -48,6 +48,14 @@
 #endif
 
 
+namespace
+{
+	constexpr int max_filter_length = 100;
+	
+}  // namespace
+
+
+
 bool FileDialog::needUpperCaseExtensions()
 {
 #if QTBUG_51712_QUIRK_ENABLED
@@ -71,7 +79,6 @@ void FileDialog::adjustParameters(QString& filter, QFileDialog::Options& options
 	using std::begin;
 	using std::end;
 	
-	constexpr int max_filter_length = 100;
 	static const auto separator = QString::fromLatin1(";;");
 #if QT_VERSION >= 0x50400
 	const auto filters = filter.splitRef(separator);
