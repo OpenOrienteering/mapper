@@ -746,11 +746,11 @@ Vennligst sjekk at riktig filnavn ble angitt.</translation>
     </message>
     <message>
         <source>&amp;Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ja</translation>
     </message>
     <message>
         <source>&amp;No</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Nei</translation>
     </message>
     <message>
         <location filename="../src/gui/text_browser_dialog.cpp" line="63"/>
@@ -759,7 +759,7 @@ Vennligst sjekk at riktig filnavn ble angitt.</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation></translation>
+        <translation>Avbryt</translation>
     </message>
     <message>
         <source>Help</source>
