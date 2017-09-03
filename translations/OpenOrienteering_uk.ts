@@ -283,7 +283,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="90"/>
         <source>Edit</source>
-        <translation type="unfinished">Редагувати</translation>
+        <translation>Редагувати</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="103"/>
@@ -389,12 +389,12 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="276"/>
         <source>Name</source>
-        <translation type="unfinished">Назва</translation>
+        <translation>Назва</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="328"/>
         <source>- unnamed -</source>
-        <translation type="unfinished">- без назви -</translation>
+        <translation>- без назви -</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="597"/>
@@ -2918,7 +2918,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3972"/>
         <source>Import...</source>
-        <translation type="unfinished">Імпорт...</translation>
+        <translation>Імпорт...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3973"/>
@@ -3956,7 +3956,7 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="884"/>
         <source>Assign new symbols by cross-reference table</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Назначити новий знак у таблиці перехресних зв&apos;язків</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="901"/>
@@ -4344,7 +4344,7 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="57"/>
         <source>Find &amp;next</source>
-        <translation>Шукати &amp;наступний</translation>
+        <translation>Знайти &amp;наступний</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="96"/>
@@ -4354,12 +4354,12 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="101"/>
         <source>&amp;Find next</source>
-        <translation>&amp;Шукати наступний</translation>
+        <translation>&amp;Знайти наступний</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="104"/>
         <source>Find &amp;all</source>
-        <translation>Шукати &amp;всі</translation>
+        <translation>Знайти &amp;всі</translation>
     </message>
 </context>
 <context>
@@ -4407,7 +4407,7 @@ selected</source>
         <location filename="../src/gui/color_dialog.cpp" line="514"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="323"/>
         <source>Map (%1)</source>
-        <translation>Мапа (%1)</translation>
+        <translation>Карта (%1)</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="515"/>
@@ -4427,13 +4427,13 @@ selected</source>
         <location filename="../src/gui/color_dialog.cpp" line="585"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="214"/>
         <source>Before editing, the stored text will be replaced with the current translation. Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Перед внесенням змін, збережений текст буде замінено на  поточний переклад. Бажаєте продовжити?</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="592"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="221"/>
         <source>After modifying the stored text, the translation may no longer be found. Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Після внесення правок у збережений текст, переклад більше не буде доступним. Бажаєте продовжити?</translation>
     </message>
 </context>
 <context>
@@ -5137,22 +5137,22 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="341"/>
         <source>Point</source>
-        <translation type="unfinished">Точка</translation>
+        <translation>Точка</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="348"/>
         <source>Line</source>
-        <translation type="unfinished">Лінія</translation>
+        <translation>Лінія</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="357"/>
         <source>Area</source>
-        <translation type="unfinished">Площа</translation>
+        <translation>Площа</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="363"/>
         <source>Text</source>
-        <translation type="unfinished">Текст</translation>
+        <translation>Текст</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="420"/>
@@ -5939,12 +5939,12 @@ separations</source>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="142"/>
         <source>Pattern</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Візерунок</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="154"/>
         <source>Clear replacements</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Очистити заміни</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="157"/>
@@ -6000,7 +6000,8 @@ separations</source>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="356"/>
         <source>The cross reference table has been modified.
 Do you want to save your changes?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Таблицю перехресних зв&apos;язків було змінено.
+Бажаєте зберегти ці зміни?</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="513"/>
@@ -6356,7 +6357,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="83"/>
         <source>Edit</source>
-        <translation type="unfinished">Редагувати</translation>
+        <translation>Редагувати</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="84"/>
@@ -6829,7 +6830,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template.cpp" line="608"/>
         <source>Not enough free memory.</source>
-        <translation type="unfinished"></translation>
+        <translation>Недостатньо вільної пам&apos;яті.</translation>
     </message>
 </context>
 <context>
