@@ -2140,13 +2140,13 @@ An out-of-bounds route shall not be used.</source>
         <message>
             <source>Refreshment point</source>
             <comment>Name of symbol 713</comment>
-            <translation type="unfinished">Juomapaikka</translation>
+            <translation>Juomapaikka</translation>
         </message>
         <message>
             <source>The location of a refreshment point which is not at a control.</source>
             <comment>Description of symbol 713</comment>
-            <translation type="unfinished">Merkillä osoitetaan juomapisteen paikka silloin kun se ei ole rastilla tai viitoituksella</translation>
-        </message>
+            <translation>Merkillä osoitetaan juomapaikka silloin, kun se ei ole rastilla.</translation>
+    </message>
         <message>
             <source>Simple Orienteering Course</source>
             <comment>Name of symbol 799</comment>
@@ -3801,8 +3801,8 @@ A bounding line may be drawn if there is no natural boundary, as follows:
         <message>
             <source>The location of a refreshment point which is not at a control.</source>
             <comment>Description of symbol 713</comment>
-            <translation>Merkillä osoitetaan juomapisteen paikka silloin kun se ei ole rastilla tai viitoituksella.</translation>
-        </message>
+            <translation>Merkillä osoitetaan juomapaikka silloin, kun se ei ole rastilla.</translation>
+    </message>
         <message>
             <source>Simple Orienteering Course</source>
             <comment>Name of symbol 799</comment>
@@ -6049,13 +6049,13 @@ Tätä sääntöä rikkovat kilpailijat hylätään.&lt;/span&gt;</translation>
         <message>
             <source>Refreshment point</source>
             <comment>Name of symbol 713</comment>
-            <translation>Juomapiste</translation>
-        </message>
+            <translation>Juomapaikka</translation>
+    </message>
         <message>
             <source>The location of a refreshment point which is not at a control or along the marked route.</source>
             <comment>Description of symbol 713</comment>
-            <translation>Merkillä osoitetaan juomapisteen paikka silloin, kun se ei ole rastilla tai viitoituksella.</translation>
-        </message>
+            <translation>Merkillä osoitetaan juomapaikka silloin, kun se ei ole rastilla tai viitoituksella.</translation>
+    </message>
         <message>
             <source>Temporary construction or closed area &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 714</comment>
@@ -9201,13 +9201,13 @@ Kielletty alue (ks. myös merkki 528), merkitään pystysuorin viivoin. Mikäli 
         <message>
             <source>Refreshment point</source>
             <comment>Name of symbol 713</comment>
-            <translation type="unfinished">Juomapaikka</translation>
+            <translation>Juomapaikka</translation>
         </message>
         <message>
             <source>The location of a refreshment point which is not at a control.</source>
             <comment>Description of symbol 713</comment>
-            <translation type="unfinished">Merkillä osoitetaan juomapisteen paikka silloin kun se ei ole rastilla tai viitoituksella</translation>
-        </message>
+            <translation>Merkillä osoitetaan juomapaikka silloin, kun se ei ole rastilla.</translation>
+    </message>
         <message>
             <source>Simple Orienteering Course</source>
             <comment>Name of symbol 799</comment>
@@ -9797,8 +9797,8 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
         <message>
             <source>Purple</source>
             <comment>Color 0</comment>
-            <translation type="unfinished">Purple</translation>
-        </message>
+            <translation>Violetti</translation>
+    </message>
         <message>
             <source>Black for control descriptions</source>
             <comment>Color 1</comment>
@@ -9827,7 +9827,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
         <message>
             <source>Simple Orienteering Course</source>
             <comment>Name of symbol 799</comment>
-            <translation type="unfinished">Yksinkertainen suunnistusrata</translation>
+            <translation>Yksinkertainen suunnistusrata</translation>
         </message>
         <message>
             <source>This symbol provides a simple and quick way to make training courses.
@@ -9911,7 +9911,7 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
         <message>
             <source>Crossing point</source>
             <comment>Name of symbol 708</comment>
-            <translation type="unfinished">Portti</translation>
+            <translation>Portti</translation>
         </message>
         <message>
             <source>A crossing point through or over a wall or fence, or across a road or railway or through a tunnel or an out-of-bounds area is drawn on the map with two lines curving outwards.</source>
@@ -9994,8 +9994,8 @@ Mikäli maastossa ei ole ko. alueen luonnollista rajaa, merkitään raja seuraav
         <message>
             <source>The location of a refreshment point which is not at a control.</source>
             <comment>Description of symbol 713</comment>
-            <translation>Merkillä osoitetaan juomapisteen paikka silloin kun se ei ole rastilla tai viitoituksella.</translation>
-        </message>
+            <translation>Merkillä osoitetaan juomapaikka silloin, kun se ei ole rastilla.</translation>
+    </message>
         <message>
             <source>Heading: Single line for event title or classes</source>
             <comment>Name of symbol 99.0</comment>
@@ -10110,8 +10110,8 @@ Map symbol: ISOM 703</source>
         <message>
             <source>|C| Northern</source>
             <comment>Name of symbol 0.1.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|C| Pohjoinen</translation>
+    </message>
         <message>
             <source>The more northern of two similar features, or the northern-most of several similar features.</source>
             <comment>Description of symbol 0.1.1</comment>
@@ -10120,8 +10120,8 @@ Map symbol: ISOM 703</source>
         <message>
             <source>|C| North Eastern</source>
             <comment>Name of symbol 0.2.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|C| Koillinen</translation>
+    </message>
         <message>
             <source>The more northern of two similar features, or the northern-most of several similar features.</source>
             <comment>Description of symbol 0.2.1</comment>
@@ -10130,8 +10130,8 @@ Map symbol: ISOM 703</source>
         <message>
             <source>|C| Eastern</source>
             <comment>Name of symbol 0.1.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|C| Itäinen</translation>
+    </message>
         <message>
             <source>The more northern of two similar features, or the northern-most of several similar features.</source>
             <comment>Description of symbol 0.1.2</comment>
@@ -10140,8 +10140,8 @@ Map symbol: ISOM 703</source>
         <message>
             <source>|C| South Eastern</source>
             <comment>Name of symbol 0.2.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|C| Kaakkoinen</translation>
+    </message>
         <message>
             <source>The more south eastern of two similar features, or the south-eastern-most of several similar features.</source>
             <comment>Description of symbol 0.2.2</comment>
@@ -10150,8 +10150,8 @@ Map symbol: ISOM 703</source>
         <message>
             <source>|C| Southern</source>
             <comment>Name of symbol 0.1.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|C| Eteläinen</translation>
+    </message>
         <message>
             <source>The more northern of two similar features, or the northern-most of several similar features.</source>
             <comment>Description of symbol 0.1.3</comment>
@@ -10160,8 +10160,8 @@ Map symbol: ISOM 703</source>
         <message>
             <source>|C| South western</source>
             <comment>Name of symbol 0.2.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|C| Lounainen</translation>
+    </message>
         <message>
             <source>The more northern of two similar features, or the northern-most of several similar features.</source>
             <comment>Description of symbol 0.2.3</comment>
@@ -10170,8 +10170,8 @@ Map symbol: ISOM 703</source>
         <message>
             <source>|C| Western</source>
             <comment>Name of symbol 0.1.4</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|C| Läntinen</translation>
+    </message>
         <message>
             <source>The more northern of two similar features, or the northern-most of several similar features.</source>
             <comment>Description of symbol 0.1.4</comment>
@@ -10180,8 +10180,8 @@ Map symbol: ISOM 703</source>
         <message>
             <source>|C| North Western</source>
             <comment>Name of symbol 0.2.4</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|C| Luoteinen</translation>
+    </message>
         <message>
             <source>The more northern of two similar features, or the northern-most of several similar features.</source>
             <comment>Description of symbol 0.2.4</comment>
@@ -12005,8 +12005,8 @@ The orientation of the symbol indicates the direction in which the corner points
         <message>
             <source>|G| Refreshment point</source>
             <comment>Name of symbol 12.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|G| Juomapaikka</translation>
+    </message>
         <message>
             <source>Control site where Refreshments are available.</source>
             <comment>Description of symbol 12.2</comment>
