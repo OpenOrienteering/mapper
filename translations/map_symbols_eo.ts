@@ -9557,8 +9557,8 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Control point</source>
             <comment>Name of symbol 702</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Kontrolpunkto</translation>
+    </message>
         <message>
             <source>The control points are shown with circles. The centre of the circle shows the precise position of the feature. Sections of circles should be omitted to leave important detail showing.</source>
             <comment>Description of symbol 702</comment>
@@ -9577,8 +9577,8 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Line</source>
             <comment>Name of symbol 704</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Linio</translation>
+    </message>
         <message>
             <source>Where controls are to be visited in order, the start, control points and finish are joined together by straight lines. Sections of lines should be omitted to leave important detail showing.</source>
             <comment>Description of symbol 704</comment>
@@ -9661,8 +9661,8 @@ A bounding line may be drawn if there is no natural boundary, as follows:
         <message>
             <source>Dangerous area</source>
             <comment>Name of symbol 710</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Danĝera areo</translation>
+    </message>
         <message>
             <source>An area presenting danger to the competitor is shown with cross-hatched diagonal lines.</source>
             <comment>Description of symbol 710</comment>
@@ -9671,8 +9671,8 @@ A bounding line may be drawn if there is no natural boundary, as follows:
         <message>
             <source>Forbidden route</source>
             <comment>Name of symbol 711</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Malpermesita vojo</translation>
+    </message>
         <message>
             <source>A route which is out-of-bounds is shown with crosses.</source>
             <comment>Description of symbol 711</comment>
@@ -9681,8 +9681,8 @@ A bounding line may be drawn if there is no natural boundary, as follows:
         <message>
             <source>First aid post</source>
             <comment>Name of symbol 712</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Sukurejo</translation>
+    </message>
         <message>
             <source>The location of a first aid post.</source>
             <comment>Description of symbol 712</comment>
@@ -9812,8 +9812,8 @@ Map symbol: ISOM 703</source>
         <message>
             <source>|C| Northern</source>
             <comment>Name of symbol 0.1.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|C| Norda</translation>
+    </message>
         <message>
             <source>The more northern of two similar features, or the northern-most of several similar features.</source>
             <comment>Description of symbol 0.1.1</comment>
@@ -9822,8 +9822,8 @@ Map symbol: ISOM 703</source>
         <message>
             <source>|C| North Eastern</source>
             <comment>Name of symbol 0.2.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|C| Nordorienta</translation>
+    </message>
         <message>
             <source>The more northern of two similar features, or the northern-most of several similar features.</source>
             <comment>Description of symbol 0.2.1</comment>
@@ -9832,8 +9832,8 @@ Map symbol: ISOM 703</source>
         <message>
             <source>|C| Eastern</source>
             <comment>Name of symbol 0.1.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|C| Orienta</translation>
+    </message>
         <message>
             <source>The more northern of two similar features, or the northern-most of several similar features.</source>
             <comment>Description of symbol 0.1.2</comment>
@@ -9842,8 +9842,8 @@ Map symbol: ISOM 703</source>
         <message>
             <source>|C| South Eastern</source>
             <comment>Name of symbol 0.2.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|C| Sudorienta</translation>
+    </message>
         <message>
             <source>The more south eastern of two similar features, or the south-eastern-most of several similar features.</source>
             <comment>Description of symbol 0.2.2</comment>
@@ -9852,8 +9852,8 @@ Map symbol: ISOM 703</source>
         <message>
             <source>|C| Southern</source>
             <comment>Name of symbol 0.1.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|C| Suda</translation>
+    </message>
         <message>
             <source>The more northern of two similar features, or the northern-most of several similar features.</source>
             <comment>Description of symbol 0.1.3</comment>
@@ -9862,8 +9862,8 @@ Map symbol: ISOM 703</source>
         <message>
             <source>|C| South western</source>
             <comment>Name of symbol 0.2.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|C| Sudokcidenta</translation>
+    </message>
         <message>
             <source>The more northern of two similar features, or the northern-most of several similar features.</source>
             <comment>Description of symbol 0.2.3</comment>
@@ -9872,8 +9872,8 @@ Map symbol: ISOM 703</source>
         <message>
             <source>|C| Western</source>
             <comment>Name of symbol 0.1.4</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|C| Okcidenta</translation>
+    </message>
         <message>
             <source>The more northern of two similar features, or the northern-most of several similar features.</source>
             <comment>Description of symbol 0.1.4</comment>
@@ -9882,8 +9882,8 @@ Map symbol: ISOM 703</source>
         <message>
             <source>|C| North Western</source>
             <comment>Name of symbol 0.2.4</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|C| Nordokcidenta</translation>
+    </message>
         <message>
             <source>The more northern of two similar features, or the northern-most of several similar features.</source>
             <comment>Description of symbol 0.2.4</comment>
@@ -9892,8 +9892,8 @@ Map symbol: ISOM 703</source>
         <message>
             <source>|C| Upper</source>
             <comment>Name of symbol 0.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|C| Supra</translation>
+    </message>
         <message>
             <source>Where the control feature is the middle one of a number of similar features.</source>
             <comment>Description of symbol 0.3</comment>
@@ -9902,8 +9902,8 @@ Map symbol: ISOM 703</source>
         <message>
             <source>|C| Lower</source>
             <comment>Name of symbol 0.4</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|C| Malsupra</translation>
+    </message>
         <message>
             <source>Where the control feature is the middle one of a number of similar features.</source>
             <comment>Description of symbol 0.4</comment>
@@ -9912,8 +9912,8 @@ Map symbol: ISOM 703</source>
         <message>
             <source>|C| Middle</source>
             <comment>Name of symbol 0.5</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|C| Meza</translation>
+    </message>
         <message>
             <source>Where the control feature is the middle one of a number of similar features.</source>
             <comment>Description of symbol 0.5</comment>
