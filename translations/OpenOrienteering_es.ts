@@ -2683,7 +2683,7 @@
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="282"/>
         <source>Scale the dash symbol at corners</source>
-        <translation type="unfinished"></translation>
+        <translation>Escalar el símbolo de discontinuidad en las esquinas</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="528"/>
@@ -4953,12 +4953,12 @@ zoom usando la rueda del ratón, si dispone de esos elementos.</translation>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1885"/>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1896"/>
         <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
-        <translation type="unfinished"></translation>
+        <translation>La coordenadas se ajustan para caber dentro del área de dibujo OCAD 8 (-2 m ... 2 m).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1907"/>
         <source>Some coordinates remain outside of the OCAD 8 drawing area. They might be unreachable in OCAD.</source>
-        <translation type="unfinished"></translation>
+        <translation>Algunas coordenadas permanecen fuera del área de dibujo OCAD 8. Puede que no sean alcanzables en OCAD.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="2135"/>
@@ -6692,7 +6692,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1281"/>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation>Descripción</translation>
     </message>
 </context>
 <context>
@@ -7140,7 +7140,7 @@ para saltar sobre el perro perezoso
     <message>
         <location filename="../src/templates/template.cpp" line="608"/>
         <source>Not enough free memory.</source>
-        <translation type="unfinished"></translation>
+        <translation>No hay suficiente memoria libre.</translation>
     </message>
     <message>
         <source>Cannot change the template to this file! Is the format of the file correct for this template type?</source>
