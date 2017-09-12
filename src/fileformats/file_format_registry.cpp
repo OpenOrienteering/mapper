@@ -78,7 +78,10 @@ const FileFormat *FileFormatRegistry::findFormatByFilter(const QString& filter) 
 {
 	for (auto format : fmts)
 	{
-		if (format->filter() == filter) return format;
+		// Compare only before closing ')'. Needed for QTBUG 51712 workaround in
+		// file_dialog.cpp, and warranted by Q_ASSERT in registerFormat().
+		if (filter.startsWith(format->filter().leftRef(format->filter().length()-1)))
+			return format;
 	}
 	return nullptr;
 }
