@@ -102,7 +102,7 @@ public:
 		}
 		QSettings settings;
 		settings.beginGroup(gdal_manager_group);
-		return settings.value(key).toBool();
+		return !settings.contains(key) || settings.value(key).toBool();
 	}
 	
 	const std::vector<QByteArray>& supportedRasterExtensions() const
