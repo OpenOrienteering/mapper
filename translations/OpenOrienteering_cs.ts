@@ -5501,7 +5501,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="589"/>
         <source>The geospatial data has no suitable spatial reference.</source>
-        <translation>Prostorová data mají nevhodnou prostorovou referenci.</translation>
+        <translation>Geoprostorová data mají nevhodnou prostorovou referenci.</translation>
     </message>
 </context>
 <context>
