@@ -31,6 +31,7 @@
 #include "core/georeferencing.h"
 #include "core/map.h"
 #include "core/map_view.h"
+#include "fileformats/xml_file_format_p.h"
 #include "templates/template.h"
 #include "templates/world_file.h"
 
@@ -91,6 +92,51 @@ private slots:
 		auto rotation_template = 0.01 * qRound(100 * qRadiansToDegrees(temp->getTemplateRotation()));
 		auto rotation_map = 0.01 * qRound(100 * georef.getGrivation());
 		QCOMPARE(rotation_template, rotation_map);
+	}
+	
+	void templatePathTest()
+	{
+		QDir symbol_set_dir{ QFileInfo(QString::fromUtf8(__FILE__)).dir().absoluteFilePath(QStringLiteral("../symbol sets")) };
+		QVERIFY(symbol_set_dir.exists());
+		
+		QString file_path = symbol_set_dir.absoluteFilePath(QStringLiteral("src/Course_Design_10000.xmap"));
+		QFile file{ file_path };
+		QVERIFY(file.open(QIODevice::ReadOnly));
+		auto data = file.readAll();
+		QVERIFY(file.atEnd());
+		file.close();
+		
+		Map map;
+		MapView view{ &map };
+		
+		// The buffer has no path, so the template cannot be loaded.
+		QBuffer buffer{ &data };
+		buffer.open(QIODevice::ReadOnly);
+		XMLFileImporter importer{ &buffer, &map, &view };
+		importer.doImport(false);
+		
+		const auto& warnings = importer.warnings();
+		QCOMPARE(warnings.size(), std::size_t(1));
+		
+		QCOMPARE(map.getNumTemplates(), 1);
+		auto temp = map.getTemplate(0);
+		QCOMPARE(temp->getTemplateType(), "TemplateMap");
+		QCOMPARE(temp->getTemplateFilename(), QStringLiteral("forest sample.omap"));
+		QCOMPARE(temp->getTemplatePath(), QStringLiteral("../../examples/forest sample.omap"));
+		QCOMPARE(temp->getTemplateRelativePath(), QStringLiteral("../../examples/forest sample.omap"));
+		QCOMPARE(temp->getTemplateState(), Template::Invalid);
+		
+		QBuffer out_buffer;
+		QVERIFY(out_buffer.open(QIODevice::WriteOnly));
+		XMLFileExporter exporter{ &out_buffer, &map, &view };
+		exporter.setOption(QStringLiteral("autoFormatting"), true);
+		exporter.doExport();
+		out_buffer.close();
+		
+		const auto& out_warnings = exporter.warnings();
+		QCOMPARE(out_warnings.size(), std::size_t(0));
+		
+		QCOMPARE(out_buffer.buffer(), data);
 	}
 	
 };
