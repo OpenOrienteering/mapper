@@ -1520,7 +1520,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="110"/>
         <source>Save undo/redo history</source>
-        <translation type="unfinished"></translation>
+        <translation>Rückgängig-/Wiederholen-Schritte speichern</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="113"/>
@@ -5336,12 +5336,13 @@ Zoomen ist mit dem Mausrad möglich.</translation>
         <location filename="../src/gdal/ogr_file_format.cpp" line="536"/>
         <source>Cannot use this spatial reference:
 %s</source>
-        <translation type="unfinished"></translation>
+        <translation>Dieser räumliche Bezug kann nicht verwendet werden:
+%1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="589"/>
         <source>The geospatial data has no suitable spatial reference.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Geodaten haben keinen geeigneten räumlichen Bezug.</translation>
     </message>
 </context>
 <context>
