@@ -52,7 +52,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="2510"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2513"/>
         <source>Duplicated %n object(s)</source>
         <translation>
             <numerusform>Duplicated one object</numerusform>
@@ -74,11 +74,11 @@
 <context>
     <name>OgrFileImport</name>
     <message numerus="yes">
-        <location filename="../src/gdal/ogr_file_format.cpp" line="468"/>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="473"/>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="478"/>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="483"/>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="488"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="486"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="491"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="496"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="501"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="506"/>
         <source>Unable to load %n objects, reason: %1</source>
         <translation>
             <numerusform>Unable to load one object, reason: %1</numerusform>
