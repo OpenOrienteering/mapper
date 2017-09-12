@@ -89,7 +89,9 @@ Sets a point object at the GPS position. Selecting this button first enters an a
 
 (16) Symbol selector
 
-Displays the active symbol, and opens the symbol selection screen when touched.
+Displays the active symbol, and opens the symbol selection screen on short press.
+
+A long press of the symbol selector opens a popup menu which allows to read the symbol name and description, and to toggle the hidden state and the protected state of the symbol.
 
 (17) Map parts selector
 
