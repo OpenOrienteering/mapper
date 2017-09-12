@@ -7150,7 +7150,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template.cpp" line="608"/>
         <source>Not enough free memory.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ikke nok ledig minne.</translation>
     </message>
     <message>
         <source>Cannot change the template to this file! Is the format of the file correct for this template type?</source>

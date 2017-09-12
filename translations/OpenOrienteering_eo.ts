@@ -859,7 +859,7 @@
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="301"/>
         <source>Hold %1 to start drawing from the center.</source>
-        <translation type="unfinished"></translation>
+        <translation>Reteni %1 por komenci la desegnadon el la centro.</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="305"/>
@@ -985,12 +985,12 @@
     <message>
         <location filename="../src/tools/draw_point_gps_tool.cpp" line="71"/>
         <source>Touch the map to finish averaging</source>
-        <translation type="unfinished"></translation>
+        <translation>Tuŝi la mapon por fini mezumadon</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_gps_tool.cpp" line="183"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Finish setting the object. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Klaki&lt;/b&gt;: Fini starigon de la objekto. </translation>
     </message>
 </context>
 <context>
@@ -1089,7 +1089,7 @@
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="748"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set a corner point. &lt;b&gt;Right or double click&lt;/b&gt;: Finish the rectangle. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Klaki&lt;/b&gt;: Starigi angulan punkton. &lt;b&gt;Dekstre aŭ duoble alklaki&lt;/b&gt;: Fini la rektangulon. </translation>
     </message>
 </context>
 <context>
@@ -1839,7 +1839,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="195"/>
         <source>On CRS changes, keep:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ŝanĝinte CRS, konservi:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="201"/>
@@ -2050,7 +2050,7 @@
     <message>
         <location filename="../src/core/objects/object.cpp" line="451"/>
         <source>Point object with undefined or wrong symbol at %1:%2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Punktobjekto kun nedefinita aŭ malvera simbolo ĉe %1:%2.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/native_file_format.cpp" line="93"/>
@@ -2112,15 +2112,13 @@
     <message numerus="yes">
         <location filename="../src/fileformats/file_import_export.cpp" line="100"/>
         <source>Dropped %n irregular object(s).</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>Forĵetita %n neregula objekto.</numerusform>
+        <numerusform>Forĵetitaj %n neregulaj objektoj.</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="107"/>
         <source>Error during symbol post-processing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Eraro dum postprilaborado de simbolo.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="133"/>

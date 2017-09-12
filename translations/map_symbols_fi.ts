@@ -287,7 +287,7 @@ Contour lines shall not be broken around this symbol.</source>
         <message>
             <source>Small erosion gully</source>
             <comment>Name of symbol 108</comment>
-            <translation type="unfinished">Kuiva pieni uoma</translation>
+            <translation>Kuiva pieni uoma</translation>
         </message>
         <message>
             <source>A small erosion gully, dry ditch or trench. Minimum depth: 0.5 m.
@@ -320,7 +320,7 @@ The symbol shall not touch or overlap contours.</source>
         <message>
             <source>Small depression</source>
             <comment>Name of symbol 111</comment>
-            <translation type="unfinished">Pieni suppa</translation>
+            <translation>Pieni suppa</translation>
         </message>
         <message>
             <source>A small depression or hollow without steep sides that is too small to be shown by contours. Minimum depth: 1 m. Minimum width: 2 m.
@@ -331,8 +331,8 @@ Small depressions with steep sides are represented with symbol 112 (pit). The sy
         <message>
             <source>Pit</source>
             <comment>Name of symbol 112</comment>
-            <translation>Kuoppa</translation>
-        </message>
+            <translation>Pieni kaivettu kuoppa</translation>
+    </message>
         <message>
             <source>Pits and holes with distinct steep sides which cannot be shown to scale using symbol 104 (earth bank). Minimum depth: 1 m. Minimum width: 1 m. A pit larger than 5 m x 5 m should normally be exaggerated and drawn using symbol 104 (earth bank). Pits without steep sides are represented with symbol 111 (small depression). The symbol may not touch or overlap other brown symbols. Location is the centre of
 gravity of the symbol, and the symbol is orientated to north.</source>
@@ -449,8 +449,8 @@ When an impassable cliff drops straight into water, making it impossible to pass
         <message>
             <source>Impassable cliff, minimum size (from ISOM2000)</source>
             <comment>Name of symbol 201.9</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ylipääsemätön jyrkänne, minimikoko (ISOM2000:sta)</translation>
+    </message>
         <message>
             <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
 Ends of the top line may be rounded or square.
@@ -586,8 +586,8 @@ To be able to show the distinction between neighbouring (closer than 30 metres a
         <message>
             <source>Large boulder</source>
             <comment>Name of symbol 205</comment>
-            <translation>Iso kivi</translation>
-        </message>
+            <translation>Suuri kivi</translation>
+    </message>
         <message>
             <source>A particularly large and distinct boulder. A large boulder should be more than 2 m high. To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders with significant difference in size, it is permitted to reduce the size of the symbol to 0.5 mm for some of the boulders.</source>
             <comment>Description of symbol 205</comment>
@@ -596,8 +596,8 @@ To be able to show the distinction between neighbouring (closer than 30 metres a
         <message>
             <source>Gigantic boulder</source>
             <comment>Name of symbol 206</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Jättimäinen kivi</translation>
+    </message>
         <message>
             <source>A rock pillar or gigantic boulder that is so high and steep that it is impossible topass/climb.
 The gap between gigantic boulders or between gigantic boulders and other impassable feature symbols must exceed 0.3 mm on the map.</source>
@@ -733,8 +733,8 @@ To avoid confusion with symbol 416 (distinct vegetation boundary), the dots shou
         <message>
             <source>Bare rock</source>
             <comment>Name of symbol 214</comment>
-            <translation>Kallio</translation>
-        </message>
+            <translation>Avokallio</translation>
+    </message>
         <message>
             <source>A runnable area of rock without earth or vegetation should be shown as bare rock.
 An area of rock covered with grass, moss or other low vegetation, shall not be shown using the bare rock symbol.
@@ -849,8 +849,8 @@ Collapsed and easily crossable trenches should be mapped as erosion gullies.</so
         <message>
             <source>Small crossable watercourse</source>
             <comment>Name of symbol 305</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ylitettävä pieni puro tai oja</translation>
+    </message>
         <message>
             <source>A crossable watercourse (including a major drainage ditch) less than 2 m wide.</source>
             <comment>Description of symbol 305</comment>
@@ -889,7 +889,7 @@ Collapsed and easily crossable trenches should be mapped as erosion gullies.</so
         <message>
             <source>Uncrossable marsh, border line</source>
             <comment>Name of symbol 307.2</comment>
-            <translation type="unfinished">Ylipääsemättömän suon reunaviiva</translation>
+            <translation>Ylipääsemättömän suon reunaviiva</translation>
         </message>
         <message>
             <source>A black line surrounds the symbol 307.</source>
@@ -923,7 +923,7 @@ The symbol is orientated to north.</source>
         <message>
             <source>Narrow marsh</source>
             <comment>Name of symbol 309</comment>
-            <translation type="unfinished">Suojuotti</translation>
+            <translation>Suojuotti</translation>
         </message>
         <message>
             <source>A marsh or trickle of water which is too narrow (less than about 5 m wide) to be shown with the marsh symbol.</source>
@@ -933,7 +933,7 @@ The symbol is orientated to north.</source>
         <message>
             <source>Indistinct marsh</source>
             <comment>Name of symbol 310</comment>
-            <translation type="unfinished">Soistuva maa</translation>
+            <translation>Soistuva maa</translation>
         </message>
         <message>
             <source>An indistinct marsh, seasonal marsh or an area of gradual transition from marsh to firm ground, which is crossable. The edge is generally indistinct and the vegetation similar to that of the surrounding ground.
@@ -945,7 +945,7 @@ The symbol is orientated to north.</source>
         <message>
             <source>Indistinct marsh, minimum size</source>
             <comment>Name of symbol 310.1</comment>
-            <translation type="unfinished">Soistuva maa, minimikoko</translation>
+            <translation>Soistuva maa, minimikoko</translation>
         </message>
         <message>
             <source>An indistinct marsh, seasonal marsh or an area of gradual transition from marsh to firm ground, which is crossable. The edge is generally indistinct and the vegetation similar to that of the surrounding ground.
@@ -989,7 +989,7 @@ The symbol is orientated to north.</source>
         <message>
             <source>Open land</source>
             <comment>Name of symbol 401</comment>
-            <translation type="unfinished">Avoin alue, helppokulkuinen</translation>
+            <translation>Avoin alue, helppokulkuinen</translation>
         </message>
         <message>
             <source>Open land that has a ground cover (grass, moss or similar) which offers better runnability than typical open forest. If yellow coloured areas become dominant, a screen (75% instead of full yellow) may be used.
@@ -1000,7 +1000,7 @@ May not be combined with other area symbols than symbol 113 (broken ground), sym
         <message>
             <source>Open land with scattered trees</source>
             <comment>Name of symbol 402</comment>
-            <translation type="unfinished">Puoliavoin alue, helppokulkuinen</translation>
+            <translation>Puoliavoin alue, helppokulkuinen</translation>
         </message>
         <message>
             <source>Areas with scattered trees or bushes in open land may be generalised by using a regular pattern of large dots in the yellow screen. The dots may be white (scattered trees) or green (scattered bushes/thickets). Prominent individual trees may be added using symbol 417 (prominent large tree). If yellow coloured areas become dominant, a screen (75% instead of full yellow) may be used.
@@ -1022,7 +1022,7 @@ May not be combined with other area symbols than symbol 113 (broken ground), sym
         <message>
             <source>Rough open land</source>
             <comment>Name of symbol 403</comment>
-            <translation type="unfinished">Avoin maasto</translation>
+            <translation>Avoin maasto</translation>
         </message>
         <message>
             <source>Heath, moorland, felled areas, newly planted areas (trees lower than ca. 1 m) or other generally open land with rough ground vegetation, heather or tall grass offering the same runnability as typical open forest.
@@ -1034,7 +1034,7 @@ Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m). Smaller areas must either be 
         <message>
             <source>Rough open land with scattered trees</source>
             <comment>Name of symbol 404</comment>
-            <translation type="unfinished">Puoliavoin maasto, hakkuuala</translation>
+            <translation>Puoliavoin maasto, hakkuuala</translation>
         </message>
         <message>
             <source>Areas with scattered trees or bushes in rough open land may be generalised by using a regular pattern of large dots in the yellow screen.
@@ -2140,13 +2140,13 @@ An out-of-bounds route shall not be used.</source>
         <message>
             <source>Refreshment point</source>
             <comment>Name of symbol 713</comment>
-            <translation type="unfinished">Juomapaikka</translation>
+            <translation>Juomapaikka</translation>
         </message>
         <message>
             <source>The location of a refreshment point which is not at a control.</source>
             <comment>Description of symbol 713</comment>
-            <translation type="unfinished">Merkillä osoitetaan juomapisteen paikka silloin kun se ei ole rastilla tai viitoituksella</translation>
-        </message>
+            <translation>Merkillä osoitetaan juomapaikka silloin, kun se ei ole rastilla.</translation>
+    </message>
         <message>
             <source>Simple Orienteering Course</source>
             <comment>Name of symbol 799</comment>
@@ -2232,8 +2232,8 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
         <message>
             <source>Green over White over Green</source>
             <comment>Color 11</comment>
-            <translation>Green over White over Green</translation>
-        </message>
+            <translation></translation>
+    </message>
         <message>
             <source>Opaque White over Green</source>
             <comment>Color 12</comment>
@@ -2392,8 +2392,8 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
         <message>
             <source>Distinct earth wall. Minimum height is 1 m.</source>
             <comment>Description of symbol 107</comment>
-            <translation>Selvästi havaittava maavalli. Minimikorkeus 1m.</translation>
-        </message>
+            <translation>Selvästi havaittava maavalli. Minimikorkeus 1 m.</translation>
+    </message>
         <message>
             <source>Small earth wall</source>
             <comment>Name of symbol 108</comment>
@@ -2458,8 +2458,8 @@ Minimimitta halkaisija 2m. Kaivetut pienet kuopat kuvataan merkillä 116.</trans
         <message>
             <source>Pit</source>
             <comment>Name of symbol 116</comment>
-            <translation>Kuoppa</translation>
-        </message>
+            <translation>Pieni kaivettu kuoppa</translation>
+    </message>
         <message>
             <source>Pits and holes with distinct steep sides which cannot be shown to scale by symbol 106 (minimum diameter 2 m). Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol which is orientated to north.</source>
             <comment>Description of symbol 116</comment>
@@ -2649,8 +2649,8 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
         <message>
             <source>Large boulder</source>
             <comment>Name of symbol 207</comment>
-            <translation>Iso kivi</translation>
-        </message>
+            <translation>Suuri kivi</translation>
+    </message>
         <message>
             <source>A particularly large and distinct boulder. For gigantic boulders symbol 202 should be used.</source>
             <comment>Description of symbol 207</comment>
@@ -2729,8 +2729,8 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
         <message>
             <source>Bare rock</source>
             <comment>Name of symbol 212</comment>
-            <translation>Kallio</translation>
-        </message>
+            <translation>Avokallio</translation>
+    </message>
         <message>
             <source>A runnable area of rock without earth or vegetation is shown as bare rock. An area of rock covered with grass, moss or other low vegetation is shown as open land (401/402).</source>
             <comment>Description of symbol 212</comment>
@@ -2749,8 +2749,8 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
         <message>
             <source>Lake, bank line</source>
             <comment>Name of symbol 301.1</comment>
-            <translation>Rantaviiva</translation>
-        </message>
+            <translation>Vesialue, rantaviiva</translation>
+    </message>
         <message>
             <source>A black bank line indicates that the feature cannot be crossed.</source>
             <comment>Description of symbol 301.1</comment>
@@ -2794,8 +2794,8 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
         <message>
             <source>Crossable small watercourse</source>
             <comment>Name of symbol 306</comment>
-            <translation>Pieni puro tai oja</translation>
-        </message>
+            <translation>Ylitettävä pieni puro tai oja</translation>
+    </message>
         <message>
             <source>A crossable watercourse (including a major drainage ditch) less than 2 m wide. For better legibility a ditch in a marsh should be drawn as a crossable watercourse (305).</source>
             <comment>Description of symbol 306</comment>
@@ -3801,8 +3801,8 @@ A bounding line may be drawn if there is no natural boundary, as follows:
         <message>
             <source>The location of a refreshment point which is not at a control.</source>
             <comment>Description of symbol 713</comment>
-            <translation>Merkillä osoitetaan juomapisteen paikka silloin kun se ei ole rastilla tai viitoituksella.</translation>
-        </message>
+            <translation>Merkillä osoitetaan juomapaikka silloin, kun se ei ole rastilla.</translation>
+    </message>
         <message>
             <source>Simple Orienteering Course</source>
             <comment>Name of symbol 799</comment>
@@ -4128,8 +4128,8 @@ Korkeuskäyrän pienin mutka on 0.4 mm viivojen keskilinjasta keskilinjaan.</tra
         <message>
             <source>Small erosion gully</source>
             <comment>Name of symbol 110</comment>
-            <translation>Pieni uurre</translation>
-        </message>
+            <translation>Kuiva pieni uoma</translation>
+    </message>
         <message>
             <source>A small erosion gully or trench. Minimum depth is 0.5 m.</source>
             <comment>Description of symbol 110</comment>
@@ -4175,8 +4175,8 @@ Merkin muotoa ei saa muuttaa eikä niitä saa piirtää koskettamaan toisiaan ei
         <message>
             <source>Pit</source>
             <comment>Name of symbol 116</comment>
-            <translation>Kuoppa</translation>
-        </message>
+            <translation>Pieni kaivettu kuoppa</translation>
+    </message>
         <message>
             <source>A pit or hole with distinct steep sides which cannot be represented to scale with the symbol earth bank (106). The minimum diameter shall be 2 m. The minimum depth from the surrounding ground shall be 1 m. The symbol is orientated to north.</source>
             <comment>Description of symbol 116</comment>
@@ -6049,13 +6049,13 @@ Tätä sääntöä rikkovat kilpailijat hylätään.&lt;/span&gt;</translation>
         <message>
             <source>Refreshment point</source>
             <comment>Name of symbol 713</comment>
-            <translation>Juomapiste</translation>
-        </message>
+            <translation>Juomapaikka</translation>
+    </message>
         <message>
             <source>The location of a refreshment point which is not at a control or along the marked route.</source>
             <comment>Description of symbol 713</comment>
-            <translation>Merkillä osoitetaan juomapisteen paikka silloin, kun se ei ole rastilla tai viitoituksella.</translation>
-        </message>
+            <translation>Merkillä osoitetaan juomapaikka silloin, kun se ei ole rastilla tai viitoituksella.</translation>
+    </message>
         <message>
             <source>Temporary construction or closed area &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 714</comment>
@@ -6323,8 +6323,8 @@ Kansainvälisten kilpailujen kartoissa johtokäyrät on aina kuvattava. Suomessa
         <message>
             <source>Distinct earth wall. Minimum height is 1 m.</source>
             <comment>Description of symbol 107</comment>
-            <translation>Selvästi havaittava maavalli. Minimikorkeus 1m.</translation>
-        </message>
+            <translation>Selvästi havaittava maavalli. Minimikorkeus 1 m.</translation>
+    </message>
         <message>
             <source>Erosion gully</source>
             <comment>Name of symbol 109</comment>
@@ -6460,8 +6460,8 @@ Small areas of water should be shown with full colour. Use symbol 302 (&quot;Pon
         <message>
             <source>Lake, bank line</source>
             <comment>Name of symbol 301.1</comment>
-            <translation type="unfinished">Rantaviiva</translation>
-        </message>
+            <translation>Vesialue, rantaviiva</translation>
+    </message>
         <message>
             <source>A black bank line indicates that the feature cannot be crossed.</source>
             <comment>Description of symbol 301.1</comment>
@@ -6470,7 +6470,7 @@ Small areas of water should be shown with full colour. Use symbol 302 (&quot;Pon
         <message>
             <source>Lake, with bank line</source>
             <comment>Name of symbol 301.2</comment>
-            <translation type="unfinished">Vesialue, rantaviivalla</translation>
+            <translation>Vesialue, rantaviivalla</translation>
         </message>
         <message>
             <source>Pond</source>
@@ -6507,8 +6507,8 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
         <message>
             <source>Minor water channel</source>
             <comment>Name of symbol 307</comment>
-            <translation>Pieni vesiuoma</translation>
-        </message>
+            <translation>Epäselvä oja</translation>
+    </message>
         <message>
             <source>A natural or man-made minor water channel which may contain water only intermittently.</source>
             <comment>Description of symbol 307</comment>
@@ -6582,8 +6582,8 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
         <message>
             <source>Rough open land</source>
             <comment>Name of symbol 403</comment>
-            <translation>Puoliavoin alue</translation>
-        </message>
+            <translation>Avoin maasto</translation>
+    </message>
         <message>
             <source>Heath, moorland, felled areas, newly planted areas (trees lower than ca. 1 m) or other generally open land with rough ground vegetation, heather or tall grass. Symbol 403 may be combined with symbols 407 and 409 to show reduced runnability.</source>
             <comment>Description of symbol 403</comment>
@@ -7244,17 +7244,17 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
         <message>
             <source>Small earth wall</source>
             <comment>Name of symbol 108</comment>
-            <translation type="unfinished">Pieni maavalli</translation>
+            <translation>Pieni maavalli</translation>
         </message>
         <message>
             <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
             <comment>Description of symbol 108</comment>
-            <translation type="unfinished">Pieni, osittain sortunut tai epäselvä maavalli. Minimikorkeus 0.75</translation>
-        </message>
+            <translation>Pieni, osittain sortunut tai epäselvä maavalli. Minimikorkeus 0.5 m.</translation>
+    </message>
         <message>
             <source>Small erosion gully</source>
             <comment>Name of symbol 110</comment>
-            <translation type="unfinished">Kuiva pieni uoma</translation>
+            <translation>Kuiva pieni uoma</translation>
         </message>
         <message>
             <source>A small erosion gully or trench. Minimum depth 0.5 m.</source>
@@ -7264,7 +7264,7 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
         <message>
             <source>Small knoll</source>
             <comment>Name of symbol 112</comment>
-            <translation type="unfinished">Pieni kumpare</translation>
+            <translation>Pieni kumpare</translation>
         </message>
         <message>
             <source>A small obvious mound or rocky knoll which cannot be drawn to scale with a contour (diameter of mound less than ca. 5 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. The symbol may not touch a contour line.</source>
@@ -7284,7 +7284,7 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
         <message>
             <source>Small depression</source>
             <comment>Name of symbol 115</comment>
-            <translation type="unfinished">Pieni suppa</translation>
+            <translation>Pieni suppa</translation>
         </message>
         <message>
             <source>Small shallow natural depressions and hollows (minimum diameter 2 m) which cannot be shown to scale by contours are represented by a semicircle. Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol, which is orientated to north. Symbol 116 is used for man-made pits.</source>
@@ -7295,8 +7295,8 @@ Minimimitta halkaisija 2m. Kaivetut pienet kuopat kuvataan merkillä 116.</trans
         <message>
             <source>Pit</source>
             <comment>Name of symbol 116</comment>
-            <translation type="unfinished">Kuoppa</translation>
-        </message>
+            <translation>Pieni kaivettu kuoppa</translation>
+    </message>
         <message>
             <source>Pits and holes with distinct steep sides which cannot be shown to scale by symbol 106 (minimum diameter 2 m). Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol which is orientated to north.</source>
             <comment>Description of symbol 116</comment>
@@ -7336,7 +7336,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
         <message>
             <source>Passable rock face</source>
             <comment>Name of symbol 203</comment>
-            <translation type="unfinished">Pieni jyrkänne</translation>
+            <translation>Pieni jyrkänne</translation>
         </message>
         <message>
             <source>A small vertical rock face (minimum height 1 m) may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
@@ -7346,7 +7346,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
         <message>
             <source>Passable rock face, minimum size</source>
             <comment>Name of symbol 203.0.1</comment>
-            <translation type="unfinished">Pieni jyrkänne, minimikoko</translation>
+            <translation>Pieni jyrkänne, minimikoko</translation>
         </message>
         <message>
             <source>A small vertical rock face (minimum height 1 m) may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
@@ -7356,7 +7356,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
         <message>
             <source>Passable rock face, no tags</source>
             <comment>Name of symbol 203.1</comment>
-            <translation type="unfinished">Pieni jyrkänne, ei poikkiviivoja</translation>
+            <translation>Pieni jyrkänne, ei poikkiviivoja</translation>
         </message>
         <message>
             <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
@@ -7366,7 +7366,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
         <message>
             <source>Passable rock face, no tags, minimum size</source>
             <comment>Name of symbol 203.1.1</comment>
-            <translation type="unfinished">Pieni jyrkänne, ei poikkiviivoja, minimikoko</translation>
+            <translation>Pieni jyrkänne, ei poikkiviivoja, minimikoko</translation>
         </message>
         <message>
             <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
@@ -7376,7 +7376,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
         <message>
             <source>Passable rock face, no tags, rounded</source>
             <comment>Name of symbol 203.2</comment>
-            <translation type="unfinished">Pieni jyrkänne, ei poikkiviivoja, pyöristetty</translation>
+            <translation>Pieni jyrkänne, ei poikkiviivoja, pyöristetty</translation>
         </message>
         <message>
             <source>For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
@@ -7386,8 +7386,8 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
         <message>
             <source>Passable rock face, no tags, rounded, minimum size</source>
             <comment>Name of symbol 203.2.1</comment>
-            <translation type="unfinished">Pieni jyrkänne, pyöristetty, minimikoko</translation>
-        </message>
+            <translation>Pieni jyrkänne, ei poikkiviivoja, pyöristetty, minimikoko</translation>
+    </message>
         <message>
             <source>For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
             <comment>Description of symbol 203.2.1</comment>
@@ -7416,8 +7416,8 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
         <message>
             <source>Large boulder</source>
             <comment>Name of symbol 207</comment>
-            <translation>Iso kivi</translation>
-        </message>
+            <translation>Suuri kivi</translation>
+    </message>
         <message>
             <source>A particularly large and distinct boulder. For gigantic boulders symbol 202 should be used.</source>
             <comment>Description of symbol 207</comment>
@@ -7426,7 +7426,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
         <message>
             <source>Boulder field</source>
             <comment>Name of symbol 208</comment>
-            <translation type="unfinished">Louhikko</translation>
+            <translation>Louhikko</translation>
         </message>
         <message>
             <source>An area which is covered with so many blocks of stone that they cannot be marked individually is shown with randomly orientated solid triangles with sides of ratio 8:6:5. A minimum of two triangles should be used. The going is indicated by the density of the triangles. To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
@@ -7436,7 +7436,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
         <message>
             <source>Boulder field, large</source>
             <comment>Name of symbol 208.1</comment>
-            <translation type="unfinished">Louhikko, suurennettu</translation>
+            <translation>Louhikko, suurennettu</translation>
         </message>
         <message>
             <source>To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
@@ -7476,7 +7476,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
         <message>
             <source>Narrow marsh</source>
             <comment>Name of symbol 308</comment>
-            <translation type="unfinished">Suojuotti</translation>
+            <translation>Suojuotti</translation>
         </message>
         <message>
             <source>A marsh or trickle of water which is too narrow to be shown with symbol 310 (less than ca. 5 m wide).</source>
@@ -7486,7 +7486,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
         <message>
             <source>Indistinct marsh</source>
             <comment>Name of symbol 311</comment>
-            <translation type="unfinished">Soistuva maa</translation>
+            <translation>Soistuva maa</translation>
         </message>
         <message>
             <source>An indistinct or seasonal marsh or area of gradual transition from marsh to firm ground, which is crossable. The edge is generally indistinct and the vegetation similar to that of the surrounding ground. The symbol should be combined with vegetation symbols to show runnability and openness.</source>
@@ -7496,7 +7496,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
         <message>
             <source>Indistinct marsh, minimum size</source>
             <comment>Name of symbol 311.1</comment>
-            <translation type="unfinished">Soistuva maa, minimikoko</translation>
+            <translation>Soistuva maa, minimikoko</translation>
         </message>
         <message>
             <source>Well</source>
@@ -8131,17 +8131,17 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
         <message>
             <source>Earth wall</source>
             <comment>Name of symbol 107</comment>
-            <translation type="unfinished">Maavalli</translation>
+            <translation>Maavalli</translation>
         </message>
         <message>
             <source>Distinct earth wall. Minimum height is 1 m.</source>
             <comment>Description of symbol 107</comment>
-            <translation type="unfinished">Selvästi havaittava maavalli. Minimikorkeus 1m.</translation>
-        </message>
+            <translation>Selvästi havaittava maavalli. Minimikorkeus 1 m.</translation>
+    </message>
         <message>
             <source>Erosion gully</source>
             <comment>Name of symbol 109</comment>
-            <translation type="unfinished">Uurre</translation>
+            <translation>Uurre</translation>
         </message>
         <message>
             <source>An erosion gully or trench which is too small to be shown by symbol 106 is shown by a single line. The line width reflects the size of the gully. Minimum depth 1 m. The end of the line is pointed.</source>
@@ -8151,7 +8151,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
         <message>
             <source>Impassable cliff</source>
             <comment>Name of symbol 201</comment>
-            <translation type="unfinished">Ylipääsemätön jyrkänne</translation>
+            <translation>Ylipääsemätön jyrkänne</translation>
         </message>
         <message>
             <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
@@ -8161,7 +8161,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
         <message>
             <source>Impassable cliff, minimum size</source>
             <comment>Name of symbol 201.0.1</comment>
-            <translation type="unfinished">Ylipääsemätön jyrkänne, minimikoko</translation>
+            <translation>Ylipääsemätön jyrkänne, minimikoko</translation>
         </message>
         <message>
             <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
@@ -8171,7 +8171,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
         <message>
             <source>Impassable cliff, no tags</source>
             <comment>Name of symbol 201.1</comment>
-            <translation type="unfinished">Ylipääsemätön jyrkänne, ei poikkiviivoja</translation>
+            <translation>Ylipääsemätön jyrkänne, ei poikkiviivoja</translation>
         </message>
         <message>
             <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
@@ -8181,7 +8181,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
         <message>
             <source>Impassable cliff, tag line</source>
             <comment>Name of symbol 201.2</comment>
-            <translation type="unfinished">Ylipääsemätön jyrkänne, poikkiviiva</translation>
+            <translation>Ylipääsemätön jyrkänne, poikkiviiva</translation>
         </message>
         <message>
             <source>Use this symbol to display the full extent of a wide cliff.</source>
@@ -8201,7 +8201,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
         <message>
             <source>Passable rock face</source>
             <comment>Name of symbol 203</comment>
-            <translation type="unfinished">Pieni jyrkänne</translation>
+            <translation>Pieni jyrkänne</translation>
         </message>
         <message>
             <source>A small vertical rock face (minimum height 1 m) may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
@@ -8211,7 +8211,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
         <message>
             <source>Passable rock face, minimum size</source>
             <comment>Name of symbol 203.0.1</comment>
-            <translation type="unfinished">Pieni jyrkänne, minimikoko</translation>
+            <translation>Pieni jyrkänne, minimikoko</translation>
         </message>
         <message>
             <source>A small vertical rock face (minimum height 1 m) may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
@@ -8221,7 +8221,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
         <message>
             <source>Passable rock face, no tags</source>
             <comment>Name of symbol 203.1</comment>
-            <translation type="unfinished">Pieni jyrkänne, ei poikkiviivoja</translation>
+            <translation>Pieni jyrkänne, ei poikkiviivoja</translation>
         </message>
         <message>
             <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
@@ -8231,7 +8231,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
         <message>
             <source>Passable rock face, no tags, minimum size</source>
             <comment>Name of symbol 203.1.1</comment>
-            <translation type="unfinished">Pieni jyrkänne, ei poikkiviivoja, minimikoko</translation>
+            <translation>Pieni jyrkänne, ei poikkiviivoja, minimikoko</translation>
         </message>
         <message>
             <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
@@ -8241,7 +8241,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
         <message>
             <source>Passable rock face, no tags, rounded</source>
             <comment>Name of symbol 203.2</comment>
-            <translation type="unfinished">Pieni jyrkänne, ei poikkiviivoja, pyöristetty</translation>
+            <translation>Pieni jyrkänne, ei poikkiviivoja, pyöristetty</translation>
         </message>
         <message>
             <source>For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
@@ -8251,8 +8251,8 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
         <message>
             <source>Passable rock face, no tags, rounded, minimum size</source>
             <comment>Name of symbol 203.2.1</comment>
-            <translation type="unfinished">Pieni jyrkänne, pyöristetty, minimikoko</translation>
-        </message>
+            <translation>Pieni jyrkänne, ei poikkiviivoja, pyöristetty, minimikoko</translation>
+    </message>
         <message>
             <source>For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
             <comment>Description of symbol 203.2.1</comment>
@@ -8261,7 +8261,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
         <message>
             <source>Boulder</source>
             <comment>Name of symbol 206</comment>
-            <translation type="unfinished">Kivi</translation>
+            <translation>Kivi</translation>
         </message>
         <message>
             <source>A small distinct boulder (minimum height 1 m). Every boulder marked on the map should be immediately identifiable on the ground. To be able to show the distinction between boulders with significant difference in size it is permitted to enlarge this symbol by 20% (diameter 0.5 mm).</source>
@@ -8271,7 +8271,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
         <message>
             <source>Boulder, enlarged</source>
             <comment>Name of symbol 206.1</comment>
-            <translation type="unfinished">Kivi, suurennettu</translation>
+            <translation>Kivi, suurennettu</translation>
         </message>
         <message>
             <source>To be able to show the distinction between boulders with significant difference in size it is permitted to enlarge this symbol by 20% (diameter 0.5 mm).</source>
@@ -8281,8 +8281,8 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
         <message>
             <source>Large boulder</source>
             <comment>Name of symbol 207</comment>
-            <translation type="unfinished">Iso kivi</translation>
-        </message>
+            <translation>Suuri kivi</translation>
+    </message>
         <message>
             <source>A particularly large and distinct boulder. For gigantic boulders symbol 202 should be used.</source>
             <comment>Description of symbol 207</comment>
@@ -8291,7 +8291,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
         <message>
             <source>Boulder field</source>
             <comment>Name of symbol 208</comment>
-            <translation type="unfinished">Louhikko</translation>
+            <translation>Louhikko</translation>
         </message>
         <message>
             <source>An area which is covered with so many blocks of stone that they cannot be marked individually is shown with randomly orientated solid triangles with sides of ratio 8:6:5. A minimum of two triangles should be used. The going is indicated by the density of the triangles. To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
@@ -8301,7 +8301,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
         <message>
             <source>Boulder field, large</source>
             <comment>Name of symbol 208.1</comment>
-            <translation type="unfinished">Louhikko, suurennettu</translation>
+            <translation>Louhikko, suurennettu</translation>
         </message>
         <message>
             <source>To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
@@ -8311,7 +8311,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
         <message>
             <source>Boulder cluster</source>
             <comment>Name of symbol 209</comment>
-            <translation type="unfinished">Kiviryhmä</translation>
+            <translation>Kiviryhmä</translation>
         </message>
         <message>
             <source>A small distinct group of boulders so closely clustered together that they cannot be marked individually. The symbol is an equilateral triangle orientated to the north. To be able to show the distinction between boulder clusters with significant difference in size it is permitted to enlarge this symbol by 25% (1.0 mm).</source>
@@ -8321,7 +8321,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
         <message>
             <source>Boulder cluster, large</source>
             <comment>Name of symbol 209.1</comment>
-            <translation type="unfinished">Kiviryhmä, suurennettu</translation>
+            <translation>Kiviryhmä, suurennettu</translation>
         </message>
         <message>
             <source>To be able to show the distinction between boulder clusters with significant difference in size it is permitted to enlarge this symbol by 25% (1.0 mm).</source>
@@ -8379,8 +8379,8 @@ The ISSkiOM symbol number is 301.1. Mapper uses this number already for the bank
         <message>
             <source>Crossable small watercourse</source>
             <comment>Name of symbol 306</comment>
-            <translation type="unfinished">Pieni puro tai oja</translation>
-        </message>
+            <translation>Ylitettävä pieni puro tai oja</translation>
+    </message>
         <message>
             <source>A crossable watercourse (including a major drainage ditch) less than 2 m wide. For better legibility a ditch in a marsh should be drawn as a crossable watercourse (305).</source>
             <comment>Description of symbol 306</comment>
@@ -9201,13 +9201,13 @@ Kielletty alue (ks. myös merkki 528), merkitään pystysuorin viivoin. Mikäli 
         <message>
             <source>Refreshment point</source>
             <comment>Name of symbol 713</comment>
-            <translation type="unfinished">Juomapaikka</translation>
+            <translation>Juomapaikka</translation>
         </message>
         <message>
             <source>The location of a refreshment point which is not at a control.</source>
             <comment>Description of symbol 713</comment>
-            <translation type="unfinished">Merkillä osoitetaan juomapisteen paikka silloin kun se ei ole rastilla tai viitoituksella</translation>
-        </message>
+            <translation>Merkillä osoitetaan juomapaikka silloin, kun se ei ole rastilla.</translation>
+    </message>
         <message>
             <source>Simple Orienteering Course</source>
             <comment>Name of symbol 799</comment>
@@ -9235,17 +9235,17 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
         <message>
             <source>Small earth wall</source>
             <comment>Name of symbol 108</comment>
-            <translation type="unfinished">Pieni maavalli</translation>
+            <translation>Pieni maavalli</translation>
         </message>
         <message>
             <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
             <comment>Description of symbol 108</comment>
-            <translation type="unfinished">Pieni, osittain sortunut tai epäselvä maavalli. Minimikorkeus 0.75</translation>
-        </message>
+            <translation>Pieni, osittain sortunut tai epäselvä maavalli. Minimikorkeus 0.5 m.</translation>
+    </message>
         <message>
             <source>Small erosion gully</source>
             <comment>Name of symbol 110</comment>
-            <translation type="unfinished">Kuiva pieni uoma</translation>
+            <translation>Kuiva pieni uoma</translation>
         </message>
         <message>
             <source>A small erosion gully or trench. Minimum depth 0.5 m.</source>
@@ -9255,7 +9255,7 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
         <message>
             <source>Small knoll</source>
             <comment>Name of symbol 112</comment>
-            <translation type="unfinished">Pieni kumpare</translation>
+            <translation>Pieni kumpare</translation>
         </message>
         <message>
             <source>A small obvious mound or rocky knoll which cannot be drawn to scale with a contour (diameter of mound less than ca. 5 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. The symbol may not touch a contour line.</source>
@@ -9275,7 +9275,7 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
         <message>
             <source>Small depression</source>
             <comment>Name of symbol 115</comment>
-            <translation type="unfinished">Pieni suppa</translation>
+            <translation>Pieni suppa</translation>
         </message>
         <message>
             <source>Small shallow natural depressions and hollows (minimum diameter 2 m) which cannot be shown to scale by contours are represented by a semicircle. Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol, which is orientated to north. Symbol 116 is used for man-made pits.</source>
@@ -9286,8 +9286,8 @@ Minimimitta halkaisija 2m. Kaivetut pienet kuopat kuvataan merkillä 116.</trans
         <message>
             <source>Pit</source>
             <comment>Name of symbol 116</comment>
-            <translation type="unfinished">Kuoppa</translation>
-        </message>
+            <translation>Pieni kaivettu kuoppa</translation>
+    </message>
         <message>
             <source>Pits and holes with distinct steep sides which cannot be shown to scale by symbol 106 (minimum diameter 2 m). Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol which is orientated to north.</source>
             <comment>Description of symbol 116</comment>
@@ -9377,8 +9377,8 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
         <message>
             <source>Bare rock</source>
             <comment>Name of symbol 212</comment>
-            <translation type="unfinished">Kallio</translation>
-        </message>
+            <translation>Avokallio</translation>
+    </message>
         <message>
             <source>A runnable area of rock without earth or vegetation is shown as bare rock. An area of rock covered with grass, moss or other low vegetation is shown as open land (401/402).</source>
             <comment>Description of symbol 212</comment>
@@ -9407,7 +9407,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
         <message>
             <source>Minor water channel</source>
             <comment>Name of symbol 307</comment>
-            <translation type="unfinished">Epäselvä oja</translation>
+            <translation>Epäselvä oja</translation>
         </message>
         <message>
             <source>A natural or man-made minor water channel which may contain water only intermittently.</source>
@@ -9427,7 +9427,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
         <message>
             <source>Narrow marsh</source>
             <comment>Name of symbol 308</comment>
-            <translation type="unfinished">Suojuotti</translation>
+            <translation>Suojuotti</translation>
         </message>
         <message>
             <source>A marsh or trickle of water which is too narrow to be shown with symbol 310 (less than ca. 5 m wide).</source>
@@ -9437,7 +9437,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
         <message>
             <source>Uncrossable marsh</source>
             <comment>Name of symbol 309</comment>
-            <translation type="unfinished">Ylipääsemätön suo</translation>
+            <translation>Ylipääsemätön suo</translation>
         </message>
         <message>
             <source>A marsh which is uncrossable or dangerous for the runner. A black line surrounds the symbol.</source>
@@ -9447,7 +9447,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
         <message>
             <source>Uncrossable marsh, border line</source>
             <comment>Name of symbol 309.1</comment>
-            <translation type="unfinished">Ylipääsemättömän suon reunaviiva</translation>
+            <translation>Ylipääsemättömän suon reunaviiva</translation>
         </message>
         <message>
             <source>A black line surrounds the symbol.</source>
@@ -9457,7 +9457,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
         <message>
             <source>Uncrossable marsh, with border line</source>
             <comment>Name of symbol 309.2</comment>
-            <translation type="unfinished">Ylipääsemätön suo, reunaviivalla</translation>
+            <translation>Ylipääsemätön suo, reunaviivalla</translation>
         </message>
         <message>
             <source>Marsh</source>
@@ -9477,7 +9477,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
         <message>
             <source>Indistinct marsh</source>
             <comment>Name of symbol 311</comment>
-            <translation type="unfinished">Soistuva maa</translation>
+            <translation>Soistuva maa</translation>
         </message>
         <message>
             <source>An indistinct or seasonal marsh or area of gradual transition from marsh to firm ground, which is crossable. The edge is generally indistinct and the vegetation similar to that of the surrounding ground. The symbol should be combined with vegetation symbols to show runnability and openness.</source>
@@ -9487,7 +9487,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
         <message>
             <source>Indistinct marsh, minimum size</source>
             <comment>Name of symbol 311.1</comment>
-            <translation type="unfinished">Soistuva maa, minimikoko</translation>
+            <translation>Soistuva maa, minimikoko</translation>
         </message>
         <message>
             <source>Well</source>
@@ -9797,8 +9797,8 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
         <message>
             <source>Purple</source>
             <comment>Color 0</comment>
-            <translation type="unfinished">Purple</translation>
-        </message>
+            <translation>Violetti</translation>
+    </message>
         <message>
             <source>Black for control descriptions</source>
             <comment>Color 1</comment>
@@ -9827,7 +9827,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
         <message>
             <source>Simple Orienteering Course</source>
             <comment>Name of symbol 799</comment>
-            <translation type="unfinished">Yksinkertainen suunnistusrata</translation>
+            <translation>Yksinkertainen suunnistusrata</translation>
         </message>
         <message>
             <source>This symbol provides a simple and quick way to make training courses.
@@ -9911,7 +9911,7 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
         <message>
             <source>Crossing point</source>
             <comment>Name of symbol 708</comment>
-            <translation type="unfinished">Portti</translation>
+            <translation>Portti</translation>
         </message>
         <message>
             <source>A crossing point through or over a wall or fence, or across a road or railway or through a tunnel or an out-of-bounds area is drawn on the map with two lines curving outwards.</source>
@@ -9994,8 +9994,8 @@ Mikäli maastossa ei ole ko. alueen luonnollista rajaa, merkitään raja seuraav
         <message>
             <source>The location of a refreshment point which is not at a control.</source>
             <comment>Description of symbol 713</comment>
-            <translation>Merkillä osoitetaan juomapisteen paikka silloin kun se ei ole rastilla tai viitoituksella.</translation>
-        </message>
+            <translation>Merkillä osoitetaan juomapaikka silloin, kun se ei ole rastilla.</translation>
+    </message>
         <message>
             <source>Heading: Single line for event title or classes</source>
             <comment>Name of symbol 99.0</comment>
@@ -10110,8 +10110,8 @@ Map symbol: ISOM 703</source>
         <message>
             <source>|C| Northern</source>
             <comment>Name of symbol 0.1.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|C| Pohjoinen</translation>
+    </message>
         <message>
             <source>The more northern of two similar features, or the northern-most of several similar features.</source>
             <comment>Description of symbol 0.1.1</comment>
@@ -10120,8 +10120,8 @@ Map symbol: ISOM 703</source>
         <message>
             <source>|C| North Eastern</source>
             <comment>Name of symbol 0.2.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|C| Koillinen</translation>
+    </message>
         <message>
             <source>The more northern of two similar features, or the northern-most of several similar features.</source>
             <comment>Description of symbol 0.2.1</comment>
@@ -10130,8 +10130,8 @@ Map symbol: ISOM 703</source>
         <message>
             <source>|C| Eastern</source>
             <comment>Name of symbol 0.1.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|C| Itäinen</translation>
+    </message>
         <message>
             <source>The more northern of two similar features, or the northern-most of several similar features.</source>
             <comment>Description of symbol 0.1.2</comment>
@@ -10140,8 +10140,8 @@ Map symbol: ISOM 703</source>
         <message>
             <source>|C| South Eastern</source>
             <comment>Name of symbol 0.2.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|C| Kaakkoinen</translation>
+    </message>
         <message>
             <source>The more south eastern of two similar features, or the south-eastern-most of several similar features.</source>
             <comment>Description of symbol 0.2.2</comment>
@@ -10150,8 +10150,8 @@ Map symbol: ISOM 703</source>
         <message>
             <source>|C| Southern</source>
             <comment>Name of symbol 0.1.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|C| Eteläinen</translation>
+    </message>
         <message>
             <source>The more northern of two similar features, or the northern-most of several similar features.</source>
             <comment>Description of symbol 0.1.3</comment>
@@ -10160,8 +10160,8 @@ Map symbol: ISOM 703</source>
         <message>
             <source>|C| South western</source>
             <comment>Name of symbol 0.2.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|C| Lounainen</translation>
+    </message>
         <message>
             <source>The more northern of two similar features, or the northern-most of several similar features.</source>
             <comment>Description of symbol 0.2.3</comment>
@@ -10170,8 +10170,8 @@ Map symbol: ISOM 703</source>
         <message>
             <source>|C| Western</source>
             <comment>Name of symbol 0.1.4</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|C| Läntinen</translation>
+    </message>
         <message>
             <source>The more northern of two similar features, or the northern-most of several similar features.</source>
             <comment>Description of symbol 0.1.4</comment>
@@ -10180,8 +10180,8 @@ Map symbol: ISOM 703</source>
         <message>
             <source>|C| North Western</source>
             <comment>Name of symbol 0.2.4</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|C| Luoteinen</translation>
+    </message>
         <message>
             <source>The more northern of two similar features, or the northern-most of several similar features.</source>
             <comment>Description of symbol 0.2.4</comment>
@@ -10274,8 +10274,8 @@ Map symbol: ISOM 106</source>
         <message>
             <source>|D| Earth wall</source>
             <comment>Name of symbol 1.6</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|D| Maavalli</translation>
+    </message>
         <message>
             <source>A narrow wall of earth projecting above the surrounding terrain; may be partially stone faced, usually man-made. Used with symbol 8.11 to indicate a ruined earth wall.s
 
@@ -10286,8 +10286,8 @@ Map symbols: ISOM 107, 108</source>
         <message>
             <source>|D| Erosion gully</source>
             <comment>Name of symbol 1.7</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|D| Uurre</translation>
+    </message>
         <message>
             <source>An erosion gully or trench, normally dry.
 
@@ -10298,8 +10298,8 @@ Map symbol: ISOM 109</source>
         <message>
             <source>|D| Small erosion gully</source>
             <comment>Name of symbol 1.8</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|D| Kuiva pieni uoma</translation>
+    </message>
         <message>
             <source>A small erosion gully or trench, normally dry.
 
@@ -10344,8 +10344,8 @@ Map symbols: ISOM 112, 113</source>
         <message>
             <source>|D| Depression</source>
             <comment>Name of symbol 1.12</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|D| Suppa</translation>
+    </message>
         <message>
             <source>A depression or hollow from which the ground rises on all sides. Shown on the map with contour lines.
 
@@ -10356,8 +10356,8 @@ Map symbol: ISOM 114</source>
         <message>
             <source>|D| Small depression</source>
             <comment>Name of symbol 1.13</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|D| Pieni suppa</translation>
+    </message>
         <message>
             <source>A small, shallow, natural depression or hollow from which the ground rises on all sides.
 
@@ -10368,8 +10368,8 @@ Map symbol: ISOM 115</source>
         <message>
             <source>|D| Pit</source>
             <comment>Name of symbol 1.14</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|D| Pieni kaivettu kuoppa</translation>
+    </message>
         <message>
             <source>A pit or hole with distinct steep-sides. Usually man made. Used with symbol 8.6 to indicate a rocky pit.
 
@@ -10438,8 +10438,8 @@ Map symbol: ISOM 205</source>
         <message>
             <source>|D| Boulder</source>
             <comment>Name of symbol 2.4</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|D| Kivi</translation>
+    </message>
         <message>
             <source>A prominent free-standing block of rock or stone.
 
@@ -10450,8 +10450,8 @@ Map symbols: ISOM 206, 207</source>
         <message>
             <source>|D| Boulder field</source>
             <comment>Name of symbol 2.5</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|D| Louhikko</translation>
+    </message>
         <message>
             <source>An area covered by so many boulders that they cannot be individually mapped.
 
@@ -10462,8 +10462,8 @@ Map symbol: ISOM 208</source>
         <message>
             <source>|D| Boulder cluster</source>
             <comment>Name of symbol 2.6</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|D| Kiviryhmä</translation>
+    </message>
         <message>
             <source>A small distinct group of boulders so closely clustered together that they cannot be individually mapped.
 
@@ -10486,8 +10486,8 @@ Map symbol: ISOM 210</source>
         <message>
             <source>|D| Bare rock</source>
             <comment>Name of symbol 2.8</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|D| Avokallio</translation>
+    </message>
         <message>
             <source>A runnable area of rock with no earth or vegetation cover.
 
@@ -10508,8 +10508,8 @@ Map symbol: ISOM 212</source>
         <message>
             <source>|D| Lake</source>
             <comment>Name of symbol 3.1</comment>
-            <translation>|D| Järvi</translation>
-        </message>
+            <translation>|D| Vesialue</translation>
+    </message>
         <message>
             <source>A high point. Shown on the map with contour lines.
 
@@ -10568,8 +10568,8 @@ Map symbol: ISOM 307</source>
         <message>
             <source>|D| Narrow marsh</source>
             <comment>Name of symbol 3.6</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|D| Suojuotti</translation>
+    </message>
         <message>
             <source>A narrow marsh or trickle of water, too narrow to be shown on the map with the marsh symbol.
 
@@ -12005,8 +12005,8 @@ The orientation of the symbol indicates the direction in which the corner points
         <message>
             <source>|G| Refreshment point</source>
             <comment>Name of symbol 12.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|G| Juomapaikka</translation>
+    </message>
         <message>
             <source>Control site where Refreshments are available.</source>
             <comment>Description of symbol 12.2</comment>

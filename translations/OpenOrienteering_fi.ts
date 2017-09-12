@@ -184,27 +184,27 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="211"/>
         <source>Element drawing at boundary</source>
-        <translation type="unfinished"></translation>
+        <translation>Elementin piirtäminen reunalla</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="213"/>
         <source>Clip elements at the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Leikkaa elementit reunalla.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="214"/>
         <source>Draw elements if the center is inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Piirtää elementit, jos keskipiste sijaitsee reunan sisäpuolella.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="215"/>
         <source>Draw elements if any point is inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Piirtää elementit, jos mikä tahansa piste sijaitsee reunan sisäpuolella.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="216"/>
         <source>Draw elements if all points are inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Piirtää elementit, jos kaikki pisteet sijaitsevat reunan sisäpuolella.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="231"/>
@@ -760,7 +760,7 @@
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="92"/>
         <source>&lt;b&gt;Click&lt;/b&gt; on a line: Split it into two. &lt;b&gt;Drag&lt;/b&gt; along a line: Remove this line part. &lt;b&gt;Click or Drag&lt;/b&gt; at an area boundary: Start a split line. </source>
-        <translation>&lt;b&gt;Klikkaa&lt;/b&gt;viivalle: Katkaise kahdeksi.&lt;b&gt;Vedä&lt;/b&gt;viivaa pitkin: Poista viivan tämä osa. &lt;b&gt;Klikkaa tai vedä&lt;/b&gt;alueen reuvaviivalla: Aloita katkaisuviiva. </translation>
+        <translation>&lt;b&gt;Klikkaa&lt;/b&gt;viivalle: Katkaise kahdeksi.&lt;b&gt;Vedä&lt;/b&gt;viivaa pitkin: Poista viivan tämä osa. &lt;b&gt;Klikkaa tai vedä&lt;/b&gt;alueen reunaviivalla: Aloita katkaisuviiva. </translation>
     </message>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="352"/>
@@ -4209,7 +4209,7 @@ valittu</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2218"/>
         <source>Draw paths free-handedly.</source>
-        <translation type="unfinished"></translation>
+        <translation>Piirtää polku vapaasti käsin.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2220"/>
@@ -4547,7 +4547,7 @@ valittu</translation>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="96"/>
         <source>Find objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Etsi kohteet</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="101"/>
@@ -5320,7 +5320,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="321"/>
         <source>Unable to setup &quot;%1&quot; SRS for GDAL: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; SRS:ta ei voi asettaa GDAL:lle: %2</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="328"/>
@@ -5359,11 +5359,9 @@ zoomaa hiiren rullalla.</translation>
         <location filename="../src/gdal/ogr_file_format.cpp" line="483"/>
         <location filename="../src/gdal/ogr_file_format.cpp" line="488"/>
         <source>Unable to load %n objects, reason: %1</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n kohdetta eI voi ladata, syy: %1</numerusform>
+        <numerusform>%n kohdetta eI voi ladata,  syy: %1</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="469"/>
         <source>Empty geometry.</source>
@@ -6144,12 +6142,12 @@ erottelut</translation>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="136"/>
         <source>Match by symbol name</source>
-        <translation type="unfinished"></translation>
+        <translation>Täsmää symbolinimen perusteella</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="141"/>
         <source>Assign new symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Aseta uudet symbolit</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="142"/>
@@ -6159,7 +6157,7 @@ erottelut</translation>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="154"/>
         <source>Clear replacements</source>
-        <translation type="unfinished"></translation>
+        <translation>Tyhjennä korvaukset</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="157"/>

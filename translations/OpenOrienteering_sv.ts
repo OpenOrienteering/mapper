@@ -3957,7 +3957,7 @@ Importera datan ändå?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="884"/>
         <source>Load CRT file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Läs in CRT-fil...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="884"/>
@@ -4850,30 +4850,26 @@ valda</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="928"/>
         <source>Rotate objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotera objekt</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="930"/>
         <source>Scale objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Skala objekt</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/map/map_editor.cpp" line="1618"/>
         <source>Cut %n object(s)</source>
         <extracomment>Past tense. Displayed when an Edit &gt; Cut operation is completed.</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n klippt objekt</numerusform>
+        <numerusform>%n klippta objekt</numerusform>
+        </translation></message>
     <message numerus="yes">
         <location filename="../src/gui/map/map_editor.cpp" line="1671"/>
         <source>Copied %n object(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>Kopierat %n objekt</numerusform>
+        <numerusform>Kopierat %n objekt</numerusform>
+        </translation></message>
     <message numerus="yes">
         <location filename="../src/gui/map/map_editor.cpp" line="1711"/>
         <source>Pasted %n object(s)</source>
@@ -4885,17 +4881,17 @@ valda</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2314"/>
         <source>Deletes the selected objects.</source>
-        <translation type="unfinished"></translation>
+        <translation>Raderar de valda objekten.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2316"/>
         <source>Duplicate the selected objects.</source>
-        <translation type="unfinished"></translation>
+        <translation>Duplicera de valda objekten.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2318"/>
         <source>Rotate the selected objects.</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotera de valda objekten.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2320"/>
@@ -5838,7 +5834,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../packaging/translations.cpp" line="10"/>
         <source>Orienteering map</source>
-        <translation type="unfinished"></translation>
+        <translation>Orienteringskarta</translation>
     </message>
     <message>
         <location filename="../packaging/translations.cpp" line="11"/>
@@ -7643,7 +7639,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template.cpp" line="608"/>
         <source>Not enough free memory.</source>
-        <translation type="unfinished"></translation>
+        <translation>Inte tillräckligt minne.</translation>
     </message>
     <message>
         <source>Cannot change the template to this file! Is the format of the file correct for this template type?</source>
