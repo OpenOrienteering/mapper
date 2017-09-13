@@ -5242,12 +5242,13 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gdal/ogr_file_format.cpp" line="536"/>
         <source>Cannot use this spatial reference:
 %s</source>
-        <translation type="unfinished"></translation>
+        <translation>Нельзя использовать эту пространственную ссылку:
+%s</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="589"/>
         <source>The geospatial data has no suitable spatial reference.</source>
-        <translation type="unfinished"></translation>
+        <translation>Геопространственные данные не имеют подходящей пространственной привязки.</translation>
     </message>
 </context>
 <context>
