@@ -94,36 +94,33 @@ private slots:
 		QCOMPARE(rotation_template, rotation_map);
 	}
 	
+	
 	void templatePathTest()
 	{
-		QDir symbol_set_dir{ QFileInfo(QString::fromUtf8(__FILE__)).dir().absoluteFilePath(QStringLiteral("../symbol sets")) };
-		QVERIFY(symbol_set_dir.exists());
-		
-		QString file_path = symbol_set_dir.absoluteFilePath(QStringLiteral("src/Course_Design_10000.xmap"));
-		QFile file{ file_path };
+		QFile file{ QStringLiteral("testdata:templates/world-file.xmap") };
 		QVERIFY(file.open(QIODevice::ReadOnly));
-		auto data = file.readAll();
-		QVERIFY(file.atEnd());
+		auto original_data = file.readAll();
+		QCOMPARE(file.error(), QFileDevice::NoError);
 		file.close();
 		
 		Map map;
 		MapView view{ &map };
 		
 		// The buffer has no path, so the template cannot be loaded.
-		QBuffer buffer{ &data };
+		// This results in a warning.
+		QBuffer buffer{ &original_data };
 		buffer.open(QIODevice::ReadOnly);
 		XMLFileImporter importer{ &buffer, &map, &view };
 		importer.doImport(false);
+		QCOMPARE(importer.warnings().size(), std::size_t(1));
 		
-		const auto& warnings = importer.warnings();
-		QCOMPARE(warnings.size(), std::size_t(1));
-		
+		// The image is in Invalid state, but path attributes are intact.
 		QCOMPARE(map.getNumTemplates(), 1);
 		auto temp = map.getTemplate(0);
-		QCOMPARE(temp->getTemplateType(), "TemplateMap");
-		QCOMPARE(temp->getTemplateFilename(), QStringLiteral("forest sample.omap"));
-		QCOMPARE(temp->getTemplatePath(), QStringLiteral("../../examples/forest sample.omap"));
-		QCOMPARE(temp->getTemplateRelativePath(), QStringLiteral("../../examples/forest sample.omap"));
+		QCOMPARE(temp->getTemplateType(), "TemplateImage");
+		QCOMPARE(temp->getTemplateFilename(), QStringLiteral("world-file.png"));
+		QCOMPARE(temp->getTemplatePath(), QStringLiteral("world-file.png"));
+		QCOMPARE(temp->getTemplateRelativePath(), QStringLiteral("world-file.png"));
 		QCOMPARE(temp->getTemplateState(), Template::Invalid);
 		
 		QBuffer out_buffer;
@@ -132,11 +129,10 @@ private slots:
 		exporter.setOption(QStringLiteral("autoFormatting"), true);
 		exporter.doExport();
 		out_buffer.close();
+		QCOMPARE(exporter.warnings().size(), std::size_t(0));
 		
-		const auto& out_warnings = exporter.warnings();
-		QCOMPARE(out_warnings.size(), std::size_t(0));
-		
-		QCOMPARE(out_buffer.buffer(), data);
+		// The exported data matches the original data.
+		QCOMPARE(out_buffer.buffer(), original_data);
 	}
 	
 };
