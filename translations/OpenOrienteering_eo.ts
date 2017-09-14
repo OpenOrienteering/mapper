@@ -1524,7 +1524,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="110"/>
         <source>Save undo/redo history</source>
-        <translation type="unfinished"></translation>
+        <translation>Konservi malfaran/refaran historion</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="123"/>
@@ -3567,12 +3567,12 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="882"/>
         <source>Symbol set ID...</source>
-        <translation type="unfinished"></translation>
+        <translation>ID de simbolaro…</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="882"/>
         <source>Edit the symbol set ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Redakti ID de simbolaro</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="884"/>
@@ -3720,12 +3720,12 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1878"/>
         <source>Symbol set ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID de simbolaro</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1879"/>
         <source>Edit the symbol set ID:</source>
-        <translation type="unfinished"></translation>
+        <translation>Redakti ID de simbolaro:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1906"/>
@@ -4301,27 +4301,27 @@ elektitaj</translation>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="50"/>
         <source>&amp;Find...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Trovi…</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="57"/>
         <source>Find &amp;next</source>
-        <translation type="unfinished"></translation>
+        <translation>Trovi &amp;sekvan</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="96"/>
         <source>Find objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Trovi objektojn</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="101"/>
         <source>&amp;Find next</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Trovi sekvan</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="104"/>
         <source>Find &amp;all</source>
-        <translation type="unfinished"></translation>
+        <translation>Trovi ĉi&amp;ujn</translation>
     </message>
 </context>
 <context>
@@ -4450,7 +4450,11 @@ to create one.</source>
 Start drawing or load a base map.
 To load a base map, click
 Templates -&gt; Open template...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ĉio estas preta por desegnado!
+
+Komencu desegni aŭ ŝargu bazmapon.
+Por ŝargi bazmapon, klaku
+Ŝablonoj -&gt; Malfermi ŝablonon…</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_widget.cpp" line="814"/>
@@ -5868,7 +5872,7 @@ apartigoj</translation>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="130"/>
         <source>Edit the symbol set ID:</source>
-        <translation type="unfinished"></translation>
+        <translation>Redakti ID de simbolaro:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="133"/>
