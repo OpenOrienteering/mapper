@@ -151,8 +151,8 @@
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. A contour interval of 2.5 metres may be used for flat terrains. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
             <comment>Description of symbol 101</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Viiva, joka yhdistää samalla korkeudella olevat pisteet. Normaali käyräväli on 5 m. Pienin käyrien välinen etäisyys on 0.25 mm viivan keskeltä keskelle.</translation>
+    </message>
         <message>
             <source>Slope line, contour</source>
             <comment>Name of symbol 101.1</comment>
@@ -2013,8 +2013,8 @@ Sections of the circle should be omitted to leave important detail showing.</sou
         <message>
             <source>Control number</source>
             <comment>Name of symbol 704</comment>
-            <translation>Rastin numero</translation>
-        </message>
+            <translation>Rastinumero</translation>
+    </message>
         <message>
             <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail. The numbers are orientated to north.</source>
             <comment>Description of symbol 704</comment>
@@ -3669,8 +3669,8 @@ Rasti: koju, romukasa, autonromu tms.</translation>
         <message>
             <source>Control number</source>
             <comment>Name of symbol 703</comment>
-            <translation>Rastin numero</translation>
-        </message>
+            <translation>Rastinumero</translation>
+    </message>
         <message>
             <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail. The numbers are orientated to north.</source>
             <comment>Description of symbol 703</comment>
@@ -5908,8 +5908,8 @@ Symboli sisältää kaikki painettavat värit - älä laita värejä erillisinä
         <message>
             <source>Control number</source>
             <comment>Name of symbol 703</comment>
-            <translation>Rastin numero</translation>
-        </message>
+            <translation>Rastinumero</translation>
+    </message>
         <message>
             <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail. The numbers are orientated to north.</source>
             <comment>Description of symbol 703</comment>
@@ -7078,8 +7078,8 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <message>
             <source>Control number</source>
             <comment>Name of symbol 703</comment>
-            <translation>Rastin numero</translation>
-        </message>
+            <translation>Rastinumero</translation>
+    </message>
         <message>
             <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail. The numbers are orientated to north.</source>
             <comment>Description of symbol 703</comment>
@@ -7901,13 +7901,13 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
         <message>
             <source>Opaque Purple</source>
             <comment>Color 0</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Peittävä violetti</translation>
+    </message>
         <message>
             <source>Purple</source>
             <comment>Color 1</comment>
-            <translation type="unfinished">Purple</translation>
-        </message>
+            <translation>Violetti</translation>
+    </message>
         <message>
             <source>Upper Green</source>
             <comment>Color 2</comment>
@@ -8021,27 +8021,27 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
         <message>
             <source>Contour</source>
             <comment>Name of symbol 101</comment>
-            <translation type="unfinished">Korkeuskäyrä</translation>
+            <translation>Korkeuskäyrä</translation>
         </message>
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
             <comment>Description of symbol 101</comment>
-            <translation type="unfinished">Viiva joka yhdistää samalla korkeudella olevat pisteet. Standardikäyräväli on 5 m. Pienin käyrien välinen etäisyys on 0.25 mm viivan keskeltä keskelle. </translation>
-        </message>
+            <translation>Viiva joka yhdistää samalla korkeudella olevat pisteet. Standardikäyräväli on 5 m. Pienin käyrien välinen etäisyys on 0.25 mm viivan keskeltä keskelle.</translation>
+    </message>
         <message>
             <source>Contour (narrow)</source>
             <comment>Name of symbol 101.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Korkeuskäyrä (kapea)</translation>
+    </message>
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
             <comment>Description of symbol 101.1</comment>
-            <translation type="unfinished">Viiva joka yhdistää samalla korkeudella olevat pisteet. Standardikäyräväli on 5 m. Pienin käyrien välinen etäisyys on 0.25 mm viivan keskeltä keskelle. </translation>
-        </message>
+            <translation>Viiva joka yhdistää samalla korkeudella olevat pisteet. Standardikäyräväli on 5 m. Pienin käyrien välinen etäisyys on 0.25 mm viivan keskeltä keskelle.</translation>
+    </message>
         <message>
             <source>Index contour</source>
             <comment>Name of symbol 102</comment>
-            <translation type="unfinished">Johtokäyrä</translation>
+            <translation>Johtokäyrä</translation>
         </message>
         <message>
             <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. Where an index contour coincides with an area of much detail, it may be shown with a normal contour line.</source>
@@ -8071,7 +8071,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
         <message>
             <source>Contour value</source>
             <comment>Name of symbol 105</comment>
-            <translation type="unfinished">Korkeuskäyrän korkeusluku</translation>
+            <translation>Korkeuskäyrän korkeusluku</translation>
         </message>
         <message>
             <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
@@ -8331,8 +8331,8 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
         <message>
             <source>Uncrossable waterbody (forbidden to cross)</source>
             <comment>Name of symbol 301</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ylipääsemätön vesialue (kielletty ylittää)</translation>
+    </message>
         <message>
             <source>When a body of water is not covered with ice or is otherwise dangerous to cross, the colour of the area shall be blue 100 %. That means also that the area is forbidden to cross.</source>
             <comment>Description of symbol 301</comment>
@@ -8356,8 +8356,8 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
         <message>
             <source>Crossable waterbody</source>
             <comment>Name of symbol 301.0.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ylitettävä vesialue</translation>
+    </message>
         <message>
             <source>When a body of water can be safely crossed, the colour shall be blue 50 %, so that the track symbols drawn can be read more clearly.
 The bank line of the crossable waterbody is not presented in ski orienteering map.
@@ -8859,40 +8859,40 @@ Rasti: koju, romukasa, autonromu tms.</translation>
         <message>
             <source>Very wide track &gt; 3m</source>
             <comment>Name of symbol 801</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Erittäin leveä ura &gt; 3 m</translation>
+    </message>
         <message>
             <source>Very fast, wide ski tracks in ski centres, made with a ski trail groomer or a track leveller.</source>
             <comment>Description of symbol 801</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Yli 3 m leveä latukoneella tehty ura esim. hiihtokeskuksissa. Erittäin nopea hiihtää.</translation>
+    </message>
         <message>
             <source>Wide track 1.5-3.0 m</source>
             <comment>Name of symbol 802</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Leveä ura 1,5-3,0 m</translation>
+    </message>
         <message>
             <source>A fast, skateable track made by a snow mobile, width usually 2-3 m. Skateable tracks
 rougher and softer than the wide skateable tracks in the area.</source>
             <comment>Description of symbol 802</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Moottorikelkalla tehty, useimmiten 2-3 metriä leveä nopea luistelukelpoinen ura. Pehmeämpi ja epätasaisempi kuin alueen erittäin leveät urat (801).</translation>
+    </message>
         <message>
             <source>Track 0.8-1.2 m</source>
             <comment>Name of symbol 803</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ura 0,8-1,2 m</translation>
+    </message>
         <message>
             <source>A good track made by a snow mobile, usually 1-1.2 m wide. In steep slopes, tracks may
 be made wider to reduce widening during competition.</source>
             <comment>Description of symbol 803</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Hyvä, moottorikelkalla tehty, useimmiten 1-1,2 metriä leveä ura. Jyrkissä rinteissä ura tehdään niin, ettei se leviä kilpailun aikana.</translation>
+    </message>
         <message>
             <source>Track, slow 0.8-1 m</source>
             <comment>Name of symbol 804</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Hidas ura 0,8-1 m</translation>
+    </message>
         <message>
             <source>A rough, slow track with little snow or some brushwood. This symbol is not used in steep
 slopes, if the width of the track allows using herringbone steps for uphill, or snow plowing
@@ -8900,30 +8900,32 @@ technique for slowing and stopping.
 
 In order to clarify a junction, the beginning of a slow track is drawn with a short line.</source>
             <comment>Description of symbol 804</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Epätasainen ura, jolla pieniä puita ym. tai vähän lunta. Symbolia ei käytetä jyrkissä rinteissä, joissa uran leveys mahdollistaa haarakäynnin ylöspäin ja aurajarrutuksen alaspäin.
+
+Uran alku piirretään yhtenäisellä viivalla selventämään risteystä tai haaraa.</translation>
+    </message>
         <message>
             <source>Road covered with snow</source>
             <comment>Name of symbol 805</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Luminen tie</translation>
+    </message>
         <message>
             <source>Snowploughed, skiable roads are drawn with a normal road symbol but wider.</source>
             <comment>Description of symbol 805</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Aurattu, hiihtokelpoinen tie kuvataan tiesymbolilla, mutta leveämpänä.</translation>
+    </message>
         <message>
             <source>Sanded or snowless road, line symbol</source>
             <comment>Name of symbol 806</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Hiekoitettu tai lumeton tie, viivasymboli</translation>
+    </message>
         <message>
             <source>A road on the map which is sanded or snowless during the competition. A chain of V-
 marks across the road symbol show that the road is not skiable. Snowless roads and
 heavily sanded roads should normally be marked as forbidden routes.</source>
             <comment>Description of symbol 806</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Kilpailun aikana hiekoituksen tai lumettomuuden takia hiihtokelvoton tie.</translation>
+    </message>
         <message>
             <source>Sanded or snowless road, single symbol</source>
             <comment>Name of symbol 806.1</comment>
@@ -8934,29 +8936,29 @@ heavily sanded roads should normally be marked as forbidden routes.</source>
 marks across the road symbol show that the road is not skiable. Snowless roads and
 heavily sanded roads should normally be marked as forbidden routes.</source>
             <comment>Description of symbol 806.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Kilpailun aikana hiekoituksen tai lumettomuuden takia hiihtokelvoton tie.</translation>
+    </message>
         <message>
             <source>Unploughed road</source>
             <comment>Name of symbol 807</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Auraamaton tie</translation>
+    </message>
         <message>
             <source>A road which is not opened for traffic, no skiable track.</source>
             <comment>Description of symbol 807</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Tie, jota ei ole aurattu liikenteelle, hiihtokelvoton.</translation>
+    </message>
         <message>
             <source>Prepared area</source>
             <comment>Name of symbol 808</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Tampattu alue</translation>
+    </message>
         <message>
             <source>Slalom slopes (alpine skiing slopes) and other areas which are wide, skiable and hard.
 The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</source>
             <comment>Description of symbol 808</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Laajat, hiihtokelpoiset ja kovapintaiset alueet, esim. laskettelurinteet. Alueen reunat selvennetään reunaviivalla, jotta alueen muodot ovat selkeästi luettavissa kartasta.</translation>
+    </message>
         <message>
             <source>Prepared area, fill pattern</source>
             <comment>Name of symbol 808.0.1</comment>
@@ -8966,8 +8968,8 @@ The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so
             <source>Slalom slopes (alpine skiing slopes) and other areas which are wide, skiable and hard.
 The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</source>
             <comment>Description of symbol 808.0.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Laajat, hiihtokelpoiset ja kovapintaiset alueet, esim. laskettelurinteet. Alueen reunat selvennetään reunaviivalla, jotta alueen muodot ovat selkeästi luettavissa kartasta.</translation>
+    </message>
         <message>
             <source>Prepared area, boundary</source>
             <comment>Name of symbol 801.0.2</comment>
@@ -8981,13 +8983,13 @@ The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so
         <message>
             <source>Public snow mobile route</source>
             <comment>Name of symbol 813</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Moottorikelkkailureitti</translation>
+    </message>
         <message>
             <source>A public and marked route for snow mobiles that may be in use during the ski orienteering competition. These routes are often uneven and of varying width and quality. The organizers must inform competitors in the competition instructions about the quality of such routes (e.g. with photographs) and ensure the safety of the competitors by temporarily closing the route, manning the route or by other means informing any snow mobile drivers about the possiblity of encountering ski orienteers on the route. If the safety of the competitors can not be guaranteed, the route must be marked as forbidden and safe passages must be ensured.</source>
             <comment>Description of symbol 813</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Yleisessä käytössä oleva maastoon merkitty reitti moottorikelkkailua varten. Reitti voi olla käytössä hiihtosuunnistuskilpailun aikana. Tällaiset reitit ovat usein pinnaltaan epätasaisia ja niiden leveys ja laatu vaihtelevat. Järjestäjien pitää ilmoittaa kilpailuohjeissa reittien laatu (esim. valokuvilla) ja varmistaa kilpailijoiden turvallisuus sulkemalla reitti väliaikaisesti, miehittämällä reitti tai muulla tavoin ilmoittamalla jokaiselle moottorikelkkailijalle mahdollisuudesta kohdata hiihtosuunnistajia reitillä. Jos kilpailijoiden turvallisuutta ei voida taata, IOF:n valvojan pitää merkitä reitti kielletyksi reitiksi ja varmistaa turvalliset ylityspaikat.</translation>
+    </message>
         <message>
             <source>Forbidden route, forbidden to cross</source>
             <comment>Name of symbol 814</comment>
@@ -9027,13 +9029,13 @@ that it is more clearly visible in the track network.</source>
         <message>
             <source>Equipment deposit</source>
             <comment>Name of symbol 812</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Varustepaikka</translation>
+    </message>
         <message>
             <source>A deposit for spare equipment in the terrain.</source>
             <comment>Description of symbol 812</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Symboli osoittaa maaston kohdan, jossa hiihtovarusteita voi vaihtaa.</translation>
+    </message>
         <message>
             <source>Start</source>
             <comment>Name of symbol 701</comment>
@@ -9057,18 +9059,18 @@ that it is more clearly visible in the track network.</source>
         <message>
             <source>Control point and focus point</source>
             <comment>Name of symbol 810</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Rastiympyrä ja kohdistuspiste</translation>
+    </message>
         <message>
             <source>The focus point (i.e. the point in the centre of a control circle) can be used when it is necessary to clarify the exact position of a control for instance in a dense track network. In ski orienteering, a control is preferably placed in one track only, not in crossings or junctions. A focus point helps specify the exact track where a control is situated.</source>
             <comment>Description of symbol 810</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Kohdistuspistettä käytetään tarvittaessa selventämään rastin sijaintia tiheässä uraverkostossa. Hiihtosuunnistuksessa rasti sijoitetaan mieluummin hiihtouran varteen. Kohdistuspiste auttaa paikallistamaan rastin tarkan sijainnin.</translation>
+    </message>
         <message>
             <source>Control number</source>
             <comment>Name of symbol 703</comment>
-            <translation>Rastin numero</translation>
-        </message>
+            <translation>Rastinumero</translation>
+    </message>
         <message>
             <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail. The numbers are orientated to north.</source>
             <comment>Description of symbol 703</comment>
@@ -9181,7 +9183,7 @@ Kielletty alue (ks. myös merkki 528), merkitään pystysuorin viivoin. Mikäli 
         <message>
             <source>Forbidden route</source>
             <comment>Name of symbol 711</comment>
-            <translation type="unfinished">Kielletty reitti</translation>
+            <translation>Kielletty reitti</translation>
         </message>
         <message>
             <source>A route which is out-of-bounds is shown with crosses.</source>
@@ -9861,8 +9863,8 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
         <message>
             <source>Control number</source>
             <comment>Name of symbol 703</comment>
-            <translation>Rastin numero</translation>
-        </message>
+            <translation>Rastinumero</translation>
+    </message>
         <message>
             <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail. The numbers are orientated to north.</source>
             <comment>Description of symbol 703</comment>
@@ -10088,8 +10090,8 @@ Map symbol: ISOM 701</source>
         <message>
             <source>|A| Control number</source>
             <comment>Name of symbol 99.7</comment>
-            <translation>|A| Rastin numero</translation>
-        </message>
+            <translation>|A| Rastinumero</translation>
+    </message>
         <message>
             <source>Numbering of controls is in the sequence they are to be visited, unless the description is for a Score competition.
 
@@ -10100,8 +10102,8 @@ Map symbol: ISOM 703</source>
         <message>
             <source>|B| Control code</source>
             <comment>Name of symbol 99.8</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|B| Rastitunnus</translation>
+    </message>
         <message>
             <source>The control code should be a number greater than 30.</source>
             <comment>Description of symbol 99.8</comment>
