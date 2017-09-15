@@ -95,7 +95,7 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 , active      { false }
 {
 	Q_ASSERT(main_window);
-	
+
 	layout = new QFormLayout();
 	
 	target_combo = new QComboBox();
