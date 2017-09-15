@@ -2738,37 +2738,6 @@
     </message>
 </context>
 <context>
-    <name>MAC_APPLICATION_MENU</name>
-    <message>
-        <source>Hide Others</source>
-        <translation type="vanished">Ukryj pozostałe</translation>
-    </message>
-    <message>
-        <source>Quit %1</source>
-        <translation type="vanished">Wyjdź %1</translation>
-    </message>
-    <message>
-        <source>About %1</source>
-        <translation type="vanished">O %1</translation>
-    </message>
-    <message>
-        <source>Preferences...</source>
-        <translation type="vanished">Preferencje...</translation>
-    </message>
-    <message>
-        <source>Services</source>
-        <translation type="vanished">Usługi</translation>
-    </message>
-    <message>
-        <source>Hide %1</source>
-        <translation type="vanished">Ukryj %1</translation>
-    </message>
-    <message>
-        <source>Show All</source>
-        <translation type="vanished">Pokaż wszystkie</translation>
-    </message>
-</context>
-<context>
     <name>MainWindow</name>
     <message>
         <location filename="../src/gui/main_window.cpp" line="269"/>

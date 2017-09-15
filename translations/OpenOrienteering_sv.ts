@@ -3015,37 +3015,6 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     </message>
 </context>
 <context>
-    <name>MAC_APPLICATION_MENU</name>
-    <message>
-        <source>Services</source>
-        <translation type="vanished">Tjänster</translation>
-    </message>
-    <message>
-        <source>Hide %1</source>
-        <translation type="vanished">Dölj %1</translation>
-    </message>
-    <message>
-        <source>Hide Others</source>
-        <translation type="vanished">Dölj Andra</translation>
-    </message>
-    <message>
-        <source>Show All</source>
-        <translation type="vanished">Visa alla</translation>
-    </message>
-    <message>
-        <source>Preferences...</source>
-        <translation type="vanished">Personliga inställningar...</translation>
-    </message>
-    <message>
-        <source>Quit %1</source>
-        <translation type="vanished">Avsluta %1</translation>
-    </message>
-    <message>
-        <source>About %1</source>
-        <translation type="vanished">Om %1</translation>
-    </message>
-</context>
-<context>
     <name>MainWindow</name>
     <message>
         <location filename="../src/gui/main_window.cpp" line="269"/>

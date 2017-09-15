@@ -2713,37 +2713,6 @@
     </message>
 </context>
 <context>
-    <name>MAC_APPLICATION_MENU</name>
-    <message>
-        <source>Services</source>
-        <translation type="vanished">Valg</translation>
-    </message>
-    <message>
-        <source>Hide %1</source>
-        <translation type="vanished">Skjul %1</translation>
-    </message>
-    <message>
-        <source>Hide Others</source>
-        <translation type="vanished">Skjul andre</translation>
-    </message>
-    <message>
-        <source>Show All</source>
-        <translation type="vanished">Vis alle</translation>
-    </message>
-    <message>
-        <source>Preferences...</source>
-        <translation type="vanished">Innstillinger...</translation>
-    </message>
-    <message>
-        <source>Quit %1</source>
-        <translation type="vanished">Avslutt %1</translation>
-    </message>
-    <message>
-        <source>About %1</source>
-        <translation type="vanished">Om %1</translation>
-    </message>
-</context>
-<context>
     <name>MainWindow</name>
     <message>
         <location filename="../src/gui/main_window.cpp" line="269"/>

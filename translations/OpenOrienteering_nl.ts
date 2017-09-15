@@ -2792,37 +2792,6 @@
     </message>
 </context>
 <context>
-    <name>MAC_APPLICATION_MENU</name>
-    <message>
-        <source>Services</source>
-        <translation type="vanished">Ondersteunende functies</translation>
-    </message>
-    <message>
-        <source>Hide %1</source>
-        <translation type="vanished">%1 verbergen</translation>
-    </message>
-    <message>
-        <source>Hide Others</source>
-        <translation type="vanished">Verberg anderen</translation>
-    </message>
-    <message>
-        <source>Show All</source>
-        <translation type="vanished">Toon alles</translation>
-    </message>
-    <message>
-        <source>Preferences...</source>
-        <translation type="vanished">Instellingen...</translation>
-    </message>
-    <message>
-        <source>Quit %1</source>
-        <translation type="vanished">%1 afsluiten</translation>
-    </message>
-    <message>
-        <source>About %1</source>
-        <translation type="vanished">Over %1</translation>
-    </message>
-</context>
-<context>
     <name>MainWindow</name>
     <message>
         <location filename="../src/gui/main_window.cpp" line="757"/>
