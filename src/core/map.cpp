@@ -32,7 +32,6 @@
 #include <QtMath>
 #include <QByteArray>
 #include <QDebug>
-#include <QDir>
 #include <QFile>
 #include <QFileInfo>
 #include <QIODevice>
@@ -658,25 +657,6 @@ bool Map::exportTo(const QString& path, MapView* view, const FileFormat* format)
 		QMessageBox::warning(nullptr, tr("Error"), tr("Cannot export the map as\n\"%1\"\nbecause saving as %2 (.%3) is not supported.").
 		                     arg(path, format->description(), format->fileExtensions().join(QLatin1String(", "))));
 		return false;
-	}
-	
-	// Update the relative paths of templates
-	QDir map_dir = QFileInfo(path).absoluteDir();
-	for (int i = 0; i < getNumTemplates(); ++i)
-	{
-		Template* temp = getTemplate(i);
-		if (temp->getTemplateState() == Template::Invalid)
-			temp->setTemplateRelativePath(QString());
-		else
-			temp->setTemplateRelativePath(map_dir.relativeFilePath(temp->getTemplatePath()));
-	}
-	for (int i = 0; i < getNumClosedTemplates(); ++i)
-	{
-		Template* temp = getClosedTemplate(i);
-		if (temp->getTemplateState() == Template::Invalid)
-			temp->setTemplateRelativePath(QString());
-		else
-			temp->setTemplateRelativePath(map_dir.relativeFilePath(temp->getTemplatePath()));
 	}
 	
 	QSaveFile file(path);

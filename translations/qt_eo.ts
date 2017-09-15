@@ -694,6 +694,10 @@ Bonvolu kontroli, ke dosiernomo estis ĝusta.</translation>
         <translation>Bone</translation>
     </message>
     <message>
+        <source>Save</source>
+        <translation>Konservi</translation>
+    </message>
+    <message>
         <source>&amp;Yes</source>
         <translation>&amp;Jes</translation>
     </message>
@@ -709,6 +713,10 @@ Bonvolu kontroli, ke dosiernomo estis ĝusta.</translation>
     <message>
         <source>Cancel</source>
         <translation>Rezigni</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Forĵeti</translation>
     </message>
     <message>
         <source>Help</source>

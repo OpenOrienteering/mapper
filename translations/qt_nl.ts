@@ -691,7 +691,11 @@ Controleer of de juiste bestandsnaam is opgegeven.</translation>
     <name>QPlatformTheme</name>
     <message>
         <source>OK</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&amp;Yes</source>
@@ -711,8 +715,12 @@ Controleer of de juiste bestandsnaam is opgegeven.</translation>
         <translation>Annuleer</translation>
     </message>
     <message>
+        <source>Discard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Help</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Reset</source>

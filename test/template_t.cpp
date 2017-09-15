@@ -31,6 +31,7 @@
 #include "core/georeferencing.h"
 #include "core/map.h"
 #include "core/map_view.h"
+#include "fileformats/xml_file_format_p.h"
 #include "templates/template.h"
 #include "templates/world_file.h"
 
@@ -91,6 +92,47 @@ private slots:
 		auto rotation_template = 0.01 * qRound(100 * qRadiansToDegrees(temp->getTemplateRotation()));
 		auto rotation_map = 0.01 * qRound(100 * georef.getGrivation());
 		QCOMPARE(rotation_template, rotation_map);
+	}
+	
+	
+	void templatePathTest()
+	{
+		QFile file{ QStringLiteral("testdata:templates/world-file.xmap") };
+		QVERIFY(file.open(QIODevice::ReadOnly));
+		auto original_data = file.readAll();
+		QCOMPARE(file.error(), QFileDevice::NoError);
+		file.close();
+		
+		Map map;
+		MapView view{ &map };
+		
+		// The buffer has no path, so the template cannot be loaded.
+		// This results in a warning.
+		QBuffer buffer{ &original_data };
+		buffer.open(QIODevice::ReadOnly);
+		XMLFileImporter importer{ &buffer, &map, &view };
+		importer.doImport(false);
+		QCOMPARE(importer.warnings().size(), std::size_t(1));
+		
+		// The image is in Invalid state, but path attributes are intact.
+		QCOMPARE(map.getNumTemplates(), 1);
+		auto temp = map.getTemplate(0);
+		QCOMPARE(temp->getTemplateType(), "TemplateImage");
+		QCOMPARE(temp->getTemplateFilename(), QStringLiteral("world-file.png"));
+		QCOMPARE(temp->getTemplatePath(), QStringLiteral("world-file.png"));
+		QCOMPARE(temp->getTemplateRelativePath(), QStringLiteral("world-file.png"));
+		QCOMPARE(temp->getTemplateState(), Template::Invalid);
+		
+		QBuffer out_buffer;
+		QVERIFY(out_buffer.open(QIODevice::WriteOnly));
+		XMLFileExporter exporter{ &out_buffer, &map, &view };
+		exporter.setOption(QStringLiteral("autoFormatting"), true);
+		exporter.doExport();
+		out_buffer.close();
+		QCOMPARE(exporter.warnings().size(), std::size_t(0));
+		
+		// The exported data matches the original data.
+		QCOMPARE(out_buffer.buffer(), original_data);
 	}
 	
 };

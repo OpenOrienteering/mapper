@@ -23,7 +23,9 @@
 #include "xml_file_format_p.h"
 
 #include <QDebug>
+#include <QDir>
 #include <QFileDevice>
+#include <QFileInfo>
 #include <QScopedValueRollback>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
@@ -368,6 +370,28 @@ void XMLFileExporter::exportMapParts()
 
 void XMLFileExporter::exportTemplates()
 {
+	// Update the relative paths of templates
+	if (auto file = qobject_cast<const QFileDevice*>(stream))
+	{
+		auto filename = file->fileName();
+		auto map_dir = QFileInfo(filename).absoluteDir();
+		if (!filename.isEmpty() && map_dir.exists())
+		{
+			for (int i = 0; i < map->getNumTemplates(); ++i)
+			{
+				auto temp = map->getTemplate(i);
+				if (temp->getTemplateState() != Template::Invalid)
+					temp->setTemplateRelativePath(map_dir.relativeFilePath(temp->getTemplatePath()));
+			}
+			for (int i = 0; i < map->getNumClosedTemplates(); ++i)
+			{
+				auto temp = map->getClosedTemplate(i);
+				if (temp->getTemplateState() != Template::Invalid)
+					temp->setTemplateRelativePath(map_dir.relativeFilePath(temp->getTemplatePath()));
+			}
+		}
+	}
+	
 	XmlElementWriter templates_element(xml, literal::templates);
 	
 	int num_templates = map->getNumTemplates() + map->getNumClosedTemplates();

@@ -289,6 +289,7 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	
 	connect(mode_button_group, QOverload<QAbstractButton*>::of(&QButtonGroup::buttonClicked), this, &PrintWidget::printModeChanged);
 	connect(dpi_combo->lineEdit(), &QLineEdit::textEdited, this, &PrintWidget::resolutionEdited);
+	connect(dpi_combo, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &PrintWidget::resolutionEdited);
 	connect(different_scale_check, &QAbstractButton::clicked, this, &PrintWidget::differentScaleClicked);
 	connect(different_scale_edit, QOverload<int>::of(&QSpinBox::valueChanged), this, &PrintWidget::differentScaleEdited);
 	connect(show_templates_check, &QAbstractButton::clicked, this, &PrintWidget::showTemplatesClicked);
