@@ -2896,29 +2896,6 @@
     </message>
 </context>
 <context>
-    <name>MAC_APPLICATION_MENU</name>
-    <message>
-        <source>Services</source>
-        <translation type="vanished">サービス</translation>
-    </message>
-    <message>
-        <source>Hide %1</source>
-        <translation type="vanished">%1 を非表示</translation>
-    </message>
-    <message>
-        <source>Show All</source>
-        <translation type="vanished">すべて表示</translation>
-    </message>
-    <message>
-        <source>Quit %1</source>
-        <translation type="vanished">%1 を終了</translation>
-    </message>
-    <message>
-        <source>About %1</source>
-        <translation type="vanished">%1 について</translation>
-    </message>
-</context>
-<context>
     <name>MainWindow</name>
     <message>
         <location filename="../src/gui/main_window.cpp" line="269"/>

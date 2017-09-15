@@ -2,6 +2,37 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="lv_LV">
 <context>
+    <name>MAC_APPLICATION_MENU</name>
+    <message>
+        <source>Services</source>
+        <translation>Servisi</translation>
+    </message>
+    <message>
+        <source>Hide %1</source>
+        <translation>Slēpt %1</translation>
+    </message>
+    <message>
+        <source>Hide Others</source>
+        <translation>Slēpt Citus</translation>
+    </message>
+    <message>
+        <source>Show All</source>
+        <translation>Rādīt Visu</translation>
+    </message>
+    <message>
+        <source>Preferences...</source>
+        <translation>Iestatījumi...</translation>
+    </message>
+    <message>
+        <source>Quit %1</source>
+        <translation>Beigt %1</translation>
+    </message>
+    <message>
+        <source>About %1</source>
+        <translation>Par %1</translation>
+    </message>
+</context>
+<context>
     <name>QAbstractSpinBox</name>
     <message>
         <source>Step &amp;down</source>

@@ -2693,37 +2693,6 @@
     </message>
 </context>
 <context>
-    <name>MAC_APPLICATION_MENU</name>
-    <message>
-        <source>Services</source>
-        <translation type="vanished">Servisi</translation>
-    </message>
-    <message>
-        <source>Hide %1</source>
-        <translation type="vanished">Slēpt %1</translation>
-    </message>
-    <message>
-        <source>Hide Others</source>
-        <translation type="vanished">Slēpt Citus</translation>
-    </message>
-    <message>
-        <source>Show All</source>
-        <translation type="vanished">Rādīt Visu</translation>
-    </message>
-    <message>
-        <source>Preferences...</source>
-        <translation type="vanished">Iestatījumi...</translation>
-    </message>
-    <message>
-        <source>Quit %1</source>
-        <translation type="vanished">Beigt %1</translation>
-    </message>
-    <message>
-        <source>About %1</source>
-        <translation type="vanished">Par %1</translation>
-    </message>
-</context>
-<context>
     <name>MainWindow</name>
     <message>
         <location filename="../src/gui/main_window.cpp" line="269"/>
