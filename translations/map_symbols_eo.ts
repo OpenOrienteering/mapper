@@ -1515,8 +1515,8 @@ Runnability: normal runnability.</source>
         <message>
             <source>Railway</source>
             <comment>Name of symbol 509</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Fervojo</translation>
+    </message>
         <message>
             <source>A railway or other kind of railed track.
 If it is forbidden to run along the railway, it shall be combined with the overprint symbol for forbidden route. If it is forbidden to cross the railway, it must be combined with a symbol for forbidden area.</source>
@@ -1622,8 +1622,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Fence</source>
             <comment>Name of symbol 516</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Barilo</translation>
+    </message>
         <message>
             <source>A wooden or wire fence less than ca. 1.5 m high.
 If the fence forms an enclosed area, tags should be placed inside.</source>
@@ -1633,8 +1633,8 @@ If the fence forms an enclosed area, tags should be placed inside.</source>
         <message>
             <source>Ruined fence</source>
             <comment>Name of symbol 517</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ruinigita barilo</translation>
+    </message>
         <message>
             <source>A ruined or less distinct fence. If the fence forms an enclosed area, tags should be placed inside.</source>
             <comment>Description of symbol 517</comment>
@@ -1643,8 +1643,8 @@ If the fence forms an enclosed area, tags should be placed inside.</source>
         <message>
             <source>Impassable fence</source>
             <comment>Name of symbol 518</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Netrairebla barilo</translation>
+    </message>
         <message>
             <source>An impassable or uncrossable fence, normally more than 1.5 m high.
 If the fence forms an enclosed area, tags should be placed inside.</source>
@@ -3244,8 +3244,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Railway</source>
             <comment>Name of symbol 515</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Fervojo</translation>
+    </message>
         <message>
             <source>A railway or other kind of railed track (tramway, truckway, etc.).</source>
             <comment>Description of symbol 515</comment>
@@ -3324,8 +3324,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Fence</source>
             <comment>Name of symbol 522</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Barilo</translation>
+    </message>
         <message>
             <source>A wooden or wire fence less than ca. 1.5 m high.</source>
             <comment>Description of symbol 522</comment>
@@ -3334,8 +3334,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Ruined fence</source>
             <comment>Name of symbol 523</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ruinigita barilo</translation>
+    </message>
         <message>
             <source>A ruined fence may be shown with a dashed line.</source>
             <comment>Description of symbol 523</comment>
@@ -3344,8 +3344,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>High fence</source>
             <comment>Name of symbol 524</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Alta barilo</translation>
+    </message>
         <message>
             <source>A boarded or wire fence higher than ca 1.5 m, not crossable to the average orienteer, eg. deer fence.</source>
             <comment>Description of symbol 524</comment>
@@ -3379,8 +3379,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Settlement</source>
             <comment>Name of symbol 527</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Setlejo</translation>
+    </message>
         <message>
             <source>Houses and gardens and other built up areas. Roads, buildings and other significant features within a settlement must be shown. If all buildings cannot be shown, an alternative symbol (black line screen) may be used.</source>
             <comment>Description of symbol 527</comment>
@@ -3389,8 +3389,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Settlement</source>
             <comment>Name of symbol 527.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Setlejo</translation>
+    </message>
         <message>
             <source>Houses and gardens and other built up areas. Roads, buildings and other significant features within a settlement must be shown. If all buildings cannot be shown, an alternative symbol (black line screen) may be used.</source>
             <comment>Description of symbol 527.1</comment>
@@ -4988,8 +4988,8 @@ Colour: black, brown 0%(white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (mi
         <message>
             <source>Railway</source>
             <comment>Name of symbol 515.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Fervojo</translation>
+    </message>
         <message>
             <source>A railway is a permanent track laid with rails on which locomotives, carriages or wagons can travel. If it is forbidden to cross or run along the railroad, the forbidden area around the railway shall be represented with symbol area with forbidden access (528.1).</source>
             <comment>Description of symbol 515.1</comment>
@@ -6527,8 +6527,8 @@ required to dismount. Speed max 25 %.</source>
         <message>
             <source>Railway</source>
             <comment>Name of symbol 515</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Fervojo</translation>
+    </message>
         <message>
             <source>A railway or other kind of railed track (tramway, truckway, etc.).</source>
             <comment>Description of symbol 515</comment>
@@ -6588,8 +6588,8 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <message>
             <source>High fence</source>
             <comment>Name of symbol 524</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Alta barilo</translation>
+    </message>
         <message>
             <source>A boarded or wire fence higher than ca 1.5 m, not crossable to the average orienteer, eg. deer fence.</source>
             <comment>Description of symbol 524</comment>
@@ -6623,8 +6623,8 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <message>
             <source>Settlement</source>
             <comment>Name of symbol 527</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Setlejo</translation>
+    </message>
         <message>
             <source>Houses and gardens and other built up areas. Roads, buildings and other significant features within a settlement must be shown. If all buildings cannot be shown, an alternative symbol (black line screen) may be used.</source>
             <comment>Description of symbol 527</comment>
@@ -7478,8 +7478,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Fence</source>
             <comment>Name of symbol 522</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Barilo</translation>
+    </message>
         <message>
             <source>A wooden or wire fence less than ca. 1.5 m high.</source>
             <comment>Description of symbol 522</comment>
@@ -7488,8 +7488,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Ruined fence</source>
             <comment>Name of symbol 523</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ruinigita barilo</translation>
+    </message>
         <message>
             <source>A ruined fence may be shown with a dashed line.</source>
             <comment>Description of symbol 523</comment>
@@ -7498,8 +7498,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Settlement</source>
             <comment>Name of symbol 527.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Setlejo</translation>
+    </message>
         <message>
             <source>Houses and gardens and other built up areas. Roads, buildings and other significant features within a settlement must be shown. If all buildings cannot be shown, an alternative symbol (black line screen) may be used.</source>
             <comment>Description of symbol 527.1</comment>
@@ -8287,8 +8287,8 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <message>
             <source>Railway</source>
             <comment>Name of symbol 515</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Fervojo</translation>
+    </message>
         <message>
             <source>A railway or other kind of railed track (tramway, truckway, etc.).</source>
             <comment>Description of symbol 515</comment>
@@ -8357,8 +8357,8 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <message>
             <source>Fence</source>
             <comment>Name of symbol 522</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Barilo</translation>
+    </message>
         <message>
             <source>A wooden or wire fence less than ca. 1.5 m high.</source>
             <comment>Description of symbol 522</comment>
@@ -8367,8 +8367,8 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <message>
             <source>High fence</source>
             <comment>Name of symbol 524</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Alta barilo</translation>
+    </message>
         <message>
             <source>A boarded or wire fence higher than ca 1.5 m, not crossable to the average orienteer, eg. deer fence.</source>
             <comment>Description of symbol 524</comment>
@@ -8402,8 +8402,8 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <message>
             <source>Settlement</source>
             <comment>Name of symbol 527</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Setlejo</translation>
+    </message>
         <message>
             <source>Houses and gardens and other built up areas. Roads, buildings and other significant features within a settlement must be shown. If all buildings cannot be shown, an alternative symbol (black line screen) may be used.</source>
             <comment>Description of symbol 527</comment>
@@ -8412,8 +8412,8 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <message>
             <source>Settlement</source>
             <comment>Name of symbol 527.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Setlejo</translation>
+    </message>
         <message>
             <source>Houses and gardens and other built up areas. Roads, buildings and other significant features within a settlement must be shown. If all buildings cannot be shown, an alternative symbol (black line screen) may be used.</source>
             <comment>Description of symbol 527.1</comment>
@@ -9422,8 +9422,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Ruined fence</source>
             <comment>Name of symbol 523</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ruinigita barilo</translation>
+    </message>
         <message>
             <source>A ruined fence may be shown with a dashed line.</source>
             <comment>Description of symbol 523</comment>
@@ -10550,8 +10550,8 @@ Map symbols: ISOM 519, 520, 521</source>
         <message>
             <source>|D| Fence</source>
             <comment>Name of symbol 5.9</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>|D| Barilo</translation>
+    </message>
         <message>
             <source>A wire or wooden boundary. Used with symbol 8.11 to indicate a ruined fence.
 

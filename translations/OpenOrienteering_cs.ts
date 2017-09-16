@@ -1557,7 +1557,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="110"/>
         <source>Save undo/redo history</source>
-        <translation type="unfinished"></translation>
+        <translation>Uložit historii zpět/znovu</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="113"/>
@@ -5464,12 +5464,13 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
         <location filename="../src/gdal/ogr_file_format.cpp" line="536"/>
         <source>Cannot use this spatial reference:
 %s</source>
-        <translation type="unfinished"></translation>
+        <translation>Nemohu použít tento souřadnicový systém:
+%1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="589"/>
         <source>The geospatial data has no suitable spatial reference.</source>
-        <translation type="unfinished"></translation>
+        <translation>Geoprostorová data mají nevhodnou prostorovou referenci.</translation>
     </message>
 </context>
 <context>
