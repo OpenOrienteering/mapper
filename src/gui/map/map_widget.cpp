@@ -22,20 +22,38 @@
 #include "map_widget.h"
 
 #include <cmath>
+#include <stdexcept>
 
 #include <QApplication>
+#include <QColor>
+#include <QContextMenuEvent>
+#include <QEvent>
+#include <QFlags>
+#include <QFont>
+#include <QGestureEvent>
+#include <QKeyEvent>
 #include <QLabel>
+#include <QLatin1String>
+#include <QList>
+#include <QLocale>
+#include <QMouseEvent>
 #include <QPainter>
+#include <QPaintEvent>
 #include <QPinchGesture>
 #include <QPixmap>
+#include <QResizeEvent>
+#include <QSizePolicy>
 #include <QTimer>
 #include <QTouchEvent>
+#include <QTransform>
 #include <QVariant>
+#include <QWheelEvent>
 
 #include "settings.h"
 #include "core/georeferencing.h"
+#include "core/latlon.h"
 #include "core/map.h"
-#include "core/objects/object.h"
+#include "core/renderables/renderable.h"
 #include "gui/touch_cursor.h"
 #include "gui/map/map_editor_activity.h"
 #include "gui/widgets/action_grid_bar.h"
@@ -44,10 +62,12 @@
 #include "sensors/gps_display.h"
 #include "sensors/gps_temporary_markers.h"
 #include "templates/template.h" // IWYU pragma: keep
-#include "tools/edit_tool.h"
 #include "tools/tool.h"
-#include "util/backports.h"
+#include "util/backports.h" // IWYU pragma: keep
 #include "util/util.h"
+
+class QGesture;
+// IWYU pragma: no_forward_declare QPinchGesture
 
 
 MapWidget::MapWidget(bool show_help, bool force_antialiasing, QWidget* parent)

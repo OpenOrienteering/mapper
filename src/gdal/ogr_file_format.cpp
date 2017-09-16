@@ -278,7 +278,7 @@ namespace
 		auto srs_wkt = QString::fromLocal8Bit(srs_wkt_raw);
 		CPLFree(srs_wkt_raw);
 		return srs_wkt;
-	};
+	}
 	
 }
 

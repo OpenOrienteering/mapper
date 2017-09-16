@@ -31,7 +31,9 @@
 #include <QtGlobal>
 #include <QtMath>
 #include <QByteArray>
+#include <QCoreApplication>
 #include <QDebug>
+#include <QEventLoop>
 #include <QFile>
 #include <QFileInfo>
 #include <QIODevice>
@@ -68,6 +70,7 @@
 #include "gui/text_browser_dialog.h"
 #include "templates/template.h"
 #include "undo/object_undo.h"
+#include "undo/undo.h"
 #include "undo/undo_manager.h"
 #include "util/util.h"
 #include "util/transformation.h"

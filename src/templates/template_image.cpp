@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,24 +21,50 @@
 
 #include "template_image.h"
 
+#include <iterator>
+
+#include <Qt>
+#include <QtGlobal>
+#include <QtMath>
+#include <QAbstractButton>
+#include <QByteArray>
 #include <QDebug>
+#include <QFlags>
 #include <QHBoxLayout>
+#include <QIcon>
 #include <QImageReader>
+#include <QIntValidator>
 #include <QLabel>
+#include <QLatin1String>
 #include <QLineEdit>
+#include <QList>
 #include <QMessageBox>
 #include <QPainter>
+#include <QPen>
+#include <QPoint>
 #include <QPushButton>
 #include <QRadioButton>
+#include <QRect>
+#include <QSize>
+#include <QStringRef>
+#include <QTransform>
+#include <QVBoxLayout>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
-#include "world_file.h"
 #include "core/georeferencing.h"
+#include "core/latlon.h"
 #include "core/map.h"
+#include "core/map_coord.h"
 #include "gui/georeferencing_dialog.h"
 #include "gui/select_crs_dialog.h"
+#include "templates/world_file.h"
+#include "util/transformation.h"
 #include "util/util.h"
+
+// IWYU pragma: no_forward_declare QHBoxLayout
+// IWYU pragma: no_forward_declare QVBoxLayout
+
 
 const std::vector<QByteArray>& TemplateImage::supportedExtensions()
 {
