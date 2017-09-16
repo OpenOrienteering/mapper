@@ -2,6 +2,37 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="nl_NL">
 <context>
+    <name>MAC_APPLICATION_MENU</name>
+    <message>
+        <source>Services</source>
+        <translation>Ondersteunende functies</translation>
+    </message>
+    <message>
+        <source>Hide %1</source>
+        <translation>%1 verbergen</translation>
+    </message>
+    <message>
+        <source>Hide Others</source>
+        <translation>Verberg anderen</translation>
+    </message>
+    <message>
+        <source>Show All</source>
+        <translation>Toon alles</translation>
+    </message>
+    <message>
+        <source>Preferences...</source>
+        <translation>Instellingen...</translation>
+    </message>
+    <message>
+        <source>Quit %1</source>
+        <translation>%1 afsluiten</translation>
+    </message>
+    <message>
+        <source>About %1</source>
+        <translation>Over %1</translation>
+    </message>
+</context>
+<context>
     <name>QAbstractSpinBox</name>
     <message>
         <source>Step &amp;down</source>
