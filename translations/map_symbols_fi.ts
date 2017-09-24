@@ -36,8 +36,8 @@
         <message>
             <source>Black below light browns</source>
             <comment>Color 6</comment>
-            <translation>Musta ruskean alla</translation>
-        </message>
+            <translation>Musta vaaleanruskean alla</translation>
+    </message>
         <message>
             <source>Opaque Blue</source>
             <comment>Color 7</comment>
@@ -61,8 +61,8 @@
         <message>
             <source>OpenOrienteering Orange</source>
             <comment>Color 11</comment>
-            <translation>OpenOrienteering Oranssi</translation>
-        </message>
+            <translation>OpenOrienteering oranssi</translation>
+    </message>
         <message>
             <source>Black 25% (Grey)</source>
             <comment>Color 12</comment>
@@ -71,8 +71,8 @@
         <message>
             <source>Green 50%, Yellow</source>
             <comment>Color 13</comment>
-            <translation>Vihreä 50%, Keltainen</translation>
-        </message>
+            <translation>Vihreä 50%, keltainen</translation>
+    </message>
         <message>
             <source>Green</source>
             <comment>Color 14</comment>
@@ -101,8 +101,8 @@
         <message>
             <source>Green, Black 50%</source>
             <comment>Color 19</comment>
-            <translation>Vihreä, Musta 50%</translation>
-        </message>
+            <translation>Vihreä, musta 50%</translation>
+    </message>
         <message>
             <source>Opaque Green</source>
             <comment>Color 20</comment>
@@ -151,7 +151,7 @@
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. A contour interval of 2.5 metres may be used for flat terrains. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
             <comment>Description of symbol 101</comment>
-            <translation>Viiva, joka yhdistää samalla korkeudella olevat pisteet. Normaali käyräväli on 5 m. Pienin käyrien välinen etäisyys on 0.25 mm viivan keskeltä keskelle.</translation>
+            <translation>Viiva, joka yhdistää samalla korkeudella olevat pisteet. Normaali käyräväli on 5 metriä. 2.5 metrin käyräväli voidaan käyttää laakeaa maastoa varten. Pienin käyrien välinen etäisyys on 0.25 mm viivan keskeltä keskelle.</translation>
     </message>
         <message>
             <source>Slope line, contour</source>
