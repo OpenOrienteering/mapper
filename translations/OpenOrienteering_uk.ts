@@ -1233,7 +1233,7 @@
         <location filename="../src/tools/edit_point_tool.cpp" line="707"/>
         <location filename="../src/tools/edit_line_tool.cpp" line="510"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Select a single object. &lt;b&gt;Drag&lt;/b&gt;: Select multiple objects. &lt;b&gt;%1+Click&lt;/b&gt;: Toggle selection. </source>
-        <translation>&lt;b&gt;Клік&lt;/b&gt;: Вибрати об&apos;єкт. &lt;b&gt;Потягніть&lt;/b&gt; щоб вибрати кілька об&apos;єктів. &lt;b&gt;%1+Клік&lt;/b&gt;: Переключити виділення. </translation>
+        <translation>&lt;b&gt;Клік&lt;/b&gt;: Вибрати об&apos;єкт. &lt;b&gt;Потягніть&lt;/b&gt; щоб вибрати кілька об&apos;єктів. &lt;b&gt;%1+Клік&lt;/b&gt;: Зняти/додати виділення. </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="710"/>
