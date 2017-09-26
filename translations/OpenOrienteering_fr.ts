@@ -220,12 +220,12 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="216"/>
         <source>Draw elements if all points are inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Trace les éléments si tous les points sont à l&apos;intérieur de la zone définie.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="231"/>
         <source>Area settings</source>
-        <translation>Paramètres de surface</translation>
+        <translation type="unfinished">Paramètres de surface</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="326"/>
@@ -292,7 +292,7 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="58"/>
         <source>File %1 was not properly closed. At the moment, there are two versions:</source>
-        <translation>Le fichier %1 n&apos;a pas été correctement fermé. Pour le moment, il existe deux versions :</translation>
+        <translation>Le fichier %1 n&apos;a pas été correctement fermé. Actuellement, il en existe deux versions :</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="72"/>
