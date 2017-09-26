@@ -61,6 +61,34 @@
 extern QPointer<QTranslator> map_symbol_translator;
 
 
+#if MAPPER_USE_QTSINGLEAPPLICATION
+
+void resetActivationWindow()
+{
+	auto app = qobject_cast<QtSingleApplication*>(qApp);
+	app->setActivationWindow(nullptr);
+	
+	if (!app->closingDown())
+	{
+		const auto old_window = app->activationWindow();
+		const auto top_level_widgets = app->topLevelWidgets();
+		for (const auto widget : top_level_widgets)
+		{	
+			auto new_window = qobject_cast<MainWindow*>(widget);
+			if (new_window && new_window != old_window)
+			{
+				app->setActivationWindow(new_window);
+				QObject::connect(new_window, &QObject::destroyed, &resetActivationWindow);
+				QObject::connect(app, &QtSingleApplication::messageReceived, new_window, &MainWindow::openPath);
+				break;
+			}
+		}
+	}
+};
+
+#endif
+
+
 int main(int argc, char** argv)
 {
 #if MAPPER_USE_QTSINGLEAPPLICATION
@@ -136,9 +164,9 @@ int main(int argc, char** argv)
 #endif
 	
 	// Create first main window
-	MainWindow first_window;
-	first_window.setAttribute(Qt::WA_DeleteOnClose, false);
-	first_window.setController(new HomeScreenController());
+	auto first_window = new MainWindow();
+	Q_ASSERT(first_window->testAttribute(Qt::WA_DeleteOnClose));
+	first_window->setController(new HomeScreenController());
 	
 	// Open given files later, i.e. after the initial home screen has been
 	// displayed. In this way, error messages for missing files will show on 
@@ -149,19 +177,17 @@ int main(int argc, char** argv)
 	args.removeFirst(); // the program name
 	for (const auto& arg : qAsConst(args))
 	{
-		first_window.openPathLater(arg);
+		first_window->openPathLater(arg);
 	}
 	
-	first_window.applicationStateChanged();
+	first_window->applicationStateChanged();
 	
 #if MAPPER_USE_QTSINGLEAPPLICATION
-	// If we need to respond to a second app launch, do so, but also accept a file open request.
-	qapp.setActivationWindow(&first_window);
-	QObject::connect(&qapp, &QtSingleApplication::messageReceived, &first_window, &MainWindow::openPath);
+	resetActivationWindow();
 #endif
 	
 	// Let application run
-	first_window.setVisible(true);
-	first_window.raise();
+	first_window->setVisible(true);
+	first_window->raise();
 	return qapp.exec();
 }
