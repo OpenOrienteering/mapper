@@ -1568,7 +1568,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="110"/>
         <source>Save undo/redo history</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardar el historial de deshacer/rehacer</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="113"/>
@@ -5433,12 +5433,13 @@ zoom usando la rueda del ratón, si dispone de esos elementos.</translation>
         <location filename="../src/gdal/ogr_file_format.cpp" line="536"/>
         <source>Cannot use this spatial reference:
 %s</source>
-        <translation type="unfinished"></translation>
+        <translation>No se puede usar esta referencia espacial:
+%1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="589"/>
         <source>The geospatial data has no suitable spatial reference.</source>
-        <translation type="unfinished"></translation>
+        <translation>La información geoespacial no tienen una referencia espacial apropiada.</translation>
     </message>
 </context>
 <context>
@@ -5855,7 +5856,7 @@ zoom usando la rueda del ratón, si dispone de esos elementos.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="205"/>
         <source>Print in different scale:</source>
-        <translation>Utilizar una escala diferente:</translation>
+        <translation>Imprimir en una escala diferente:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="226"/>
@@ -6603,7 +6604,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/core/storage_location.cpp" line="282"/>
         <source>&apos;%1&apos; is stored in a regular location.</source>
-        <translation>&apos;%1&apos; es una ruta de almacenamiento válida.</translation>
+        <translation>&apos;%1&apos; está almacenado en una ubicación válida.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="285"/>
