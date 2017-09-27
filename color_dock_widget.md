@@ -7,51 +7,47 @@ keywords: Colors
 edited: 26 February 2013
 ---
 
-<p>This window can be shown by clicking the menu item Symbols -&gt; Color window.</p>
+This window can be shown by clicking the menu item Symbols -&gt; Color window.
 
-<br/><br/><img src="images/color_dock_widget.png" border="0" /><br/><br/>
+![ ](images/color_dock_widget.png)
 
-<h4>Introduction</h4>
+#### Introduction
 
-<p>Colors on orienteering maps are defined in the orienteering map standards, ISOM and ISSOM, as colors from the Pantone Matching System (PMS). The recommended way to print maps is to use these spot colors to print each color layer separately onto the map sheet. This way colors printed later will overlap colors which are printed earlier. The color system in OpenOrienteering Mapper follows this analogy: each map file contains a prioritized list of available colors, where colors higher in the list overlap lower colors.</p>
+Colors on orienteering maps are defined in the orienteering map standards, ISOM and ISSOM, as colors from the Pantone Matching System (PMS). The recommended way to print maps is to use these spot colors to print each color layer separately onto the map sheet. This way colors printed later will overlap colors which are printed earlier. The color system in OpenOrienteering Mapper follows this analogy: each map file contains a prioritized list of available colors, where colors higher in the list overlap lower colors.
 
-<p>Colors can be managed with the buttons at the bottom of the list. To edit a color, double click its entry in the color list.</p>
+Colors can be managed with the buttons at the bottom of the list. To edit a color, double click its entry in the color list.
 
-<h3 id="editor">Color editor</h3>
+### Color editor
 
-<p>Today there are different methods for printing maps and the color editor in OpenOrienteering Mapper is adjusted to that, so there are different settings for "desktop" and "professional" printing.</p>
+Today there are different methods for printing maps and the color editor in OpenOrienteering Mapper is adjusted to that, so there are different settings for "desktop" and "professional" printing.
 
-<h4>Desktop printing</h4>
+#### Desktop printing
 
-<br/><br/><img src="images/color_editor_desktop.png" border="0" /><br/><br/>
+![ ](images/color_editor_desktop.png)
 
-<p>The first page addresses "desktop" printing, i.e. printing maps with cheap home laser printers. These devices use the <b>RGB color space</b> to define colors, where each color consists of a given amount of red, green and blue (this is not to be confused with how the colors are actually printed; it is just how the PC tells the printer which color to print). So on the desktop page, you can define how the RGB value for a color should be calculated by OpenOrienteering Mapper:</p>
+The first page addresses "desktop" printing, i.e. printing maps with cheap home laser printers. These devices use the **RGB color space** to define colors, where each color consists of a given amount of red, green and blue (this is not to be confused with how the colors are actually printed; it is just how the PC tells the printer which color to print). So on the desktop page, you can define how the RGB value for a color should be calculated by OpenOrienteering Mapper:
 
-<ul>
-<li><b>Evaluate spot colors</b>: the spot colors referenced by this color will define its RGB color. This is only possible if this color references at least one spot color (see later)</li>
-<li><b>Evaluate CMYK color</b>: the CMYK value of this color will be converted to a RGB value (see later)</li>
-<li><b>Custom RGB color</b>: you can enter the RGB value directly</li>
-</ul>
 
-<p>Note that while defining RGB colors is enough for normal desktop printing, using the <a href="view_menu.md#overprinting">overprinting simulation</a> effect requires to define spot color printing options also.
+ - **Evaluate spot colors**: the spot colors referenced by this color will define its RGB color. This is only possible if this color references at least one spot color (see later)
+ - **Evaluate CMYK color**: the CMYK value of this color will be converted to a RGB value (see later)
+ - **Custom RGB color**: you can enter the RGB value directly
 
-<h4>Professional printing</h4>
 
-<br/><br/><img src="images/color_editor_professional.png" border="0" /><br/><br/>
+Note that while defining RGB colors is enough for normal desktop printing, using the [overprinting simulation](view_menu.md#overprinting) effect requires to define spot color printing options also.
 
-<p>This page is divided into two parts. On the left are the settings for <b>spot color printing</b>:</p>
-<ul>
-<li>If the first option is activated, this color entry represents a spot color and will thus define a color layer. Enter the spot color name in the text field below the option.</li>
-<li>If the second option is activated, this color entry represents a color which is printed as a percentage of a spot color (screen) or a mixture of multiple spot colors (overprint). Choose the referenced spot colors and their amounts below.</li>
-</ul>
+#### Professional printing
 
-<p>When multiple colors overlap each other on the map and <a href="view_menu.md#overprinting">overprinting simulation</a> is activated, the program simulates the effect of overprinting real spot colors where the colors are darkened when printed on top of each other. This can be very useful to increase map legibility, however it is not desired in all situations. Sometimes a color on top of another should erase the lower color completely. This can be set by activating the "<b>Knockout</b>" option.</p>
+![ ](images/color_editor_professional.png)
 
-<p>On the right side of the professional page, there are the options for <b>CMYK color printing</b>. These are similar to the RGB color options:</p>
+This page is divided into two parts. On the left are the settings for **spot color printing**:
 
-<ul>
-<li><b>Evaluate spot colors</b>: the spot colors referenced by this color will define its CMYK color. This is only possible if this color references at least one spot color</li>
-<li><b>Evaluate RGB color</b>: the RGB value of this color will be converted to a CMYK value</li>
-<li><b>Custom process color</b>: you can enter the CMYK value directly</li>
-</ul>
+ - If the first option is activated, this color entry represents a spot color and will thus define a color layer. Enter the spot color name in the text field below the option.
+ - If the second option is activated, this color entry represents a color which is printed as a percentage of a spot color (screen) or a mixture of multiple spot colors (overprint). Choose the referenced spot colors and their amounts below.
 
+When multiple colors overlap each other on the map and [overprinting simulation](view_menu.md#overprinting) is activated, the program simulates the effect of overprinting real spot colors where the colors are darkened when printed on top of each other. This can be very useful to increase map legibility, however it is not desired in all situations. Sometimes a color on top of another should erase the lower color completely. This can be set by activating the "**Knockout**" option.
+
+On the right side of the professional page, there are the options for **CMYK color printing**. These are similar to the RGB color options:
+
+ - **Evaluate spot colors**: the spot colors referenced by this color will define its CMYK color. This is only possible if this color references at least one spot color
+ - **Evaluate RGB color**: the RGB value of this color will be converted to a CMYK value
+ - **Custom process color**: you can enter the CMYK value directly
