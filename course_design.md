@@ -15,14 +15,12 @@ for Control Descriptions - 2004". See the [IOF Homepage] for details.
 ![ ](images/course_design.png)
 
 
-Loading a base map
-------------------
+## Loading a base map
 
 Open the base map as a template in the background. See [Templates] for details.
 
 
-Drawing the course
-------------------
+## Drawing the course
 
 For simple courses which consist only of start, controls, finish and free
 navigation you may use symbol 799 Simple Orienteering Course. For more complex
@@ -30,8 +28,7 @@ courses use the individual overprinting symbols. The labels for the controls
 have to be created explicitly.
 
 
-Creating the control description sheet
---------------------------------------
+## Creating the control description sheet
 
 The Course Design symbol set contains the individual pictograms as well as
 symbols for the different sections which together form the control description
@@ -43,8 +40,7 @@ and vertical lines spaced 3.0 millimeters. By pressing the Shift key while
 creating a new element, you may easily align all the parts of the description.
 
 
-About the control description sheet
------------------------------------
+## About the control description sheet
 
 The control description sheet starts with a heading which consists of blocks for
 the event title, classes (optional), and (in a single row) course code, course
@@ -68,8 +64,7 @@ uses eight colums which are refered to as A...H.
 | H       | Other information. Other information that may be of importance to the competitor; e.g. radio control; refreshments. |
 
 
-Specifications for Trail Orienteering
--------------------------------------
+## Specifications for Trail Orienteering
 
 There are two variations in the use of the columns when using IOF Control Descriptions for Trail Orienteering.
 
@@ -77,5 +72,3 @@ There are two variations in the use of the columns when using IOF Control Descri
 | ------ | ----------- |
 | B      | Number of control flags. This column is used to denote the number of control flags visible at this control; e.g. A-C equals three control flags to choose from; A-D equals four control flags to choose from. |
 | H      | Direction of observation. This column is used to denote the direction in which to view a feature. For example an arrow pointing north indicates that the competitor should be on a path/track to the south of the control circle. |
-
-

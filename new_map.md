@@ -27,4 +27,4 @@ In conjunction with the scale it is necessary to make an early decision on the s
 
 After clicking Create, the [map screen](main_window.md) will be shown. Now you probably want to load some [templates](templates.md) and establish the map's [georeferencing](georeferencing.md). Note that loading a georeferenced template will show the georeferencing dialog with some values already pre-filled and adapted to your template file, so you probably do not need to do this step separately.
 
-After loading your templates you can start [drawing](toolbars.md#drawing) your map objects with the map [symbols](symbol_dock_widget.md).
+After loading your templates you can start [drawing](toolbars.md#drawing-toolbar) your map objects with the map [symbols](symbol_dock_widget.md).

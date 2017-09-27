@@ -15,6 +15,7 @@ edited: 25 February 2013
  - [Further reading](#further-reading)
 
 #### Introduction
+
 Georeferencing of a map is the best way for aligning templates (such as base maps or aerial imagery) and GPS tracks. In short, to georeference a map means to establish a known relationship between the paper coordinates of the map and the coordinates of a geographic coordinate reference system. This way, data which is known in a geographic coordinate reference system (such as GPS coordinates) can be transformed to map coordinates and thus displayed on the map, and vice versa the map can be transformed to geographic coordinates and e.g. be displayed on a world map. More information is available on [Wikipedia](http://en.wikipedia.org/wiki/Georeferencing).
 
 Georeferencing properties are set in a dialog which is available from the menu **Map &gt; Georeferencing...**. The dialog is divided in three sections: Map coordinate reference system, Reference point and Map north.
@@ -62,6 +63,7 @@ In the **Declination** field the angle between true north and magnetic north at 
 
 
 #### Related functions
+
 The (mouse) cursor position of the map editor can be displayed in map coordinates, projected coordinates or geographic coordinates (decimal or as degrees/minutes/seconds, DMS). The coordinates of the cursor on the map sheet are discussed [here](view_menu.md#coorddisplay).
 
 #### Further reading
