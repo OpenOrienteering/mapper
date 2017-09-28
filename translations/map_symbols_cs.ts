@@ -6,346 +6,348 @@
         <message>
             <source>Purple</source>
             <comment>Color 0</comment>
-            <translation type="unfinished">Fialová</translation>
+            <translation>Fialová</translation>
         </message>
         <message>
             <source>Black</source>
             <comment>Color 1</comment>
-            <translation type="unfinished">Černá</translation>
+            <translation>Černá</translation>
         </message>
         <message>
             <source>Opaque White below Black</source>
             <comment>Color 2</comment>
-            <translation type="unfinished">Opaque White below Black</translation>
-        </message>
+            <translation>Neprůhledná bílá pod černou</translation>
+    </message>
         <message>
             <source>Black 65%</source>
             <comment>Color 3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Černá 65%</translation>
+    </message>
         <message>
             <source>Black 20%</source>
             <comment>Color 4</comment>
-            <translation type="unfinished">Black 20%</translation>
-        </message>
+            <translation>Černá 20%</translation>
+    </message>
         <message>
             <source>Brown 50%</source>
             <comment>Color 5</comment>
-            <translation type="unfinished">Hnědá 50%</translation>
+            <translation>Hnědá 50%</translation>
         </message>
         <message>
             <source>Black below light browns</source>
             <comment>Color 6</comment>
-            <translation type="unfinished">Černá pod světle hnědou</translation>
+            <translation>Černá pod světle hnědou</translation>
         </message>
         <message>
             <source>Opaque Blue</source>
             <comment>Color 7</comment>
-            <translation type="unfinished">Krycí modrá</translation>
-        </message>
+            <translation>Neprůhledná modrá</translation>
+    </message>
         <message>
             <source>Blue</source>
             <comment>Color 8</comment>
-            <translation type="unfinished">Modrá</translation>
+            <translation>Modrá</translation>
         </message>
         <message>
             <source>Blue 50%</source>
             <comment>Color 9</comment>
-            <translation type="unfinished">Modrá 50%</translation>
+            <translation>Modrá 50%</translation>
         </message>
         <message>
             <source>Brown</source>
             <comment>Color 10</comment>
-            <translation type="unfinished">Hnědá</translation>
+            <translation>Hnědá</translation>
         </message>
         <message>
             <source>OpenOrienteering Orange</source>
             <comment>Color 11</comment>
-            <translation type="unfinished">Oranžová OpenOrienteering</translation>
+            <translation>Oranžová OpenOrienteering</translation>
         </message>
         <message>
             <source>Black 25% (Grey)</source>
             <comment>Color 12</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Černá 25% (Šedá)</translation>
+    </message>
         <message>
             <source>Green 50%, Yellow</source>
             <comment>Color 13</comment>
-            <translation type="unfinished">Zelená 50%, žlutá</translation>
+            <translation>Zelená 50%, žlutá</translation>
         </message>
         <message>
             <source>Green</source>
             <comment>Color 14</comment>
-            <translation type="unfinished">Zelená</translation>
+            <translation>Zelená</translation>
         </message>
         <message>
             <source>Opaque Yellow</source>
             <comment>Color 15</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Neprůhledná žlutá</translation>
+    </message>
         <message>
             <source>Opaque White over Green</source>
             <comment>Color 16</comment>
-            <translation type="unfinished">Krycí bílá nad zelenou</translation>
-        </message>
+            <translation>Neprůhledná bílá nad zelenou</translation>
+    </message>
         <message>
             <source>Opaque Green 20%</source>
             <comment>Color 17</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Neprůhledná zelená 20%</translation>
+    </message>
         <message>
             <source>Opaque Green 50%</source>
             <comment>Color 18</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Neprůhledná zelená 50%</translation>
+    </message>
         <message>
             <source>Green, Black 50%</source>
             <comment>Color 19</comment>
-            <translation type="unfinished">Green, Black 50%</translation>
-        </message>
+            <translation>Zelená, černá 50%</translation>
+    </message>
         <message>
             <source>Opaque Green</source>
             <comment>Color 20</comment>
-            <translation type="unfinished">Krycí zelená</translation>
-        </message>
+            <translation>Neprůhledná zelená</translation>
+    </message>
         <message>
             <source>Green 50%</source>
             <comment>Color 21</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Zelená 50%</translation>
+    </message>
         <message>
             <source>Green 20%</source>
             <comment>Color 22</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Zelená 20%</translation>
+    </message>
         <message>
             <source>Green below light greens</source>
             <comment>Color 23</comment>
-            <translation type="unfinished">Zelená nad světle zelenou</translation>
-        </message>
+            <translation>Zelená pod světle zelenou</translation>
+    </message>
         <message>
             <source>Green 50% over Yellow</source>
             <comment>Color 24</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Zelená 50% nad žlutou</translation>
+    </message>
         <message>
             <source>White over Yellow</source>
             <comment>Color 25</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Bílá nad žlutou</translation>
+    </message>
         <message>
             <source>Yellow</source>
             <comment>Color 26</comment>
-            <translation type="unfinished">Žlutá</translation>
+            <translation>Žlutá</translation>
         </message>
         <message>
             <source>Yellow 50%</source>
             <comment>Color 27</comment>
-            <translation type="unfinished">Žlutá 50%</translation>
+            <translation>Žlutá 50%</translation>
         </message>
         <message>
             <source>Contour</source>
             <comment>Name of symbol 101</comment>
-            <translation type="unfinished">Vrstevnice</translation>
+            <translation>Vrstevnice</translation>
         </message>
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. A contour interval of 2.5 metres may be used for flat terrains. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
             <comment>Description of symbol 101</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Čára spojující body stejné {nadmořské} výšky. Základní výškový interval mezi vrstevnicemi je 5 metrů. Interval vrstevnic 2.5 metru může být použit v plochých terénech. Nejmenší ohyb vrstevnice je 0.25 mm od středu ke středu linie.</translation>
+    </message>
         <message>
             <source>Slope line, contour</source>
             <comment>Name of symbol 101.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Spádnice</translation>
+    </message>
         <message>
             <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
             <comment>Description of symbol 101.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Spádnice se mohou kreslit na nižší straně vrstevnice k ujasnění směru spádu. Pokud jsou použity, měly by být umístěny v údolích.</translation>
+    </message>
         <message>
             <source>Index contour</source>
             <comment>Name of symbol 102</comment>
-            <translation type="unfinished">Hlavní vrstevnice</translation>
+            <translation>Hlavní vrstevnice</translation>
         </message>
         <message>
             <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. An index contour may be represented as an ordinary contour line in an area with much detail. Small contour knolls and depressions are normally not represented using index contours.</source>
             <comment>Description of symbol 102</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Každá pátá vrstevnice musí být kreslena silnější čarou. To napomáhá k rychlému odhadu výškového rozdílu a celkového tvaru terénu. V oblasti s mnoha detaily může být hlavní vrstevnice nakreslena jako normální vrstevnice. Malé vrstevnicové kupky a prohlubně se obvykle nezobrazují pomocí hlavní vrstevnice.</translation>
+    </message>
         <message>
             <source>Contour value</source>
             <comment>Name of symbol 102.1</comment>
-            <translation type="unfinished">Vrstevnicová kóta</translation>
-        </message>
+            <translation>Výšková kóta</translation>
+    </message>
         <message>
             <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
             <comment>Description of symbol 102.1</comment>
-            <translation type="unfinished">Vrstevnicová kóta může být vložena pro rychlý odhad velkých výškových rozdílů {a informaci o nadmořské výšce terénu}. Vsunují se do hlavních vrstevnic v místech, kde nezacloní jiné podrobnosti. Číslice musí být orientovány horní částí na vyšší stranu vrstevnice.
-Barva: hnědá.</translation>
-        </message>
+            <translation>Hlavní vrstevnice může mít přiřazenu výškovou kótu. Výšková kóta by měla být vložena pouze v hlavní vrstevnici v místech, kde nezakrývá další detaily. Musí být orientována tak, aby horní strana kóty byla na vyšší straně vrstevnice.</translation>
+    </message>
         <message>
             <source>Form line</source>
             <comment>Name of symbol 103</comment>
-            <translation type="unfinished">Pomocná vrstevnice</translation>
+            <translation>Pomocná vrstevnice</translation>
         </message>
         <message>
             <source>Form lines are used where more information must be given about the shape of the ground. Form lines are added only where representation would be incomplete with ordinary contours. They shall not be used as intermediate contours. Only one form line should be used between neighbouring contours. It is very important that a form line fits logically into the contour system, so the start and end of a form line should be parallel to the neighbouring contours. The gaps between the form line dashes must be placed on reasonably straight sections of the form line. Form lines can be used to differentiate flat knolls and depressions from more distinct ones.</source>
             <comment>Description of symbol 103</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Pomocné vrstevnice se používají tam, kde musí být poskytnuty další informace o tvaru terénu. Pomocné vrstevnice jsou přidány pouze tam, kde vyjádření běžnými vrstevnicemi by bylo neúplné. Nesmějí být pou-žity jako mezilehlé vrstevnice. Pouze jedna pomocná vrstevnice by měla být {smí být} použita mezi dvěma sousedními vrstevnicemi. Je velmi důležité, aby pomocná vrstevnice zapadala logicky do systému vrstevnic tak, že začátek a konec pomocné vrstevnice má být rovno-běžný se sousedními vrstevnicemi. Mezery mezi čárkami pomocné vrstevnice musí být umístěny na přiměřeně přímých úsecích pomocné vrstevnice. Pomocné vrstevnice mohou být použity pro odlišení plo-chých kupek a prohlubní od těch výraznějších.</translation>
+    </message>
         <message>
             <source>Slope line, formline</source>
             <comment>Name of symbol 103.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Spádnice pomocné vrstevnice</translation>
+    </message>
         <message>
             <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
             <comment>Description of symbol 103.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Spádnice se mohou kreslit na nižší straně vrstevnice k ujasnění směru spádu. Pokud jsou použity, měly by být umístěny v údolích.</translation>
+    </message>
         <message>
             <source>Earth bank</source>
             <comment>Name of symbol 104</comment>
-            <translation type="unfinished">Sráz</translation>
-        </message>
+            <translation>Zemní sráz</translation>
+    </message>
         <message>
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
             <comment>Description of symbol 104</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Zemní sráz je zlomová změna úrovně povrchu, která se jasně odlišuje od svého okolí, například štěrkoviště a pískovny, zářezy a náspy silnic a železnic {a meze}. Minimální výška: 1 m. Zemní sráz může ovlivnit průběžnost. Čárky ukazují celý rozsah srázu. Pro dlouhé zemní srázy je přípustné užít na jeho koncích čárky kratší, než je minimální délka. Pokud jsou dva zemní srázy blízko sebe, mohou být čárky vynechány. Nepřekonatelné zemní srázy by měly být zobrazeny značkou 201 (nepřekonatelný sráz).</translation>
+    </message>
         <message>
             <source>Earth bank, minimum size</source>
             <comment>Name of symbol 104.1</comment>
-            <translation type="unfinished">Sráz, nejmenší velikost</translation>
-        </message>
+            <translation>Zemní sráz, minimální délka</translation>
+    </message>
         <message>
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
             <comment>Description of symbol 104.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Zemní sráz je zlomová změna úrovně povrchu, která se jasně odlišuje od svého okolí, například štěrkoviště a pískovny, zářezy a náspy silnic a železnic {a meze}. Minimální výška: 1 m. Zemní sráz může ovlivnit průběžnost. Čárky ukazují celý rozsah srázu. Pro dlouhé zemní srázy je přípustné užít na jeho koncích čárky kratší, než je minimální délka. Pokud jsou dva zemní srázy blízko sebe, mohou být čárky vynechány. Nepřekonatelné zemní srázy by měly být zobrazeny značkou 201 (nepřekonatelný sráz).</translation>
+    </message>
         <message>
             <source>Earth bank, top line</source>
             <comment>Name of symbol 104.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Zemní sráz, horní linie</translation>
+    </message>
         <message>
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
             <comment>Description of symbol 104.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Zemní sráz je zlomová změna úrovně povrchu, která se jasně odlišuje od svého okolí, například štěrkoviště a pískovny, zářezy a náspy silnic a železnic {a meze}. Minimální výška: 1 m. Zemní sráz může ovlivnit průběžnost. Čárky ukazují celý rozsah srázu. Pro dlouhé zemní srázy je přípustné užít na jeho koncích čárky kratší, než je minimální délka. Pokud jsou dva zemní srázy blízko sebe, mohou být čárky vynechány. Nepřekonatelné zemní srázy by měly být zobrazeny značkou 201 (nepřekonatelný sráz).</translation>
+    </message>
         <message>
             <source>Earth bank, tag line</source>
             <comment>Name of symbol 104.3</comment>
-            <translation type="unfinished">Sráz, souvislá čára</translation>
-        </message>
+            <translation>Zemní sráz, spádová čára</translation>
+    </message>
         <message>
             <source>Use this symbol to display the full extent of wide earth banks.</source>
             <comment>Description of symbol 104.3</comment>
-            <translation type="unfinished">Tento symbol se použije k zobrazení celého rozsahu širokých srázů.</translation>
+            <translation>Tento symbol se použije k zobrazení celého rozsahu širokých srázů.</translation>
         </message>
         <message>
             <source>Earth bank, minimum size (from ISOM2000)</source>
             <comment>Name of symbol 104.9</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Zemní sráz, minimální délka (z ISOM2000)</translation>
+    </message>
         <message>
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
             <comment>Description of symbol 104.9</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Zemní sráz je zlomová změna úrovně povrchu, která se jasně odlišuje od svého okolí, například štěrkoviště a pískovny, zářezy a náspy silnic a železnic {a meze}. Minimální výška: 1 m. Zemní sráz může ovlivnit průběžnost. Čárky ukazují celý rozsah srázu. Pro dlouhé zemní srázy je přípustné užít na jeho koncích čárky kratší, než je minimální délka. Pokud jsou dva zemní srázy blízko sebe, mohou být čárky vynechány. Nepřekonatelné zemní srázy by měly být zobrazeny značkou 201 (nepřekonatelný sráz).</translation>
+    </message>
         <message>
             <source>Earth wall</source>
             <comment>Name of symbol 105</comment>
-            <translation type="unfinished">Hráz</translation>
-        </message>
+            <translation>Zemní val</translation>
+    </message>
         <message>
             <source>Distinct earth wall. Minimum height is 1 m.</source>
             <comment>Description of symbol 105</comment>
-            <translation type="unfinished">Výrazný hliněný val {- úzký násep bez komunikace}. Minimální výška je 1 m. {Širší náspy se kreslí pomocí dvou značek 106.}
-Barva: hnědá.</translation>
-        </message>
+            <translation>Zřetelný zemní val. Minimální výška: 1 m.</translation>
+    </message>
         <message>
             <source>Small earth wall</source>
             <comment>Name of symbol 106</comment>
-            <translation type="unfinished">Malá hráz</translation>
-        </message>
+            <translation>Rozpadlý zemní val</translation>
+    </message>
         <message>
             <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
             <comment>Description of symbol 106</comment>
-            <translation type="unfinished">Malá nebo částečně rozpadlá hráz může být znázorněna přerušova-nou linií. Minimální výška je 0,5 m.
-Barva: hnědá.</translation>
-        </message>
+            <translation>Zřícený nebo méně zřetelný zemní val. Minimální výška je 0.5 m.</translation>
+    </message>
         <message>
             <source>Erosion gully</source>
             <comment>Name of symbol 107</comment>
-            <translation type="unfinished">Rýha</translation>
+            <translation>Rýha</translation>
         </message>
         <message>
             <source>An erosion gully which is too small to be shown using symbol 104 (earth bank) is shown by a single line. Minimum depth: 1 m.
 Contour lines shall not be broken around this symbol.</source>
             <comment>Description of symbol 107</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Erozní rýha, která je příliš malá pro zobrazení užitím značky 104 (zemní sráz), je zobrazena jednou čarou. Minimální hloubka: 1 m. 
+Vrstevnice kolem této značky se nepřerušují.</translation>
+    </message>
         <message>
             <source>Small erosion gully</source>
             <comment>Name of symbol 108</comment>
-            <translation type="unfinished">Mělká rýha</translation>
-        </message>
+            <translation>Malá rýha</translation>
+    </message>
         <message>
             <source>A small erosion gully, dry ditch or trench. Minimum depth: 0.5 m.
 Contour lines should be broken around this symbol.</source>
             <comment>Description of symbol 108</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Malá erozní rýha, suchý příkop nebo výkop. Minimální hloubka 0.5 m. 
+Vrstevnice by měly být přerušeny kolem této značky.</translation>
+    </message>
         <message>
             <source>Small knoll</source>
             <comment>Name of symbol 109</comment>
-            <translation type="unfinished">Malá kupka</translation>
+            <translation>Malá kupka</translation>
         </message>
         <message>
             <source>An obvious mound or knoll which cannot be drawn to scale with a contour. Minimum height: 1 m.
 The symbol shall not touch or overlap contours.</source>
             <comment>Description of symbol 109</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Zřetelný kopeček nebo kupka, která nemůže být vykreslena v měřítku vrstevnicí. Minimální výška: 1 m. 
+Značka se nesmí dotýkat nebo překrývat vrstevnice.</translation>
+    </message>
         <message>
             <source>Small elongated knoll</source>
             <comment>Name of symbol 110</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Malá protáhlá kupka</translation>
+    </message>
         <message>
             <source>An obvious elongated knoll which cannot be drawn to scale with a contour. Minimum height: 1 m.
 The symbol shall not touch or overlap contours.</source>
             <comment>Description of symbol 110</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Zřetelná protáhlá kupka, která nemůže být vykreslena v měřítku vrstevnicí. Minimální výška: 1 m. 
+Značka se nesmí dotýkat nebo překrývat vrstevnice.</translation>
+    </message>
         <message>
             <source>Small depression</source>
             <comment>Name of symbol 111</comment>
-            <translation type="unfinished">Malá prohlubeň</translation>
+            <translation>Malá prohlubeň</translation>
         </message>
         <message>
             <source>A small depression or hollow without steep sides that is too small to be shown by contours. Minimum depth: 1 m. Minimum width: 2 m.
 Small depressions with steep sides are represented with symbol 112 (pit). The symbol may not touch or overlap other brown symbols. Location is the centre of gravity of the symbol, and the symbol is orientated to north.</source>
             <comment>Description of symbol 111</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Malá prohlubeň nebo sníženina bez prudkých stěn, která je příliš malá, než aby se dala vyjádřit vrstevnicí. Minimální hloubka: 1 m. Minimální šířka: 2 m. 
+Malé prohlubně se strmými stěnami jsou zobrazeny značkou 112 (jáma).  Značka se nesmí dotýkat nebo překrývat s jinými hnědými značkami. Umístění je v těžišti značky a značka je orientována k severu.</translation>
+    </message>
         <message>
             <source>Pit</source>
             <comment>Name of symbol 112</comment>
-            <translation type="unfinished">Jáma</translation>
+            <translation>Jáma</translation>
         </message>
         <message>
             <source>Pits and holes with distinct steep sides which cannot be shown to scale using symbol 104 (earth bank). Minimum depth: 1 m. Minimum width: 1 m. A pit larger than 5 m x 5 m should normally be exaggerated and drawn using symbol 104 (earth bank). Pits without steep sides are represented with symbol 111 (small depression). The symbol may not touch or overlap other brown symbols. Location is the centre of
 gravity of the symbol, and the symbol is orientated to north.</source>
             <comment>Description of symbol 112</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Jámy a díry se zřetelnými strmými stěnami, které nemohou být zobrazeny v měřítku užitím značky 104 (zemní sráz). Minimální hloubka: 1 m. Minimální šířka: 1 m. Jáma větší než 5 m × 5 m by měla být obvykle zveličena a kreslená pomocí značky 104 (zemní sráz). Jámy bez strmých stěn jsou zobrazeny značkou 111 (malá prohlubeň). Značka se nesmí dotýkat nebo překrývat s jinými hnědými značkami. Umístění je v těžišti značky a značka je orientována k severu.</translation>
+    </message>
         <message>
             <source>Broken ground</source>
             <comment>Name of symbol 113</comment>
-            <translation type="unfinished">Rozbitý povrch</translation>
+            <translation>Rozbitý povrch</translation>
         </message>
         <message>
             <source>An area of pits and/or knolls which is too intricate to be shown in detail, or other types of rough and uneven ground that is clearly distinguishable but has little impact on runnability.
@@ -354,24 +356,27 @@ The minimum number of dots is three (footprint 10 m x 10 m).
 Contours shall not be cut in broken ground areas.
 Density: 3 to 5 dots / mm² (9-16%).</source>
             <comment>Description of symbol 113</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Oblast jam a / nebo kupek, která je příliš složitá na to, aby ji bylo možné zobrazit v detailu, nebo jiné typy drsného a nerovného povrchu, který je jasně odlišitelný, ale má jen malý vliv na průběžnost.
+Jde o plošnou značku. 
+Minimální počet teček jsou tři (stopa 10 m × 10 m).
+Vrstevnice by neměly být přerušeny na rozbitém povrchu. 
+Hustota: 3–4 body / mm2 ({hustota} 9-13 %).</translation>
+    </message>
         <message>
             <source>Broken ground, individual dot</source>
             <comment>Name of symbol 113.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Rozbitý povrch, samostatná tečka</translation>
+    </message>
         <message>
             <source>An area of pits or knolls which is too intricate to be shown in detail. The density of randomly placed dots may vary according to the detail on the ground.</source>
             <comment>Description of symbol 113.1</comment>
-            <translation type="unfinished">Oblast jam nebo kupek, které se nedají jednotlivě znázornit. Hustota náhodně umístěných teček se může měnit podle četnosti detailů na povrchu.
-Barva: hnědá.</translation>
-        </message>
+            <translation>Oblast jam a / nebo kupek, která je příliš složitá na to, aby ji bylo možné zobrazit v detailu. Tečky by měly být rozmístěny náhodně, ale bez zasahování do zobrazení důležitých terénních prvků a objektů.</translation>
+    </message>
         <message>
             <source>Very broken ground</source>
             <comment>Name of symbol 114</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Velmi rozbitý povrch</translation>
+    </message>
         <message>
             <source>An area of pits and/or knolls, which is too intricate to be shown in detail, or other types of rough and uneven ground that is clearly distinguishable and affects runnability.
 This is an area symbol.
@@ -379,90 +384,104 @@ The minimum number of dots is three (footprint 7m x 7m).
 Contours shall not be cut in broken ground areas.
 Density: 8 to 10 dots / mm² (25-32%).</source>
             <comment>Description of symbol 114</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Oblast jam a / nebo kupek, která je příliš složitá na to, aby ji bylo možné zobrazit v detailu, nebo jiné typy drsného a nerovného povrchu, který je jasně odlišitelný a má vliv na průběžnost.
+Jde o plošnou značku.
+Minimální počet teček jsou tři (stopa 7 m × 7 m).
+Vrstevnice by neměly být přerušeny na rozbitém povrchu.
+Hustota: 7–9 bodů / mm2 ({hustota} 22-28 %).</translation>
+    </message>
         <message>
             <source>Prominent landform feature</source>
             <comment>Name of symbol 115</comment>
-            <translation type="unfinished">Význačný terénní objekt</translation>
-        </message>
+            <translation>Výrazný terénní objekt</translation>
+    </message>
         <message>
             <source>The feature must be very clearly distinguishable from its surroundings. Location is the centre of gravity of the symbol, which is orientated to north. The symbol may not touch or overlap other brown symbols.</source>
             <comment>Description of symbol 115</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Objekt musí být jasně rozlišitelný od svého okolí. Umístění je v těžišti značky, která je orientována k severu. Značka se nesmí dotýkat nebo překrývat s jinými hnědými značkami.</translation>
+    </message>
         <message>
             <source>Impassable cliff</source>
             <comment>Name of symbol 201</comment>
-            <translation type="unfinished">Neschůdný sráz</translation>
-        </message>
+            <translation>Nepřekonatelný sráz</translation>
+    </message>
         <message>
             <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
 For vertical rock faces the tags may be omitted if space is short. Ends of the top line may be rounded or square. Shorter tags may be used at the ends.
 The gap between two impassable cliffs or between impassable cliffs and other impassable feature symbols must exceed 0.3 mm on the map.
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.</source>
             <comment>Description of symbol 201</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Sráz, lom nebo zemní sráz {nebo opěrná zeď}, který je tak vysoký a strmý, že je nemožné ho překonat / přelézt nebo je to nebezpečné.  Pro svislé skalní stěny mohou být čárky vynechány, je-li nedostatek prostoru. Konce horní linie mohou být kulaté nebo hranaté. Kratší spádové čárky mohou být použity na koncích.
+Mezera mezi dvěma nepřekonatelnými srázy nebo mezi nepřekonatelnými srázy a značkou jiného neprůchodného objektu musí překročit 0.3 mm v mapě.
+Když skalní útvar spadá přímo do vody a znemožňuje tím průchod pod skalou podél okraje vody, vynechá se břehová čára, nebo se čárky zřetelně přetáhnou přes břehovou čáru. Nepřekonatelný sráz by měl být v souladu s vrstevnicemi.</translation>
+    </message>
         <message>
             <source>Impassable cliff, minimum size</source>
             <comment>Name of symbol 201.1</comment>
-            <translation type="unfinished">Neschůdný sráz, nejmenší velikost</translation>
-        </message>
+            <translation>Nepřekonatelný sráz, minimální délka</translation>
+    </message>
         <message>
             <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
 Ends of the top line may be rounded or square.
 The gap between two impassable cliffs or between impassable cliffs and other impassable feature symbols must exceed 0.3 mm on the map.
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.</source>
             <comment>Description of symbol 201.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Sráz, lom nebo zemní sráz {nebo opěrná zeď}, který je tak vysoký a strmý, že je nemožné ho překonat / přelézt nebo je to nebezpečné.  Pro svislé skalní stěny mohou být čárky vynechány, je-li nedostatek prostoru. Konce horní linie mohou být kulaté nebo hranaté.
+Mezera mezi dvěma nepřekonatelnými srázy nebo mezi nepřekonatelnými srázy a značkou jiného neprůchodného objektu musí překročit 0.3 mm v mapě.
+Když skalní útvar spadá přímo do vody a znemožňuje tím průchod pod skalou podél okraje vody, vynechá se břehová čára, nebo se čárky zřetelně přetáhnou přes břehovou čáru. Nepřekonatelný sráz by měl být v souladu s vrstevnicemi.</translation>
+    </message>
         <message>
             <source>Impassable cliff, plan shape representation</source>
             <comment>Name of symbol 201.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Nepřekonatelný sráz, půdorysné zobrazení</translation>
+    </message>
         <message>
             <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
 For vertical rock faces the tags may be omitted if space is short. &lt;b&gt;For plan shape representation, the minimum width is 0.35 mm.&lt;/b&gt; Shorter tags may be used at the ends.
 The gap between two impassable cliffs or between impassable cliffs and other impassable feature symbols must exceed 0.3 mm on the map.
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.</source>
             <comment>Description of symbol 201.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Sráz, lom nebo zemní sráz {nebo opěrná zeď}, který je tak vysoký a strmý, že je nemožné ho překonat / přelézt nebo je to nebezpečné.
+Pro svislé skalní stěny mohou být čárky vynechány, je-li nedostatek prostoru. &lt;b&gt;Pro půdorysné zobrazení je minimální šířka 0.35 mm.&lt;/b&gt; Kratší spádové čárky mohou být použity na koncích.
+Mezera mezi dvěma nepřekonatelnými srázy nebo mezi nepřekonatelnými srázy a značkou jiného neprůchodného objektu musí překročit 0.3 mm v mapě.
+Když skalní útvar spadá přímo do vody a znemožňuje tím průchod pod skalou podél okraje vody, vynechá se břehová čára, nebo se čárky zřetelně přetáhnou přes břehovou čáru. Nepřekonatelný sráz by měl být v souladu s vrstevnicemi.</translation>
+    </message>
         <message>
             <source>Impassable cliff, top line</source>
             <comment>Name of symbol 201.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Nepřekonatelný sráz, horní linie</translation>
+    </message>
         <message>
             <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
             <comment>Description of symbol 201.3</comment>
-            <translation type="unfinished">Pro svislé skalní srázy mohou být čárky vynechány, byly-li by krátké, například úzké průchody mezi skalami (průchod má být kreslen v šířce alespoň 0,3 mm).</translation>
-        </message>
+            <translation>Pro svislé skalní srázy mohou být čárky vynechány, je-li nedostatek prostoru. Mezera mezi dvěma nepřekonatelnými srázy nebo mezi nepřekonatelnými srázy a značkou jiného neprůchodného objektu musí překročit 0.3 mm v mapě.</translation>
+    </message>
         <message>
             <source>Impassable cliff, tag line</source>
             <comment>Name of symbol 201.4</comment>
-            <translation type="unfinished">Neschůdný sráz, souvislá čára</translation>
-        </message>
+            <translation>Nepřekonatelný sráz, spádová čára</translation>
+    </message>
         <message>
             <source>Use this symbol to display the full extent of a wide cliff.</source>
             <comment>Description of symbol 201.4</comment>
-            <translation type="unfinished">Tento symbol se použije k zobrazení celého rozsahu širokého srázu.</translation>
-        </message>
+            <translation>Tato značka se použije k zobrazení celého rozsahu širokého srázu.</translation>
+    </message>
         <message>
             <source>Impassable cliff, minimum size (from ISOM2000)</source>
             <comment>Name of symbol 201.9</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Nepřekonatelný sráz, minimální délka (z ISOM2000)</translation>
+    </message>
         <message>
             <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
 Ends of the top line may be rounded or square.
 The gap between two impassable cliffs or between impassable cliffs and other impassable feature symbols must exceed 0.3 mm on the map.
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.</source>
             <comment>Description of symbol 201.9</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Sráz, lom nebo zemní sráz {nebo opěrná zeď}, který je tak vysoký a strmý, že je nemožné ho překonat / přelézt nebo je to nebezpečné.
+Konce horní linie mohou být kulaté nebo hranaté.
+Mezera mezi dvěma nepřekonatelnými srázy nebo mezi nepřekonatelnými srázy a značkou jiného neprůchodného objektu musí překročit 0.3 mm v mapě.
+Když skalní útvar spadá přímo do vody a znemožňuje tím průchod pod skalou podél okraje vody, vynechá se břehová čára, nebo se čárky zřetelně přetáhnou přes břehovou čáru. Nepřekonatelný sráz by měl být v souladu s vrstevnicemi.</translation>
+    </message>
         <message>
             <source>Cliff</source>
             <comment>Name of symbol 202</comment>
@@ -2556,7 +2575,7 @@ Barva: hnědá.</translation>
             <translation>Neschůdný sráz</translation>
         </message>
         <message>
-            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
+            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201</comment>
             <translation>Neschůdný sráz, kamenný nebo hliněný sráz (viz 106) {nebo opěrná zeď} se znázorňuje čarou 0,35 mm a dolů {ve směru spádu} směřují-cími čárkami ukazujícími celkový rozsah od vrcholové linie až k úpatí. Pro svislé skalní srázy mohou být čárky vynechány, byly-li by krátké, například úzké průchody mezi skalami (průchod má být kreslen v šířce alespoň 0,3 mm). Čárky mohou přesahovat přes plošnou značku vyjadřující detail bezprostředně pod skalním útvarem. Když skalní útvar spadá přímo do vody a znemožňuje tím průchod pod skalou podél okraje vody, vynechá se břehová čára, nebo se čárky zřetelně přetáhnou přes břehovou čáru.
 Barva: černá.</translation>
@@ -2567,7 +2586,7 @@ Barva: černá.</translation>
             <translation>Neschůdný sráz, nejmenší velikost</translation>
         </message>
         <message>
-            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
+            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201.0.1</comment>
             <translation>Neschůdný sráz, kamenný nebo hliněný sráz (viz 106) {nebo opěrná zeď} se znázorňuje čarou 0,35 mm a dolů {ve směru spádu} směřují-cími čárkami ukazujícími celkový rozsah od vrcholové linie až k úpatí. Pro svislé skalní srázy mohou být čárky vynechány, byly-li by krátké, například úzké průchody mezi skalami (průchod má být kreslen v šířce alespoň 0,3 mm). Čárky mohou přesahovat přes plošnou značku vyjadřující detail bezprostředně pod skalním útvarem. Když skalní útvar spadá přímo do vody a znemožňuje tím průchod pod skalou podél okraje vody, vynechá se břehová čára, nebo se čárky zřetelně přetáhnou přes břehovou čáru.
 Barva: černá.</translation>
@@ -4420,7 +4439,7 @@ Barva: hnědá.</translation>
         <message>
             <source>An impassable cliff, quarry or earth bank [see symbol earth bank (106)]. Tags are drawn downwards, showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). 
 
-The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags shall clearly extend over the bank line. Minimum height is 2 meters.
+The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags shall clearly extend over the bank line. Minimum height is 2 meters.
 
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable cliff!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
@@ -4442,7 +4461,7 @@ Závodníci, kteří porušili toto pravidlo, budou diskvalifikováni..&lt;/span
         <message>
             <source>An impassable cliff, quarry or earth bank [see symbol earth bank (106)]. Tags are drawn downwards, showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). 
 
-The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags shall clearly extend over the bank line. Minimum height is 2 meters.
+The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags shall clearly extend over the bank line. Minimum height is 2 meters.
 
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable cliff!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
@@ -5595,8 +5614,8 @@ Závodníci, kteří porušili toto pravidlo, budou diskvalifikováni.&lt;/span&
         <message>
             <source>Passable fence or railing</source>
             <comment>Name of symbol 522</comment>
-            <translation> Překonatelný plot nebo ohrada</translation>
-        </message>
+            <translation type="unfinished">Passable fence or railing</translation>
+    </message>
         <message>
             <source>A passable fence is a barrier enclosing or bordering a field, yard, etc., usually made of posts and wire or wood. It is used to prevent entrance or to confine or mark a boundary. A railing is a fencelike barrier composed of one or more horizontal rails supported by widely spaced upright poles, usually it can be slipped through.
 
@@ -6837,7 +6856,7 @@ Barva: hnědá.</translation>
             <translation type="unfinished">Neschůdný sráz</translation>
         </message>
         <message>
-            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
+            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201</comment>
             <translation type="unfinished">Neschůdný sráz, kamenný nebo hliněný sráz (viz 106) {nebo opěrná zeď} se znázorňuje čarou 0,35 mm a dolů {ve směru spádu} směřují-cími čárkami ukazujícími celkový rozsah od vrcholové linie až k úpatí. Pro svislé skalní srázy mohou být čárky vynechány, byly-li by krátké, například úzké průchody mezi skalami (průchod má být kreslen v šířce alespoň 0,3 mm). Čárky mohou přesahovat přes plošnou značku vyjadřující detail bezprostředně pod skalním útvarem. Když skalní útvar spadá přímo do vody a znemožňuje tím průchod pod skalou podél okraje vody, vynechá se břehová čára, nebo se čárky zřetelně přetáhnou přes břehovou čáru.
 Barva: černá.</translation>
@@ -6848,7 +6867,7 @@ Barva: černá.</translation>
             <translation type="unfinished">Neschůdný sráz, nejmenší velikost</translation>
         </message>
         <message>
-            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
+            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201.0.1</comment>
             <translation type="unfinished">Neschůdný sráz, kamenný nebo hliněný sráz (viz 106) {nebo opěrná zeď} se znázorňuje čarou 0,35 mm a dolů {ve směru spádu} směřují-cími čárkami ukazujícími celkový rozsah od vrcholové linie až k úpatí. Pro svislé skalní srázy mohou být čárky vynechány, byly-li by krátké, například úzké průchody mezi skalami (průchod má být kreslen v šířce alespoň 0,3 mm). Čárky mohou přesahovat přes plošnou značku vyjadřující detail bezprostředně pod skalním útvarem. Když skalní útvar spadá přímo do vody a znemožňuje tím průchod pod skalou podél okraje vody, vynechá se břehová čára, nebo se čárky zřetelně přetáhnou přes břehovou čáru.
 Barva: černá.</translation>
@@ -8817,7 +8836,7 @@ Barva: hnědá.</translation>
             <translation type="unfinished">Neschůdný sráz</translation>
         </message>
         <message>
-            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
+            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201</comment>
             <translation type="unfinished">Neschůdný sráz, kamenný nebo hliněný sráz (viz 106) {nebo opěrná zeď} se znázorňuje čarou 0,35 mm a dolů {ve směru spádu} směřují-cími čárkami ukazujícími celkový rozsah od vrcholové linie až k úpatí. Pro svislé skalní srázy mohou být čárky vynechány, byly-li by krátké, například úzké průchody mezi skalami (průchod má být kreslen v šířce alespoň 0,3 mm). Čárky mohou přesahovat přes plošnou značku vyjadřující detail bezprostředně pod skalním útvarem. Když skalní útvar spadá přímo do vody a znemožňuje tím průchod pod skalou podél okraje vody, vynechá se břehová čára, nebo se čárky zřetelně přetáhnou přes břehovou čáru.
 Barva: černá.</translation>
@@ -8828,7 +8847,7 @@ Barva: černá.</translation>
             <translation type="unfinished">Neschůdný sráz, nejmenší velikost</translation>
         </message>
         <message>
-            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
+            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201.0.1</comment>
             <translation type="unfinished">Neschůdný sráz, kamenný nebo hliněný sráz (viz 106) {nebo opěrná zeď} se znázorňuje čarou 0,35 mm a dolů {ve směru spádu} směřují-cími čárkami ukazujícími celkový rozsah od vrcholové linie až k úpatí. Pro svislé skalní srázy mohou být čárky vynechány, byly-li by krátké, například úzké průchody mezi skalami (průchod má být kreslen v šířce alespoň 0,3 mm). Čárky mohou přesahovat přes plošnou značku vyjadřující detail bezprostředně pod skalním útvarem. Když skalní útvar spadá přímo do vody a znemožňuje tím průchod pod skalou podél okraje vody, vynechá se břehová čára, nebo se čárky zřetelně přetáhnou přes břehovou čáru.
 Barva: černá.</translation>
