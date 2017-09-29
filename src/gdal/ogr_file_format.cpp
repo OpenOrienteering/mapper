@@ -35,6 +35,7 @@
 #include <QtMath>
 #include <QByteArray>
 #include <QColor>
+#include <QCoreApplication>
 #include <QFile>
 #include <QHash>
 #include <QIODevice>
@@ -561,7 +562,7 @@ void OgrFileImport::importGeoreferencing(OGRDataSourceH data_source)
 		map_srs = std::move(suitable_srs);
 		
 		auto georef = map->getGeoreferencing();  // copy
-		georef.setProjectedCRS(QString::fromLatin1(projected_srs_spec));
+		georef.setProjectedCRS(QStringLiteral("PROJ.4"), QString::fromLatin1(projected_srs_spec));
 		map->setGeoreferencing(georef);
 		
 		CPLFree(projected_srs_spec);
