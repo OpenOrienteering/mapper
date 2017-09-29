@@ -45,6 +45,7 @@ class QRectF;
 class MapEditorController;
 class MapWidget;
 class Object;
+class ObjectMover;
 class TextObjectEditorHelper;
 
 
