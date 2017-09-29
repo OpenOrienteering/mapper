@@ -20,14 +20,26 @@
 
 #include "edit_tool.h"
 
+#include <algorithm>
+#include <cstddef>
 #include <limits>
+#include <map>
+#include <memory>
 
 #include <QtMath>
+#include <QCursor>
 #include <QPainter>
+#include <QPainterPath>
+#include <QPen>
+#include <QPixmap>
+#include <QString>
+#include <QTransform>
 
 #include "core/map.h"
+#include "core/virtual_path.h"
 #include "core/objects/object.h"
 #include "core/objects/text_object.h"
+#include "core/symbols/symbol.h"
 #include "core/symbols/text_symbol.h"
 #include "gui/map/map_widget.h"
 #include "tools/tool_helpers.h"
@@ -40,7 +52,10 @@
 ObjectSelector::ObjectSelector(Map* map)
  : map(map)
 {
+	// nothing esle
 }
+
+
 
 bool ObjectSelector::selectAt(MapCoordF position, double tolerance, bool toggle)
 {
@@ -83,18 +98,18 @@ bool ObjectSelector::selectAt(MapCoordF position, double tolerance, bool toggle)
 			// Results different - select object with highest priority, if it is not the same as before
 			last_results = objects;
 			std::sort(objects.begin(), objects.end(), sortObjects);
-			last_results_ordered = objects;
+			last_results_ordered = std::move(objects);
 			next_object_to_select = 1;
 			
 			map->clearObjectSelection(false);
-			if (single_selected_object == objects.begin()->second)
+			if (single_selected_object == last_results_ordered.begin()->second)
 			{
 				next_object_to_select = next_object_to_select % last_results_ordered.size();
-				map->addObjectToSelection(objects[next_object_to_select].second, true);
+				map->addObjectToSelection(last_results_ordered[next_object_to_select].second, true);
 				++next_object_to_select;
 			}
 			else
-				map->addObjectToSelection(objects.begin()->second, true);
+				map->addObjectToSelection(last_results_ordered.begin()->second, true);
 			
 			selection_changed = true;
 		}
@@ -121,15 +136,16 @@ bool ObjectSelector::selectAt(MapCoordF position, double tolerance, bool toggle)
 			// Toggle selection of highest priority object
 			last_results = objects;
 			std::sort(objects.begin(), objects.end(), sortObjects);
-			last_results_ordered = objects;
+			last_results_ordered = std::move(objects);
 			
-			map->toggleObjectSelection(objects.begin()->second, true);
+			map->toggleObjectSelection(last_results_ordered.begin()->second, true);
 			selection_changed = true;
 		}
 	}
 	
 	return selection_changed;
 }
+
 
 bool ObjectSelector::selectBox(MapCoordF corner1, MapCoordF corner2, bool toggle)
 {
@@ -145,8 +161,8 @@ bool ObjectSelector::selectBox(MapCoordF corner1, MapCoordF corner2, bool toggle
 		map->clearObjectSelection(false);
 	}
 	
-	int size = objects.size();
-	for (int i = 0; i < size; ++i)
+	auto size = objects.size();
+	for (std::size_t i = 0; i < size; ++i)
 	{
 		if (toggle)
 			map->toggleObjectSelection(objects[i], i == size - 1);
@@ -159,21 +175,24 @@ bool ObjectSelector::selectBox(MapCoordF corner1, MapCoordF corner2, bool toggle
 	return selection_changed;
 }
 
+
 bool ObjectSelector::sortObjects(const std::pair< int, Object* >& a, const std::pair< int, Object* >& b)
 {
 	if (a.first != b.first)
 		return a.first < b.first;
 	
-	float a_area = a.second->getExtent().width() * a.second->getExtent().height();
-	float b_area = b.second->getExtent().width() * b.second->getExtent().height();
+	auto a_area = a.second->getExtent().width() * a.second->getExtent().height();
+	auto b_area = b.second->getExtent().width() * b.second->getExtent().height();
 	
 	return a_area < b_area;
 }
+
 
 bool ObjectSelector::selectionInfosEqual(const SelectionInfoVector& a, const SelectionInfoVector& b)
 {
 	return a.size() == b.size() && std::equal(a.begin(), a.end(), b.begin());
 }
+
 
 
 // ### ObjectMover ###
@@ -184,15 +203,19 @@ ObjectMover::ObjectMover(Map* map, const MapCoordF& start_pos)
 	Q_UNUSED(map);
 }
 
+
+
 void ObjectMover::setStartPos(const MapCoordF& start_pos)
 {
 	this->start_position = start_pos;
 }
 
+
 void ObjectMover::addObject(Object* object)
 {
 	objects.insert(object);
 }
+
 
 void ObjectMover::addPoint(PathObject* object, MapCoordVector::size_type point_index)
 {
@@ -203,6 +226,7 @@ void ObjectMover::addPoint(PathObject* object, MapCoordVector::size_type point_i
 
 	constraints_calculated = false;
 }
+
 
 void ObjectMover::addLine(PathObject* object, MapCoordVector::size_type start_point_index)
 {
@@ -220,10 +244,12 @@ void ObjectMover::addLine(PathObject* object, MapCoordVector::size_type start_po
 	constraints_calculated = false;
 }
 
+
 void ObjectMover::addTextHandle(TextObject* text, int handle)
 {
-	text_handles.insert(text, handle);
+	text_handles.insert({text, handle});
 }
+
 
 void ObjectMover::move(const MapCoordF& cursor_pos, bool move_opposite_handles, qint32* out_dx, qint32* out_dy)
 {
@@ -240,6 +266,7 @@ void ObjectMover::move(const MapCoordF& cursor_pos, bool move_opposite_handles, 
 	prev_drag_y += delta_y;
 }
 
+
 void ObjectMover::move(qint32 dx, qint32 dy, bool move_opposite_handles)
 {
 	calculateConstraints();
@@ -249,15 +276,15 @@ void ObjectMover::move(qint32 dx, qint32 dy, bool move_opposite_handles)
 		object->move(dx, dy);
 	
 	// Move points
-	for (auto it = points.constBegin(), end = points.constEnd(); it != end; ++it)
+	for (auto& item : points)
 	{
-		PathObject* path = it.key();
-		for (auto pit = it.value().constBegin(), pit_end = it.value().constEnd(); pit != pit_end; ++pit)
+		PathObject* path = item.first;
+		for (auto index : item.second)
 		{
-			MapCoord coord = path->getCoordinate(*pit);
+			auto coord = path->getCoordinate(index);
 			coord.setNativeX(coord.nativeX() + dx);
 			coord.setNativeY(coord.nativeY() + dy);
-			path->setCoordinate(*pit, coord);
+			path->setCoordinate(index, coord);
 		}
 	}
 	
@@ -282,16 +309,16 @@ void ObjectMover::move(qint32 dx, qint32 dy, bool move_opposite_handles)
 	}
 	
 	// Move box text object handles
-	for (auto it = text_handles.constBegin(), end = text_handles.constEnd(); it != end; ++it)
+	for (auto& handle : text_handles)
 	{
-		TextObject* text_object = it.key();
+		TextObject* text_object = handle.first;
 		const TextSymbol* text_symbol = text_object->getSymbol()->asText();
 		
 		QTransform transform;
-		transform.rotate(text_object->getRotation() * 180 / M_PI);
+		transform.rotate(qRadiansToDegrees(text_object->getRotation()));
 		QPointF delta_point = transform.map(QPointF(dx, dy));
 		
-		int move_point = it.value();
+		int move_point = handle.second;
 		int x_sign = (move_point <= 1) ? 1 : -1;
 		int y_sign = (move_point >= 1 && move_point <= 2) ? 1 : -1;
 		
@@ -304,13 +331,12 @@ void ObjectMover::move(qint32 dx, qint32 dy, bool move_opposite_handles)
 	}
 }
 
+
 ObjectMover::CoordIndexSet* ObjectMover::insertPointObject(PathObject* object)
 {
-	if (!points.contains(object))
-		return &points.insert(object, CoordIndexSet()).value();
-	else
-		return &points[object];
+	return &points.insert({object, CoordIndexSet()}).first->second;
 }
+
 
 void ObjectMover::calculateConstraints()
 {
@@ -325,11 +351,11 @@ void ObjectMover::calculateConstraints()
 		switch (object->getType())
 		{
 		case Object::Path:
-			points.remove(object->asPath());
+			points.erase(object->asPath());
 			break;
 			
 		case Object::Text:
-			text_handles.remove(object->asText());
+			text_handles.erase(object->asText());
 			break;
 			
 		default:
@@ -338,10 +364,10 @@ void ObjectMover::calculateConstraints()
 	}
 	
 	// Points
-	for (QHash< PathObject*, CoordIndexSet>::iterator it = points.begin(), end = points.end(); it != end; ++it)
+	for (auto& item : points)
 	{
-		PathObject* path = it.key();
-		auto& point_set = it.value();
+		PathObject* path = item.first;
+		auto& point_set = item.second;
 		
 		// If end points of closed paths are contained in the move set,
 		// change them to the corresponding start points
@@ -349,9 +375,9 @@ void ObjectMover::calculateConstraints()
 		//  they are set as curve start points if a curve starts there, in contrast to the end points)
 		for (const auto& part : path->parts())
 		{
-			if (part.isClosed() && point_set.contains(part.last_index))
+			if (part.isClosed() && point_set.find(part.last_index) != point_set.end())
 			{
-				point_set.remove(part.last_index);
+				point_set.erase(part.last_index);
 				point_set.insert(part.first_index);
 			}
 		}
@@ -441,6 +467,7 @@ void ObjectMover::calculateConstraints()
 }
 
 
+
 // ### EditTool ###
 
 EditTool::EditTool(MapEditorController* editor, MapEditorTool::Type type, QAction* tool_button)
@@ -450,16 +477,17 @@ EditTool::EditTool(MapEditorController* editor, MapEditorTool::Type type, QActio
 	; // nothing
 }
 
-EditTool::~EditTool()
-{
-	; // nothing
-}
+
+EditTool::~EditTool() = default;
+
+
 
 void EditTool::deleteSelectedObjects()
 {
 	map()->deleteSelectedObjects();
 	updateStatusText();
 }
+
 
 void EditTool::createReplaceUndoStep(Object* object)
 {
@@ -472,9 +500,9 @@ void EditTool::createReplaceUndoStep(Object* object)
 	map()->setObjectsDirty();
 }
 
+
 bool EditTool::pointOverRectangle(QPointF point, const QRectF& rect) const
 {
-	cur_map_widget->getMapView();
 	auto click_tolerance = clickTolerance();
 	if (point.x() < rect.left() - click_tolerance) return false;
 	if (point.y() < rect.top() - click_tolerance) return false;
@@ -486,6 +514,7 @@ bool EditTool::pointOverRectangle(QPointF point, const QRectF& rect) const
 		point.y() < rect.bottom() - click_tolerance) return false;
 	return true;
 }
+
 
 MapCoordF EditTool::closestPointOnRect(MapCoordF point, const QRectF& rect)
 {
@@ -514,17 +543,18 @@ MapCoordF EditTool::closestPointOnRect(MapCoordF point, const QRectF& rect)
 	return result;
 }
 
+
 void EditTool::setupAngleHelperFromEditedObjects()
 {
-	const std::size_t max_num_primary_directions = 5;
-	const float angle_window = (2 * M_PI) * 2 / 360.0f;
+	constexpr auto max_num_primary_directions = std::size_t(5);
+	constexpr auto angle_window = (2 * M_PI) * 2 / 360.0;
 	// Amount of all path length which has to be covered by an angle
 	// to be classified as "primary angle"
-	const float path_angle_threshold = 1 / 5.0f;
+	constexpr auto path_angle_threshold = qreal(1 / 5.0);
 	
 	angle_helper->clearAngles();
 	
-	std::set< float > primary_directions;
+	std::unordered_set<qreal> primary_directions;
 	for (const Object* object : editedObjects())
 	{
 		if (object->getType() == Object::Point)
@@ -539,47 +569,47 @@ void EditTool::setupAngleHelperFromEditedObjects()
 		{
 			auto path = object->asPath();
 			// Maps angles to the path distance covered by them
-			QMap< float, float > path_directions;
+			std::map<qreal, qreal> path_directions;
 			
 			// Collect segment directions, only looking at the first part
 			auto& part = path->parts().front();
-			float path_length = part.path_coords.back().clen;
+			auto path_length = part.path_coords.back().clen;
 			for (auto c = part.first_index; c < part.last_index; c = part.nextCoordIndex(c))
 			{
 				if (!path->getCoordinate(c).isCurveStart())
 				{
-					MapCoordF segment = MapCoordF(path->getCoordinate(c + 1) - path->getCoordinate(c));
-					float angle = fmod_pos(-1 * segment.angle(), M_PI / 2);
-					float length = segment.length();
+					auto segment = MapCoordF(path->getCoordinate(c + 1) - path->getCoordinate(c));
+					auto angle = fmod_pos(-segment.angle(), M_PI / 2);
+					auto length = segment.length();
 					
-					QMap< float, float >::iterator angle_it = path_directions.find(angle);
+					auto angle_it = path_directions.find(angle);
 					if (angle_it != path_directions.end())
-						angle_it.value() += length;
+						angle_it->second += length;
 					else
-						path_directions.insert(angle, length);
+						path_directions.insert({angle, length});
 				}
 			}
 			
 			// Determine primary directions by moving a window over the collected angles
 			// and determining maxima.
 			// The iterators are the next angle which crosses the respective window border.
-			float angle_start = -1 * angle_window;
-			QMap< float, float >::const_iterator start_it = path_directions.constBegin();
-			float angle_end = 0;
-			QMap< float, float >::const_iterator end_it = path_directions.constBegin();
+			auto angle_start = -angle_window;
+			auto start_it = path_directions.begin();
+			auto angle_end = qreal(0.0);
+			auto end_it = path_directions.begin();
 			
-			bool length_increasing = true;
-			float cur_length = 0;
-			while (start_it != path_directions.constEnd())
+			auto length_increasing = true;
+			auto cur_length = qreal(0.0);
+			while (start_it != path_directions.end())
 			{
-				float start_dist = start_it.key() - angle_start;
-				float end_dist = (end_it == path_directions.constEnd()) ?
-					std::numeric_limits<float>::max() :
-					(end_it.key() - angle_end);
+				auto start_dist = start_it->first - angle_start;
+				auto end_dist = (end_it == path_directions.end()) ?
+					std::numeric_limits<qreal>::max() :
+					(end_it->first - angle_end);
 				if (start_dist > end_dist)
 				{
 					// A new angle enters the window (at the end)
-					cur_length += end_it.value();
+					cur_length += end_it->second;
 					length_increasing = true;
 					++end_it;
 					
@@ -593,18 +623,18 @@ void EditTool::setupAngleHelperFromEditedObjects()
 					if (length_increasing &&
 						cur_length / path_length >= path_angle_threshold)
 					{
-						// Find the average angle and inset it
-						float angle = 0;
-						float total_weight = 0;
-						for (QMap< float, float >::const_iterator angle_it = start_it; angle_it != end_it; ++angle_it)
+						// Find the average angle and insert it
+						auto angle = qreal(0.0);
+						auto total_weight = qreal(0.0);
+						for (auto angle_it = start_it; angle_it != end_it; ++angle_it)
 						{
-							angle += angle_it.key() * angle_it.value();
-							total_weight += angle_it.value();
+							angle += angle_it->first * angle_it->second;
+							total_weight += angle_it->second;
 						}
 						primary_directions.insert(angle / total_weight);
 					}
 					
-					cur_length -= start_it.value();
+					cur_length -= start_it->second;
 					length_increasing = false;
 					++start_it;
 					
@@ -634,6 +664,7 @@ void EditTool::setupAngleHelperFromEditedObjects()
 	}
 }
 
+
 void EditTool::drawBoundingBox(QPainter* painter, MapWidget* widget, const QRectF& bounding_box, const QRgb& color)
 {
 	QPen pen(color);
@@ -645,7 +676,8 @@ void EditTool::drawBoundingBox(QPainter* painter, MapWidget* widget, const QRect
 	painter->drawRect(widget->mapToViewport(bounding_box));
 }
 
-void EditTool::drawBoundingPath(QPainter *painter, MapWidget *widget, const std::vector<QPointF>& bounding_path, const QRgb &color)
+
+void EditTool::drawBoundingPath(QPainter* painter, MapWidget* widget, const std::vector<QPointF>& bounding_path, const QRgb& color)
 {
 	Q_ASSERT(bounding_path.size() > 0);
 	

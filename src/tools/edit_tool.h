@@ -21,21 +21,19 @@
 #ifndef OPENORIENTEERING_EDIT_TOOL_H
 #define OPENORIENTEERING_EDIT_TOOL_H
 
-#include <utility>
+#include <unordered_map>
 #include <unordered_set>
+#include <utility>
 #include <vector>
 
 #include <Qt>
 #include <QtGlobal>
 #include <QFlags>
-#include <QHash>
 #include <QObject>
 #include <QPointF>
 #include <QRectF>
 #include <QRgb>
 #include <QScopedPointer>
-
-#include <QSet>
 
 #include "core/map_coord.h"
 #include "tools/tool.h"
@@ -52,7 +50,7 @@ class MapWidget;
 class Object;
 class PathObject;
 class TextObject;
-typedef std::vector< std::pair< int, Object* > > SelectionInfoVector;
+using SelectionInfoVector = std::vector<std::pair<int, Object*>>;
 
 
 /**
@@ -91,7 +89,7 @@ private:
 	// Information about the last click
 	SelectionInfoVector last_results;
 	SelectionInfoVector last_results_ordered;
-	int next_object_to_select;
+	SelectionInfoVector::size_type next_object_to_select;
 	
 	Map* map;
 };
@@ -133,7 +131,7 @@ public:
 	
 private:
 	using ObjectSet = std::unordered_set<Object*>;
-	using CoordIndexSet = QSet<MapCoordVector::size_type>;
+	using CoordIndexSet = std::unordered_set<MapCoordVector::size_type>;
 	
 	CoordIndexSet* insertPointObject(PathObject* object);
 	void calculateConstraints();
@@ -143,8 +141,8 @@ private:
 	qint32 prev_drag_x;
 	qint32 prev_drag_y;
 	ObjectSet objects;
-	QHash< PathObject*, CoordIndexSet> points;
-	QHash< TextObject*, int > text_handles;
+	std::unordered_map<PathObject*, CoordIndexSet> points;
+	std::unordered_map<TextObject*, int> text_handles;
 	
 	/** Constraints calculated from the basic information */
 	struct OppositeHandleConstraint
@@ -152,17 +150,17 @@ private:
 		/** Object to which the constraint applies */
 		PathObject* object;
 		/** Index of moved handle */
-		int moved_handle_index;
+		MapCoordVector::size_type moved_handle_index;
 		/** Index of opposite handle */
-		int opposite_handle_index;
+		MapCoordVector::size_type opposite_handle_index;
 		/** Index of center point in the middle of the handles */
-		int curve_anchor_index;
+		MapCoordVector::size_type curve_anchor_index;
 		/** Distance of opposite handle to center point */
-		double opposite_handle_dist;
+		qreal opposite_handle_dist;
 		/** Original position of the opposite handle */
 		MapCoord opposite_handle_original_position;
 	};
-	std::vector< OppositeHandleConstraint > handle_constraints;
+	std::vector<OppositeHandleConstraint> handle_constraints;
 	bool constraints_calculated;
 };
 
