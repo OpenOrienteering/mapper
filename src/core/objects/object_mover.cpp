@@ -122,13 +122,9 @@ void ObjectMover::move(qint32 dx, qint32 dy, bool move_opposite_handles)
 	}
 	
 	// Apply handle constraints
-	for (auto& constraint : handle_constraints)
+	if (move_opposite_handles)
 	{
-		if (!move_opposite_handles)
-		{
-			constraint.object->setCoordinate(constraint.opposite_handle_index, constraint.opposite_handle_original_position);
-		}
-		else
+		for (auto& constraint : handle_constraints)
 		{
 			MapCoord anchor_point = constraint.object->getCoordinate(constraint.curve_anchor_index);
 			MapCoordF to_hover_point = MapCoordF(constraint.object->getCoordinate(constraint.moved_handle_index) - anchor_point);
