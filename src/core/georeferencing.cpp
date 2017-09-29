@@ -448,7 +448,7 @@ void Georeferencing::setState(Georeferencing::State value)
 		updateTransformation();
 		
 		if (state != Normal)
-			setProjectedCRS(QString::fromLatin1("Local"));
+			setProjectedCRS(QStringLiteral("Local"), {});
 		
 		emit stateChanged();
 	}
