@@ -134,6 +134,12 @@ public:
 	~OgrFileImport() override;
 	
 	
+	/**
+	 * Enables the import of georeferencing from the geospatial data.
+	 * 
+	 * If this import is not enabled, the georeferencing of the Map given to
+	 * the constructor will be used instead.
+	 */
 	void setGeoreferencingImportEnabled(bool enabled);
 	
 	
@@ -153,6 +159,8 @@ public:
 	
 	
 protected:
+	ogr::unique_srs srsFromMap();
+	
 	/**
 	 * Tests if the file's spatial references can be used with the given georeferencing.
 	 * 
@@ -164,7 +172,7 @@ protected:
 	
 	void import(bool load_symbols_only) override;
 	
-	void importGeoreferencing(OGRDataSourceH data_source);
+	ogr::unique_srs importGeoreferencing(OGRDataSourceH data_source);
 	
 	void importStyles(OGRDataSourceH data_source);
 	
