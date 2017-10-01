@@ -81,22 +81,37 @@ void TemplateTrack::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml)
 {
 	// Follow map georeferencing XML structure
 	xml.writeStartElement(QString::fromLatin1("crs_spec"));
-	// TODO: xml.writeAttribute(QString::fromLatin1("language"), "PROJ.4");
 	xml.writeCharacters(track_crs_spec);
 	xml.writeEndElement(/*crs_spec*/);
+	if (!projected_crs_spec.isEmpty())
+	{
+		Q_ASSERT(!is_georeferenced);
+		xml.writeStartElement(QString::fromLatin1("projected_crs_spec"));
+		xml.writeCharacters(projected_crs_spec);
+		xml.writeEndElement(/*crs_spec*/);
+	}
 }
+
+
 bool TemplateTrack::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
 {
 	if (xml.name() == QLatin1String("crs_spec"))
 	{
-		// TODO: check specification language
 		track_crs_spec = xml.readElementText();
 	}
+	else if (xml.name() == QLatin1String("projected_crs_spec"))
+	{
+		Q_ASSERT(!is_georeferenced);
+		projected_crs_spec = xml.readElementText();
+	}
 	else
+	{
 		xml.skipCurrentElement(); // unsupported
+	}
 	
 	return true;
 }
+
 
 bool TemplateTrack::saveTemplateFile() const
 {
@@ -118,9 +133,16 @@ bool TemplateTrack::loadTemplateFileImpl(bool configuring)
 		
 		bool crs_is_geographic = track_crs_spec.contains(QLatin1String("+proj=latlong"));
 		if (!is_georeferenced && crs_is_geographic)
-			calculateLocalGeoreferencing();
+		{
+			if (projected_crs_spec.isEmpty())
+				projected_crs_spec = calculateLocalGeoreferencing();
+			applyProjectedCrsSpec();
+		}
 		else
+		{
+			projected_crs_spec.clear();
 			track.changeMapGeoreferencing(map->getGeoreferencing());
+		}
 	}
 	
 	return true;
@@ -217,9 +239,16 @@ bool TemplateTrack::postLoadConfiguration(QWidget* dialog_parent, bool& out_cent
 	// If the track is loaded as not georeferenced,
 	// the map coords for the track coordinates have to be calculated
 	if (!is_georeferenced && crs_is_geographic)
-		calculateLocalGeoreferencing();
+	{
+		if (projected_crs_spec.isEmpty())
+			projected_crs_spec = calculateLocalGeoreferencing();
+		applyProjectedCrsSpec();
+	}
 	else
+	{
+		projected_crs_spec.clear();
 		track.changeMapGeoreferencing(map->getGeoreferencing());
+	}
 	
 	return true;
 }
@@ -494,6 +523,7 @@ void TemplateTrack::configureForGPSTrack()
 	track_crs->setTransformationDirectly(QTransform());
 	track.setTrackCRS(track_crs);
 	
+	projected_crs_spec.clear();
 	track.changeMapGeoreferencing(map->getGeoreferencing());
 	
 	template_state = Template::Loaded;
@@ -503,19 +533,26 @@ void TemplateTrack::updateGeoreferencing()
 {
 	if (is_georeferenced && template_state == Template::Loaded)
 	{
+		projected_crs_spec.clear();
 		track.changeMapGeoreferencing(map->getGeoreferencing());
 		map->updateAllMapWidgets();
 	}
 }
 
-void TemplateTrack::calculateLocalGeoreferencing()
+QString TemplateTrack::calculateLocalGeoreferencing() const
 {
 	LatLon proj_center = track.calcAveragePosition();
+	return QString::fromLatin1("+proj=ortho +datum=WGS84 +lat_0=%1 +lon_0=%2")
+	        .arg(proj_center.latitude(), 0, 'f')
+	        .arg(proj_center.longitude(), 0, 'f');
 	
+}
+
+void TemplateTrack::applyProjectedCrsSpec()
+{
 	Georeferencing georef;
-	georef.setScaleDenominator(map->getScaleDenominator());
-	georef.setProjectedCRS(QString{}, QString::fromLatin1("+proj=ortho +datum=WGS84 +lat_0=%1 +lon_0=%2")
-		.arg(proj_center.latitude()).arg(proj_center.longitude()));
-	georef.setGeographicRefPoint(proj_center);
+	georef.setScaleDenominator(int(map->getScaleDenominator()));
+	georef.setProjectedCRS(QString{}, projected_crs_spec);
+	georef.setProjectedRefPoint({});
 	track.changeMapGeoreferencing(georef);
 }
