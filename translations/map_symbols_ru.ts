@@ -151,9 +151,8 @@
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. A contour interval of 2.5 metres may be used for flat terrains. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
             <comment>Description of symbol 101</comment>
-            <translation>Линия, соединяющая точки одинаковой высоты. Стандартный вертикальный интервал между горизонталями составляет 5 метров. Для плоских участков можно использовать интервал в 2,5 метра. Наименьший изгиб линии горизонтали  составляет 0,25 мм от центра к 
-центру линии.</translation>
-        </message>
+            <translation>Линия, соединяющая точки одинаковой высоты. Стандартный вертикальный интервал между горизонталями составляет 5 метров. Для плоских участков можно использовать интервал в 2,5 метра. Наименьший изгиб линии горизонтали составляет 0,25 мм от центра к центру линии.</translation>
+    </message>
         <message>
             <source>Slope line, contour</source>
             <comment>Name of symbol 101.1</comment>
