@@ -233,7 +233,7 @@ This tool changes the symbols of the selected objects to another. To use it, sel
 #### ![ ](../mapper-images/tool-fill-border.png) Fill / Create border {#fill_create_border}
 Ctrl+F
 
-Having drawn a [closed boundary](drawing_toolbar.md#closed-paths) which requires a fill (such as a fence containing a thicket) select the boundary on the map (using the [point edit tool](#tool_edit_point) tool), then choose the required fill symbol in the symbols window. (*Attention:* with default settings, it is not possible to do this the other way round as selecting an object will select its symbol, so the initial symbol selection is discarded.) A left click on the fill tool will put the chosen fill into the selected boundary.
+Having drawn a [closed boundary](#drawing-toolbar) which requires a fill (such as a fence containing a thicket) select the boundary on the map (using the [point edit tool](#tool_edit_point) tool), then choose the required fill symbol in the symbols window. (*Attention:* with default settings, it is not possible to do this the other way round as selecting an object will select its symbol, so the initial symbol selection is discarded.) A left click on the fill tool will put the chosen fill into the selected boundary.
 
 Internally, this tool creates a duplicate of the selected object and assigns it the selected symbol. So, in addition to filling closed boundaries, it is also possible to create a boundary around an area, or create duplicates of lines with another symbol using this tool.
 
@@ -263,7 +263,7 @@ K
 
 This tool cuts a selected existing line or area object into two parts.
 
-To cut **lines*, click at the point where it is desired to break the line. The object will be split into two at this point and both will be selected, so it is possible to insert more cuts after the first. It is also possible to click on a line and drag the mouse along it to remove the marked part completely.
+To cut **lines**, click at the point where it is desired to break the line. The object will be split into two at this point and both will be selected, so it is possible to insert more cuts after the first. It is also possible to click on a line and drag the mouse along it to remove the marked part completely.
 
 To cut an **area object**, select it and draw a cut line from one side of its boundary to another. Drawing works exactly as with the [draw path tool](#tool_draw_path). It is necessary to start and end the cut line on the boundary of the area to be cut. It is not sufficient to cross the boundary; both ends of the line must be on the boundary within a tolerance of 5 pixels (this may be altered in the [settings dialog](settings.md)). The cut line may contain any number of internal vertices and can be polygonal or curved. The cut occurs immediately when the line is finished on the boundary (with a right click or double click).
 
