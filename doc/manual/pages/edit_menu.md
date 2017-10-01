@@ -8,73 +8,14 @@ keywords: Menus
 edited: 10 Januar 2016
 ---
 
-<table>
-<tr>
-<td width="40"><img class="small" src="../mapper-images/undo.png" width="32" height="32" border="0" alt="" /></td>
-<td width="100"><b>Undo</b></td>
-<td width="70"><b>Ctrl+Z</b></td>
-<td width="400">This most important function reverses the last change made to the map. Repeating 'Undo' will undo earlier changes, one step at a time.<br/>
-<b>Attention:</b> While changes to map objects can be undone this way, not all map changes are covered by the undo system. This includes changes to colors, symbols or templates.</td>
-</tr>
-<tr>
-<td><img class="small" src="../mapper-images/redo.png" width="32" height="32" border="0" alt="" /></td>
-<td><b>Redo</b></td>
-<td><b>Ctrl+Y, Ctrl+Shift+Z</b></td>
-<td>When you have taken Undo too far this will reverse the process &#8212; again one step at a time.</td>
-</tr>
-<tr>
-<td><img class="small" src="../mapper-images/cut.png" width="32" height="32" border="0" alt="" /></td>
-<td><b>Cut</b></td>
-<td><b>Ctrl+X</b></td>
-<td>This removes the selected object(s) and moves them to the clipboard.</td>
-</tr>
-<tr>
-<td><img class="small" src="../mapper-images/copy.png" width="32" height="32" border="0" alt="" /></td>
-<td><b>Copy</b></td>
-<td><b>Ctrl+C</b></td>
-<td>This copies the selected object(s) to the clipboard.</td>
-</tr>
-<tr>
-<td><img class="small" src="../mapper-images/paste.png" width="32" height="32" border="0" alt="" /></td>
-<td><b>Paste</b></td>
-<td><b>Ctrl+V</b></td>
-<td>This inserts the map object(s) on the clipboard into the map. They will be centered at the view midpoint.<br/>
-<b>Note:</b> When copying objects between different maps, their symbols and colors may be copied too in order to be able to display the objects in the new map in the same way as in the source map.</td>
-</tr>
-<tr>
-<td><img class="small" src="../mapper-images/delete.png" width="32" height="32" border="0" alt="" /></td>
-<td><b>Delete</b></td>
-<td><b>Del</b></td>
-<td>This action deletes the selected object(s).</td>
-</tr>
-<tr>
-<td></td>
-<td><b>Select all</b></td>
-<td><b>Ctrl+A</b></td>
-<td>This selects all objects in the current map part.</td>
-</tr>
-<tr>
-<td></td>
-<td><b>Select nothing</b></td>
-<td><b>Ctrl+Shift+A</b></td>
-<td>After this action, no object is selected.</td>
-</tr>
-<tr>
-<td></td>
-<td><b>Invert selection</b></td>
-<td><b>Ctrl+I</b></td>
-<td>This action inverts the selection in the current map part.</td>
-</tr>
-<tr>
-<td></td>
-<td><b>Select all objects with selected symbols</b></td>
-<td></td>
-<td>After this action, the selection consists of all objects in the current map part which have the selected symbol(s).</td>
-</tr>
-<tr>
-<td></td>
-<td><b>Clear undo / redo history</b></td>
-<td></td>
-<td>Clears the history of undo and redo steps, i.e. all undo and redo steps will be deleted. This reduces the file size for map file formats where the last undo and redo steps are stored, e.g. the omap format.</td>
-</tr>
-</table>
+|![ ](../mapper-images/undo.png)|**Undo**|**Ctrl+Z**|This most important function reverses the last change made to the map. Repeating 'Undo' will undo earlier changes, one step at a time. **Attention:** While changes to map objects can be undone this way, not all map changes are covered by the undo system. This includes changes to colors, symbols or templates.|
+|![ ](../mapper-images/redo.png)|**Redo**|**Ctrl+Y, Ctrl+Shift+Z**|When you have taken Undo too far this will reverse the process &#8212; again one step at a time.|
+|![ ](../mapper-images/cut.png)|**Cut**|**Ctrl+X**|This removes the selected object(s) and moves them to the clipboard.|
+|![ ](../mapper-images/copy.png)|**Copy**|**Ctrl+C**|This copies the selected object(s) to the clipboard.|
+|![ ](../mapper-images/paste.png)|**Paste**|**Ctrl+V**|This inserts the map object(s) on the clipboard into the map. They will be centered at the view midpoint. **Note:** When copying objects between different maps, their symbols and colors may be copied too in order to be able to display the objects in the new map in the same way as in the source map.|
+|![ ](../mapper-images/delete.png)|**Delete**|**Del**|This action deletes the selected object(s).|
+| |**Select all**|**Ctrl+A**|This selects all objects in the current map part.|
+| |**Select nothing**|**Ctrl+Shift+A**|After this action, no object is selected.|
+| |**Invert selection**|**Ctrl+I**|This action inverts the selection in the current map part.|
+| |**Select all objects with selected symbols**| |After this action, the selection consists of all objects in the current map part which have the selected symbol(s).|
+| |**Clear undo / redo history**| |Clears the history of undo and redo steps, i.e. all undo and redo steps will be deleted. This reduces the file size for map file formats where the last undo and redo steps are stored, e.g. the omap format.|

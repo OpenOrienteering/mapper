@@ -3,16 +3,12 @@ title: Using the Mapper App
 keywords: Android
 ---
 
-[Toolbars]: toolbars.md
-
 On startup, the app shows a list of map files available from the [supported storage locations](android-storage.md). To start editing a map, touch its filename.
 
-This will show a map editor screen which is similar to the desktop version. In the following, only the functionality which differs from the desktop version will be explained. To find out about the other symbols, see [Toolbars] in the desktop application's manual.
+This will show a map editor screen which is similar to the desktop version. In the following, only the functionality which differs from the desktop version will be explained. To find out about the other symbols, see [Toolbars](toolbars.md) in the desktop application's manual.
 
 
-		  
-The mobile map editor
----------------------
+## The mobile map editor
 
 ![ ](images/Android_UI_explanation.png)
 
@@ -89,9 +85,10 @@ Sets a point object at the GPS position. Selecting this button first enters an a
 
 (16) Symbol selector
 
-Displays the active symbol, and opens the symbol selection screen when touched.
+Displays the active symbol, and opens the symbol selection screen on short press.
+
+A long press of the symbol selector opens a popup menu which allows to read the symbol name and description, and to toggle the visibility and the protection state of the symbol.
 
 (17) Map parts selector
 
 This button opens a popup for changing the active map part.
-
