@@ -96,6 +96,12 @@ public:
 	
 	
 	/**
+	 * A shared PROJ.4 specification of a WGS84 geographic CRS.
+	 */
+	static const QString geographic_crs_spec;
+	
+	
+	/**
 	 * @brief Returns the precision of the grid scale factor.
 	 * 
 	 * The precision is given in number of decimal places,
@@ -559,7 +565,6 @@ private:
 	
 	projPJ geographic_crs;
 	
-	static const QString geographic_crs_spec;
 };
 
 /**

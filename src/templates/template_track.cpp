@@ -27,6 +27,7 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
+#include "core/georeferencing.h"
 #include "core/map.h"
 #include "core/objects/object.h"
 #include "core/symbols/line_symbol.h"
@@ -48,7 +49,7 @@ TemplateTrack::TemplateTrack(const QString& path, Map* map)
  : Template(path, map)
 {
 	// set default value
-	track_crs_spec = QString::fromLatin1("+proj=latlong +datum=WGS84");
+	track_crs_spec = Georeferencing::geographic_crs_spec;
 	
 	const Georeferencing& georef = map->getGeoreferencing();
 	connect(&georef, &Georeferencing::projectionChanged, this, &TemplateTrack::updateGeoreferencing);
@@ -70,7 +71,7 @@ bool TemplateTrack::loadTypeSpecificTemplateConfiguration(QIODevice* stream, int
 	if (version >= 30)
 		loadString(stream, track_crs_spec);
 	else
-		track_crs_spec = QString::fromLatin1("+proj=latlong +datum=WGS84");
+		track_crs_spec = Georeferencing::geographic_crs_spec;
 	return true;
 }
 #endif
@@ -487,7 +488,7 @@ void TemplateTrack::configureForGPSTrack()
 {
 	is_georeferenced = true;
 	
-	track_crs_spec = QString::fromLatin1("+proj=latlong +datum=WGS84");
+	track_crs_spec = Georeferencing::geographic_crs_spec;
 	Georeferencing* track_crs = new Georeferencing();
 	track_crs->setProjectedCRS(QString{}, track_crs_spec);
 	track_crs->setTransformationDirectly(QTransform());
