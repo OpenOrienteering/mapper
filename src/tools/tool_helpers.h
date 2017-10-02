@@ -26,6 +26,8 @@
 #include <memory>
 #include <set>
 
+#include <QColor>
+#include <QFont>
 #include <QObject>
 
 #include "core/map_coord.h"
@@ -322,4 +324,23 @@ std::size_t FollowPathToolHelper::getPartIndex() const
 	return part_index;
 }
 
+class AzimuthInfoHelper
+{
+protected:
+	QColor text_color;
+	QFont text_font;
+	int text_offset; // distance between text and cursor
+	float text_box_diagonal;
+
+public:
+	AzimuthInfoHelper(const QWidget* widget, QColor color);
+
+	/** Draws the azimuth info text. */
+	void draw(QPainter* painter, const MapWidget* widget, const Map* map,
+	          const MapCoordF& click_pos_map, const MapCoordF& constrained_pos_map);
+
+	/** Includes this helper's drawing region in the given rect. */
+	void includeDirtyRect(QRectF& rect,
+	                      const MapCoordF& constrained_pos_map);
+};
 #endif

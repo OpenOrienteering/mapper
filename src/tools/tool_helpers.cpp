@@ -21,7 +21,16 @@
 
 #include "tool_helpers.h"
 
+#include <QColor>
+#include <QLineF>
+#include <QLocale>
 #include <QPainter>
+#include <QPainterPath>
+#include <QPen>
+#include <QPointF>
+#include <QRectF>
+#include <QString>
+#include <QWidget>
 
 #include "settings.h"
 #include "core/map.h"
@@ -562,4 +571,86 @@ std::unique_ptr<PathObject> FollowPathToolHelper::updateFollowing(const PathCoor
 	}
 	
 	return result;
+}
+
+AzimuthInfoHelper::AzimuthInfoHelper(const QWidget* widget, QColor color)
+ : text_color(color),
+   text_font(widget->font()),
+   text_offset(25)
+{
+	auto size = text_font.pixelSize();
+	if (size >= 0)
+		text_font.setPixelSize(size*2);
+	else
+		text_font.setPointSizeF(text_font.pointSizeF()*2);
+}
+
+void AzimuthInfoHelper::draw(QPainter* painter, const MapWidget* widget, const Map* map, const MapCoordF& click_pos_map, const MapCoordF& constrained_pos_map)
+{
+	QLineF drag_vector_map(click_pos_map, constrained_pos_map);
+
+	if (!drag_vector_map.length())
+		return;
+
+	auto text_azimuth = QString::fromUtf8("%1°")
+	            .arg(QLocale().toString(fmod(450.0-drag_vector_map.angle(), 360), 'f', 1));
+	auto text_distance = QString::fromUtf8("%1 m")
+	                     .arg(QLocale().toString(0.001 * map->getScaleDenominator() * drag_vector_map.length(), 'f', 0));
+
+	painter->save();
+
+	// rotate the text for better legibility
+	QLineF drag_vector(widget->mapToViewport(click_pos_map),
+	                   widget->mapToViewport(constrained_pos_map));
+	auto text_angle = -drag_vector.angle();
+	QPainterPath text_path, text_path_2nd_line;
+	int offset;
+	text_path.addText(0, 0, text_font, text_azimuth);
+	text_path_2nd_line.addText(0, text_path.controlPointRect().height() * 1.2,
+	                  text_font, text_distance);
+
+	if (text_angle < -90 && text_angle >= -270)
+	{   // westwards
+		text_angle += 180;
+		offset = text_offset;
+	}
+	else
+	{	// eastwards
+		auto text_width = text_path.controlPointRect().width();
+		auto text_width_azimuth = text_path_2nd_line.controlPointRect().width();
+		offset = -text_width - text_offset;
+		text_path_2nd_line.translate(text_width - text_width_azimuth, 0);
+	}
+
+	text_path += text_path_2nd_line;
+	auto text_extent = text_path.controlPointRect();
+	text_path.translate(offset, -text_extent.height() * .05);
+
+	// info for dirty rectangle generation, diagonal size expressed in map units
+	QLineF diagonal(widget->viewportToMapF(QPointF(0, 0)),
+	                widget->viewportToMapF(QPointF(text_extent.width() + text_offset,
+	                                               text_extent.height())));
+	text_box_diagonal = diagonal.length();
+
+	painter->translate(widget->mapToViewport(constrained_pos_map));
+	painter->rotate(text_angle);
+
+	// give the numbers white outline
+	painter->setPen(QPen(Qt::white, 3));
+	painter->drawPath(text_path);
+
+	painter->setPen(Qt::NoPen);
+	painter->setBrush(text_color);
+	painter->drawPath(text_path);
+
+	painter->restore();
+}
+
+void AzimuthInfoHelper::includeDirtyRect(QRectF& rect,
+                                         const MapCoordF& constrained_pos_map)
+{
+	// avoid complicated calculations and return large enough square
+	// that contains text box rectangle under all circumstances
+	rectIncludeSafe(rect, QRectF(constrained_pos_map - QPointF(text_box_diagonal, text_box_diagonal),
+	                             constrained_pos_map + QPointF(text_box_diagonal, text_box_diagonal)));
 }

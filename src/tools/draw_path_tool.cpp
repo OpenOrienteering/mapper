@@ -46,6 +46,7 @@ DrawPathTool::DrawPathTool(MapEditorController* editor, QAction* tool_button, bo
 , finished_path_is_selected(false)
 , cur_map_widget(mapWidget())
 , angle_helper(new ConstrainAngleToolHelper())
+, azimuth_helper(new AzimuthInfoHelper(cur_map_widget, active_color))
 , snap_helper(new SnappingToolHelper(this))
 , follow_helper(new FollowPathToolHelper())
 , key_button_bar(nullptr)
@@ -61,6 +62,7 @@ DrawPathTool::DrawPathTool(MapEditorController* editor, QAction* tool_button, bo
 	following = false;
 	picking_angle = false;
 	picked_angle = false;
+	show_azimuth_info = false;
 	draw_dash_points = false;
 	shift_pressed = false;
 	ctrl_pressed = false;
@@ -87,6 +89,7 @@ void DrawPathTool::init()
 		key_button_bar->addPressKey(Qt::Key_Return, tr("Close"));
 		key_button_bar->addModifierKey(Qt::Key_Shift, Qt::ShiftModifier, tr("Snap", "Snap to existing objects"));
 		key_button_bar->addModifierKey(Qt::Key_Control, Qt::ControlModifier, tr("Angle", "Using constrained angles"));
+		key_button_bar->addPressKeyWithModifier(Qt::Key_Space, Qt::ControlModifier, tr("Info", "Show segment azimuth and length"));
 		key_button_bar->addPressKey(Qt::Key_Space, tr("Dash", "Drawing dash points"));
 		key_button_bar->addPressKey(Qt::Key_Backspace, tr("Undo"));
 		key_button_bar->addPressKey(Qt::Key_Escape, tr("Abort"));
@@ -443,8 +446,13 @@ bool DrawPathTool::keyPressEvent(QKeyEvent* event)
 		return true;
 		
 	case Qt::Key_Space:
-		draw_dash_points = !draw_dash_points;
-		updateStatusText();
+		if (event->modifiers() & Qt::ControlModifier)
+			show_azimuth_info =! show_azimuth_info;
+		else
+		{
+			draw_dash_points = !draw_dash_points;
+			updateStatusText();
+		}
 		return true;
 		
 	case Qt::Key_Control:
@@ -504,6 +512,11 @@ void DrawPathTool::draw(QPainter* painter, MapWidget* widget)
 	if (editingInProgress())
 	{
 		painter->setRenderHint(QPainter::Antialiasing);
+
+		if (show_azimuth_info)
+			azimuth_helper->draw(painter, widget, map(),
+			                     click_pos_map, constrained_pos_map);
+
 		if (dragging && (cur_pos - click_pos).manhattanLength() >= Settings::getInstance().getStartDragDistancePx())
 		{
 			QPen pen(qRgb(255, 255, 255));
@@ -808,6 +821,7 @@ void DrawPathTool::finishDrawing()
 	setEditingInProgress(false);
 	if (!ctrl_pressed)
 		angle_helper->setActive(false);
+	show_azimuth_info = false;
 	updateSnapHelper();
 	updateStatusText();
 	hidePreviewPoints();
@@ -824,6 +838,7 @@ void DrawPathTool::abortDrawing()
 	setEditingInProgress(false);
 	if (!ctrl_pressed)
 		angle_helper->setActive(false);
+	show_azimuth_info = false;
 	updateSnapHelper();
 	updateStatusText();
 	hidePreviewPoints();
@@ -835,6 +850,9 @@ void DrawPathTool::updateDirtyRect()
 {
 	QRectF rect;
 	
+	if (show_azimuth_info)
+		azimuth_helper->includeDirtyRect(rect, constrained_pos_map);
+
 	if (dragging)
 	{
 		rectIncludeSafe(rect, click_pos_map);
