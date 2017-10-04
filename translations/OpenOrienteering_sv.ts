@@ -325,7 +325,7 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="72"/>
         <source>Save the active file to remove the conflicting version.</source>
-        <translation>Spara den aktiva filen för att ta bort konflikten.</translation>
+        <translation>Spara den aktiva filen för att ta bort den motstridiga versionen.</translation>
     </message>
 </context>
 <context>
@@ -1057,7 +1057,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
         <location filename="../src/tools/draw_path_tool.cpp" line="88"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation>Snappa</translation>
+        <translation type="unfinished">Snappa</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="89"/>
@@ -4321,7 +4321,7 @@ Importera datan ändå?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="934"/>
         <source>Cut away from area</source>
-        <translation>Klip ut från yta</translation>
+        <translation>Klipp ut från yta</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="936"/>
@@ -4562,7 +4562,7 @@ valda</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2338"/>
         <source>Select at least one line or area object to activate this tool.</source>
-        <translation>Välj minst en linje eller yta för att använda detta verktyg.</translation>
+        <translation>Välj minst ett linje- eller ytobjekt för att använda detta verktyg.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2347"/>
@@ -8456,7 +8456,7 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="113"/>
         <source>underlined</source>
-        <translation>understreck</translation>
+        <translation type="unfinished">understreckad</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="116"/>
