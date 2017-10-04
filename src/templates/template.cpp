@@ -666,9 +666,9 @@ void Template::rotate(double rotation, const MapCoord& center)
 	
 	setTemplateRotation(getTemplateRotation() + rotation);
 	
-	MapCoordF offset = MapCoordF { templatePosition() - center };
-	offset.rotate(rotation);
-	setTemplatePosition(MapCoord { offset });
+	auto position = MapCoordF{templatePosition() - center};
+	position.rotate(-rotation);
+	setTemplatePosition(MapCoord{position} + center);
 }
 
 void Template::setTemplateAreaDirty()
