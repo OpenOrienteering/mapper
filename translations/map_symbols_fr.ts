@@ -86,7 +86,7 @@
         <message>
             <source>Opaque White over Green</source>
             <comment>Color 16</comment>
-            <translation>Blanc opaque sur vert</translation>
+            <translation>Blanc opaque au dessus du vert</translation>
     </message>
         <message>
             <source>Opaque Green 20%</source>
