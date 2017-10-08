@@ -36,7 +36,7 @@
         <message>
             <source>Black below light browns</source>
             <comment>Color 6</comment>
-            <translation>Noir sur brun clair</translation>
+            <translation>Noir sous brun clair</translation>
     </message>
         <message>
             <source>Opaque Blue</source>
