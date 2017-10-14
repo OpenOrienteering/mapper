@@ -4577,12 +4577,12 @@ er valgt</translation>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="101"/>
         <source>&amp;Find next</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Finn neste</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="104"/>
         <source>Find &amp;all</source>
-        <translation type="unfinished"></translation>
+        <translation>Finn &amp;alle</translation>
     </message>
 </context>
 <context>
@@ -4630,7 +4630,7 @@ er valgt</translation>
         <location filename="../src/gui/color_dialog.cpp" line="514"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="323"/>
         <source>Map (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kart (%1)</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="515"/>
@@ -5159,7 +5159,7 @@ rull musehjulet for å zoome.</translation>
         <location filename="../src/core/objects/object_query.cpp" line="316"/>
         <source>Symbol</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Symbol</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="320"/>
@@ -6193,12 +6193,12 @@ separations</source>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="142"/>
         <source>Assign new symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Tildel nye symboler</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="143"/>
         <source>Pattern</source>
-        <translation type="unfinished"></translation>
+        <translation>Mønster</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="155"/>
@@ -6220,7 +6220,7 @@ separations</source>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="165"/>
         <source>Symbol mapping</source>
-        <translation type="unfinished"></translation>
+        <translation>Symboltilknytning</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="233"/>
@@ -6662,7 +6662,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1281"/>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation>Beskrivelse</translation>
     </message>
 </context>
 <context>
