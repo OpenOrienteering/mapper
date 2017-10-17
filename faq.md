@@ -21,7 +21,6 @@ The easiest way is to hold the middle mouse button while moving the mouse. But y
 
 You can use the mouse wheel, press F7/F8 or +/- keys, or click the zoom buttons in the toolbar.
 
-
 ## Drawing
 
 ### I want to start drawing a map, but have no idea how to.
@@ -69,3 +68,15 @@ An Android version is available. It already has a special user interface, but it
 ### Will Mapper be available for iPhone / iPad?
 
 Probably not, due to distribution issues. Technically, a build should be feasible.
+
+## Experienced mappers' corner
+
+### What are the most notable differences to OCAD?
+
+* Whole objects can be moved by dragging the dashed magenta bounding box.
+* There is a single tool for straight lines and Bézier curves.
+* Addition and removal of path points (vertices) can be achieved via **Edit** tool using various combinations of keyboard modifiers. See the status line at the bottom edge of the window for dynamically updated help. See also [Drawing](#drawing).
+* Dash points can be added and removed using the **Edit** tool after pressing **Ctrl-Space** on keyboard.
+* Corner points do not exist per se. Move the Bézier curve handles independently while holding keyboard **Shift** key.
+* Edge lines of double line symbols (roads et al) are inactive. Mapper does not support cutting out parts of the side lines.
+* Partial map export is done via a tool. See [Advanced editing](#advanced-editing).
