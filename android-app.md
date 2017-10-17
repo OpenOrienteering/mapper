@@ -24,11 +24,11 @@ Attention: the compass is very sensitive to magnetic materials. Android tries th
 
 (3) GPS position display toggle
 
-This will show a dot at your current position. In addition, in case an accuracy estimate is available, this shows a circle around the dot which indicates the positioning accuracy. The chance of your real position being in the circle is approximately 70%.
+If the currently active map work has valid global geographic coordinate system settings, this control will be enabled and will show a dot at your current position. In addition, in case an accuracy estimate (HDOP) is available, this shows a circle around the dot which indicates the positioning accuracy. The chance of your real position being in the circle is approximately 70%.
 
 While this is active, your GPS track is automatically recorded into a GPX file in the directory of your map, named "<map> - GPS-<YYYY-MM-DD>.gpx". This file is included as a template in the map. You can simply show it using button (7) to view your track.
 
-Note that track recording is interrupted while the screen is off or the app is in the background to save battery. If you want to record a track, you need to keep the app active.
+Note that track recording might be interrupted while the screen is off or the app is in the background to save battery. Keep the app active if you want to ensure continuous track recording.
 
 (4) GPS distance rings toggle
 
