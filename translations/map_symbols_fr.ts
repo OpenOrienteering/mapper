@@ -2572,102 +2572,102 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <message>
             <source>Black below light browns</source>
             <comment>Color 3</comment>
-            <translation type="unfinished">Black below light browns</translation>
-        </message>
+            <translation>Noir sous brun clair</translation>
+    </message>
         <message>
             <source>Opaque Blue</source>
             <comment>Color 4</comment>
-            <translation type="unfinished">Opaque Blue</translation>
-        </message>
+            <translation>Bleu opaque</translation>
+    </message>
         <message>
             <source>Blue</source>
             <comment>Color 5</comment>
-            <translation type="unfinished">Blue</translation>
-        </message>
+            <translation>Bleu</translation>
+    </message>
         <message>
             <source>Blue 50%</source>
             <comment>Color 6</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Bleu 50%</translation>
+    </message>
         <message>
             <source>Brown</source>
             <comment>Color 7</comment>
-            <translation type="unfinished">Brown</translation>
-        </message>
+            <translation>Brun</translation>
+    </message>
         <message>
             <source>OpenOrienteering Orange</source>
             <comment>Color 8</comment>
-            <translation type="unfinished">OpenOrienteering Orange</translation>
-        </message>
+            <translation>Orange OpenOrienteering</translation>
+    </message>
         <message>
             <source>Black 30%</source>
             <comment>Color 9</comment>
-            <translation type="unfinished">Black 30%</translation>
-        </message>
+            <translation>Noir 30%</translation>
+    </message>
         <message>
             <source>Green 50%, Yellow</source>
             <comment>Color 10</comment>
-            <translation type="unfinished">Green 50%, Yellow</translation>
-        </message>
+            <translation>Vert 50%, Jaune</translation>
+    </message>
         <message>
             <source>Green over White over Green</source>
             <comment>Color 11</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Vert sur Blanc sur vert</translation>
+    </message>
         <message>
             <source>Opaque White over Green</source>
             <comment>Color 12</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Blanc opaque sur vert</translation>
+    </message>
         <message>
             <source>Opaque Green</source>
             <comment>Color 13</comment>
-            <translation type="unfinished">Opaque Green</translation>
-        </message>
+            <translation>Vert opaque</translation>
+    </message>
         <message>
             <source>Green</source>
             <comment>Color 14</comment>
-            <translation type="unfinished">Green</translation>
-        </message>
+            <translation>Vert</translation>
+    </message>
         <message>
             <source>Green 60%</source>
             <comment>Color 15</comment>
-            <translation type="unfinished">Green 60%</translation>
-        </message>
+            <translation>Vert 60%</translation>
+    </message>
         <message>
             <source>Green 30%</source>
             <comment>Color 16</comment>
-            <translation type="unfinished">Green 30%</translation>
-        </message>
+            <translation>Vert 30%</translation>
+    </message>
         <message>
             <source>Green below light greens</source>
             <comment>Color 17</comment>
-            <translation type="unfinished">Green below light greens</translation>
-        </message>
+            <translation>Vert sous vert clair</translation>
+    </message>
         <message>
             <source>Yellow</source>
             <comment>Color 18</comment>
-            <translation type="unfinished">Yellow</translation>
-        </message>
+            <translation>Jaune</translation>
+    </message>
         <message>
             <source>Yellow 50%</source>
             <comment>Color 19</comment>
-            <translation type="unfinished">Yellow 50%</translation>
-        </message>
+            <translation>Jaune 50%</translation>
+    </message>
         <message>
             <source>White over Yellow 70%</source>
             <comment>Color 20</comment>
-            <translation type="unfinished">White over Yellow 70%</translation>
-        </message>
+            <translation>Blanc sur jaune 70%</translation>
+    </message>
         <message>
             <source>Yellow 70%</source>
             <comment>Color 21</comment>
-            <translation type="unfinished">Yellow 70%</translation>
-        </message>
+            <translation>Jaune 70%</translation>
+    </message>
         <message>
             <source>Contour</source>
             <comment>Name of symbol 101</comment>
-            <translation type="unfinished">Courbe de niveau</translation>
+            <translation>Courbe de niveau</translation>
         </message>
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
@@ -2677,7 +2677,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <message>
             <source>Index contour</source>
             <comment>Name of symbol 102</comment>
-            <translation type="unfinished">Courbe de niveau maîtresse</translation>
+            <translation>Courbe de niveau maîtresse</translation>
         </message>
         <message>
             <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. Where an index contour coincides with an area of much detail, it may be shown with a normal contour line.</source>
@@ -2687,17 +2687,17 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <message>
             <source>Form line</source>
             <comment>Name of symbol 103</comment>
-            <translation type="unfinished">Courbe de forme</translation>
+            <translation>Courbe de forme</translation>
         </message>
         <message>
             <source>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</source>
             <comment>Description of symbol 103</comment>
-            <translation type="unfinished">Courbe de niveau intermédiaire. Les courbes intermédiaires sont utilisées pour donner plus d&apos;information sur la forme du terrain. Elles ne seront utilisées que si les courbes de niveau ne peuvent donner une bonne représentation du terrain. Une seule courbe intermédiaire peut être dessinée entre deux courbes de niveau.</translation>
+            <translation>Courbe de niveau intermédiaire. Les courbes intermédiaires sont utilisées pour donner plus d&apos;information sur la forme du terrain. Elles ne seront utilisées que si les courbes de niveau ne peuvent donner une bonne représentation du terrain. Une seule courbe intermédiaire peut être dessinée entre deux courbes de niveau.</translation>
         </message>
         <message>
             <source>Slope line</source>
             <comment>Name of symbol 104</comment>
-            <translation type="unfinished">Tiret de pente</translation>
+            <translation>Tiret de pente</translation>
         </message>
         <message>
             <source>Slope lines may be drawn on the lower side of a contour line, e.g. along the line of a re-entrant or in a depression. They are used only where it is necessary to clarify the direction of slope.</source>
@@ -2707,17 +2707,17 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <message>
             <source>Contour value</source>
             <comment>Name of symbol 105</comment>
-            <translation type="unfinished">Cote</translation>
+            <translation>Cote</translation>
         </message>
         <message>
             <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
             <comment>Description of symbol 105</comment>
-            <translation type="unfinished">Les courbes de niveau peuvent être cotées pour faciliter l&apos;évaluation de grandes différences de dénivelé. Elles sont insérées dans les courbes de niveau maîtresse, où elles ne dissimulent aucun détail. Les chiffres sont orientés avec leur sommet en amont de la pente.</translation>
+            <translation>Les courbes de niveau peuvent être cotées pour faciliter l&apos;évaluation de grandes différences de dénivelé. Elles sont insérées dans les courbes de niveau maîtresse, où elles ne dissimulent aucun détail. Les chiffres sont orientés avec leur sommet en amont de la pente.</translation>
         </message>
         <message>
             <source>Earth bank</source>
             <comment>Name of symbol 106</comment>
-            <translation type="unfinished">Abrupt de terre</translation>
+            <translation>Abrupt de terre</translation>
         </message>
         <message>
             <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
@@ -2727,8 +2727,8 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <message>
             <source>Earth bank, minimum size</source>
             <comment>Name of symbol 106.0.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Abrupt de terre, taille minimale</translation>
+    </message>
         <message>
             <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
             <comment>Description of symbol 106.0.1</comment>
@@ -2737,53 +2737,53 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <message>
             <source>Earth bank, very high</source>
             <comment>Name of symbol 106.1</comment>
-            <translation type="unfinished">Abrupt de terre, important</translation>
+            <translation>Abrupt de terre, important</translation>
         </message>
         <message>
             <source>The line width of very high earth banks may be 0.25 mm.</source>
             <comment>Description of symbol 106.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>La ligne d&apos;une abrupt de terre important peut être égal à 0.25 mm.</translation>
+    </message>
         <message>
             <source>Earth bank, very high, minimum size</source>
             <comment>Name of symbol 106.1.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Abrupt de terre, très haut, taille minimal</translation>
+    </message>
         <message>
             <source>The line width of very high earth banks may be 0.25 mm.</source>
             <comment>Description of symbol 106.1.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>L&apos;épaisseur de la ligne d&apos;une abrupte de terre peut être égal à 0.25 mm.</translation>
+    </message>
         <message>
             <source>Earth bank, tag line</source>
             <comment>Name of symbol 106.2</comment>
-            <translation type="unfinished">Abrupt de terre, tiret</translation>
+            <translation>Abrupt de terre, tiret</translation>
         </message>
         <message>
             <source>Use this symbol to display the full extent of wide earth banks.</source>
             <comment>Description of symbol 106.2</comment>
-            <translation type="unfinished">Utiliser ce symbole pour représenter l&apos;étendue de l&apos;abrupt de terre.</translation>
+            <translation>Utiliser ce symbole pour représenter l&apos;étendue de l&apos;abrupt de terre.</translation>
         </message>
         <message>
             <source>Earth wall</source>
             <comment>Name of symbol 107</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Levée de terre</translation>
+    </message>
         <message>
             <source>Distinct earth wall. Minimum height is 1 m.</source>
             <comment>Description of symbol 107</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Levée de terre. La hauteur minimale est 1m.</translation>
+    </message>
         <message>
             <source>Small earth wall</source>
             <comment>Name of symbol 108</comment>
-            <translation type="unfinished">Petite levée de terre</translation>
+            <translation>Petite levée de terre</translation>
         </message>
         <message>
             <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
             <comment>Description of symbol 108</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Une petite ou levée de terre en ruine doit être dessinée avec une ligne discontinue. La hauteur minimale est 0,5 mm.</translation>
+    </message>
         <message>
             <source>Erosion gully</source>
             <comment>Name of symbol 109</comment>
@@ -2797,8 +2797,8 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <message>
             <source>Small erosion gully</source>
             <comment>Name of symbol 110</comment>
-            <translation type="unfinished">Petit ravin</translation>
-        </message>
+            <translation>Petite ravine</translation>
+    </message>
         <message>
             <source>A small erosion gully or trench. Minimum depth 0.5 m.</source>
             <comment>Description of symbol 110</comment>
@@ -2807,7 +2807,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <message>
             <source>Small knoll</source>
             <comment>Name of symbol 112</comment>
-            <translation type="unfinished">Petite butte</translation>
+            <translation>Petite butte</translation>
         </message>
         <message>
             <source>A small obvious mound or rocky knoll which cannot be drawn to scale with a contour (diameter of mound less than ca. 5 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. The symbol may not touch a contour line.</source>
@@ -2817,7 +2817,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <message>
             <source>Elongated knoll</source>
             <comment>Name of symbol 113</comment>
-            <translation type="unfinished">Butte allongée</translation>
+            <translation>Butte allongée</translation>
         </message>
         <message>
             <source>A small obvious elongated knoll which cannot be drawn to scale with a contour (length less than 12 m and width less than 4 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. Knolls larger than this must be shown by contours. The symbol may not be drawn in free form or such that two elongated knoll symbols overlap. The symbol may not touch a contour line.</source>
@@ -2827,7 +2827,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <message>
             <source>Small depression</source>
             <comment>Name of symbol 115</comment>
-            <translation type="unfinished">Petite dépression</translation>
+            <translation>Petite dépression</translation>
         </message>
         <message>
             <source>Small shallow natural depressions and hollows (minimum diameter 2 m) which cannot be shown to scale by contours are represented by a semicircle. Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol, which is orientated to north. Symbol 116 is used for man-made pits.</source>
@@ -2837,7 +2837,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <message>
             <source>Pit</source>
             <comment>Name of symbol 116</comment>
-            <translation type="unfinished">Trou</translation>
+            <translation>Trou</translation>
         </message>
         <message>
             <source>Pits and holes with distinct steep sides which cannot be shown to scale by symbol 106 (minimum diameter 2 m). Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol which is orientated to north.</source>
@@ -2907,13 +2907,13 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <message>
             <source>Impassable cliff, tag line</source>
             <comment>Name of symbol 201.2</comment>
-            <translation type="unfinished">Falaise infranchissable, tiret</translation>
+            <translation>Falaise infranchissable, tiret</translation>
         </message>
         <message>
             <source>Use this symbol to display the full extent of a wide cliff.</source>
             <comment>Description of symbol 201.2</comment>
-            <translation type="unfinished">Utiliser ce symbole pour dessiner l&apos;étendue d&apos;une grande falaise.</translation>
-        </message>
+            <translation>Utiliser ce symbole pour dessiner la surface d&apos;une grande falaise.</translation>
+    </message>
         <message>
             <source>Rock pillars/cliffs</source>
             <comment>Name of symbol 202</comment>
@@ -2927,7 +2927,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <message>
             <source>Passable rock face</source>
             <comment>Name of symbol 203</comment>
-            <translation type="unfinished">Falaise franchissable</translation>
+            <translation>Falaise franchissable</translation>
         </message>
         <message>
             <source>A small vertical rock face (minimum height 1 m) may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
@@ -2937,7 +2937,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <message>
             <source>Passable rock face, minimum size</source>
             <comment>Name of symbol 203.0.1</comment>
-            <translation type="unfinished">Falaise franchissable, taille minimum</translation>
+            <translation>Falaise franchissable, taille minimum</translation>
         </message>
         <message>
             <source>A small vertical rock face (minimum height 1 m) may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
@@ -2947,27 +2947,27 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <message>
             <source>Passable rock face, no tags</source>
             <comment>Name of symbol 203.1</comment>
-            <translation type="unfinished">Falaise franchissable, sans tirets</translation>
+            <translation>Falaise franchissable, sans tirets</translation>
         </message>
         <message>
             <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
             <comment>Description of symbol 203.1</comment>
-            <translation type="unfinished">Doit être utilisé si le sens de la pente est évident d&apos;après les courbes de niveau.</translation>
+            <translation>Doit être utilisé si le sens de la pente est évident d&apos;après les courbes de niveau.</translation>
         </message>
         <message>
             <source>Passable rock face, no tags, minimum size</source>
             <comment>Name of symbol 203.1.1</comment>
-            <translation type="unfinished">Falaise franchissable, sans tirets, taille minimum</translation>
+            <translation>Falaise franchissable, sans tirets, taille minimum</translation>
         </message>
         <message>
             <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
             <comment>Description of symbol 203.1.1</comment>
-            <translation type="unfinished">Doit être utilisé si le sens de la pente est évident d&apos;après les courbes de niveau.</translation>
+            <translation>Doit être utilisé si le sens de la pente est évident d&apos;après les courbes de niveau.</translation>
         </message>
         <message>
             <source>Passable rock face, no tags, rounded</source>
             <comment>Name of symbol 203.2</comment>
-            <translation type="unfinished">Falaise franchissable, sans tirets, arrondie</translation>
+            <translation>Falaise franchissable, sans tirets, arrondie</translation>
         </message>
         <message>
             <source>For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
@@ -2977,7 +2977,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <message>
             <source>Passable rock face, no tags, rounded, minimum size</source>
             <comment>Name of symbol 203.2.1</comment>
-            <translation type="unfinished">Falaise franchissable, sans tirets, arrondie, taille minimum</translation>
+            <translation>Falaise franchissable, sans tirets, arrondie, taille minimum</translation>
         </message>
         <message>
             <source>For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
@@ -2987,7 +2987,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <message>
             <source>Rocky pit</source>
             <comment>Name of symbol 204</comment>
-            <translation type="unfinished">Trou rocheux</translation>
+            <translation>Trou rocheux</translation>
         </message>
         <message>
             <source>Rocky pits, holes or mineshafts which may constitute a danger to the runner. Location is the centre of gravity of the symbol, which is orientated to north.</source>
@@ -2997,8 +2997,8 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <message>
             <source>Cave</source>
             <comment>Name of symbol 205</comment>
-            <translation type="unfinished">Caverne ou grotte</translation>
-        </message>
+            <translation>Caverne</translation>
+    </message>
         <message>
             <source>A cave is represented by the same symbol as a rocky pit. In this case the symbol should be orientated to point up the slope as indicated opposite. The centre of gravity of the symbol marks the opening.</source>
             <comment>Description of symbol 205</comment>
@@ -3007,7 +3007,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <message>
             <source>Boulder</source>
             <comment>Name of symbol 206</comment>
-            <translation type="unfinished">Rocher</translation>
+            <translation>Rocher</translation>
         </message>
         <message>
             <source>A small distinct boulder (minimum height 1 m). Every boulder marked on the map should be immediately identifiable on the ground. To be able to show the distinction between boulders with significant difference in size it is permitted to enlarge this symbol by 20% (diameter 0.5 mm).</source>
@@ -3027,7 +3027,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <message>
             <source>Large boulder</source>
             <comment>Name of symbol 207</comment>
-            <translation type="unfinished">Grand bloc rocheux</translation>
+            <translation>Grand bloc rocheux</translation>
         </message>
         <message>
             <source>A particularly large and distinct boulder. For gigantic boulders symbol 202 should be used.</source>
@@ -3037,7 +3037,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <message>
             <source>Boulder field</source>
             <comment>Name of symbol 208</comment>
-            <translation type="unfinished">Zone rocheuse</translation>
+            <translation>Zone rocheuse</translation>
         </message>
         <message>
             <source>An area which is covered with so many blocks of stone that they cannot be marked individually is shown with randomly orientated solid triangles with sides of ratio 8:6:5. A minimum of two triangles should be used. The going is indicated by the density of the triangles. To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
@@ -3047,7 +3047,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <message>
             <source>Boulder field, large</source>
             <comment>Name of symbol 208.1</comment>
-            <translation type="unfinished">Zone rocheuse, grande</translation>
+            <translation>Zone rocheuse, grande</translation>
         </message>
         <message>
             <source>To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
@@ -3087,7 +3087,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <message>
             <source>Stony ground</source>
             <comment>Name of symbol 210.1</comment>
-            <translation type="unfinished">Terrain rocailleux</translation>
+            <translation>Terrain rocailleux</translation>
         </message>
         <message>
             <source>Stony or rocky ground which affects going should be shown on the map. The dots should be randomly distributed with density according to the amount of rock. A minimum of three dots should be used.</source>
@@ -3097,7 +3097,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <message>
             <source>Open sandy ground</source>
             <comment>Name of symbol 211</comment>
-            <translation type="unfinished">Terrain sablonneux découvert</translation>
+            <translation>Terrain sablonneux découvert</translation>
         </message>
         <message>
             <source>An area of soft sandy ground or gravel with no vegetation and where running is slow. Where an area of sandy ground is open but running is good, it is shown as open land (401/402).</source>
@@ -3107,7 +3107,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <message>
             <source>Bare rock</source>
             <comment>Name of symbol 212</comment>
-            <translation type="unfinished">Affleurement rocheux</translation>
+            <translation>Affleurement rocheux</translation>
         </message>
         <message>
             <source>A runnable area of rock without earth or vegetation is shown as bare rock. An area of rock covered with grass, moss or other low vegetation is shown as open land (401/402).</source>
@@ -3152,7 +3152,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <message>
             <source>Waterhole</source>
             <comment>Name of symbol 303</comment>
-            <translation type="unfinished">Trou d&apos;eau</translation>
+            <translation>Trou d&apos;eau</translation>
         </message>
         <message>
             <source>A water-filled pit or an area of water which is too small to be shown to scale. Location is the centre of gravity of the symbol, which is orientated to north.</source>
@@ -3192,7 +3192,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <message>
             <source>Narrow marsh</source>
             <comment>Name of symbol 308</comment>
-            <translation type="unfinished">Marais étroit</translation>
+            <translation>Marais étroit</translation>
         </message>
         <message>
             <source>A marsh or trickle of water which is too narrow to be shown with symbol 310 (less than ca. 5 m wide).</source>
@@ -3227,7 +3227,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <message>
             <source>Marsh</source>
             <comment>Name of symbol 310</comment>
-            <translation type="unfinished">Marais</translation>
+            <translation>Marais</translation>
         </message>
         <message>
             <source>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility.</source>
@@ -3237,7 +3237,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <message>
             <source>Marsh, minimum size</source>
             <comment>Name of symbol 310.1</comment>
-            <translation type="unfinished">Marais, taille minimum</translation>
+            <translation>Marais, taille minimum</translation>
         </message>
         <message>
             <source>Indistinct marsh</source>
@@ -3267,7 +3267,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <message>
             <source>Spring</source>
             <comment>Name of symbol 313</comment>
-            <translation type="unfinished">Source</translation>
+            <translation>Source</translation>
         </message>
         <message>
             <source>The source of a stream with a distinct outflow. The symbol is orientated to open downstream.</source>
@@ -3287,7 +3287,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <message>
             <source>Open land</source>
             <comment>Name of symbol 401</comment>
-            <translation type="unfinished">Terrain découvert</translation>
+            <translation>Terrain découvert</translation>
         </message>
         <message>
             <source>Cultivated land, fields, meadows, grassland, etc. without trees, offering easy running. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
@@ -3317,10 +3317,8 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <message>
             <source>Rough open land with scattered trees</source>
             <comment>Name of symbol 404</comment>
-            <translation type="unfinished">Terrain découvert
-encombré avec arbres
-dispersés</translation>
-        </message>
+            <translation>Terrain découvert encombré avec arbres dispersés</translation>
+    </message>
         <message>
             <source>Where there are scattered trees in rough open land, areas of white (or green) should appear in the tone. Such an area may be generalised by using a regular pattern of large white dots in the yellow screen. Areas smaller than 16 mm in the maps scale are shown as rough open land (403). Individual trees may be added (418, 419, 420).</source>
             <comment>Description of symbol 404</comment>
@@ -3329,7 +3327,7 @@ dispersés</translation>
         <message>
             <source>Forest: easy running</source>
             <comment>Name of symbol 405</comment>
-            <translation type="unfinished">Forêt : course facile</translation>
+            <translation>Forêt : course facile</translation>
         </message>
         <message>
             <source>Typically open runnable forest for the particular type of terrain. If no part of the forest is runnable then no white should appear on the map.</source>
@@ -3339,7 +3337,7 @@ dispersés</translation>
         <message>
             <source>Forest: slow running</source>
             <comment>Name of symbol 406</comment>
-            <translation type="unfinished">Forêt : course ralentie</translation>
+            <translation>Forêt : course ralentie</translation>
         </message>
         <message>
             <source>An area with dense trees (low visibility) which reduces running to ca. 60-80% of normal speed.</source>
@@ -3359,7 +3357,7 @@ dispersés</translation>
         <message>
             <source>Forest: difficult to run</source>
             <comment>Name of symbol 408</comment>
-            <translation type="unfinished">Forêt : course difficile</translation>
+            <translation>Forêt : course difficile</translation>
         </message>
         <message>
             <source>An area with dense trees or thicket (low visibility) which reduce running to ca. 20-60% of normal speed.</source>
@@ -3450,7 +3448,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <message>
             <source>Distinct cultivation boundary</source>
             <comment>Name of symbol 414</comment>
-            <translation type="unfinished">Limite de culture nette</translation>
+            <translation>Limite de culture nette</translation>
         </message>
         <message>
             <source>The boundary of cultivated land when not shown with other symbols (fence, wall, path, etc.) is shown with a black line. A permanent boundary between different types of cultivated land is also shown with this symbol.</source>
@@ -4208,183 +4206,183 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <message>
             <source>Purple</source>
             <comment>Color 0</comment>
-            <translation type="unfinished">Purple</translation>
-        </message>
+            <translation>Violine</translation>
+    </message>
         <message>
             <source>Purple 50%</source>
             <comment>Color 1</comment>
-            <translation type="unfinished">Purple 50%</translation>
-        </message>
+            <translation>Violine 50%</translation>
+    </message>
         <message>
             <source>Black</source>
             <comment>Color 2</comment>
-            <translation type="unfinished">Black</translation>
-        </message>
+            <translation>Noir</translation>
+    </message>
         <message>
             <source>Opaque White below Black</source>
             <comment>Color 3</comment>
-            <translation type="unfinished">Opaque White below Black</translation>
-        </message>
+            <translation>Blanc opaque sous noir</translation>
+    </message>
         <message>
             <source>Brown for contours</source>
             <comment>Color 4</comment>
-            <translation type="unfinished">Brown for contours</translation>
-        </message>
+            <translation>Brun pour lignes de niveau</translation>
+    </message>
         <message>
             <source>Black 50-65% for buildings</source>
             <comment>Color 5</comment>
-            <translation type="unfinished">Black 50-65% for buildings</translation>
-        </message>
+            <translation>Noir 50-65% pour bâtiments</translation>
+    </message>
         <message>
             <source>Black 50%</source>
             <comment>Color 6</comment>
-            <translation type="unfinished">Black 50%</translation>
-        </message>
+            <translation>Noir 50%</translation>
+    </message>
         <message>
             <source>Black 30%</source>
             <comment>Color 7</comment>
-            <translation type="unfinished">Black 30%</translation>
-        </message>
+            <translation>Noir 30%</translation>
+    </message>
         <message>
             <source>Black 20%</source>
             <comment>Color 8</comment>
-            <translation type="unfinished">Black 20%</translation>
-        </message>
+            <translation>Noir 20%</translation>
+    </message>
         <message>
             <source>Green, Black 50% above Brown</source>
             <comment>Color 9</comment>
-            <translation type="unfinished">Green, Black 50% above Brown</translation>
-        </message>
+            <translation>Vert, Noir 50% sur brun</translation>
+    </message>
         <message>
             <source>Opaque Blue above Brown</source>
             <comment>Color 10</comment>
-            <translation type="unfinished">Opaque Blue above Brown</translation>
-        </message>
+            <translation>Bleu opaque sur brun</translation>
+    </message>
         <message>
             <source>Blue above Brown</source>
             <comment>Color 11</comment>
-            <translation type="unfinished">Blue above Brown</translation>
-        </message>
+            <translation>Bleu sur brun</translation>
+    </message>
         <message>
             <source>Green above Brown</source>
             <comment>Color 12</comment>
-            <translation type="unfinished">Green above Brown</translation>
-        </message>
+            <translation>Vert sur brun</translation>
+    </message>
         <message>
             <source>Brown 20-50% for paved area, non-urban</source>
             <comment>Color 13</comment>
-            <translation type="unfinished">Brown 20-50% for paved area, non-urban</translation>
-        </message>
+            <translation>Brun 20-50% pour zone urbaine, non-urbaine</translation>
+    </message>
         <message>
             <source>Brown 0-30% for paved area, urban</source>
             <comment>Color 14</comment>
-            <translation type="unfinished">Brown 0-30% for paved area, urban</translation>
-        </message>
+            <translation>Brun 0-30% pour zone urbaine</translation>
+    </message>
         <message>
             <source>Black below light browns</source>
             <comment>Color 15</comment>
-            <translation type="unfinished">Black below light browns</translation>
-        </message>
+            <translation>Noir sous brun clair</translation>
+    </message>
         <message>
             <source>Opaque Blue</source>
             <comment>Color 16</comment>
-            <translation type="unfinished">Opaque Blue</translation>
-        </message>
+            <translation>Bleu opaque</translation>
+    </message>
         <message>
             <source>Blue</source>
             <comment>Color 17</comment>
-            <translation type="unfinished">Blue</translation>
-        </message>
+            <translation>Bleu</translation>
+    </message>
         <message>
             <source>Blue 75%</source>
             <comment>Color 18</comment>
-            <translation type="unfinished">Blue 75%</translation>
-        </message>
+            <translation>Bleu 75%</translation>
+    </message>
         <message>
             <source>Blue 30%</source>
             <comment>Color 19</comment>
-            <translation type="unfinished">Blue 30%</translation>
-        </message>
+            <translation>Bleu 30%</translation>
+    </message>
         <message>
             <source>OpenOrienteering Blue 50%</source>
             <comment>Color 20</comment>
-            <translation type="unfinished">OpenOrienteering Blue 50%</translation>
-        </message>
+            <translation>Bleu OpenOrienteering 50%</translation>
+    </message>
         <message>
             <source>Brown</source>
             <comment>Color 21</comment>
-            <translation type="unfinished">Brown</translation>
-        </message>
+            <translation>Brun</translation>
+    </message>
         <message>
             <source>OpenOrienteering Orange</source>
             <comment>Color 22</comment>
-            <translation type="unfinished">OpenOrienteering Orange</translation>
-        </message>
+            <translation>Orange OpenOrienteering</translation>
+    </message>
         <message>
             <source>Grey</source>
             <comment>Color 23</comment>
-            <translation type="unfinished">Grey</translation>
-        </message>
+            <translation>Gris</translation>
+    </message>
         <message>
             <source>Green 50%, Yellow</source>
             <comment>Color 24</comment>
-            <translation type="unfinished">Green 50%, Yellow</translation>
-        </message>
+            <translation>Vert 50%, Jaune</translation>
+    </message>
         <message>
             <source>White over Green</source>
             <comment>Color 25</comment>
-            <translation type="unfinished">White over Green</translation>
-        </message>
+            <translation>Blanc sur Vert</translation>
+    </message>
         <message>
             <source>Green, Black 50%</source>
             <comment>Color 26</comment>
-            <translation type="unfinished">Green, Black 50%</translation>
-        </message>
+            <translation>Vert, Noir 50%</translation>
+    </message>
         <message>
             <source>Opaque Green</source>
             <comment>Color 27</comment>
-            <translation type="unfinished">Opaque Green</translation>
-        </message>
+            <translation>Vert opaque</translation>
+    </message>
         <message>
             <source>Green</source>
             <comment>Color 28</comment>
-            <translation type="unfinished">Green</translation>
-        </message>
+            <translation>Vert</translation>
+    </message>
         <message>
             <source>Green 60%</source>
             <comment>Color 29</comment>
-            <translation type="unfinished">Green 60%</translation>
-        </message>
+            <translation>Vert 60%</translation>
+    </message>
         <message>
             <source>Green 30%</source>
             <comment>Color 30</comment>
-            <translation type="unfinished">Green 30%</translation>
-        </message>
+            <translation>Vert 30%</translation>
+    </message>
         <message>
             <source>Green below light greens</source>
             <comment>Color 31</comment>
-            <translation type="unfinished">Green below light greens</translation>
-        </message>
+            <translation>Vert sous vert clair</translation>
+    </message>
         <message>
             <source>Yellow</source>
             <comment>Color 32</comment>
-            <translation type="unfinished">Yellow</translation>
-        </message>
+            <translation>Jaune</translation>
+    </message>
         <message>
             <source>Yellow 50%</source>
             <comment>Color 33</comment>
-            <translation type="unfinished">Yellow 50%</translation>
-        </message>
+            <translation>Jaune 50%</translation>
+    </message>
         <message>
             <source>White over Yellow 70%</source>
             <comment>Color 34</comment>
-            <translation type="unfinished">White over Yellow 70%</translation>
-        </message>
+            <translation>Blanc sur jaune 70%</translation>
+    </message>
         <message>
             <source>Yellow 70%</source>
             <comment>Color 35</comment>
-            <translation type="unfinished">Yellow 70%</translation>
-        </message>
+            <translation>Jaune 70%</translation>
+    </message>
         <message>
             <source>Contour</source>
             <comment>Name of symbol 101</comment>
@@ -10097,7 +10095,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Fodder rack</source>
             <comment>Name of symbol 538</comment>
-            <translation type="unfinished">Mangeoire</translation>
+            <translation>Mangeoire</translation>
         </message>
         <message>
             <source>A fodder rack which is free standing or built on to a tree. Location is at the centre of gravity of the symbol. For land access reasons these may be omitted.</source>
@@ -10110,132 +10108,132 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Purple</source>
             <comment>Color 0</comment>
-            <translation type="unfinished">Purple</translation>
-        </message>
+            <translation>Violine</translation>
+    </message>
         <message>
             <source>Black for control descriptions</source>
             <comment>Color 1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Noir pour définitions</translation>
+    </message>
         <message>
             <source>White above framing</source>
             <comment>Color 2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Blanc pour cadre</translation>
+    </message>
         <message>
             <source>Black for framing</source>
             <comment>Color 3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Noir pour cadre</translation>
+    </message>
         <message>
             <source>White below framing</source>
             <comment>Color 4</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Blanc sous cadre</translation>
+    </message>
         <message>
             <source>Black</source>
             <comment>Color 5</comment>
-            <translation type="unfinished">Black</translation>
-        </message>
+            <translation>Noir</translation>
+    </message>
         <message>
             <source>Simple Orienteering Course</source>
             <comment>Name of symbol 799</comment>
-            <translation type="unfinished">Simple course d&apos;orientation</translation>
-        </message>
+            <translation>Parcours simplifié</translation>
+    </message>
         <message>
             <source>This symbol provides a simple and quick way to make training courses.
 
 The purple line will extend a bit into the finish symbol. This is a shortcoming of this simple approach.</source>
             <comment>Description of symbol 799</comment>
-            <translation type="unfinished">Ce symbole fournit un moyen simple et rapide de créer des course d&apos;entraînement.
+            <translation>Ce symbole fournit un moyen simple et rapide de créer des course d&apos;entraînement.
 
-Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arrivée. Ceci est un inconvénient de ce symbole.</translation>
-        </message>
+Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arrivée. C&apos;est un défaut de ce symbole.</translation>
+    </message>
         <message>
             <source>Start</source>
             <comment>Name of symbol 701</comment>
-            <translation type="unfinished">Départ</translation>
+            <translation>Départ</translation>
         </message>
         <message>
             <source>The start or map issue point (if not at the start) is shown by an equilateral triangle which points in the direction of the first control. The centre of the triangle shows the precise position of the start point.</source>
             <comment>Description of symbol 701</comment>
-            <translation type="unfinished">Le départ, (ou le point de la prise de carte s&apos;il ne s&apos;agit pas du départ) est représenté par un triangle équilatéral qui pointe dans la direction du premier poste. Le centre de ce triangle montre la position exacte du point de départ.</translation>
+            <translation>Le départ, (ou le point de la prise de carte s&apos;il ne s&apos;agit pas du départ) est représenté par un triangle équilatéral qui pointe dans la direction du premier poste. Le centre de ce triangle montre la position exacte du point de départ.</translation>
         </message>
         <message>
             <source>Control point</source>
             <comment>Name of symbol 702</comment>
-            <translation type="unfinished">Poste de contrôle</translation>
-        </message>
+            <translation>Poste</translation>
+    </message>
         <message>
             <source>The control points are shown with circles. The centre of the circle shows the precise position of the feature. Sections of circles should be omitted to leave important detail showing.</source>
             <comment>Description of symbol 702</comment>
-            <translation type="unfinished">Les postes de contrôle sont représentés par des cercles. Le centre du cercle doit indiquer la position exacte de l&apos;élément. Des sections du cercle peuvent être éliminées à condition de ne masquer aucun détail important.</translation>
-        </message>
+            <translation>Les postes sont représentés par des cercles. Le centre du cercle doit indiquer la position exacte de l&apos;élément. Des sections du cercle peuvent être éliminées à condition de ne masquer aucun détail important.</translation>
+    </message>
         <message>
             <source>Control number</source>
             <comment>Name of symbol 703</comment>
-            <translation type="unfinished">Numéro de poste</translation>
+            <translation>Numéro de poste</translation>
         </message>
         <message>
             <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail. The numbers are orientated to north.</source>
             <comment>Description of symbol 703</comment>
-            <translation type="unfinished">Le numéro du poste est placé à proximité du cercle, de telle manière qu&apos;il ne masque aucun détail important. Ces numéros sont orientés vers le nord.</translation>
+            <translation>Le numéro du poste est placé à proximité du cercle, de telle manière qu&apos;il ne masque aucun détail important. Ces numéros sont orientés vers le nord.</translation>
         </message>
         <message>
             <source>Line</source>
             <comment>Name of symbol 704</comment>
-            <translation type="unfinished">Ligne interposte</translation>
+            <translation>Ligne interposte</translation>
         </message>
         <message>
             <source>Where controls are to be visited in order, the start, control points and finish are joined together by straight lines. Sections of lines should be omitted to leave important detail showing.</source>
             <comment>Description of symbol 704</comment>
-            <translation type="unfinished">Lorsque les contrôles doivent être parcourus dans un ordre défini, le départ, les postes et l&apos;arrivée sont réunis par des traits. Des sections de ligne peuvent être éliminées pour ne pas masquer des détails importants.</translation>
-        </message>
+            <translation>Lorsque les postes doivent être parcourus dans un ordre défini, le départ, les postes et l&apos;arrivée sont réunis par des traits. Des sections de ligne peuvent être éliminées pour ne pas masquer des détails importants.</translation>
+    </message>
         <message>
             <source>Marked route</source>
             <comment>Name of symbol 705</comment>
-            <translation type="unfinished">Itinéraire balisé</translation>
-        </message>
+            <translation>Itinéraire jalonné</translation>
+    </message>
         <message>
             <source>A marked route is shown on the map with a dashed line.</source>
             <comment>Description of symbol 705</comment>
-            <translation type="unfinished">Un itinéraire balisé est indiqué sur la carte par des traits interrompus.</translation>
-        </message>
+            <translation>Un itinéraire jalonné est indiqué sur la carte par des traits interrompus.</translation>
+    </message>
         <message>
             <source>Finish</source>
             <comment>Name of symbol 706</comment>
-            <translation type="unfinished">Arrivée</translation>
+            <translation>Arrivée</translation>
         </message>
         <message>
             <source>The finish is shown by two concentric circles.</source>
             <comment>Description of symbol 706</comment>
-            <translation type="unfinished">L&apos;arrivée est représentée par deux cercles concentriques.</translation>
+            <translation>L&apos;arrivée est représentée par deux cercles concentriques.</translation>
         </message>
         <message>
             <source>Uncrossable boundary</source>
             <comment>Name of symbol 707</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Limite infranchissable</translation>
+    </message>
         <message>
             <source>A boundary which it is not permitted to cross.</source>
             <comment>Description of symbol 707</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Limite qui n&apos;est pas permis de franchir.</translation>
+    </message>
         <message>
             <source>Crossing point</source>
             <comment>Name of symbol 708</comment>
-            <translation type="unfinished">Point de passage</translation>
+            <translation>Point de passage</translation>
         </message>
         <message>
             <source>A crossing point through or over a wall or fence, or across a road or railway or through a tunnel or an out-of-bounds area is drawn on the map with two lines curving outwards.</source>
             <comment>Description of symbol 708</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un point de passage à travers ou sur un mur ou une clôture, ou traversant une route ou une voie de chemin de fer ou à travers un tunnel ou une zone interdite est dessiné sur la carte avec deux lignes incurvées vers l&apos;extérieur.</translation>
+    </message>
         <message>
             <source>Out-of-bounds area</source>
             <comment>Name of symbol 709</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Zone interdite</translation>
+    </message>
         <message>
             <source>An out-of-bounds area, see also symbol 528, is shown with vertical stripes.
 A bounding line may be drawn if there is no natural boundary, as follows:
@@ -10243,74 +10241,77 @@ A bounding line may be drawn if there is no natural boundary, as follows:
 - a dashed line indicates intermittent marking on the ground,
 - no line indicates no marking on the ground.</source>
             <comment>Description of symbol 709</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Une zone interdite, voir aussi le symbole 528, est dessiné avec des traits verticaux.
+Une limite peut être dessinée s&apos;il n&apos;y a pas de limite naturelle, de la façon suivante :
+- une ligne continue indique que la limite est marquée clairement au sol (rubalise, etc).
+- une ligne discontinue indique un marquage au sol irrégulier,
+- aucune ligne indique qu&apos;il n&apos;y pas de marquage au sol.</translation>
+    </message>
         <message>
             <source>Out-of-bounds area, solid boundary</source>
             <comment>Name of symbol 709.1</comment>
-            <translation type="unfinished">Zone interdite,  ligne continue</translation>
+            <translation>Zone interdite,  ligne continue</translation>
         </message>
         <message>
             <source>A solid line indicates that the boundary is marked continuously (tapes, etc.) on the ground.</source>
             <comment>Description of symbol 709.1</comment>
-            <translation type="unfinished">Une ligne continue indique que la zone est repérée de manière continue (banderole, etc) sur le terrain.</translation>
-        </message>
+            <translation>Une ligne continue indique que la zone est repérée de manière continue (rubalise, etc) sur le terrain.</translation>
+    </message>
         <message>
             <source>Out-of-bounds area, dashed boundary</source>
             <comment>Name of symbol 709.2</comment>
-            <translation type="unfinished">Zone interdite, ligne en tirets</translation>
-        </message>
+            <translation>Zone interdite, tirets</translation>
+    </message>
         <message>
             <source>A dashed line indicates intermittent marking on the ground.</source>
             <comment>Description of symbol 709.2</comment>
-            <translation type="unfinished">Une ligne en tirets indique un repérage intermittent sur le terrain
-</translation>
-        </message>
+            <translation>Une ligne en tirets indique un marquage irrégulier au sol.</translation>
+    </message>
         <message>
             <source>Dangerous area</source>
             <comment>Name of symbol 710</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Zone dangereuse</translation>
+    </message>
         <message>
             <source>An area presenting danger to the competitor is shown with cross-hatched diagonal lines.</source>
             <comment>Description of symbol 710</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Une zone présentant un danger pour les compétiteurs est dessiné avec des hachures croisées.</translation>
+    </message>
         <message>
             <source>Forbidden route</source>
             <comment>Name of symbol 711</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Route interdite</translation>
+    </message>
         <message>
             <source>A route which is out-of-bounds is shown with crosses.</source>
             <comment>Description of symbol 711</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Une route est interdite est surchargée par des croix.</translation>
+    </message>
         <message>
             <source>First aid post</source>
             <comment>Name of symbol 712</comment>
-            <translation type="unfinished">Poste de secours</translation>
+            <translation>Poste de secours</translation>
         </message>
         <message>
             <source>The location of a first aid post.</source>
             <comment>Description of symbol 712</comment>
-            <translation type="unfinished">La position d&apos;un poste de premiers soins.</translation>
-        </message>
+            <translation>La position d&apos;un poste de secours.</translation>
+    </message>
         <message>
             <source>Refreshment point</source>
             <comment>Name of symbol 713</comment>
-            <translation type="unfinished">Poste de ravitaillement</translation>
+            <translation>Poste de ravitaillement</translation>
         </message>
         <message>
             <source>The location of a refreshment point which is not at a control.</source>
             <comment>Description of symbol 713</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Position d&apos;un poste de ravitaillement qui n&apos;est pas un poste de parcours.</translation>
+    </message>
         <message>
             <source>Heading: Single line for event title or classes</source>
             <comment>Name of symbol 99.0</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Libellé : simple de texte pour indiquer le nom de la course ou les catégories</translation>
+    </message>
         <message>
             <source>Optionally this block can be used as [ Classes line ] between [ Event title ] and [ Course nature ].</source>
             <comment>Description of symbol 99.0</comment>
@@ -10319,13 +10320,13 @@ A bounding line may be drawn if there is no natural boundary, as follows:
         <message>
             <source>Heading: Event title, two lines</source>
             <comment>Name of symbol 99.0.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Libellé : Nom de la course sur deux lignes</translation>
+    </message>
         <message>
             <source>Heading: Event title, three lines</source>
             <comment>Name of symbol 99.0.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Libellé : Nom de la course sur trois lignes</translation>
+    </message>
         <message>
             <source>Course nature</source>
             <comment>Name of symbol 99.2</comment>
@@ -10342,8 +10343,8 @@ A bounding line may be drawn if there is no natural boundary, as follows:
         <message>
             <source>Description of individual control</source>
             <comment>Name of symbol 99.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Définition de chaque poste</translation>
+    </message>
         <message>
             <source>Scheme of columns: |A|B|C|D|E|F|G|H| 
 
@@ -12395,13 +12396,13 @@ The orientation of the symbol indicates the direction in which the corner points
         <message>
             <source>Taped Route from last control to Finish</source>
             <comment>Name of symbol 14.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Parcours jalonné du dernier poste jusqu&apos;à l&apos;arrivée</translation>
+    </message>
         <message>
             <source>Mandatory route from the last control to the Finish. Re-emphasises what is shown on the map. Gives the distance from the last control to Finish.</source>
             <comment>Description of symbol 14.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Parcours obligatoire du dernier poste jusqu&apos;à arrivée. Donne la distance du dernier poste jusqu&apos;à l&apos;arrivée.</translation>
+    </message>
         <message>
             <source>Taped Route from finish funnel to Finish</source>
             <comment>Name of symbol 14.2</comment>
