@@ -67,7 +67,6 @@ struct ApplyTemplateTransform
 		object->rotate(transform.template_rotation);
 		object->scale(transform.template_scale_x, transform.template_scale_y);
 		object->move(transform.template_x, transform.template_y);
-		object->update();
 	}
 };
 
@@ -972,8 +971,6 @@ void TemplateListWidget::importClicked()
 		{
 			template_map.scaleAllSymbols(template_scale);
 		}
-		// Symbols and objects are already adjusted. Merge as is.
-		template_map.setGeoreferencing(map->getGeoreferencing());
 	}
 	else if (qstrcmp(prototype->getTemplateType(), "TemplateMap") == 0
 	         && template_map.loadFrom(prototype->getTemplatePath(), this, nullptr, false, true))
@@ -1008,9 +1005,6 @@ void TemplateListWidget::importClicked()
 		
 		if (ok && scale != 1.0)
 				template_map.scaleAllSymbols(scale);
-			
-		// Symbols and objects are already adjusted. Merge as is.
-		template_map.setGeoreferencing(map->getGeoreferencing());
 	}
 	else
 	{
@@ -1020,7 +1014,7 @@ void TemplateListWidget::importClicked()
 
 	if (ok)
 	{
-		map->importMap(&template_map, Map::MinimalObjectImport, window());
+		map->importMap(template_map, Map::MinimalObjectImport);
 		deleteTemplate();
 		
 		if (main_view->isOverprintingSimulationEnabled()
