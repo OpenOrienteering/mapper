@@ -12,7 +12,7 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="172"/>
         <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
-        <translation type="unfinished"></translation>
+        <translation>Šī ir brīvprogrammatūra: Jūs to varat rediģēt un/vai izplatīt tālāk, ievērojot &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt; nosacījumus, kā minēts Free Software Foundation publikācijā.</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="177"/>
@@ -22,12 +22,12 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="182"/>
         <source>&lt;a %1&gt;All about licenses, copyright notices, conditions and disclaimers.&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;a %1&gt;Viss par licensēm, autortiesību paziņojumiem un atrunām.&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="184"/>
         <source>The OpenOrienteering developers in alphabetical order:</source>
-        <translation type="unfinished"></translation>
+        <translation>The OpenOrienteering izstrādātāji alfabētiskā secībā:</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="185"/>
