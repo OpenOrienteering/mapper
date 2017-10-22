@@ -436,7 +436,7 @@ void OgrTemplate::reloadLater()
 		return;
 		
 	if (template_state == Loaded)
-		templateMap()->reset(); // no expensive operations before reloading
+		templateMap()->clear(); // no expensive operations before reloading
 	QTimer::singleShot(0, this, SLOT(reload()));
 	reload_pending = true;
 }

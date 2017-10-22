@@ -453,44 +453,48 @@ Map::Map()
 
 Map::~Map()
 {
-	clear();
+	clear();  // properly destruct all children
 }
 
 void Map::clear()
 {
-	for (Symbol* symbol : symbols)
-		delete symbol;
+	undo_manager->clear();
 	
-	for (Template* temp : templates)
+	for (auto temp : templates)
 		delete temp;
+	templates.clear();
+	first_front_template = 0;
 	
-	for (Template* temp : closed_templates)
+	for (auto temp : closed_templates)
 		delete temp;
+	closed_templates.clear();
+	
+	object_selection.clear();
+	first_selected_object = nullptr;
+	selection_renderables->clear();
+	
+	renderables->clear();
 	
 	for (MapPart* part : parts)
 		delete part;
+	parts.clear();
+	current_part_index = 0;
+	
+	for (auto symbol : symbols)
+		delete symbol;
+	symbols.clear();
+	
+	// Don't clear() color_set: It is shared.
 }
 
 void Map::init()
 {
 	color_set = new MapColorSet();
 	
-	symbols.clear();
-	templates.clear();
-	closed_templates.clear();
-	parts.clear();
-	
-	first_front_template = 0;
-	
 	parts.push_back(new MapPart(tr("default part"), this));
-	current_part_index = 0;
-	
-	object_selection.clear();
-	first_selected_object = nullptr;
 	
 	widgets.clear();
 	
-	undo_manager->clear();
 	undo_manager->setClean();
 	
 	symbol_set_id = QString();
