@@ -960,9 +960,20 @@ void TemplateListWidget::importClicked()
 	bool ok = true;
 	if (qstrcmp(prototype->getTemplateType(), "OgrTemplate") == 0)
 	{
-		template_map.setGeoreferencing(prototype->templateMap()->getGeoreferencing());
-		template_map.importMap(prototype->templateMap(), Map::MinimalObjectImport, window());
-		template_map.applyOnAllObjects(ApplyTemplateTransform{transform});
+		template_map.importMap(*prototype->templateMap(), Map::MinimalObjectImport);
+		if (!prototype->isTemplateGeoreferenced())
+		{
+			template_map.applyOnAllObjects(ApplyTemplateTransform{transform});
+			template_map.setGeoreferencing(map->getGeoreferencing());
+		}
+		auto template_scale = (transform.template_scale_x + transform.template_scale_y) / 2;
+		template_scale *= double(prototype->templateMap()->getScaleDenominator()) / map->getScaleDenominator();
+		if (!qFuzzyCompare(template_scale, 1))
+		{
+			template_map.scaleAllSymbols(template_scale);
+		}
+		// Symbols and objects are already adjusted. Merge as is.
+		template_map.setGeoreferencing(map->getGeoreferencing());
 	}
 	else if (qstrcmp(prototype->getTemplateType(), "TemplateMap") == 0
 	         && template_map.loadFrom(prototype->getTemplatePath(), this, nullptr, false, true))
