@@ -24,7 +24,6 @@
 #include <memory>
 
 #include <Qt>
-#include <QtMath>
 #include <QtGlobal>
 #include <QByteArray>
 #include <QDialog>
@@ -33,7 +32,6 @@
 #include <QPoint>
 #include <QPointF>
 #include <QStringRef>
-#include <QTransform>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
@@ -345,27 +343,18 @@ try
 		importer.setGeoreferencingImportEnabled(false);
 	}
 	
+	const auto pp0 = new_template_map->getGeoreferencing().getProjectedRefPoint();
+	importer.setGeoreferencingImportEnabled(false);
 	importer.doImport(false, template_path);
 	
-	accounted_offset = {};
-	if (is_georeferenced || !explicit_georef)
-	{
-		// Handle data which has been subject to bounds handling during doImport().
-		// p1 := ref_point + offset; p2: = ref_point;
-		auto p1 = georef.toMapCoords(new_template_map->getGeoreferencing().getProjectedRefPoint());
-		auto p2 = georef.getMapRefPoint();
-		if (p1 != p2)
-		{
-			accounted_offset = QPointF{p1 - p2};
-			if (accounted_offset != QPointF{})
-			{
-				QTransform t;
-				t.rotate(-qRadiansToDegrees(getTemplateRotation()));
-				t.scale(getTemplateScaleX(), getTemplateScaleY());
-				setTemplatePosition(templatePosition() + MapCoord{t.map(accounted_offset)});
-			}
-		}
-	}
+	// MapCoord bounds handling may have moved the paper position of the
+	// template data during import. The template position might need to be
+	// adjusted accordingly.
+	// However, this will happen again the next time the template is loaded.
+	// So this adjustment must not affect the saved configuration.
+	const auto pm0 = new_template_map->getGeoreferencing().toMapCoords(pp0);
+	const auto pm1 = new_template_map->getGeoreferencing().getMapRefPoint();
+	setTemplatePositionOffset(pm1 - pm0);
 	
 	setTemplateMap(std::move(new_template_map));
 	

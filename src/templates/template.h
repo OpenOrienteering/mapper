@@ -491,6 +491,11 @@ public:
 	MapCoord templatePosition() const;
 	void setTemplatePosition(MapCoord coord);
 	
+	MapCoord templatePositionOffset() const;
+	void setTemplatePositionOffset(MapCoord offset);
+	void applyTemplatePositionOffset();
+	void resetTemplatePositionOffset();
+	
 	inline qint64 getTemplateX() const {return transform.template_x;}
 	inline void setTemplateX(qint64 x) {transform.template_x = x; updateTransformationMatrices();}
 	
@@ -646,12 +651,21 @@ protected:
 	/// Is the template in georeferenced mode?
 	bool is_georeferenced;
 	
-	
+private:	
 	// Properties for non-georeferenced templates (invalid if is_georeferenced is true) 
 	
 	/// Bounds correction offset for map templates. Must be masked out when saving.
-	QPointF accounted_offset;
+	MapCoord accounted_offset;
 	
+	/**
+	 * This class reverts the template's accounted offset for its lifetime.
+	 * 
+	 * \todo Copy/restore the transformation matrices when this no longer needs
+	 *       allocations.
+	 */
+	class ScopedOffsetReversal;
+	
+protected:
 	/// Currently active transformation. NOTE: after direct changes here call updateTransformationMatrices()
 	TemplateTransform transform;
 	
