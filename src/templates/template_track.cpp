@@ -79,6 +79,13 @@ bool TemplateTrack::loadTypeSpecificTemplateConfiguration(QIODevice* stream, int
 
 void TemplateTrack::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const
 {
+	if (preserved_georef)
+	{
+		// Preserve explicit georeferencing from OgrTemplate.
+		preserved_georef->save(xml);
+		return;
+	}
+	
 	// Follow map georeferencing XML structure
 	xml.writeStartElement(QString::fromLatin1("crs_spec"));
 	xml.writeCharacters(track_crs_spec);
@@ -104,6 +111,12 @@ bool TemplateTrack::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
 		Q_ASSERT(!is_georeferenced);
 		projected_crs_spec = xml.readElementText();
 	}
+	else if (xml.name() == QLatin1String("georeferencing"))
+	{
+		// Preserve explicit georeferencing from OgrTemplate.
+		preserved_georef.reset(new Georeferencing());
+		preserved_georef->load(xml, false);
+	}
 	else
 	{
 		xml.skipCurrentElement(); // unsupported
@@ -120,6 +133,12 @@ bool TemplateTrack::saveTemplateFile() const
 
 bool TemplateTrack::loadTemplateFileImpl(bool configuring)
 {
+	if (preserved_georef)
+	{
+		setErrorString(tr("This template must be loaded with GDAL/OGR."));
+		return false;
+	}
+	
 	if (!track.loadFrom(template_path, false))
 		return false;
 	
