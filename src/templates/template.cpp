@@ -676,17 +676,24 @@ void Template::scale(double factor, const MapCoord& center)
 	setTemplatePosition(center + factor * (templatePosition() - center));
 	setTemplateScaleX(factor * getTemplateScaleX());
 	setTemplateScaleY(factor * getTemplateScaleY());
+	
+	accounted_offset *= factor;
 }
 
 void Template::rotate(double rotation, const MapCoord& center)
 {
 	Q_ASSERT(!is_georeferenced);
 	
+	auto offset = templatePositionOffset();
+	setTemplatePositionOffset({});
+	
 	setTemplateRotation(getTemplateRotation() + rotation);
 	
 	auto position = MapCoordF{templatePosition() - center};
 	position.rotate(-rotation);
 	setTemplatePosition(MapCoord{position} + center);
+	
+	setTemplatePositionOffset(offset);
 }
 
 void Template::setTemplateAreaDirty()

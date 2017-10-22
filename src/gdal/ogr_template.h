@@ -79,6 +79,16 @@ public:
 	bool postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view) override;
 	
 protected:
+	void reloadLater();
+	
+protected slots:
+	void reload();
+	
+protected:
+	void mapProjectionChanged();
+	
+	void mapTransformationChanged();
+	
 	OgrTemplate* duplicateImpl() const override;
 	
 	bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml) override;
@@ -92,6 +102,7 @@ private:
 	bool template_track_compatibility { false };  //  transient
 	bool use_real_coords              { true };   //  transient
 	bool center_in_view               { false };  //  transient
+	bool reload_pending               { false };  //  transient
 };
 
 #endif // OPENORIENTEERING_OGR_TEMPLATE_H
