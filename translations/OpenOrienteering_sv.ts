@@ -325,7 +325,7 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="72"/>
         <source>Save the active file to remove the conflicting version.</source>
-        <translation>Spara den aktiva filen för att ta bort konflikten.</translation>
+        <translation>Spara den aktiva filen för att ta bort den motstridiga versionen.</translation>
     </message>
 </context>
 <context>
@@ -1057,7 +1057,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
         <location filename="../src/tools/draw_path_tool.cpp" line="88"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation>Snappa</translation>
+        <translation type="unfinished">Snappa</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="89"/>
@@ -1713,7 +1713,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="110"/>
         <source>Save undo/redo history</source>
-        <translation type="unfinished"></translation>
+        <translation>Spara ångra/gör om-historiken</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="113"/>
@@ -3961,7 +3961,7 @@ Importera datan ändå?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="901"/>
         <source>Tag Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Tag-väljare</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="901"/>
@@ -4025,7 +4025,7 @@ Importera datan ändå?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3656"/>
         <source>Switched to map part &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ändrat till kartdel &apos;%1&apos;.</translation>
     </message>
     <message>
         <source>Area difference</source>
@@ -4321,7 +4321,7 @@ Importera datan ändå?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="934"/>
         <source>Cut away from area</source>
-        <translation>Klip ut från yta</translation>
+        <translation>Klipp ut från yta</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="936"/>
@@ -4331,7 +4331,7 @@ Importera datan ändå?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="937"/>
         <source>Convert to curves</source>
-        <translation>Konvertera till ytor</translation>
+        <translation>Konvertera till kurvor</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="938"/>
@@ -4562,7 +4562,7 @@ valda</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2338"/>
         <source>Select at least one line or area object to activate this tool.</source>
-        <translation>Välj minst en linje eller yta för att använda detta verktyg.</translation>
+        <translation>Välj minst ett linje- eller ytobjekt för att använda detta verktyg.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2347"/>
@@ -4851,11 +4851,9 @@ valda</translation>
     <message numerus="yes">
         <location filename="../src/gui/map/map_editor.cpp" line="1711"/>
         <source>Pasted %n object(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>Klistrat in %n objekt</numerusform>
+        <numerusform>Klistrat in %n objekt</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2317"/>
         <source>Deletes the selected objects.</source>
@@ -8458,7 +8456,7 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="113"/>
         <source>underlined</source>
-        <translation>understreck</translation>
+        <translation type="unfinished">understreckad</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="116"/>

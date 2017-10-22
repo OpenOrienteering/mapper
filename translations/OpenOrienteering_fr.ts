@@ -200,32 +200,32 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="211"/>
         <source>Element drawing at boundary</source>
-        <translation type="unfinished"></translation>
+        <translation>Element dessiné en bordure</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="213"/>
         <source>Clip elements at the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fixe les éléments sur la bordure.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="214"/>
         <source>Draw elements if the center is inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dessine les éléments si leur centre est dans la surface.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="215"/>
         <source>Draw elements if any point is inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dessine les éléments si une partie est dans la surface.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="216"/>
         <source>Draw elements if all points are inside the boundary.</source>
-        <translation type="unfinished">Trace les éléments si tous les points sont à l&apos;intérieur de la zone définie.</translation>
+        <translation>Trace les éléments si tous les points sont à l&apos;intérieur de la zone définie.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="231"/>
         <source>Area settings</source>
-        <translation type="unfinished">Paramètres de surface</translation>
+        <translation>Paramètres de surface</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="326"/>
@@ -310,7 +310,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="90"/>
         <source>Edit</source>
-        <translation type="unfinished">Éditer</translation>
+        <translation>Éditer</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="103"/>
@@ -416,17 +416,17 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="276"/>
         <source>Name</source>
-        <translation type="unfinished">Nom</translation>
+        <translation>Nom</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="328"/>
         <source>- unnamed -</source>
-        <translation type="unfinished">-sans nom-</translation>
+        <translation>- sans nom -</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="597"/>
         <source>Warning</source>
-        <translation type="unfinished">Attention</translation>
+        <translation>Attention</translation>
     </message>
 </context>
 <context>
@@ -519,7 +519,7 @@
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="247"/>
         <source>%1 (duplicate)</source>
         <extracomment>Future replacement for COLOR_NAME + &quot; (Duplicate)&quot;, for better localization.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 (dupliqué)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="248"/>
@@ -1150,7 +1150,7 @@
         <location filename="../src/tools/draw_text_tool.cpp" line="101"/>
         <source>Snap</source>
         <extracomment>Snap to existing objects</extracomment>
-        <translation type="unfinished">Aimanter</translation>
+        <translation>Aimanter</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="447"/>
@@ -1160,7 +1160,7 @@
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="448"/>
         <source>&lt;b&gt;%1+%2&lt;/b&gt;: Cancel editing. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+%2&lt;/b&gt;: Edite l&apos;annulation. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="453"/>
@@ -1474,42 +1474,42 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="49"/>
         <source>Import with GDAL/OGR:</source>
-        <translation type="unfinished"></translation>
+        <translation>Importer avec GDAL/OGR :</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="51"/>
         <source>DXF</source>
-        <translation type="unfinished"></translation>
+        <translation>DXF</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="54"/>
         <source>GPX</source>
-        <translation type="unfinished"></translation>
+        <translation>GPX</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="57"/>
         <source>OSM</source>
-        <translation type="unfinished"></translation>
+        <translation>OSM</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="61"/>
         <source>Configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramétrage</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="69"/>
         <source>Parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètre</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="69"/>
         <source>Value</source>
-        <translation type="unfinished">Valeur</translation>
+        <translation>Valeur</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="88"/>
         <source>GDAL/OGR</source>
-        <translation type="unfinished"></translation>
+        <translation>GDAL/OGR</translation>
     </message>
 </context>
 <context>
@@ -1552,7 +1552,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="110"/>
         <source>Save undo/redo history</source>
-        <translation type="unfinished"></translation>
+        <translation>Sauvegarder l&apos;historique des effacement/rétablissement</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="113"/>
@@ -1589,7 +1589,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="123"/>
         <source>Default</source>
-        <translation type="unfinished">Défaut</translation>
+        <translation>Défaut</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="147"/>
@@ -2263,12 +2263,12 @@
         <location filename="../src/fileformats/file_import_export.cpp" line="45"/>
         <source>No such option: %1</source>
         <comment>No such import / export option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Aucun option : %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="290"/>
         <source>Geospatial vector data</source>
-        <translation type="unfinished"></translation>
+        <translation>Données vectorielles géospatiales</translation>
     </message>
 </context>
 <context>
@@ -2407,7 +2407,7 @@
         <location filename="../src/gdal/ogr_file_format.cpp" line="1252"/>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1303"/>
         <source>Could not read &apos;%1&apos;: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne peux pas lire &apos;%1&apos; : %2</translation>
     </message>
 </context>
 <context>
@@ -2657,7 +2657,7 @@
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="282"/>
         <source>Scale the dash symbol at corners</source>
-        <translation type="unfinished"></translation>
+        <translation>Redimensionne le symbole pointillé dans les coins</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="528"/>
@@ -2874,7 +2874,7 @@ Voulez-vous redimensionner ces symboles à l&apos;échelle de la carte ?</transl
     <message>
         <location filename="../src/gui/main_window.cpp" line="151"/>
         <source>You must close the current file before you can open another one.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vous devez fermer le fichier ouvert avant de pouvoir en ouvrir un autre.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="721"/>
@@ -3075,13 +3075,14 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3975"/>
         <source>Import...</source>
-        <translation type="unfinished">Importer…</translation>
+        <translation>Importer…</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3976"/>
         <source>Symbol replacement was canceled.
 Import the data anyway?</source>
-        <translation type="unfinished"></translation>
+        <translation>Le remplacement du symbole a été annulé.
+Faut-il poursuivre l&apos;import ?</translation>
     </message>
 </context>
 <context>
@@ -3715,7 +3716,7 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3656"/>
         <source>Switched to map part &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Déplacé vers la partie &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3678"/>
@@ -3951,22 +3952,22 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="882"/>
         <source>Symbol set ID...</source>
-        <translation type="unfinished"></translation>
+        <translation>Table des symboles ID...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="882"/>
         <source>Edit the symbol set ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Editer la table des symboles ID</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="884"/>
         <source>Load CRT file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Charge le fichier de correspondance des symboles...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="884"/>
         <source>Assign new symbols by cross-reference table</source>
-        <translation type="unfinished"></translation>
+        <translation>Assigne les nouveaux symboles avec la table de correspondance des symboles</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="901"/>
@@ -4132,7 +4133,7 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1878"/>
         <source>Symbol set ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Table des symboles ID</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1879"/>
@@ -5306,7 +5307,7 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.h" line="454"/>
         <source>Color id not found: %1, ignoring this color</source>
-        <translation type="unfinished">L&apos;identifiant de la couleur est introuvable: %1, le couleur est ignorée</translation>
+        <translation>L&apos;identifiant de la couleur est introuvable: %1, la couleur est ignorée</translation>
     </message>
 </context>
 <context>
@@ -5324,22 +5325,22 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="351"/>
         <source>Point</source>
-        <translation type="unfinished">Point</translation>
+        <translation>Point</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="358"/>
         <source>Line</source>
-        <translation type="unfinished">Ligne</translation>
+        <translation>Ligne</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="367"/>
         <source>Area</source>
-        <translation type="unfinished">Surface</translation>
+        <translation>Surface</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="373"/>
         <source>Text</source>
-        <translation type="unfinished">Texte</translation>
+        <translation>Texte</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="438"/>
@@ -6192,7 +6193,7 @@ des couleurs</translation>
 %1
 
 %2</source>
-        <translation type="unfinished">Impossible d&apos;ouvrir le fichier:
+        <translation>Impossible d&apos;ouvrir le fichier:
 %1
 
 %2</translation>
@@ -6585,7 +6586,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="83"/>
         <source>Edit</source>
-        <translation type="unfinished">Éditer</translation>
+        <translation>Éditer</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="84"/>
@@ -6610,7 +6611,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="226"/>
         <source>Warning</source>
-        <translation type="unfinished">Attention</translation>
+        <translation>Attention</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1281"/>
@@ -6941,7 +6942,7 @@ traverser les jattes de kiwis
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="56"/>
         <source>Key</source>
-        <translation type="unfinished">Clé</translation>
+        <translation>Clé</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="56"/>
@@ -6951,7 +6952,7 @@ traverser les jattes de kiwis
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="56"/>
         <source>Value</source>
-        <translation type="unfinished">Valeur</translation>
+        <translation>Valeur</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="72"/>
@@ -6966,12 +6967,12 @@ traverser les jattes de kiwis
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="79"/>
         <source>Move Up</source>
-        <translation type="unfinished">Monter</translation>
+        <translation>Monter</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="81"/>
         <source>Move Down</source>
-        <translation type="unfinished">Descendre</translation>
+        <translation>Descendre</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="88"/>
@@ -6981,7 +6982,7 @@ traverser les jattes de kiwis
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="93"/>
         <source>Help</source>
-        <translation type="unfinished">Aide</translation>
+        <translation>Aide</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="342"/>
@@ -7232,7 +7233,7 @@ Si vous ne souhaitez pas dessiner sur le modèle, cela ne pose alors aucun probl
     <message>
         <location filename="../src/templates/template_image.cpp" line="553"/>
         <source>World file</source>
-        <translation>World file</translation>
+        <translation type="unfinished">World file</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="555"/>
@@ -8068,7 +8069,7 @@ La version maximale supportée est la version %2.</translation>
         <location filename="../src/fileformats/xml_file_format.cpp" line="577"/>
         <location filename="../src/fileformats/xml_file_format.cpp" line="834"/>
         <source>Some invalid characters had to be removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Des caractères non-valides ont été supprimés.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="595"/>

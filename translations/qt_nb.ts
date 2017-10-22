@@ -773,11 +773,11 @@ Vennligst sjekk at riktig filnavn ble angitt.</translation>
     <name>QPlatformTheme</name>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Lagre</translation>
     </message>
     <message>
         <source>&amp;Yes</source>
@@ -798,7 +798,7 @@ Vennligst sjekk at riktig filnavn ble angitt.</translation>
     </message>
     <message>
         <source>Discard</source>
-        <translation type="unfinished"></translation>
+        <translation>Forkast</translation>
     </message>
     <message>
         <source>Help</source>
