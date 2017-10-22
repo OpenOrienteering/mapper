@@ -510,6 +510,11 @@ public:
 	void setTransformationDirectly(const QTransform& transform);
 	
 	
+	QTransform mapToProjected() const;
+	
+	QTransform projectedToMap() const;
+	
+	
 signals:
 	/**
 	 * Indicates a change of the state property.
