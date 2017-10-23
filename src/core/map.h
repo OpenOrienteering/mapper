@@ -134,6 +134,8 @@ public:
 	
 	/**
 	 * Deletes all map data.
+	 * 
+	 * The resulting map must not be modified before another init().
 	 */
 	void clear();
 	
@@ -146,6 +148,8 @@ public:
 	
 	/**
 	 * Deletes all map data, and reinitializes the empty map.
+	 * 
+	 * This method combines a call to clear() followed by init().
 	 */
 	void reset();
 	
@@ -1486,12 +1490,12 @@ private:
 	SymbolVector symbols;
 	TemplateVector templates;
 	TemplateVector closed_templates;
-	int first_front_template;		// index of the first template in templates which should be drawn in front of the map
+	int first_front_template = 0;		// index of the first template in templates which should be drawn in front of the map
 	PartVector parts;
 	ObjectSelection object_selection;
-	Object* first_selected_object;
+	Object* first_selected_object = nullptr;
 	QScopedPointer<UndoManager> undo_manager;
-	std::size_t current_part_index;
+	std::size_t current_part_index = 0;
 	WidgetVector widgets;
 	QScopedPointer<MapRenderables> renderables;
 	QScopedPointer<MapRenderables> selection_renderables;

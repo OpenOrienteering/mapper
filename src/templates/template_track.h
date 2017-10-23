@@ -40,6 +40,7 @@ class QWidget;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 
+class Georeferencing;
 class Map;
 class MapCoordF;
 class PathObject;
@@ -102,7 +103,9 @@ protected:
     bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml) override;
 	
 	/// Projects the track in non-georeferenced mode
-	void calculateLocalGeoreferencing();
+	QString calculateLocalGeoreferencing() const;
+	
+	void applyProjectedCrsSpec();
 	
 	PathObject* importPathStart();
 	void importPathEnd(PathObject* path);
@@ -111,6 +114,9 @@ protected:
 	
 	Track track;
 	QString track_crs_spec;
+	QString projected_crs_spec;
+	friend class OgrTemplate; // for migration
+	std::unique_ptr<Georeferencing> preserved_georef;
 	
 private:
 	Q_DISABLE_COPY(TemplateTrack)

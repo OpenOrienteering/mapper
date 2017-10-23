@@ -45,6 +45,7 @@ class QRectF;
 class MapEditorController;
 class MapWidget;
 class Object;
+class ObjectMover;
 class TextObjectEditorHelper;
 
 
@@ -135,6 +136,11 @@ protected:
 	 * Checks if the cursor hovers over the selection frame.
 	 */
 	bool hoveringOverFrame() const;
+	
+	/**
+	 * Checks if a the opposite handle should be moved synchronously.
+	 */
+	bool moveOppositeHandle() const;
 	
 	
 	/** Measures the time a click takes to decide whether to do selection. */

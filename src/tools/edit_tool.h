@@ -22,20 +22,15 @@
 #define OPENORIENTEERING_EDIT_TOOL_H
 
 #include <utility>
-#include <unordered_set>
 #include <vector>
 
 #include <Qt>
-#include <QtGlobal>
 #include <QFlags>
-#include <QHash>
 #include <QObject>
 #include <QPointF>
 #include <QRectF>
 #include <QRgb>
 #include <QScopedPointer>
-
-#include <QSet>
 
 #include "core/map_coord.h"
 #include "tools/tool.h"
@@ -46,125 +41,11 @@ class QPainter;
 class QPointF;
 class QRectF;
 
-class Map;
 class MapEditorController;
 class MapWidget;
 class Object;
-class PathObject;
-class TextObject;
-typedef std::vector< std::pair< int, Object* > > SelectionInfoVector;
-
-
-/**
- * Implements the object selection logic for edit tools.
- */
-class ObjectSelector
-{
-public:
-	/** Creates a selector for the given map. */
-	ObjectSelector(Map* map);
-	
-	/**
-	 * Selects an object at the given position.
-	 * If there is already an object selected at this position, switches through
-	 * the available objects.
-	 * @param tolerance maximum, normal selection distance in map units.
-	 *    It is enlarged by 1.5 if no objects are found with the normal distance.
-	 * @param toggle corresponds to the shift key modifier.
-	 * @return true if the selection has changed.
-	 */
-	bool selectAt(MapCoordF position, double tolerance, bool toggle);
-	
-	/**
-	 * Applies box selection.
-	 * @param toggle corresponds to the shift key modifier.
-	 * @return true if the selection has changed.
-	 */
-	bool selectBox(MapCoordF corner1, MapCoordF corner2, bool toggle);
-	
-	// TODO: move to other place? util.h/cpp or object.h/cpp
-	static bool sortObjects(const std::pair<int, Object*>& a, const std::pair<int, Object*>& b);
-	
-private:
-	bool selectionInfosEqual(const SelectionInfoVector& a, const SelectionInfoVector& b);
-	
-	// Information about the last click
-	SelectionInfoVector last_results;
-	SelectionInfoVector last_results_ordered;
-	int next_object_to_select;
-	
-	Map* map;
-};
-
-/**
- * Implements the logic to move sets of objects and / or object points for edit tools.
- */
-class ObjectMover
-{
-public:
-	/** Creates a mover for the map with the given cursor start position. */
-	ObjectMover(Map* map, const MapCoordF& start_pos);
-	
-	/** Sets the start position. */
-	void setStartPos(const MapCoordF& start_pos);
-	
-	/** Adds an object to the set of elements to move. */
-	void addObject(Object* object);
-	
-	/** Adds a point to the set of elements to move. */
-	void addPoint(PathObject* object, MapCoordVector::size_type point_index);
-	
-	/** Adds a line to the set of elements to move. */
-	void addLine(PathObject* object, MapCoordVector::size_type start_point_index);
-	
-	/** Adds a text handle to the set of elements to move. */
-	void addTextHandle(TextObject* text, int handle);
-	
-	/**
-	 * Moves the elements.
-	 * @param move_opposite_handles If false, opposite handles are reset to their original position.
-	 * @param out_dx returns the move along the x coordinate in map units
-	 * @param out_dy returns the move along the y coordinate in map units
-	 */
-	void move(const MapCoordF& cursor_pos, bool move_opposite_handles, qint32* out_dx = nullptr, qint32* out_dy = nullptr);
-	
-	/** Overload of move() taking delta values. */
-	void move(qint32 dx, qint32 dy, bool move_opposite_handles);
-	
-private:
-	using ObjectSet = std::unordered_set<Object*>;
-	using CoordIndexSet = QSet<MapCoordVector::size_type>;
-	
-	CoordIndexSet* insertPointObject(PathObject* object);
-	void calculateConstraints();
-	
-	// Basic information
-	MapCoordF start_position;
-	qint32 prev_drag_x;
-	qint32 prev_drag_y;
-	ObjectSet objects;
-	QHash< PathObject*, CoordIndexSet> points;
-	QHash< TextObject*, int > text_handles;
-	
-	/** Constraints calculated from the basic information */
-	struct OppositeHandleConstraint
-	{
-		/** Object to which the constraint applies */
-		PathObject* object;
-		/** Index of moved handle */
-		int moved_handle_index;
-		/** Index of opposite handle */
-		int opposite_handle_index;
-		/** Index of center point in the middle of the handles */
-		int curve_anchor_index;
-		/** Distance of opposite handle to center point */
-		double opposite_handle_dist;
-		/** Original position of the opposite handle */
-		MapCoord opposite_handle_original_position;
-	};
-	std::vector< OppositeHandleConstraint > handle_constraints;
-	bool constraints_calculated;
-};
+class ObjectSelector;
+using SelectionInfoVector = std::vector<std::pair<int, Object*>>;
 
 
 /**

@@ -96,6 +96,12 @@ public:
 	
 	
 	/**
+	 * A shared PROJ.4 specification of a WGS84 geographic CRS.
+	 */
+	static const QString geographic_crs_spec;
+	
+	
+	/**
 	 * @brief Returns the precision of the grid scale factor.
 	 * 
 	 * The precision is given in number of decimal places,
@@ -371,7 +377,7 @@ public:
 	 * @param params parameter values (ignore for empty spec)
 	 * @return true if the specification is valid or empty, false otherwise
 	 */
-	bool setProjectedCRS(const QString& id, QString spec = QString{}, std::vector< QString > params = std::vector<QString>());
+	bool setProjectedCRS(const QString& id, QString spec, std::vector< QString > params = std::vector<QString>());
 	
 	/**
 	 * Calculates the meridian convergence at the reference point.
@@ -504,6 +510,11 @@ public:
 	void setTransformationDirectly(const QTransform& transform);
 	
 	
+	QTransform mapToProjected() const;
+	
+	QTransform projectedToMap() const;
+	
+	
 signals:
 	/**
 	 * Indicates a change of the state property.
@@ -559,7 +570,6 @@ private:
 	
 	projPJ geographic_crs;
 	
-	static const QString geographic_crs_spec;
 };
 
 /**

@@ -114,7 +114,7 @@ QString SelectCRSDialog::currentCRSSpec() const
 		// nothing
 		break;
 	case SpecialCRS::Geographic:
-		spec = QLatin1String("+proj=latlong +datum=WGS84");
+		spec = Georeferencing::geographic_crs_spec;
 		break;
 	default:
 		spec = crs_selector->currentCRSSpec();

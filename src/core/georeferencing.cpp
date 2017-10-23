@@ -448,7 +448,7 @@ void Georeferencing::setState(Georeferencing::State value)
 		updateTransformation();
 		
 		if (state != Normal)
-			setProjectedCRS(QString::fromLatin1("Local"));
+			setProjectedCRS(QStringLiteral("Local"), {});
 		
 		emit stateChanged();
 	}
@@ -641,6 +641,18 @@ void Georeferencing::setTransformationDirectly(const QTransform& transform)
 		emit transformationChanged();
 	}
 }
+
+QTransform Georeferencing::mapToProjected() const
+{
+	return to_projected;
+}
+
+QTransform Georeferencing::projectedToMap() const
+{
+	return from_projected;
+}
+
+
 
 bool Georeferencing::setProjectedCRS(const QString& id, QString spec, std::vector<QString> params)
 {

@@ -41,7 +41,7 @@
 #include "gui/map/map_editor.h"
 #include "gui/map/map_widget.h"
 #include "tools/cutout_operation.h"
-#include "tools/edit_tool.h"
+#include "tools/object_selector.h"
 #include "tools/tool.h"
 #include "tools/tool_base.h"
 #include "util/util.h"

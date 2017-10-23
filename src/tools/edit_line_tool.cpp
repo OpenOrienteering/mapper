@@ -28,6 +28,7 @@
 #include "settings.h"
 #include "core/map.h"
 #include "core/objects/object.h"
+#include "core/objects/object_mover.h"
 #include "core/objects/text_object.h"
 #include "core/renderables/renderable.h"
 #include "core/symbols/combined_symbol.h"
@@ -36,6 +37,7 @@
 #include "gui/map/map_editor.h"
 #include "gui/map/map_widget.h"
 #include "gui/widgets/key_button_bar.h"
+#include "tools/object_selector.h"
 #include "tools/tool_helpers.h"
 #include "util/util.h"
 
@@ -271,7 +273,7 @@ void EditLineTool::dragMove()
 		}
 		
 		qint32 dx, dy;
-		object_mover->move(constrained_pos_map, !(active_modifiers & Qt::ShiftModifier), &dx, &dy);
+		object_mover->move(constrained_pos_map, false, &dx, &dy);
 		if (highlight_object)
 		{
 			highlight_renderables->removeRenderablesOfObject(highlight_object, false);

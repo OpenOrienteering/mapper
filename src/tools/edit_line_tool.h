@@ -39,6 +39,7 @@ class QRectF;
 class MapEditorController;
 class MapRenderables;
 class MapWidget;
+class ObjectMover;
 class PathObject;
 
 

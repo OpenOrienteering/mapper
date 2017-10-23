@@ -63,6 +63,7 @@ set(Mapper_Common_SRCS
   
   core/objects/boolean_tool.cpp
   core/objects/object.cpp
+  core/objects/object_mover.cpp
   core/objects/object_query.cpp
   core/objects/symbol_rule_set.cpp
   core/objects/text_object.cpp
@@ -187,6 +188,7 @@ set(Mapper_Common_SRCS
   tools/edit_point_tool.cpp
   tools/edit_line_tool.cpp
   tools/fill_tool.cpp
+  tools/object_selector.cpp
   tools/pan_tool.cpp
   tools/rotate_tool.cpp
   tools/rotate_pattern_tool.cpp

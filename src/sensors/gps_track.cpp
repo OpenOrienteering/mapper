@@ -29,16 +29,9 @@
 #include <QXmlStreamWriter>
 // IWYU pragma: no_include <qxmlstream.h>
 
-#include "util/dxfparser.h"
+#include "core/georeferencing.h"
 #include "templates/template_track.h"
-
-
-namespace
-{
-	/// Shared definition of standard geographic CRS.
-	/// \todo Merge with Georeferencing.
-	const auto geographic_crs_spec = "+proj=latlong +datum=WGS84";
-}
+#include "util/dxfparser.h"
 
 
 // There is some (mis?)use of TrackPoint's gps_coord LatLon
@@ -348,7 +341,7 @@ bool Track::loadFromGPX(QFile* file, bool project_points, QWidget* dialog_parent
 	Q_UNUSED(dialog_parent);
 	
 	track_crs = new Georeferencing();
-	track_crs->setProjectedCRS({}, QString::fromLatin1(geographic_crs_spec));
+	track_crs->setProjectedCRS({}, Georeferencing::geographic_crs_spec);
 	track_crs->setTransformationDirectly(QTransform());
 	
 	TrackPoint point;
@@ -484,7 +477,7 @@ bool Track::loadFromDXF(QFile* file, bool project_points, QWidget* dialog_parent
 bool Track::loadFromOSM(QFile* file, bool project_points, QWidget* dialog_parent)
 {
 	track_crs = new Georeferencing();
-	track_crs->setProjectedCRS({}, QString::fromLatin1(geographic_crs_spec));
+	track_crs->setProjectedCRS({}, Georeferencing::geographic_crs_spec);
 	track_crs->setTransformationDirectly(QTransform());
 	
 	// Basic OSM file support
@@ -623,7 +616,7 @@ bool Track::loadFromOSM(QFile* file, bool project_points, QWidget* dialog_parent
 
 void Track::projectPoints()
 {
-	if (track_crs->getProjectedCRSSpec() == QLatin1String(geographic_crs_spec))
+	if (track_crs->getProjectedCRSSpec() == Georeferencing::geographic_crs_spec)
 	{
 		int size = waypoints.size();
 		for (int i = 0; i < size; ++i)
