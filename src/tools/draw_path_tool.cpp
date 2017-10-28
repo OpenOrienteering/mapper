@@ -1109,6 +1109,7 @@ void DrawPathTool::updateStatusText()
 			if (ctrl_pressed)
 			{
 				text += DrawLineAndAreaTool::tr("<b>%1+Click</b>: Pick direction from existing objects. ").arg(ModifierKey::control());
+				text += DrawLineAndAreaTool::tr("<b>%1+%2</b>: Segment azimuth and length. ").arg(ModifierKey::control(), ModifierKey::space());
 			}
 			else
 			{
@@ -1131,9 +1132,11 @@ void DrawPathTool::updateStatusText()
 		{
 			modifier_keys.append(ModifierKey::shift());
 			
-			if (ctrl_pressed && angle_helper->isActive())
+			if (ctrl_pressed)
 			{
-				text += DrawLineAndAreaTool::tr("<b>%1</b>: Fixed angles. ").arg(ModifierKey::control());
+				if (angle_helper->isActive())
+					text += DrawLineAndAreaTool::tr("<b>%1</b>: Fixed angles. ").arg(ModifierKey::control());
+				text += DrawLineAndAreaTool::tr("<b>%1+%2</b>: Segment azimuth and length. ").arg(ModifierKey::control(), ModifierKey::space());
 			}
 			else
 			{
@@ -1148,7 +1151,7 @@ void DrawPathTool::updateStatusText()
 		}
 	}
 	
-	if (!is_helper_tool)
+	if (!is_helper_tool && !ctrl_pressed)
 	{
 		modifier_keys.append(ModifierKey::space());
 	}
