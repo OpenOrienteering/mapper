@@ -195,7 +195,17 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 		else
 		{
 			if (!shift_pressed)
-				angle_helper->getConstrainedCursorPosMap(click_pos_map, click_pos_map);
+			{
+				if (previous_point_is_curve_point
+				    && (cur_pos - widget->mapToViewport(previous_drag_map)).manhattanLength() < Settings::getInstance().getStartDragDistancePx())
+				{
+					click_pos_map = previous_drag_map;
+				}
+				else
+				{
+					angle_helper->getConstrainedCursorPosMap(click_pos_map, click_pos_map);
+				}
+			}
 			cur_pos_map = click_pos_map;
 		}
 
@@ -262,7 +272,7 @@ bool DrawPathTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 	}
 	else
 	{
-		bool drag_distance_reached = (event->pos() - click_pos).manhattanLength() >= Settings::getInstance().getStartDragDistancePx();
+		bool drag_distance_reached = MapCoordF{event->pos() - click_pos}.length() >= Settings::getInstance().getStartDragDistancePx();
 		if (dragging && !drag_distance_reached)
 		{
 			if (create_spline_corner)
@@ -293,8 +303,10 @@ bool DrawPathTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 				float drag_direction = calculateRotation(constrained_pos.toPoint(), constrained_pos_map);
 				
 				// Add a new node or convert the last node into a corner?
-				if ((widget->mapToViewport(previous_pos_map) - click_pos).manhattanLength() >= Settings::getInstance().getStartDragDistancePx())
+				if (MapCoordF{widget->mapToViewport(previous_pos_map) - click_pos}.length() >= Settings::getInstance().getStartDragDistancePx())
+				{
 					createPreviewCurve(MapCoord(click_pos_map), drag_direction);
+				}
 				else
 				{
 					create_spline_corner = true;
@@ -347,6 +359,11 @@ bool DrawPathTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 		{
 			coord = snap_helper->snapToObject(map_coord, widget);
 		}
+		if (previous_point_is_curve_point
+		    && (cur_pos - widget->mapToViewport(click_pos_map)).manhattanLength() < Settings::getInstance().getStartDragDistancePx())
+		{
+			coord = MapCoord{click_pos_map};
+		}
 		else if (angle_helper->isActive())
 		{
 			QPointF constrained_pos;
@@ -362,7 +379,6 @@ bool DrawPathTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 			coord.setDashPoint(true);
 		preview_path->addCoordinate(coord);
 		updatePreviewPath();
-		updateDirtyRect();
 	}
 	
 	previous_point_is_curve_point = dragging;
@@ -377,6 +393,7 @@ bool DrawPathTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 	}
 	
 	updateAngleHelper();
+	updateDirtyRect();
 	
 	create_spline_corner = false;
 	path_has_preview_point = false;
@@ -516,28 +533,58 @@ void DrawPathTool::draw(QPainter* painter, MapWidget* widget)
 	{
 		painter->setRenderHint(QPainter::Antialiasing);
 		
-		if (azimuth_helper->isActive())
-		{
-			azimuth_helper->draw(painter, widget, map(), click_pos_map, constrained_pos_map);
-		}
+		auto azimuth_info_pending = azimuth_helper->isActive();
 		
 		if (dragging && (cur_pos - click_pos).manhattanLength() >= Settings::getInstance().getStartDragDistancePx())
 		{
+			auto line = QLineF{ widget->mapToViewport(click_pos_map),
+			                    widget->mapToViewport(constrained_pos_map) };
 			QPen pen(qRgb(255, 255, 255));
 			pen.setWidth(3);
 			painter->setPen(pen);
-			painter->drawLine(widget->mapToViewport(click_pos_map), widget->mapToViewport(constrained_pos_map));
+			painter->drawLine(line);
 			painter->setPen(active_color);
-			painter->drawLine(widget->mapToViewport(click_pos_map), widget->mapToViewport(constrained_pos_map));
+			painter->drawLine(line);
+			if (azimuth_info_pending)
+			{
+				azimuth_helper->draw(painter, widget, map(), click_pos_map, constrained_pos_map);
+				azimuth_info_pending = false;
+			}
 		}
+		
 		if (previous_point_is_curve_point)
 		{
+			auto line = QLineF{ widget->mapToViewport(previous_pos_map),
+			                    widget->mapToViewport(previous_drag_map) };
 			QPen pen(qRgb(255, 255, 255));
 			pen.setWidth(3);
 			painter->setPen(pen);
-			painter->drawLine(widget->mapToViewport(previous_pos_map), widget->mapToViewport(previous_drag_map));
+			painter->drawLine(line);
 			painter->setPen(active_color);
-			painter->drawLine(widget->mapToViewport(previous_pos_map), widget->mapToViewport(previous_drag_map));
+			painter->drawLine(line);
+			if (azimuth_info_pending)
+			{
+				if ((cur_pos - line.p2()).manhattanLength() < Settings::getInstance().getStartDragDistancePx())
+				{
+					azimuth_helper->draw(painter, widget, map(), previous_pos_map, previous_drag_map);
+					QPen pen(qRgb(255, 0, 0));
+					painter->setPen(pen);
+					painter->drawRect(QRectF{line.p2(), QSizeF{8.0, 8.0}}.translated(-4.0, -4.0));
+				}
+				else
+				{
+					azimuth_helper->draw(painter, widget, map(), click_pos_map, constrained_pos_map);
+				}
+				azimuth_info_pending = false;
+			}
+		}
+		
+		if (azimuth_info_pending && preview_path && preview_path->getCoordinateCount() >= 2)
+		{
+			auto start_pos = MapCoordF{preview_path->getCoordinate(preview_path->getCoordinateCount() - 2)};
+			auto end_pos = MapCoordF{preview_path->getCoordinate(preview_path->getCoordinateCount() - 1)};
+			azimuth_helper->draw(painter, widget, map(), start_pos, end_pos);
+			azimuth_info_pending = false;
 		}
 		
 		if (!shift_pressed)
