@@ -62,7 +62,6 @@ DrawPathTool::DrawPathTool(MapEditorController* editor, QAction* tool_button, bo
 	following = false;
 	picking_angle = false;
 	picked_angle = false;
-	show_azimuth_info = false;
 	draw_dash_points = false;
 	shift_pressed = false;
 	ctrl_pressed = false;
@@ -447,7 +446,11 @@ bool DrawPathTool::keyPressEvent(QKeyEvent* event)
 		
 	case Qt::Key_Space:
 		if (event->modifiers() & Qt::ControlModifier)
-			show_azimuth_info =! show_azimuth_info;
+		{
+			updateDirtyRect();
+			azimuth_helper->setActive(!azimuth_helper->isActive());
+			updateDirtyRect();
+		}
 		else
 		{
 			draw_dash_points = !draw_dash_points;
@@ -512,11 +515,12 @@ void DrawPathTool::draw(QPainter* painter, MapWidget* widget)
 	if (editingInProgress())
 	{
 		painter->setRenderHint(QPainter::Antialiasing);
-
-		if (show_azimuth_info)
-			azimuth_helper->draw(painter, widget, map(),
-			                     click_pos_map, constrained_pos_map);
-
+		
+		if (azimuth_helper->isActive())
+		{
+			azimuth_helper->draw(painter, widget, map(), click_pos_map, constrained_pos_map);
+		}
+		
 		if (dragging && (cur_pos - click_pos).manhattanLength() >= Settings::getInstance().getStartDragDistancePx())
 		{
 			QPen pen(qRgb(255, 255, 255));
@@ -821,7 +825,6 @@ void DrawPathTool::finishDrawing()
 	setEditingInProgress(false);
 	if (!ctrl_pressed)
 		angle_helper->setActive(false);
-	show_azimuth_info = false;
 	updateSnapHelper();
 	updateStatusText();
 	hidePreviewPoints();
@@ -838,7 +841,6 @@ void DrawPathTool::abortDrawing()
 	setEditingInProgress(false);
 	if (!ctrl_pressed)
 		angle_helper->setActive(false);
-	show_azimuth_info = false;
 	updateSnapHelper();
 	updateStatusText();
 	hidePreviewPoints();
@@ -850,9 +852,11 @@ void DrawPathTool::updateDirtyRect()
 {
 	QRectF rect;
 	
-	if (show_azimuth_info)
-		azimuth_helper->includeDirtyRect(rect, constrained_pos_map);
-
+	if (azimuth_helper->isActive() && editingInProgress())
+	{
+		rectIncludeSafe(rect, azimuth_helper->dirtyRect(mapWidget(), constrained_pos_map));
+	}
+	
 	if (dragging)
 	{
 		rectIncludeSafe(rect, click_pos_map);

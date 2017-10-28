@@ -324,23 +324,40 @@ std::size_t FollowPathToolHelper::getPartIndex() const
 	return part_index;
 }
 
+
+
+/**
+ * A utility for displaying azimuth and distance while drawing.
+ */
 class AzimuthInfoHelper
 {
 protected:
+	static constexpr int text_offset = 25;
+	
 	QColor text_color;
-	QFont text_font;
-	int text_offset; // distance between text and cursor
-	float text_box_diagonal;
+	QFont  text_font;
+	QString azimuth_template;
+	QString distance_template;
+	QRectF display_rect;
+	int line_0_offset;
+	int line_1_offset; 
+	bool active = false;
 
 public:
 	AzimuthInfoHelper(const QWidget* widget, QColor color);
+	
+	bool isActive() const { return active; }
 
-	/** Draws the azimuth info text. */
+	void setActive(bool active);
+	
+	/** Returns this helper's drawing region. */
+	QRectF dirtyRect(MapWidget* widget, const MapCoordF& pos_map) const;
+	
+	/** Draws the azimuth and distance info text. */
 	void draw(QPainter* painter, const MapWidget* widget, const Map* map,
-	          const MapCoordF& click_pos_map, const MapCoordF& constrained_pos_map);
+	          const MapCoordF& start_pos, const MapCoordF& end_pos);
 
-	/** Includes this helper's drawing region in the given rect. */
-	void includeDirtyRect(QRectF& rect,
-	                      const MapCoordF& constrained_pos_map);
 };
+
+
 #endif

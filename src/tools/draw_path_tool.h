@@ -157,7 +157,6 @@ protected:
 	bool picked_angle;    ///< Indicates an active angle picked from another object.
 	MapCoordF constrained_pos_map;
 	
-	bool show_azimuth_info;
 	QScopedPointer<AzimuthInfoHelper> azimuth_helper;
 
 	QScopedPointer<SnappingToolHelper> snap_helper;
