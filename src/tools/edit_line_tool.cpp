@@ -416,7 +416,7 @@ int EditLineTool::updateDirtyRectImpl(QRectF& rect)
 	map()->includeSelectionRect(selection_extent);
 	
 	rectInclude(rect, selection_extent);
-	int pixel_border = show_object_points ? (scaleFactor() * 6) : 1;
+	int pixel_border = show_object_points ? pointHandles().displayRadius() : 1;
 	
 	// Control points
 	if (show_object_points)
