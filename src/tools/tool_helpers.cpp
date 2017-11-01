@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2016 Kai Pastor
+ *    Copyright 2013-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,11 +21,24 @@
 
 #include "tool_helpers.h"
 
+#include <cmath>
+#include <limits>
+#include <utility>
+#include <vector>
+
+#include <Qt>
+#include <QtGlobal>
+#include <QtMath>
 #include <QPainter>
+#include <QPoint>
+#include <QPointF>
+#include <QVariant>
 
 #include "settings.h"
 #include "core/map.h"
 #include "core/map_grid.h"
+#include "core/map_part.h"
+#include "core/map_view.h"
 #include "core/objects/object.h"
 #include "gui/map/map_widget.h"
 #include "tools/tool.h"
@@ -35,26 +48,15 @@
 // ### ConstrainAngleToolHelper ###
 
 ConstrainAngleToolHelper::ConstrainAngleToolHelper()
- : active_angle(-1),
-   center(MapCoordF(0, 0)),
-   active(true),
-   have_default_angles_only(false)
 {
 	connect(&Settings::getInstance(), &Settings::settingsChanged, this, &ConstrainAngleToolHelper::settingsChanged);
-}
-
-ConstrainAngleToolHelper::ConstrainAngleToolHelper(const MapCoordF& center)
- : active_angle(-1),
-   center(center),
-   active(true),
-   have_default_angles_only(false)
-{
 }
 
 ConstrainAngleToolHelper::~ConstrainAngleToolHelper()
 {
 	// nothing, not inlined!
 }
+
 
 void ConstrainAngleToolHelper::setCenter(const MapCoordF& center)
 {
@@ -64,15 +66,15 @@ void ConstrainAngleToolHelper::setCenter(const MapCoordF& center)
 		emit displayChanged();
 	}
 }
-void ConstrainAngleToolHelper::addAngle(double angle)
+
+void ConstrainAngleToolHelper::addAngle(qreal angle)
 {
-	angle = fmod(angle, 2*M_PI);
-	if (angle < 0)
-	{
-		angle = 2*M_PI + angle;
-		if (angle == 2*M_PI)
-			angle = 0;	// can happen because of numerical inaccuracy
-	}
+	angle = std::fmod(angle, 2*M_PI);
+	if (angle < 0.0)
+		angle += 2*M_PI;
+	
+	if (qFuzzyCompare(angle, 2*M_PI))
+		angle = 0;
 	
 	// Fuzzy compare for existing angle as otherwise very similar angles will be added
 	for (auto value : angles)
@@ -82,30 +84,40 @@ void ConstrainAngleToolHelper::addAngle(double angle)
 			return;
 	}
 	
-	angles.insert(angle);
-	have_default_angles_only = false;
+	if (Q_LIKELY(angle >= 0.0))
+	{
+		angles.insert(angle);
+		have_default_angles_only = false;
+	}
+	else
+	{
+		Q_UNREACHABLE();
+	}
 }
-void ConstrainAngleToolHelper::addAngles(double base, double stepping)
+
+void ConstrainAngleToolHelper::addAngles(qreal base, qreal stepping)
 {
 	for (double angle = base; angle < base + 2*M_PI; angle += stepping)
 		addAngle(angle);
 }
-void ConstrainAngleToolHelper::addAnglesDeg(double base, double stepping)
+
+void ConstrainAngleToolHelper::addAnglesDeg(qreal base, qreal stepping)
 {
-	for (double angle = base; angle < base + 360; angle += stepping)
-		addAngle(angle * M_PI / 180);
+	addAngles(qDegreesToRadians(base), qDegreesToRadians(stepping));
 }
-void ConstrainAngleToolHelper::addDefaultAnglesDeg(double base)
+
+void ConstrainAngleToolHelper::addDefaultAnglesDeg(qreal base)
 {
 	addAnglesDeg(base, Settings::getInstance().getSettingCached(Settings::MapEditor_FixedAngleStepping).toDouble());
 	have_default_angles_only = true;
 	default_angles_base = base;
 }
+
 void ConstrainAngleToolHelper::clearAngles()
 {
 	angles.clear();
 	have_default_angles_only = false;
-	if (active_angle != -1)
+	if (active_angle > -1)
 	{
 		active_angle = -1;
 		emitActiveAngleChanged();
@@ -120,10 +132,11 @@ double ConstrainAngleToolHelper::getConstrainedCursorPos(const QPoint& in_pos, Q
 	out_pos = widget->mapToViewport(out_pos_map);
 	return angle;
 }
+
 double ConstrainAngleToolHelper::getConstrainedCursorPosMap(const MapCoordF& in_pos, MapCoordF& out_pos)
 {
 	MapCoordF to_cursor = in_pos - center;
-	double in_angle = -1 * to_cursor.angle();
+	double in_angle = -to_cursor.angle();
 	if (!active)
 	{
 		out_pos = in_pos;
@@ -159,7 +172,7 @@ double ConstrainAngleToolHelper::getConstrainedCursorPosMap(const MapCoordF& in_
 	}
 	
 	double new_active_angle;
-	if (lower_angle_delta < -1 * higher_angle_delta)
+	if (lower_angle_delta < -higher_angle_delta)
 		new_active_angle = lower_angle;
 	else
 		new_active_angle = higher_angle;
@@ -175,6 +188,7 @@ double ConstrainAngleToolHelper::getConstrainedCursorPosMap(const MapCoordF& in_
 	
 	return active_angle;
 }
+
 double ConstrainAngleToolHelper::getConstrainedCursorPositions(const MapCoordF& in_pos_map, MapCoordF& out_pos_map, QPointF& out_pos, MapWidget* widget)
 {
 	double angle = getConstrainedCursorPosMap(in_pos_map, out_pos_map);
@@ -192,7 +206,7 @@ void ConstrainAngleToolHelper::setActive(bool active, const MapCoordF& center)
 	}
 	else
 	{
-		if (active_angle != -1)
+		if (active_angle > -1)
 		{
 			active_angle = -1;
 			emitActiveAngleChanged();
@@ -202,6 +216,7 @@ void ConstrainAngleToolHelper::setActive(bool active, const MapCoordF& center)
 	}
 	this->active = active;
 }
+
 void ConstrainAngleToolHelper::setActive(bool active)
 {
 	if (active)
@@ -211,7 +226,7 @@ void ConstrainAngleToolHelper::setActive(bool active)
 	}
 	else
 	{
-		if (active_angle != -1)
+		if (active_angle > -1)
 		{
 			active_angle = -1;
 			emitActiveAngleChanged();
@@ -224,11 +239,11 @@ void ConstrainAngleToolHelper::setActive(bool active)
 
 void ConstrainAngleToolHelper::draw(QPainter* painter, MapWidget* widget)
 {
-	const float opacity = 0.5f;
+	constexpr auto reduced_opacity = qreal(0.5);
 	
 	if (!active) return;
 	QPointF center_point = widget->mapToViewport(center);
-	painter->setOpacity(opacity);
+	painter->setOpacity(reduced_opacity);
 	painter->setPen(MapEditorTool::inactive_color);
 	painter->setBrush(Qt::NoBrush);
 	for (auto value : angles)
@@ -236,7 +251,7 @@ void ConstrainAngleToolHelper::draw(QPainter* painter, MapWidget* widget)
 		if (value == active_angle)
 		{
 			painter->setPen(MapEditorTool::active_color);
-			painter->setOpacity(1.0f);
+			painter->setOpacity(1);
 		}
 		
 		QPointF outer_point = center_point + getDisplayRadius() * QPointF(cos(value), -sin(value));
@@ -245,11 +260,12 @@ void ConstrainAngleToolHelper::draw(QPainter* painter, MapWidget* widget)
 		if (value == active_angle)
 		{
 			painter->setPen(MapEditorTool::inactive_color);
-			painter->setOpacity(opacity);
+			painter->setOpacity(reduced_opacity);
 		}
 	}
-	painter->setOpacity(1.0f);
+	painter->setOpacity(1);
 }
+
 void ConstrainAngleToolHelper::includeDirtyRect(QRectF& rect)
 {
 	if (!active) return;
@@ -266,16 +282,21 @@ void ConstrainAngleToolHelper::settingsChanged()
 }
 
 
+
 // ### SnappingToolHelper ###
 
 SnappingToolHelper::SnappingToolHelper(MapEditorTool* tool, SnapObjects filter)
- : QObject(nullptr),
-   filter(filter),
-   snapped_type(NoSnapping),
-   map(tool->map()),
-   point_handles(tool->scaleFactor())
+: filter(filter)
+, map(tool->map())
 {
+	point_handles.setScaleFactor(tool->scaleFactor());
 }
+
+SnappingToolHelper::~SnappingToolHelper()
+{
+	// nothing, not inlined
+}
+
 
 void SnappingToolHelper::setFilter(SnapObjects filter)
 {
@@ -283,23 +304,23 @@ void SnappingToolHelper::setFilter(SnapObjects filter)
 	if (!(filter & snapped_type))
 		snapped_type = NoSnapping;
 }
+
 SnappingToolHelper::SnapObjects SnappingToolHelper::getFilter() const
 {
 	return filter;
 }
 
-MapCoord SnappingToolHelper::snapToObject(MapCoordF position, MapWidget* widget, SnappingToolHelperSnapInfo* info, Object* exclude_object, float snap_distance)
+MapCoord SnappingToolHelper::snapToObject(MapCoordF position, MapWidget* widget, SnappingToolHelperSnapInfo* info, Object* exclude_object)
 {
-	if (snap_distance < 0)
-		snap_distance = 0.001f * widget->getMapView()->pixelToLength(Settings::getInstance().getMapEditorSnapDistancePx());
-	float closest_distance_sq = snap_distance * snap_distance;
+	auto snap_distance = widget->getMapView()->pixelToLength(Settings::getInstance().getMapEditorSnapDistancePx() / 1000);
+	auto closest_distance_sq = float(snap_distance * snap_distance); /// \todo Change to qreal when Path::calcClosestPointOnPath accepts that.
 	auto result_position = MapCoord { position };
 	SnappingToolHelperSnapInfo result_info;
 	result_info.type = NoSnapping;
 	result_info.object = nullptr;
-	result_info.coord_index = -1;
+	result_info.coord_index = std::numeric_limits<decltype(result_info.coord_index)>::max();
 	result_info.path_coord.pos = MapCoordF(0, 0);
-	result_info.path_coord.index = -1;
+	result_info.path_coord.index = std::numeric_limits<decltype(result_info.path_coord.index)>::max();
 	result_info.path_coord.clen = -1;
 	result_info.path_coord.param = -1;
 	
@@ -316,7 +337,7 @@ MapCoord SnappingToolHelper::snapToObject(MapCoordF position, MapWidget* widget,
 			if (object == exclude_object)
 				continue;
 			
-			float distance_sq;
+			auto distance_sq = float(-1); /// \todo Change to qreal when Path::calcClosestPointOnPath accepts that.
 			if (object->getType() == Object::Point && filter & ObjectCorners)
 			{
 				PointObject* point = object->asPoint();
@@ -342,7 +363,7 @@ MapCoord SnappingToolHelper::snapToObject(MapCoordF position, MapWidget* widget,
 						closest_distance_sq = distance_sq;
 						result_position = MapCoord(path_coord.pos);
 						result_info.object = object;
-						if (path_coord.param == 0.0)
+						if (path_coord.param == 0)
 						{
 							result_info.type = ObjectCorners;
 							result_info.coord_index = path_coord.index;
@@ -350,7 +371,7 @@ MapCoord SnappingToolHelper::snapToObject(MapCoordF position, MapWidget* widget,
 						else
 						{
 							result_info.type = ObjectPaths;
-							result_info.coord_index = -1;
+							result_info.coord_index = std::numeric_limits<decltype(result_info.coord_index)>::max();
 							result_info.path_coord = path_coord;
 						}
 					}
@@ -382,14 +403,14 @@ MapCoord SnappingToolHelper::snapToObject(MapCoordF position, MapWidget* widget,
 		map->getGrid().isSnappingEnabled() && map->getGrid().getDisplayMode() == MapGrid::AllLines)
 	{
 		MapCoordF closest_grid_point = map->getGrid().getClosestPointOnGrid(position, map);
-		float distance_sq = closest_grid_point.distanceSquaredTo(position);
+		auto distance_sq = float(closest_grid_point.distanceSquaredTo(position)); /// \todo Change to qreal when Path::calcClosestPointOnPath accepts that.
 		if (distance_sq < closest_distance_sq)
 		{
 			closest_distance_sq = distance_sq;
 			result_position = MapCoord(closest_grid_point);
 			result_info.type = GridCorners;
 			result_info.object = nullptr;
-			result_info.coord_index = -1;
+			result_info.coord_index = std::numeric_limits<decltype(result_info.coord_index)>::max();
 		}
 	}
 	
@@ -410,7 +431,7 @@ bool SnappingToolHelper::snapToDirection(MapCoordF position, MapWidget* widget, 
 {
 	// As getting a direction from the map grid is not supported, remove grid from filter
 	int filter_grid = filter & GridCorners;
-	filter = (SnapObjects)(filter & ~filter_grid);
+	filter = SnapObjects(filter & ~filter_grid);
 	
 	// Snap to position
 	SnappingToolHelperSnapInfo info;
@@ -419,7 +440,7 @@ bool SnappingToolHelper::snapToDirection(MapCoordF position, MapWidget* widget, 
 		*out_snap_position = snap_position;
 	
 	// Add grid to filter again, if it was there originally
-	filter = (SnapObjects)(filter | filter_grid);
+	filter = SnapObjects(filter | filter_grid);
 	
 	// Get direction from result
 	switch (info.type)
@@ -467,11 +488,17 @@ bool SnappingToolHelper::snapToDirection(MapCoordF position, MapWidget* widget, 
 
 void SnappingToolHelper::draw(QPainter* painter, MapWidget* widget)
 {
-	if (snapped_type != NoSnapping)
+	auto handle_type = PointHandles::EndHandle;
+	switch (snapped_type)
 	{
-		point_handles.draw( painter, widget->mapToViewport(snap_mark),
-									   (snapped_type == ObjectPaths) ? PointHandles::NormalHandle : PointHandles::EndHandle,
-									   PointHandles::NormalHandleState );
+	case NoSnapping:
+		break;
+		
+	case ObjectPaths:
+		handle_type = PointHandles::NormalHandle;
+		// fall through
+	default:
+		point_handles.draw(painter, widget->mapToViewport(snap_mark), handle_type, PointHandles::NormalHandleState);
 	}
 }
 
@@ -482,10 +509,10 @@ void SnappingToolHelper::includeDirtyRect(QRectF& rect)
 }
 
 
+
 // ### FollowPathToolHelper ###
 
 FollowPathToolHelper::FollowPathToolHelper()
-: path{nullptr}
 {
 	// nothing else
 }
@@ -520,21 +547,22 @@ std::unique_ptr<PathObject> FollowPathToolHelper::updateFollowing(const PathCoor
 		if (part.isClosed())
 		{
 			// Positive length to add to end_clen to get to new_end_clen with wrapping
-			auto path_length = part.length();
+			auto path_length = qreal(part.length());
+			auto half_path_length = path_length / 2;
 			auto forward_diff = fmod_pos(new_end_clen - end_clen, path_length);
-			auto delta_forward = forward_diff >= 0 && forward_diff < 0.5f * path_length;
+			auto delta_forward = forward_diff >= 0 && forward_diff < half_path_length;
 			
 			if (delta_forward
 			    && !drag_forward
-			    && fmod_pos(end_clen - start_clen, path_length) > 0.5f * path_length
-			    && fmod_pos(new_end_clen - start_clen, path_length) <= 0.5f * path_length )
+			    && fmod_pos(end_clen - start_clen, path_length) > half_path_length
+			    && fmod_pos(new_end_clen - start_clen, path_length) <= half_path_length )
 			{
 				drag_forward = true;
 			}
 			else if (!delta_forward
 			         && drag_forward
-			         && fmod_pos(end_clen - start_clen, path_length) <= 0.5f * path_length
-			         && fmod_pos(new_end_clen - start_clen, path_length) > 0.5f * path_length)
+			         && fmod_pos(end_clen - start_clen, path_length) <= half_path_length
+			         && fmod_pos(new_end_clen - start_clen, path_length) > half_path_length)
 			{
 				drag_forward = false;
 			}

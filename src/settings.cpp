@@ -247,9 +247,9 @@ qreal Settings::getMapEditorClickTolerancePx()
 	return Util::mmToPixelLogical(getSettingCached(Settings::MapEditor_ClickToleranceMM).toReal());
 }
 
-float Settings::getMapEditorSnapDistancePx()
+qreal Settings::getMapEditorSnapDistancePx()
 {
-	return Util::mmToPixelLogical(getSettingCached(Settings::MapEditor_SnapDistanceMM).toFloat());
+	return Util::mmToPixelLogical(getSettingCached(Settings::MapEditor_SnapDistanceMM).toReal());
 }
 
 float Settings::getRectangleToolHelperCrossRadiusPx()
