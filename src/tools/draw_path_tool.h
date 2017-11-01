@@ -145,7 +145,6 @@ protected:
 	PathObject* append_to_object;
 	
 	std::unique_ptr<FollowPathToolHelper> follow_helper;
-	PathObject* follow_object;
 	MapCoordVector::size_type follow_start_index;
 	
 	qreal previous_point_direction = 0;

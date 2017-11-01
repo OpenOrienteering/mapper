@@ -972,13 +972,13 @@ void DrawPathTool::startAppending(SnappingToolHelperSnapInfo& snap_info)
 void DrawPathTool::startFollowing(SnappingToolHelperSnapInfo& snap_info, const MapCoord& snap_coord)
 {
 	following = true;
-	follow_object = snap_info.object->asPath();
+	auto followed_object = snap_info.object->asPath();
 	create_segment = false;
 	
 	if (snap_info.type == SnappingToolHelper::ObjectCorners)
-		follow_helper->startFollowingFromCoord(follow_object, snap_info.coord_index);
+		follow_helper->startFollowingFromCoord(followed_object, snap_info.coord_index);
 	else // if (snap_info.type == SnappingToolHelper::ObjectPaths)
-		follow_helper->startFollowingFromPathCoord(follow_object, snap_info.path_coord);
+		follow_helper->startFollowingFromPathCoord(followed_object, snap_info.path_coord);
 	
 	if (path_has_preview_point)
 		preview_path->setCoordinate(preview_path->getCoordinateCount() - 1, snap_coord);
@@ -994,13 +994,15 @@ void DrawPathTool::updateFollowing()
 {
 	PathCoord path_coord;
 	float distance_sq;
-	const auto& part = follow_object->parts()[follow_helper->getPartIndex()];
-	follow_object->calcClosestPointOnPath(cur_pos_map, distance_sq, path_coord, part.first_index, part.last_index);
+	const auto followed_object = follow_helper->followed_object();
+	const auto& part = followed_object->parts()[follow_helper->partIndex()];
+	followed_object->calcClosestPointOnPath(cur_pos_map, distance_sq, path_coord, part.first_index, part.last_index);
 	auto followed_path = follow_helper->updateFollowing(path_coord);
 	
 	// Append the temporary object to the preview object at follow_start_index
 	// 1. Delete everything appended, except for the point where following started
 	//    (thus avoiding deletion of the whole part).
+	// \todo Implement as truncate()
 	for (auto i = preview_path->getCoordinateCount() - 1;
 	     i > follow_start_index + 1;
 	     i = preview_path->getCoordinateCount() - 1)
