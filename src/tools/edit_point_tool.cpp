@@ -816,10 +816,7 @@ void EditPointTool::updateHoverState(MapCoordF cursor_pos)
 		// We have got a Map*, so we may get an non-const Object*.
 		hover_object = const_cast<Object*>(new_hover_object);
 		hover_point  = new_hover_point;
-		if (hover_state != OverNothing)
-			start_drag_distance = 0;
-		else
-			start_drag_distance = Settings::getInstance().getStartDragDistancePx();
+		effective_start_drag_distance = (hover_state == OverNothing) ? startDragDistance() : 0;
 		updateDirtyRect();
 	}
 	

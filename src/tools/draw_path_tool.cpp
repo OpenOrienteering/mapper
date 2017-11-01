@@ -25,7 +25,6 @@
 #include <QMouseEvent>
 #include <QPainter>
 
-#include "settings.h"
 #include "core/map.h"
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/symbol.h"
@@ -260,7 +259,7 @@ bool DrawPathTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 	}
 	else
 	{
-		bool drag_distance_reached = (event->pos() - click_pos).manhattanLength() >= Settings::getInstance().getStartDragDistancePx();
+		bool drag_distance_reached = (event->pos() - click_pos).manhattanLength() >= startDragDistance();
 		if (dragging && !drag_distance_reached)
 		{
 			if (create_spline_corner)
@@ -291,7 +290,7 @@ bool DrawPathTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 				float drag_direction = calculateRotation(constrained_pos.toPoint(), constrained_pos_map);
 				
 				// Add a new node or convert the last node into a corner?
-				if ((widget->mapToViewport(previous_pos_map) - click_pos).manhattanLength() >= Settings::getInstance().getStartDragDistancePx())
+				if ((widget->mapToViewport(previous_pos_map) - click_pos).manhattanLength() >= startDragDistance())
 					createPreviewCurve(MapCoord(click_pos_map), drag_direction);
 				else
 				{
@@ -504,7 +503,7 @@ void DrawPathTool::draw(QPainter* painter, MapWidget* widget)
 	if (editingInProgress())
 	{
 		painter->setRenderHint(QPainter::Antialiasing);
-		if (dragging && (cur_pos - click_pos).manhattanLength() >= Settings::getInstance().getStartDragDistancePx())
+		if (dragging && (cur_pos - click_pos).manhattanLength() >= startDragDistance())
 		{
 			QPen pen(qRgb(255, 255, 255));
 			pen.setWidth(3);
@@ -1029,7 +1028,7 @@ void DrawPathTool::finishFollowing()
 
 float DrawPathTool::calculateRotation(QPoint mouse_pos, MapCoordF mouse_pos_map)
 {
-	if (dragging && (mouse_pos - click_pos).manhattanLength() >= Settings::getInstance().getStartDragDistancePx())
+	if (dragging && (mouse_pos - click_pos).manhattanLength() >= startDragDistance())
 		return -atan2(mouse_pos_map.x() - click_pos_map.x(), click_pos_map.y() - mouse_pos_map.y());
 	else
 		return 0;

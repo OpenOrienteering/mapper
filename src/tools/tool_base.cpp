@@ -24,7 +24,6 @@
 #include <QMouseEvent>
 #include <QTimer>
 
-#include "settings.h"
 #include "core/map.h"
 #include "core/objects/object.h"
 #include "gui/map/map_editor.h"
@@ -101,7 +100,7 @@ bool MapEditorToolBase::EditedItem::isModified() const
 
 MapEditorToolBase::MapEditorToolBase(const QCursor& cursor, MapEditorTool::Type type, MapEditorController* editor, QAction* tool_button)
 : MapEditorTool(editor, type, tool_button),
-  start_drag_distance(Settings::getInstance().getStartDragDistancePx()),
+  effective_start_drag_distance(startDragDistance()),
   angle_helper(new ConstrainAngleToolHelper()),
   snap_helper(new SnappingToolHelper(this)),
   snap_exclude_object(nullptr),
@@ -210,7 +209,7 @@ bool MapEditorToolBase::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, 
 		{
 			updateDragging();
 		}
-		else if ((cur_pos - click_pos).manhattanLength() >= start_drag_distance)
+		else if ((cur_pos - click_pos).manhattanLength() >= effective_start_drag_distance)
 		{
 			startDragging();
 		}

@@ -283,8 +283,9 @@ protected:
 	MapCoordF constrained_pos_map;
 	/// This is set to true when constrained_pos(_map) is a snapped position
 	bool snapped_to_pos;
-	/// The amount of pixels the mouse has to be moved to start dragging. Defaults to Settings::getInstance().getStartDragDistancePx().
-	int start_drag_distance;
+	/// The amount of pixels the mouse has to be moved to start dragging.
+	/// Defaults to Settings::getInstance().getStartDragDistancePx(), but can be modified.
+	int effective_start_drag_distance;
 	
 	/// Angle tool helper. If activated, it is included in the dirty rect and drawn automatically.
 	QScopedPointer<ConstrainAngleToolHelper> angle_helper;

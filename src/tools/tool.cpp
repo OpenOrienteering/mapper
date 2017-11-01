@@ -367,6 +367,7 @@ namespace
 void MapEditorTool::settingsChanged()
 {
 	click_tolerance = Settings::getInstance().getMapEditorClickTolerancePx();
+	start_drag_distance = Settings::getInstance().getStartDragDistancePx();
 	scale_factor = calculateScaleFactor();
 	point_handles.setScaleFactor(scale_factor);
 	draw_on_right_click = Settings::getInstance().getSettingCached(Settings::MapEditor_DrawLastPointOnRightClick).toBool();

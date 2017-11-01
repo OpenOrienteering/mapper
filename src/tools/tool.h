@@ -274,7 +274,12 @@ public:
 	 * @brief A value representing how close the user must click or hover to select a point.
 	 */
 	qreal clickTolerance() const { return click_tolerance; }
-
+	
+	/**
+	 * The number of pixels the mouse has to be moved to start dragging.
+	 */
+	int startDragDistance() const { return start_drag_distance; }
+	
 	
 	// General color definitions which are used by all tools
 	
@@ -347,15 +352,15 @@ protected:
 	 * To be used for press and release events.
 	 */
 	bool isDrawingButton(Qt::MouseButton button) const;
-
-
+	
+	
 private:
 	/**
 	 * Updates cached settings.
 	 */
 	void settingsChanged();
-
-
+	
+	
 protected:
 	/**
 	 * @brief The map editor which uses this tool.

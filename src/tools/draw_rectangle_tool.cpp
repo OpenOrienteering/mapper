@@ -212,7 +212,7 @@ void DrawRectangleTool::updateHover(bool mouse_down)
 	else
 	{
 		hidePreviewPoints();
-		if (mouse_down && !dragging && (cur_pos - click_pos).manhattanLength() >= Settings::getInstance().getStartDragDistancePx())
+		if (mouse_down && !dragging && (cur_pos - click_pos).manhattanLength() >= startDragDistance())
 		{
 			// Start dragging
 			dragging = true;

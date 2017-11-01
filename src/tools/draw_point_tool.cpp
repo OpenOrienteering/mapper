@@ -297,7 +297,7 @@ double DrawPointTool::calculateRotation(QPointF mouse_pos, MapCoordF mouse_pos_m
 	if (isDragging())
 	{
 		QPoint preview_object_pos = cur_map_widget->mapToViewport(preview_object->getCoordF()).toPoint();
-		if ((mouse_pos - preview_object_pos).manhattanLength() >= Settings::getInstance().getStartDragDistancePx())
+		if ((mouse_pos - preview_object_pos).manhattanLength() >= startDragDistance())
 			result = -atan2(mouse_pos_map.x() - preview_object->getCoordF().x(), preview_object->getCoordF().y() - mouse_pos_map.y());
 	}
 	return result;

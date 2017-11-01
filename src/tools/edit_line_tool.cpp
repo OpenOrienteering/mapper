@@ -25,7 +25,6 @@
 
 #include <QKeyEvent>
 
-#include "settings.h"
 #include "core/map.h"
 #include "core/objects/object.h"
 #include "core/objects/object_mover.h"
@@ -604,7 +603,7 @@ void EditLineTool::updateHoverState(MapCoordF cursor_pos)
 			highlight_renderables->insertRenderablesOfObject(highlight_object);
 		}
 		
-		start_drag_distance = (hover_state != OverNothing) ? 0 : Settings::getInstance().getStartDragDistancePx();
+		effective_start_drag_distance = (hover_state == OverNothing) ? startDragDistance() : 0;
 		updateDirtyRect();
 	}
 }
