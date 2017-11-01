@@ -23,6 +23,7 @@
 #define OPENORIENTEERING_MAP_EDITOR_TOOL_H
 
 #include <Qt>
+#include <QtGlobal>
 #include <QAction>
 #include <QCursor>
 #include <QObject>
@@ -185,19 +186,19 @@ public:
 	/**
 	 * @brief Returns the type of this tool.
 	 */
-	Type toolType() const;
+	Type toolType() const { return tool_type; }
 	
 	
 	/**
 	 * @brief Returns the action which repesents this tool.
 	 */
-	QAction* toolAction() const;
+	QAction* toolAction() const { return tool_action; }
 	
 	
 	/**
 	 * @brief Returns whether to use the touch helper cursor for this tool.
 	 */
-	bool usesTouchCursor() const;
+	bool usesTouchCursor() const { return uses_touch_cursor; }
 	
 	
 	/** 
@@ -226,7 +227,7 @@ public:
 	/**
 	 * Returns true if Mapper is configured to finish drawing on right click.
 	 */
-	bool drawOnRightClickEnabled() const;
+	bool drawOnRightClickEnabled() const { return draw_on_right_click; }
 	
 	
 	/**
@@ -239,7 +240,7 @@ public:
 	 * 
 	 * @return Returns true if there is an ongoing edition operation, false otherwise.
 	 */
-	bool editingInProgress() const;
+	bool editingInProgress() const { return editing_in_progress; }
 	
 	/**
 	 * @brief Finishes editing if it is currently in progress.
@@ -260,19 +261,20 @@ public:
 	/**
 	 * @brief Returns the point handles utility for this tool.
 	 */
-	const PointHandles& pointHandles() const;
+	const PointHandles& pointHandles() const { return point_handles; }
 	
 	/**
 	 * @brief The factor by which all drawing shall be scaled.
 	 * 
 	 * @see PointHandles::scaleFactor()
 	 */
-	int scaleFactor() const;
+	unsigned int scaleFactor() const { return scale_factor; }
 	
 	/**
 	 * @brief A value representing how close the user must click or hover to select a point.
 	 */
-	qreal clickTolerance() const;
+	qreal clickTolerance() const { return click_tolerance; }
+
 	
 	// General color definitions which are used by all tools
 	
@@ -345,18 +347,14 @@ protected:
 	 * To be used for press and release events.
 	 */
 	bool isDrawingButton(Qt::MouseButton button) const;
-	
-	
-	/**
-	 * @brief Returns the drawing scale value for the current pixel-per-inch setting.
-	 */
-	static int newScaleFactor();
-	
-private slots:
+
+
+private:
 	/**
 	 * Updates cached settings.
 	 */
 	void settingsChanged();
+
 
 protected:
 	/**
@@ -365,66 +363,16 @@ protected:
 	MapEditorController* const editor;
 	
 private:	
+	PointHandles point_handles;
 	QPointer<QAction> tool_action;
 	Type tool_type;
-	qreal click_tolerance;
-	int scale_factor;
-	bool editing_in_progress;
-	bool uses_touch_cursor;
-	bool draw_on_right_click;
-	PointHandles point_handles;
+	qreal click_tolerance     = 4;
+	int start_drag_distance   = 4;
+	unsigned int scale_factor = 1;
+	bool editing_in_progress  = false;
+	bool uses_touch_cursor    = false;
+	bool draw_on_right_click  = false;
 };
 
-
-
-//### MapEditorTool inline code ###
-
-inline
-MapEditorTool::Type MapEditorTool::toolType() const
-{
-	return tool_type;
-}
-
-inline
-QAction* MapEditorTool::toolAction() const
-{
-	return tool_action;
-}
-
-inline
-bool MapEditorTool::usesTouchCursor() const
-{
-	return uses_touch_cursor;
-}
-
-inline
-bool MapEditorTool::drawOnRightClickEnabled() const
-{
-	return draw_on_right_click;
-}
-
-inline
-bool MapEditorTool::editingInProgress() const
-{
-	return editing_in_progress;
-}
-
-inline
-const PointHandles& MapEditorTool::pointHandles() const
-{
-	return point_handles;
-}
-
-inline
-int MapEditorTool::scaleFactor() const
-{
-	return point_handles.scaleFactor();
-}
-
-inline
-qreal MapEditorTool::clickTolerance() const
-{
-	return click_tolerance;
-}
 
 #endif
