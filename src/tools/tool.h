@@ -33,7 +33,7 @@
 #include <QVariant>
 
 #include "core/map_coord.h"
-#include "gui/point_handles.h"
+#include "tools/point_handles.h"
 
 class QEvent;
 class QFocusEvent;

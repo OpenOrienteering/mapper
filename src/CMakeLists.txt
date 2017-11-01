@@ -99,7 +99,6 @@ set(Mapper_Common_SRCS
   gui/main_window.cpp
   gui/main_window_controller.cpp
   gui/modifier_key.cpp
-  gui/point_handles.cpp
   gui/print_progress_dialog.cpp
   gui/print_tool.cpp
   gui/print_widget.cpp
@@ -190,6 +189,7 @@ set(Mapper_Common_SRCS
   tools/fill_tool.cpp
   tools/object_selector.cpp
   tools/pan_tool.cpp
+  tools/point_handles.cpp
   tools/rotate_tool.cpp
   tools/rotate_pattern_tool.cpp
   tools/scale_tool.cpp

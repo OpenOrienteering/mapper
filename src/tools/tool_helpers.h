@@ -30,7 +30,7 @@
 
 #include "core/map_coord.h"
 #include "core/path_coord.h"
-#include "gui/point_handles.h"
+#include "tools/point_handles.h"
 
 class QPainter;
 class QPoint;
