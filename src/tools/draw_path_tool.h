@@ -22,10 +22,12 @@
 #ifndef OPENORIENTEERING_DRAW_PATH_H
 #define OPENORIENTEERING_DRAW_PATH_H
 
+#include <memory>
+
+#include <QtGlobal>
 #include <QObject>
 #include <QPoint>
 #include <QPointer>
-#include <QScopedPointer>
 
 #include "core/map_coord.h"
 #include "tools/draw_line_and_area_tool.h"
@@ -84,7 +86,7 @@ protected:
 	/** Called by updateHover() if the user is currently drawing */
 	void updateDrawHover();
 	/** Updates the last three points of the path to form a bezier curve */
-	void createPreviewCurve(MapCoord position, float direction);
+	void createPreviewCurve(MapCoord position, qreal direction);
 	/** Closes the preview path */
 	void closeDrawing();
 	void finishDrawing() override;
@@ -111,7 +113,7 @@ protected:
 	 * Checks if the user dragged the mouse away a certain minimum distance from
 	 * the click point and if yes, returns the drag angle, otherwise returns 0.
 	 */
-	float calculateRotation(QPoint mouse_pos, MapCoordF mouse_pos_map);
+	qreal calculateRotation(QPoint mouse_pos, MapCoordF mouse_pos_map) const;
 	/**
 	 * Activates or deactivates dash point drawing depending on if a line symbol
 	 * with dash symbols is selcted.
@@ -119,8 +121,14 @@ protected:
 	void updateDashPointDrawing();
 	void updateStatusText();
 	
+	
+	QPointer<KeyButtonBar> key_button_bar;
+	
+	MapWidget* cur_map_widget;
+	
 	QPoint click_pos;
 	MapCoordF click_pos_map;
+	
 	QPoint cur_pos;
 	MapCoordF cur_pos_map;
 	
@@ -129,45 +137,36 @@ protected:
 	/** A control point defining the tangent at the beginning of the current curve. */
 	MapCoordF previous_drag_map;
 	
-	bool dragging;
-	
-	bool path_has_preview_point;
-	bool previous_point_is_curve_point;
-	float previous_point_direction;
-	bool create_spline_corner; // for drawing bezier splines without parallel handles
-	bool create_segment;
-	
-	/** Information for correct undo on finishing the path by double clicking. */
-	bool created_point_at_last_mouse_press;
-	
-	bool draw_dash_points;
-	bool allow_closing_paths;
-	
-	/** This property is set to true after finishing a path
-	 *  and reset to false when the selection changes. */
-	bool finished_path_is_selected;
-	
-	MapWidget* cur_map_widget;
-	
-	QScopedPointer<ConstrainAngleToolHelper> angle_helper;
-	bool left_mouse_down;
-	bool ctrl_pressed;
-	bool picking_angle;   ///< Indicates picking of the initial angle from an object.
-	bool picked_angle;    ///< Indicates an active angle picked from another object.
+	std::unique_ptr<ConstrainAngleToolHelper> angle_helper;
 	MapCoordF constrained_pos_map;
 	
-	QScopedPointer<SnappingToolHelper> snap_helper;
-	bool shift_pressed;
+	std::unique_ptr<SnappingToolHelper> snap_helper;
 	
-	bool appending;
 	PathObject* append_to_object;
 	
-	bool following;
-	QScopedPointer<FollowPathToolHelper> follow_helper;
+	std::unique_ptr<FollowPathToolHelper> follow_helper;
 	PathObject* follow_object;
 	MapCoordVector::size_type follow_start_index;
 	
-	QPointer<KeyButtonBar> key_button_bar;
+	qreal previous_point_direction = 0;
+	
+	bool allow_closing_paths = true;
+	bool ctrl_pressed     = false;
+	bool shift_pressed    = false;
+	bool left_mouse_down  = false;
+	bool appending        = false;
+	bool following        = false;
+	bool picking_angle    = false; ///< Indicates picking of the initial angle from an object.
+	bool picked_angle     = false; ///< Indicates an active angle picked from another object.
+	bool dragging         = false;
+	bool draw_dash_points = false;
+	bool create_segment   = false;
+	bool create_spline_corner = false; ///< For drawing bezier splines without parallel handles
+	bool path_has_preview_point = false;
+	bool previous_point_is_curve_point = false;
+	bool created_point_at_last_mouse_press = false;  ///< Used for finishing on double click.
+	bool finished_path_is_selected = false;  ///< True just after finishing a path
+	
 };
 
 #endif
