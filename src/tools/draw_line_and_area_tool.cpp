@@ -21,28 +21,35 @@
 
 #include "draw_line_and_area_tool.h"
 
+#include <algorithm>
+#include <cstddef>
+#include <iterator>
+
+#include <QtGlobal>
 #include <QPainter>
+#include <QPoint>
 
 #include "core/map.h"
-#include "gui/map/map_editor.h"
-#include "undo/object_undo.h"
-#include "gui/map/map_widget.h"
+#include "core/map_coord.h"
+#include "core/map_part.h"
+#include "core/map_view.h"
 #include "core/objects/object.h"
 #include "core/renderables/renderable.h"
-#include "core/symbols/symbol.h"
 #include "core/symbols/combined_symbol.h"
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/point_symbol.h"
+#include "core/symbols/symbol.h"
+#include "gui/map/map_editor.h"
+#include "gui/map/map_widget.h"
+#include "undo/object_undo.h"
 #include "util/util.h"
+
+
 
 DrawLineAndAreaTool::DrawLineAndAreaTool(MapEditorController* editor, Type type, QAction* tool_action, bool is_helper_tool)
 : MapEditorTool(editor, type, tool_action)
 , is_helper_tool(is_helper_tool)
-, drawing_symbol(nullptr)
-, preview_point_radius(0)
-, preview_points_shown(false)
 , path_combination(Map::getCoveringCombinedLine()->duplicate()->asCombined())
-, preview_path(nullptr)
 , renderables(new MapRenderables(map()))
 {
 	// Helper tools don't draw the active symbol.
@@ -57,10 +64,13 @@ DrawLineAndAreaTool::DrawLineAndAreaTool(MapEditorController* editor, Type type,
 	connect(editor, &MapEditorController::activeSymbolChanged, this, &DrawLineAndAreaTool::setDrawingSymbol);
 }
 
+
 DrawLineAndAreaTool::~DrawLineAndAreaTool()
 {
 	deletePreviewObjects();
 }
+
+
 
 void DrawLineAndAreaTool::leaveEvent(QEvent* event)
 {
@@ -188,7 +198,7 @@ void DrawLineAndAreaTool::startDrawing()
 		path_combination->setNumParts(num_symbol_parts);
 	}
 	
-	preview_path = new PathObject(path_combination.data());
+	preview_path = new PathObject(path_combination.get());
 	
 	setEditingInProgress(true);
 }

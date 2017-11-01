@@ -22,11 +22,11 @@
 #ifndef OPENORIENTEERING_DRAW_LINE_AND_AREA_H
 #define OPENORIENTEERING_DRAW_LINE_AND_AREA_H
 
+#include <memory>
 #include <vector>
 
 #include <QObject>
 #include <QRectF>
-#include <QScopedPointer>
 
 #include "tools/tool.h"
 
@@ -121,19 +121,19 @@ protected:
 	void drawPreviewObjects(QPainter* painter, MapWidget* widget);
 	
 	
-	bool is_helper_tool;
-	const Symbol* drawing_symbol;
-	
 	std::vector<PointSymbol*> preview_point_symbols;
 	std::vector<bool> preview_point_symbols_external;
 	std::vector<PointObject*> preview_points[2];
-	int preview_point_radius;
-	bool preview_points_shown;
 	
-	QScopedPointer<CombinedSymbol> path_combination;
-	PathObject* preview_path;
+	std::unique_ptr<CombinedSymbol> path_combination;
 	
-	QScopedPointer<MapRenderables> renderables;
+	std::unique_ptr<MapRenderables> renderables;
+	
+	const Symbol* drawing_symbol = nullptr;
+	PathObject* preview_path     = nullptr;
+	int preview_point_radius     = 0;
+	bool preview_points_shown    = false;
+	bool is_helper_tool          = false;
 	
 };
 
