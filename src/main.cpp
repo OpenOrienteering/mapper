@@ -84,7 +84,7 @@ void resetActivationWindow()
 			}
 		}
 	}
-};
+}
 
 #endif
 
