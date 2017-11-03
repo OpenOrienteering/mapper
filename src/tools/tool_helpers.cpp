@@ -29,10 +29,18 @@
 #include <Qt>
 #include <QtGlobal>
 #include <QtMath>
+#include <QLineF>
+#include <QLocale>
 #include <QPainter>
+#include <QPainterPath>
+#include <QPen>
 #include <QPoint>
 #include <QPointF>
+#include <QRectF>
+#include <QSettings>
+#include <QString>
 #include <QVariant>
+#include <QWidget>
 
 #include "settings.h"
 #include "core/map.h"
@@ -590,4 +598,117 @@ std::unique_ptr<PathObject> FollowPathToolHelper::updateFollowing(const PathCoor
 	}
 	
 	return result;
+}
+
+
+
+// ### AzimuthInfoHelper ###
+
+namespace
+{
+	const QString show_azimuth_key = QStringLiteral("MapEditor/show_azimuth_info");  // clazy:exclude=non-pod-global-static
+	
+}
+
+
+AzimuthInfoHelper::AzimuthInfoHelper(const QWidget* widget, QColor color)
+: text_color(color)
+, text_font(widget->font())
+, azimuth_template(QCoreApplication::translate("UnitOfMeasurement", "%1°", "degree"))
+, distance_template(QCoreApplication::translate("UnitOfMeasurement", "%1 m", "meter"))
+{
+	auto size = text_font.pixelSize();
+	if (size >= 0)
+		text_font.setPixelSize(size*2);
+	else
+		text_font.setPointSizeF(text_font.pointSizeF()*2);
+	
+	auto metrics = QFontMetrics{text_font};
+	line_0_offset = -metrics.leading() / 2 - metrics.descent();
+	line_1_offset = line_0_offset + metrics.lineSpacing();
+	
+	// Approximation of the length needed to draw "359.9°" or "1,200 m".
+	auto display_radius = text_offset + metrics.width(QLatin1Char('5')) * 7;
+	display_rect = QRectF(-display_radius, -display_radius, 2*display_radius, 2*display_radius);
+	
+	active = QSettings().value(show_azimuth_key).toBool();
+}
+
+
+void AzimuthInfoHelper::setActive(bool active)
+{
+	this->active = active;
+	QSettings().setValue(show_azimuth_key, active);
+}
+
+
+QRectF AzimuthInfoHelper::dirtyRect(MapWidget* widget, const MapCoordF& pos_map) const
+{
+	auto map_rect = QRectF{widget->viewportToMapF(display_rect.topLeft()),
+	                       widget->viewportToMapF(display_rect.bottomRight())};
+	return map_rect.translated(pos_map - map_rect.center());
+}
+
+
+void AzimuthInfoHelper::draw(QPainter* painter, const MapWidget* widget, const Map* map, const MapCoordF& start_pos, const MapCoordF& end_pos)
+{
+	QLineF drag_vector(start_pos, end_pos);
+	const auto distance = drag_vector.length();
+	if (qIsNull(distance))
+		return;
+	
+	QLocale locale;
+	auto angle = qreal(450) - drag_vector.angle();
+	if (angle >= 360)
+		angle -= 360;
+	auto azimuth_string = azimuth_template.arg(locale.toString(angle, 'f', 1));
+	auto distance_string = distance_template.arg(locale.toString(0.001 * map->getScaleDenominator() * distance, 'f', 0));
+
+	// rotate the text for better legibility
+	QPainterPath line_0, line_1;
+	line_0.addText(0, line_0_offset, text_font, azimuth_string);
+	line_1.addText(0, line_1_offset, text_font, distance_string);
+
+	auto text_angle = std::fmod(angle + qRadiansToDegrees(widget->getMapView()->getRotation()) + qreal(360 + 270), 360);
+	auto offset = qreal(text_offset);
+	if (text_angle > 90 && text_angle < 270)
+	{
+		// westwards
+		text_angle -= 180;
+	}
+	else
+	{
+		// eastwards
+		auto line_0_width = line_0.controlPointRect().width();
+		auto line_1_width = line_1.controlPointRect().width();
+		auto delta_width = line_1_width - line_0_width;
+		if (delta_width > 0)
+		{
+			line_0.translate(delta_width, 0);
+			offset = -line_1_width - text_offset;
+		}
+		else
+		{
+			line_1.translate(-delta_width, 0);
+			offset = -line_0_width - text_offset;
+		}
+	}
+
+	painter->save();
+
+	painter->translate(widget->mapToViewport(end_pos));
+	painter->rotate(text_angle);
+	painter->translate(offset, 0);
+
+	// give the numbers white outline
+	painter->setPen(QPen(Qt::white, 3));
+	painter->drawPath(line_0);
+	painter->drawPath(line_1);
+
+	painter->setPen(Qt::NoPen);
+	painter->setBrush(text_color);
+	painter->drawPath(line_0);
+	painter->drawPath(line_1);
+
+	painter->restore();
 }

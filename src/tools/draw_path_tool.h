@@ -38,6 +38,7 @@ class QKeyEvent;
 class QMouseEvent;
 class QPainter;
 
+class AzimuthInfoHelper;
 class ConstrainAngleToolHelper;
 class FollowPathToolHelper;
 class KeyButtonBar;
@@ -140,6 +141,8 @@ protected:
 	std::unique_ptr<ConstrainAngleToolHelper> angle_helper;
 	MapCoordF constrained_pos_map;
 	
+	std::unique_ptr<AzimuthInfoHelper> azimuth_helper;
+
 	std::unique_ptr<SnappingToolHelper> snap_helper;
 	
 	PathObject* append_to_object;

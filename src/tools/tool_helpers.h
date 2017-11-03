@@ -27,6 +27,8 @@
 #include <set>
 
 #include <QtGlobal>
+#include <QColor>
+#include <QFont>
 #include <QObject>
 
 #include "core/map_coord.h"
@@ -333,6 +335,41 @@ private:
 	PathCoord::length_type end_clen;
 	std::size_t part_index;
 	bool drag_forward;
+};
+
+
+
+/**
+ * A utility for displaying azimuth and distance while drawing.
+ */
+class AzimuthInfoHelper
+{
+protected:
+	static constexpr int text_offset = 25;
+	
+	QColor text_color;
+	QFont  text_font;
+	QString azimuth_template;
+	QString distance_template;
+	QRectF display_rect;
+	int line_0_offset;
+	int line_1_offset; 
+	bool active = false;
+
+public:
+	AzimuthInfoHelper(const QWidget* widget, QColor color);
+	
+	bool isActive() const { return active; }
+
+	void setActive(bool active);
+	
+	/** Returns this helper's drawing region. */
+	QRectF dirtyRect(MapWidget* widget, const MapCoordF& pos_map) const;
+	
+	/** Draws the azimuth and distance info text. */
+	void draw(QPainter* painter, const MapWidget* widget, const Map* map,
+	          const MapCoordF& start_pos, const MapCoordF& end_pos);
+
 };
 
 
