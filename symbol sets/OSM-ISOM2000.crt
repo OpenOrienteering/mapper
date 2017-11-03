@@ -83,6 +83,7 @@
 527    landuse = residential
 413    landuse = vineyard
 
+401    leisure = park
 401    leisure = pitch
 
 504    highway = cycleway
