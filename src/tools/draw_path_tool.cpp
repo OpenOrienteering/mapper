@@ -27,10 +27,12 @@
 
 #include <Qt>
 #include <QtMath>
+#include <QColor>
 #include <QCursor>
 #include <QFlags>
 #include <QLatin1String>
 #include <QKeyEvent>
+#include <QLineF>
 #include <QLocale>
 #include <QMouseEvent>
 #include <QPainter>
@@ -39,6 +41,7 @@
 #include <QPointF>
 #include <QRectF>
 #include <QRgb>
+#include <QSizeF>
 #include <QString>
 #include <QVarLengthArray>
 
@@ -742,6 +745,8 @@ void DrawPathTool::undoLastPoint()
 		previous_drag_map = MapCoordF((prev_coord.x() + prev_drag.x()) / 2, (prev_coord.y() + prev_drag.y()) / 2);
 		previous_point_is_curve_point = true;
 		path_has_preview_point = false;
+		
+		click_pos_map = previous_pos_map;  // for azimuth info
 	}
 	else if (!path_has_preview_point)
 	{
