@@ -114,7 +114,7 @@ public:
 	
 	int getSymbolWidgetIconSizePx();
 	qreal getMapEditorClickTolerancePx();
-	float getMapEditorSnapDistancePx();
+	qreal getMapEditorSnapDistancePx();
 	float getRectangleToolHelperCrossRadiusPx();
 	int getStartDragDistancePx();
 	

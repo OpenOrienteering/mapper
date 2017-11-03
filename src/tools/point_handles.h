@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014, 2015 Kai Pastor
+ *    Copyright 2014, 2015, 2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,16 +21,16 @@
 #ifndef OPENORIENTEERING_POINT_HANDLES_H
 #define OPENORIENTEERING_POINT_HANDLES_H
 
+
 #include <limits>
 
 #include <QImage>
-#include <QPointF>
+#include <QPointF>  // IWYU pragma: no_forward_declare QPointF
 #include <QRgb>
 
 #include "core/map_coord.h"
 
 class QPainter;
-// IWYU pragma: no_forward_declare QPointF
 
 class MapWidget;
 class Object;
@@ -70,31 +70,55 @@ public:
 	};
 	
 	/**
-	 * @brief Constructs a new point handles utility.
+	 * Default constructor.
 	 * 
-	 * The constructor assures that current settings are used.
+	 * The resulting object is in a valid stable, but not really useful
+	 * until calling setScaleFactor().
 	 */
-	PointHandles(int scale_factor);
+	PointHandles() noexcept;
+	
+	/**
+	 * Constructs a point handles utility for the given scale factor.
+	 */
+	PointHandles(unsigned int factor);
+	
 	
 	/**
 	 * @brief The factor by which all drawing shall be scaled.
 	 * 
 	 * The control point handles image matches this factor, too.
-	 * Currently, this value is either 1, 2, or 4.
+	 * Currently, this value is either 0, 1, 2, or 4.
+	 * (0 represents a default constructed object.)
 	 */
-	int scaleFactor() const;
+	unsigned int scaleFactor() const { return scale_factor; }
+	
+	/**
+	 * Sets the scale factor.
+	 * 
+	 * Currently, valid factors are 1, 2, or 4.
+	 */
+	void setScaleFactor(unsigned int factor);
+	
+	
+	/**
+	 * The number of covered pixels around the center of a point handle.
+	 */
+	int displayRadius() const { return display_radius; }
+	
 	
 	/**
 	 * @brief The control point handles image.
 	 * 
-	 * The control point image matches the current scale factor.
+	 * The image matches the current scale factor.
 	 */
-	const QImage image() const;
+	const QImage image() const { return handle_image; }
+	
 	
 	/**
 	 * @brief Returns the color in which point handles with the given state will be displayed.
 	 */
-	QRgb stateColor(PointHandleState state) const;
+	static QRgb stateColor(PointHandleState state);
+	
 	
 	/**
 	 * @brief Draws a single handle.
@@ -107,7 +131,7 @@ public:
 	 * @param painter QPainter object with correct transformation set.
 	 * @param widget Map widget which provides coordinate transformations.
 	 * @param object Object to draw point handles for.
-	 * @param hover_point Index of a point which should be drawn in 'active' state. Pass a negative number to disable.
+	 * @param hover_point Index of a point which should be drawn in 'active' state. Pass out-of-bounds value to disable.
 	 * @param draw_curve_handles If false, curve handles for path objects are not drawn.
 	 * @param base_state The state in which all points except hover_point should be drawn.
 	 */
@@ -134,26 +158,13 @@ private:
 	 * very often, the image is loaded only when the scale changes and returned
 	 * from an internal cache otherwise.
 	 */
-	static const QImage loadHandleImage(int scale);
+	static const QImage loadHandleImage(unsigned int scale);
 	
-	int scale_factor;
+	
 	QImage handle_image;
+	unsigned int scale_factor = 0;
+	int display_radius = 0;
 };
 
-
-
-//### PointHandles inline code ###
-
-inline
-int PointHandles::scaleFactor() const
-{
-	return scale_factor;
-}
-
-inline
-const QImage PointHandles::image() const
-{
-	return handle_image;
-}
 
 #endif // OPENORIENTEERING_POINT_HANDLES_H

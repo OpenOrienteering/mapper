@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014, 2015 Kai Pastor
+ *    Copyright 2014, 2015, 2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,20 +20,49 @@
 
 #include "point_handles.h"
 
+#include <cmath>
+#include <type_traits>
+
+#include <Qt>
+#include <QtGlobal>
+#include <QBrush>
 #include <QPainter>
+#include <QPen>
+#include <QPoint>
+#include <QString>
 
 #include "core/objects/object.h"
 #include "core/objects/text_object.h"
 #include "gui/map/map_widget.h"
 
-PointHandles::PointHandles(int scale_factor)
-: scale_factor(scale_factor)
-, handle_image(loadHandleImage(scale_factor))
+
+
+PointHandles::PointHandles() noexcept
+{
+	// nothing
+}
+
+
+PointHandles::PointHandles(unsigned int factor)
+: handle_image(loadHandleImage(factor))
+, scale_factor(factor)
 {
 	; // nothing
 }
 
-QRgb PointHandles::stateColor(PointHandleState state) const
+
+
+void PointHandles::setScaleFactor(unsigned int factor)
+{
+	scale_factor = factor;
+	display_radius = 6 * int(scale_factor); // = (image width + 1) / 2
+	handle_image = loadHandleImage(factor);
+}
+
+
+
+// static
+QRgb PointHandles::stateColor(PointHandleState state)
 {
 	switch (state)
 	{
@@ -41,10 +70,12 @@ QRgb PointHandles::stateColor(PointHandleState state) const
 	case ActiveHandleState:    return qRgb(255, 150,   0);
 	case SelectedHandleState:  return qRgb(255,   0,   0);
 	case DisabledHandleState:  return qRgb(106, 106, 106);
-	default:                   Q_UNREACHABLE();
-	                           return qRgb(255,   0,   0);
 	}
+	Q_UNREACHABLE();
+	return qRgb(255,   0,   0);
 }
+
+
 
 void PointHandles::draw(
         QPainter* painter,
@@ -54,26 +85,27 @@ void PointHandles::draw(
         bool draw_curve_handles,
         PointHandleState base_state ) const
 {
-	if (object->getType() == Object::Point)
+	MapCoordVector::size_type i = 0;
+	switch (object->getType())
 	{
-		const PointObject* point = reinterpret_cast<const PointObject*>(object);
-		draw(painter, widget->mapToViewport(point->getCoordF()), NormalHandle, (hover_point == 0) ? ActiveHandleState : base_state);
-	}
-	else if (object->getType() == Object::Text)
-	{
-		const TextObject* text = reinterpret_cast<const TextObject*>(object);
-		std::vector<QPointF> text_handles(text->controlPoints());
-		for (std::size_t i = 0; i < text_handles.size(); ++i)
-			draw(painter, widget->mapToViewport(text_handles[i]), NormalHandle, (hover_point == i) ? ActiveHandleState : base_state);
-	}
-	else if (object->getType() == Object::Path)
-	{
-		painter->setBrush(Qt::NoBrush); // for handle lines
+	case Object::Point:
+		draw(painter, widget->mapToViewport(object->asPoint()->getCoordF()), NormalHandle, (hover_point == 0) ? ActiveHandleState : base_state);
+		return;
 		
-		const PathObject* path = reinterpret_cast<const PathObject*>(object);
-		
-		for (const auto& part : path->parts())
+	case Object::Text:
+		for (const auto& point : object->asText()->controlPoints())
 		{
+			draw(painter, widget->mapToViewport(point), NormalHandle, (hover_point == i) ? ActiveHandleState : base_state);
+			i++;
+		}
+		return;
+		
+	case Object::Path:
+		painter->setBrush(Qt::NoBrush); // for handle lines
+		for (const auto& part : object->asPath()->parts())
+		{
+			auto path = part.path;
+
 			bool have_curve = part.isClosed() && part.size() > 3 && path->getCoordinate(part.last_index - 3).isCurveStart();
 			PointHandleType handle_type = NormalHandle;
 			
@@ -125,61 +157,72 @@ void PointHandles::draw(
 				}
 			}
 		}
+		return;
 	}
-	else
-		Q_ASSERT(false);
+	
+	Q_UNREACHABLE();
 }
+
 
 void PointHandles::draw(QPainter* painter, QPointF position, PointHandleType type, PointHandleState state) const
 {
-	int width = scale_factor * 11;
-	int offset = (width - 1) / 2;
-	painter->drawImage(qRound(position.x()) - offset, qRound(position.y()) - offset, image(), (int)type * width, (int)state * width, width, width);
+	auto width = int(scale_factor) * 11;  // = displayRadius() * 2 - 1
+	auto offset = (width - 1) / 2;
+	painter->drawImage(qRound(position.x()) - offset, qRound(position.y()) - offset, image(), int(type) * width, int(state) * width, width, width);
 }
+
 
 void PointHandles::drawCurveHandleLine(QPainter* painter, QPointF anchor_point, QPointF curve_handle, PointHandleType type, PointHandleState state) const
 {
-	const float handle_radius = 3 * scale_factor;
+	const auto handle_radius = 3 * scale_factor;
 	if (scale_factor > 1)
 		painter->setPen(QPen(QBrush(stateColor(state)), scale_factor));
 	else
 		painter->setPen(stateColor(state));
 	
 	QPointF to_handle = curve_handle - anchor_point;
-	float to_handle_len = to_handle.x()*to_handle.x() + to_handle.y()*to_handle.y();
-	if (to_handle_len > 0.00001f)
+	auto to_handle_len = to_handle.x()*to_handle.x() + to_handle.y()*to_handle.y();
+	if (to_handle_len > 0.00001)
 	{
-		to_handle_len = sqrt(to_handle_len);
-		if (type == StartHandle)
-			anchor_point += scale_factor * 5 / qMax(qAbs(to_handle.x()), qAbs(to_handle.y())) * to_handle;
-		else if (type == DashHandle)
-			anchor_point += scale_factor * to_handle * (3 / to_handle_len);
-		else //if (type == NormalHandle)
-			anchor_point += scale_factor * 3 / qMax(qAbs(to_handle.x()), qAbs(to_handle.y())) * to_handle;
-		
+		to_handle_len = std::sqrt(to_handle_len);
+		auto factor = qreal(scale_factor);
+		switch (type)
+		{
+		case StartHandle:
+			factor *= 5 / qMax(qAbs(to_handle.x()), qAbs(to_handle.y()));
+			break;
+		case DashHandle:
+			factor *= 3 / to_handle_len;
+			break;
+		default:
+			factor *= 3 / qMax(qAbs(to_handle.x()), qAbs(to_handle.y()));
+		}
+		anchor_point += to_handle * factor;
 		curve_handle -= to_handle * (handle_radius / to_handle_len);
 	}
 	
 	painter->drawLine(anchor_point, curve_handle);
 }
 
+
+
 // static
-const QImage PointHandles::loadHandleImage(int factor)
+const QImage PointHandles::loadHandleImage(unsigned int factor)
 {
-	static const QStringList image_names = (
-	  QStringList() << QString() // not used
-	                << QStringLiteral(":/images/point-handles.png")
-	                << QStringLiteral(":/images/point-handles-2x.png")
-	                << QString() // not used
-					<< QStringLiteral(":/images/point-handles-4x.png")
-	);
+	static const QString image_names[5] = {
+	    {}, // not used
+	    QStringLiteral(":/images/point-handles.png"),
+	    QStringLiteral(":/images/point-handles-2x.png"),
+	    {}, // not used
+	    QStringLiteral(":/images/point-handles-4x.png")
+	};
 	
-	Q_ASSERT(factor < image_names.size());
+	Q_ASSERT(factor < std::extent<decltype(image_names)>::value);
 	
 	// NOTE: If this fails, check MapEditorTool::newScaleFactor()!
 	Q_ASSERT(!image_names[factor].isEmpty());
 	
-	static int shared_image_factor = factor;
+	static auto shared_image_factor = factor;
 	static QImage shared_image = QImage(image_names[shared_image_factor]);
 	if (shared_image_factor != factor)
 	{

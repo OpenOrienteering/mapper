@@ -25,7 +25,6 @@
 
 #include <QKeyEvent>
 
-#include "settings.h"
 #include "core/map.h"
 #include "core/objects/object.h"
 #include "core/objects/object_mover.h"
@@ -416,7 +415,7 @@ int EditLineTool::updateDirtyRectImpl(QRectF& rect)
 	map()->includeSelectionRect(selection_extent);
 	
 	rectInclude(rect, selection_extent);
-	int pixel_border = show_object_points ? (scaleFactor() * 6) : 1;
+	int pixel_border = show_object_points ? pointHandles().displayRadius() : 1;
 	
 	// Control points
 	if (show_object_points)
@@ -604,7 +603,7 @@ void EditLineTool::updateHoverState(MapCoordF cursor_pos)
 			highlight_renderables->insertRenderablesOfObject(highlight_object);
 		}
 		
-		start_drag_distance = (hover_state != OverNothing) ? 0 : Settings::getInstance().getStartDragDistancePx();
+		effective_start_drag_distance = (hover_state == OverNothing) ? startDragDistance() : 0;
 		updateDirtyRect();
 	}
 }

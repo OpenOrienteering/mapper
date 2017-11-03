@@ -26,7 +26,6 @@
 
 #include "core/map.h"
 #include "core/objects/object.h"
-#include "settings.h"
 #include "util/util.h"
 #include "gui/modifier_key.h"
 #include "gui/widgets/key_button_bar.h"
@@ -136,7 +135,7 @@ bool DrawCircleTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, Map
 		if (!editingInProgress())
 			return false;
 		
-		if ((event->pos() - click_pos).manhattanLength() >= Settings::getInstance().getStartDragDistancePx())
+		if ((event->pos() - click_pos).manhattanLength() >= startDragDistance())
 		{
 			if (!dragging)
 			{

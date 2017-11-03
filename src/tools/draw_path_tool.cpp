@@ -21,12 +21,31 @@
 
 #include "draw_path_tool.h"
 
+#include <cmath>
+#include <memory>
+#include <vector>
+
+#include <Qt>
+#include <QtMath>
+#include <QCursor>
+#include <QFlags>
+#include <QLatin1String>
 #include <QKeyEvent>
+#include <QLocale>
 #include <QMouseEvent>
 #include <QPainter>
+#include <QPen>
+#include <QPixmap>
+#include <QPointF>
+#include <QRectF>
+#include <QRgb>
+#include <QString>
+#include <QVarLengthArray>
 
-#include "settings.h"
 #include "core/map.h"
+#include "core/path_coord.h"
+#include "core/virtual_coord_vector.h"
+#include "core/virtual_path.h"
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/symbol.h"
 #include "core/objects/object.h"
@@ -35,35 +54,25 @@
 #include "gui/map/map_editor.h"
 #include "gui/map/map_widget.h"
 #include "gui/widgets/key_button_bar.h"
-#include "tool_helpers.h"
+#include "tools/tool.h"
+#include "tools/tool_helpers.h"
 #include "util/util.h"
 #include "undo/object_undo.h"
 
 
 DrawPathTool::DrawPathTool(MapEditorController* editor, QAction* tool_button, bool is_helper_tool, bool allow_closing_paths)
 : DrawLineAndAreaTool(editor, DrawPath, tool_button, is_helper_tool)
-, allow_closing_paths(allow_closing_paths)
-, finished_path_is_selected(false)
 , cur_map_widget(mapWidget())
+, allow_closing_paths(allow_closing_paths)
 , angle_helper(new ConstrainAngleToolHelper())
 , snap_helper(new SnappingToolHelper(this))
 , follow_helper(new FollowPathToolHelper())
-, key_button_bar(nullptr)
 {
 	angle_helper->setActive(false);
-	connect(angle_helper.data(), &ConstrainAngleToolHelper::displayChanged, this, &DrawPathTool::updateDirtyRect);
+	connect(angle_helper.get(), &ConstrainAngleToolHelper::displayChanged, this, &DrawPathTool::updateDirtyRect);
 	
 	updateSnapHelper();
-	connect(snap_helper.data(), &SnappingToolHelper::displayChanged, this, &DrawPathTool::updateDirtyRect);
-	
-	dragging = false;
-	appending = false;
-	following = false;
-	picking_angle = false;
-	picked_angle = false;
-	draw_dash_points = false;
-	shift_pressed = false;
-	ctrl_pressed = false;
+	connect(snap_helper.get(), &SnappingToolHelper::displayChanged, this, &DrawPathTool::updateDirtyRect);
 	
 	connect(map(), &Map::objectSelectionChanged, this, &DrawPathTool::objectSelectionChanged);
 }
@@ -96,7 +105,7 @@ void DrawPathTool::init()
 	MapEditorTool::init();
 }
 
-const QCursor&DrawPathTool::getCursor() const
+const QCursor& DrawPathTool::getCursor() const
 {
 	static auto const cursor = scaledToScreen(QCursor{ QPixmap(QString::fromLatin1(":/images/cursor-draw-path.png")), 11, 11 });
 	return cursor;
@@ -151,7 +160,7 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 					}
 					
 					// Setup angle helper
-					if (snap_helper->snapToDirection(map_coord, widget, angle_helper.data()))
+					if (snap_helper->snapToDirection(map_coord, widget, angle_helper.get()))
 						picked_angle = true;
 				}
 				else if (editingInProgress() &&
@@ -260,7 +269,7 @@ bool DrawPathTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 	}
 	else
 	{
-		bool drag_distance_reached = (event->pos() - click_pos).manhattanLength() >= Settings::getInstance().getStartDragDistancePx();
+		bool drag_distance_reached = (event->pos() - click_pos).manhattanLength() >= startDragDistance();
 		if (dragging && !drag_distance_reached)
 		{
 			if (create_spline_corner)
@@ -288,11 +297,13 @@ bool DrawPathTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 			if (previous_point_is_curve_point)
 			{
 				hidePreviewPoints();
-				float drag_direction = calculateRotation(constrained_pos.toPoint(), constrained_pos_map);
+				auto drag_direction = calculateRotation(constrained_pos.toPoint(), constrained_pos_map);
 				
 				// Add a new node or convert the last node into a corner?
-				if ((widget->mapToViewport(previous_pos_map) - click_pos).manhattanLength() >= Settings::getInstance().getStartDragDistancePx())
+				if ((widget->mapToViewport(previous_pos_map) - click_pos).manhattanLength() >= startDragDistance())
+				{
 					createPreviewCurve(MapCoord(click_pos_map), drag_direction);
+				}
 				else
 				{
 					create_spline_corner = true;
@@ -504,7 +515,7 @@ void DrawPathTool::draw(QPainter* painter, MapWidget* widget)
 	if (editingInProgress())
 	{
 		painter->setRenderHint(QPainter::Antialiasing);
-		if (dragging && (cur_pos - click_pos).manhattanLength() >= Settings::getInstance().getStartDragDistancePx())
+		if (dragging && (cur_pos - click_pos).manhattanLength() >= startDragDistance())
 		{
 			QPen pen(qRgb(255, 255, 255));
 			pen.setWidth(3);
@@ -592,11 +603,11 @@ void DrawPathTool::updateDrawHover()
 	}
 }
 
-void DrawPathTool::createPreviewCurve(MapCoord position, float direction)
+void DrawPathTool::createPreviewCurve(MapCoord position, qreal direction)
 {
 	if (!path_has_preview_point)
 	{
-		int last = preview_path->getCoordinateCount() - 1;
+		auto last = preview_path->getCoordinateCount() - 1;
 		(preview_path->getCoordinate(last)).setCurveStart(true);
 		
 		preview_path->addCoordinate(MapCoord(0, 0));
@@ -610,7 +621,7 @@ void DrawPathTool::createPreviewCurve(MapCoord position, float direction)
 	}
 	
 	// Adjust the preview curve
-	int last = preview_path->getCoordinateCount() - 1;
+	auto last = preview_path->getCoordinateCount() - 1;
 	MapCoord previous_point = preview_path->getCoordinate(last - 3);
 	MapCoord last_point = preview_path->getCoordinate(last);
 	
@@ -725,8 +736,8 @@ bool DrawPathTool::removeLastPointFromSelectedPath()
 	}
 	
 	int points_on_path = 0;
-	int num_coords = path->getCoordinateCount();
-	for (int i = 0; i < num_coords && points_on_path < 3; ++i)
+	auto num_coords = path->getCoordinateCount();
+	for (MapCoordVector::size_type i = 0; i < num_coords && points_on_path < 3; ++i)
 	{
 		++points_on_path;
 		if (path->getCoordinate(i).isCurveStart())
@@ -927,7 +938,7 @@ void DrawPathTool::updateAngleHelper()
 bool DrawPathTool::pickAngle(MapCoordF coord, MapWidget* widget)
 {
 	MapCoord snap_position;
-	bool picked = snap_helper->snapToDirection(coord, widget, angle_helper.data(), &snap_position);
+	bool picked = snap_helper->snapToDirection(coord, widget, angle_helper.get(), &snap_position);
 	if (picked)
 	{
 		angle_helper->setCenter(MapCoordF(snap_position));
@@ -961,13 +972,13 @@ void DrawPathTool::startAppending(SnappingToolHelperSnapInfo& snap_info)
 void DrawPathTool::startFollowing(SnappingToolHelperSnapInfo& snap_info, const MapCoord& snap_coord)
 {
 	following = true;
-	follow_object = snap_info.object->asPath();
+	auto followed_object = snap_info.object->asPath();
 	create_segment = false;
 	
 	if (snap_info.type == SnappingToolHelper::ObjectCorners)
-		follow_helper->startFollowingFromCoord(follow_object, snap_info.coord_index);
+		follow_helper->startFollowingFromCoord(followed_object, snap_info.coord_index);
 	else // if (snap_info.type == SnappingToolHelper::ObjectPaths)
-		follow_helper->startFollowingFromPathCoord(follow_object, snap_info.path_coord);
+		follow_helper->startFollowingFromPathCoord(followed_object, snap_info.path_coord);
 	
 	if (path_has_preview_point)
 		preview_path->setCoordinate(preview_path->getCoordinateCount() - 1, snap_coord);
@@ -983,13 +994,15 @@ void DrawPathTool::updateFollowing()
 {
 	PathCoord path_coord;
 	float distance_sq;
-	const auto& part = follow_object->parts()[follow_helper->getPartIndex()];
-	follow_object->calcClosestPointOnPath(cur_pos_map, distance_sq, path_coord, part.first_index, part.last_index);
+	const auto followed_object = follow_helper->followed_object();
+	const auto& part = followed_object->parts()[follow_helper->partIndex()];
+	followed_object->calcClosestPointOnPath(cur_pos_map, distance_sq, path_coord, part.first_index, part.last_index);
 	auto followed_path = follow_helper->updateFollowing(path_coord);
 	
 	// Append the temporary object to the preview object at follow_start_index
 	// 1. Delete everything appended, except for the point where following started
 	//    (thus avoiding deletion of the whole part).
+	// \todo Implement as truncate()
 	for (auto i = preview_path->getCoordinateCount() - 1;
 	     i > follow_start_index + 1;
 	     i = preview_path->getCoordinateCount() - 1)
@@ -1027,9 +1040,9 @@ void DrawPathTool::finishFollowing()
 	updateAngleHelper();
 }
 
-float DrawPathTool::calculateRotation(QPoint mouse_pos, MapCoordF mouse_pos_map)
+qreal DrawPathTool::calculateRotation(QPoint mouse_pos, MapCoordF mouse_pos_map) const
 {
-	if (dragging && (mouse_pos - click_pos).manhattanLength() >= Settings::getInstance().getStartDragDistancePx())
+	if (dragging && (mouse_pos - click_pos).manhattanLength() >= startDragDistance())
 		return -atan2(mouse_pos_map.x() - click_pos_map.x(), click_pos_map.y() - mouse_pos_map.y());
 	else
 		return 0;

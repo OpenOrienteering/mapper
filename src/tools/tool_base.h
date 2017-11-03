@@ -34,7 +34,6 @@
 #include <QPointF>
 
 #include <QPointer>
-#include <QScopedPointer>
 
 #include "core/map_coord.h"
 #include "core/objects/object.h"
@@ -195,7 +194,7 @@ protected:
 	void finishDragging();
 	void cancelDragging();
 	/// Is the left mouse button pressed and has a drag move been started (by moving the mouse a minimum amount of pixels)?
-	bool isDragging() const;
+	bool isDragging() const { return dragging; }
 	
 	/// Called when a drag operation is started. This happens when dragging the mouse some pixels
 	/// away from the mouse press position. The distance is determined by start_drag_distance.
@@ -232,7 +231,7 @@ protected:
 	void startEditing(const std::set<Object*>& objects);
 	void abortEditing();
 	
-	ObjectsRange editedObjects();
+	ObjectsRange editedObjects() { return ObjectsRange { edited_items }; }
 	bool editedObjectsModified() const;
 	void resetEditedObjects();
 	
@@ -283,15 +282,16 @@ protected:
 	MapCoordF constrained_pos_map;
 	/// This is set to true when constrained_pos(_map) is a snapped position
 	bool snapped_to_pos;
-	/// The amount of pixels the mouse has to be moved to start dragging. Defaults to Settings::getInstance().getStartDragDistancePx().
-	int start_drag_distance;
+	/// The amount of pixels the mouse has to be moved to start dragging.
+	/// Defaults to Settings::getInstance().getStartDragDistancePx(), but can be modified.
+	int effective_start_drag_distance;
 	
 	/// Angle tool helper. If activated, it is included in the dirty rect and drawn automatically.
-	QScopedPointer<ConstrainAngleToolHelper> angle_helper;
+	std::unique_ptr<ConstrainAngleToolHelper> angle_helper;
 	/// Snapping tool helper. If a non-null filter is set, it is included in the dirty rect and drawn automatically.
-	QScopedPointer<SnappingToolHelper> snap_helper;
+	std::unique_ptr<SnappingToolHelper> snap_helper;
 	/// An object to exclude from snapping, or nullptr to snap to all objects.
-	Object* snap_exclude_object;
+	Object* snap_exclude_object = nullptr;
 	
 	// Key handling
 	
@@ -311,26 +311,13 @@ protected:
 private:
 	// Miscellaneous internals
 	QCursor cursor;
-	bool preview_update_triggered;
-	bool dragging;
-	bool dragging_canceled;
-	QScopedPointer<MapRenderables> renderables;
-	QScopedPointer<MapRenderables> old_renderables;
+	bool preview_update_triggered = false;
+	bool dragging                 = false;
+	bool dragging_canceled        = false;
+	std::unique_ptr<MapRenderables> renderables;
+	std::unique_ptr<MapRenderables> old_renderables;
 	std::vector<EditedItem> edited_items;
 };
-
-inline
-bool MapEditorToolBase::isDragging() const
-{
-	return dragging;
-}
-
-
-inline
-MapEditorToolBase::ObjectsRange MapEditorToolBase::editedObjects()
-{
-	return ObjectsRange { edited_items };
-}
 
 
 #endif
