@@ -6,253 +6,253 @@
         <message>
             <source>Purple</source>
             <comment>Color 0</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Púrpura</translation>
+    </message>
         <message>
             <source>Black</source>
             <comment>Color 1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Negro</translation>
+    </message>
         <message>
             <source>Opaque White below Black</source>
             <comment>Color 2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Blanco opaco debajo de negro</translation>
+    </message>
         <message>
             <source>Black 65%</source>
             <comment>Color 3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Negro 65%</translation>
+    </message>
         <message>
             <source>Black 20%</source>
             <comment>Color 4</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Negro 20%</translation>
+    </message>
         <message>
             <source>Brown 50%</source>
             <comment>Color 5</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Marrón 50%</translation>
+    </message>
         <message>
             <source>Black below light browns</source>
             <comment>Color 6</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Negro debajo de marrones claros</translation>
+    </message>
         <message>
             <source>Opaque Blue</source>
             <comment>Color 7</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Azul opaco</translation>
+    </message>
         <message>
             <source>Blue</source>
             <comment>Color 8</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Azul</translation>
+    </message>
         <message>
             <source>Blue 50%</source>
             <comment>Color 9</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Azul 50%</translation>
+    </message>
         <message>
             <source>Brown</source>
             <comment>Color 10</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Marrón</translation>
+    </message>
         <message>
             <source>OpenOrienteering Orange</source>
             <comment>Color 11</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Naranja OpenOrienteering</translation>
+    </message>
         <message>
             <source>Black 25% (Grey)</source>
             <comment>Color 12</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Negro 25% (Gris)</translation>
+    </message>
         <message>
             <source>Green 50%, Yellow</source>
             <comment>Color 13</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verde 50%, amarillo</translation>
+    </message>
         <message>
             <source>Green</source>
             <comment>Color 14</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verde</translation>
+    </message>
         <message>
             <source>Opaque Yellow</source>
             <comment>Color 15</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Amarillo opaco</translation>
+    </message>
         <message>
             <source>Opaque White over Green</source>
             <comment>Color 16</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Blanco opaco debajo de verde</translation>
+    </message>
         <message>
             <source>Opaque Green 20%</source>
             <comment>Color 17</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verde opaco 20%</translation>
+    </message>
         <message>
             <source>Opaque Green 50%</source>
             <comment>Color 18</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verde opaco 50%</translation>
+    </message>
         <message>
             <source>Green, Black 50%</source>
             <comment>Color 19</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verde, Negro 50%</translation>
+    </message>
         <message>
             <source>Opaque Green</source>
             <comment>Color 20</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verde opaco</translation>
+    </message>
         <message>
             <source>Green 50%</source>
             <comment>Color 21</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verde 50%</translation>
+    </message>
         <message>
             <source>Green 20%</source>
             <comment>Color 22</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verde 20%</translation>
+    </message>
         <message>
             <source>Green below light greens</source>
             <comment>Color 23</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verde debajo de verdes claros</translation>
+    </message>
         <message>
             <source>Green 50% over Yellow</source>
             <comment>Color 24</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verde 50% sobre amarillo</translation>
+    </message>
         <message>
             <source>White over Yellow</source>
             <comment>Color 25</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Blanco sobre amarillo</translation>
+    </message>
         <message>
             <source>Yellow</source>
             <comment>Color 26</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Amarillo</translation>
+    </message>
         <message>
             <source>Yellow 50%</source>
             <comment>Color 27</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Amarillo 50%</translation>
+    </message>
         <message>
             <source>Contour</source>
             <comment>Name of symbol 101</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Curva de nivel</translation>
+    </message>
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. A contour interval of 2.5 metres may be used for flat terrains. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
             <comment>Description of symbol 101</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una línea que une los puntos de la misma altitud. La equidistancia estándar entre curvas de nivel es 5 metros. Se puede utilizar una equidistancia de 2,5 metros en terrenos llanos. La separación mínima entre curvas de nivel es 0,25 mm entre los centros de las líneas.</translation>
+    </message>
         <message>
             <source>Slope line, contour</source>
             <comment>Name of symbol 101.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Línea de pendiente, curva de nivel</translation>
+    </message>
         <message>
             <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
             <comment>Description of symbol 101.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Las líneas de pendiente se pueden dibujar hacia el lado más bajo de una curva de nivel para clarificar la dirección de la pendiente.</translation>
+    </message>
         <message>
             <source>Index contour</source>
             <comment>Name of symbol 102</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Curva maestra</translation>
+    </message>
         <message>
             <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. An index contour may be represented as an ordinary contour line in an area with much detail. Small contour knolls and depressions are normally not represented using index contours.</source>
             <comment>Description of symbol 102</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Cada 5 curvas de nivel se debe dibujar una línea más gruesa. Esto es una ayuda para evaluar más rápidamente la diferencia de altitud y la forma general de la superficie del terreno. Una curva maestra se puede representar como una curva normal en una zona con mucho detalle. Las curvas de pequeñas colinas y depresiones no se representan normalmente como curvas maestras.</translation>
+    </message>
         <message>
             <source>Contour value</source>
             <comment>Name of symbol 102.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Altitud de la curva de nivel</translation>
+    </message>
         <message>
             <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
             <comment>Description of symbol 102.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>La altitud de las curvas se puede incluir para ayudar a evaluar grandes diferencias de altitud. Se insertan en las curvas maestras en lugares donde no oculten otros detalles. Los números deberían orientarse de forma que su parte superior esté hacia el lado más alto de la curva.</translation>
+    </message>
         <message>
             <source>Form line</source>
             <comment>Name of symbol 103</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Curva auxiliar</translation>
+    </message>
         <message>
             <source>Form lines are used where more information must be given about the shape of the ground. Form lines are added only where representation would be incomplete with ordinary contours. They shall not be used as intermediate contours. Only one form line should be used between neighbouring contours. It is very important that a form line fits logically into the contour system, so the start and end of a form line should be parallel to the neighbouring contours. The gaps between the form line dashes must be placed on reasonably straight sections of the form line. Form lines can be used to differentiate flat knolls and depressions from more distinct ones.</source>
             <comment>Description of symbol 103</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Las curvas auxiliares se utilizan donde se debe aportar más información sobre la forma del terreno. Las curvas auxiliares se añaden sólamente donde la representación sería incompleta con curvas normales. No se deben utilizar como curvas de nivel intermedias. Solo una única curva auxiliar se debe utilizar entre curvas vecinas. Es muy importante que una curva auxiliar se adapte lógicamente entre las curvas de nivel, de forma que el principio y final de dicha curva sean paralelos a las curvas vecinas. Los espacios entre los trazos de la curva auxiliar se deben situar en las secciones más rectas de dicha curva auxiliar. Las curvas auxiliares se pueden utilizar para diferenciar colinas y depresiones suaves de otras más pronunciadas.</translation>
+    </message>
         <message>
             <source>Slope line, formline</source>
             <comment>Name of symbol 103.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Línea de pendiente, curva auxiliar</translation>
+    </message>
         <message>
             <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
             <comment>Description of symbol 103.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Se pueden dibujar líneas de pendiente hacia el lado más bajo de una curva de nivel para clarificar la dirección de la pendiente. Cuando se utilicen, se deben situar en vaguadas.</translation>
+    </message>
         <message>
             <source>Earth bank</source>
             <comment>Name of symbol 104</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terraplén</translation>
+    </message>
         <message>
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
             <comment>Description of symbol 104</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un terraplén es un abrupto desnivel en el terreno que se puede distinguir claramente en el entorno, p. ej. canteras de grava o arena, cortes o rellenos de carreteras y vías férreas. Altura mínima: 1 m. Un terraplén puede influir la velocidad de carrera. Las líneas de extensión representan la extensión completa del terraplén. Para terraplenes largos, se permite utilizar líneas de extensión menores que la longitud mínima en los extremos. Si dos terraplenes están muy juntos, las líneas de extensión se pueden omitir. Los terraplenes impasables se deben representar utilizando el símbolo 201 (cortado impasable).</translation>
+    </message>
         <message>
             <source>Earth bank, minimum size</source>
             <comment>Name of symbol 104.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terraplén, tamaño mínimo</translation>
+    </message>
         <message>
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
             <comment>Description of symbol 104.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un terraplén es un abrupto desnivel en el terreno que se puede distinguir claramente en el entorno, p. ej. canteras de grava o arena, cortes o rellenos de carreteras y vías férreas. Altura mínima: 1 m. Un terraplén puede influir la velocidad de carrera. Las líneas de extensión representan la extensión completa del terraplén. Para terraplenes largos, se permite utilizar líneas de extensión menores que la longitud mínima en los extremos. Si dos terraplenes están muy juntos, las líneas de extensión se pueden omitir. Los terraplenes impasables se deben representar utilizando el símbolo 201 (cortado impasable).</translation>
+    </message>
         <message>
             <source>Earth bank, top line</source>
             <comment>Name of symbol 104.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terraplén, línea superior</translation>
+    </message>
         <message>
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
             <comment>Description of symbol 104.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un terraplén es un abrupto desnivel en el terreno que se puede distinguir claramente en el entorno, p. ej. canteras de grava o arena, cortes o rellenos de carreteras y vías férreas. Altura mínima: 1 m. Un terraplén puede influir la velocidad de carrera. Las líneas de extensión representan la extensión completa del terraplén. Para terraplenes largos, se permite utilizar líneas de extensión menores que la longitud mínima en los extremos. Si dos terraplenes están muy juntos, las líneas de extensión se pueden omitir. Los terraplenes impasables se deben representar utilizando el símbolo 201 (cortado impasable).</translation>
+    </message>
         <message>
             <source>Earth bank, tag line</source>
             <comment>Name of symbol 104.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terraplén, línea de extensión</translation>
+    </message>
         <message>
             <source>Use this symbol to display the full extent of wide earth banks.</source>
             <comment>Description of symbol 104.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Utilice este símbolo para representar la extensión completa de terraplenes amplios.</translation>
+    </message>
         <message>
             <source>Earth bank, minimum size (from ISOM2000)</source>
             <comment>Name of symbol 104.9</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terraplén, tamaño mínimo (en la ISOM2000)</translation>
+    </message>
         <message>
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
             <comment>Description of symbol 104.9</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un terraplén es un abrupto desnivel en el terreno que se puede distinguir claramente en el entorno, p. ej. canteras de grava o arena, cortes o rellenos de carreteras y vías férreas. Altura mínima: 1 m. Un terraplén puede influir la velocidad de carrera. Las líneas de extensión representan la extensión completa del terraplén. Para terraplenes largos, se permite utilizar líneas de extensión menores que la longitud mínima en los extremos. Si dos terraplenes están muy juntos, las líneas de extensión se pueden omitir. Los terraplenes impasables se deben representar utilizando el símbolo 201 (cortado impasable).</translation>
+    </message>
         <message>
             <source>Earth wall</source>
             <comment>Name of symbol 105</comment>
