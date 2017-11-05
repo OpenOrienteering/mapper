@@ -28,9 +28,11 @@
 #include <QEvent>
 #include <QFlags>
 #include <QGuiApplication>
-#include <QKeyEvent>
 #include <QHBoxLayout>
+#include <QHideEvent>
 #include <QInputEvent>
+#include <QKeyEvent>
+#include <QShowEvent>
 #include <QToolButton>
 
 
@@ -141,6 +143,9 @@ QToolButton* KeyButtonBar::addModifierButton(Qt::KeyboardModifier modifier_code,
 
 bool KeyButtonBar::eventFilter(QObject* /*watched*/, QEvent* event)
 {
+	if (!active)
+		return false;
+	
 	using std::begin;
 	using std::end;
 	auto find_info = [this](int key_code) -> ButtonInfo* {
@@ -206,6 +211,21 @@ bool KeyButtonBar::eventFilter(QObject* /*watched*/, QEvent* event)
 	}
 	
 	return false;
+}
+
+
+
+void KeyButtonBar::showEvent(QShowEvent* event)
+{
+	if (!event->spontaneous())
+		active = true;
+}
+
+
+void KeyButtonBar::hideEvent(QHideEvent* event)
+{
+	if (!event->spontaneous())
+		active = false;
 }
 
 

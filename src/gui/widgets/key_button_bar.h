@@ -32,6 +32,8 @@
 
 class QEvent;
 class QHBoxLayout;
+class QHideEvent;
+class QShowEvent;
 class QToolButton;
 
 
@@ -108,6 +110,12 @@ public:
 	bool eventFilter(QObject* watched, QEvent* event) override;
 	
 	
+protected:
+	void showEvent(QShowEvent* event) override;
+	
+	void hideEvent(QHideEvent* event) override;
+	
+	
 private:
 	void sendKeyPressAndRelease();
 	
@@ -129,6 +137,7 @@ private:
 	QWidget* receiver;
 	QHBoxLayout* layout;
 	Qt::KeyboardModifiers active_modifiers;
+	bool active = false;
 	
 	
 	Q_DISABLE_COPY(KeyButtonBar)

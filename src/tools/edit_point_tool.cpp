@@ -292,6 +292,9 @@ void EditPointTool::clickPress()
 	{
 		box_selection = false;
 		
+		if (key_button_bar)
+			key_button_bar->hide();
+		
 		TextObject* hover_object = map()->getFirstSelectedObject()->asText();
 		startEditing(hover_object);
 		
@@ -306,7 +309,7 @@ void EditPointTool::clickPress()
 		connect(text_editor, &TextObjectEditorHelper::finished, this, &EditPointTool::finishEditing);
 		
 		// Send clicked position
-		QMouseEvent event { QEvent::MouseButtonPress, click_pos, Qt::LeftButton, Qt::LeftButton, active_modifiers };
+		QMouseEvent event { QEvent::MouseButtonPress, click_pos, Qt::LeftButton, Qt::LeftButton, Qt::KeyboardModifiers{} };
 		text_editor->mousePressEvent(&event, click_pos_map, cur_map_widget);
 	}
 	
@@ -656,6 +659,9 @@ void EditPointTool::finishEditing()
 		text_editor = nullptr;
 		
 		waiting_for_mouse_release = true;
+		
+		if (key_button_bar)
+			key_button_bar->show();
 		
 		if (!editedObjectsModified())
 		{

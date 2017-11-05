@@ -123,6 +123,9 @@ void DrawTextTool::objectSelectionChangedImpl()
 
 void DrawTextTool::startEditing()
 {
+	if (key_button_bar)
+		key_button_bar->hide();
+	
 	snap_helper->setFilter(SnappingToolHelper::NoSnapping);
 	preview_text->setText(QString{});
 
@@ -146,6 +149,13 @@ void DrawTextTool::abortEditing()
 	
 	editor->setEditingInProgress(false);
 	resetWaitingForMouseRelease();
+	
+	if (key_button_bar)
+	{
+		key_button_bar->show();
+		if (key_button_bar->keyboardModifiers().testFlag(Qt::ShiftModifier))
+			snap_helper->setFilter(SnappingToolHelper::AllTypes);
+	}
 }
 
 void DrawTextTool::finishEditing()
@@ -182,6 +192,13 @@ void DrawTextTool::finishEditing()
 	else
 	{
 		resetWaitingForMouseRelease();
+	}
+	
+	if (key_button_bar)
+	{
+		key_button_bar->show();
+		if (key_button_bar->keyboardModifiers().testFlag(Qt::ShiftModifier))
+			snap_helper->setFilter(SnappingToolHelper::AllTypes);
 	}
 }
 
