@@ -178,7 +178,7 @@ protected:
 	
 	// Mouse / key handling
 	bool waiting_for_mouse_release;
-	bool space_pressed;
+	bool switch_dash_points;
 	
 	/**
 	 * Offset from cursor position to drag handle of moved element.

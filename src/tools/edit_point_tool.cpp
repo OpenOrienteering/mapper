@@ -87,7 +87,7 @@ EditPointTool::EditPointTool(MapEditorController* editor, QAction* tool_action)
  , hover_point { 0 }
  , box_selection { false }
  , waiting_for_mouse_release { false }
- , space_pressed { false }
+ , switch_dash_points { false }
  , text_editor { nullptr }
 {
 	// noting else
@@ -190,7 +190,7 @@ void EditPointTool::clickPress()
 			startDragging();
 			hover_state = OverObjectNode;
 			hover_point = path->subdivide(path_coord);
-			if (addDashPointDefault() ^ space_pressed)
+			if (addDashPointDefault() ^ switch_dash_points)
 			{
 				MapCoord point = path->getCoordinate(hover_point);
 				point.setDashPoint(true);
@@ -208,7 +208,7 @@ void EditPointTool::clickPress()
 		PathObject* hover_object = this->hover_object->asPath();
 		Q_ASSERT(hover_point < hover_object->getCoordinateCount());
 		
-		if (space_pressed &&
+		if (switch_dash_points &&
 		    !hover_object->isCurveHandle(hover_point))
 		{
 			// Switch point between dash / normal point
@@ -407,9 +407,9 @@ void EditPointTool::focusOutEvent(QFocusEvent* event)
 	
 	// Deactivate modifiers - not always correct, but should be
 	// wrong only in unusual cases and better than leaving the modifiers on forever
-	space_pressed = false;
+	switch_dash_points = false;
 	if (dash_points_button)
-		dash_points_button->setChecked(space_pressed);
+		dash_points_button->setChecked(switch_dash_points);
 	updateStatusText();
 }
 
@@ -440,9 +440,12 @@ bool EditPointTool::keyPress(QKeyEvent* event)
 		return true;
 		
 	case Qt::Key_Space:
-		space_pressed = true;
+		if (event->modifiers().testFlag(Qt::ControlModifier))
+			switch_dash_points = !switch_dash_points;
+		else
+			switch_dash_points = true;
 		if (dash_points_button)
-			dash_points_button->setChecked(space_pressed);
+			dash_points_button->setChecked(switch_dash_points);
 		updateStatusText();
 		return true;
 		
@@ -491,9 +494,12 @@ bool EditPointTool::keyRelease(QKeyEvent* event)
 		return false; // not consuming Shift
 		
 	case Qt::Key_Space:
-		space_pressed = false;
+		if (event->modifiers().testFlag(Qt::ControlModifier))
+			return true;
+		
+		switch_dash_points = false;
 		if (dash_points_button)
-			dash_points_button->setChecked(space_pressed);
+			dash_points_button->setChecked(switch_dash_points);
 		updateStatusText();
 		return true;
 		
@@ -528,9 +534,9 @@ void EditPointTool::initImpl()
 		key_button_bar = new KeyButtonBar(editor->getMainWidget());
 		key_button_bar->addModifierButton(Qt::ShiftModifier, tr("Snap", "Snap to existing objects"));
 		key_button_bar->addModifierButton(Qt::ControlModifier, tr("Point / Angle", "Modify points or use constrained angles"));
-		dash_points_button = key_button_bar->addKeyButton(Qt::Key_Space, tr("Toggle dash", "Toggle dash points"));
+		dash_points_button = key_button_bar->addKeyButton(Qt::Key_Space, Qt::ControlModifier, tr("Toggle dash", "Toggle dash points"));
 		dash_points_button->setCheckable(true);
-		dash_points_button->setChecked(space_pressed);
+		dash_points_button->setChecked(switch_dash_points);
 		editor->showPopupWidget(key_button_bar, QString{});
 	}
 }
@@ -750,7 +756,7 @@ void EditPointTool::updateStatusText()
 						text = tr("<b>%1+Click</b> on point: Delete it; on path: Add a new point; with <b>%2</b>: Add a dash point. ").
 						       arg(ModifierKey::control(), ModifierKey::space());
 				}
-				else if (space_pressed)
+				else if (switch_dash_points)
 					text = tr("<b>%1+Click</b> on point to switch between dash and normal point. ").arg(ModifierKey::space());
 				else
 					text += QLatin1String("| ") + MapEditorTool::tr("More: %1, %2").arg(ModifierKey::control(), ModifierKey::space());
