@@ -21,25 +21,45 @@
 
 #include "draw_point_tool.h"
 
+#include <cmath>
+
+#include <Qt>
+#include <QtGlobal>
+#include <QtMath>
+#include <QCursor>
+#include <QFlags>
 #include <QKeyEvent>
+#include <QLatin1Char>
+#include <QLatin1String>
+#include <QLocale>
 #include <QPainter>
+#include <QPen>
+#include <QPixmap>
+#include <QPoint>
+#include <QPointer>
+#include <QRgb>
+#include <QString>
+#include <QStringList>
 
 #include "core/map.h"
-#include "gui/map/map_editor.h"
-#include "undo/object_undo.h"
-#include "gui/map/map_widget.h"
+#include "core/map_coord.h"
+#include "core/map_view.h"
 #include "core/objects/object.h"
 #include "core/renderables/renderable.h"
-#include "settings.h"
 #include "core/symbols/symbol.h"
 #include "core/symbols/point_symbol.h"
-#include "tool_helpers.h"
-#include "util/util.h"
 #include "gui/modifier_key.h"
 #include "gui/widgets/key_button_bar.h"
+#include "gui/map/map_editor.h"
+#include "gui/map/map_widget.h"
+#include "tools/tool.h"
+#include "tools/tool_base.h"
+#include "tools/tool_helpers.h"
+#include "undo/object_undo.h"
+#include "util/util.h"
 
-DrawPointTool::DrawPointTool(MapEditorController* editor, QAction* tool_button)
-: MapEditorToolBase(QCursor(QPixmap(QString::fromLatin1(":/images/cursor-draw-point.png")), 11, 11), DrawPoint, editor, tool_button)
+DrawPointTool::DrawPointTool(MapEditorController* editor, QAction* tool_action)
+: MapEditorToolBase(QCursor(QPixmap(QString::fromLatin1(":/images/cursor-draw-point.png")), 11, 11), DrawPoint, editor, tool_action)
 , renderables(new MapRenderables(map()))
 {
 	// all done in initImpl()
@@ -97,7 +117,7 @@ void DrawPointTool::activeSymbolChanged(const Symbol* symbol)
 	}
 }
 
-void DrawPointTool::symbolDeleted(int, const Symbol* symbol)
+void DrawPointTool::symbolDeleted(int /*unused*/, const Symbol* symbol)
 {
 	if (preview_object && preview_object->getSymbol() == symbol)
 		deactivate();
@@ -121,12 +141,12 @@ void DrawPointTool::createObject()
 	map()->addObjectToSelection(point, true);
 	map()->setObjectsDirty();
 	
-	DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(map());
+	auto undo_step = new DeleteObjectsUndoStep(map());
 	undo_step->addObject(index);
 	map()->push(undo_step);
 }
 
-void DrawPointTool::leaveEvent(QEvent*)
+void DrawPointTool::leaveEvent(QEvent* /*unused*/)
 {
 	map()->clearDrawingBoundingBox();
 }

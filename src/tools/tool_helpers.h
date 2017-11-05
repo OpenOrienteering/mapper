@@ -30,6 +30,8 @@
 #include <QColor>
 #include <QFont>
 #include <QObject>
+#include <QRectF>
+#include <QString>
 
 #include "core/map_coord.h"
 #include "core/path_coord.h"
@@ -39,6 +41,7 @@ class QPainter;
 class QPoint;
 class QPointF;
 class QRectF;
+class QWidget;
 
 class Map;
 class MapEditorTool;

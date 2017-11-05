@@ -63,8 +63,8 @@
 #include "undo/object_undo.h"
 
 
-DrawPathTool::DrawPathTool(MapEditorController* editor, QAction* tool_button, bool is_helper_tool, bool allow_closing_paths)
-: DrawLineAndAreaTool(editor, DrawPath, tool_button, is_helper_tool)
+DrawPathTool::DrawPathTool(MapEditorController* editor, QAction* tool_action, bool is_helper_tool, bool allow_closing_paths)
+: DrawLineAndAreaTool(editor, DrawPath, tool_action, is_helper_tool)
 , cur_map_widget(mapWidget())
 , angle_helper(new ConstrainAngleToolHelper())
 , azimuth_helper(new AzimuthInfoHelper(cur_map_widget, active_color))
@@ -820,8 +820,8 @@ bool DrawPathTool::removeLastPointFromSelectedPath()
 		return true;
 	}
 	
-	ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(map());
-	Object* undo_duplicate = object->duplicate();
+	auto undo_step = new ReplaceObjectsUndoStep(map());
+	auto undo_duplicate = object->duplicate();
 	undo_duplicate->setMap(map());
 	undo_step->addObject(object, undo_duplicate);
 	map()->push(undo_step);

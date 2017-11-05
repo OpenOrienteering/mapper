@@ -57,7 +57,7 @@ class DrawLineAndAreaTool : public MapEditorTool
 {
 Q_OBJECT
 public:
-	DrawLineAndAreaTool(MapEditorController* editor, Type tool_type, QAction* tool_action, bool is_helper_tool);
+	DrawLineAndAreaTool(MapEditorController* editor, Type type, QAction* tool_action, bool is_helper_tool);
 	~DrawLineAndAreaTool() override;
 	
 	void leaveEvent(QEvent* event) override;

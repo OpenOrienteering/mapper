@@ -114,63 +114,63 @@ void MapEditorTool::setEditingInProgress(bool state)
 }
 
 
-void MapEditorTool::draw(QPainter*, MapWidget*)
+void MapEditorTool::draw(QPainter* /*painter*/, MapWidget* /*widget*/)
 {
 	// nothing
 }
 
 
-bool MapEditorTool::mousePressEvent(QMouseEvent*, MapCoordF, MapWidget* )
+bool MapEditorTool::mousePressEvent(QMouseEvent* /*event*/, MapCoordF /*map_coord*/, MapWidget* /*widget*/)
 {
 	return false;
 }
 
-bool MapEditorTool::mouseMoveEvent(QMouseEvent*, MapCoordF, MapWidget*)
+bool MapEditorTool::mouseMoveEvent(QMouseEvent* /*event*/, MapCoordF /*map_coord*/, MapWidget* /*widget*/)
 {
 	return false;
 }
 
-bool MapEditorTool::mouseReleaseEvent(QMouseEvent*, MapCoordF, MapWidget*)
+bool MapEditorTool::mouseReleaseEvent(QMouseEvent* /*event*/, MapCoordF /*map_coord*/, MapWidget* /*widget*/)
 {
 	return false;
 }
 
-bool MapEditorTool::mouseDoubleClickEvent(QMouseEvent*, MapCoordF, MapWidget*)
+bool MapEditorTool::mouseDoubleClickEvent(QMouseEvent* /*event*/, MapCoordF /*map_coord*/, MapWidget* /*widget*/)
 {
 	return false;
 }
 
-void MapEditorTool::leaveEvent(QEvent*)
+void MapEditorTool::leaveEvent(QEvent* /*event*/)
 {
 	// nothing
 }
 
-bool MapEditorTool::keyPressEvent(QKeyEvent*)
+bool MapEditorTool::keyPressEvent(QKeyEvent* /*event*/)
 {
 	return false;
 }
 
-bool MapEditorTool::keyReleaseEvent(QKeyEvent*)
+bool MapEditorTool::keyReleaseEvent(QKeyEvent* /*event*/)
 {
 	return false;
 }
 
-void MapEditorTool::focusOutEvent(QFocusEvent*)
+void MapEditorTool::focusOutEvent(QFocusEvent* /*event*/)
 {
 	// nothing
 }
 
-bool MapEditorTool::inputMethodEvent(QInputMethodEvent*)
+bool MapEditorTool::inputMethodEvent(QInputMethodEvent* /*event*/)
 {
 	return false;
 }
 
-QVariant MapEditorTool::inputMethodQuery(Qt::InputMethodQuery, const QVariant&) const
+QVariant MapEditorTool::inputMethodQuery(Qt::InputMethodQuery /*property*/, const QVariant& /*argument*/) const
 {
 	return {};
 }
 
-bool MapEditorTool::gestureEvent(QGestureEvent*, MapWidget*)
+bool MapEditorTool::gestureEvent(QGestureEvent* /*event*/, MapWidget* /*widget*/)
 {
 	return false;
 }

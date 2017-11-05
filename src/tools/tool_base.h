@@ -123,7 +123,7 @@ public:
 	};
 	
 	
-	MapEditorToolBase(const QCursor& cursor, MapEditorTool::Type tool_type, MapEditorController* editor, QAction* tool_action);
+	MapEditorToolBase(const QCursor& cursor, MapEditorTool::Type type, MapEditorController* editor, QAction* tool_action);
 	~MapEditorToolBase() override;
 	
 	void init() override;

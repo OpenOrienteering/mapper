@@ -68,7 +68,7 @@ public:
 	
 Q_OBJECT
 public:
-	EditTool(MapEditorController* editor, MapEditorTool::Type tool_type, QAction* tool_action);
+	EditTool(MapEditorController* editor, MapEditorTool::Type type, QAction* tool_action);
 	
 	~EditTool() override;
 	

@@ -46,8 +46,8 @@
 #include "util/util.h"
 
 
-EditTool::EditTool(MapEditorController* editor, MapEditorTool::Type type, QAction* tool_button)
- : MapEditorToolBase { QCursor(QPixmap(QString::fromLatin1(":/images/cursor-hollow.png")), 1, 1), type, editor, tool_button }
+EditTool::EditTool(MapEditorController* editor, MapEditorTool::Type type, QAction* tool_action)
+ : MapEditorToolBase { QCursor(QPixmap(QString::fromLatin1(":/images/cursor-hollow.png")), 1, 1), type, editor, tool_action }
  , object_selector { new ObjectSelector(map()) }
 {
 	; // nothing
@@ -67,8 +67,8 @@ void EditTool::deleteSelectedObjects()
 
 void EditTool::createReplaceUndoStep(Object* object)
 {
-	ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(map());
-	Object* undo_duplicate = object->duplicate();
+	auto undo_step = new ReplaceObjectsUndoStep(map());
+	auto undo_duplicate = object->duplicate();
 	undo_duplicate->setMap(map());
 	undo_step->addObject(object, undo_duplicate);
 	map()->push(undo_step);
@@ -225,7 +225,7 @@ void EditTool::setupAngleHelperFromEditedObjects()
 	}
 	
 	if (primary_directions.size() > max_num_primary_directions ||
-		primary_directions.size() == 0)
+		primary_directions.empty())
 	{
 		angle_helper->addDefaultAnglesDeg(0);
 	}
@@ -255,7 +255,7 @@ void EditTool::drawBoundingBox(QPainter* painter, MapWidget* widget, const QRect
 
 void EditTool::drawBoundingPath(QPainter* painter, MapWidget* widget, const std::vector<QPointF>& bounding_path, const QRgb& color)
 {
-	Q_ASSERT(bounding_path.size() > 0);
+	Q_ASSERT(!bounding_path.empty());
 	
 	QPen pen(color);
 	pen.setStyle(Qt::DashLine);

@@ -22,24 +22,40 @@
 #include "draw_rectangle_tool.h"
 
 #include <limits>
+#include <memory>
 
+#include <Qt>
+#include <QtGlobal>
+#include <QtMath>
+#include <QCursor>
 #include <QKeyEvent>
+#include <QLatin1String>
+#include <QLine>
+#include <QLineF>
 #include <QMouseEvent>
 #include <QPainter>
+#include <QPixmap>
+#include <QPointF>
+#include <QRectF>
+#include <QString>
+#include <QVariant>
 
 #include "settings.h"
 #include "core/map.h"
+#include "core/map_view.h"
 #include "core/objects/object.h"
+#include "core/symbols/symbol.h"
 #include "gui/modifier_key.h"
 #include "gui/map/map_editor.h"
 #include "gui/map/map_widget.h"
 #include "gui/widgets/key_button_bar.h"
+#include "tools/tool.h"
 #include "tools/tool_helpers.h"
 #include "util/util.h"
 
 
-DrawRectangleTool::DrawRectangleTool(MapEditorController* editor, QAction* tool_button, bool is_helper_tool)
-: DrawLineAndAreaTool(editor, DrawRectangle, tool_button, is_helper_tool)
+DrawRectangleTool::DrawRectangleTool(MapEditorController* editor, QAction* tool_action, bool is_helper_tool)
+: DrawLineAndAreaTool(editor, DrawRectangle, tool_action, is_helper_tool)
 , angle_helper(new ConstrainAngleToolHelper())
 , snap_helper(new SnappingToolHelper(this))
 , key_button_bar(nullptr)

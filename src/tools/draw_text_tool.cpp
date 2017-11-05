@@ -21,12 +21,22 @@
 
 #include "draw_text_tool.h"
 
+#include <QtGlobal>
+#include <QCursor>
+#include <QFlags>
 #include <QGuiApplication>
 #include <QKeyEvent>
 #include <QMouseEvent>
 #include <QPainter>
+#include <QPixmap>
+#include <QPointer>
+#include <QRectF>
+#include <QRgb>
+#include <QString>
 
 #include "core/map.h"
+#include "core/map_coord.h"
+#include "core/map_view.h"
 #include "core/objects/text_object.h"
 #include "core/renderables/renderable.h"
 #include "core/symbols/symbol.h"
@@ -37,6 +47,7 @@
 #include "gui/widgets/key_button_bar.h"
 #include "tools/edit_tool.h"
 #include "tools/text_object_editor_helper.h"
+#include "tools/tool.h"
 #include "tools/tool_helpers.h"
 #include "undo/object_undo.h"
 #include "util/util.h"
@@ -48,8 +59,8 @@
 #endif
 
 
-DrawTextTool::DrawTextTool(MapEditorController* editor, QAction* tool_button)
-: MapEditorToolBase { QCursor{ QPixmap(QString::fromLatin1(":/images/cursor-draw-text.png")), 11, 11 }, DrawText, editor, tool_button }
+DrawTextTool::DrawTextTool(MapEditorController* editor, QAction* tool_action)
+: MapEditorToolBase { QCursor{ QPixmap(QString::fromLatin1(":/images/cursor-draw-text.png")), 11, 11 }, DrawText, editor, tool_action }
 , drawing_symbol { editor->activeSymbol() }
 , renderables    { map() }
 , preview_text   { new TextObject(), { renderables } }
@@ -153,7 +164,7 @@ void DrawTextTool::finishEditing()
 		map()->addObjectToSelection(object, true);
 		map()->setObjectsDirty();
 		
-		DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(map());
+		auto undo_step = new DeleteObjectsUndoStep(map());
 		undo_step->addObject(index);
 		map()->push(undo_step);
 		
@@ -331,7 +342,7 @@ bool DrawTextTool::keyRelease(QKeyEvent* event)
 }
 
 
-void DrawTextTool::leaveEvent(QEvent*)
+void DrawTextTool::leaveEvent(QEvent* /*event*/)
 {
 	if (!text_editor)
 		map()->clearDrawingBoundingBox();

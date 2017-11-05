@@ -48,9 +48,9 @@
 
 DrawLineAndAreaTool::DrawLineAndAreaTool(MapEditorController* editor, Type type, QAction* tool_action, bool is_helper_tool)
 : MapEditorTool(editor, type, tool_action)
-, is_helper_tool(is_helper_tool)
 , path_combination(Map::getCoveringCombinedLine()->duplicate()->asCombined())
 , renderables(new MapRenderables(map()))
+, is_helper_tool(is_helper_tool)
 {
 	// Helper tools don't draw the active symbol.
 	if (!is_helper_tool)
@@ -125,9 +125,9 @@ void DrawLineAndAreaTool::createPreviewPoints()
 	}
 }
 
-void DrawLineAndAreaTool::setPreviewPointsPosition(MapCoordF map_coord, int index)
+void DrawLineAndAreaTool::setPreviewPointsPosition(MapCoordF map_coord, int points_index)
 {
-	const auto& preview_point_vector = preview_points[std::size_t(index)];
+	const auto& preview_point_vector = preview_points[std::size_t(points_index)];
 	for (const auto preview_point : preview_point_vector)
 	{
 		if (preview_points_shown)
@@ -244,15 +244,15 @@ void DrawLineAndAreaTool::finishDrawing(PathObject* append_to_object)
 		
 		if (can_be_appended)
 		{
-			Object* undo_duplicate = append_to_object->duplicate();
+			auto undo_duplicate = append_to_object->duplicate();
 			append_to_object->connectIfClose(preview_path, 0.01*0.01);
 			delete preview_path;
 			
 			map()->clearObjectSelection(false);
 			map()->addObjectToSelection(append_to_object, true);
 			
-			MapPart* cur_part = map()->getCurrentPart();
-			ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(map());
+			auto cur_part = map()->getCurrentPart();
+			auto undo_step = new ReplaceObjectsUndoStep(map());
 			undo_step->addObject(cur_part->findObjectIndex(append_to_object), undo_duplicate);
 			map()->push(undo_step);
 		}
@@ -262,7 +262,7 @@ void DrawLineAndAreaTool::finishDrawing(PathObject* append_to_object)
 			map()->clearObjectSelection(false);
 			map()->addObjectToSelection(preview_path, true);
 			
-			DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(map());
+			auto undo_step = new DeleteObjectsUndoStep(map());
 			undo_step->addObject(index);
 			map()->push(undo_step);
 		}
@@ -334,7 +334,7 @@ void DrawLineAndAreaTool::addPreviewPointSymbols(const Symbol* symbol)
 		{
 			if (has_main_line)
 			{
-				PointSymbol* preview = new PointSymbol();
+				auto preview = new PointSymbol();
 				preview->setInnerRadius(line->getLineWidth() / 2);
 				preview->setInnerColor(line->getColor());
 				preview_point_symbols.push_back(preview);
@@ -377,7 +377,7 @@ void DrawLineAndAreaTool::addPreviewPointSymbolsForBorder(const LineSymbol* line
 	if (!border->isVisible())
 		return;
 	
-	PointSymbol* preview = new PointSymbol();
+	auto preview = new PointSymbol();
 	preview->setInnerRadius(line->getLineWidth() / 2 - border->width / 2 + border->shift);
 	preview->setOuterWidth(border->width);
 	preview->setOuterColor(border->color);

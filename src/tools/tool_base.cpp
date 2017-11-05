@@ -38,15 +38,15 @@
 #include "gui/map/map_editor.h"
 #include "gui/map/map_widget.h"
 #include "gui/widgets/key_button_bar.h"
-#include "tool_helpers.h"
+#include "tools/tool_helpers.h"
 #include "undo/object_undo.h"
 
 
 // ### MapEditorToolBase::EditedItem ###
 
-MapEditorToolBase::EditedItem::EditedItem(Object* original)
-: active_object { original }
-, duplicate     { original ? original->duplicate() : nullptr }
+MapEditorToolBase::EditedItem::EditedItem(Object* active_object)
+: active_object { active_object }
+, duplicate     { active_object ? active_object->duplicate() : nullptr }
 {
 	// nothing else
 	
@@ -107,8 +107,8 @@ bool MapEditorToolBase::EditedItem::isModified() const
 
 // ### MapEditorToolBase ###
 
-MapEditorToolBase::MapEditorToolBase(const QCursor& cursor, MapEditorTool::Type type, MapEditorController* editor, QAction* tool_button)
-: MapEditorTool(editor, type, tool_button),
+MapEditorToolBase::MapEditorToolBase(const QCursor& cursor, MapEditorTool::Type type, MapEditorController* editor, QAction* tool_action)
+: MapEditorTool(editor, type, tool_action),
   effective_start_drag_distance(startDragDistance()),
   angle_helper(new ConstrainAngleToolHelper()),
   snap_helper(new SnappingToolHelper(this)),

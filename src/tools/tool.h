@@ -99,7 +99,7 @@ public:
 	 * @param tool_action  Optional button which will be unchecked on
 	 *                     destruction of this tool.
 	 */
-	MapEditorTool(MapEditorController* editor, Type tool_type, QAction* tool_action = nullptr);
+	MapEditorTool(MapEditorController* editor, Type type, QAction* tool_action = nullptr);
 	
 	/**
 	 * @brief Destructs the MapEditorTool.
@@ -169,8 +169,8 @@ public:
 	virtual void focusOutEvent(QFocusEvent* event);
 	
 	// Input method support
-	virtual bool inputMethodEvent(QInputMethodEvent *event);
-	virtual QVariant inputMethodQuery(Qt::InputMethodQuery, const QVariant&) const;
+	virtual bool inputMethodEvent(QInputMethodEvent* event);
+	virtual QVariant inputMethodQuery(Qt::InputMethodQuery property, const QVariant& argument) const;
 	
 	// Gesture input
 	virtual bool gestureEvent(QGestureEvent* event, MapWidget* widget);

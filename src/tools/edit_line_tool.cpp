@@ -21,11 +21,27 @@
 
 #include "edit_line_tool.h"
 
+#include <map>
+#include <memory>
 #include <limits>
+#include <vector>
 
+#include <Qt>
+#include <QtGlobal>
+#include <QtMath>
+#include <QFlags>
+#include <QLatin1String>
 #include <QKeyEvent>
+#include <QLocale>
+#include <QMouseEvent>
+#include <QPoint>
+#include <QPointF>
+#include <QPointer>
+#include <QString>
 
 #include "core/map.h"
+#include "core/map_view.h"
+#include "core/path_coord.h"
 #include "core/objects/object.h"
 #include "core/objects/object_mover.h"
 #include "core/objects/text_object.h"
@@ -37,6 +53,9 @@
 #include "gui/map/map_widget.h"
 #include "gui/widgets/key_button_bar.h"
 #include "tools/object_selector.h"
+#include "tools/point_handles.h"
+#include "tools/tool.h"
+#include "tools/tool_base.h"
 #include "tools/tool_helpers.h"
 #include "util/util.h"
 
@@ -52,8 +71,8 @@ namespace
 
 
 
-EditLineTool::EditLineTool(MapEditorController* editor, QAction* tool_button)
- : EditTool(editor, EditLine, tool_button)
+EditLineTool::EditLineTool(MapEditorController* editor, QAction* tool_action)
+ : EditTool(editor, EditLine, tool_action)
  , hover_state(OverNothing)
  , hover_object(nullptr)
  , highlight_object(nullptr)

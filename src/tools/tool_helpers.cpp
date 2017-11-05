@@ -29,6 +29,9 @@
 #include <Qt>
 #include <QtGlobal>
 #include <QtMath>
+#include <QCoreApplication>
+#include <QFontMetrics>
+#include <QLatin1Char>
 #include <QLineF>
 #include <QLocale>
 #include <QPainter>

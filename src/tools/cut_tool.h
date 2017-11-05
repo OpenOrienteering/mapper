@@ -100,7 +100,7 @@ protected:
 	// Drawing
 	void updatePreviewObjects() override;
 	void deletePreviewObject();
-	int updateDirtyRectImpl(QRectF& path_rect) override;
+	int updateDirtyRectImpl(QRectF& rect) override;
 	void drawImpl(QPainter* painter, MapWidget* widget) override;
 	
 	// State 

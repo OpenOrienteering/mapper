@@ -21,19 +21,31 @@
 
 #include "draw_circle_tool.h"
 
+#include <memory>
+
+#include <Qt>
+#include <QtGlobal>
+#include <QCursor>
+#include <QFlags>
 #include <QKeyEvent>
 #include <QMouseEvent>
+#include <QLatin1String>
+#include <QPixmap>
+#include <QRectF>
+#include <QString>
+
 
 #include "core/map.h"
 #include "core/objects/object.h"
-#include "util/util.h"
 #include "gui/modifier_key.h"
-#include "gui/widgets/key_button_bar.h"
 #include "gui/map/map_editor.h"
+#include "gui/widgets/key_button_bar.h"
+#include "tools/tool.h"
+#include "util/util.h"
 
 
-DrawCircleTool::DrawCircleTool(MapEditorController* editor, QAction* tool_button, bool is_helper_tool)
- : DrawLineAndAreaTool(editor, DrawCircle, tool_button, is_helper_tool),
+DrawCircleTool::DrawCircleTool(MapEditorController* editor, QAction* tool_action, bool is_helper_tool)
+ : DrawLineAndAreaTool(editor, DrawCircle, tool_action, is_helper_tool),
    key_button_bar(nullptr)
 {
 	dragging = false;

@@ -21,14 +21,30 @@
 
 #include "edit_point_tool.h"
 
+#include <map>
+#include <memory>
 #include <limits>
+#include <vector>
 
+#include <QtGlobal>
+#include <QtMath>
+#include <QCursor>
+#include <QEvent>
+#include <QFlags>
 #include <QKeyEvent>
+#include <QLatin1String>
+#include <QLocale>
 #include <QMouseEvent>
 #include <QPainter>
+#include <QPoint>
+#include <QPointF>
+#include <QPointer>
 
 #include "settings.h"
 #include "core/map.h"
+#include "core/map_part.h"
+#include "core/map_view.h"
+#include "core/path_coord.h"
 #include "core/objects/object.h"
 #include "core/objects/object_mover.h"
 #include "core/objects/text_object.h"
@@ -39,8 +55,11 @@
 #include "gui/map/map_widget.h"
 #include "gui/widgets/key_button_bar.h"
 #include "tools/object_selector.h"
-#include "tools/tool_helpers.h"
+#include "tools/point_handles.h"
 #include "tools/text_object_editor_helper.h"
+#include "tools/tool.h"
+#include "tools/tool_base.h"
+#include "tools/tool_helpers.h"
 #include "undo/object_undo.h"
 #include "util/util.h"
 
@@ -61,8 +80,8 @@ namespace
 
 
 
-EditPointTool::EditPointTool(MapEditorController* editor, QAction* tool_button)
- : EditTool { editor, EditPoint, tool_button }
+EditPointTool::EditPointTool(MapEditorController* editor, QAction* tool_action)
+ : EditTool { editor, EditPoint, tool_action }
  , hover_state { OverNothing }
  , hover_object { nullptr }
  , hover_point { 0 }
@@ -645,7 +664,7 @@ void EditPointTool::finishEditing()
 			{
 				part->deleteObject(index, true);
 				
-				AddObjectsUndoStep* undo_step = new AddObjectsUndoStep(map);
+				auto undo_step = new AddObjectsUndoStep(map);
 				undo_step->addObject(index, text_object);
 				map->push(undo_step);
 				map->setObjectsDirty();
