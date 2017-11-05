@@ -405,9 +405,9 @@ void EditLineTool::initImpl()
 	if (editor->isInMobileMode())
 	{
 		// Create key replacement bar
-		key_button_bar = new KeyButtonBar(this, editor->getMainWidget());
-		key_button_bar->addModifierKey(Qt::Key_Shift, Qt::ShiftModifier, tr("Snap", "Snap to existing objects"));
-		key_button_bar->addModifierKey(Qt::Key_Control, Qt::ControlModifier, tr("Toggle curve", "Toggle between curved and flat segment"));
+		key_button_bar = new KeyButtonBar(editor->getMainWidget());
+		key_button_bar->addModifierButton(Qt::ShiftModifier, tr("Snap", "Snap to existing objects"));
+		key_button_bar->addModifierButton(Qt::ControlModifier, tr("Toggle curve", "Toggle between curved and flat segment"));
 		editor->showPopupWidget(key_button_bar, QString{});
 	}
 }

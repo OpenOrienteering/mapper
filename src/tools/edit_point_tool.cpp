@@ -38,7 +38,7 @@
 #include <QPainter>
 #include <QPoint>
 #include <QPointF>
-#include <QPointer>
+#include <QToolButton>
 
 #include "settings.h"
 #include "core/map.h"
@@ -408,6 +408,8 @@ void EditPointTool::focusOutEvent(QFocusEvent* event)
 	// Deactivate modifiers - not always correct, but should be
 	// wrong only in unusual cases and better than leaving the modifiers on forever
 	space_pressed = false;
+	if (dash_points_button)
+		dash_points_button->setChecked(space_pressed);
 	updateStatusText();
 }
 
@@ -439,6 +441,8 @@ bool EditPointTool::keyPress(QKeyEvent* event)
 		
 	case Qt::Key_Space:
 		space_pressed = true;
+		if (dash_points_button)
+			dash_points_button->setChecked(space_pressed);
 		updateStatusText();
 		return true;
 		
@@ -488,6 +492,8 @@ bool EditPointTool::keyRelease(QKeyEvent* event)
 		
 	case Qt::Key_Space:
 		space_pressed = false;
+		if (dash_points_button)
+			dash_points_button->setChecked(space_pressed);
 		updateStatusText();
 		return true;
 		
@@ -519,10 +525,12 @@ void EditPointTool::initImpl()
 	if (editor->isInMobileMode())
 	{
 		// Create key replacement bar
-		key_button_bar = new KeyButtonBar(this, editor->getMainWidget());
-		key_button_bar->addModifierKey(Qt::Key_Shift, Qt::ShiftModifier, tr("Snap", "Snap to existing objects"));
-		key_button_bar->addModifierKey(Qt::Key_Control, Qt::ControlModifier, tr("Point / Angle", "Modify points or use constrained angles"));
-		key_button_bar->addModifierKey(Qt::Key_Space, 0, tr("Toggle dash", "Toggle dash points"));
+		key_button_bar = new KeyButtonBar(editor->getMainWidget());
+		key_button_bar->addModifierButton(Qt::ShiftModifier, tr("Snap", "Snap to existing objects"));
+		key_button_bar->addModifierButton(Qt::ControlModifier, tr("Point / Angle", "Modify points or use constrained angles"));
+		dash_points_button = key_button_bar->addKeyButton(Qt::Key_Space, tr("Toggle dash", "Toggle dash points"));
+		dash_points_button->setCheckable(true);
+		dash_points_button->setChecked(space_pressed);
 		editor->showPopupWidget(key_button_bar, QString{});
 	}
 }

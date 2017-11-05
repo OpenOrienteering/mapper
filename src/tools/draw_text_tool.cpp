@@ -107,9 +107,9 @@ void DrawTextTool::initImpl()
 	if (editor->isInMobileMode())
 	{
 		// Create key replacement bar
-		key_button_bar = new KeyButtonBar(this, editor->getMainWidget());
+		key_button_bar = new KeyButtonBar(editor->getMainWidget());
 		//: Snap to existing objects
-		key_button_bar->addModifierKey(Qt::Key_Shift, Qt::ShiftModifier, tr("Snap"));
+		key_button_bar->addModifierButton(Qt::ShiftModifier, tr("Snap"));
 		editor->showPopupWidget(key_button_bar, QString{});
 	}
 }

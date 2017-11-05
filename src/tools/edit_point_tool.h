@@ -27,6 +27,7 @@
 
 #include <Qt>
 #include <QObject>
+#include <QPointer>
 #include <QRectF>
 #include <QString>
 #include <QVariant>
@@ -41,6 +42,7 @@ class QKeyEvent;
 class QMouseEvent;
 class QPainter;
 class QRectF;
+class QToolButton;
 
 class MapEditorController;
 class MapWidget;
@@ -141,6 +143,9 @@ protected:
 	 * Checks if a the opposite handle should be moved synchronously.
 	 */
 	bool moveOppositeHandle() const;
+	
+	
+	QPointer<QToolButton> dash_points_button;
 	
 	
 	/** Measures the time a click takes to decide whether to do selection. */

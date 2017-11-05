@@ -43,6 +43,7 @@
 #include <QRgb>
 #include <QSizeF>
 #include <QString>
+#include <QToolButton>
 #include <QVarLengthArray>
 
 #include "core/map.h"
@@ -95,15 +96,19 @@ void DrawPathTool::init()
 	if (editor->isInMobileMode())
 	{
 		// Create key replacement bar
-		key_button_bar = new KeyButtonBar(this, editor->getMainWidget());
-		key_button_bar->addPressKeyWithModifier(Qt::Key_Return, Qt::ControlModifier, tr("Finish"));
-		key_button_bar->addPressKey(Qt::Key_Return, tr("Close"));
-		key_button_bar->addModifierKey(Qt::Key_Shift, Qt::ShiftModifier, tr("Snap", "Snap to existing objects"));
-		key_button_bar->addModifierKey(Qt::Key_Control, Qt::ControlModifier, tr("Angle", "Using constrained angles"));
-		key_button_bar->addPressKeyWithModifier(Qt::Key_Space, Qt::ControlModifier, tr("Info", "Show segment azimuth and length"));
-		key_button_bar->addPressKey(Qt::Key_Space, tr("Dash", "Drawing dash points"));
-		key_button_bar->addPressKey(Qt::Key_Backspace, tr("Undo"));
-		key_button_bar->addPressKey(Qt::Key_Escape, tr("Abort"));
+		key_button_bar = new KeyButtonBar(editor->getMainWidget());
+		key_button_bar->addKeyButton(Qt::Key_Return, Qt::ControlModifier, tr("Finish"));
+		key_button_bar->addKeyButton(Qt::Key_Return, tr("Close"));
+		key_button_bar->addModifierButton(Qt::ShiftModifier, tr("Snap", "Snap to existing objects"));
+		key_button_bar->addModifierButton(Qt::ControlModifier, tr("Angle", "Using constrained angles"));
+		azimuth_button = key_button_bar->addKeyButton(Qt::Key_Space, Qt::ControlModifier, tr("Info", "Show segment azimuth and length"));
+		azimuth_button->setCheckable(true);
+		azimuth_button->setChecked(azimuth_helper->isActive());
+		dash_points_button = key_button_bar->addKeyButton(Qt::Key_Space, tr("Dash", "Drawing dash points"));
+		dash_points_button->setCheckable(true);
+		dash_points_button->setChecked(draw_dash_points);
+		key_button_bar->addKeyButton(Qt::Key_Backspace, tr("Undo"));
+		key_button_bar->addKeyButton(Qt::Key_Escape, tr("Abort"));
 		editor->showPopupWidget(key_button_bar, QString{});
 	}
 	
@@ -478,11 +483,15 @@ bool DrawPathTool::keyPressEvent(QKeyEvent* event)
 		{
 			updateDirtyRect();
 			azimuth_helper->setActive(!azimuth_helper->isActive());
+			if (azimuth_button)
+				azimuth_button->setChecked(azimuth_helper->isActive());
 			updateDirtyRect();
 		}
 		else
 		{
 			draw_dash_points = !draw_dash_points;
+			if (dash_points_button)
+				dash_points_button->setChecked(draw_dash_points);
 			updateStatusText();
 		}
 		return true;
@@ -1141,6 +1150,9 @@ void DrawPathTool::updateDashPointDrawing()
 	{
 		draw_dash_points = false;
 	}
+	
+	if (dash_points_button)
+		dash_points_button->setChecked(draw_dash_points);
 }
 
 void DrawPathTool::updateStatusText()

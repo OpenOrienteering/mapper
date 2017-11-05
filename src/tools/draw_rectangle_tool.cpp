@@ -28,6 +28,7 @@
 #include <QtGlobal>
 #include <QtMath>
 #include <QCursor>
+#include <QFlags>
 #include <QKeyEvent>
 #include <QLatin1String>
 #include <QLine>
@@ -38,6 +39,7 @@
 #include <QPointF>
 #include <QRectF>
 #include <QString>
+#include <QToolButton>
 #include <QVariant>
 
 #include "settings.h"
@@ -89,13 +91,15 @@ void DrawRectangleTool::init()
 	if (editor->isInMobileMode())
 	{
 		// Create key replacement bar
-		key_button_bar = new KeyButtonBar(this, editor->getMainWidget());
-		key_button_bar->addPressKey(Qt::Key_Return, tr("Finish"));
-		key_button_bar->addModifierKey(Qt::Key_Shift, Qt::ShiftModifier, tr("Snap", "Snap to existing objects"));
-		key_button_bar->addModifierKey(Qt::Key_Control, Qt::ControlModifier, tr("Line snap", "Snap to previous lines"));
-		key_button_bar->addPressKey(Qt::Key_Space, tr("Dash", "Drawing dash points"));
-		key_button_bar->addPressKey(Qt::Key_Backspace, tr("Undo"));
-		key_button_bar->addPressKey(Qt::Key_Escape, tr("Abort"));
+		key_button_bar = new KeyButtonBar(editor->getMainWidget());
+		key_button_bar->addKeyButton(Qt::Key_Return, tr("Finish"));
+		key_button_bar->addModifierButton(Qt::ShiftModifier, tr("Snap", "Snap to existing objects"));
+		key_button_bar->addModifierButton(Qt::ControlModifier, tr("Line snap", "Snap to previous lines"));
+		dash_points_button = key_button_bar->addKeyButton(Qt::Key_Space, tr("Dash", "Drawing dash points"));
+		dash_points_button->setCheckable(true);
+		dash_points_button->setChecked(draw_dash_points);
+		key_button_bar->addKeyButton(Qt::Key_Backspace, tr("Undo"));
+		key_button_bar->addKeyButton(Qt::Key_Escape, tr("Abort"));
 		editor->showPopupWidget(key_button_bar, QString{});
 	}
 	
@@ -111,7 +115,7 @@ const QCursor& DrawRectangleTool::getCursor() const
 bool DrawRectangleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
 	// Adjust flags to have possibly more recent state
-	int modifiers = (event->modifiers() | (key_button_bar ? key_button_bar->activeModifiers() : 0));
+	auto modifiers = event->modifiers();
 	ctrl_pressed = modifiers & Qt::ControlModifier;
 	shift_pressed = modifiers & Qt::ShiftModifier;
 	cur_map_widget = widget;
@@ -361,6 +365,8 @@ bool DrawRectangleTool::keyPressEvent(QKeyEvent* event)
 		
 	case Qt::Key_Space:
 		draw_dash_points = !draw_dash_points;
+		if (dash_points_button)
+			dash_points_button->setChecked(draw_dash_points);
 		updateStatusText();
 		return true;
 		

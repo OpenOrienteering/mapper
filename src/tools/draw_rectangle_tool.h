@@ -38,6 +38,7 @@ class QCursor;
 class QKeyEvent;
 class QMouseEvent;
 class QPainter;
+class QToolButton;
 
 class ConstrainAngleToolHelper;
 class KeyButtonBar;
@@ -154,6 +155,7 @@ protected:
 	MapWidget* cur_map_widget;
 	
 	QPointer<KeyButtonBar> key_button_bar;
+	QPointer<QToolButton> dash_points_button;
 };
 
 #endif

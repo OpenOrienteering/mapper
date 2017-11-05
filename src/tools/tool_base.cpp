@@ -28,7 +28,6 @@
 #include <QMouseEvent>
 #include <QTimer>
 #include <QEvent>
-#include <QFlags>
 #include <QKeyEvent>
 #include <QRectF>
 
@@ -37,7 +36,7 @@
 #include "core/renderables/renderable.h"
 #include "gui/map/map_editor.h"
 #include "gui/map/map_widget.h"
-#include "gui/widgets/key_button_bar.h"
+#include "gui/widgets/key_button_bar.h"  // IWYU pragma: keep
 #include "tools/tool_helpers.h"
 #include "undo/object_undo.h"
 
@@ -151,16 +150,9 @@ const QCursor& MapEditorToolBase::getCursor() const
 
 
 
-Qt::KeyboardModifiers MapEditorToolBase::keyButtonBarModifiers() const
-{
-	return Qt::KeyboardModifiers(key_button_bar ? key_button_bar->activeModifiers() : 0);
-}
-
-
-
 void MapEditorToolBase::mousePositionEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
-	active_modifiers = event->modifiers() | keyButtonBarModifiers();
+	active_modifiers = event->modifiers();
 	cur_pos = event->pos();
 	cur_pos_map = map_coord;
 	cur_map_widget = widget;
@@ -256,7 +248,7 @@ bool MapEditorToolBase::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coor
 
 bool MapEditorToolBase::keyPressEvent(QKeyEvent* event)
 {
-	active_modifiers = event->modifiers() | keyButtonBarModifiers();
+	active_modifiers = event->modifiers();
 #if defined(Q_OS_MACOS)
 	// FIXME: On Mac, QKeyEvent::modifiers() seems to return the keyboard 
 	// modifier flags that existed immediately before the event occurred.
@@ -286,7 +278,7 @@ bool MapEditorToolBase::keyPressEvent(QKeyEvent* event)
 
 bool MapEditorToolBase::keyReleaseEvent(QKeyEvent* event)
 {
-	active_modifiers = event->modifiers() | keyButtonBarModifiers();
+	active_modifiers = event->modifiers();
 #if defined(Q_OS_MACOS)
 	// FIXME: On Mac, QKeyEvent::modifiers() seems to return the keyboard 
 	// modifier flags that existed immediately before the event occurred.

@@ -34,11 +34,11 @@
 #include <QRectF>
 #include <QString>
 
-
 #include "core/map.h"
 #include "core/objects/object.h"
-#include "gui/modifier_key.h"
 #include "gui/map/map_editor.h"
+#include "gui/map/map_widget.h"
+#include "gui/modifier_key.h"
 #include "gui/widgets/key_button_bar.h"
 #include "tools/tool.h"
 #include "util/util.h"
@@ -66,8 +66,8 @@ void DrawCircleTool::init()
 	if (editor->isInMobileMode())
 	{
 		// Create key replacement bar
-		key_button_bar = new KeyButtonBar(this, editor->getMainWidget());
-		key_button_bar->addModifierKey(Qt::Key_Control, Qt::ControlModifier, tr("From center", "Draw circle starting from center"));
+		key_button_bar = new KeyButtonBar(editor->getMainWidget());
+		key_button_bar->addModifierButton(Qt::ControlModifier, tr("From center", "Draw circle starting from center"));
 		editor->showPopupWidget(key_button_bar, QString{});
 	}
 }
@@ -94,7 +94,7 @@ bool DrawCircleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 			opposite_pos_map = map_coord;
 			dragging = false;
 			first_point_set = true;
-			start_from_center = (event->modifiers() | (key_button_bar ? key_button_bar->activeModifiers() : 0)) & Qt::ControlModifier;
+			start_from_center = event->modifiers() & Qt::ControlModifier;
 			
 			if (!editingInProgress())
 				startDrawing();

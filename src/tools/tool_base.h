@@ -129,8 +129,6 @@ public:
 	void init() override;
 	const QCursor& getCursor() const override;
 	
-	Qt::KeyboardModifiers keyButtonBarModifiers() const;
-	
 	/**
 	 * Updates the saved current position (raw and constrained), map widget, and modifiers.
 	 * 
