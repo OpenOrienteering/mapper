@@ -184,7 +184,8 @@ std::unique_ptr<Symbol> SymbolSettingDialog::getNewSymbol() const
 
 void SymbolSettingDialog::updatePreview()
 {
-	symbol_icon_label->setPixmap(QPixmap::fromImage(symbol->getIcon(source_map, true)));
+	symbol->resetIcon();
+	symbol_icon_label->setPixmap(QPixmap::fromImage(symbol->getIcon(source_map)));
 	preview_map->updateAllObjects();
 }
 

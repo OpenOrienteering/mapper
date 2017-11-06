@@ -296,6 +296,7 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, bool mobile_mode, QWidget* pare
 	connect(map, &Map::symbolDeleted, this, &SymbolRenderWidget::symbolDeleted);
 	connect(map, &Map::symbolChanged, this, &SymbolRenderWidget::symbolChanged);
 	connect(map, &Map::symbolIconChanged, this, &SymbolRenderWidget::updateSingleIcon);
+	connect(&Settings::getInstance(), &Settings::settingsChanged, this, &SymbolRenderWidget::settingsChanged);
 }
 
 SymbolRenderWidget::~SymbolRenderWidget()
@@ -352,6 +353,23 @@ void SymbolRenderWidget::updateSingleIcon(int i)
 		update(pos.x(), pos.y(), icon_size, icon_size);
 	}
 }
+
+void SymbolRenderWidget::settingsChanged()
+{
+	const auto new_size = Settings::getInstance().getSymbolWidgetIconSizePx();
+	if (icon_size != new_size)
+	{
+		for (int i = 0; i < map->getNumSymbols(); ++i)
+		{
+			auto symbol = map->getSymbol(i);
+			if (symbol->getIcon(map).width() != new_size)
+				symbol->resetIcon();
+		}
+		updateAll();
+	}
+}
+
+
 
 QSize SymbolRenderWidget::sizeHint() const
 {

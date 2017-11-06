@@ -2128,7 +2128,7 @@ void MapEditorController::selectedSymbolsChanged()
 		}
 		else //if (symbol_widget->getNumSelectedSymbols() == 1)
 		{
-			QImage image = symbol->createIcon(map, qMin(icon_size.width(), icon_size.height()), Util::isAntialiasingRequired(), 0, 4);
+			QImage image = symbol->createIcon(map, qMin(icon_size.width(), icon_size.height()), Util::isAntialiasingRequired());
 			QPainter painter(&pixmap);
 			painter.drawImage(pixmap.rect(), image);
 			

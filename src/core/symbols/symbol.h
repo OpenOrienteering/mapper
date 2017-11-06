@@ -263,20 +263,30 @@ public:
 	/** Scales the whole symbol */
 	virtual void scale(double factor) = 0;
 	
-	/**
-	 * Returns the symbol's icon, creates it if it was not created yet.
-	 * update == true forces an update of the icon.
-	 */
-	QImage getIcon(const Map* map, bool update = false) const;
 	
 	/**
-	 * Creates a new image with the given side length and draws the smybol icon onto it.
-	 * Returns an image pointer which you must delete yourself when no longer needed.
+	 * Returns the symbol's icon.
+	 * 
+	 * This icon uses a default size and zoom, and it is cached, making
+	 * repeated calls cheap.
 	 */
-	QImage createIcon(const Map* map, int side_length, bool antialiasing, int bottom_right_border = 0, qreal best_zoom = 2) const;
+	QImage getIcon(const Map* map) const;
 	
-	/** Clear the symbol's icon. It will be recreated when it is needed. */
-	void resetIcon() { icon = QImage(); }
+	/**
+	 * Creates a symbol icon with the given side length and zoom.
+	 * 
+	 * If the zoom parameter is zero, the function chooses a zoom equivalent to
+	 * 100% at 4 mm side length on the current display.
+	 */
+	QImage createIcon(const Map* map, int side_length, bool antialiasing, int bottom_right_border = 0, qreal zoom = 0) const;
+	
+	/**
+	 * Clear the symbol's cached icon.
+	 * 
+	 * It will be recreated the next time getIcon() gets called.
+	 */
+	void resetIcon();
+	
 	
 	/**
 	 * Returns the largest extent (half width) of all line symbols

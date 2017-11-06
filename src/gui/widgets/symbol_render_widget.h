@@ -141,6 +141,11 @@ public slots:
 	 */
 	void updateSingleIcon(int i);
 	
+	/**
+	 * Observes settings changes related to symbol display.
+	 */
+	void settingsChanged();
+	
 signals:
 	/**
 	 * @brief The collection of selected symbols changed.

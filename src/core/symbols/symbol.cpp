@@ -353,16 +353,20 @@ bool Symbol::containsSymbol(const Symbol* symbol) const
 	return false;
 }
 
-QImage Symbol::getIcon(const Map* map, bool update) const
+QImage Symbol::getIcon(const Map* map) const
 {
-	if (update || icon.isNull())
+	if (icon.isNull())
 		icon = createIcon(map, Settings::getInstance().getSymbolWidgetIconSizePx(), true, 1);
 	
 	return icon;
 }
 
-QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, int bottom_right_border, qreal best_zoom) const
+QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, int bottom_right_border, qreal zoom) const
 {
+	// Desktop default used to be 2x zoom for 8 mm side length.
+	if (zoom < 0.1)
+		zoom = side_length / Util::mmToPixelLogical(4);
+	
 	Type contained_types = getContainedTypes();
 	
 	// Create icon map and view
@@ -373,7 +377,7 @@ QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, in
 	MapView view{ &icon_map };
 	
 	// If the icon is bigger than the rectangle with this zoom factor, it is zoomed out to fit into the rectangle
-	view.setZoom(best_zoom);
+	view.setZoom(zoom);
 	int white_border_pixels = 0;
 	if (contained_types & Line || contained_types & Area || type == Combined)
 		white_border_pixels = 0;
@@ -516,7 +520,7 @@ QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, in
 		real_icon_mm_half = qMax(real_icon_mm_half, -object->getExtent().top());
 	}
 	if (real_icon_mm_half > max_icon_mm_half)
-		view.setZoom(best_zoom * (max_icon_mm_half / real_icon_mm_half));
+		view.setZoom(zoom * (max_icon_mm_half / real_icon_mm_half));
 	
 	painter.translate((side_length - bottom_right_border)/2, (side_length - bottom_right_border)/2);
 	painter.setWorldTransform(view.worldTransform(), true);
@@ -532,6 +536,14 @@ QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, in
 	
 	return image;
 }
+
+
+void Symbol::resetIcon()
+{
+	icon = {};
+}
+
+
 
 float Symbol::calculateLargestLineExtent(Map* map) const
 {

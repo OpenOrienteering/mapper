@@ -50,6 +50,7 @@ protected:
 	void updateWidgets();
 	
 private:
+	QSpinBox* icon_size;
 	QCheckBox* antialiasing;
 	QCheckBox* text_antialiasing;
 	QSpinBox* tolerance;
