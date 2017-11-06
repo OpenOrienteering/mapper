@@ -7,44 +7,44 @@
         <location filename="../src/gui/about_dialog.cpp" line="101"/>
         <location filename="../src/gui/about_dialog.cpp" line="168"/>
         <source>About %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Sobre %1</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="182"/>
         <source>&lt;a %1&gt;All about licenses, copyright notices, conditions and disclaimers.&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;a %1&gt;Tudo sobre licenças, notas de direitos de autor, condições e renúncias.&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="184"/>
         <source>The OpenOrienteering developers in alphabetical order:</source>
-        <translation type="unfinished"></translation>
+        <translation>Desenvolvedores do OpenOrienteering em ordem alfabética:</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="185"/>
         <source>(project initiator)</source>
-        <translation type="unfinished"></translation>
+        <translation>(iniciador do projecto)</translation>
     </message>
     <message>
         <location filename="../packaging/translations.cpp" line="14"/>
         <location filename="../src/gui/about_dialog.cpp" line="170"/>
         <source>A free software for drawing orienteering maps</source>
         <extracomment>For the moment, we use this existing translation instead of the previous one.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Um programa livre para desenho de mapas de orientação</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="172"/>
         <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
-        <translation type="unfinished"></translation>
+        <translation>Este programa é software livre: pode ser redistribuído e/ou modificado sob os termos de &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, como publicado pela Free Software Foundation.</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="177"/>
         <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License (GPL), version&amp;nbsp;3, for &lt;a %1&gt;more details&lt;/a&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Este programa é distribuído na esperança de ser útil, mas SEM NENHUMA GARANTIA; nem mesmo a garantia implícita de APTIDÃO PARA COMERCIALIZAÇÃO ou PARA UM DETERMINADO FIM. Veja a GNU General Public License (GPL), versão&amp;nbsp;3, para &lt;a %1&gt;mais detalhes&lt;/a&gt;.</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="186"/>
         <source>For contributions, thanks to:</source>
-        <translation type="unfinished"></translation>
+        <translation>Pelas contribuições, agradecimentos a:</translation>
     </message>
 </context>
 <context>
@@ -52,12 +52,12 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="93"/>
         <source>Open most recently used file</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir ficheiro mais recente</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="96"/>
         <source>Show tip of the day</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar dica do dia</translation>
     </message>
 </context>
 <context>
@@ -65,7 +65,7 @@
     <message>
         <location filename="../src/gui/widgets/action_grid_bar.cpp" line="49"/>
         <source>Show remaining items</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar itens restantes</translation>
     </message>
 </context>
 <context>
@@ -73,17 +73,17 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="69"/>
         <source>mm²</source>
-        <translation type="unfinished"></translation>
+        <translation>mm²</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="70"/>
         <source>Minimum size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamanho mínimo:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="77"/>
         <source>Fills</source>
-        <translation type="unfinished"></translation>
+        <translation>Preenchimentos</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="90"/>
@@ -102,7 +102,7 @@
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="166"/>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="171"/>
         <source>mm</source>
-        <translation type="unfinished"></translation>
+        <translation>mm</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="144"/>
@@ -157,12 +157,12 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="187"/>
         <source>°</source>
-        <translation type="unfinished"></translation>
+        <translation>º</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="189"/>
         <source>Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ângulo:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="191"/>
@@ -246,10 +246,9 @@
         <location filename="../src/gui/autosave_dialog.cpp" line="45"/>
         <location filename="../src/gui/autosave_dialog.cpp" line="51"/>
         <source>%n bytes</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n bytes</numerusform>
+        <numerusform>%n bytes</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="49"/>
         <source>File saved by the user</source>
@@ -357,22 +356,22 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="223"/>
         <source>Red</source>
-        <translation type="unfinished"></translation>
+        <translation>Vermelho</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="228"/>
         <source>Green</source>
-        <translation type="unfinished"></translation>
+        <translation>Verde</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="233"/>
         <source>Blue</source>
-        <translation type="unfinished"></translation>
+        <translation>Azul</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="238"/>
         <source>#RRGGBB</source>
-        <translation type="unfinished"></translation>
+        <translation>#RRGGBB</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="256"/>
@@ -413,7 +412,7 @@
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="80"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="80"/>
@@ -428,12 +427,12 @@
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="80"/>
         <source>CMYK</source>
-        <translation type="unfinished"></translation>
+        <translation>CMYK</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="80"/>
         <source>RGB</source>
-        <translation type="unfinished"></translation>
+        <translation>RGB</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="80"/>
@@ -444,17 +443,17 @@
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="86"/>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="91"/>
         <source>New</source>
-        <translation type="unfinished"></translation>
+        <translation>Novo</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="94"/>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Eliminar</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="87"/>
         <source>Duplicate</source>
-        <translation type="unfinished"></translation>
+        <translation>Duplicar</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="100"/>
@@ -469,7 +468,7 @@
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="113"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajuda</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="134"/>
@@ -1152,7 +1151,7 @@
         <location filename="../src/tools/edit_point_tool.cpp" line="503"/>
         <source>Point / Angle</source>
         <comment>Modify points or use constrained angles</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ponto / Ângulo</translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="504"/>
@@ -1163,7 +1162,7 @@
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="678"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Finish editing. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Terminar edição. </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="697"/>
@@ -2744,17 +2743,17 @@ Press No to choose a different format.</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1057"/>
         <source>Save file</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardar ficheiro</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1078"/>
         <source>File could not be saved:</source>
-        <translation type="unfinished"></translation>
+        <translation>O ficheiro não pôde ser guardado:</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1079"/>
         <source>There was a problem in determining the file format.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ocorreu um problema ao determinar o formato do ficheiro.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1080"/>
@@ -2776,7 +2775,7 @@ Press No to choose a different format.</source>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="285"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="343"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro</translation>
     </message>
     <message>
         <location filename="../src/core/map.cpp" line="658"/>
@@ -2796,7 +2795,7 @@ because the format is unknown.</source>
         <location filename="../src/core/map.cpp" line="713"/>
         <location filename="../src/core/map.cpp" line="775"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Aviso</translation>
     </message>
     <message>
         <location filename="../src/core/map.cpp" line="714"/>
@@ -2807,7 +2806,8 @@ because the format is unknown.</source>
         <location filename="../src/core/map.cpp" line="695"/>
         <source>Internal error while saving:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro interno ao gravar:
+%1</translation>
     </message>
     <message>
         <location filename="../src/core/map.cpp" line="776"/>
@@ -3395,127 +3395,127 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="789"/>
         <source>Ctrl+A</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+A</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="790"/>
         <source>Ctrl+Shift+A</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Shift+A</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="791"/>
         <source>Ctrl+I</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+I</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="793"/>
         <source>G</source>
-        <translation type="unfinished"></translation>
+        <translation>G</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="807"/>
         <source>E</source>
-        <translation type="unfinished"></translation>
+        <translation>E</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="808"/>
         <source>L</source>
-        <translation type="unfinished"></translation>
+        <translation>L</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="809"/>
         <source>S</source>
-        <translation type="unfinished"></translation>
+        <translation>S</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="810"/>
         <source>P</source>
-        <translation type="unfinished"></translation>
+        <translation>P</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="811"/>
         <source>O</source>
-        <translation type="unfinished"></translation>
+        <translation>O</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="812"/>
         <source>Ctrl+R</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+R</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="813"/>
         <source>F</source>
-        <translation type="unfinished"></translation>
+        <translation>F</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="814"/>
         <source>T</source>
-        <translation type="unfinished"></translation>
+        <translation>T</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="816"/>
         <source>D</source>
-        <translation type="unfinished"></translation>
+        <translation>D</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="817"/>
         <source>Ctrl+G</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+G</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="818"/>
         <source>Ctrl+F</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+F</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="819"/>
         <source>Ctrl+D</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+D</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="820"/>
         <source>C</source>
-        <translation type="unfinished"></translation>
+        <translation>C</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="821"/>
         <source>R</source>
-        <translation type="unfinished"></translation>
+        <translation>R</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="822"/>
         <source>Z</source>
-        <translation type="unfinished"></translation>
+        <translation>Z</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="823"/>
         <source>K</source>
-        <translation type="unfinished"></translation>
+        <translation>K</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="824"/>
         <source>H</source>
-        <translation type="unfinished"></translation>
+        <translation>H</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="825"/>
         <source>M</source>
-        <translation type="unfinished"></translation>
+        <translation>M</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="826"/>
         <source>U</source>
-        <translation type="unfinished"></translation>
+        <translation>U</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="827"/>
         <source>N</source>
-        <translation type="unfinished"></translation>
+        <translation>N</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="828"/>
         <source>Ctrl+M</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+M</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="855"/>
@@ -4419,26 +4419,26 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="135"/>
         <source>mm</source>
         <comment>millimeters</comment>
-        <translation type="unfinished"></translation>
+        <translation>mm</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="98"/>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="136"/>
         <source>m</source>
         <comment>meters</comment>
-        <translation type="unfinished"></translation>
+        <translation>m</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="113"/>
         <source>mm²</source>
         <comment>square millimeters</comment>
-        <translation type="unfinished"></translation>
+        <translation>mm²</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="114"/>
         <source>m²</source>
         <comment>square meters</comment>
-        <translation type="unfinished"></translation>
+        <translation>m²</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="126"/>
@@ -4453,7 +4453,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="127"/>
         <source>mm²</source>
-        <translation type="unfinished"></translation>
+        <translation>mm²</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="130"/>
