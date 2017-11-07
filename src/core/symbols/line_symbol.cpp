@@ -1667,18 +1667,21 @@ void LineSymbol::cleanupPointSymbols()
 	}
 }
 
-float LineSymbol::calculateLargestLineExtent(Map* map) const
+
+
+qreal LineSymbol::calculateLargestLineExtent() const
 {
-	Q_UNUSED(map);
-	float line_extent_f = 0.001f * 0.5f * getLineWidth();
-	float result = line_extent_f;
+	auto line_extent_f = 0.001 * 0.5 * getLineWidth();
+	auto result = line_extent_f;
 	if (hasBorder())
 	{
-		result = qMax(result, line_extent_f + 0.001f * (getBorder().shift + 0.5f * getBorder().width));
-		result = qMax(result, line_extent_f + 0.001f * (getRightBorder().shift + 0.5f * getRightBorder().width));
+		result = qMax(result, line_extent_f + 0.001 * (getBorder().shift + getBorder().width)/2);
+		result = qMax(result, line_extent_f + 0.001 * (getRightBorder().shift + getRightBorder().width)/2);
 	}
 	return result;
 }
+
+
 
 void LineSymbol::setStartSymbol(PointSymbol* symbol)
 {

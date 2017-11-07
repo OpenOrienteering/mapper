@@ -159,10 +159,14 @@ public:
 	 */
 	void cleanupPointSymbols();
 	
+	
+	
 	/**
 	 * Returns the largest extent (half width) of the components of this line.
 	 */
-	float calculateLargestLineExtent(Map* map) const override;
+	qreal calculateLargestLineExtent() const override;
+	
+	
 	
 	/**
 	 * Returns the limit for miter joins in units of the line width.

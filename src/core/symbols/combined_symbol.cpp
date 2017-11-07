@@ -24,6 +24,7 @@
 #include <algorithm>
 #include <cstddef>
 #include <iterator>
+#include <numeric>
 
 #include <QtGlobal>
 #include <QIODevice>
@@ -354,16 +355,17 @@ bool CombinedSymbol::loadFinished(Map* map)
 	return last == end(temp_part_indices);
 }
 
-float CombinedSymbol::calculateLargestLineExtent(Map* map) const
+
+
+qreal CombinedSymbol::calculateLargestLineExtent() const
 {
-	float result = 0;
-	for (auto subsymbol : parts)
+	return std::accumulate(begin(parts), end(parts), qreal(0), [](qreal value, auto subsymbol)
 	{
-		if (subsymbol)
-			result = qMax(result, subsymbol->calculateLargestLineExtent(map));
-	}
-	return result;
+		return subsymbol ? qMax(value, subsymbol->calculateLargestLineExtent()) : value;
+	});
 }
+
+
 
 void CombinedSymbol::setPart(int i, const Symbol* symbol, bool is_private)
 {

@@ -2445,7 +2445,7 @@ int PathObject::isPointOnPath(MapCoordF coord, float tolerance, bool treat_areas
 	if (extended_selection && map && (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Combined))
 	{
 		// TODO: precalculate largest line extent for all symbols to move it out of this time critical method?
-		side_tolerance = qMax(side_tolerance, symbol->calculateLargestLineExtent(map));
+		side_tolerance = qMax(side_tolerance, float(symbol->calculateLargestLineExtent()));
 	}
 	
 	Symbol::Type contained_types = symbol->getContainedTypes();

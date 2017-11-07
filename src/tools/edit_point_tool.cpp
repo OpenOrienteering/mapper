@@ -823,7 +823,7 @@ void EditPointTool::updateHoverState(MapCoordF cursor_pos)
 						
 						if (distance_sq >= +0.0 &&
 						    distance_sq < best_distance_sq &&
-						    distance_sq < qMax(click_tolerance_sq, qPow(path->getSymbol()->calculateLargestLineExtent(map()), 2)))
+						    distance_sq < qMax(click_tolerance_sq, qPow(path->getSymbol()->calculateLargestLineExtent(), 2)))
 						{
 							new_hover_state |= OverPathEdge;
 							new_hover_object = path;

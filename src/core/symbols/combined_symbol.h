@@ -27,6 +27,7 @@
 #include <vector>
 
 #include <Qt>
+#include <QtGlobal> 
 
 class QIODevice;
 class QXmlStreamReader;
@@ -86,7 +87,7 @@ public:
 	
 	bool loadFinished(Map* map) override;
 	
-    float calculateLargestLineExtent(Map* map) const override;
+    qreal calculateLargestLineExtent() const override;
 	
 	// Getters / Setter
 	inline int getNumParts() const {return (int)parts.size();}

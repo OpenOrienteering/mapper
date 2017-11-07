@@ -289,11 +289,11 @@ public:
 	
 	
 	/**
-	 * Returns the largest extent (half width) of all line symbols
-	 * which may be included in this symbol.
-	 * TODO: may fit into a subclass "PathSymbol"?
+	 * Returns the largest extent of all primitive lines which are part of the symbol.
+	 * 
+	 * Effectively, this is the half line width.
 	 */
-	virtual float calculateLargestLineExtent(Map* map) const;
+	virtual qreal calculateLargestLineExtent() const;
 	
 	
 	// Getters / Setters

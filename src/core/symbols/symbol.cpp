@@ -545,10 +545,9 @@ void Symbol::resetIcon()
 
 
 
-float Symbol::calculateLargestLineExtent(Map* map) const
+qreal Symbol::calculateLargestLineExtent() const
 {
-	Q_UNUSED(map);
-	return 0.0f;
+	return 0;
 }
 
 
