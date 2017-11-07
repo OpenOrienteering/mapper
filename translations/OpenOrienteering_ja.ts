@@ -8644,7 +8644,7 @@ The maximum supported version is %2.</source>
         <location filename="../src/tools/tool_helpers.cpp" line="620"/>
         <source>%1°</source>
         <comment>degree</comment>
-        <translation type="unfinished">%1x {1°?}</translation>
+        <translation type="unfinished">%1°</translation>
     </message>
     <message>
         <location filename="../src/tools/tool_helpers.cpp" line="621"/>
