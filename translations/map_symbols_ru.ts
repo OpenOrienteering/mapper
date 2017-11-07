@@ -152,7 +152,7 @@
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. A contour interval of 2.5 metres may be used for flat terrains. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
             <comment>Description of symbol 101</comment>
             <translation>Линия, соединяющая точки одинаковой высоты. Стандартный вертикальный интервал между горизонталями составляет 5 метров. Для плоских участков можно использовать интервал в 2,5 метра. Наименьший изгиб линии горизонтали составляет 0,25 мм от центра к центру линии.</translation>
-    </message>
+        </message>
         <message>
             <source>Slope line, contour</source>
             <comment>Name of symbol 101.1</comment>
@@ -193,7 +193,7 @@
             <comment>Description of symbol 103</comment>
             <translation>Вспомогательная горизонталь используются там, где требуется дополнительная информация о форме земли. Линии вспомогательных горизонталей добавляются только там, где представление было бы неполным с использованием обычных горизонталей. Они не должны использоваться в качестве промежуточных горизонталей. Между соседними горизонталями должна использоваться только одна вспомогательная. Очень важно, чтобы вспомогательная горизонталь логически входила в систему основных, поэтому её начало и конец должны быть параллельны соседним основным. Промежутки между штрихами вспомогательных горизонталей должны быть размещены на их разумно прямых участках. Вспомогательные горизонтали
 могут использоваться для дифференциации плоских холмов и впадин от более четких (минимальная высота / глубина должна составлять 1 м).</translation>
-    </message>
+        </message>
         <message>
             <source>Slope line, formline</source>
             <comment>Name of symbol 103.1</comment>
@@ -213,7 +213,7 @@
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
             <comment>Description of symbol 104</comment>
             <translation>Грунтовый обрыв - это резкое изменение уровня земли, которое можно четко отличить от его окружения, например: гравийные или песчаные карьеры, дорожные и железнодорожные выемки или насыпи. Минимальная высота: 1 м. Грунтовый обрыв может повлиять на проходимость. Зубчики наносятся на всей протяженности бровки обрыва. Для длинных обрывов разрешается использовать зубчики короче минимальной длины на концах. Если два земляных обрыва расположены близко друг к другу, то крайние зубчики могут быть опущены. Непроходимые земляные обрывы должны быть показаны знаком 201 (непроходимая скала).</translation>
-    </message>
+        </message>
         <message>
             <source>Earth bank, minimum size</source>
             <comment>Name of symbol 104.1</comment>
@@ -223,7 +223,7 @@
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
             <comment>Description of symbol 104.1</comment>
             <translation>Грунтовый обрыв - это резкое изменение уровня земли, которое можно четко отличить от его окружения, например: гравийные или песчаные карьеры, дорожные и железнодорожные выемки или насыпи. Минимальная высота: 1 м. Грунтовый обрыв может повлиять на проходимость. Зубчики наносятся на всей протяженности бровки обрыва. Для длинных обрывов разрешается использовать зубчики короче минимальной длины на концах. Если два земляных обрыва расположены близко друг к другу, то крайние зубчики могут быть опущены. Непроходимые земляные обрывы должны быть показаны знаком 201 (непроходимая скала).</translation>
-    </message>
+        </message>
         <message>
             <source>Earth bank, top line</source>
             <comment>Name of symbol 104.2</comment>
@@ -233,7 +233,7 @@
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
             <comment>Description of symbol 104.2</comment>
             <translation>Грунтовый обрыв - это резкое изменение уровня земли, которое можно четко отличить от его окружения, например: гравийные или песчаные карьеры, дорожные и железнодорожные выемки или насыпи. Минимальная высота: 1 м. Грунтовый обрыв может повлиять на проходимость. Зубчики наносятся на всей протяженности бровки обрыва. Для длинных обрывов разрешается использовать зубчики короче минимальной длины на концах. Если два земляных обрыва расположены близко друг к другу, то крайние зубчики могут быть опущены. Непроходимые земляные обрывы должны быть показаны знаком 201 (непроходимая скала).</translation>
-    </message>
+        </message>
         <message>
             <source>Earth bank, tag line</source>
             <comment>Name of symbol 104.3</comment>
@@ -253,7 +253,7 @@
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
             <comment>Description of symbol 104.9</comment>
             <translation>Грунтовый обрыв - это резкое изменение уровня земли, которое можно четко отличить от его окружения, например: гравийные или песчаные карьеры, дорожные и железнодорожные выемки или насыпи. Минимальная высота: 1 м. Грунтовый обрыв может повлиять на проходимость. Зубчики наносятся на всей протяженности бровки обрыва. Для длинных обрывов разрешается использовать зубчики короче минимальной длины на концах. Если два земляных обрыва расположены близко друг к другу, то крайние зубчики могут быть опущены. Непроходимые земляные обрывы должны быть показаны знаком 201 (непроходимая скала).</translation>
-    </message>
+        </message>
         <message>
             <source>Earth wall</source>
             <comment>Name of symbol 105</comment>
@@ -284,7 +284,7 @@
 Contour lines shall not be broken around this symbol.</source>
             <comment>Description of symbol 107</comment>
             <translation>Овраг, который слишком мал для показа с использованием знака 104 (грунтовый обрыв), отображается одной линией. Минимальная глубина: 1 м. Горизонтали не должны быть разорваны при пересечении с этим знаком.</translation>
-    </message>
+        </message>
         <message>
             <source>Small erosion gully</source>
             <comment>Name of symbol 108</comment>
@@ -295,7 +295,7 @@ Contour lines shall not be broken around this symbol.</source>
 Contour lines should be broken around this symbol.</source>
             <comment>Description of symbol 108</comment>
             <translation>Небольшая промоина, сухой ров или траншея. Минимальная глубина: 0,5 м. Горизонтали должны быть разорваны при пересечении с этим знаком.</translation>
-    </message>
+        </message>
         <message>
             <source>Small knoll</source>
             <comment>Name of symbol 109</comment>
@@ -306,7 +306,7 @@ Contour lines should be broken around this symbol.</source>
 The symbol shall not touch or overlap contours.</source>
             <comment>Description of symbol 109</comment>
             <translation>Выделяющийся микробугор или холмик, которые невозможно отобразить с помощью горизонтали. Минимальная высота: 1 м. Знак не должен касаться или разрывать горизонтали.</translation>
-    </message>
+        </message>
         <message>
             <source>Small elongated knoll</source>
             <comment>Name of symbol 110</comment>
@@ -317,7 +317,7 @@ The symbol shall not touch or overlap contours.</source>
 The symbol shall not touch or overlap contours.</source>
             <comment>Description of symbol 110</comment>
             <translation>Выделяющийся удлиненный холмик, который нельзя показать горизонталью. Минимальная высота: 1 м. Знак не должен касаться или разрывать горизонтали.</translation>
-    </message>
+        </message>
         <message>
             <source>Small depression</source>
             <comment>Name of symbol 111</comment>
@@ -329,7 +329,7 @@ Small depressions with steep sides are represented with symbol 112 (pit). The sy
             <comment>Description of symbol 111</comment>
             <translation>Небольшие углубления или понижения без крутых склонов, которые слишком малы для показа горизонталями. Минимальная глубина: 1 м. Минимальная ширина: 2 м.
 Небольшие ямки с крутыми склонами обозначены символом 112 (воронка). Знак не должен касаться или накладываться на другие коричневые символы. Расположение - центр тяжести знака, который ориентирован на север.</translation>
-    </message>
+        </message>
         <message>
             <source>Pit</source>
             <comment>Name of symbol 112</comment>
@@ -340,7 +340,7 @@ Small depressions with steep sides are represented with symbol 112 (pit). The sy
 gravity of the symbol, and the symbol is orientated to north.</source>
             <comment>Description of symbol 112</comment>
             <translation>Ямы и углубления с отчетливо выраженными крутыми стенками, которые нельзя показать в масштабе с помощью знака 104 (земляной обрыв). Минимальная глубина: 1 м. Минимальная ширина: 1 м. Выемка размером более 5 м x 5 м обычно должна быть преувеличена и нарисована с использованием знака 104 (земляной обрыв). Ямы с пологими склонами обозначаются знаком 111 (ямка). Знак не должен касаться или накладываться на другие коричневые знаки. Расположение - центр тяжести знака, который ориентирован на север.</translation>
-    </message>
+        </message>
         <message>
             <source>Broken ground</source>
             <comment>Name of symbol 113</comment>
@@ -358,7 +358,7 @@ Density: 3 to 5 dots / mm² (9-16%).</source>
 Минимальное количество точек - три (проекция 10 м x 10м).
 Горизонтали не разрываются в местах пересечений.
 Плотность: 3-5 точек / мм² (9-16%).</translation>
-    </message>
+        </message>
         <message>
             <source>Broken ground, individual dot</source>
             <comment>Name of symbol 113.1</comment>
@@ -386,7 +386,7 @@ Density: 8 to 10 dots / mm² (25-32%).</source>
 Минимальное количество точек три (проекция 7 м x 7 м).
 Горизонтали не разрываются в местах пересечений.
 Плотность: 8-10 точек / мм² (25-32%).</translation>
-    </message>
+        </message>
         <message>
             <source>Prominent landform feature</source>
             <comment>Name of symbol 115</comment>
@@ -396,7 +396,7 @@ Density: 8 to 10 dots / mm² (25-32%).</source>
             <source>The feature must be very clearly distinguishable from its surroundings. Location is the centre of gravity of the symbol, which is orientated to north. The symbol may not touch or overlap other brown symbols.</source>
             <comment>Description of symbol 115</comment>
             <translation>Этот объект должен очень четко отличаться от его окружения. Расположение - центр тяжести знака, который ориентирован на север. Знак не должен касаться или накладываться на другие коричневые знаки.</translation>
-    </message>
+        </message>
         <message>
             <source>Impassable cliff</source>
             <comment>Name of symbol 201</comment>
@@ -412,7 +412,7 @@ When an impassable cliff drops straight into water, making it impossible to pass
 Для вертикальных скальных обрывов зубчики могут быть опущены, если проекция склона узкая. Конец верхней бровки может быть закругленными или квадратными. На концах могут использоваться короткие зубчики.
 Разрыв между двумя непроходимыми обрывами или между непроходимыми обрывами и другими знаками непроходимых объектов не должны превышать 0,3 мм на карте.
 В случае, когда невозможно пройти под скалой вдоль кромки воды, линия берега опускается и зубчики должны четко пересекать береговую линию. Непроходимый обрыв должен взаимодействовать с горизонталями.</translation>
-    </message>
+        </message>
         <message>
             <source>Impassable cliff, minimum size</source>
             <comment>Name of symbol 201.1</comment>
@@ -548,7 +548,7 @@ Rocky pits larger than 5 m in diameter should be exaggerated and represented usi
             <translation>Каменистые ямы, отверстия, пещеры или шахты, которые могут представлять опасность для участников. Минимальная глубина: 1 м.
 Расположение - центр тяжести знака.
 Каменистые ямы диаметром более 5 м должны быть преувеличены и представлены с использованием знаков скалы (201, 202).</translation>
-    </message>
+        </message>
         <message>
             <source>Rocky pit or cave with distinct entrance</source>
             <comment>Name of symbol 203.2</comment>
@@ -584,7 +584,7 @@ To be able to show the distinction between neighbouring (closer than 30 metres a
             <comment>Description of symbol 204</comment>
             <translation>Камень (выше 1 м), который хорошо опознается на местности. Группы камней отображаются с помощью знака 207 (группа камней) или знаков каменистое поле 208, 209 (поле валунов).
 Чтобы иметь возможность показать различие между соседними (ближе 30 метров друг от друга), для отображения камней со значительной разницей в размерах, разрешается увеличить знак до 0,5 мм для некоторых из них.</translation>
-    </message>
+        </message>
         <message>
             <source>Boulder or large boulder, different size</source>
             <comment>Name of symbol 204.5</comment>
@@ -608,7 +608,7 @@ To be able to show the distinction between neighbouring (closer than 30 metres a
             <source>A particularly large and distinct boulder. A large boulder should be more than 2 m high. To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders with significant difference in size, it is permitted to reduce the size of the symbol to 0.5 mm for some of the boulders.</source>
             <comment>Description of symbol 205</comment>
             <translation>Особенно большой и выделяющийся камень (выше 2 м). Для того, чтобы показать различие между соседними (на расстоянии ближе 30 м) большими камнями со значительной разницей в размерах, разрешено уменьшить размер знака до 0,5 мм для некоторых из них.</translation>
-    </message>
+        </message>
         <message>
             <source>Gigantic boulder</source>
             <comment>Name of symbol 206</comment>
@@ -620,7 +620,7 @@ The gap between gigantic boulders or between gigantic boulders and other impassa
             <comment>Description of symbol 206</comment>
             <translation>Скала останец или гигантский камень, который настолько высок и крут, что невозможно преодолеть / подняться.
 Разрыв между гигантскими камнями или между гигантскими камнями и другими непроходимыми знаками должен превышать 0.3 мм на карте.</translation>
-    </message>
+        </message>
         <message>
             <source>Boulder cluster</source>
             <comment>Name of symbol 207</comment>
@@ -632,7 +632,7 @@ To be able to show the distinction between neighbouring (maximum 30 metres apart
             <comment>Description of symbol 207</comment>
             <translation>Отдельная группа камней, так тесно сгруппированных друг с другом, что они не могут быть отмечены индивидуально. Камни в группе должны быть выше 1 метра. Группа должна быть легко идентифицируема.
 Для того, чтобы показать различие между соседними (ближе 30 метров друг от друга) группами камней со значительной разницей в размерах валунов, разрешается увеличить этот символ на 20% (длина ребра 0,96 мм) для некоторых из них.</translation>
-    </message>
+        </message>
         <message>
             <source>Boulder cluster, large</source>
             <comment>Name of symbol 207.1</comment>
@@ -642,7 +642,7 @@ To be able to show the distinction between neighbouring (maximum 30 metres apart
             <source>To be able to show the distinction between neighbouring (maximum 30 metres apart), boulder clusters with significant difference in boulder size, it is permitted to enlarge this symbol by 20% (edge length 0.96 mm) for some of the boulder clusters.</source>
             <comment>Description of symbol 207.1</comment>
             <translation>Для того, чтобы показать различие между соседними (ближе 30 метров друг от друга) группами камней со значительной разницей в размерах валунов, разрешается увеличить этот символ на 20% (длина ребра 0,96 мм) для некоторых из них.</translation>
-    </message>
+        </message>
         <message>
             <source>Boulder field</source>
             <comment>Name of symbol 208</comment>
@@ -657,7 +657,7 @@ To be able to show obvious height differences within a boulder field, it is perm
 Необходимо использовать минимум два треугольника. Можно использовать один треугольник, если он сочетается с другими знаками скал и камней 
 (например, непосредственно под знаками скалы (201, 202), рядом со знаками камней (204-206) или в сочетании  со знаками (210-212)). 
 Чтобы иметь возможность показывать явные разности высот в пределах каменистого поля, разрешается увеличить некоторые треугольники до 120%.</translation>
-    </message>
+        </message>
         <message>
             <source>Boulder field, single triangle</source>
             <comment>Name of symbol 208.1</comment>
@@ -689,7 +689,7 @@ Density: 2–3 symbols / mm² (31%-47%). To be able to show obvious height diffe
             <comment>Description of symbol 209</comment>
             <translation>Область, покрытая таким количеством камней, которые не могут быть отображены индивидуально и снижающие скорость, отображается произвольно расположенными и ориентированными сплошными треугольниками. Используется минимум два треугольника.
 Плотность: 2-3 символа / мм² (31% -47%). Чтобы иметь возможность показывать явные разности высот в пределах поля, разрешается увеличить некоторые треугольники до 120%.</translation>
-    </message>
+        </message>
         <message>
             <source>Stony ground, slow running</source>
             <comment>Name of symbol 210</comment>
@@ -705,7 +705,7 @@ To avoid confusion with symbol 416 (distinct vegetation boundary), the dots shou
 Точки должны быть распределены случайным образом, но не должны мешать представлению важных объектов и элементов рельефа.
 Минимальное количество точек равно трем (площадь основания 10 м x 10 м).
 Чтобы избежать путаницы со знаком 416 (четкая граница растительности), точки не должны быть расположены так, чтобы была образована линия.</translation>
-    </message>
+        </message>
         <message>
             <source>Stony ground, individual dot</source>
             <comment>Name of symbol 210.1</comment>
@@ -717,7 +717,10 @@ The dots should be randomly distributed but not interfere with the representatio
 The minimum number of dots is three (footprint 10 m x 10 m).
 To avoid confusion with symbol 416 (distinct vegetation boundary), the dots should not be arranged to form a line.</source>
             <comment>Description of symbol 210.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Каменистый грунт, который снижает скорость до 60-80% от нормальной.
+Точки должны быть распределены случайным образом, но не должны мешать представлению важных объектов и элементов рельефа.
+Минимальное количество точек равно трем (площадь основания 10 м x 10 м).
+Чтобы избежать путаницы со знаком 416 (четкая граница растительности), точки не должны быть расположены так, чтобы была образована линия.</translation>
         </message>
         <message>
             <source>Stony ground, walk</source>
@@ -754,7 +757,7 @@ To avoid confusion with symbol 416 (distinct vegetation boundary), the dots shou
             <source>An area of soft sandy ground where runnability is reduced to less than 80% of normal speed.</source>
             <comment>Description of symbol 213</comment>
             <translation>Область мягкого песчаного грунта, где скорость бега снижается до менее 80% от нормальной.</translation>
-    </message>
+        </message>
         <message>
             <source>Bare rock</source>
             <comment>Name of symbol 214</comment>
@@ -768,7 +771,7 @@ An area of less runnable bare rock should be shown using a stony ground symbol (
             <translation>Открытые скалы без земли или растительности должны быть показаны как голая скала.
 Поверхность скалы, покрытая травой, мхом или другой низкой растительностью, не должна быть показана с использованием знака голая скала.
 Голые скалы снижающие скорость должны быть показан с использованием знака каменистого грунта (210-212).</translation>
-    </message>
+        </message>
         <message>
             <source>Trench</source>
             <comment>Name of symbol 215</comment>
@@ -786,7 +789,7 @@ Collapsed and easily crossable trenches should be mapped as erosion gullies.</so
 Более короткие траншеи могут быть преувеличены до минимального графического размера.
 Непроходимые траншеи должны быть обозначены символом 201 (непроходимый обрыв).
 Разрушенные и легко пересекающиеся траншеи должны быть нанесены на карту как промоины.</translation>
-    </message>
+        </message>
         <message>
             <source>Uncrossable body of water, with bank line</source>
             <comment>Name of symbol 301</comment>
@@ -796,7 +799,7 @@ Collapsed and easily crossable trenches should be mapped as erosion gullies.</so
             <source>The black bank line emphasises that the feature is uncrossable. Dominant areas of water may be shown with 70% colour. Small areas of water and bodies of water that have narrow parts shall always be shown with full colour.</source>
             <comment>Description of symbol 301</comment>
             <translation>Черная береговая линия подчеркивает, что этот объект непреодолим. Доминирующие области воды могут быть показаны с 70% цветом. Небольшие участки воды и водоемы с узкими участками всегда должны быть показаны полным цветом.</translation>
-    </message>
+        </message>
         <message>
             <source>Uncrossable body of water</source>
             <comment>Name of symbol 301.1</comment>
@@ -805,7 +808,7 @@ Collapsed and easily crossable trenches should be mapped as erosion gullies.</so
         <message>
             <source>The black bank line emphasises that the feature is uncrossable. Dominant areas of water may be shown with 70% colour. Small areas of water and bodies of water that have narrow parts shall always be shown with full colour.</source>
             <comment>Description of symbol 301.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Черная береговая линия подчеркивает, что этот объект непреодолим. Доминирующие области воды могут быть показаны с 70% цветом. Небольшие участки воды и водоемы с узкими участками всегда должны быть показаны полным цветом.</translation>
         </message>
         <message>
             <source>Uncrossable body of water, bank line</source>
@@ -866,7 +869,7 @@ Collapsed and easily crossable trenches should be mapped as erosion gullies.</so
             <source>A water-filled pit or an area of water which is too small to be shown to scale. Location is the centre of gravity of the symbol, and the symbol is orientated to north.</source>
             <comment>Description of symbol 303</comment>
             <translation>Заполненная водой яма или водоём, который слишком мал для показа в масштабе. Расположение - центр тяжести знака, который ориентирован на север.</translation>
-    </message>
+        </message>
         <message>
             <source>Crossable watercourse</source>
             <comment>Name of symbol 304</comment>
@@ -876,7 +879,7 @@ Collapsed and easily crossable trenches should be mapped as erosion gullies.</so
             <source>A crossable watercourse, minimum 2 m wide. The width of watercourses over 5 m wide should be shown to scale.</source>
             <comment>Description of symbol 304</comment>
             <translation>Преодолимая река или канава шириной минимум 2 м. Если ширина больше 5 м, то объект показывается в масштабе карты.</translation>
-    </message>
+        </message>
         <message>
             <source>Small crossable watercourse</source>
             <comment>Name of symbol 305</comment>
@@ -940,7 +943,7 @@ The symbol is orientated to north.</source>
             <translation>Преодолимое болото, обычно с отчетливым краем.
 Знак может быть объединен с другими знаками, чтобы показать проходимость и открытость.
 Знак ориентирован на север.</translation>
-    </message>
+        </message>
         <message>
             <source>Marsh, minimum size</source>
             <comment>Name of symbol 308.1</comment>
@@ -954,7 +957,7 @@ The symbol is orientated to north.</source>
             <translation>Преодолимое болото, обычно с отчетливым краем.
 Знак может быть объединен с другими знаками, чтобы показать проходимость и открытость.
 Знак ориентирован на север.</translation>
-    </message>
+        </message>
         <message>
             <source>Narrow marsh</source>
             <comment>Name of symbol 309</comment>
@@ -964,7 +967,7 @@ The symbol is orientated to north.</source>
             <source>A marsh or trickle of water which is too narrow (less than about 5 m wide) to be shown with the marsh symbol.</source>
             <comment>Description of symbol 309</comment>
             <translation>Болото или сочащийся грунт, которая слишком узок (менее 5 м в ширину) для показа знаком болото.</translation>
-    </message>
+        </message>
         <message>
             <source>Indistinct marsh</source>
             <comment>Name of symbol 310</comment>
@@ -979,7 +982,7 @@ The symbol is orientated to north.</source>
 растительность похожа на растительность окружающей местности.
 Знак должен быть объединен с другими знаками, чтобы показать проходимость и открытость.
 Символ ориентирован на север.</translation>
-    </message>
+        </message>
         <message>
             <source>Indistinct marsh, minimum size</source>
             <comment>Name of symbol 310.1</comment>
@@ -994,7 +997,7 @@ The symbol is orientated to north.</source>
 растительность похожа на растительность окружающей местности.
 Знак должен быть объединен с другими знаками, чтобы показать проходимость и открытость.
 Символ ориентирован на север.</translation>
-    </message>
+        </message>
         <message>
             <source>Well, fountain or water tank</source>
             <comment>Name of symbol 311</comment>
@@ -1016,7 +1019,7 @@ Location is the centre of gravity of the symbol, and the symbol is orientated to
             <comment>Description of symbol 312</comment>
             <translation>Родник (источник воды).
 Расположение - центр тяжести знака, который ориентирован вниз по течению.</translation>
-    </message>
+        </message>
         <message>
             <source>Prominent water feature</source>
             <comment>Name of symbol 313</comment>
@@ -1028,7 +1031,7 @@ The symbol is orientated to north.</source>
             <comment>Description of symbol 313</comment>
             <translation>Выделяющийся объект гидрографии.
 Знак ориентирован на север.</translation>
-    </message>
+        </message>
         <message>
             <source>Open land</source>
             <comment>Name of symbol 401</comment>
@@ -2541,7 +2544,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
             <translation>Непреодолимая скала</translation>
         </message>
         <message>
-            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
+            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201</comment>
             <translation>Непреодолимая (опасная) скала, карьер или опасный грунтовый обрыв (см. 106) показывается линией толщиной 0,35 мм вдоль бровки и зубцами, покрывающими площадь проекции обрыва от верхней кромки до подножья. При отображении вертикальных или близко расположенных обрывов зубцы могут быть опущены (ширина прохода должна быть не менее 0,3 мм в масштабе карты). Зубцы могут быть удлинены, если это необходимо. Например, если обрывом и береговой линией нет прохода, то зубцы обрыва должны пересекать береговую линию и накладываться на край изображения водоема.</translation>
         </message>
@@ -2551,7 +2554,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
             <translation>Непреодолимая скала, минимальный размер</translation>
         </message>
         <message>
-            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
+            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201.0.1</comment>
             <translation>Непреодолимая (опасная) скала, карьер или опасный грунтовый обрыв (см. 106) показывается линией толщиной 0,35 мм вдоль бровки и зубцами, покрывающими площадь проекции обрыва от верхней кромки до подножья. При отображении вертикальных или близко расположенных обрывов зубцы могут быть опущены (ширина прохода должна быть не менее 0,3 мм в масштабе карты). Зубцы могут быть удлинены, если это необходимо. Например, если обрывом и береговой линией нет прохода, то зубцы обрыва должны пересекать береговую линию и накладываться на край изображения водоема.</translation>
         </message>
@@ -2809,7 +2812,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
             <source>Where the lake or pond is smaller than 1 mm² on the printed map, the bank line is omitted.</source>
             <comment>Description of symbol 302</comment>
             <translation>В случаях, когда озеро или пруд меньше 1 мм² в масштабе карты, береговая линия не показывается.</translation>
-    </message>
+        </message>
         <message>
             <source>Waterhole</source>
             <comment>Name of symbol 303</comment>
@@ -2829,7 +2832,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
             <source>A crossable watercourse, minimum 2 m wide. The width of watercourses over 5 m wide should be shown to scale.</source>
             <comment>Description of symbol 305</comment>
             <translation>Преодолимая река или канава шириной минимум 2 м. Если ширина больше 5 м, то объект показывается в масштабе карты.</translation>
-    </message>
+        </message>
         <message>
             <source>Crossable small watercourse</source>
             <comment>Name of symbol 306</comment>
@@ -2984,7 +2987,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
             <source>Where there are scattered trees in rough open land, areas of white (or green) should appear in the tone. Such an area may be generalised by using a regular pattern of large white dots in the yellow screen. Areas smaller than 16 mm in the maps scale are shown as rough open land (403). Individual trees may be added (418, 419, 420).</source>
             <comment>Description of symbol 404</comment>
             <translation>Редколесье по неудобице. В случаях когда группы растительности, показываемые белым или зелёным цветом, сливаются, - такие группы обобщаются и показываются регулярным рисунком, состоящим из больших белых точек на желтом фоне. Площади, занимающие меньше 16 мм в масштабе карты, показываются знаком 403. Отдельные деревья могут быть добавлены знаками 418 - 420.</translation>
-    </message>
+        </message>
         <message>
             <source>Forest: easy running</source>
             <comment>Name of symbol 405</comment>
@@ -3044,7 +3047,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
             <source>An area of dense vegetation (trees or undergrowth) which is barely passable. Running reduced to ca. 0-20% of normal speed.</source>
             <comment>Description of symbol 410</comment>
             <translation>Площадь густой растительности (деревья или подлесок), с трудом преодолевается. Скорость снижается до 0 - 20% от нормальной.</translation>
-    </message>
+        </message>
         <message>
             <source>Vegetation: very difficult to run, impassable, line</source>
             <comment>Name of symbol 410.1</comment>
@@ -3870,7 +3873,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
             <source>Purple 50%</source>
             <comment>Color 1</comment>
             <translation>Пурпурный 50%</translation>
-    </message>
+        </message>
         <message>
             <source>Black</source>
             <comment>Color 2</comment>
@@ -3895,7 +3898,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
             <source>Black 50%</source>
             <comment>Color 6</comment>
             <translation>Чёрный 50%</translation>
-    </message>
+        </message>
         <message>
             <source>Black 30%</source>
             <comment>Color 7</comment>
@@ -3955,12 +3958,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
             <source>Blue 75%</source>
             <comment>Color 18</comment>
             <translation>Синий 75%</translation>
-    </message>
+        </message>
         <message>
             <source>Blue 30%</source>
             <comment>Color 19</comment>
             <translation>Синий 30%</translation>
-    </message>
+        </message>
         <message>
             <source>OpenOrienteering Blue 50%</source>
             <comment>Color 20</comment>
@@ -3980,7 +3983,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
             <source>Grey</source>
             <comment>Color 23</comment>
             <translation>Серый</translation>
-    </message>
+        </message>
         <message>
             <source>Green 50%, Yellow</source>
             <comment>Color 24</comment>
@@ -4233,7 +4236,7 @@ The symbol may not be drawn in free form or such that two elongated knoll symbol
         <message>
             <source>An impassable cliff, quarry or earth bank [see symbol earth bank (106)]. Tags are drawn downwards, showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). 
 
-The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags shall clearly extend over the bank line. Minimum height is 2 meters.
+The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags shall clearly extend over the bank line. Minimum height is 2 meters.
 
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable cliff!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
@@ -4248,7 +4251,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>An impassable cliff, quarry or earth bank [see symbol earth bank (106)]. Tags are drawn downwards, showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). 
 
-The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags shall clearly extend over the bank line. Minimum height is 2 meters.
+The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags shall clearly extend over the bank line. Minimum height is 2 meters.
 
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable cliff!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
@@ -5025,7 +5028,7 @@ Colour: black, brown 0%(white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (mi
             <source>Bridge, minimum width</source>
             <comment>Name of symbol 512.1.1</comment>
             <translation>Мост, минимальная ширина</translation>
-    </message>
+        </message>
         <message>
             <source>A bridge is a structure spanning and permitting passage over a river, chasm, road or the like.</source>
             <comment>Description of symbol 512.1.1</comment>
@@ -5055,7 +5058,7 @@ Colour: black, brown 0%(white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (mi
             <source>Tramway</source>
             <comment>Name of symbol 515.2</comment>
             <translation>Трамвай</translation>
-    </message>
+        </message>
         <message>
             <source>A tramway is a public vehicle running regularly along certain streets, usually on rails. The track can be easily crossed by the competitor. Tramways are generally not represented. However, if they serve navigation or orientation, they can be represented.</source>
             <comment>Description of symbol 515.2</comment>
@@ -5159,7 +5162,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <source>Passable fence or railing</source>
             <comment>Name of symbol 522</comment>
             <translation>Преодолимая ограда или перила</translation>
-    </message>
+        </message>
         <message>
             <source>A passable fence is a barrier enclosing or bordering a field, yard, etc., usually made of posts and wire or wood. It is used to prevent entrance or to confine or mark a boundary. A railing is a fencelike barrier composed of one or more horizontal rails supported by widely spaced upright poles, usually it can be slipped through.
 
@@ -6131,7 +6134,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
             <translation>Непреодолимая скала</translation>
         </message>
         <message>
-            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
+            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201</comment>
             <translation type="unfinished">Непреодолимая (опасная) скала, карьер или опасный грунтовый обрыв (см. 106) показывается линией толщиной 0,35 мм вдоль бровки и зубцами, покрывающими площадь проекции обрыва от верхней кромки до подножья. При отображении вертикальных или близко расположенных обрывов зубцы могут быть опущены (ширина прохода должна быть не менее 0,3 мм в масштабе карты). Зубцы могут быть удлинены, если это необходимо. Например, если обрывом и береговой линией нет прохода, то зубцы обрыва должны пересекать береговую линию и накладываться на край изображения водоема.</translation>
         </message>
@@ -6141,7 +6144,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
             <translation>Непреодолимая скала, минимальный размер</translation>
         </message>
         <message>
-            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
+            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201.0.1</comment>
             <translation type="unfinished">Непреодолимая (опасная) скала, карьер или опасный грунтовый обрыв (см. 106) показывается линией толщиной 0,35 мм вдоль бровки и зубцами, покрывающими площадь проекции обрыва от верхней кромки до подножья. При отображении вертикальных или близко расположенных обрывов зубцы могут быть опущены (ширина прохода должна быть не менее 0,3 мм в масштабе карты). Зубцы могут быть удлинены, если это необходимо. Например, если обрывом и береговой линией нет прохода, то зубцы обрыва должны пересекать береговую линию и накладываться на край изображения водоема.</translation>
         </message>
@@ -6234,7 +6237,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
             <source>A runnable area of rock without earth or vegetation is shown as bare rock. An area of rock covered with grass, moss or other low vegetation is shown as open land (401/402).</source>
             <comment>Description of symbol 212</comment>
             <translation>Хорошо пробегаемая скальная поверхность без растительности. Если имеется какая-либо растительность (трава, мох и т. п.), следует использовать знаки 401 или 402.</translation>
-    </message>
+        </message>
         <message>
             <source>Lake</source>
             <comment>Name of symbol 301</comment>
@@ -6283,7 +6286,7 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
             <source>A crossable watercourse, minimum 2 m wide. The width of watercourses over 5 m wide should be shown to scale.</source>
             <comment>Description of symbol 305</comment>
             <translation>Преодолимая река или канава шириной минимум 2 м. Если ширина больше 5 м, то объект показывается в масштабе карты.</translation>
-    </message>
+        </message>
         <message>
             <source>Crossable small watercourse</source>
             <comment>Name of symbol 306</comment>
@@ -6388,7 +6391,7 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
             <source>Where there are scattered trees in rough open land, areas of white (or green) should appear in the tone. Such an area may be generalised by using a regular pattern of large white dots in the yellow screen. Areas smaller than 16 mm in the maps scale are shown as rough open land (403). Individual trees may be added (418, 419, 420).</source>
             <comment>Description of symbol 404</comment>
             <translation>Редколесье по неудобице. В случаях когда группы растительности, показываемые белым или зелёным цветом, сливаются, - такие группы обобщаются и показываются регулярным рисунком, состоящим из больших белых точек на желтом фоне. Площади, занимающие меньше 16 мм в масштабе карты, показываются знаком 403. Отдельные деревья могут быть добавлены знаками 418 - 420.</translation>
-    </message>
+        </message>
         <message>
             <source>Forest: good visibility</source>
             <comment>Name of symbol 405</comment>
@@ -6652,7 +6655,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
             <source>A boarded or wire fence higher than ca 1.5 m, not crossable to the average orienteer, eg. deer fence.</source>
             <comment>Description of symbol 524</comment>
             <translation>Деревянная или проволочная (решетка, сетка и т.п.) выше 1,5 м высоты, непреодолимая для среднего ориентировщика.</translation>
-    </message>
+        </message>
         <message>
             <source>Crossing point</source>
             <comment>Name of symbol 525</comment>
@@ -7038,7 +7041,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
             <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
             <comment>Description of symbol 108</comment>
             <translation>Маленькая или частично разрушенная земляная насыпь показывается прерывистой линией. Минимальная высота 0,5 м.</translation>
-    </message>
+        </message>
         <message>
             <source>Small erosion gully</source>
             <comment>Name of symbol 110</comment>
@@ -7343,7 +7346,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
             <source>An area of dense vegetation (trees or undergrowth) which is barely passable. Running reduced to ca. 0-20% of normal speed.</source>
             <comment>Description of symbol 410</comment>
             <translation>Площадь густой растительности (деревья или подлесок), с трудом преодолевается. Скорость снижается до 0 - 20% от нормальной.</translation>
-    </message>
+        </message>
         <message>
             <source>Vegetation: very difficult to run, impassable, line</source>
             <comment>Name of symbol 410.1</comment>
@@ -7524,7 +7527,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
             <source>A stone wall or stone-faced bank.</source>
             <comment>Description of symbol 519</comment>
             <translation>Каменная стена или облицованный камнем вал (насыпь).</translation>
-    </message>
+        </message>
         <message>
             <source>Ruined stone wall</source>
             <comment>Name of symbol 520</comment>
@@ -7922,7 +7925,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
             <source>Distinct earth wall. Minimum height is 1 m.</source>
             <comment>Description of symbol 107</comment>
             <translation>Четко видимая земляная насыпь. Высота минимум 1 м.</translation>
-    </message>
+        </message>
         <message>
             <source>Erosion gully</source>
             <comment>Name of symbol 109</comment>
@@ -7939,7 +7942,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
             <translation>Непреодолимая скала</translation>
         </message>
         <message>
-            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
+            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201</comment>
             <translation type="unfinished">Непреодолимая (опасная) скала, карьер или опасный грунтовый обрыв (см. 106) показывается линией толщиной 0,35 мм вдоль бровки и зубцами, покрывающими площадь проекции обрыва от верхней кромки до подножья. При отображении вертикальных или близко расположенных обрывов зубцы могут быть опущены (ширина прохода должна быть не менее 0,3 мм в масштабе карты). Зубцы могут быть удлинены, если это необходимо. Например, если обрывом и береговой линией нет прохода, то зубцы обрыва должны пересекать береговую линию и накладываться на край изображения водоема.</translation>
         </message>
@@ -7949,7 +7952,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
             <translation>Непреодолимая скала, минимальный размер</translation>
         </message>
         <message>
-            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
+            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201.0.1</comment>
             <translation type="unfinished">Непреодолимая (опасная) скала, карьер или опасный грунтовый обрыв (см. 106) показывается линией толщиной 0,35 мм вдоль бровки и зубцами, покрывающими площадь проекции обрыва от верхней кромки до подножья. При отображении вертикальных или близко расположенных обрывов зубцы могут быть опущены (ширина прохода должна быть не менее 0,3 мм в масштабе карты). Зубцы могут быть удлинены, если это необходимо. Например, если обрывом и береговой линией нет прохода, то зубцы обрыва должны пересекать береговую линию и накладываться на край изображения водоема.</translation>
         </message>
@@ -8155,12 +8158,12 @@ The ISSkiOM symbol number is 301.1. Mapper uses this number already for the bank
             <source>Crossable watercourse</source>
             <comment>Name of symbol 305</comment>
             <translation>Преодолимый водный поток</translation>
-    </message>
+        </message>
         <message>
             <source>A crossable watercourse, minimum 2 m wide. The width of watercourses over 5 m wide should be shown to scale.</source>
             <comment>Description of symbol 305</comment>
             <translation>Преодолимая река или канава шириной минимум 2 м. Если ширина больше 5 м, то объект показывается в масштабе карты.</translation>
-    </message>
+        </message>
         <message>
             <source>Crossable small watercourse</source>
             <comment>Name of symbol 306</comment>
@@ -8222,7 +8225,7 @@ The ISSkiOM symbol number is 310.1. Mapper uses this number already for the mini
             <source>Where there are scattered trees in rough open land, areas of white (or green) should appear in the tone. Such an area may be generalised by using a regular pattern of large white dots in the yellow screen. Areas smaller than 16 mm in the maps scale are shown as rough open land (403). Individual trees may be added (418, 419, 420).</source>
             <comment>Description of symbol 404</comment>
             <translation>Редколесье по неудобице. В случаях когда группы растительности, показываемые белым или зелёным цветом, сливаются, - такие группы обобщаются и показываются регулярным рисунком, состоящим из больших белых точек на желтом фоне. Площади, занимающие меньше 16 мм в масштабе карты, показываются знаком 403. Отдельные деревья могут быть добавлены знаками 418 - 420.</translation>
-    </message>
+        </message>
         <message>
             <source>Forest: easy running</source>
             <comment>Name of symbol 405</comment>
@@ -8403,7 +8406,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
             <source>A stone wall or stone-faced bank.</source>
             <comment>Description of symbol 519</comment>
             <translation>Каменная стена или облицованный камнем вал (насыпь).</translation>
-    </message>
+        </message>
         <message>
             <source>High stone wall</source>
             <comment>Name of symbol 521</comment>
@@ -8433,7 +8436,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
             <source>A boarded or wire fence higher than ca 1.5 m, not crossable to the average orienteer, eg. deer fence.</source>
             <comment>Description of symbol 524</comment>
             <translation>Деревянная или проволочная (решетка, сетка и т.п.) выше 1,5 м высоты, непреодолимая для среднего ориентировщика.</translation>
-    </message>
+        </message>
         <message>
             <source>Crossing point</source>
             <comment>Name of symbol 525</comment>
@@ -8633,7 +8636,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
             <source>Spot height, text</source>
             <comment>Name of symbol 603.1</comment>
             <translation>Отметка высоты, текст</translation>
-    </message>
+        </message>
         <message>
             <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
             <comment>Description of symbol 603.1</comment>
@@ -9002,7 +9005,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
             <source>The OpenOrienteering Logo.</source>
             <comment>Description of symbol 999</comment>
             <translation>Логотип OpenOrienteering.</translation>
-    </message>
+        </message>
         <message>
             <source>Small earth wall</source>
             <comment>Name of symbol 108</comment>
@@ -9012,7 +9015,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
             <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
             <comment>Description of symbol 108</comment>
             <translation>Маленькая или частично разрушенная земляная насыпь показывается прерывистой линией. Минимальная высота 0,5 м.</translation>
-    </message>
+        </message>
         <message>
             <source>Small erosion gully</source>
             <comment>Name of symbol 110</comment>
@@ -9152,7 +9155,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
             <source>A runnable area of rock without earth or vegetation is shown as bare rock. An area of rock covered with grass, moss or other low vegetation is shown as open land (401/402).</source>
             <comment>Description of symbol 212</comment>
             <translation>Хорошо пробегаемая скальная поверхность без растительности. Если имеется какая-либо растительность (трава, мох и т. п.), следует использовать знаки 401 или 402.</translation>
-    </message>
+        </message>
         <message>
             <source>Pond</source>
             <comment>Name of symbol 302</comment>
@@ -9162,7 +9165,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
             <source>Where the lake or pond is smaller than 1 mm² on the printed map, the bank line is omitted.</source>
             <comment>Description of symbol 302</comment>
             <translation>В случаях, когда озеро или пруд меньше 1 мм² в масштабе карты, береговая линия не показывается.</translation>
-    </message>
+        </message>
         <message>
             <source>Waterhole</source>
             <comment>Name of symbol 303</comment>
@@ -9317,7 +9320,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
             <source>An area of dense vegetation (trees or undergrowth) which is barely passable. Running reduced to ca. 0-20% of normal speed.</source>
             <comment>Description of symbol 410</comment>
             <translation>Площадь густой растительности (деревья или подлесок), с трудом преодолевается. Скорость снижается до 0 - 20% от нормальной.</translation>
-    </message>
+        </message>
         <message>
             <source>Vegetation: very difficult to run, impassable, line</source>
             <comment>Name of symbol 410.1</comment>
@@ -10613,7 +10616,7 @@ Map symbols: ISOM 519, 520, 521</source>
             <source>|D| Fence</source>
             <comment>Name of symbol 5.9</comment>
             <translation>|D| Ограда</translation>
-    </message>
+        </message>
         <message>
             <source>A wire or wooden boundary. Used with symbol 8.11 to indicate a ruined fence.
 

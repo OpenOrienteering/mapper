@@ -37,7 +37,7 @@
             <source>Black below light browns</source>
             <comment>Color 6</comment>
             <translation>Musta vaaleanruskean alla</translation>
-    </message>
+        </message>
         <message>
             <source>Opaque Blue</source>
             <comment>Color 7</comment>
@@ -62,7 +62,7 @@
             <source>OpenOrienteering Orange</source>
             <comment>Color 11</comment>
             <translation>OpenOrienteering oranssi</translation>
-    </message>
+        </message>
         <message>
             <source>Black 25% (Grey)</source>
             <comment>Color 12</comment>
@@ -72,7 +72,7 @@
             <source>Green 50%, Yellow</source>
             <comment>Color 13</comment>
             <translation>Vihreä 50%, keltainen</translation>
-    </message>
+        </message>
         <message>
             <source>Green</source>
             <comment>Color 14</comment>
@@ -102,7 +102,7 @@
             <source>Green, Black 50%</source>
             <comment>Color 19</comment>
             <translation>Vihreä, musta 50%</translation>
-    </message>
+        </message>
         <message>
             <source>Opaque Green</source>
             <comment>Color 20</comment>
@@ -152,7 +152,7 @@
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. A contour interval of 2.5 metres may be used for flat terrains. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
             <comment>Description of symbol 101</comment>
             <translation>Viiva, joka yhdistää samalla korkeudella olevat pisteet. Normaali käyräväli on 5 metriä. 2.5 metrin käyräväli voidaan käyttää laakeaa maastoa varten. Pienin käyrien välinen etäisyys on 0.25 mm viivan keskeltä keskelle.</translation>
-    </message>
+        </message>
         <message>
             <source>Slope line, contour</source>
             <comment>Name of symbol 101.1</comment>
@@ -2014,7 +2014,7 @@ Sections of the circle should be omitted to leave important detail showing.</sou
             <source>Control number</source>
             <comment>Name of symbol 704</comment>
             <translation>Rastinumero</translation>
-    </message>
+        </message>
         <message>
             <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail. The numbers are orientated to north.</source>
             <comment>Description of symbol 704</comment>
@@ -2502,7 +2502,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
             <translation>Ylipääsemätön jyrkänne</translation>
         </message>
         <message>
-            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
+            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201</comment>
             <translation>Ylipääsemätön jyrkänne, pato, louhos tai korkea irtomaarinne (ks. 106) kuvataan taitekohtaan sijoitetulla tukevalla (0.35 mm) selkäviivalla josta viettosuuntaviivoilla osoitetaan jyrkänteen korkeus yläreunasta alareunaan. Tilanpuutteen takia viettosuuntaviivat voidaan jättää pois. Tämä tulee kyseeseen erikoisesti solissa. Solissa selkäviivaa voidaan ohentaa 0.30 mm. Kun jyrkänne on vesistön rannalla siten, että rantaa pitkin ei jyrkänteen alapuolelta voida kulkea, piirretään viettosuuntaviivat selvästi vesistön päälle. Rantaviiva on tältä kohtaa katkaistava. Padossa ylitysmahdollisuus kuvataan polku- tai tiemerkinnöin. Minimimitat: korkeus 3 m ja pituus 4 m.</translation>
         </message>
@@ -2512,7 +2512,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
             <translation>Ylipääsemätön jyrkänne, minimikoko</translation>
         </message>
         <message>
-            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
+            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201.0.1</comment>
             <translation>Ylipääsemätön jyrkänne, pato, louhos tai korkea irtomaarinne (ks. 106) kuvataan taitekohtaan sijoitetulla tukevalla (0.35 mm) selkäviivalla josta viettosuuntaviivoilla osoitetaan jyrkänteen korkeus yläreunasta alareunaan. Tilanpuutteen takia viettosuuntaviivat voidaan jättää pois. Tämä tulee kyseeseen erikoisesti solissa. Solissa selkäviivaa voidaan ohentaa 0.30 mm. Kun jyrkänne on vesistön rannalla siten, että rantaa pitkin ei jyrkänteen alapuolelta voida kulkea, piirretään viettosuuntaviivat selvästi vesistön päälle. Rantaviiva on tältä kohtaa katkaistava. Padossa ylitysmahdollisuus kuvataan polku- tai tiemerkinnöin. Minimimitat: korkeus 3 m ja pituus 4 m.</translation>
         </message>
@@ -3670,7 +3670,7 @@ Rasti: koju, romukasa, autonromu tms.</translation>
             <source>Control number</source>
             <comment>Name of symbol 703</comment>
             <translation>Rastinumero</translation>
-    </message>
+        </message>
         <message>
             <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail. The numbers are orientated to north.</source>
             <comment>Description of symbol 703</comment>
@@ -4224,7 +4224,7 @@ tiheästi alueella on yksityiskohtia.</translation>
         <message>
             <source>An impassable cliff, quarry or earth bank [see symbol earth bank (106)]. Tags are drawn downwards, showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). 
 
-The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags shall clearly extend over the bank line. Minimum height is 2 meters.
+The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags shall clearly extend over the bank line. Minimum height is 2 meters.
 
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable cliff!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
@@ -4244,7 +4244,7 @@ Tätä sääntöä rikkovat kilpailijat hylätään.&lt;/span&gt;</translation>
         <message>
             <source>An impassable cliff, quarry or earth bank [see symbol earth bank (106)]. Tags are drawn downwards, showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). 
 
-The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags shall clearly extend over the bank line. Minimum height is 2 meters.
+The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags shall clearly extend over the bank line. Minimum height is 2 meters.
 
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable cliff!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
@@ -5909,7 +5909,7 @@ Symboli sisältää kaikki painettavat värit - älä laita värejä erillisinä
             <source>Control number</source>
             <comment>Name of symbol 703</comment>
             <translation>Rastinumero</translation>
-    </message>
+        </message>
         <message>
             <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail. The numbers are orientated to north.</source>
             <comment>Description of symbol 703</comment>
@@ -6341,7 +6341,7 @@ Kansainvälisten kilpailujen kartoissa johtokäyrät on aina kuvattava. Suomessa
             <translation>Ylipääsemätön jyrkänne</translation>
         </message>
         <message>
-            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
+            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201</comment>
             <translation>Ylipääsemätön jyrkänne, louhos tai korkea irtomaarinne (ks. 106) kuvataan taitekohtaan sijoitetulla tukevalla 0.35 mm kantaviivalla, josta lähtevillä viettosuuntaviivoilla osoitetaan jyrkänteen ulottuvuus yläreunasta juureen. Tilanpuutteen johdosta viettosuuntaviivat voidaan jättää pois pystysuorista jyrkänteistä esim. solien kohdalla. Kapeiden solien seinämät voi kuvata 0,30 mm kantaviivalla. Viettosuuntaviivat ulotetaan aluetta kuvaavien karttamerkkien päälle, jos alueen reuna on jyrkänteessä kiinni. Kun jyrkänne on vesistön rannalla siten, että maata pitkin ei jyrkänteen alapuolelta voida kulkea, piirretään viettosuuntaviivat selvästi vesistön päälle. Rantaviiva katkaistaan tältä kohdalta.</translation>
         </message>
@@ -6351,7 +6351,7 @@ Kansainvälisten kilpailujen kartoissa johtokäyrät on aina kuvattava. Suomessa
             <translation>Ylipääsemätön jyrkänne, minimikoko</translation>
         </message>
         <message>
-            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
+            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201.0.1</comment>
             <translation>Ylipääsemätön jyrkänne, louhos tai korkea irtomaarinne (ks. 106) kuvataan taitekohtaan sijoitetulla tukevalla 0.35 mm kantaviivalla, josta lähtevillä viettosuuntaviivoilla osoitetaan jyrkänteen ulottuvuus yläreunasta juureen. Tilanpuutteen johdosta viettosuuntaviivat voidaan jättää pois pystysuorista jyrkänteistä esim. solien kohdalla. Kapeiden solien seinämät voi kuvata 0,30 mm kantaviivalla. Viettosuuntaviivat ulotetaan aluetta kuvaavien karttamerkkien päälle, jos alueen reuna on jyrkänteessä kiinni. Kun jyrkänne on vesistön rannalla siten, että maata pitkin ei jyrkänteen alapuolelta voida kulkea, piirretään viettosuuntaviivat selvästi vesistön päälle. Rantaviiva katkaistaan tältä kohdalta.</translation>
         </message>
@@ -7079,7 +7079,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
             <source>Control number</source>
             <comment>Name of symbol 703</comment>
             <translation>Rastinumero</translation>
-    </message>
+        </message>
         <message>
             <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail. The numbers are orientated to north.</source>
             <comment>Description of symbol 703</comment>
@@ -7902,12 +7902,12 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
             <source>Opaque Purple</source>
             <comment>Color 0</comment>
             <translation>Peittävä violetti</translation>
-    </message>
+        </message>
         <message>
             <source>Purple</source>
             <comment>Color 1</comment>
             <translation>Violetti</translation>
-    </message>
+        </message>
         <message>
             <source>Upper Green</source>
             <comment>Color 2</comment>
@@ -8027,17 +8027,17 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
             <comment>Description of symbol 101</comment>
             <translation>Viiva joka yhdistää samalla korkeudella olevat pisteet. Standardikäyräväli on 5 m. Pienin käyrien välinen etäisyys on 0.25 mm viivan keskeltä keskelle.</translation>
-    </message>
+        </message>
         <message>
             <source>Contour (narrow)</source>
             <comment>Name of symbol 101.1</comment>
             <translation>Korkeuskäyrä (kapea)</translation>
-    </message>
+        </message>
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
             <comment>Description of symbol 101.1</comment>
             <translation>Viiva joka yhdistää samalla korkeudella olevat pisteet. Standardikäyräväli on 5 m. Pienin käyrien välinen etäisyys on 0.25 mm viivan keskeltä keskelle.</translation>
-    </message>
+        </message>
         <message>
             <source>Index contour</source>
             <comment>Name of symbol 102</comment>
@@ -8154,7 +8154,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
             <translation>Ylipääsemätön jyrkänne</translation>
         </message>
         <message>
-            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
+            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201</comment>
             <translation type="unfinished">Ylipääsemätön jyrkänne, pato, louhos tai korkea irtomaarinne (ks. 106) kuvataan taitekohtaan sijoitetulla tukevalla (0.35 mm) selkäviivalla josta viettosuuntaviivoilla osoitetaan jyrkänteen korkeus yläreunasta alareunaan. Tilanpuutteen takia viettosuuntaviivat voidaan jättää pois. Tämä tulee kyseeseen erikoisesti solissa. Solissa selkäviivaa voidaan ohentaa 0.30 mm. Kun jyrkänne on vesistön rannalla siten, että rantaa pitkin ei jyrkänteen alapuolelta voida kulkea, piirretään viettosuuntaviivat selvästi vesistön päälle. Rantaviiva on tältä kohtaa katkaistava. Padossa ylitysmahdollisuus kuvataan polku- tai tiemerkinnöin. Minimimitat: korkeus 3 m ja pituus 4 m.</translation>
         </message>
@@ -8164,7 +8164,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
             <translation>Ylipääsemätön jyrkänne, minimikoko</translation>
         </message>
         <message>
-            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
+            <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201.0.1</comment>
             <translation type="unfinished">Ylipääsemätön jyrkänne, pato, louhos tai korkea irtomaarinne (ks. 106) kuvataan taitekohtaan sijoitetulla tukevalla (0.35 mm) selkäviivalla josta viettosuuntaviivoilla osoitetaan jyrkänteen korkeus yläreunasta alareunaan. Tilanpuutteen takia viettosuuntaviivat voidaan jättää pois. Tämä tulee kyseeseen erikoisesti solissa. Solissa selkäviivaa voidaan ohentaa 0.30 mm. Kun jyrkänne on vesistön rannalla siten, että rantaa pitkin ei jyrkänteen alapuolelta voida kulkea, piirretään viettosuuntaviivat selvästi vesistön päälle. Rantaviiva on tältä kohtaa katkaistava. Padossa ylitysmahdollisuus kuvataan polku- tai tiemerkinnöin. Minimimitat: korkeus 3 m ja pituus 4 m.</translation>
         </message>
@@ -8332,7 +8332,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
             <source>Uncrossable waterbody (forbidden to cross)</source>
             <comment>Name of symbol 301</comment>
             <translation>Ylipääsemätön vesialue (kielletty ylittää)</translation>
-    </message>
+        </message>
         <message>
             <source>When a body of water is not covered with ice or is otherwise dangerous to cross, the colour of the area shall be blue 100 %. That means also that the area is forbidden to cross.</source>
             <comment>Description of symbol 301</comment>
@@ -8357,7 +8357,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
             <source>Crossable waterbody</source>
             <comment>Name of symbol 301.0.1</comment>
             <translation>Ylitettävä vesialue</translation>
-    </message>
+        </message>
         <message>
             <source>When a body of water can be safely crossed, the colour shall be blue 50 %, so that the track symbols drawn can be read more clearly.
 The bank line of the crossable waterbody is not presented in ski orienteering map.
@@ -8860,39 +8860,39 @@ Rasti: koju, romukasa, autonromu tms.</translation>
             <source>Very wide track &gt; 3m</source>
             <comment>Name of symbol 801</comment>
             <translation>Erittäin leveä ura &gt; 3 m</translation>
-    </message>
+        </message>
         <message>
             <source>Very fast, wide ski tracks in ski centres, made with a ski trail groomer or a track leveller.</source>
             <comment>Description of symbol 801</comment>
             <translation>Yli 3 m leveä latukoneella tehty ura esim. hiihtokeskuksissa. Erittäin nopea hiihtää.</translation>
-    </message>
+        </message>
         <message>
             <source>Wide track 1.5-3.0 m</source>
             <comment>Name of symbol 802</comment>
             <translation>Leveä ura 1,5-3,0 m</translation>
-    </message>
+        </message>
         <message>
             <source>A fast, skateable track made by a snow mobile, width usually 2-3 m. Skateable tracks
 rougher and softer than the wide skateable tracks in the area.</source>
             <comment>Description of symbol 802</comment>
             <translation>Moottorikelkalla tehty, useimmiten 2-3 metriä leveä nopea luistelukelpoinen ura. Pehmeämpi ja epätasaisempi kuin alueen erittäin leveät urat (801).</translation>
-    </message>
+        </message>
         <message>
             <source>Track 0.8-1.2 m</source>
             <comment>Name of symbol 803</comment>
             <translation>Ura 0,8-1,2 m</translation>
-    </message>
+        </message>
         <message>
             <source>A good track made by a snow mobile, usually 1-1.2 m wide. In steep slopes, tracks may
 be made wider to reduce widening during competition.</source>
             <comment>Description of symbol 803</comment>
             <translation>Hyvä, moottorikelkalla tehty, useimmiten 1-1,2 metriä leveä ura. Jyrkissä rinteissä ura tehdään niin, ettei se leviä kilpailun aikana.</translation>
-    </message>
+        </message>
         <message>
             <source>Track, slow 0.8-1 m</source>
             <comment>Name of symbol 804</comment>
             <translation>Hidas ura 0,8-1 m</translation>
-    </message>
+        </message>
         <message>
             <source>A rough, slow track with little snow or some brushwood. This symbol is not used in steep
 slopes, if the width of the track allows using herringbone steps for uphill, or snow plowing
@@ -8903,29 +8903,29 @@ In order to clarify a junction, the beginning of a slow track is drawn with a sh
             <translation>Epätasainen ura, jolla pieniä puita ym. tai vähän lunta. Symbolia ei käytetä jyrkissä rinteissä, joissa uran leveys mahdollistaa haarakäynnin ylöspäin ja aurajarrutuksen alaspäin.
 
 Uran alku piirretään yhtenäisellä viivalla selventämään risteystä tai haaraa.</translation>
-    </message>
+        </message>
         <message>
             <source>Road covered with snow</source>
             <comment>Name of symbol 805</comment>
             <translation>Luminen tie</translation>
-    </message>
+        </message>
         <message>
             <source>Snowploughed, skiable roads are drawn with a normal road symbol but wider.</source>
             <comment>Description of symbol 805</comment>
             <translation>Aurattu, hiihtokelpoinen tie kuvataan tiesymbolilla, mutta leveämpänä.</translation>
-    </message>
+        </message>
         <message>
             <source>Sanded or snowless road, line symbol</source>
             <comment>Name of symbol 806</comment>
             <translation>Hiekoitettu tai lumeton tie, viivasymboli</translation>
-    </message>
+        </message>
         <message>
             <source>A road on the map which is sanded or snowless during the competition. A chain of V-
 marks across the road symbol show that the road is not skiable. Snowless roads and
 heavily sanded roads should normally be marked as forbidden routes.</source>
             <comment>Description of symbol 806</comment>
             <translation>Kilpailun aikana hiekoituksen tai lumettomuuden takia hiihtokelvoton tie.</translation>
-    </message>
+        </message>
         <message>
             <source>Sanded or snowless road, single symbol</source>
             <comment>Name of symbol 806.1</comment>
@@ -8937,28 +8937,28 @@ marks across the road symbol show that the road is not skiable. Snowless roads a
 heavily sanded roads should normally be marked as forbidden routes.</source>
             <comment>Description of symbol 806.1</comment>
             <translation>Kilpailun aikana hiekoituksen tai lumettomuuden takia hiihtokelvoton tie.</translation>
-    </message>
+        </message>
         <message>
             <source>Unploughed road</source>
             <comment>Name of symbol 807</comment>
             <translation>Auraamaton tie</translation>
-    </message>
+        </message>
         <message>
             <source>A road which is not opened for traffic, no skiable track.</source>
             <comment>Description of symbol 807</comment>
             <translation>Tie, jota ei ole aurattu liikenteelle, hiihtokelvoton.</translation>
-    </message>
+        </message>
         <message>
             <source>Prepared area</source>
             <comment>Name of symbol 808</comment>
             <translation>Tampattu alue</translation>
-    </message>
+        </message>
         <message>
             <source>Slalom slopes (alpine skiing slopes) and other areas which are wide, skiable and hard.
 The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</source>
             <comment>Description of symbol 808</comment>
             <translation>Laajat, hiihtokelpoiset ja kovapintaiset alueet, esim. laskettelurinteet. Alueen reunat selvennetään reunaviivalla, jotta alueen muodot ovat selkeästi luettavissa kartasta.</translation>
-    </message>
+        </message>
         <message>
             <source>Prepared area, fill pattern</source>
             <comment>Name of symbol 808.0.1</comment>
@@ -8969,7 +8969,7 @@ The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so
 The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</source>
             <comment>Description of symbol 808.0.1</comment>
             <translation>Laajat, hiihtokelpoiset ja kovapintaiset alueet, esim. laskettelurinteet. Alueen reunat selvennetään reunaviivalla, jotta alueen muodot ovat selkeästi luettavissa kartasta.</translation>
-    </message>
+        </message>
         <message>
             <source>Prepared area, boundary</source>
             <comment>Name of symbol 801.0.2</comment>
@@ -8984,12 +8984,12 @@ The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so
             <source>Public snow mobile route</source>
             <comment>Name of symbol 813</comment>
             <translation>Moottorikelkkailureitti</translation>
-    </message>
+        </message>
         <message>
             <source>A public and marked route for snow mobiles that may be in use during the ski orienteering competition. These routes are often uneven and of varying width and quality. The organizers must inform competitors in the competition instructions about the quality of such routes (e.g. with photographs) and ensure the safety of the competitors by temporarily closing the route, manning the route or by other means informing any snow mobile drivers about the possiblity of encountering ski orienteers on the route. If the safety of the competitors can not be guaranteed, the route must be marked as forbidden and safe passages must be ensured.</source>
             <comment>Description of symbol 813</comment>
             <translation>Yleisessä käytössä oleva maastoon merkitty reitti moottorikelkkailua varten. Reitti voi olla käytössä hiihtosuunnistuskilpailun aikana. Tällaiset reitit ovat usein pinnaltaan epätasaisia ja niiden leveys ja laatu vaihtelevat. Järjestäjien pitää ilmoittaa kilpailuohjeissa reittien laatu (esim. valokuvilla) ja varmistaa kilpailijoiden turvallisuus sulkemalla reitti väliaikaisesti, miehittämällä reitti tai muulla tavoin ilmoittamalla jokaiselle moottorikelkkailijalle mahdollisuudesta kohdata hiihtosuunnistajia reitillä. Jos kilpailijoiden turvallisuutta ei voida taata, IOF:n valvojan pitää merkitä reitti kielletyksi reitiksi ja varmistaa turvalliset ylityspaikat.</translation>
-    </message>
+        </message>
         <message>
             <source>Forbidden route, forbidden to cross</source>
             <comment>Name of symbol 814</comment>
@@ -9030,12 +9030,12 @@ that it is more clearly visible in the track network.</source>
             <source>Equipment deposit</source>
             <comment>Name of symbol 812</comment>
             <translation>Varustepaikka</translation>
-    </message>
+        </message>
         <message>
             <source>A deposit for spare equipment in the terrain.</source>
             <comment>Description of symbol 812</comment>
             <translation>Symboli osoittaa maaston kohdan, jossa hiihtovarusteita voi vaihtaa.</translation>
-    </message>
+        </message>
         <message>
             <source>Start</source>
             <comment>Name of symbol 701</comment>
@@ -9060,17 +9060,17 @@ that it is more clearly visible in the track network.</source>
             <source>Control point and focus point</source>
             <comment>Name of symbol 810</comment>
             <translation>Rastiympyrä ja kohdistuspiste</translation>
-    </message>
+        </message>
         <message>
             <source>The focus point (i.e. the point in the centre of a control circle) can be used when it is necessary to clarify the exact position of a control for instance in a dense track network. In ski orienteering, a control is preferably placed in one track only, not in crossings or junctions. A focus point helps specify the exact track where a control is situated.</source>
             <comment>Description of symbol 810</comment>
             <translation>Kohdistuspistettä käytetään tarvittaessa selventämään rastin sijaintia tiheässä uraverkostossa. Hiihtosuunnistuksessa rasti sijoitetaan mieluummin hiihtouran varteen. Kohdistuspiste auttaa paikallistamaan rastin tarkan sijainnin.</translation>
-    </message>
+        </message>
         <message>
             <source>Control number</source>
             <comment>Name of symbol 703</comment>
             <translation>Rastinumero</translation>
-    </message>
+        </message>
         <message>
             <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail. The numbers are orientated to north.</source>
             <comment>Description of symbol 703</comment>
@@ -9864,7 +9864,7 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
             <source>Control number</source>
             <comment>Name of symbol 703</comment>
             <translation>Rastinumero</translation>
-    </message>
+        </message>
         <message>
             <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail. The numbers are orientated to north.</source>
             <comment>Description of symbol 703</comment>
@@ -10091,7 +10091,7 @@ Map symbol: ISOM 701</source>
             <source>|A| Control number</source>
             <comment>Name of symbol 99.7</comment>
             <translation>|A| Rastinumero</translation>
-    </message>
+        </message>
         <message>
             <source>Numbering of controls is in the sequence they are to be visited, unless the description is for a Score competition.
 
@@ -10103,7 +10103,7 @@ Map symbol: ISOM 703</source>
             <source>|B| Control code</source>
             <comment>Name of symbol 99.8</comment>
             <translation>|B| Rastitunnus</translation>
-    </message>
+        </message>
         <message>
             <source>The control code should be a number greater than 30.</source>
             <comment>Description of symbol 99.8</comment>

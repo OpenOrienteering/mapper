@@ -51,6 +51,7 @@ set(Mapper_translations_template
   OpenOrienteering_et.ts
   OpenOrienteering_eu.ts
   OpenOrienteering_he.ts
+  OpenOrienteering_pt_PT.ts
   OpenOrienteering_template.ts
 )
 
@@ -60,6 +61,7 @@ set(map_symbols_translations
   map_symbols_da.ts
   map_symbols_de.ts
   map_symbols_eo.ts
+  map_symbols_es.ts
   map_symbols_fi.ts
   map_symbols_fr.ts
   map_symbols_nl.ts
