@@ -974,7 +974,7 @@
         <location filename="../src/tools/draw_path_tool.cpp" line="104"/>
         <source>Info</source>
         <comment>Show segment azimuth and length</comment>
-        <translation type="unfinished"></translation>
+        <translation>Інформація</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="107"/>
@@ -1305,7 +1305,7 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="44"/>
         <source>Symbol icon size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Розмір іконок знаків:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="63"/>
@@ -1563,7 +1563,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="110"/>
         <source>Save undo/redo history</source>
-        <translation type="unfinished"></translation>
+        <translation>Зберігати історію редагування</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="123"/>
@@ -7350,7 +7350,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/templates/template_track.cpp" line="138"/>
         <source>This template must be loaded with GDAL/OGR.</source>
-        <translation type="unfinished"></translation>
+        <translation>Необхідно імпортувати цю підложку через GDAL/OGR.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="187"/>
@@ -7770,7 +7770,7 @@ The maximum supported version is %2.</source>
         <location filename="../src/tools/tool_helpers.cpp" line="621"/>
         <source>%1 m</source>
         <comment>meter</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 м</translation>
     </message>
 </context>
 <context>
