@@ -160,6 +160,10 @@ public:
 	void cleanupPointSymbols();
 	
 	
+	/**
+	 * Returns the dimension which shall considered when scaling the icon.
+	 */
+	qreal dimensionForIcon() const override;
 	
 	/**
 	 * Returns the largest extent (half width) of the components of this line.

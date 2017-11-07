@@ -287,6 +287,10 @@ public:
 	 */
 	void resetIcon();
 	
+	/**
+	 * Returns the dimension which shall considered when scaling the icon.
+	 */
+	virtual qreal dimensionForIcon() const;
 	
 	/**
 	 * Returns the largest extent of all primitive lines which are part of the symbol.

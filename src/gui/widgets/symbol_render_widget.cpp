@@ -296,6 +296,7 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, bool mobile_mode, QWidget* pare
 	connect(map, &Map::symbolDeleted, this, &SymbolRenderWidget::symbolDeleted);
 	connect(map, &Map::symbolChanged, this, &SymbolRenderWidget::symbolChanged);
 	connect(map, &Map::symbolIconChanged, this, &SymbolRenderWidget::updateSingleIcon);
+	connect(map, &Map::symbolIconZoomChanged, this, &SymbolRenderWidget::updateAll);
 	connect(&Settings::getInstance(), &Settings::settingsChanged, this, &SymbolRenderWidget::settingsChanged);
 }
 
@@ -378,6 +379,7 @@ QSize SymbolRenderWidget::sizeHint() const
 
 void SymbolRenderWidget::adjustLayout()
 {
+	auto old_icon_size = icon_size;
 	icon_size = Settings::getInstance().getSymbolWidgetIconSizePx();
 	// Allow symbol widget to be that much wider than the viewport
 	int overflow = icon_size / 3;
@@ -385,8 +387,11 @@ void SymbolRenderWidget::adjustLayout()
 	num_rows = qMax(1, (map->getNumSymbols() + icons_per_row -1) / icons_per_row);
 	setFixedHeight(num_rows * icon_size);
 	
-	hidden_symbol_decoration.reset(new HiddenSymbolDecorator(icon_size));
-	protected_symbol_decoration.reset(new ProtectedSymbolDecorator(icon_size));
+	if (old_icon_size != icon_size)
+	{
+		hidden_symbol_decoration.reset(new HiddenSymbolDecorator(icon_size));
+		protected_symbol_decoration.reset(new ProtectedSymbolDecorator(icon_size));
+	}
 }
 
 void SymbolRenderWidget::emitGuarded_selectedSymbolsChanged()

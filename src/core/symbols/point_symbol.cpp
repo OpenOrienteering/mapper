@@ -46,6 +46,7 @@
 #include "core/renderables/renderable_implementation.h"
 #include "core/symbols/symbol.h"
 #include "core/virtual_coord_vector.h"
+#include "util/util.h"
 
 // IWYU pragma: no_forward_declare QPainterPath
 // IWYU pragma: no_forward_declare QXmlStreamReader
@@ -558,6 +559,34 @@ void PointSymbol::scale(double factor)
 	
 	resetIcon();
 }
+
+
+qreal PointSymbol::dimensionForIcon() const
+{
+	auto size = qreal(0);
+	if (getOuterColor())
+		size = 0.001 * (getInnerRadius() + getOuterWidth());
+	else if (getInnerColor())
+		size = 0.001 * getInnerRadius();
+	
+	QRectF extent;
+	for (int i = 0; i < getNumElements(); ++i)
+	{
+		auto object = std::unique_ptr<Object>(getElementObject(i)->duplicate());
+		object->setSymbol(getElementSymbol(i), true);
+		object->update();
+		rectIncludeSafe(extent, object->getExtent());
+		object->clearRenderables();
+	}
+	if (extent.isValid())
+	{
+		return qMax(size, (extent.width()+extent.height())/2);
+	}
+	
+	return size;
+}
+
+
 
 #ifndef NO_NATIVE_FILE_FORMAT
 

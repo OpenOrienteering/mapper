@@ -445,6 +445,9 @@ Map::Map()
 	georeferencing.reset(new Georeferencing());
 	init();
 	
+	connect(this, &Map::symbolAdded, this, &Map::updateSymbolIconZoom, Qt::QueuedConnection);
+	connect(this, &Map::symbolChanged, this, &Map::updateSymbolIconZoom, Qt::QueuedConnection);
+	connect(this, &Map::symbolDeleted, this, &Map::updateSymbolIconZoom, Qt::QueuedConnection);
 	connect(this, &Map::colorAdded, this, &Map::checkSpotColorPresence);
 	connect(this, &Map::colorChanged, this, &Map::checkSpotColorPresence);
 	connect(this, &Map::colorDeleted, this, &Map::checkSpotColorPresence);
@@ -1955,6 +1958,48 @@ void Map::determineSymbolUseClosure(std::vector< bool >& symbol_bitfield) const
 		
 	} while (change);
 }
+
+
+qreal Map::symbolIconZoom() const
+{
+	if (symbol_icon_scale <= 0)
+		const_cast<Map*>(this)->updateSymbolIconZoom();
+		
+	return symbol_icon_scale;
+}
+
+
+void Map::updateSymbolIconZoom()
+{
+	// A simple heuristics which determines the symbol icon scale from
+	// the mean of the line symbol widths.
+	auto values = std::vector<qreal>();
+	values.reserve(symbols.size());
+	for (const auto symbol : symbols)
+	{
+		auto size = symbol->dimensionForIcon();
+		if (size > 0)
+			values.push_back(size);
+	}
+	
+	auto new_scale = qreal(2);
+	if (values.size() >= 20)
+	{
+		std::sort(begin(values), end(values));
+		// Scale the symbol at 80% percentile to 7.0 mm.
+		new_scale = qMax(0.1, std::round(qreal(70 / values[values.size()*80/100])) / 10);
+	}
+	
+	if (!qFuzzyCompare(new_scale, symbol_icon_scale))
+	{
+		symbol_icon_scale = new_scale;
+		for (const auto symbol : symbols)
+			symbol->resetIcon();
+		emit symbolIconZoomChanged();
+	}
+}
+
+
 
 void Map::setTemplate(Template* temp, int pos)
 {

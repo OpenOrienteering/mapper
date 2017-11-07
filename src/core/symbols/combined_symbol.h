@@ -87,6 +87,8 @@ public:
 	
 	bool loadFinished(Map* map) override;
 	
+	qreal dimensionForIcon() const override;
+	
     qreal calculateLargestLineExtent() const override;
 	
 	// Getters / Setter

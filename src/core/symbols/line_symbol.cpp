@@ -1669,6 +1669,23 @@ void LineSymbol::cleanupPointSymbols()
 
 
 
+qreal LineSymbol::dimensionForIcon() const
+{
+	// calculateLargestLineExtent() gives half line width, and for the icon,
+	// we suggest a half line width of white space on each side.
+	auto size = 4 * calculateLargestLineExtent();
+	if (start_symbol)
+		size = qMax(size, start_symbol->dimensionForIcon());
+	if (mid_symbol)
+		size = qMax(size, mid_symbol->dimensionForIcon());
+	if (dash_symbol)
+		size = qMax(size, dash_symbol->dimensionForIcon());
+	if (end_symbol)
+		size = qMax(size, end_symbol->dimensionForIcon());
+	return size;
+}
+
+
 qreal LineSymbol::calculateLargestLineExtent() const
 {
 	auto line_extent_f = 0.001 * 0.5 * getLineWidth();

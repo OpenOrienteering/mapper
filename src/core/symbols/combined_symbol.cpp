@@ -357,6 +357,15 @@ bool CombinedSymbol::loadFinished(Map* map)
 
 
 
+qreal CombinedSymbol::dimensionForIcon() const
+{
+	return std::accumulate(begin(parts), end(parts), qreal(0), [](qreal value, auto subsymbol)
+	{
+		return subsymbol ? qMax(value, subsymbol->dimensionForIcon()) : value;
+	});
+}
+
+
 qreal CombinedSymbol::calculateLargestLineExtent() const
 {
 	return std::accumulate(begin(parts), end(parts), qreal(0), [](qreal value, auto subsymbol)

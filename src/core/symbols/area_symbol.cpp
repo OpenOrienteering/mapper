@@ -579,6 +579,12 @@ void AreaSymbol::FillPattern::scale(double factor)
 }
 
 
+qreal AreaSymbol::FillPattern::dimensionForIcon() const
+{
+	return qMax(line_spacing+line_width, point_distance)*0.0015;
+}
+
+
 
 // ### AreaSymbol ###
 
@@ -758,6 +764,17 @@ void AreaSymbol::scale(double factor)
 	
 	resetIcon();
 }
+
+
+
+qreal AreaSymbol::dimensionForIcon() const
+{
+	qreal size = 0;
+	for (auto& pattern : patterns)
+		size = qMax(size, pattern.dimensionForIcon());
+	return size;
+}
+
 
 
 bool AreaSymbol::hasRotatableFillPattern() const

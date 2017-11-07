@@ -88,6 +88,8 @@ public:
 	const MapColor* guessDominantColor() const override;
 	void scale(double factor) override;
 	
+	qreal dimensionForIcon() const override;
+	
 	// Contained objects and symbols (elements)
 	
 	/** Returns the number of contained elements. */

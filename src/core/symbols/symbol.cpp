@@ -365,7 +365,7 @@ QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, in
 {
 	// Desktop default used to be 2x zoom for 8 mm side length.
 	if (zoom < 0.1)
-		zoom = side_length / Util::mmToPixelLogical(4);
+		zoom = side_length / Util::mmToPixelLogical(8) * map->symbolIconZoom();
 	
 	Type contained_types = getContainedTypes();
 	
@@ -541,6 +541,12 @@ QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, in
 void Symbol::resetIcon()
 {
 	icon = {};
+}
+
+
+qreal Symbol::dimensionForIcon() const
+{
+	return 0;
 }
 
 

@@ -28,6 +28,7 @@
 #include <set>
 #include <vector>
 
+#include <QtGlobal>
 #include <QExplicitlySharedDataPointer>
 #include <QFlags>
 #include <QHash>
@@ -40,9 +41,9 @@
 #include <QString>
 #include <QTransform>
 
-#include "map_coord.h"
-#include "map_grid.h"
-#include "map_part.h"
+#include "core/map_coord.h"
+#include "core/map_grid.h"
+#include "core/map_part.h"
 
 class QIODevice;
 class QPainter;
@@ -585,6 +586,22 @@ public:
 	 * display the symbols indicated by the bitfield because of symbol dependencies.
 	 */
 	void determineSymbolUseClosure(std::vector< bool >& symbol_bitfield) const;
+	
+	/**
+	 * Returns the scale factor to be used for default symbol icons.
+	 */
+	qreal symbolIconZoom() const;
+	
+	/**
+	 * Updates the symbol icon zoom from the current set of symbols.
+	 * 
+	 * If there are not enough suitable symbols for a good guess, the zoom is
+	 * to 2.0.
+	 * 
+	 * \todo At the moment, only line symbol are considered, but point and text
+	 *       symbols should be included, too.
+	 */
+	void updateSymbolIconZoom();
 	
 	
 	// Templates
@@ -1354,6 +1371,9 @@ signals:
 	/** Emitted when a symbol in the map is deleted. */
 	void symbolDeleted(int pos, const Symbol* old_symbol);
 	
+	/** Emitted when the symbol icon zoom changes. */
+	void symbolIconZoomChanged();
+	
 	
 	/** Emitted when a template is added to the map, gives the template's index and pointer. */
 	void templateAdded(int pos, Template* temp);
@@ -1488,6 +1508,7 @@ private:
 	bool has_spot_colors;
 	QString symbol_set_id;
 	SymbolVector symbols;
+	mutable qreal symbol_icon_scale = 0;
 	TemplateVector templates;
 	TemplateVector closed_templates;
 	int first_front_template = 0;		// index of the first template in templates which should be drawn in front of the map
