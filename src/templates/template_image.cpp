@@ -325,7 +325,7 @@ void TemplateImage::updateGeoreferencing()
 
 Template* TemplateImage::duplicateImpl() const
 {
-	TemplateImage* new_template = new TemplateImage(template_path, map);
+	auto new_template = new TemplateImage(template_path, map);
 	new_template->image = image;
 	new_template->available_georef = available_georef;
 	return new_template;
@@ -606,31 +606,31 @@ TemplateImageOpenDialog::TemplateImageOpenDialog(TemplateImage* templ, QWidget* 
 	else
 		dpi_radio->setChecked(true);
 	
-	QHBoxLayout* mpp_layout = new QHBoxLayout();
+	auto mpp_layout = new QHBoxLayout();
 	mpp_layout->addWidget(mpp_radio);
 	mpp_layout->addWidget(mpp_edit);
 	mpp_layout->addStretch(1);
-	QHBoxLayout* dpi_layout = new QHBoxLayout();
+	auto dpi_layout = new QHBoxLayout();
 	dpi_layout->addWidget(dpi_radio);
 	dpi_layout->addWidget(dpi_edit);
 	dpi_layout->addWidget(dpi_label);
 	dpi_layout->addStretch(1);
-	QHBoxLayout* scale_layout = new QHBoxLayout();
+	auto scale_layout = new QHBoxLayout();
 	scale_layout->addSpacing(16);
 	scale_layout->addWidget(scale_label);
 	scale_layout->addWidget(scale_edit);
 	scale_layout->addStretch(1);
 	
-	QPushButton* cancel_button = new QPushButton(tr("Cancel"));
+	auto cancel_button = new QPushButton(tr("Cancel"));
 	open_button = new QPushButton(QIcon(QString::fromLatin1(":/images/arrow-right.png")), tr("Open"));
 	open_button->setDefault(true);
 	
-	QHBoxLayout* buttons_layout = new QHBoxLayout();
+	auto buttons_layout = new QHBoxLayout();
 	buttons_layout->addWidget(cancel_button);
 	buttons_layout->addStretch(1);
 	buttons_layout->addWidget(open_button);
 	
-	QVBoxLayout* layout = new QVBoxLayout();
+	auto layout = new QVBoxLayout();
 	layout->addWidget(size_label);
 	layout->addSpacing(16);
 	layout->addWidget(desc_label);

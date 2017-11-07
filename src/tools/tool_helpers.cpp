@@ -615,7 +615,7 @@ namespace
 
 
 AzimuthInfoHelper::AzimuthInfoHelper(const QWidget* widget, QColor color)
-: text_color(color)
+: text_color(std::move(color))
 , text_font(widget->font())
 , azimuth_template(QCoreApplication::translate("UnitOfMeasurement", "%1°", "degree"))
 , distance_template(QCoreApplication::translate("UnitOfMeasurement", "%1 m", "meter"))

@@ -348,7 +348,7 @@ void MapWidget::moveMap(int steps_x, int steps_y)
 			                                      qRound64(view->pixelToLength(height() * steps_y * move_factor)) );
 			view->setCenter(view->center() + offset);
 		}
-		catch (std::range_error)
+		catch (std::range_error&)
 		{
 			// Do nothing
 		}
@@ -492,20 +492,20 @@ void MapWidget::updateDrawing(const QRectF& map_rect, int pixel_border)
 		update(viewport_rect);
 }
 
-void MapWidget::updateMapRect(const QRectF& map_rect, int pixel_border, QRect& dirty_rect)
+void MapWidget::updateMapRect(const QRectF& map_rect, int pixel_border, QRect& cache_dirty_rect)
 {
 	QRect viewport_rect = calculateViewportBoundingBox(map_rect, pixel_border);
-	updateViewportRect(viewport_rect, dirty_rect);
+	updateViewportRect(viewport_rect, cache_dirty_rect);
 }
 
-void MapWidget::updateViewportRect(QRect viewport_rect, QRect& dirty_rect)
+void MapWidget::updateViewportRect(QRect viewport_rect, QRect& cache_dirty_rect)
 {
 	if (viewport_rect.intersects(rect()))
 	{
-		if (dirty_rect.isValid())
-			dirty_rect = dirty_rect.united(viewport_rect);
+		if (cache_dirty_rect.isValid())
+			cache_dirty_rect = cache_dirty_rect.united(viewport_rect);
 		else
-			dirty_rect = viewport_rect;
+			cache_dirty_rect = viewport_rect;
 		
 		update(viewport_rect);
 	}
@@ -762,7 +762,7 @@ void MapWidget::gestureEvent(QGestureEvent* event)
 			cancelPinching();
 			break;
 		default:
-			Q_ASSERT(false && "Unknown gesture state");
+			Q_UNREACHABLE(); // unknown gesture state
 		}
 		event->accept();
 	}
@@ -1119,7 +1119,7 @@ bool MapWidget::keyReleaseEventFilter(QKeyEvent* event)
 {
 	if (tool && tool->keyReleaseEvent(event))
 	{
-		return true;
+		return true; // NOLINT
 	}
 	
 	return false;

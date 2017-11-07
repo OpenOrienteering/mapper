@@ -152,13 +152,13 @@ public:
 	
 private:
 	/**
-	 * @brief Loads and returns the image for a for a particular scale.
+	 * @brief Loads and returns the image for a for a particular scale factor.
 	 * 
 	 * Since scale depends on the pixels-per-inch setting and doesn't change
 	 * very often, the image is loaded only when the scale changes and returned
 	 * from an internal cache otherwise.
 	 */
-	static const QImage loadHandleImage(unsigned int scale);
+	static const QImage loadHandleImage(unsigned int factor);
 	
 	
 	QImage handle_image;
