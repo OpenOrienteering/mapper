@@ -935,7 +935,7 @@
         <location filename="../src/tools/draw_path_tool.cpp" line="1187"/>
         <location filename="../src/tools/draw_path_tool.cpp" line="1214"/>
         <source>&lt;b&gt;%1+%2&lt;/b&gt;: Segment azimuth and length. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+%2&lt;/b&gt;: Viivan atsimuutti ja pituus. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1203"/>
@@ -985,7 +985,7 @@
         <location filename="../src/tools/draw_path_tool.cpp" line="104"/>
         <source>Info</source>
         <comment>Show segment azimuth and length</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tieto</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="107"/>
@@ -1328,7 +1328,7 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="44"/>
         <source>Symbol icon size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbolin kuvakkeen koko:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="63"/>
@@ -4096,7 +4096,7 @@ Haluatko silti tuoda datan?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="957"/>
         <source>Enable GPS distance rings</source>
-        <translation type="unfinished"></translation>
+        <translation>Ota GPS-etäisyysrenkaat käyttöön</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="959"/>
@@ -4176,7 +4176,7 @@ Haluatko silti tuoda datan?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2060"/>
         <source>Tag Selector</source>
-        <translation type="unfinished"></translation>
+        <translation>Tagin valinta</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2123"/>
@@ -4623,7 +4623,7 @@ valittu</translation>
         <location filename="../src/gui/color_dialog.cpp" line="592"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="221"/>
         <source>After modifying the stored text, the translation may no longer be found. Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Tallennetun tekstin muokkaamisen jälkeen, käännöstä ei enää löydy. Haluatko jatkaa?</translation>
     </message>
 </context>
 <context>
@@ -7587,7 +7587,7 @@ Jos et aio piirtää taustakartalle, tämä ei ole ongelma.</translation>
     <message>
         <location filename="../src/templates/template_track.cpp" line="138"/>
         <source>This template must be loaded with GDAL/OGR.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tämä taustakartta on ladattava GDAL/OGR:n avulla.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="187"/>
@@ -8000,13 +8000,13 @@ Tuetaan vain versioon %2 asti.</translation>
         <location filename="../src/tools/tool_helpers.cpp" line="620"/>
         <source>%1°</source>
         <comment>degree</comment>
-        <translation type="unfinished">%1°</translation>
+        <translation>%1°</translation>
     </message>
     <message>
         <location filename="../src/tools/tool_helpers.cpp" line="621"/>
         <source>%1 m</source>
         <comment>meter</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 m</translation>
     </message>
 </context>
 <context>
@@ -8083,7 +8083,7 @@ Tuetaan vain versioon %2 asti.</translation>
         <location filename="../src/fileformats/xml_file_format.cpp" line="601"/>
         <location filename="../src/fileformats/xml_file_format.cpp" line="858"/>
         <source>Some invalid characters had to be removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Joitain virheellisiä merkkejä oli poistettava.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="619"/>
