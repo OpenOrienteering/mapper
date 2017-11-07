@@ -55,6 +55,9 @@ Importer::~Importer() = default;
 
 void Importer::doImport(bool load_symbols_only, const QString& map_path)
 {
+	if (view)
+		view->setTemplateLoadingBlocked(true);
+	
 	import(load_symbols_only);
 	
 	// Object post processing:
@@ -97,7 +100,7 @@ void Importer::doImport(bool load_symbols_only, const QString& map_path)
 	
 	if (auto deleted = map->deleteIrregularObjects())
 	{
-		addWarning(tr("Dropped %n irregular object(s).", 0, deleted));
+		addWarning(tr("Dropped %n irregular object(s).", nullptr, int(deleted)));
 	}
 	
 	// Symbol post processing
@@ -108,6 +111,8 @@ void Importer::doImport(bool load_symbols_only, const QString& map_path)
 	}
 	
 	// Template loading: try to find all template files
+	if (view)
+		view->setTemplateLoadingBlocked(false);
 	bool have_lost_template = false;
 	for (int i = 0; i < map->getNumTemplates(); ++i)
 	{

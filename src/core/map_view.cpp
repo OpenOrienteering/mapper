@@ -462,7 +462,9 @@ TemplateVisibility MapView::getTemplateVisibility(const Template* temp) const
 void MapView::setTemplateVisibility(Template* temp, TemplateVisibility vis)
 {
 	auto visible = vis.visible && vis.opacity > 0;
-	if (visible && temp->getTemplateState() != Template::Loaded)
+	if (visible
+	    && temp->getTemplateState() != Template::Loaded
+	    && !templateLoadingBlocked())
 	{
 		vis.visible = visible = temp->loadTemplateFile(false);
 	}
@@ -526,4 +528,11 @@ void MapView::setOverprintingSimulationEnabled(bool enabled)
 		overprinting_simulation_enabled = enabled;
 		emit visibilityChanged(VisibilityFeature::OverprintingEnabled, enabled);
 	}
+}
+
+
+
+void MapView::setTemplateLoadingBlocked(bool blocked)
+{
+	template_loading_blocked = blocked;
 }

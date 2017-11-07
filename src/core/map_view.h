@@ -321,6 +321,13 @@ public:
 	void setOverprintingSimulationEnabled(bool enabled);
 	
 	
+	/** Temporarily blocks automatic template loading on visibility changes. */
+	void setTemplateLoadingBlocked(bool blocked);
+	
+	/** Returns true when template loading on visibility changes is disabled. */
+	bool templateLoadingBlocked() const { return template_loading_blocked; }
+	
+	
 signals:
 	/**
 	 * Indicates a change of the viewed area of the map.
@@ -411,6 +418,8 @@ private:
 	bool all_templates_hidden;
 	bool grid_visible;
 	bool overprinting_simulation_enabled;
+	
+	bool template_loading_blocked;
 };
 
 
