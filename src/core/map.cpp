@@ -1987,7 +1987,7 @@ void Map::updateSymbolIconZoom()
 	{
 		std::sort(begin(values), end(values));
 		// Scale the symbol at 80% percentile to 7.0 mm.
-		new_scale = qMax(0.1, std::round(qreal(70 / values[values.size()*80/100])) / 10);
+		new_scale = 0.1 * qMax(1, qRound(qreal(70 / values[values.size()*80/100])));
 	}
 	
 	if (!qFuzzyCompare(new_scale, symbol_icon_scale))
