@@ -169,6 +169,11 @@ private:
 			if (qstrcmp(type, "YES") != 0)
 				continue;
 			
+			// Skip write-only drivers.
+			auto cap_open = GDALGetMetadataItem(driver_data, GDAL_DCAP_OPEN, nullptr);
+			if (qstrcmp(cap_open, "YES") != 0)
+				continue;
+			
 			auto extensions_raw = GDALGetMetadataItem(driver_data, GDAL_DMD_EXTENSIONS, nullptr);
 			auto extensions = QByteArray::fromRawData(extensions_raw, int(qstrlen(extensions_raw)));
 			for (auto pos = 0; pos >= 0; )
