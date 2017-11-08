@@ -69,6 +69,10 @@ An Android version is available. It already has a special user interface, but it
 
 Probably not, due to distribution issues. Technically, a build should be feasible.
 
+### How do I hide/protect a symbol in the mobile UI?
+
+Tap-and-hold on the Symbol selector button. Context menu with hide and protect options will appear. Hidden and protected symbols are marked with usual signs in the symbol list. 
+
 ## Experienced mappers' corner
 
 ### What are the most notable differences to OCAD?
