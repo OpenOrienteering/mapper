@@ -256,45 +256,47 @@
         <message>
             <source>Earth wall</source>
             <comment>Name of symbol 105</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Muro de tierra</translation>
+    </message>
         <message>
             <source>Distinct earth wall. Minimum height is 1 m.</source>
             <comment>Description of symbol 105</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Muro de tierra perceptible. La altura mínima es 1 m.</translation>
+    </message>
         <message>
             <source>Small earth wall</source>
             <comment>Name of symbol 106</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Muro de tierra pequeño</translation>
+    </message>
         <message>
             <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
             <comment>Description of symbol 106</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un muro de tierra pequeño o parcialmente derruido se debe mostrar con una línea discontinua. La altura mínima es 0,5 m.</translation>
+    </message>
         <message>
             <source>Erosion gully</source>
             <comment>Name of symbol 107</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Surco de erosión</translation>
+    </message>
         <message>
             <source>An erosion gully which is too small to be shown using symbol 104 (earth bank) is shown by a single line. Minimum depth: 1 m.
 Contour lines shall not be broken around this symbol.</source>
             <comment>Description of symbol 107</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un surco de erosión que sea demasiado pequeño para representarse con el símbolo 104 (terraplén) se representa con una línea única. Mínima profundidad: 1 m.
+Las curvas de nivel no se deberán cortar alrededor de este símbolo</translation>
+    </message>
         <message>
             <source>Small erosion gully</source>
             <comment>Name of symbol 108</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Surco de erosión pequeño</translation>
+    </message>
         <message>
             <source>A small erosion gully, dry ditch or trench. Minimum depth: 0.5 m.
 Contour lines should be broken around this symbol.</source>
             <comment>Description of symbol 108</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un surco de erosión pequeño, canal seco o trinchera. Mínima profundidad: 0,5 m.
+Las curvas de nivel se deberían recortar alrededor de este símbolo.</translation>
+    </message>
         <message>
             <source>Small knoll</source>
             <comment>Name of symbol 109</comment>
