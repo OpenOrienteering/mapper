@@ -23,6 +23,7 @@
 #include "map_editor_p.h"
 
 #include <cstddef>
+#include <functional>
 #include <iterator>
 #include <limits>
 #include <set>
@@ -597,7 +598,7 @@ void MapEditorController::attach(MainWindow* window)
 	measure_dock_widget = nullptr;
 	color_dock_widget = nullptr;
 	symbol_dock_widget = nullptr;
-	QLabel* statusbar_zoom_label = nullptr;
+	std::function<void(const QString&)> zoom_display_function;
 	
 	this->window = window;
 	if (mode == MapEditor)
@@ -614,11 +615,14 @@ void MapEditorController::attach(MainWindow* window)
 	if (mobile_mode)
 	{
 		window->setWindowState(window->windowState() | Qt::WindowFullScreen);
+		zoom_display_function = [window](const QString& text) {
+			window->showStatusBarMessage(text);
+		};
 	}
 	else
 	{
 		// Add zoom / cursor position field to status bar
-		QLabel* statusbar_zoom_icon = new QLabel();
+		auto statusbar_zoom_icon = new QLabel();
 		auto fontmetrics = statusbar_zoom_icon->fontMetrics();
 		auto pixmap = QPixmap(QLatin1String(":/images/magnifying-glass.png"));
 		auto scale = qreal(fontmetrics.height()) / pixmap.height();
@@ -626,10 +630,14 @@ void MapEditorController::attach(MainWindow* window)
 			pixmap = pixmap.scaledToHeight(qRound(scale * pixmap.height()), Qt::SmoothTransformation);
 		statusbar_zoom_icon->setPixmap(pixmap);
 		
-		statusbar_zoom_label = new QLabel();
+		auto statusbar_zoom_label = new QLabel();
 		statusbar_zoom_label->setMinimumWidth(fontmetrics.width(QLatin1String(" 0.333x")));
 		statusbar_zoom_label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 		statusbar_zoom_label->setFrameShape(QFrame::NoFrame);
+		
+		zoom_display_function = [statusbar_zoom_label](const QString& text) {
+			statusbar_zoom_label->setText(text);
+		};
 		
 		statusbar_zoom_frame = new QFrame();
 #ifdef Q_OS_WIN
@@ -661,6 +669,7 @@ void MapEditorController::attach(MainWindow* window)
 	// Create map widget
 	map_widget = new MapWidget(mode == MapEditor, mode == SymbolEditor);
 	map_widget->setMapView(main_view);
+	map_widget->setZoomDisplay(zoom_display_function);
 	
 	// Create menu and toolbar together, so actions can be inserted into one or both
 	if (mode == MapEditor)
@@ -677,7 +686,6 @@ void MapEditorController::attach(MainWindow* window)
 		}
 		else
 		{
-			map_widget->setZoomLabel(statusbar_zoom_label);
 			map_widget->setCursorposLabel(statusbar_cursorpos_label);
 			window->setCentralWidget(map_widget);
 			
@@ -687,7 +695,6 @@ void MapEditorController::attach(MainWindow* window)
 	}
 	else if (mode == SymbolEditor)
 	{
-		map_widget->setZoomLabel(statusbar_zoom_label);
 		map_widget->setCursorposLabel(statusbar_cursorpos_label);
 		window->setCentralWidget(map_widget);
 	}

@@ -76,7 +76,6 @@ MapWidget::MapWidget(bool show_help, bool force_antialiasing, QWidget* parent)
  , tool(nullptr)
  , activity(nullptr)
  , coords_type(MAP_COORDS)
- , zoom_label(nullptr)
  , cursorpos_label(nullptr)
  , show_help(show_help)
  , force_antialiasing(force_antialiasing)
@@ -264,7 +263,7 @@ void MapWidget::viewChanged(MapView::ChangeFlags changes)
 	setActivityBoundingBox(activity_dirty_rect_map, activity_dirty_rect_border, true);
 	updateEverything();
 	if (changes.testFlag(MapView::ZoomChange))
-		updateZoomLabel();
+		updateZoomDisplay();
 }
 
 void MapWidget::setPanOffset(QPoint offset)
@@ -320,6 +319,7 @@ void MapWidget::updatePinching(QPoint center, qreal factor)
 	Q_ASSERT(pinching);
 	pinching_center = center;
 	pinching_factor = factor;
+	updateZoomDisplay();
 	update();
 }
 
@@ -557,10 +557,10 @@ QRect MapWidget::calculateViewportBoundingBox(const QRectF& map_rect, int pixel_
 	return viewToViewport(view_rect).toAlignedRect();
 }
 
-void MapWidget::setZoomLabel(QLabel* zoom_label)
+void MapWidget::setZoomDisplay(std::function<void(const QString&)> setter)
 {
-	this->zoom_label = zoom_label;
-	updateZoomLabel();
+	this->zoom_display = setter;
+	updateZoomDisplay();
 }
 
 void MapWidget::setCursorposLabel(QLabel* cursorpos_label)
@@ -568,10 +568,15 @@ void MapWidget::setCursorposLabel(QLabel* cursorpos_label)
 	this->cursorpos_label = cursorpos_label;
 }
 
-void MapWidget::updateZoomLabel()
+void MapWidget::updateZoomDisplay()
 {
-	if (zoom_label)
-		zoom_label->setText(tr("%1x", "Zoom factor").arg(view->getZoom(), 0, 'g', 3));
+	if (zoom_display)
+	{
+		auto zoom = view->getZoom();
+		if (pinching)
+			zoom *= pinching_factor;
+		zoom_display(tr("%1x", "Zoom factor").arg(zoom, 0, 'g', 3));
+	}
 }
 
 void MapWidget::setCoordsDisplay(CoordsType type)
