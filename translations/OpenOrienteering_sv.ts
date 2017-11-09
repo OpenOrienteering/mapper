@@ -3979,7 +3979,7 @@ Importera datan ändå?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="901"/>
         <source>Tag Selection</source>
-        <translation>Tag-väljare</translation>
+        <translation>Välj taggar</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="901"/>
