@@ -4349,7 +4349,7 @@ Importera datan ändå?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="937"/>
         <source>Convert to curves</source>
-        <translation>Konvertera till kurvor</translation>
+        <translation>Konvertera till kurvlinjer</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="938"/>
