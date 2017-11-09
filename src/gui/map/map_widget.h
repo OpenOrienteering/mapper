@@ -22,6 +22,7 @@
 #ifndef OPENORIENTEERING_MAP_WIDGET_H
 #define OPENORIENTEERING_MAP_WIDGET_H
 
+#include <functional>
 #include <type_traits>
 
 #include <Qt>
@@ -290,8 +291,11 @@ public:
 	 */
 	void updateEverythingInRect(const QRect& dirty_rect);
 	
-	/** Specify the label where the MapWidget will display zoom information. */
-	void setZoomLabel(QLabel* zoom_label);
+	/**
+	 * Sets the function which will be called to display zoom information.
+	 */
+	void setZoomDisplay(std::function<void(const QString&)> setter);
+	
 	/** Specify the label where the MapWidget will display cursor position information. */
 	void setCursorposLabel(QLabel* cursorpos_label);
 	/**
@@ -449,8 +453,12 @@ private:
 	/** Draws a help message at the center of the MapWidget. */
 	void showHelpMessage(QPainter* painter, const QString& text) const;
 	
-	/** Updates the content of the zoom label, set by setZoomLabel(). */
-	void updateZoomLabel();
+	/**
+	 * Updates the content of the zoom display.
+	 * 
+	 * \see setZoomDisplay()
+	 */
+	void updateZoomDisplay();
 	/** Updates the content of the cursorpos label, set by setCursorposLabel(). */
 	void updateCursorposLabel(const MapCoordF pos);
 	
@@ -460,7 +468,7 @@ private:
 	
 	CoordsType coords_type;
 	
-	QLabel* zoom_label;
+	std::function<void(const QString&)> zoom_display;
 	QLabel* cursorpos_label;
 	QLabel* objecttag_label;
 	MapCoordF last_cursor_pos;

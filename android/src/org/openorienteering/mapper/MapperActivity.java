@@ -49,6 +49,8 @@ public class MapperActivity extends org.qtproject.qt5.android.bindings.QtActivit
 	private String yes_string;
 	private String no_string;
 	private String gps_disabled_string;
+	
+	private static Toast toast;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -131,9 +133,13 @@ public class MapperActivity extends org.qtproject.qt5.android.bindings.QtActivit
 	{
 		instance.runOnUiThread(new Runnable() {
 			public void run() {
-				Toast.makeText(instance, message, Toast.LENGTH_SHORT).show();
+				if (toast == null)
+					toast = Toast.makeText(instance, "", Toast.LENGTH_SHORT);
+			
+				toast.setText(message);
+				toast.show();
 			}
-		});
+		} );
 	}
 	
 	/** Locks the current display orientation.
