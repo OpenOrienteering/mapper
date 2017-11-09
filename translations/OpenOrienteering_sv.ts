@@ -204,7 +204,7 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="216"/>
         <source>Draw elements if all points are inside the boundary.</source>
-        <translation>Rita ut element om alla dess punkter än innanför området.</translation>
+        <translation>Rita ut element om alla dess punkter är inom området.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="231"/>
@@ -338,7 +338,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="90"/>
         <source>Edit</source>
-        <translation type="unfinished">Redigera</translation>
+        <translation>Redigera</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="103"/>
@@ -444,17 +444,17 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="276"/>
         <source>Name</source>
-        <translation type="unfinished">Namn</translation>
+        <translation>Namn</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="328"/>
         <source>- unnamed -</source>
-        <translation type="unfinished">- namnlös -</translation>
+        <translation>- namnlös -</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="597"/>
         <source>Warning</source>
-        <translation type="unfinished">Varning</translation>
+        <translation>Varning</translation>
     </message>
 </context>
 <context>
@@ -1063,7 +1063,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
         <location filename="../src/tools/draw_path_tool.cpp" line="102"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation type="unfinished">Snappa</translation>
+        <translation>Snappa</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="103"/>
@@ -1482,7 +1482,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="44"/>
         <source>Symbol icon size:</source>
-        <translation type="unfinished">Ikonstorlek:</translation>
+        <translation>Ikonstorlek:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="63"/>
@@ -1773,7 +1773,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="147"/>
         <source>Use the new OCD importer also for version 8 files</source>
-        <translation type="unfinished">Använd den nya OCD-filimporteraren även för version 8-filer</translation>
+        <translation>Använd den nya OCD-fil importeraren även för version 8-filer</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="191"/>
@@ -3475,7 +3475,7 @@ Skala om den importerade datan?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3975"/>
         <source>Import...</source>
-        <translation type="unfinished">Importera...</translation>
+        <translation>Importera...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3976"/>
@@ -4959,7 +4959,7 @@ valda</translation>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="50"/>
         <source>&amp;Find...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Hitta...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="57"/>
@@ -5525,7 +5525,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
         <location filename="../src/core/objects/object_query.cpp" line="296"/>
         <source>is</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished">är</translation>
+        <translation>är</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="299"/>
@@ -5745,7 +5745,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.h" line="454"/>
         <source>Color id not found: %1, ignoring this color</source>
-        <translation type="unfinished">Färg-ID gick inte att hitta: %1, ignorerar denna färg</translation>
+        <translation>Färg-ID gick inte att hitta: %1, ignorerar denna färg</translation>
     </message>
 </context>
 <context>
@@ -5763,22 +5763,22 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="335"/>
         <source>Point</source>
-        <translation type="unfinished">Punkt</translation>
+        <translation>Punkt</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="342"/>
         <source>Line</source>
-        <translation type="unfinished">Linje</translation>
+        <translation>Linje</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="351"/>
         <source>Area</source>
-        <translation type="unfinished">Yta</translation>
+        <translation>Yta</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="357"/>
         <source>Text</source>
-        <translation type="unfinished">Text</translation>
+        <translation>Text</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="448"/>
@@ -5798,7 +5798,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="497"/>
         <source>Empty geometry.</source>
-        <translation type="unfinished">Tom geometri.</translation>
+        <translation>Tom geometri.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="502"/>
@@ -6694,7 +6694,7 @@ separations</source>
 %1
 
 %2</source>
-        <translation type="unfinished">Kan inte öppna fil:
+        <translation>Kan inte öppna fil:
 %1
 
 %2</translation>
@@ -7111,7 +7111,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="83"/>
         <source>Edit</source>
-        <translation type="unfinished">Redigera</translation>
+        <translation>Redigera</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="84"/>
@@ -7136,7 +7136,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="226"/>
         <source>Warning</source>
-        <translation type="unfinished">Varning</translation>
+        <translation>Varning</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1281"/>
@@ -7520,7 +7520,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="56"/>
         <source>Key</source>
-        <translation type="unfinished">Nyckel</translation>
+        <translation>Nyckel</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="56"/>
@@ -7530,7 +7530,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="56"/>
         <source>Value</source>
-        <translation type="unfinished">Värde</translation>
+        <translation>Värde</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="72"/>
@@ -7545,12 +7545,12 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="79"/>
         <source>Move Up</source>
-        <translation type="unfinished">Flytta upp</translation>
+        <translation>Flytta upp</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="81"/>
         <source>Move Down</source>
-        <translation type="unfinished">Flytta ner</translation>
+        <translation>Flytta ner</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="88"/>
@@ -7560,7 +7560,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="93"/>
         <source>Help</source>
-        <translation type="unfinished">Hjälp</translation>
+        <translation>Hjälp</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="342"/>
@@ -8477,7 +8477,7 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="113"/>
         <source>underlined</source>
-        <translation type="unfinished">understreckad</translation>
+        <translation>understruken</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="116"/>
