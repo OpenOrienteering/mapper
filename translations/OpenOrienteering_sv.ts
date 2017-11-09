@@ -1270,7 +1270,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="476"/>
         <source>&lt;b&gt;%1+%2&lt;/b&gt;: Cancel editing. </source>
-        <translation>&lt;b&gt;%1+%2&lt;/b&gt;: Avbryter redigering. </translation>
+        <translation>&lt;b&gt;%1+%2&lt;/b&gt;: Avbryt redigering.</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="481"/>
