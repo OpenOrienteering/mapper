@@ -163,6 +163,7 @@ protected:
 	
 	// Symbol export
 	void exportCommonSymbolFields(const Symbol* symbol, OCADSymbol* ocad_symbol, int size);
+	void exportSymbolIcon(const Symbol* symbol, u8 ocad_icon[]);
 	int getPatternSize(const PointSymbol* point);
 	s16 exportPattern(const PointSymbol* point, OCADPoint** buffer);		// returns the number of written coordinates, including the headers
 	s16 exportSubPattern(const Object* object, const Symbol* symbol, OCADPoint** buffer);

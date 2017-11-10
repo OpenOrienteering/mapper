@@ -1959,10 +1959,14 @@ void OCAD8FileExport::exportCommonSymbolFields(const Symbol* symbol, OCADSymbol*
 		}
 	}
 	
+	exportSymbolIcon(symbol, ocad_symbol->icon);
+}
+
+void OCAD8FileExport::exportSymbolIcon(const Symbol* symbol, u8 ocad_icon[])
+{
 	// Icon: 22x22 with 4 bit color code, origin at bottom left, some padding
-	const int icon_size = 22;
+	constexpr int icon_size = 22;
 	QImage image = symbol->createIcon(map, icon_size, false, 0, map->symbolIconZoom());
-	u8* ocad_icon = (u8*)ocad_symbol->icon;
 	for (int y = icon_size - 1; y >= 0; --y)
 	{
 		for (int x = 0; x < icon_size; x += 2)
