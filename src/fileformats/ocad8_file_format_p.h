@@ -178,7 +178,7 @@ protected:
 	/// Returns the number of exported coordinates. If not nullptr, the given symbol is used to determine the meaning of dash points.
 	u16 exportCoordinates(const MapCoordVector& coords, OCADPoint** buffer, const Symbol* symbol);
 	u16 exportTextCoordinates(TextObject* object, OCADPoint** buffer);
-	int getOcadColor(QRgb rgb);
+	static int getOcadColor(QRgb rgb);
 	s16 getPointSymbolExtent(const PointSymbol* symbol);
 	
 	// Conversion functions
