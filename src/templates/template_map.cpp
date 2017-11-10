@@ -155,7 +155,7 @@ QRectF TemplateMap::getTemplateExtent() const
 
 Template* TemplateMap::duplicateImpl() const
 {
-	TemplateMap* copy = new TemplateMap(template_path, map);
+	auto copy = new TemplateMap(template_path, map);
 	if (template_state == Loaded)
 		copy->loadTemplateFileImpl(false);
 	return copy;

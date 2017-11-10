@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2015 Kai Pastor
+ *    Copyright 2013-2015, 2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,15 +21,24 @@
 
 #include "template_tool_move.h"
 
+#include <Qt>
+#include <QCursor>
+#include <QFlags>
 #include <QMouseEvent>
 
 #include "core/map.h"
-#include "template.h"
+#include "templates/template.h"
+#include "util/transformation.h"
 
-TemplateMoveTool::TemplateMoveTool(Template* templ, MapEditorController* editor, QAction* action) : MapEditorTool(editor, Other, action), templ(templ)
+TemplateMoveTool::TemplateMoveTool(Template* templ, MapEditorController* editor, QAction* tool_action)
+: MapEditorTool(editor, Other, tool_action), templ(templ)
 {
-	dragging = false;
+	// nothing else
 }
+
+TemplateMoveTool::~TemplateMoveTool() = default;
+
+
 
 void TemplateMoveTool::init()
 {

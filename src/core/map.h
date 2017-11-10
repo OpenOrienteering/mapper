@@ -227,7 +227,7 @@ public:
 	QHash<const Symbol*, Symbol*> importMap(
 	        const Map& imported_map,
 	        ImportMode mode,
-	        std::vector<bool>* symbol_filter = nullptr,
+	        std::vector<bool>* filter = nullptr,
 	        int symbol_insert_pos = -1,
 	        bool merge_duplicate_symbols = true,
 	        const QTransform& transform = {}
