@@ -4351,7 +4351,7 @@ selected</source>
         <location filename="../src/gui/map/map_widget.cpp" line="574"/>
         <source>%1x</source>
         <comment>Zoom factor</comment>
-        <translation type="unfinished"> {1x?}</translation>
+        <translation>%1x</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_widget.cpp" line="595"/>
@@ -7247,11 +7247,9 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message numerus="yes">
         <location filename="../src/templates/template_track.cpp" line="529"/>
         <source>%n path object(s) could not be imported (reason: missing coordinates).</source>
-        <translation type="unfinished">
-            <numerusform>%n objekti ei saanud importida (põhjus: puuduvad koordinaadid)</numerusform>
-            <numerusform>%n objekte ei saanud importida (põhjus: puuduvad koordinaadid)</numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n objekti ei saanud importida (põhjus: puuduvad koordinaadid).</numerusform>
+        <numerusform>%n objekte ei saanud importida (põhjus: puuduvad koordinaadid).</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/sensors/gps_track.cpp" line="417"/>
         <source>Error reading</source>
