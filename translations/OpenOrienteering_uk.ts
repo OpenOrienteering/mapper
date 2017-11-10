@@ -399,7 +399,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="597"/>
         <source>Warning</source>
-        <translation type="unfinished">Попередження</translation>
+        <translation>Попередження</translation>
     </message>
 </context>
 <context>
@@ -924,7 +924,7 @@
         <location filename="../src/tools/draw_path_tool.cpp" line="1187"/>
         <location filename="../src/tools/draw_path_tool.cpp" line="1214"/>
         <source>&lt;b&gt;%1+%2&lt;/b&gt;: Segment azimuth and length. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+%2 &lt;/b&gt;: Азимут та довжина сегменту. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1203"/>
@@ -974,7 +974,7 @@
         <location filename="../src/tools/draw_path_tool.cpp" line="104"/>
         <source>Info</source>
         <comment>Show segment azimuth and length</comment>
-        <translation type="unfinished"></translation>
+        <translation>Інформація</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="107"/>
@@ -1305,7 +1305,7 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="44"/>
         <source>Symbol icon size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Розмір іконок знаків:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="63"/>
@@ -1483,7 +1483,7 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="69"/>
         <source>Value</source>
-        <translation type="unfinished">Значення</translation>
+        <translation>Значення</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="88"/>
@@ -1563,7 +1563,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="110"/>
         <source>Save undo/redo history</source>
-        <translation type="unfinished"></translation>
+        <translation>Зберігати історію редагування</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="123"/>
@@ -3979,7 +3979,7 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="884"/>
         <source>Assign new symbols by cross-reference table</source>
-        <translation type="unfinished">Назначити новий знак у таблиці перехресних зв&apos;язків</translation>
+        <translation>Призначити новий знак у таблиці перехресних зв&apos;язків</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="901"/>
@@ -4450,13 +4450,13 @@ selected</source>
         <location filename="../src/gui/color_dialog.cpp" line="585"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="214"/>
         <source>Before editing, the stored text will be replaced with the current translation. Do you want to continue?</source>
-        <translation type="unfinished">Перед внесенням змін, збережений текст буде замінено на  поточний переклад. Бажаєте продовжити?</translation>
+        <translation>Зверніть увагу, що збережений текст буде замінено на поточний переклад. Бажаєте продовжити?</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="592"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="221"/>
         <source>After modifying the stored text, the translation may no longer be found. Do you want to continue?</source>
-        <translation type="unfinished">Після внесення правок у збережений текст, переклад більше не буде доступним. Бажаєте продовжити?</translation>
+        <translation>Після редагування збереженого тексту, переклад більше не буде доступним. Бажаєте продовжити?</translation>
     </message>
 </context>
 <context>
@@ -5224,12 +5224,13 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gdal/ogr_file_format.cpp" line="560"/>
         <source>Cannot use this spatial reference:
 %s</source>
-        <translation type="unfinished"></translation>
+        <translation>Неможливо використати цю просторову прив&amp;apos;язку:
+%s</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="619"/>
         <source>The geospatial data has no suitable spatial reference.</source>
-        <translation type="unfinished"></translation>
+        <translation>Геодані не містять придатної просторової прив&amp;apos;язки.</translation>
     </message>
 </context>
 <context>
@@ -5973,12 +5974,12 @@ separations</source>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="143"/>
         <source>Pattern</source>
-        <translation type="unfinished">Візерунок</translation>
+        <translation>Візерунок</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="155"/>
         <source>Clear replacements</source>
-        <translation type="unfinished">Очистити заміни</translation>
+        <translation>Очистити заміни</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="158"/>
@@ -5995,7 +5996,7 @@ separations</source>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="165"/>
         <source>Symbol mapping</source>
-        <translation type="unfinished"></translation>
+        <translation>Відображення знаків</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="233"/>
@@ -6034,7 +6035,7 @@ separations</source>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="360"/>
         <source>The cross reference table has been modified.
 Do you want to save your changes?</source>
-        <translation type="unfinished">Таблицю перехресних зв&apos;язків було змінено.
+        <translation>Таблицю перехресних зв&apos;язків було змінено.
 Бажаєте зберегти ці зміни?</translation>
     </message>
     <message>
@@ -6416,7 +6417,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="226"/>
         <source>Warning</source>
-        <translation type="unfinished">Попередження</translation>
+        <translation>Попередження</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1281"/>
@@ -7350,7 +7351,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/templates/template_track.cpp" line="138"/>
         <source>This template must be loaded with GDAL/OGR.</source>
-        <translation type="unfinished"></translation>
+        <translation>Необхідно імпортувати цю підложку через GDAL/OGR.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="187"/>
@@ -7764,13 +7765,13 @@ The maximum supported version is %2.</source>
         <location filename="../src/tools/tool_helpers.cpp" line="620"/>
         <source>%1°</source>
         <comment>degree</comment>
-        <translation type="unfinished">%1°</translation>
+        <translation>%1°</translation>
     </message>
     <message>
         <location filename="../src/tools/tool_helpers.cpp" line="621"/>
         <source>%1 m</source>
         <comment>meter</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 м</translation>
     </message>
 </context>
 <context>
