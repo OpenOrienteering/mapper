@@ -534,6 +534,44 @@ QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, in
 	delete icon_symbol;
 	painter.end();
 	
+	// Add shadow to dominant white on transparent
+	auto color = guessDominantColor();
+	if (color && color->isWhite())
+	{
+		for (int y = image.height() - 1; y >= 0; --y)
+		{
+			for (int x = image.width() - 1; x >= 0; --x)
+			{
+				if (qAlpha(image.pixel(x, y)) > 0)
+					continue;
+				
+				auto is_white = [](const QRgb& rgb) {
+					return rgb > 0
+					       && qAlpha(rgb) == qRed(rgb)
+						   && qRed(rgb) == qGreen(rgb)
+						   && qGreen(rgb) == qBlue(rgb);
+				};
+				if (x > 0)
+				{
+					auto preceding = image.pixel(x-1, y);
+					if (is_white(preceding))
+					{
+						image.setPixel(x, y, qPremultiply(qRgba(0, 0, 0, 127)));
+						continue;
+					}
+				}
+				if (y > 0)
+				{
+					auto preceding = image.pixel(x, y-1);
+					if (is_white(preceding))
+					{
+						image.setPixel(x, y, qPremultiply(qRgba(0, 0, 0, 127)));
+					}
+				}
+			}
+		}
+	}
+	
 	return image;
 }
 
