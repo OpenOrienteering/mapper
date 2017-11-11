@@ -1960,18 +1960,95 @@ void OCAD8FileExport::exportCommonSymbolFields(const Symbol* symbol, OCADSymbol*
 	}
 	
 	// Icon: 22x22 with 4 bit color code, origin at bottom left, some padding
-	const int icon_size = 22;
-	QImage image = symbol->createIcon(map, icon_size, false, 0, map->symbolIconZoom());
-	u8* ocad_icon = (u8*)ocad_symbol->icon;
-	for (int y = icon_size - 1; y >= 0; --y)
+	constexpr int icon_size = 22;
+	auto image = symbol->createIcon(map, icon_size, false, 0, map->symbolIconZoom())
+	             .convertToFormat(QImage::Format_ARGB32_Premultiplied);
+	
+	// RGB colors
+	struct Rgb { int r, g, b; };
+	auto difference = [](const Rgb& a, const Rgb& b) -> Rgb
 	{
-		for (int x = 0; x < icon_size; x += 2)
+		return { a.r - b.r, a.g - b.g, a.b - b.b };
+	};
+	
+	// OCD color palette
+	static const Rgb ocd_colors[16] = {
+		{   0,   0,   0 },
+		{ 128,   0,   0 },
+		{   0, 128,   0 },
+		{ 128, 128,   0 },
+		{   0,   0, 128 },
+		{ 128,   0, 128 },
+		{   0, 128, 128 },
+		{ 128, 128, 128 },
+		{ 192, 192, 192 },
+		{ 255,   0,   0 },
+		{   0, 255,   0 },
+		{ 255, 255,   0 },
+		{   0,   0, 255 },
+		{ 255,   0, 255 },
+		{   0, 255, 255 },
+		{ 255, 255, 255 }
+	};
+	
+	// Floyd-Steinberg error diffusion
+	// One extra element for avoiding an upper bound check
+	Rgb row[icon_size+1];
+	Rgb next_row[icon_size+1];
+	auto process_pixel = [&image, &row, &next_row, difference](int x, int y, int dir)->int
+	{
+		// Apply original pixel on white background
+		auto premultiplied = image.pixel(x, y);
+		auto alpha = qAlpha(premultiplied);
+		auto r = 255 - alpha + qRed(premultiplied);
+		auto g = 255 - alpha + qGreen(premultiplied);
+		auto b = 255 - alpha + qBlue(premultiplied);
+		auto pixel = Rgb{r, g, b};
+		// Merge pixel with quantization error, then determine OCD color and new error.
+		auto current = difference(pixel, row[x]);
+		auto ocd_color = getOcadColor(QColor{qBound(0, current.r, 255), qBound(0, current.g, 255), qBound(0, current.b, 255)}.rgba());
+		auto err = difference(pixel, ocd_colors[ocd_color]);
+		
+		next_row[x] = difference(next_row[x], {err.r*5/16, err.g*5/16,err.b*5/16});
+		if (x-dir >= 0)
 		{
-			int first = getOcadColor(image.pixel(x, y));
-			int second = getOcadColor(image.pixel(x + 1, y));
-			*(ocad_icon++) = (first << 4) + (second);
+			next_row[x-dir] = difference(next_row[x-dir], {err.r*3/16, err.g*3/16, err.b*3/16});
 		}
-		ocad_icon++;
+		if (x+dir >= 0)
+		{
+			next_row[x+dir] = difference(next_row[x+dir], {err.r*1/16, err.g*1/16, err.b*1/16});
+			row[x+dir] = difference(row[x+dir], {err.r*7/16, err.g*7/16, err.b*7/16});
+		}
+		return ocd_color;
+	};
+	
+	u8* ocad_icon = static_cast<u8*>(ocad_symbol->icon);
+	ocad_icon += 12 * (icon_size - 1);  // Upside down
+	std::fill(std::begin(next_row), std::end(next_row), Rgb{0, 0, 0});
+	for (int y = 0; y < icon_size; ++y)
+	{
+		std::copy(std::begin(next_row), std::end(next_row), std::begin(row));
+		std::fill(std::begin(next_row), std::end(next_row), Rgb{0, 0, 0});
+		// One row from front to back
+		for (int x = 0; x < icon_size; ++x)
+		{
+			auto first  = process_pixel(  x, y, +1);
+			auto second = process_pixel(++x, y, +1);
+			*(ocad_icon + x/2) = u8((first << 4) + second);
+		}
+		ocad_icon -= 12;
+		
+		++y;
+		std::copy(std::begin(next_row), std::end(next_row), std::begin(row));
+		std::fill(std::begin(next_row), std::end(next_row), Rgb{0, 0, 0});
+		// Another row from back to front
+		for (int x = icon_size; x > 0; )
+		{
+			auto second = process_pixel(--x, y, -1);
+			auto first  = process_pixel(--x, y, -1);
+			*(ocad_icon + x/2) = u8((first << 4) + second);
+		}
+		ocad_icon -= 12;
 	}
 }
 
@@ -2571,64 +2648,47 @@ u16 OCAD8FileExport::exportTextCoordinates(TextObject* object, OCADPoint** buffe
 
 int OCAD8FileExport::getOcadColor(QRgb rgb)
 {
-	// Simple comparison function which takes the best matching color.
-	static const QColor ocad_colors[16] = {
-		QColor(  0,   0,   0).toHsv(),
-		QColor(128,   0,   0).toHsv(),
-		QColor(0,   128,   0).toHsv(),
-		QColor(128, 128,   0).toHsv(),
-		QColor(  0,   0, 128).toHsv(),
-		QColor(128,   0, 128).toHsv(),
-		QColor(  0, 128, 128).toHsv(),
-		QColor(128, 128, 128).toHsv(),
-		QColor(192, 192, 192).toHsv(),
-		QColor(255,   0,   0).toHsv(),
-		QColor(  0, 255,   0).toHsv(),
-		QColor(255, 255,   0).toHsv(),
-		QColor(  0,   0, 255).toHsv(),
-		QColor(255,   0, 255).toHsv(),
-		QColor(  0, 255, 255).toHsv(),
-		QColor(255, 255, 255).toHsv()
-	};
-	
-	// Return white for transparent areas
-	if (qAlpha(rgb) < 128)
-		return 15;
-	
 	QColor color = QColor(rgb).toHsv();
-	int best_index = 0;
-	float best_distance = 999999;
-	for (int i = 0; i < 16; ++i)
+	int h, s, v;
+	color.getHsv(&h, &s, &v);
+	
+	if (s - v/20 < 40)
 	{
-		int hue_dist = qAbs(color.hue() - ocad_colors[i].hue());
-		hue_dist = qMin(hue_dist, 360 - hue_dist);
-		float distance = qPow(hue_dist, 2) + 
-						  0.1f * qPow(color.saturation() - ocad_colors[i].saturation(), 2) +
-						  0.1f * qPow(color.value() - ocad_colors[i].value(), 2);
-		
-		// (Too much) manual tweaking for orienteering colors
-		if (i == 1)
-			distance *= 1.5;	// Dark red
-		else if (i == 3)
-			distance *= 2;		// Olive
-		else if (i == 7)
-			distance *= 2;		// Dark gray
-		else if (i == 8)
-			distance *= 3;		// Light gray
-		else if (i == 11)
-			distance *= 2;		// Yellow
-		else if (i == 9)
-			distance *= 3;		// Red is unlikely
-		else if (i == 15)
-			distance *= 4;		// White is very unlikely
-			
-		if (distance < best_distance)
-		{
-			best_distance = distance;
-			best_index = i;
-		}
+		// Low saturation
+		if (v < 32)
+			return 0; // black
+		else if (v < 96)
+			return 7; // dark gray
+		else if (v < 192)
+			return 8; // light gray
+		else
+			return 15; // white
 	}
-	return best_index;
+	else if (v + s/20 < 40)
+	{
+		// Low value
+		return 0; // black
+	}
+	else
+	{
+		// A real color
+		int index = (v + s/20 < 208) ? 0 : 8;
+		if (h < 30)
+			index += 1; // red
+		else if (h < 90)
+			index += 3; // yellow
+		else if (h < 150)
+			index += 2; // green
+		else if (h < 210)
+			index += 6; // cyan
+		else if (h < 270)
+			index += 4; // blue
+		else if (h < 330)
+			index += 5; // magenta
+		else
+			index += 1; // red
+		return index;
+	}
 }
 
 s16 OCAD8FileExport::getPointSymbolExtent(const PointSymbol* symbol)
