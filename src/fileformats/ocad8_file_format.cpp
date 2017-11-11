@@ -25,7 +25,9 @@
 #include <QCoreApplication>
 #include <QDir>
 #include <QFileInfo>
+#include <QImage>
 #include <QImageReader>
+#include <QRgb>
 #include <QTextCodec>
 
 #include "settings.h"
@@ -1966,14 +1968,43 @@ void OCAD8FileExport::exportSymbolIcon(const Symbol* symbol, u8 ocad_icon[])
 {
 	// Icon: 22x22 with 4 bit color code, origin at bottom left, some padding
 	constexpr int icon_size = 22;
-	QImage image = symbol->createIcon(map, icon_size, false, 0, map->symbolIconZoom());
+	QImage image = symbol->createIcon(map, icon_size, false, 0, map->symbolIconZoom())
+	               .convertToFormat(QImage::Format_ARGB32_Premultiplied);
+	
+	auto process_pixel = [&image](int x, int y)->int
+	{
+		// Apply premultiplied pixel on white background
+		auto premultiplied = image.pixel(x, y);
+		auto alpha = qAlpha(premultiplied);
+		auto r = 255 - alpha + qRed(premultiplied);
+		auto g = 255 - alpha + qGreen(premultiplied);
+		auto b = 255 - alpha + qBlue(premultiplied);
+		auto pixel = qRgb(r, g, b);
+		
+		// Ordered dithering 2x2 threshold matrix, adjusted for o-map halftones
+		static int threshold[4] = { 24, 192, 136, 80 };
+		auto palette_color = getOcadColor(pixel);
+		switch (palette_color)
+		{
+		case 0:
+		case 7:
+		case 8:
+		case 15:
+			// Black/gray/white covered by palette
+			return palette_color;
+			
+		default:
+			return  QColor(pixel).saturation() >= threshold[(x%2 + 2*(y%2))] ? palette_color : 15;
+		}
+	};
+	
 	for (int y = icon_size - 1; y >= 0; --y)
 	{
 		for (int x = 0; x < icon_size; x += 2)
 		{
-			int first = getOcadColor(image.pixel(x, y));
-			int second = getOcadColor(image.pixel(x + 1, y));
-			*(ocad_icon++) = (first << 4) + (second);
+			auto first = process_pixel(x, y);
+			auto second = process_pixel(x+1, y);
+			*(ocad_icon++) = u8((first << 4) + second);
 		}
 		ocad_icon++;
 	}
@@ -2573,6 +2604,7 @@ u16 OCAD8FileExport::exportTextCoordinates(TextObject* object, OCADPoint** buffe
 	}
 }
 
+// static
 int OCAD8FileExport::getOcadColor(QRgb rgb)
 {
 	// Simple comparison function which takes the best matching color.
@@ -2595,9 +2627,7 @@ int OCAD8FileExport::getOcadColor(QRgb rgb)
 		QColor(255, 255, 255).toHsv()
 	};
 	
-	// Return white for transparent areas
-	if (qAlpha(rgb) < 128)
-		return 15;
+	Q_ASSERT(qAlpha(rgb) == 255);
 	
 	QColor color = QColor(rgb).toHsv();
 	int best_index = 0;
