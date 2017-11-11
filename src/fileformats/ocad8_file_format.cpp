@@ -2631,14 +2631,14 @@ int OCAD8FileExport::getOcadColor(QRgb rgb)
 	
 	QColor color = QColor(rgb).toHsv();
 	int best_index = 0;
-	float best_distance = 999999;
+	auto best_distance = std::numeric_limits<qreal>::max();
 	for (int i = 0; i < 16; ++i)
 	{
 		int hue_dist = qAbs(color.hue() - ocad_colors[i].hue());
 		hue_dist = qMin(hue_dist, 360 - hue_dist);
-		float distance = qPow(hue_dist, 2) + 
-						  0.1f * qPow(color.saturation() - ocad_colors[i].saturation(), 2) +
-						  0.1f * qPow(color.value() - ocad_colors[i].value(), 2);
+		auto distance = qPow(hue_dist, 2)
+		                + 0.1 * qPow(color.saturation() - ocad_colors[i].saturation(), 2)
+		                + 0.1 * qPow(color.value() - ocad_colors[i].value(), 2);
 		
 		// (Too much) manual tweaking for orienteering colors
 		if (i == 1)
