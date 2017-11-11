@@ -1987,13 +1987,23 @@ void OCAD8FileExport::exportSymbolIcon(const Symbol* symbol, u8 ocad_icon[])
 		switch (palette_color)
 		{
 		case 0:
+			// Black to gray (50%)
+			return  qGray(pixel) < 128-threshold[(x%2 + 2*(y%2))]/2 ? 0 : 7;
+			
 		case 7:
+			// Gray (50%) to light gray 
+			return  qGray(pixel) < 192-threshold[(x%2 + 2*(y%2))]/4 ? 7 : 8;
+			
 		case 8:
+			// Light gray to white
+			return  qGray(pixel) < 256-threshold[(x%2 + 2*(y%2))]/4 ? 8 : 15;
+			
 		case 15:
-			// Black/gray/white covered by palette
+			// Pure white
 			return palette_color;
 			
 		default:
+			// Color to white
 			return  QColor(pixel).saturation() >= threshold[(x%2 + 2*(y%2))] ? palette_color : 15;
 		}
 	};
@@ -2607,7 +2617,6 @@ u16 OCAD8FileExport::exportTextCoordinates(TextObject* object, OCADPoint** buffe
 // static
 int OCAD8FileExport::getOcadColor(QRgb rgb)
 {
-	// Simple comparison function which takes the best matching color.
 	static const QColor ocad_colors[16] = {
 		QColor(  0,   0,   0).toHsv(),
 		QColor(128,   0,   0).toHsv(),
@@ -2629,11 +2638,28 @@ int OCAD8FileExport::getOcadColor(QRgb rgb)
 	
 	Q_ASSERT(qAlpha(rgb) == 255);
 	
+	// Quick return for frequent values
+	if (rgb == qRgb(255, 255, 255))
+		return 15;
+	else if (rgb == qRgb(0, 0, 0))
+		return 0;
+	
 	QColor color = QColor(rgb).toHsv();
+	if (color.hue() == -1 || color.saturation() < 32)
+	{
+		auto gray = qGray(rgb);  // qGray is used for dithering
+		if (gray >= 192)
+			return 8;
+		if (gray >= 128)
+			return 7;
+		return 0;
+	}
+	
 	int best_index = 0;
 	auto best_distance = std::numeric_limits<qreal>::max();
-	for (int i = 0; i < 16; ++i)
+	for (auto i : { 1, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14 })
 	{
+		// True color
 		int hue_dist = qAbs(color.hue() - ocad_colors[i].hue());
 		hue_dist = qMin(hue_dist, 360 - hue_dist);
 		auto distance = qPow(hue_dist, 2)
@@ -2645,17 +2671,11 @@ int OCAD8FileExport::getOcadColor(QRgb rgb)
 			distance *= 1.5;	// Dark red
 		else if (i == 3)
 			distance *= 2;		// Olive
-		else if (i == 7)
-			distance *= 2;		// Dark gray
-		else if (i == 8)
-			distance *= 3;		// Light gray
 		else if (i == 11)
 			distance *= 2;		// Yellow
 		else if (i == 9)
 			distance *= 3;		// Red is unlikely
-		else if (i == 15)
-			distance *= 4;		// White is very unlikely
-			
+		
 		if (distance < best_distance)
 		{
 			best_distance = distance;
