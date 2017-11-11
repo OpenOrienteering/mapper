@@ -163,6 +163,7 @@ protected:
 	
 	// Symbol export
 	void exportCommonSymbolFields(const Symbol* symbol, OCADSymbol* ocad_symbol, int size);
+	void exportSymbolIcon(const Symbol* symbol, u8 ocad_icon[]);
 	int getPatternSize(const PointSymbol* point);
 	s16 exportPattern(const PointSymbol* point, OCADPoint** buffer);		// returns the number of written coordinates, including the headers
 	s16 exportSubPattern(const Object* object, const Symbol* symbol, OCADPoint** buffer);
@@ -178,7 +179,7 @@ protected:
 	/// Returns the number of exported coordinates. If not nullptr, the given symbol is used to determine the meaning of dash points.
 	u16 exportCoordinates(const MapCoordVector& coords, OCADPoint** buffer, const Symbol* symbol);
 	u16 exportTextCoordinates(TextObject* object, OCADPoint** buffer);
-	int getOcadColor(QRgb rgb);
+	static int getOcadColor(QRgb rgb);
 	s16 getPointSymbolExtent(const PointSymbol* symbol);
 	
 	// Conversion functions
