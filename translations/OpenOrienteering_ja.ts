@@ -994,7 +994,7 @@
         <location filename="../src/tools/draw_path_tool.cpp" line="1187"/>
         <location filename="../src/tools/draw_path_tool.cpp" line="1214"/>
         <source>&lt;b&gt;%1+%2&lt;/b&gt;: Segment azimuth and length. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+%2&lt;/b&gt;: セグメントの方位角と長さ。 </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1203"/>
@@ -1056,7 +1056,7 @@
         <location filename="../src/tools/draw_path_tool.cpp" line="104"/>
         <source>Info</source>
         <comment>Show segment azimuth and length</comment>
-        <translation type="unfinished"></translation>
+        <translation>情報</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="107"/>
@@ -1467,7 +1467,7 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="44"/>
         <source>Symbol icon size:</source>
-        <translation type="unfinished"></translation>
+        <translation>記号アイコンサイズ:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="63"/>
@@ -2836,7 +2836,7 @@
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="302"/>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="769"/>
         <source>Start symbol</source>
-        <translation>Start symbol</translation>
+        <translation>開始記号</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/line_symbol.cpp" line="1709"/>
@@ -2851,7 +2851,7 @@
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="302"/>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="769"/>
         <source>End symbol</source>
-        <translation>End symbol</translation>
+        <translation>終了記号</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/line_symbol.cpp" line="1717"/>
@@ -8200,7 +8200,7 @@ Failed to load template. Does the file exist and is it valid?</source>
     <message>
         <location filename="../src/templates/template_track.cpp" line="138"/>
         <source>This template must be loaded with GDAL/OGR.</source>
-        <translation type="unfinished"></translation>
+        <translation>このテンプレートは GDAL/OGR で読み込む必要があります。</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="187"/>
@@ -8644,13 +8644,13 @@ The maximum supported version is %2.</source>
         <location filename="../src/tools/tool_helpers.cpp" line="620"/>
         <source>%1°</source>
         <comment>degree</comment>
-        <translation type="unfinished">%1°</translation>
+        <translation>%1°</translation>
     </message>
     <message>
         <location filename="../src/tools/tool_helpers.cpp" line="621"/>
         <source>%1 m</source>
         <comment>meter</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 m</translation>
     </message>
 </context>
 <context>

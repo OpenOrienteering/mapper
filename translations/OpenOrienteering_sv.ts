@@ -189,7 +189,7 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="213"/>
         <source>Clip elements at the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Klipp objekt vid ytterkant</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="214"/>
@@ -2946,7 +2946,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="282"/>
         <source>Scale the dash symbol at corners</source>
-        <translation type="unfinished"></translation>
+        <translation>Skalera sträcklinjesymbolen vid hörn</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/line_symbol.cpp" line="1705"/>
@@ -3939,12 +3939,12 @@ Importera datan ändå?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="882"/>
         <source>Symbol set ID...</source>
-        <translation type="unfinished"></translation>
+        <translation>Symboluppsättnings-ID...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="882"/>
         <source>Edit the symbol set ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Redigera symboluppsättnings-ID</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="884"/>
@@ -3954,7 +3954,7 @@ Importera datan ändå?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="884"/>
         <source>Assign new symbols by cross-reference table</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilldela nya symboler med korsreferenstabell</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="888"/>
@@ -3984,7 +3984,7 @@ Importera datan ändå?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="901"/>
         <source>Show/Hide the tag selection window</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Visa/Dölj fönstret för tag-väljaren</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="908"/>
@@ -4033,7 +4033,7 @@ Importera datan ändå?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1879"/>
         <source>Edit the symbol set ID:</source>
-        <translation type="unfinished"></translation>
+        <translation>Redigera symboluppsättnings-ID:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2060"/>
@@ -4907,7 +4907,7 @@ valda</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2394"/>
         <source>Fill the selected lines or create a border for the selected areas.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fyll valda linjer eller skapa kantlinjer för den/de markerade ytan/ytorna.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/map/map_editor.cpp" line="2513"/>
@@ -4964,7 +4964,7 @@ valda</translation>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="57"/>
         <source>Find &amp;next</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sök &amp;next</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="96"/>
@@ -4974,12 +4974,12 @@ valda</translation>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="101"/>
         <source>&amp;Find next</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Sök nästa</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="104"/>
         <source>Find &amp;all</source>
-        <translation type="unfinished"></translation>
+        <translation>Sök &amp;alla</translation>
     </message>
 </context>
 <context>
@@ -5021,7 +5021,7 @@ valda</translation>
         <location filename="../src/gui/color_dialog.cpp" line="272"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="81"/>
         <source>Text source:</source>
-        <translation type="unfinished"></translation>
+        <translation>Textkälla:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="514"/>
@@ -5047,13 +5047,13 @@ valda</translation>
         <location filename="../src/gui/color_dialog.cpp" line="585"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="214"/>
         <source>Before editing, the stored text will be replaced with the current translation. Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Före redigering, den lagrade texten kommer att ersättas med den nuvarande översättningen. Vill du fortsätta?</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="592"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="221"/>
         <source>After modifying the stored text, the translation may no longer be found. Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Efter ändring av den lagrade texten, översättningen kanske inte längre kan hittas. Vill du fortsätta?</translation>
     </message>
 </context>
 <context>
@@ -5325,7 +5325,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1907"/>
         <source>Some coordinates remain outside of the OCAD 8 drawing area. They might be unreachable in OCAD.</source>
-        <translation type="unfinished"></translation>
+        <translation>Några koordinater är fortfarande utanför ritningsytan för OCAD 8. Dessa kanske inte kan läsas av OCAD.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="2135"/>
@@ -5700,7 +5700,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="84"/>
         <source>Encoding &apos;%1&apos; is not available. Check the settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kodning &apos;%1&apos; är inte tillgänglig. Kontrollera inställningarna.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="121"/>
@@ -5753,12 +5753,12 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="388"/>
         <source>Unable to setup &quot;%1&quot; SRS for GDAL: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Omöjligt att tilldela &quot;%1&quot; SRS för GDAL: %2</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="322"/>
         <source>Purple</source>
-        <translation type="unfinished"></translation>
+        <translation>Lila</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="335"/>
@@ -5813,7 +5813,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="512"/>
         <source>Unknown or unsupported geometry type.</source>
-        <translation type="unfinished"></translation>
+        <translation>Okänd eller icke-supporterad typ av geometri.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="517"/>
@@ -5824,12 +5824,13 @@ zooma med scrollhjulet om tillgängligt.</translation>
         <location filename="../src/gdal/ogr_file_format.cpp" line="560"/>
         <source>Cannot use this spatial reference:
 %s</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan inte använda detta referenssystem:
+%s</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="619"/>
         <source>The geospatial data has no suitable spatial reference.</source>
-        <translation type="unfinished"></translation>
+        <translation>Geodata har inte något passande referenssystem.</translation>
     </message>
 </context>
 <context>
@@ -5842,7 +5843,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../packaging/translations.cpp" line="11"/>
         <source>Software for drawing orienteering maps</source>
-        <translation type="unfinished"></translation>
+        <translation>Programvara för att rita orienteringskartor</translation>
     </message>
 </context>
 <context>
@@ -6632,7 +6633,7 @@ separations</source>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="130"/>
         <source>Edit the symbol set ID:</source>
-        <translation type="unfinished"></translation>
+        <translation>Redigera symboluppsättnings-ID:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="133"/>
@@ -6643,50 +6644,50 @@ separations</source>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="137"/>
         <source>Match by symbol name</source>
-        <translation type="unfinished"></translation>
+        <translation>Matcha mot symbolnamn</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="142"/>
         <source>Assign new symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilldela nya symboler</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="143"/>
         <source>Pattern</source>
-        <translation type="unfinished"></translation>
+        <translation>Mönster</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="155"/>
         <source>Clear replacements</source>
-        <translation type="unfinished"></translation>
+        <translation>Rensa ersättningar</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="158"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="234"/>
         <source>Open CRT file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Öppna CRT-fil...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="160"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="330"/>
         <source>Save CRT file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Spara CRT-fil...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="165"/>
         <source>Symbol mapping</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbolöversättning</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="233"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="329"/>
         <source>CRT file</source>
-        <translation type="unfinished"></translation>
+        <translation>CRT-fil</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="283"/>
         <source>There are multiple replacements for symbol %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Det finns flera ersättningar för symbol %1.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="286"/>
@@ -6705,13 +6706,17 @@ separations</source>
 %1
 
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan inte spara fil:
+%1
+
+%2</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="360"/>
         <source>The cross reference table has been modified.
 Do you want to save your changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>Korsreferenstabellen har blivit modifierad.
+Vill du spara dina ändringar?</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="517"/>
@@ -6747,7 +6752,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="655"/>
         <source>Cannot load CRT file, aborting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan inte ladda CRT-filen, avbryter.</translation>
     </message>
 </context>
 <context>
@@ -7067,22 +7072,22 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/core/storage_location.cpp" line="282"/>
         <source>&apos;%1&apos; is stored in a regular location.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&apos;%1&apos; är lagrad på en vanlig plats.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="285"/>
         <source>&apos;%1&apos; is located in app storage. The files will be removed when uninstalling the app.</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos; finns i app-lagringen. Filerna kommer att tas bort när appen avinstalleras.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="288"/>
         <source>&apos;%1&apos; is not writable. Changes cannot be saved.</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos; är inte skrivbar. Ändringar kan inte sparas.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="291"/>
         <source>&apos;%1&apos; is not a valid storage location.</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos; är inte en giltig lagringsplats.</translation>
     </message>
 </context>
 <context>
@@ -7141,7 +7146,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1281"/>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation>Beskrivning</translation>
     </message>
 </context>
 <context>
@@ -7380,17 +7385,17 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="266"/>
         <source>Switch symbol of selected objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Byt symbol på valda objekt</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="267"/>
         <source>Fill / Create border for selected objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Fyll / Skapa kantlinjer för valda objekt</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="949"/>
         <source>Scale symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Skalera symboler</translation>
     </message>
 </context>
 <context>
@@ -7515,7 +7520,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="56"/>
         <source>Relation</source>
-        <translation type="unfinished"></translation>
+        <translation>Relation</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="56"/>
@@ -7525,7 +7530,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="56"/>
         <source>Comparison</source>
-        <translation type="unfinished"></translation>
+        <translation>Jämförelse</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="56"/>
@@ -7535,12 +7540,12 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="72"/>
         <source>Add Row</source>
-        <translation type="unfinished"></translation>
+        <translation>Lägg till rad</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="73"/>
         <source>Remove Row</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta bort rad</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="79"/>
@@ -7555,7 +7560,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="88"/>
         <source>Select</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="93"/>
@@ -7565,15 +7570,13 @@ to jump over the lazy dog
     <message numerus="yes">
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="342"/>
         <source>%n object(s) selected</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n objekt valt/valda</numerusform>
+        <numerusform>%n objekt valda</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="346"/>
         <source>Invalid query</source>
-        <translation type="unfinished"></translation>
+        <translation>Ogiltigt uttryck</translation>
     </message>
 </context>
 <context>
@@ -8235,7 +8238,7 @@ Tänker du inte rita på bakgrunden är det inget problem.</translation>
     <message>
         <location filename="../src/templates/template_track.cpp" line="138"/>
         <source>This template must be loaded with GDAL/OGR.</source>
-        <translation type="unfinished"></translation>
+        <translation>Denna mall måste laddas med GDAL/OGR.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="187"/>
@@ -8671,7 +8674,7 @@ Högsta versionen som stöds är %2.</translation>
         <location filename="../src/tools/tool_helpers.cpp" line="621"/>
         <source>%1 m</source>
         <comment>meter</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 m</translation>
     </message>
 </context>
 <context>
@@ -8744,7 +8747,7 @@ Högsta versionen som stöds är %2.</translation>
         <location filename="../src/fileformats/xml_file_format.cpp" line="601"/>
         <location filename="../src/fileformats/xml_file_format.cpp" line="858"/>
         <source>Some invalid characters had to be removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Några ogiltiga tecken har tagits bort.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="619"/>

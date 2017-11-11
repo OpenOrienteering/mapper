@@ -1750,7 +1750,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="330"/>
         <source>&lt;a href=&quot;%1&quot;&gt;OpenStreetMap&lt;/a&gt; | &lt;a href=&quot;%2&quot;&gt;World of O Maps&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;%1&quot;&gt;OpenStreetMap&lt;/a&gt; | &lt;a href=&quot;%2&quot;&gt;O Mapa mondo&lt;/a&gt;</translation>
+        <translation>&lt;a href=&quot;%1&quot;&gt;OpenStreetMap&lt;/a&gt; | &lt;a href=&quot;%2&quot;&gt;World of O Maps&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="360"/>
@@ -1882,7 +1882,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="440"/>
         <source>The declination has been changed. Do you want to rotate the map content accordingly, too?</source>
-        <translation type="unfinished"></translation>
+        <translation>La deklinacio estis ŝanĝita. Ĉu vi volas ankaŭ turni enhavon de la mapo?</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="470"/>
@@ -2122,7 +2122,7 @@
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="291"/>
         <source>Geospatial vector data</source>
-        <translation type="unfinished"></translation>
+        <translation>Geospaca vektoraj datumoj</translation>
     </message>
 </context>
 <context>
