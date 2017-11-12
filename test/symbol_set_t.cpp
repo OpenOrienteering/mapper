@@ -638,6 +638,7 @@ void SymbolSetTool::processSymbolSetTranslations()
 		
 		// Workaround Weblate quirk
 		existing_data.replace("\n    </message>", "\n        </message>");
+		existing_data.replace("&apos;", "'");
 		
 		new_data.reserve(existing_data.size()*2);
 	}

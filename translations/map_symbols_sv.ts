@@ -2284,7 +2284,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Opaque Blue</source>
             <comment>Color 4</comment>
-            <translation type="unfinished"></translation>
+            <translation>Ogenomskinlig Blå</translation>
         </message>
         <message>
             <source>Blue</source>
@@ -2329,7 +2329,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Opaque Green</source>
             <comment>Color 13</comment>
-            <translation type="unfinished"></translation>
+            <translation>Ogenomskinlig Grön</translation>
         </message>
         <message>
             <source>Green</source>
@@ -2471,7 +2471,7 @@ sidan av stödkurvan.</translation>
         <message>
             <source>Use this symbol to display the full extent of wide earth banks.</source>
             <comment>Description of symbol 106.2</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Använd denna symbol för att visa den totala omfattningen av breda jordvallar.</translation>
         </message>
         <message>
             <source>Earth wall</source>
@@ -3927,7 +3927,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Opaque White below Black</source>
             <comment>Color 3</comment>
-            <translation type="unfinished"></translation>
+            <translation>Ogenomskinlig Vit under Svart</translation>
         </message>
         <message>
             <source>Brown for contours</source>
@@ -3992,7 +3992,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Opaque Blue</source>
             <comment>Color 16</comment>
-            <translation type="unfinished"></translation>
+            <translation>Ogenomskinlig Blå</translation>
         </message>
         <message>
             <source>Blue</source>
@@ -4047,7 +4047,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Opaque Green</source>
             <comment>Color 27</comment>
-            <translation type="unfinished"></translation>
+            <translation>Ogenomskinlig Grön</translation>
         </message>
         <message>
             <source>Green</source>
@@ -4171,7 +4171,7 @@ sidan av stödkurvan.</translation>
         <message>
             <source>Use this symbol to display the full extent of wide earth banks.</source>
             <comment>Description of symbol 106.2</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Använd denna symbol för att visa den totala omfattningen av breda jordvallar.</translation>
         </message>
         <message>
             <source>Small earth wall</source>
@@ -5981,7 +5981,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Opaque Blue</source>
             <comment>Color 8</comment>
-            <translation type="unfinished"></translation>
+            <translation>Ogenomskinlig Blå</translation>
         </message>
         <message>
             <source>Blue</source>
@@ -6021,7 +6021,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Opaque Green</source>
             <comment>Color 16</comment>
-            <translation type="unfinished"></translation>
+            <translation>Ogenomskinlig Grön</translation>
         </message>
         <message>
             <source>Green</source>
@@ -6153,7 +6153,7 @@ sidan av stödkurvan.</translation>
         <message>
             <source>Use this symbol to display the full extent of wide earth banks.</source>
             <comment>Description of symbol 106.2</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Använd denna symbol för att visa den totala omfattningen av breda jordvallar.</translation>
         </message>
         <message>
             <source>Earth wall</source>
@@ -7774,7 +7774,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Opaque Blue</source>
             <comment>Color 8</comment>
-            <translation type="unfinished"></translation>
+            <translation>Ogenomskinlig Blå</translation>
         </message>
         <message>
             <source>Blue</source>
@@ -7809,7 +7809,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Opaque Green</source>
             <comment>Color 15</comment>
-            <translation type="unfinished"></translation>
+            <translation>Ogenomskinlig Grön</translation>
         </message>
         <message>
             <source>Green</source>
@@ -7961,7 +7961,7 @@ sidan av stödkurvan.</translation>
         <message>
             <source>Use this symbol to display the full extent of wide earth banks.</source>
             <comment>Description of symbol 106.2</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Använd denna symbol för att visa den totala omfattningen av breda jordvallar.</translation>
         </message>
         <message>
             <source>Earth wall</source>
