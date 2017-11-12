@@ -294,7 +294,7 @@ OgrFileFormat::OgrFileFormat()
 		addExtension(QString::fromLatin1(extension));
 }
 
-bool OgrFileFormat::understands(const unsigned char*, std::size_t) const
+bool OgrFileFormat::understands(const unsigned char* /*buffer*/, std::size_t /*size*/) const
 {
 	return true;
 }
@@ -1138,7 +1138,7 @@ PointSymbol* OgrFileImport::getSymbolForOgrSymbol(OGRStyleToolH tool, const QByt
 	return point_symbol;
 }
 
-TextSymbol* OgrFileImport::getSymbolForLabel(OGRStyleToolH tool, const QByteArray&)
+TextSymbol* OgrFileImport::getSymbolForLabel(OGRStyleToolH tool, const QByteArray& /*style_string*/)
 {
 	Q_ASSERT(OGR_ST_GetType(tool) == OGRSTCLabel);
 	

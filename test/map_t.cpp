@@ -24,6 +24,8 @@
 #include <QMessageBox>
 #include <QTextStream>
 
+#include "test_config.h"
+
 #include "global.h"
 #include "core/map.h"
 #include "core/map_color.h"
@@ -46,10 +48,10 @@ void MapTest::initTestCase()
 	
 	doStaticInitializations();
 	
-	examples_dir.cd(QFileInfo(QString::fromUtf8(__FILE__)).dir().absoluteFilePath(QString::fromLatin1("../examples")));
+	examples_dir.cd(QDir(QString::fromUtf8(MAPPER_TEST_SOURCE_DIR)).absoluteFilePath(QStringLiteral("../examples")));
 	QVERIFY(examples_dir.exists());
 	
-	symbol_set_dir.cd(QFileInfo(QString::fromUtf8(__FILE__)).dir().absoluteFilePath(QString::fromLatin1("../symbol sets")));
+	symbol_set_dir.cd(QDir(QString::fromUtf8(MAPPER_TEST_SOURCE_DIR)).absoluteFilePath(QStringLiteral("../symbol sets")));
 	QVERIFY(symbol_set_dir.exists());
 	
 	// Static map initializations

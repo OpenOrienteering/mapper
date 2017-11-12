@@ -22,6 +22,7 @@
 #include "map_editor.h"
 #include "map_editor_p.h"
 
+#include <algorithm>
 #include <cstddef>
 #include <functional>
 #include <iterator>
@@ -33,6 +34,7 @@
 #include <Qt>
 #include <QtGlobal>
 #include <QtMath>
+#include <QAbstractButton>
 #include <QAction>
 #include <QActionGroup>
 #include <QApplication>
@@ -52,7 +54,7 @@
 #include <QFrame>
 #include <QHBoxLayout>
 #include <QIcon>
-#include <QImage>
+#include <QImage> // IWYU pragma: keep
 #include <QInputDialog>
 #include <QIODevice>
 #include <QKeyEvent> // IWYU pragma: keep
@@ -479,7 +481,7 @@ void MapEditorController::setEditorActivity(MapEditorActivity* new_activity)
 void MapEditorController::addTemplatePositionDockWidget(Template* temp)
 {
 	Q_ASSERT(!existsTemplatePositionDockWidget(temp));
-	TemplatePositionDockWidget* dock_widget = new TemplatePositionDockWidget(temp, this, window);
+	auto dock_widget = new TemplatePositionDockWidget(temp, this, window);
 	addFloatingDockWidget(dock_widget);
 	template_position_widgets.insert(temp, dock_widget);
 }
@@ -514,7 +516,7 @@ void MapEditorController::showPopupWidget(QWidget* child_widget, const QString& 
 	}
 	else
 	{
-		QDockWidget* dock_widget = new QDockWidget(title, window);
+		auto dock_widget = new QDockWidget(title, window);
 		dock_widget->setFeatures(dock_widget->features() & ~QDockWidget::DockWidgetClosable);
 		dock_widget->setWidget(child_widget);
 		
@@ -839,7 +841,7 @@ void MapEditorController::createActions()
 {
 	// Define all the actions, saving them into variables as necessary. Can also get them by ID.
 #ifdef QT_PRINTSUPPORT_LIB
-	QSignalMapper* print_act_mapper = new QSignalMapper(this);
+	auto print_act_mapper = new QSignalMapper(this);
 	connect(print_act_mapper, QOverload<int>::of(&QSignalMapper::mapped), this, QOverload<int>::of(&MapEditorController::printClicked));
 	print_act = newAction("print", tr("Print..."), print_act_mapper, SLOT(map()), "print.png", QString{}, "file_menu.html");
 	print_act_mapper->setMapping(print_act, PrintWidget::PRINT_TASK);
@@ -990,7 +992,7 @@ void MapEditorController::createActions()
 	geographic_coordinates_act->setCheckable(true);
 	geographic_coordinates_dms_act = new QAction(tr("Latitude/Longitude (DMS)"), this);
 	geographic_coordinates_dms_act->setCheckable(true);
-	QActionGroup* coordinates_group = new QActionGroup(this);
+	auto coordinates_group = new QActionGroup(this);
 	coordinates_group->addAction(map_coordinates_act);
 	coordinates_group->addAction(projected_coordinates_act);
 	coordinates_group->addAction(geographic_coordinates_act);
@@ -1174,11 +1176,11 @@ void MapEditorController::createMenuAndToolbars()
 	// View toolbar
 	toolbar_view = window->addToolBar(tr("View"));
 	toolbar_view->setObjectName(QString::fromLatin1("View toolbar"));
-	QToolButton* grid_button = new QToolButton();
+	auto grid_button = new QToolButton();
 	grid_button->setCheckable(true);
 	grid_button->setDefaultAction(show_grid_act);
 	grid_button->setPopupMode(QToolButton::MenuButtonPopup);
-	QMenu* grid_menu = new QMenu(grid_button);
+	auto grid_menu = new QMenu(grid_button);
 	grid_menu->addAction(tr("Configure grid..."));
 	grid_button->setMenu(grid_menu);
 	connect(grid_menu, &QMenu::triggered, this, &MapEditorController::configureGrid);
@@ -1217,11 +1219,11 @@ void MapEditorController::createMenuAndToolbars()
 	toolbar_drawing->addAction(draw_text_act);
 	toolbar_drawing->addSeparator();
 	
-	QToolButton* paint_on_template_button = new QToolButton();
+	auto paint_on_template_button = new QToolButton();
 	paint_on_template_button->setCheckable(true);
 	paint_on_template_button->setDefaultAction(paint_on_template_act);
 	paint_on_template_button->setPopupMode(QToolButton::MenuButtonPopup);
-	QMenu* paint_on_template_menu = new QMenu(paint_on_template_button);
+	auto paint_on_template_menu = new QMenu(paint_on_template_button);
 	paint_on_template_menu->addAction(tr("Select template..."));
 	paint_on_template_button->setMenu(paint_on_template_menu);
 	connect(paint_on_template_menu, &QMenu::triggered, this, &MapEditorController::paintOnTemplateSelectClicked);
@@ -1239,7 +1241,7 @@ void MapEditorController::createMenuAndToolbars()
 	toolbar_editing->addAction(boolean_union_act);
 	toolbar_editing->addAction(cut_tool_act);
 	
-	QToolButton* cut_hole_button = new QToolButton();
+	auto cut_hole_button = new QToolButton();
 	cut_hole_button->setCheckable(true);
 	cut_hole_button->setToolButtonStyle(Qt::ToolButtonIconOnly);
 	cut_hole_button->setDefaultAction(cut_hole_act);
@@ -1459,7 +1461,7 @@ void MapEditorController::createMobileGUI()
 	
 	top_action_bar->setParent(map_widget);
 	
-	QWidget* container_widget = new QWidget();
+	auto container_widget = new QWidget();
 	auto layout = new QVBoxLayout();
 	layout->setMargin(0);
 	layout->setSpacing(0);
@@ -1670,7 +1672,7 @@ void MapEditorController::copy()
 	}
 	
 	// Put buffer into clipboard
-	QMimeData* mime_data = new QMimeData();
+	auto mime_data = new QMimeData();
 	mime_data->setData(MimeType::OpenOrienteeringObjects(), buffer.data());
 	QApplication::clipboard()->setMimeData(mime_data);
 	
@@ -1937,7 +1939,7 @@ void MapEditorController::mapNotesClicked()
 	dialog.setWindowTitle(tr("Map notes"));
 	dialog.setWindowModality(Qt::WindowModal);
 	
-	QTextEdit* text_edit = new QTextEdit();
+	auto text_edit = new QTextEdit();
 	text_edit->setPlainText(map->getMapNotes());
 	QPushButton* cancel_button = new QPushButton(tr("Cancel"));
 	QPushButton* ok_button = new QPushButton(QIcon(QString::fromLatin1(":/images/arrow-right.png")), tr("OK"));
@@ -2020,7 +2022,7 @@ void MapEditorController::reopenTemplateClicked()
 	QString map_directory = window->currentPath();
 	if (!map_directory.isEmpty())
 		map_directory = QFileInfo(map_directory).canonicalPath();
-	ReopenTemplateDialog* dialog = new ReopenTemplateDialog(window, map, map_directory); 
+	auto dialog = new ReopenTemplateDialog(window, map, map_directory); 
 	dialog->setWindowModality(Qt::WindowModal);
 	dialog->exec();
 	delete dialog;
@@ -2041,7 +2043,7 @@ void MapEditorController::createTagEditor()
 {
 	Q_ASSERT(!tags_dock_widget);
 	
-	TagsWidget* tags_widget = new TagsWidget(map, main_view, this);
+	auto tags_widget = new TagsWidget(map, main_view, this);
 	tags_dock_widget = new EditorDockWidget(tr("Tag Editor"), tags_window_act, this, window);
 	tags_dock_widget->setWidget(tags_widget);
 	tags_dock_widget->setObjectName(QString::fromLatin1("Tag editor dock widget"));
@@ -2063,7 +2065,7 @@ void MapEditorController::createTagSelector()
 {
 	Q_ASSERT(!tag_select_dock_widget);
 
-	TagSelectWidget* tag_widget = new TagSelectWidget(map, main_view, this);
+	auto tag_widget = new TagSelectWidget(map, main_view, this);
 	tag_select_dock_widget = new EditorDockWidget(tr("Tag Selector"), tag_select_window_act, this, window);
 	tag_select_dock_widget->setWidget(tag_widget);
 	tag_select_dock_widget->setObjectName(QString::fromLatin1("Tag selection dock widget"));
@@ -2086,7 +2088,7 @@ void MapEditorController::editGeoreferencing()
 {
 	if (georeferencing_dialog.isNull())
 	{
-		GeoreferencingDialog* dialog = new GeoreferencingDialog(this); 
+		auto dialog = new GeoreferencingDialog(this); 
 		georeferencing_dialog.reset(dialog);
 		connect(dialog, &QDialog::finished, this, &MapEditorController::georeferencingDialogFinished);
 	}
@@ -2135,9 +2137,8 @@ void MapEditorController::selectedSymbolsChanged()
 		}
 		else //if (symbol_widget->getNumSelectedSymbols() == 1)
 		{
-			QImage image = symbol->createIcon(map, qMin(icon_size.width(), icon_size.height()), Util::isAntialiasingRequired());
-			QPainter painter(&pixmap);
-			painter.drawImage(pixmap.rect(), image);
+			auto image = symbol->createIcon(map, qMin(icon_size.width(), icon_size.height()), Util::isAntialiasingRequired());
+			pixmap = QPixmap::fromImage(image);
 			
 			symbol_button->setMenu(mobile_symbol_button_menu);
 			const auto actions = mobile_symbol_button_menu->actions();
@@ -2504,7 +2505,7 @@ void MapEditorController::duplicateClicked()
 		new_objects.push_back(duplicate);
 	}
 	
-	DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(map);
+	auto undo_step = new DeleteObjectsUndoStep(map);
 	MapPart* part = map->getCurrentPart();
 	
 	map->clearObjectSelection(false);
@@ -2584,7 +2585,7 @@ void MapEditorController::switchSymbolClicked()
 			{
 				for (const auto& part : path_object->parts())
 				{
-					PathObject* new_object = new PathObject { part };
+					auto new_object = new PathObject { part };
 					new_object->setSymbol(symbol, true);
 					new_objects.push_back(new_object);
 				}
@@ -2628,7 +2629,7 @@ void MapEditorController::switchSymbolClicked()
 	}
 	else if (split_up)
 	{
-		CombinedUndoStep* combined_step = new CombinedUndoStep(map);
+		auto combined_step = new CombinedUndoStep(map);
 		combined_step->push(add_step);
 		combined_step->push(delete_step);
 		map->push(combined_step);
@@ -2655,7 +2656,7 @@ void MapEditorController::fillBorderClicked()
 	else if (contained_types & Symbol::Line && !(contained_types & Symbol::Area))
 		split_up = true;
 	
-	DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(map);
+	auto undo_step = new DeleteObjectsUndoStep(map);
 	MapPart* part = map->getCurrentPart();
 	
 	for (const auto object : map->selectedObjects())
@@ -2665,7 +2666,7 @@ void MapEditorController::fillBorderClicked()
 			PathObject* path_object = object->asPath();
 			for (const auto& part : path_object->parts())
 			{
-				PathObject* new_object = new PathObject { part };
+				auto new_object = new PathObject { part };
 				new_object->setSymbol(symbol, true);
 				map->addObject(new_object);
 				new_objects.push_back(new_object);
@@ -2801,7 +2802,7 @@ void MapEditorController::selectByCurrentSymbols()
 
 void MapEditorController::switchDashesClicked()
 {
-	SwitchDashesUndoStep* undo_step = new SwitchDashesUndoStep(map);
+	auto undo_step = new SwitchDashesUndoStep(map);
 	MapPart* part = map->getCurrentPart();
 	
 	for (const auto object : map->selectedObjects())
@@ -3035,7 +3036,7 @@ void MapEditorController::connectPathsClicked()
 	
 	if (add_step || replace_step)
 	{
-		CombinedUndoStep* undo_step = new CombinedUndoStep(map);
+		auto undo_step = new CombinedUndoStep(map);
 		if (replace_step)
 			undo_step->push(replace_step);
 		if (add_step)
@@ -3087,7 +3088,7 @@ void MapEditorController::measureClicked(bool checked)
 	{
 		measure_dock_widget = new EditorDockWidget(tr("Measure"), measure_act, this, window);
 		measure_dock_widget->toggleViewAction()->setVisible(false);
-		MeasureWidget* measure_widget = new MeasureWidget(map);
+		auto measure_widget = new MeasureWidget(map);
 		measure_dock_widget->setWidget(measure_widget);
 		measure_dock_widget->setObjectName(QString::fromLatin1("Measure dock widget"));
 		addFloatingDockWidget(measure_dock_widget);
@@ -3131,7 +3132,7 @@ void MapEditorController::booleanMergeHolesClicked()
 
 void MapEditorController::convertToCurvesClicked()
 {
-	ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(map);
+	auto undo_step = new ReplaceObjectsUndoStep(map);
 	MapPart* part = map->getCurrentPart();
 	
 	for (const auto object : map->selectedObjects())
@@ -3166,7 +3167,7 @@ void MapEditorController::simplifyPathClicked()
 	// TODO: make threshold configurable!
 	const auto threshold = 0.1;
 	
-	ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(map);
+	auto undo_step = new ReplaceObjectsUndoStep(map);
 	MapPart* part = map->getCurrentPart();
 	
 	for (const auto object : map->selectedObjects())
@@ -3227,7 +3228,7 @@ void MapEditorController::distributePointsClicked()
 	// Create undo step and select new objects
 	map->clearObjectSelection(false);
 	MapPart* part = map->getCurrentPart();
-	DeleteObjectsUndoStep* delete_step = new DeleteObjectsUndoStep(map);
+	auto delete_step = new DeleteObjectsUndoStep(map);
 	for (std::size_t i = 0; i < created_objects.size(); ++i)
 	{
 		Object* object = created_objects[i];
@@ -3343,7 +3344,7 @@ void MapEditorController::enableGPSDisplay(bool enable)
 			if (template_index == -1)
 			{
 				// Create a new template
-				TemplateTrack* new_template = new TemplateTrack(gpx_file_path, map);
+				auto new_template = new TemplateTrack(gpx_file_path, map);
 				new_template->configureForGPSTrack();
 				template_index = map->getNumTemplates();
 				map->addTemplate(new_template, template_index);
@@ -3562,7 +3563,7 @@ void MapEditorController::updateMapPartsUI()
 			
 			if (i != current)
 			{
-				QAction* action = new QAction(part_name, this);
+				auto action = new QAction(part_name, this);
 				mappart_merge_mapper->setMapping(action, i);
 				connect(action, QOverload<bool>::of(&QAction::triggered), mappart_merge_mapper, QOverload<>::of(&QSignalMapper::map));
 				mappart_merge_menu->addAction(action);
@@ -3590,7 +3591,7 @@ void MapEditorController::addMapPart()
 	                   &accepted );
 	if (accepted && !name.isEmpty())
 	{
-		MapPart* part = new MapPart(name, map);
+		auto part = new MapPart(name, map);
 		map->addPart(part, map->getCurrentPartIndex() + 1);
 		map->setCurrentPart(part);
 		map->push(new MapPartUndoStep(map, MapPartUndoStep::RemoveMapPart, part));
@@ -3669,7 +3670,7 @@ void MapEditorController::reassignObjectsToMapPart(int target)
 	auto current = map->getCurrentPartIndex();
 	auto begin   = map->reassignObjectsToMapPart(map->selectedObjectsBegin(), map->selectedObjectsEnd(), current, target);
 	
-	SwitchPartUndoStep* undo = new SwitchPartUndoStep(map, target, current);
+	auto undo = new SwitchPartUndoStep(map, target, current);
 	for (std::size_t i = begin, end = map->getPart(target)->getNumObjects(); i < end; ++i)
 		undo->addObject(i);
 	map->push(undo);
@@ -3697,11 +3698,11 @@ void MapEditorController::mergeCurrentMapPartTo(int target)
 		
 		auto begin  = map->mergeParts(source, target);
 		
-		SwitchPartUndoStep* switch_part_undo = new SwitchPartUndoStep(map, target, source);
+		auto switch_part_undo = new SwitchPartUndoStep(map, target, source);
 		for (std::size_t i = begin, end = target_part->getNumObjects(); i < end; ++i)
 			switch_part_undo->addObject(i);
 		
-		CombinedUndoStep* undo = new CombinedUndoStep(map);
+		auto undo = new CombinedUndoStep(map);
 		undo->push(switch_part_undo);
 		undo->push(add_part_step);
 		map->push(undo);
@@ -3720,7 +3721,7 @@ void MapEditorController::mergeAllMapParts()
 	
 	if (button == QMessageBox::Yes)
 	{
-		CombinedUndoStep* undo = new CombinedUndoStep(map);
+		auto undo = new CombinedUndoStep(map);
 		
 		// For simplicity, we merge to the first part,
 		// but keep the properties (i.e. name) of the current part.
@@ -3731,7 +3732,7 @@ void MapEditorController::mergeAllMapParts()
 		{
 			UndoStep* add_part_step = new MapPartUndoStep(map, MapPartUndoStep::AddMapPart, i);
 			auto begin = map->mergeParts(i, 0);
-			SwitchPartUndoStep* switch_part_undo = new SwitchPartUndoStep(map, 0, i);
+			auto switch_part_undo = new SwitchPartUndoStep(map, 0, i);
 			for (std::size_t j = begin, end = target_part->getNumObjects(); j < end; ++j)
 				switch_part_undo->addObject(j);
 			undo->push(switch_part_undo);

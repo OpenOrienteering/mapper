@@ -37,6 +37,9 @@ add_definitions(
   -DQT_USE_QSTRINGBUILDER
 )
 
+configure_file(test_config.h.in ${CMAKE_CURRENT_BINARY_DIR}/test_config.h @ONLY)
+
+
 # This function defines a test from a list of source file names
 # (without ending). For each filename, a .cpp file and .h must exist.
 # The .h file is processed with Qt's moc.

@@ -47,6 +47,8 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
+#include "test_config.h"
+
 #include "global.h"
 #include "settings.h"
 #include "core/map.h"
@@ -270,16 +272,16 @@ void SymbolSetTool::initTestCase()
 	
 	doStaticInitializations();
 	
-	symbol_set_dir.cd(QFileInfo(QString::fromUtf8(__FILE__)).dir().absoluteFilePath(QString::fromLatin1("../symbol sets")));
+	symbol_set_dir.cd(QDir(QString::fromUtf8(MAPPER_TEST_SOURCE_DIR)).absoluteFilePath(QStringLiteral("../symbol sets")));
 	QVERIFY(symbol_set_dir.exists());
 	
-	examples_dir.cd(QFileInfo(QString::fromUtf8(__FILE__)).dir().absoluteFilePath(QString::fromLatin1("../examples")));
+	examples_dir.cd(QDir(QString::fromUtf8(MAPPER_TEST_SOURCE_DIR)).absoluteFilePath(QStringLiteral("../examples")));
 	QVERIFY(examples_dir.exists());
 	
-	test_data_dir.cd(QFileInfo(QString::fromUtf8(__FILE__)).dir().absoluteFilePath(QString::fromLatin1("../test/data")));
+	test_data_dir.cd(QDir(QString::fromUtf8(MAPPER_TEST_SOURCE_DIR)).absoluteFilePath(QStringLiteral("../test/data")));
 	QVERIFY(test_data_dir.exists());
 	
-	translations_dir.cd(QFileInfo(QString::fromUtf8(__FILE__)).dir().absoluteFilePath(QString::fromLatin1("../translations")));
+	translations_dir.cd(QDir(QString::fromUtf8(MAPPER_TEST_SOURCE_DIR)).absoluteFilePath(QStringLiteral("../translations")));
 	QVERIFY(translations_dir.exists());
 	
 	Template::pathForSaving = &Template::getTemplateRelativePath;
@@ -636,6 +638,7 @@ void SymbolSetTool::processSymbolSetTranslations()
 		
 		// Workaround Weblate quirk
 		existing_data.replace("\n    </message>", "\n        </message>");
+		existing_data.replace("&apos;", "'");
 		
 		new_data.reserve(existing_data.size()*2);
 	}

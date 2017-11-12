@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2015, 2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,15 +21,28 @@
 
 #include "template_tool_paint.h"
 
+#include <Qt>
+#include <QAbstractButton>
+#include <QCursor>
+#include <QFlags>
+#include <QHBoxLayout>
+#include <QIcon>
 #include <QListWidget>
 #include <QListWidgetItem>
 #include <QMouseEvent>
 #include <QPainter>
+#include <QPaintEvent>
+#include <QPen>
+#include <QPixmap>
 #include <QPushButton>
+#include <QRect>
+#include <QRgb>
 #include <QSettings>
+#include <QVariant>
 #include <QVBoxLayout>
 
 #include "core/map.h"
+#include "core/map_view.h"
 #include "gui/map/map_editor.h"
 #include "gui/map/map_widget.h"
 #include "templates/template.h"
@@ -40,12 +53,11 @@
 
 int PaintOnTemplateTool::erase_width = 4;
 
-PaintOnTemplateTool::PaintOnTemplateTool(MapEditorController* editor, QAction* tool_button, Template* temp) : MapEditorTool(editor, Other, tool_button)
+PaintOnTemplateTool::PaintOnTemplateTool(MapEditorController* editor, QAction* tool_action, Template* temp)
+: MapEditorTool(editor, Other, tool_action)
+, paint_color(Qt::black)
+, temp(temp)
 {
-	paint_color = Qt::black;
-	dragging = false;
-	
-	this->temp = temp;
 	connect(map(), &Map::templateDeleted, this, &PaintOnTemplateTool::templateDeleted);
 }
 
@@ -334,14 +346,14 @@ PaintOnTemplateSelectDialog::PaintOnTemplateSelectDialog(Map* map, QWidget* pare
 #endif
 	setWindowTitle(tr("Select template to draw onto"));
 	
-	QListWidget* template_list = new QListWidget();
+	auto template_list = new QListWidget();
 	for (int i = map->getNumTemplates() - 1; i >= 0; --i)
 	{
 		Template* temp = map->getTemplate(i);
 		if (!temp->canBeDrawnOnto())
 			continue;
 		
-		QListWidgetItem* item = new QListWidgetItem(temp->getTemplateFilename());
+		auto item = new QListWidgetItem(temp->getTemplateFilename());
 		item->setData(Qt::UserRole, qVariantFromValue<void*>(temp));
 		template_list->addItem(item);
 	}
@@ -350,12 +362,12 @@ PaintOnTemplateSelectDialog::PaintOnTemplateSelectDialog(Map* map, QWidget* pare
 	draw_button = new QPushButton(QIcon(QString::fromLatin1(":/images/pencil.png")), tr("Draw"));
 	draw_button->setDefault(true);
 	
-	QHBoxLayout* buttons_layout = new QHBoxLayout();
+	auto buttons_layout = new QHBoxLayout();
 	buttons_layout->addWidget(cancel_button);
 	buttons_layout->addStretch(1);
 	buttons_layout->addWidget(draw_button);
 	
-	QVBoxLayout* layout = new QVBoxLayout();
+	auto layout = new QVBoxLayout();
 	layout->addWidget(template_list);
 	layout->addSpacing(16);
 	layout->addLayout(buttons_layout);

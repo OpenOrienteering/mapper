@@ -224,7 +224,7 @@ MapColorMap Map::MapColorSet::importSet(const Map::MapColorSet& other, std::vect
 		bool priorities_changed = false;
 		
 		// Initialize merge_list
-		MapColorSetMergeList::iterator merge_list_item = merge_list.begin();
+		auto merge_list_item = merge_list.begin();
 		for (std::size_t i = 0; i < other.colors.size(); ++i)
 		{
 			merge_list_item->filter = (!filter || (*filter)[i]);
@@ -253,13 +253,13 @@ MapColorMap Map::MapColorSet::importSet(const Map::MapColorSet& other, std::vect
 		{
 			// Evaluate bounds and conflicting order of colors
 			int max_conflict_reduction = 0;
-			MapColorSetMergeList::iterator selected_item = merge_list.end();
+			auto selected_item = merge_list.end();
 			for (merge_list_item = merge_list.begin(); merge_list_item != merge_list.end(); ++merge_list_item)
 			{
 				// Check all lower colors for a higher dest_index
 				std::size_t& lower_bound(merge_list_item->lower_bound);
 				lower_bound = merge_list_item->dest_color ? merge_list_item->dest_index : 0;
-				MapColorSetMergeList::iterator it = merge_list.begin();
+				auto it = merge_list.begin();
 				for (; it != merge_list_item; ++it)
 				{
 					if (it->dest_color)
@@ -339,7 +339,7 @@ MapColorMap Map::MapColorSet::importSet(const Map::MapColorSet& other, std::vect
 				break;
 			
 			// Solve selected conflict item
-			MapColor* new_color = new MapColor(*selected_item->dest_color);
+			auto new_color = new MapColor(*selected_item->dest_color);
 			selected_item->dest_color = new_color;
 			out_pointermap[selected_item->src_color] = new_color;
 			std::size_t insertion_index = (selected_item->lower_errors == 0) ? selected_item->upper_bound : (selected_item->lower_bound+1);
@@ -365,7 +365,7 @@ MapColorMap Map::MapColorSet::importSet(const Map::MapColorSet& other, std::vect
 		// Some missing colors may be spot color compositions which can be 
 		// resolved to new colors only after all colors have been created.
 		// That is why we create all missing colors first.
-		for (MapColorSetMergeList::reverse_iterator it = merge_list.rbegin(); it != merge_list.rend(); ++it)
+		for (auto it = merge_list.rbegin(); it != merge_list.rend(); ++it)
 		{
 			if (it->filter && !it->dest_color)
 			{
@@ -380,7 +380,7 @@ MapColorMap Map::MapColorSet::importSet(const Map::MapColorSet& other, std::vect
 		}
 		
 		// Now process all new colors for spot color resolution and insertion
-		for (MapColorSetMergeList::reverse_iterator it = merge_list.rbegin(); it != merge_list.rend(); ++it)
+		for (auto it = merge_list.rbegin(); it != merge_list.rend(); ++it)
 		{
 			MapColor* new_color = it->dest_color;
 			if (new_color)
@@ -1169,12 +1169,12 @@ void Map::getSelectionToSymbolCompatibility(const Symbol* symbol, bool& out_comp
 
 void Map::deleteSelectedObjects()
 {
-	Map::ObjectSelection::const_iterator obj = selectedObjectsBegin();
-	Map::ObjectSelection::const_iterator end = selectedObjectsEnd();
+	auto obj = selectedObjectsBegin();
+	auto end = selectedObjectsEnd();
 	if (obj != end)
 	{
 		// FIXME: this is not ready for multiple map parts.
-		AddObjectsUndoStep* undo_step = new AddObjectsUndoStep(this);
+		auto undo_step = new AddObjectsUndoStep(this);
 		MapPart* part = getCurrentPart();
 	
 		for (; obj != end; ++obj)
@@ -1255,8 +1255,8 @@ void Map::removeObjectFromSelection(Object* object, bool emit_selection_changed)
 bool Map::removeSymbolFromSelection(const Symbol* symbol, bool emit_selection_changed)
 {
 	bool removed_at_least_one_object = false;
-	ObjectSelection::iterator it_end = object_selection.end();
-	for (ObjectSelection::iterator it = object_selection.begin(); it != it_end; )
+	auto it_end = object_selection.end();
+	for (auto it = object_selection.begin(); it != it_end; )
 	{
 		if ((*it)->getSymbol() != symbol)
 		{
@@ -2021,7 +2021,7 @@ void Map::addTemplate(Template* temp, int pos)
 
 void Map::removeTemplate(int pos)
 {
-	TemplateVector::iterator it = templates.begin() + pos;
+	auto it = templates.begin() + pos;
 	Template* temp = *it;
 	templates.erase(it);
 	if (templates.empty())
@@ -2086,7 +2086,7 @@ void Map::emitTemplateChanged(Template* temp)
 
 void Map::clearClosedTemplates()
 {
-	if (closed_templates.size() == 0)
+	if (closed_templates.empty())
 		return;
 	
 	for (Template* temp : closed_templates)
@@ -2132,7 +2132,7 @@ bool Map::reloadClosedTemplate(int i, int target_pos, QWidget* dialog_parent, co
 		addTemplate(temp, target_pos);
 		temp->setTemplateAreaDirty();
 		setTemplatesDirty();
-		if (closed_templates.size() == 0)
+		if (closed_templates.empty())
 			emit closedTemplateAvailabilityChanged();
 		return true;
 	}
@@ -2225,7 +2225,7 @@ std::size_t Map::reassignObjectsToMapPart(std::set<Object*>::const_iterator begi
 	std::size_t count = 0;
 	MapPart* const source_part = parts[source];
 	MapPart* const target_part = parts[destination];
-	for (std::set<Object*>::const_iterator it = begin; it != end; ++it)
+	for (auto it = begin; it != end; ++it)
 	{
 		Object* const object = *it;
 		source_part->deleteObject(object, true);
@@ -2271,7 +2271,7 @@ std::size_t Map::reassignObjectsToMapPart(std::vector<int>::const_iterator begin
 	std::size_t count = 0;
 	MapPart* const source_part = parts[source];
 	MapPart* const target_part = parts[destination];
-	for (std::vector<int>::const_iterator it = begin; it != end; ++it)
+	for (auto it = begin; it != end; ++it)
 	{
 		Object* const object = source_part->getObject(*it);
 		

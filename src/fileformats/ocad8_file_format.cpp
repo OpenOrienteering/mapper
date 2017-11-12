@@ -25,7 +25,9 @@
 #include <QCoreApplication>
 #include <QDir>
 #include <QFileInfo>
+#include <QImage>
 #include <QImageReader>
+#include <QRgb>
 #include <QTextCodec>
 
 #include "settings.h"
@@ -1959,17 +1961,60 @@ void OCAD8FileExport::exportCommonSymbolFields(const Symbol* symbol, OCADSymbol*
 		}
 	}
 	
+	exportSymbolIcon(symbol, ocad_symbol->icon);
+}
+
+void OCAD8FileExport::exportSymbolIcon(const Symbol* symbol, u8 ocad_icon[])
+{
 	// Icon: 22x22 with 4 bit color code, origin at bottom left, some padding
-	const int icon_size = 22;
-	QImage image = symbol->createIcon(map, icon_size, false, 0, map->symbolIconZoom());
-	u8* ocad_icon = (u8*)ocad_symbol->icon;
+	constexpr int icon_size = 22;
+	QImage image = symbol->createIcon(map, icon_size, false, 0, map->symbolIconZoom())
+	               .convertToFormat(QImage::Format_ARGB32_Premultiplied);
+	
+	auto process_pixel = [&image](int x, int y)->int
+	{
+		// Apply premultiplied pixel on white background
+		auto premultiplied = image.pixel(x, y);
+		auto alpha = qAlpha(premultiplied);
+		auto r = 255 - alpha + qRed(premultiplied);
+		auto g = 255 - alpha + qGreen(premultiplied);
+		auto b = 255 - alpha + qBlue(premultiplied);
+		auto pixel = qRgb(r, g, b);
+		
+		// Ordered dithering 2x2 threshold matrix, adjusted for o-map halftones
+		static int threshold[4] = { 24, 192, 136, 80 };
+		auto palette_color = getOcadColor(pixel);
+		switch (palette_color)
+		{
+		case 0:
+			// Black to gray (50%)
+			return  qGray(pixel) < 128-threshold[(x%2 + 2*(y%2))]/2 ? 0 : 7;
+			
+		case 7:
+			// Gray (50%) to light gray 
+			return  qGray(pixel) < 192-threshold[(x%2 + 2*(y%2))]/4 ? 7 : 8;
+			
+		case 8:
+			// Light gray to white
+			return  qGray(pixel) < 256-threshold[(x%2 + 2*(y%2))]/4 ? 8 : 15;
+			
+		case 15:
+			// Pure white
+			return palette_color;
+			
+		default:
+			// Color to white
+			return  QColor(pixel).saturation() >= threshold[(x%2 + 2*(y%2))] ? palette_color : 15;
+		}
+	};
+	
 	for (int y = icon_size - 1; y >= 0; --y)
 	{
 		for (int x = 0; x < icon_size; x += 2)
 		{
-			int first = getOcadColor(image.pixel(x, y));
-			int second = getOcadColor(image.pixel(x + 1, y));
-			*(ocad_icon++) = (first << 4) + (second);
+			auto first = process_pixel(x, y);
+			auto second = process_pixel(x+1, y);
+			*(ocad_icon++) = u8((first << 4) + second);
 		}
 		ocad_icon++;
 	}
@@ -2569,9 +2614,9 @@ u16 OCAD8FileExport::exportTextCoordinates(TextObject* object, OCADPoint** buffe
 	}
 }
 
+// static
 int OCAD8FileExport::getOcadColor(QRgb rgb)
 {
-	// Simple comparison function which takes the best matching color.
 	static const QColor ocad_colors[16] = {
 		QColor(  0,   0,   0).toHsv(),
 		QColor(128,   0,   0).toHsv(),
@@ -2591,37 +2636,46 @@ int OCAD8FileExport::getOcadColor(QRgb rgb)
 		QColor(255, 255, 255).toHsv()
 	};
 	
-	// Return white for transparent areas
-	if (qAlpha(rgb) < 128)
+	Q_ASSERT(qAlpha(rgb) == 255);
+	
+	// Quick return for frequent values
+	if (rgb == qRgb(255, 255, 255))
 		return 15;
+	else if (rgb == qRgb(0, 0, 0))
+		return 0;
 	
 	QColor color = QColor(rgb).toHsv();
-	int best_index = 0;
-	float best_distance = 999999;
-	for (int i = 0; i < 16; ++i)
+	if (color.hue() == -1 || color.saturation() < 32)
 	{
+		auto gray = qGray(rgb);  // qGray is used for dithering
+		if (gray >= 192)
+			return 8;
+		if (gray >= 128)
+			return 7;
+		return 0;
+	}
+	
+	int best_index = 0;
+	auto best_distance = std::numeric_limits<qreal>::max();
+	for (auto i : { 1, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14 })
+	{
+		// True color
 		int hue_dist = qAbs(color.hue() - ocad_colors[i].hue());
 		hue_dist = qMin(hue_dist, 360 - hue_dist);
-		float distance = qPow(hue_dist, 2) + 
-						  0.1f * qPow(color.saturation() - ocad_colors[i].saturation(), 2) +
-						  0.1f * qPow(color.value() - ocad_colors[i].value(), 2);
+		auto distance = qPow(hue_dist, 2)
+		                + 0.1 * qPow(color.saturation() - ocad_colors[i].saturation(), 2)
+		                + 0.1 * qPow(color.value() - ocad_colors[i].value(), 2);
 		
 		// (Too much) manual tweaking for orienteering colors
 		if (i == 1)
 			distance *= 1.5;	// Dark red
 		else if (i == 3)
 			distance *= 2;		// Olive
-		else if (i == 7)
-			distance *= 2;		// Dark gray
-		else if (i == 8)
-			distance *= 3;		// Light gray
 		else if (i == 11)
 			distance *= 2;		// Yellow
 		else if (i == 9)
 			distance *= 3;		// Red is unlikely
-		else if (i == 15)
-			distance *= 4;		// White is very unlikely
-			
+		
 		if (distance < best_distance)
 		{
 			best_distance = distance;

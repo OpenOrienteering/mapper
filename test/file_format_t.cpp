@@ -22,6 +22,8 @@
 
 #include <QtTest>
 
+#include "test_config.h"
+
 #include "global.h"
 #include "settings.h"
 #include "core/georeferencing.h"
@@ -338,7 +340,7 @@ void FileFormatTest::initTestCase()
 		FileFormats.registerFormat(new OCAD8FileFormat());
 	
 	static const auto prefix = QString::fromLatin1("data");
-	QDir::addSearchPath(prefix, QFileInfo(QString::fromUtf8(__FILE__)).dir().absoluteFilePath(prefix));
+	QDir::addSearchPath(prefix, QDir(QString::fromUtf8(MAPPER_TEST_SOURCE_DIR)).absoluteFilePath(prefix));
 	
 	for (auto raw_path : test_files)
 	{
