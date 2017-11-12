@@ -569,7 +569,7 @@ void LineSymbol::shiftCoordinates(const VirtualPath& path, double main_shift, Ma
 		{
 			// Rare but existing case.  No valid solution, but
 			// at least we need to output a point to handle the flags correctly.
-			//qDebug() << "No valid tangent at" << __FILE__ << __LINE__;
+			//qDebug("No valid tangent");
 			segment_start = coords_i;
 		}
 		else if (i == 0 && !path.isClosed())
