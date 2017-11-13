@@ -113,12 +113,32 @@ add_custom_command(
 )
 
 if(Mapper_MANUAL_QTHELP)
+	# Reproducible builds need a modifications to the help collection file.
+	set(source_date_commands )
+	find_program(SQLITE3_EXECUTABLE NAMES sqlite3
+	  DOC "The path of the sqlite3 executable"
+	)
+	if (DEFINED ENV{SOURCE_DATE_EPOCH} AND SQLITE3_EXECUTABLE)
+		file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/timestamp.sql"
+		  "update 'SettingsTable' set Value='$ENV{SOURCE_DATE_EPOCH}' where Key='CreationTime';\n"
+		  "delete from 'SettingsTable' where Key='LastRegisterTime';\n"
+		)
+		set(source_date_commands
+	      COMMAND ${SQLITE3_EXECUTABLE} "${Mapper_HELP_COLLECTION}" < "timestamp.sql"
+		)
+	elseif(DEFINED ENV{SOURCE_DATE_EPOCH})
+		message(FATAL_ERROR
+		  "By setting SOURCE_DATE_EPOCH, a reproducible build was requested. "
+		  "sqlite3 is needed for reproducible builds but cannot be found."
+		)
+	endif()
 	set(MAPPER_MANUAL_TARGET "${Mapper_HELP_COLLECTION}")
 	add_custom_command( 
 	  OUTPUT    "${Mapper_HELP_COLLECTION}"
 	            "${Mapper_COMPRESSED_HELP}"
 	  COMMAND   "${Qt5Help_QCOLLECTIONGENERATOR_EXECUTABLE}" Manual.qhcp
 	            -o "${Mapper_HELP_COLLECTION}"
+	  ${source_date_commands}
 	  MAIN_DEPENDENCY "html/index.qhp"
 	  DEPENDS   "${CMAKE_CURRENT_BINARY_DIR}/Manual.qhcp"
 	  WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
