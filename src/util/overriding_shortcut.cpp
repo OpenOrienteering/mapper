@@ -33,7 +33,7 @@ OverridingShortcut::OverridingShortcut(QWidget* parent)
 {
 	Q_ASSERT(parent);
 	parent->window()->installEventFilter(this);
-	time.start();
+	timer.start();
 }
 
 OverridingShortcut::OverridingShortcut(const QKeySequence& key, QWidget* parent, const char* member, const char* ambiguousMember, Qt::ShortcutContext context)
@@ -41,19 +41,22 @@ OverridingShortcut::OverridingShortcut(const QKeySequence& key, QWidget* parent,
 {
 	Q_ASSERT(parent);
 	parent->window()->installEventFilter(this);
-	time.start();
+	timer.start();
 }
 
-bool OverridingShortcut::eventFilter(QObject* watched, QEvent* event)
+
+OverridingShortcut::~OverridingShortcut() = default;
+
+
+
+bool OverridingShortcut::eventFilter(QObject* /*watched*/, QEvent* event)
 {
-	Q_UNUSED(watched);
-	
 	if (event->type() == QEvent::ShortcutOverride && key().count() == 1)
 	{
 		QKeyEvent* key_event = static_cast<QKeyEvent*>(event);
-		if (static_cast<int>(key_event->key() | key_event->modifiers()) == key()[0])
+		if ((key_event->key() | int(key_event->modifiers())) == key()[0])
 		{
-			if (time.elapsed() < 50) // milliseconds
+			if (timer.elapsed() < 50) // milliseconds
 			{
 				event->accept();
 				return true;
@@ -61,7 +64,7 @@ bool OverridingShortcut::eventFilter(QObject* watched, QEvent* event)
 			
 			QShortcutEvent se(key(), id());
 			event->setAccepted(QShortcut::event(&se));
-			time.start();
+			timer.restart();
 			return event->isAccepted();
 		}
 	}
