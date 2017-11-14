@@ -134,12 +134,12 @@ foreach(file ${input_files})
 	string(REGEX REPLACE "(\r?\n)#(#+ +[^\r\n{]*{#[^\r\n]*})" "\\1\\2" output "${output}")
 	
 	# toolbar.md headline entries with icon - doxygen doesn't support inline images
-	string(REGEX REPLACE "(\r?\n)###+ +(( *!\\[([^]]*)\\]\\(([^)]*)\\))*) *" "\\1<h4-icon-table><tr bgcolor=\"#eeeeee\"><td>\\2</td><td width=\"100%\" valign=\"middle\"><b>" output "${output}")
+	string(REGEX REPLACE "(\r?\n)###+ +(( *!\\[([^]]*)\\]\\(([^)]*)\\))*) *" "\\1<h4-icon-table><tr bgcolor=\"#eeeeee\"><td>\\2</td><td width=\"100%\" valign=\"middle\" style=\"padding-top:10px;padding-bottom:10px;\"><b>" output "${output}")
 	while(output MATCHES "(<h4-icon-table>[^\r\n]*!\\[[^]]*\\]\\([^)]*\\)) *(!\\[[^]]*\\]\\([^)]*\\))")
 		string(REGEX REPLACE "(<h4-icon-table>[^\r\n]*!\\[[^]]*\\]\\([^)]*\\)) *(!\\[[^]]*\\]\\([^)]*\\))" "\\1</td><td>\\2" output "${output}")
 	endwhile()
 	string(REGEX REPLACE "(<h4-icon-table>[^\r\n]*<b>[^\r\n{]*){#([^\r\n]*)}" "<a name=\"\\2\" >\n\\1" output "${output}")
-	string(REGEX REPLACE "<h4-icon-table>([^\r\n]*)" "<table cellspacing=\"0\" cellpadding=\"2\">\\1</b></td></tr></table>" output "${output}")
+	string(REGEX REPLACE "<h4-icon-table>([^\r\n]*)" "\n<table cellspacing=\"0\" cellpadding=\"2\" style=\"margin-top:20px\">\\1</b></td></tr></table>\n" output "${output}")
 	
 	# Liquid/Kramdown/Markdown markup
 	string(REGEX REPLACE "\r?\n *[-*]  *[^\r\n]*\r?\n{:toc}" "\\\\tableofcontents" output "${output}")
