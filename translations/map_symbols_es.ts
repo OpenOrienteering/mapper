@@ -604,19 +604,19 @@ Hoyos rocosos de más de 5 m de diámetro deberían ser exagerados y representar
         <message>
             <source>Boulder</source>
             <comment>Name of symbol 204</comment>
-            <translation>Peña</translation>
+            <translation>Peñasco</translation>
     </message>
         <message>
             <source>A distinct boulder (should be higher than 1 m), which is immediately identifiable on the ground. Groups of boulders are represented using symbol 207 (boulder cluster) or a boulder field symbol (208, 209).
 To be able to show the distinction between neighbouring (closer than 30 metres apart) boulders with significant difference in size, it is permitted to enlarge the symbol to 0.5 mm for some of the boulders.</source>
             <comment>Description of symbol 204</comment>
-            <translation>Una gran roca perceptible (debería ser mayor de 1 m de altura), que es inmediatamente identificable en el terreno. Los grupos de rocas se representan utilizando el símbolo 207 (agrupamiento de rocas) o un símbolo de área de rocas (208, 209).
-Para poder mostrar la distinción entre peñas vecinas (separadas por menos de 30 metros) con marcadas diferencias de tamaño, se permite agrandar el símbolo a 0,5 mm para las peñas mayores.</translation>
+            <translation>Una roca grande y perceptible (debería ser mayor de 1 m de altura), que es inmediatamente identificable en el terreno. Los grupos de rocas se representan utilizando el símbolo 207 (agrupamiento de peñascos) o un símbolo de peñascales (208, 209).
+Para poder mostrar la distinción entre peñascos vecinos (separados por menos de 30 metros) con marcadas diferencias de tamaño, se permite agrandar el símbolo a 0,5 mm para los peñascos mayores.</translation>
     </message>
         <message>
             <source>Boulder or large boulder, different size</source>
             <comment>Name of symbol 204.5</comment>
-            <translation>Peña o gran peñasco, diferente tamaño</translation>
+            <translation>Peñasco o peña, tamaño diferente</translation>
     </message>
         <message>
             <source>A boulder which is larger than neighboring boulders (204), or a large boulder which is smaller than neighboring large boulders (205).
@@ -625,33 +625,33 @@ To be able to show the distinction between neighbouring (closer than 30 metres a
 
 To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some of the boulders.</source>
             <comment>Description of symbol 204.5</comment>
-            <translation>Una gran roca que es mayor que las rocas vecinas (204), o una gran roca que es menor que los grandes peñascos vecinos (205).
+            <translation>Un peñasco que es mayor que los peñascos vecinos (204), o una peña que es menor que las peñas vecinas (205).
 
-Para poder mostrar la distinción entre grandes rocas (204) vecinas (separadas por menos de 30 metros) con marcadas diferencias de tamaño, se permite utilizar este símbolo (0,5 mm) como un aumento del símbol 204 para las rocas mayores.
+Para poder mostrar la distinción entre peñascos (204) vecinos (separadas por menos de 30 metros) con marcadas diferencias de tamaño, se permite utilizar este símbolo (0,5 mm) como un aumento del símbol 204 para los peñascos mayores.
 
-Para poder mostrar la distinción entre grandes peñascos (205) vecinos (separadas por menos de 30 metros) con marcadas diferencias de tamaño, se permite utilizar este símbolo (0,5 mm) como una reducción del símbol 205 para los peñascos menores.</translation>
+Para poder mostrar la distinción entre peñas (205) vecinas (separadas por menos de 30 metros) con marcadas diferencias de tamaño, se permite utilizar este símbolo (0,5 mm) como una reducción del símbol 205 para las peñas menores.</translation>
     </message>
         <message>
             <source>Large boulder</source>
             <comment>Name of symbol 205</comment>
-            <translation>Gran peñasco</translation>
+            <translation>Peña</translation>
     </message>
         <message>
             <source>A particularly large and distinct boulder. A large boulder should be more than 2 m high. To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders with significant difference in size, it is permitted to reduce the size of the symbol to 0.5 mm for some of the boulders.</source>
             <comment>Description of symbol 205</comment>
-            <translation>Un peñasco particularmente grande y distintivo. Un gran peñasco debería tener más de 2 m de altura. Para poder mostrar la distinción entre grandes peñascos vecinos (separados por menos de 30 metros) con marcadas diferencias de tamaño, se permite reducir el tamaño del símbolo a 0,5 mm para los peñascos menores.</translation>
+            <translation>Una roca particularmente grande y distintiva. Una peña debería tener más de 2 m de altura. Para poder mostrar la distinción entre peñas vecinas (separados por menos de 30 metros) con marcadas diferencias de tamaño, se permite reducir el tamaño del símbolo a 0,5 mm para las peñas menores.</translation>
     </message>
         <message>
             <source>Gigantic boulder</source>
             <comment>Name of symbol 206</comment>
-            <translation>Peña gigante</translation>
+            <translation>Peñón</translation>
     </message>
         <message>
             <source>A rock pillar or gigantic boulder that is so high and steep that it is impossible topass/climb.
 The gap between gigantic boulders or between gigantic boulders and other impassable feature symbols must exceed 0.3 mm on the map.</source>
             <comment>Description of symbol 206</comment>
-            <translation>Un pilar de roca o peña gigante que es tan alto y empinado que es imposible sobrepasar/ascender.
-El espacio entre varias peñas gigantes o entre peñas gigantes y otros símbolos de elementos impasables debe ser mayor de 0,3 mm sobre el mapa.</translation>
+            <translation>Un pilar de roca o peña gigante que es tan alto y empinado que es imposible de sobrepasar/ascender.
+El espacio entre varios peñones o entre peñas gigantes y otros símbolos de elementos impasables debe ser mayor de 0,3 mm sobre el mapa.</translation>
     </message>
         <message>
             <source>Boulder cluster</source>
@@ -662,7 +662,7 @@ El espacio entre varias peñas gigantes o entre peñas gigantes y otros símbolo
             <source>A distinct group of boulders so closely clustered together that they cannot be marked individually. The boulders in the cluster should be higher than 1 metre. A boulder cluster must be easily identifiable as a group of boulders.
 To be able to show the distinction between neighbouring (maximum 30 metres apart), boulder clusters with significant difference in boulder size, it is permitted to enlarge this symbol by 20% (edge length 0.96 mm) for some of the boulder clusters.</source>
             <comment>Description of symbol 207</comment>
-            <translation>Un perceptible grupo de peñas tan juntas que no pueden ser representadas individualmente. Las rocas del agrupamiento deberían ser mayores de 1 m de altura. Un agrupamiento de peñas debe ser fácilmente idendificable como un único grupo de rocas.
+            <translation>Un perceptible grupo de rocas tan juntas que no pueden ser representadas individualmente. Las rocas del agrupamiento deberían ser mayores de 1 m de altura. Un agrupamiento de peñas debe ser fácilmente idendificable como un único grupo de rocas.
 Para poder mostrar la distinción entre agrupamientos de peñas vecinos (separados por 30 metros como máximo) con marcadas diferencias de tamaño de rocas, se permite agrandar este símbolo en un 20% (longitud del borde 0,96 mm) para los agrupamientos mayores.</translation>
     </message>
         <message>
@@ -678,128 +678,142 @@ Para poder mostrar la distinción entre agrupamientos de peñas vecinos (separad
         <message>
             <source>Boulder field</source>
             <comment>Name of symbol 208</comment>
-            <translation>Área de rocas</translation>
+            <translation>Peñascal</translation>
     </message>
         <message>
             <source>An area which is covered with so many scattered blocks of stone that they cannot be marked individually, is shown with randomly placed and orientated solid triangles. A boulder field will generally not impact runnability. If the runnability of the boulder field is reduced, symbol 209 (dense boulder field) should be used or the symbol should be combined with a stony ground symbol.
 A minimum of two triangles should be used. One triangle may be used if it is combined with other rock symbols (for instance directly below cliff symbols (201, 202), adjacent to boulder symbols (204-206) or combined with stony ground symbols (210-212)).
 To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.</source>
             <comment>Description of symbol 208</comment>
-            <translation>Una zona que está cubierta con tantos bloques de piedra diseminados que no se pueden dibujar individualmente, se representa con triángulos sólidos colocados y orientados aleatoriamente. En general, un área de rocas no afectará a la velocidad de carrera. Si dicha velocidad se ve reducida, se debería utilizar el símbolo 209 (densa área de rocas) o combinar el símbolo de área de rocas con uno de los símbolos de terreno pedregoso.
+            <translation>Una zona que está cubierta con tantos bloques de piedra diseminados que no se pueden dibujar individualmente, se representa con triángulos sólidos colocados y orientados aleatoriamente. En general, un peñascal no afectará a la velocidad de carrera. Si dicha velocidad se ve reducida, se debería utilizar el símbolo 209 (peñascal denso) o combinar el símbolo de área de rocas con uno de los símbolos de terreno pedregoso.
 Se debe utilizar un mínimo de dos triángulos. Se puede utilizar un solo triángulo si se combina con otros símbolos de rocas (por ejemplo directamente debajo de símbolos de cortados (201, 202), junto a símbolos de peñas (204-206) o combinado con símbolos de terreno pedregoso (210-212)).
-Para poder mostrar evidentes diferencias de altura dento de un área de rocas, se permite agrandar algunos de los triángulos a un 120%.</translation>
+Para poder mostrar evidentes diferencias de altura dento de un peñascal, se permite agrandar algunos de los triángulos a un 120%.</translation>
     </message>
         <message>
             <source>Boulder field, single triangle</source>
             <comment>Name of symbol 208.1</comment>
-            <translation>Área de rocas, triángulo único</translation>
+            <translation>Peñascal, triángulo único</translation>
     </message>
         <message>
             <source>An area which is covered with so many blocks of stone that they cannot be marked individually is shown with randomly orientated solid triangles with sides of ratio 8:6:5. A minimum of two triangles should be used. The going is indicated by the density of the triangles. To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
             <comment>Description of symbol 208.1</comment>
-            <translation>Una zona que está cubierta con tantos bloques de piedra que no se pueden mostrar individualmente se representa con triángulos sólidos orientados aleatoriamente con sus lados cumpliendo la relación 8:6:5. Se debería utilizar un mínimo de dos triángulos. Para mostrar la distinción entre zonas de rocas con una diferencia significativa en el tamaño de las mismas se permite agrandar los triángulos en un 20%.</translation>
+            <translation>Una zona que está cubierta con tantos bloques de piedra que no se pueden mostrar individualmente se representa con triángulos sólidos orientados aleatoriamente con sus lados cumpliendo la relación 8:6:5. Se debería utilizar un mínimo de dos triángulos. Para mostrar la distinción entre peñascales con una diferencia significativa en el tamaño de sus peñascos se permite agrandar los triángulos en un 20%.</translation>
     </message>
         <message>
             <source>Boulder field, single triangle, enlarged</source>
             <comment>Name of symbol 208.2</comment>
-            <translation>Área de rocas, triángulo único, agrandado</translation>
+            <translation>Peñascal, triángulo único, agrandado</translation>
     </message>
         <message>
             <source>To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
             <comment>Description of symbol 208.2</comment>
-            <translation>Para mostrar la distinción entre zonas de rocas con una diferencia significativa en el tamaño de las mismas se permite agrandar los triángulos en un 20%.</translation>
+            <translation>Para mostrar la distinción entre peñascales con una diferencia significativa en el tamaño de sus peñascos se permite agrandar los triángulos en un 20%.</translation>
     </message>
         <message>
             <source>Dense boulder field</source>
             <comment>Name of symbol 209</comment>
-            <translation>Densa área de rocas</translation>
+            <translation>Peñascal denso</translation>
     </message>
         <message>
             <source>An area which is covered with so many blocks of stone that they cannot be marked individually and the runnability is affected, is shown with randomly placed and orientated solid triangles. A minimum of two triangles must be used.
 Density: 2–3 symbols / mm² (31%-47%). To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.</source>
             <comment>Description of symbol 209</comment>
             <translation>Una zona que está cubierta con tantos bloques de piedra que no se pueden mostrar individualmente y donde la velocidad de carrera se ve afectada, se representa con triángulos sólidos colocados y orientados aleatoriamente. Se debe utilizar un mínimo de dos triángulos.
-Densidad: 2-3 símbolos / mm² (31%-47%). Para poder mostrar marcadas diferencias de altura dentro de un área de rocas, se permite agrandar los triángulos de las mayores al 120%.</translation>
+Densidad: 2-3 símbolos / mm² (31%-47%). Para poder mostrar marcadas diferencias de altura dentro de un peñascal, se permite agrandar los triángulos de las mayores al 120%.</translation>
     </message>
         <message>
             <source>Stony ground, slow running</source>
             <comment>Name of symbol 210</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terreno pedregoso, carrera lenta</translation>
+    </message>
         <message>
             <source>Stony or rocky ground which reduces runnability to about 60-80% of normal speed.
 The dots should be randomly distributed but not interfere with the representation of important terrain features and objects.
 The minimum number of dots is three (footprint 10 m x 10 m).
 To avoid confusion with symbol 416 (distinct vegetation boundary), the dots should not be arranged to form a line.</source>
             <comment>Description of symbol 210</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terreno rocoso o pedregoso que reduce la velocidad de carrera al 60-80% de la velocidad normal.
+Los puntos deberían ser distribuidos aleatoriamente pero sin interferir en la representación de objetos y elementos importantes del terreno.
+El número mínimo de puntos es tres (huella 10 m x 10 m).
+Para evitar confusión con el símbolo 416 (límite de vegetación distinguible), los puntos no deben estar dispuestos formando una línea.</translation>
+    </message>
         <message>
             <source>Stony ground, individual dot</source>
             <comment>Name of symbol 210.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terreno pedregoso, punto individual</translation>
+    </message>
         <message>
             <source>Stony or rocky ground which reduces runnability to about 60-80% of normal speed.
 The dots should be randomly distributed but not interfere with the representation of important terrain features and objects.
 The minimum number of dots is three (footprint 10 m x 10 m).
 To avoid confusion with symbol 416 (distinct vegetation boundary), the dots should not be arranged to form a line.</source>
             <comment>Description of symbol 210.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terreno rocoso o pedregoso que reduce la velocidad de carrera al 60-80% de la velocidad normal.
+Los puntos deberían ser distribuidos aleatoriamente pero sin interferir en la representación de objetos y elementos importantes del terreno.
+El número mínimo de puntos es tres (huella 10 m x 10 m).
+Para evitar confusión con el símbolo 416 (límite de vegetación distinguible), los puntos no deben estar dispuestos formando una línea.</translation>
+    </message>
         <message>
             <source>Stony ground, walk</source>
             <comment>Name of symbol 211</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terreno pedregoso, caminar</translation>
+    </message>
         <message>
             <source>Stony or rocky ground which reduces the runnability significantly (to about 20-60% of normal speed).
 The dots should be randomly distributed but not interfere with the representation of important terrain features and objects.
 The minimum number of dots is three (footprint 8 m x 8 m).
 To avoid confusion with symbol 416 (distinct vegetation boundary), the dots should not be arranged to form a line.</source>
             <comment>Description of symbol 211</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terreno rocoso o pedregoso que reduce la velocidad de carrera significativamente (sobre el 20-60% de la velocidad normal).
+Los puntos deberían ser distribuidos aleatoriamente pero sin interferir en la representación de objetos y elementos importantes del terreno.
+El número mínimo de puntos es tres (huella 8 m x 8 m).
+Para evitar confusión con el símbolo 416 (límite de vegetación distinguible), los puntos no deben estar dispuestos formando una línea.</translation>
+    </message>
         <message>
             <source>Stony ground, fight</source>
             <comment>Name of symbol 212</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terreno pedregoso, bregar</translation>
+    </message>
         <message>
             <source>Stony or rocky ground which is hardly passable (less than 20% of normal speed).
 The dots should be randomly distributed but not interfere with the representation of important terrain features and objects.
 The minimum number of dots is three (footprint 7 m x 7 m).
 To avoid confusion with symbol 416 (distinct vegetation boundary), the dots should not be arranged to form a line.</source>
             <comment>Description of symbol 212</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terreno rocoso o pedregoso que es difícilmente pasable (menos del 20% de la velocidad normal).
+Los puntos deberían ser distribuidos aleatoriamente pero sin interferir en la representación de objetos y elementos importantes del terreno.
+El número mínimo de puntos es tres (huella 7 m x 7 m).
+Para evitar confusión con el símbolo 416 (límite de vegetación distinguible), los puntos no deben estar dispuestos formando una línea.</translation>
+    </message>
         <message>
             <source>Open sandy ground</source>
             <comment>Name of symbol 213</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terreno despejado y arenoso</translation>
+    </message>
         <message>
             <source>An area of soft sandy ground where runnability is reduced to less than 80% of normal speed.</source>
             <comment>Description of symbol 213</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una zona de terreno blando y arenoso donde la velocidad de carrera se reduce a menos de un 80% de la velocidad normal.</translation>
+    </message>
         <message>
             <source>Bare rock</source>
             <comment>Name of symbol 214</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Roca desnuda</translation>
+    </message>
         <message>
             <source>A runnable area of rock without earth or vegetation should be shown as bare rock.
 An area of rock covered with grass, moss or other low vegetation, shall not be shown using the bare rock symbol.
 An area of less runnable bare rock should be shown using a stony ground symbol (210-212).</source>
             <comment>Description of symbol 214</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una zona de roca sobre la que se puede correr, sin tierra ni vegetación, se debería representar como roca desnuda.
+Una zona de roca cubierta de hierba, musgo u otra vegetación baja, no se debe representar utilizando el símbolo de roca desnuda.
+Una zona de roca desnuda que no permita la carrera normal debería representarse utilizando un símbolo de terreno pedregoso (210-212).</translation>
+    </message>
         <message>
             <source>Trench</source>
             <comment>Name of symbol 215</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Trinchera</translation>
+    </message>
         <message>
             <source>Rocky or artificial trench. Minimum depth should be 1 m.
 Minimum length: 2 mm (footprint 30 m).
@@ -807,238 +821,252 @@ Shorter trenches may be exaggerated to the minimum graphical dimension.
 Impassable trenches shall be represented using symbol 201 (impassable cliff).
 Collapsed and easily crossable trenches should be mapped as erosion gullies.</source>
             <comment>Description of symbol 215</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Trinchera de roca o artificial. La mínima profundidad debería ser 1 m.
+Longitud mínima: 2 mm (huella 30m).
+Las trincheras más cortas deben ser exageradas a la mínima dimensión gráfica.
+Las trincheras impasables deben ser representadas utilizando el símbolo 201 (cortado impasable).
+Las trincheras colapsadas y fácilmente superables deberían representarse como surcos de erosión.</translation>
+    </message>
         <message>
             <source>Uncrossable body of water, with bank line</source>
             <comment>Name of symbol 301</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Balsa de agua no vadeable, con línea de orilla</translation>
+    </message>
         <message>
             <source>The black bank line emphasises that the feature is uncrossable. Dominant areas of water may be shown with 70% colour. Small areas of water and bodies of water that have narrow parts shall always be shown with full colour.</source>
             <comment>Description of symbol 301</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>La línea negra de la orilla enfatiza que el elemento no es vadeable. Las zonas de agua, cuando son dominantes, pueden representarse con el 70% del color. Zonas pequeñas de agua y balsas de agua que tengan partes estrechas se deben representar siempre con el color completo.</translation>
+    </message>
         <message>
             <source>Uncrossable body of water</source>
             <comment>Name of symbol 301.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Balsa de agua no vadeable</translation>
+    </message>
         <message>
             <source>The black bank line emphasises that the feature is uncrossable. Dominant areas of water may be shown with 70% colour. Small areas of water and bodies of water that have narrow parts shall always be shown with full colour.</source>
             <comment>Description of symbol 301.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>La línea negra de la orilla enfatiza que el elemento no es vadeable. Las zonas de agua, cuando son dominantes, pueden representarse con el 70% del color. Zonas pequeñas de agua y balsas de agua que tengan partes estrechas se deben representar siempre con el color completo.</translation>
+    </message>
         <message>
             <source>Uncrossable body of water, bank line</source>
             <comment>Name of symbol 301.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Balsa de agua no vadeable, línea de orilla</translation>
+    </message>
         <message>
             <source>A black bank line indicates that the feature cannot be crossed.</source>
             <comment>Description of symbol 301.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una línea negra de orilla indica que el elemento no se puede vadear.</translation>
+    </message>
         <message>
             <source>Shallow body of water, with outline</source>
             <comment>Name of symbol 302</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Balsa de agua poco profunda, con contorno</translation>
+    </message>
         <message>
             <source>A shallow seasonal or periodic body of water may be represented using a dashed outline. Small shallow water bodies may be represented as 100% blue (without an outline).</source>
             <comment>Description of symbol 302</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una balsa de agua poco profunda, estacional o periódica, puede representarse utilizando una línea discontinua de contorno. Las pequeñas balsas de agua poco profundas se pueden representar como 100% azul (sin línea de contorno).</translation>
+    </message>
         <message>
             <source>Shallow body of water</source>
             <comment>Name of symbol 302.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Balsa de agua poco profunda</translation>
+    </message>
         <message>
             <source>A shallow seasonal or periodic body of water may be represented using a dashed outline. Small shallow water bodies may be represented as 100% blue (without an outline).</source>
             <comment>Description of symbol 302.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una balsa de agua poco profunda, estacional o periódica, puede representarse utilizando una línea discontinua de contorno. Las pequeñas balsas de agua poco profundas se pueden representar como 100% azul (sin línea de contorno).</translation>
+    </message>
         <message>
             <source>Shallow body of water, solid outline</source>
             <comment>Name of symbol 302.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Balsa de agua poco profunda, línea de contorno continua</translation>
+    </message>
         <message>
             <source>Use this symbol to represent regular outline for shallow body of water.</source>
             <comment>Description of symbol 302.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Utilice este símbolo para representar contornos permanentes de balsas de agua poco profundas.</translation>
+    </message>
         <message>
             <source>Shallow body of water, dashed outline</source>
             <comment>Name of symbol 302.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Balsa de agua poco profunda, línea de contorno discontinua</translation>
+    </message>
         <message>
             <source>A shallow seasonal or periodic body of water may be represented using a dashed 0.10 outline.</source>
             <comment>Description of symbol 302.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una balsa de agua poco profunda, estacional o periódica, puede representarse utilizando una línea de contorno discontinua de 0,10.</translation>
+    </message>
         <message>
             <source>Waterhole</source>
             <comment>Name of symbol 303</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Poza</translation>
+    </message>
         <message>
             <source>A water-filled pit or an area of water which is too small to be shown to scale. Location is the centre of gravity of the symbol, and the symbol is orientated to north.</source>
             <comment>Description of symbol 303</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un hoyo relleno de agua o una balsa de agua demasiado pequeña para representarse a escala. La ubicación es el centro de gravedad del símbolo, y el símbolo está orientado al norte.</translation>
+    </message>
         <message>
             <source>Crossable watercourse</source>
             <comment>Name of symbol 304</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Cauce vadeable</translation>
+    </message>
         <message>
             <source>A crossable watercourse, minimum 2 m wide. The width of watercourses over 5 m wide should be shown to scale.</source>
             <comment>Description of symbol 304</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una corriente de agua vadeable, de 2 m de ancho como mínimo. La amplitud de cauces superior a 5 m debería representarse a escala.</translation>
+    </message>
         <message>
             <source>Small crossable watercourse</source>
             <comment>Name of symbol 305</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Pequeño cauce vadeable</translation>
+    </message>
         <message>
             <source>A crossable watercourse (including a major drainage ditch) less than 2 m wide.</source>
             <comment>Description of symbol 305</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una corriente de agua vadeable (incluyendo canales principales de drenaje o acequias) menor de 2 m de ancho.</translation>
+    </message>
         <message>
             <source>Minor/seasonal water channel</source>
             <comment>Name of symbol 306</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Canal de agua secundario/estacional</translation>
+    </message>
         <message>
             <source>A natural or man-made minor water channel which may contain water only intermittently.</source>
             <comment>Description of symbol 306</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un canal de agua secundario, natural o artificial, que puede llevar agua sólo ocasionalmente.</translation>
+    </message>
         <message>
             <source>Uncrossable marsh, with border line</source>
             <comment>Name of symbol 307</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ciénaga no vadeable, con línea de orilla</translation>
+    </message>
         <message>
             <source>A marsh which is uncrossable or dangerous for the competitor. The black outline emphasises that the feature is uncrossable. The black outline is omitted for boundaries between uncrossable marsh and symbol 301 (uncrossable body of water). The symbol may be combined with a rough open land symbol (403, 404) to show openness. The symbol is orientated to north.</source>
             <comment>Description of symbol 307</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un terreno pantanoso que no es vadeable o es peligroso para el competidor. La línea negra de contorno enfatiza que el elemento no es vadeable. La línea negra de contorno se omite para límites entre ciénagas no vadeables y el símbolo 301 (balsa de agua no vadeable). El símbolo se puede combinar con un símbolo de terreno despejado (403, 404) para indicar que es más o menos abierto. El símbolo está orientado al norte.</translation>
+    </message>
         <message>
             <source>Uncrossable marsh</source>
             <comment>Name of symbol 307.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ciénaga no vadeable</translation>
+    </message>
         <message>
             <source>A marsh which is uncrossable or dangerous for the competitor. The black outline emphasises that the feature is uncrossable. The black outline is omitted for boundaries between uncrossable marsh and symbol 301 (uncrossable body of water). The symbol may be combined with a rough open land symbol (403, 404) to show openness. The symbol is orientated to north.</source>
             <comment>Description of symbol 307.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un terreno pantanoso que no es vadeable o es peligroso para el competidor. La línea negra de contorno enfatiza que el elemento no es vadeable. La línea negra de contorno se omite para límites entre ciénagas no vadeables y el símbolo 301 (balsa de agua no vadeable). El símbolo se puede combinar con un símbolo de terreno despejado (403, 404) para indicar que es más o menos abierto. El símbolo está orientado al norte.</translation>
+    </message>
         <message>
             <source>Uncrossable marsh, border line</source>
             <comment>Name of symbol 307.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ciénaga no vadeable, línea de orilla</translation>
+    </message>
         <message>
             <source>A black line surrounds the symbol 307.</source>
             <comment>Description of symbol 307.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una línea negra rodea el símbolo 307.</translation>
+    </message>
         <message>
             <source>Marsh</source>
             <comment>Name of symbol 308</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ciénaga</translation>
+    </message>
         <message>
             <source>A crossable marsh, usually with a distinct edge.
 The symbol shall be combined with other symbols to show runnability and openness.
 The symbol is orientated to north.</source>
             <comment>Description of symbol 308</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un terreno pantanoso vadeable, normalmente con un borde distinguible.
+El símbolo debe combinarse con otros símbolos para indicar la velocidad de carrera que permite y la densidad de la vegetación.
+El símbolo está orientado al norte.</translation>
+    </message>
         <message>
             <source>Marsh, minimum size</source>
             <comment>Name of symbol 308.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ciénaga, tamaño mínimo</translation>
+    </message>
         <message>
             <source>A crossable marsh, usually with a distinct edge.
 The symbol shall be combined with other symbols to show runnability and openness.
 The symbol is orientated to north.</source>
             <comment>Description of symbol 308.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un terreno pantanoso vadeable, normalmente con un borde distinguible.
+El símbolo debe combinarse con otros símbolos para indicar la velocidad de carrera que permite y la densidad de la vegetación.
+El símbolo está orientado al norte.</translation>
+    </message>
         <message>
             <source>Narrow marsh</source>
             <comment>Name of symbol 309</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ciénaga estrecha</translation>
+    </message>
         <message>
             <source>A marsh or trickle of water which is too narrow (less than about 5 m wide) to be shown with the marsh symbol.</source>
             <comment>Description of symbol 309</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un terreno pantanoso o una filtración de agua que son demasiado estrechos (menor de 5 m de anchura) para representarse con el símbolo de ciénaga.</translation>
+    </message>
         <message>
             <source>Indistinct marsh</source>
             <comment>Name of symbol 310</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ciénaga difusa</translation>
+    </message>
         <message>
             <source>An indistinct marsh, seasonal marsh or an area of gradual transition from marsh to firm ground, which is crossable. The edge is generally indistinct and the vegetation similar to that of the surrounding ground.
 The symbol shall be combined with other symbols to show runnability and openness.
 The symbol is orientated to north.</source>
             <comment>Description of symbol 310</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un terreno pantanoso poco definido, estacional o una zona de transición gradual desde una ciénaga a tierra firme, que es vadeable. El borde es generalmente difuso y su vegetación similar a la del terreno que lo rodea.
+El símbolo se debe combinar con otros símbolos para indicar la velocidad de carrera que permite y la densidad de la vegetación.
+El símbolo está orientado al norte.</translation>
+    </message>
         <message>
             <source>Indistinct marsh, minimum size</source>
             <comment>Name of symbol 310.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ciénaga difusa, tamaño mínimo</translation>
+    </message>
         <message>
             <source>An indistinct marsh, seasonal marsh or an area of gradual transition from marsh to firm ground, which is crossable. The edge is generally indistinct and the vegetation similar to that of the surrounding ground.
 The symbol shall be combined with other symbols to show runnability and openness.
 The symbol is orientated to north.</source>
             <comment>Description of symbol 310.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un terreno pantanoso poco definido, estacional o una zona de transición gradual desde una ciénaga a tierra firme, que es vadeable. El borde es generalmente difuso y su vegetación similar a la del terreno que lo rodea.
+El símbolo se debe combinar con otros símbolos para indicar la velocidad de carrera que permite y la densidad de la vegetación.
+El símbolo está orientado al norte.</translation>
+    </message>
         <message>
             <source>Well, fountain or water tank</source>
             <comment>Name of symbol 311</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Pozo, fuente o depósito de agua</translation>
+    </message>
         <message>
             <source>A prominent well, fountain, water tank or captive spring.</source>
             <comment>Description of symbol 311</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un pozo, fuente, depósito de agua o manantial embalsado destacable.</translation>
+    </message>
         <message>
             <source>Spring</source>
             <comment>Name of symbol 312</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Manantial</translation>
+    </message>
         <message>
             <source>A source of water.
 Location is the centre of gravity of the symbol, and the symbol is orientated to open downstream.</source>
             <comment>Description of symbol 312</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un surgimiento de agua.
+La ubicación es el centro de gravedad del símbolo, y el símbolo está orientado al sentido de la corriente.</translation>
+    </message>
         <message>
             <source>Prominent water feature</source>
             <comment>Name of symbol 313</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Elemento de agua destacado</translation>
+    </message>
         <message>
             <source>Prominent water feature
 The symbol is orientated to north.</source>
             <comment>Description of symbol 313</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Elemento de agua destacado.
+El símbolo está orientado al norte.</translation>
+    </message>
         <message>
             <source>Open land</source>
             <comment>Name of symbol 401</comment>
