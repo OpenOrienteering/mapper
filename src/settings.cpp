@@ -239,22 +239,22 @@ void Settings::applySettings()
 
 int Settings::getSymbolWidgetIconSizePx()
 {
-	return qRound(Util::mmToPixelLogical(getSettingCached(Settings::SymbolWidget_IconSizeMM).toFloat()));
+	return qRound(Util::mmToPixelPhysical(getSettingCached(Settings::SymbolWidget_IconSizeMM).toFloat()));
 }
 
 qreal Settings::getMapEditorClickTolerancePx()
 {
-	return Util::mmToPixelLogical(getSettingCached(Settings::MapEditor_ClickToleranceMM).toReal());
+	return Util::mmToPixelPhysical(getSettingCached(Settings::MapEditor_ClickToleranceMM).toReal());
 }
 
 qreal Settings::getMapEditorSnapDistancePx()
 {
-	return Util::mmToPixelLogical(getSettingCached(Settings::MapEditor_SnapDistanceMM).toReal());
+	return Util::mmToPixelPhysical(getSettingCached(Settings::MapEditor_SnapDistanceMM).toReal());
 }
 
 float Settings::getRectangleToolHelperCrossRadiusPx()
 {
-	return Util::mmToPixelLogical(getSettingCached(Settings::RectangleTool_HelperCrossRadiusMM).toFloat());
+	return Util::mmToPixelPhysical(getSettingCached(Settings::RectangleTool_HelperCrossRadiusMM).toFloat());
 }
 
 int Settings::getStartDragDistancePx()
