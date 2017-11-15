@@ -453,7 +453,7 @@ void DrawRectangleTool::draw(QPainter* painter, MapWidget* widget)
 		if (widget->getMapView()->lengthToPixel(preview_point_radius) < preview_radius_min_pixels)
 			use_preview_radius = false;
 		
-		float helper_cross_radius = Settings::getInstance().getRectangleToolHelperCrossRadiusPx();
+		auto helper_cross_radius = Settings::getInstance().getRectangleToolHelperCrossRadiusPx();
 		painter->setRenderHint(QPainter::Antialiasing);
 		
 		auto perp_vector = forward_vector.perpRight();
@@ -705,10 +705,10 @@ void DrawRectangleTool::updateDirtyRect()
 			angle_helper->includeDirtyRect(rect);
 		if (rect.isValid())
 		{
-			float helper_cross_radius = Settings::getInstance().getRectangleToolHelperCrossRadiusPx();
 			int pixel_border = 0;
 			if (editingInProgress())
-				pixel_border = helper_cross_radius;	// helper_cross_radius as border is less than ideal but the only way to always ensure visibility of the helper cross at the moment
+				// helper_cross_radius as border is less than ideal but the only way to always ensure visibility of the helper cross at the moment
+				pixel_border = qCeil(Settings::getInstance().getRectangleToolHelperCrossRadiusPx());
 			if (angle_helper->isActive())
 				pixel_border = qMax(pixel_border, angle_helper->getDisplayRadius());
 			map()->setDrawingBoundingBox(rect, pixel_border, true);

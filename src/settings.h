@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012 Thomas Schöps
- *    Copyright 2013, 2014 Thomas Schöps, Kai Pastor
+ *    Copyright 2013, 2014,2017 Thomas Schöps, Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,6 +22,7 @@
 #ifndef OPENORIENTEERING_SETTINGS_H
 #define OPENORIENTEERING_SETTINGS_H
 
+#include <QtGlobal>
 #include <QHash>
 #include <QObject>
 #include <QString>
@@ -115,7 +116,7 @@ public:
 	int getSymbolWidgetIconSizePx();
 	qreal getMapEditorClickTolerancePx();
 	qreal getMapEditorSnapDistancePx();
-	float getRectangleToolHelperCrossRadiusPx();
+	qreal getRectangleToolHelperCrossRadiusPx();
 	int getStartDragDistancePx();
 	
 signals:

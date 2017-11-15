@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Thomas Schöps
- *    Copyright 2013-2015 Kai Pastor
+ *    Copyright 2013-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -68,8 +68,8 @@ Settings::Settings()
 	registerSetting(MapEditor_ZoomOutAwayFromCursor, "MapEditor/zoom_out_away_from_cursor", true);
 	registerSetting(MapEditor_DrawLastPointOnRightClick, "MapEditor/draw_last_point_on_right_click", true);
 	
-	registerSetting(EditTool_DeleteBezierPointAction, "EditTool/delete_bezier_point_action", (int)DeleteBezierPoint_RetainExistingShape);
-	registerSetting(EditTool_DeleteBezierPointActionAlternative, "EditTool/delete_bezier_point_action_alternative", (int)DeleteBezierPoint_ResetHandles);
+	registerSetting(EditTool_DeleteBezierPointAction, "EditTool/delete_bezier_point_action", int(DeleteBezierPoint_RetainExistingShape));
+	registerSetting(EditTool_DeleteBezierPointActionAlternative, "EditTool/delete_bezier_point_action_alternative", int(DeleteBezierPoint_ResetHandles));
 	
 	registerSetting(RectangleTool_HelperCrossRadiusMM, "RectangleTool/helper_cross_radius_mm", 100.0f);
 	registerSetting(RectangleTool_PreviewLineWidth, "RectangleTool/preview_line_with", true);
@@ -123,11 +123,11 @@ void Settings::migrateSettings(QSettings& settings, const QVariant& version)
 {
 	migrateValue("General/language", General_Language, settings);
 	if (migrateValue("MapEditor/click_tolerance", MapEditor_ClickToleranceMM, settings))
-		settings.setValue(getSettingPath(MapEditor_ClickToleranceMM), Util::pixelToMMLogical(settings.value(getSettingPath(MapEditor_ClickToleranceMM)).toFloat()));
+		settings.setValue(getSettingPath(MapEditor_ClickToleranceMM), Util::pixelToMMLogical(settings.value(getSettingPath(MapEditor_ClickToleranceMM)).toReal()));
 	if (migrateValue("MapEditor/snap_distance", MapEditor_SnapDistanceMM, settings))
-		settings.setValue(getSettingPath(MapEditor_SnapDistanceMM), Util::pixelToMMLogical(settings.value(getSettingPath(MapEditor_SnapDistanceMM)).toFloat()));
+		settings.setValue(getSettingPath(MapEditor_SnapDistanceMM), Util::pixelToMMLogical(settings.value(getSettingPath(MapEditor_SnapDistanceMM)).toReal()));
 	if (migrateValue("RectangleTool/helper_cross_radius", RectangleTool_HelperCrossRadiusMM, settings))
-		settings.setValue(getSettingPath(RectangleTool_HelperCrossRadiusMM), Util::pixelToMMLogical(settings.value(getSettingPath(RectangleTool_HelperCrossRadiusMM)).toFloat()));
+		settings.setValue(getSettingPath(RectangleTool_HelperCrossRadiusMM), Util::pixelToMMLogical(settings.value(getSettingPath(RectangleTool_HelperCrossRadiusMM)).toReal()));
 	
 	if (!settings.value(QLatin1String("MapEditor/units_rectified"), false).toBool())
 	{
@@ -252,7 +252,7 @@ void Settings::applySettings()
 
 int Settings::getSymbolWidgetIconSizePx()
 {
-	return qRound(Util::mmToPixelPhysical(getSettingCached(Settings::SymbolWidget_IconSizeMM).toFloat()));
+	return qRound(Util::mmToPixelPhysical(getSettingCached(Settings::SymbolWidget_IconSizeMM).toReal()));
 }
 
 qreal Settings::getMapEditorClickTolerancePx()
@@ -265,9 +265,9 @@ qreal Settings::getMapEditorSnapDistancePx()
 	return Util::mmToPixelPhysical(getSettingCached(Settings::MapEditor_SnapDistanceMM).toReal());
 }
 
-float Settings::getRectangleToolHelperCrossRadiusPx()
+qreal Settings::getRectangleToolHelperCrossRadiusPx()
 {
-	return Util::mmToPixelPhysical(getSettingCached(Settings::RectangleTool_HelperCrossRadiusMM).toFloat());
+	return Util::mmToPixelPhysical(getSettingCached(Settings::RectangleTool_HelperCrossRadiusMM).toReal());
 }
 
 int Settings::getStartDragDistancePx()
