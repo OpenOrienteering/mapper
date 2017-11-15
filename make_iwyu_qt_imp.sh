@@ -52,6 +52,7 @@ cat << END_EXTRA
 
     # convenience
     { include: [ "<QFlag>", "public", "<QFlags>", "public" ] },
+    { include: [ "<QVariantComparisonHelper>", "public", "<QVariant>", "public" ] },
     # http://doc.qt.io/qt-5/qt.html
     { include: [ "<qnamespace.h>", "private", "<Qt>", "public" ] },
     # http://doc.qt.io/qt-5/qtglobal.html
