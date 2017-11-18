@@ -1070,53 +1070,58 @@ El símbolo está orientado al norte.</translation>
         <message>
             <source>Open land</source>
             <comment>Name of symbol 401</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Campo abierto</translation>
+    </message>
         <message>
             <source>Open land that has a ground cover (grass, moss or similar) which offers better runnability than typical open forest. If yellow coloured areas become dominant, a screen (75% instead of full yellow) may be used.
 May not be combined with other area symbols than symbol 113 (broken ground), symbol 208 (boulder field) and marsh symbols (308, 310).</source>
             <comment>Description of symbol 401</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terreno despejado con una cobertura (hierba, musgo o similar) que permite mayor velocidad de carrera que el típico bosque abierto. Si las áreas coloreadas de amarillo son dominantes, se puede utilizar una trama (75% en lugar amarillo sólido).
+No se puede combinar con otros símbolos de área excepto los símbolos 113 (terreno accidentado), 208 (peñascal) y símbolos de ciénaga (308, 310).</translation>
+    </message>
         <message>
             <source>Open land with scattered trees</source>
             <comment>Name of symbol 402</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Campo abierto con árboles dispersos</translation>
+    </message>
         <message>
             <source>Areas with scattered trees or bushes in open land may be generalised by using a regular pattern of large dots in the yellow screen. The dots may be white (scattered trees) or green (scattered bushes/thickets). Prominent individual trees may be added using symbol 417 (prominent large tree). If yellow coloured areas become dominant, a screen (75% instead of full yellow) may be used.
 May not be combined with other area symbols than symbol 113 (broken ground), symbol 208 (boulder field) or marsh symbols (308, 310).</source>
             <comment>Description of symbol 402</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Las zonas con árboles dispersos o arbustos en terreno despejado y liso se pueden generalizar utilizando un patrón regular de grandes puntos dentro de la trama amarilla. Los puntos pueden ser blancos (árboles dispersos) o verdes (arbustos/matorrales dispersos). Se pueden incluir individualmente árboles prominentes utilizando el símbolo 417 (árbol grande y prominente). Si las áreas coloreadas de amarillo son dominantes, se puede utilizar una trama (75% en lugar de amarillo sólido).
+No se puede combinar con otros símbolos de área excepto los símbolos 113 (terreno accidentado), 208 (peñascal) o símbolos de ciénaga (308, 310).</translation>
+    </message>
         <message>
             <source>Open land with scattered bushes</source>
             <comment>Name of symbol 402.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Campo abierto con arbustos dispersos</translation>
+    </message>
         <message>
             <source>Areas with scattered trees or bushes in open land may be generalised by using a regular pattern of large dots in the yellow screen. The dots may be white (scattered trees) or green (scattered bushes/thickets). Prominent individual trees may be added using symbol 417 (prominent large tree). If yellow coloured areas become dominant, a screen (75% instead of full yellow) may be used.
 May not be combined with other area symbols than symbol 113 (broken ground), symbol 208 (boulder field) or marsh symbols (308, 310).</source>
             <comment>Description of symbol 402.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Las zonas con árboles dispersos o arbustos en terreno despejado y liso se pueden generalizar utilizando un patrón regular de grandes puntos dentro de la trama amarilla. Los puntos pueden ser blancos (árboles dispersos) o verdes (arbustos/matorrales dispersos). Se pueden incluir individualmente árboles prominentes utilizando el símbolo 417 (árbol grande y prominente). Si las áreas coloreadas de amarillo son dominantes, se puede utilizar una trama (75% en lugar de amarillo sólido).
+No se puede combinar con otros símbolos de área excepto los símbolos 113 (terreno accidentado), 208 (peñascal) o símbolos de ciénaga (308, 310).</translation>
+    </message>
         <message>
             <source>Rough open land</source>
             <comment>Name of symbol 403</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Campo abierto y escabroso</translation>
+    </message>
         <message>
             <source>Heath, moorland, felled areas, newly planted areas (trees lower than ca. 1 m) or other generally open land with rough ground vegetation, heather or tall grass offering the same runnability as typical open forest.
 May be combined with symbol 407 (vegetation, slow running, good visibility) or 409 (vegetation, walk, good visibility) to show reduced runnability.
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m). Smaller areas must either be left out, exaggerated or shown using symbol 401 (open land).</source>
             <comment>Description of symbol 403</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terreno sin cultivar, páramos, colinas desnudas, zonas en reforestación (árboles menores de 1 m aprox.) u otros terrenos generalmente despejados con vegetación rastrera, brezo o hierba alta que permite la misma velocidad de carrera que el típico bosque abierto.
+Se puede combinar con el símbolo 407 (vegetación, carrera lenta, buena visibilidad) o el 409 (vegetación, caminar, buena visibilidad) para indicar una reducción de la velocidad de carrera.
+Área mínima: 1 mm x 1 mm (huella 15 m x 15 m). Las áreas más pequeñas se deben descartar, exagerar o representar utilizando el símbolo 401 (campo abierto).</translation>
+    </message>
         <message>
             <source>Rough open land with scattered trees</source>
             <comment>Name of symbol 404</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Campo abierto y escabroso con árboles dispersos</translation>
+    </message>
         <message>
             <source>Areas with scattered trees or bushes in rough open land may be generalised by using a regular pattern of large dots in the yellow screen.
 The dots may be white (scattered trees) or green (scattered bushes/thickets). Only the white dot variant can be combined with symbol 407 (vegetation, slow
@@ -1125,13 +1130,16 @@ The symbol is orientated to north.
 Minimum width: 1.5 mm (footprint 22.5 m). Minimum area: 2.5 x 2.5 mm. Smaller areas must either be left out, exaggerated or shown using symbol 403 (rough
 open land).</source>
             <comment>Description of symbol 404</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Las zonas con árboles dispersos o arbustos en terreno despejado e irregular se pueden generalizar utilizando un patrón regular de grandes puntos dentro de la trama amarilla.
+Los puntos pueden ser blancos (árboles dispersos) o verdes (arbustos/matorrales dispersos). Sólo la variante de puntos blancos se puede combinar con el símbolo 407 (vegetación, carrera lenta, buena visibilidad) o el 409 (vegetación, caminar, buena visibilidad) para indicar una reducción de la velocidad de carrera.
+El símbolo está orientado al norte.
+Anchura mínima: 1,5 mm (huella 22,5 m). Área mínima: 2,5 x 2,5 mm. Las áreas más pequeñas se deben descartar, exagerar o representar utilizando el símbolo 403 (campo abierto y escabroso).</translation>
+    </message>
         <message>
             <source>Rough open land with scattered bushes</source>
             <comment>Name of symbol 404.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Campo abierto y escabroso con arbustos dispersos</translation>
+    </message>
         <message>
             <source>Areas with scattered trees or bushes in rough open land may be generalised by using a regular pattern of large dots in the yellow screen.
 The dots may be white (scattered trees) or green (scattered bushes/thickets). Only the white dot variant can be combined with symbol 407 (vegetation, slow
@@ -1140,320 +1148,339 @@ The symbol is orientated to north.
 Minimum width: 1.5 mm (footprint 22.5 m). Minimum area: 2.5 x 2.5 mm. Smaller areas must either be left out, exaggerated or shown using symbol 403 (rough
 open land).</source>
             <comment>Description of symbol 404.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Las zonas con árboles dispersos o arbustos en terreno despejado e irregular se pueden generalizar utilizando un patrón regular de grandes puntos dentro de la trama amarilla.
+Los puntos pueden ser blancos (árboles dispersos) o verdes (arbustos/matorrales dispersos). Sólo la variante de puntos blancos se puede combinar con el símbolo 407 (vegetación, carrera lenta, buena visibilidad) o el 409 (vegetación, caminar, buena visibilidad) para indicar una reducción de la velocidad de carrera.
+El símbolo está orientado al norte.
+Anchura mínima: 1,5 mm (huella 22,5 m). Área mínima: 2,5 x 2,5 mm. Las áreas más pequeñas se deben descartar, exagerar o representar utilizando el símbolo 403 (campo abierto y escabroso).</translation>
+    </message>
         <message>
             <source>Forest</source>
             <comment>Name of symbol 405</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Bosque</translation>
+    </message>
         <message>
             <source>Typical open forest for the particular type of terrain. If no part of the forest is easily runnable then no white should appear on the map.</source>
             <comment>Description of symbol 405</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Típico bosque abierto para un tipo de terreno particular. Si ninguna parte del bosque permite una carrera fácil, entonces no debería aparecer ningún blanco en el mapa.</translation>
+    </message>
         <message>
             <source>Vegetation, slow running</source>
             <comment>Name of symbol 406</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Vegetación, carrera lenta</translation>
+    </message>
         <message>
             <source>An area with dense vegetation (low visibility) which reduces running to about 60-80% of normal speed.</source>
             <comment>Description of symbol 406</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una zona con vegetación densa (baja visibilidad) que reduce la velocidad de carrera a un 60-80% de la velocidad normal.</translation>
+    </message>
         <message>
             <source>Vegetation runnable in one direction, 1</source>
             <comment>Name of symbol 406.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Vegetación transitable en una dirección, 1</translation>
+    </message>
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
             <comment>Description of symbol 406.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Cuando una zona de bosque permite buena velocidad de carrera en una dirección, pero menos buena en otras, se incluyen bandas blancas en la trama del símbolo para indicar la dirección de buena velocidad.</translation>
+    </message>
         <message>
             <source>Vegetation, slow running, good visibility</source>
             <comment>Name of symbol 407</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Vegetación, carrera lenta, buena visibilidad</translation>
+    </message>
         <message>
             <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 60-80% of normal speed. This symbol may not be combined with 406 or 408.</source>
             <comment>Description of symbol 407</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una zona de monte bajo denso y, sin embargo, buena visibilidad (zarzas, brezo, arbustos bajos e incluyendo ramas taladas) que reduce la velocidad de carrera a un 60-80% aprox. de la velocidad normal. Este símbolo no se puede combinar con los símbolos 406 ni 408.</translation>
+    </message>
         <message>
             <source>Vegetation, walk</source>
             <comment>Name of symbol 408</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Vegetación, caminar</translation>
+    </message>
         <message>
             <source>An area with dense trees or thickets (low visibility) which reduce running to about 20-60% of normal speed.</source>
             <comment>Description of symbol 408</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una zona densa de árboles o matorrales (baja visibilidad) que reduce la velocidad de carrera a un 20-60% de la velocidad normal.</translation>
+    </message>
         <message>
             <source>Vegetation runnable in one direction, 2</source>
             <comment>Name of symbol 408.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Vegetación transitable en una dirección, 2</translation>
+    </message>
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
             <comment>Description of symbol 408.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Cuando una zona de bosque permite buena velocidad de carrera en una dirección, pero menos buena en otras, se incluyen bandas blancas en la trama del símbolo para indicar la dirección de buena velocidad.</translation>
+    </message>
         <message>
             <source>Vegetation runnable in one direction, 2, 20%</source>
             <comment>Name of symbol 408.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Vegetación transitable en una dirección, 2, 20%</translation>
+    </message>
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, light green stripes are left in the screen symbol to show the direction of good running.</source>
             <comment>Description of symbol 408.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Cuando una zona de bosque permite buena velocidad de carrera en una dirección, pero menos buena en otras, se incluyen bandas verdes claras en la trama del símbolo para indicar la dirección de buena velocidad.</translation>
+    </message>
         <message>
             <source>Vegetation, walk, good visibility</source>
             <comment>Name of symbol 409</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Vegetación, caminar, buena visibilidad</translation>
+    </message>
         <message>
             <source>An area of good visibility that is difficult to run through due to for instance undergrowth (brambles, heather, low bushes, cut branches). Running speed is reduced to about 20-60% of normal speed.
 Areas of good visibility that are very difficult to run or impassable are represented using symbol 410 (vegetation, fight) or 411 (vegetation, impassable).</source>
             <comment>Description of symbol 409</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Zonas de buena visibilidad que son difíciles de atravesar corriendo debido por ejemplo al monte bajo (zarzas, brezo, arbustos bajos, ramas taladas). La velocidad de carrera se reduce a un 20-60% de la velocidad normal.
+Las zonas de buena visibilidad que sean muy difíciles de atravesar o impasables se representan utilizando el símbolo 410 (vegetación, bregar) o el 411 (vegetación, impasable).</translation>
+    </message>
         <message>
             <source>Vegetation, fight</source>
             <comment>Name of symbol 410</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Vegetación, bregar</translation>
+    </message>
         <message>
             <source>An area of dense vegetation (trees or undergrowth) which is barely passable. Running reduced to ca. 0-20% of normal speed.
 For fairness reasons, areas that are really difficult to get through (10% and slower) shall be represented using symbol 411 (vegetation, impassable).</source>
             <comment>Description of symbol 410</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una zona de vegetación densa (árboles o monte bajo) que apenas es pasable. La velocidad de carrera se reduce a un 0-20% aprox. de la velocidad normal.
+Por razones de ecuanimidad, las zonas que sean realmente difíciles de atravesar (10% o más lentas) se deben representar utilizando el símbolo 411 (vegetación, impasable).</translation>
+    </message>
         <message>
             <source>Forest runnable in one direction, 3</source>
             <comment>Name of symbol 410.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Bosque transitable en una dirección, 3</translation>
+    </message>
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
             <comment>Description of symbol 410.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Cuando una zona de bosque permite buena velocidad de carrera en una dirección, pero menos buena en otras, se incluyen bandas blancas en la trama del símbolo para indicar la dirección de buena velocidad.</translation>
+    </message>
         <message>
             <source>Forest runnable in one direction, 3, 20%</source>
             <comment>Name of symbol 410.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Bosque transitable en una dirección, 3, 20%</translation>
+    </message>
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, light green stripes are left in the screen symbol to show the direction of good running.</source>
             <comment>Description of symbol 410.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Cuando una zona de bosque permite buena velocidad de carrera en una dirección, pero menos buena en otras, se incluyen bandas verdes claras en la trama del símbolo para indicar la dirección de buena velocidad.</translation>
+    </message>
         <message>
             <source>Forest runnable in one direction, 3, 50%</source>
             <comment>Name of symbol 410.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Bosque transitable en una dirección, 3, 50%</translation>
+    </message>
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, light green stripes are left in the screen symbol to show the direction of good running.</source>
             <comment>Description of symbol 410.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Cuando una zona de bosque permite buena velocidad de carrera en una dirección, pero menos buena en otras, se incluyen bandas verdes claras en la trama del símbolo para indicar la dirección de buena velocidad.</translation>
+    </message>
         <message>
             <source>Vegetation, impassable</source>
             <comment>Name of symbol 411</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Vegetación, impasable</translation>
+    </message>
         <message>
             <source>An area of dense vegetation (trees or undergrowth) which is effectively impassable. Most useful for narrow and small areas.</source>
             <comment>Description of symbol 411</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una zona de vegetación densa (árboles o monte bajo) que es efectivamente impasable. Principalmente útil en zonas pequeñas o estrechas.</translation>
+    </message>
         <message>
             <source>Vegetation, impassable</source>
             <comment>Name of symbol 411.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Vegetación, impasable</translation>
+    </message>
         <message>
             <source>An area of dense vegetation (trees or undergrowth) which is effectively impassable. Most useful for narrow and small areas.</source>
             <comment>Description of symbol 411.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una zona de vegetación densa (árboles o monte bajo) que es efectivamente impasable. Principalmente útil en zonas pequeñas o estrechas.</translation>
+    </message>
         <message>
             <source>Vegetation, impassable, minimum width</source>
             <comment>Name of symbol 411.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Vegetación, impasable, anchura mínima</translation>
+    </message>
         <message>
             <source>An area of dense vegetation (trees or undergrowth) which is effectively impassable.
 Minimum width: 0.35 mm</source>
             <comment>Description of symbol 411.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una zona de vegetación densa (árboles o monte bajo) que es efectivamente impasable.
+Anchura mínima: 0,35 mm</translation>
+    </message>
         <message>
             <source>Cultivated land</source>
             <comment>Name of symbol 412</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Campo de cultivo</translation>
+    </message>
         <message>
             <source>Cultivated land, normally used for growing crops. Runnability may vary according to the type of crops grown and the time of year. For agroforestry, symbol 405 (forest) or 402 (open land with scattered trees) may be used instead of yellow.
 Since the runnability may vary, such areas should be avoided when setting courses.
 The symbol is combined with symbol 709 (out of bounds area) to show cultivated land that shall not be entered.</source>
             <comment>Description of symbol 412</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terreno cultivado, normalmente usado para el crecimiento de las cosechas. La velocidad de carrera puede variar según el tipo de cultivos y la época del año. Para plantaciones forestales,  se puede utilizar el símbolo 405 (bosque) o el 402 (campo abierto con árboles dispersos) en lugar del amarillo.
+Como la velocidad de carrera puede variar, estas zonas deberían evitarse al trazar los recorridos.
+El símbolo se combina con el 709 (zona prohibida) para representar terreno cultivado al que no se debe entrar.</translation>
+    </message>
         <message>
             <source>Orchard</source>
             <comment>Name of symbol 413</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Huerto de árboles frutales</translation>
+    </message>
         <message>
             <source>Land planted with trees or bushes, normally in a regular pattern.
 The dot lines may be orientated to show the direction of planting.
 Must be combined with either symbol 401 (open land) or 403 (rough open land).
 May be combined with symbol 407 (vegetation, slow running, good visibility) or 409 (vegetation, walk, good visibility) to show reduced runnability.</source>
             <comment>Description of symbol 413</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terreno cultivado con árboles o arbustos, normalmente en un patrón regular.
+Las líneas de puntos pueden orientarse mostrando la dirección de la plantación.
+Se debe combinar bien con el símbolo 401 (campo abierto) o el 403 (campo abierto y escabroso).
+Se puede combinar con el símbolo 407 (vegetación, carrera lenta, buena visibilidad) o el 409 (vegetación, caminar, buena visibilidad) para indicar la reducción de la velocidad de carrera.</translation>
+    </message>
         <message>
             <source>Orchard, rough open</source>
             <comment>Name of symbol 413.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Árboles frutales, abierto y escabroso</translation>
+    </message>
         <message>
             <source>Land planted with trees or bushes, normally in a regular pattern.
 The dot lines may be orientated to show the direction of planting.
 Must be combined with either symbol 401 (open land) or 403 (rough open land).
 May be combined with symbol 407 (vegetation, slow running, good visibility) or 409 (vegetation, walk, good visibility) to show reduced runnability.</source>
             <comment>Description of symbol 413.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terreno cultivado con árboles o arbustos, normalmente en un patrón regular.
+Las líneas de puntos pueden orientarse mostrando la dirección de la plantación.
+Se debe combinar bien con el símbolo 401 (campo abierto) o el 403 (campo abierto y escabroso).
+Se puede combinar con el símbolo 407 (vegetación, carrera lenta, buena visibilidad) o el 409 (vegetación, caminar, buena visibilidad) para indicar la reducción de la velocidad de carrera.</translation>
+    </message>
         <message>
             <source>Vineyard</source>
             <comment>Name of symbol 414</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Viñedo</translation>
+    </message>
         <message>
             <source>A vineyard or similar cultivated land containing dense rows of plants offering good or normal runnability in the direction of planting. The lines shall be orientated to show the direction of planting. Must be combined with either symbol 401 (open land) or symbol 403 (rough open land).</source>
             <comment>Description of symbol 414</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una viña o campo de cultivo similar que contiene densas filas de plantas que ofrecen velocidad de carrera normal o buena en la dirección de la plantación. Las líneas deben orientarse para indicar la dirección de la plantación. Se debe combinar con el símbolo 401 (campo abierto) o con el 403 (campo abierto y escabroso).</translation>
+    </message>
         <message>
             <source>Vineyard, rough open</source>
             <comment>Name of symbol 414.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Viñedo, abierto y escabroso</translation>
+    </message>
         <message>
             <source>A vineyard or similar cultivated land containing dense rows of plants offering good or normal runnability in the direction of planting. The lines shall be orientated to show the direction of planting. Must be combined with either symbol 401 (open land) or symbol 403 (rough open land).</source>
             <comment>Description of symbol 414.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una viña o campo de cultivo similar que contiene densas filas de plantas que ofrecen velocidad de carrera normal o buena en la dirección de la plantación. Las líneas deben orientarse para indicar la dirección de la plantación. Se debe combinar con el símbolo 401 (campo abierto) o con el 403 (campo abierto y escabroso).</translation>
+    </message>
         <message>
             <source>Distinct cultivation boundary</source>
             <comment>Name of symbol 415</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Límite de cultivo perceptible</translation>
+    </message>
         <message>
             <source>A boundary of symbol 412 (cultivated land) or a boundary between areas of cultivated land when not shown with other symbols (fence, wall, path, etc.).</source>
             <comment>Description of symbol 415</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un límite del símbolo 412 (campo de cultivo) o un límite entre zonas de cultivo cuando no se representa con otros símbolos (valla, muro, camino, etc.).</translation>
+    </message>
         <message>
             <source>Distinct vegetation boundary</source>
             <comment>Name of symbol 416</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Límite de vegetación perceptible</translation>
+    </message>
         <message>
             <source>A distinct forest edge or vegetation boundary within the forest.
 Very distinct forest edges and vegetation boundaries may be represented using the cultivation boundary symbol. Only one of the vegetation boundary symbols (black dotted line or dashed green line) can be used on a map.
 Minimum length, black dot implementation: 5 dots (2.5 mm – footprint 37 m).</source>
             <comment>Description of symbol 416</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un borde del bosque distinguible o linde de vegetación dentro del bosque.
+Los límites del bosque y las lindes de vegetación muy distinguibles se pueden representar utilizando el símbolo de límite de cultivo. Sólo uno de los símbolos de límite de vegetación (línea de puntos negros o línea discontinua verde) se puede utilizar en un mapa.
+Longitud mínima, implementación de puntos negros: 5 puntos (2,5 mm - huella 37 m).</translation>
+    </message>
         <message>
             <source>Distinct vegetation boundary, green dashed line</source>
             <comment>Name of symbol 416.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Límite de vegetación perceptible, línea discontinua verde</translation>
+    </message>
         <message>
             <source>For areas with a lot of rock features, it is recommended to use the green dashed line for vegetation boundaries.
 A disadvantage with a green line is that it cannot be used to show distinct vegetation boundaries around and within symbols 410 (vegetation, fight) and 411 (vegetation, impassable). An alternative for these situations is to use symbol 415 (distinct cultivation boundary).
 Minimum length, green line implementation: 4 dashes (1.8 mm – footprint 27 m).</source>
             <comment>Description of symbol 416.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Para zonas con muchos elementos de roca, se recomienda utilizar la línea discontinua verde para límites de vegetación.
+Una desventaja de la línea verde es que no se puede utilizar para representar límites de vegetación alrededor y dentro de los símbolos 410 (vegetación, bregar) y 411 (vegetación, impasable). Una alternativa para estas situaciones es utilizar el símbolo 415 (límite de cultivo perceptible).
+Longitud mínima, implementación de línea verde: 4 rayas (1,8 mm - huella 27 m).</translation>
+    </message>
         <message>
             <source>Prominent large tree</source>
             <comment>Name of symbol 417</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Arbol grande y prominente</translation>
+    </message>
         <message>
             <source>Footprint: 13.5 m x 13.5 m.</source>
             <comment>Description of symbol 417</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Huella: 13,5 m x 13,5 m.</translation>
+    </message>
         <message>
             <source>Prominent bush or tree</source>
             <comment>Name of symbol 418</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Arbol o arbusto prominente</translation>
+    </message>
         <message>
             <source>Use sparingly, as it is easily mistaken for symbol 109 (small knoll) by the colour vision impaired.
 
 Footprint: 7.5 m x 7.5 m.</source>
             <comment>Description of symbol 418</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Utilizar con moderación, ya que se confunde fácilmente con el símbolo 109 (montículo) por las personas con alteraciones en la percepción del color.
+Huella: 7,5 m x 7,5 m.</translation>
+    </message>
         <message>
             <source>Prominent vegetation feature</source>
             <comment>Name of symbol 419</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Elemento de vegetación prominente</translation>
+    </message>
         <message>
             <source>Footprint: 13.5 m x 13.5 m.</source>
             <comment>Description of symbol 419</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Huella: 13,5 m x 13,5 m.</translation>
+    </message>
         <message>
             <source>Paved area, with bounding line</source>
             <comment>Name of symbol 501</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Área pavimentada, con línea delimitadora</translation>
+    </message>
         <message>
             <source>An area with a firm level surface such as asphalt, hard gravel, tiles, concrete or the like. Paved areas should be bordered (or framed) by a thin black line where they have a distinct boundary.</source>
             <comment>Description of symbol 501</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un área que presenta una superficie firme y nivelada tal como asfalto, gravilla, losas, hormigón o similares. Las áreas pavimentadas deberían rodearse (o enmarcarse) con una fina línea negra donde presenten un límite distinguible.</translation>
+    </message>
         <message>
             <source>Paved area</source>
             <comment>Name of symbol 501.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Área pavimentada</translation>
+    </message>
         <message>
             <source>An area with a firm level surface such as asphalt, hard gravel, tiles, concrete or the like.</source>
             <comment>Description of symbol 501.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un área que presenta una superficie firme y nivelada tal como asfalto, gravilla, losas, hormigón o similares.</translation>
+    </message>
         <message>
             <source>Paved area, bounding line</source>
             <comment>Name of symbol 501.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Área pavimentada, línea delimitadora</translation>
+    </message>
         <message>
             <source>Paved areas should be bordered (or framed) by a thin black line where they have a distinct boundary.</source>
             <comment>Description of symbol 501.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Las áreas pavimentadas deberían rodearse (o enmarcarse) con una fina línea negra donde presenten un límite distinguible.</translation>
+    </message>
         <message>
             <source>Wide road, minimum width</source>
             <comment>Name of symbol 502</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Carretera, anchura mínima</translation>
+    </message>
         <message>
             <source>The width should be drawn to scale, but not smaller than the minimum width (0.3 +
 2*0.14 mm – footprint 8.7 m)
@@ -1462,137 +1489,147 @@ symbol 516 (fence), 518 (impassable fence), 513 (wall) or 515 (impassable wall) 
 feature is so close to the road edge that it cannot practically be shown as a separate
 symbol.</source>
             <comment>Description of symbol 502</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>La anchura deberái dibujarse a escala, pero no menor que la anchura mínima (0,3 + 2*0,14 - huella 8,7 m)
+Las líneas delimitadoras exteriores pueden remplazarse con otros símbolos de líneas negras, tales como el 516 (valla), 518 (valla impasable), 513 (muro) o 515 (muro impasable) si el elemento está tan próximo al borde de la carretera que no puede representarse en la práctica como separado.</translation>
+    </message>
         <message>
             <source>Wide road, 0.5mm width</source>
             <comment>Name of symbol 502.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Carretera, 0,5 mm de anchura</translation>
+    </message>
         <message>
             <source>Formerly &quot;502 Major road&quot;, provided for migration from ISOM 2000. Use of this symbol is discouraged for new maps.</source>
             <comment>Description of symbol 502.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Anteriormente &quot;502 Carretera principal&quot;, se define para la migración desde ISOM 2000. El uso de este símbolo está desaconsejado en mapas nuevos.</translation>
+    </message>
         <message>
             <source>Road with two carriageways</source>
             <comment>Name of symbol 502.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Carretera con separación de los sentidos de la circulación</translation>
+    </message>
         <message>
             <source>A road with two carriageways can be represented using two wide road symbols side by side, keeping only one of the road edges in the middle. The width of the symbol should be drawn to scale but not smaller than the minimum width. The outer boundary lines may be replaced with other black line symbols, such as symbol 516 (fence), 518 (impassable fence), 513 (wall) or 515 (impassable wall) if the feature is so close to the road edge that it cannot practically be shown as a separate symbol.</source>
             <comment>Description of symbol 502.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una carretera con separación de los sentidos de la circulación puede representarse utilizando dos símbolos de carretera amplia juntos, manteniendo sólo uno de los bordes en el medio. La anchura del símbolo debería dibujarse a escala no siendo menor que la anchura mínima. Las líneas delimitadoras exteriores pueden remplazarse con otros símbolos de líneas negras, tales como el 516 (valla), 518 (valla impasable), 513 (muro) o 515 (muro impasable) si el elemento está tan próximo al borde de la carretera que no puede representarse en la práctica como separado.</translation>
+    </message>
         <message>
             <source>Road</source>
             <comment>Name of symbol 503</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Pista</translation>
+    </message>
         <message>
             <source>A maintained road suitable for motor vehicles in all weather. Width less than 5 m.</source>
             <comment>Description of symbol 503</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una pista bien mantenida y adecuada para vehículos de motor con cualquier meteorología. Anchura menor de 5 m.</translation>
+    </message>
         <message>
             <source>Vehicle track</source>
             <comment>Name of symbol 504</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Camino que permite vehículos</translation>
+    </message>
         <message>
             <source>A track or poorly maintained road suitable for vehicles only when travelling slowly.</source>
             <comment>Description of symbol 504</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un camino o una pista con poco mantenimiento por la que sólo pueden circular los vehículos lentamente.</translation>
+    </message>
         <message>
             <source>Footpath</source>
             <comment>Name of symbol 505</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Camino</translation>
+    </message>
         <message>
             <source>An easily runnable path, bicycle track or old vehicle track.</source>
             <comment>Description of symbol 505</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un camino que permite una carrera fácil, una pista ciclista o un antiguo camino para vehículos.</translation>
+    </message>
         <message>
             <source>Small footpath</source>
             <comment>Name of symbol 506</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Senda</translation>
+    </message>
         <message>
             <source>A runnable small path or (temporary) forest extraction track which can be followed at competition speed.</source>
             <comment>Description of symbol 506</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una senda que permite la carrera o (temporalmente) rastros de extracción forestal que pueden seguirse a velocidad de competición.</translation>
+    </message>
         <message>
             <source>Less distinct small footpath</source>
             <comment>Name of symbol 507</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Senda difusa</translation>
+    </message>
         <message>
             <source>A runnable less distinct / visible small path or forestry extraction track.</source>
             <comment>Description of symbol 507</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una senda difusa/poco visible que permite la carrera o rastros de extracción forestal.</translation>
+    </message>
         <message>
             <source>Narrow ride</source>
             <comment>Name of symbol 508</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Corredor estrecho</translation>
+    </message>
         <message>
             <source>A forest ride or a prominent trace (forestry extraction track, sandy track, ski track) through the terrain which does not have a distinct runnable path along it. The definition of the symbol must be given on the map.
 Runnability: the same runnability as the surroundings.</source>
             <comment>Description of symbol 508</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un corredor en el bosque o una traza prominente (rastro de extracción forestal, pista arenosa, pista de esquí) a través del terreno que no constituye un camino perceptible por el que correr.
+Velocidad de carrera: permite la misma velocidad que el terreno circundante.</translation>
+    </message>
         <message>
             <source>Narrow ride, yellow background</source>
             <comment>Name of symbol 508.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Corredor estrecho, fondo amarillo</translation>
+    </message>
         <message>
             <source>A forest ride or a prominent trace (forestry extraction track, sandy track, ski track) through the terrain which does not have a distinct runnable path along it. The definition of the symbol must be given on the map.
 The definition of the symbol must be given on the map.
 Runnability: easy running.</source>
             <comment>Description of symbol 508.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un corredor en el bosque o una traza prominente (rastro de extracción forestal, pista arenosa, pista de esquí) a través del terreno que no constituye un camino perceptible por el que correr.
+La definición del símbolo se debe dar en el mapa.
+Velocidad de carrera: carrera fácil.</translation>
+    </message>
         <message>
             <source>Narrow ride, green 20% background</source>
             <comment>Name of symbol 508.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Corredor estrecho, fondo verde 20%</translation>
+    </message>
         <message>
             <source>A forest ride or a prominent trace (forestry extraction track, sandy track, ski track) through the terrain which does not have a distinct runnable path along it. The definition of the symbol must be given on the map.
 The definition of the symbol must be given on the map.
 Runnability: slow running.</source>
             <comment>Description of symbol 508.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un corredor en el bosque o una traza prominente (rastro de extracción forestal, pista arenosa, pista de esquí) a través del terreno que no constituye un camino perceptible por el que correr.
+La definición del símbolo se debe dar en el mapa.
+Velocidad de carrera: carrera lenta.</translation>
+    </message>
         <message>
             <source>Narrow ride, green 50% background</source>
             <comment>Name of symbol 508.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Corredor estrecho, fondo verde 50%</translation>
+    </message>
         <message>
             <source>A forest ride or a prominent trace (forestry extraction track, sandy track, ski track) through the terrain which does not have a distinct runnable path along it. The definition of the symbol must be given on the map.
 The definition of the symbol must be given on the map.
 Runnability: walk.</source>
             <comment>Description of symbol 508.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un corredor en el bosque o una traza prominente (rastro de extracción forestal, pista arenosa, pista de esquí) a través del terreno que no constituye un camino perceptible por el que correr.
+La definición del símbolo se debe dar en el mapa.
+Velocidad de carrera: caminar.</translation>
+    </message>
         <message>
             <source>Narrow ride, white background</source>
             <comment>Name of symbol 508.4</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Corredor estrecho, fondo blanco</translation>
+    </message>
         <message>
             <source>A forest ride or a prominent trace (forestry extraction track, sandy track, ski track) through the terrain which does not have a distinct runnable path along it. The definition of the symbol must be given on the map.
 The definition of the symbol must be given on the map.
 Runnability: normal runnability.</source>
             <comment>Description of symbol 508.4</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un corredor en el bosque o una traza prominente (rastro de extracción forestal, pista arenosa, pista de esquí) a través del terreno que no constituye un camino perceptible por el que correr.
+La definición del símbolo se debe dar en el mapa.
+Velocidad de carrera: carrera normal.</translation>
+    </message>
         <message>
             <source>Railway</source>
             <comment>Name of symbol 509</comment>
