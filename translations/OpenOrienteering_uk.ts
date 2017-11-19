@@ -4534,7 +4534,7 @@ Templates -&gt; Open template...</source>
         <source>Hint: Hold the middle mouse button to drag the map,
 zoom using the mouse wheel, if available.</source>
         <translation>Порада: Утримуйте середню клавішу миші для переміщення карти,
-змінюйте коефіцієнт збільшення колесом миші, якщо це доступно.</translation>
+наближайте/віддаляйте карту, обертаючи коліщатко миші, якщо доступно.</translation>
     </message>
 </context>
 <context>

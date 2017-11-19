@@ -6,8 +6,8 @@
         <message>
             <source>Purple</source>
             <comment>Color 0</comment>
-            <translation type="unfinished">Верхній пурпурний</translation>
-        </message>
+            <translation type="unfinished">Пурпурний</translation>
+    </message>
         <message>
             <source>Black</source>
             <comment>Color 1</comment>
@@ -16,8 +16,8 @@
         <message>
             <source>Opaque White below Black</source>
             <comment>Color 2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation type="unfinished">Непрозорий білий під чорним</translation>
+    </message>
         <message>
             <source>Black 65%</source>
             <comment>Color 3</comment>
@@ -61,8 +61,8 @@
         <message>
             <source>OpenOrienteering Orange</source>
             <comment>Color 11</comment>
-            <translation type="unfinished">OpenOrienteering Orange</translation>
-        </message>
+            <translation type="unfinished">Оранжевий OpenOrienteering</translation>
+    </message>
         <message>
             <source>Black 25% (Grey)</source>
             <comment>Color 12</comment>
@@ -71,8 +71,8 @@
         <message>
             <source>Green 50%, Yellow</source>
             <comment>Color 13</comment>
-            <translation type="unfinished">Зелений 50% та Жовтий</translation>
-        </message>
+            <translation type="unfinished">Зелений 50%, Жовтий</translation>
+    </message>
         <message>
             <source>Green</source>
             <comment>Color 14</comment>
@@ -151,8 +151,8 @@
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. A contour interval of 2.5 metres may be used for flat terrains. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
             <comment>Description of symbol 101</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation type="unfinished">Лінія, що з&apos;єднує точки однакової висоти. Стандартний вертикальний інтервал між горизонталями становить 5 метрів. Для поганих ділянок можна використовувати інтервал в 2,5 метра. Найменший вигин лінії горизонталі складає 0,25 мм від центру до центру лінії.</translation>
+    </message>
         <message>
             <source>Slope line, contour</source>
             <comment>Name of symbol 101.1</comment>
@@ -161,8 +161,8 @@
         <message>
             <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
             <comment>Description of symbol 101.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation type="unfinished">Бергштрихи можуть бути намальовані на нижній стороні горизонталі, щоб уточнити напрям схилу. Коли вони використовуються, вони повинні бути поміщені в уступ.</translation>
+    </message>
         <message>
             <source>Index contour</source>
             <comment>Name of symbol 102</comment>
@@ -171,8 +171,8 @@
         <message>
             <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. An index contour may be represented as an ordinary contour line in an area with much detail. Small contour knolls and depressions are normally not represented using index contours.</source>
             <comment>Description of symbol 102</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation type="unfinished">Кожна п&apos;ята горизонталь повинна бути потовщеною. Це сприяє швидкості оцінки різниці висот і загального сприйняття форм місцевості. При необхідності показу дрібних деталей, потовщена горизонталь може бути викреслена нормальною лінією. Для відображення маленьких горбів та ям потовщена горизонталь зазвичай не використовується.</translation>
+    </message>
         <message>
             <source>Contour value</source>
             <comment>Name of symbol 102.1</comment>
@@ -186,8 +186,8 @@
         <message>
             <source>Form line</source>
             <comment>Name of symbol 103</comment>
-            <translation type="unfinished">Form line</translation>
-        </message>
+            <translation type="unfinished">Допоміжна горизонталь</translation>
+    </message>
         <message>
             <source>Form lines are used where more information must be given about the shape of the ground. Form lines are added only where representation would be incomplete with ordinary contours. They shall not be used as intermediate contours. Only one form line should be used between neighbouring contours. It is very important that a form line fits logically into the contour system, so the start and end of a form line should be parallel to the neighbouring contours. The gaps between the form line dashes must be placed on reasonably straight sections of the form line. Form lines can be used to differentiate flat knolls and depressions from more distinct ones.</source>
             <comment>Description of symbol 103</comment>
@@ -196,13 +196,13 @@
         <message>
             <source>Slope line, formline</source>
             <comment>Name of symbol 103.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation type="unfinished">Бергштрих допоміжної горизонталі</translation>
+    </message>
         <message>
             <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
             <comment>Description of symbol 103.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation type="unfinished">Бергштрихи можуть бути намальовані на нижній стороні горизонталі, щоб уточнити напрям схилу. Коли вони використовуються, вони повинні бути поміщені в уступ.</translation>
+    </message>
         <message>
             <source>Earth bank</source>
             <comment>Name of symbol 104</comment>
@@ -226,8 +226,8 @@
         <message>
             <source>Earth bank, top line</source>
             <comment>Name of symbol 104.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation type="unfinished">Земляний обрив (урвище), лінія верху</translation>
+    </message>
         <message>
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
             <comment>Description of symbol 104.2</comment>
@@ -246,8 +246,8 @@
         <message>
             <source>Earth bank, minimum size (from ISOM2000)</source>
             <comment>Name of symbol 104.9</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation type="unfinished">Земляний обрив (урвище), мінімальний розмір (із ISOM2000)</translation>
+    </message>
         <message>
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
             <comment>Description of symbol 104.9</comment>
@@ -266,13 +266,13 @@
         <message>
             <source>Small earth wall</source>
             <comment>Name of symbol 106</comment>
-            <translation type="unfinished">Small earth wall</translation>
-        </message>
+            <translation type="unfinished">Маленький земляний вал</translation>
+    </message>
         <message>
             <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
             <comment>Description of symbol 106</comment>
-            <translation type="unfinished">A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</translation>
-        </message>
+            <translation type="unfinished">Маленький чи частково зруйнований земляний вал показується пунктирною лінією. Мінімальна висота 0,5 м.</translation>
+    </message>
         <message>
             <source>Erosion gully</source>
             <comment>Name of symbol 107</comment>
@@ -282,24 +282,26 @@
             <source>An erosion gully which is too small to be shown using symbol 104 (earth bank) is shown by a single line. Minimum depth: 1 m.
 Contour lines shall not be broken around this symbol.</source>
             <comment>Description of symbol 107</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation type="unfinished">Яр, що занадто малий для показу з використанням знаку 104 (земляний обрив), відображається однією лінією. Мінімальна глибина: 1 м.
+Горизонталі не повинні бути розірвані при перетині з даним знаком.</translation>
+    </message>
         <message>
             <source>Small erosion gully</source>
             <comment>Name of symbol 108</comment>
-            <translation type="unfinished">Small erosion gully</translation>
-        </message>
+            <translation type="unfinished">Маленька вимоїна</translation>
+    </message>
         <message>
             <source>A small erosion gully, dry ditch or trench. Minimum depth: 0.5 m.
 Contour lines should be broken around this symbol.</source>
             <comment>Description of symbol 108</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation type="unfinished">Невелика вимоїна, сухий рів чи траншея. Мінімальна глибина 0,5 м.
+Горизонталі повинні бути розірвані при перетині з даним знаком.</translation>
+    </message>
         <message>
             <source>Small knoll</source>
             <comment>Name of symbol 109</comment>
-            <translation type="unfinished">Small knoll</translation>
-        </message>
+            <translation type="unfinished">Позамасштабний горб</translation>
+    </message>
         <message>
             <source>An obvious mound or knoll which cannot be drawn to scale with a contour. Minimum height: 1 m.
 The symbol shall not touch or overlap contours.</source>
@@ -309,8 +311,8 @@ The symbol shall not touch or overlap contours.</source>
         <message>
             <source>Small elongated knoll</source>
             <comment>Name of symbol 110</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation type="unfinished">Позамасштабний витягнутий горб</translation>
+    </message>
         <message>
             <source>An obvious elongated knoll which cannot be drawn to scale with a contour. Minimum height: 1 m.
 The symbol shall not touch or overlap contours.</source>
@@ -320,8 +322,8 @@ The symbol shall not touch or overlap contours.</source>
         <message>
             <source>Small depression</source>
             <comment>Name of symbol 111</comment>
-            <translation type="unfinished">Small depression</translation>
-        </message>
+            <translation type="unfinished">Позамасштабна яма</translation>
+    </message>
         <message>
             <source>A small depression or hollow without steep sides that is too small to be shown by contours. Minimum depth: 1 m. Minimum width: 2 m.
 Small depressions with steep sides are represented with symbol 112 (pit). The symbol may not touch or overlap other brown symbols. Location is the centre of gravity of the symbol, and the symbol is orientated to north.</source>
