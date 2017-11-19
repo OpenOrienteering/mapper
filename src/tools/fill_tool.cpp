@@ -351,48 +351,47 @@ int FillTool::traceBoundary(const QImage& image, QPoint free_pixel, QPoint bound
 	out_boundary.reserve(4096);
 	out_boundary.push_back(boundary_pixel);
 	
-	// Go along obstructed pixels with a "right hand on the wall" method.
+	// Go along obstructed pixels with a "right(?) hand on the wall" method.
 	// Iteration keeps the following variables as state:
+	// cur_free_pixel:     current free position next to boundary
 	// cur_boundary_pixel: current position on boundary
-	// fwd_vector: vector from test_pixel to free spot
-	QPoint cur_boundary_pixel = boundary_pixel;
-	QPoint fwd_vector = free_pixel - boundary_pixel;
-	int max_length = image.width() * image.height();
-	for (int i = 0; i < max_length; ++i)
+	auto cur_free_pixel     = free_pixel;
+	auto cur_boundary_pixel = boundary_pixel;
+	do
 	{
-		QPoint right_vector = QPoint(fwd_vector.y(), -fwd_vector.x());
-		if (!image.rect().contains(cur_boundary_pixel + fwd_vector + right_vector, true))
-			return -1;
-		if (!image.rect().contains(cur_boundary_pixel + right_vector, true))
+		const auto fwd_vector = cur_free_pixel - cur_boundary_pixel;
+		const auto right_vector = QPoint(fwd_vector.y(), -fwd_vector.x());
+		const auto right_pixel = cur_free_pixel + right_vector;
+		if (!image.rect().contains(right_pixel, true))
 			return -1;
 		
-		if (image.pixel(cur_boundary_pixel + fwd_vector + right_vector) != background)
+		// Now analysing a 2x2 pixel block:
+		// | cur_free_pixel | cur_boundary_pixel |
+		// |  right_pixel   |     diag_pixel     |
+		const auto diag_pixel = cur_boundary_pixel + right_vector;
+		if (image.pixel(right_pixel) == image.pixel(cur_boundary_pixel))
 		{
-			cur_boundary_pixel = cur_boundary_pixel + fwd_vector + right_vector;
-			fwd_vector = -1 * right_vector;
+			out_boundary.push_back(right_pixel);
 		}
-		else if (image.pixel(cur_boundary_pixel + right_vector) != background)
+		else if (image.pixel(diag_pixel) != background)
 		{
-			cur_boundary_pixel = cur_boundary_pixel + right_vector;
-			// fwd_vector stays the same
+			out_boundary.push_back(diag_pixel);
+			if (image.pixel(right_pixel) == background)
+				cur_free_pixel = right_pixel;
+			else
+				out_boundary.push_back(right_pixel);
+		}
+		else if (image.pixel(right_pixel) != background)
+		{
+			out_boundary.push_back(right_pixel);
 		}
 		else
 		{
-			// cur_pixel stays the same
-			fwd_vector = right_vector;
+			cur_free_pixel = diag_pixel;
 		}
-		
-		QPoint cur_free_pixel = cur_boundary_pixel + fwd_vector;
-		if (cur_boundary_pixel == boundary_pixel && cur_free_pixel == free_pixel)
-		{
-			// Close the path.
-			out_boundary.push_back(cur_boundary_pixel);
-			break;
-		}
-		
-		if (out_boundary.back() != cur_boundary_pixel)
-			out_boundary.push_back(cur_boundary_pixel);
+		cur_boundary_pixel = out_boundary.back();
 	}
+	while (cur_boundary_pixel != boundary_pixel || cur_free_pixel != free_pixel);
 	
 	bool inside = false;
 	auto size = out_boundary.size();
