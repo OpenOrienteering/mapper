@@ -46,6 +46,7 @@
 #include "core/path_coord.h"
 #include "core/objects/object.h"
 #include "core/renderables/renderable.h"
+#include "core/symbols/area_symbol.h"
 #include "core/symbols/symbol.h"
 #include "gui/map/map_editor.h"
 #include "gui/map/map_widget.h"
@@ -294,19 +295,27 @@ QImage FillTool::rasterizeMap(const QRectF& extent, QTransform& out_transform)
 void FillTool::drawObjectIDs(Map* map, QPainter* painter, const RenderConfig &config)
 {
 	Q_STATIC_ASSERT(MapColor::Reserved == -1);
+	Q_ASSERT(!map->isAreaHatchingEnabled());
 	
 	auto part = map->getCurrentPart();
 	auto num_objects = qMin(part->getNumObjects(), int(RGB_MASK));
 	auto num_colors = map->getNumColors();
 	for (auto c = num_colors-1; c >= MapColor::Reserved; --c)
 	{
+		auto map_color = map->getColor(c);
 		for (int o = 0; o < num_objects; ++o)
 		{
 			auto object = part->getObject(o);
 			if (object->getType() != Object::Path)
 				continue;
-			if (object->getSymbol() && object->getSymbol()->isHidden())
-				continue;
+			if (auto symbol = object->getSymbol())
+			{
+				if (symbol->isHidden())
+					continue;
+				if (symbol->getType() == Symbol::Area
+				    && static_cast<const AreaSymbol*>(symbol)->getColor() != map_color)
+					continue;
+			}
 			
 			object->update();
 			object->renderables().draw(c, QRgb(o) | ~RGB_MASK, painter, config);
