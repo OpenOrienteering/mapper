@@ -21,7 +21,9 @@
 
 #include "fill_tool.h"
 
+#include <algorithm>
 #include <cstddef>
+#include <iterator>
 #include <limits>
 #include <memory>
 #include <type_traits>
@@ -210,6 +212,13 @@ int FillTool::fill(const QRectF& extent)
 			free_pixel -= QPoint(1, 0);
 			continue;
 		}
+		
+		// Don't let the boundary start in the midde of an object
+		const auto id = image.pixel(boundary.front());
+		auto new_object = std::find_if(begin(boundary), end(boundary), [&image, id](auto pos) {
+			return image.pixel(pos) != id;
+		});
+		std::rotate(begin(boundary), new_object, end(boundary));
 		
 		// Create fill object
 		if (!fillBoundary(image, boundary, transform.inverted()))
@@ -509,8 +518,10 @@ bool FillTool::fillBoundary(const QImage& image, const std::vector<QPoint>& boun
 	
 	path->closeAllParts();
 	
-	const auto simplify_epsilon = 1e-2;
-	path->simplify(nullptr, simplify_epsilon);
+	// Obsolete: The resultung path is as simple as the bounding objects,
+	// so better avoid the loss in precision from PathObject::simplify.
+	//   const auto simplify_epsilon = 1e-2;
+	//   path->simplify(nullptr, simplify_epsilon);
 	
 	int index = map()->addObject(path);
 	map()->clearObjectSelection(false);
