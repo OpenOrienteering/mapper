@@ -27,6 +27,7 @@
 
 #include <QtGlobal>
 #include <QCursor>
+#include <QDir>  // IWYU pragma: keep
 #include <QFlags>
 #include <QMessageBox>
 #include <QPainter>
@@ -53,6 +54,10 @@
 #include "tools/tool.h"
 #include "tools/tool_base.h"
 #include "undo/object_undo.h"
+
+
+// Uncomment this to generate an image file of the rasterized map
+//#define FILLTOOL_DEBUG_IMAGE "FillTool.png"
 
 
 // Make sure that we can use the object ID in place of a qRgb
@@ -290,6 +295,11 @@ QImage FillTool::rasterizeMap(const QRectF& extent, QTransform& out_transform)
 	
 	out_transform = painter.combinedTransform();
 	painter.end();
+	
+#ifdef FILLTOOL_DEBUG_IMAGE
+	image.save(QDir::temp().absoluteFilePath(QString::fromLatin1(FILLTOOL_DEBUG_IMAGE)));
+#endif
+	
 	return image;
 }
 
@@ -329,13 +339,17 @@ int FillTool::traceBoundary(const QImage& image, QPoint free_pixel, QPoint bound
 	Q_ASSERT(image.pixel(free_pixel) == background);
 	Q_ASSERT(image.pixel(boundary_pixel) != background);
 	
+#ifdef FILLTOOL_DEBUG_IMAGE
+	{
+		auto debugImage = image.copy();
+		debugImage.setPixel(free_pixel, qRgb(255, 0, 0));
+		debugImage.save(QDir::temp().absoluteFilePath(QString::fromLatin1(FILLTOOL_DEBUG_IMAGE)));
+	}
+#endif
+	
 	out_boundary.clear();
 	out_boundary.reserve(4096);
 	out_boundary.push_back(boundary_pixel);
-	
-	// Uncomment this and below references to debugImage to generate path visualizations
-// 	QImage debugImage = image.copy();
-// 	debugImage.setPixel(test_pixel, qRgb(255, 0, 0));
 	
 	// Go along obstructed pixels with a "right hand on the wall" method.
 	// Iteration keeps the following variables as state:
@@ -376,16 +390,9 @@ int FillTool::traceBoundary(const QImage& image, QPoint free_pixel, QPoint bound
 			break;
 		}
 		
-// 		debugImage.setPixel(cur_pixel, qRgb(0, 0, 255));
-		
 		if (out_boundary.back() != cur_boundary_pixel)
 			out_boundary.push_back(cur_boundary_pixel);
 	}
-	
-// 	QLabel* debugImageLabel = new QLabel();
-// 	debugImageLabel->setPixmap(QPixmap::fromImage(debugImage));
-// 	debugImageLabel->show();
-// 	debugImage.save("debugImage.png");
 	
 	bool inside = false;
 	auto size = out_boundary.size();
