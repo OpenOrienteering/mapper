@@ -1505,12 +1505,12 @@ Las líneas delimitadoras exteriores pueden remplazarse con otros símbolos de l
         <message>
             <source>Road with two carriageways</source>
             <comment>Name of symbol 502.2</comment>
-            <translation>Carretera con separación de los sentidos de la circulación</translation>
+            <translation>Carretera de dos sentidos separados</translation>
     </message>
         <message>
             <source>A road with two carriageways can be represented using two wide road symbols side by side, keeping only one of the road edges in the middle. The width of the symbol should be drawn to scale but not smaller than the minimum width. The outer boundary lines may be replaced with other black line symbols, such as symbol 516 (fence), 518 (impassable fence), 513 (wall) or 515 (impassable wall) if the feature is so close to the road edge that it cannot practically be shown as a separate symbol.</source>
             <comment>Description of symbol 502.2</comment>
-            <translation>Una carretera con separación de los sentidos de la circulación puede representarse utilizando dos símbolos de carretera amplia juntos, manteniendo sólo uno de los bordes en el medio. La anchura del símbolo debería dibujarse a escala no siendo menor que la anchura mínima. Las líneas delimitadoras exteriores pueden remplazarse con otros símbolos de líneas negras, tales como el 516 (valla), 518 (valla impasable), 513 (muro) o 515 (muro impasable) si el elemento está tan próximo al borde de la carretera que no puede representarse en la práctica como separado.</translation>
+            <translation>Una carretera de dos sentidos separados puede representarse utilizando dos símbolos de carretera juntos, manteniendo sólo uno de los bordes en el medio. La anchura del símbolo debería dibujarse a escala no siendo menor que la anchura mínima. Las líneas delimitadoras exteriores pueden remplazarse con otros símbolos de líneas negras, tales como el 516 (valla), 518 (valla impasable), 513 (muro) o 515 (muro impasable) si el elemento está tan próximo al borde de la carretera que no puede representarse en la práctica como separado.</translation>
     </message>
         <message>
             <source>Road</source>
@@ -1525,12 +1525,12 @@ Las líneas delimitadoras exteriores pueden remplazarse con otros símbolos de l
         <message>
             <source>Vehicle track</source>
             <comment>Name of symbol 504</comment>
-            <translation>Camino que permite vehículos</translation>
+            <translation>Carril</translation>
     </message>
         <message>
             <source>A track or poorly maintained road suitable for vehicles only when travelling slowly.</source>
             <comment>Description of symbol 504</comment>
-            <translation>Un camino o una pista con poco mantenimiento por la que sólo pueden circular los vehículos lentamente.</translation>
+            <translation>Un camino carretero o una pista con poco mantenimiento por los que pueden circular los vehículos sólo lentamente.</translation>
     </message>
         <message>
             <source>Footpath</source>
@@ -1540,7 +1540,7 @@ Las líneas delimitadoras exteriores pueden remplazarse con otros símbolos de l
         <message>
             <source>An easily runnable path, bicycle track or old vehicle track.</source>
             <comment>Description of symbol 505</comment>
-            <translation>Un camino que permite una carrera fácil, una pista ciclista o un antiguo camino para vehículos.</translation>
+            <translation>Un camino que permite una carrera fácil, una pista ciclista o un antiguo camino carretero.</translation>
     </message>
         <message>
             <source>Small footpath</source>
@@ -1550,7 +1550,7 @@ Las líneas delimitadoras exteriores pueden remplazarse con otros símbolos de l
         <message>
             <source>A runnable small path or (temporary) forest extraction track which can be followed at competition speed.</source>
             <comment>Description of symbol 506</comment>
-            <translation>Una senda que permite la carrera o (temporalmente) rastros de extracción forestal que pueden seguirse a velocidad de competición.</translation>
+            <translation>Una senda que permite la carrera o (temporalmente) veredas de extracción forestal que pueden seguirse a velocidad de competición.</translation>
     </message>
         <message>
             <source>Less distinct small footpath</source>
@@ -1560,164 +1560,172 @@ Las líneas delimitadoras exteriores pueden remplazarse con otros símbolos de l
         <message>
             <source>A runnable less distinct / visible small path or forestry extraction track.</source>
             <comment>Description of symbol 507</comment>
-            <translation>Una senda difusa/poco visible que permite la carrera o rastros de extracción forestal.</translation>
+            <translation>Una senda difusa/poco visible que permite la carrera o veredas de extracción forestal.</translation>
     </message>
         <message>
             <source>Narrow ride</source>
             <comment>Name of symbol 508</comment>
-            <translation>Corredor estrecho</translation>
+            <translation>Vereda forestal</translation>
     </message>
         <message>
             <source>A forest ride or a prominent trace (forestry extraction track, sandy track, ski track) through the terrain which does not have a distinct runnable path along it. The definition of the symbol must be given on the map.
 Runnability: the same runnability as the surroundings.</source>
             <comment>Description of symbol 508</comment>
-            <translation>Un corredor en el bosque o una traza prominente (rastro de extracción forestal, pista arenosa, pista de esquí) a través del terreno que no constituye un camino perceptible por el que correr.
+            <translation>Un corredor del bosque o una traza prominente (veredas de extracción forestal, veredas arenosas, pista de esquí) a través del terreno que no constituye un camino perceptible por el que correr.
 Velocidad de carrera: permite la misma velocidad que el terreno circundante.</translation>
     </message>
         <message>
             <source>Narrow ride, yellow background</source>
             <comment>Name of symbol 508.1</comment>
-            <translation>Corredor estrecho, fondo amarillo</translation>
+            <translation>Vereda forestal, fondo amarillo</translation>
     </message>
         <message>
             <source>A forest ride or a prominent trace (forestry extraction track, sandy track, ski track) through the terrain which does not have a distinct runnable path along it. The definition of the symbol must be given on the map.
 The definition of the symbol must be given on the map.
 Runnability: easy running.</source>
             <comment>Description of symbol 508.1</comment>
-            <translation>Un corredor en el bosque o una traza prominente (rastro de extracción forestal, pista arenosa, pista de esquí) a través del terreno que no constituye un camino perceptible por el que correr.
-La definición del símbolo se debe dar en el mapa.
+            <translation>Un corredor del bosque o una traza prominente (veredas de extracción forestal, veredas arenosas, pista de esquí) a través del terreno que no constituye un camino perceptible por el que correr.
+La definición del símbolo se debe proporcionar en el mapa.
 Velocidad de carrera: carrera fácil.</translation>
     </message>
         <message>
             <source>Narrow ride, green 20% background</source>
             <comment>Name of symbol 508.2</comment>
-            <translation>Corredor estrecho, fondo verde 20%</translation>
+            <translation>Vereda forestal, fondo verde 20%</translation>
     </message>
         <message>
             <source>A forest ride or a prominent trace (forestry extraction track, sandy track, ski track) through the terrain which does not have a distinct runnable path along it. The definition of the symbol must be given on the map.
 The definition of the symbol must be given on the map.
 Runnability: slow running.</source>
             <comment>Description of symbol 508.2</comment>
-            <translation>Un corredor en el bosque o una traza prominente (rastro de extracción forestal, pista arenosa, pista de esquí) a través del terreno que no constituye un camino perceptible por el que correr.
-La definición del símbolo se debe dar en el mapa.
+            <translation>Un corredor del bosque o una traza prominente (veredas de extracción forestal, veredas arenosas, pista de esquí) a través del terreno que no constituye un camino perceptible por el que correr.
+La definición del símbolo se debe proporcionar en el mapa.
 Velocidad de carrera: carrera lenta.</translation>
     </message>
         <message>
             <source>Narrow ride, green 50% background</source>
             <comment>Name of symbol 508.3</comment>
-            <translation>Corredor estrecho, fondo verde 50%</translation>
+            <translation>Vereda forestal, fondo verde 50%</translation>
     </message>
         <message>
             <source>A forest ride or a prominent trace (forestry extraction track, sandy track, ski track) through the terrain which does not have a distinct runnable path along it. The definition of the symbol must be given on the map.
 The definition of the symbol must be given on the map.
 Runnability: walk.</source>
             <comment>Description of symbol 508.3</comment>
-            <translation>Un corredor en el bosque o una traza prominente (rastro de extracción forestal, pista arenosa, pista de esquí) a través del terreno que no constituye un camino perceptible por el que correr.
-La definición del símbolo se debe dar en el mapa.
+            <translation>Un corredor del bosque o una traza prominente (veredas de extracción forestal, veredas arenosas, pista de esquí) a través del terreno que no constituye un camino perceptible por el que correr.
+La definición del símbolo se debe proporcionar en el mapa.
 Velocidad de carrera: caminar.</translation>
     </message>
         <message>
             <source>Narrow ride, white background</source>
             <comment>Name of symbol 508.4</comment>
-            <translation>Corredor estrecho, fondo blanco</translation>
+            <translation>Vereda forestal, fondo blanco</translation>
     </message>
         <message>
             <source>A forest ride or a prominent trace (forestry extraction track, sandy track, ski track) through the terrain which does not have a distinct runnable path along it. The definition of the symbol must be given on the map.
 The definition of the symbol must be given on the map.
 Runnability: normal runnability.</source>
             <comment>Description of symbol 508.4</comment>
-            <translation>Un corredor en el bosque o una traza prominente (rastro de extracción forestal, pista arenosa, pista de esquí) a través del terreno que no constituye un camino perceptible por el que correr.
-La definición del símbolo se debe dar en el mapa.
+            <translation>Un corredor del bosque o una traza prominente (veredas de extracción forestal, veredas arenosas, pista de esquí) a través del terreno que no constituye un camino perceptible por el que correr.
+La definición del símbolo se debe proporcionar en el mapa.
 Velocidad de carrera: carrera normal.</translation>
     </message>
         <message>
             <source>Railway</source>
             <comment>Name of symbol 509</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Vía férrea</translation>
+    </message>
         <message>
             <source>A railway or other kind of railed track.
 If it is forbidden to run along the railway, it shall be combined with the overprint symbol for forbidden route. If it is forbidden to cross the railway, it must be combined with a symbol for forbidden area.</source>
             <comment>Description of symbol 509</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una vía de tren u otra clase de vía con railes.
+Si está prohibido correr sobre la vía férrea, se debe combinar con el símbolo sobreimpreso para ruta prohibida. Si está prohibido cruzar la vía férrea, se debe conbinar con un símbolo de área prohibida.</translation>
+    </message>
         <message>
             <source>Power line</source>
             <comment>Name of symbol 510</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Tendido eléctrico</translation>
+    </message>
         <message>
             <source>Power line, cableway or skilift. The bars show the exact location of the pylons. The line may be broken to improve legibility.</source>
             <comment>Description of symbol 510</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Tendido eléctrico, teleférico o telesilla. Las barras indican la localización exacta de los pilones. Se puede cortar la línea para mejorar la legibilidad.</translation>
+    </message>
         <message>
             <source>Major power line, minimum width</source>
             <comment>Name of symbol 511</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Tendido eléctrico principal, anchura mínima</translation>
+    </message>
         <message>
             <source>Major power lines should be drawn with a double line. The gap between the lines may indicate the extent of the powerline.
 The lines may be broken to improve legibility. Very large carrying masts shall be represented in plan shape using symbol 521 (building) or with symbol 524 (high tower).</source>
             <comment>Description of symbol 511</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Los tendidos eléctricos principales se deberían dibujar con doble línea. La separación entre líneas puede indicar la extensión del tendido.
+Se pueden cortar las líneas para mejorar la legibilidad. Los mástiles de soporte muy grandes se deben representar en en su forma plana utilizando el símbolo 521 (edificación) o el símbolo 524 (torre alta).</translation>
+    </message>
         <message>
             <source>Major power line</source>
             <comment>Name of symbol 511.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Tendido eléctrico principal</translation>
+    </message>
         <message>
             <source>Major power lines should be drawn with a double line. The gap between the lines may indicate the extent of the powerline.
 The lines may be broken to improve legibility. Very large carrying masts shall be represented in plan shape using symbol 521 (building) or with symbol 524 (high tower).</source>
             <comment>Description of symbol 511.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Los tendidos eléctricos principales se deberían dibujar con doble línea. La separación entre líneas puede indicar la extensión del tendido.
+Se pueden cortar las líneas para mejorar la legibilidad. Los mástiles de soporte muy grandes se deben representar en en su forma plana utilizando el símbolo 521 (edificación) o el símbolo 524 (torre alta).</translation>
+    </message>
         <message>
             <source>Major power line, large carrying masts</source>
             <comment>Name of symbol 511.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Tendido eléctrico principal, grandes mástiles de soporte</translation>
+    </message>
         <message>
             <source>Major power lines should be drawn with a double line. The gap between the lines may indicate the extent of the powerline.
 The lines may be broken to improve legibility. Very large carrying masts shall be represented in plan shape using symbol 521 (building) or with symbol 524 (high tower).</source>
             <comment>Description of symbol 511.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Los tendidos eléctricos principales se deberían dibujar con doble línea. La separación entre líneas puede indicar la extensión del tendido.
+Se pueden cortar las líneas para mejorar la legibilidad. Los mástiles de soporte muy grandes se deben representar en en su forma plana utilizando el símbolo 521 (edificación) o el símbolo 524 (torre alta).</translation>
+    </message>
         <message>
             <source>Bridge / tunnel</source>
             <comment>Name of symbol 512</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Puente / túnel</translation>
+    </message>
         <message>
             <source>Bridges and tunnels are represented using the same basic symbols.
 If it is not possible to get through a tunnel (or under a bridge), it shall be omitted.
 Small bridges connected to a track/path are shown by centring a track dash on the crossing. Tracks/paths are broken for water course crossings without bridges.</source>
             <comment>Description of symbol 512</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Los puentes y túneles se representan utilizando el mismo símbolo básico.
+Si no es posible atravesar un túnel (o pasar debajo de un puente), se debe omitir.
+Los puentes pequeños conectados a un carril/camino se representan centrando una raya del camino en el cruce. Los carriles/caminos se deben cortan en cruces de cauces sin puentes.</translation>
+    </message>
         <message>
             <source>Bridge / tunnel, minimum size</source>
             <comment>Name of symbol 512.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Puente / túnel, tamaño mínimo</translation>
+    </message>
         <message>
             <source>Bridges and tunnels are represented using the same basic symbols.
 If it is not possible to get through a tunnel (or under a bridge), it shall be omitted.</source>
             <comment>Description of symbol 512.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Los puentes y túneles se representan utilizando el mismo símbolo básico.
+Si no es posible atravesar un túnel (o pasar debajo de un puente), se debe omitir.</translation>
+    </message>
         <message>
             <source>Footbridge</source>
             <comment>Name of symbol 512.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Pasarela</translation>
+    </message>
         <message>
             <source>A small footbridge with no path leading to it is represented with a single dash.
 Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm over both sides of the stream!</source>
             <comment>Description of symbol 512.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un pequeño puente peatonal sin ningún camino que conduzca hacia él se representa con una única raya.
+Nota: si el cauce es más ancho de 0,25 mm, ajustar este símbolo de forma que se extienda 0,5 mm a ambos lados del cauce!</translation>
+    </message>
         <message>
             <source>Wall</source>
             <comment>Name of symbol 513</comment>
