@@ -82,13 +82,6 @@ namespace
 
 EditPointTool::EditPointTool(MapEditorController* editor, QAction* tool_action)
  : EditTool { editor, EditPoint, tool_action }
- , hover_state { OverNothing }
- , hover_object { nullptr }
- , hover_point { 0 }
- , box_selection { false }
- , waiting_for_mouse_release { false }
- , switch_dash_points { false }
- , text_editor { nullptr }
 {
 	// noting else
 }

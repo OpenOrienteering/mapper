@@ -21,20 +21,32 @@
 
 #include "cut_hole_tool.h"
 
+#include <map>
+#include <memory>
+
+#include <Qt>
+#include <QtGlobal>
+#include <QCursor>
+#include <QFlags>
 #include <QMouseEvent>
+#include <QPixmap>
+#include <QString>
 
 #include "core/map.h"
+#include "core/map_coord.h"
 #include "core/objects/boolean_tool.h"
 #include "core/objects/object.h"
 #include "core/symbols/symbol.h"
 #include "tools/draw_circle_tool.h"
+#include "tools/draw_line_and_area_tool.h"
 #include "tools/draw_path_tool.h"
 #include "tools/draw_rectangle_tool.h"
+#include "tools/tool.h"
 #include "undo/object_undo.h"
 
 
-CutHoleTool::CutHoleTool(MapEditorController* editor, QAction* tool_button, CutHoleTool::HoleType hole_type)
- : MapEditorTool(editor, Other, tool_button), hole_type(hole_type)
+CutHoleTool::CutHoleTool(MapEditorController* editor, QAction* tool_action, CutHoleTool::HoleType hole_type)
+ : MapEditorTool(editor, Other, tool_action), hole_type(hole_type)
 {
 	path_tool = nullptr;
 }
@@ -218,7 +230,7 @@ void CutHoleTool::pathFinished(PathObject* hole_path)
 		out_objects.pop_back();
 	}
 	
-	ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(map());
+	auto undo_step = new ReplaceObjectsUndoStep(map());
 	undo_step->addObject(edited_object, undo_duplicate);
 	map()->push(undo_step);
 	map()->setObjectsDirty();

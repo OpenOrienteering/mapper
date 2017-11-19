@@ -21,8 +21,13 @@
 
 #include "draw_freehand_tool.h"
 
+#include <Qt>
+#include <QCursor>
 #include <QKeyEvent>
 #include <QMouseEvent>
+#include <QPixmap>
+#include <QRectF>
+#include <QString>
 
 #include "core/map.h"
 #include "core/map_view.h"
@@ -30,10 +35,11 @@
 #include "gui/modifier_key.h"
 #include "gui/map/map_editor.h"
 #include "gui/map/map_widget.h"
+#include "tools/tool.h"
 
 
-DrawFreehandTool::DrawFreehandTool(MapEditorController* editor, QAction* tool_button, bool is_helper_tool)
-: DrawLineAndAreaTool(editor, DrawFreehand, tool_button, is_helper_tool)
+DrawFreehandTool::DrawFreehandTool(MapEditorController* editor, QAction* tool_action, bool is_helper_tool)
+: DrawLineAndAreaTool(editor, DrawFreehand, tool_action, is_helper_tool)
 {
 	// nothing else
 }

@@ -21,27 +21,33 @@
 
 #include "scale_tool.h"
 
+#include <Qt>
+#include <QtGlobal>
+#include <QCursor>
+#include <QLocale>
 #include <QPainter>
+#include <QPixmap>
+#include <QPoint>
+#include <QPointF>
+#include <QRectF>
+#include <QString>
 
 #include "core/map.h"
+#include "core/map_view.h"
 #include "gui/map/map_widget.h"
 #include "core/objects/object.h"
+#include "tools/tool.h"
 #include "util/util.h"
 
 
-ScaleTool::ScaleTool(MapEditorController* editor, QAction* tool_button)
-: MapEditorToolBase { scaledToScreen(QCursor{ QPixmap(QString::fromLatin1(":/images/cursor-scale.png")), 1, 1 }), Other, editor, tool_button }
-, reference_length  { 0 }
-, scaling_factor    { 1 }
+ScaleTool::ScaleTool(MapEditorController* editor, QAction* tool_action)
+: MapEditorToolBase { scaledToScreen(QCursor{ QPixmap(QString::fromLatin1(":/images/cursor-scale.png")), 1, 1 }), Other, editor, tool_action }
 {
 	// nothing else
 }
 
 
-ScaleTool::~ScaleTool()
-{
-	// nothing, not inlined
-}
+ScaleTool::~ScaleTool() = default;
 
 
 

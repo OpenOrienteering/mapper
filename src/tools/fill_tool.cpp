@@ -21,18 +21,57 @@
 
 #include "fill_tool.h"
 
+#include <cstddef>
+#include <memory>
+
+#include <Qt>
+#include <QtGlobal>
+#include <QCursor>
+#include <QFlags>
 #include <QMessageBox>
 #include <QPainter>
+#include <QPixmap>
+#include <QPoint>
+#include <QPointF>
+#include <QRect>
+#include <QRgb>
+#include <QString>
 
 #include "core/map.h"
+#include "core/map_coord.h"
+#include "core/map_part.h"
+#include "core/map_view.h"
+#include "core/path_coord.h"
 #include "core/objects/object.h"
+#include "core/renderables/renderable.h"
+#include "core/symbols/symbol.h"
 #include "gui/map/map_editor.h"
 #include "gui/map/map_widget.h"
+#include "tools/tool.h"
+#include "tools/tool_base.h"
 #include "undo/object_undo.h"
 
 
-FillTool::FillTool(MapEditorController* editor, QAction* tool_button)
-: MapEditorToolBase(QCursor(QPixmap(QString::fromLatin1(":/images/cursor-fill.png")), 11, 11), Other, editor, tool_button)
+namespace
+{
+/**
+ * Helper structure used to represent a section of a traced path
+ * while constructing the fill object.
+ */
+struct PathSection
+{
+	PathObject* object;
+	PathPartVector::size_type part;
+	PathCoord::length_type start_clen;
+	PathCoord::length_type end_clen;
+};
+
+}  // namespace
+
+
+
+FillTool::FillTool(MapEditorController* editor, QAction* tool_action)
+: MapEditorToolBase(QCursor(QPixmap(QString::fromLatin1(":/images/cursor-fill.png")), 11, 11), Other, editor, tool_action)
 {
 	drawing_symbol = editor->activeSymbol();
 	setDrawingSymbol(editor->activeSymbol());
@@ -40,10 +79,9 @@ FillTool::FillTool(MapEditorController* editor, QAction* tool_button)
 	connect(editor, &MapEditorController::activeSymbolChanged, this, &FillTool::setDrawingSymbol);
 }
 
-FillTool::~FillTool()
-{
-	// Nothing, not inlined
-}
+FillTool::~FillTool() = default;
+
+
 
 // TODO: create a way for tools to specify which symbols / selections they support and deactivate them automatically if these conditions are not satisfied anymore!
 void FillTool::setDrawingSymbol(const Symbol* symbol)
@@ -65,7 +103,7 @@ void FillTool::setDrawingSymbol(const Symbol* symbol)
 void FillTool::clickPress()
 {
 	// First try to apply with current viewport only as extent (for speed)
-	MapWidget* widget = editor->getMainWidget();
+	auto widget = editor->getMainWidget();
 	QRectF viewport_extent = widget->getMapView()->calculateViewedRect(widget->viewportToView(widget->geometry()));
 	int result = fill(viewport_extent);
 	if (result == -1 || result == 1)
@@ -86,7 +124,7 @@ void FillTool::clickPress()
 
 int FillTool::fill(const QRectF& extent)
 {
-	const float extent_area_warning_threshold = 600 * 600; // 60 cm x 60 cm
+	constexpr auto extent_area_warning_threshold = qreal(600 * 600); // 60 cm x 60 cm
 	
 	// Warn if desired extent is large
 	if (extent.width() * extent.height() > extent_area_warning_threshold)
@@ -188,7 +226,7 @@ QImage FillTool::rasterizeMap(const QRectF& extent, QTransform& out_transform)
 	// - draw baselines in advance to normal rendering
 	//   This makes it possible to fill areas bounded by e.g. dashed paths.
 	
-	const float zoom_level = 4;
+	constexpr auto zoom_level = qreal(4);
 	
 	// Create map view centered on the extent
 	MapView view{ map() };
@@ -252,10 +290,10 @@ QImage FillTool::rasterizeMap(const QRectF& extent, QTransform& out_transform)
 
 void FillTool::drawObjectIDs(Map* map, QPainter* painter, const RenderConfig &config)
 {
-	MapPart* part = map->getCurrentPart();
+	auto part = map->getCurrentPart();
 	for (int o = 0, num_objects = part->getNumObjects(); o < num_objects; ++o)
 	{
-		Object* object = part->getObject(o);
+		auto object = part->getObject(o);
 		if (object->getSymbol() && object->getSymbol()->isHidden())
 			continue;
 		if (object->getType() != Object::Path)
@@ -333,13 +371,13 @@ int FillTool::traceBoundary(const QImage& image, QPoint start_pixel, QPoint test
 // 	debugImage.save("debugImage.png");
 	
 	bool inside = false;
-	int size = (int)out_boundary.size();
-	int i, j;
-	for (i = 0, j = size - 1; i < size; j = i++)
+	auto size = out_boundary.size();
+	for (std::size_t i = 0, j = size - 1; i < size; j = i++)
 	{
-		if ( ((out_boundary[i].y() > start_pixel.y()) != (out_boundary[j].y() > start_pixel.y())) &&
-			(start_pixel.x() < (out_boundary[j].x() - out_boundary[i].x()) *
-			(start_pixel.y() - out_boundary[i].y()) / (float)(out_boundary[j].y() - out_boundary[i].y()) + out_boundary[i].x()) )
+		if ( ((out_boundary[i].y() > start_pixel.y()) != (out_boundary[j].y() > start_pixel.y()))
+		     &&	(start_pixel.x() < (out_boundary[j].x() - out_boundary[i].x())
+		                           * (start_pixel.y() - out_boundary[i].y())
+		                           / float(out_boundary[j].y() - out_boundary[i].y()) + out_boundary[i].x()) )
 			inside = !inside;
 	}
 	return inside ? 1 : 0;
@@ -371,7 +409,7 @@ bool FillTool::fillBoundary(const QImage& image, const std::vector<QPoint>& boun
 		float distance_sq;
 		PathCoord path_coord;
 		path->calcClosestPointOnPath(map_pos, distance_sq, path_coord);
-		int part = path->findPartIndexForIndex(path_coord.index);
+		auto part = path->findPartIndexForIndex(path_coord.index);
 		
 		// Insert snap info into sections vector.
 		// Start new section if this is the first section,
@@ -388,12 +426,7 @@ bool FillTool::fillBoundary(const QImage& image, const std::vector<QPoint>& boun
 		
 		if (start_new_section)
 		{
-			PathSection new_section;
-			new_section.object = path;
-			new_section.part = part;
-			new_section.start_clen = path_coord.clen;
-			new_section.end_clen = path_coord.clen;
-			sections.push_back(new_section);
+			sections.push_back( { path, part, path_coord.clen, path_coord.clen } );
 		}
 		else
 		{
@@ -402,8 +435,8 @@ bool FillTool::fillBoundary(const QImage& image, const std::vector<QPoint>& boun
 	}
 	
 	// Clean up PathSection vector
-	const float pixel_length = (image_to_map.map(QPointF(0, 0)) - image_to_map.map(QPointF(1, 0))).manhattanLength();
-	for (int s = 0, end = (int)sections.size(); s < end; ++s)
+	const auto pixel_length = PathCoord::length_type((image_to_map.map(QPointF(0, 0)) - image_to_map.map(QPointF(1, 0))).manhattanLength());
+	for (int s = 0, end = int(sections.size()); s < end; ++s)
 	{
 		PathSection& section = sections[s];
 		
@@ -442,14 +475,14 @@ bool FillTool::fillBoundary(const QImage& image, const std::vector<QPoint>& boun
 	}
 	
 	// Create fill object
-	PathObject* path = new PathObject(drawing_symbol);
+	auto path = new PathObject(drawing_symbol);
 	for (auto& section : sections)
 	{
 		const auto& part = section.object->parts().front();
 		if (section.start_clen > part.length() || section.end_clen > part.length())
 			continue;
 		
-		PathObject* part_copy = new PathObject { section.object->parts()[section.part] };
+		auto part_copy = new PathObject { section.object->parts()[section.part] };
 		if (section.end_clen < section.start_clen)
 		{
 			part_copy->changePathBounds(0, section.end_clen, section.start_clen);
@@ -483,7 +516,7 @@ bool FillTool::fillBoundary(const QImage& image, const std::vector<QPoint>& boun
 	map()->clearObjectSelection(false);
 	map()->addObjectToSelection(path, true);
 	
-	DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(map());
+	auto undo_step = new DeleteObjectsUndoStep(map());
 	undo_step->addObject(index);
 	map()->push(undo_step);
 	

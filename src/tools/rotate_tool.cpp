@@ -21,30 +21,40 @@
 
 #include "rotate_tool.h"
 
+#include <memory>
+
+#include <Qt>
 #include <QtMath>
 #include <QKeyEvent>
 #include <QPainter>
+#include <QCursor>
+#include <QLatin1String>
+#include <QLocale>
+#include <QPixmap>
+#include <QPoint>
+#include <QPointF>
+#include <QRectF>
+#include <QString>
 
 #include "core/map.h"
+#include "core/map_view.h"
 #include "core/objects/object.h"
 #include "gui/modifier_key.h"
 #include "gui/map/map_widget.h"
-#include "tool_helpers.h"
+#include "tools/tool.h"
+#include "tools/tool_helpers.h"
 #include "util/util.h"
 
 
-RotateTool::RotateTool(MapEditorController* editor, QAction* tool_button)
-: MapEditorToolBase { QCursor { QString::fromLatin1(":/images/cursor-rotate.png"), 1, 1 }, Other, editor, tool_button }
-, original_rotation { 0 }
-, current_rotation  { 0 }
+RotateTool::RotateTool(MapEditorController* editor, QAction* tool_action)
+: MapEditorToolBase { QCursor { QString::fromLatin1(":/images/cursor-rotate.png"), 1, 1 }, Other, editor, tool_action }
 {
 	// nothing else
 }
 
-RotateTool::~RotateTool()
-{
-	// nothing, not inlined
-}
+RotateTool::~RotateTool() = default;
+
+
 
 void RotateTool::initImpl()
 {

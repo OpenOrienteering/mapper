@@ -22,8 +22,10 @@
 #ifndef OPENORIENTEERING_DRAW_FREEHAND_TOOL_H
 #define OPENORIENTEERING_DRAW_FREEHAND_TOOL_H
 
+#include <cstddef>
 #include <vector>
 
+#include <QtGlobal>
 #include <QObject>
 #include <QPoint>
 
@@ -68,7 +70,7 @@ protected:
 	void updateStatusText();
 	
 private:
-	void checkLineSegment(std::size_t a, std::size_t b);
+	void checkLineSegment(std::size_t first, std::size_t last);
 	
 	std::vector<bool> point_mask;
 	qreal split_distance_sq;

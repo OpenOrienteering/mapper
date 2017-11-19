@@ -64,7 +64,6 @@ DrawTextTool::DrawTextTool(MapEditorController* editor, QAction* tool_action)
 , drawing_symbol { editor->activeSymbol() }
 , renderables    { map() }
 , preview_text   { new TextObject(), { renderables } }
-, waiting_for_mouse_release { false }
 {
 	connect(editor, &MapEditorController::activeSymbolChanged, this, &DrawTextTool::setDrawingSymbol);
 }

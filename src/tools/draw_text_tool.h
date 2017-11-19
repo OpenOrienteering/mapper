@@ -97,7 +97,7 @@ protected:
 	MapRenderables renderables;
 	std::unique_ptr<TextObject, MapRenderables::ObjectDeleter> preview_text;
 	std::unique_ptr<TextObjectEditorHelper> text_editor;
-	bool waiting_for_mouse_release;
+	bool waiting_for_mouse_release = false;
 };
 
 #endif

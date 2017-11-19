@@ -61,8 +61,8 @@ protected:
 	void objectSelectionChangedImpl() override;
 	
 	MapCoordF scaling_center;
-	double reference_length;
-	double scaling_factor;
+	double reference_length = 0;
+	double scaling_factor   = 1;
 };
 
 #endif

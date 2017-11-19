@@ -60,15 +60,8 @@ DrawRectangleTool::DrawRectangleTool(MapEditorController* editor, QAction* tool_
 : DrawLineAndAreaTool(editor, DrawRectangle, tool_action, is_helper_tool)
 , angle_helper(new ConstrainAngleToolHelper())
 , snap_helper(new SnappingToolHelper(this))
-, key_button_bar(nullptr)
 {
 	cur_map_widget = mapWidget();
-	draw_dash_points = true;
-	shift_pressed = false;
-	ctrl_pressed = false;
-	picked_direction = false;
-	snapped_to_line = false;
-	no_more_effect_on_click = false;
 	
 	angle_helper->addDefaultAnglesDeg(0);
 	angle_helper->setActive(false);
@@ -160,7 +153,7 @@ bool DrawRectangleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord,
 			}
 			
 			// Add new point
-			int cur_point_index = angles.size();
+			auto cur_point_index = angles.size();
 			if (!preview_path->getCoordinate(cur_point_index).isPositionEqualTo(preview_path->getCoordinate(cur_point_index - 1)))
 			{
 				MapCoord coord = MapCoord(cur_pos_map);
@@ -439,7 +432,7 @@ void DrawRectangleTool::draw(QPainter* painter, MapWidget* widget)
 		if (snapped_to_line)
 		{
 			// Simple hack to make line extend over the whole screen in most cases
-			const float scale_factor = 100;
+			const auto scale_factor = 100;
 			MapCoord a = snapped_to_line_b + (snapped_to_line_a - snapped_to_line_b) * scale_factor;
 			MapCoord b = snapped_to_line_b - (snapped_to_line_a - snapped_to_line_b) * scale_factor;
 			
@@ -466,10 +459,10 @@ void DrawRectangleTool::draw(QPainter* painter, MapWidget* widget)
 		}
 		else
 		{
-			painter->drawLine(widget->mapToViewport(cur_pos_map + 0.001f * preview_point_radius * perp_vector) + helper_cross_radius * forward_vector,
-							  widget->mapToViewport(cur_pos_map + 0.001f * preview_point_radius * perp_vector) - helper_cross_radius * forward_vector);
-			painter->drawLine(widget->mapToViewport(cur_pos_map - 0.001f * preview_point_radius * perp_vector) + helper_cross_radius * forward_vector,
-							  widget->mapToViewport(cur_pos_map - 0.001f * preview_point_radius * perp_vector) - helper_cross_radius * forward_vector);
+			painter->drawLine(widget->mapToViewport(cur_pos_map + preview_point_radius * perp_vector / 1000) + helper_cross_radius * forward_vector,
+							  widget->mapToViewport(cur_pos_map + preview_point_radius * perp_vector / 1000) - helper_cross_radius * forward_vector);
+			painter->drawLine(widget->mapToViewport(cur_pos_map - preview_point_radius * perp_vector / 1000) + helper_cross_radius * forward_vector,
+							  widget->mapToViewport(cur_pos_map - preview_point_radius * perp_vector / 1000) - helper_cross_radius * forward_vector);
 		}
 		
 		painter->setPen(active_color);
@@ -480,10 +473,10 @@ void DrawRectangleTool::draw(QPainter* painter, MapWidget* widget)
 		}
 		else
 		{
-			painter->drawLine(widget->mapToViewport(cur_pos_map + 0.001f * preview_point_radius * forward_vector) + helper_cross_radius * perp_vector,
-							  widget->mapToViewport(cur_pos_map + 0.001f * preview_point_radius * forward_vector) - helper_cross_radius * perp_vector);
-			painter->drawLine(widget->mapToViewport(cur_pos_map - 0.001f * preview_point_radius * forward_vector) + helper_cross_radius * perp_vector,
-							  widget->mapToViewport(cur_pos_map - 0.001f * preview_point_radius * forward_vector) - helper_cross_radius * perp_vector);
+			painter->drawLine(widget->mapToViewport(cur_pos_map + preview_point_radius * forward_vector / 1000) + helper_cross_radius * perp_vector,
+							  widget->mapToViewport(cur_pos_map + preview_point_radius * forward_vector / 1000) - helper_cross_radius * perp_vector);
+			painter->drawLine(widget->mapToViewport(cur_pos_map - preview_point_radius * forward_vector / 1000) + helper_cross_radius * perp_vector,
+							  widget->mapToViewport(cur_pos_map - preview_point_radius * forward_vector / 1000) - helper_cross_radius * perp_vector);
 		}
 	}
 	
@@ -570,7 +563,7 @@ bool DrawRectangleTool::drawingParallelTo(double angle) const
 
 MapCoordF DrawRectangleTool::calculateClosingVector() const
 {
-	int cur_point_index = angles.size();
+	auto cur_point_index = angles.size();
 	auto close_vector = MapCoordF(1, 0);
 	close_vector.rotate(-angles[0]);
 	if (drawingParallelTo(angles[0]))
@@ -619,16 +612,16 @@ void DrawRectangleTool::updateRectangle()
 		auto cur_point_index = angles.size();
 		deleteClosePoint();
 		
-		float forward_dist = MapCoordF::dotProduct(forward_vector, constrained_pos_map - MapCoordF(preview_path->getCoordinate(cur_point_index - 1)));
+		auto forward_dist = MapCoordF::dotProduct(forward_vector, constrained_pos_map - MapCoordF(preview_path->getCoordinate(cur_point_index - 1)));
 		MapCoord coord = preview_path->getCoordinate(cur_point_index - 1) + MapCoord(forward_dist * forward_vector);
 		
 		snapped_to_line = false;
-		float best_snap_distance_sq = std::numeric_limits<float>::max();
+		auto best_snap_distance_sq = std::numeric_limits<qreal>::max();
 		if (ctrl_pressed && angles.size() > 2)
 		{
 			// Try to snap to existing lines
 			MapCoord original_coord = coord;
-			for (int i = 0; i < (int)angles.size() - 1; ++i)
+			for (int i = 0; i < int(angles.size()) - 1; ++i)
 			{
 				MapCoordF direction(100, 0);
 				direction.rotate(-angles[i]);
@@ -661,7 +654,7 @@ void DrawRectangleTool::updateRectangle()
 					if (intersection_type == QLineF::NoIntersection)
 						continue;
 					
-					float snap_distance_sq = original_coord.distanceSquaredTo(MapCoord(intersection_point));
+					auto snap_distance_sq = original_coord.distanceSquaredTo(MapCoord(intersection_point));
 					if (snap_distance_sq > best_snap_distance_sq)
 						continue;
 					
@@ -678,7 +671,7 @@ void DrawRectangleTool::updateRectangle()
 		preview_path->setCoordinate(cur_point_index, coord);
 		
 		auto close_vector = calculateClosingVector();
-		float close_dist = MapCoordF::dotProduct(close_vector, MapCoordF(preview_path->getCoordinate(0) - preview_path->getCoordinate(cur_point_index)));
+		auto close_dist = MapCoordF::dotProduct(close_vector, MapCoordF(preview_path->getCoordinate(0) - preview_path->getCoordinate(cur_point_index)));
 		coord = preview_path->getCoordinate(cur_point_index) + MapCoord(close_dist * close_vector);
 		coord.setDashPoint(draw_dash_points);
 		preview_path->setCoordinate(cur_point_index + 1, coord);

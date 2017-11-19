@@ -68,8 +68,8 @@ protected:
 	
 	// Mouse handling
 	MapCoordF rotation_center;
-	qreal original_rotation;
-	qreal current_rotation;
+	qreal original_rotation = 0;
+	qreal current_rotation  = 0;
 };
 
 #endif

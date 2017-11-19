@@ -21,11 +21,19 @@
 
 #include "draw_point_gps_tool.h"
 
+#include <Qt>
+#include <QtGlobal>
+#include <QCursor>
 #include <QKeyEvent>
 #include <QLabel>
 #include <QPainter>
+#include <QPixmap>
+#include <QPoint>
+#include <QString>
 
 #include "core/map.h"
+#include "core/map_coord.h"
+#include "core/map_view.h"
 #include "core/objects/object.h"
 #include "core/renderables/renderable.h"
 #include "core/symbols/point_symbol.h"
@@ -33,14 +41,14 @@
 #include "gui/map/map_editor.h"
 #include "gui/map/map_widget.h"
 #include "sensors/gps_display.h"
+#include "tools/tool.h"
 #include "undo/object_undo.h"
 #include "util/util.h"
 
 
-DrawPointGPSTool::DrawPointGPSTool(GPSDisplay* gps_display, MapEditorController* editor, QAction* tool_button)
-: MapEditorToolBase(QCursor(QPixmap(QString::fromLatin1(":/images/cursor-draw-point.png")), 11, 11), DrawPoint, editor, tool_button)
+DrawPointGPSTool::DrawPointGPSTool(GPSDisplay* gps_display, MapEditorController* editor, QAction* tool_action)
+: MapEditorToolBase(QCursor(QPixmap(QString::fromLatin1(":/images/cursor-draw-point.png")), 11, 11), DrawPoint, editor, tool_action)
 , renderables(new MapRenderables(map()))
-, help_label(nullptr)
 {
 	useTouchCursor(false);
 	
@@ -75,7 +83,7 @@ void DrawPointGPSTool::initImpl()
 
 void DrawPointGPSTool::newGPSPosition(MapCoordF coord, float accuracy)
 {
-	PointSymbol* point = reinterpret_cast<PointSymbol*>(editor->activeSymbol());
+	auto point = reinterpret_cast<PointSymbol*>(editor->activeSymbol());
 	
 	// Calculate weight from accuracy. This is arbitrarily chosen.
 	float weight;
@@ -121,7 +129,7 @@ void DrawPointGPSTool::clickRelease()
 	if (! preview_object)
 		return;
 
-	PointObject* point = preview_object->duplicate()->asPoint();
+	auto point = preview_object->duplicate()->asPoint();
 	
 	int index = map()->addObject(point);
 	map()->clearObjectSelection(false);
@@ -130,7 +138,7 @@ void DrawPointGPSTool::clickRelease()
 	map()->clearDrawingBoundingBox();
 	renderables->removeRenderablesOfObject(preview_object, false);
 	
-	DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(map());
+	auto undo_step = new DeleteObjectsUndoStep(map());
 	undo_step->addObject(index);
 	map()->push(undo_step);
 	

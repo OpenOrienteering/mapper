@@ -73,11 +73,6 @@ namespace
 
 EditLineTool::EditLineTool(MapEditorController* editor, QAction* tool_action)
  : EditTool(editor, EditLine, tool_action)
- , hover_state(OverNothing)
- , hover_object(nullptr)
- , highlight_object(nullptr)
- , box_selection(false)
- , waiting_for_mouse_release(false)
  , highlight_renderables(new MapRenderables(map()))
 {
 	// nothing

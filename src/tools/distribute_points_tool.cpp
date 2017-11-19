@@ -21,13 +21,20 @@
 
 #include "distribute_points_tool.h"
 
+#include <Qt>
 #include <QtMath>
 #include <QCheckBox>
 #include <QDialogButtonBox>
 #include <QDoubleSpinBox>
+#include <QFlags>
 #include <QFormLayout>
+#include <QLabel>
+#include <QSpacerItem>
 #include <QSpinBox>
+#include <QWidget>
 
+#include "core/map_coord.h"
+#include "core/path_coord.h"
 #include "core/symbols/point_symbol.h"
 #include "core/objects/object.h"
 #include "gui/util_gui.h"
@@ -95,7 +102,7 @@ void DistributePointsTool::execute(
 		auto clen = distance * i;
 		split = SplitPathCoord::at(clen, split);
 		
-		PointObject* object = new PointObject(point);
+		auto object = new PointObject(point);
 		object->setPosition(split.pos);
 		if (point->isRotatable())
 		{
@@ -120,7 +127,7 @@ DistributePointsSettingsDialog::DistributePointsSettingsDialog(
 {
 	setWindowTitle(tr("Distribute points evenly along path"));
 	
-	QFormLayout* layout = new QFormLayout();
+	auto layout = new QFormLayout();
 	
 	num_points_edit = Util::SpinBox::create(1, 9999);
 	num_points_edit->setValue(settings.num_points_per_line);
@@ -152,7 +159,7 @@ DistributePointsSettingsDialog::DistributePointsSettingsDialog(
 	}
 	
 	layout->addItem(Util::SpacerItem::create(this));
-	QDialogButtonBox* button_box = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal);
+	auto button_box = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal);
 	layout->addRow(button_box);
 	
 	setLayout(layout);

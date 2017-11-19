@@ -158,27 +158,27 @@ protected:
 	/**
 	 * Provides general information on what is hovered over.
 	 */
-	HoverState hover_state;
+	HoverState hover_state = OverNothing;
 	
 	/**
 	 * Object which is hovered over (if any).
 	 */
-	Object* hover_object;
+	Object* hover_object = nullptr;
 	
 	/**
 	 * Index of the object's coordinate which is hovered over.
 	 */
-	MapCoordVector::size_type hover_point;
+	MapCoordVector::size_type hover_point = 0;
 	
 	
 	/** Is a box selection in progress? */
-	bool box_selection;
+	bool box_selection = false;
 	
 	QScopedPointer<ObjectMover> object_mover;
 	
 	// Mouse / key handling
-	bool waiting_for_mouse_release;
-	bool switch_dash_points;
+	bool waiting_for_mouse_release = false;
+	bool switch_dash_points = false;
 	
 	/**
 	 * Offset from cursor position to drag handle of moved element.
@@ -187,7 +187,7 @@ protected:
 	MapCoordF handle_offset;
 	
 	/** Text editor tool helper */
-	TextObjectEditorHelper* text_editor;
+	TextObjectEditorHelper* text_editor = nullptr;
 	
 	/**
 	 * To prevent creating an undo step if text edit mode is entered and

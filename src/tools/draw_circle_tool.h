@@ -71,10 +71,10 @@ protected:
 	QPoint cur_pos;
 	MapCoordF cur_pos_map;
 	MapCoordF opposite_pos_map;		// position on cirlce/ellipse opposite to click_pos_map
-	bool dragging;
-	bool start_from_center;
-	bool first_point_set;
-	bool second_point_set;
+	bool dragging          = false;
+	bool start_from_center = false;
+	bool first_point_set   = false;
+	bool second_point_set  = false;
 	QPointer<KeyButtonBar> key_button_bar;
 };
 

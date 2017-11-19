@@ -73,12 +73,6 @@ namespace
 
 CutTool::CutTool(MapEditorController* editor, QAction* tool_action)
  : MapEditorToolBase { scaledToScreen(QCursor{ QString::fromLatin1(":/images/cursor-cut.png"), 11, 11 }), Other, editor, tool_action }
- , waiting_for_mouse_release { false }
- , hover_state  { HoverFlag::OverNothing }
- , hover_object { nullptr }
- , hover_point  { 0 }
- , path_tool    { nullptr }
- , preview_path { nullptr }
  , renderables { new MapRenderables(map()) }
 {
 	// nothing

@@ -45,12 +45,9 @@
 
 
 DrawCircleTool::DrawCircleTool(MapEditorController* editor, QAction* tool_action, bool is_helper_tool)
- : DrawLineAndAreaTool(editor, DrawCircle, tool_action, is_helper_tool),
-   key_button_bar(nullptr)
+ : DrawLineAndAreaTool(editor, DrawCircle, tool_action, is_helper_tool)
 {
-	dragging = false;
-	first_point_set = false;
-	second_point_set = false;
+	// nothing else
 }
 
 DrawCircleTool::~DrawCircleTool()

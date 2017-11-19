@@ -21,14 +21,31 @@
 
 #include "text_object_editor_helper.h"
 
+#include <QtGlobal>
+#include <QBrush>
+#include <QChar>
+#include <QClipboard>
+#include <QEvent>
+#include <QFlags>
 #include <QGuiApplication>
+#include <QInputMethod>
+#include <QInputMethodEvent>
 #include <QKeyEvent>
+#include <QKeySequence>
+#include <QLatin1Char>
 #include <QMimeData>
 #include <QMouseEvent>
 #include <QPainter>
+#include <QPointF>
+#include <QRectF>
+#include <QRgb>
 #include <QStyle>
 #include <QTimer>
+#include <QTransform>
+#include <QVariant>
+#include <QWidget>
 
+#include "core/map_coord.h"
 #include "core/objects/text_object.h"
 #include "gui/main_window.h"
 #include "gui/map/map_editor.h"
@@ -551,7 +568,7 @@ bool TextObjectEditorHelper::mouseMoveEvent(QMouseEvent* event, MapCoordF map_co
 	}
 	
 	if (sendMouseEventToInputContext(event, map_coord))
-		return true;
+		return true;  // NOLINT
 	
 	return false;
 }

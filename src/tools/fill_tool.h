@@ -38,7 +38,6 @@ class QRectF;
 
 class Map;
 class MapEditorController;
-class PathObject;
 class RenderConfig;
 class Symbol;
 
@@ -56,18 +55,6 @@ protected slots:
 	void setDrawingSymbol(const Symbol* symbol);
 	
 protected:
-	/**
-	 * Helper structure used to represent a section of a traced path
-	 * while constructing the fill object.
-	 */
-	struct PathSection
-	{
-		PathObject* object;
-		int part;
-		float start_clen;
-		float end_clen;
-	};
-	
 	void updateStatusText() override;
 	void objectSelectionChangedImpl() override;
 	

@@ -118,13 +118,13 @@ protected:
 	void replaceObject(Object* object, const std::vector<PathObject*>& replacement) const;
 	
 	// Basic state
-	bool waiting_for_mouse_release;
-	HoverState  hover_state;
-	PathObject* hover_object;
-	MapCoordVector::size_type hover_point;
+	bool waiting_for_mouse_release = false;
+	HoverState  hover_state = HoverFlag::OverNothing;
+	PathObject* hover_object = nullptr;
+	MapCoordVector::size_type hover_point = 0;
 	
 	// The object which is about to be split
-	PathObject* edit_object;
+	PathObject* edit_object = nullptr;
 	
 	// State for splitting lines
 	PathPartVector::size_type drag_part_index;
@@ -133,11 +133,11 @@ protected:
 	bool reverse_drag; // if true, the effective drag range is [drag_end_len; drag_start_len]
 	
 	// State for cutting areas
-	DrawPathTool* path_tool;
+	DrawPathTool* path_tool = nullptr;
 	QRectF path_tool_rect;
 	
 	// Preview objects for dragging
-	PathObject* preview_path;
+	PathObject* preview_path = nullptr;
 	/**
 	 * The renderables member in MapEditorToolBase contains the selection at the moment,
 	 * but the path of cutting a line needs to be drawn separately.
