@@ -39,6 +39,7 @@
 #include <QString>
 
 #include "core/map.h"
+#include "core/map_color.h"
 #include "core/map_coord.h"
 #include "core/map_part.h"
 #include "core/map_view.h"
@@ -292,18 +293,24 @@ QImage FillTool::rasterizeMap(const QRectF& extent, QTransform& out_transform)
 
 void FillTool::drawObjectIDs(Map* map, QPainter* painter, const RenderConfig &config)
 {
+	Q_STATIC_ASSERT(MapColor::Reserved == -1);
+	
 	auto part = map->getCurrentPart();
 	auto num_objects = qMin(part->getNumObjects(), int(RGB_MASK));
-	for (int o = 0; o < num_objects; ++o)
+	auto num_colors = map->getNumColors();
+	for (auto c = num_colors-1; c >= MapColor::Reserved; --c)
 	{
-		auto object = part->getObject(o);
-		if (object->getSymbol() && object->getSymbol()->isHidden())
-			continue;
-		if (object->getType() != Object::Path)
-			continue;
-		
-		object->update();
-		object->renderables().draw(QRgb(o) | ~RGB_MASK, painter, config);
+		for (int o = 0; o < num_objects; ++o)
+		{
+			auto object = part->getObject(o);
+			if (object->getType() != Object::Path)
+				continue;
+			if (object->getSymbol() && object->getSymbol()->isHidden())
+				continue;
+			
+			object->update();
+			object->renderables().draw(c, QRgb(o) | ~RGB_MASK, painter, config);
+		}
 	}
 }
 
