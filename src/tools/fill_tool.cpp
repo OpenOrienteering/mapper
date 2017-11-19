@@ -22,6 +22,7 @@
 #include "fill_tool.h"
 
 #include <cstddef>
+#include <limits>
 #include <memory>
 #include <type_traits>
 
@@ -408,120 +409,97 @@ int FillTool::traceBoundary(const QImage& image, QPoint free_pixel, QPoint bound
 
 bool FillTool::fillBoundary(const QImage& image, const std::vector<QPoint>& boundary, const QTransform& image_to_map)
 {
-	// Test of simpler implementation,
-	// does not work properly like this (would need fixing of path->simplify() and dilatation of path)
-// 	PathObject* path = new PathObject(last_used_symbol);
-// 	for (size_t b = 0, end = boundary.size(); b < end; ++b)
-// 		path->addCoordinate(MapCoord(image_to_map.map(QPointF(boundary[b]))));
-// 	path->closeAllParts();
-// 	
-// 	path->convertToCurves();
-// 	path->simplify();
-	
-	// Create PathSection vector
-	std::vector< PathSection > sections;
-	for (size_t b = 0, end = boundary.size(); b < end; ++b)
-	{
-		auto pixel = image.pixel(boundary[b]);
-		if (pixel == background)
-			continue;
-		auto path = map()->getCurrentPart()->getObject(int(pixel & RGB_MASK))->asPath();
-		
-		MapCoordF map_pos = MapCoordF(image_to_map.map(QPointF(boundary[b])));
-		float distance_sq;
-		PathCoord path_coord;
-		path->calcClosestPointOnPath(map_pos, distance_sq, path_coord);
-		auto part = path->findPartIndexForIndex(path_coord.index);
-		
-		// Insert snap info into sections vector.
-		// Start new section if this is the first section,
-		// if the object changed,
-		// if the part changed,
-		// if the clen advancing direction changes,
-		// or if the clen advancement is more than a magic factor times the pixel advancement
-		bool start_new_section =
-			sections.empty()
-			|| sections.back().object != path
-			|| sections.back().part != part
-			|| (sections.back().end_clen - sections.back().start_clen) * (path_coord.clen - sections.back().end_clen) < 0
-			|| qAbs(path_coord.clen - sections.back().end_clen) > 5 * (map_pos.distanceTo(MapCoordF(image_to_map.map(QPointF(boundary[b - 1])))));
-		
-		if (start_new_section)
-		{
-			sections.push_back( { path, part, path_coord.clen, path_coord.clen } );
-		}
-		else
-		{
-			sections.back().end_clen = path_coord.clen;
-		}
-	}
-	
-	// Clean up PathSection vector
-	const auto pixel_length = PathCoord::length_type((image_to_map.map(QPointF(0, 0)) - image_to_map.map(QPointF(1, 0))).manhattanLength());
-	for (int s = 0, end = int(sections.size()); s < end; ++s)
-	{
-		PathSection& section = sections[s];
-		
-		// Remove back-and-forth sections
-		if (s > 0)
-		{
-			PathSection& prev_section = sections[s - 1];
-			if (section.object == prev_section.object
-				&& qAbs(section.start_clen - prev_section.end_clen) < 2 * pixel_length
-				&& (section.end_clen - section.start_clen) * (prev_section.end_clen - prev_section.start_clen) < 0)
-			{
-				if ((section.end_clen > section.start_clen) == (section.end_clen > prev_section.end_clen))
-				{
-					// section.end_clen is between prev_section.start_clen and prev_section.end_clen.
-					// Delete the new section and shrink prev_section.
-					prev_section.end_clen = section.end_clen;
-					sections.erase(sections.begin() + s);
-				}
-				else
-				{
-					// section.end_clen extends over prev_section.start_clen.
-					// Delete prev_section and shrink the new section.
-					section.start_clen = prev_section.start_clen;
-					sections.erase(sections.begin() + (s - 1));
-				}
-				--end;
-				--s;
-			}
-		}
-		
-		// Slightly extend sections where the start is equal to the end,
-		// otherwise changePathBounds() will give us the whole path later
-		const float epsilon = 1e-4f;
-		if (section.end_clen == section.start_clen)
-			section.end_clen += epsilon;
-	}
-	
-	// Create fill object
 	auto path = new PathObject(drawing_symbol);
-	for (auto& section : sections)
+	auto append_section = [path](const PathSection& section)
 	{
-		const auto& part = section.object->parts().front();
-		if (section.start_clen > part.length() || section.end_clen > part.length())
-			continue;
+		if (!section.object)
+			return;
 		
-		auto part_copy = new PathObject { section.object->parts()[section.part] };
+		const auto& part = section.object->parts()[section.part];
+		if (section.end_clen == section.start_clen)
+		{
+			path->addCoordinate(MapCoord(SplitPathCoord::at(section.start_clen, SplitPathCoord::begin(part.path_coords)).pos));
+			return;
+		}
+		
+		PathObject part_copy { part };
 		if (section.end_clen < section.start_clen)
 		{
-			part_copy->changePathBounds(0, section.end_clen, section.start_clen);
-			part_copy->reverse();
+			part_copy.changePathBounds(0, section.end_clen, section.start_clen);
+			part_copy.reverse();
 		}
 		else
 		{
-			part_copy->changePathBounds(0, section.start_clen, section.end_clen);
+			part_copy.changePathBounds(0, section.start_clen, section.end_clen);
 		}
 		
 		if (path->getCoordinateCount() == 0)
-			path->appendPath(part_copy);
+			path->appendPath(&part_copy);
 		else
-			path->connectPathParts(0, part_copy, 0, false, false);
+			path->connectPathParts(0, &part_copy, 0, false, false);
+	};
+	
+	auto last_pixel = background; // no object
+	const auto pixel_length = PathCoord::length_type((image_to_map.map(QPointF(0, 0)) - image_to_map.map(QPointF(1, 1))).manhattanLength());
+	auto threshold = std::numeric_limits<PathCoord::length_type>::max();
+	auto section = PathSection{ nullptr, 0, 0, 0 };
+	for (const auto& point : boundary)
+	{
+		auto pixel = image.pixel(point);
+		if (pixel == background)
+			continue;
 		
-		delete part_copy;
+		MapCoordF map_pos = MapCoordF(image_to_map.map(QPointF(point)));
+		PathCoord path_coord;
+		float distance_sq;
+		
+		if (pixel != last_pixel)
+		{
+			// Change of object
+			append_section(section);
+			
+			section.object = map()->getCurrentPart()->getObject(int(pixel & RGB_MASK))->asPath();
+			section.object->calcClosestPointOnPath(map_pos, distance_sq, path_coord);
+			section.part = section.object->findPartIndexForIndex(path_coord.index);
+			section.start_clen = path_coord.clen;
+			section.end_clen = path_coord.clen;
+			last_pixel = pixel;
+			threshold = section.object->parts()[section.part].length() - 5*pixel_length;
+			continue;
+		}
+		
+		section.object->calcClosestPointOnPath(map_pos, distance_sq, path_coord);
+		auto part = section.object->findPartIndexForIndex(path_coord.index);
+		if (Q_UNLIKELY(part != section.part))
+		{
+			// Change of path part
+			append_section(section);
+			
+			section.part = part;
+			section.start_clen = path_coord.clen;
+			section.end_clen = path_coord.clen;
+			threshold = section.object->parts()[section.part].length() - 4*pixel_length;
+			continue;
+		}
+		
+		if (section.end_clen - path_coord.clen >= threshold)
+		{
+			// Forward over closing point
+			section.end_clen = section.object->parts()[section.part].length();
+			append_section(section);
+			section.start_clen = 0;
+		}
+		else if (path_coord.clen - section.end_clen >= threshold)
+		{
+			// Backward over closing point
+			section.end_clen = 0;
+			append_section(section);
+			section.start_clen = section.object->parts()[section.part].length();
+		}
+		section.end_clen = path_coord.clen;
 	}
+	// Final section
+	append_section(section);
 	
 	if (path->getCoordinateCount() < 2)
 	{
