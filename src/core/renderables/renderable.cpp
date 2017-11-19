@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,6 +20,7 @@
 
 #include "renderable.h"
 
+#include <algorithm>
 #include <iterator>
 #include <utility>
 
@@ -125,40 +126,42 @@ void SharedRenderables::compact()
 // ### ObjectRenderables ###
 
 ObjectRenderables::ObjectRenderables(Object& object)
-: extent(object.extent),
-  clip_path(nullptr)
+: extent(object.extent)
 {
-	;
+	// nothing else
 }
 
 ObjectRenderables::~ObjectRenderables() = default;
 
-void ObjectRenderables::draw(const QColor& color, QPainter* painter, const RenderConfig& config) const
+void ObjectRenderables::draw(int map_color, const QColor& color, QPainter* painter, const RenderConfig& config) const
 {
-	QPainterPath initial_clip = painter->clipPath();
+	if (!extent.intersects(config.bounding_box))
+		return;
+	
+	auto color_renderables = std::find_if(begin(), end(), [map_color](auto item) { 
+		return item.first == map_color; 
+	});
+	if (color_renderables == end())
+		return;
+	
+	const QPainterPath initial_clip = clip_path ? *clip_path : painter->clipPath();
 	const QPainterPath* current_clip = nullptr;
 	
 	painter->save();
-	
-	for (const auto& color_renderables : *this)
+	for (const auto& config_renderables : *(color_renderables->second))
 	{
-		for (const auto& config_renderables : *color_renderables.second)
+		const PainterConfig& state = config_renderables.first;
+		if (!state.activate(painter, current_clip, config, color, initial_clip))
+			continue;
+		
+		for (const auto renderable : config_renderables.second)
 		{
-			// Render the renderables
-			const PainterConfig& state = config_renderables.first;
-			if (!state.activate(painter, current_clip, config, color, initial_clip))
-				continue;
-			
-			for (const auto renderable : config_renderables.second)
+			if (renderable->intersects(config.bounding_box))
 			{
-				if (renderable->intersects(config.bounding_box))
-				{
-					renderable->render(*painter, config);
-				}
+				renderable->render(*painter, config);
 			}
 		}
 	}
-	
 	painter->restore();
 }
 
