@@ -120,9 +120,10 @@ void FillTool::clickPress()
 	if (result == -1 || result == 1)
 		return;
 	
-	// If not successful, try again with rasterizing the whole map
-	QRectF map_extent = map()->calculateExtent(true, false);
-	result = fill(map_extent);
+	// If not successful, try again with rasterizing the whole map part
+	QRectF map_part_extent = map()->getCurrentPart()->calculateExtent(true);
+	if (viewport_extent.united(map_part_extent) != viewport_extent)
+		result = fill(map_part_extent);
 	if (result == -1 || result == 1)
 		return;
 	
@@ -268,14 +269,14 @@ QImage FillTool::rasterizeMap(const QRectF& extent, QTransform& out_transform)
 	{
 		// Temporarily enable baseline view and draw map once.
 		map()->setBaselineViewEnabled(true);
-		map()->updateAllObjects();
+		map()->getCurrentPart()->applyOnAllObjects(&Object::forceUpdate);
 		drawObjectIDs(map(), &painter, config);
 		map()->setBaselineViewEnabled(false);
-		map()->updateAllObjects();
+		map()->getCurrentPart()->applyOnAllObjects(&Object::forceUpdate);
 	}
 	else if (original_area_hatching)
 	{
-		map()->updateAllObjects();
+		map()->getCurrentPart()->applyOnAllObjects(&Object::forceUpdate);
 	}
 	
 	// Draw the map in original mode (but without area hatching)
@@ -284,7 +285,7 @@ QImage FillTool::rasterizeMap(const QRectF& extent, QTransform& out_transform)
 	if (original_area_hatching)
 	{
 		map()->setAreaHatchingEnabled(original_area_hatching);
-		map()->updateAllObjects();
+		map()->getCurrentPart()->applyOnAllObjects(&Object::forceUpdate);
 	}
 	
 	out_transform = painter.combinedTransform();
