@@ -81,15 +81,19 @@ protected:
 	void drawObjectIDs(Map* map, QPainter* painter, const RenderConfig& config);
 	
 	/**
-	 * Traces the boundary around an "island" in the given image, starting from the
-	 * start_pixel / test_pixel pair, where start_pixel must reference a free (transparent)
-	 * pixel and test_pixel a 4-adjacent obstructed pixel of the island to trace.
-	 * Returns the found boundary as a vector of pixel positions. Returns:
+	 * Constructs the boundary around an area of free pixels in the given image.
+	 * 
+	 * The discovered boundary is stored as a vector of pixel positions.
+	 * The tracing starts from the free_pixel/boundary_pixel pair, where
+	 * free_pixel references a free (transparent) pixel next to boundary pixel
+	 * which reference an obstructed pixel of area to be traced.
+	 * 
+	 * Returns:
 	 * -1 if running out of the image borders,
 	 *  0 if the tracing fails because the start is not included in the shape,
 	 *  1 if the tracing succeeds.
 	 */
-	int traceBoundary(const QImage& image, QPoint start_pixel, QPoint test_pixel, std::vector<QPoint>& out_boundary);
+	int traceBoundary(const QImage& image, QPoint free_pixel, QPoint boundary_pixel, std::vector<QPoint>& out_boundary);
 	
 	/**
 	 * Creates a fill object for the given image, boundary vector (of pixel positions) and transform.

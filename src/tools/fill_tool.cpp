@@ -173,17 +173,17 @@ int FillTool::fill(const QRectF& extent)
 	// For every collision, trace the boundary of the collision object
 	// and check whether the click position is inside the boundary.
 	// If it is, the correct outline was found which is then filled.
-	for (QPoint start_pixel = clicked_pixel; start_pixel.x() < image.width() - 1; start_pixel += QPoint(1, 0))
+	for (QPoint free_pixel = clicked_pixel; free_pixel.x() < image.width() - 1; free_pixel += QPoint(1, 0))
 	{
 		// Check if there is a collision to the right
-		QPoint test_pixel = start_pixel + QPoint(1, 0);
-		if (image.pixel(test_pixel) == background)
+		QPoint boundary_pixel = free_pixel + QPoint(1, 0);
+		if (image.pixel(boundary_pixel) == background)
 			continue;
 		
 		// Found a collision, trace outline of hit object
 		// and check whether the outline contains start_pixel
 		std::vector<QPoint> boundary;
-		int trace_result = traceBoundary(image, start_pixel, test_pixel, boundary);
+		int trace_result = traceBoundary(image, free_pixel, boundary_pixel, boundary);
 		if (trace_result == -1)
 			return 0;
 		else if (trace_result == 0)
@@ -192,16 +192,16 @@ int FillTool::fill(const QRectF& extent)
 			// Jump to the rightmost pixel of the boundary with same y as the start.
 			for (const auto& point : boundary)
 			{
-				if (point.y() == start_pixel.y() && point.x() > start_pixel.x())
-					start_pixel = point;
+				if (point.y() == free_pixel.y() && point.x() > free_pixel.x())
+					free_pixel = point;
 			}
 			
 			// Skip over the rest of the floating object.
-			start_pixel += QPoint(1, 0);
-			while (start_pixel.x() < image.width() - 1
-				&& image.pixel(start_pixel) != background)
-				start_pixel += QPoint(1, 0);
-			start_pixel -= QPoint(1, 0);
+			free_pixel += QPoint(1, 0);
+			while (free_pixel.x() < image.width() - 1
+				&& image.pixel(free_pixel) != background)
+				free_pixel += QPoint(1, 0);
+			free_pixel -= QPoint(1, 0);
 			continue;
 		}
 		
@@ -324,14 +324,14 @@ void FillTool::drawObjectIDs(Map* map, QPainter* painter, const RenderConfig &co
 	}
 }
 
-int FillTool::traceBoundary(const QImage& image, QPoint start_pixel, QPoint test_pixel, std::vector<QPoint>& out_boundary)
+int FillTool::traceBoundary(const QImage& image, QPoint free_pixel, QPoint boundary_pixel, std::vector<QPoint>& out_boundary)
 {
-	Q_ASSERT(image.pixel(start_pixel) == background);
-	Q_ASSERT(image.pixel(test_pixel) != background);
+	Q_ASSERT(image.pixel(free_pixel) == background);
+	Q_ASSERT(image.pixel(boundary_pixel) != background);
 	
 	out_boundary.clear();
 	out_boundary.reserve(4096);
-	out_boundary.push_back(test_pixel);
+	out_boundary.push_back(boundary_pixel);
 	
 	// Uncomment this and below references to debugImage to generate path visualizations
 // 	QImage debugImage = image.copy();
@@ -339,27 +339,27 @@ int FillTool::traceBoundary(const QImage& image, QPoint start_pixel, QPoint test
 	
 	// Go along obstructed pixels with a "right hand on the wall" method.
 	// Iteration keeps the following variables as state:
-	// cur_pixel: current (obstructed) position
+	// cur_boundary_pixel: current position on boundary
 	// fwd_vector: vector from test_pixel to free spot
-	QPoint cur_pixel = test_pixel;
-	QPoint fwd_vector = start_pixel - test_pixel;
+	QPoint cur_boundary_pixel = boundary_pixel;
+	QPoint fwd_vector = free_pixel - boundary_pixel;
 	int max_length = image.width() * image.height();
 	for (int i = 0; i < max_length; ++i)
 	{
 		QPoint right_vector = QPoint(fwd_vector.y(), -fwd_vector.x());
-		if (!image.rect().contains(cur_pixel + fwd_vector + right_vector, true))
+		if (!image.rect().contains(cur_boundary_pixel + fwd_vector + right_vector, true))
 			return -1;
-		if (!image.rect().contains(cur_pixel + right_vector, true))
+		if (!image.rect().contains(cur_boundary_pixel + right_vector, true))
 			return -1;
 		
-		if (image.pixel(cur_pixel + fwd_vector + right_vector) != background)
+		if (image.pixel(cur_boundary_pixel + fwd_vector + right_vector) != background)
 		{
-			cur_pixel = cur_pixel + fwd_vector + right_vector;
+			cur_boundary_pixel = cur_boundary_pixel + fwd_vector + right_vector;
 			fwd_vector = -1 * right_vector;
 		}
-		else if (image.pixel(cur_pixel + right_vector) != background)
+		else if (image.pixel(cur_boundary_pixel + right_vector) != background)
 		{
-			cur_pixel = cur_pixel + right_vector;
+			cur_boundary_pixel = cur_boundary_pixel + right_vector;
 			// fwd_vector stays the same
 		}
 		else
@@ -368,18 +368,18 @@ int FillTool::traceBoundary(const QImage& image, QPoint start_pixel, QPoint test
 			fwd_vector = right_vector;
 		}
 		
-		QPoint cur_free_pixel = cur_pixel + fwd_vector;
-		if (cur_pixel == test_pixel && cur_free_pixel == start_pixel)
+		QPoint cur_free_pixel = cur_boundary_pixel + fwd_vector;
+		if (cur_boundary_pixel == boundary_pixel && cur_free_pixel == free_pixel)
 		{
 			// Close the path.
-			out_boundary.push_back(cur_pixel);
+			out_boundary.push_back(cur_boundary_pixel);
 			break;
 		}
 		
 // 		debugImage.setPixel(cur_pixel, qRgb(0, 0, 255));
 		
-		if (out_boundary.back() != cur_pixel)
-			out_boundary.push_back(cur_pixel);
+		if (out_boundary.back() != cur_boundary_pixel)
+			out_boundary.push_back(cur_boundary_pixel);
 	}
 	
 // 	QLabel* debugImageLabel = new QLabel();
@@ -391,9 +391,9 @@ int FillTool::traceBoundary(const QImage& image, QPoint start_pixel, QPoint test
 	auto size = out_boundary.size();
 	for (std::size_t i = 0, j = size - 1; i < size; j = i++)
 	{
-		if ( ((out_boundary[i].y() > start_pixel.y()) != (out_boundary[j].y() > start_pixel.y()))
-		     &&	(start_pixel.x() < (out_boundary[j].x() - out_boundary[i].x())
-		                           * (start_pixel.y() - out_boundary[i].y())
+		if ( ((out_boundary[i].y() > free_pixel.y()) != (out_boundary[j].y() > free_pixel.y()))
+		     &&	(free_pixel.x() < (out_boundary[j].x() - out_boundary[i].x())
+		                           * (free_pixel.y() - out_boundary[i].y())
 		                           / float(out_boundary[j].y() - out_boundary[i].y()) + out_boundary[i].x()) )
 			inside = !inside;
 	}
