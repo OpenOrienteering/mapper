@@ -1,6 +1,6 @@
 /*
  *    Copyright 2013 Thomas Schöps
- *    Copyright 2014, 2015 Kai Pastor
+ *    Copyright 2014-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -23,8 +23,8 @@
 
 #include <cstddef>
 #include <memory>
+#include <type_traits>
 
-#include <Qt>
 #include <QtGlobal>
 #include <QCursor>
 #include <QFlags>
@@ -35,6 +35,7 @@
 #include <QPointF>
 #include <QRect>
 #include <QRgb>
+#include <QSize>
 #include <QString>
 
 #include "core/map.h"
@@ -52,6 +53,12 @@
 #include "undo/object_undo.h"
 
 
+// Make sure that we can use the object ID in place of a qRgb
+// directly and in a sufficiently large domain.
+Q_STATIC_ASSERT((std::is_same<QRgb, unsigned int>::value));
+Q_STATIC_ASSERT(RGB_MASK == 0x00ffffff);
+
+
 namespace
 {
 /**
@@ -65,6 +72,8 @@ struct PathSection
 	PathCoord::length_type start_clen;
 	PathCoord::length_type end_clen;
 };
+
+constexpr auto background = QRgb(0xffffffffu);
 
 }  // namespace
 
@@ -147,7 +156,7 @@ int FillTool::fill(const QRectF& extent)
 	QPoint clicked_pixel = transform.map(cur_map_widget->viewportToMapF(click_pos)).toPoint();
 	if (!image.rect().contains(clicked_pixel, true))
 		return 0;
-	if (qAlpha(image.pixel(clicked_pixel)) > 0)
+	if (image.pixel(clicked_pixel) != background)
 	{
 		QMessageBox::warning(
 			window(),
@@ -165,7 +174,7 @@ int FillTool::fill(const QRectF& extent)
 	{
 		// Check if there is a collision to the right
 		QPoint test_pixel = start_pixel + QPoint(1, 0);
-		if (qAlpha(image.pixel(test_pixel)) == 0)
+		if (image.pixel(test_pixel) == background)
 			continue;
 		
 		// Found a collision, trace outline of hit object
@@ -187,7 +196,7 @@ int FillTool::fill(const QRectF& extent)
 			// Skip over the rest of the floating object.
 			start_pixel += QPoint(1, 0);
 			while (start_pixel.x() < image.width() - 1
-				&& qAlpha(image.pixel(start_pixel)) > 0)
+				&& image.pixel(start_pixel) != background)
 				start_pixel += QPoint(1, 0);
 			start_pixel -= QPoint(1, 0);
 			continue;
@@ -234,23 +243,16 @@ QImage FillTool::rasterizeMap(const QRectF& extent, QTransform& out_transform)
 	view.setZoom(zoom_level);
 	
 	// Allocate the image
-	QRect image_size = view.calculateViewBoundingBox(extent).toAlignedRect();
-	QImage image = QImage(image_size.size(), QImage::Format_ARGB32_Premultiplied);
-	
-	// Start drawing
-	QPainter painter;
-	painter.begin(&image);
-	
-	// Make image transparent
-	QPainter::CompositionMode mode = painter.compositionMode();
-	painter.setCompositionMode(QPainter::CompositionMode_Clear);
-	painter.fillRect(0, 0, image_size.width(), image_size.height(), Qt::transparent);
-	painter.setCompositionMode(mode);
+	auto image_size = view.calculateViewBoundingBox(extent).toAlignedRect().size();
+	QImage image = QImage(image_size, QImage::Format_RGB32);
+	image.fill(background);
 	
 	// Draw map
 	RenderConfig::Options options = RenderConfig::DisableAntialiasing | RenderConfig::ForceMinSize;
 	RenderConfig config = { *map(), extent, view.calculateFinalZoomFactor(), options, 1.0 };
 	
+	QPainter painter;
+	painter.begin(&image);
 	painter.translate(image_size.width() / 2.0, image_size.height() / 2.0);
 	painter.setWorldTransform(view.worldTransform(), true);
 	
@@ -291,7 +293,8 @@ QImage FillTool::rasterizeMap(const QRectF& extent, QTransform& out_transform)
 void FillTool::drawObjectIDs(Map* map, QPainter* painter, const RenderConfig &config)
 {
 	auto part = map->getCurrentPart();
-	for (int o = 0, num_objects = part->getNumObjects(); o < num_objects; ++o)
+	auto num_objects = qMin(part->getNumObjects(), int(RGB_MASK));
+	for (int o = 0; o < num_objects; ++o)
 	{
 		auto object = part->getObject(o);
 		if (object->getSymbol() && object->getSymbol()->isHidden())
@@ -300,21 +303,18 @@ void FillTool::drawObjectIDs(Map* map, QPainter* painter, const RenderConfig &co
 			continue;
 		
 		object->update();
-		object->renderables().draw(
-			qRgb(o % 256, (o / 256) % 256, (o / (256 * 256)) % 256),
-			painter,
-			config
-		);
+		object->renderables().draw(QRgb(o) | ~RGB_MASK, painter, config);
 	}
 }
 
 int FillTool::traceBoundary(const QImage& image, QPoint start_pixel, QPoint test_pixel, std::vector<QPoint>& out_boundary)
 {
+	Q_ASSERT(image.pixel(start_pixel) == background);
+	Q_ASSERT(image.pixel(test_pixel) != background);
+	
 	out_boundary.clear();
 	out_boundary.reserve(4096);
 	out_boundary.push_back(test_pixel);
-	Q_ASSERT(qAlpha(image.pixel(start_pixel)) == 0);
-	Q_ASSERT(qAlpha(image.pixel(test_pixel)) > 0);
 	
 	// Uncomment this and below references to debugImage to generate path visualizations
 // 	QImage debugImage = image.copy();
@@ -335,12 +335,12 @@ int FillTool::traceBoundary(const QImage& image, QPoint start_pixel, QPoint test
 		if (!image.rect().contains(cur_pixel + right_vector, true))
 			return -1;
 		
-		if (qAlpha(image.pixel(cur_pixel + fwd_vector + right_vector)) > 0)
+		if (image.pixel(cur_pixel + fwd_vector + right_vector) != background)
 		{
 			cur_pixel = cur_pixel + fwd_vector + right_vector;
 			fwd_vector = -1 * right_vector;
 		}
-		else if (qAlpha(image.pixel(cur_pixel + right_vector)) > 0)
+		else if (image.pixel(cur_pixel + right_vector) != background)
 		{
 			cur_pixel = cur_pixel + right_vector;
 			// fwd_vector stays the same
@@ -399,11 +399,10 @@ bool FillTool::fillBoundary(const QImage& image, const std::vector<QPoint>& boun
 	std::vector< PathSection > sections;
 	for (size_t b = 0, end = boundary.size(); b < end; ++b)
 	{
-		QRgb color = image.pixel(boundary[b]);
-		if (qAlpha(color) == 0)
+		auto pixel = image.pixel(boundary[b]);
+		if (pixel == background)
 			continue;
-		int object_index = qRed(color) + 256 * qGreen(color) + (256 * 256) * qBlue(color);
-		PathObject* path = map()->getCurrentPart()->getObject(object_index)->asPath();
+		auto path = map()->getCurrentPart()->getObject(int(pixel & RGB_MASK))->asPath();
 		
 		MapCoordF map_pos = MapCoordF(image_to_map.map(QPointF(boundary[b])));
 		float distance_sq;

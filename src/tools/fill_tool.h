@@ -1,6 +1,6 @@
 /*
  *    Copyright 2013 Thomas Schöps
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2014, 2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -69,8 +69,8 @@ protected:
 	
 	/**
 	 * Rasterizes an area of the current map part with the given extent into an image.
-	 * Encodes object ids as colors, where the object with index 0 has color (0, 0, 0, 255),
-	 * the object with index 1 has (1, 0, 0, 255), and so on. The background is transparent.
+	 * 
+	 * The pixels encodes object IDs (with alpha = 255). The background is white.
 	 * Returns the image and the used map-to-image transform.
 	 */
 	QImage rasterizeMap(const QRectF& extent, QTransform& out_transform);
