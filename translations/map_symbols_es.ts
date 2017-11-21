@@ -1729,118 +1729,123 @@ Nota: si el cauce es más ancho de 0,25 mm, ajustar este símbolo de forma que s
         <message>
             <source>Wall</source>
             <comment>Name of symbol 513</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Muro</translation>
+    </message>
         <message>
             <source>A significant wall of stone, concrete, wood or other materials. Minimum height: 1 m.</source>
             <comment>Description of symbol 513</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un muro identificable de piedra, hormigón, madera u otros materiales. Altura mínima: 1 m.</translation>
+    </message>
         <message>
             <source>Ruined stone wall</source>
             <comment>Name of symbol 514</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Muro de piedra en ruinas</translation>
+    </message>
         <message>
             <source>A ruined or less distinct wall. Minimum height 0.5 m.</source>
             <comment>Description of symbol 514</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un muro derruido o menos identificable. Altura mínima 0,5 m.</translation>
+    </message>
         <message>
             <source>Impassable wall</source>
             <comment>Name of symbol 515</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Muro impasable</translation>
+    </message>
         <message>
             <source>An impassable or uncrossable wall, normally more than 1.5 m high.</source>
             <comment>Description of symbol 515</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un muro impasable o que no se puede franquear, normalmente mayor de 1,5 m de altura.</translation>
+    </message>
         <message>
             <source>Fence</source>
             <comment>Name of symbol 516</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Valla</translation>
+    </message>
         <message>
             <source>A wooden or wire fence less than ca. 1.5 m high.
 If the fence forms an enclosed area, tags should be placed inside.</source>
             <comment>Description of symbol 516</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una valla de alambre o madera menor de aprox. 1,5 m de altura.
+Si la valla forma un cercado cerrado, las marcas de la línea deben situarse en el interior.</translation>
+    </message>
         <message>
             <source>Ruined fence</source>
             <comment>Name of symbol 517</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Valla en ruinas</translation>
+    </message>
         <message>
             <source>A ruined or less distinct fence. If the fence forms an enclosed area, tags should be placed inside.</source>
             <comment>Description of symbol 517</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una valla estropeada o menos identificable. Si la valla forma un cercado cerrado, las marcas de la línea deben situarse en el interior.</translation>
+    </message>
         <message>
             <source>Impassable fence</source>
             <comment>Name of symbol 518</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Valla impasable</translation>
+    </message>
         <message>
             <source>An impassable or uncrossable fence, normally more than 1.5 m high.
 If the fence forms an enclosed area, tags should be placed inside.</source>
             <comment>Description of symbol 518</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una valla impasable o que no se puede atravesar, normalmente mayor de 1,5 m de altura.
+Si la valla forma un cercado cerrado, las marcas de la línea deben situarse en el interior.</translation>
+    </message>
         <message>
             <source>Crossing point</source>
             <comment>Name of symbol 519</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Punto de paso</translation>
+    </message>
         <message>
             <source>A way through or over a wall, fence or other linear feature, including a gate or stile.
 For impassable features, the line shall be broken at the crossing point. For passable features, the line shall not be broken if passing involves a degree of climb.</source>
             <comment>Description of symbol 519</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un paso a través de o sobre un muro, valla u otro elemento lineal, incluyendo una puerta o peldaños.
+Para elementos impasables, la línea debe cortarse en el punto de paso. Para elementos pasables, la línea no se debe cortar si el paso implica cualquier ascenso.</translation>
+    </message>
         <message>
             <source>Area that shall not be entered</source>
             <comment>Name of symbol 520</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Zona prohibida</translation>
+    </message>
         <message>
             <source>An out-of-bounds area is a feature such as a private house, a garden, a factory or another industrial area. Only contours and prominent features such as railways and large buildings shall be shown inside an out-of-bounds area.
 The area shall be discontinued where a path or track goes through. Out-of-bounds areas should be bounded by the black boundary line or another black line symbol (e.g. fence).</source>
             <comment>Description of symbol 520</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una zona prohibida es algo como una propiedad privada, un jardín, una factoría u otra zona industrial. Solamente se deben representar dentro de una zona prohibida las curvas de nivel y los elementos más destacados como vías férreas o grandes edificaciones.
+El área se debe recortar donde un camino o pista la atraviesa. Las zonas prohibidas se deberían delimitar con una línea negra u otro símbolo de línea negra (p. ej. valla).</translation>
+    </message>
         <message>
             <source>Out of bounds area, bounding line</source>
             <comment>Name of symbol 520.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Zona prohibida, línea delimitadora</translation>
+    </message>
         <message>
             <source>A bounding line may be drawn with 520.0 if there is no natural boundary.</source>
             <comment>Description of symbol 520.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Si no hay un límite natural, se puede dibujar una línea delimitadora con el 520.0.</translation>
+    </message>
         <message>
             <source>Area that shall not be entered, alternative</source>
             <comment>Name of symbol 520.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Zona prohibida, alternativa</translation>
+    </message>
         <message>
             <source>An out-of-bounds area is a feature such as a private house, a garden, a factory or another industrial area. Only contours and prominent features such as railways and large buildings shall be shown inside an out-of-bounds area.
 Vertical black stripes may be used for areas where it is important to show a complete representation of the terrain (e.g. when a part of the forest is out-of-bounds). The area shall be discontinued where a path or track goes through. Out-of-bounds areas should be bounded by the black boundary line or another black line symbol (e.g. fence).</source>
             <comment>Description of symbol 520.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una zona prohibida es algo como una propiedad privada, un jardín, una factoría u otra zona industrial. Solamente se deben representar dentro de una zona prohibida las curvas de nivel y los elementos más destacados como vías férreas o grandes edificaciones.
+Se pueden utilizar bandas negras verticales en zonas donde es importante mostrar una representación completa del terreno (p. ej. cuando una parte del bosque es zona prohibida). El área se debe recortar donde un camino o pista la atraviesa. Las zonas prohibidas deberían estar delimitadas por una línea negra u otro símbolo de línea negra (p. ej. valla).</translation>
+    </message>
         <message>
             <source>Out of bounds area, alternative bounding line</source>
             <comment>Name of symbol 520.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Zona prohibida, línea delimitadora alternativa</translation>
+    </message>
         <message>
             <source>A bounding line may be drawn with 520.1 if there is no natural boundary.</source>
             <comment>Description of symbol 520.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Si no hay un límite natural, se puede dibujar una línea delimitadora con el 520.1.</translation>
+    </message>
         <message>
             <source>Building</source>
             <comment>Name of symbol 521</comment>
