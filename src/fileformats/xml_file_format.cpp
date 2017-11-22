@@ -47,10 +47,10 @@
 
 // ### XMLFileFormat definition ###
 
-constexpr int XMLFileFormat::minimum_version = 2;
-constexpr int XMLFileFormat::current_version = 7;
+constexpr XMLFileFormat::FormatVersion XMLFileFormat::minimum_version = XMLFileFormat::XML_FILE_FORMAT_V2;
+constexpr XMLFileFormat::FormatVersion XMLFileFormat::current_version = XMLFileFormat::XML_FILE_FORMAT_LATEST;
 
-int XMLFileFormat::active_version = 5; // updated by XMLFileExporter::doExport()
+XMLFileFormat::FormatVersion XMLFileFormat::active_version = XMLFileFormat::XML_FILE_FORMAT_V5; // updated by XMLFileExporter::doExport()
 
 
 
@@ -180,11 +180,11 @@ void XMLFileExporter::doExport()
 		xml.setAutoFormatting(true);
 	
 #ifdef MAPPER_ENABLE_COMPATIBILITY
-	int current_version = XMLFileFormat::current_version;
+	XMLFileFormat::FormatVersion current_version = XMLFileFormat::current_version;
 	bool retain_compatibility = Settings::getInstance().getSetting(Settings::General_RetainCompatiblity).toBool();
-	XMLFileFormat::active_version = retain_compatibility ? 5 : current_version;
+	XMLFileFormat::active_version = retain_compatibility ? XMLFileFormat::XML_FILE_FORMAT_V5 : current_version;
 	
-	if (XMLFileFormat::active_version < 6 && map->getNumParts() != 1)
+	if (XMLFileFormat::active_version < XMLFileFormat::XML_FILE_FORMAT_V6 && map->getNumParts() != 1)
 	{
 		throw FileFormatException(tr("Older versions of Mapper do not support multiple map parts. To save the map in compatibility mode, you must first merge all map parts."));
 	}
@@ -209,7 +209,7 @@ void XMLFileExporter::doExport()
 		writeLineBreak(xml);
 
 		XmlElementWriter* barrier = nullptr;
-		if (XMLFileFormat::active_version >= 6)
+		if (XMLFileFormat::active_version >= XMLFileFormat::XML_FILE_FORMAT_V6)
 		{
 			// Prevent Mapper versions < 0.6.0 from crashing
 			// when compatibilty mode is NOT activated

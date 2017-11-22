@@ -353,7 +353,7 @@ void CoordXmlTest::writeFastImplementation()
 	xml.setAutoFormatting(false);
 	xml.writeStartDocument();
 	
-	XMLFileFormat::active_version = 6; // Activate fast text format.
+	XMLFileFormat::active_version = XMLFileFormat::XML_FILE_FORMAT_V6; // Activate fast text format.
 	XmlElementWriter element(xml, QLatin1String("root"));
 	
 	QFETCH(int, num_coords);
@@ -1007,7 +1007,7 @@ void CoordXmlTest::readFastImplementation()
 		xml.setAutoFormatting(false);
 		xml.writeStartDocument();
 		
-		XMLFileFormat::active_version = 6; // Activate fast text format.
+		XMLFileFormat::active_version = XMLFileFormat::XML_FILE_FORMAT_V6; // Activate fast text format.
 		
 		xml.writeStartElement(QString::fromLatin1("root"));
 		xml.writeCharacters(QString{}); // flush root start element

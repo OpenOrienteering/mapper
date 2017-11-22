@@ -31,6 +31,7 @@
 
 #include "core/latlon.h"
 #include "core/map_coord.h"
+#include "fileformats/xml_file_format.h"
 
 class QDebug;
 class QXmlStreamReader;
@@ -157,7 +158,7 @@ public:
 	/** 
 	 * Saves the georeferencing to an XML stream.
 	 */
-	void save(QXmlStreamWriter& xml, int xml_format_version) const;
+	void save(QXmlStreamWriter& xml, XMLFileFormat::FormatVersion xml_format_version) const;
 	
 	/**
 	 * Creates a georeferencing from an XML stream.

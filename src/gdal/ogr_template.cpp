@@ -496,6 +496,6 @@ void OgrTemplate::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) c
 	}
 	else if (explicit_georef)
 	{
-		explicit_georef->save(xml, 7); // FIXME - create format version enum
+		explicit_georef->save(xml, XMLFileFormat::XML_FILE_FORMAT_LATEST);
 	}
 }

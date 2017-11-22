@@ -367,7 +367,7 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only)
 	emit projectionChanged();
 }
 
-void Georeferencing::save(QXmlStreamWriter& xml, int xml_format_version) const
+void Georeferencing::save(QXmlStreamWriter& xml, XMLFileFormat::FormatVersion xml_format_version) const
 {
 	XmlElementWriter georef_element(xml, literal::georeferencing);
 	georef_element.writeAttribute(literal::scale, scale_denominator);
