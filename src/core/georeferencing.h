@@ -157,7 +157,7 @@ public:
 	/** 
 	 * Saves the georeferencing to an XML stream.
 	 */
-	void save(QXmlStreamWriter& xml) const;
+	void save(QXmlStreamWriter& xml, int xml_format_version) const;
 	
 	/**
 	 * Creates a georeferencing from an XML stream.

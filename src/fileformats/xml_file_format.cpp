@@ -253,7 +253,7 @@ void XMLFileExporter::doExport()
 
 void XMLFileExporter::exportGeoreferencing()
 {
-	map->getGeoreferencing().save(xml);
+	map->getGeoreferencing().save(xml, XMLFileFormat::active_version);
 	writeLineBreak(xml);
 }
 
