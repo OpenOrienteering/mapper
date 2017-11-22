@@ -1849,8 +1849,8 @@ Se pueden utilizar bandas negras verticales en zonas donde es importante mostrar
         <message>
             <source>Building</source>
             <comment>Name of symbol 521</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Edificación</translation>
+    </message>
         <message>
             <source>A building is shown with its ground plan so far as the scale permits.
 
@@ -1860,184 +1860,196 @@ Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).
 
 Buildings larger than 75 m x 75 m may be represented with a dark grey infill in urban areas.</source>
             <comment>Description of symbol 521</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una edificación se representa con su planta sobre el terreno mientras la escala lo permita.
+
+Los pasadizos a través de edificaciones deben tener una anchura mínima de 0,3 mm (huella 4,5 m). Las edificaciones dentro de áreas prohibidas se generalizan. Las áreas incluidas completamente dentro de una edificación no se deben trasladar al mapa (se deben representar siendo parte de la edificación). El espacio mínimo entre edificaciones o entre edificaciones y otros elementos impasables debería ser de 0,25 mm.
+
+Área mínima: 0,5 mm x 0,5 mm (huella 7,5 m x 7,5 m).
+
+Las edificaciones mayores de 75 m x 75 m se pueden representar con relleno gris oscuro en áreas urbanas.</translation>
+    </message>
         <message>
             <source>Building, minimum size</source>
             <comment>Name of symbol 521.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Edificación, tamaño mínimo</translation>
+    </message>
         <message>
             <source>A building is shown with its ground plan so far as the scale permits.
 
 Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</source>
             <comment>Description of symbol 521.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una edificación se representa con su planta sobre el terreno mientras la escala lo permita.
+
+Área mínima: 0,5 mm x 0,5 mm (huella 7,5 mm x 7,5 mm).</translation>
+    </message>
         <message>
             <source>Large building with outline</source>
             <comment>Name of symbol 521.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Edificación grande con contorno</translation>
+    </message>
         <message>
             <source>In urban areas, buildings larger than 75 m x 75 m may be represented with a dark grey infill.
 
 Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m). Buildings within forbidden areas are generalised. Areas totally contained within a building shall not be mapped (they shall be represented as being part of the building). Minimum gap indicating a passage between buildings and between buildings and other impassable features should be 0.25 mm.</source>
             <comment>Description of symbol 521.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Las edificaciones mayores de 75 m x 75 m se pueden representar con relleno gris oscuro en áreas urbanas.
+
+Los pasadizos a través de edificaciones deben tener una anchura mínima de 0,3 mm (huella 4,5 m). Las edificaciones dentro de áreas prohibidas se generalizan. Las áreas incluidas completamente dentro de una edificación no se deben trasladar al mapa (se deben representar siendo parte de la edificación). El espacio mínimo entre edificaciones o entre edificaciones y otros elementos impasables debería ser de 0,25 mm.</translation>
+    </message>
         <message>
             <source>Large building</source>
             <comment>Name of symbol 521.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Edificación grande</translation>
+    </message>
         <message>
             <source>Buildings larger than 75 m x 75 m may be represented with a dark grey infill in urban areas.</source>
             <comment>Description of symbol 521.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Las edificaciones mayores de 75 m x 75 m se pueden representar con relleno gris oscuro en áreas urbanas.</translation>
+    </message>
         <message>
             <source>Large building outline</source>
             <comment>Name of symbol 521.4</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Edificación grande contorno</translation>
+    </message>
         <message>
             <source>A black line surrounds the symbol 521.1.1.</source>
             <comment>Description of symbol 521.4</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una línea negra rodeando el símbolo 521.1.1.</translation>
+    </message>
         <message>
             <source>Canopy with outline</source>
             <comment>Name of symbol 522</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Cubierta con contorno</translation>
+    </message>
         <message>
             <source>An accessible and runnable area with roof.</source>
             <comment>Description of symbol 522</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una zona con techo que es accesible y permite la carrera.</translation>
+    </message>
         <message>
             <source>Canopy</source>
             <comment>Name of symbol 522.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Cubierta</translation>
+    </message>
         <message>
             <source>An accessible and runnable area with roof.</source>
             <comment>Description of symbol 522.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una zona con techo que es accesible y permite la carrera.</translation>
+    </message>
         <message>
             <source>Canopy outline</source>
             <comment>Name of symbol 522.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Contorno de una cubierta</translation>
+    </message>
         <message>
             <source>A black line surrounds the symbol 522.0.1.</source>
             <comment>Description of symbol 522.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una línea negra que rodea el símbolo 522.0.1.</translation>
+    </message>
         <message>
             <source>Ruin</source>
             <comment>Name of symbol 523</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ruina</translation>
+    </message>
         <message>
             <source>A ruined building. The ground plan of a ruin is shown to scale, down to the minimum size.</source>
             <comment>Description of symbol 523</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una construcción en ruinas. La planta sobre el terreno de una ruina se representa a escala, hasta el tamaño mínimo.</translation>
+    </message>
         <message>
             <source>Ruin, minimum size</source>
             <comment>Name of symbol 523.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ruina, tamaño mínimo</translation>
+    </message>
         <message>
             <source>Ruins that are so small that they cannot be drawn to scale may be represented using a solid line.</source>
             <comment>Description of symbol 523.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Las ruinas que sean tan pequeñas que no puedan dibujarse a escala se deben representar utilizando una línea continua.</translation>
+    </message>
         <message>
             <source>High tower</source>
             <comment>Name of symbol 524</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Torre alta</translation>
+    </message>
         <message>
             <source>A high tower or large pylon. If it is in a forest, it must be visible above the level of the surrounding forest.</source>
             <comment>Description of symbol 524</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una torre alta o un pilón grande. Si está en el bosque, debe ser visible por encima de la altura del bosque que lo rodea.</translation>
+    </message>
         <message>
             <source>Small tower</source>
             <comment>Name of symbol 525</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Torre pequeña</translation>
+    </message>
         <message>
             <source>An obvious small tower, platform or seat.</source>
             <comment>Description of symbol 525</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una evidente torre pequeña, base o plataforma.</translation>
+    </message>
         <message>
             <source>Cairn</source>
             <comment>Name of symbol 526</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Hito</translation>
+    </message>
         <message>
             <source>A prominent cairn, memorial stone, boundary stone or trigonometric point.
 Minimum height: 0.5 m.</source>
             <comment>Description of symbol 526</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un hito prominente, túmulo, mojón o poste geodésico.
+Altura mínima: 0,5 m.</translation>
+    </message>
         <message>
             <source>Fodder rack</source>
             <comment>Name of symbol 527</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Comedero de ganado</translation>
+    </message>
         <message>
             <source>A fodder rack, which is free standing or attached to a tree.
 Location is at the centre of gravity of the symbol.</source>
             <comment>Description of symbol 527</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un comedero para el ganado, aislado o enganchado a un árbol.
+La ubicación está en el centro de gravedad del símbolo.</translation>
+    </message>
         <message>
             <source>Prominent line feature</source>
             <comment>Name of symbol 528</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Elemento lineal destacado</translation>
+    </message>
         <message>
             <source>A prominent man-made line feature. For example, a low pipeline (gas, water, oil, heat, etc.) or a bobsleigh/skeleton track that is clearly visible. The definition of the symbol must be given on the map.</source>
             <comment>Description of symbol 528</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una construcción lineal prominente. Por ejemplo, una conducción de poca altura (gas, agua, oleoducto, calefacción, etc.) o una estructura de pista (bobsleigh) que es claramente visible. La definición del símbolo se debe indicar en el mapa.</translation>
+    </message>
         <message>
             <source>Prominent impassable line feature</source>
             <comment>Name of symbol 529</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Elemento lineal destacado impasable</translation>
+    </message>
         <message>
             <source>An impassable man-made line feature. For example, a high pipeline (gas, water, oil, heat, etc.) or a bobsleigh/skeleton track. The definition of the symbol must be given on the map.</source>
             <comment>Description of symbol 529</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una construcción lineal impasable. Por ejemplo, una conducción alta (gas, agua, oleoducto, calefacción, etc.) o una estructura de pista (bobsleigh). La definición del símbolo se debe indicar en el mapa.</translation>
+    </message>
         <message>
             <source>Prominent man-made feature – ring</source>
             <comment>Name of symbol 530</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Construcción prominente - anillo</translation>
+    </message>
         <message>
             <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
             <comment>Description of symbol 530</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Las construcciones especiales se representan con estos símbolos. La definición de los símbolos se debe indicar en cada caso en la leyenda del mapa.</translation>
+    </message>
         <message>
             <source>Prominent man-made feature – x</source>
             <comment>Name of symbol 531</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Construcción prominente - x</translation>
+    </message>
         <message>
             <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
             <comment>Description of symbol 531</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Las construcciones especiales se representan con estos símbolos. La definición de los símbolos se debe indicar en cada caso en la leyenda del mapa.</translation>
+    </message>
         <message>
             <source>Magnetic north line</source>
             <comment>Name of symbol 601.1</comment>
