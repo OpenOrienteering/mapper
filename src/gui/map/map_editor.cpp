@@ -905,9 +905,9 @@ void MapEditorController::createActions()
 	open_template_act = newAction("opentemplate", tr("Open template..."), this, SLOT(openTemplateClicked()), nullptr, QString{}, "templates_menu.html");
 	reopen_template_act = newAction("reopentemplate", tr("Reopen template..."), this, SLOT(reopenTemplateClicked()), nullptr, QString{}, "templates_menu.html");
 	
-	tags_window_act = newCheckAction("tagswindow", tr("Tag editor"), this, SLOT(showTagsWindow(bool)), "window-new", tr("Show/Hide the tag editor window"), "tag_editor.html");
+	tags_window_act = newCheckAction("tagswindow", tr("Tag Editor"), this, SLOT(showTagsWindow(bool)), "window-new", tr("Show/Hide the tag editor window"), "tag_editor.html");
 
-	tag_select_window_act = newCheckAction("tagselectwindow", tr("Tag Selection"), this, SLOT(showTagSelectWindow(bool)), "tag-selector", tr("Show/Hide the tag selection window"), "tag_selector.html");
+	tag_select_window_act = newCheckAction("tagselectwindow", tr("Tag Selector"), this, SLOT(showTagSelectWindow(bool)), "tag-selector", tr("Show/Hide the tag selector window"), "tag_selector.html");
 	
 	edit_tool_act = newToolAction("editobjects", tr("Edit objects"), this, SLOT(editToolClicked()), "tool-edit.png", QString{}, "toolbars.html#tool_edit_point");
 	edit_line_tool_act = newToolAction("editlines", tr("Edit lines"), this, SLOT(editLineToolClicked()), "tool-edit-line.png", QString{}, "toolbars.html#tool_edit_line");
@@ -2068,7 +2068,7 @@ void MapEditorController::createTagSelector()
 	auto tag_widget = new TagSelectWidget(map, main_view, this);
 	tag_select_dock_widget = new EditorDockWidget(tr("Tag Selector"), tag_select_window_act, this, window);
 	tag_select_dock_widget->setWidget(tag_widget);
-	tag_select_dock_widget->setObjectName(QString::fromLatin1("Tag selection dock widget"));
+	tag_select_dock_widget->setObjectName(QString::fromLatin1("Tag selector dock widget"));
 	if (!window->restoreDockWidget(tag_select_dock_widget))
 		window->addDockWidget(Qt::RightDockWidgetArea, tag_select_dock_widget, Qt::Vertical);
 	tag_select_dock_widget->setVisible(false);
