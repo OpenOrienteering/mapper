@@ -78,7 +78,7 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="69"/>
         <source>mm²</source>
-        <translation type="unfinished"></translation>
+        <translation>mm²</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="70"/>
@@ -107,7 +107,7 @@
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="166"/>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="171"/>
         <source>mm</source>
-        <translation type="unfinished"></translation>
+        <translation>mm</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="144"/>
@@ -177,7 +177,7 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="187"/>
         <source>°</source>
-        <translation type="unfinished"></translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="189"/>
@@ -302,7 +302,7 @@
         <location filename="../src/gui/color_dialog.cpp" line="180"/>
         <location filename="../src/gui/color_dialog.cpp" line="414"/>
         <source>%</source>
-        <translation type="unfinished"></translation>
+        <translation>%</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="132"/>
@@ -338,12 +338,12 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="176"/>
         <source>Yellow</source>
-        <translation type="unfinished"></translation>
+        <translation>Kollane</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="181"/>
         <source>Black</source>
-        <translation type="unfinished"></translation>
+        <translation>Must</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="212"/>
@@ -358,22 +358,22 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="223"/>
         <source>Red</source>
-        <translation type="unfinished"></translation>
+        <translation>Punane</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="228"/>
         <source>Green</source>
-        <translation type="unfinished"></translation>
+        <translation>Roheline</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="233"/>
         <source>Blue</source>
-        <translation type="unfinished"></translation>
+        <translation>Sinine</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="238"/>
         <source>#RRGGBB</source>
-        <translation type="unfinished"></translation>
+        <translation>#RRGGBB</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="256"/>
@@ -388,7 +388,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="276"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nimi</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="328"/>
@@ -398,7 +398,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="597"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Hoiatus</translation>
     </message>
 </context>
 <context>
@@ -414,7 +414,7 @@
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="80"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nimi</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="80"/>
@@ -424,12 +424,12 @@
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="80"/>
         <source>CMYK</source>
-        <translation type="unfinished"></translation>
+        <translation>CMYK</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="80"/>
         <source>RGB</source>
-        <translation type="unfinished"></translation>
+        <translation>RGB</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="80"/>
@@ -445,7 +445,7 @@
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="86"/>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="91"/>
         <source>New</source>
-        <translation type="unfinished"></translation>
+        <translation>Uus</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="87"/>
