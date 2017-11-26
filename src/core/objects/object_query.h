@@ -56,11 +56,12 @@ public:
 		OperatorAnd      = 1,  ///< And-chains two object queries
 		OperatorOr       = 2,  ///< Or-chains two object queries
 		
-		// Operators 16 .. 18 operate on object tags
+		// Operators 16 .. 18 operate on object tags and other strings
 		OperatorIs       = 16, ///< Tests an existing tag for equality with the given value (case-sensitive)
 		OperatorIsNot    = 17, ///< Tests an existing tag for inequality with the given value (case-sensitive)
 		OperatorContains = 18, ///< Tests an existing tag for containing the given value (case-sensitive)
 		OperatorSearch   = 19, ///< Tests if the symbol name, a tag key or a tag value contains the given value (case-insensitive)
+		OperatorObjectText = 20, ///< Text object content (case-insensitive)
 		
 		// More operators, 32 ..
 		OperatorSymbol   = 32, ///< Test the symbol for equality.
@@ -83,12 +84,12 @@ public:
 	 };
 	
 	// Parameters for operations on tags.
-	struct TagOperands
+	struct StringOperands
 	{
 		QString key;
 		QString value;
 		
-		~TagOperands();
+		~StringOperands();
 	};
 
 	ObjectQuery() noexcept;
@@ -166,7 +167,7 @@ public:
 	/**
 	 * Returns the operands of logical query operations.
 	 */
-	const TagOperands* tagOperands() const;
+	const StringOperands* tagOperands() const;
 	
 	/**
 	 * Returns the operand of symbol operations.
@@ -205,7 +206,7 @@ private:
 	union
 	{
 		LogicalOperands subqueries;
-		TagOperands     tags;
+		StringOperands     tags;
 		SymbolOperand   symbol;
 	};
 	
@@ -217,9 +218,9 @@ bool operator==(const ObjectQuery& lhs, const ObjectQuery& rhs);
 
 bool operator!=(const ObjectQuery& lhs, const ObjectQuery& rhs);
 
-bool operator==(const ObjectQuery::TagOperands& lhs, const ObjectQuery::TagOperands& rhs);
+bool operator==(const ObjectQuery::StringOperands& lhs, const ObjectQuery::StringOperands& rhs);
 
-bool operator!=(const ObjectQuery::TagOperands& lhs, const ObjectQuery::TagOperands& rhs);
+bool operator!=(const ObjectQuery::StringOperands& lhs, const ObjectQuery::StringOperands& rhs);
 
 
 
@@ -278,7 +279,7 @@ bool operator!=(const ObjectQuery& lhs, const ObjectQuery& rhs)
 }
 
 inline
-bool operator!=(const ObjectQuery::TagOperands& lhs, const ObjectQuery::TagOperands& rhs)
+bool operator!=(const ObjectQuery::StringOperands& lhs, const ObjectQuery::StringOperands& rhs)
 {
 	return !(lhs==rhs);
 }

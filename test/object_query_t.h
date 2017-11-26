@@ -42,6 +42,7 @@ private slots:
 	void testOrQuery();
 	void testAndQuery();
 	void testSearch();
+	void testObjectText();
 	void testSymbol();
 	void testToString();
 	void testParser();

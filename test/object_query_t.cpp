@@ -30,6 +30,7 @@
 #include <QString>
 
 #include "core/objects/object.h"
+#include "core/objects/text_object.h"
 #include "core/objects/object_query.h"
 #include "core/symbols/point_symbol.h"
 
@@ -52,7 +53,7 @@ ObjectQueryTest::ObjectQueryTest(QObject* parent)
 
 const Object* ObjectQueryTest::testObject()
 {
-	static PathObject obj;
+	static TextObject obj;
 	if (obj.tags().isEmpty())
 	{
 		obj.setTags( {
@@ -61,6 +62,7 @@ const Object* ObjectQueryTest::testObject()
 		  { QLatin1String("c"), QLatin1String("3") },
 		  { QLatin1String("abc"), QLatin1String("123") }
 		});
+		obj.setText(QStringLiteral("ac 13"));
 	}
 	Q_ASSERT(!obj.tags().contains(QLatin1String("d")));
 	return &obj;
@@ -225,6 +227,27 @@ void ObjectQueryTest::testSearch()
 	QVERIFY(single_query_is_false_1(object) == false);
 	ObjectQuery single_query_is_false_2{ObjectQuery::OperatorSearch, QLatin1String("13")};
 	QVERIFY(single_query_is_false_2(object) == false);
+	
+	auto clone = ObjectQuery(single_query_is_true_1);
+	QCOMPARE(clone, single_query_is_true_1);
+	QVERIFY(clone != single_query_is_true_2);
+	auto operands = clone.tagOperands();
+	QVERIFY(operands);
+	QCOMPARE(operands->value, QLatin1String("Bc"));
+}
+
+void ObjectQueryTest::testObjectText()
+{
+	auto object = testObject();
+
+	ObjectQuery single_query_is_true_1{ObjectQuery::OperatorObjectText, QLatin1String("Bc")};
+	QVERIFY(single_query_is_true_1(object) == false);
+	ObjectQuery single_query_is_true_2{ObjectQuery::OperatorObjectText, QLatin1String("23")};
+	QVERIFY(single_query_is_true_2(object) == false);
+	ObjectQuery single_query_is_false_1{ObjectQuery::OperatorObjectText, QLatin1String("Ac")};
+	QVERIFY(single_query_is_false_1(object) == true);
+	ObjectQuery single_query_is_false_2{ObjectQuery::OperatorObjectText, QLatin1String("13")};
+	QVERIFY(single_query_is_false_2(object) == true);
 	
 	auto clone = ObjectQuery(single_query_is_true_1);
 	QCOMPARE(clone, single_query_is_true_1);
