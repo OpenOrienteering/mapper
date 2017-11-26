@@ -2053,160 +2053,162 @@ La ubicación está en el centro de gravedad del símbolo.</translation>
         <message>
             <source>Magnetic north line</source>
             <comment>Name of symbol 601.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Línea de norte magnético</translation>
+    </message>
         <message>
             <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map. North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.</source>
             <comment>Description of symbol 601.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Las líneas del norte magnético son líneas dibujadas sobre el mapa apuntando al norte magnético, paralelas a los bordes del papel. Su espaciado en el mapa debe ser de 20 mm, que suponen 300 m sobre el terreno a escala 1:15000. Si el mapa es ampliado a 1:10000, el espaciado de las líneas será de 30 mm en el mapa. Las líneas del norte se deben cortar para mejorar la legibilidad del mapa, por ejemplo cuando tapan pequeños elementos. En zonas con muy pocos elementos de agua, se pueden utilizar líneas azules.</translation>
+    </message>
         <message>
             <source>North lines pattern</source>
             <comment>Name of symbol 601.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Patrón de líneas de norte</translation>
+    </message>
         <message>
             <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map. North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.</source>
             <comment>Description of symbol 601.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Las líneas del norte magnético son líneas dibujadas sobre el mapa apuntando al norte magnético, paralelas a los bordes del papel. Su espaciado en el mapa debe ser de 20 mm, que suponen 300 m sobre el terreno a escala 1:15000. Si el mapa es ampliado a 1:10000, el espaciado de las líneas será de 30 mm en el mapa. Las líneas del norte se deben cortar para mejorar la legibilidad del mapa, por ejemplo cuando tapan pequeños elementos. En zonas con muy pocos elementos de agua, se pueden utilizar líneas azules.</translation>
+    </message>
         <message>
             <source>Magnetic north line, blue</source>
             <comment>Name of symbol 601.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Línea del norte magnético, azul</translation>
+    </message>
         <message>
             <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map. North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.</source>
             <comment>Description of symbol 601.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Las líneas del norte magnético son líneas dibujadas sobre el mapa apuntando al norte magnético, paralelas a los bordes del papel. Su espaciado en el mapa debe ser de 20 mm, que suponen 300 m sobre el terreno a escala 1:15000. Si el mapa es ampliado a 1:10000, el espaciado de las líneas será de 30 mm en el mapa. Las líneas del norte se deben cortar para mejorar la legibilidad del mapa, por ejemplo cuando tapan pequeños elementos. En zonas con muy pocos elementos de agua, se pueden utilizar líneas azules.</translation>
+    </message>
         <message>
             <source>North lines pattern, blue</source>
             <comment>Name of symbol 601.4</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Patrón de líneas de norte, azul</translation>
+    </message>
         <message>
             <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map. North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.</source>
             <comment>Description of symbol 601.4</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Las líneas del norte magnético son líneas dibujadas sobre el mapa apuntando al norte magnético, paralelas a los bordes del papel. Su espaciado en el mapa debe ser de 20 mm, que suponen 300 m sobre el terreno a escala 1:15000. Si el mapa es ampliado a 1:10000, el espaciado de las líneas será de 30 mm en el mapa. Las líneas del norte se deben cortar para mejorar la legibilidad del mapa, por ejemplo cuando tapan pequeños elementos. En zonas con muy pocos elementos de agua, se pueden utilizar líneas azules.</translation>
+    </message>
         <message>
             <source>Registration mark</source>
             <comment>Name of symbol 602</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Marca de registro</translation>
+    </message>
         <message>
             <source>At least three registration marks should be placed within the frame of a map in a non-symmetrical position. These can be used for course overprinting when overprinting on already printed maps. In addition, it allows a check of colour registration when printing colours separately.</source>
             <comment>Description of symbol 602</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Se deberían colocar al menos tres marcas de registro dentro del marco del mapa en posiciones no simétricas. Estas pueden utilizarse para la sobreimpresión de los recorridos cuando estos se impriman sobre mapas impresos previamente. Además, permiten comprobar el registro de color cuando se imprimen los colores separadamente.</translation>
+    </message>
         <message>
             <source>Spot height, dot</source>
             <comment>Name of symbol 603.0</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Altitud de un punto, punto</translation>
+    </message>
         <message>
             <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. Water levels are given without the dot. Spot heights must only be used where they do not conflict with other symbols.</source>
             <comment>Description of symbol 603.0</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Las altitudes de puntos se utilizan para valorar aproximadamente las diferencias de altitud. La altitud se aproxima a metros. Los niveles del agua se proporcionan sin punto. Las altitudes se deben utilizar sólo cuando no haya conflictos con otros símbolos.</translation>
+    </message>
         <message>
             <source>Spot height, text</source>
             <comment>Name of symbol 603.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Altitud de un punto, texto</translation>
+    </message>
         <message>
             <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. Water levels are given without the dot. Spot heights must only be used where they do not conflict with other symbols.</source>
             <comment>Description of symbol 603.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Las altitudes de puntos se utilizan para valorar aproximadamente las diferencias de altitud. La altitud se aproxima a metros. Los niveles del agua se proporcionan sin punto. Las altitudes se deben utilizar sólo cuando no haya conflictos con otros símbolos.</translation>
+    </message>
         <message>
             <source>Start</source>
             <comment>Name of symbol 701</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Salida</translation>
+    </message>
         <message>
             <source>The place where the orienteering starts. The centre of the triangle shows the precise position where the orienteering course starts. The start must be on a clearly identifiable point on the map. The triangle points in the direction of the first control.</source>
             <comment>Description of symbol 701</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>El lugar donde comienza la orientación. El centro del triángulo representa la posición precisa donde comienza el recorrido de orientación. La salida debe estar en un punto sobre el mapa claramente identificable. El triángulo apunta en la dirección del primer control.</translation>
+    </message>
         <message>
             <source>Map issue point</source>
             <comment>Name of symbol 702</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Punto de recogida del mapa</translation>
+    </message>
         <message>
             <source>If there is a marked route to the start point, the map issue point is marked using this symbol.</source>
             <comment>Description of symbol 702</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Si hay una ruta marcada hasta el triángulo de salida, el punto de recogida del mapa se marca utilizando este símbolo.</translation>
+    </message>
         <message>
             <source>Control point</source>
             <comment>Name of symbol 703</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Punto de control</translation>
+    </message>
         <message>
             <source>For point features, the centre of the circle shall be the centre of the symbol. For line and area features, the centre of the circle shows the precise position of the control marker. Controls shall only be placed on points that are clearly identifiable on the map.
 Sections of the circle should be omitted to leave important detail showing.</source>
             <comment>Description of symbol 703</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Para elementos puntuales, el centro del círculo debe ser el centro del símbolo. Para elementos lineales o de área, el centro del círculo indica la posición precisa del la baliza de control. Los controles deben ubicarse solamente en puntos que con claramente identificables sobre el mapa.
+Las secciones del círculo que tapen detalles importentes deberían recortarse.</translation>
+    </message>
         <message>
             <source>Control number</source>
             <comment>Name of symbol 704</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Número de control</translation>
+    </message>
         <message>
             <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail. The numbers are orientated to north.</source>
             <comment>Description of symbol 704</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>El número de un control se coloca junto al círculo del punto de control de manera que no tape detalles importantes. Los números están orientados al norte.</translation>
+    </message>
         <message>
             <source>Course line</source>
             <comment>Name of symbol 705</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Línea de recorrido</translation>
+    </message>
         <message>
             <source>Where controls are to be visited in order, the sequence is shown using straight lines from the start to the first control and then from each control to the next one. Sections of lines should be omitted to leave important detail showing. The line should be drawn via mandatory crossing points. There should be gaps between the line and the control circle in order to increase the readability of the underlying detail close to the control.</source>
             <comment>Description of symbol 705</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Cuando los controles se visitan en orden, la secuencia se muestra utilizando líneas rectas desde la salida al primer control y luego, desde cada control al siguiente. Las secciones de las líneas que tapen detalles importantes deberían recortarse. La línea debería dibujarse desviándose por los puntos de paso obligatorios. Debería dejarse un espacio entre la línea y el círculo de control para mejorar la legibilidad de los detalles junto al control.</translation>
+    </message>
         <message>
             <source>Finish</source>
             <comment>Name of symbol 706</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Meta</translation>
+    </message>
         <message>
             <source>The end of the course.</source>
             <comment>Description of symbol 706</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>El final del recorrido.</translation>
+    </message>
         <message>
             <source>Marked route</source>
             <comment>Name of symbol 707</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ruta señalizada</translation>
+    </message>
         <message>
             <source>A marked route that is a part of the course. It is mandatory to follow the marked route.</source>
             <comment>Description of symbol 707</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una ruta señalizada que es parte del recorrido. Es obligatorio seguir una ruta señalizada.</translation>
+    </message>
         <message>
             <source>Out-of-bounds boundary</source>
             <comment>Name of symbol 708</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Límite prohibido</translation>
+    </message>
         <message>
             <source>A boundary which it is not permitted to cross.
 An out-of-bounds boundary shall not be crossed.</source>
             <comment>Description of symbol 708</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un límite que no está permitido cruzar.
+Un límite prohibido no se debe cruzar.</translation>
+    </message>
         <message>
             <source>Out-of-bounds area</source>
             <comment>Name of symbol 709</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Área prohibida</translation>
+    </message>
         <message>
             <source>An out-of-bounds area. A bounding line may be drawn if there is no natural boundary, as follows:
 – a solid line indicates that the boundary is marked continuously (tapes, etc.) in the terrain,
@@ -2214,102 +2216,110 @@ An out-of-bounds boundary shall not be crossed.</source>
 – no line indicates no marking in the terrain.
 An out-of-bounds area shall not be entered.</source>
             <comment>Description of symbol 709</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una zona prohibida. Se puede dibujar una línea delimitadora si no existe un límite natural, como sigue:
+- una línea continua indica que el límite está señalizado de forma continua en el terreno (cintas, etc.)
+- una línea discontinua indica que hay señales intermitentes en el terreno.
+- ninguna línea indica que no hay señales en el terreno.
+En una zona prohibida no se debe entrar.</translation>
+    </message>
         <message>
             <source>Out-of-bounds area, solid boundary</source>
             <comment>Name of symbol 709.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Área prohibida, límite continuo</translation>
+    </message>
         <message>
             <source>A solid line indicates that the boundary is marked continuously (tapes, etc.) on the ground.</source>
             <comment>Description of symbol 709.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una línea continua indica que el límite está señalizado de forma continua en el terreno (cintas, etc.).</translation>
+    </message>
         <message>
             <source>Out-of-bounds area, dashed boundary</source>
             <comment>Name of symbol 709.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Área prohibida, límite discontinuo</translation>
+    </message>
         <message>
             <source>A dashed line indicates intermittent marking on the ground.</source>
             <comment>Description of symbol 709.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una línea discontinua indica que hay señales intermitentes en el terreno.</translation>
+    </message>
         <message>
             <source>Crossing point</source>
             <comment>Name of symbol 710</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Punto de paso</translation>
+    </message>
         <message>
             <source>A crossing point, for instance through or over a wall or fence, across a road or railway, through a tunnel or out-of-bounds area, or over an uncrossable boundary is drawn on the map with two lines curving outwards. The lines shall reflect the length of the crossing.</source>
             <comment>Description of symbol 710</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un punto de paso, por ejemplo a través de o sobre un muro o valla, cruzando una carretera o vía férrea, a través de un túnel o un área prohibida, o sobre un límite que no se puede cruzar, se dibuja en el mapa con dos líneas curvadas hacia afuera. Las líneas deben reflejar la longitud del paso.</translation>
+    </message>
         <message>
             <source>Out-of-bounds route</source>
             <comment>Name of symbol 711</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ruta prohibida</translation>
+    </message>
         <message>
             <source>A route which is out-of-bounds. Competitors are allowed to cross directly over a forbidden route, but it is forbidden to go along it.
 An out-of-bounds route shall not be used.</source>
             <comment>Description of symbol 711</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una ruta que está prohibido seguir. Los competidores pueden cruzar directamente sobre una ruta prohibida, pero no está permitido seguir a lo largo de ella.
+Una ruta prohibida no se debe seguir.</translation>
+    </message>
         <message>
             <source>Out-of-bounds route, single cross</source>
             <comment>Name of symbol 711.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ruta prohibida, cruz individual</translation>
+    </message>
         <message>
             <source>A route which is out-of-bounds. Competitors are allowed to cross directly over a forbidden route, but it is forbidden to go along it.
 An out-of-bounds route shall not be used.</source>
             <comment>Description of symbol 711.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una ruta que está prohibido seguir. Los competidores pueden cruzar directamente sobre una ruta prohibida, pero no está permitido seguir a lo largo de ella.
+Una ruta prohibida no se debe seguir.</translation>
+    </message>
         <message>
             <source>First aid post</source>
             <comment>Name of symbol 712</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Puesto de primeros auxilios</translation>
+    </message>
         <message>
             <source>The location of a first aid post.</source>
             <comment>Description of symbol 712</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>La localización de un puesto de primeros auxilios.</translation>
+    </message>
         <message>
             <source>Refreshment point</source>
             <comment>Name of symbol 713</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Punto de avituallamiento</translation>
+    </message>
         <message>
             <source>The location of a refreshment point which is not at a control.</source>
             <comment>Description of symbol 713</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>La localización de un punto de avituallamiento que no está en un control.</translation>
+    </message>
         <message>
             <source>Simple Orienteering Course</source>
             <comment>Name of symbol 799</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Recorrido de orientación sencillo</translation>
+    </message>
         <message>
             <source>This symbol provides a simple and quick way to make training courses.
 
 The purple line will extend a bit into the finish symbol. This is a shortcoming of this simple approach.</source>
             <comment>Description of symbol 799</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Este símbolo proporciona una forma sencilla y rápida de hacer recorridos de orientación.
+
+La línea púrpura se introducirá un poco en el símbolo de meta. Es una deficiencia de esta sencilla aproximación.</translation>
+    </message>
         <message>
             <source>OpenOrienteering Logo</source>
             <comment>Name of symbol 999</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Logo de OpenOrienteering</translation>
+    </message>
         <message>
             <source>The OpenOrienteering Logo.</source>
             <comment>Description of symbol 999</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>El logo de OpenOrienteering.</translation>
+    </message>
     </context>
     <context>
         <name>ISOM2000</name>
