@@ -20,15 +20,14 @@
 #ifndef OPENORIENTEERING_MAP_FIND_FEATURE_H
 #define OPENORIENTEERING_MAP_FIND_FEATURE_H
 
-#include <memory>
-
+#include <QtGlobal>
 #include <QObject>
+#include <QPointer>
 
 class QAction;
 class QDialog;
 class QTextEdit;
 
-class MainWindow;
 class MapEditorController;
 
 /**
@@ -44,15 +43,15 @@ class MapFindFeature : public QObject
 	Q_OBJECT
 	
 public:
-	MapFindFeature(MainWindow& window, MapEditorController& controller);
+	MapFindFeature(MapEditorController& controller);
 	
 	~MapFindFeature() override;
 	
 	void setEnabled(bool enabled);
 	
-	QAction* showAction();
+	QAction* showDialogAction() { return show_action; }
 	
-	QAction* findNextAction();
+	QAction* findNextAction() { return find_next_action; }
 	
 private:
 	void showDialog();
@@ -61,15 +60,15 @@ private:
 	
 	void findAll();
 	
-	void showHelp();
+	void showHelp() const;
 	
-	MainWindow &window;
 	MapEditorController& controller;
-	std::unique_ptr<QAction> show_action;
-	std::unique_ptr<QAction> find_next_action;
-	std::unique_ptr<QDialog> find_dialog;
-	QTextEdit* text_edit;
+	QPointer<QDialog> find_dialog;           // child of controller's window
+	QTextEdit* text_edit = nullptr;          // child of find_dialog
+	QAction* show_action = nullptr;          // child of this
+	QAction* find_next_action = nullptr;     // child of this
 	
+	Q_DISABLE_COPY(MapFindFeature)
 };
 
 #endif

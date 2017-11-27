@@ -865,7 +865,7 @@ void MapEditorController::createActions()
 	select_nothing_act = newAction("select-nothing", tr("Select nothing"), this, SLOT(selectNothing()), nullptr, QString{}, "edit_menu.html");
 	invert_selection_act = newAction("invert-selection", tr("Invert selection"), this, SLOT(invertSelection()), nullptr, QString{}, "edit_menu.html");
 	select_by_current_symbol_act = newAction("select-by-symbol", QApplication::translate("SymbolRenderWidget", "Select all objects with selected symbols"), this, SLOT(selectByCurrentSymbols()), nullptr, QString{}, "edit_menu.html");
-	find_feature.reset(new MapFindFeature(*window, *this));
+	find_feature.reset(new MapFindFeature(*this));
 	
 	clear_undo_redo_history_act = newAction("clearundoredohistory", tr("Clear undo / redo history"), this, SLOT(clearUndoRedoHistory()), nullptr, tr("Clear the undo / redo history to reduce map file size."), "edit_menu.html");
 	
@@ -1049,7 +1049,7 @@ void MapEditorController::createMenuAndToolbars()
 	edit_menu->addAction(invert_selection_act);
 	edit_menu->addAction(select_by_current_symbol_act);
 	edit_menu->addSeparator();
-	edit_menu->addAction(find_feature->showAction());
+	edit_menu->addAction(find_feature->showDialogAction());
 	edit_menu->addAction(find_feature->findNextAction());
 	edit_menu->addSeparator();
 	edit_menu->addAction(clear_undo_redo_history_act);

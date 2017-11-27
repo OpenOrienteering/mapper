@@ -20,7 +20,6 @@
 
 #include "map_find_feature.h"
 
-
 #include <Qt>
 #include <QAction>
 #include <QDialog>
@@ -42,24 +41,23 @@
 #include "util/util.h"
 
 
-MapFindFeature::MapFindFeature(MainWindow& window, MapEditorController& controller)
-: window{window}
+MapFindFeature::MapFindFeature(MapEditorController& controller)
+: QObject{nullptr}
 , controller{controller}
-, text_edit{nullptr}
 {
-	show_action.reset(new QAction(tr("&Find..."), &window));
+	show_action = new QAction(tr("&Find..."), this);
 	// QKeySequence::Find may be Ctrl+F, which conflicts with "Fill / Create Border"
 	//show_action->setShortcut(QKeySequence::Find);
 	//action->setStatusTip(tr_tip);
 	show_action->setWhatsThis(Util::makeWhatThis("edit_menu.html"));
-	connect(&*show_action, &QAction::triggered, this, &MapFindFeature::showDialog);
+	connect(show_action, &QAction::triggered, this, &MapFindFeature::showDialog);
 	
-	find_next_action.reset(new QAction(tr("Find &next"), &window));
+	find_next_action = new QAction(tr("Find &next"), this);
 	// QKeySequence::FindNext may be F3, which conflicts with "Baseline view"
 	//find_next_action->setShortcut(QKeySequence::FindNext);
 	//action->setStatusTip(tr_tip);
 	find_next_action->setWhatsThis(Util::makeWhatThis("edit_menu.html"));
-	connect(&*find_next_action, &QAction::triggered, this, &MapFindFeature::findNext);
+	connect(find_next_action, &QAction::triggered, this, &MapFindFeature::findNext);
 }
 
 
@@ -75,24 +73,15 @@ void MapFindFeature::setEnabled(bool enabled)
 
 
 
-QAction* MapFindFeature::showAction()
-{
-	return show_action.get();
-}
-
-
-QAction* MapFindFeature::findNextAction()
-{
-	return find_next_action.get();
-}
-
-
-
 void MapFindFeature::showDialog()
 {
+	auto window = controller.getWindow();
+	if (!window)
+		return;
+	
 	if (!find_dialog)
 	{
-		find_dialog.reset(new QDialog(&window));
+		find_dialog = new QDialog(window);
 		find_dialog->setWindowTitle(tr("Find objects"));
 		
 		text_edit = new QTextEdit;
@@ -125,7 +114,7 @@ void MapFindFeature::showDialog()
 
 void MapFindFeature::findNext()
 {
-	if (text_edit)
+	if (find_dialog)
 	{
 		auto text = text_edit->toPlainText().trimmed();
 		auto query = ObjectQueryParser().parse(text);
@@ -170,7 +159,7 @@ void MapFindFeature::findNext()
 
 void MapFindFeature::findAll()
 {
-	if (text_edit)
+	if (find_dialog)
 	{
 		auto text = text_edit->toPlainText().trimmed();
 		auto query = ObjectQueryParser().parse(text);
@@ -193,8 +182,9 @@ void MapFindFeature::findAll()
 }
 
 
-void MapFindFeature::showHelp()
+
+void MapFindFeature::showHelp() const
 {
-	Util::showHelp(&window, "search_dialog.html");
+	Util::showHelp(controller.getWindow(), "search_dialog.html");
 }
 
