@@ -20,7 +20,8 @@
 
 #include "map_find_feature.h"
 
-#include <Qt>
+#include <functional>
+
 #include <QAction>
 #include <QDialog>
 #include <QDialogButtonBox>
@@ -33,12 +34,12 @@
 
 #include "core/map.h"
 #include "core/map_part.h"
-#include "core/objects/object.h"
 #include "core/objects/object_query.h"
-#include "core/objects/text_object.h"
 #include "gui/main_window.h"
 #include "gui/map/map_editor.h"
 #include "util/util.h"
+
+class Object;
 
 
 MapFindFeature::MapFindFeature(MapEditorController& controller)
@@ -112,73 +113,81 @@ void MapFindFeature::showDialog()
 }
 
 
-void MapFindFeature::findNext()
+
+ObjectQuery MapFindFeature::makeQuery() const
 {
+	auto query = ObjectQuery{};
 	if (find_dialog)
 	{
 		auto text = text_edit->toPlainText().trimmed();
-		auto query = ObjectQueryParser().parse(text);
-		if (!query)
-			query = ObjectQuery(ObjectQuery::OperatorSearch, text);
-		
-		auto map = controller.getMap();
-		auto first_object = map->getFirstSelectedObject();
-		Object* next_object = nullptr;
-		auto search = [&first_object, &next_object, &query, &text](Object* object) {
-			if (!next_object)
-			{
-				if (first_object)
-				{
-					if (object == first_object)
-						first_object = nullptr;
-				}
-				else if (query(object)
-				        || (!text.isEmpty()
-				            && object->getType() == Object::Text
-				            && static_cast<const TextObject*>(object)->getText().contains(text, Qt::CaseInsensitive)))
-				{
-					next_object = object;
-				}
-			}
-		};
-		
-		if (first_object)
-			// Start from selected object
-			map->getCurrentPart()->applyOnAllObjects(search);
-		if (!next_object)
-			// Start from first object
-			map->getCurrentPart()->applyOnAllObjects(search);
-		
-		map->clearObjectSelection(false);
-		if (next_object)
-			map->addObjectToSelection(next_object, false);
-		map->emitSelectionChanged();
+		if (!text.isEmpty())
+		{
+			query = ObjectQueryParser().parse(text);
+			if (!query || query.getOperator() == ObjectQuery::OperatorSearch)
+				query = ObjectQuery{ ObjectQuery(ObjectQuery::OperatorSearch, text),
+				        ObjectQuery::OperatorOr,
+				        ObjectQuery(ObjectQuery::OperatorObjectText, text) };
+		}
 	}
+	return query;
+}
+
+
+void MapFindFeature::findNext()
+{
+	auto map = controller.getMap();
+	auto first_object = map->getFirstSelectedObject();
+	map->clearObjectSelection(false);
+	
+	Object* next_object = nullptr;
+	auto query = makeQuery();
+	auto search = [&first_object, &next_object, &query](Object* object) {
+		if (!next_object)
+		{
+			if (first_object)
+			{
+				if (object == first_object)
+					first_object = nullptr;
+			}
+			else if (query(object))
+			{
+				next_object = object;
+			}
+		}
+	};
+	
+	// Start from selected object
+	map->getCurrentPart()->applyOnAllObjects(search);
+	if (!next_object)
+	{
+		// Start from first object
+		first_object = nullptr;
+		map->getCurrentPart()->applyOnAllObjects(search);
+	}
+	
+	map->clearObjectSelection(false);
+	if (next_object)
+		map->addObjectToSelection(next_object, false);
+	map->emitSelectionChanged();
+	
+	if (!map->selectedObjects().empty())
+		controller.setEditTool();
 }
 
 
 void MapFindFeature::findAll()
 {
-	if (find_dialog)
-	{
-		auto text = text_edit->toPlainText().trimmed();
-		auto query = ObjectQueryParser().parse(text);
-		if (!query)
-			query = ObjectQuery(ObjectQuery::OperatorSearch, text);
-		
-		auto map = controller.getMap();
-		map->clearObjectSelection(false);
-		map->getCurrentPart()->applyOnAllObjects([map, &query, &text](Object* object) {
-			if (query(object)
-			    || (!text.isEmpty()
-			        && object->getType() == Object::Text
-			        && static_cast<const TextObject*>(object)->getText().contains(text, Qt::CaseInsensitive)))
-			{
-				map->addObjectToSelection(object, false);
-			}
-		});
-		map->emitSelectionChanged();
-	}
+	auto map = controller.getMap();
+	map->clearObjectSelection(false);
+	
+	auto query = makeQuery();
+	map->getCurrentPart()->applyOnMatchingObjects([map](auto object) {
+		map->addObjectToSelection(object, false);
+	}, std::cref(query));
+	map->emitSelectionChanged();
+
+	if (!map->selectedObjects().empty())
+		controller.setEditTool();
 }
 
 

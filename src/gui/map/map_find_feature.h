@@ -29,14 +29,14 @@ class QDialog;
 class QTextEdit;
 
 class MapEditorController;
+class ObjectQuery;
 
 /**
  * Provides an interactive feature for finding objects in the map.
  * 
  * The search text from the provided dialog is trimmed and parsed as an 
- * ObjectQuery. If parsing fails, the trimmed text is taken as a ObjectQuery
- * search string. However, the search does not only use ObjectQuery but also
- * tries to match the text content of text objects.
+ * ObjectQuery. If parsing fails, the trimmed text is used to find any matching
+ * text in tag keys, tag values, text object content or symbol name.
  */
 class MapFindFeature : public QObject
 {
@@ -55,6 +55,8 @@ public:
 	
 private:
 	void showDialog();
+	
+	ObjectQuery makeQuery() const;
 	
 	void findNext();
 	
