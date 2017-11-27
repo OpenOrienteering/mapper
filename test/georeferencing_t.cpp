@@ -27,9 +27,6 @@
 #include "fileformats/xml_file_format.h"
 
 
-int XMLFileFormat::active_version = 6;
-
-
 namespace
 {
 	// clazy:excludeall=non-pod-global-static

@@ -157,7 +157,7 @@ void XmlElementWriter::write(const MapCoordVector& coords)
 	
 	writeAttribute(literal::count, coords.size());
 	
-	if (XMLFileFormat::active_version < 6 || xml.autoFormatting())
+	if (XMLFileFormat::active_version < XMLFileFormat::XML_FILE_FORMAT_V6 || xml.autoFormatting())
 	{
 		// XMAP files and old format: syntactically rich output
 		for (auto& coord : coords)

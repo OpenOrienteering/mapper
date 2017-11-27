@@ -55,19 +55,30 @@ public:
 	 */
 	Exporter *createExporter(QIODevice* stream, Map *map, MapView *view) const override;
 	
+	enum FormatVersion
+	{
+		XML_FILE_FORMAT_V2 = 2,
+		XML_FILE_FORMAT_V3,
+		XML_FILE_FORMAT_V4,
+		XML_FILE_FORMAT_V5,
+		XML_FILE_FORMAT_V6,
+		XML_FILE_FORMAT_V7,
+		XML_FILE_FORMAT_LATEST = XML_FILE_FORMAT_V7
+	};
+
 	/** @brief The minimum XML file format version supported by this implementation.
 	 */
-	static const int minimum_version;
+	static const FormatVersion minimum_version;
 	
 	/** @brief The optimal XML file format version created by this implementation.
 	 */
-	static const int current_version;
+	static const FormatVersion current_version;
 	
 	/** @brief The actual XML file format version to be written.
 	 * 
 	 * This value must be less than or equal to current_version.
 	 */
-	static int active_version;
+	static FormatVersion active_version;
 	
 };
 

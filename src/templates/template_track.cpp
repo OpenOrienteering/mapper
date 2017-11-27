@@ -82,7 +82,7 @@ void TemplateTrack::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml)
 	if (preserved_georef)
 	{
 		// Preserve explicit georeferencing from OgrTemplate.
-		preserved_georef->save(xml);
+		preserved_georef->save(xml, XMLFileFormat::XML_FILE_FORMAT_LATEST);
 		return;
 	}
 	

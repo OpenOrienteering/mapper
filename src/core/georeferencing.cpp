@@ -367,7 +367,7 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only)
 	emit projectionChanged();
 }
 
-void Georeferencing::save(QXmlStreamWriter& xml) const
+void Georeferencing::save(QXmlStreamWriter& xml, XMLFileFormat::FormatVersion xml_format_version) const
 {
 	XmlElementWriter georef_element(xml, literal::georeferencing);
 	georef_element.writeAttribute(literal::scale, scale_denominator);
@@ -424,7 +424,7 @@ void Georeferencing::save(QXmlStreamWriter& xml) const
 			spec_element.writeAttribute(literal::language, literal::proj_4);
 			xml.writeCharacters(geographic_crs_spec);
 		}
-		if (XMLFileFormat::active_version < 6)
+		if (xml_format_version < 6)
 		{
 			// Legacy compatibility
 			XmlElementWriter ref_point_element(xml, literal::ref_point);
