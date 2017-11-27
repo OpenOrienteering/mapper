@@ -23,20 +23,24 @@
 #include <functional>
 
 #include <QAction>
+#include <QAbstractButton>
 #include <QDialog>
 #include <QDialogButtonBox>
 #include <QFlags>
 #include <QGridLayout>
 #include <QKeySequence>  // IWYU pragma: keep
 #include <QPushButton>
+#include <QStackedLayout>
 #include <QString>
 #include <QTextEdit>
+#include <QWidget>
 
 #include "core/map.h"
 #include "core/map_part.h"
 #include "core/objects/object_query.h"
 #include "gui/main_window.h"
 #include "gui/map/map_editor.h"
+#include "gui/widgets/tag_select_widget.h"
 #include "util/util.h"
 
 class Object;
@@ -88,21 +92,37 @@ void MapFindFeature::showDialog()
 		text_edit = new QTextEdit;
 		text_edit->setLineWrapMode(QTextEdit::WidgetWidth);
 		
+		tag_selector = new TagSelectWidget;
+		
 		auto find_next = new QPushButton(tr("&Find next"));
 		connect(find_next, &QPushButton::clicked, this, &MapFindFeature::findNext);
 		
 		auto find_all = new QPushButton(tr("Find &all"));
 		connect(find_all, &QPushButton::clicked, this, &MapFindFeature::findAll);
 		
+		auto tags_button = new QPushButton(tr("Query editor"));
+		tags_button->setCheckable(true);
+		
+		tag_selector_buttons = tag_selector->makeButtons();
+		tag_selector_buttons->setEnabled(false);
+		
 		auto button_box = new QDialogButtonBox(QDialogButtonBox::Close | QDialogButtonBox::Help);
 		connect(button_box, &QDialogButtonBox::rejected, &*find_dialog, &QDialog::hide);
 		connect(button_box->button(QDialogButtonBox::Help), &QPushButton::clicked, this, &MapFindFeature::showHelp);
 		
+		editor_stack = new QStackedLayout();
+		editor_stack->addWidget(text_edit);
+		editor_stack->addWidget(tag_selector);
+		
+		connect(tags_button, &QAbstractButton::toggled, this, &MapFindFeature::tagSelectorToggled);
+		
 		auto layout = new QGridLayout;
-		layout->addWidget(text_edit, 0, 0, 3, 1);
+		layout->addLayout(editor_stack, 0, 0, 6, 1);
 		layout->addWidget(find_next, 0, 1, 1, 1);
 		layout->addWidget(find_all, 1, 1, 1, 1);
-		layout->addWidget(button_box, 3, 0, 1, 2);
+		layout->addWidget(tags_button, 3, 1, 1, 1);
+		layout->addWidget(tag_selector_buttons, 5, 1, 1, 1);
+		layout->addWidget(button_box, 6, 0, 1, 2);
 		
 		find_dialog->setLayout(layout);
 	}
@@ -119,14 +139,22 @@ ObjectQuery MapFindFeature::makeQuery() const
 	auto query = ObjectQuery{};
 	if (find_dialog)
 	{
-		auto text = text_edit->toPlainText().trimmed();
-		if (!text.isEmpty())
+		if (editor_stack->currentIndex() == 0)
 		{
-			query = ObjectQueryParser().parse(text);
-			if (!query || query.getOperator() == ObjectQuery::OperatorSearch)
-				query = ObjectQuery{ ObjectQuery(ObjectQuery::OperatorSearch, text),
-				        ObjectQuery::OperatorOr,
-				        ObjectQuery(ObjectQuery::OperatorObjectText, text) };
+			auto text = text_edit->toPlainText().trimmed();
+			if (!text.isEmpty())
+			{
+				query = ObjectQueryParser().parse(text);
+				if (!query || query.getOperator() == ObjectQuery::OperatorSearch)
+					query = ObjectQuery{ ObjectQuery(ObjectQuery::OperatorSearch, text),
+					        ObjectQuery::OperatorOr,
+					        ObjectQuery(ObjectQuery::OperatorObjectText, text) };
+			
+			}
+		}
+		else
+		{
+			query = tag_selector->makeQuery();
 		}
 	}
 	return query;
@@ -141,6 +169,13 @@ void MapFindFeature::findNext()
 	
 	Object* next_object = nullptr;
 	auto query = makeQuery();
+	if (!query)
+	{
+		if (auto window = controller.getWindow())
+			controller.getWindow()->showStatusBarMessage(TagSelectWidget::tr("Invalid query"), 2000);
+		return;
+	}
+		
 	auto search = [&first_object, &next_object, &query](Object* object) {
 		if (!next_object)
 		{
@@ -181,11 +216,18 @@ void MapFindFeature::findAll()
 	map->clearObjectSelection(false);
 	
 	auto query = makeQuery();
+	if (!query)
+	{
+		controller.getWindow()->showStatusBarMessage(TagSelectWidget::tr("Invalid query"), 2000);
+		return;
+	}
+	
 	map->getCurrentPart()->applyOnMatchingObjects([map](auto object) {
 		map->addObjectToSelection(object, false);
 	}, std::cref(query));
 	map->emitSelectionChanged();
-
+	controller.getWindow()->showStatusBarMessage(TagSelectWidget::tr("%n object(s) selected", nullptr, map->getNumSelectedObjects()), 2000);
+	
 	if (!map->selectedObjects().empty())
 		controller.setEditTool();
 }
@@ -194,6 +236,24 @@ void MapFindFeature::findAll()
 
 void MapFindFeature::showHelp() const
 {
-	Util::showHelp(controller.getWindow(), "search_dialog.html");
+	if (find_dialog && editor_stack->currentIndex() == 1)
+		Util::showHelp(controller.getWindow(), "tag_selector.html");
+	else
+		Util::showHelp(controller.getWindow(), "search_dialog.html");
+}
+
+
+
+// slot
+void MapFindFeature::tagSelectorToggled(bool active)
+{
+	editor_stack->setCurrentIndex(active ? 1 : 0);
+	tag_selector_buttons->setEnabled(active);
+	if (!active)
+	{
+		auto text = tag_selector->makeQuery().toString();
+		if (!text.isEmpty())
+			text_edit->setText(text);
+	}
 }
 

@@ -28,8 +28,6 @@
 #include <QString>
 #include <QStringRef>
 
-class Map;
-class MapEditorController;
 class Object;
 class Symbol;
 
@@ -151,12 +149,6 @@ public:
 	 * Evaluates this query on the given object and returns whether it matches.
 	 */
 	bool operator()(const Object* object) const;
-	
-	
-	/**
-	 * Select the objects in the current part which match to this query.
-	 */
-	void selectMatchingObjects(Map* map, MapEditorController* controller) const;
 	
 	
 	/**

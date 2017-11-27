@@ -1,5 +1,6 @@
 /*
  *    Copyright 2016 Mitchell Krome
+ *    Copyright 2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,135 +21,108 @@
 
 #include "tag_select_widget.h"
 
+#include <algorithm>
+
+#include <Qt>
+#include <QtGlobal>
+#include <QAbstractButton>
+#include <QAbstractItemView>
+#include <QBrush>
 #include <QComboBox>
 #include <QGuiApplication>
+#include <QHBoxLayout>
 #include <QHeaderView>
-#include <QLabel>
+#include <QIcon>
+#include <QLatin1String>
+#include <QPalette>
 #include <QShowEvent>
-#include <QTableWidget>
+#include <QStringList>
 #include <QToolButton>
+#include <QTableWidgetItem>
+#include <QVariant>
+#include <QWidget>
 
-#include "core/map.h"
 #include "core/objects/object_query.h"
-#include "gui/main_window.h"
-#include "gui/map/map_editor.h"
 #include "gui/widgets/segmented_button_layout.h"
 #include "util/util.h"
 
 
 // ### TagSelectWidget ###
 
-TagSelectWidget::TagSelectWidget(Map* map, MapView* main_view, MapEditorController* controller, QWidget* parent)
-: QWidget    { parent }
-, map        { map }
-, main_view  { main_view }
-, controller { controller }
+TagSelectWidget::TagSelectWidget(QWidget* parent)
+: QTableWidget{1, 4, parent}
 {
-	Q_ASSERT(main_view);
-	Q_ASSERT(controller);
-	
 	setWhatsThis(Util::makeWhatThis("tag_selector.html"));
 	
-	query_table = new QTableWidget(1, 4);
-	query_table->setEditTriggers(QAbstractItemView::AllEditTriggers);
-	query_table->setSelectionBehavior(QAbstractItemView::SelectRows);
-	query_table->setSelectionMode(QAbstractItemView::SingleSelection);
-	query_table->setHorizontalHeaderLabels(QStringList() << tr("Relation") << tr("Key") << tr("Comparison") << tr("Value"));
-	query_table->verticalHeader()->setVisible(false);
+	setEditTriggers(QAbstractItemView::AllEditTriggers);
+	setSelectionBehavior(QAbstractItemView::SelectRows);
+	setSelectionMode(QAbstractItemView::SingleSelection);
+	setHorizontalHeaderLabels(QStringList() << tr("Relation") << tr("Key") << tr("Comparison") << tr("Value"));
+	verticalHeader()->setVisible(false);
 	
-	QHeaderView* header_view = query_table->horizontalHeader();
+	auto header_view = horizontalHeader();
+	header_view->setSectionsClickable(false);
 	header_view->setSectionResizeMode(0, QHeaderView::Fixed);
 	header_view->setSectionResizeMode(1, QHeaderView::Stretch);
 	header_view->setSectionResizeMode(2, QHeaderView::Fixed);
 	header_view->setSectionResizeMode(3, QHeaderView::Stretch);
-	header_view->setSectionsClickable(false);
+	header_view->resizeSections(QHeaderView::ResizeToContents);
+	setMinimumWidth(10
+	                + header_view->sectionSize(0)
+	                + header_view->sectionSize(1)
+	                + header_view->sectionSize(2)
+	                + header_view->sectionSize(3));
 	
-	all_query_layout = new QVBoxLayout();
-	all_query_layout->setMargin(0);
-	all_query_layout->addWidget(query_table, 1);
-
 	addRowItems(0);
 
-	add_button = newToolButton(QIcon(QString::fromLatin1(":/images/plus.png")), tr("Add Row"));
-	delete_button = newToolButton(QIcon(QString::fromLatin1(":/images/minus.png")), tr("Remove Row"));
+	connect(this, &QTableWidget::cellChanged, this, &TagSelectWidget::onCellChanged);
+}
+
+
+TagSelectWidget::~TagSelectWidget() = default;
+
+
+
+QWidget* TagSelectWidget::makeButtons(QWidget* parent)
+{
+	auto add_button = newToolButton(QIcon(QString::fromLatin1(":/images/plus.png")), tr("Add Row"));
+	auto delete_button = newToolButton(QIcon(QString::fromLatin1(":/images/minus.png")), tr("Remove Row"));
 	
-	SegmentedButtonLayout* add_remove_layout = new SegmentedButtonLayout();
+	auto add_remove_layout = new SegmentedButtonLayout();
 	add_remove_layout->addWidget(add_button);
 	add_remove_layout->addWidget(delete_button);
 
-	move_up_button = newToolButton(QIcon(QString::fromLatin1(":/images/arrow-up.png")), tr("Move Up"));
+	auto move_up_button = newToolButton(QIcon(QString::fromLatin1(":/images/arrow-up.png")), tr("Move Up"));
 	move_up_button->setAutoRepeat(true);
-	move_down_button = newToolButton(QIcon(QString::fromLatin1(":/images/arrow-down.png")), tr("Move Down"));
+	auto move_down_button = newToolButton(QIcon(QString::fromLatin1(":/images/arrow-down.png")), tr("Move Down"));
 	move_down_button->setAutoRepeat(true);
 
-	SegmentedButtonLayout* up_down_layout = new SegmentedButtonLayout();
+	auto up_down_layout = new SegmentedButtonLayout();
 	up_down_layout->addWidget(move_up_button);
 	up_down_layout->addWidget(move_down_button);
 	
-	select_button = newToolButton(QIcon(QString::fromLatin1(":/images/tool-edit.png")), tr("Select"));
-	select_button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-
-	selection_info = new QLabel();
-
-	QToolButton* help_button = newToolButton(QIcon(QString::fromLatin1(":/images/help.png")), tr("Help"));
-	help_button->setAutoRaise(true);
-
-	QBoxLayout* list_buttons_layout = new QHBoxLayout();
+	auto list_buttons_layout = new QHBoxLayout();
 	list_buttons_layout->setContentsMargins(0,0,0,0);
 	list_buttons_layout->addLayout(add_remove_layout);
 	list_buttons_layout->addLayout(up_down_layout);
-	list_buttons_layout->addWidget(select_button);
-	list_buttons_layout->addWidget(selection_info);
 	
-	list_buttons_group = new QWidget();
+	auto list_buttons_group = new QWidget(parent);
 	list_buttons_group->setLayout(list_buttons_layout);
 	
-	QBoxLayout* all_buttons_layout = new QHBoxLayout();
-	QStyleOption style_option(QStyleOption::Version, QStyleOption::SO_DockWidget);
-	all_buttons_layout->setContentsMargins(
-		style()->pixelMetric(QStyle::PM_LayoutLeftMargin, &style_option) / 2,
-		0, // Covered by the main layout's spacing.
-		style()->pixelMetric(QStyle::PM_LayoutRightMargin, &style_option) / 2,
-		style()->pixelMetric(QStyle::PM_LayoutBottomMargin, &style_option) / 2
-	);
-	all_buttons_layout->addWidget(list_buttons_group);
-	all_buttons_layout->addWidget(new QLabel(QString::fromLatin1("   ")), 1);
-	all_buttons_layout->addWidget(help_button);
-
-	all_query_layout->addLayout(all_buttons_layout);
-	
-	setLayout(all_query_layout);
-
 	// Connections
 	connect(add_button, &QAbstractButton::clicked, this, &TagSelectWidget::addRow);
 	connect(delete_button, &QAbstractButton::clicked, this, &TagSelectWidget::deleteRow);
-	connect(move_up_button, &QAbstractButton::clicked, this, [this]{ moveRow(true); });
-	connect(move_down_button, &QAbstractButton::clicked, this, [this]{ moveRow(false); });
-	connect(select_button, &QAbstractButton::clicked, this, &TagSelectWidget::makeSelection);
-	connect(help_button, &QAbstractButton::clicked, this, &TagSelectWidget::showHelp);
+	connect(move_up_button, &QAbstractButton::clicked, this, &TagSelectWidget::moveRowUp);
+	connect(move_down_button, &QAbstractButton::clicked, this, &TagSelectWidget::moveRowDown);
 	
-	connect(query_table, &QTableWidget::cellChanged, this, &TagSelectWidget::cellChanged);
-	connect(map, &Map::objectSelectionChanged, this, &TagSelectWidget::resetSelectionInfo);
-}
-
-
-TagSelectWidget::~TagSelectWidget()
-{
-	; // Nothing
-}
-
-
-
-void TagSelectWidget::resetSelectionInfo()
-{
-	selection_info->setText({});
+	return list_buttons_group;
 }
 
 
 
 QToolButton* TagSelectWidget::newToolButton(const QIcon& icon, const QString& text)
 {
-	QToolButton* button = new QToolButton();
+	auto button = new QToolButton();
 	button->setToolButtonStyle(Qt::ToolButtonIconOnly);
 	button->setToolTip(text);
 	button->setIcon(icon);
@@ -163,35 +137,27 @@ void TagSelectWidget::showEvent(QShowEvent* event)
 {
 	if (!event->spontaneous())
 	{
-		auto last_row = query_table->rowCount() - 1;
-		query_table->setCurrentCell(last_row, 1);
-		if (!query_table->currentItem()->text().isEmpty())
-			query_table->setCurrentCell(last_row, 3);
-		query_table->editItem(query_table->currentItem());
+		auto last_row = rowCount() - 1;
+		setCurrentCell(last_row, 1);
+		if (!currentItem()->text().isEmpty())
+			setCurrentCell(last_row, 3);
+		editItem(currentItem());
 	}
-}
-
-
-
-void TagSelectWidget::showHelp()
-{
-	Util::showHelp(controller->getWindow(), "tag_selector.html");
 }
 
 
 
 void TagSelectWidget::addRowItems(int row)
 {
-	QTableWidgetItem* item = new QTableWidgetItem();
-	query_table->setItem(row, 1, item);
+	auto item = new QTableWidgetItem();
+	setItem(row, 1, item);
 	item = new QTableWidgetItem();
-	query_table->setItem(row, 3, item);
+	setItem(row, 3, item);
 
-	QComboBox* compare_op = new QComboBox();
+	auto compare_op = new QComboBox();
 	for (auto op : { ObjectQuery::OperatorIs, ObjectQuery::OperatorIsNot, ObjectQuery::OperatorContains })
 		compare_op->addItem(ObjectQuery::labelFor(op), QVariant::fromValue(op));
-	query_table->setCellWidget(row, 2, compare_op);
-	connect(compare_op, &QComboBox::currentTextChanged, this, &TagSelectWidget::resetSelectionInfo);
+	setCellWidget(row, 2, compare_op);
 
 	if (row == 0)
 	{
@@ -199,30 +165,28 @@ void TagSelectWidget::addRowItems(int row)
 		item = new QTableWidgetItem();
 		item->setFlags(Qt::NoItemFlags);
 		item->setBackground(QBrush(QGuiApplication::palette().window()));
-		query_table->setItem(row, 0, item);
+		setItem(row, 0, item);
 	}
 	else
 	{
-		QComboBox* logical_op = new QComboBox();
+		auto logical_op = new QComboBox();
 		auto and_label = QString { QLatin1String("  ") + ObjectQuery::labelFor(ObjectQuery::OperatorAnd) };
 		logical_op->addItem(and_label, QVariant::fromValue(ObjectQuery::OperatorAnd));
 		logical_op->addItem(ObjectQuery::labelFor(ObjectQuery::OperatorOr), QVariant::fromValue(ObjectQuery::OperatorOr));
-		query_table->setCellWidget(row, 0, logical_op);
-		connect(logical_op, &QComboBox::currentTextChanged, this, &TagSelectWidget::resetSelectionInfo);
+		setCellWidget(row, 0, logical_op);
 	}
 }
 
 
 
-void TagSelectWidget::cellChanged(int row, int column)
+void TagSelectWidget::onCellChanged(int row, int column)
 {
-	resetSelectionInfo();
 	switch(column)
 	{
 	case 1:
 	case 3:
 		{
-			auto item = query_table->item(row, column);
+			auto item = this->item(row, column);
 			item->setText(item->text().trimmed());
 			break;
 		}
@@ -235,51 +199,51 @@ void TagSelectWidget::cellChanged(int row, int column)
 
 void TagSelectWidget::addRow()
 {
-	int row = query_table->currentRow() + 1;
+	int row = currentRow() + 1;
 
 	// When nothing is selected, add to the end
 	if (row == 0)
-		row = query_table->rowCount();
+		row = rowCount();
 
-	query_table->insertRow(row);
+	insertRow(row);
 	addRowItems(row);
 
 	// Move the selection to the new row
-	int col = query_table->currentColumn();
-	query_table->setCurrentCell(row, col);
+	int col = currentColumn();
+	setCurrentCell(row, col);
 }
 
 
 void TagSelectWidget::deleteRow()
 {
 	// Always need one row
-	if (query_table->rowCount() == 1)
+	if (rowCount() == 1)
 		return;
 
-	int row = query_table->currentRow();
+	int row = currentRow();
 
 	// When nothing is selected, delete from the end
 	if (row == -1)
-		row = query_table->rowCount() - 1;
+		row = rowCount() - 1;
 
-	query_table->removeRow(row);
+	removeRow(row);
 
 	// If we delete first row, need to fix logical operator
 	if (row == 0)
 	{
-		query_table->removeCellWidget(row, 0);
-		QTableWidgetItem* item = new QTableWidgetItem();
+		removeCellWidget(row, 0);
+		auto item = new QTableWidgetItem();
 		item->setFlags(Qt::NoItemFlags);
 		item->setBackground(QBrush(QGuiApplication::palette().window()));
-		query_table->setItem(row, 0, item);
+		setItem(row, 0, item);
 	}
 }
 
 
 void TagSelectWidget::moveRow(bool up)
 {
-	int row = query_table->currentRow();
-	int max_row = query_table->rowCount();
+	int row = currentRow();
+	int max_row = rowCount();
 
 	// When nothing is selected, move the last row
 	if (row == -1)
@@ -294,18 +258,18 @@ void TagSelectWidget::moveRow(bool up)
 		row += 1;
 
 	// Col 1, 3 are items
-	auto top_item = query_table->takeItem(row - 1, 1);
-	auto bottom_item = query_table->takeItem(row, 1);
-	query_table->setItem(row, 1, top_item);
-	query_table->setItem(row - 1, 1, bottom_item);
-	top_item = query_table->takeItem(row - 1, 3);
-	bottom_item = query_table->takeItem(row, 3);
-	query_table->setItem(row, 3, top_item);
-	query_table->setItem(row - 1, 3, bottom_item);
+	auto top_item = takeItem(row - 1, 1);
+	auto bottom_item = takeItem(row, 1);
+	setItem(row, 1, top_item);
+	setItem(row - 1, 1, bottom_item);
+	top_item = takeItem(row - 1, 3);
+	bottom_item = takeItem(row, 3);
+	setItem(row, 3, top_item);
+	setItem(row - 1, 3, bottom_item);
 
 	// Col 2 is comparison combobox
-	auto top_combo = qobject_cast<QComboBox*>(query_table->cellWidget(row - 1, 2));
-	auto bottom_combo = qobject_cast<QComboBox*>(query_table->cellWidget(row, 2));
+	auto top_combo = qobject_cast<QComboBox*>(cellWidget(row - 1, 2));
+	auto bottom_combo = qobject_cast<QComboBox*>(cellWidget(row, 2));
 	auto top_selection = top_combo->currentIndex();
 	auto bottom_selection = bottom_combo->currentIndex();
 	top_combo->setCurrentIndex(bottom_selection);
@@ -315,8 +279,8 @@ void TagSelectWidget::moveRow(bool up)
 	if (row - 1 != 0 )
 	{
 		// Col 0 is relation combobox
-		top_combo = qobject_cast<QComboBox*>(query_table->cellWidget(row - 1, 0));
-		bottom_combo = qobject_cast<QComboBox*>(query_table->cellWidget(row, 0));
+		top_combo = qobject_cast<QComboBox*>(cellWidget(row - 1, 0));
+		bottom_combo = qobject_cast<QComboBox*>(cellWidget(row, 0));
 		top_selection = top_combo->currentIndex();
 		bottom_selection = bottom_combo->currentIndex();
 		top_combo->setCurrentIndex(bottom_selection);
@@ -324,27 +288,23 @@ void TagSelectWidget::moveRow(bool up)
 	}
 
 	// Keep the moved row selected
-	int col = query_table->currentColumn();
+	int col = currentColumn();
 	// For the down case we already adjusted the row
 	if (up)
 		row -= 1;
-	query_table->setCurrentCell(row, col);
+	setCurrentCell(row, col);
 }
 
 
-
-void TagSelectWidget::makeSelection()
+void TagSelectWidget::moveRowDown()
 {
-	query_table->setCurrentItem(nullptr);
-	if (auto query = makeQuery())
-	{
-		query.selectMatchingObjects(map, controller);
-		selection_info->setText(tr("%n object(s) selected", nullptr, map->getNumSelectedObjects()));
-	}
-	else
-	{
-		selection_info->setText(tr("Invalid query"));
-	}
+	moveRow(false);
+}
+
+
+void TagSelectWidget::moveRowUp()
+{
+	moveRow(true);
 }
 
 
@@ -356,12 +316,11 @@ ObjectQuery TagSelectWidget::makeQuery() const
 	// AND has precedence over OR, so its terms are collected separately.
 	ObjectQuery and_expression;
 
-	int rowCount = query_table->rowCount();
-	for (int row = 0; row < rowCount; ++row)
+	for (int row = 0; row < rowCount(); ++row)
 	{
-		auto key = query_table->item(row, 1)->text();
-		auto compare_op = qobject_cast<QComboBox*>(query_table->cellWidget(row, 2))->currentData().value<ObjectQuery::Operator>();
-		auto value = query_table->item(row, 3)->text();
+		auto key = item(row, 1)->text();
+		auto compare_op = qobject_cast<QComboBox*>(cellWidget(row, 2))->currentData().value<ObjectQuery::Operator>();
+		auto value = item(row, 3)->text();
 
 		auto comparison = ObjectQuery(key, compare_op, value);
 		if (row == 0)
@@ -371,7 +330,7 @@ ObjectQuery TagSelectWidget::makeQuery() const
 		}
 		else
 		{
-			auto logical_op = qobject_cast<QComboBox*>(query_table->cellWidget(row, 0))->currentData().value<ObjectQuery::Operator>();
+			auto logical_op = qobject_cast<QComboBox*>(cellWidget(row, 0))->currentData().value<ObjectQuery::Operator>();
 			if (logical_op == ObjectQuery::OperatorAnd)
 			{
 				// Add another term to the AND expression

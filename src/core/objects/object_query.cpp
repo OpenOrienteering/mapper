@@ -22,7 +22,6 @@
 #include "object_query.h"
 
 #include <algorithm>
-#include <functional>
 #include <iterator>
 #include <new>
 
@@ -36,13 +35,9 @@
 #include <QString>
 #include <QVarLengthArray>
 
-#include "core/map.h"
-#include "core/map_part.h"
 #include "core/objects/object.h"
 #include "core/objects/text_object.h"
 #include "core/symbols/symbol.h"
-#include "gui/map/map_editor.h"
-#include "tools/tool.h"
 
 
 // ### Local utilites ###
@@ -371,34 +366,6 @@ bool ObjectQuery::operator()(const Object* object) const
 	}
 	
 	Q_UNREACHABLE();
-}
-
-
-
-void ObjectQuery::selectMatchingObjects(Map* map, MapEditorController* controller) const
-{
-	bool had_selection = !map->selectedObjects().empty();
-	map->clearObjectSelection(false);
-
-	// Lambda to add objects to the selection
-	auto select_object = [map](Object* object)
-	{
-		map->addObjectToSelection(object, false);
-	};
-
-	auto part = map->getCurrentPart();
-	part->applyOnMatchingObjects(select_object, std::cref(*this));
-
-	auto object_selected = !map->selectedObjects().empty();
-	if (object_selected || had_selection)
-		map->emitSelectionChanged();
-
-	if (object_selected)
-	{
-		auto current_tool = controller->getTool();
-		if (current_tool && current_tool->isDrawTool())
-			controller->setEditTool();
-	}
 }
 
 

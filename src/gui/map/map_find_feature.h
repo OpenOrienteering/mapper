@@ -26,10 +26,14 @@
 
 class QAction;
 class QDialog;
+class QStackedLayout;
 class QTextEdit;
+class QWidget;
 
 class MapEditorController;
 class ObjectQuery;
+class TagSelectWidget;
+
 
 /**
  * Provides an interactive feature for finding objects in the map.
@@ -64,9 +68,14 @@ private:
 	
 	void showHelp() const;
 	
+	void tagSelectorToggled(bool active);
+	
 	MapEditorController& controller;
 	QPointer<QDialog> find_dialog;           // child of controller's window
+	QStackedLayout* editor_stack = nullptr;  // child of find_dialog
 	QTextEdit* text_edit = nullptr;          // child of find_dialog
+	TagSelectWidget* tag_selector = nullptr; // child of find_dialog
+	QWidget* tag_selector_buttons = nullptr; // child of find_dialog
 	QAction* show_action = nullptr;          // child of this
 	QAction* find_next_action = nullptr;     // child of this
 	
