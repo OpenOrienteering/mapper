@@ -1,5 +1,5 @@
 #
-#    Copyright 2014, 2015 Kai Pastor
+#    Copyright 2014, 2015, 2017 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -52,12 +52,12 @@ endfunction()
 
 
 
-if(NOT EXISTS "pages-tmp")
-	file(MAKE_DIRECTORY "pages-tmp")
+if(NOT EXISTS "markdown-html")
+	file(MAKE_DIRECTORY "markdown-html")
 endif()
 
-if(NOT EXISTS "preprocess-markdown.stamp")
-	file(WRITE "preprocess-markdown.stamp")
+if(NOT EXISTS "preprocess-markdown-html.stamp")
+	file(WRITE "preprocess-markdown-html.stamp")
 endif()
 
 set(all_pages )
@@ -158,14 +158,14 @@ foreach(file ${input_files})
 	
 	string(MD5 output_md5 "${output}")
 	set(file_md5)
-	if(EXISTS "pages-tmp/${file}")
-		file(MD5 "pages-tmp/${file}" file_md5)
+	if(EXISTS "markdown-html/${file}")
+		file(MD5 "markdown-html/${file}" file_md5)
 	endif()
 	if(NOT "${output_md5}" STREQUAL "${file_md5}")
 		message(STATUS "Updating ${file}")
-		file(WRITE "pages-tmp/${file}" "${output}")
-		if(EXISTS "preprocess-markdown.stamp")
-			file(READ "preprocess-markdown.stamp" markdown_log)
+		file(WRITE "markdown-html/${file}" "${output}")
+		if(EXISTS "preprocess-markdown-html.stamp")
+			file(READ "preprocess-markdown-html.stamp" markdown_log)
 			string(REGEX REPLACE "([.+[\(\)^$*?|]|])" "\\\\\\1" file_esc "${file}")
 			string(REGEX REPLACE "(^|\n)[^\n]*: ${file_esc}( \\([^)]*\\))?\r?\n" "\\1" markdown_log "${markdown_log}")
 		else()
@@ -175,22 +175,22 @@ foreach(file ${input_files})
 		if (file_remarks)
 			set(file_remarks " (${file_remarks})")
 		endif()
-		file(WRITE "preprocess-markdown.stamp" "${markdown_log}" "${date}: ${file}${file_remarks}\n")
+		file(WRITE "preprocess-markdown-html.stamp" "${markdown_log}" "${date}: ${file}${file_remarks}\n")
 	endif()
 endforeach()
 
-file(GLOB output_files RELATIVE "@CMAKE_CURRENT_BINARY_DIR@/pages-tmp" "@CMAKE_CURRENT_BINARY_DIR@/pages-tmp/*.md")
+file(GLOB output_files RELATIVE "@CMAKE_CURRENT_BINARY_DIR@/markdown-html" "@CMAKE_CURRENT_BINARY_DIR@/markdown-html/*.md")
 foreach(file ${output_files})
 	if(NOT EXISTS "@CMAKE_CURRENT_SOURCE_DIR@/pages/${file}")
 		message(STATUS "Removing ${file}")
-		file(REMOVE "pages-tmp/${file}")
-		if(EXISTS "preprocess-markdown.stamp")
-			file(READ "preprocess-markdown.stamp" markdown_log)
+		file(REMOVE "markdown-html/${file}")
+		if(EXISTS "preprocess-markdown-html.stamp")
+			file(READ "preprocess-markdown-html.stamp" markdown_log)
 			string(REGEX REPLACE "([.+[\(\)^$*?|]|])" "\\\\\\1" file_esc "${file}")
 			string(REGEX REPLACE "(^|\n)[^\n]*: ${file_esc}\r?\n" "\\1" markdown_log "${markdown_log}")
 		else()
 			set(markdown_log "")
 		endif()
-		file(WRITE "preprocess-markdown.stamp" "${markdown_log}")
+		file(WRITE "preprocess-markdown-html.stamp" "${markdown_log}")
 	endif()
 endforeach()

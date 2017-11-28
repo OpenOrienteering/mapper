@@ -17,15 +17,8 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
 
-if(NOT PROJECT_NAME)
-	# FIXME Used by legacy qmake build for Android
-	cmake_minimum_required(VERSION 3.0)
-	project(Mapper_Manual NONE)
-	set(MAPPER_DATA_DESTINATION /assets)
-	enable_language(CXX)
-else()
-	message(STATUS "Configuring ${PROJECT_NAME} user manual")
-endif()
+
+message(STATUS "Configuring ${PROJECT_NAME} user manual")
 
 
 set(Mapper_MANUAL_QTHELP_default ON)
@@ -38,44 +31,44 @@ option(Mapper_MANUAL_QTHELP
 )
 
 
-# Qt provides a broken Qt5::qcollectiongenerator when crosscompiling.
-if (CMAKE_CROSSCOMPILING AND NOT TARGET Qt5::qcollectiongenerator)
-	find_program(Qt5Help_QCOLLECTIONGENERATOR_EXECUTABLE
-	  NAMES qcollectiongenerator-qt5 qcollectiongenerator
-	  DOC "The path of the Qt Assistant executable"
-	)
-	add_executable(Qt5::qcollectiongenerator IMPORTED)
-	set_target_properties(Qt5::qcollectiongenerator PROPERTIES
-	  IMPORTED_LOCATION ${Qt5Help_QCOLLECTIONGENERATOR_EXECUTABLE}
-	)
-elseif(NOT Qt5Help_QCOLLECTIONGENERATOR_EXECUTABLE)
-	find_package(Qt5Help REQUIRED)
-	set(Qt5Help_QCOLLECTIONGENERATOR_EXECUTABLE Qt5::qcollectiongenerator)
-endif()
+
+#
+# General target
+#
+add_custom_target(Mapper-manual ALL)
 
 
-set(Mapper_HELP_NAMESPACE "openorienteering.mapper-${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}.help"
-  CACHE INTERNAL "The namespace where the current version's help will be located.")
 
-set(Mapper_HELP_COLLECTION "Mapper ${Mapper_VERSION_DISPLAY} Manual.qhc")
-set(Mapper_COMPRESSED_HELP "Mapper ${Mapper_VERSION_DISPLAY} Manual.qch")
-configure_file(Manual.qhcp.in Manual.qhcp @ONLY)
+#
+# Creating doxygen input for HTML generation
+#
+configure_file(preprocess-markdown-html.cmake.in preprocess-markdown-html.cmake @ONLY)
+add_custom_target(Mapper-manual-markdown-html
+  COMMAND   "${CMAKE_COMMAND}" -P preprocess-markdown-html.cmake
+  BYPRODUCTS preprocess-markdown-html.stamp
+  SOURCES   preprocess-markdown-html.cmake.in
+  COMMENT   "Preprocessing Markdown for HTML output"
+)
+
+
+
+#
+# Doxygen HTML generation; creating input for optional Qt Help generation
+#
 
 find_program(DOXYGEN_EXECUTABLE
   NAMES doxygen
   DOC "The path of the doxygen executable"
 )
-if(DOXYGEN_EXECUTABLE MATCHES NOTFOUND)
+if(NOT DOXYGEN_EXECUTABLE)
 	message(FATAL_ERROR "doxygen executable not found.")
 endif()
-mark_as_advanced(DOXYGEN_EXECUTABLE)
 
-configure_file(preprocess-markdown.cmake.in preprocess-markdown.cmake @ONLY)
-add_custom_target(Mapper-manual-pages
-  COMMAND "${CMAKE_COMMAND}" -P preprocess-markdown.cmake
-  BYPRODUCTS preprocess-markdown.stamp
+set(Mapper_COMPRESSED_HELP "Mapper ${Mapper_VERSION_DISPLAY} Manual.qch")
+set(Mapper_HELP_COLLECTION "Mapper ${Mapper_VERSION_DISPLAY} Manual.qhc")
+set(Mapper_HELP_NAMESPACE "openorienteering.mapper-${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}.help"
+  CACHE INTERNAL "The namespace where the current version's help will be located."
 )
-
 if(NOT MANUAL_SECTIONS)
 	if(ANDROID)
 		set(MANUAL_SECTIONS_DEFAULT ANDROID)
@@ -93,26 +86,64 @@ if(NOT MANUAL_SECTIONS)
 endif()
 message(STATUS "Conditional manual sections: ${MANUAL_SECTIONS}")
 
-configure_file(Doxyfile.in Doxyfile @ONLY)
+set(DOXYFILE_HTML_EXTRA )
+if(ANDROID)
+	set(DOXYFILE_HTML_EXTRA "
+FILE_PATTERNS          = android* toolbar*
+USE_MDFILE_AS_MAINPAGE = android-index.md
+")
+endif()
 
+configure_file(Doxyfile-html.in Doxyfile-html @ONLY)
 configure_file(postprocess-qhp.cmake.in postprocess-qhp.cmake @ONLY)
-add_custom_command( 
+add_custom_command(
   OUTPUT    "html/index.qhp"
   COMMAND   "${CMAKE_COMMAND}" -E remove_directory html
-  COMMAND   "${DOXYGEN_EXECUTABLE}" Doxyfile
+  COMMAND   "${DOXYGEN_EXECUTABLE}" Doxyfile-html
   COMMAND   "${CMAKE_COMMAND}" -P postprocess-qhp.cmake
-  MAIN_DEPENDENCY preprocess-markdown.stamp
-  DEPENDS   Mapper-manual-pages
-            "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile"
+  DEPENDS   preprocess-markdown-html.stamp
+            "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile-html"
             "${CMAKE_CURRENT_BINARY_DIR}/postprocess-qhp.cmake"
             "${DOXYGEN_EXECUTABLE}"
             header.html
             footer.html
             style.css
-  COMMENT   "Running doxygen on the manual"
+  COMMENT   "Running doxygen for HTML output"
 )
+add_custom_target(Mapper-manual-HTML
+  DEPENDS   "html/index.qhp"
+  # Sources to be listed in Qt Creator
+  SOURCES   Doxyfile-html.in
+            header.html
+            footer.html
+            install-html.cmake.in
+            postprocess-qhp.cmake.in
+            style.css
+)
+add_dependencies(Mapper-manual-HTML Mapper-manual-markdown-html)
+
+
 
 if(Mapper_MANUAL_QTHELP)
+	#
+	# Qt Help generation
+	#
+	
+	# Qt provides a broken Qt5::qcollectiongenerator when crosscompiling.
+	if (CMAKE_CROSSCOMPILING AND NOT TARGET Qt5::qcollectiongenerator)
+		find_program(Qt5Help_QCOLLECTIONGENERATOR_EXECUTABLE
+		  NAMES qcollectiongenerator-qt5 qcollectiongenerator
+		  DOC "The path of the Qt Assistant executable"
+		)
+		add_executable(Qt5::qcollectiongenerator IMPORTED)
+		set_target_properties(Qt5::qcollectiongenerator PROPERTIES
+		  IMPORTED_LOCATION ${Qt5Help_QCOLLECTIONGENERATOR_EXECUTABLE}
+		)
+	elseif(NOT Qt5Help_QCOLLECTIONGENERATOR_EXECUTABLE)
+		find_package(Qt5Help REQUIRED)
+		set(Qt5Help_QCOLLECTIONGENERATOR_EXECUTABLE Qt5::qcollectiongenerator)
+	endif()
+	
 	# Reproducible builds need a modifications to the help collection file.
 	set(source_date_commands )
 	find_program(SQLITE3_EXECUTABLE NAMES sqlite3
@@ -132,7 +163,8 @@ if(Mapper_MANUAL_QTHELP)
 		  "sqlite3 is needed for reproducible builds but cannot be found."
 		)
 	endif()
-	set(MAPPER_MANUAL_TARGET "${Mapper_HELP_COLLECTION}")
+	
+	configure_file(Manual.qhcp.in Manual.qhcp @ONLY)
 	add_custom_command( 
 	  OUTPUT    "${Mapper_HELP_COLLECTION}"
 	            "${Mapper_COMPRESSED_HELP}"
@@ -142,38 +174,27 @@ if(Mapper_MANUAL_QTHELP)
 	  MAIN_DEPENDENCY "html/index.qhp"
 	  DEPENDS   "${CMAKE_CURRENT_BINARY_DIR}/Manual.qhcp"
 	  WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
-	  COMMENT   "Running qcollectiongenerator on the manual"
+	  COMMENT   "Running qcollectiongenerator for Qt Help output"
 	)
+	add_custom_target(Mapper-manual-Qt-Help
+	  DEPENDS   "${Mapper_HELP_COLLECTION}"
+	  SOURCES   Manual.qhcp.in
+	)
+	add_dependencies(Mapper-manual-Qt-Help  Mapper-manual-HTML)
+	add_dependencies(Mapper-manual  Mapper-manual-Qt-Help)
+	
 	install(
 	  FILES "${CMAKE_CURRENT_BINARY_DIR}/${Mapper_HELP_COLLECTION}" 
 	        "${CMAKE_CURRENT_BINARY_DIR}/${Mapper_COMPRESSED_HELP}" 
 	  DESTINATION "${MAPPER_ABOUT_DESTINATION}"
 	)
 else()
-	set(MAPPER_MANUAL_TARGET "html/index.qhp")
-	file(APPEND "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile" \n
-	  "FILE_PATTERNS          = android* toolbar*" \n
-	  "USE_MDFILE_AS_MAINPAGE = android-index.md" \n
-	)
-	install(CODE "
-		file(READ \"${CMAKE_CURRENT_BINARY_DIR}/html/index.qhp\" index_qhp)
-		string(REGEX MATCHALL \"<file>[^<]*</file>\" matches \${index_qhp})
-		foreach(match \${matches})
-			string(REGEX REPLACE \".*<file>\"  \"\" match \"\${match}\")
-			string(REGEX REPLACE \"</file>.*\" \"\" match \"\${match}\")
-			file(INSTALL
-			  DESTINATION \"\${CMAKE_INSTALL_PREFIX}/${MAPPER_ABOUT_DESTINATION}/manual\"
-			  FILES \"${CMAKE_CURRENT_BINARY_DIR}/html/\${match}\"
-			)
-		endforeach()
-")
+	#
+	# Direct installation of manual HTML files
+	#
+	
+	add_dependencies(Mapper-manual Mapper-manual-HTML)
+	
+	configure_file(install-html.cmake.in install-html.cmake @ONLY)
+	install(SCRIPT "${CMAKE_CURRENT_BINARY_DIR}/install-html.cmake")
 endif()
-
-add_custom_target(Mapper-manual ALL
-  DEPENDS   "${MAPPER_MANUAL_TARGET}"
-  # Sources to be listed in Qt Creator
-  SOURCES
-    header.html
-    footer.html
-    style.css
-)
