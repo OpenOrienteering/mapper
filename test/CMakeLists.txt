@@ -127,6 +127,15 @@ include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 add_unit_test(tst_qglobal)
 add_unit_test(autosave_t MANUAL ../src/core/autosave ../src/settings ../src/util/util)
 add_unit_test(encoding_t ../src/util/encoding)
+add_unit_test(georef_ocd_mapping_t
+        ../src/gui/util_gui
+        ../src/gui/widgets/crs_param_widgets
+        ../src/core/georeferencing
+        ../src/core/crs_template
+        ../src/core/crs_template_implementation
+        ../src/fileformats/ocd_georef
+        ../src/fileformats/file_format
+)
 add_unit_test(georeferencing_t ../src/core/georeferencing ../src/gui/util_gui
 	../src/core/latlon
 	../src/core/crs_template
