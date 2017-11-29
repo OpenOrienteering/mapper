@@ -9,7 +9,7 @@ edited: 25 February 2013
 
 ![ ](images/template_adjust.png)
 
-This window can be opened from the [template setup window](templates.md#template-setup-window) and is used to adjust the positioning of the currently selected template to the position of another existing template, or the map, which is already in the correct location.
+This window can be opened from the [template setup window](templates.md#setup) and is used to adjust the positioning of the currently selected template to the position of another existing template, or the map, which is already in the correct location.
 
 The principle is to define two or more so-called pass points. Every pass point defines a source position, this is an arbitrary point on the new template, and a target position, this is the position where the source point should move to. So every pass point is a pair of identical positions on source (template) and target (existing template or map).
 

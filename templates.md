@@ -22,7 +22,7 @@ OpenOrienteering Mapper supports the following file formats to be loaded as temp
 
 Additionally, templates can be classified into **georeferenced** and **non-georeferenced** templates. For georeferenced templates, information about the exact positioning of the template in a known world coordinate system is available - see [georeferencing](georeferencing.md). This way, they can be positioned on the map automatically provided that the map is georeferenced too. For non-georeferenced templates, this information is not available, so they have to be [positioned manually](#positioning).
 
-#### Template setup window
+#### Template setup window  {#setup}
 
 ![ ](images/template_setup_window.png)
 
@@ -40,7 +40,7 @@ When a template is selected, it can be moved up and down in the list using the M
 
 #### Deleting or closing templates
 
-Using the Delete or Close button, templates can be removed. The label text depends on the [corresponding setting](settings.md#keep_closed_templates) "Keep settings of closed templates": if it is activated, it will be "Close" and it will be possible to reopen the template later with the menu item Templates -&gt; Reopen template..., otherwise it will be "Delete" and it will not be possible to reopen the template later.
+Using the Delete or Close button, templates can be removed. The label text depends on the [corresponding setting](settings.md#templates-keep-settings-of-closed-templates) "Keep settings of closed templates": if it is activated, it will be "Close" and it will be possible to reopen the template later with the menu item Templates -&gt; Reopen template..., otherwise it will be "Delete" and it will not be possible to reopen the template later.
 
 #### Positioning
 
