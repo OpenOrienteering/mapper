@@ -99,7 +99,6 @@ QToolButton* TagsWidget::newToolButton(const QIcon& icon, const QString& text)
 	button->setToolTip(text);
 	button->setIcon(icon);
 	button->setText(text);
-	button->setWhatsThis(Util::makeWhatThis("templates.html#setup"));
 	return button;
 }
 
