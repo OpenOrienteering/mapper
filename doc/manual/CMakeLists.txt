@@ -31,6 +31,13 @@ option(Mapper_MANUAL_QTHELP
 )
 
 
+set(Mapper_MANUAL_PDF_default OFF)
+option(Mapper_MANUAL_PDF
+  "Provide the manual as PDF file"
+  ${Mapper_MANUAL_PDF_default}
+)
+
+
 
 #
 # General target
@@ -197,4 +204,63 @@ else()
 	
 	configure_file(install-html.cmake.in install-html.cmake @ONLY)
 	install(SCRIPT "${CMAKE_CURRENT_BINARY_DIR}/install-html.cmake")
+endif()
+
+
+if(Mapper_MANUAL_PDF)
+	#
+	# PDF file generation
+	#
+	
+	find_program(PDFLATEX_EXECUTABLE
+	  NAMES pdflatex
+	  DOC "The path of the pdflatex executable"
+	)
+	if(PDFLATEX_EXECUTABLE)
+		find_program(MAKE_EXECUTABLE
+		  NAMES make
+		  DOC "The path of the make executable"
+		)
+		if(NOT MAKE_EXECUTABLE AND CMAKE_HOST_WIN32)
+			set(MAKE_EXECUTABLE make.bat)
+		endif()
+	endif()
+	
+	set(Mapper_PDF_manual "Mapper ${Mapper_VERSION_DISPLAY} Manual.pdf")
+	
+	configure_file(Doxyfile-pdflatex.in Doxyfile-pdflatex @ONLY)
+	configure_file(preprocess-markdown-pdflatex.cmake.in preprocess-markdown-pdflatex.cmake @ONLY)
+	configure_file(postprocess-pdflatex.cmake.in postprocess-pdflatex.cmake @ONLY)
+	add_custom_target(Mapper-manual-markdown-pdflatex
+	  COMMAND "${CMAKE_COMMAND}" -P preprocess-markdown-pdflatex.cmake
+	  BYPRODUCTS preprocess-markdown-pdflatex.stamp
+	             Doxyfile-pdflatex-input.txt
+	  SOURCES    preprocess-markdown-pdflatex.cmake.in
+	)
+	add_custom_command( 
+	  OUTPUT    "${Mapper_PDF_manual}"
+	  COMMAND   "${DOXYGEN_EXECUTABLE}" Doxyfile-pdflatex
+	  COMMAND   "${CMAKE_COMMAND}" -P postprocess-pdflatex.cmake
+	  COMMAND   "${MAKE_EXECUTABLE}" -C pdflatex
+	  COMMAND   "${CMAKE_COMMAND}" -E copy_if_different "pdflatex/refman.pdf" "${Mapper_PDF_manual}"
+	  COMMAND   "${CMAKE_COMMAND}" -E remove "pdflatex/refman.pdf"
+	  MAIN_DEPENDENCY preprocess-markdown-pdflatex.stamp
+	  DEPENDS   Doxyfile-pdflatex
+	            Doxyfile-pdflatex-input.txt
+	            postprocess-pdflatex.cmake
+	  WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
+	  COMMENT   "Running pdflatex for PDF output"
+	)
+	add_custom_target(Mapper-manual-PDF
+	  DEPENDS   "${Mapper_PDF_manual}"
+	  SOURCES   Doxyfile-pdflatex.in
+	            postprocess-pdflatex.cmake.in
+	)
+	add_dependencies(Mapper-manual-PDF Mapper-manual-markdown-pdflatex)
+	add_dependencies(Mapper-manual Mapper-manual-PDF)
+	
+	install(
+	  FILES "${CMAKE_CURRENT_BINARY_DIR}/${Mapper_PDF_manual}" 
+	  DESTINATION "${MAPPER_ABOUT_DESTINATION}"
+	)
 endif()
