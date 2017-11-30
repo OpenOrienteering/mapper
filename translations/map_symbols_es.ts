@@ -2326,143 +2326,143 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Purple</source>
             <comment>Color 0</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Púrpura</translation>
+    </message>
         <message>
             <source>Black</source>
             <comment>Color 1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Negro</translation>
+    </message>
         <message>
             <source>Brown 50%</source>
             <comment>Color 2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Marrón 50%</translation>
+    </message>
         <message>
             <source>Black below light browns</source>
             <comment>Color 3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Negro debajo de marrones claros</translation>
+    </message>
         <message>
             <source>Opaque Blue</source>
             <comment>Color 4</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Azul opaco</translation>
+    </message>
         <message>
             <source>Blue</source>
             <comment>Color 5</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Azul</translation>
+    </message>
         <message>
             <source>Blue 50%</source>
             <comment>Color 6</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Azul 50%</translation>
+    </message>
         <message>
             <source>Brown</source>
             <comment>Color 7</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Marrón</translation>
+    </message>
         <message>
             <source>OpenOrienteering Orange</source>
             <comment>Color 8</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Naranja OpenOrienteering</translation>
+    </message>
         <message>
             <source>Black 30%</source>
             <comment>Color 9</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Negro 30%</translation>
+    </message>
         <message>
             <source>Green 50%, Yellow</source>
             <comment>Color 10</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verde 50%, amarillo</translation>
+    </message>
         <message>
             <source>Green over White over Green</source>
             <comment>Color 11</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verde sobre blanco sobre verde</translation>
+    </message>
         <message>
             <source>Opaque White over Green</source>
             <comment>Color 12</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Blanco opaco debajo de verde</translation>
+    </message>
         <message>
             <source>Opaque Green</source>
             <comment>Color 13</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verde opaco</translation>
+    </message>
         <message>
             <source>Green</source>
             <comment>Color 14</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verde</translation>
+    </message>
         <message>
             <source>Green 60%</source>
             <comment>Color 15</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verde 60%</translation>
+    </message>
         <message>
             <source>Green 30%</source>
             <comment>Color 16</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verde 30%</translation>
+    </message>
         <message>
             <source>Green below light greens</source>
             <comment>Color 17</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verde debajo de verdes claros</translation>
+    </message>
         <message>
             <source>Yellow</source>
             <comment>Color 18</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Amarillo</translation>
+    </message>
         <message>
             <source>Yellow 50%</source>
             <comment>Color 19</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Amarillo 50%</translation>
+    </message>
         <message>
             <source>White over Yellow 70%</source>
             <comment>Color 20</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Blanco sobre amarillo 70%</translation>
+    </message>
         <message>
             <source>Yellow 70%</source>
             <comment>Color 21</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Amarillo 70%</translation>
+    </message>
         <message>
             <source>Contour</source>
             <comment>Name of symbol 101</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Curva de nivel</translation>
+    </message>
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
             <comment>Description of symbol 101</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una línea que une los puntos de la misma altitud. La equidistancia estándar entre curvas de nivel es 5 metros. La separación mínima entre curvas de nivel es 0,25 mm entre los centros de las líneas.</translation>
+    </message>
         <message>
             <source>Index contour</source>
             <comment>Name of symbol 102</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Curva maestra</translation>
+    </message>
         <message>
             <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. Where an index contour coincides with an area of much detail, it may be shown with a normal contour line.</source>
             <comment>Description of symbol 102</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Cada 5 curvas de nivel se debe dibujar una línea más gruesa. Esto es una ayuda para evaluar más rápidamente la diferencia de altitud y la forma general de la superficie del terreno. Una curva maestra se puede representar como una curva normal en una zona con mucho detalle.</translation>
+    </message>
         <message>
             <source>Form line</source>
             <comment>Name of symbol 103</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Curva auxiliar</translation>
+    </message>
         <message>
             <source>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</source>
             <comment>Description of symbol 103</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una curva de nivel intermedia. Las curvas auxiliares se utilizan donde se debe aportar más información sobre la forma del terreno. Las curvas auxiliares se añaden sólamente donde la representación sería incompleta con curvas normales.  Solo una única curva auxiliar se debe utilizar entre curvas vecinas.</translation>
+    </message>
         <message>
             <source>Slope line</source>
             <comment>Name of symbol 104</comment>
@@ -2476,8 +2476,8 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Contour value</source>
             <comment>Name of symbol 105</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Altitud de la curva de nivel</translation>
+    </message>
         <message>
             <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
             <comment>Description of symbol 105</comment>
@@ -2486,8 +2486,8 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Earth bank</source>
             <comment>Name of symbol 106</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terraplén</translation>
+    </message>
         <message>
             <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
             <comment>Description of symbol 106</comment>
@@ -2496,8 +2496,8 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Earth bank, minimum size</source>
             <comment>Name of symbol 106.0.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terraplén, tamaño mínimo</translation>
+    </message>
         <message>
             <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
             <comment>Description of symbol 106.0.1</comment>
@@ -2526,38 +2526,38 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Earth bank, tag line</source>
             <comment>Name of symbol 106.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terraplén, línea de extensión</translation>
+    </message>
         <message>
             <source>Use this symbol to display the full extent of wide earth banks.</source>
             <comment>Description of symbol 106.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Utilice este símbolo para representar la extensión completa de terraplenes amplios.</translation>
+    </message>
         <message>
             <source>Earth wall</source>
             <comment>Name of symbol 107</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Muro de tierra</translation>
+    </message>
         <message>
             <source>Distinct earth wall. Minimum height is 1 m.</source>
             <comment>Description of symbol 107</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Muro de tierra perceptible. La altura mínima es 1 m.</translation>
+    </message>
         <message>
             <source>Small earth wall</source>
             <comment>Name of symbol 108</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Muro de tierra pequeño</translation>
+    </message>
         <message>
             <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
             <comment>Description of symbol 108</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un muro de tierra pequeño o parcialmente derruido se debe mostrar con una línea discontinua. La altura mínima es 0,5 m.</translation>
+    </message>
         <message>
             <source>Erosion gully</source>
             <comment>Name of symbol 109</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Surco de erosión</translation>
+    </message>
         <message>
             <source>An erosion gully or trench which is too small to be shown by symbol 106 is shown by a single line. The line width reflects the size of the gully. Minimum depth 1 m. The end of the line is pointed.</source>
             <comment>Description of symbol 109</comment>
@@ -2566,8 +2566,8 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Small erosion gully</source>
             <comment>Name of symbol 110</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Surco de erosión pequeño</translation>
+    </message>
         <message>
             <source>A small erosion gully or trench. Minimum depth 0.5 m.</source>
             <comment>Description of symbol 110</comment>
@@ -2576,8 +2576,8 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Small knoll</source>
             <comment>Name of symbol 112</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Colina pequeña</translation>
+    </message>
         <message>
             <source>A small obvious mound or rocky knoll which cannot be drawn to scale with a contour (diameter of mound less than ca. 5 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. The symbol may not touch a contour line.</source>
             <comment>Description of symbol 112</comment>
@@ -2596,8 +2596,8 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Small depression</source>
             <comment>Name of symbol 115</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Depresión pequeña</translation>
+    </message>
         <message>
             <source>Small shallow natural depressions and hollows (minimum diameter 2 m) which cannot be shown to scale by contours are represented by a semicircle. Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol, which is orientated to north. Symbol 116 is used for man-made pits.</source>
             <comment>Description of symbol 115</comment>
@@ -2606,8 +2606,8 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Pit</source>
             <comment>Name of symbol 116</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Hoyo</translation>
+    </message>
         <message>
             <source>Pits and holes with distinct steep sides which cannot be shown to scale by symbol 106 (minimum diameter 2 m). Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol which is orientated to north.</source>
             <comment>Description of symbol 116</comment>
@@ -2621,8 +2621,8 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>An area of pits or knolls which is too intricate to be shown in detail. The density of randomly placed dots may vary according to the detail on the ground.</source>
             <comment>Description of symbol 117.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una zona de hoyos o montículos que es demasiado intrincada para representarse en detalle. La densidad de los puntos ubicados al azar puede variar según el detalle sobre el terreno.</translation>
+    </message>
         <message>
             <source>Broken ground, big</source>
             <comment>Name of symbol 117.2</comment>
@@ -2646,8 +2646,8 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Impassable cliff</source>
             <comment>Name of symbol 201</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Cortado impasable</translation>
+    </message>
         <message>
             <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201</comment>
@@ -2656,8 +2656,8 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Impassable cliff, minimum size</source>
             <comment>Name of symbol 201.0.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Cortado impasable, tamaño mínimo</translation>
+    </message>
         <message>
             <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201.0.1</comment>
@@ -2671,18 +2671,18 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
             <comment>Description of symbol 201.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Para paredes de roca verticales las líneas de extensión se pueden omitir si hay escasez de espacio, p. ej. pasillos estrechos entre cortados (el pasillo debería dibujarse con una anchura de al menos 0,3 mm).</translation>
+    </message>
         <message>
             <source>Impassable cliff, tag line</source>
             <comment>Name of symbol 201.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Cortado impasable, línea de extensión</translation>
+    </message>
         <message>
             <source>Use this symbol to display the full extent of a wide cliff.</source>
             <comment>Description of symbol 201.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Utilice este símbolo para mostrar la extensión completa de un cortado amplio.</translation>
+    </message>
         <message>
             <source>Rock pillars/cliffs</source>
             <comment>Name of symbol 202</comment>
@@ -2776,8 +2776,8 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Boulder</source>
             <comment>Name of symbol 206</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Peñasco</translation>
+    </message>
         <message>
             <source>A small distinct boulder (minimum height 1 m). Every boulder marked on the map should be immediately identifiable on the ground. To be able to show the distinction between boulders with significant difference in size it is permitted to enlarge this symbol by 20% (diameter 0.5 mm).</source>
             <comment>Description of symbol 206</comment>
@@ -2796,8 +2796,8 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Large boulder</source>
             <comment>Name of symbol 207</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Peña</translation>
+    </message>
         <message>
             <source>A particularly large and distinct boulder. For gigantic boulders symbol 202 should be used.</source>
             <comment>Description of symbol 207</comment>
@@ -2806,13 +2806,13 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Boulder field</source>
             <comment>Name of symbol 208</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Peñascal</translation>
+    </message>
         <message>
             <source>An area which is covered with so many blocks of stone that they cannot be marked individually is shown with randomly orientated solid triangles with sides of ratio 8:6:5. A minimum of two triangles should be used. The going is indicated by the density of the triangles. To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
             <comment>Description of symbol 208</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una zona que está cubierta con tantos bloques de piedra que no se pueden mostrar individualmente se representa con triángulos sólidos orientados aleatoriamente con sus lados cumpliendo la relación 8:6:5. Se debería utilizar un mínimo de dos triángulos. Para mostrar la distinción entre peñascales con una diferencia significativa en el tamaño de sus peñascos se permite agrandar los triángulos en un 20%.</translation>
+    </message>
         <message>
             <source>Boulder field, large</source>
             <comment>Name of symbol 208.1</comment>
@@ -2821,13 +2821,13 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
             <comment>Description of symbol 208.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Para mostrar la distinción entre peñascales con una diferencia significativa en el tamaño de sus peñascos se permite agrandar los triángulos en un 20%.</translation>
+    </message>
         <message>
             <source>Boulder cluster</source>
             <comment>Name of symbol 209</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Agrupamiento de peñas</translation>
+    </message>
         <message>
             <source>A small distinct group of boulders so closely clustered together that they cannot be marked individually. The symbol is an equilateral triangle orientated to the north. To be able to show the distinction between boulder clusters with significant difference in size it is permitted to enlarge this symbol by 25% (1.0 mm).</source>
             <comment>Description of symbol 209</comment>
@@ -2836,8 +2836,8 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Boulder cluster, large</source>
             <comment>Name of symbol 209.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Agrupamiento de peñas, grande</translation>
+    </message>
         <message>
             <source>To be able to show the distinction between boulder clusters with significant difference in size it is permitted to enlarge this symbol by 25% (1.0 mm).</source>
             <comment>Description of symbol 209.1</comment>
@@ -2866,8 +2866,8 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Open sandy ground</source>
             <comment>Name of symbol 211</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terreno despejado y arenoso</translation>
+    </message>
         <message>
             <source>An area of soft sandy ground or gravel with no vegetation and where running is slow. Where an area of sandy ground is open but running is good, it is shown as open land (401/402).</source>
             <comment>Description of symbol 211</comment>
@@ -2876,8 +2876,8 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Bare rock</source>
             <comment>Name of symbol 212</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Roca desnuda</translation>
+    </message>
         <message>
             <source>A runnable area of rock without earth or vegetation is shown as bare rock. An area of rock covered with grass, moss or other low vegetation is shown as open land (401/402).</source>
             <comment>Description of symbol 212</comment>
@@ -2901,8 +2901,8 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>A black bank line indicates that the feature cannot be crossed.</source>
             <comment>Description of symbol 301.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una línea negra de orilla indica que el elemento no se puede vadear.</translation>
+    </message>
         <message>
             <source>Lake, with bank line</source>
             <comment>Name of symbol 301.2</comment>
@@ -2921,8 +2921,8 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Waterhole</source>
             <comment>Name of symbol 303</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Poza</translation>
+    </message>
         <message>
             <source>A water-filled pit or an area of water which is too small to be shown to scale. Location is the centre of gravity of the symbol, which is orientated to north.</source>
             <comment>Description of symbol 303</comment>
@@ -2931,13 +2931,13 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Crossable watercourse</source>
             <comment>Name of symbol 305</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Cauce vadeable</translation>
+    </message>
         <message>
             <source>A crossable watercourse, minimum 2 m wide. The width of watercourses over 5 m wide should be shown to scale.</source>
             <comment>Description of symbol 305</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una corriente de agua vadeable, de 2 m de ancho como mínimo. La amplitud de cauces superior a 5 m debería representarse a escala.</translation>
+    </message>
         <message>
             <source>Crossable small watercourse</source>
             <comment>Name of symbol 306</comment>
@@ -2956,13 +2956,13 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>A natural or man-made minor water channel which may contain water only intermittently.</source>
             <comment>Description of symbol 307</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un canal de agua secundario, natural o artificial, que puede llevar agua sólo ocasionalmente.</translation>
+    </message>
         <message>
             <source>Narrow marsh</source>
             <comment>Name of symbol 308</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ciénaga estrecha</translation>
+    </message>
         <message>
             <source>A marsh or trickle of water which is too narrow to be shown with symbol 310 (less than ca. 5 m wide).</source>
             <comment>Description of symbol 308</comment>
@@ -2971,8 +2971,8 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Uncrossable marsh</source>
             <comment>Name of symbol 309</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ciénaga no vadeable</translation>
+    </message>
         <message>
             <source>A marsh which is uncrossable or dangerous for the runner. A black line surrounds the symbol.</source>
             <comment>Description of symbol 309</comment>
@@ -2981,8 +2981,8 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Uncrossable marsh, border line</source>
             <comment>Name of symbol 309.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ciénaga no vadeable, línea de orilla</translation>
+    </message>
         <message>
             <source>A black line surrounds the symbol.</source>
             <comment>Description of symbol 309.1</comment>
@@ -2991,13 +2991,13 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Uncrossable marsh, with border line</source>
             <comment>Name of symbol 309.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ciénaga no vadeable, con línea de orilla</translation>
+    </message>
         <message>
             <source>Marsh</source>
             <comment>Name of symbol 310</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ciénaga</translation>
+    </message>
         <message>
             <source>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility.</source>
             <comment>Description of symbol 310</comment>
@@ -3006,13 +3006,13 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Marsh, minimum size</source>
             <comment>Name of symbol 310.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ciénaga, tamaño mínimo</translation>
+    </message>
         <message>
             <source>Indistinct marsh</source>
             <comment>Name of symbol 311</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ciénaga difusa</translation>
+    </message>
         <message>
             <source>An indistinct or seasonal marsh or area of gradual transition from marsh to firm ground, which is crossable. The edge is generally indistinct and the vegetation similar to that of the surrounding ground. The symbol should be combined with vegetation symbols to show runnability and openness.</source>
             <comment>Description of symbol 311</comment>
@@ -3021,8 +3021,8 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Indistinct marsh, minimum size</source>
             <comment>Name of symbol 311.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ciénaga difusa, tamaño mínimo</translation>
+    </message>
         <message>
             <source>Well</source>
             <comment>Name of symbol 312</comment>
@@ -3036,8 +3036,8 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Spring</source>
             <comment>Name of symbol 313</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Manantial</translation>
+    </message>
         <message>
             <source>The source of a stream with a distinct outflow. The symbol is orientated to open downstream.</source>
             <comment>Description of symbol 313</comment>
@@ -3056,8 +3056,8 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Open land</source>
             <comment>Name of symbol 401</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Campo abierto</translation>
+    </message>
         <message>
             <source>Cultivated land, fields, meadows, grassland, etc. without trees, offering easy running. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
             <comment>Description of symbol 401</comment>
@@ -3066,8 +3066,8 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Open land with scattered trees</source>
             <comment>Name of symbol 402</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Campo abierto con árboles dispersos</translation>
+    </message>
         <message>
             <source>Meadows with scattered trees or bushes, with grass or similar ground cover offering easy running. Areas smaller than 10 mm at the maps scale are shown as open land (401). Individual trees may be added (418, 419, 420). If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
             <comment>Description of symbol 402</comment>
@@ -3076,8 +3076,8 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Rough open land</source>
             <comment>Name of symbol 403</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Campo abierto y escabroso</translation>
+    </message>
         <message>
             <source>Heath, moorland, felled areas, newly planted areas (trees lower than ca. 1 m) or other generally open land with rough ground vegetation, heather or tall grass. Symbol 403 may be combined with symbols 407 and 409 to show reduced runnability.</source>
             <comment>Description of symbol 403</comment>
@@ -3086,8 +3086,8 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Rough open land with scattered trees</source>
             <comment>Name of symbol 404</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Campo abierto y escabroso con árboles dispersos</translation>
+    </message>
         <message>
             <source>Where there are scattered trees in rough open land, areas of white (or green) should appear in the tone. Such an area may be generalised by using a regular pattern of large white dots in the yellow screen. Areas smaller than 16 mm in the maps scale are shown as rough open land (403). Individual trees may be added (418, 419, 420).</source>
             <comment>Description of symbol 404</comment>
@@ -3121,8 +3121,8 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 60-80% of normal speed. This symbol may not be combined with 406 or 408.</source>
             <comment>Description of symbol 407</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una zona de monte bajo denso y, sin embargo, buena visibilidad (zarzas, brezo, arbustos bajos e incluyendo ramas taladas) que reduce la velocidad de carrera a un 60-80% aprox. de la velocidad normal. Este símbolo no se puede combinar con los símbolos 406 ni 408.</translation>
+    </message>
         <message>
             <source>Forest: difficult to run</source>
             <comment>Name of symbol 408</comment>
@@ -3171,8 +3171,8 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
             <comment>Description of symbol 411.0</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Cuando una zona de bosque permite buena velocidad de carrera en una dirección, pero menos buena en otras, se incluyen bandas blancas en la trama del símbolo para indicar la dirección de buena velocidad.</translation>
+    </message>
         <message>
             <source>Forest runnable in one direction, 2</source>
             <comment>Name of symbol 411.1</comment>
@@ -3181,23 +3181,23 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
             <comment>Description of symbol 411.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Cuando una zona de bosque permite buena velocidad de carrera en una dirección, pero menos buena en otras, se incluyen bandas blancas en la trama del símbolo para indicar la dirección de buena velocidad.</translation>
+    </message>
         <message>
             <source>Forest runnable in one direction, 3</source>
             <comment>Name of symbol 411.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Bosque transitable en una dirección, 3</translation>
+    </message>
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
             <comment>Description of symbol 411.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Cuando una zona de bosque permite buena velocidad de carrera en una dirección, pero menos buena en otras, se incluyen bandas blancas en la trama del símbolo para indicar la dirección de buena velocidad.</translation>
+    </message>
         <message>
             <source>Orchard</source>
             <comment>Name of symbol 412</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Huerto de árboles frutales</translation>
+    </message>
         <message>
             <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the
 direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
@@ -3207,8 +3207,8 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <message>
             <source>Vineyard</source>
             <comment>Name of symbol 413</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Viñedo</translation>
+    </message>
         <message>
             <source>The green lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
             <comment>Description of symbol 413</comment>
@@ -3217,8 +3217,8 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <message>
             <source>Distinct cultivation boundary</source>
             <comment>Name of symbol 414</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Límite de cultivo perceptible</translation>
+    </message>
         <message>
             <source>The boundary of cultivated land when not shown with other symbols (fence, wall, path, etc.) is shown with a black line. A permanent boundary between different types of cultivated land is also shown with this symbol.</source>
             <comment>Description of symbol 414</comment>
@@ -3227,8 +3227,8 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <message>
             <source>Cultivated land</source>
             <comment>Name of symbol 415</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Campo de cultivo</translation>
+    </message>
         <message>
             <source>Cultivated land which is seasonally out-of-bounds due to growing crops may be shown with a black dot screen.</source>
             <comment>Description of symbol 415</comment>
@@ -3237,8 +3237,8 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <message>
             <source>Distinct vegetation boundary</source>
             <comment>Name of symbol 416</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Límite de vegetación perceptible</translation>
+    </message>
         <message>
             <source>A distinct forest edge or very distinct vegetation boundary within the forest.</source>
             <comment>Description of symbol 416</comment>
@@ -3337,8 +3337,8 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <message>
             <source>Road</source>
             <comment>Name of symbol 504</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Pista</translation>
+    </message>
         <message>
             <source>A maintained road suitable for motor vehicles in all weather. Width less than 3 m.</source>
             <comment>Description of symbol 504</comment>
@@ -3347,8 +3347,8 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <message>
             <source>Vehicle track</source>
             <comment>Name of symbol 505</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Carril</translation>
+    </message>
         <message>
             <source>A track or poorly maintained road suitable for vehicles only when travelling slowly. Width less than 3 m.</source>
             <comment>Description of symbol 505</comment>
@@ -3357,8 +3357,8 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <message>
             <source>Footpath</source>
             <comment>Name of symbol 506</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Camino</translation>
+    </message>
         <message>
             <source>A large path, or old vehicle track, which is distinct on the ground.</source>
             <comment>Description of symbol 506</comment>
@@ -3387,8 +3387,8 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <message>
             <source>Narrow ride</source>
             <comment>Name of symbol 509</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Vereda forestal</translation>
+    </message>
         <message>
             <source>A distinct ride, less than ca. 5 m wide. A ride is a linear break in the forest (usually plantation) which does not have a distinct path along it. Where there is a path along a ride, symbols 507 or 508 should be used in place of symbol 509.</source>
             <comment>Description of symbol 509</comment>
@@ -3397,8 +3397,8 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <message>
             <source>Footbridge</source>
             <comment>Name of symbol 512</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Pasarela</translation>
+    </message>
         <message>
             <source>A footbridge with no path leading to it.
 Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm over both sides of the stream!</source>
@@ -3408,8 +3408,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Railway</source>
             <comment>Name of symbol 515</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Vía férrea</translation>
+    </message>
         <message>
             <source>A railway or other kind of railed track (tramway, truckway, etc.).</source>
             <comment>Description of symbol 515</comment>
@@ -3418,8 +3418,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Power line</source>
             <comment>Name of symbol 516</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Tendido eléctrico</translation>
+    </message>
         <message>
             <source>Power line, cableway or skilift. The bars indicate the exact location of the pylons.</source>
             <comment>Description of symbol 516</comment>
@@ -3428,8 +3428,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Major power line</source>
             <comment>Name of symbol 517</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Tendido eléctrico principal</translation>
+    </message>
         <message>
             <source>Major power lines should be drawn with a double line. The gap between the lines may indicate the extent of the powerline.</source>
             <comment>Description of symbol 517</comment>
@@ -3468,8 +3468,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Ruined stone wall</source>
             <comment>Name of symbol 520</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Muro de piedra en ruinas</translation>
+    </message>
         <message>
             <source>A ruined stone wall may be shown by a dashed line.</source>
             <comment>Description of symbol 520</comment>
@@ -3488,8 +3488,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Fence</source>
             <comment>Name of symbol 522</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Valla</translation>
+    </message>
         <message>
             <source>A wooden or wire fence less than ca. 1.5 m high.</source>
             <comment>Description of symbol 522</comment>
@@ -3498,8 +3498,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Ruined fence</source>
             <comment>Name of symbol 523</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Valla en ruinas</translation>
+    </message>
         <message>
             <source>A ruined fence may be shown with a dashed line.</source>
             <comment>Description of symbol 523</comment>
@@ -3518,8 +3518,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Crossing point</source>
             <comment>Name of symbol 525</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Punto de paso</translation>
+    </message>
         <message>
             <source>All ways through or over high fences or walls must be indicated. The symbol may also be used for a gate through or stile over a stone wall (519) or a fence (522) or a pipeline (534).</source>
             <comment>Description of symbol 525</comment>
@@ -3528,8 +3528,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Building</source>
             <comment>Name of symbol 526</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Edificación</translation>
+    </message>
         <message>
             <source>A building is shown with its ground plan so far as the scale permits.</source>
             <comment>Description of symbol 526</comment>
@@ -3538,8 +3538,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Building, minimum size</source>
             <comment>Name of symbol 526.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Edificación, tamaño mínimo</translation>
+    </message>
         <message>
             <source>Settlement</source>
             <comment>Name of symbol 527</comment>
@@ -3583,8 +3583,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Paved area</source>
             <comment>Name of symbol 529</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Área pavimentada</translation>
+    </message>
         <message>
             <source>An area of hard standing used for parking or other purposes.</source>
             <comment>Description of symbol 529</comment>
@@ -3593,18 +3593,18 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Paved area, bounding line</source>
             <comment>Name of symbol 529.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Área pavimentada, línea delimitadora</translation>
+    </message>
         <message>
             <source>Paved area, with bounding line</source>
             <comment>Name of symbol 529.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Área pavimentada, con línea delimitadora</translation>
+    </message>
         <message>
             <source>Ruin</source>
             <comment>Name of symbol 530</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ruina</translation>
+    </message>
         <message>
             <source>The ground plan of a ruin is shown to scale, down to the minimum size shown opposite. Very small ruins may be drawn with a solid line.</source>
             <comment>Description of symbol 530</comment>
@@ -3623,8 +3623,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Ruin, minimum size</source>
             <comment>Name of symbol 530.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ruina, tamaño mínimo</translation>
+    </message>
         <message>
             <source>Very small ruins may be drawn with a solid line.</source>
             <comment>Description of symbol 530.2</comment>
@@ -3673,8 +3673,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>High tower</source>
             <comment>Name of symbol 535</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Torre alta</translation>
+    </message>
         <message>
             <source>A high tower or large pylon, standing above the level of the surrounding forest. Location is at the centre of gravity of the symbol.</source>
             <comment>Description of symbol 535</comment>
@@ -3683,8 +3683,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Small tower</source>
             <comment>Name of symbol 536</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Torre pequeña</translation>
+    </message>
         <message>
             <source>An obvious shooting platform or seat, or small tower. Location is at the centre of gravity of the symbol.</source>
             <comment>Description of symbol 536</comment>
@@ -3693,8 +3693,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Cairn</source>
             <comment>Name of symbol 537</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Hito</translation>
+    </message>
         <message>
             <source>Cairn, memorial stone or boundary stone (or a trigonometric point in some countries) more than 0.5 m high.</source>
             <comment>Description of symbol 537</comment>
@@ -3703,8 +3703,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Fodder rack</source>
             <comment>Name of symbol 538</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Comedero de ganado</translation>
+    </message>
         <message>
             <source>A fodder rack which is free standing or built on to a tree. Location is at the centre of gravity of the symbol. For land access reasons these may be omitted.</source>
             <comment>Description of symbol 538</comment>
@@ -3718,8 +3718,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
             <comment>Description of symbol 539</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Las construcciones especiales se representan con estos símbolos. La definición de los símbolos se debe indicar en cada caso en la leyenda del mapa.</translation>
+    </message>
         <message>
             <source>Special man-made feature</source>
             <comment>Name of symbol 540</comment>
@@ -3728,13 +3728,13 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
             <comment>Description of symbol 540</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Las construcciones especiales se representan con estos símbolos. La definición de los símbolos se debe indicar en cada caso en la leyenda del mapa.</translation>
+    </message>
         <message>
             <source>Magnetic north line</source>
             <comment>Name of symbol 601</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Línea de norte magnético</translation>
+    </message>
         <message>
             <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing on the map should be 33.33 mm which represents 500 m on the ground at the scale of 1:15 000. For maps with other scales lines placing should be at intervals which represents a round number of meters (e.g. 50 m, 100 m, 250 m, 500 m) and the spacing should be between 20 mm and 40 mm on the map. North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. In areas with very few water features, blue lines may be used.</source>
             <comment>Description of symbol 601</comment>
@@ -3743,13 +3743,13 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>North lines pattern</source>
             <comment>Name of symbol 601.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Patrón de líneas de norte</translation>
+    </message>
         <message>
             <source>Magnetic north line, blue</source>
             <comment>Name of symbol 601.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Línea del norte magnético, azul</translation>
+    </message>
         <message>
             <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing on the map should be 33.33 mm which represents 500 m on the ground at the scale of 1:15 000. For maps with other scales lines placing should be at intervals which represents a round number of meters (e.g. 50 m, 100 m, 250 m, 500 m) and the spacing should be between 20 mm and 40 mm on the map. North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. In areas with very few water features, blue lines may be used.</source>
             <comment>Description of symbol 601.2</comment>
@@ -3758,13 +3758,13 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>North lines pattern, blue</source>
             <comment>Name of symbol 601.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Patrón de líneas de norte, azul</translation>
+    </message>
         <message>
             <source>Registration mark</source>
             <comment>Name of symbol 602</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Marca de registro</translation>
+    </message>
         <message>
             <source>At least three registration marks must be placed within the frame of a map in a non-symmetrical position. In addition, a colour check should also be possible.</source>
             <comment>Description of symbol 602</comment>
@@ -3773,8 +3773,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Spot height, dot</source>
             <comment>Name of symbol 603.0</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Altitud de un punto, punto</translation>
+    </message>
         <message>
             <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
             <comment>Description of symbol 603.0</comment>
@@ -3783,8 +3783,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Spot height, text</source>
             <comment>Name of symbol 603.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Altitud de un punto, texto</translation>
+    </message>
         <message>
             <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
             <comment>Description of symbol 603.1</comment>
@@ -3793,8 +3793,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Start</source>
             <comment>Name of symbol 701</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Salida</translation>
+    </message>
         <message>
             <source>The start or map issue point (if not at the start) is shown by an equilateral triangle which points in the direction of the first control. The centre of the triangle shows the precise position of the start point.</source>
             <comment>Description of symbol 701</comment>
@@ -3803,8 +3803,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Control point</source>
             <comment>Name of symbol 702</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Punto de control</translation>
+    </message>
         <message>
             <source>The control points are shown with circles. The centre of the circle shows the precise position of the feature. Sections of circles should be omitted to leave important detail showing.</source>
             <comment>Description of symbol 702</comment>
@@ -3813,18 +3813,18 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Control number</source>
             <comment>Name of symbol 703</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Número de control</translation>
+    </message>
         <message>
             <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail. The numbers are orientated to north.</source>
             <comment>Description of symbol 703</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>El número de un control se coloca junto al círculo del punto de control de manera que no tape detalles importantes. Los números están orientados al norte.</translation>
+    </message>
         <message>
             <source>Line</source>
             <comment>Name of symbol 704</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Línea</translation>
+    </message>
         <message>
             <source>Where controls are to be visited in order, the start, control points and finish are joined together by straight lines. Sections of lines should be omitted to leave important detail showing.</source>
             <comment>Description of symbol 704</comment>
@@ -3833,8 +3833,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Marked route</source>
             <comment>Name of symbol 705</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ruta señalizada</translation>
+    </message>
         <message>
             <source>A marked route is shown on the map with a dashed line.</source>
             <comment>Description of symbol 705</comment>
@@ -3843,8 +3843,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Finish</source>
             <comment>Name of symbol 706</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Finalizar</translation>
+    </message>
         <message>
             <source>The finish is shown by two concentric circles.</source>
             <comment>Description of symbol 706</comment>
@@ -3863,8 +3863,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Crossing point</source>
             <comment>Name of symbol 708</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Punto de paso</translation>
+    </message>
         <message>
             <source>A crossing point through or over a wall or fence, or across a road or railway or through a tunnel or an out-of-bounds area is drawn on the map with two lines curving outwards.</source>
             <comment>Description of symbol 708</comment>
@@ -3873,8 +3873,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Out-of-bounds area</source>
             <comment>Name of symbol 709</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Área prohibida</translation>
+    </message>
         <message>
             <source>An out-of-bounds area, see also symbol 528, is shown with vertical stripes.
 A bounding line may be drawn if there is no natural boundary, as follows:
@@ -3887,23 +3887,23 @@ A bounding line may be drawn if there is no natural boundary, as follows:
         <message>
             <source>Out-of-bounds area, solid boundary</source>
             <comment>Name of symbol 709.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Área prohibida, límite continuo</translation>
+    </message>
         <message>
             <source>A solid line indicates that the boundary is marked continuously (tapes, etc.) on the ground.</source>
             <comment>Description of symbol 709.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una línea continua indica que el límite está señalizado de forma continua en el terreno (cintas, etc.).</translation>
+    </message>
         <message>
             <source>Out-of-bounds area, dashed boundary</source>
             <comment>Name of symbol 709.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Área prohibida, límite discontinuo</translation>
+    </message>
         <message>
             <source>A dashed line indicates intermittent marking on the ground.</source>
             <comment>Description of symbol 709.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una línea discontinua indica que hay señales intermitentes en el terreno.</translation>
+    </message>
         <message>
             <source>Dangerous area</source>
             <comment>Name of symbol 710</comment>
@@ -3927,45 +3927,47 @@ A bounding line may be drawn if there is no natural boundary, as follows:
         <message>
             <source>First aid post</source>
             <comment>Name of symbol 712</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Puesto de primeros auxilios</translation>
+    </message>
         <message>
             <source>The location of a first aid post.</source>
             <comment>Description of symbol 712</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>La localización de un puesto de primeros auxilios.</translation>
+    </message>
         <message>
             <source>Refreshment point</source>
             <comment>Name of symbol 713</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Punto de avituallamiento</translation>
+    </message>
         <message>
             <source>The location of a refreshment point which is not at a control.</source>
             <comment>Description of symbol 713</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>La localización de un punto de avituallamiento que no está en un control.</translation>
+    </message>
         <message>
             <source>Simple Orienteering Course</source>
             <comment>Name of symbol 799</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Recorrido de orientación sencillo</translation>
+    </message>
         <message>
             <source>This symbol provides a simple and quick way to make training courses.
 
 The purple line will extend a bit into the finish symbol. This is a shortcoming of this simple approach.</source>
             <comment>Description of symbol 799</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Este símbolo proporciona una forma sencilla y rápida de hacer recorridos de orientación.
+
+La línea púrpura se introducirá un poco en el símbolo de meta. Es una deficiencia de esta sencilla aproximación.</translation>
+    </message>
         <message>
             <source>OpenOrienteering Logo</source>
             <comment>Name of symbol 999</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Logo de OpenOrienteering</translation>
+    </message>
         <message>
             <source>The OpenOrienteering Logo.</source>
             <comment>Description of symbol 999</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>El logo de OpenOrienteering.</translation>
+    </message>
     </context>
     <context>
         <name>ISSOM</name>
