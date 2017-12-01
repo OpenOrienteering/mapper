@@ -42,13 +42,13 @@ To show the symbol menu, right click the symbol pane:
 
  - The actions in the first section enable to create new symbols or edit the selected symbol.
  - The actions in the second section enable to copy/paste symbols.
- - In the third section, in additon to the possibility to select all symbols with the selected object, there are shortcuts to the two drawing functions [switch symbol](#switch_symbol) and [fill / create border](toolbars.md#fill_create_border).
+ - In the third section, in additon to the possibility to select all symbols with the selected object, there are shortcuts to the two drawing functions [switch symbol](toolbars.md#switch_symbol) and [fill / create border](toolbars.md#fill_create_border).
  - The fourth section enables to hide all objects with a given symbol, for example to remove all paths from a map, and to protect all objects with a given symbol from editing. This is useful to make large area symbols static while editing other objects on top of them.
  - The last section offers actions for symbol selection and sorting.
 
 ### Symbol editor
 
-#### Introduction
+#### Introduction  {#symbol_editor_introduction}
 
 The symbol editor enables to create new symbols or to modify any of the existing symbols. Its main use in normal operations is to create symbols for map labeling, because no symbols for this purpose are provided by default as they depend on the desired styling of the map sheet.
 Regarding symbols for use in the map itself, it should be understood that the default symbol sets include all the symbols permitted by the ISOM or ISSOM and that any new symbols created, or modifications of existing symbols, will be a departure from the international standard.
