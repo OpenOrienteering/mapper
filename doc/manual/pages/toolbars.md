@@ -21,7 +21,7 @@ todo:
  * [Editing toolbar](#editing-toolbar)
  * [Advanced drawing](#advanced-drawing-toolbar)
 
-## Toolbar positions and visibility
+## Toolbar positions and visibility  {#toolbar-visibility}
 
 Toolbars may be moved to a more convenient position. To detach and move, pick the handle at the left end and drag the toolbar to your preferred position. The resulting order of your toolbars may thus be different from this page.
 
