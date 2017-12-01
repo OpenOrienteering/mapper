@@ -4615,7 +4615,7 @@ symbolů</translation>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="103"/>
         <source>Query editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Editor dotazů</translation>
     </message>
 </context>
 <context>
@@ -5182,7 +5182,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
         <location filename="../src/core/objects/object_query.cpp" line="305"/>
         <source>Text</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished">Text</translation>
+        <translation>Text</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="309"/>
