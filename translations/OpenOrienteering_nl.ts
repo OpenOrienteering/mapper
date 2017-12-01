@@ -4668,7 +4668,7 @@ gekozen</translation>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="103"/>
         <source>Query editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoek-vraag bewerken</translation>
     </message>
 </context>
 <context>
@@ -5231,7 +5231,7 @@ en gebruik -indien beschikbaar- het muiswiel om uit te vergroten/verkleinen.</tr
         <location filename="../src/core/objects/object_query.cpp" line="305"/>
         <source>Text</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished">Tekst</translation>
+        <translation>Tekst</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="309"/>
