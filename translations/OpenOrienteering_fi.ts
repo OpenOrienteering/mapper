@@ -4551,7 +4551,7 @@ valittu</translation>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="103"/>
         <source>Query editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Kyselyeditori</translation>
     </message>
 </context>
 <context>
@@ -5110,7 +5110,7 @@ zoomaa hiiren rullalla.</translation>
         <location filename="../src/core/objects/object_query.cpp" line="305"/>
         <source>Text</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished">Teksti</translation>
+        <translation>Teksti</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="309"/>
