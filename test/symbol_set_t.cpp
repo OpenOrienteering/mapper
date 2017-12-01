@@ -69,7 +69,7 @@ namespace
 const auto Obsolete = QString::fromLatin1("obsolete");       // clazy:exclude=non-pod-global-static
 const auto NeedsReview = QString::fromLatin1("unfinished");  // clazy:exclude=non-pod-global-static
 
-const auto translation_suffix = { "template", "cs", "de", "fi", "fr", "ru", "sv", "uk" };
+const auto translation_suffix = { "template", "cs", "de", "eo", "fi", "fr", "nl", "ru", "sv", "uk" };
 
 using TranslationEntries = std::vector<SymbolSetTool::TranslationEntry>;
 

@@ -27,7 +27,7 @@
 <context>
     <name>MapEditorController</name>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="1618"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1619"/>
         <source>Cut %n object(s)</source>
         <extracomment>Past tense. Displayed when an Edit &gt; Cut operation is completed.</extracomment>
         <translation>
@@ -36,7 +36,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="1671"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1672"/>
         <source>Copied %n object(s)</source>
         <translation>
             <numerusform>Copied one object</numerusform>
@@ -44,7 +44,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="1711"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1712"/>
         <source>Pasted %n object(s)</source>
         <translation>
             <numerusform>Pasted one object</numerusform>
@@ -52,7 +52,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="2513"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2491"/>
         <source>Duplicated %n object(s)</source>
         <translation>
             <numerusform>Duplicated one object</numerusform>
@@ -63,7 +63,7 @@
 <context>
     <name>OCAD8FileImport</name>
     <message numerus="yes">
-        <location filename="../src/fileformats/ocad8_file_format.cpp" line="145"/>
+        <location filename="../src/fileformats/ocad8_file_format.cpp" line="147"/>
         <source>%n color separation(s) were skipped, reason: Import disabled.</source>
         <translation>
             <numerusform>One color separation was skipped, reason: Import disabled.</numerusform>
@@ -89,7 +89,7 @@
 <context>
     <name>TagSelectWidget</name>
     <message numerus="yes">
-        <location filename="../src/gui/widgets/tag_select_widget.cpp" line="342"/>
+        <location filename="../src/gui/map/map_find_feature.cpp" line="229"/>
         <source>%n object(s) selected</source>
         <translation>
             <numerusform>One object selected</numerusform>
