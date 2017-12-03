@@ -172,7 +172,7 @@ void MapFindFeature::findNext()
 	if (!query)
 	{
 		if (auto window = controller.getWindow())
-			controller.getWindow()->showStatusBarMessage(TagSelectWidget::tr("Invalid query"), 2000);
+			window->showStatusBarMessage(TagSelectWidget::tr("Invalid query"), 2000);
 		return;
 	}
 		
