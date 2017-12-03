@@ -27,6 +27,14 @@ include(FeatureSummary)
 
 project(Mapper VERSION 0.8.0 LANGUAGES CXX C)
 
+if(Mapper_VERSION_DISPLAY)
+	message(STATUS "Custom version display string: \"{Mapper_VERSION_DISPLAY}\"")
+elseif(CMAKE_BUILD_TYPE AND NOT CMAKE_BUILD_TYPE MATCHES "Release|MinSizeRel|RelWithDebInfo")
+	set(Mapper_VERSION_DISPLAY "${CMAKE_BUILD_TYPE} ${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}")
+else()
+	set(Mapper_VERSION_DISPLAY "${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}")
+endif()
+
 set(Mapper_COPYRIGHT "(C) 2012-2017 The OpenOrienteering developers")
 
 set(android_manifest "${PROJECT_SOURCE_DIR}/android/AndroidManifest.xml")
@@ -215,12 +223,6 @@ if(Mapper_DEVELOPMENT_BUILD)
 	configure_file(suppress.txt.in suppress.txt COPYONLY)
 else()
 	add_definitions(-DQT_NO_DEBUG -DQT_NO_DEBUG_OUTPUT -DQT_NO_WARNING_OUTPUT -DNDEBUG)
-endif()
-
-if(NOT Mapper_VERSION_PATCH LESS 99)
-	set(Mapper_VERSION_DISPLAY "unstable ${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}")
-else()
-	set(Mapper_VERSION_DISPLAY "${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}")
 endif()
 
 # Subdirectories
