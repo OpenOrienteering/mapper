@@ -927,7 +927,7 @@
         <location filename="../src/tools/draw_path_tool.cpp" line="1187"/>
         <location filename="../src/tools/draw_path_tool.cpp" line="1214"/>
         <source>&lt;b&gt;%1+%2&lt;/b&gt;: Segment azimuth and length. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+%2&lt;/b&gt;: Richtung und Länge des Segments. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1203"/>
@@ -977,7 +977,7 @@
         <location filename="../src/tools/draw_path_tool.cpp" line="104"/>
         <source>Info</source>
         <comment>Show segment azimuth and length</comment>
-        <translation type="unfinished"></translation>
+        <translation>Info</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="107"/>
@@ -1312,7 +1312,7 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="44"/>
         <source>Symbol icon size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbolgröße:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="63"/>
@@ -4480,7 +4480,7 @@ gewählt</translation>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="103"/>
         <source>Query editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Abfrageeditor</translation>
     </message>
 </context>
 <context>
@@ -5048,7 +5048,7 @@ Zoomen ist mit dem Mausrad möglich.</translation>
         <location filename="../src/core/objects/object_query.cpp" line="305"/>
         <source>Text</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished">Text</translation>
+        <translation>Text</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="309"/>
@@ -7506,7 +7506,7 @@ Speichern im GIF-Format wird nicht unterstützt. Zeichnungen auf solchen Vorlage
     <message>
         <location filename="../src/templates/template_track.cpp" line="138"/>
         <source>This template must be loaded with GDAL/OGR.</source>
-        <translation type="unfinished"></translation>
+        <translation>Diese Vorlage muss mit GDAL/OGR geladen werden.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="187"/>
@@ -7922,13 +7922,13 @@ Die höchste unterstütze Version ist %2.</translation>
         <location filename="../src/tools/tool_helpers.cpp" line="620"/>
         <source>%1°</source>
         <comment>degree</comment>
-        <translation type="unfinished">%1°</translation>
+        <translation>%1°</translation>
     </message>
     <message>
         <location filename="../src/tools/tool_helpers.cpp" line="621"/>
         <source>%1 m</source>
         <comment>meter</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 m</translation>
     </message>
 </context>
 <context>

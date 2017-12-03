@@ -4392,7 +4392,7 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="103"/>
         <source>Query editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Редактор запросов</translation>
     </message>
 </context>
 <context>
@@ -4953,7 +4953,7 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/core/objects/object_query.cpp" line="305"/>
         <source>Text</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished">Текст</translation>
+        <translation>Текст</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="309"/>
