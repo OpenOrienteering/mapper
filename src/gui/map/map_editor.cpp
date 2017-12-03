@@ -615,7 +615,7 @@ void MapEditorController::attach(MainWindow* window)
 	{
 		window->setWindowState(window->windowState() | Qt::WindowFullScreen);
 		zoom_display_function = [window](const QString& text) {
-			window->showStatusBarMessage(text);
+			window->showStatusBarMessage(text, 1000);
 		};
 	}
 	else

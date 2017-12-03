@@ -39,6 +39,7 @@
 #  include <QtAndroid>
 #  include <QAndroidJniObject>
 #  include <QDesktopWidget>
+#  include <QTimer>
 #  include <QUrl>
 #endif
 
@@ -441,13 +442,12 @@ void MainWindow::setStatusBarText(const QString& text)
 void MainWindow::showStatusBarMessage(const QString& text, int timeout)
 {
 #if defined(Q_OS_ANDROID)
-	Q_UNUSED(timeout);
 	QAndroidJniObject java_string = QAndroidJniObject::fromString(text);
 	QAndroidJniObject::callStaticMethod<void>(
 		"org/openorienteering/mapper/MapperActivity",
-		"showShortMessage",
-		"(Ljava/lang/String;)V",
-		java_string.object<jstring>());
+		"showToast",
+		"(Ljava/lang/String;I)V",
+		java_string.object<jstring>(), timeout);
 #else
 	statusBar()->showMessage(text, timeout);
 #endif
@@ -455,7 +455,12 @@ void MainWindow::showStatusBarMessage(const QString& text, int timeout)
 
 void MainWindow::clearStatusBarMessage()
 {
-#if !defined(Q_OS_ANDROID)
+#if defined(Q_OS_ANDROID)
+	QAndroidJniObject::callStaticMethod<void>(
+		"org/openorienteering/mapper/MapperActivity",
+		"hideToast",
+		"()V");
+#else
 	statusBar()->clearMessage();
 #endif
 }
