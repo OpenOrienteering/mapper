@@ -23,12 +23,12 @@ cmake_minimum_required(VERSION 2.8.3)
 
 # Configuration options
 
-set(CLIPPER_VERSION_DEFAULT 6.1.3a)
+set(CLIPPER_VERSION_DEFAULT 6.4.2)
 if(CLIPPER_VERSION MATCHES "^5")
 	unset(CLIPPER_VERSION CACHE) # source incompatible
 endif()
 set(CLIPPER_VERSION ${CLIPPER_VERSION_DEFAULT} CACHE STRING
-  "Version number of the Clipper library, recommended value: 6.1.3a")
+  "Version number of the Clipper library")
 mark_as_advanced(CLIPPER_VERSION)
 
 
@@ -57,6 +57,7 @@ else()
 	set(CLIPPER_MD5SUMS
 	  # Schema: VERSION:MD5
 	  6.1.3a:4dcd043ce48de59714f07bd3ec7ac62b
+	  6.4.2:100b4ec56c5308bac2d10f3966e35e11
 	)
 	foreach(line ${CLIPPER_MD5SUMS})
 		if(${line} MATCHES "^${CLIPPER_VERSION}:")
