@@ -143,15 +143,15 @@ void MapTest::importTest()
 	auto original_size = map.getNumObjects();
 	auto original_num_colors = map.getNumColors();
 	Map empty_map;
-	map.importMap(&empty_map, Map::CompleteImport);
+	map.importMap(empty_map, Map::CompleteImport);
 	QCOMPARE(map.getNumObjects(), original_size);
 	QCOMPARE(map.getNumColors(), original_num_colors);
 	
-	map.importMap(&map, Map::ColorImport);
+	map.importMap(map, Map::ColorImport);
 	QCOMPARE(map.getNumObjects(), original_size);
 	QCOMPARE(map.getNumColors(), original_num_colors);
 	
-	map.importMap(&map, Map::CompleteImport);
+	map.importMap(map, Map::CompleteImport);
 	QCOMPARE(map.getNumObjects(), 2*original_size);
 	QCOMPARE(map.getNumColors(), original_num_colors);
 	
@@ -161,8 +161,7 @@ void MapTest::importTest()
 	QVERIFY(imported_map.getNumSymbols() > 0);
 	
 	original_size = map.getNumObjects();
-	QHash<const Symbol*, Symbol*> symbol_map;
-	map.importMap(&imported_map, Map::CompleteImport, nullptr, nullptr, -1, false, &symbol_map);
+	auto symbol_map = map.importMap(imported_map, Map::CompleteImport, nullptr, -1, false);
 	QCOMPARE(map.getNumObjects(), original_size + imported_map.getNumObjects());
 	QCOMPARE(symbol_map.size(), imported_map.getNumSymbols());
 }
