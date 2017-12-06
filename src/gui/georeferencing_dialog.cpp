@@ -516,7 +516,7 @@ void GeoreferencingDialog::crsEdited()
 	switch (selected_item_id)
 	{
 	default:
-		Q_ASSERT(false && "Unsupported CRS item id");
+		qWarning("Unsupported CRS item id");
 		// fall through
 	case Georeferencing::Local:
 		// Local

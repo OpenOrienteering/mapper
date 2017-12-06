@@ -180,7 +180,7 @@ bool ObjectCreatingUndoStep::isValid() const
 
 void ObjectCreatingUndoStep::addObject(int)
 {
-	Q_ASSERT(false && "This implementation must not be called");
+	qWarning("This implementation must not be called");
 	return;
 }
 

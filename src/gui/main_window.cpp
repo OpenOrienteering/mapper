@@ -592,7 +592,7 @@ bool MainWindow::showSaveOnCloseDialog()
 			break;
 			
 		default:
-			Q_ASSERT(false && "Unsupported return value from message box");
+			qWarning("Unsupported return value from message box");
 			break;
 		}
 		

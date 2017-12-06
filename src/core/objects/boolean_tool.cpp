@@ -109,7 +109,7 @@ bool BooleanTool::execute()
 	Object* const primary_object = map->getFirstSelectedObject();
 	if (primary_object->getType() != Object::Path)
 	{
-		Q_ASSERT(false && "The first selected object must be a path.");
+		qWarning("The first selected object must be a path.");
 		return false; // in release build
 	}
 
@@ -292,7 +292,7 @@ bool BooleanTool::executeForObjects(PathObject* subject, PathObjects& in_objects
 	case MergeHoles:    clip_type = ClipperLib::ctUnion;
 	                    fill_type = ClipperLib::pftPositive;
 	                    break;
-	default:            Q_ASSERT(false && "Undefined operation");
+	default:            qWarning("Undefined operation");
 	                    return false;
 	}
 
