@@ -4963,7 +4963,7 @@ valda</translation>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="60"/>
         <source>Find &amp;next</source>
-        <translation type="unfinished">Sök &amp;next</translation>
+        <translation>Sök &amp;nästa</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="90"/>
@@ -4983,7 +4983,7 @@ valda</translation>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="103"/>
         <source>Query editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Avancerad sökning</translation>
     </message>
 </context>
 <context>
