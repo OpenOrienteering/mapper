@@ -571,7 +571,7 @@ void SymbolSetTool::processSymbolSet()
 			source = symbol->getDescription();
 			comment = QString{QLatin1String("Description of symbol ") + symbol->getNumberAsString()};
 			if (source.isEmpty())
-				qWarning("%s: empty", qPrintable(comment));
+				qInfo("%s: empty", qPrintable(comment));
 			else
 				addSource(translation_entries, id, source, comment);
 		}
