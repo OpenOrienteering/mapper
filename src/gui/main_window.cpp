@@ -631,7 +631,8 @@ void MainWindow::loadWindowSettings()
 	move(pos);
 	resize(size);
 	if (maximized)
-		showMaximized();
+		setWindowState((windowState() & ~(Qt::WindowMinimized | Qt::WindowFullScreen))
+		               | Qt::WindowMaximized); // Cf. QWidget::showMaximized()
 #endif
 }
 
