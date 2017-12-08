@@ -956,7 +956,7 @@
         <location filename="../src/tools/draw_path_tool.cpp" line="1187"/>
         <location filename="../src/tools/draw_path_tool.cpp" line="1214"/>
         <source>&lt;b&gt;%1+%2&lt;/b&gt;: Segment azimuth and length. </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;b&gt;%1+%2&lt;/b&gt;: Segmentets retning og lengde. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1203"/>
@@ -1006,7 +1006,7 @@
         <location filename="../src/tools/draw_path_tool.cpp" line="104"/>
         <source>Info</source>
         <comment>Show segment azimuth and length</comment>
-        <translation type="unfinished"></translation>
+        <translation>Info</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="107"/>
@@ -4577,17 +4577,17 @@ er valgt</translation>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="53"/>
         <source>&amp;Find...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Finn…</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="60"/>
         <source>Find &amp;next</source>
-        <translation type="unfinished"></translation>
+        <translation>Finn &amp;neste</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="90"/>
         <source>Find objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Finn objekter</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="97"/>
@@ -4602,7 +4602,7 @@ er valgt</translation>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="103"/>
         <source>Query editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Avansert søk</translation>
     </message>
 </context>
 <context>
@@ -6235,13 +6235,13 @@ separations</source>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="158"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="234"/>
         <source>Open CRT file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Åpne CRT-fil…</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="160"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="330"/>
         <source>Save CRT file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Lagre CRT-fil…</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="165"/>
@@ -6252,12 +6252,12 @@ separations</source>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="233"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="329"/>
         <source>CRT file</source>
-        <translation type="unfinished"></translation>
+        <translation>CRT-fil</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="283"/>
         <source>There are multiple replacements for symbol %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Det er flere erstatninger for symbolet %1.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="286"/>
@@ -6276,7 +6276,10 @@ separations</source>
 %1
 
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ikke lagre fil:
+%1
+
+%2</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="360"/>
@@ -6318,7 +6321,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="655"/>
         <source>Cannot load CRT file, aborting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ikke laste CRT-fil, avbryter.</translation>
     </message>
 </context>
 <context>
@@ -7682,7 +7685,7 @@ Hvis du ikke har til hensikt å endre denne malen, er det ikke noe problem.</tra
     <message>
         <location filename="../src/templates/template_track.cpp" line="138"/>
         <source>This template must be loaded with GDAL/OGR.</source>
-        <translation type="unfinished"></translation>
+        <translation>Denne malen må lastes med GDAL/OGR.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="187"/>
@@ -8109,7 +8112,7 @@ Høyeste støttede versjon er %2.</translation>
         <location filename="../src/tools/tool_helpers.cpp" line="621"/>
         <source>%1 m</source>
         <comment>meter</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 m</translation>
     </message>
 </context>
 <context>
