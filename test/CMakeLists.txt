@@ -166,12 +166,12 @@ add_system_test(undo_manager_t)
 get_property(Mapper_AUTORUN_TESTS DIRECTORY PROPERTY Mapper_AUTORUN_TESTS)
 configure_file(AUTORUN_TESTS.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/AUTORUN_TESTS.cmake @ONLY)
 
-
-# This executable first runs all tests which are marked for auto-run. If the
-# tests don't fail, it starts the Mapper executable. Unlike the default "test"
-# target, it is displayed in Qt Creator's project view, and when run, it prints
-# the output of failed tests.
-add_executable(Mapper-with-test mapper_t.cpp)
-add_dependencies(Mapper-with-test Mapper_prerequisites)
-target_link_libraries(Mapper-with-test Qt5::Core)
-target_compile_definitions(Mapper-with-test PRIVATE -DCMAKE_COMMAND="${CMAKE_COMMAND}" -DMAPPER_LOCATION="$<TARGET_FILE:Mapper>")
+# Unlike the default "test" target, this custom target is displayed in Qt
+# Creator's Projects view, and when build, it prints the output of failed tests.
+# It maybe used as an additional build step or be build from the Projects view.
+# It also provides access to the the script template.
+add_custom_target(AUTORUN_TESTS
+  COMMAND "${CMAKE_COMMAND}" -P AUTORUN_TESTS.cmake
+  SOURCES AUTORUN_TESTS.cmake.in
+  COMMENT "Running tests for modified sources"
+)
