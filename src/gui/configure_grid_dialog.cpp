@@ -29,6 +29,7 @@
 #include <QDialogButtonBox>
 #include <QDoubleSpinBox>
 #include <QFormLayout>
+#include <QLabel>
 #include <QPushButton>
 #include <QRadioButton>
 

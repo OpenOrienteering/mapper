@@ -49,6 +49,7 @@
 #include "core/symbols/text_symbol.h"
 #include "fileformats/file_format.h"
 #include "fileformats/file_import_export.h"
+#include "gui/util_gui.h"
 #include "util/util.h"
 #include "settings.h"
 

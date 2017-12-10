@@ -23,7 +23,7 @@
 #include <QPainter>
 #include <QtNumeric>
 
-#include "util/util.h"
+#include "gui/util_gui.h"
 
 
 CompassDisplay::CompassDisplay(QWidget* parent)

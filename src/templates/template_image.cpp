@@ -58,6 +58,7 @@
 #include "core/map_coord.h"
 #include "gui/georeferencing_dialog.h"
 #include "gui/select_crs_dialog.h"
+#include "gui/util_gui.h"
 #include "templates/world_file.h"
 #include "util/transformation.h"
 #include "util/util.h"

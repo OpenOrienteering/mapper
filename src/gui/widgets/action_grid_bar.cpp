@@ -28,7 +28,7 @@
 #include <QToolButton>
 
 #include "settings.h"
-#include "util/util.h"
+#include "gui/util_gui.h"
 
 ActionGridBar::ActionGridBar(Direction direction, int rows, QWidget* parent)
 : QWidget(parent)

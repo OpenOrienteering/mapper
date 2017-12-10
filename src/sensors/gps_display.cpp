@@ -32,10 +32,11 @@
 #include <QTimer>  // IWYU pragma: keep
 
 #include "core/georeferencing.h"
+#include "gui/util_gui.h"
 #include "gui/map/map_widget.h"
 #include "sensors/compass.h"
 #include "util/backports.h"
-#include "util/util.h"
+
 
 GPSDisplay::GPSDisplay(MapWidget* widget, const Georeferencing& georeferencing, QObject* parent)
  : QObject(parent)

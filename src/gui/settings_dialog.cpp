@@ -34,9 +34,9 @@
 #include <QVBoxLayout>
 
 #include "gui/main_window.h"
+#include "gui/util_gui.h"
 #include "gui/widgets/editor_settings_page.h"
 #include "gui/widgets/general_settings_page.h"
-#include "util/util.h"
 #include "util/backports.h" // IWYU pragma: keep
 
 #ifdef MAPPER_USE_GDAL

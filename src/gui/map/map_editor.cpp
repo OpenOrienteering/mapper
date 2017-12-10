@@ -115,6 +115,7 @@
 #include "gui/main_window.h"
 #include "gui/print_widget.h"
 #include "gui/text_browser_dialog.h"
+#include "gui/util_gui.h"
 #include "gui/map/map_dialog_rotate.h"
 #include "gui/map/map_dialog_scale.h"
 #include "gui/map/map_editor_activity.h"

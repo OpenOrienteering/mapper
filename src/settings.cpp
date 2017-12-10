@@ -30,7 +30,55 @@
 #include <QSettings>
 #include <QStringList>
 
-#include "util/util.h"
+
+/*
+ * Implementation for some functions which need a Settings instance.
+ * 
+ * Settings has Qt dependencies only. The Util function are declared in
+ * gui/util_gui.h. By moving the definitions here, we facilitate the
+ * compilation of unit tests which depend on Settings.
+ */
+namespace Util
+{
+
+	qreal mmToPixelPhysical(qreal millimeters)
+	{
+		auto ppi = Settings::getInstance().getSettingCached(Settings::General_PixelsPerInch).toReal();
+		return millimeters * ppi / 25.4;
+	}
+	
+	qreal pixelToMMPhysical(qreal pixels)
+	{
+		auto ppi = Settings::getInstance().getSettingCached(Settings::General_PixelsPerInch).toReal();
+		return pixels * 25.4 / ppi;
+	}
+
+	
+	qreal mmToPixelLogical(qreal millimeters)
+	{
+		auto ppi = QApplication::primaryScreen()->logicalDotsPerInch();
+		return millimeters * ppi / qreal(25.4);
+	}
+	
+	qreal pixelToMMLogical(qreal pixels)
+	{
+		auto ppi = QApplication::primaryScreen()->logicalDotsPerInch();
+		return pixels * qreal(25.4) / ppi;
+	}
+	
+	
+	bool isAntialiasingRequired(qreal ppi)
+	{
+		return ppi < 200;
+	}
+	
+	bool isAntialiasingRequired()
+	{
+		return isAntialiasingRequired(Settings::getInstance().getSettingCached(Settings::General_PixelsPerInch).toReal());
+	}
+	
+}
+
 
 
 Settings::Settings()

@@ -37,6 +37,7 @@
 
 #include "core/map.h"
 #include "core/map_coord.h"
+#include "gui/util_gui.h"
 #include "templates/template.h" // IWYU pragma: keep
 #include "util/util.h"
 #include "util/xml_stream_util.h"

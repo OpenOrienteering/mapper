@@ -22,11 +22,13 @@
 #include "text_symbol_settings.h"
 
 #include <QCheckBox>
+#include <QCoreApplication>
 #include <QDoubleSpinBox>
 #include <QFontComboBox>
 #include <QFormLayout>
 #include <QHBoxLayout>
 #include <QInputDialog>
+#include <QLabel>
 #include <QLineEdit>
 #include <QListWidget>
 #include <QPushButton>

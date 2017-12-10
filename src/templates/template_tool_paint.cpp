@@ -43,6 +43,7 @@
 
 #include "core/map.h"
 #include "core/map_view.h"
+#include "gui/util_gui.h"
 #include "gui/map/map_editor.h"
 #include "gui/map/map_widget.h"
 #include "templates/template.h"

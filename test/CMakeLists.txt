@@ -125,12 +125,16 @@ include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
 # Unit tests
 add_unit_test(tst_qglobal)
-add_unit_test(autosave_t MANUAL ../src/core/autosave ../src/settings ../src/util/util)
+add_unit_test(autosave_t MANUAL ../src/core/autosave
+	../src/settings
+)
 add_unit_test(encoding_t ../src/util/encoding)
-add_unit_test(georeferencing_t ../src/core/georeferencing ../src/gui/util_gui
-	../src/core/latlon
+add_unit_test(georeferencing_t ../src/core/georeferencing
+	../src/settings
 	../src/core/crs_template
 	../src/core/crs_template_implementation
+	../src/core/latlon
+	../src/gui/util_gui
 	../src/gui/widgets/crs_param_widgets
 	../src/mapper_resource
 	../src/fileformats/file_format
@@ -138,7 +142,9 @@ add_unit_test(georeferencing_t ../src/core/georeferencing ../src/gui/util_gui
 add_unit_test(locale_t ../src/util/translation_util)
 add_unit_test(map_color_t ../src/core/map_color)
 add_unit_test(qpainter_t)
-add_unit_test(util_t ../src/util/util ../src/settings)
+add_unit_test(util_t ../src/util/util
+	../src/settings
+)
 
 # Benchmarks
 add_system_test(coord_xml_t MANUAL)

@@ -42,6 +42,7 @@
 #include "core/objects/object.h"
 #include "gui/file_dialog.h"
 #include "gui/main_window.h"
+#include "gui/util_gui.h"
 #include "gui/map/map_editor.h"
 #include "gui/map/map_widget.h"
 #include "gui/widgets/segmented_button_layout.h"
@@ -50,7 +51,6 @@
 #include "templates/template_map.h"
 #include "templates/template_tool_move.h"
 #include "util/item_delegates.h"
-#include "util/util.h"
 
 
 // ### ApplyTemplateTransform ###

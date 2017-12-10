@@ -56,6 +56,7 @@
 #include "gui/file_dialog.h"
 #include "gui/home_screen_controller.h"
 #include "gui/settings_dialog.h"
+#include "gui/util_gui.h"
 #include "gui/map/map_editor.h"
 #include "gui/map/new_map_dialog.h"
 #include "undo/undo_manager.h"

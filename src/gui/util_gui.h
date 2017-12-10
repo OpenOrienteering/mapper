@@ -21,25 +21,109 @@
 #ifndef OPENORIENTEERING_UTIL_GUI_H
 #define OPENORIENTEERING_UTIL_GUI_H
 
-#include <QCoreApplication>
-#include <QLabel>
-#include <QLatin1String>
-#include <QSpacerItem>
+#include <QtGlobal>
+#include <QDoubleValidator>
 #include <QString>
-#include <QStyle>
-#include <QWidget>
+#include <QValidator>
 
 class QCheckBox;
 class QDoubleSpinBox;
-// IWYU pragma: no_forward_declare QLabel
+class QLabel;
+class QObject;
 class QSpacerItem;
 class QSpinBox;
+class QWidget;
 
 class MapCoordF;
 
-/** A collection of GUI utility functions. */
+
+/** Double validator for line edit widgets,
+ *  ensures that only valid doubles can be entered. */
+class DoubleValidator : public QDoubleValidator  // clazy:exclude=missing-qobject-macro
+{
+public:
+	DoubleValidator(double bottom, double top = 10e10, QObject* parent = nullptr, int decimals = 20);
+	
+	~DoubleValidator() override;
+	
+	State validate(QString& input, int& pos) const override;
+};
+
+
+
+/**
+ * A collection of GUI utility functions.
+ */
 namespace Util
 {
+
+	/**
+	 * Converts millimeters to pixels using the physical dpi setting of
+	 * Mapper's settings. This should be used to calculate sizes of map elements.
+	 * @sa mmToPixelLogical()
+	 */
+	qreal mmToPixelPhysical(qreal millimeters);
+	
+	/** Inverse of mmToPixelPhysical(). */
+	qreal pixelToMMPhysical(qreal pixels);
+	
+	
+	/**
+	 * Converts millimeters to pixels using the "logical" dpi setting of
+	 * the operating system. This should be used to calculate sizes of UI
+	 * elements.
+	 * @sa mmToPixelPhysical()
+	 */
+	qreal mmToPixelLogical(qreal millimeters);
+	
+	/** Inverse of mmToPixelLogical(). */
+	qreal pixelToMMLogical(qreal pixels);
+	
+	
+	/** Returns true for low-dpi screens, false for high-dpi screens. */
+	bool isAntialiasingRequired();
+	
+	/** Returns true for low-dpi screens, false for high-dpi screens. */
+	bool isAntialiasingRequired(qreal ppi);
+	
+	
+	
+	/**
+	 * Show the manual in Qt assistant.
+	 * 
+	 * @param filename_latin1 the name of the manual page html file
+	 * @param anchor_latin1 the anchor in the specified file to jump to
+	 */
+	void showHelp(QWidget* dialog_parent, const char* filename_latin1, const char* anchor_latin1);
+	
+	/**
+	 * Show the manual in Qt assistant.
+	 * 
+	 * The anchor may be left out or given with the filename.
+	 * 
+	 * @param file_and_anchor_latin1 the name of the manual page html file, optionally including an anchor
+	 */
+	void showHelp(QWidget* dialog_parent, const char* file_and_anchor_latin1 = "index.html");
+	
+	/**
+	 * Show the manual in Qt assistant.
+	 * 
+	 * The anchor may be left out or given with the filename.
+	 * 
+	 * @param file_and_anchor the name of the manual page html file, optionally including an anchor
+	 */
+	void showHelp(QWidget* dialog_parent, const QString& file_and_anchor);
+	
+	
+	
+	/**
+	 * Creates a What's-this text "See more" linking to the given page and
+	 * fragment in the manual.
+	 */
+	QString makeWhatThis(const char* reference_latin1);
+	
+	
+	
 	/**
 	 * Provides information about the properties of Mapper types
 	 * for the purpose of customizing input widgets.
@@ -53,6 +137,7 @@ namespace Util
 	{
 		// intentionally left empty
 	};
+	
 	
 	/**
 	 * Provides information about the properties of MapCoordF
@@ -77,17 +162,16 @@ namespace Util
 		constexpr static int decimals() noexcept { return 2; }
 		
 		/** The unit of measurement, translated in context UnitOfMeasurement. */
-		static QString unit()
-		{
-			return QCoreApplication::translate("UnitOfMeasurement", "mm", "millimeters");
-		}
+		static QString unit();
 	};
+	
 	
 	/** Identifies the type double representing real meters */
 	struct RealMeters
 	{
 		// intentionally left empty
 	};
+	
 	
 	/**
 	 * Provides information about the type double representing real meters
@@ -112,11 +196,10 @@ namespace Util
 		constexpr static int decimals() noexcept { return 2; }
 		
 		/** The unit of measurement, translated in context UnitOfMeasurement. */
-		static QString unit()
-		{
-			return QCoreApplication::translate("UnitOfMeasurement", "m", "meters");
-		}
+		static QString unit();
 	};
+	
+	
 	
 	namespace Headline
 	{
@@ -125,23 +208,17 @@ namespace Util
 		 *
 		 * This headline is intended for use in dialogs.
 		 */
-		inline
-		QLabel* create(const QString& text)
-		{
-			return new QLabel(QLatin1String("<b>") + text + QLatin1String("</b>"));
-		}
+		QLabel* create(const QString& text);
 		
 		/**
 		 * Creates a QLabel which is styled as a headline.
 		 *
 		 * This headline is intended for use in dialogs.
 		 */
-		inline
-		QLabel* create(const char* text_utf8)
-		{
-			return create(QString::fromUtf8(text_utf8));
-		}
+		QLabel* create(const char* text_utf8);
 	}
+	
+	
 	
 	namespace SpacerItem
 	{
@@ -152,29 +229,13 @@ namespace Util
 		 * This spacer item is intended for use with QFormLayout which
 		 * does not offer a direct mean for extra spacing.
 		 */
-		inline
-		QSpacerItem* create(const QWidget* widget)
-		{
-			const int spacing = widget->style()->pixelMetric(QStyle::PM_LayoutTopMargin);
-			return new QSpacerItem(spacing, spacing);
-		}
+		QSpacerItem* create(const QWidget* widget);
 	}
+	
+	
 	
 	namespace SpinBox
 	{
-#ifndef NDEBUG
-		/**
-		 * Returns the maximum number of digits in a spinbox which is regarded
-		 * as normal. Exceedings this number in Util::SpinBox::create() will
-		 * print a runtime warning in development builds.
-		 */
-		inline
-		constexpr int max_digits()
-		{
-			return 13;
-		}
-#endif
-		
 		/**
 		 * Creates and initializes a QSpinBox.
 		 * 
@@ -235,12 +296,16 @@ namespace Util
 		}
 	}
 	
+	
+	
 	namespace TristateCheckbox
 	{
 		void setDisabledAndChecked(QCheckBox* checkbox, bool checked);
 		
 		void setEnabledAndChecked(QCheckBox* checkbox, bool checked);
 	}
+	
+	
 	
 	/**
 	 * Remove any HTML markup from the input text.

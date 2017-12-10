@@ -43,8 +43,8 @@
 #include <QWidget>
 
 #include "core/objects/object_query.h"
+#include "gui/util_gui.h"
 #include "gui/widgets/segmented_button_layout.h"
-#include "util/util.h"
 
 
 // ### TagSelectWidget ###

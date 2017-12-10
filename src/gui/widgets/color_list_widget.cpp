@@ -54,6 +54,7 @@
 #include "core/map_color.h"
 #include "gui/color_dialog.h"
 #include "gui/main_window.h"
+#include "gui/util_gui.h"
 #include "gui/widgets/segmented_button_layout.h"
 #include "util/item_delegates.h"
 #include "util/util.h"

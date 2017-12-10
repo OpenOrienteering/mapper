@@ -39,9 +39,9 @@
 #include "core/map_part.h"
 #include "core/objects/object_query.h"
 #include "gui/main_window.h"
+#include "gui/util_gui.h"
 #include "gui/map/map_editor.h"
 #include "gui/widgets/tag_select_widget.h"
-#include "util/util.h"
 
 class Object;
 

@@ -25,7 +25,7 @@
 #include <QPainter>
 
 #include "gui/map/map_widget.h"
-#include "util/util.h"
+#include "gui/util_gui.h"
 
 
 // TODO: convert these to settings

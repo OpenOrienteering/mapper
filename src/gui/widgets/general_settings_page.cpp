@@ -28,6 +28,7 @@
 #include <QDialogButtonBox>
 #include <QDoubleSpinBox>
 #include <QFormLayout>
+#include <QLabel>
 #include <QLineEdit>
 #include <QMessageBox>
 #include <QScreen>

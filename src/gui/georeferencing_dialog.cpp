@@ -28,6 +28,7 @@
 #include <QDoubleSpinBox>
 #include <QHBoxLayout>
 #include <QFormLayout>
+#include <QLabel>
 #include <QMessageBox>
 #include <QMouseEvent>
 #include <QPushButton>

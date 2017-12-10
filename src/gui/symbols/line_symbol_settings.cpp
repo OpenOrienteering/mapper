@@ -25,6 +25,7 @@
 #include <QComboBox>
 #include <QDoubleSpinBox>
 #include <QGridLayout>
+#include <QLabel>
 #include <QScrollArea>
 #include <QScrollBar>
 #include <QTimer>

@@ -40,13 +40,13 @@
 #include "core/symbols/symbol.h"
 #include "core/symbols/text_symbol.h"
 #include "gui/main_window.h"
+#include "gui/util_gui.h"
 #include "gui/map/map_editor.h"
 #include "gui/map/map_widget.h"
 #include "gui/symbols/symbol_properties_widget.h"
 #include "gui/widgets/template_list_widget.h"
 #include "templates/template.h"
 #include "templates/template_image.h"
-#include "util/util.h"
 
 
 SymbolSettingDialog::SymbolSettingDialog(const Symbol* source_symbol, Map* source_map, QWidget* parent)
