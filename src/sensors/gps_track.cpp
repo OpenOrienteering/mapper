@@ -57,7 +57,7 @@ void TrackPoint::save(QXmlStreamWriter* stream) const
 	stream->writeAttribute(QStringLiteral("lon"), QString::number(gps_coord.longitude(), 'f', 12));
 	
 	if (datetime.isValid())
-		stream->writeTextElement(QStringLiteral("time"), datetime.toString(Qt::ISODate) + QLatin1Char('Z'));
+		stream->writeTextElement(QStringLiteral("time"), datetime.toString(Qt::ISODate));
 	if (elevation > -9999)
 		stream->writeTextElement(QStringLiteral("ele"), QString::number(elevation, 'f', 3));
 	if (num_satellites >= 0)
