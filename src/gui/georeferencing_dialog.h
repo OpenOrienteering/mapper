@@ -292,7 +292,7 @@ public:
 	GeoreferencingTool(
 	        GeoreferencingDialog* dialog,
 	        MapEditorController* controller,
-	        QAction* toolAction = nullptr
+	        QAction* action = nullptr
 	);
 	
 	/**

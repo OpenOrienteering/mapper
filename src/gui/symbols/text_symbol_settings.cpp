@@ -21,20 +21,35 @@
 
 #include "text_symbol_settings.h"
 
+#include <vector>
+
+#include <QAbstractButton>
 #include <QCheckBox>
+#include <QComboBox>
 #include <QCoreApplication>
 #include <QDoubleSpinBox>
+#include <QFont>
 #include <QFontComboBox>
 #include <QFormLayout>
 #include <QHBoxLayout>
+#include <QIcon>
 #include <QInputDialog>
 #include <QLabel>
+#include <QLatin1Char>
 #include <QLineEdit>
 #include <QListWidget>
+#include <QListWidgetItem>
+#include <QLocale>
+#include <QPainterPath>
 #include <QPushButton>
 #include <QRadioButton>
+#include <QRectF>
 #include <QSignalBlocker>
+#include <QSpacerItem>
+#include <QVBoxLayout>
+#include <QWidget>
 
+#include "core/symbols/symbol.h"
 #include "core/symbols/text_symbol.h"
 #include "gui/util_gui.h"
 #include "gui/symbols/symbol_setting_dialog.h"
@@ -54,6 +69,7 @@ public:
 };
 
 
+
 // ### TextSymbol ###
 
 SymbolPropertiesWidget* TextSymbol::createPropertiesWidget(SymbolSettingDialog* dialog)
@@ -69,13 +85,13 @@ TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* 
   symbol(symbol), 
   dialog(dialog)
 {
-	Map* map = dialog->getPreviewMap();
+	auto map = dialog->getPreviewMap();
 	react_to_changes = true;
 	
-	QWidget* text_tab = new QWidget();
+	auto text_tab = new QWidget();
 	addPropertiesGroup(tr("Text settings"), text_tab);
 	
-	QFormLayout* layout = new QFormLayout();
+	auto layout = new QFormLayout();
 	text_tab->setLayout(layout);
 	
 	font_edit = new QFontComboBox();
@@ -85,7 +101,7 @@ TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* 
 	font_size_edit = Util::SpinBox::create(2, 0.04, 40000.0, tr("pt"));
 	layout->addRow(tr("Font size:"), font_size_edit);
 	
-	QHBoxLayout* letter_size_layout = new QHBoxLayout();
+	auto letter_size_layout = new QHBoxLayout();
 	letter_size_layout->setMargin(0);
 	
 	letter_size_layout->addWidget(new QLabel(DetermineFontSizeDialog::tr("Letter:")));
@@ -107,7 +123,7 @@ TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* 
 	color_edit = new ColorDropDown(map, symbol->getColor());
 	layout->addRow(tr("Text color:"), color_edit);
 	
-	QVBoxLayout* text_style_layout = new QVBoxLayout();
+	auto text_style_layout = new QVBoxLayout();
 	bold_check = new QCheckBox(tr("bold"));
 	text_style_layout->addWidget(bold_check);
 	italic_check = new QCheckBox(tr("italic"));
@@ -149,7 +165,7 @@ TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* 
 	framing_widget = new QWidget();
 	addPropertiesGroup(tr("Framing"), framing_widget);
 	
-	QFormLayout* framing_layout = new QFormLayout();
+	auto framing_layout = new QFormLayout();
 	framing_widget->setLayout(framing_layout);
 	
 	framing_color_edit = new ColorDropDown(map, symbol->getFramingColor());
@@ -174,7 +190,7 @@ TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* 
 	ocad_compat_widget = new QWidget();
 	addPropertiesGroup(tr("OCAD compatibility"), ocad_compat_widget);
 	
-	QFormLayout* ocad_compat_layout = new QFormLayout();
+	auto ocad_compat_layout = new QFormLayout();
 	ocad_compat_widget->setLayout(ocad_compat_layout);
 	
 	ocad_compat_layout->addRow(Util::Headline::create(tr("Line below paragraphs")));
@@ -198,7 +214,7 @@ TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* 
 	custom_tab_list = new QListWidget();
 	ocad_compat_layout->addRow(custom_tab_list);
 	
-	QHBoxLayout* custom_tabs_button_layout = new QHBoxLayout();
+	auto custom_tabs_button_layout = new QHBoxLayout();
 	custom_tab_add = new QPushButton(QIcon(QStringLiteral(":/images/plus.png")), QString{});
 	custom_tabs_button_layout->addWidget(custom_tab_add);
 	custom_tab_remove = new QPushButton(QIcon(QStringLiteral(":/images/minus.png")), QString{});
@@ -245,9 +261,9 @@ TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* 
 	connect(custom_tab_remove, &QAbstractButton::clicked, this, &TextSymbolSettings::removeCustomTabClicked);
 }
 
-TextSymbolSettings::~TextSymbolSettings()
-{
-}
+TextSymbolSettings::~TextSymbolSettings() = default;
+
+
 
 void TextSymbolSettings::fontChanged(const QFont& font)
 {
@@ -340,7 +356,7 @@ void TextSymbolSettings::spacingChanged(double value)
 	
 	symbol->line_spacing = 0.01 * line_spacing_edit->value();
 	symbol->paragraph_spacing = qRound(1000.0 * paragraph_spacing_edit->value());
-	symbol->character_spacing = 0.01f * character_spacing_edit->value();
+	symbol->character_spacing = 0.01 * character_spacing_edit->value();
 	symbol->updateQFont();
 	emit propertiesModified();
 }

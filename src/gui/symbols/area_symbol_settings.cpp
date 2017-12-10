@@ -21,19 +21,35 @@
 
 #include "area_symbol_settings.h"
 
+#include <memory>
+
+#include <Qt>
+#include <QtGlobal>
 #include <QtMath>
+#include <QAbstractButton>
 #include <QCheckBox>
 #include <QComboBox>
 #include <QDoubleSpinBox>
 #include <QFormLayout>
+#include <QHBoxLayout>
+#include <QIcon>
 #include <QLabel>
+#include <QLatin1String>
 #include <QListWidget>
+#include <QListWidgetItem>
 #include <QMenu>
 #include <QPushButton>
+#include <QSizePolicy>
+#include <QSpacerItem>
 #include <QStackedWidget>
+#include <QString>
 #include <QToolButton>
+#include <QVariant>
+#include <QVBoxLayout>
+#include <QWidget>
 
 #include "core/map.h"
+#include "core/symbols/symbol.h"
 #include "core/symbols/point_symbol.h"
 #include "gui/symbols/point_symbol_editor_widget.h"
 #include "gui/symbols/symbol_setting_dialog.h"
@@ -61,7 +77,7 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, SymbolSettingDialog* 
 	controller = dialog->getPreviewController();
 	
 	
-	QFormLayout* general_layout = new QFormLayout();
+	auto general_layout = new QFormLayout();
 	
 	color_edit = new ColorDropDown(map);
 	general_layout->addRow(tr("Area color:"), color_edit);
@@ -72,7 +88,7 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, SymbolSettingDialog* 
 	general_layout->addItem(Util::SpacerItem::create(this));
 	
 	
-	QVBoxLayout* fill_patterns_list_layout = new QVBoxLayout();
+	auto fill_patterns_list_layout = new QVBoxLayout();
 	
 	fill_patterns_list_layout->addWidget(Util::Headline::create(tr("Fills")), 0);
 	
@@ -86,12 +102,12 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, SymbolSettingDialog* 
 	add_pattern_button->setPopupMode(QToolButton::InstantPopup);
 	add_pattern_button->setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed));
 	add_pattern_button->setMinimumSize(del_pattern_button->sizeHint());
-	QMenu* add_fill_button_menu = new QMenu(add_pattern_button);
+	auto add_fill_button_menu = new QMenu(add_pattern_button);
 	add_fill_button_menu->addAction(tr("Line fill"), this, SLOT(addLinePattern()));
 	add_fill_button_menu->addAction(tr("Pattern fill"), this, SLOT(addPointPattern()));
 	add_pattern_button->setMenu(add_fill_button_menu);
 	
-	QHBoxLayout* buttons_layout = new QHBoxLayout();
+	auto buttons_layout = new QHBoxLayout();
 	buttons_layout->addStretch(1);
 	buttons_layout->addWidget(add_pattern_button);
 	buttons_layout->addWidget(del_pattern_button);
@@ -99,7 +115,7 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, SymbolSettingDialog* 
 	fill_patterns_list_layout->addLayout(buttons_layout, 0);
 	
 	
-	QFormLayout* fill_pattern_layout = new QFormLayout();
+	auto fill_pattern_layout = new QFormLayout();
 	
 	pattern_name_edit = new QLabel();
 	fill_pattern_layout->addRow(pattern_name_edit);
@@ -108,34 +124,34 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, SymbolSettingDialog* 
 	
 	
 	/* From here, stacked widgets are used to unify the layout of pattern type dependant fields. */
-	QStackedWidget* single_line_headline = new QStackedWidget();
+	auto single_line_headline = new QStackedWidget();
 	connect(this, &AreaSymbolSettings::switchPatternEdits, single_line_headline, &QStackedWidget::setCurrentIndex);
 	fill_pattern_layout->addRow(single_line_headline);
 	
-	QStackedWidget* single_line_label1 = new QStackedWidget();
+	auto single_line_label1 = new QStackedWidget();
 	connect(this, &AreaSymbolSettings::switchPatternEdits, single_line_label1, &QStackedWidget::setCurrentIndex);
-	QStackedWidget* single_line_edit1  = new QStackedWidget();
+	auto single_line_edit1  = new QStackedWidget();
 	connect(this, &AreaSymbolSettings::switchPatternEdits, single_line_edit1, &QStackedWidget::setCurrentIndex);
 	fill_pattern_layout->addRow(single_line_label1, single_line_edit1);
 	
-	QStackedWidget* single_line_label2 = new QStackedWidget();
+	auto single_line_label2 = new QStackedWidget();
 	connect(this, &AreaSymbolSettings::switchPatternEdits, single_line_label2, &QStackedWidget::setCurrentIndex);
-	QStackedWidget* single_line_edit2  = new QStackedWidget();
+	auto single_line_edit2  = new QStackedWidget();
 	connect(this, &AreaSymbolSettings::switchPatternEdits, single_line_edit2, &QStackedWidget::setCurrentIndex);
 	fill_pattern_layout->addRow(single_line_label2, single_line_edit2);
 	
-	QStackedWidget* single_line_label3 = new QStackedWidget();
+	auto single_line_label3 = new QStackedWidget();
 	connect(this, &AreaSymbolSettings::switchPatternEdits, single_line_label3, &QStackedWidget::setCurrentIndex);
 	pattern_line_offset_edit = Util::SpinBox::create(3, -999999.9, 999999.9, tr("mm"));
 	fill_pattern_layout->addRow(single_line_label3, pattern_line_offset_edit);
 	
 	fill_pattern_layout->addItem(Util::SpacerItem::create(this));
 	
-	QStackedWidget* parallel_lines_headline = new QStackedWidget();
+	auto parallel_lines_headline = new QStackedWidget();
 	connect(this, &AreaSymbolSettings::switchPatternEdits, parallel_lines_headline, &QStackedWidget::setCurrentIndex);
 	fill_pattern_layout->addRow(parallel_lines_headline);
 	
-	QStackedWidget* parallel_lines_label1 = new QStackedWidget();
+	auto parallel_lines_label1 = new QStackedWidget();
 	connect(this, &AreaSymbolSettings::switchPatternEdits, parallel_lines_label1, &QStackedWidget::setCurrentIndex);
 	pattern_spacing_edit = Util::SpinBox::create(3, 0.0, 999999.9, tr("mm"));
 	fill_pattern_layout->addRow(parallel_lines_label1, pattern_spacing_edit);
@@ -143,12 +159,12 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, SymbolSettingDialog* 
 	/* Stacked widgets, index 0: line pattern fields */
 	single_line_headline->addWidget(Util::Headline::create(tr("Single line")));
 	
-	QLabel* pattern_linewidth_label = new QLabel(tr("Line width:"));
+	auto pattern_linewidth_label = new QLabel(tr("Line width:"));
 	pattern_linewidth_edit = Util::SpinBox::create(3, 0.0, 999999.9, tr("mm"));
 	single_line_label1->addWidget(pattern_linewidth_label);
 	single_line_edit1 ->addWidget(pattern_linewidth_edit);
 	
-	QLabel* pattern_color_label = new QLabel(tr("Line color:"));
+	auto pattern_color_label = new QLabel(tr("Line color:"));
 	pattern_color_edit = new ColorDropDown(map);
 	single_line_label2->addWidget(pattern_color_label);
 	single_line_edit2 ->addWidget(pattern_color_edit);
@@ -162,12 +178,12 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, SymbolSettingDialog* 
 	/* Stacked widgets, index 1: point pattern fields */
 	single_line_headline->addWidget(Util::Headline::create(tr("Single row")));
 	
-	QLabel* pattern_pointdist_label = new QLabel(tr("Pattern interval:"));
+	auto pattern_pointdist_label = new QLabel(tr("Pattern interval:"));
 	pattern_pointdist_edit = Util::SpinBox::create(3, 0, 999999.9, tr("mm"));
 	single_line_label1->addWidget(pattern_pointdist_label);
 	single_line_edit1 ->addWidget(pattern_pointdist_edit);
 	
-	QLabel* pattern_offset_along_line_label = new QLabel(tr("Pattern offset:"));
+	auto pattern_offset_along_line_label = new QLabel(tr("Pattern offset:"));
 	pattern_offset_along_line_edit = Util::SpinBox::create(3, -999999.9, 999999.9, tr("mm"));
 	single_line_label2->addWidget(pattern_offset_along_line_label);
 	single_line_edit2 ->addWidget(pattern_offset_along_line_edit);
@@ -195,11 +211,11 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, SymbolSettingDialog* 
 	fill_pattern_layout->addItem(Util::SpacerItem::create(this));
 	
 	/* Stacked widgets again. */
-	QStackedWidget* clipping_headline = new QStackedWidget();
+	auto clipping_headline = new QStackedWidget();
 	connect(this, &AreaSymbolSettings::switchPatternEdits, clipping_headline, &QStackedWidget::setCurrentIndex);
 	fill_pattern_layout->addRow(clipping_headline);
 	
-	QStackedWidget* clipping_edit  = new QStackedWidget();
+	auto clipping_edit  = new QStackedWidget();
 	connect(this, &AreaSymbolSettings::switchPatternEdits, clipping_edit, &QStackedWidget::setCurrentIndex);
 	fill_pattern_layout->addRow(clipping_edit);
 	
@@ -217,16 +233,16 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, SymbolSettingDialog* 
 	clipping_edit->addWidget(pattern_clipping_edit);
 	
 	
-	QHBoxLayout* fill_patterns_layout = new QHBoxLayout();
+	auto fill_patterns_layout = new QHBoxLayout();
 	fill_patterns_layout->addLayout(fill_patterns_list_layout, 1);
 	fill_patterns_layout->addItem(Util::SpacerItem::create(this));
 	fill_patterns_layout->addLayout(fill_pattern_layout, 3);
 	
-	QBoxLayout* layout = new QVBoxLayout();
+	auto layout = new QVBoxLayout();
 	layout->addLayout(general_layout);
 	layout->addLayout(fill_patterns_layout);
 	
-	QWidget* area_tab = new QWidget();
+	auto area_tab = new QWidget();
 	area_tab->setLayout(layout);
 	addPropertiesGroup(tr("Area settings"), area_tab);
 	
@@ -255,10 +271,7 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, SymbolSettingDialog* 
 }
 
 
-AreaSymbolSettings::~AreaSymbolSettings()
-{
-	// nothing, not inlined
-}
+AreaSymbolSettings::~AreaSymbolSettings() = default;
 
 
 
@@ -305,7 +318,7 @@ void AreaSymbolSettings::loadPatterns()
 		pattern_list->addItem(pattern.name);
 		if (pattern.type == AreaSymbol::FillPattern::PointPattern)
 		{
-			PointSymbolEditorWidget* editor = new PointSymbolEditorWidget(controller, pattern.point, 16);
+			auto editor = new PointSymbolEditorWidget(controller, pattern.point, 16);
 			connect(editor, &PointSymbolEditorWidget::symbolEdited, this, &SymbolPropertiesWidget::propertiesModified );
 			addPropertiesGroup(pattern.name, editor);
 		}
@@ -350,7 +363,7 @@ void AreaSymbolSettings::updatePatternWidgets()
 	
 	del_pattern_button->setEnabled(pattern_active);
 	
-	AreaSymbol::FillPattern* pattern = pattern_active ? &*active_pattern : new AreaSymbol::FillPattern();
+	auto pattern = pattern_active ? &*active_pattern : new AreaSymbol::FillPattern();
 	pattern_name_edit->setText(pattern_active ? (QLatin1String("<b>") + active_pattern->name + QLatin1String("</b>")) : tr("No fill selected"));
 	
 	{
@@ -434,7 +447,7 @@ void AreaSymbolSettings::addPattern(AreaSymbol::FillPattern::Type type)
 	{
 		active_pattern->point = new PointSymbol();
 		active_pattern->point->setRotatable(true);
-		PointSymbolEditorWidget* editor = new PointSymbolEditorWidget(controller, active_pattern->point, 16);
+		auto editor = new PointSymbolEditorWidget(controller, active_pattern->point, 16);
 		connect(editor, &PointSymbolEditorWidget::symbolEdited, this, &SymbolPropertiesWidget::propertiesModified );
 		if (pattern_list->currentRow() == int(symbol->patterns.size()) - 1)
 		{

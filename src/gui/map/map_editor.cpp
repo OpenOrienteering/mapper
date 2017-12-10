@@ -162,7 +162,6 @@
 #include "undo/object_undo.h"
 #include "undo/undo.h"
 #include "undo/undo_manager.h"
-#include "util/util.h"
 #include "util/backports.h" // IWYU pragma: keep
 
 

@@ -100,9 +100,9 @@ SymbolSettingDialog::SymbolSettingDialog(const Symbol* source_symbol, Map* sourc
 	if (symbol->getType() == Symbol::Point)
 	{
 		Q_UNUSED(QT_TR_NOOP("Template:")) /// \todo Switch the following line to Util::Headline::create
-		QLabel* template_label = new QLabel(tr("<b>Template:</b> "));
+		auto template_label = new QLabel(tr("<b>Template:</b> "));
 		template_file_label = new QLabel(tr("(none)"));
-		QPushButton* load_template_button = new QPushButton(tr("Open..."));
+		auto load_template_button = new QPushButton(tr("Open..."));
 		
 		center_template_button = new QToolButton();
 		center_template_button->setText(tr("Center template..."));
@@ -163,7 +163,7 @@ SymbolSettingDialog::SymbolSettingDialog(const Symbol* source_symbol, Map* sourc
 	splitter->addWidget(right);
 	splitter->setCollapsible(1, true);
 	
-	QBoxLayout* layout = new QHBoxLayout();
+	auto layout = new QHBoxLayout();
 	layout->setContentsMargins(0, 0, 0, 0);
 	layout->addWidget(splitter);
 	setLayout(layout);
@@ -216,7 +216,7 @@ void SymbolSettingDialog::loadTemplateClicked()
 void SymbolSettingDialog::centerTemplateBBox()
 {
 	Q_ASSERT(preview_map->getNumTemplates() == 1);
-	Template* temp = preview_map->getTemplate(0);
+	auto temp = preview_map->getTemplate(0);
 	
 	preview_map->setTemplateAreaDirty(0);
 	temp->setTemplatePosition(temp->templatePosition() - MapCoord { temp->calculateTemplateBoundingBox().center() } );
@@ -226,7 +226,7 @@ void SymbolSettingDialog::centerTemplateBBox()
 void SymbolSettingDialog::centerTemplateGravity()
 {
 	Q_ASSERT(preview_map->getNumTemplates() == 1);
-	Template* temp = preview_map->getTemplate(0);
+	auto temp = preview_map->getTemplate(0);
 	auto image = reinterpret_cast<TemplateImage*>(temp);
 	
 	QColor background_color = QColorDialog::getColor(Qt::white, this, tr("Select background color"));

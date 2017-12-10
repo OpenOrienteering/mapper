@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013, 2014 Kai Pastor
+ *    Copyright 2013-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -43,7 +43,7 @@ TagsWidget::TagsWidget(Map* map, MapView* main_view, MapEditorController* contro
 {
 	react_to_changes = false;
 	
-	QBoxLayout* layout = new QVBoxLayout();
+	auto layout = new QVBoxLayout();
 	layout->setMargin(0);
 	
 	tags_table = new QTableWidget(1, 2);
@@ -53,17 +53,17 @@ TagsWidget::TagsWidget(Map* map, MapView* main_view, MapEditorController* contro
 	tags_table->setHorizontalHeaderLabels(QStringList() << tr("Key") << tr("Value"));
 	tags_table->verticalHeader()->setVisible(false);
 	
-	QHeaderView* header_view = tags_table->horizontalHeader();
+	auto header_view = tags_table->horizontalHeader();
 	header_view->setSectionResizeMode(0, QHeaderView::Stretch);
 	header_view->setSectionResizeMode(1, QHeaderView::Stretch);
 	header_view->setSectionsClickable(false);
 	
 	layout->addWidget(tags_table);
 	
-	QToolButton* help_button = newToolButton(QIcon(QString::fromLatin1(":/images/help.png")), tr("Help"));
+	auto help_button = newToolButton(QIcon(QString::fromLatin1(":/images/help.png")), tr("Help"));
 	help_button->setAutoRaise(true);
 	
-	QBoxLayout* all_buttons_layout = new QHBoxLayout();
+	auto all_buttons_layout = new QHBoxLayout();
 	QStyleOption style_option(QStyleOption::Version, QStyleOption::SO_DockWidget);
 	all_buttons_layout->setContentsMargins(
 		style()->pixelMetric(QStyle::PM_LayoutLeftMargin, &style_option) / 2,
@@ -87,14 +87,13 @@ TagsWidget::TagsWidget(Map* map, MapView* main_view, MapEditorController* contro
 	objectTagsChanged();
 }
 
-TagsWidget::~TagsWidget()
-{
-	; // Nothing
-}
+TagsWidget::~TagsWidget() = default;
+
+
 
 QToolButton* TagsWidget::newToolButton(const QIcon& icon, const QString& text)
 {
-	QToolButton* button = new QToolButton();
+	auto button = new QToolButton();
 	button->setToolButtonStyle(Qt::ToolButtonIconOnly);
 	button->setToolTip(text);
 	button->setIcon(icon);
@@ -112,7 +111,7 @@ void TagsWidget::setupLastRow()
 {
 	const int row = tags_table->rowCount() - 1;
 	tags_table->setItem(row, 0, new QTableWidgetItem());
-	QTableWidgetItem* value_item = new QTableWidgetItem();
+	auto value_item = new QTableWidgetItem();
 	value_item->setFlags(value_item->flags() & ~Qt::ItemIsEnabled);
 	tags_table->setItem(row, 1, value_item);
 }
@@ -121,7 +120,7 @@ void TagsWidget::createUndoStep(Object* object)
 {
 	Q_ASSERT(object);
 	
-	ObjectTagsUndoStep* undo_step = new ObjectTagsUndoStep(map);
+	auto undo_step = new ObjectTagsUndoStep(map);
 	undo_step->addObject(map->getCurrentPart()->findObjectIndex(object));
 	map->push(undo_step);
 }
@@ -162,7 +161,7 @@ void TagsWidget::objectTagsChanged()
 // slot
 void TagsWidget::cellChange(int row, int column)
 {
-	Object* object = map->getFirstSelectedObject();
+	auto object = map->getFirstSelectedObject();
 	if (!react_to_changes || !object)
 		return;
 	
@@ -220,7 +219,7 @@ void TagsWidget::cellChange(int row, int column)
 			{
 				// Reset current row
 				tags_table->item(row, 1)->setText({});
-				QTableWidgetItem* value_item = tags_table->item(row, 1);
+				auto value_item = tags_table->item(row, 1);
 				value_item->setFlags(value_item->flags() & ~Qt::ItemIsEnabled);
 			}
 		}
@@ -253,7 +252,7 @@ void TagsWidget::cellChange(int row, int column)
 				tags_table->item(row, 0)->setData(Qt::UserRole, key);
 				if (tags_table->rowCount() == row + 1)
 				{
-					QTableWidgetItem* value_item = tags_table->item(row, 1);
+					auto value_item = tags_table->item(row, 1);
 					value_item->setFlags(value_item->flags() | Qt::ItemIsEnabled);
 				}
 				tags_table->setCurrentCell(row, 1);

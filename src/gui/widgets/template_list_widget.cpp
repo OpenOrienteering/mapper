@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2016 Kai Pastor
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -93,8 +93,8 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	QStyleOption style_option(QStyleOption::Version, QStyleOption::SO_DockWidget);
 	
 	// Wrap the checkbox in a widget and layout to force a margin.
-	QWidget* top_bar_widget = new QWidget();
-	QLayout* top_bar_layout = new QHBoxLayout(top_bar_widget);
+	auto top_bar_widget = new QWidget();
+	auto top_bar_layout = new QHBoxLayout(top_bar_widget);
 	
 	// Reuse the translation from MapEditorController action.
 	all_hidden_check = new QCheckBox(MapEditorController::tr("Hide all templates"));
@@ -132,7 +132,7 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	template_table->hideColumn(2);
 #endif
 	
-	QHeaderView* header_view = template_table->horizontalHeader();
+	auto header_view = template_table->horizontalHeader();
 	if (mobile_mode)
 	{
 		header_view->setVisible(false);
@@ -184,7 +184,7 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	all_templates_layout->addWidget(top_bar_widget);
 	all_templates_layout->addWidget(template_table, 1);
 	
-	QMenu* new_button_menu = new QMenu(this);
+	auto new_button_menu = new QMenu(this);
 	if (!mobile_mode)
 	{
 		new_button_menu->addAction(QIcon(QString::fromLatin1(":/images/open.png")), tr("Open..."), this, SLOT(openTemplate()));
@@ -198,13 +198,13 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	current_action->setDisabled(true);
 #endif
 	
-	QToolButton* new_button = newToolButton(QIcon(QString::fromLatin1(":/images/plus.png")), tr("Add template..."));
+	auto new_button = newToolButton(QIcon(QString::fromLatin1(":/images/plus.png")), tr("Add template..."));
 	new_button->setPopupMode(QToolButton::InstantPopup);
 	new_button->setMenu(new_button_menu);
 	
 	delete_button = newToolButton(QIcon(QString::fromLatin1(":/images/minus.png")), (tr("Remove"), tr("Close"))); /// \todo Use "Remove instead of "Close"
 	
-	SegmentedButtonLayout* add_remove_layout = new SegmentedButtonLayout();
+	auto add_remove_layout = new SegmentedButtonLayout();
 	add_remove_layout->addWidget(new_button);
 	add_remove_layout->addWidget(delete_button);
 	
@@ -213,7 +213,7 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	move_down_button = newToolButton(QIcon(QString::fromLatin1(":/images/arrow-down.png")), tr("Move Down"));
 	move_down_button->setAutoRepeat(true);
 	
-	SegmentedButtonLayout* up_down_layout = new SegmentedButtonLayout();
+	auto up_down_layout = new SegmentedButtonLayout();
 	up_down_layout->addWidget(move_up_button);
 	up_down_layout->addWidget(move_down_button);
 	
@@ -230,7 +230,7 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	adjust_button = newToolButton(QIcon(QString::fromLatin1(":/images/georeferencing.png")), tr("Adjust..."));
 	adjust_button->setCheckable(true);
 	
-	QMenu* edit_menu = new QMenu(this);
+	auto edit_menu = new QMenu(this);
 	position_action = edit_menu->addAction(tr("Positioning..."));
 	position_action->setCheckable(true);
 	import_action =  edit_menu->addAction(tr("Import and remove"), this, SLOT(importClicked()));
@@ -241,7 +241,7 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	edit_button->setMenu(edit_menu);
 	
 	// The buttons row layout
-	QBoxLayout* list_buttons_layout = new QHBoxLayout();
+	auto list_buttons_layout = new QHBoxLayout();
 	list_buttons_layout->setContentsMargins(0,0,0,0);
 	list_buttons_layout->addLayout(add_remove_layout);
 	list_buttons_layout->addLayout(up_down_layout);
@@ -253,7 +253,7 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	list_buttons_group = new QWidget();
 	list_buttons_group->setLayout(list_buttons_layout);
 	
-	QBoxLayout* all_buttons_layout = new QHBoxLayout();
+	auto all_buttons_layout = new QHBoxLayout();
 	all_buttons_layout->setContentsMargins(
 		style()->pixelMetric(QStyle::PM_LayoutLeftMargin, &style_option) / 2,
 		0, // Covered by the main layout's spacing.
@@ -265,7 +265,7 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	
 	if (!mobile_mode)
 	{
-		QToolButton* help_button = newToolButton(QIcon(QString::fromLatin1(":/images/help.png")), tr("Help"));
+		auto help_button = newToolButton(QIcon(QString::fromLatin1(":/images/help.png")), tr("Help"));
 		help_button->setAutoRaise(true);
 		all_buttons_layout->addWidget(help_button);
 		connect(help_button, &QAbstractButton::clicked, this, &TemplateListWidget::showHelp);
@@ -313,14 +313,13 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	connect(controller, &MapEditorController::templatePositionDockWidgetClosed, this, &TemplateListWidget::templatePositionDockWidgetClosed);
 }
 
-TemplateListWidget::~TemplateListWidget()
-{
-	; // Nothing
-}
+TemplateListWidget::~TemplateListWidget() = default;
+
+
 
 QToolButton* TemplateListWidget::newToolButton(const QIcon& icon, const QString& text)
 {
-	QToolButton* button = new QToolButton();
+	auto button = new QToolButton();
 	button->setToolButtonStyle(Qt::ToolButtonIconOnly);
 	button->setToolTip(text);
 	button->setIcon(icon);
@@ -409,7 +408,7 @@ std::unique_ptr<Template> TemplateListWidget::showOpenTemplateDialog(QWidget* di
 	// If the template is not georeferenced, position it at the viewport midpoint
 	else if (!new_temp->isTemplateGeoreferenced() && center_in_view)
 	{
-		MapView* main_view = controller->getMainWidget()->getMapView();
+		auto main_view = controller->getMainWidget()->getMapView();
 		auto view_pos = main_view->center();
 		auto offset = MapCoord { new_temp->calculateTemplateBoundingBox().center() };
 		new_temp->setTemplatePosition(view_pos - offset);
@@ -554,8 +553,8 @@ void TemplateListWidget::moveTemplateUp()
 	else
 	{
 		// Exchanging two templates
-		Template* above_template = map->getTemplate(above_pos);
-		Template* cur_template = map->getTemplate(cur_pos);
+		auto above_template = map->getTemplate(above_pos);
+		auto cur_template = map->getTemplate(cur_pos);
 		map->setTemplate(cur_template, above_pos);
 		map->setTemplate(above_template, cur_pos);
 	}
@@ -599,8 +598,8 @@ void TemplateListWidget::moveTemplateDown()
 	else
 	{
 		// Exchanging two templates
-		Template* below_template = map->getTemplate(below_pos);
-		Template* cur_template = map->getTemplate(cur_pos);
+		auto below_template = map->getTemplate(below_pos);
+		auto cur_template = map->getTemplate(cur_pos);
 		map->setTemplate(cur_template, below_pos);
 		map->setTemplate(below_template, cur_pos);
 	}
@@ -793,7 +792,7 @@ void TemplateListWidget::updateButtons()
 	}
 	else if (single_template_selected)
 	{
-		Template* temp = map->getTemplate(posFromRow(visited_row));
+		auto temp = map->getTemplate(posFromRow(visited_row));
 		if (temp->isTemplateGeoreferenced())
 		{
 			georef_visible = true;
@@ -892,7 +891,7 @@ void TemplateListWidget::cellDoubleClicked(int row, int column)
 
 void TemplateListWidget::moveByHandClicked(bool checked)
 {
-	Template* temp = getCurrentTemplate();
+	auto temp = getCurrentTemplate();
 	Q_ASSERT(temp);
 	controller->setTool(checked ? new TemplateMoveTool(temp, controller, move_by_hand_action) : nullptr);
 }
@@ -901,9 +900,9 @@ void TemplateListWidget::adjustClicked(bool checked)
 {
 	if (checked)
 	{
-		Template* temp = getCurrentTemplate();
+		auto temp = getCurrentTemplate();
 		Q_ASSERT(temp);
-		TemplateAdjustActivity* activity = new TemplateAdjustActivity(temp, controller);
+		auto activity = new TemplateAdjustActivity(temp, controller);
 		controller->setEditorActivity(activity);
 		connect(activity->getDockWidget(), &TemplateAdjustDockWidget::closed, this, &TemplateListWidget::adjustWindowClosed);
 	}
@@ -915,7 +914,7 @@ void TemplateListWidget::adjustClicked(bool checked)
 
 void TemplateListWidget::adjustWindowClosed()
 {
-	Template* current_template = getCurrentTemplate();
+	auto current_template = getCurrentTemplate();
 	if (!current_template)
 		return;
 	
@@ -934,7 +933,7 @@ void TemplateListWidget::positionClicked(bool checked)
 {
 	Q_UNUSED(checked);
 	
-	Template* temp = getCurrentTemplate();
+	auto temp = getCurrentTemplate();
 	if (!temp)
 		return;
 	
@@ -1061,7 +1060,7 @@ void TemplateListWidget::templateAdded(int pos, const Template* temp)
 
 void TemplateListWidget::templatePositionDockWidgetClosed(Template* temp)
 {
-	Template* current_temp = getCurrentTemplate();
+	auto current_temp = getCurrentTemplate();
 	if (current_temp == temp)
 		position_action->setChecked(false);
 }
@@ -1117,7 +1116,7 @@ void TemplateListWidget::addRowItems(int row)
 	
 	for (int i = 0; i < 4; ++i)
 	{
-		QTableWidgetItem* item = new QTableWidgetItem();
+		auto item = new QTableWidgetItem();
 		template_table->setItem(row, i, item);
 	}
 	template_table->item(row, 0)->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled /* | Qt::ItemIsSelectable*/);
@@ -1146,7 +1145,7 @@ void TemplateListWidget::updateRow(int row)
 	
 	if (pos >= 0)
 	{
-		Template* temp = map->getTemplate(pos);
+		auto temp = map->getTemplate(pos);
 		group = temp->getTemplateGroup();
 		name = temp->getTemplateFilename();
 		path = temp->getTemplatePath();
@@ -1289,7 +1288,7 @@ Template* TemplateListWidget::getCurrentTemplate()
 
 void TemplateListWidget::changeTemplateFile(int pos)
 {
-	Template* temp = map->getTemplate(pos);
+	auto temp = map->getTemplate(pos);
 	Q_ASSERT(temp);
 	temp->execSwitchTemplateFileDialog(this);
 	updateRow(rowFromPos(pos));

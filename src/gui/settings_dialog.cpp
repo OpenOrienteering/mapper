@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Jan Dalheimer
- *    Copyright 2012-2016  Kai Pastor
+ *    Copyright 2012-2017  Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,23 +20,31 @@
 
 #include "settings_dialog.h"
 
+#include <Qt>
+#include <QtGlobal>
 #include <QAbstractButton> // IWYU pragma: keep
 #include <QAction>
 #include <QDialogButtonBox>
 #include <QFormLayout>
+#include <QFlags>
+#include <QFrame>
 #include <QKeyEvent>
 #include <QLabel>
+#include <QLatin1String>
+#include <QLayout>
 #include <QScrollArea>
 #include <QScroller>
 #include <QStackedWidget>
 #include <QTabWidget>
 #include <QToolBar>
 #include <QVBoxLayout>
+#include <QWidget>
 
 #include "gui/main_window.h"
 #include "gui/util_gui.h"
 #include "gui/widgets/editor_settings_page.h"
 #include "gui/widgets/general_settings_page.h"
+#include "gui/widgets/settings_page.h"
 #include "util/backports.h" // IWYU pragma: keep
 
 #ifdef MAPPER_USE_GDAL
@@ -51,7 +59,7 @@ SettingsDialog::SettingsDialog(QWidget* parent)
 {
 	setWindowTitle(tr("Settings"));
 	
-	QVBoxLayout* layout = new QVBoxLayout(this);
+	auto layout = new QVBoxLayout(this);
 	
 	auto buttons = QDialogButtonBox::StandardButtons{ QDialogButtonBox::Ok };
 	if (MainWindow::mobileMode())
@@ -87,7 +95,7 @@ SettingsDialog::SettingsDialog(QWidget* parent)
 		layout->setContentsMargins(0, 0, 0, 0);
 		layout->setSpacing(0);
 		
-		QVBoxLayout* l = new QVBoxLayout();
+		auto l = new QVBoxLayout();
 		l->setContentsMargins(left, top, right, bottom);
 		l->addWidget(button_box);
 		layout->addLayout(l);
@@ -100,16 +108,15 @@ SettingsDialog::SettingsDialog(QWidget* parent)
 	addPages();
 }
 
-SettingsDialog::~SettingsDialog()
-{
-	// Nothing, not inlined.
-}
+SettingsDialog::~SettingsDialog() = default;
 
-void SettingsDialog::closeEvent(QCloseEvent* e)
+
+
+void SettingsDialog::closeEvent(QCloseEvent* event)
 {
 	if (MainWindow::mobileMode())
 		callOnAllPages(&SettingsPage::apply);
-	QDialog::closeEvent(e);
+	QDialog::closeEvent(event);
 }
 
 void SettingsDialog::keyPressEvent(QKeyEvent* event)

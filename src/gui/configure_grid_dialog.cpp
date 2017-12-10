@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014, 2015 Kai Pastor
+ *    Copyright 2014, 2016, 2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,22 +21,36 @@
 
 #include "configure_grid_dialog.h"
 
+#include <Qt>
+#include <QtGlobal>
 #include <QtMath>
+#include <QAbstractButton>
 #include <QCheckBox>
+#include <QColor>
 #include <QColorDialog>
 #include <QComboBox>
 #include <QDebug>
 #include <QDialogButtonBox>
 #include <QDoubleSpinBox>
+#include <QFlags>
 #include <QFormLayout>
+#include <QIcon>
 #include <QLabel>
+#include <QLatin1Char>
+#include <QPixmap>
 #include <QPushButton>
 #include <QRadioButton>
+#include <QSpacerItem>
+#include <QString>
+#include <QStyle>
+#include <QVariant>
 
 #include "core/georeferencing.h"
 #include "core/map.h"
 #include "gui/util_gui.h"
-#include "util/util.h"
+#include "util/backports.h"  // IWYU pragma: keep
+
+class MapCoordF;
 
 
 ConfigureGridDialog::ConfigureGridDialog(QWidget* parent, const Map& map, bool grid_visible)
@@ -54,40 +68,40 @@ ConfigureGridDialog::ConfigureGridDialog(QWidget* parent, const Map& map, bool g
 	choose_color_button = new QPushButton(tr("Choose..."));
 	
 	display_mode_combo = new QComboBox();
-	display_mode_combo->addItem(tr("All lines"), (int)MapGrid::AllLines);
-	display_mode_combo->addItem(tr("Horizontal lines"), (int)MapGrid::HorizontalLines);
-	display_mode_combo->addItem(tr("Vertical lines"), (int)MapGrid::VerticalLines);
+	display_mode_combo->addItem(tr("All lines"), int(MapGrid::AllLines));
+	display_mode_combo->addItem(tr("Horizontal lines"), int(MapGrid::HorizontalLines));
+	display_mode_combo->addItem(tr("Vertical lines"), int(MapGrid::VerticalLines));
 	
 	mag_north_radio = new QRadioButton(tr("Align with magnetic north"));
 	grid_north_radio = new QRadioButton(tr("Align with grid north"));
 	true_north_radio = new QRadioButton(tr("Align with true north"));
 	
-	QLabel* rotate_label = new QLabel(tr("Additional rotation (counter-clockwise):"));
+	auto rotate_label = new QLabel(tr("Additional rotation (counter-clockwise):"));
 	additional_rotation_edit = Util::SpinBox::create(Georeferencing::declinationPrecision(), -360, +360, trUtf8("°"));
 	additional_rotation_edit->setWrapping(true);
 	
 	
 	unit_combo = new QComboBox();
-	unit_combo->addItem(tr("meters in terrain"), (int)MapGrid::MetersInTerrain);
-	unit_combo->addItem(tr("millimeters on map"), (int)MapGrid::MillimetersOnMap);
+	unit_combo->addItem(tr("meters in terrain"), int(MapGrid::MetersInTerrain));
+	unit_combo->addItem(tr("millimeters on map"), int(MapGrid::MillimetersOnMap));
 	
-	QLabel* horz_spacing_label = new QLabel(tr("Horizontal spacing:"));
+	auto horz_spacing_label = new QLabel(tr("Horizontal spacing:"));
 	horz_spacing_edit = Util::SpinBox::create(1, 0.1, Util::InputProperties<MapCoordF>::max());
-	QLabel* vert_spacing_label = new QLabel(tr("Vertical spacing:"));
+	auto vert_spacing_label = new QLabel(tr("Vertical spacing:"));
 	vert_spacing_edit = Util::SpinBox::create(1, 0.1, Util::InputProperties<MapCoordF>::max());
 	
 	origin_label = new QLabel();
-	QLabel* horz_offset_label = new QLabel(tr("Horizontal offset:"));
+	auto horz_offset_label = new QLabel(tr("Horizontal offset:"));
 	horz_offset_edit = Util::SpinBox::create(1, Util::InputProperties<MapCoordF>::min(), Util::InputProperties<MapCoordF>::max());
-	QLabel* vert_offset_label = new QLabel(tr("Vertical offset:"));
+	auto vert_offset_label = new QLabel(tr("Vertical offset:"));
 	vert_offset_edit = Util::SpinBox::create(1, Util::InputProperties<MapCoordF>::min(), Util::InputProperties<MapCoordF>::max());
 
-	QDialogButtonBox* button_box = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Help, Qt::Horizontal);
+	auto button_box = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Help, Qt::Horizontal);
 	
 	
 	show_grid_check->setChecked(grid_visible);
 	snap_to_grid_check->setChecked(grid.isSnappingEnabled());
-	display_mode_combo->setCurrentIndex(display_mode_combo->findData((int)grid.getDisplayMode()));
+	display_mode_combo->setCurrentIndex(display_mode_combo->findData(int(grid.getDisplayMode())));
 	if (grid.getAlignment() == MapGrid::MagneticNorth)
 		mag_north_radio->setChecked(true);
 	else if (grid.getAlignment() == MapGrid::GridNorth)
@@ -101,7 +115,7 @@ ConfigureGridDialog::ConfigureGridDialog(QWidget* parent, const Map& map, bool g
 	horz_offset_edit->setValue(grid.getHorizontalOffset());
 	vert_offset_edit->setValue(-1 * grid.getVerticalOffset());
 	
-	QFormLayout* layout = new QFormLayout();
+	auto layout = new QFormLayout();
 	layout->addRow(show_grid_check);
 	layout->addRow(snap_to_grid_check);
 	layout->addRow(tr("Line color:"), choose_color_button);
@@ -131,24 +145,22 @@ ConfigureGridDialog::ConfigureGridDialog(QWidget* parent, const Map& map, bool g
 	updateStates();
 	updateColorDisplay();
 	
-	using TakingIntArgument = void (QComboBox::*)(int);
 	connect(show_grid_check, &QAbstractButton::clicked, this, &ConfigureGridDialog::updateStates);
 	connect(choose_color_button, &QAbstractButton::clicked, this, &ConfigureGridDialog::chooseColor);
-	connect(display_mode_combo, (TakingIntArgument)&QComboBox::currentIndexChanged, this, &ConfigureGridDialog::updateStates);
+	connect(display_mode_combo, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &ConfigureGridDialog::updateStates);
 	connect(mag_north_radio, &QAbstractButton::clicked, this, &ConfigureGridDialog::updateStates);
 	connect(grid_north_radio, &QAbstractButton::clicked, this, &ConfigureGridDialog::updateStates);
 	connect(true_north_radio, &QAbstractButton::clicked, this, &ConfigureGridDialog::updateStates);
-	connect(unit_combo, (TakingIntArgument)&QComboBox::currentIndexChanged, this, &ConfigureGridDialog::unitChanged);
+	connect(unit_combo, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &ConfigureGridDialog::unitChanged);
 	connect(button_box, &QDialogButtonBox::helpRequested, this, &ConfigureGridDialog::showHelp);
 	
 	connect(button_box, &QDialogButtonBox::accepted, this, &ConfigureGridDialog::okClicked);
 	connect(button_box, &QDialogButtonBox::rejected, this, &QDialog::reject);
 }
 
-ConfigureGridDialog::~ConfigureGridDialog()
-{
-	// nothing, not inlined
-}
+ConfigureGridDialog::~ConfigureGridDialog() = default;
+
+
 
 void ConfigureGridDialog::chooseColor()
 {
@@ -172,7 +184,7 @@ void ConfigureGridDialog::updateColorDisplay()
 
 void ConfigureGridDialog::unitChanged(int index)
 {
-	auto unit = (MapGrid::Unit)unit_combo->itemData(index).toInt();
+	auto unit = MapGrid::Unit(unit_combo->itemData(index).toInt());
 	if (unit != current_unit)
 	{
 		current_unit = unit;
@@ -203,7 +215,7 @@ void ConfigureGridDialog::okClicked()
 	
 	grid.setSnappingEnabled(snap_to_grid_check->isChecked());
 	grid.setColor(current_color);
-	grid.setDisplayMode((MapGrid::DisplayMode)display_mode_combo->itemData(display_mode_combo->currentIndex()).toInt());
+	grid.setDisplayMode(MapGrid::DisplayMode(display_mode_combo->itemData(display_mode_combo->currentIndex()).toInt()));
 	
 	if (mag_north_radio->isChecked())
 		grid.setAlignment(MapGrid::MagneticNorth);
@@ -225,7 +237,7 @@ void ConfigureGridDialog::okClicked()
 
 void ConfigureGridDialog::updateStates()
 {
-	MapGrid::DisplayMode display_mode = (MapGrid::DisplayMode)display_mode_combo->itemData(display_mode_combo->currentIndex()).toInt();
+	MapGrid::DisplayMode display_mode = MapGrid::DisplayMode(display_mode_combo->itemData(display_mode_combo->currentIndex()).toInt());
 	choose_color_button->setEnabled(show_grid_check->isChecked());
 	display_mode_combo->setEnabled(show_grid_check->isChecked());
 	snap_to_grid_check->setEnabled(show_grid_check->isChecked());
