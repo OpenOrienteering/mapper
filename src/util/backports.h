@@ -28,6 +28,14 @@
 #  include "qoverload.h" // IWYU pragma: export
 #endif
 
+#if QT_VERSION < 0x050500
+#  if defined(QT_NO_INFO_OUTPUT)
+#    define qInfo QT_NO_QDEBUG_MACRO
+#  else
+#    define qInfo qDebug
+#  endif
+#endif
+
 #if defined(Q_OS_ANDROID) && defined(_GLIBCXX_CMATH)
 namespace std
 {
