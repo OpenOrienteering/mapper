@@ -2662,7 +2662,7 @@ löytääksesi taustakarttatiedoston nimen.</translation>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="282"/>
         <source>Scale the dash symbol at corners</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Skaalaa väliviiva symbooli nurkissa</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="528"/>
@@ -4074,12 +4074,12 @@ Haluatko silti tuoda datan?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="938"/>
         <source>Merge area holes</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Yhdistä alueen reiät</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="950"/>
         <source>Paint on template settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Maalaa malliasetusten päälle</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="956"/>
@@ -4284,7 +4284,7 @@ valittu</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2349"/>
         <source>Select one area object with holes to activate this tool.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Valitse yksi alue-esine reikien kanssa aktivoidaksesi tämän työkalun.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2318"/>
@@ -4619,7 +4619,7 @@ valittu</translation>
         <location filename="../src/gui/color_dialog.cpp" line="585"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="214"/>
         <source>Before editing, the stored text will be replaced with the current translation. Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ennen muokkaamista, tallennettu teksti korvataan nykyisellä käännöksellä. Haluatko jatkaa?</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="592"/>
@@ -4885,12 +4885,12 @@ zoomaa hiiren rullalla.</translation>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1887"/>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1898"/>
         <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinaatit ovat mukautettu sopimaan OCAD 8 piirtoalueeseen (-2 m ... 2 m).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1909"/>
         <source>Some coordinates remain outside of the OCAD 8 drawing area. They might be unreachable in OCAD.</source>
-        <translation type="unfinished"></translation>
+        <translation>Jotkut koordinaatit pysyvät OCAD 8 piirtoalueen ulkopuolella. Ne saattavat olla saavuttamattomia OCADissa.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="2180"/>
@@ -5222,7 +5222,7 @@ zoomaa hiiren rullalla.</translation>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="948"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1301"/>
         <source>This symbol cannot be saved as a proper OCD symbol again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tätä symboolia ei voitu tallentaa kunnollisena OCD symbolina taas.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1956"/>
@@ -5372,7 +5372,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="502"/>
         <source>Can&apos;t determine the coordinate transformation: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ei voitu määrittää koordinaattitransformointia: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="507"/>
@@ -5393,12 +5393,13 @@ zoomaa hiiren rullalla.</translation>
         <location filename="../src/gdal/ogr_file_format.cpp" line="560"/>
         <source>Cannot use this spatial reference:
 %s</source>
-        <translation type="unfinished"></translation>
+        <translation>Ei voitu käyttää tätä välillistä viittausta:
+%s</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="619"/>
         <source>The geospatial data has no suitable spatial reference.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Geospatiaalisella tiedolla ei ole sopivaa välillistä viittausta.</translation>
     </message>
 </context>
 <context>
