@@ -51,60 +51,61 @@
     <name>QColorDialog</name>
     <message>
         <source>Hu&amp;e:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ku&amp;lør:</translation>
     </message>
     <message>
         <source>&amp;Sat:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Metning:</translation>
     </message>
     <message>
         <source>&amp;Val:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Verdi:</translation>
     </message>
     <message>
         <source>&amp;Red:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Rød:</translation>
     </message>
     <message>
         <source>&amp;Green:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Grønn:</translation>
     </message>
     <message>
         <source>Bl&amp;ue:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bl&amp;å:</translation>
     </message>
     <message>
         <source>A&amp;lpha channel:</source>
-        <translation type="unfinished"></translation>
+        <translation>A%lfa-kanal:</translation>
     </message>
     <message>
         <source>&amp;HTML:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;HTML:</translation>
     </message>
     <message>
         <source>Cursor at %1, %2
 Press ESC to cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Peker på %1, %2
+Trykk Esc for å avbryte</translation>
     </message>
     <message>
         <source>&amp;Pick Screen Color</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Velg skjermfarge</translation>
     </message>
     <message>
         <source>Select Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Velg farge</translation>
     </message>
     <message>
         <source>&amp;Basic colors</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Basisfarger</translation>
     </message>
     <message>
         <source>&amp;Custom colors</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Egendefinerte farger</translation>
     </message>
     <message>
         <source>&amp;Add to Custom Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Legg til i egendefinerte farger</translation>
     </message>
 </context>
 <context>
@@ -732,7 +733,7 @@ Vennligst sjekk at riktig filnavn ble angitt.</translation>
     </message>
     <message>
         <source>&lt;p&gt;Qt is a C++ toolkit for cross-platform application development.&lt;/p&gt;&lt;p&gt;Qt provides single-source portability across all major desktop operating systems. It is also available for embedded Linux and other embedded and mobile operating systems.&lt;/p&gt;&lt;p&gt;Qt is available under three different licensing options designed to accommodate the needs of our various users.&lt;/p&gt;&lt;p&gt;Qt licensed under our commercial license agreement is appropriate for development of proprietary/commercial software where you do not want to share any source code with third parties or otherwise cannot comply with the terms of the GNU LGPL version 3 or GNU LGPL version 2.1.&lt;/p&gt;&lt;p&gt;Qt licensed under the GNU LGPL version 3 is appropriate for the development of Qt&amp;nbsp;applications provided you can comply with the terms and conditions of the GNU LGPL version 3.&lt;/p&gt;&lt;p&gt;Qt licensed under the GNU LGPL version 2.1 is appropriate for the development of Qt&amp;nbsp;applications provided you can comply with the terms and conditions of the GNU LGPL version 2.1.&lt;/p&gt;&lt;p&gt;Please see &lt;a href=&quot;http://%2/&quot;&gt;%2&lt;/a&gt; for an overview of Qt licensing.&lt;/p&gt;&lt;p&gt;Copyright (C) %1 The Qt Company Ltd and other contributors.&lt;/p&gt;&lt;p&gt;Qt and the Qt logo are trademarks of The Qt Company Ltd.&lt;/p&gt;&lt;p&gt;Qt is The Qt Company Ltd product developed as an open source project. See &lt;a href=&quot;http://%3/&quot;&gt;%3&lt;/a&gt; for more information.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;Qt er et C++ er et flerplattformsverktøyssett for programutvikling.&lt;/p&gt;&lt;p&gt;Qt tilbyr tilpasningene som trengs for å kun ha én kodebase på tvers av alle store skrivebordsmiljø. Det er også tilgjengelig for innebygd Linux, og andre innebygde miljøer og mobiloperativsystemer.&lt;/p&gt;&lt;p&gt;Qt er lisensiert med tre forskjellige valg, som tilbyr forskjellige valg til forskjellige brukere.&lt;/p&gt;&lt;p&gt;Qt med vår kommersielle lisensavtale passer for utvikling av proprietær programvare, der man ikke ønsker å dele kildekoden med tredjeparter eller på annet vis samsvare med vilkårene i GNU LGPS versjon 3 eller GNU LGPL versjon 2.1.&lt;/p&gt;&lt;p&gt;Qt lisensiert i henhold til GNU LGPL versjon 3 passer for utvikling av programmer, gitt at du kan innfri vilkårene i GNU LGPL versjon 3.&lt;/p&gt;&lt;p&gt;Qt lisensiert GNU LGPL versjon 2.1 passer for utvikling av Qt programmer, gitt at du kan innfri villkårene i GNU LGPL versjon 2.1&lt;/p&gt;&lt;p&gt;Sjekk &lt;a href=&quot;http://%2/&quot;&gt;%2&lt;/a&gt; for en oversikt over Qt-lisensiering.&lt;/p&gt;&lt;p&gt;Kopirett (C) %1 The Qt Company Ltd og andre bidragsytere.&lt;/p&gt;&lt;p&gt;Qt og Qt-logoen er varemerker tilhørende The Qt Company Ltd.&lt;/p&gt;&lt;p&gt;Qt er et Qt Company Ltd-produkt, utviklet som et friprog-prosjekt. Se &lt;a href=&quot;http://%3/&quot;&gt;%3&lt;/a&gt; for mer informasjon.&lt;/p&gt;</translation>
     </message>
 </context>
 <context>

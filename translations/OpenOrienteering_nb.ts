@@ -956,7 +956,7 @@
         <location filename="../src/tools/draw_path_tool.cpp" line="1187"/>
         <location filename="../src/tools/draw_path_tool.cpp" line="1214"/>
         <source>&lt;b&gt;%1+%2&lt;/b&gt;: Segment azimuth and length. </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;b&gt;%1+%2&lt;/b&gt;: Segmentets retning og lengde. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1203"/>
@@ -1006,7 +1006,7 @@
         <location filename="../src/tools/draw_path_tool.cpp" line="104"/>
         <source>Info</source>
         <comment>Show segment azimuth and length</comment>
-        <translation type="unfinished"></translation>
+        <translation>Info</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="107"/>
@@ -1351,7 +1351,7 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="44"/>
         <source>Symbol icon size:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Symbolikonstørrelse:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="63"/>
@@ -2697,7 +2697,7 @@
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="282"/>
         <source>Scale the dash symbol at corners</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Skaler streklinjesymbolet ved hjørnene</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="528"/>
@@ -3438,7 +3438,7 @@ Importer data likevel?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="888"/>
         <source>Assign new symbols by cross-reference table</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tildel nye symboler med kryssreferansetabell</translation>
     </message>
     <message>
         <source>Tag Selection</source>
@@ -4577,17 +4577,17 @@ er valgt</translation>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="53"/>
         <source>&amp;Find...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Finn…</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="60"/>
         <source>Find &amp;next</source>
-        <translation type="unfinished"></translation>
+        <translation>Finn &amp;neste</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="90"/>
         <source>Find objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Finn objekter</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="97"/>
@@ -4602,7 +4602,7 @@ er valgt</translation>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="103"/>
         <source>Query editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Avansert søk</translation>
     </message>
 </context>
 <context>
@@ -4670,13 +4670,13 @@ er valgt</translation>
         <location filename="../src/gui/color_dialog.cpp" line="585"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="214"/>
         <source>Before editing, the stored text will be replaced with the current translation. Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Før redigering, vil lagret tekst bli erstattet av gjeldende oversettelse. Ønsker du å fortsette?</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="592"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="221"/>
         <source>After modifying the stored text, the translation may no longer be found. Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Etter endring av lagret tekst, vil oversettelsen ikke lenger være å finne. Ønsker du å fortsette?</translation>
     </message>
 </context>
 <context>
@@ -4938,12 +4938,12 @@ rull musehjulet for å zoome.</translation>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1887"/>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1898"/>
         <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Koordinater justeres for å passe i OCAD-8 -tegneområdet (-2 m … 2 m).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1909"/>
         <source>Some coordinates remain outside of the OCAD 8 drawing area. They might be unreachable in OCAD.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Noen koordinater er fremdeles utenfor OCAD-8 -tegneområdet. De kan kanskje ikke leses i OCAD.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="2180"/>
@@ -5451,12 +5451,13 @@ rull musehjulet for å zoome.</translation>
         <location filename="../src/gdal/ogr_file_format.cpp" line="560"/>
         <source>Cannot use this spatial reference:
 %s</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kan ikke bruke dette siktepunktet:
+%1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="619"/>
         <source>The geospatial data has no suitable spatial reference.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Geosiktedataen har ikke noe passende referansessytem.</translation>
     </message>
 </context>
 <context>
@@ -6214,7 +6215,7 @@ separations</source>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="137"/>
         <source>Match by symbol name</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Jamfør etter symbolnavn</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="142"/>
@@ -6229,19 +6230,19 @@ separations</source>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="155"/>
         <source>Clear replacements</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tøm erstatninger</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="158"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="234"/>
         <source>Open CRT file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Åpne CRT-fil…</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="160"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="330"/>
         <source>Save CRT file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Lagre CRT-fil…</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="165"/>
@@ -6252,12 +6253,12 @@ separations</source>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="233"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="329"/>
         <source>CRT file</source>
-        <translation type="unfinished"></translation>
+        <translation>CRT-fil</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="283"/>
         <source>There are multiple replacements for symbol %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Det er flere erstatninger for symbolet %1.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="286"/>
@@ -6276,13 +6277,17 @@ separations</source>
 %1
 
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ikke lagre fil:
+%1
+
+%2</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="360"/>
         <source>The cross reference table has been modified.
 Do you want to save your changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>Kryssreferansetabellen har blitt endret.
+Ønsker du å lagre dine endringer?</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="517"/>
@@ -6318,7 +6323,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="655"/>
         <source>Cannot load CRT file, aborting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ikke laste CRT-fil, avbryter.</translation>
     </message>
 </context>
 <context>
@@ -7682,7 +7687,7 @@ Hvis du ikke har til hensikt å endre denne malen, er det ikke noe problem.</tra
     <message>
         <location filename="../src/templates/template_track.cpp" line="138"/>
         <source>This template must be loaded with GDAL/OGR.</source>
-        <translation type="unfinished"></translation>
+        <translation>Denne malen må lastes med GDAL/OGR.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="187"/>
@@ -8109,7 +8114,7 @@ Høyeste støttede versjon er %2.</translation>
         <location filename="../src/tools/tool_helpers.cpp" line="621"/>
         <source>%1 m</source>
         <comment>meter</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 m</translation>
     </message>
 </context>
 <context>
