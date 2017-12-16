@@ -50,12 +50,12 @@
 <context>
     <name>AbstractHomeScreenWidget</name>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="93"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="117"/>
         <source>Open most recently used file</source>
         <translation>Buka berkas yang terakhir digunakan</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="96"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="120"/>
         <source>Show tip of the day</source>
         <translation>Tampilkan tips</translation>
     </message>
@@ -71,166 +71,166 @@
 <context>
     <name>AreaSymbolSettings</name>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="69"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="85"/>
         <source>mm²</source>
         <translation>mm²</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="70"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="86"/>
         <source>Minimum size:</source>
         <translation>Ukuran minimum:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="77"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="93"/>
         <source>Fills</source>
         <translation>Mengisi</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="90"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="106"/>
         <source>Line fill</source>
         <translation>Mengisi garis</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="91"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="107"/>
         <source>Pattern fill</source>
         <translation>Pola mengisi</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="129"/>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="140"/>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="147"/>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="166"/>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="171"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="145"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="156"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="163"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="182"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="187"/>
         <source>mm</source>
         <translation>mm</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="144"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="160"/>
         <source>Single line</source>
         <translation>Garis tunggal</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="158"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="174"/>
         <source>Parallel lines</source>
         <translation>Paralel baris</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="160"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="176"/>
         <source>Line spacing:</source>
         <translation>Spasi:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="163"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="179"/>
         <source>Single row</source>
         <translation>Baris tunggal</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="165"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="181"/>
         <source>Pattern interval:</source>
         <translation>Interval pola:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="170"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="186"/>
         <source>Pattern offset:</source>
         <translation>Pola offset:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="175"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="191"/>
         <source>Row offset:</source>
         <translation>Offset baris:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="177"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="193"/>
         <source>Parallel rows</source>
         <translation>Paralel baris</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="179"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="195"/>
         <source>Row spacing:</source>
         <translation>Spasi baris:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="185"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="201"/>
         <source>Fill rotation</source>
         <translation>Mengisi rotasi</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="187"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="203"/>
         <source>°</source>
         <translation>°</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="189"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="205"/>
         <source>Angle:</source>
         <translation>Sudut:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="191"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="207"/>
         <source>adjustable per object</source>
         <translation>adjustable per objek</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="211"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="227"/>
         <source>Element drawing at boundary</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="213"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="229"/>
         <source>Clip elements at the boundary.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="214"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="230"/>
         <source>Draw elements if the center is inside the boundary.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="215"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="231"/>
         <source>Draw elements if any point is inside the boundary.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="216"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="232"/>
         <source>Draw elements if all points are inside the boundary.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="231"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="247"/>
         <source>Area settings</source>
         <translation>Pengaturan wilayah</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="326"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="339"/>
         <source>Pattern fill %1</source>
         <translation>Pola mengisi %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="335"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="348"/>
         <source>Line fill %1</source>
         <translation>Mengisi garis %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="354"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="367"/>
         <source>No fill selected</source>
         <translation>Ada isi yang dipilih</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="67"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="83"/>
         <source>Area color:</source>
         <translation>Area warna:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="156"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="172"/>
         <source>Line offset:</source>
         <translation>Offset baris:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="151"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="167"/>
         <source>Line color:</source>
         <translation>Warna garis:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="146"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="162"/>
         <source>Line width:</source>
         <translation>Lebar garis:</translation>
     </message>
@@ -411,100 +411,100 @@
 <context>
     <name>ColorListWidget</name>
     <message>
-        <location filename="../src/gui/widgets/color_list_widget.cpp" line="80"/>
+        <location filename="../src/gui/widgets/color_list_widget.cpp" line="81"/>
         <source>Name</source>
         <translation>Nama</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/color_list_widget.cpp" line="80"/>
+        <location filename="../src/gui/widgets/color_list_widget.cpp" line="81"/>
         <source>Opacity</source>
         <translation>Keburaman</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/color_list_widget.cpp" line="80"/>
+        <location filename="../src/gui/widgets/color_list_widget.cpp" line="81"/>
         <source>Spot color</source>
         <translation>Warna bintik</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/color_list_widget.cpp" line="80"/>
+        <location filename="../src/gui/widgets/color_list_widget.cpp" line="81"/>
         <source>CMYK</source>
         <translation>CMYK</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/color_list_widget.cpp" line="80"/>
+        <location filename="../src/gui/widgets/color_list_widget.cpp" line="81"/>
         <source>RGB</source>
         <translation>RGB</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/color_list_widget.cpp" line="80"/>
+        <location filename="../src/gui/widgets/color_list_widget.cpp" line="81"/>
         <source>K.o.</source>
         <translation>K.o</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/color_list_widget.cpp" line="86"/>
-        <location filename="../src/gui/widgets/color_list_widget.cpp" line="91"/>
+        <location filename="../src/gui/widgets/color_list_widget.cpp" line="87"/>
+        <location filename="../src/gui/widgets/color_list_widget.cpp" line="92"/>
         <source>New</source>
         <translation>Baru</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/color_list_widget.cpp" line="94"/>
+        <location filename="../src/gui/widgets/color_list_widget.cpp" line="95"/>
         <source>Delete</source>
         <translation>Hapus</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/color_list_widget.cpp" line="87"/>
+        <location filename="../src/gui/widgets/color_list_widget.cpp" line="88"/>
         <source>Duplicate</source>
         <translation>Duplikat</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/color_list_widget.cpp" line="100"/>
+        <location filename="../src/gui/widgets/color_list_widget.cpp" line="101"/>
         <source>Move Up</source>
         <translation>pindahkan keatas</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/color_list_widget.cpp" line="102"/>
+        <location filename="../src/gui/widgets/color_list_widget.cpp" line="103"/>
         <source>Move Down</source>
         <translation>Pindahkan ke bawah</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/color_list_widget.cpp" line="113"/>
+        <location filename="../src/gui/widgets/color_list_widget.cpp" line="114"/>
         <source>Help</source>
         <translation>Tolong</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/color_list_widget.cpp" line="134"/>
+        <location filename="../src/gui/widgets/color_list_widget.cpp" line="135"/>
         <source>Double-click a color value to open a dialog.</source>
         <translation>Klik dua kali nilai warna untuk membuka dialog.</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/color_list_widget.cpp" line="229"/>
+        <location filename="../src/gui/widgets/color_list_widget.cpp" line="230"/>
         <source>Confirmation</source>
         <translation>Konfirmasi</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/color_list_widget.cpp" line="229"/>
+        <location filename="../src/gui/widgets/color_list_widget.cpp" line="230"/>
         <source>The map contains symbols with this color. Deleting it will remove the color from these objects! Do you really want to do that?</source>
         <translation>Peta berisi simbol dengan warna ini. Menghapusnya akan menghapus warna dari objek-objek ini! Apakah Anda benar-benar ingin melakukan itu?</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/color_list_widget.cpp" line="247"/>
+        <location filename="../src/gui/widgets/color_list_widget.cpp" line="248"/>
         <source>%1 (duplicate)</source>
         <extracomment>Future replacement for COLOR_NAME + &quot; (Duplicate)&quot;, for better localization.</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/color_list_widget.cpp" line="248"/>
+        <location filename="../src/gui/widgets/color_list_widget.cpp" line="249"/>
         <source> (Duplicate)</source>
         <translation> Duplikat</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/color_list_widget.cpp" line="406"/>
-        <location filename="../src/gui/widgets/color_list_widget.cpp" line="455"/>
+        <location filename="../src/gui/widgets/color_list_widget.cpp" line="407"/>
+        <location filename="../src/gui/widgets/color_list_widget.cpp" line="456"/>
         <source>Double click to define the color</source>
         <translation>Klik dua kali untuk menentukan warna</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/color_list_widget.cpp" line="414"/>
+        <location filename="../src/gui/widgets/color_list_widget.cpp" line="415"/>
         <source>Click to select the name and click again to edit.</source>
         <translation>Klik untuk memilih nama dan klik lagi untuk mengedit.</translation>
     </message>
@@ -512,42 +512,42 @@
 <context>
     <name>CombinedSymbolSettings</name>
     <message>
-        <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="62"/>
+        <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="86"/>
         <source>&amp;Number of parts:</source>
         <translation>&amp;Jumlah bagian:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="77"/>
+        <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="94"/>
         <source>- Private line symbol -</source>
         <translation>- Prifat baris simbol -</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="78"/>
+        <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="95"/>
         <source>- Private area symbol -</source>
         <translation>- Area pribadi simbol -</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="84"/>
+        <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="98"/>
         <source>Edit private symbol...</source>
         <translation>Mengedit simbol prifat...</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="104"/>
+        <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="112"/>
         <source>Combination settings</source>
         <translation>Pengaturan Kombinasi</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="157"/>
+        <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="225"/>
         <source>Change from public to private symbol</source>
         <translation>Mengubah dari publik ke simbol prifat</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="158"/>
+        <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="226"/>
         <source>Take the old symbol as template for the private symbol?</source>
         <translation>Ambil simbol lama sebagai template untuk simbol pribadi?</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="74"/>
+        <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="91"/>
         <source>Symbol %1:</source>
         <translation>Simbol %1:</translation>
     </message>
@@ -555,150 +555,150 @@
 <context>
     <name>ConfigureGridDialog</name>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="49"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="64"/>
         <source>Configure grid</source>
         <translation>Mengkonfigurasi grid</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="51"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="66"/>
         <source>Show grid</source>
         <translation>Tampilkan grid</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="52"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="67"/>
         <source>Snap to grid</source>
         <translation>Snap ke grid</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="53"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="68"/>
         <source>Choose...</source>
         <translation>Memilih...</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="56"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="71"/>
         <source>All lines</source>
         <translation>Semua garis</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="57"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="72"/>
         <source>Horizontal lines</source>
         <translation>Garis horizontal</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="58"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="73"/>
         <source>Vertical lines</source>
         <translation>Garis vertikal</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="110"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="125"/>
         <source>Alignment</source>
         <translation>Garis arah</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="60"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="75"/>
         <source>Align with magnetic north</source>
         <translation>Sejajar dengan utara magnetik</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="61"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="76"/>
         <source>Align with grid north</source>
         <translation>Menyelaraskan dengan grid utara</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="62"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="77"/>
         <source>Align with true north</source>
         <translation>Menyelaraskan dengan benar Utara</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="64"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="79"/>
         <source>Additional rotation (counter-clockwise):</source>
         <translation>Tambahan rotasi (berlawanan arah jarum jam):</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="65"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="80"/>
         <source>°</source>
         <translation>°</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="117"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="132"/>
         <source>Positioning</source>
         <translation>Posisi</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="70"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="85"/>
         <source>meters in terrain</source>
         <translation>meter di medan</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="71"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="86"/>
         <source>millimeters on map</source>
         <translation>milimeter pada peta</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="73"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="88"/>
         <source>Horizontal spacing:</source>
         <translation>Spasi horisontal:</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="75"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="90"/>
         <source>Vertical spacing:</source>
         <translation>Jarak vertical:</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="79"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="94"/>
         <source>Horizontal offset:</source>
         <translation>Horisontal offset:</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="81"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="96"/>
         <source>Vertical offset:</source>
         <translation>Vertikal offset:</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="118"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="133"/>
         <source>Unit:</source>
         <comment>measurement unit</comment>
         <translation>Unit:</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="106"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="121"/>
         <source>Line color:</source>
         <translation>Warna garis:</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="107"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="122"/>
         <source>Display:</source>
         <translation>Tampilan:</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="155"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="168"/>
         <source>Choose grid line color</source>
         <translation>Memilih warna baris grid</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="239"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="252"/>
         <source>m</source>
         <comment>meters</comment>
         <translation>m</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="239"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="252"/>
         <source>mm</source>
         <comment>millimeters</comment>
         <translation>mm</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="245"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="258"/>
         <source>Origin at: %1</source>
         <translation>Asal: %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="247"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="260"/>
         <source>paper coordinates origin</source>
         <translation>kertas koordinat asal</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="249"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="262"/>
         <source>projected coordinates origin</source>
         <translation>proyeksi koordinat asal</translation>
     </message>
@@ -782,18 +782,18 @@
 <context>
     <name>DetermineFontSizeDialog</name>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="89"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="107"/>
         <source>Letter:</source>
         <translation>Huruf:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="91"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="109"/>
         <source>A</source>
         <extracomment>&quot;A&quot; is the default letter which is used for determining letter height.</extracomment>
         <translation>A</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="97"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="115"/>
         <source>Height:</source>
         <translation>Tinggi:</translation>
     </message>
@@ -1411,17 +1411,17 @@
 <context>
     <name>GPSDisplay</name>
     <message>
-        <location filename="../src/sensors/gps_display.cpp" line="88"/>
+        <location filename="../src/sensors/gps_display.cpp" line="89"/>
         <source>GPS is disabled in the device settings. Open settings now?</source>
         <translation>GPS dinonaktifkan dalam pengaturan perangkat. Membuka pengaturan sekarang?</translation>
     </message>
     <message>
-        <location filename="../src/sensors/gps_display.cpp" line="89"/>
+        <location filename="../src/sensors/gps_display.cpp" line="90"/>
         <source>Yes</source>
         <translation>Ya</translation>
     </message>
     <message>
-        <location filename="../src/sensors/gps_display.cpp" line="90"/>
+        <location filename="../src/sensors/gps_display.cpp" line="91"/>
         <source>No</source>
         <translation>Tidak</translation>
     </message>
@@ -1472,130 +1472,130 @@
 <context>
     <name>GeneralSettingsPage</name>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="54"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="78"/>
         <source>Appearance</source>
         <translation>Penampilan</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="59"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="83"/>
         <source>Language:</source>
         <translation>Bahasa:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="76"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="100"/>
         <source>Screen</source>
         <translation>Layar</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="81"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="105"/>
         <source>Pixels per inch:</source>
         <translation>Piksel per inci:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="91"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="115"/>
         <source>Program start</source>
         <translation>Mulai program</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="100"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="124"/>
         <source>Saving files</source>
         <translation>Menyimpan file</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="102"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="126"/>
         <source>Retain compatibility with Mapper %1</source>
         <translation>Mempertahankan kompatibilitas dengan Mapper %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="113"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="137"/>
         <source>Save information for automatic recovery</source>
         <translation>Simpan pemulihan informasi otomatis</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="117"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="141"/>
         <source>Recovery information saving interval:</source>
         <translation>Menyimpan jarak informasi pemulihan:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="116"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="140"/>
         <source>min</source>
         <comment>unit minutes</comment>
         <translation>min</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="120"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="144"/>
         <source>File import and export</source>
         <translation>File impor dan ekspor</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="145"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="169"/>
         <source>8-bit encoding:</source>
         <translation>8-bit menulis kode:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="138"/>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="290"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="162"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="313"/>
         <source>More...</source>
         <translation>Lebih...</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="110"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="134"/>
         <source>Save undo/redo history</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="123"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="147"/>
         <source>Default</source>
         <translation>Standar</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="147"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="171"/>
         <source>Use the new OCD importer also for version 8 files</source>
         <translation>Menggunakan importir OCD baru juga file versi 8</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="167"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="190"/>
         <source>General</source>
         <translation>Umum</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="191"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="214"/>
         <source>Notice</source>
         <translation>Pemberitahuan</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="191"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="214"/>
         <source>The program must be restarted for the language change to take effect!</source>
         <translation>Program harus direstart dahulu supaya perubahan bahasa terjadi!</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="332"/>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="338"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="355"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="361"/>
         <source>Open translation</source>
         <translation>Buka terjemahan</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="332"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="355"/>
         <source>Translation files (*.qm)</source>
         <translation>File terjemahan (*.qm)</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="339"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="362"/>
         <source>The selected file is not a valid translation.</source>
         <translation>File yang dipilih bukanlah terjemahan yang berlaku.</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="369"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="392"/>
         <source>%1 x %2</source>
         <translation>%1 x %2</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="370"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="393"/>
         <source>Primary screen resolution in pixels:</source>
         <translation>Resolusi layar utama dalam pixel:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="374"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="397"/>
         <source>Primary screen size in inches (diagonal):</source>
         <translation>Ukuran layar utama dalam inci (diagonal):</translation>
     </message>
@@ -1700,223 +1700,223 @@
 <context>
     <name>GeoreferencingDialog</name>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="89"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="111"/>
         <source>Map Georeferencing</source>
         <translation>Georeferencing peta</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="166"/>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="497"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="188"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="519"/>
         <source>Lookup...</source>
         <translation>Lihatlah...</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="126"/>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="127"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="148"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="149"/>
         <source>m</source>
         <translation>m</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="200"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="222"/>
         <source>Declination:</source>
         <translation>Deklinasi:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="151"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="173"/>
         <source>Projected coordinates</source>
         <translation>Proyeksi koordinat</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="98"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="120"/>
         <source>Status:</source>
         <translation>Status:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="152"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="174"/>
         <source>Geographic coordinates</source>
         <translation>Koordinat geografis</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="147"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="169"/>
         <source>Show reference point in:</source>
         <translation>Menunjukkan titik referensi di:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="336"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="358"/>
         <source>valid</source>
         <translation>berlaku</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="330"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="352"/>
         <source>&lt;a href=&quot;%1&quot;&gt;OpenStreetMap&lt;/a&gt; | &lt;a href=&quot;%2&quot;&gt;World of O Maps&lt;/a&gt;</source>
         <translation>&lt;a href=&quot;%1&quot;&gt;OpenStreetMap&lt;/a&gt; | &lt;a href=&quot;%2&quot;&gt;World of O Maps&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="360"/>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="673"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="382"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="695"/>
         <source>Online declination lookup</source>
         <translation>Pencarian online deklinasi</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="93"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="115"/>
         <source>Map coordinate reference system</source>
         <translation>Peta sistem koordinat rujukan</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="96"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="118"/>
         <source>- local -</source>
         <translation>- lokal -</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="104"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="126"/>
         <source>Grid scale factor:</source>
         <extracomment>The grid scale factor is the ratio between a length in the grid plane and the corresponding length on the curved earth model. It is applied as a factor to ground distances to get grid plane distances.</extracomment>
         <translation>Faktor skala grid:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="107"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="129"/>
         <source>Reference point</source>
         <translation>Acuan</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="109"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="131"/>
         <source>&amp;Pick on map</source>
         <translation>&amp;Memilih pada peta</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="111"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="133"/>
         <source>(Datum: WGS84)</source>
         <translation>(Datum: WGS84)</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="114"/>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="115"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="136"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="137"/>
         <source>mm</source>
         <translation>mm</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="119"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="141"/>
         <source>X</source>
         <comment>x coordinate</comment>
         <translation>X</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="121"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="143"/>
         <source>Y</source>
         <comment>y coordinate</comment>
         <translation>Y</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="130"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="152"/>
         <source>E</source>
         <comment>west / east</comment>
         <translation>E</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="132"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="154"/>
         <source>N</source>
         <comment>north / south</comment>
         <translation>N</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="136"/>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="137"/>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="165"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="158"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="159"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="187"/>
         <source>°</source>
         <translation>°</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="140"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="162"/>
         <source>N</source>
         <comment>north</comment>
         <translation>N</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="142"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="164"/>
         <source>E</source>
         <comment>east</comment>
         <translation>E</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="163"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="185"/>
         <source>Map north</source>
         <translation>Utara peta</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="183"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="205"/>
         <location filename="../src/gui/select_crs_dialog.cpp" line="88"/>
         <source>&amp;Coordinate reference system:</source>
         <translation>&amp;Referensi sistem koordinat:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="190"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="212"/>
         <source>Map coordinates:</source>
         <translation>Koordinat peta:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="192"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="214"/>
         <source>Geographic coordinates:</source>
         <translation>Koordinat geografis:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="195"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="217"/>
         <source>On CRS changes, keep:</source>
         <translation>Perubahan CRS, menjaga:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="201"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="223"/>
         <source>Grivation:</source>
         <translation>Grivasi:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="361"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="383"/>
         <source>The magnetic declination for the reference point %1° %2° will now be retrieved from &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Do you want to continue?</source>
         <translation>Deklinasi magnet untuk referensi titik %1° %2° sekarang dapat diperoleh dari &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Apakah Anda ingin melanjutkan?</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="440"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="462"/>
         <source>Declination change</source>
         <translation>Deklinasi perubahan</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="440"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="462"/>
         <source>The declination has been changed. Do you want to rotate the map content accordingly, too?</source>
         <translation>Deklinasi telah berubah. Apakah Anda ingin memutar konten sesuai peta?</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="470"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="492"/>
         <source>Local coordinates:</source>
         <translation>Koordinat lokal:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="497"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="519"/>
         <source>Loading...</source>
         <translation>Memuat...</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="504"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="526"/>
         <source>locked</source>
         <translation>terkunci</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="644"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="666"/>
         <source>Could not parse data.</source>
         <translation>Tidak bisa mengurai data.</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="669"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="691"/>
         <source>Declination value not found.</source>
         <translation>Deklinasi nilai tidak ditemukan.</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="674"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="696"/>
         <source>The online declination lookup failed:
 %1</source>
         <translation>Pencarian online deklinasi gagal:
 %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="502"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="524"/>
         <source>%1 °</source>
         <comment>degree value</comment>
         <translation>%1 °</translation>
@@ -1925,7 +1925,7 @@
 <context>
     <name>GeoreferencingTool</name>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="702"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="724"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the reference point. &lt;b&gt;Right click&lt;/b&gt;: Cancel.</source>
         <translation>&lt;b&gt;Klik&lt;/b&gt;: mengatur titik referensi. &lt;b&gt;Klik kanan&lt;/b&gt;: membatalkan.</translation>
     </message>
@@ -2040,17 +2040,17 @@
 <context>
     <name>ImportExport</name>
     <message>
-        <location filename="../src/core/symbols/symbol.cpp" line="244"/>
+        <location filename="../src/core/symbols/symbol.cpp" line="245"/>
         <source>Error while loading a symbol of type %1 at line %2 column %3.</source>
         <translation>Error ketika memuat simbol jenis %1 baris %2 kolom %3.</translation>
     </message>
     <message>
-        <location filename="../src/core/symbols/symbol.cpp" line="252"/>
+        <location filename="../src/core/symbols/symbol.cpp" line="253"/>
         <source>Symbol ID &apos;%1&apos; not unique at line %2 column %3.</source>
         <translation>Simbol ID &apos;%1&apos; tidak unik di baris %2 kolom %3.</translation>
     </message>
     <message>
-        <location filename="../src/core/symbols/symbol.cpp" line="300"/>
+        <location filename="../src/core/symbols/symbol.cpp" line="301"/>
         <source>Error while loading a symbol of type %1 at line %2 column %3: %4</source>
         <translation>Error ketika memuat simbol jenis %1 baris %2 kolom %3: %4</translation>
     </message>
@@ -2150,7 +2150,7 @@
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="129"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="701"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="700"/>
         <source>Failed to load template &apos;%1&apos;, reason: %2</source>
         <translation>Gagal untuk memuat template &apos;%1&apos;, alasan: %2</translation>
     </message>
@@ -2261,190 +2261,190 @@
 <context>
     <name>LineSymbolSettings</name>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="297"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="308"/>
         <source>Line settings</source>
         <translation>Pengaturan garis</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="62"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="73"/>
         <source>Line width:</source>
         <translation>Lebar garis:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="63"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="78"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="74"/>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="89"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="133"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="136"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="100"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="144"/>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="147"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="186"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="202"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="205"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="529"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="535"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="560"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="563"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="158"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="197"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="213"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="216"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="540"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="546"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="571"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="574"/>
         <source>mm</source>
         <translation>mm</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="65"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="76"/>
         <source>Line color:</source>
         <translation>Warna garis:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="77"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="88"/>
         <source>Minimum line length:</source>
         <translation>Panjang minimum garis:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="80"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="91"/>
         <source>Line cap:</source>
         <translation>Cap garis:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="82"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="93"/>
         <source>flat</source>
         <translation>datar</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="83"/>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="94"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="105"/>
         <source>round</source>
         <translation>bulat</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="84"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="95"/>
         <source>square</source>
         <translation>persegi</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="85"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="96"/>
         <source>pointed</source>
         <translation>lincip</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="91"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="102"/>
         <source>Line join:</source>
         <translation>Gabung garis:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="93"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="104"/>
         <source>miter</source>
         <translation>mitra</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="95"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="106"/>
         <source>bevel</source>
         <translation>memiringkan</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="88"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="99"/>
         <source>Cap length:</source>
         <translation>Panjang cap:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="98"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="109"/>
         <source>Line is dashed</source>
         <translation>Garis putus-putus</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="207"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="218"/>
         <source>Show at least one mid symbol</source>
         <translation>Menunjukkan setidaknya satu pertengahan simbol</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="210"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="221"/>
         <source>Minimum mid symbol count:</source>
         <translation>Pertengahan jumlah simbol minimum:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="213"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="224"/>
         <source>Minimum mid symbol count when closed:</source>
         <translation>Minimum pertengahan simbol menghitung ketika ditutup:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="132"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="143"/>
         <source>Dash length:</source>
         <translation>Panjang garis:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="128"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="139"/>
         <source>Dashed line</source>
         <translation>Garis putus-putus</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="135"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="146"/>
         <source>Break length:</source>
         <translation>Jeda panjang:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="138"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="149"/>
         <source>Dashes grouped together:</source>
         <translation>Tanda hubung dikelompokkan bersama:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="140"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="151"/>
         <source>none</source>
         <translation>tidak ada</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="141"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="152"/>
         <source>2</source>
         <translation>2</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="142"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="153"/>
         <source>3</source>
         <translation>3</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="143"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="154"/>
         <source>4</source>
         <translation>4</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="146"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="157"/>
         <source>In-group break length:</source>
         <translation>Dalam kelompok jeda panjang:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="149"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="160"/>
         <source>Half length of first and last dash</source>
         <translation>Setengah panjang garis pertama dan terakhir</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="179"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="190"/>
         <source>Mid symbols</source>
         <translation>Simbol-simbol pertengahan</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="182"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="193"/>
         <source>Mid symbols per spot:</source>
         <translation>Simbol-simbol pertengahan setiap tempat:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="185"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="196"/>
         <source>Mid symbol distance:</source>
         <translation>Pertengahan simbol jarak:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="243"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="254"/>
         <source>Borders</source>
         <translation>Perbatasan</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="247"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="258"/>
         <source>Different borders on left and right sides</source>
         <translation>Batas-batas yang berbeda pada sisi kiri dan kanan</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="252"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="263"/>
         <source>Left border:</source>
         <translation>Perbatasan kiri:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="257"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="268"/>
         <source>Right border:</source>
         <translation>Perbatasan yang kanan:</translation>
     </message>
@@ -2452,23 +2452,23 @@
         <location filename="../src/core/symbols/line_symbol.cpp" line="1705"/>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="599"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1209"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="302"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="769"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="313"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="780"/>
         <source>Start symbol</source>
         <translation>Simbol start</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/line_symbol.cpp" line="1709"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="302"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="769"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="313"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="780"/>
         <source>Mid symbol</source>
         <translation>Pertengahan simbol</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/line_symbol.cpp" line="1713"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1216"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="302"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="769"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="313"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="780"/>
         <source>End symbol</source>
         <translation>Simbol akhir</translation>
     </message>
@@ -2476,64 +2476,64 @@
         <location filename="../src/core/symbols/line_symbol.cpp" line="1717"/>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="593"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1202"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="275"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="302"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="769"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="286"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="313"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="780"/>
         <source>Dash symbol</source>
         <translation>Garis simbol</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="101"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="112"/>
         <source>Enable border lines</source>
         <translation>Mengaktifkan garis perbatasan</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="201"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="212"/>
         <source>Distance between spots:</source>
         <translation>Jarak antara tempat:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="204"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="215"/>
         <source>Distance from line end:</source>
         <translation>Jarak dari garis akhir:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="277"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="288"/>
         <source>Suppress the dash symbol at line start and line end</source>
         <translation>Menekan simbol dash di garis awal dan akhir baris</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="282"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="293"/>
         <source>Scale the dash symbol at corners</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="528"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="539"/>
         <source>Border width:</source>
         <translation>Lebar batas:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="531"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="542"/>
         <source>Border color:</source>
         <translation>Warna batas:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="534"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="545"/>
         <source>Border shift:</source>
         <translation>Geser batas:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="537"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="548"/>
         <source>Border is dashed</source>
         <translation>Perbatasan berlari</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="559"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="570"/>
         <source>Border dash length:</source>
         <translation>Batas garis panjang:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="562"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="573"/>
         <source>Border break length:</source>
         <translation>Jeda batas panjang:</translation>
     </message>
@@ -2541,142 +2541,142 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="269"/>
+        <location filename="../src/gui/main_window.cpp" line="271"/>
         <source>&amp;New</source>
         <translation>&amp;Baru</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="271"/>
+        <location filename="../src/gui/main_window.cpp" line="273"/>
         <source>Create a new map</source>
         <translation>Membuat peta baru</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="275"/>
+        <location filename="../src/gui/main_window.cpp" line="277"/>
         <source>&amp;Open...</source>
         <translation>&amp;Terbuka...</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="277"/>
+        <location filename="../src/gui/main_window.cpp" line="279"/>
         <source>Open an existing file</source>
         <translation>Buka file ada</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="281"/>
+        <location filename="../src/gui/main_window.cpp" line="283"/>
         <source>Open &amp;recent</source>
         <translation>Buka &amp;baru saja</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="292"/>
+        <location filename="../src/gui/main_window.cpp" line="294"/>
         <source>&amp;Save</source>
         <translation>&amp;Simpan</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="297"/>
+        <location filename="../src/gui/main_window.cpp" line="299"/>
         <source>Save &amp;as...</source>
         <translation>Simpan &amp;sebagai...</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="299"/>
+        <location filename="../src/gui/main_window.cpp" line="301"/>
         <source>Ctrl+Shift+S</source>
         <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="305"/>
+        <location filename="../src/gui/main_window.cpp" line="307"/>
         <source>Settings...</source>
         <translation>Pengaturan...</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="310"/>
+        <location filename="../src/gui/main_window.cpp" line="312"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="105"/>
         <source>Close</source>
         <translation>Tutup</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="312"/>
+        <location filename="../src/gui/main_window.cpp" line="314"/>
         <source>Close this file</source>
         <translation>Tutup file ini</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="316"/>
+        <location filename="../src/gui/main_window.cpp" line="318"/>
         <source>E&amp;xit</source>
         <translation>&amp;Keluar instalasi</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="318"/>
+        <location filename="../src/gui/main_window.cpp" line="320"/>
         <source>Exit the application</source>
         <translation>Keluar dari aplikasi</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="325"/>
+        <location filename="../src/gui/main_window.cpp" line="327"/>
         <source>&amp;File</source>
         <translation>&amp;File</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="344"/>
+        <location filename="../src/gui/main_window.cpp" line="346"/>
         <source>General</source>
         <translation>Umum</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="359"/>
+        <location filename="../src/gui/main_window.cpp" line="361"/>
         <source>Open &amp;Manual</source>
         <translation>Buka &amp;Manual</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="360"/>
+        <location filename="../src/gui/main_window.cpp" line="362"/>
         <source>Show the help file for this application</source>
         <translation>Tampilkan file bantuan untuk aplikasi ini</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="364"/>
+        <location filename="../src/gui/main_window.cpp" line="366"/>
         <source>&amp;About %1</source>
         <translation>&amp;Tentang %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="365"/>
+        <location filename="../src/gui/main_window.cpp" line="367"/>
         <source>Show information about this application</source>
         <translation>Menampilkan informasi tentang aplikasi ini</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="369"/>
+        <location filename="../src/gui/main_window.cpp" line="371"/>
         <source>About &amp;Qt</source>
         <translation>Tentang &amp;Qt</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="370"/>
+        <location filename="../src/gui/main_window.cpp" line="372"/>
         <source>Show information about Qt</source>
         <translation>Menampilkan informasi tentang Qt</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="376"/>
+        <location filename="../src/gui/main_window.cpp" line="378"/>
         <source>&amp;Help</source>
         <translation>&amp;Bantuan</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="552"/>
+        <location filename="../src/gui/main_window.cpp" line="558"/>
         <source>Do you want to remove the autosaved version?</source>
         <translation>Apakah Anda ingin menghapus versi autosaved?</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="558"/>
+        <location filename="../src/gui/main_window.cpp" line="564"/>
         <source>The file has been modified.
 Do you want to save your changes?</source>
         <translation>File telah dimodifikasi.
 Apakah Anda ingin menyimpan perubahan?</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="397"/>
+        <location filename="../src/gui/main_window.cpp" line="399"/>
         <source>Unsaved file</source>
         <translation>File belum tersimpan</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="671"/>
-        <location filename="../src/gui/main_window.cpp" line="965"/>
+        <location filename="../src/gui/main_window.cpp" line="678"/>
+        <location filename="../src/gui/main_window.cpp" line="972"/>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="443"/>
         <source>Warning</source>
         <translation>Peringatan</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="671"/>
+        <location filename="../src/gui/main_window.cpp" line="678"/>
         <source>The selected map scale is 1:%1, but the chosen symbol set has a nominal scale of 1:%2.
 
 Do you want to scale the symbols to the selected scale?</source>
@@ -2685,60 +2685,60 @@ Do you want to scale the symbols to the selected scale?</source>
 Apakah Anda ingin skala simbol untuk skala dipilih?</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="740"/>
+        <location filename="../src/gui/main_window.cpp" line="747"/>
         <source>Crash warning</source>
         <translation>Kecelakaan peringatan</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="741"/>
+        <location filename="../src/gui/main_window.cpp" line="748"/>
         <source>It seems that %1 crashed the last time this file was opened:&lt;br /&gt;&lt;tt&gt;%2&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Really retry to open it?</source>
         <translation>Tampaknya bahwa %1 jatuh terakhir waktu file ini dibuka: &lt;br /&gt; &lt;tt&gt; %2&lt;/tt&gt; &lt;br /&gt; &lt;br /&gt; Benar-benar mencoba untuk membukanya?</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="932"/>
+        <location filename="../src/gui/main_window.cpp" line="939"/>
         <source>Autosaving...</source>
         <translation>Simpan otomatis...</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="942"/>
+        <location filename="../src/gui/main_window.cpp" line="949"/>
         <source>Autosaving failed!</source>
         <translation>Gagal menyimpan ootomatis!</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1017"/>
+        <location filename="../src/gui/main_window.cpp" line="1024"/>
         <source>All maps</source>
         <translation>Semua peta</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1021"/>
+        <location filename="../src/gui/main_window.cpp" line="1028"/>
         <source>All files</source>
         <translation>Semua file</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="709"/>
+        <location filename="../src/gui/main_window.cpp" line="716"/>
         <source>Open file</source>
         <translation>Buka file</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="151"/>
+        <location filename="../src/gui/main_window.cpp" line="153"/>
         <source>You must close the current file before you can open another one.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="721"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="687"/>
+        <location filename="../src/gui/main_window.cpp" line="728"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="686"/>
         <source>Opening %1</source>
         <translation>Buka %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="757"/>
-        <location filename="../src/gui/main_window.cpp" line="1077"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="700"/>
+        <location filename="../src/gui/main_window.cpp" line="764"/>
+        <location filename="../src/gui/main_window.cpp" line="1084"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="699"/>
         <source>Error</source>
         <translation>Kesalahan</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="757"/>
+        <location filename="../src/gui/main_window.cpp" line="764"/>
         <source>Cannot open file:
 %1
 
@@ -2749,19 +2749,19 @@ File format not recognized.</source>
 format File tidak diakui.</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="834"/>
+        <location filename="../src/gui/main_window.cpp" line="841"/>
         <source>The file has been modified.
 Do you want to discard your changes?</source>
         <translation>File telah dimodifikasi.
 Apakah Anda ingin membuang perubahan Anda?</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="885"/>
+        <location filename="../src/gui/main_window.cpp" line="892"/>
         <source>&amp;%1 %2</source>
         <translation>&amp;%1 %2</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="964"/>
+        <location filename="../src/gui/main_window.cpp" line="971"/>
         <source>This map is being saved as a &quot;%1&quot; file. Information may be lost.
 
 Press Yes to save in this format.
@@ -2772,22 +2772,22 @@ Tekan ya untuk menyimpan dalam format ini.
 Tekan tidak untuk memilih format yang berbeda.</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1057"/>
+        <location filename="../src/gui/main_window.cpp" line="1064"/>
         <source>Save file</source>
         <translation>Simpan file</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1078"/>
+        <location filename="../src/gui/main_window.cpp" line="1085"/>
         <source>File could not be saved:</source>
         <translation>File tidak bisa diselamatkan:</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1079"/>
+        <location filename="../src/gui/main_window.cpp" line="1086"/>
         <source>There was a problem in determining the file format.</source>
         <translation>Ada masalah dalam menentukan file format.</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1080"/>
+        <location filename="../src/gui/main_window.cpp" line="1087"/>
         <source>Please report this as a bug.</source>
         <translation>Laporkan hal ini sebagai kesalahan.</translation>
     </message>
@@ -3223,7 +3223,7 @@ Import the data anyway?</source>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1030"/>
-        <location filename="../src/gui/widgets/color_list_widget.cpp" line="110"/>
+        <location filename="../src/gui/widgets/color_list_widget.cpp" line="111"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="238"/>
         <source>&amp;Edit</source>
         <translation>&amp;Merubah</translation>
@@ -4279,7 +4279,7 @@ yang dipilih</translation>
 <context>
     <name>MapEditorTool</name>
     <message>
-        <location filename="../src/templates/template_adjust.cpp" line="599"/>
+        <location filename="../src/templates/template_adjust.cpp" line="617"/>
         <location filename="../src/tools/cutout_tool.cpp" line="154"/>
         <location filename="../src/tools/draw_path_tool.cpp" line="1224"/>
         <location filename="../src/tools/draw_circle_tool.cpp" line="315"/>
@@ -5202,17 +5202,17 @@ zoom menggunakan roda mouse, jika tersedia.</translation>
 <context>
     <name>PaintOnTemplateSelectDialog</name>
     <message>
-        <location filename="../src/templates/template_tool_paint.cpp" line="347"/>
+        <location filename="../src/templates/template_tool_paint.cpp" line="348"/>
         <source>Select template to draw onto</source>
         <translation>Pilih template untuk menarik ke</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_tool_paint.cpp" line="361"/>
+        <location filename="../src/templates/template_tool_paint.cpp" line="362"/>
         <source>Cancel</source>
         <translation>Batal</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_tool_paint.cpp" line="362"/>
+        <location filename="../src/templates/template_tool_paint.cpp" line="363"/>
         <source>Draw</source>
         <translation>Menggambar</translation>
     </message>
@@ -5220,12 +5220,12 @@ zoom menggunakan roda mouse, jika tersedia.</translation>
 <context>
     <name>PaintOnTemplateTool</name>
     <message>
-        <location filename="../src/templates/template_tool_paint.cpp" line="71"/>
+        <location filename="../src/templates/template_tool_paint.cpp" line="72"/>
         <source>&lt;b&gt;Click and drag&lt;/b&gt;: Paint. &lt;b&gt;Right click and drag&lt;/b&gt;: Erase. </source>
         <translation>&lt;b&gt;Klik dan tarik&lt;/b&gt;: cat. &lt;b&gt;Klik kanan dan tarik&lt;/b&gt;: menghapus. </translation>
     </message>
     <message>
-        <location filename="../src/templates/template_tool_paint.cpp" line="74"/>
+        <location filename="../src/templates/template_tool_paint.cpp" line="75"/>
         <source>Color selection</source>
         <translation>Pilihan warna</translation>
     </message>
@@ -5417,7 +5417,7 @@ zoom menggunakan roda mouse, jika tersedia.</translation>
 <context>
     <name>PointSymbolSettings</name>
     <message>
-        <location filename="../src/gui/symbols/point_symbol_settings.cpp" line="56"/>
+        <location filename="../src/gui/symbols/point_symbol_settings.cpp" line="58"/>
         <source>Point symbol</source>
         <translation>Simbol titik</translation>
     </message>
@@ -5471,354 +5471,354 @@ zoom menggunakan roda mouse, jika tersedia.</translation>
 <context>
     <name>PrintWidget</name>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="219"/>
+        <location filename="../src/gui/print_widget.cpp" line="246"/>
         <source>Show templates</source>
         <translation>Template Tampilkan</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="230"/>
+        <location filename="../src/gui/print_widget.cpp" line="257"/>
         <source>Show grid</source>
         <translation>Tampilkan grid</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="143"/>
+        <location filename="../src/gui/print_widget.cpp" line="170"/>
         <source>Page orientation:</source>
         <translation>Orientasi halaman:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="103"/>
+        <location filename="../src/gui/print_widget.cpp" line="130"/>
         <source>Printer:</source>
         <translation>cetakan:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="136"/>
+        <location filename="../src/gui/print_widget.cpp" line="163"/>
         <source>Portrait</source>
         <translation>Potret</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="138"/>
+        <location filename="../src/gui/print_widget.cpp" line="165"/>
         <source>Landscape</source>
         <translation>Pemandangan</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="117"/>
+        <location filename="../src/gui/print_widget.cpp" line="144"/>
         <source>Page format:</source>
         <translation>Format halaman:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="146"/>
+        <location filename="../src/gui/print_widget.cpp" line="173"/>
         <source>Copies:</source>
         <translation>Salinan:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="159"/>
+        <location filename="../src/gui/print_widget.cpp" line="186"/>
         <source>Left:</source>
         <translation>Kiri:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="162"/>
+        <location filename="../src/gui/print_widget.cpp" line="189"/>
         <source>Top:</source>
         <translation>Paling atas:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="165"/>
+        <location filename="../src/gui/print_widget.cpp" line="192"/>
         <source>Width:</source>
         <translation>Lebar:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="168"/>
+        <location filename="../src/gui/print_widget.cpp" line="195"/>
         <source>Height:</source>
         <translation>Tinggi:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="262"/>
+        <location filename="../src/gui/print_widget.cpp" line="289"/>
         <source>Preview...</source>
         <translation>Tinjauan...</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="151"/>
+        <location filename="../src/gui/print_widget.cpp" line="178"/>
         <source>Single page</source>
         <translation>Satu halaman</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="152"/>
+        <location filename="../src/gui/print_widget.cpp" line="179"/>
         <source>Custom area</source>
         <translation>Wilayah kustom</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="153"/>
+        <location filename="../src/gui/print_widget.cpp" line="180"/>
         <source>Map area:</source>
         <translation>Peta wilayah:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="155"/>
+        <location filename="../src/gui/print_widget.cpp" line="182"/>
         <source>Center print area</source>
         <translation>Pusat area cetak</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="123"/>
-        <location filename="../src/gui/print_widget.cpp" line="127"/>
-        <location filename="../src/gui/print_widget.cpp" line="158"/>
-        <location filename="../src/gui/print_widget.cpp" line="161"/>
-        <location filename="../src/gui/print_widget.cpp" line="164"/>
-        <location filename="../src/gui/print_widget.cpp" line="167"/>
-        <location filename="../src/gui/print_widget.cpp" line="170"/>
+        <location filename="../src/gui/print_widget.cpp" line="150"/>
+        <location filename="../src/gui/print_widget.cpp" line="154"/>
+        <location filename="../src/gui/print_widget.cpp" line="185"/>
+        <location filename="../src/gui/print_widget.cpp" line="188"/>
+        <location filename="../src/gui/print_widget.cpp" line="191"/>
+        <location filename="../src/gui/print_widget.cpp" line="194"/>
+        <location filename="../src/gui/print_widget.cpp" line="197"/>
         <source>mm</source>
         <translation>mm</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="108"/>
+        <location filename="../src/gui/print_widget.cpp" line="135"/>
         <source>Properties</source>
         <translation>Properti</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="171"/>
+        <location filename="../src/gui/print_widget.cpp" line="198"/>
         <source>Page overlap:</source>
         <translation>Halaman tumpang tindih:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="175"/>
+        <location filename="../src/gui/print_widget.cpp" line="202"/>
         <source>Options</source>
         <translation>Pilihan</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="203"/>
+        <location filename="../src/gui/print_widget.cpp" line="230"/>
         <source>Resolution:</source>
         <translation>Resolusi:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="205"/>
+        <location filename="../src/gui/print_widget.cpp" line="232"/>
         <source>Print in different scale:</source>
         <translation>Cetak dalam skala yang berbeda:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="226"/>
+        <location filename="../src/gui/print_widget.cpp" line="253"/>
         <source>Template appearance may differ.</source>
         <translation>Penampilan template mungkin berbeda.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="233"/>
+        <location filename="../src/gui/print_widget.cpp" line="260"/>
         <source>Simulate overprinting</source>
         <translation>Mensimulasikan overprinting</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="238"/>
+        <location filename="../src/gui/print_widget.cpp" line="265"/>
         <source>Default</source>
         <translation>Standar</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="239"/>
+        <location filename="../src/gui/print_widget.cpp" line="266"/>
         <source>Device CMYK (experimental)</source>
         <translation>Perangkat CMYK (eksperimental)</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="240"/>
+        <location filename="../src/gui/print_widget.cpp" line="267"/>
         <source>Color mode:</source>
         <translation>Mode warna:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="264"/>
-        <location filename="../src/gui/print_widget.cpp" line="370"/>
+        <location filename="../src/gui/print_widget.cpp" line="291"/>
+        <location filename="../src/gui/print_widget.cpp" line="397"/>
         <source>Print</source>
         <translation>Cetak</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="268"/>
+        <location filename="../src/gui/print_widget.cpp" line="295"/>
         <source>Export...</source>
         <translation>Ekspor...</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="375"/>
+        <location filename="../src/gui/print_widget.cpp" line="402"/>
         <source>PDF export</source>
         <translation>PDF Ekspor</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="386"/>
+        <location filename="../src/gui/print_widget.cpp" line="413"/>
         <source>Image export</source>
         <translation>Ekspor gambar</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="492"/>
+        <location filename="../src/gui/print_widget.cpp" line="519"/>
         <source>Save to PDF</source>
         <translation>Menyimpan PDF</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="201"/>
-        <location filename="../src/gui/print_widget.cpp" line="896"/>
-        <location filename="../src/gui/print_widget.cpp" line="937"/>
+        <location filename="../src/gui/print_widget.cpp" line="228"/>
+        <location filename="../src/gui/print_widget.cpp" line="923"/>
+        <location filename="../src/gui/print_widget.cpp" line="964"/>
         <source>dpi</source>
         <translation>dpi</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1067"/>
+        <location filename="../src/gui/print_widget.cpp" line="1094"/>
         <source>Not supported on Android.</source>
         <translation>Tidak didukung pada Android.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1075"/>
+        <location filename="../src/gui/print_widget.cpp" line="1102"/>
         <source>Failed to prepare the preview.</source>
         <translation>Gagal untuk mempersiapkan pratinjau.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1086"/>
+        <location filename="../src/gui/print_widget.cpp" line="1113"/>
         <source>Print Preview Progress</source>
         <translation>Print Preview kemajuan</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1103"/>
+        <location filename="../src/gui/print_widget.cpp" line="1130"/>
         <source>Warning</source>
         <translation>Peringatan</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1104"/>
+        <location filename="../src/gui/print_widget.cpp" line="1131"/>
         <source>A non-standard view mode is activated. Are you sure to print / export the map like this?</source>
         <translation>Lihat non-standar mode diaktifkan. Apakah Anda yakin untuk cetak / ekspor peta seperti ini?</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1121"/>
+        <location filename="../src/gui/print_widget.cpp" line="1148"/>
         <source>PNG</source>
         <translation>PNG</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1122"/>
+        <location filename="../src/gui/print_widget.cpp" line="1149"/>
         <source>BMP</source>
         <translation>BMP</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1123"/>
+        <location filename="../src/gui/print_widget.cpp" line="1150"/>
         <source>TIFF</source>
         <translation>TIFF</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1124"/>
+        <location filename="../src/gui/print_widget.cpp" line="1151"/>
         <source>JPEG</source>
         <translation>JPEG</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1178"/>
+        <location filename="../src/gui/print_widget.cpp" line="1205"/>
         <source>Failed to prepare the PDF export.</source>
         <translation>Gagal untuk mempersiapkan PDF Ekspor.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1188"/>
+        <location filename="../src/gui/print_widget.cpp" line="1215"/>
         <source>PDF</source>
         <translation>PDF</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1241"/>
+        <location filename="../src/gui/print_widget.cpp" line="1268"/>
         <source>An error occurred during printing.</source>
         <translation>Kesalahan terjadi selama proses percetakan.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1126"/>
-        <location filename="../src/gui/print_widget.cpp" line="1154"/>
-        <location filename="../src/gui/print_widget.cpp" line="1190"/>
-        <location filename="../src/gui/print_widget.cpp" line="1202"/>
+        <location filename="../src/gui/print_widget.cpp" line="1153"/>
+        <location filename="../src/gui/print_widget.cpp" line="1181"/>
+        <location filename="../src/gui/print_widget.cpp" line="1217"/>
+        <location filename="../src/gui/print_widget.cpp" line="1229"/>
         <source>Export map ...</source>
         <translation>Peta ekspor...</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1125"/>
-        <location filename="../src/gui/print_widget.cpp" line="1189"/>
+        <location filename="../src/gui/print_widget.cpp" line="1152"/>
+        <location filename="../src/gui/print_widget.cpp" line="1216"/>
         <source>All files (*.*)</source>
         <translation>Semua file (*.*)</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1227"/>
+        <location filename="../src/gui/print_widget.cpp" line="1254"/>
         <source>Failed to prepare the printing.</source>
         <translation>Gagal untuk mempersiapkan pencetakan.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1236"/>
+        <location filename="../src/gui/print_widget.cpp" line="1263"/>
         <source>Printing Progress</source>
         <translation>Percetakan kemajuan</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1067"/>
-        <location filename="../src/gui/print_widget.cpp" line="1075"/>
-        <location filename="../src/gui/print_widget.cpp" line="1144"/>
-        <location filename="../src/gui/print_widget.cpp" line="1163"/>
-        <location filename="../src/gui/print_widget.cpp" line="1178"/>
-        <location filename="../src/gui/print_widget.cpp" line="1208"/>
-        <location filename="../src/gui/print_widget.cpp" line="1227"/>
-        <location filename="../src/gui/print_widget.cpp" line="1241"/>
+        <location filename="../src/gui/print_widget.cpp" line="1094"/>
+        <location filename="../src/gui/print_widget.cpp" line="1102"/>
+        <location filename="../src/gui/print_widget.cpp" line="1171"/>
+        <location filename="../src/gui/print_widget.cpp" line="1190"/>
+        <location filename="../src/gui/print_widget.cpp" line="1205"/>
+        <location filename="../src/gui/print_widget.cpp" line="1235"/>
         <location filename="../src/gui/print_widget.cpp" line="1254"/>
-        <location filename="../src/gui/print_widget.cpp" line="1318"/>
+        <location filename="../src/gui/print_widget.cpp" line="1268"/>
+        <location filename="../src/gui/print_widget.cpp" line="1281"/>
+        <location filename="../src/gui/print_widget.cpp" line="1345"/>
         <source>Error</source>
         <translation>Kesalahan</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="182"/>
+        <location filename="../src/gui/print_widget.cpp" line="209"/>
         <source>Vector
 graphics</source>
         <translation>Vektor
 grafis</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="183"/>
+        <location filename="../src/gui/print_widget.cpp" line="210"/>
         <source>Raster
 graphics</source>
         <translation>Gambar
 bitmap</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="184"/>
+        <location filename="../src/gui/print_widget.cpp" line="211"/>
         <source>Color
 separations</source>
         <translation>Pemisahan
 warna</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="197"/>
+        <location filename="../src/gui/print_widget.cpp" line="224"/>
         <source>Mode:</source>
         <translation>Mode:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1144"/>
+        <location filename="../src/gui/print_widget.cpp" line="1171"/>
         <source>Failed to prepare the image. Not enough memory.</source>
         <translation>Gagal untuk mempersiapkan gambar. Memori tidak cukup.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1163"/>
+        <location filename="../src/gui/print_widget.cpp" line="1190"/>
         <source>Failed to save the image. Does the path exist? Do you have sufficient rights?</source>
         <translation>Gagal untuk menyimpan gambar. Apakah ada jalan? Apakah Anda memiliki cukup hak?</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1167"/>
-        <location filename="../src/gui/print_widget.cpp" line="1212"/>
+        <location filename="../src/gui/print_widget.cpp" line="1194"/>
+        <location filename="../src/gui/print_widget.cpp" line="1239"/>
         <source>Exported successfully to %1</source>
         <translation>Berhasil diekspor ke %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1208"/>
+        <location filename="../src/gui/print_widget.cpp" line="1235"/>
         <source>Failed to finish the PDF export.</source>
         <translation>Gagal untuk menyelesaikan PDF Ekspor.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1218"/>
-        <location filename="../src/gui/print_widget.cpp" line="1250"/>
+        <location filename="../src/gui/print_widget.cpp" line="1245"/>
+        <location filename="../src/gui/print_widget.cpp" line="1277"/>
         <source>Canceled.</source>
         <translation>Dibatalkan.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1254"/>
+        <location filename="../src/gui/print_widget.cpp" line="1281"/>
         <source>The print job could not be stopped.</source>
         <translation>Pekerjaan cetak tidak bisa berhenti.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1245"/>
+        <location filename="../src/gui/print_widget.cpp" line="1272"/>
         <source>Successfully created print job</source>
         <translation>Berhasil menciptakan cetak pekerjaan</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1302"/>
-        <location filename="../src/gui/print_widget.cpp" line="1310"/>
+        <location filename="../src/gui/print_widget.cpp" line="1329"/>
+        <location filename="../src/gui/print_widget.cpp" line="1337"/>
         <source>Unknown</source>
         <comment>Paper size</comment>
         <translation>tidak diketahui</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1318"/>
+        <location filename="../src/gui/print_widget.cpp" line="1345"/>
         <source>The map area is empty. Output canceled.</source>
         <translation>Peta daerah ini kosong. Keluaran dibatalkan.</translation>
     </message>
@@ -6287,7 +6287,7 @@ Do you want to save your changes?</source>
 <context>
     <name>SettingsDialog</name>
     <message>
-        <location filename="../src/gui/settings_dialog.cpp" line="52"/>
+        <location filename="../src/gui/settings_dialog.cpp" line="60"/>
         <source>Settings</source>
         <translation>Pengaturan</translation>
     </message>
@@ -6762,12 +6762,12 @@ to jump over the lazy dog
         <translation>Tolong</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/tags_widget.cpp" line="232"/>
+        <location filename="../src/gui/widgets/tags_widget.cpp" line="231"/>
         <source>Key exists</source>
         <translation>eksis kunci</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/tags_widget.cpp" line="233"/>
+        <location filename="../src/gui/widgets/tags_widget.cpp" line="232"/>
         <source>The key &quot;%1&quot; already exists and must not be used twice.</source>
         <translation>Tombol &quot;%1&quot; sudah ada dan tidak boleh digunakan dua kali.</translation>
     </message>
@@ -6809,17 +6809,17 @@ to jump over the lazy dog
 <context>
     <name>TemplateAdjustActivity</name>
     <message>
-        <location filename="../src/templates/template_adjust.cpp" line="64"/>
+        <location filename="../src/templates/template_adjust.cpp" line="67"/>
         <source>Template adjustment</source>
         <translation>Penyesuaian template</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_adjust.cpp" line="141"/>
+        <location filename="../src/templates/template_adjust.cpp" line="145"/>
         <source>Error</source>
         <translation>Kesalahan</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_adjust.cpp" line="141"/>
+        <location filename="../src/templates/template_adjust.cpp" line="145"/>
         <source>Failed to calculate adjustment!</source>
         <translation>Gagal untuk menghitung penyesuaian!</translation>
     </message>
@@ -6827,12 +6827,12 @@ to jump over the lazy dog
 <context>
     <name>TemplateAdjustAddTool</name>
     <message>
-        <location filename="../src/templates/template_adjust.cpp" line="573"/>
+        <location filename="../src/templates/template_adjust.cpp" line="591"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the template position of the pass point. </source>
         <translation>&lt;b&gt;Klik&lt;/b&gt;: mengatur posisi titik lewat template. </translation>
     </message>
     <message>
-        <location filename="../src/templates/template_adjust.cpp" line="598"/>
+        <location filename="../src/templates/template_adjust.cpp" line="616"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the map position of the pass point. </source>
         <translation>&lt;b&gt;Klik&lt;/b&gt;: mengatur posisi peta titik lulus. </translation>
     </message>
@@ -6840,7 +6840,7 @@ to jump over the lazy dog
 <context>
     <name>TemplateAdjustDeleteTool</name>
     <message>
-        <location filename="../src/templates/template_adjust.cpp" line="807"/>
+        <location filename="../src/templates/template_adjust.cpp" line="832"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Delete pass points. </source>
         <translation>&lt;b&gt;Klik&lt;/b&gt;: Hapus lulus poin. </translation>
     </message>
@@ -6848,7 +6848,7 @@ to jump over the lazy dog
 <context>
     <name>TemplateAdjustMoveTool</name>
     <message>
-        <location filename="../src/templates/template_adjust.cpp" line="682"/>
+        <location filename="../src/templates/template_adjust.cpp" line="703"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move pass points. </source>
         <translation>&lt;b&gt;Seret&lt;/b&gt;: bergerak melewati poin. </translation>
     </message>
@@ -6856,67 +6856,67 @@ to jump over the lazy dog
 <context>
     <name>TemplateAdjustWidget</name>
     <message>
-        <location filename="../src/templates/template_adjust.cpp" line="194"/>
+        <location filename="../src/templates/template_adjust.cpp" line="201"/>
         <source>Pass points:</source>
         <translation>Melewati poin:</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_adjust.cpp" line="196"/>
+        <location filename="../src/templates/template_adjust.cpp" line="203"/>
         <source>New</source>
         <translation>Baru</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_adjust.cpp" line="200"/>
+        <location filename="../src/templates/template_adjust.cpp" line="207"/>
         <source>Move</source>
         <translation>Bergerak</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_adjust.cpp" line="204"/>
+        <location filename="../src/templates/template_adjust.cpp" line="211"/>
         <source>Delete</source>
         <translation>Hapus</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_adjust.cpp" line="211"/>
+        <location filename="../src/templates/template_adjust.cpp" line="218"/>
         <source>Template X</source>
         <translation>Template X</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_adjust.cpp" line="211"/>
+        <location filename="../src/templates/template_adjust.cpp" line="218"/>
         <source>Template Y</source>
         <translation>Template Y</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_adjust.cpp" line="211"/>
+        <location filename="../src/templates/template_adjust.cpp" line="218"/>
         <source>Map X</source>
         <translation>Peta X</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_adjust.cpp" line="211"/>
+        <location filename="../src/templates/template_adjust.cpp" line="218"/>
         <source>Map Y</source>
         <translation>Peta Y</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_adjust.cpp" line="211"/>
+        <location filename="../src/templates/template_adjust.cpp" line="218"/>
         <source>Error</source>
         <translation>Kesalahan</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_adjust.cpp" line="222"/>
+        <location filename="../src/templates/template_adjust.cpp" line="229"/>
         <source>Apply pass points</source>
         <translation>Menerapkan lulus poin</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_adjust.cpp" line="224"/>
+        <location filename="../src/templates/template_adjust.cpp" line="231"/>
         <source>Help</source>
         <translation>Tolong</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_adjust.cpp" line="225"/>
+        <location filename="../src/templates/template_adjust.cpp" line="232"/>
         <source>Apply &amp;&amp; clear all</source>
         <translation>Menerapkan &amp;&amp; Hapus semua</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_adjust.cpp" line="226"/>
+        <location filename="../src/templates/template_adjust.cpp" line="233"/>
         <source>Clear all</source>
         <translation>Hapus semua</translation>
     </message>
@@ -6924,17 +6924,17 @@ to jump over the lazy dog
 <context>
     <name>TemplateImage</name>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="159"/>
+        <location filename="../src/templates/template_image.cpp" line="160"/>
         <source>Not enough free memory (image size: %1x%2 pixels)</source>
         <translation>Tidak cukup bebas memori (ukuran gambar: 1%x%2 piksel)</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="199"/>
+        <location filename="../src/templates/template_image.cpp" line="200"/>
         <source>Warning</source>
         <translation>Peringatan</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="199"/>
+        <location filename="../src/templates/template_image.cpp" line="200"/>
         <source>Loading a GIF image template.
 Saving GIF files is not supported. This means that drawings on this template won&apos;t be saved!
 If you do not intend to draw on this template however, that is no problem.</source>
@@ -6943,7 +6943,7 @@ Menyimpan file GIF tidak didukung. Ini berarti bahwa gambar di template ini tida
 Jika Anda tidak berniat untuk menggambar pada template ini namun, itulah tidak ada masalah.</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="241"/>
+        <location filename="../src/templates/template_image.cpp" line="242"/>
         <source>Select the coordinate reference system of the coordinates in the world file</source>
         <translation>Pilih sistem koordinat koordinat referensi dalam file dunia</translation>
     </message>
@@ -6951,67 +6951,67 @@ Jika Anda tidak berniat untuk menggambar pada template ini namun, itulah tidak a
 <context>
     <name>TemplateImageOpenDialog</name>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="564"/>
+        <location filename="../src/templates/template_image.cpp" line="565"/>
         <source>Opening %1</source>
         <translation>Buka %1</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="566"/>
+        <location filename="../src/templates/template_image.cpp" line="567"/>
         <source>Image size:</source>
         <translation>Ukuran gambar:</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="569"/>
+        <location filename="../src/templates/template_image.cpp" line="570"/>
         <source>Specify how to position or scale the image:</source>
         <translation>Menentukan cara untuk posisi atau skala gambar:</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="579"/>
+        <location filename="../src/templates/template_image.cpp" line="580"/>
         <source>World file</source>
         <translation>Dunia file</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="581"/>
+        <location filename="../src/templates/template_image.cpp" line="582"/>
         <source>GeoTiff</source>
         <translation>GeoTiff</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="583"/>
+        <location filename="../src/templates/template_image.cpp" line="584"/>
         <source>no georeferencing information</source>
         <translation>tidak ada informasi georeferencing</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="585"/>
+        <location filename="../src/templates/template_image.cpp" line="586"/>
         <source>Georeferenced</source>
         <translation>Rujukan geografis</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="589"/>
+        <location filename="../src/templates/template_image.cpp" line="590"/>
         <source>Meters per pixel:</source>
         <translation>Meter per pixel:</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="593"/>
+        <location filename="../src/templates/template_image.cpp" line="594"/>
         <source>Scanned with</source>
         <translation>Scan dengan</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="596"/>
+        <location filename="../src/templates/template_image.cpp" line="597"/>
         <source>dpi</source>
         <translation>dpi</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="598"/>
+        <location filename="../src/templates/template_image.cpp" line="599"/>
         <source>Template scale:  1 :</source>
         <translation>Skala template: 1 :</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="624"/>
+        <location filename="../src/templates/template_image.cpp" line="625"/>
         <source>Cancel</source>
         <translation>Batal</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="625"/>
+        <location filename="../src/templates/template_image.cpp" line="626"/>
         <source>Open</source>
         <translation>Buka</translation>
     </message>
@@ -7040,13 +7040,13 @@ Jika Anda tidak berniat untuk menggambar pada template ini namun, itulah tidak a
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="195"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="465"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="464"/>
         <source>Sketch</source>
         <translation>Sketsa</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="197"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="469"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="468"/>
         <source>GPS</source>
         <translation>GPS</translation>
     </message>
@@ -7106,7 +7106,7 @@ Jika Anda tidak berniat untuk menggambar pada template ini namun, itulah tidak a
         <translation>Memindahkan dengan tangan</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="375"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="374"/>
         <source>Open image, GPS track or DXF file</source>
         <translation>Buka gambar, melacak GPS atau DXF file</translation>
     </message>
@@ -7116,12 +7116,12 @@ Jika Anda tidak berniat untuk menggambar pada template ini namun, itulah tidak a
         <translation>Posisi...</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="378"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="377"/>
         <source>Template files</source>
         <translation>File template</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="378"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="377"/>
         <source>All files</source>
         <translation>Semua file</translation>
     </message>
@@ -7131,29 +7131,29 @@ Jika Anda tidak berniat untuk menggambar pada template ini namun, itulah tidak a
         <translation>Menyesuaikan...</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="391"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="402"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="738"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="390"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="401"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="737"/>
         <source>Error</source>
         <translation>Kesalahan</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="738"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="737"/>
         <source>Please enter a valid integer number to set a group or leave the field empty to ungroup the template!</source>
         <translation>Harap masukkan sebuah angka integer berlaku untuk mengatur sebuah kelompok atau meninggalkan bidang kosong ke ungroup template!</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="991"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="990"/>
         <source>Don&apos;t scale</source>
         <translation>Tidak terskala</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="986"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="985"/>
         <source>Scale by nominal map scale ratio (%1 %)</source>
         <translation>Skala dengan nominal peta skala rasio (%1 %)</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="387"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="386"/>
         <location filename="../src/templates/template.cpp" line="489"/>
         <source>Cannot open template
 %1:
@@ -7163,38 +7163,38 @@ Jika Anda tidak berniat untuk menggambar pada template ini namun, itulah tidak a
 %2</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="391"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="390"/>
         <source>File format not recognized.</source>
         <translation>Format file yang tidak diakui.</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="401"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="400"/>
         <source>Failed to load template. Does the file exist and is it valid?</source>
         <translation>Gagal untuk memuat template. Apakah ada file dan tidak berlaku?</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="988"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="987"/>
         <source>Scale by current template scaling (%1 %)</source>
         <translation>Skala oleh saat ini template skala (%1 %)</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="993"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1025"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="992"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1024"/>
         <source>Template import</source>
         <translation>Template impor</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="994"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="993"/>
         <source>How shall the symbols of the imported template map be scaled?</source>
         <translation>Bagaimana akan simbol-simbol peta impor template diskalakan?</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1026"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1025"/>
         <source>The template will be invisible in the overprinting simulation. Switch to normal view?</source>
         <translation>Template akan terlihat dalam simulasi overprinting. Beralih ke tampilan normal?</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1159"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1158"/>
         <source>- Map -</source>
         <translation>- Peta -</translation>
     </message>
@@ -7465,17 +7465,17 @@ Didukung versi maksimum adalah %2.</translation>
 <context>
     <name>TextSymbolSettings</name>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="74"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="92"/>
         <source>Text settings</source>
         <translation>Pengaturan teks</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="80"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="98"/>
         <source>Font family:</source>
         <translation>Jenis huruf:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="84"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="102"/>
         <source>Font size:</source>
         <translation>Ukuran font:</translation>
     </message>
@@ -7486,160 +7486,160 @@ Didukung versi maksimum adalah %2.</translation>
         <translation>A</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="98"/>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="123"/>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="183"/>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="189"/>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="456"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="116"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="141"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="201"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="207"/>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="474"/>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="567"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="492"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="585"/>
         <source>mm</source>
         <translation>mm</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="83"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="101"/>
         <source>pt</source>
         <translation>pt</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="106"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="124"/>
         <source>Text color:</source>
         <translation>Warna teks:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="109"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="127"/>
         <source>bold</source>
         <translation>tebal</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="111"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="129"/>
         <source>italic</source>
         <translation>miring</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="113"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="131"/>
         <source>underlined</source>
         <translation>menggarisbawahi</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="116"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="134"/>
         <source>Text style:</source>
         <translation>Gaya teks:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="120"/>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="126"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="138"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="144"/>
         <source>%</source>
         <translation>%</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="121"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="139"/>
         <source>Line spacing:</source>
         <translation>Spasi:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="124"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="142"/>
         <source>Paragraph spacing:</source>
         <translation>Penentuan spasi paragraf:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="127"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="145"/>
         <source>Character spacing:</source>
         <translation>Spasi karakter:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="129"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="147"/>
         <source>Kerning</source>
         <translation>Kerning</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="136"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="154"/>
         <source>Symbol icon text:</source>
         <translation>Simbol ikon teks:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="140"/>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="148"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="158"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="166"/>
         <source>Framing</source>
         <translation>Membingkai</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="143"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="161"/>
         <source>OCAD compatibility settings</source>
         <translation>OCAD kompatibilitas pengaturan</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="154"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="172"/>
         <source>Framing color:</source>
         <translation>Membingkai warna:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="156"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="174"/>
         <source>Line framing</source>
         <translation>Membingkai baris</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="160"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="178"/>
         <source>Width:</source>
         <translation>Lebar:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="162"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="180"/>
         <source>Shadow framing</source>
         <translation>Bayangan membingkai</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="166"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="184"/>
         <source>Left/Right Offset:</source>
         <translation>Offset kiri/kanan:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="169"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="187"/>
         <source>Top/Down Offset:</source>
         <translation>Offset atas bawah:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="173"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="191"/>
         <source>OCAD compatibility</source>
         <translation>OCAD kompatibilitas</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="180"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="198"/>
         <source>enabled</source>
         <translation>diaktifkan</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="184"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="202"/>
         <source>Line width:</source>
         <translation>Lebar garis:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="187"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="205"/>
         <source>Line color:</source>
         <translation>Warna garis:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="456"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="474"/>
         <source>Position:</source>
         <translation>Posisi:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="178"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="196"/>
         <source>Line below paragraphs</source>
         <translation>Baris di bawah paragraf</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="190"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="208"/>
         <source>Distance from baseline:</source>
         <translation>Jarak dari dasar:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="194"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="212"/>
         <source>Custom tabulator positions</source>
         <translation>Posisi tabulator kustom</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="455"/>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="473"/>
         <source>Add custom tabulator</source>
         <translation>Tambahkan tabulator kustom</translation>
     </message>
@@ -7684,14 +7684,16 @@ Didukung versi maksimum adalah %2.</translation>
 <context>
     <name>UnitOfMeasurement</name>
     <message>
+        <location filename="../src/gui/util_gui.cpp" line="209"/>
         <source>mm</source>
         <comment>millimeters</comment>
-        <translation type="obsolete">mm</translation>
+        <translation>mm</translation>
     </message>
     <message>
+        <location filename="../src/gui/util_gui.cpp" line="214"/>
         <source>m</source>
         <comment>meters</comment>
-        <translation type="obsolete">m</translation>
+        <translation>m</translation>
     </message>
     <message>
         <location filename="../src/tools/tool_helpers.cpp" line="620"/>
@@ -7709,29 +7711,29 @@ Didukung versi maksimum adalah %2.</translation>
 <context>
     <name>Util</name>
     <message>
-        <location filename="../src/util/util.cpp" line="254"/>
-        <location filename="../src/util/util.cpp" line="268"/>
-        <location filename="../src/util/util.cpp" line="302"/>
+        <location filename="../src/gui/util_gui.cpp" line="135"/>
+        <location filename="../src/gui/util_gui.cpp" line="149"/>
+        <location filename="../src/gui/util_gui.cpp" line="183"/>
         <source>Error</source>
         <translation>Kesalahan</translation>
     </message>
     <message>
-        <location filename="../src/util/util.cpp" line="254"/>
+        <location filename="../src/gui/util_gui.cpp" line="135"/>
         <source>Failed to locate the help files.</source>
         <translation>Gagal untuk menemukan file bantuan.</translation>
     </message>
     <message>
-        <location filename="../src/util/util.cpp" line="268"/>
+        <location filename="../src/gui/util_gui.cpp" line="149"/>
         <source>Failed to locate the help browser (&quot;Qt Assistant&quot;).</source>
         <translation>Gagal untuk menemukan bantuan browser (&quot;Qt asisten&quot;).</translation>
     </message>
     <message>
-        <location filename="../src/util/util.cpp" line="303"/>
+        <location filename="../src/gui/util_gui.cpp" line="184"/>
         <source>Failed to launch the help browser (&quot;Qt Assistant&quot;).</source>
         <translation>Gagal untuk memulai bantuan browser (&quot;Qt asisten&quot;).</translation>
     </message>
     <message>
-        <location filename="../src/util/util.cpp" line="319"/>
+        <location filename="../src/gui/util_gui.cpp" line="202"/>
         <source>See more...</source>
         <extracomment>This &quot;See more&quot; is displayed as a link to the manual in What&apos;s-this tooltips.</extracomment>
         <translation>Lihat lanjut...</translation>
