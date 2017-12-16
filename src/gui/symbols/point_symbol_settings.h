@@ -40,6 +40,7 @@ class PointSymbolSettings : public SymbolPropertiesWidget
 Q_OBJECT
 public:
 	PointSymbolSettings(PointSymbol* symbol, SymbolSettingDialog* dialog);
+	~PointSymbolSettings() override;
 	
 	void reset(Symbol* symbol) override;
 	

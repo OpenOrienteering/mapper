@@ -22,6 +22,7 @@
 #include "point_symbol_settings.h"
 
 #include <QtGlobal>
+#include <QTabWidget>
 #include <QVBoxLayout>
 #include <QWidget>
 
@@ -37,6 +38,7 @@ SymbolPropertiesWidget* PointSymbol::createPropertiesWidget(SymbolSettingDialog*
 {
 	return new PointSymbolSettings(this, dialog);
 }
+
 
 
 // ### PointSymbolSettings ###
@@ -58,12 +60,21 @@ PointSymbolSettings::PointSymbolSettings(PointSymbol* symbol, SymbolSettingDialo
 	connect(this, &QTabWidget::currentChanged, this, &PointSymbolSettings::tabChanged);
 }
 
+
+PointSymbolSettings::~PointSymbolSettings() = default;
+
+
+
 void PointSymbolSettings::reset(Symbol* symbol)
 {
-	Q_ASSERT(symbol->getType() == Symbol::Point);
+	if (Q_UNLIKELY(symbol->getType() != Symbol::Point))
+	{
+		qWarning("Not a point symbol: %s", symbol ? "nullptr" : qPrintable(symbol->getPlainTextName()));
+		return;
+	}
 	
 	SymbolPropertiesWidget::reset(symbol);
-	this->symbol = reinterpret_cast<PointSymbol*>(symbol);
+	this->symbol = static_cast<PointSymbol*>(symbol);
 	
 	layout->removeWidget(symbol_editor);
 	delete(symbol_editor);
@@ -73,8 +84,9 @@ void PointSymbolSettings::reset(Symbol* symbol)
 	layout->addWidget(symbol_editor);
 }
 
-void PointSymbolSettings::tabChanged(int index)
+
+
+void PointSymbolSettings::tabChanged(int /*index*/)
 {
-	Q_UNUSED(index);
 	symbol_editor->setEditorActive( currentWidget()==point_tab );
 }
