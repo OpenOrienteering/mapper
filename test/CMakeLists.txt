@@ -172,7 +172,7 @@ configure_file(AUTORUN_TESTS.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/AUTORUN_TESTS.
 # It also provides access to the the script template.
 add_custom_target(AUTORUN_TESTS
   COMMAND "${CMAKE_COMMAND}" -P AUTORUN_TESTS.cmake
-  DEPENDS ${Mapper_AUTORUN_TESTS}
   SOURCES AUTORUN_TESTS.cmake.in
   COMMENT "Running tests for modified sources"
 )
+add_dependencies(AUTORUN_TESTS ${Mapper_AUTORUN_TESTS})
