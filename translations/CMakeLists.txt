@@ -88,7 +88,14 @@ set(qt_translations
 qt5_add_translation(translations_qm ${Mapper_translations} ${map_symbols_translations} ${qt_translations})
 
 # A target which builds all translations.
-add_custom_target(Mapper_translations ALL DEPENDS ${translations_qm})
+add_custom_target(Mapper_translations ALL
+  DEPENDS ${translations_qm}
+  # SOURCES are displayed in Qt Creator
+  SOURCES
+    ${Mapper_translations}
+    ${map_symbols_translations}
+    ${qt_translations}
+)
 
 install(
   FILES ${translations_qm}
@@ -125,7 +132,14 @@ if(lupdate_version VERSION_LESS 5.6.1)
 	message(AUTHOR_WARNING "lupdate version ${lupdate_version} is less than 5.6.1. Updates disabled.")
 else()
 	# A target which updates all translations.
-	add_custom_target(Mapper_translations_update)
+	add_custom_target(Mapper_translations_update
+	  # SOURCES are displayed in Qt Creator
+	  SOURCES
+	    ${Mapper_translations_template}
+	    ${map_symbols_translations_template}
+	    future_translations.cpp
+	    ../packaging/translations.cpp
+	)
 	
 	set(listfile "${CMAKE_CURRENT_BINARY_DIR}/translations_sourcefiles.txt")
 	set_property(SOURCE "${listfile}" PROPERTY GENERATED TRUE)
@@ -146,10 +160,6 @@ else()
 			list(APPEND lupdate_options -no-obsolete)
 		endif()
 		add_custom_target(Mapper_${ts_filename}_update
-		  # SOURCES are displayed in Qt Creator
-		  SOURCES "${PROJECT_SOURCE_DIR}/translations/future_translations.cpp"
-		          "${PROJECT_SOURCE_DIR}/packaging/translations.cpp"
-		          "${listfile}"
 		  COMMAND "${Qt5_LUPDATE_EXECUTABLE}" ${lupdate_options} "@${listfile}" -ts "${CMAKE_CURRENT_SOURCE_DIR}/${translation}"
 		  COMMAND sed -i -e "/<name>Q[A-Z]/,/<context>/d" "${CMAKE_CURRENT_SOURCE_DIR}/${translation}"
 		  VERBATIM
@@ -203,6 +213,8 @@ if(UNIX AND NOT APPLE)
 	)
 	add_custom_target(translate-text-files
 	  DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/text-files.stamp"
+	  SOURCES
+	    translate_text_files.sh
 	)
 	add_dependencies(Mapper_translations translate-text-files)
 endif()
