@@ -5392,9 +5392,9 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="560"/>
         <source>Cannot use this spatial reference:
-%s</source>
+%1</source>
         <translation>Ei voitu käyttää tätä välillistä viittausta:
-%s</translation>
+%1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="619"/>

@@ -5236,9 +5236,9 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="560"/>
         <source>Cannot use this spatial reference:
-%s</source>
+%1</source>
         <translation>Нельзя использовать эту пространственную ссылку:
-%s</translation>
+%1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="619"/>

@@ -557,7 +557,7 @@ ogr::unique_srs OgrFileImport::importGeoreferencing(OGRDataSourceH data_source)
 		auto transformation = OCTNewCoordinateTransformation(spatial_reference, orthographic.get());
 		if (!transformation)
 		{
-			addWarning(tr("Cannot use this spatial reference:\n%s").arg(toPrettyWkt(spatial_reference)));
+			addWarning(tr("Cannot use this spatial reference:\n%1").arg(toPrettyWkt(spatial_reference)));
 			continue;
 		}
 		OCTDestroyCoordinateTransformation(transformation);

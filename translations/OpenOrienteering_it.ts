@@ -5273,7 +5273,7 @@ se disponibile si può zoomare con la rotella del mouse.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="560"/>
         <source>Cannot use this spatial reference:
-%s</source>
+%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

@@ -5489,7 +5489,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="560"/>
         <source>Cannot use this spatial reference:
-%s</source>
+%1</source>
         <translation>Nemohu použít tento souřadnicový systém:
 %1</translation>
     </message>

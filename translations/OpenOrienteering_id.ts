@@ -5177,7 +5177,7 @@ zoom menggunakan roda mouse, jika tersedia.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="560"/>
         <source>Cannot use this spatial reference:
-%s</source>
+%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

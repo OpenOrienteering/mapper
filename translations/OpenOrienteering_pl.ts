@@ -544,7 +544,7 @@
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="414"/>
         <source>Click to select the name and click again to edit.</source>
-        <translation>Kliknij, by zaznaczyć nazwę oraz kliknij ponownie, by ją edytować.</translation>
+        <translation>Kliknij, by zaznaczyć nazwę oraz kliknij ponownie, by ją edytować.</translation>
     </message>
 </context>
 <context>
@@ -5454,7 +5454,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="560"/>
         <source>Cannot use this spatial reference:
-%s</source>
+%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
