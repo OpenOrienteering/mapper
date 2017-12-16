@@ -221,7 +221,7 @@
         <message>
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
             <comment>Description of symbol 104.1</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Земляний обрив це різка зміна рівня земної поверхні, що чітко вирізняється на тлі іншого оточення, на приклад, гравійний чи піщаний кар'єр, насип вздовж залізної дороги чи шосе, дамба. Мінімальна висота: 1 м. Земляний обрив може впливати на прохідність. Зубці обриву зображають його розміри в плані. Для довгих обривів дозволяється використовувати зубці коротші за мінімальну довжину на кінцях обриву. Якщо кілька обривів розташовано близько один до одного, дозволяється не показувати зубці. Непрохідні земляні обриви мають бути показані знаком 201 (непрохідна скеля).</translation>
         </message>
         <message>
             <source>Earth bank, top line</source>
@@ -231,7 +231,7 @@
         <message>
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
             <comment>Description of symbol 104.2</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Земляний обрив це різка зміна рівня земної поверхні, що чітко вирізняється на тлі іншого оточення, на приклад, гравійний чи піщаний кар'єр, насип вздовж залізної дороги чи шосе, дамба. Мінімальна висота: 1 м. Земляний обрив може впливати на прохідність. Зубці обриву зображають його розміри в плані. Для довгих обривів дозволяється використовувати зубці коротші за мінімальну довжину на кінцях обриву. Якщо кілька обривів розташовано близько один до одного, дозволяється не показувати зубці. Непрохідні земляні обриви мають бути показані знаком 201 (непрохідна скеля).</translation>
         </message>
         <message>
             <source>Earth bank, tag line</source>
@@ -251,7 +251,7 @@
         <message>
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
             <comment>Description of symbol 104.9</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Земляний обрив це різка зміна рівня земної поверхні, що чітко вирізняється на тлі іншого оточення, на приклад, гравійний чи піщаний кар'єр, насип вздовж залізної дороги чи шосе, дамба. Мінімальна висота: 1 м. Земляний обрив може впливати на прохідність. Зубці обриву зображають його розміри в плані. Для довгих обривів дозволяється використовувати зубці коротші за мінімальну довжину на кінцях обриву. Якщо кілька обривів розташовано близько один до одного, дозволяється не показувати зубці. Непрохідні земляні обриви мають бути показані знаком 201 (непрохідна скеля).</translation>
         </message>
         <message>
             <source>Earth wall</source>
