@@ -22,18 +22,18 @@
 #ifndef OPENORIENTEERING_COMBINED_SYMBOL_SETTINGS_H
 #define OPENORIENTEERING_COMBINED_SYMBOL_SETTINGS_H
 
+#include <vector>
+
 #include <QObject>
 
 #include "gui/symbols/symbol_properties_widget.h"
 
-class QLabel;
-class QPushButton;
 class QSpinBox;
 
 class CombinedSymbol;
 class Symbol;
-class SymbolDropDown;
 class SymbolSettingDialog;
+
 
 class CombinedSymbolSettings : public SymbolPropertiesWidget
 {
@@ -49,20 +49,20 @@ public:
 	 */
 	void updateContents();
 	
-	static const int max_count;	// maximum number of symbols in a combined symbol
 	
-protected slots:
+protected:
+	void addRow(unsigned int index);
 	void numberChanged(int value);
-	void symbolChanged(int index);
-	void editClicked(int index);
+	void symbolChanged();
+	void editButtonClicked();
+	void showEditDialog(int index);
 	
 private:
 	CombinedSymbol* symbol;
 	
 	QSpinBox* number_edit;
-	QLabel** symbol_labels;
-	SymbolDropDown** symbol_edits;
-	QPushButton** edit_buttons;
+	struct Widgets;
+	std::vector<Widgets> widgets;
 };
 
 #endif
