@@ -63,9 +63,9 @@ SymbolPropertiesWidget* CombinedSymbol::createPropertiesWidget(SymbolSettingDial
 
 struct CombinedSymbolSettings::Widgets
 {
-	QLabel*         label  = nullptr;
-	SymbolDropDown* edit   = nullptr;
-	QPushButton*    button = nullptr;
+	QLabel*         label;
+	SymbolDropDown* edit;
+	QPushButton*    button;
 };
 
 
