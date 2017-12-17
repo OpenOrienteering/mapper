@@ -405,6 +405,7 @@ QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, in
 	// Create geometry
 	Object* object = nullptr;
 	Symbol* icon_symbol = nullptr;
+	auto offset = MapCoord{};
 	if (type == Point)
 	{
 		auto point = new PointObject(static_cast<const PointSymbol*>(this));
@@ -427,9 +428,12 @@ QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, in
 		bool show_dash_symbol = false;
 		if (type == Line)
 		{
+			auto line = static_cast<const LineSymbol*>(this);
+			if (line->getCapStyle() == LineSymbol::RoundCap)
+				offset.setNativeX(-line->getLineWidth()/3);
+
 			// If there are breaks in the line, scale them down so they fit into the icon exactly
 			// TODO: does not work for combined lines yet. Could be done by checking every contained line and scaling the painter horizontally
-			const LineSymbol* line = asLine();
 			if (line->isDashed() && line->getBreakLength() > 0)
 			{
 				LineSymbol* icon_line = duplicate()->asLine();
@@ -518,7 +522,7 @@ QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, in
 		// Center horizontally on extent
 		real_icon_mm_half = qMax(object->getExtent().width() / 2, object->getExtent().bottom());
 		real_icon_mm_half = qMax(real_icon_mm_half, -object->getExtent().top());
-		auto pos = MapCoord{ object->getExtent().center() };
+		auto pos = offset + MapCoord{ object->getExtent().center() };
 		pos.setY(0);
 		view.setCenter(pos);
 	}
