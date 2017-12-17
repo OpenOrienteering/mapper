@@ -580,7 +580,9 @@ qreal PointSymbol::dimensionForIcon() const
 	}
 	if (extent.isValid())
 	{
-		return qMax(size, (extent.width()+extent.height())/2);
+		auto w = 2 * std::max(std::abs(extent.left()), std::abs(extent.right()));
+		auto h = 2 * std::max(std::abs(extent.top()), std::abs(extent.bottom()));
+		return std::max(size, std::max(w, h));
 	}
 	
 	return size;
