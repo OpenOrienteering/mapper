@@ -522,44 +522,37 @@ QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, in
 		text->setText(dynamic_cast<const TextSymbol*>(this)->getIconText());
 		object = text;
 	}
-	/*else if (type == Combined)
-	{
-		PathObject* path = new PathObject(this);
-		for (int i = 0; i < 5; ++i)
-			path->addCoordinate(i, MapCoord(sin(2*M_PI * i/5.0) * max_icon_mm_half, -cos(2*M_PI * i/5.0) * max_icon_mm_half));
-		path->parts().front().setClosed(true, false);
-		object = path;
-	}*/
 	else
-		Q_ASSERT(false);
+	{
+		qWarning("Unhandled symbol: %s", qPrintable(getDescription()));
+		return image;
+	}
 	
 	icon_map.addObject(object);
 	
-	qreal real_icon_mm_half;
-	if (type == Point || type == Text)
+	const auto& extent = object->getExtent();
+	if (type == Text)
 	{
-		// Center on the object's extent center
-		real_icon_mm_half = qMax(object->getExtent().width() / 2, object->getExtent().height() / 2);
-		view.setCenter(MapCoord{ object->getExtent().center() });
+		// Center text
+		view.setCenter(MapCoord{ extent.center() });
+	}
+	else if (type == Point)
+	{
+		// Do not completely offset the symbols relative position
+		view.setCenter(MapCoord{ extent.center() / 2 });
 	}
 	else if (contained_types & Line && !(contained_types & Area))
 	{
-		// Center horizontally on extent
-		real_icon_mm_half = qMax(object->getExtent().width() / 2, object->getExtent().bottom());
-		real_icon_mm_half = qMax(real_icon_mm_half, -object->getExtent().top());
-		auto pos = offset + MapCoord{ object->getExtent().center() };
-		pos.setY(0);
-		view.setCenter(pos);
+		view.setCenter(offset);
 	}
-	else
-	{
-		// Center on coordinate system origin
-		real_icon_mm_half = qMax(object->getExtent().right(), object->getExtent().bottom());
-		real_icon_mm_half = qMax(real_icon_mm_half, -object->getExtent().left());
-		real_icon_mm_half = qMax(real_icon_mm_half, -object->getExtent().top());
-	}
+	
+	auto w = std::max(std::abs(extent.left()), std::abs(extent.right()));
+	auto h = std::max(std::abs(extent.top()), std::abs(extent.bottom()));
+	auto real_icon_mm_half = std::max(w, h);
 	if (real_icon_mm_half > max_icon_mm_half)
-		view.setZoom(zoom * (max_icon_mm_half / real_icon_mm_half));
+	{
+		view.setZoom(zoom * max_icon_mm_half / real_icon_mm_half);
+	}
 	
 	painter.translate((side_length - bottom_right_border)/2, (side_length - bottom_right_border)/2);
 	painter.setWorldTransform(view.worldTransform(), true);
