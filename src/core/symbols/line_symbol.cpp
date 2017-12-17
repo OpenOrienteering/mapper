@@ -1674,13 +1674,13 @@ qreal LineSymbol::dimensionForIcon() const
 	// calculateLargestLineExtent() gives half line width, and for the icon,
 	// we suggest a half line width of white space on each side.
 	auto size = 4 * calculateLargestLineExtent();
-	if (start_symbol)
+	if (start_symbol && !start_symbol->isEmpty())
 		size = qMax(size, start_symbol->dimensionForIcon());
-	if (mid_symbol)
-		size = qMax(size, mid_symbol->dimensionForIcon());
-	if (dash_symbol)
-		size = qMax(size, dash_symbol->dimensionForIcon());
-	if (end_symbol)
+	if (mid_symbol && !mid_symbol->isEmpty())
+		size = qMax(size, 2 * mid_symbol->dimensionForIcon() + getMidSymbolDistance() * (getMidSymbolsPerSpot() - 1) / 1000);
+	if (dash_symbol && !dash_symbol->isEmpty())
+		size = qMax(size, 2 * dash_symbol->dimensionForIcon());
+	if (end_symbol && !end_symbol->isEmpty())
 		size = qMax(size, end_symbol->dimensionForIcon());
 	return size;
 }

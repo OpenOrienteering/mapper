@@ -404,7 +404,7 @@ QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, in
 	
 	// Create geometry
 	Object* object = nullptr;
-	Symbol* icon_symbol = nullptr;
+	std::unique_ptr<Symbol> symbol_copy;
 	auto offset = MapCoord{};
 	if (type == Point)
 	{
@@ -424,19 +424,27 @@ QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, in
 	}
 	else if (type == Line || type == Combined)
 	{
-		const Symbol* symbol_to_use = this;
 		bool show_dash_symbol = false;
+		auto line_length_half = max_icon_mm_half;
 		if (type == Line)
 		{
 			auto line = static_cast<const LineSymbol*>(this);
 			if (line->getCapStyle() == LineSymbol::RoundCap)
+			{
 				offset.setNativeX(-line->getLineWidth()/3);
+			}
+			else if (line->getCapStyle() == LineSymbol::PointedCap)
+			{
+				line_length_half = std::max(line_length_half, 0.0012 * line->getPointedCapLength());
+			}
 
 			// If there are breaks in the line, scale them down so they fit into the icon exactly
 			// TODO: does not work for combined lines yet. Could be done by checking every contained line and scaling the painter horizontally
 			if (line->isDashed() && line->getBreakLength() > 0)
 			{
-				LineSymbol* icon_line = duplicate()->asLine();
+				if (!symbol_copy)
+					symbol_copy.reset(line->duplicate());
+				auto icon_line = static_cast<LineSymbol*>(symbol_copy.get());
 				
 				auto ideal_length = qreal(2 * line->getDashesInGroup() * line->getDashLength() + 2 * (line->getDashesInGroup() - 1) * line->getInGroupBreakLength() + line->getBreakLength()) / 1000;
 				auto real_length = max_icon_mm;
@@ -447,20 +455,37 @@ QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, in
 				icon_line->setInGroupBreakLength(qRound(factor * icon_line->getInGroupBreakLength()));
 				icon_line->setShowAtLeastOneSymbol(true);
 				
-				icon_symbol = icon_line;
-				symbol_to_use = icon_symbol;
 			}
-			else if (line->getDashSymbol() != nullptr)
+
+			if (line->getDashSymbol() && !line->getDashSymbol()->isEmpty())
 			{
-				show_dash_symbol = !line->getDashSymbol()->isEmpty();
+				line_length_half = std::max(line_length_half, line->getDashSymbol()->dimensionForIcon());
+				show_dash_symbol = true;
 			}
-			else if (line->getMidSymbol() && !line->getMidSymbol()->isEmpty()
-			         && !line->getShowAtLeastOneSymbol())
+
+			if (line->getMidSymbol() && !line->getMidSymbol()->isEmpty())
 			{
-				auto icon_line = static_cast<LineSymbol*>(line->duplicate());
-				icon_line->setShowAtLeastOneSymbol(true);
-				icon_symbol = icon_line;
-				symbol_to_use = icon_symbol;
+				auto icon_size = line->getMidSymbol()->dimensionForIcon();
+				icon_size += line->getMidSymbolDistance() * (line->getMidSymbolsPerSpot() - 1) / 2000;
+				line_length_half = std::max(line_length_half, icon_size);
+
+			    if (!line->getShowAtLeastOneSymbol())
+				{
+					if (!symbol_copy)
+						symbol_copy.reset(line->duplicate());
+					auto icon_line = static_cast<LineSymbol*>(symbol_copy.get());
+					icon_line->setShowAtLeastOneSymbol(true);
+				}
+			}
+
+			if (line->getStartSymbol() && !line->getStartSymbol()->isEmpty())
+			{
+				line_length_half = std::max(line_length_half, line->getStartSymbol()->dimensionForIcon() / 2);
+			}
+
+			if (line->getEndSymbol() && !line->getEndSymbol()->isEmpty())
+			{
+				line_length_half = std::max(line_length_half, line->getEndSymbol()->dimensionForIcon() / 2);
 			}
 		}
 		else if (type == Combined)
@@ -477,9 +502,9 @@ QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, in
 			}
 		}
 		
-		auto path = new PathObject(symbol_to_use);
-		path->addCoordinate(0, MapCoord(-max_icon_mm_half, 0.0));
-		path->addCoordinate(1, MapCoord(max_icon_mm_half, 0.0));
+		auto path = new PathObject(symbol_copy ? symbol_copy.get() : this);
+		path->addCoordinate(0, MapCoord(-line_length_half, 0.0));
+		path->addCoordinate(1, MapCoord(line_length_half, 0.0));
 		if (show_dash_symbol)
 		{
 			MapCoord dash_coord(0, 0);
@@ -545,7 +570,6 @@ QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, in
 	icon_map.draw(&painter, config);
 	is_hidden = was_hidden;
 	
-	delete icon_symbol;
 	painter.end();
 	
 	// Add shadow to dominant white on transparent
