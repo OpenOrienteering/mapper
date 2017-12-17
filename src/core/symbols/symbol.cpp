@@ -441,6 +441,7 @@ QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, in
 				icon_line->setDashLength(qRound(factor * icon_line->getDashLength()));
 				icon_line->setBreakLength(qRound(factor * icon_line->getBreakLength()));
 				icon_line->setInGroupBreakLength(qRound(factor * icon_line->getInGroupBreakLength()));
+				icon_line->setShowAtLeastOneSymbol(true);
 				
 				icon_symbol = icon_line;
 				symbol_to_use = icon_symbol;
@@ -448,6 +449,14 @@ QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, in
 			else if (line->getDashSymbol() != nullptr)
 			{
 				show_dash_symbol = !line->getDashSymbol()->isEmpty();
+			}
+			else if (line->getMidSymbol() && !line->getMidSymbol()->isEmpty()
+			         && !line->getShowAtLeastOneSymbol())
+			{
+				auto icon_line = static_cast<LineSymbol*>(line->duplicate());
+				icon_line->setShowAtLeastOneSymbol(true);
+				icon_symbol = icon_line;
+				symbol_to_use = icon_symbol;
 			}
 		}
 		else if (type == Combined)
