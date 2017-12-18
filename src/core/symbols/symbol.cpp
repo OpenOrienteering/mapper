@@ -437,26 +437,7 @@ QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, in
 			{
 				line_length_half = std::max(line_length_half, 0.0012 * line->getPointedCapLength());
 			}
-
-			// If there are breaks in the line, scale them down so they fit into the icon exactly
-			// TODO: does not work for combined lines yet. Could be done by checking every contained line and scaling the painter horizontally
-			if (line->isDashed() && line->getBreakLength() > 0)
-			{
-				if (!symbol_copy)
-					symbol_copy.reset(line->duplicate());
-				auto icon_line = static_cast<LineSymbol*>(symbol_copy.get());
-				
-				auto ideal_length = qreal(2 * line->getDashesInGroup() * line->getDashLength() + 2 * (line->getDashesInGroup() - 1) * line->getInGroupBreakLength() + line->getBreakLength()) / 1000;
-				auto real_length = max_icon_mm;
-				auto factor = qMin(qreal(1), real_length / qMax(qreal(0.001), ideal_length));
-				
-				icon_line->setDashLength(qRound(factor * icon_line->getDashLength()));
-				icon_line->setBreakLength(qRound(factor * icon_line->getBreakLength()));
-				icon_line->setInGroupBreakLength(qRound(factor * icon_line->getInGroupBreakLength()));
-				icon_line->setShowAtLeastOneSymbol(true);
-				
-			}
-
+			
 			if (line->getDashSymbol() && !line->getDashSymbol()->isEmpty())
 			{
 				line_length_half = std::max(line_length_half, line->getDashSymbol()->dimensionForIcon());
@@ -486,6 +467,23 @@ QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, in
 			if (line->getEndSymbol() && !line->getEndSymbol()->isEmpty())
 			{
 				line_length_half = std::max(line_length_half, line->getEndSymbol()->dimensionForIcon() / 2);
+			}
+
+			// If there are breaks in the line, scale them down so they fit into the icon exactly
+			// TODO: does not work for combined lines yet. Could be done by checking every contained line and scaling the painter horizontally
+			if (line->isDashed() && line->getBreakLength() > 0)
+			{
+				if (!symbol_copy)
+					symbol_copy.reset(line->duplicate());
+				auto icon_line = static_cast<LineSymbol*>(symbol_copy.get());
+				
+				auto ideal_length_half = qreal(2 * line->getDashesInGroup() * line->getDashLength() + 2 * (line->getDashesInGroup() - 1) * line->getInGroupBreakLength() + line->getBreakLength()) / 2000;
+				auto factor = qMin(qreal(0.5), line_length_half / qMax(qreal(0.001), ideal_length_half));
+				
+				icon_line->setDashLength(qRound(factor * icon_line->getDashLength()));
+				icon_line->setBreakLength(qRound(factor * icon_line->getBreakLength()));
+				icon_line->setInGroupBreakLength(qRound(factor * icon_line->getInGroupBreakLength()));
+				icon_line->setShowAtLeastOneSymbol(true);
 			}
 		}
 		else if (type == Combined)
