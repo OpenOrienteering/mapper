@@ -402,6 +402,10 @@ void MainWindow::setCurrentPath(const QString& path)
 		}
 		setWindowFilePath(window_file_path);
 	}
+	else if (!windowFilePath().isEmpty() && !has_opened_file)
+	{
+		setWindowFilePath({});
+	}
 }
 
 void MainWindow::setMostRecentlyUsedFile(const QString& path)
@@ -703,6 +707,7 @@ void MainWindow::showNewMapWizard()
 	new_map->undoManager().clear();
 	
 	MainWindow* new_window = hasOpenedFile() ? new MainWindow() : this;
+	new_window->setWindowFilePath(tr("Unsaved file"));
 	new_window->setController(new MapEditorController(MapEditorController::MapEditor, new_map, map_view), QString());
 	
 	new_window->show();
