@@ -565,9 +565,9 @@ qreal PointSymbol::dimensionForIcon() const
 {
 	auto size = qreal(0);
 	if (getOuterColor())
-		size = 0.001 * (getInnerRadius() + getOuterWidth());
+		size = 0.002 * (getInnerRadius() + getOuterWidth());
 	else if (getInnerColor())
-		size = 0.001 * getInnerRadius();
+		size = 0.002 * getInnerRadius();
 	
 	QRectF extent;
 	for (int i = 0; i < getNumElements(); ++i)
