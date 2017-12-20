@@ -380,7 +380,7 @@ QSize SymbolRenderWidget::sizeHint() const
 void SymbolRenderWidget::adjustLayout()
 {
 	auto old_icon_size = icon_size;
-	icon_size = Settings::getInstance().getSymbolWidgetIconSizePx();
+	icon_size = Settings::getInstance().getSymbolWidgetIconSizePx() + 1;
 	// Allow symbol widget to be that much wider than the viewport
 	int overflow = icon_size / 3;
 	icons_per_row = qMax(1, (width() + overflow) / icon_size);
