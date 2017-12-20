@@ -356,63 +356,53 @@ bool Symbol::containsSymbol(const Symbol* symbol) const
 
 QImage Symbol::getIcon(const Map* map) const
 {
-	if (icon.isNull())
-		icon = createIcon(map, Settings::getInstance().getSymbolWidgetIconSizePx(), true, 1);
+	if (icon.isNull() && map)
+		icon = createIcon(*map, Settings::getInstance().getSymbolWidgetIconSizePx());
 	
 	return icon;
 }
 
-QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, int bottom_right_border, qreal zoom) const
+QImage Symbol::createIcon(const Map& map, int side_length, bool antialiasing, qreal zoom) const
 {
-	// Desktop default used to be 2x zoom for 8 mm side length.
-	if (zoom < 0.1)
-		zoom = side_length / Util::mmToPixelLogical(8) * map->symbolIconZoom();
-	
-	Type contained_types = getContainedTypes();
-	
-	// Create icon map and view
-	Map icon_map;
-	// const_cast promise: We won't change the colors, thus we won't change map.
-	icon_map.useColorsFrom(const_cast<Map*>(map));
-	icon_map.setScaleDenominator(map->getScaleDenominator());
-	MapView view{ &icon_map };
-	
-	// If the icon is bigger than the rectangle with this zoom factor, it is zoomed out to fit into the rectangle
-	view.setZoom(zoom);
-	int white_border_pixels = 0;
-	if (contained_types & Line || contained_types & Area || type == Combined)
-		white_border_pixels = 0;
-	else if (contained_types & Point || contained_types & Text)
-		white_border_pixels = 2;
-	else
-		Q_ASSERT(false);
-	const auto max_icon_mm = view.pixelToLength(side_length - bottom_right_border - white_border_pixels) / 1000;
-	const auto max_icon_mm_half = max_icon_mm / 2;
+	// Desktop default used to be 2x zoom at 8 mm side length, plus/minus
+	// a border of one white pixel around some objects.
+	// If the icon is bigger than the rectangle with this zoom factor, the zoom
+	// is reduced later to make the icon fit into the rectangle.
+	if (zoom <= 0)
+		zoom = map.symbolIconZoom();
+	auto max_icon_mm_half = 0.5 / zoom;
 	
 	// Create image
 	QImage image(side_length, side_length, QImage::Format_ARGB32_Premultiplied);
-	QPainter painter;
-	painter.begin(&image);
+	QPainter painter(&image);
 	if (antialiasing)
 		painter.setRenderHint(QPainter::Antialiasing);
 	
 	// Make background transparent
-	QPainter::CompositionMode mode = painter.compositionMode();
+	auto mode = painter.compositionMode();
 	painter.setCompositionMode(QPainter::CompositionMode_Clear);
 	painter.fillRect(image.rect(), Qt::transparent);
 	painter.setCompositionMode(mode);
+	painter.translate(0.5 * side_length, 0.5 * side_length);
 	
 	// Create geometry
 	Object* object = nullptr;
 	std::unique_ptr<Symbol> symbol_copy;
 	auto offset = MapCoord{};
+	auto contained_types = getContainedTypes();
 	if (type == Point)
 	{
-		auto point = new PointObject(static_cast<const PointSymbol*>(this));
-		point->setPosition(0, 0);
-		object = point;
+		max_icon_mm_half *= 0.90; // white border
+		object = new PointObject(static_cast<const PointSymbol*>(this));
 	}
-	else if (type == Area || (type == Combined && getContainedTypes() & Area))
+	else if (type == Text)
+	{
+		max_icon_mm_half *= 0.95; // white border
+		auto text = new TextObject(this);
+		text->setText(static_cast<const TextSymbol*>(this)->getIconText());
+		object = text;
+	}
+	else if (type == Area || (type == Combined && contained_types & Area))
 	{
 		auto path = new PathObject(this);
 		path->addCoordinate(0, MapCoord(-max_icon_mm_half, -max_icon_mm_half));
@@ -511,51 +501,42 @@ QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, in
 		}
 		object = path;
 	}
-	else if (type == Text)
-	{
-		auto text = new TextObject(this);
-		text->setAnchorPosition(0, 0);
-		text->setHorizontalAlignment(TextObject::AlignHCenter);
-		text->setVerticalAlignment(TextObject::AlignVCenter);
-		text->setText(dynamic_cast<const TextSymbol*>(this)->getIconText());
-		object = text;
-	}
 	else
 	{
 		qWarning("Unhandled symbol: %s", qPrintable(getDescription()));
 		return image;
 	}
 	
+	// Create icon map and view
+	Map icon_map;
+	// const_cast promise: We won't change the colors, thus we won't change map.
+	icon_map.useColorsFrom(const_cast<Map*>(&map));
+	icon_map.setScaleDenominator(map.getScaleDenominator());
 	icon_map.addObject(object);
 	
 	const auto& extent = object->getExtent();
+	auto w = std::max(std::abs(extent.left()), std::abs(extent.right()));
+	auto h = std::max(std::abs(extent.top()), std::abs(extent.bottom()));
+	auto real_icon_mm_half = std::max(w, h);
+	auto final_zoom = side_length * zoom * std::min(qreal(1), max_icon_mm_half / real_icon_mm_half);
+	painter.scale(final_zoom, final_zoom);
+	
 	if (type == Text)
 	{
 		// Center text
-		view.setCenter(MapCoord{ extent.center() });
+		painter.translate(-extent.center());
 	}
 	else if (type == Point)
 	{
 		// Do not completely offset the symbols relative position
-		view.setCenter(MapCoord{ extent.center() / 2 });
+		painter.translate(-extent.center() / 2);
 	}
 	else if (contained_types & Line && !(contained_types & Area))
 	{
-		view.setCenter(offset);
+		painter.translate(MapCoordF(-offset));
 	}
 	
-	auto w = std::max(std::abs(extent.left()), std::abs(extent.right()));
-	auto h = std::max(std::abs(extent.top()), std::abs(extent.bottom()));
-	auto real_icon_mm_half = std::max(w, h);
-	if (real_icon_mm_half > max_icon_mm_half)
-	{
-		view.setZoom(zoom * max_icon_mm_half / real_icon_mm_half);
-	}
-	
-	painter.translate((side_length - bottom_right_border)/2, (side_length - bottom_right_border)/2);
-	painter.setWorldTransform(view.worldTransform(), true);
-	
-	RenderConfig config = { *map, QRectF(-10000, -10000, 20000, 20000), view.calculateFinalZoomFactor(), RenderConfig::HelperSymbols, 1.0 };
+	RenderConfig config = { map, QRectF(-10000, -10000, 20000, 20000), final_zoom, RenderConfig::HelperSymbols, 1.0 };
 	bool was_hidden = is_hidden;
 	is_hidden = false; // ensure that an icon is created for hidden symbols.
 	icon_map.draw(&painter, config);

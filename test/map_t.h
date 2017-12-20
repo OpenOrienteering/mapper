@@ -35,6 +35,9 @@ Q_OBJECT
 private slots:
 	void initTestCase();
 	
+	/** Test icon scaling */
+	void iconTest();
+	 
 	/** Tests basic print configuration properties. */
 	void printerConfigTest();
 	

@@ -589,17 +589,17 @@ public:
 	
 	/**
 	 * Returns the scale factor to be used for default symbol icons.
+	 * 
+	 * The full icon size (width, height) is represented by 1.0.
 	 */
 	qreal symbolIconZoom() const;
 	
 	/**
 	 * Updates the symbol icon zoom from the current set of symbols.
 	 * 
-	 * If there are not enough suitable symbols for a good guess, the zoom is
-	 * to 2.0.
-	 * 
-	 * \todo At the moment, only line symbol are considered, but point and text
-	 *       symbols should be included, too.
+	 * The symbol icon zoom is chosen so that most symbols fit into the full
+	 * icon space, and the number of symbol below 10% size is kept low.
+	 * For a map without symbols, this returns 1.0.
 	 */
 	void updateSymbolIconZoom();
 	

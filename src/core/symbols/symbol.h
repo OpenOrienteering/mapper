@@ -273,12 +273,13 @@ public:
 	QImage getIcon(const Map* map) const;
 	
 	/**
-	 * Creates a symbol icon with the given side length and zoom.
+	 * Creates a symbol icon with the given side length (pixels).
 	 * 
-	 * If the zoom parameter is zero, the function chooses a zoom equivalent to
-	 * 100% at 4 mm side length on the current display.
+	 * If the zoom parameter is zero, the map's symbolIconZoom() is used.
+	 * At a zoom of 1.0 (100%), a square symbol of 1 mm side length would fill
+	 * 50% of the icon width and height. Larger symbols may be scaled down.
 	 */
-	QImage createIcon(const Map* map, int side_length, bool antialiasing, int bottom_right_border = 0, qreal zoom = 0) const;
+	QImage createIcon(const Map& map, int side_length, bool antialiasing = true, qreal zoom = 0) const;
 	
 	/**
 	 * Clear the symbol's cached icon.

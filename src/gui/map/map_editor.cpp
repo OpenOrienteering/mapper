@@ -2107,7 +2107,7 @@ void MapEditorController::selectedSymbolsChanged()
 		}
 		else //if (symbol_widget->getNumSelectedSymbols() == 1)
 		{
-			auto image = symbol->createIcon(map, qMin(icon_size.width(), icon_size.height()), Util::isAntialiasingRequired());
+			auto image = symbol->createIcon(*map, qMin(icon_size.width(), icon_size.height()));
 			pixmap = QPixmap::fromImage(image);
 			
 			symbol_button->setMenu(mobile_symbol_button_menu);

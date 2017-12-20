@@ -33,6 +33,7 @@
 #include "core/map_view.h"
 #include "core/objects/symbol_rule_set.h"
 #include "core/symbols/symbol.h"
+#include "core/symbols/point_symbol.h"
 
 
 namespace
@@ -64,6 +65,51 @@ void MapTest::initTestCase()
 	});
 }
 
+
+void MapTest::iconTest()
+{
+	Map map;
+	// Newly constructed map
+	QVERIFY(!qIsNull(map.symbolIconZoom()));
+	
+	// Explict update on newly constructed map
+	map.updateSymbolIconZoom();
+	QVERIFY(!qIsNull(map.symbolIconZoom()));
+	
+	// Single symbol, 1 mm
+	auto symbol = static_cast<PointSymbol*>(map.getUndefinedPoint()->duplicate());
+	symbol->setInnerRadius(500);
+	QCOMPARE(symbol->dimensionForIcon(), qreal(1));
+	map.addSymbol(symbol, 0);
+	map.updateSymbolIconZoom();
+	QCOMPARE(map.symbolIconZoom() * symbol->dimensionForIcon(), qreal(0.9));
+	
+	// Change symbol size to 4 mm
+	symbol->setInnerRadius(2000);
+	QCOMPARE(symbol->dimensionForIcon(), qreal(4));
+	map.updateSymbolIconZoom();
+	QCOMPARE(map.symbolIconZoom() * symbol->dimensionForIcon(), qreal(1));
+	
+	map.addSymbol(symbol->duplicate(), 1);
+	map.updateSymbolIconZoom();
+	QCOMPARE(map.symbolIconZoom() * symbol->dimensionForIcon(), qreal(1));
+	
+	map.addSymbol(symbol->duplicate(), 2);
+	map.updateSymbolIconZoom();
+	QCOMPARE(map.symbolIconZoom() * symbol->dimensionForIcon(), qreal(1));
+	
+	QCOMPARE(map.getNumSymbols(), 3);
+	symbol->setInnerRadius(100);
+	QCOMPARE(symbol->dimensionForIcon(), qreal(0.2));
+	map.updateSymbolIconZoom();
+	// Symbol dimensions, ordered:  0.2  4.0  4.0
+	// The small symbol has 5% of the size of the large symbols.
+	// Zoom is expected to be adjusted order to enlarge the smallest symbol.
+	// Thus the other symbol will result in more than 90% size...
+	QVERIFY(map.symbolIconZoom() * 4.0 > 0.9);
+	// ... while the smallest symbol will still be at most 10% size.
+	QVERIFY(map.symbolIconZoom() * 0.2 <= 0.1);
+}
 
 
 void MapTest::printerConfigTest()
