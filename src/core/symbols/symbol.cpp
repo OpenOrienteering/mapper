@@ -459,8 +459,7 @@ QImage Symbol::createIcon(const Map& map, int side_length, bool antialiasing, qr
 				line_length_half = std::max(line_length_half, line->getEndSymbol()->dimensionForIcon() / 2);
 			}
 
-			// If there are breaks in the line, scale them down so they fit into the icon exactly
-			// TODO: does not work for combined lines yet. Could be done by checking every contained line and scaling the painter horizontally
+			// If there are breaks in the line, scale them down so they fit into the icon exactly.
 			if (line->isDashed() && line->getBreakLength() > 0)
 			{
 				if (!symbol_copy)
@@ -478,14 +477,53 @@ QImage Symbol::createIcon(const Map& map, int side_length, bool antialiasing, qr
 		}
 		else if (type == Combined)
 		{
-			const auto* combined = asCombined();
+			auto max_ideal_length = 0;
+			auto combined = static_cast<const CombinedSymbol*>(this);
 			for (int i = 0; i < combined->getNumParts(); ++i)
 			{
 				auto part = combined->getPart(i);
-				if (part && part->getType() == Line && part->asLine()->getDashSymbol())
+				if (part && part->getType() == Line)
 				{
-					show_dash_symbol = true;
-					break;
+					auto line = static_cast<const LineSymbol*>(part);
+					auto dash_symbol = line->getDashSymbol();
+					if (dash_symbol && !dash_symbol->isEmpty())
+						show_dash_symbol = true;
+					
+					if (line->isDashed() && line->getBreakLength() > 0)
+					{
+						auto ideal_length = 2 * line->getDashesInGroup() * line->getDashLength()
+						                    + 2 * (line->getDashesInGroup() - 1) * line->getInGroupBreakLength()
+						                    + line->getBreakLength();
+						if (max_ideal_length < ideal_length)
+							max_ideal_length = ideal_length;
+					}
+				}
+			}
+			// If there are breaks in the line, scale them down so they fit into the icon exactly.
+			if (max_ideal_length > 0)
+			{
+				auto ideal_length_half = qreal(max_ideal_length) / 2000;
+				auto factor = qMin(qreal(0.5), line_length_half / qMax(qreal(0.001), ideal_length_half));
+				
+				symbol_copy.reset(new CombinedSymbol());
+				static_cast<CombinedSymbol*>(symbol_copy.get())->setNumParts(combined->getNumParts());
+				
+				for (int i = 0; i < combined->getNumParts(); ++i)
+				{
+					auto proto = static_cast<const CombinedSymbol*>(combined)->getPart(i);
+					if (!proto)
+						continue;
+					
+					auto copy = proto->duplicate();
+					if (copy->getType() == Line)
+					{
+						auto icon_line = static_cast<LineSymbol*>(copy);
+						icon_line->setDashLength(qRound(factor * icon_line->getDashLength()));
+						icon_line->setBreakLength(qRound(factor * icon_line->getBreakLength()));
+						icon_line->setInGroupBreakLength(qRound(factor * icon_line->getInGroupBreakLength()));
+						icon_line->setShowAtLeastOneSymbol(true);
+					}
+					static_cast<CombinedSymbol*>(symbol_copy.get())->setPart(i, copy, true);
 				}
 			}
 		}
