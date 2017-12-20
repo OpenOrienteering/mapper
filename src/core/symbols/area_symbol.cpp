@@ -581,7 +581,25 @@ void AreaSymbol::FillPattern::scale(double factor)
 
 qreal AreaSymbol::FillPattern::dimensionForIcon() const
 {
-	return qMax(line_spacing+line_width, point_distance)*0.0015;
+	// Ignore large spacing for icon scaling
+	auto size = qreal(0);
+	switch (type)
+	{
+	case LinePattern:
+		size = qreal(0.002 * line_width);
+		break;
+		
+	case PointPattern:
+		size = qreal(0.002 * point->dimensionForIcon());
+		if (point_distance < 5000)
+			size = std::max(size, qreal(0.002 * point_distance));
+		break;
+	}
+	
+	if (line_spacing < 5000)
+		size = std::max(size, qreal(0.0015 * line_spacing));
+	
+	return size;
 }
 
 
