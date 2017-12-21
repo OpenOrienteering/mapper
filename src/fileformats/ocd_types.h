@@ -831,7 +831,7 @@ template< class F >
 inline
 const typename F::FileHeader* OcdFile<F>::header() const
 {
-	return (byte_array.size() < (int)sizeof(FileHeader)) ? nullptr : (const FileHeader*)byte_array.constData();
+	return (byte_array.size() < int(sizeof(FileHeader))) ? nullptr : reinterpret_cast<const FileHeader*>(byte_array.constData());
 }
 
 template< class F >

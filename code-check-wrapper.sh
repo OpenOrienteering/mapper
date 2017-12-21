@@ -75,6 +75,7 @@ PATTERN=" \
   /util_gui.cpp \
   world_file.cpp \
   \
+  ocd \
   src/tools/ \
   settings \
   \

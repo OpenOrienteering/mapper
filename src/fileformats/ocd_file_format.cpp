@@ -22,8 +22,14 @@
 
 #include "ocd_file_format.h"
 
-#include "ocd_file_export.h"
-#include "ocd_file_import.h"
+#include <QtGlobal>
+#include <QCoreApplication>
+#include <QFlags>
+#include <QString>
+
+#include "fileformats/file_import_export.h"
+#include "fileformats/ocd_file_export.h"
+#include "fileformats/ocd_file_import.h"
 
 
 // ### OcdFileFormat ###
