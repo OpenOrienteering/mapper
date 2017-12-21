@@ -213,7 +213,7 @@ void OcdFileImport::importImplementationLegacy(bool load_symbols_only)
 template< class F >
 void OcdFileImport::importImplementation(bool load_symbols_only)
 {
-	OcdFile< F > file(buffer);
+	const OcdFile<F> file(buffer);
 #ifdef MAPPER_DEVELOPMENT_BUILD
 	if (!qApp->applicationName().endsWith(QLatin1String("Test")))
 	{
@@ -2064,7 +2064,7 @@ void OcdFileImport::import(bool load_symbols_only)
 	if (size_t(buffer.size()) < sizeof(Ocd::FormatGeneric::FileHeader))
 		throw FileFormatException(Importer::tr("Could not read file: %1").arg(tr("Invalid data.")));
 	
-	OcdFile< Ocd::FormatGeneric > generic_file(buffer);
+	const OcdFile<Ocd::FormatGeneric> generic_file(buffer);
 	if (generic_file.header()->vendor_mark != 0x0cad) // This also tests correct endianess...
 		throw FileFormatException(Importer::tr("Could not read file: %1").arg(tr("Invalid data.")));
 	
