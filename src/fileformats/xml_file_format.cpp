@@ -22,24 +22,41 @@
 #include "xml_file_format.h"
 #include "xml_file_format_p.h"
 
-#include <QDebug>
+#include <memory>
+#include <vector>
+
+#include <QtGlobal>
+#include <QByteArray>
+#include <QCoreApplication>
 #include <QDir>
+#include <QExplicitlySharedDataPointer>
 #include <QFileDevice>
 #include <QFileInfo>
+#include <QFlags>
+#include <QIODevice>
+#include <QLatin1String>
+#include <QObject>
+#include <QRectF>
 #include <QScopedValueRollback>
+#include <QString>
+#include <QStringRef>
+#include <QVariant>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
-#include "file_import_export.h"
 #include "settings.h"
 #include "core/georeferencing.h"
+#include "core/map.h"
 #include "core/map_color.h"
+#include "core/map_coord.h"
 #include "core/map_grid.h"
+#include "core/map_part.h"
 #include "core/map_printer.h"  // IWYU pragma: keep
 #include "core/map_view.h"
-#include "core/map.h"
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/point_symbol.h"
+#include "core/symbols/symbol.h"
+#include "fileformats/file_import_export.h"
 #include "templates/template.h"
 #include "undo/undo_manager.h"
 #include "util/xml_stream_util.h"
@@ -77,7 +94,7 @@ XMLFileFormat::XMLFileFormat()
 bool XMLFileFormat::understands(const unsigned char *buffer, std::size_t sz) const
 {
 	static const uint len = qstrlen(magic_string);
-	return (sz >= len && memcmp(buffer, magic_string, len) == 0);
+	return (sz >= len && qstrncmp(reinterpret_cast<const char*>(buffer), magic_string, len) == 0);
 }
 
 Importer *XMLFileFormat::createImporter(QIODevice* stream, Map *map, MapView *view) const
@@ -357,10 +374,10 @@ void XMLFileExporter::exportMapParts()
 {
 	XmlElementWriter parts_element(xml, literal::parts);
 	
-	int num_parts = map->getNumParts();
+	auto num_parts = std::size_t(map->getNumParts());
 	parts_element.writeAttribute(literal::count, num_parts);
 	parts_element.writeAttribute(literal::current, map->current_part_index);
-	for (int i = 0; i < num_parts; ++i)
+	for (auto i = 0u; i < num_parts; ++i)
 	{
 		writeLineBreak(xml);
 		map->getPart(i)->save(xml);
@@ -648,10 +665,10 @@ typedef std::vector<XMLFileImporterColorBacklogItem> XMLFileImporterColorBacklog
 void XMLFileImporter::importColors()
 {
 	XmlElementReader all_colors_element(xml);
-	int num_colors = all_colors_element.attribute<int>(literal::count);
+	auto num_colors = all_colors_element.attribute<std::size_t>(literal::count);
 	
 	Map::ColorVector& colors(map->color_set->colors);
-	colors.reserve(qMin(num_colors, 100)); // 100 is not a limit
+	colors.reserve(qMin(num_colors, std::size_t(100))); // 100 is not a limit
 	XMLFileImporterColorBacklog backlog;
 	backlog.reserve(colors.size());
 	while (xml.readNextStartElement())
@@ -760,7 +777,7 @@ void XMLFileImporter::importColors()
 		}
 	}
 	
-	if (num_colors > 0 && num_colors != (int)colors.size())
+	if (num_colors > 0 && num_colors != colors.size())
 		addWarning(tr("Expected %1 colors, found %2.").
 		  arg(num_colors).
 		  arg(colors.size())
@@ -813,8 +830,8 @@ void XMLFileImporter::importSymbols()
 	
 	XmlElementReader symbols_element(xml);
 	map->setSymbolSetId(symbols_element.attribute<QString>(literal::id));
-	int num_symbols = symbols_element.attribute<int>(literal::count);
-	map->symbols.reserve(qMin(num_symbols, 1000)); // 1000 is not a limit
+	auto num_symbols = symbols_element.attribute<std::size_t>(literal::count);
+	map->symbols.reserve(qMin(num_symbols, std::size_t(1000))); // 1000 is not a limit
 	
 	symbol_dict[QString::number(map->findSymbolIndex(map->getUndefinedPoint()))] = map->getUndefinedPoint();
 	symbol_dict[QString::number(map->findSymbolIndex(map->getUndefinedLine()))] = map->getUndefinedLine();
@@ -842,10 +859,10 @@ void XMLFileImporter::importSymbols()
 void XMLFileImporter::importMapParts()
 {
 	XmlElementReader mapparts_element(xml);
-	int num_parts = mapparts_element.attribute<int>(literal::parts);
-	int current_part_index = mapparts_element.attribute<int>(literal::current);
+	auto num_parts = mapparts_element.attribute<std::size_t>(literal::parts);
+	auto current_part_index = mapparts_element.attribute<std::size_t>(literal::current);
 	map->parts.clear();
-	map->parts.reserve(qMin(num_parts, 20)); // 20 is not a limit
+	map->parts.reserve(qMin(num_parts, std::size_t(20))); // 20 is not a limit
 	
 	while (xml.readNextStartElement())
 	{
@@ -868,7 +885,7 @@ void XMLFileImporter::importMapParts()
 		}
 	}
 	
-	if (0 <= current_part_index && current_part_index < map->getNumParts())
+	if (current_part_index < map->getNumParts())
 		map->current_part_index = current_part_index;
 	
 	if (num_parts > 0 && num_parts != map->getNumParts())
@@ -888,9 +905,9 @@ void XMLFileImporter::importTemplates()
 	XmlElementReader templates_element(xml);
 	int first_front_template = templates_element.attribute<int>(literal::first_front_template);
 	
-	int num_templates = templates_element.attribute<int>(literal::count);
-	map->templates.reserve(qMin(num_templates, 20)); // 20 is not a limit
-	map->closed_templates.reserve(qMin(num_templates, 20)); // 20 is not a limit
+	auto num_templates = templates_element.attribute<std::size_t>(literal::count);
+	map->templates.reserve(qMin(num_templates, std::size_t(20))); // 20 is not a limit
+	map->closed_templates.reserve(qMin(num_templates, std::size_t(20))); // 20 is not a limit
 	
 	while (xml.readNextStartElement())
 	{
@@ -913,7 +930,7 @@ void XMLFileImporter::importTemplates()
 		}
 		else
 		{
-			qDebug() << "Unsupported element: " << xml.qualifiedName();
+			qDebug("Unsupported element: %s", qPrintable(xml.qualifiedName().toString()));
 			xml.skipCurrentElement();
 		}
 	}

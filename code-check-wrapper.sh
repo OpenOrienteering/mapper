@@ -74,6 +74,7 @@ PATTERN=" \
   /util.cpp \
   /util_gui.cpp \
   world_file.cpp \
+  xml_file_format.cpp \
   \
   ocd \
   src/tools/ \
