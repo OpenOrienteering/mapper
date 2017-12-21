@@ -745,6 +745,7 @@ void LineSymbolSettings::updateContents()
 	updateBorderContents(symbol->getRightBorder(), right_border_widgets);
 	
 	supress_dash_symbol_check->setChecked(symbol->getSuppressDashSymbolAtLineEnds());
+	scale_dash_symbol_check->setChecked(symbol->getScaleDashSymbol());
 	
 	blockSignalsRecursively(this, false);
 /*	
