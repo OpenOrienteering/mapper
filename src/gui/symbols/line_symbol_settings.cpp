@@ -94,7 +94,6 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	line_cap_combo->addItem(tr("round"), QVariant(LineSymbol::RoundCap));
 	line_cap_combo->addItem(tr("square"), QVariant(LineSymbol::SquareCap));
 	line_cap_combo->addItem(tr("pointed"), QVariant(LineSymbol::PointedCap));
-	line_cap_combo->setCurrentIndex(line_cap_combo->findData(symbol->cap_style));
 	
 	pointed_cap_length_label = new QLabel(tr("Cap length:"));
 	pointed_cap_length_edit = Util::SpinBox::create(2, 0.0, 999999.9, tr("mm"));
@@ -104,13 +103,10 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	line_join_combo->addItem(tr("miter"), QVariant(LineSymbol::MiterJoin));
 	line_join_combo->addItem(tr("round"), QVariant(LineSymbol::RoundJoin));
 	line_join_combo->addItem(tr("bevel"), QVariant(LineSymbol::BevelJoin));
-	line_join_combo->setCurrentIndex(line_join_combo->findData(symbol->join_style));
 	
 	dashed_check = new QCheckBox(tr("Line is dashed"));
-	dashed_check->setChecked(symbol->dashed);
 	
 	border_check = new QCheckBox(tr("Enable border lines"));
-	border_check->setChecked(symbol->have_border_lines);
 	
 	line_settings_list = { 
 	    minimum_length_label, minimum_length_edit,
@@ -152,13 +148,11 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	dash_group_combo->addItem(tr("2"), QVariant(2));
 	dash_group_combo->addItem(tr("3"), QVariant(3));
 	dash_group_combo->addItem(tr("4"), QVariant(4));
-	dash_group_combo->setCurrentIndex(dash_group_combo->findData(QVariant(symbol->dashes_in_group)));
 	
 	in_group_break_length_label = new QLabel(tr("In-group break length:"));
 	in_group_break_length_edit = Util::SpinBox::create(2, 0.0, 999999.9, tr("mm"));
 	
 	half_outer_dashes_check = new QCheckBox(tr("Half length of first and last dash"));
-	half_outer_dashes_check->setChecked(symbol->half_outer_dashes);
 	
 	dashed_widget_list = {
 	    dash_length_label, dash_length_edit,
@@ -216,7 +210,6 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	end_length_edit = Util::SpinBox::create(2, 0.0, 999999.9, tr("mm"));
 	
 	show_at_least_one_symbol_check = new QCheckBox(tr("Show at least one mid symbol"));
-	show_at_least_one_symbol_check->setChecked(symbol->show_at_least_one_symbol);
 	
 	auto minimum_mid_symbol_count_label = new QLabel(tr("Minimum mid symbol count:"));
 	minimum_mid_symbol_count_edit = Util::SpinBox::create(0, 99);
@@ -256,7 +249,6 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	layout->addWidget(border_check, row, col, 1, -1);
 	
 	different_borders_check = new QCheckBox(tr("Different borders on left and right sides"));
-	different_borders_check->setChecked(symbol->areBordersDifferent());
 	row++; col = 0;
 	layout->addWidget(different_borders_check, row, col, 1, -1);
 	
@@ -286,12 +278,10 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	layout->addWidget(Util::Headline::create(tr("Dash symbol")), row, col++, 1, -1);
 	
 	supress_dash_symbol_check = new QCheckBox(tr("Suppress the dash symbol at line start and line end"));
-	supress_dash_symbol_check->setChecked(symbol->getSuppressDashSymbolAtLineEnds());
 	row++; col = 0;
 	layout->addWidget(supress_dash_symbol_check, row, col, 1, -1);
 	
 	scale_dash_symbol_check = new QCheckBox(tr("Scale the dash symbol at corners"));
-	scale_dash_symbol_check->setChecked(symbol->getScaleDashSymbol());
 	row++; col = 0;
 	layout->addWidget(scale_dash_symbol_check, row, col, 1, -1);
 	
