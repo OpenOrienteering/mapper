@@ -151,7 +151,7 @@
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. A contour interval of 2.5 metres may be used for flat terrains. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
             <comment>Description of symbol 101</comment>
-            <translation type="unfinished">Лінія, що з&apos;єднує точки однакової висоти. Стандартний вертикальний інтервал між горизонталями становить 5 метрів. Для поганих ділянок можна використовувати інтервал в 2,5 метра. Найменший вигин лінії горизонталі складає 0,25 мм від центру до центру лінії.</translation>
+            <translation>Лінія, що з&apos;єднує точки однакової висоти. Стандартний вертикальний інтервал між горизонталями (перетин рельєфу) складає 5 метрів. Для плоских ділянок можливе використання перетину 2.5 метри. Найменший вигин горизонталі має становити 0,25 мм від центру до центру лінії.</translation>
     </message>
         <message>
             <source>Slope line, contour</source>
@@ -186,17 +186,17 @@
         <message>
             <source>Form line</source>
             <comment>Name of symbol 103</comment>
-            <translation type="unfinished">Допоміжна горизонталь</translation>
+            <translation type="unfinished">Лінія форми рельєфу</translation>
     </message>
         <message>
             <source>Form lines are used where more information must be given about the shape of the ground. Form lines are added only where representation would be incomplete with ordinary contours. They shall not be used as intermediate contours. Only one form line should be used between neighbouring contours. It is very important that a form line fits logically into the contour system, so the start and end of a form line should be parallel to the neighbouring contours. The gaps between the form line dashes must be placed on reasonably straight sections of the form line. Form lines can be used to differentiate flat knolls and depressions from more distinct ones.</source>
             <comment>Description of symbol 103</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation type="unfinished">Лінії форми рельєфу використовують у випадках, коли для показу форм рельєфу необхідно передати додаткову інформацію. Лінії форм рельєфу додають лише там, де зображення форм рельєфу було б неповним при використанні лише горизонталей. Між сусідніми горизонталями може бути використана тільки одна лінія форми рельєфу. Важливо, щоб лінія форми рельєфу доречно вписувалася в систему горизонталей, тому її початок і кінець мають бути паралельними суміжним горизонталям. Розриви між штрихами мають бути розміщені на достатньо прямих ділянках лінії форми рельєфу. Лінії форми рельєфу можуть бути використані, щоб відрізнити пологі горби та западини від більш чітких.</translation>
+    </message>
         <message>
             <source>Slope line, formline</source>
             <comment>Name of symbol 103.1</comment>
-            <translation type="unfinished">Бергштрих допоміжної горизонталі</translation>
+            <translation type="unfinished">Бергштрих лінії форми рельєфу</translation>
     </message>
         <message>
             <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
@@ -206,63 +206,63 @@
         <message>
             <source>Earth bank</source>
             <comment>Name of symbol 104</comment>
-            <translation type="unfinished">Земляний обрив (урвище)</translation>
-        </message>
+            <translation>Земляний обрив</translation>
+    </message>
         <message>
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
             <comment>Description of symbol 104</comment>
-            <translation type="unfinished">Земляний обрив це різка зміна рівня земної поверхні, що чітко вирізняється на тлі іншого оточення, на приклад, гравійний чи піщаний кар&apos;єр, насип вздовж залізної дороги чи шосе, дамба. Мінімальна висота: 1 м. Земляний обрив може впливати на прохідність. Зубці обриву зображають його розміри в плані. Для довгих обривів дозволяється використовувати зубці коротші за мінімальну довжину на кінцях обриву. Якщо кілька обривів розташовано близько один до одного, дозволяється не показувати зубці. Непрохідні земляні обриви мають бути показані знаком 201 (непрохідна скеля).</translation>
+            <translation>Земляний обрив - це різка зміна рівня земної поверхні, що чітко вирізняється на тлі оточення, наприклад, гравійний або піщаний кар’єр, насип вздовж шосе чи залізниці, дамба. Мінімальна висота: 1 м. Земляний обрив може впливати на прохідність. Зубці обриву зображають його планові розміри. Для довгих обривів дозволяється використовувати зубці, коротші за мінімальну довжину на кінцях. Якщо обриви розташовані близько один до одного, дозволяється не показувати зубці. Непрохідні обриви мають зображуватися знаком 201 (непрохідна скеля).</translation>
     </message>
         <message>
             <source>Earth bank, minimum size</source>
             <comment>Name of symbol 104.1</comment>
-            <translation type="unfinished">Земляний обрив (урвище), мінімальний розмір</translation>
-        </message>
+            <translation>Земляний обрив, мінімальний розмір</translation>
+    </message>
         <message>
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
             <comment>Description of symbol 104.1</comment>
-            <translation type="unfinished">Земляний обрив це різка зміна рівня земної поверхні, що чітко вирізняється на тлі іншого оточення, на приклад, гравійний чи піщаний кар'єр, насип вздовж залізної дороги чи шосе, дамба. Мінімальна висота: 1 м. Земляний обрив може впливати на прохідність. Зубці обриву зображають його розміри в плані. Для довгих обривів дозволяється використовувати зубці коротші за мінімальну довжину на кінцях обриву. Якщо кілька обривів розташовано близько один до одного, дозволяється не показувати зубці. Непрохідні земляні обриви мають бути показані знаком 201 (непрохідна скеля).</translation>
-        </message>
+            <translation>Земляний обрив - це різка зміна рівня земної поверхні, що чітко вирізняється на тлі оточення, наприклад, гравійний або піщаний кар’єр, насип вздовж шосе чи залізниці, дамба. Мінімальна висота: 1 м. Земляний обрив може впливати на прохідність. Зубці обриву зображають його планові розміри. Для довгих обривів дозволяється використовувати зубці, коротші за мінімальну довжину на кінцях. Якщо обриви розташовані близько один до одного, дозволяється не показувати зубці. Непрохідні обриви мають зображуватися знаком 201 (непрохідна скеля).</translation>
+    </message>
         <message>
             <source>Earth bank, top line</source>
             <comment>Name of symbol 104.2</comment>
-            <translation type="unfinished">Земляний обрив (урвище), лінія верху</translation>
+            <translation type="unfinished">Земляний обрив, брівка</translation>
     </message>
         <message>
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
             <comment>Description of symbol 104.2</comment>
-            <translation type="unfinished">Земляний обрив це різка зміна рівня земної поверхні, що чітко вирізняється на тлі іншого оточення, на приклад, гравійний чи піщаний кар'єр, насип вздовж залізної дороги чи шосе, дамба. Мінімальна висота: 1 м. Земляний обрив може впливати на прохідність. Зубці обриву зображають його розміри в плані. Для довгих обривів дозволяється використовувати зубці коротші за мінімальну довжину на кінцях обриву. Якщо кілька обривів розташовано близько один до одного, дозволяється не показувати зубці. Непрохідні земляні обриви мають бути показані знаком 201 (непрохідна скеля).</translation>
-        </message>
+            <translation>Земляний обрив - це різка зміна рівня земної поверхні, що чітко вирізняється на тлі оточення, наприклад, гравійний або піщаний кар’єр, насип вздовж шосе чи залізниці, дамба. Мінімальна висота: 1 м. Земляний обрив може впливати на прохідність. Зубці обриву зображають його планові розміри. Для довгих обривів дозволяється використовувати зубці, коротші за мінімальну довжину на кінцях. Якщо обриви розташовані близько один до одного, дозволяється не показувати зубці. Непрохідні обриви мають зображуватися знаком 201 (непрохідна скеля).</translation>
+    </message>
         <message>
             <source>Earth bank, tag line</source>
             <comment>Name of symbol 104.3</comment>
-            <translation type="unfinished">Земляний обрив (урвище), вуси</translation>
-        </message>
+            <translation>Земляний обрив, зубці</translation>
+    </message>
         <message>
             <source>Use this symbol to display the full extent of wide earth banks.</source>
             <comment>Description of symbol 104.3</comment>
-            <translation type="unfinished">Використовується для відображення вздовж усього широкого обриву.</translation>
-        </message>
+            <translation>Використовуйте цей знак щоб показати ширину обриву в плані.</translation>
+    </message>
         <message>
             <source>Earth bank, minimum size (from ISOM2000)</source>
             <comment>Name of symbol 104.9</comment>
-            <translation type="unfinished">Земляний обрив (урвище), мінімальний розмір (із ISOM2000)</translation>
+            <translation type="unfinished">Земляний обрив, мінімальний розмір (із ISOM2000)</translation>
     </message>
         <message>
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
             <comment>Description of symbol 104.9</comment>
-            <translation type="unfinished">Земляний обрив це різка зміна рівня земної поверхні, що чітко вирізняється на тлі іншого оточення, на приклад, гравійний чи піщаний кар'єр, насип вздовж залізної дороги чи шосе, дамба. Мінімальна висота: 1 м. Земляний обрив може впливати на прохідність. Зубці обриву зображають його розміри в плані. Для довгих обривів дозволяється використовувати зубці коротші за мінімальну довжину на кінцях обриву. Якщо кілька обривів розташовано близько один до одного, дозволяється не показувати зубці. Непрохідні земляні обриви мають бути показані знаком 201 (непрохідна скеля).</translation>
-        </message>
+            <translation>Земляний обрив - це різка зміна рівня земної поверхні, що чітко вирізняється на тлі оточення, наприклад, гравійний або піщаний кар’єр, насип вздовж шосе чи залізниці, дамба. Мінімальна висота: 1 м. Земляний обрив може впливати на прохідність. Зубці обриву зображають його планові розміри. Для довгих обривів дозволяється використовувати зубці, коротші за мінімальну довжину на кінцях. Якщо обриви розташовані близько один до одного, дозволяється не показувати зубці. Непрохідні обриви мають зображуватися знаком 201 (непрохідна скеля).</translation>
+    </message>
         <message>
             <source>Earth wall</source>
             <comment>Name of symbol 105</comment>
-            <translation type="unfinished">Земляний вал</translation>
+            <translation>Земляний вал</translation>
         </message>
         <message>
             <source>Distinct earth wall. Minimum height is 1 m.</source>
             <comment>Description of symbol 105</comment>
-            <translation type="unfinished">Помітна земляна стіна. Мінімальна висота - 1 м.</translation>
-        </message>
+            <translation>Чіткий земляний вал. Мінімальна висота: 1 м.</translation>
+    </message>
         <message>
             <source>Small earth wall</source>
             <comment>Name of symbol 106</comment>
@@ -276,26 +276,26 @@
         <message>
             <source>Erosion gully</source>
             <comment>Name of symbol 107</comment>
-            <translation type="unfinished">Вимоїна</translation>
-        </message>
+            <translation>Промоїна</translation>
+    </message>
         <message>
             <source>An erosion gully which is too small to be shown using symbol 104 (earth bank) is shown by a single line. Minimum depth: 1 m.
 Contour lines shall not be broken around this symbol.</source>
             <comment>Description of symbol 107</comment>
-            <translation type="unfinished">Яр, що занадто малий для показу з використанням знаку 104 (земляний обрив), відображається однією лінією. Мінімальна глибина: 1 м.
-Горизонталі не повинні бути розірвані при перетині з даним знаком.</translation>
+            <translation>Ерозійний промоїна, яка є надто малою для зображення знаком 104 (земляний обрив), показується суцільною лінією. Мінімальна глибина: 1 м. 
+Горизонталі не повинні розриватися при перетині з цим знаком.</translation>
     </message>
         <message>
             <source>Small erosion gully</source>
             <comment>Name of symbol 108</comment>
-            <translation type="unfinished">Маленька вимоїна</translation>
+            <translation>Маленька промоїна</translation>
     </message>
         <message>
             <source>A small erosion gully, dry ditch or trench. Minimum depth: 0.5 m.
 Contour lines should be broken around this symbol.</source>
             <comment>Description of symbol 108</comment>
-            <translation type="unfinished">Невелика вимоїна, сухий рів чи траншея. Мінімальна глибина 0,5 м.
-Горизонталі повинні бути розірвані при перетині з даним знаком.</translation>
+            <translation>Невелика вимоїна, сухий рів чи траншея. Мінімальна глибина: 0,5 м.
+Горизонталі мають бути розірвані при перетині з цим знаком.</translation>
     </message>
         <message>
             <source>Small knoll</source>
