@@ -1351,7 +1351,7 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="44"/>
         <source>Symbol icon size:</source>
-        <translation type="unfinished">Symbolikonstørrelse:</translation>
+        <translation>Symbolikonstørrelse:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="63"/>
@@ -2697,7 +2697,7 @@
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="293"/>
         <source>Scale the dash symbol at corners</source>
-        <translation type="unfinished">Skaler streklinjesymbolet ved hjørnene</translation>
+        <translation>Skaler streklinjesymbolet ved hjørnene</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="539"/>
