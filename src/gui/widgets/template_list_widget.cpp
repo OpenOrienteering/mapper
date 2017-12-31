@@ -375,12 +375,16 @@ std::unique_ptr<Template> TemplateListWidget::showOpenTemplateDialog(QWidget* di
 	                                           template_directory,
 	                                           QString::fromLatin1("%1 (%2);;%3 (*.*)").arg(
 	                                               tr("Template files"), pattern, tr("All files")));
-	path = QFileInfo(path).canonicalFilePath();
-	
-	if (path.isEmpty())
-		return nullptr;
-	
-	settings.setValue(QString::fromLatin1("templateFileDirectory"), QFileInfo(path).canonicalPath());
+	auto canonical_path = QFileInfo(path).canonicalFilePath();
+	if (!canonical_path.isEmpty())
+	{
+		path = canonical_path;
+		settings.setValue(QString::fromLatin1("templateFileDirectory"), QFileInfo(path).canonicalPath());
+	}
+	else if (path.isEmpty())
+	{
+		return {};
+	}
 	
 	bool center_in_view = true;
 	QString error = tr("Cannot open template\n%1:\n%2").arg(path);

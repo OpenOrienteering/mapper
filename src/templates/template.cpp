@@ -871,6 +871,10 @@ std::unique_ptr<Template> Template::templateForFile(const QString& path, Map* ma
 #endif
 	else if (path_ends_with_any_of(TemplateTrack::supportedExtensions()))
 		t.reset(new TemplateTrack(path, map));
+#ifdef MAPPER_USE_GDAL
+	else
+		t.reset(new OgrTemplate(path, map));
+#endif
 	
 	return t;
 }
