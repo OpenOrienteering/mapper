@@ -178,8 +178,8 @@ private:
 			auto extensions = QByteArray::fromRawData(extensions_raw, int(qstrlen(extensions_raw)));
 			for (auto pos = 0; pos >= 0; )
 			{
-				auto start = pos;
-				pos = extensions.indexOf(' ', start+1);
+				auto start = pos ? pos + 1 : 0;
+				pos = extensions.indexOf(' ', start);
 				auto extension = extensions.mid(start, pos - start);
 				if (extension.isEmpty())
 					continue;
@@ -195,7 +195,12 @@ private:
 		settings.endGroup();
 #else
 		// GDAL < 2.0 does not provide the supported extensions 
-		static const std::vector<QByteArray> default_extensions = { "shp", "shx" };
+		static const std::vector<QByteArray> default_extensions = {
+		    "shp", "dbf",
+		    /* "dxf", */
+		    /* "gpx", */
+		    /* "osm", */ "pbf",
+		};
 		enabled_vector_extensions.reserve(default_extensions.size() + 3);
 		enabled_vector_extensions = default_extensions;
 		
