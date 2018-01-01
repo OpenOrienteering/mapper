@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013-2017 Kai Pastor
+ *    Copyright 2013-2018 Kai Pastor
  *
  *    Some parts taken from file_format_oc*d8{.h,_p.h,cpp} which are
  *    Copyright 2012 Pete Curtis
@@ -856,26 +856,25 @@ void OcdFileImport::importView(const QString& param_string, int /*ocd_version*/)
 }
 
 
-template< class S >
-void OcdFileImport::setupBaseSymbol(Symbol* symbol, const S& ocd_symbol)
+template< class OcdBaseSymbol >
+void OcdFileImport::setupBaseSymbol(Symbol* symbol, const OcdBaseSymbol& ocd_base_symbol)
 {
-	typedef typename S::BaseSymbol BaseSymbol;
-	const BaseSymbol& base_symbol = ocd_symbol.base;
 	// common fields are name, number, description, helper_symbol, hidden/protected status
-	symbol->setName(convertOcdString(base_symbol.description));
-	symbol->setNumberComponent(0, base_symbol.number / BaseSymbol::symbol_number_factor);
-	symbol->setNumberComponent(1, base_symbol.number % BaseSymbol::symbol_number_factor);
+	symbol->setName(convertOcdString(ocd_base_symbol.description));
+	symbol->setNumberComponent(0, ocd_base_symbol.number / OcdBaseSymbol::symbol_number_factor);
+	symbol->setNumberComponent(1, ocd_base_symbol.number % OcdBaseSymbol::symbol_number_factor);
 	symbol->setNumberComponent(2, -1);
 	symbol->setIsHelperSymbol(false);
-	symbol->setProtected(base_symbol.status & Ocd::SymbolProtected);
-	symbol->setHidden(base_symbol.status & Ocd::SymbolHidden);
+	symbol->setProtected(ocd_base_symbol.status & Ocd::SymbolProtected);
+	symbol->setHidden(ocd_base_symbol.status & Ocd::SymbolHidden);
 }
+
 
 template< class S >
 PointSymbol* OcdFileImport::importPointSymbol(const S& ocd_symbol, int ocd_version)
 {
 	auto symbol = new OcdImportedPointSymbol();
-	setupBaseSymbol(symbol, ocd_symbol);
+	setupBaseSymbol(symbol, ocd_symbol.base);
 	setupPointSymbolPattern(symbol, ocd_symbol.data_size, ocd_symbol.begin_of_elements, ocd_version);
 	symbol->setRotatable(ocd_symbol.base.flags & 1);
 	return symbol;
@@ -893,7 +892,7 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol, int ocd_version)
 	if (ocd_symbol.common.double_mode == 0 || ocd_symbol.common.line_width > 0)
 	{
 		main_line = importLineSymbolBase(ocd_symbol.common);
-		setupBaseSymbol(main_line, ocd_symbol);
+		setupBaseSymbol(main_line, ocd_symbol.base);
 		line_for_borders = main_line;
 	}
 	
@@ -902,7 +901,7 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol, int ocd_version)
 	if (ocd_symbol.common.framing_width > 0 && ocd_version >= 7)
 	{
 		framing_line = importLineSymbolFraming(ocd_symbol.common, main_line);
-		setupBaseSymbol(framing_line, ocd_symbol);
+		setupBaseSymbol(framing_line, ocd_symbol.base);
 		if (!line_for_borders)
 			line_for_borders = framing_line;
 	}
@@ -916,7 +915,7 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol, int ocd_version)
 	    || (has_border_line && !line_for_borders) )
 	{
 		double_line = importLineSymbolDoubleBorder(ocd_symbol.common);
-		setupBaseSymbol(double_line, ocd_symbol);
+		setupBaseSymbol(double_line, ocd_symbol.base);
 		line_for_borders = double_line;
 	}
 	else if (ocd_symbol.common.double_flags & LineStyle::DoubleBackgroundColorOn)
@@ -939,7 +938,7 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol, int ocd_version)
 	{
 		main_line = new OcdImportedLineSymbol();
 		symbol_line = main_line;
-		setupBaseSymbol(main_line, ocd_symbol);
+		setupBaseSymbol(main_line, ocd_symbol.base);
 		
 		main_line->segment_length = convertLength(ocd_symbol.common.main_length);
 		main_line->end_length = convertLength(ocd_symbol.common.end_length);
@@ -964,7 +963,7 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol, int ocd_version)
 	else
 	{
 		auto full_line = new CombinedSymbol();
-		setupBaseSymbol(full_line, ocd_symbol);
+		setupBaseSymbol(full_line, ocd_symbol.base);
 		mergeLineSymbol(full_line, main_line, framing_line, double_line);
 		addSymbolWarning(symbol_line, OcdFileImport::tr("This symbol cannot be saved as a proper OCD symbol again."));
 		return full_line;
@@ -1284,7 +1283,7 @@ Symbol* OcdFileImport::importAreaSymbol(const Ocd::AreaSymbolV8& ocd_symbol, int
 {
 	Q_ASSERT(ocd_version <= 8);
 	auto symbol = new OcdImportedAreaSymbol();
-	setupBaseSymbol(symbol, ocd_symbol);
+	setupBaseSymbol(symbol, ocd_symbol.base);
 	setupAreaSymbolCommon(
 	            symbol,
 	            ocd_symbol.fill_on,
@@ -1300,7 +1299,7 @@ Symbol* OcdFileImport::importAreaSymbol(const S& ocd_symbol, int ocd_version)
 {
 	Q_ASSERT(ocd_version >= 9);
 	auto symbol = new OcdImportedAreaSymbol();
-	setupBaseSymbol(symbol, ocd_symbol);
+	setupBaseSymbol(symbol, ocd_symbol.base);
 	setupAreaSymbolCommon(
 	            symbol,
 	            ocd_symbol.common.fill_on_V9,
@@ -1311,7 +1310,7 @@ Symbol* OcdFileImport::importAreaSymbol(const S& ocd_symbol, int ocd_version)
 	if (ocd_symbol.common.border_on_V9)
 	{
 		auto combined = new CombinedSymbol();
-		setupBaseSymbol(combined, ocd_symbol);
+		setupBaseSymbol(combined, ocd_symbol.base);
 		combined->setNumParts(2);
 		combined->setPart(0, symbol, true);
 		auto border = map->getUndefinedLine()->duplicate();
@@ -1393,7 +1392,7 @@ template< class S >
 TextSymbol* OcdFileImport::importTextSymbol(const S& ocd_symbol, int /*ocd_version*/)
 {
 	auto symbol = new OcdImportedTextSymbol();
-	setupBaseSymbol(symbol, ocd_symbol);
+	setupBaseSymbol(symbol, ocd_symbol.base);
 	setBasicAttributes(symbol, convertOcdString(ocd_symbol.font_name), ocd_symbol.basic);
 	setSpecialAttributes(symbol, ocd_symbol.special);
 	setFraming(symbol, ocd_symbol.framing);
@@ -1404,7 +1403,7 @@ template< class S >
 TextSymbol* OcdFileImport::importLineTextSymbol(const S& ocd_symbol, int /*ocd_version*/)
 {
 	auto symbol = new OcdImportedTextSymbol();
-	setupBaseSymbol(symbol, ocd_symbol);
+	setupBaseSymbol(symbol, ocd_symbol.base);
 	setBasicAttributes(symbol, convertOcdString(ocd_symbol.font_name), ocd_symbol.basic);
 	setFraming(symbol, ocd_symbol.framing);
 	
@@ -1417,7 +1416,7 @@ template< class S >
 LineSymbol* OcdFileImport::importRectangleSymbol(const S& ocd_symbol)
 {
 	auto symbol = new OcdImportedLineSymbol();
-	setupBaseSymbol(symbol, ocd_symbol);
+	setupBaseSymbol(symbol, ocd_symbol.base);
 	
 	symbol->line_width = convertLength(ocd_symbol.line_width);
 	symbol->color = convertColor(ocd_symbol.line_color);
@@ -1432,14 +1431,14 @@ LineSymbol* OcdFileImport::importRectangleSymbol(const S& ocd_symbol)
 	if (rect.has_grid)
 	{
 		auto inner_line = new OcdImportedLineSymbol();
-		setupBaseSymbol(inner_line, ocd_symbol);
+		setupBaseSymbol(inner_line, ocd_symbol.base);
 		inner_line->setNumberComponent(2, 1);  // TODO: Dynamic
 		inner_line->line_width = qRound(1000 * 0.15);
 		inner_line->color = symbol->color;
 		map->addSymbol(inner_line, map->getNumSymbols());
 		
 		auto text = new OcdImportedTextSymbol();
-		setupBaseSymbol(text, ocd_symbol);
+		setupBaseSymbol(text, ocd_symbol.base);
 		text->setNumberComponent(2, 2);  // TODO: Dynamic
 		text->font_family = QString::fromLatin1("Arial");
 		text->font_size = qRound(1000 * (15 / 72.0 * 25.4));

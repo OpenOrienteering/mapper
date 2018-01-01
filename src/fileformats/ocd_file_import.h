@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013-2016 Kai Pastor
+ *    Copyright 2013-2018 Kai Pastor
  *
  *    Some parts taken from file_format_oc*d8{.h,_p.h,cpp} which are
  *    Copyright 2012 Pete Curtis
@@ -289,8 +289,8 @@ protected:
 	template< class S >
 	LineSymbol* importRectangleSymbol(const S& ocd_symbol);
 	
-	template< class S >
-	void setupBaseSymbol(Symbol* symbol, const S& ocd_symbol);
+	template< class OcdBaseSymbol >
+	void setupBaseSymbol(Symbol* symbol, const OcdBaseSymbol& ocd_base_symbol);
 	
 	void setupPointSymbolPattern(PointSymbol* symbol, std::size_t data_size, const Ocd::PointSymbolElementV8* elements, int version);
 	
