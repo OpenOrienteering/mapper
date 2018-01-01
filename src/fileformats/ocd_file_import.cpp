@@ -25,10 +25,12 @@
 #include <algorithm>
 #include <cmath>
 #include <iterator>
+#include <limits>
 #include <memory>
 #include <type_traits>
 #include <vector>
 
+#include <QtMath>
 #include <QBuffer>
 #include <QChar>
 #include <QCoreApplication>
@@ -43,6 +45,7 @@
 #include <QList>
 #include <QPointF>
 #include <QStringRef>
+#include <QTextCodec>
 #include <QTextDecoder>
 #include <QVariant>
 
@@ -90,10 +93,10 @@ static QTextCodec* codecFromSettings()
 
 
 
-OcdFileImport::OcdImportedPathObject::~OcdImportedPathObject()
-{
-	// nothing, not inlined
-}
+
+OcdFileImport::OcdImportedPathObject::~OcdImportedPathObject() = default;
+
+
 
 OcdFileImport::OcdFileImport(QIODevice* stream, Map* map, MapView* view)
  : Importer { stream, map, view }
@@ -107,10 +110,7 @@ OcdFileImport::OcdFileImport(QIODevice* stream, Map* map, MapView* view)
 	}
 }
 
-OcdFileImport::~OcdFileImport()
-{
-	// nothing
-}
+OcdFileImport::~OcdFileImport() = default;
 
 
 void OcdFileImport::setCustom8BitEncoding(QTextCodec* encoding)
@@ -118,6 +118,45 @@ void OcdFileImport::setCustom8BitEncoding(QTextCodec* encoding)
 	custom_8bit_encoding = encoding;
 }
 
+
+template< std::size_t N >
+QString OcdFileImport::convertOcdString(const Ocd::PascalString<N>& src) const
+{
+	return custom_8bit_encoding->toUnicode(src.data, src.length);
+}
+
+template< std::size_t N >
+QString OcdFileImport::convertOcdString(const Ocd::Utf8PascalString<N>& src) const
+{
+	return QString::fromUtf8(src.data, src.length);
+}
+
+template< std::size_t N >
+QString OcdFileImport::convertOcdString(const Ocd::Utf16PascalString<N>& src) const
+{
+	Q_STATIC_ASSERT(N <= std::numeric_limits<unsigned int>::max() / 2);
+	return convertOcdString(src.data, N);
+}
+
+template< >
+QString OcdFileImport::convertOcdString< Ocd::Custom8BitEncoding >(const char* src, uint len) const
+{
+	len = qMin(uint(std::numeric_limits<int>::max()), qstrnlen(src, len));
+	return custom_8bit_encoding->toUnicode(src, int(len));
+}
+
+template< >
+QString OcdFileImport::convertOcdString< Ocd::Utf8Encoding >(const char* src, uint len) const
+{
+	len = qMin(uint(std::numeric_limits<int>::max()), qstrnlen(src, len));
+	return QString::fromUtf8(src, int(len));
+}
+
+template< class E >
+QString OcdFileImport::convertOcdString(const QByteArray& data) const
+{
+	return OcdFileImport::convertOcdString< E >(data.constData(), uint(data.length()));
+}
 
 QString OcdFileImport::convertOcdString(const QChar* src, uint maxlen) const
 {
@@ -130,10 +169,70 @@ QString OcdFileImport::convertOcdString(const QChar* src, uint maxlen) const
 			--maxlen;
 		}
 	}
+	/// \todo Create and use static decoder
 	QTextCodec* utf16 = QTextCodec::codecForName("UTF-16LE");
 	Q_ASSERT(utf16);
 	auto decoder = std::unique_ptr<QTextDecoder>(utf16->makeDecoder(QTextCodec::ConvertInvalidToNull));
 	return decoder->toUnicode(reinterpret_cast<const char*>(src), 2*int(last - src));
+}
+
+
+MapCoord OcdFileImport::convertOcdPoint(const Ocd::OcdPoint32& ocd_point) const
+{
+	qint32 ocad_x = ocd_point.x >> 8;
+	qint32 ocad_y = ocd_point.y >> 8;
+	// Recover from broken coordinate export from Mapper 0.6.2 ... 0.6.4 (#749)
+	// Cf. broken::convertPointMember in file_format_ocad8.cpp:
+	// The values -4 ... -1 (-0.004 mm ... -0.001 mm) were converted to 0x80000000u instead of 0.
+	// This is the maximum value. Thus it is okay to assume it won't occur in regular data,
+	// and we can safely replace it with 0 here.
+	// But the input parameter were already subject to right shift ...
+	constexpr auto invalid_value = qint32(0x80000000u) >> 8; // ... so we use this value here.
+	if (ocad_x == invalid_value)
+		ocad_x = 0;
+	if (ocad_y == invalid_value)
+		ocad_y = 0;
+	return MapCoord::fromNative(ocad_x * 10, ocad_y * -10);
+}
+
+
+float OcdFileImport::convertAngle(int ocd_angle) const
+{
+	// OC*D uses tenths of a degree, counterclockwise
+	// BUG: if sin(rotation) is < 0 for a hatched area pattern, the pattern's createRenderables() will go into an infinite loop.
+	// So until that's fixed, we keep a between 0 and PI
+	return qDegreesToRadians(0.1f * ((ocd_angle + 3600) % 3600));
+}
+
+
+int OcdFileImport::convertLength(qint16 ocd_length) const
+{
+	return convertLength<qint16, int>(ocd_length);
+}
+
+int OcdFileImport::convertLength(quint16 ocd_length) const
+{
+	return convertLength<quint16, int>(ocd_length);
+}
+
+template< class T, class R >
+R OcdFileImport::convertLength(T ocd_length) const
+{
+	// OC*D uses hundredths of a millimeter.
+	// oo-mapper uses 1/1000 mm
+	return static_cast<R>(ocd_length) * 10;
+}
+
+
+MapColor* OcdFileImport::convertColor(int ocd_color)
+{
+	if (!color_index.contains(ocd_color))
+	{
+		addWarning(tr("Color id not found: %1, ignoring this color").arg(ocd_color));
+		return nullptr;
+	}
+	
+	return color_index[ocd_color];
 }
 
 
@@ -160,7 +259,6 @@ void OcdFileImport::addSymbolWarning(const TextSymbol* symbol, const QString& wa
 
 // Heuristic detection of implementation errors
 template< >
-inline
 qint64 OcdFileImport::convertLength< quint8 >(quint8 ocd_length) const
 {
 	// OC*D uses hundredths of a millimeter.
@@ -171,7 +269,6 @@ qint64 OcdFileImport::convertLength< quint8 >(quint8 ocd_length) const
 }
 
 template< >
-inline
 qint64 OcdFileImport::convertLength< quint16 >(quint16 ocd_length) const
 {
 	// OC*D uses hundredths of a millimeter.
@@ -182,7 +279,6 @@ qint64 OcdFileImport::convertLength< quint16 >(quint16 ocd_length) const
 }
 
 template< >
-inline
 qint64 OcdFileImport::convertLength< quint32 >(quint32 ocd_length) const
 {
 	// OC*D uses hundredths of a millimeter.
@@ -1682,7 +1778,6 @@ QString OcdFileImport::getObjectText(const Ocd::ObjectV8& ocd_object, int ocd_ve
 }
 
 template< class O >
-inline
 QString OcdFileImport::getObjectText(const O& ocd_object, int /*ocd_version*/) const
 {
 	auto data = reinterpret_cast<const QChar *>(ocd_object.coords + ocd_object.num_items);

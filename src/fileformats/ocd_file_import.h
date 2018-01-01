@@ -25,17 +25,14 @@
 
 #include <cstddef>
 #include <initializer_list>
-#include <limits>
 
 #include <QtGlobal>
-#include <QtMath>
 #include <QByteArray>
 #include <QCoreApplication>
 #include <QHash>
 #include <QLocale>
 #include <QScopedPointer>
 #include <QString>
-#include <QTextCodec>
 
 #include "core/map_coord.h"
 #include "core/objects/object.h"
@@ -50,6 +47,7 @@
 
 class QChar;
 class QIODevice;
+class QTextCodec;
 
 namespace OpenOrienteering {
 
@@ -352,112 +350,6 @@ protected:
 	/// maps OCD symbol number to rectangle information struct
 	QHash<unsigned int, RectangleInfo> rectangle_info;
 };
-
-
-
-// ### OcdFileImport inline code ###
-
-template< std::size_t N >
-QString OcdFileImport::convertOcdString(const Ocd::PascalString<N>& src) const
-{
-	return custom_8bit_encoding->toUnicode(src.data, src.length);
-}
-
-template< std::size_t N >
-QString OcdFileImport::convertOcdString(const Ocd::Utf8PascalString<N>& src) const
-{
-	return QString::fromUtf8(src.data, src.length);
-}
-
-template< std::size_t N >
-QString OcdFileImport::convertOcdString(const Ocd::Utf16PascalString<N>& src) const
-{
-	Q_STATIC_ASSERT(N <= std::numeric_limits<unsigned int>::max() / 2);
-	return convertOcdString(src.data, N);
-}
-
-template< >
-inline
-QString OcdFileImport::convertOcdString< Ocd::Custom8BitEncoding >(const char* src, uint len) const
-{
-	len = qMin(uint(std::numeric_limits<int>::max()), qstrnlen(src, len));
-	return custom_8bit_encoding->toUnicode(src, int(len));
-}
-
-template< >
-inline
-QString OcdFileImport::convertOcdString< Ocd::Utf8Encoding >(const char* src, uint len) const
-{
-	len = qMin(uint(std::numeric_limits<int>::max()), qstrnlen(src, len));
-	return QString::fromUtf8(src, int(len));
-}
-
-template< class E >
-QString OcdFileImport::convertOcdString(const QByteArray& data) const
-{
-	return OcdFileImport::convertOcdString< E >(data.constData(), data.length());
-}
-
-inline
-MapCoord OcdFileImport::convertOcdPoint(const Ocd::OcdPoint32& ocd_point) const
-{
-	qint32 ocad_x = ocd_point.x >> 8;
-	qint32 ocad_y = ocd_point.y >> 8;
-	// Recover from broken coordinate export from Mapper 0.6.2 ... 0.6.4 (#749)
-	// Cf. broken::convertPointMember in file_format_ocad8.cpp:
-	// The values -4 ... -1 (-0.004 mm ... -0.001 mm) were converted to 0x80000000u instead of 0.
-	// This is the maximum value. Thus it is okay to assume it won't occur in regular data,
-	// and we can safely replace it with 0 here.
-	// But the input parameter were already subject to right shift ...
-	constexpr auto invalid_value = qint32(0x80000000u) >> 8; // ... so we use this value here.
-	if (ocad_x == invalid_value)
-		ocad_x = 0;
-	if (ocad_y == invalid_value)
-		ocad_y = 0;
-	return MapCoord::fromNative(ocad_x * 10, ocad_y * -10);
-}
-
-inline
-float OcdFileImport::convertAngle(int ocd_angle) const
-{
-	// OC*D uses tenths of a degree, counterclockwise
-	// BUG: if sin(rotation) is < 0 for a hatched area pattern, the pattern's createRenderables() will go into an infinite loop.
-	// So until that's fixed, we keep a between 0 and PI
-	return (M_PI / 1800) * ((ocd_angle + 3600) % 3600);
-}
-
-inline
-int OcdFileImport::convertLength(qint16 ocd_length) const
-{
-	return convertLength<qint16, int>(ocd_length);
-}
-
-inline
-int OcdFileImport::convertLength(quint16 ocd_length) const
-{
-	return convertLength<quint16, int>(ocd_length);
-}
-
-template< class T, class R >
-inline
-R OcdFileImport::convertLength(T ocd_length) const
-{
-	// OC*D uses hundredths of a millimeter.
-	// oo-mapper uses 1/1000 mm
-	return static_cast<R>(ocd_length) * 10;
-}
-
-inline
-MapColor *OcdFileImport::convertColor(int ocd_color)
-{
-	if (!color_index.contains(ocd_color))
-	{
-		addWarning(tr("Color id not found: %1, ignoring this color").arg(ocd_color));
-		return nullptr;
-	}
-	
-	return color_index[ocd_color];
-}
 
 
 }  // namespace OpenOrienteering
