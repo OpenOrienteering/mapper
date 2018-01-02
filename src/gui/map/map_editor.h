@@ -277,6 +277,8 @@ public slots:
 	
 	/** Activates the pan tool. */
 	void pan();
+	/** Moves view to GPS position. */
+	void moveToGpsPos();
 	/** Zooms in in the current map widget. */
 	void zoomIn();
 	/** Zooms out in the current map widget. */
@@ -639,6 +641,7 @@ private:
 	QAction* clear_undo_redo_history_act;
 	
 	QAction* pan_act;
+	QAction* move_to_gps_pos_act;
 	QAction* zoom_in_act;
 	QAction* zoom_out_act;
 	QAction* show_all_act;
