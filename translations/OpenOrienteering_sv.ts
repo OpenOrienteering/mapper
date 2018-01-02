@@ -184,12 +184,12 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="227"/>
         <source>Element drawing at boundary</source>
-        <translation type="unfinished"></translation>
+        <translation>Mönsterhantering vid kantlinje</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="229"/>
         <source>Clip elements at the boundary.</source>
-        <translation type="unfinished">Klipp objekt vid ytterkant</translation>
+        <translation>Klipp objekt vid ytterkant.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="230"/>
@@ -1270,7 +1270,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="475"/>
         <source>&lt;b&gt;%1+%2&lt;/b&gt;: Cancel editing. </source>
-        <translation>&lt;b&gt;%1+%2&lt;/b&gt;: Avbryt redigering.</translation>
+        <translation>&lt;b&gt;%1+%2&lt;/b&gt;: Avbryt redigering. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="480"/>
@@ -4904,7 +4904,7 @@ valda</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2372"/>
         <source>Fill the selected lines or create a border for the selected areas.</source>
-        <translation type="unfinished">Fyll valda linjer eller skapa kantlinjer för den/de markerade ytan/ytorna.</translation>
+        <translation>Fyll valda linjer eller skapa kantlinjer för den/de markerade ytan/ytorna.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/map/map_editor.cpp" line="2491"/>
@@ -5553,7 +5553,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
         <location filename="../src/core/objects/object_query.cpp" line="305"/>
         <source>Text</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished">Text</translation>
+        <translation>Text</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="309"/>
@@ -7084,7 +7084,7 @@ Vill du spara dina ändringar?</translation>
     <message>
         <location filename="../src/core/storage_location.cpp" line="282"/>
         <source>&apos;%1&apos; is stored in a regular location.</source>
-        <translation type="unfinished">&apos;%1&apos; är lagrad på en vanlig plats.</translation>
+        <translation>&apos;%1&apos; är lagrad på en vanlig plats.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="285"/>
@@ -8693,13 +8693,13 @@ Högsta versionen som stöds är %2.</translation>
         <location filename="../src/gui/util_gui.cpp" line="209"/>
         <source>mm</source>
         <comment>millimeters</comment>
-        <translation type="unfinished"></translation>
+        <translation>mm</translation>
     </message>
     <message>
         <location filename="../src/gui/util_gui.cpp" line="214"/>
         <source>m</source>
         <comment>meters</comment>
-        <translation type="unfinished"></translation>
+        <translation>m</translation>
     </message>
 </context>
 <context>
