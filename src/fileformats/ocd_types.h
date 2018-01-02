@@ -269,22 +269,6 @@ namespace Ocd
 		FramingRectangle = 3  /// \since V8; Not for line text symbols
 	};
 	
-	/**
-	 * A generic OCD file format trait.
-	 *
-	 * It is suitable for detecting the actual format.
-	 */
-	struct FormatGeneric
-	{
-		static constexpr int version() { return -1; }
-		
-		typedef FileHeaderGeneric FileHeader;
-		
-		struct BaseSymbol { typedef quint32 IndexEntryType; };
-		
-		struct Object { typedef quint32 IndexEntryType; };
-	};
-	
 }
 
 

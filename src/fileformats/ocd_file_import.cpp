@@ -2159,14 +2159,14 @@ void OcdFileImport::import(bool load_symbols_only)
 	if (buffer.isEmpty())
 		throw FileFormatException(::OpenOrienteering::Importer::tr("Could not read file: %1").arg(stream->errorString()));
 	
-	if (size_t(buffer.size()) < sizeof(Ocd::FormatGeneric::FileHeader))
-		throw FileFormatException(::OpenOrienteering::Importer::tr("Could not read file: %1").arg(tr("Invalid data.")));
+	if (size_t(buffer.size()) < sizeof(Ocd::FileHeaderGeneric))
+		throw FileFormatException(Importer::tr("Could not read file: %1").arg(tr("Invalid data.")));
 	
-	const OcdFile<Ocd::FormatGeneric> generic_file(buffer);
-	if (generic_file.header()->vendor_mark != 0x0cad) // This also tests correct endianess...
-		throw FileFormatException(::OpenOrienteering::Importer::tr("Could not read file: %1").arg(tr("Invalid data.")));
+	auto header = reinterpret_cast<const Ocd::FileHeaderGeneric*>(buffer.constData());
+	if (header->vendor_mark != 0x0cad) // This also tests correct endianess...
+		throw FileFormatException(Importer::tr("Could not read file: %1").arg(tr("Invalid data.")));
 	
-	int version = generic_file.header()->version;
+	auto version = header->version;
 	switch (version)
 	{
 	case 6:
@@ -2182,8 +2182,7 @@ void OcdFileImport::import(bool load_symbols_only)
 		break;
 	case 9:
 	case 10:
-		using FormatV10Assumption = std::is_same<Ocd::FormatV10, Ocd::FormatV9>;
-		Q_STATIC_ASSERT(FormatV10Assumption::value);
+		Q_STATIC_ASSERT((std::is_same<Ocd::FormatV10, Ocd::FormatV9>::value));
 		importImplementation< Ocd::FormatV9 >(load_symbols_only);
 		break;
 	case 11:
