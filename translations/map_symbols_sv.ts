@@ -86,13 +86,13 @@
         <message>
             <source>Opaque White over Green</source>
             <comment>Color 16</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ogenomskinlig vit över grön</translation>
+    </message>
         <message>
             <source>Opaque Green 20%</source>
             <comment>Color 17</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ogenomskinlig grön 20%</translation>
+    </message>
         <message>
             <source>Opaque Green 50%</source>
             <comment>Color 18</comment>
@@ -264,7 +264,7 @@ För långa skärningar är det tillåtet att använda kortare taggar vid ändpu
         <message>
             <source>Use this symbol to display the full extent of wide earth banks.</source>
             <comment>Description of symbol 104.3</comment>
-            <translation type="unfinished">Använd denna symbol för att visa den totala omfattningen av breda jordvallar.</translation>
+            <translation>Använd denna symbol för att visa den totala utsträckningen av breda jordvallar.</translation>
     </message>
         <message>
             <source>Earth bank, minimum size (from ISOM2000)</source>
@@ -390,7 +390,7 @@ The minimum number of dots is three (footprint 10 m x 10 m).
 Contours shall not be cut in broken ground areas.
 Density: 3 to 5 dots / mm² (9-16%).</source>
             <comment>Description of symbol 113</comment>
-            <translation type="unfinished">Ett område med smågropar och/eller höjder som är alltför komplicerat för
+            <translation>Ett område med smågropar och/eller höjder som är alltför komplicerat för
 att redovisas i detalj, eller andra typer av ojämn mark som är tydligt
 urskiljbart och har liten inverkan på löpbarheten. Punkterna ska placeras
 slumpmässigt utan att påverka läsbarheten för viktiga terrängföremål.
@@ -399,10 +399,10 @@ Största tillåtna avståndet mellan närliggande punkter är 0,6 mm
 (centrummått).
 Minsta tillåtna avståndet mellan närliggande punkter är 0,5 mm
 (centrummått).
-Höjdkurvor ska inte göra upppehåll i småkuperad terräng.
+Höjdkurvor ska inte göra upppehåll i småkuperad terräng.
 Punkterna ska inte arrangeras i raka linjer.
 Täthet: 3-4 punkter/mm2 (9-13 %).</translation>
-        </message>
+    </message>
         <message>
             <source>Broken ground, individual dot</source>
             <comment>Name of symbol 113.1</comment>
@@ -411,8 +411,8 @@ Täthet: 3-4 punkter/mm2 (9-13 %).</translation>
         <message>
             <source>An area of pits or knolls which is too intricate to be shown in detail. The density of randomly placed dots may vary according to the detail on the ground.</source>
             <comment>Description of symbol 113.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ett område med små gropar och/eller höjder som är alltför komplicerat för att redovisas i detalj, eller andra typer av ojämn mark som är tydligt urskiljbart och har liten inverkan på löpbarheten. Punkterna ska placeras slumpmässigt utan att påverka läsbarheten för viktiga terrängföremål.</translation>
+    </message>
         <message>
             <source>Very broken ground</source>
             <comment>Name of symbol 114</comment>
@@ -488,54 +488,54 @@ Ends of the top line may be rounded or square.
 The gap between two impassable cliffs or between impassable cliffs and other impassable feature symbols must exceed 0.3 mm on the map.
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.</source>
             <comment>Description of symbol 201.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Opasserbar brant, stenbrott eller skärning som är så hög och brant att den inte kan eller är farlig att passera. Lutningsstreck kan utelämnas om utrymmet är begränsat. Baslinjens avslutningar kan vara avrundade eller raka. Vid redovisning i plan måste baslinjen vara minst 0,35 mm bred. Kortare lutningsstreck kan användas vid linjesluten. Avståndet mellan två opasserbara branter eller mellan opasserbar brant och andra opasserbara symboler måste vara mer än 0,3 mm. När en brant ligger i anslutning till vatten så att passage längs med stranden nedanför branten inte är möjlig, utelämnas strandkonturen eller ska lutningsstrecken tydligt gå över strandkantlinjen. En opasserbar brant ska ansluta till höjdkurvorna. Kortaste längd, rakt linjeslut: 0,6 mm (9 m), runt linjeslut: 0,7 mm (10,5 m).</translation>
+    </message>
         <message>
             <source>Impassable cliff, plan shape representation</source>
             <comment>Name of symbol 201.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Opasserbar brant, planvy-representation</translation>
+    </message>
         <message>
             <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
 For vertical rock faces the tags may be omitted if space is short. &lt;b&gt;For plan shape representation, the minimum width is 0.35 mm.&lt;/b&gt; Shorter tags may be used at the ends.
 The gap between two impassable cliffs or between impassable cliffs and other impassable feature symbols must exceed 0.3 mm on the map.
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.</source>
             <comment>Description of symbol 201.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Opasserbar brant, stenbrott eller skärning som är så hög och brant att den inte kan eller är farlig att passera. Lutningsstreck kan utelämnas om utrymmet är begränsat. Baslinjens avslutningar kan vara avrundade eller raka. Vid redovisning i plan måste baslinjen vara minst 0,35 mm bred. Kortare lutningsstreck kan användas vid linjesluten. Avståndet mellan två opasserbara branter eller mellan opasserbar brant och andra opasserbara symboler måste vara mer än 0,3 mm. När en brant ligger i anslutning till vatten så att passage längs med stranden nedanför branten inte är möjlig, utelämnas strandkonturen eller ska lutningsstrecken tydligt gå över strandkantlinjen. En opasserbar brant ska ansluta till höjdkurvorna. Kortaste längd, rakt linjeslut: 0,6 mm (9 m), runt linjeslut: 0,7 mm (10,5 m).</translation>
+    </message>
         <message>
             <source>Impassable cliff, top line</source>
             <comment>Name of symbol 201.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Opasserbar brant, baslinje</translation>
+    </message>
         <message>
             <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
             <comment>Description of symbol 201.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Lutningsstreck kan utelämnas om utrymmet är begränsat (Avståndet mellan två opasserbara branter eller mellan opasserbar brant och andra opasserbara symboler måste vara mer än 0,3 mm).</translation>
+    </message>
         <message>
             <source>Impassable cliff, tag line</source>
             <comment>Name of symbol 201.4</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Opasserbar brant, tag</translation>
+    </message>
         <message>
             <source>Use this symbol to display the full extent of a wide cliff.</source>
             <comment>Description of symbol 201.4</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Använd denna symbol för att redovisa hela utbredningen av en ur planvy bred brant (t.ex. sva).</translation>
+    </message>
         <message>
             <source>Impassable cliff, minimum size (from ISOM2000)</source>
             <comment>Name of symbol 201.9</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Opasserbar brant, minsta storlek (från ISOM2000)</translation>
+    </message>
         <message>
             <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
 Ends of the top line may be rounded or square.
 The gap between two impassable cliffs or between impassable cliffs and other impassable feature symbols must exceed 0.3 mm on the map.
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.</source>
             <comment>Description of symbol 201.9</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Opasserbar brant, stenbrott eller skärning som är så hög och brant att den inte kan eller är farlig att passera. Lutningsstreck kan utelämnas om utrymmet är begränsat. Baslinjens avslutningar kan vara avrundade eller raka. Vid redovisning i plan måste baslinjen vara minst 0,35 mm bred. Kortare lutningsstreck kan användas vid linjesluten. Avståndet mellan två opasserbara branter eller mellan opasserbar brant och andra opasserbara symboler måste vara mer än 0,3 mm. När en brant ligger i anslutning till vatten så att passage längs med stranden nedanför branten inte är möjlig, utelämnas strandkonturen eller ska lutningsstrecken tydligt gå över strandkantlinjen. En opasserbar brant ska ansluta till höjdkurvorna. Kortaste längd, rakt linjeslut: 0,6 mm (9 m), runt linjeslut: 0,7 mm (10,5 m).</translation>
+    </message>
         <message>
             <source>Cliff</source>
             <comment>Name of symbol 202</comment>
@@ -546,59 +546,59 @@ When an impassable cliff drops straight into water, making it impossible to pass
 Ends of the top line may be rounded or square. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
 Crossing a cliff will normally slow progress.</source>
             <comment>Description of symbol 202</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>En passerbar brant eller gruva. Lägsta höjd: 1 m. Om fallriktningen inte klart framgår av kurvbilden, eller för att förbättra läsbarheten, kan taggar ritas nedåt i lutningens riktning. Taggarna ska redovisa brantens horisontella utsträckning. Baslinjens avslutningar kan vara avrundade eller raka. Passager mellan branter ska vara minst 0,2 mm. En brant ska ansluta till höjdkurvorna. Att passera en brant påverkar normalt löpbarheten. Kortaste längd, rakt linjeslut: 0,6 mm (9 m), runt linjeslut: 0,65mm (9,75 m ).</translation>
+    </message>
         <message>
             <source>Cliff, minimum size</source>
             <comment>Name of symbol 202.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Passerbar brant, minsta storlek</translation>
+    </message>
         <message>
             <source>A passable, vertical cliff or quarry where the direction of fall of the cliff is apparent from the contours. Minimum height: 1 m.
 Ends of the top line may be rounded or square. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
 Crossing a cliff will normally slow progress.</source>
             <comment>Description of symbol 202.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>En passerbar brant eller gruva. Lägsta höjd: 1 m. Om fallriktningen inte klart framgår av kurvbilden, eller för att förbättra läsbarheten, kan taggar ritas nedåt i lutningens riktning. Taggarna ska redovisa brantens horisontella utsträckning. Baslinjens avslutningar kan vara avrundade eller raka. Passager mellan branter ska vara minst 0,2 mm. En brant ska ansluta till höjdkurvorna. Att passera en brant påverkar normalt löpbarheten. Kortaste längd, rakt linjeslut: 0,6 mm (9 m), runt linjeslut: 0,65mm (9,75 m ).</translation>
+    </message>
         <message>
             <source>Cliff, with tags</source>
             <comment>Name of symbol 202.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Passerbar brant, med taggar</translation>
+    </message>
         <message>
             <source>A passable cliff or quarry. Minimum height: 1 m.
 Short tags indicate in the direction of the downslope because the direction of fall of the cliff is not apparent from the contours, or to improve legibility. For non-vertical cliffs, the tags should be drawn to show the full horizontal extent.
 Ends of the top line may be rounded or square. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
 Crossing a cliff will normally slow progress.</source>
             <comment>Description of symbol 202.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>En passerbar brant eller gruva. Lägsta höjd: 1 m. Om fallriktningen inte klart framgår av kurvbilden, eller för att förbättra läsbarheten, kan taggar ritas nedåt i lutningens riktning. Taggarna ska redovisa brantens horisontella utsträckning. Baslinjens avslutningar kan vara avrundade eller raka. Passager mellan branter ska vara minst 0,2 mm. En brant ska ansluta till höjdkurvorna. Att passera en brant påverkar normalt löpbarheten. Kortaste längd, rakt linjeslut: 0,6 mm (9 m), runt linjeslut: 0,65mm (9,75 m ).</translation>
+    </message>
         <message>
             <source>Cliff, with tags, minimum size</source>
             <comment>Name of symbol 202.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Passerbar brant med taggar, minsta storlek</translation>
+    </message>
         <message>
             <source>A passable cliff or quarry. Minimum height: 1 m.
 Short tags indicate in the direction of the downslope because the direction of fall of the cliff is not apparent from the contours, or to improve legibility. For non-vertical cliffs, the tags should be drawn to show the full horizontal extent.
 Ends of the top line may be rounded or square. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
 Crossing a cliff will normally slow progress.</source>
             <comment>Description of symbol 202.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>En passerbar brant eller gruva. Lägsta höjd: 1 m. Om fallriktningen inte klart framgår av kurvbilden, eller för att förbättra läsbarheten, kan taggar ritas nedåt i lutningens riktning. Taggarna ska redovisa brantens horisontella utsträckning. Baslinjens avslutningar kan vara avrundade eller raka. Passager mellan branter ska vara minst 0,2 mm. En brant ska ansluta till höjdkurvorna. Att passera en brant påverkar normalt löpbarheten. Kortaste längd, rakt linjeslut: 0,6 mm (9 m), runt linjeslut: 0,65mm (9,75 m ).</translation>
+    </message>
         <message>
             <source>Cliff, with tags, minimum size (from ISOM2000)</source>
             <comment>Name of symbol 202.9</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Passerbar brant med taggar, minsta storlek (från ISOM2000)</translation>
+    </message>
         <message>
             <source>A passable cliff or quarry. Minimum height: 1 m.
 Short tags indicate in the direction of the downslope because the direction of fall of the cliff is not apparent from the contours, or to improve legibility. For non-vertical cliffs, the tags should be drawn to show the full horizontal extent.
 Ends of the top line may be rounded or square. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
 Crossing a cliff will normally slow progress.</source>
             <comment>Description of symbol 202.9</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>En passerbar brant eller gruva. Lägsta höjd: 1 m. Om fallriktningen inte klart framgår av kurvbilden, eller för att förbättra läsbarheten, kan taggar ritas nedåt i lutningens riktning. Taggarna ska redovisa brantens horisontella utsträckning. Baslinjens avslutningar kan vara avrundade eller raka. Passager mellan branter ska vara minst 0,2 mm. En brant ska ansluta till höjdkurvorna. Att passera en brant påverkar normalt löpbarheten. Kortaste längd, rakt linjeslut: 0,6 mm (9 m), runt linjeslut: 0,65mm (9,75 m ).</translation>
+    </message>
         <message>
             <source>Rocky pit or cave (without distinct entrance)</source>
             <comment>Name of symbol 203.1</comment>
@@ -620,27 +620,27 @@ Utbredning: 10,5 x 12 m.</translation>
         <message>
             <source>Rocky pit or cave with distinct entrance</source>
             <comment>Name of symbol 203.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Steniga gropar, hålor, grottor eller gruvhål med tydlig ingång (symbolen ska orienteras in i grottan).</translation>
+    </message>
         <message>
             <source>Rocky pits, holes, caves or mineshafts with a distinct entrance which may constitute a danger to the competitor. Minimum depth: 1 m.
 Location is the centre of gravity of the symbol, and the symbol should point into the cave.
 Rocky pits larger than 5 m in diameter should be exaggerated and represented using cliff symbols (201, 202).</source>
             <comment>Description of symbol 203.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Steniga gropar, hålor, grottor eller gruvhål som kan vara farliga för löparen. Minsta djup: 1 m. Symbolens tyngdpunkt anger föremålets läge och tecknet orienteras mot norr. För grottor med tydlig ingång ska symbolen orienteras in i grottan. En stenig grop med diameter större än 5 m bör överdrivas och redovisas med lämplig brantsymbol (201,202).</translation>
+    </message>
         <message>
             <source>Rocky pit or cave with distinct entrance (from ISOM2000)</source>
             <comment>Name of symbol 203.9</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Steniga gropar, hålor, grottor eller gruvhål med tydlig ingång (från ISOM2000)</translation>
+    </message>
         <message>
             <source>Rocky pits, holes, caves or mineshafts with a distinct entrance which may constitute a danger to the competitor. Minimum depth: 1 m.
 Location is the centre of gravity of the symbol, and the symbol should point into the cave.
 Rocky pits larger than 5 m in diameter should be exaggerated and represented using cliff symbols (201, 202).</source>
             <comment>Description of symbol 203.9</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Steniga gropar, hålor, grottor eller gruvhål som kan vara farliga för löparen. Minsta djup: 1 m. Symbolens tyngdpunkt anger föremålets läge och tecknet orienteras mot norr. För grottor med tydlig ingång ska symbolen orienteras in i grottan. En stenig grop med diameter större än 5 m bör överdrivas och redovisas med lämplig brantsymbol (201,202).</translation>
+    </message>
         <message>
             <source>Boulder</source>
             <comment>Name of symbol 204</comment>
@@ -650,13 +650,13 @@ Rocky pits larger than 5 m in diameter should be exaggerated and represented usi
             <source>A distinct boulder (should be higher than 1 m), which is immediately identifiable on the ground. Groups of boulders are represented using symbol 207 (boulder cluster) or a boulder field symbol (208, 209).
 To be able to show the distinction between neighbouring (closer than 30 metres apart) boulders with significant difference in size, it is permitted to enlarge the symbol to 0.5 mm for some of the boulders.</source>
             <comment>Description of symbol 204</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>En tydlig sten (bör vara högre än 1 m) som omedelbart kan identifieras i terrängen. Grupper av stenar redovisas med symbol 207 ( grupp av sten ) eller med blockterrängsymbol (208,209). För att kunna särskilja närliggande stenar (närmare än 30 meter) med be tydande storleksskillnad, är det tillåtet att förstora symbolen till 0,5 mm för somliga stenar.</translation>
+    </message>
         <message>
             <source>Boulder or large boulder, different size</source>
             <comment>Name of symbol 204.5</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Sten, förstorad storlek</translation>
+    </message>
         <message>
             <source>A boulder which is larger than neighboring boulders (204), or a large boulder which is smaller than neighboring large boulders (205).
 
@@ -664,8 +664,8 @@ To be able to show the distinction between neighbouring (closer than 30 metres a
 
 To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some of the boulders.</source>
             <comment>Description of symbol 204.5</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>För att kunna särskilja närliggande stenar av typ 204 &quot;Sten&quot; (närmare än 30 meter) med betydande storleksskillnad, eller att särskilja en mindre sten från typ 205 &quot;Stor sten&quot; så är det tillåtet att endera förstora symbolen 204 till 0,5 mm, eller förminska symbolen 205 till 0,5 mm.</translation>
+    </message>
         <message>
             <source>Large boulder</source>
             <comment>Name of symbol 205</comment>
@@ -674,8 +674,8 @@ To be able to show the distinction between neighbouring (closer than 30 metres a
         <message>
             <source>A particularly large and distinct boulder. A large boulder should be more than 2 m high. To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders with significant difference in size, it is permitted to reduce the size of the symbol to 0.5 mm for some of the boulders.</source>
             <comment>Description of symbol 205</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>En särskilt stor och tydlig sten. En stor sten bör vara mer än 2 m hög. För att kunna särskilja närliggande stenar (närmare än 30 meter) med be tydande storleksskillnad, är det tillåtet att förminska symbolen till 0,5 mm för somliga stenar.</translation>
+    </message>
         <message>
             <source>Gigantic boulder</source>
             <comment>Name of symbol 206</comment>
@@ -685,8 +685,8 @@ To be able to show the distinction between neighbouring (closer than 30 metres a
             <source>A rock pillar or gigantic boulder that is so high and steep that it is impossible topass/climb.
 The gap between gigantic boulders or between gigantic boulders and other impassable feature symbols must exceed 0.3 mm on the map.</source>
             <comment>Description of symbol 206</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Stenpelare eller gigantisk sten som är så hög och brant att den inte kan passeras. Avståndet mellan två gigantiska stenar eller mellan gigantiska stenar och andra opasserbara symboler måste vara mer än 0,3 mm.</translation>
+    </message>
         <message>
             <source>Boulder cluster</source>
             <comment>Name of symbol 207</comment>
@@ -696,18 +696,18 @@ The gap between gigantic boulders or between gigantic boulders and other impassa
             <source>A distinct group of boulders so closely clustered together that they cannot be marked individually. The boulders in the cluster should be higher than 1 metre. A boulder cluster must be easily identifiable as a group of boulders.
 To be able to show the distinction between neighbouring (maximum 30 metres apart), boulder clusters with significant difference in boulder size, it is permitted to enlarge this symbol by 20% (edge length 0.96 mm) for some of the boulder clusters.</source>
             <comment>Description of symbol 207</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>En tydlig grupp av stenar som ligger så tätt att de inte kan redovisas individuellt. Stenarna bör vara högre än 1 m. En stengrupp måste tydligt kunna identifieras som en grupp av stenar. För att kunna särskilja närliggande stengrupper (närmare än 30 meter) med betydande storleksskillnad, är det tillåtet att förstora symbolen med 20 % (kantlängd 0,96 mm) för somliga stengrupper. Tecknet orienteras mot norr.</translation>
+    </message>
         <message>
             <source>Boulder cluster, large</source>
             <comment>Name of symbol 207.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Grupp av stenar, stor</translation>
+    </message>
         <message>
             <source>To be able to show the distinction between neighbouring (maximum 30 metres apart), boulder clusters with significant difference in boulder size, it is permitted to enlarge this symbol by 20% (edge length 0.96 mm) for some of the boulder clusters.</source>
             <comment>Description of symbol 207.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>För att kunna särskilja närliggande stengrupper (närmare än 30 meter) med betydande storleksskillnad, är det tillåtet att förstora symbolen med 20 % (kantlängd 0,96 mm) för somliga stengrupper.</translation>
+    </message>
         <message>
             <source>Boulder field</source>
             <comment>Name of symbol 208</comment>
@@ -718,8 +718,8 @@ To be able to show the distinction between neighbouring (maximum 30 metres apart
 A minimum of two triangles should be used. One triangle may be used if it is combined with other rock symbols (for instance directly below cliff symbols (201, 202), adjacent to boulder symbols (204-206) or combined with stony ground symbols (210-212)).
 To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.</source>
             <comment>Description of symbol 208</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ett område täckt av så många stenblock att de inte kan redovisas individuellt, redovisas med slumpmässigt utplacerade fyllda roterade trianglar, sidförhållande 8:6:5 (inre vinklar: 92.9, 48.5, 38.6). Blockterräng påverkar normalt inte löpbarheten. Om löpbarheten påverkas bör symbol 209 (tät blockterräng) användas eller symbolen kombineras med stenig mark. Minst 2 trianglar ska användas. En triangel kan användas om den kombineras med annan sten/brantsymbol, exempelvis direkt under branter (201,202), bredvid stenar (204-206) eller kombinerat med stenig mark (210-212). Största tillåtna avståndet mellan närliggande trianglar är 1,2 mm ( centrummått ). Minsta tillåtna avståndet mellan närliggande trianglar är 0,75 mm ( centrummått ). Täthet: 0,8-     1 symbol/mm 2 (12-16 %). För att visa tydliga höjdskillnader mellan block i blockterräng, är det tillåtet att förstora somliga trianglar till 120 %.</translation>
+    </message>
         <message>
             <source>Boulder field, single triangle</source>
             <comment>Name of symbol 208.1</comment>
