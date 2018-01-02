@@ -1364,6 +1364,17 @@ void MapEditorController::createMobileGUI()
 	bottom_action_bar->addAction(pan_act, 1, col++);
 	
 	bottom_action_bar->addAction(zoom_out_act, 0, col);
+	auto zoom_out_button = bottom_action_bar->getButtonForAction(zoom_out_act);
+	auto mobile_zoom_out_menu = new QMenu(zoom_out_button);
+	auto zoom_1x_action = mobile_zoom_out_menu->addAction(tr("1x zoom"));
+	connect(zoom_1x_action, &QAction::triggered, [this]() {
+		main_view->setZoom(1);
+	});
+	auto zoom_2x_action = mobile_zoom_out_menu->addAction(tr("2x zoom"));
+	connect(zoom_2x_action, &QAction::triggered, [this]() {
+		main_view->setZoom(2);
+	});
+	zoom_out_button->setMenu(mobile_zoom_out_menu);
 
 	bottom_action_bar->addAction(move_to_gps_pos_act, 1, col++);
 	
