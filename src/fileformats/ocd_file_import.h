@@ -130,10 +130,10 @@ public:
 	void setCustom8BitEncoding(QTextCodec* encoding);
 	
 	
-	template< std::size_t N >
+	template< unsigned char N >
 	QString convertOcdString(const Ocd::PascalString<N>& src) const;
 	
-	template< std::size_t N >
+	template< unsigned char N >
 	QString convertOcdString(const Ocd::Utf8PascalString<N>& src) const;
 	
 	template< std::size_t N >

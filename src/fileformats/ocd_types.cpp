@@ -43,4 +43,5 @@ namespace Ocd
 	Q_STATIC_ASSERT(sizeof(FormatV11::FileHeader) == 48);
 	
 	Q_STATIC_ASSERT(sizeof(FormatV12::FileHeader) == 60);
-}
+	
+} // namespace Ocd

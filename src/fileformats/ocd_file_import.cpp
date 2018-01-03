@@ -119,13 +119,13 @@ void OcdFileImport::setCustom8BitEncoding(QTextCodec* encoding)
 }
 
 
-template< std::size_t N >
+template< unsigned char N >
 QString OcdFileImport::convertOcdString(const Ocd::PascalString<N>& src) const
 {
 	return custom_8bit_encoding->toUnicode(src.data, src.length);
 }
 
-template< std::size_t N >
+template< unsigned char N >
 QString OcdFileImport::convertOcdString(const Ocd::Utf8PascalString<N>& src) const
 {
 	return QString::fromUtf8(src.data, src.length);
