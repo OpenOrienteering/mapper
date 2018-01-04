@@ -159,6 +159,14 @@ namespace Ocd
 	};
 	
 	/**
+	 * An index entry for a symbol.
+	 */
+	struct SymbolIndexEntry
+	{
+		quint32 pos;
+	};
+	
+	/**
 	 * The OCD file point data type.
 	 * 
 	 * The coordinates are not raw 32 bit signed integers but contain flags
@@ -368,42 +376,6 @@ private:
 };
 
 
-/**
- * A template class which provides an iterator for OCD entity indices, 
- * specialized for the case where the index entry is just the quint32 file
- * position of the entity data.
- * 
- * @param F: the type defining the file format version type
- * @param T: the entity type (string, symbol, object)
- */
-template< class F, class T >
-class OcdEntityIndexIterator<F, T, quint32 >
-{
-public:
-	using FileFormat = F;
-	using EntityType = T;
-	using EntryType  = quint32;
-	using IndexBlock = Ocd::IndexBlock<quint32>;
-	
-	OcdEntityIndexIterator(const OcdFile<F>* file, const IndexBlock* first_block);
-	
-	const OcdEntityIndexIterator& operator++();
-	
-	const T& operator*() const;
-	
-	const T* operator->() const;
-	
-	bool operator==(const OcdEntityIndexIterator<F, T, quint32>& rhs) const;
-	
-	bool operator!=(const OcdEntityIndexIterator<F, T, quint32>& rhs) const;
-	
-private:
-	const OcdFile<F>* file;
-	const IndexBlock* block;
-	std::size_t index;
-};
-
-
 
 /**
  * A template class for dealing with OCD entity indices.
@@ -535,12 +507,17 @@ public:
 	const SymbolIndex& symbols() const;
 	
 	/**
+	 * Returns a const reference to the symbol referenced by an symbol index entry.
+	 */
+	const typename F::BaseSymbol& operator[](const typename SymbolIndex::EntryType& symbol_entry) const;
+	
+	/**
 	 * Returns a const reference to the object index.
 	 */
 	const ObjectIndex& objects() const;
 	
 	/**
-	 * Returns a const referenc to the object referenced by an object index iterator.
+	 * Returns a const reference to the object referenced by an object index entry.
 	 */
 	const typename F::Object& operator[](const typename ObjectIndex::EntryType& object_entry) const;
 	
@@ -651,77 +628,6 @@ bool OcdEntityIndexIterator<F,T,E>::operator!=(const OcdEntityIndexIterator<F,T,
 
 
 
-// ### OcdEntityIndexIterator specialization ###
-
-template< class F, class T >
-OcdEntityIndexIterator<F,T,quint32>::OcdEntityIndexIterator(const OcdFile<F>* file, const IndexBlock* first_block)
- : file(nullptr),
-   block(nullptr),
-   index(0)
-{
-	if (file && first_block)
-	{
-		this->file = file;
-		block = first_block;
-		if (file && block->entries[index] == 0)
-			operator++();
-	}
-}
-
-template< class F, class T >
-const OcdEntityIndexIterator<F,T,quint32>& OcdEntityIndexIterator<F,T,quint32>::operator++()
-{
-	if (file)
-	{
-		do
-		{
-			++index;
-			if (index == 256)
-			{
-				index = 0;
-				quint32 next_block = block->next_block;
-				if (next_block)
-				{
-					block = reinterpret_cast<const IndexBlock*>(&(*file)[next_block]);
-				}
-				else
-				{
-					block = nullptr;
-					file = nullptr;
-				}
-			}
-		}
-		while ( file && !block->entries[index] );
-	}
-	return *this;
-}
-
-template< class F, class T >
-const T& OcdEntityIndexIterator<F,T,quint32>::operator*() const
-{
-	return reinterpret_cast<const T&>((*file)[block->entries[index]]);
-}
-
-template< class F, class T >
-const T* OcdEntityIndexIterator<F,T,quint32>::operator->() const
-{
-	return reinterpret_cast<const T*>(&(*file)[block->entries[index]]);
-}
-
-template< class F, class T >
-bool OcdEntityIndexIterator<F,T,quint32>::operator==(const OcdEntityIndexIterator<F,T,quint32>& rhs) const
-{
-	return (file == rhs.file && block == rhs.block && index == rhs.index);
-}
-
-template< class F, class T >
-bool OcdEntityIndexIterator<F,T,quint32>::operator!=(const OcdEntityIndexIterator<F,T,quint32>& rhs) const
-{
-	return (file != rhs.file || block != rhs.block || index != rhs.index);
-}
-
-
-
 // ### OcdEntityIndex implementation ###
 
 template< class F, class T >
@@ -806,6 +712,12 @@ template< class F >
 const typename OcdFile<F>::SymbolIndex& OcdFile<F>::symbols() const
 {
 	return symbol_index;
+}
+
+template< class F >
+const typename F::BaseSymbol& OcdFile<F>::operator[](const typename OcdFile<F>::SymbolIndex::EntryType& symbol_entry) const
+{
+	return reinterpret_cast<const typename F::BaseSymbol&>((*this)[symbol_entry.pos]);
 }
 
 template< class F >

@@ -645,8 +645,10 @@ template< class F >
 void OcdFileImport::importSymbols(const OcdFile< F >& file)
 {
 	auto ocd_version = file.header()->version;
-	for (const auto& ocd_symbol : file.symbols())
+	for (const auto& ocd_symbol_entry : file.symbols())
 	{
+		const auto& ocd_symbol = file[ocd_symbol_entry];
+		
 		// When extra symbols are created, we want to insert the main symbol
 		// before them. That is why pos needs to be determined first.
 		auto pos = map->getNumSymbols();

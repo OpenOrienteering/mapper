@@ -30,7 +30,7 @@ namespace Ocd
 	
 	struct BaseSymbolV11
 	{
-		using IndexEntryType = quint32;
+		using IndexEntryType = SymbolIndexEntry;
 		static const int symbol_number_factor = 1000;
 		
 		quint32 size;

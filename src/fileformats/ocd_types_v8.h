@@ -84,7 +84,7 @@ namespace Ocd
 	
 	struct BaseSymbolV8
 	{
-		using IndexEntryType = quint32;
+		using IndexEntryType = SymbolIndexEntry;
 		static const int symbol_number_factor = 10;
 		
 		quint16 size;
