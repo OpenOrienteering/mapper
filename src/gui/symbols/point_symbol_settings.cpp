@@ -32,6 +32,8 @@
 #include "gui/symbols/symbol_setting_dialog.h"
 
 
+namespace OpenOrienteering {
+
 // ### PointSymbol ###
 
 SymbolPropertiesWidget* PointSymbol::createPropertiesWidget(SymbolSettingDialog* dialog)
@@ -90,3 +92,6 @@ void PointSymbolSettings::tabChanged(int /*index*/)
 {
 	symbol_editor->setEditorActive( currentWidget()==point_tab );
 }
+
+
+}  // namespace OpenOrienteering

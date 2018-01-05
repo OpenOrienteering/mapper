@@ -28,6 +28,8 @@
 
 #include "settings.h"
 
+namespace OpenOrienteering {
+
 
 /**
  * A widget which serves as a page in the SettingsDialog.
@@ -90,5 +92,7 @@ void SettingsPage::setSetting(Settings::SettingsEnum setting, T value)
 	Settings::getInstance().setSetting(setting, QVariant{ value });
 }
 
+
+}  // namespace OpenOrienteering
 
 #endif

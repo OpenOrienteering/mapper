@@ -36,6 +36,8 @@ class QXmlStreamReader;
 class QXmlStreamWriter;
 // IWYU pragma: no_forward_declare QFontMetricsF
 
+namespace OpenOrienteering {
+
 class Map;
 class MapColor;
 class MapColorMap;
@@ -184,5 +186,8 @@ protected:
 	
 	double tab_interval;		/// default tab interval length in text coordinates
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

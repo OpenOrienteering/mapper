@@ -28,6 +28,8 @@
 #include "gui/util_gui.h"
 
 
+namespace OpenOrienteering {
+
 // TODO: convert these to settings
 const float touch_pos_offset_mm = 25;
 const float control_ring_radius_mm = 9.5f;
@@ -214,3 +216,6 @@ float TouchCursor::standardCursorRadiusPx() const
 {
 	return Util::mmToPixelLogical(1.5f);
 }
+
+
+}  // namespace OpenOrienteering

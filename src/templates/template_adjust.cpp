@@ -45,6 +45,8 @@
 #include "util/util.h"
 
 
+namespace OpenOrienteering {
+
 float TemplateAdjustActivity::cross_radius = 4;
 
 TemplateAdjustActivity::TemplateAdjustActivity(Template* temp, MapEditorController* controller) : controller(controller)
@@ -614,7 +616,7 @@ bool TemplateAdjustAddTool::mousePressEvent(QMouseEvent* event, MapCoordF map_co
 		setDirtyRect(map_coord);
 		
 		setStatusBarText(tr("<b>Click</b>: Set the map position of the pass point. ") +
-		                 MapEditorTool::tr("<b>%1</b>: Abort. ").arg(ModifierKey::escape()) );
+		                 OpenOrienteering::MapEditorTool::tr("<b>%1</b>: Abort. ").arg(ModifierKey::escape()) );
 	}
 	else
 	{
@@ -870,3 +872,6 @@ bool TemplateAdjustDeleteTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_
 	findHoverPoint(event->pos(), widget);
 	return true;
 }
+
+
+}  // namespace OpenOrienteering

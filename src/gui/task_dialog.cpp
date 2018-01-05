@@ -31,6 +31,8 @@
 #include "util/backports.h"
 
 
+namespace OpenOrienteering {
+
 TaskDialog::TaskDialog(QWidget* parent, const QString& title, const QString& text, QDialogButtonBox::StandardButtons buttons)
  : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
 {
@@ -78,3 +80,6 @@ void TaskDialog::buttonClicked(QAbstractButton* button)
 	else
 		accept();
 }
+
+
+}  // namespace OpenOrienteering

@@ -32,6 +32,8 @@
 #include "core/virtual_path.h"
 
 
+namespace OpenOrienteering {
+
 static_assert(std::is_nothrow_default_constructible<PathCoord>::value,
               "PathCoord must be nothrow default constructible.");
 static_assert(std::is_nothrow_copy_constructible<PathCoord>::value,
@@ -521,3 +523,6 @@ bool PathCoord::valueLessThanIndex(size_type value, const PathCoord& coord)
 {
 	return value < coord.index;
 }
+
+
+}  // namespace OpenOrienteering

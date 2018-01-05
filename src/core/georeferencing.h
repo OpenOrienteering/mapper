@@ -39,6 +39,7 @@ class QXmlStreamWriter;
 
 typedef void* projPJ;
 
+namespace OpenOrienteering {
 
 
 #if defined(Q_OS_ANDROID)
@@ -687,5 +688,8 @@ LatLon Georeferencing::getGeographicRefPoint() const
 {
 	return geographic_ref_point;
 }
+
+
+}  // namespace OpenOrienteering
 
 #endif

@@ -50,6 +50,9 @@
 #include "gui/util_gui.h"
 #include "util/backports.h"  // IWYU pragma: keep
 
+
+namespace OpenOrienteering {
+
 class MapCoordF;
 
 
@@ -272,3 +275,6 @@ void ConfigureGridDialog::showHelp()
 {
 	Util::showHelp(this, "grid.html");
 }
+
+
+}  // namespace OpenOrienteering

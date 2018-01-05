@@ -33,6 +33,8 @@ class QModelIndex;
 class QStyleOptionViewItem;
 class QWidget;
 
+namespace OpenOrienteering {
+
 class Map;
 class Symbol;
 
@@ -105,5 +107,8 @@ private slots:
 private:
 	const int symbol_type_filter;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

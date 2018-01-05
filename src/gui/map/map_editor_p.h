@@ -33,6 +33,8 @@ class QSizeGrip; // IWYU pragma: keep
 class QString;
 class QWidget;
 
+namespace OpenOrienteering {
+
 class MapEditorController;
 class Template;
 
@@ -78,5 +80,8 @@ signals:
 private slots:
 	void triggeredImpl(bool checked);
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

@@ -48,6 +48,8 @@ class QXmlStreamWriter;
 // IWYU pragma: no_forward_declare QXmlStreamReader
 
 
+namespace OpenOrienteering {
+
 // ### FillPattern ###
 
 AreaSymbol::FillPattern::FillPattern() noexcept
@@ -880,3 +882,6 @@ bool AreaSymbol::equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensit
 		return lhs.equals(rhs, case_sensitivity);
 	});
 }
+
+
+}  // namespace OpenOrienteering

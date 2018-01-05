@@ -39,6 +39,8 @@
 #include <QVector>
 
 
+namespace OpenOrienteering {
+
 namespace Android {
 
 /**
@@ -234,11 +236,15 @@ std::shared_ptr<const std::vector<StorageLocation>> buildLocationCache()
 	return locations;
 }
 
-} // namespace
+
+}  // namespace Android
+
+}  // namespace OpenOrienteering
 
 #endif
 
 
+namespace OpenOrienteering {
 
 // static
 std::shared_ptr<const std::vector<StorageLocation>> StorageLocation::knownLocations()
@@ -294,3 +300,5 @@ QString StorageLocation::fileHintTextTemplate(Hint hint)
 	Q_UNREACHABLE();
 }
 
+
+}  // namespace OpenOrienteering

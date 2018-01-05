@@ -17,12 +17,14 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
 #ifndef OPENORIENTEERING_MAPPER_RESOURCE_H
 #define OPENORIENTEERING_MAPPER_RESOURCE_H
 
+namespace OpenOrienteering {
 
-namespace MapperResource
-{
+
+namespace MapperResource {
 
 /**
  * Initializes QDir::searchPaths for Mapper resource prefixes.
@@ -36,8 +38,10 @@ namespace MapperResource
  */
 void setSeachPaths();
 
-}
+}  // namespace MapperResource
 
+
+}  // namespace OpenOrienteering
 
 
 #endif

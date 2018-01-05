@@ -25,6 +25,8 @@
 
 #include "util/util.h"
 
+using namespace OpenOrienteering;
+
 
 /**
  * @test Tests utility functions and structures.

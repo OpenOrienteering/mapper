@@ -40,6 +40,8 @@ class QRadioButton;
 class QNetworkReply;
 class QWidget;
 
+namespace OpenOrienteering {
+
 class CRSSelector;
 class Georeferencing;
 class Map;
@@ -326,5 +328,6 @@ private:
 };
 
 
+}  // namespace OpenOrienteering
 
 #endif

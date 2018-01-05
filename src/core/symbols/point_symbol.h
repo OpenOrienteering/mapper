@@ -34,6 +34,8 @@ class QPainterPath;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 
+namespace OpenOrienteering {
+
 class Map;
 class MapColor;
 class MapColorMap;
@@ -151,5 +153,8 @@ protected:
 	int outer_width;		// in 1/1000 mm
 	const MapColor* outer_color;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

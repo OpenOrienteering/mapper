@@ -31,6 +31,8 @@ class QTransform;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 
+namespace OpenOrienteering {
+
 struct TemplateTransform;
 
 
@@ -77,5 +79,8 @@ public:
 	/** Estimates an affine transformation without shearing. */
 	bool estimateNonIsometricSimilarityTransform(not_null<QTransform*> out);
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

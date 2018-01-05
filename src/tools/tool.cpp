@@ -41,6 +41,8 @@
 #include "gui/map/map_widget.h"
 
 
+namespace OpenOrienteering {
+
 namespace {
 
 /// Utility function for MapEditorTool::findHoverPoint
@@ -51,7 +53,8 @@ qreal distanceSquared(QPointF a, const QPointF& b)
 	return QPointF::dotProduct(a, a); // introduced in Qt 5.1
 }
 
-} // namespace
+
+}  // namespace
 
 
 
@@ -360,7 +363,7 @@ namespace
 			return 4;
 	}
 	
-} // namespace
+}  // namespace
 
 
 // slot
@@ -373,3 +376,5 @@ void MapEditorTool::settingsChanged()
 	draw_on_right_click = Settings::getInstance().getSettingCached(Settings::MapEditor_DrawLastPointOnRightClick).toBool();
 }
 
+
+}  // namespace OpenOrienteering

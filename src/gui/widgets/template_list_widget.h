@@ -37,6 +37,8 @@ class QIcon;
 class QTableWidget;
 class QToolButton;
 
+namespace OpenOrienteering {
+
 class Map;
 class MapEditorController;
 class Template;
@@ -152,5 +154,8 @@ private:
 	//QToolButton* group_button;
 	//QToolButton* more_button;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

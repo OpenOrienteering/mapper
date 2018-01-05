@@ -69,8 +69,10 @@ Q_STATIC_ASSERT((std::is_same<QRgb, unsigned int>::value));
 Q_STATIC_ASSERT(RGB_MASK == 0x00ffffff);
 
 
-namespace
-{
+namespace OpenOrienteering {
+
+namespace {
+
 /**
  * Helper structure used to represent a section of a traced path
  * while constructing the fill object.
@@ -536,3 +538,6 @@ bool FillTool::fillBoundary(const QImage& image, const std::vector<QPoint>& boun
 	
 	return true;
 }
+
+
+}  // namespace OpenOrienteering

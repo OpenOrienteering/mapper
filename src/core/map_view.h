@@ -40,6 +40,8 @@ class QRectF;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 
+namespace OpenOrienteering {
+
 class Map;
 class Template;
 
@@ -443,8 +445,6 @@ bool operator!=(TemplateVisibility lhs, TemplateVisibility rhs)
 
 // ### MapView inline code ###
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(MapView::ChangeFlags)
-
 inline
 MapCoord MapView::viewToMap(QPointF point) const
 {
@@ -529,6 +529,11 @@ bool MapView::isOverprintingSimulationEnabled() const
 	return overprinting_simulation_enabled;
 }
 
+
+}  // namespace OpenOrienteering
+
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(OpenOrienteering::MapView::ChangeFlags)
 
 
 #endif

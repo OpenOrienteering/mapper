@@ -23,8 +23,11 @@
 
 #include <QObject>
 
-class CompassPrivate;
 class QMetaMethod;
+
+namespace OpenOrienteering {
+
+class CompassPrivate;
 
 
 /** Provides access to the device's compass. Singleton class. */
@@ -74,5 +77,8 @@ private:
 	int reference_counter;
 	CompassPrivate* p;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

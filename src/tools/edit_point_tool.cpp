@@ -64,8 +64,10 @@
 #include "util/util.h"
 
 
-namespace
-{
+namespace OpenOrienteering {
+
+namespace {
+	
 	/**
 	 * Maximum number of objects in the selection for which point handles
 	 * will still be displayed (and can be edited).
@@ -76,6 +78,8 @@ namespace
 	 * The value which indicates that no point of the current object is hovered.
 	 */
 	static auto no_point = std::numeric_limits<MapCoordVector::size_type>::max();
+	
+	
 }
 
 
@@ -714,14 +718,14 @@ void EditPointTool::updateStatusText()
 	else if (editingInProgress())
 	{
 		MapCoordF drag_vector = constrained_pos_map - click_pos_map;
-		text = EditTool::tr("<b>Coordinate offset:</b> %1, %2 mm  <b>Distance:</b> %3 m ").
+		text = ::OpenOrienteering::EditTool::tr("<b>Coordinate offset:</b> %1, %2 mm  <b>Distance:</b> %3 m ").
 		       arg(QLocale().toString(drag_vector.x(), 'f', 1),
 		           QLocale().toString(-drag_vector.y(), 'f', 1),
 		           QLocale().toString(0.001 * map()->getScaleDenominator() * drag_vector.length(), 'f', 1)) +
 		       QLatin1String("| ");
 		
 		if (!angle_helper->isActive())
-			text += EditTool::tr("<b>%1</b>: Fixed angles. ").arg(ModifierKey::control());
+			text += ::OpenOrienteering::EditTool::tr("<b>%1</b>: Fixed angles. ").arg(ModifierKey::control());
 		
 		if (!(active_modifiers & Qt::ShiftModifier))
 		{
@@ -732,16 +736,16 @@ void EditPointTool::updateStatusText()
 			}	
 			else 
 			{
-				text += EditTool::tr("<b>%1</b>: Snap to existing objects. ").arg(ModifierKey::shift());
+				text += ::OpenOrienteering::EditTool::tr("<b>%1</b>: Snap to existing objects. ").arg(ModifierKey::shift());
 			}
 		}
 	}
 	else
 	{
-		text = EditTool::tr("<b>Click</b>: Select a single object. <b>Drag</b>: Select multiple objects. <b>%1+Click</b>: Toggle selection. ").arg(ModifierKey::shift());
+		text = ::OpenOrienteering::EditTool::tr("<b>Click</b>: Select a single object. <b>Drag</b>: Select multiple objects. <b>%1+Click</b>: Toggle selection. ").arg(ModifierKey::shift());
 		if (map()->getNumSelectedObjects() > 0)
 		{
-			text += EditTool::tr("<b>%1</b>: Delete selected objects. ").arg(ModifierKey(DeleteObjectKey));
+			text += ::OpenOrienteering::EditTool::tr("<b>%1</b>: Delete selected objects. ").arg(ModifierKey(DeleteObjectKey));
 			
 			if (map()->selectedObjects().size() <= max_objects_for_handle_display)
 			{
@@ -758,7 +762,7 @@ void EditPointTool::updateStatusText()
 				else if (switch_dash_points)
 					text = tr("<b>%1+Click</b> on point to switch between dash and normal point. ").arg(ModifierKey::space());
 				else
-					text += QLatin1String("| ") + MapEditorTool::tr("More: %1, %2").arg(ModifierKey::control(), ModifierKey::space());
+					text += QLatin1String("| ") + ::OpenOrienteering::MapEditorTool::tr("More: %1, %2").arg(ModifierKey::control(), ModifierKey::space());
 			}
 		}
 	}
@@ -947,3 +951,6 @@ bool EditPointTool::moveOppositeHandle() const
 	return !(active_modifiers & Qt::ShiftModifier)
 	       && hoveringOverCurveHandle();
 }
+
+
+}  // namespace OpenOrienteering

@@ -34,6 +34,8 @@ class QSpacerItem;
 class QSpinBox;
 class QWidget;
 
+namespace OpenOrienteering {
+
 class MapCoordF;
 
 
@@ -316,4 +318,6 @@ namespace Util
 	
 }
 
+
+}  // namespace OpenOrienteering
 #endif

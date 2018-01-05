@@ -26,7 +26,10 @@
 
 #include <QString>
 
+namespace OpenOrienteering {
+
 class FileFormat;
+
 
 /** Provides a registry for file formats, and takes ownership of the supported format objects.
  */
@@ -94,5 +97,7 @@ private:
  */
 extern FileFormatRegistry FileFormats;
 
+
+}  // namespace OpenOrienteering
 
 #endif // OPENORIENTEERING_FILE_FORMAT_REGISTRY_H

@@ -41,10 +41,13 @@ class QPainter;
 class QPointF;
 class QRectF;
 
+namespace OpenOrienteering {
+
 class MapEditorController;
 class MapWidget;
 class Object;
 class ObjectSelector;
+
 using SelectionInfoVector = std::vector<std::pair<int, Object*>>;
 
 
@@ -146,6 +149,11 @@ protected:
 	QScopedPointer<ObjectSelector> object_selector;
 };
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(EditTool::HoverState)
+
+}  // namespace OpenOrienteering
+
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(OpenOrienteering::EditTool::HoverState)
+
 
 #endif

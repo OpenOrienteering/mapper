@@ -50,6 +50,8 @@
 #include "util/util.h"
 
 
+namespace OpenOrienteering {
+
 // ### PaintOnTemplateTool ###
 
 int PaintOnTemplateTool::erase_width = 4;
@@ -391,3 +393,6 @@ void PaintOnTemplateSelectDialog::currentTemplateChanged(QListWidgetItem* curren
 	if (current)
 		selection = reinterpret_cast<Template*>(current->data(Qt::UserRole).value<void*>());
 }
+
+
+}  // namespace OpenOrienteering

@@ -29,6 +29,8 @@
 
 class QIODevice;
 
+namespace OpenOrienteering {
+
 class Map;
 class MapView;
 
@@ -42,7 +44,7 @@ class MapView;
  */
 class ImportExport
 {
-	Q_DECLARE_TR_FUNCTIONS(ImportExport)
+	Q_DECLARE_TR_FUNCTIONS(OpenOrienteering::ImportExport)
 	
 public:
 	/** Creates a new importer or exporter with the given input stream, map, and view.
@@ -121,7 +123,7 @@ class ImportAction
  */
 class Importer : public ImportExport
 {
-	Q_DECLARE_TR_FUNCTIONS(Importer)
+	Q_DECLARE_TR_FUNCTIONS(OpenOrienteering::Importer)
 	
 public:
 	/** Creates a new Importer with the given output stream, map, and view.
@@ -177,7 +179,7 @@ private:
  */
 class Exporter : public ImportExport
 {
-	Q_DECLARE_TR_FUNCTIONS(Exporter)
+	Q_DECLARE_TR_FUNCTIONS(OpenOrienteering::Exporter)
 	
 public:
 	/** Creates a new Importer with the given i/o stream, map, and view.
@@ -258,5 +260,7 @@ Exporter::Exporter(QIODevice* stream, Map* map, MapView* view)
 	// Nothing
 }
 
+
+}  // namespace OpenOrienteering
 
 #endif // OPENORIENTEERING_IMPORT_EXPORT_H

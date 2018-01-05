@@ -47,6 +47,8 @@
 #include "util/util.h"
 
 
+namespace OpenOrienteering {
+
 CutoutTool::CutoutTool(MapEditorController* editor, QAction* tool_action, bool cut_away)
 : MapEditorToolBase(QCursor(QPixmap(QString::fromLatin1(":/images/cursor-hollow.png")), 1, 1), Other, editor, tool_action)
 , object_selector(new ObjectSelector(map()))
@@ -151,7 +153,7 @@ void CutoutTool::updateStatusText()
 		text = tr("<b>%1+Click or drag</b>: Select the objects to be clipped. ").arg(ModifierKey::shift()) +
 		       tr("<b>%1</b>: Clip the selected objects. ").arg(ModifierKey::return_key());
 	}
-	text += MapEditorTool::tr("<b>%1</b>: Abort. ").arg(ModifierKey::escape());
+	text += OpenOrienteering::MapEditorTool::tr("<b>%1</b>: Abort. ").arg(ModifierKey::escape());
 	setStatusBarText(text);	
 }
 
@@ -188,3 +190,6 @@ void CutoutTool::apply(Map* map, PathObject* cutout_object, bool cut_away)
 	CutoutOperation operation(map, cutout_object, cut_away);
 	map->getCurrentPart()->applyOnAllObjects(std::ref(operation));
 }
+
+
+}  // namespace OpenOrienteering

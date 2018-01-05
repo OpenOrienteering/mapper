@@ -67,6 +67,8 @@
 // IWYU pragma: no_forward_declare QVBoxLayout
 
 
+namespace OpenOrienteering {
+
 const std::vector<QByteArray>& TemplateImage::supportedExtensions()
 {
 	static std::vector<QByteArray> extensions;
@@ -694,3 +696,6 @@ void TemplateImageOpenDialog::doAccept()
 	templ->getMap()->setImageTemplateDefaults(mpp_radio->isChecked(), mpp_edit->text().toDouble(), dpi_edit->text().toDouble(), scale_edit->text().toDouble());
 	accept();
 }
+
+
+}  // namespace OpenOrienteering

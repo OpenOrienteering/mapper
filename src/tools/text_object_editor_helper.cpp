@@ -61,6 +61,9 @@
 #endif
 //#  define INPUT_METHOD_BUGS_RESOLVED
 
+
+namespace OpenOrienteering {
+
 // ### TextObjectEditorHelper::BatchEdit ###
 
 TextObjectEditorHelper::BatchEdit::BatchEdit(not_null<TextObjectEditorHelper*> editor, int actions)
@@ -910,3 +913,6 @@ void TextObjectEditorHelper::foreachLineRect(int begin, int end, const std::func
 		worker({left, line_info->line_y - line_info->ascent, width, line_info->ascent + line_info->descent});
 	}
 }
+
+
+}  // namespace OpenOrienteering

@@ -24,7 +24,9 @@
 #include "undo/undo.h"
 #include "undo/undo_manager.h"
 
-class Map;
+namespace OpenOrienteering { class Map; }
+
+using namespace OpenOrienteering;
 
 
 // test

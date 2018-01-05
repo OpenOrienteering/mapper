@@ -70,6 +70,8 @@ class QGesture;
 // IWYU pragma: no_forward_declare QPinchGesture
 
 
+namespace OpenOrienteering {
+
 MapWidget::MapWidget(bool show_help, bool force_antialiasing, QWidget* parent)
  : QWidget(parent)
  , view(nullptr)
@@ -1354,3 +1356,6 @@ void MapWidget::shiftCache(int sx, int sy, QPixmap& cache)
 		cache.scroll(sx, sy, cache.rect());
 	}
 }
+
+
+}  // namespace OpenOrienteering

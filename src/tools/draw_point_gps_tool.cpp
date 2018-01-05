@@ -46,6 +46,8 @@
 #include "util/util.h"
 
 
+namespace OpenOrienteering {
+
 DrawPointGPSTool::DrawPointGPSTool(GPSDisplay* gps_display, MapEditorController* editor, QAction* tool_action)
 : MapEditorToolBase(QCursor(QPixmap(QString::fromLatin1(":/images/cursor-draw-point.png")), 11, 11), DrawPoint, editor, tool_action)
 , renderables(new MapRenderables(map()))
@@ -216,3 +218,6 @@ void DrawPointGPSTool::symbolDeleted(int pos, const Symbol* old_symbol)
 	if (last_used_symbol == old_symbol)
 		deactivate();
 }
+
+
+}  // namespace OpenOrienteering

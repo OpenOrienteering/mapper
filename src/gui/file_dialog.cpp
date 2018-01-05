@@ -56,6 +56,8 @@ namespace
 
 
 
+namespace OpenOrienteering {
+
 bool FileDialog::needUpperCaseExtensions()
 {
 #if QTBUG_51712_QUIRK_ENABLED
@@ -120,3 +122,6 @@ void FileDialog::adjustParameters(QString& filter, QFileDialog::Options& options
 	if (has_long_filters)
 		options |= QFileDialog::HideNameFilterDetails;
 }
+
+
+}  // namespace OpenOrienteering

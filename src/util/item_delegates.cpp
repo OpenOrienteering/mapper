@@ -31,6 +31,8 @@
 #include "gui/util_gui.h"
 
 
+namespace OpenOrienteering {
+
 // ### ColorItemDelegate ###
 
 ColorItemDelegate::ColorItemDelegate(QObject* parent)
@@ -259,3 +261,6 @@ QSize TextDocItemDelegate::sizeHint(const QStyleOptionViewItem& option, const QM
 	
 	return QSize(text_doc->idealWidth(), text_doc->size().height());
 }
+
+
+}  // namespace OpenOrienteering

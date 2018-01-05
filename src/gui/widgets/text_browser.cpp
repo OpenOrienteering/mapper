@@ -21,6 +21,8 @@
 #include "text_browser.h"
 
 
+namespace OpenOrienteering {
+
 TextBrowser::TextBrowser(QWidget* parent)
 : QTextBrowser{ parent }
 {
@@ -50,3 +52,6 @@ QVariant TextBrowser::loadResource(int type, const QUrl& name)
 	}
 	return result;
 }
+
+
+}  // namespace OpenOrienteering

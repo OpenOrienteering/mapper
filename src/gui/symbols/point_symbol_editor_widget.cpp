@@ -82,6 +82,8 @@
 // IWYU pragma: no_forward_declare QVBoxLayout
 
 
+namespace OpenOrienteering {
+
 PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller, PointSymbol* symbol, qreal offset_y, bool permanent_preview, QWidget* parent)
 : QWidget(parent)
 , symbol(symbol)
@@ -1050,3 +1052,6 @@ void PointSymbolEditorActivity::draw(QPainter* painter, MapWidget* map_widget)
 	painter->drawLine(midpoint + QPoint(0, -cross_radius), midpoint + QPoint(0, cross_radius));
 	painter->drawLine(midpoint + QPoint(-cross_radius, 0), midpoint + QPoint(cross_radius, 0));
 }
+
+
+}  // namespace OpenOrienteering

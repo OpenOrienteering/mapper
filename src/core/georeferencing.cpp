@@ -78,6 +78,8 @@ namespace literal
 	static const QLatin1String geographic_coordinates("Geographic coordinates");
 }
 
+
+
 namespace
 {
 	/** Helper for PROJ.4 initialization.
@@ -136,8 +138,13 @@ namespace
 	                         " +no_defs"
 	    },
 	};
-}
+	
+	
+}  // namespace
 
+
+
+namespace OpenOrienteering {
 
 //### Georeferencing ###
 
@@ -851,6 +858,11 @@ QDebug operator<<(QDebug dbg, const Georeferencing &georef)
 	return dbg.space();
 }
 
+
+}  // namespace OpenOrienteering
+
+
+
 #if defined(Q_OS_ANDROID)
 
 QScopedPointer<QTemporaryDir> temp_dir;  // removed upon destruction
@@ -903,4 +915,4 @@ extern "C"
 	}
 }
 
-#endif
+#endif  // defined(Q_OS_ANDROID)

@@ -25,6 +25,8 @@
 #include "fileformats/ocad8_file_format_p.h"
 
 
+namespace OpenOrienteering {
+
 OcdFileExport::OcdFileExport(QIODevice* stream, Map* map, MapView* view)
 : Exporter { stream, map, view }
 {
@@ -44,3 +46,6 @@ void OcdFileExport::doExport()
 		addWarning(w);
 	}
 }
+
+
+}  // namespace OpenOrienteering

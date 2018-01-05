@@ -43,6 +43,8 @@ class QPushButton;
 class QStackedWidget;
 class QTableWidget;
 
+namespace OpenOrienteering {
+
 class ColorDropDown;
 class Map;
 class MapEditorController;
@@ -52,6 +54,7 @@ class PointObject;
 class PointSymbol;
 class PointSymbolEditorActivity;
 class Symbol;
+
 
 /** A Widget for editing point symbol definitions */
 class PointSymbolEditorWidget : public QWidget
@@ -219,5 +222,8 @@ private:
 	
 	static const int cross_radius; // NOTE: This could be a configuration option.
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

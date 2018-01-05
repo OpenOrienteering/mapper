@@ -40,6 +40,8 @@ class QPushButton;
 class QResizeEvent;
 class QStackedLayout;
 
+namespace OpenOrienteering {
+
 class HomeScreenController;
 
 
@@ -205,4 +207,6 @@ private:
 	QPushButton* examples_button;
 };
 
+
+}  // namespace OpenOrienteering
 #endif

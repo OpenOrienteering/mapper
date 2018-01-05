@@ -59,6 +59,8 @@
 #endif
 
 
+namespace OpenOrienteering {
+
 DrawTextTool::DrawTextTool(MapEditorController* editor, QAction* tool_action)
 : MapEditorToolBase { QCursor{ QPixmap(QString::fromLatin1(":/images/cursor-draw-text.png")), 11, 11 }, DrawText, editor, tool_action }
 , drawing_symbol { editor->activeSymbol() }
@@ -479,7 +481,10 @@ void DrawTextTool::updateStatusText()
 		if (!isDragging())
 			text = tr("<b>Click</b>: Create a text object with a single anchor. <b>Drag</b>: Create a text box. ");
 		if (!(active_modifiers & Qt::ShiftModifier))
-			text += EditTool::tr("<b>%1</b>: Snap to existing objects. ").arg(ModifierKey::shift());
+			text += ::OpenOrienteering::EditTool::tr("<b>%1</b>: Snap to existing objects. ").arg(ModifierKey::shift());
 	}
 	setStatusBarText(text);
 }
+
+
+}  // namespace OpenOrienteering

@@ -34,6 +34,8 @@ class QKeyEvent;
 class QMouseEvent;
 class QPainter;
 
+namespace OpenOrienteering {
+
 class KeyButtonBar;
 class MapEditorController;
 class MapWidget;
@@ -77,5 +79,8 @@ protected:
 	bool second_point_set  = false;
 	QPointer<KeyButtonBar> key_button_bar;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

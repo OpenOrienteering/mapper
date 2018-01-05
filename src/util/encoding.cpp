@@ -26,8 +26,7 @@
 #include <QTextCodec>
 
 
-namespace
-{
+namespace {
 
 struct LanguageMapping
 {
@@ -50,7 +49,11 @@ const LanguageMapping mappings[] = {
 #endif
 };
 
-} //namespace
+}  // namespace
+
+
+
+namespace OpenOrienteering {
 
 const char* Util::codepageForLanguage(const QString& language_name)
 {
@@ -75,3 +78,6 @@ QTextCodec* Util::codecForName(const char* name)
 	else
 		return QTextCodec::codecForName(name);
 }
+
+
+}  // namespace OpenOrienteering

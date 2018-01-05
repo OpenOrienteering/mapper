@@ -31,6 +31,8 @@
 #include "core/symbols/line_symbol.h"
 
 
+namespace OpenOrienteering {
+
 MeasureWidget::MeasureWidget(Map* map, QWidget* parent)
 : QTextBrowser(parent)
 , map(map)
@@ -158,3 +160,6 @@ void MeasureWidget::objectSelectionChanged()
 		body.append(QLatin1String("<p>") + extra_text + QLatin1String("</p>"));
 	setHtml(QLatin1String("<p><b>") + headline + QLatin1String("</b></p>") + body);
 }
+
+
+}  // namespace OpenOrienteering

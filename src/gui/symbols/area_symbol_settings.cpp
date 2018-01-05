@@ -59,6 +59,8 @@
 #include "util/scoped_signals_blocker.h"
 
 
+namespace OpenOrienteering {
+
 // ### AreaSymbol ###
 
 SymbolPropertiesWidget* AreaSymbol::createPropertiesWidget(SymbolSettingDialog* dialog)
@@ -570,3 +572,6 @@ void AreaSymbolSettings::patternPointDistChanged(double value)
 	active_pattern->point_distance = qRound(1000.0 * value);
 	emit propertiesModified();
 }
+
+
+}  // namespace OpenOrienteering

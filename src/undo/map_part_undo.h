@@ -29,6 +29,8 @@ class QIODevice;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 
+namespace OpenOrienteering {
+
 class Map;
 class MapPart;
 
@@ -100,5 +102,8 @@ protected:
 	
 	QString name;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif // MAP_PART_UNDO_H

@@ -26,6 +26,8 @@
 
 class QIODevice;
 
+namespace OpenOrienteering {
+
 class Exporter;
 class Importer;
 class Map;
@@ -70,5 +72,8 @@ public:
 	static int active_version;
 	
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif // OPENORIENTEERING_FILE_FORMAT_XML_H

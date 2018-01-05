@@ -36,6 +36,8 @@ class QPushButton;
 class QTextEdit;
 class QWidget;
 
+namespace OpenOrienteering {
+
 class Symbol;
 class SymbolSettingDialog;
 
@@ -104,5 +106,8 @@ protected:
 	QTextEdit* description_edit;
 	QCheckBox* helper_symbol_check;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif // OPENORIENTEERING_SYMBOL_PROPERTIES_WIDGET_H

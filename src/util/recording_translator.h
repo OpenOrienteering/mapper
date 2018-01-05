@@ -25,6 +25,8 @@
 #include <QString>
 #include <QTranslator>
 
+namespace OpenOrienteering {
+
 
 /** A QTranslator variation that doesn't actually translate,
  *  but instead dumps (TODO: records) the strings to be translated.
@@ -50,5 +52,8 @@ public:
 	 *  Note: This is the Qt5 signature of translate(). */
 	QString	translate(const char* context, const char* sourceText, const char* disambiguation = 0, int n = -1) const override;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

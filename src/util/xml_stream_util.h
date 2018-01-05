@@ -33,13 +33,17 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
+// IWYU pragma: no_include "core/map_coord.h"
+
 class QRectF;
 class QSizeF;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 
-// IWYU pragma: no_include "core/map_coord.h"
+namespace OpenOrienteering {
+
 class MapCoord;  // IWYU pragma: keep
+
 using MapCoordVector = std::vector<MapCoord>;
 
 
@@ -751,5 +755,8 @@ void XmlElementReader::read(QHash<QString, QString> &tags)
 			xml.skipCurrentElement();
 	}
 }
+
+
+}  // namespace OpenOrienteering
 
 #endif

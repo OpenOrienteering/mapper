@@ -30,6 +30,8 @@ class QStackedLayout;
 class QTextEdit;
 class QWidget;
 
+namespace OpenOrienteering {
+
 class MapEditorController;
 class ObjectQuery;
 class TagSelectWidget;
@@ -81,5 +83,8 @@ private:
 	
 	Q_DISABLE_COPY(MapFindFeature)
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

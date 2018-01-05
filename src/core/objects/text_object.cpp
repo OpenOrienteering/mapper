@@ -33,6 +33,9 @@
 
 // IWYU pragma: no_forward_declare QPointF
 
+
+namespace OpenOrienteering {
+
 // ### TextObjectPartInfo ###
 
 int TextObjectPartInfo::getIndex(double pos_x) const
@@ -510,3 +513,6 @@ void TextObject::prepareLineInfos() const
 		}
 	}
 }
+
+
+}  // namespace OpenOrienteering

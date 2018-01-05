@@ -26,6 +26,8 @@
 #include <QWidget>
 
 
+namespace OpenOrienteering {
+
 // ### OverridingShortcut ###
 
 OverridingShortcut::OverridingShortcut(QWidget* parent)
@@ -71,3 +73,6 @@ bool OverridingShortcut::eventFilter(QObject* /*watched*/, QEvent* event)
 	
 	return false;
 }
+
+
+}  // namespace OpenOrienteering

@@ -54,6 +54,8 @@
 #include "util/util.h"
 
 
+namespace OpenOrienteering {
+
 TextSymbol::TextSymbol()
 : Symbol(Symbol::Text)
 , metrics(QFont())
@@ -550,7 +552,7 @@ bool TextSymbol::equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensit
 QString TextSymbol::getIconText() const
 {
 	if (icon_text.isEmpty())
-		return QCoreApplication::translate("TextSymbolSettings", "A", "First capital letter of the local alphabet");
+		return QCoreApplication::translate("OpenOrienteering::TextSymbolSettings", "A", "First capital letter of the local alphabet");
 	return icon_text;
 }
 
@@ -578,3 +580,6 @@ double TextSymbol::getNextTab(double pos) const
 	Q_ASSERT(next_tab > pos);
  	return next_tab;
 }
+
+
+}  // namespace OpenOrienteering

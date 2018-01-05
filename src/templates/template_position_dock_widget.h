@@ -29,6 +29,8 @@ class QCloseEvent;
 class QLineEdit;
 class QWidget;
 
+namespace OpenOrienteering {
+
 class MapEditorController;
 class Template;
 
@@ -61,5 +63,8 @@ private:
 	Template* temp;
 	MapEditorController* controller;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

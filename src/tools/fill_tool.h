@@ -36,10 +36,13 @@ class QPainter;
 class QPoint;
 class QRectF;
 
+namespace OpenOrienteering {
+
 class Map;
 class MapEditorController;
 class RenderConfig;
 class Symbol;
+
 
 /** 
  * Tool to fill bounded areas with PathObjects.
@@ -103,5 +106,8 @@ protected:
 	
 	const Symbol* drawing_symbol;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

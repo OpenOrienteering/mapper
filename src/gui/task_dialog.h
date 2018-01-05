@@ -27,12 +27,14 @@
 #include <QString>
 
 class QAbstractButton;
+class QCommandLinkButton;
 class QPushButton;
+class QSignalMapper;
+class QVBoxLayout;
 class QWidget;
 
-class QVBoxLayout;
-class QCommandLinkButton;
-class QSignalMapper;
+namespace OpenOrienteering {
+
 
 /**
  * Shows a dialog similar to a message box, but with the option to add
@@ -106,5 +108,8 @@ private:
 	QDialogButtonBox* button_box;
 	QSignalMapper* signal_mapper;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

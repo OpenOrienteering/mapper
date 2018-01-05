@@ -46,6 +46,8 @@
 #include "util/util.h"
 
 
+namespace OpenOrienteering {
+
 EditTool::EditTool(MapEditorController* editor, MapEditorTool::Type type, QAction* tool_action)
  : MapEditorToolBase { QCursor(QPixmap(QString::fromLatin1(":/images/cursor-hollow.png")), 1, 1), type, editor, tool_action }
  , object_selector { new ObjectSelector(map()) }
@@ -271,3 +273,6 @@ void EditTool::drawBoundingPath(QPainter* painter, MapWidget* widget, const std:
 	painter_path.closeSubpath();
 	painter->drawPath(painter_path);
 }
+
+
+}  // namespace OpenOrienteering

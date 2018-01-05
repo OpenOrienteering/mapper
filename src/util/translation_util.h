@@ -30,6 +30,8 @@
 class QSettings;
 // IWYU pragma: no_forward_declare QTranslator
 
+namespace OpenOrienteering {
+
 
 /**
  * A simplified interface to searching and loading translations.
@@ -167,5 +169,7 @@ bool operator<(const TranslationUtil::Language& first, const TranslationUtil::La
 	return first.code < second.code;
 }
 
+
+}  // namespace OpenOrienteering
 
 #endif

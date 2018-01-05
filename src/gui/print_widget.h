@@ -50,13 +50,15 @@ class QScrollArea;
 class QSpinBox;
 class QToolButton;
 
+namespace OpenOrienteering {
+
+class MainWindow;
 class Map;
 class MapEditorController;
 class MapPrinter;
 class MapPrinterOptions;
 class MapPrinterPageFormat;
 class MapView;
-class MainWindow;
 class PrintTool;
 
 
@@ -326,8 +328,14 @@ private:
 	bool active;
 };
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(PrintWidget::TaskFlags)
 
 #endif
+
+
+}  // namespace OpenOrienteering
+
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(OpenOrienteering::PrintWidget::TaskFlags)
+
 
 #endif

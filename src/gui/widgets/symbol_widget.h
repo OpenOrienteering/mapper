@@ -28,6 +28,8 @@
 class QContextMenuEvent;
 class QWidget;
 
+namespace OpenOrienteering {
+
 class Map;
 class Symbol;
 class SymbolRenderWidget;
@@ -127,5 +129,8 @@ protected:
 private:
 	SymbolRenderWidget* render_widget;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

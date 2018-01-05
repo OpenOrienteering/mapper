@@ -26,6 +26,8 @@
 
 #include "core/image_transparency_fixup.h"
 
+using namespace OpenOrienteering;
+
 
 QPainterTest::QPainterTest(QObject* parent)
 : QObject(parent),

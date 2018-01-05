@@ -31,6 +31,8 @@ class QAction;
 class QPainter;
 class QRectF;
 
+namespace OpenOrienteering {
+
 class MapEditorController;
 class MapWidget;
 
@@ -64,5 +66,8 @@ protected:
 	double reference_length = 0;
 	double scaling_factor   = 1;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

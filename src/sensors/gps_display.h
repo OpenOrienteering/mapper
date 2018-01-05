@@ -35,8 +35,10 @@ class QGeoPositionInfoSource;  // IWYU pragma: keep
 
 class QPainter;
 
-class MapWidget;
+namespace OpenOrienteering {
+
 class Georeferencing;
+class MapWidget;
 
 
 /**
@@ -131,5 +133,8 @@ private:
 	bool distance_rings_enabled;
 	bool heading_indicator_enabled;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

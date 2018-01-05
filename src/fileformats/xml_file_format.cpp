@@ -62,6 +62,8 @@
 #include "util/xml_stream_util.h"
 
 
+namespace OpenOrienteering {
+
 // ### XMLFileFormat definition ###
 
 constexpr int XMLFileFormat::minimum_version = 2;
@@ -85,7 +87,7 @@ QString mapperNamespace()
 
 
 XMLFileFormat::XMLFileFormat()
- : FileFormat(MapFile, "XML", ImportExport::tr("OpenOrienteering Mapper"), QString::fromLatin1("omap"),
+ : FileFormat(MapFile, "XML", ::OpenOrienteering::ImportExport::tr("OpenOrienteering Mapper"), QString::fromLatin1("omap"),
               ImportSupported | ExportSupported) 
 {
 	addExtension(QString::fromLatin1("xmap"));
@@ -498,17 +500,17 @@ void XMLFileImporter::import(bool load_symbols_only)
 {
 	if (!xml.readNextStartElement() || xml.name() != literal::map)
 	{
-		xml.raiseError(Importer::tr("Unsupported file format."));
+		xml.raiseError(::OpenOrienteering::Importer::tr("Unsupported file format."));
 	}
 	
 	XmlElementReader map_element(xml);
 	const int version = map_element.attribute<int>(literal::version);
 	if (version < 1)
-		xml.raiseError(Importer::tr("Invalid file format version."));
+		xml.raiseError(::OpenOrienteering::Importer::tr("Invalid file format version."));
 	else if (version < XMLFileFormat::minimum_version)
-		xml.raiseError(Importer::tr("Unsupported old file format version. Please use an older program version to load and update the file."));
+		xml.raiseError(::OpenOrienteering::Importer::tr("Unsupported old file format version. Please use an older program version to load and update the file."));
 	else if (version > XMLFileFormat::current_version)
-		addWarning(Importer::tr("Unsupported new file format version. Some map features will not be loaded or saved by this version of the program."));
+		addWarning(::OpenOrienteering::Importer::tr("Unsupported new file format version. Some map features will not be loaded or saved by this version of the program."));
 	
 	QScopedValueRollback<MapCoord::BoundsOffset> rollback { MapCoord::boundsOffset() };
 	MapCoord::boundsOffset().reset(true);
@@ -976,7 +978,7 @@ void XMLFileImporter::importPrint()
 	}
 	catch (FileFormatException& e)
 	{
-		addWarning(ImportExport::tr("Error while loading the printing configuration at %1:%2: %3")
+		addWarning(::OpenOrienteering::ImportExport::tr("Error while loading the printing configuration at %1:%2: %3")
 		           .arg(xml.lineNumber()).arg(xml.columnNumber()).arg(e.message()));
 	}
 }
@@ -995,7 +997,7 @@ void XMLFileImporter::importUndo()
 	}
 	catch (FileFormatException& e)
 	{
-		addWarning(ImportExport::tr("Error while loading the undo/redo steps at %1:%2: %3")
+		addWarning(::OpenOrienteering::ImportExport::tr("Error while loading the undo/redo steps at %1:%2: %3")
 		           .arg(xml.lineNumber()).arg(xml.columnNumber()).arg(e.message()));
 		map->undoManager().clear();
 	}
@@ -1015,8 +1017,11 @@ void XMLFileImporter::importRedo()
 	}
 	catch (FileFormatException& e)
 	{
-		addWarning(ImportExport::tr("Error while loading the undo/redo steps at %1:%2: %3")
+		addWarning(::OpenOrienteering::ImportExport::tr("Error while loading the undo/redo steps at %1:%2: %3")
 		           .arg(xml.lineNumber()).arg(xml.columnNumber()).arg(e.message()));
 		map->undoManager().clear();
 	}
 }
+
+
+}  // namespace OpenOrienteering

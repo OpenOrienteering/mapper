@@ -39,6 +39,9 @@
 #include "undo/object_undo.h"
 #include "util/util.h"
 
+
+namespace OpenOrienteering {
+
 const std::vector<QByteArray>& TemplateTrack::supportedExtensions()
 {
 	static std::vector<QByteArray> extensions = { "dxf", "gpx", "osm" };
@@ -575,3 +578,6 @@ void TemplateTrack::applyProjectedCrsSpec()
 	georef.setProjectedRefPoint({});
 	track.changeMapGeoreferencing(georef);
 }
+
+
+}  // namespace OpenOrienteering

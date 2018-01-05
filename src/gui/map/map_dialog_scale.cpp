@@ -33,6 +33,9 @@
 #include "templates/template.h"
 #include "gui/util_gui.h"
 
+
+namespace OpenOrienteering {
+
 ScaleMapDialog::ScaleMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), map(map)
 {
 	setWindowTitle(tr("Change map scale"));
@@ -139,3 +142,6 @@ void ScaleMapDialog::okClicked()
 	map->changeScale(scale, center, adjust_symbols_check->isChecked(), adjust_objects_check->isChecked(), adjust_georeferencing_check->isChecked(), adjust_templates_check->isChecked());
 	accept();
 }
+
+
+}  // namespace OpenOrienteering

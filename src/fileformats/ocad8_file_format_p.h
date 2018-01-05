@@ -30,6 +30,7 @@
 #include "fileformats/file_import_export.h"
 #include "libocad/libocad.h"
 
+namespace OpenOrienteering {
 
 class Map;
 class MapColor;
@@ -45,12 +46,13 @@ class PointSymbol;
 class Template;
 class TextSymbol;
 
+
 /** Importer for OCD version 8 files. */
 class OCAD8FileImport : public Importer
 {
 	friend class OcdFileImport;
 	
-	Q_DECLARE_TR_FUNCTIONS(OCAD8FileImport)
+	Q_DECLARE_TR_FUNCTIONS(OpenOrienteering::OCAD8FileImport)
 	
 private:
 	/// Information about an OCAD rectangle symbol
@@ -148,7 +150,7 @@ private:
 /** Exporter for OCD version 8 files. */
 class OCAD8FileExport : public Exporter
 {
-	Q_DECLARE_TR_FUNCTIONS(OCAD8FileExport)
+	Q_DECLARE_TR_FUNCTIONS(OpenOrienteering::OCAD8FileExport)
 	
 public:
 	OCAD8FileExport(QIODevice* stream, Map *map, MapView *view);
@@ -232,5 +234,8 @@ private:
 	
 	void addStringTruncationWarning(const QString& text, int truncation_pos);
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

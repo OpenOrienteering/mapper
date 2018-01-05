@@ -45,6 +45,9 @@
 static_assert(false, "This file needs to be modified for correct printing on Android");
 #endif
 
+
+namespace OpenOrienteering {
+
 /* 
  * The macro MAPPER_OVERPRINTING_CORRECTION allows to select different
  * implementations of spot color overprinting simulation correction towards
@@ -730,3 +733,6 @@ bool PainterConfig::activate(QPainter* painter, const QPainterPath*& current_cli
 	
 	return true;
 }
+
+
+}  // namespace OpenOrienteering

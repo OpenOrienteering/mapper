@@ -43,8 +43,10 @@
 #include "gui/map/map_editor.h"
 #include "gui/widgets/tag_select_widget.h"
 
-class Object;
 
+namespace OpenOrienteering {
+
+class Object;
 
 MapFindFeature::MapFindFeature(MapEditorController& controller)
 : QObject{nullptr}
@@ -172,7 +174,7 @@ void MapFindFeature::findNext()
 	if (!query)
 	{
 		if (auto window = controller.getWindow())
-			window->showStatusBarMessage(TagSelectWidget::tr("Invalid query"), 2000);
+			window->showStatusBarMessage(OpenOrienteering::TagSelectWidget::tr("Invalid query"), 2000);
 		return;
 	}
 		
@@ -218,7 +220,7 @@ void MapFindFeature::findAll()
 	auto query = makeQuery();
 	if (!query)
 	{
-		controller.getWindow()->showStatusBarMessage(TagSelectWidget::tr("Invalid query"), 2000);
+		controller.getWindow()->showStatusBarMessage(OpenOrienteering::TagSelectWidget::tr("Invalid query"), 2000);
 		return;
 	}
 	
@@ -226,7 +228,7 @@ void MapFindFeature::findAll()
 		map->addObjectToSelection(object, false);
 	}, std::cref(query));
 	map->emitSelectionChanged();
-	controller.getWindow()->showStatusBarMessage(TagSelectWidget::tr("%n object(s) selected", nullptr, map->getNumSelectedObjects()), 2000);
+	controller.getWindow()->showStatusBarMessage(OpenOrienteering::TagSelectWidget::tr("%n object(s) selected", nullptr, map->getNumSelectedObjects()), 2000);
 	
 	if (!map->selectedObjects().empty())
 		controller.setEditTool();
@@ -257,3 +259,5 @@ void MapFindFeature::tagSelectorToggled(bool active)
 	}
 }
 
+
+}  // namespace OpenOrienteering

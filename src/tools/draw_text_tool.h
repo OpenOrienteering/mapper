@@ -39,12 +39,14 @@ class QMouseEvent;
 class QPainter;
 class QRectF;
 
+namespace OpenOrienteering {
+
 class MapCoordF;
 class MapEditorController;
 class MapWidget;
+class Symbol;
 class TextObject;
 class TextObjectEditorHelper;
-class Symbol;
 
 
 /**
@@ -99,5 +101,8 @@ protected:
 	std::unique_ptr<TextObjectEditorHelper> text_editor;
 	bool waiting_for_mouse_release = false;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

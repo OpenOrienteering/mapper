@@ -29,11 +29,16 @@
 #include "map_part_undo.h"
 #include "util/xml_stream_util.h"
 
+
 namespace literal
 {
 	const QLatin1String step("step");
 	const QLatin1String steps("steps");
 }
+
+
+
+namespace OpenOrienteering {
 
 // ### UndoStep ###
 
@@ -292,5 +297,8 @@ bool NoOpUndoStep::load(QIODevice*, int)
 	qWarning("InvalidUndoStep::load(QIODevice*, int) must not be called");
 	return false;
 }
+
+
+}  // namespace OpenOrienteering
 
 #endif

@@ -85,7 +85,11 @@ inline void fixPenForPdf(QPen& pen, const QPainter& painter)
 #endif
 }
 
-}
+}  // namespace
+
+
+
+namespace OpenOrienteering {
 
 // ### DotRenderable ###
 
@@ -787,3 +791,6 @@ void TextFramingRenderable::render(QPainter& painter, const RenderConfig& config
 	TextRenderable::renderCommon(painter, config);
 	painter.restore();
 }
+
+
+}  // namespace OpenOrienteering

@@ -34,6 +34,8 @@ class QComboBox;
 class QTableWidget;
 class QWidget;
 
+namespace OpenOrienteering {
+
 class Map;
 class SymbolDropDownDelegate;
 class SymbolRuleSet;
@@ -115,5 +117,8 @@ private:
 	
 	Mode mode;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

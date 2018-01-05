@@ -32,6 +32,8 @@ class QAction;
 class QCursor;
 class QMouseEvent;
 
+namespace OpenOrienteering {
+
 class MapEditorController;
 class MapWidget;
 class Template;
@@ -64,5 +66,8 @@ private:
 	
 	Q_DISABLE_COPY(TemplateMoveTool)
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

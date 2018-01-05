@@ -41,6 +41,8 @@ class QStackedWidget;
 class QToolBar;
 class QWidget;
 
+namespace OpenOrienteering {
+
 class MainWindowController;
 
 
@@ -566,5 +568,8 @@ bool MainWindow::homeScreenDisabled() const
 {
 	return homescreen_disabled;
 }
+
+
+}  // namespace OpenOrienteering
 
 #endif

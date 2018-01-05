@@ -31,6 +31,8 @@ class QKeyEvent;
 class QPainter;
 class QRectF;
 
+namespace OpenOrienteering {
+
 class MapEditorController;
 class MapWidget;
 
@@ -61,5 +63,8 @@ protected:
 	void updateStatusText() override;
 	void objectSelectionChangedImpl() override;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

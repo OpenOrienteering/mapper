@@ -24,6 +24,8 @@
 #include <QDebug>
 
 
+namespace OpenOrienteering {
+
 QString DXFParser::parse()
 {
 	Q_ASSERT(device); // Programmer's responsibility
@@ -33,7 +35,7 @@ QString DXFParser::parse()
 	{
 		if (!device->open(QIODevice::ReadOnly))
 		{
-			return QApplication::translate("DXFParser", "Could not open the file.");
+			return QApplication::translate("OpenOrienteering::DXFParser", "Could not open the file.");
 		}
 		must_close_device = true;
 	}
@@ -49,7 +51,7 @@ QString DXFParser::parse()
 	if (code != 0 || value != QLatin1String("SECTION"))
 	{
 		// File does not start with DXF section
-		return QApplication::translate("DXFParser", "The file is not an DXF file.");
+		return QApplication::translate("OpenOrienteering::DXFParser", "The file is not an DXF file.");
 	}
 
 	paths = QList<DXFPath>();
@@ -598,3 +600,6 @@ void DXFParser::parseUnknown(QIODevice *d)
 		; // nothing
 	}
 }
+
+
+}  // namespace OpenOrienteering

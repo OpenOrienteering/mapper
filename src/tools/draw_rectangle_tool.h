@@ -40,6 +40,8 @@ class QMouseEvent;
 class QPainter;
 class QToolButton;
 
+namespace OpenOrienteering {
+
 class ConstrainAngleToolHelper;
 class KeyButtonBar;
 class MapEditorController;
@@ -158,4 +160,6 @@ protected:
 	QPointer<QToolButton> dash_points_button;
 };
 
+
+}  // namespace OpenOrienteering
 #endif

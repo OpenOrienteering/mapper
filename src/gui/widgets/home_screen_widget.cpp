@@ -42,6 +42,8 @@
 #include "gui/settings_dialog.h"
 
 
+namespace OpenOrienteering {
+
 //### AbstractHomeScreenWidget ###
 
 AbstractHomeScreenWidget::AbstractHomeScreenWidget(HomeScreenController* controller, QWidget* parent)
@@ -440,7 +442,7 @@ void HomeScreenWidgetMobile::fileClicked(QListWidgetItem* item)
 {
 	QString hint_text = item->data(Qt::UserRole+1).toString();
 	if (!hint_text.isEmpty())
-		QMessageBox::warning(this, MainWindow::tr("Warning"), hint_text.arg(item->data(Qt::DisplayRole).toString()));
+		QMessageBox::warning(this, ::OpenOrienteering::MainWindow::tr("Warning"), hint_text.arg(item->data(Qt::DisplayRole).toString()));
 	
 	setEnabled(false);
 	qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
@@ -570,3 +572,6 @@ void HomeScreenWidgetMobile::addFilesToFileList(QListWidget* file_list, const QS
 		file_list->addItem(new_item);
 	}
 }
+
+
+}  // namespace OpenOrienteering

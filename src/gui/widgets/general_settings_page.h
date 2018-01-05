@@ -35,6 +35,8 @@ class QSpinBox;
 class QWidget;
 
 
+namespace OpenOrienteering {
+
 class GeneralSettingsPage : public SettingsPage
 {
 Q_OBJECT
@@ -89,5 +91,8 @@ private:
 	QComboBox* encoding_box;
 	QCheckBox* ocd_importer_check;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

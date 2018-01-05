@@ -33,6 +33,8 @@
 #include "gui/util_gui.h"
 
 
+namespace OpenOrienteering {
+
 TemplatePositioningDialog::TemplatePositioningDialog(QWidget* parent)
 : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
 {
@@ -84,3 +86,6 @@ bool TemplatePositioningDialog::centerOnView() const
 {
 	return view_center_radio->isChecked();
 }
+
+
+}  // namespace OpenOrienteering

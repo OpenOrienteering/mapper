@@ -32,6 +32,8 @@ class QTextBrowser;
 class QUrl;
 
 
+namespace OpenOrienteering {
+
 /**
  * @brief A dialog for basic browsing of HTML pages.
  */
@@ -81,5 +83,8 @@ protected:
 	 */
 	QTextBrowser* const text_browser;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

@@ -54,6 +54,8 @@
 #include "core/virtual_path.h"
 
 
+namespace OpenOrienteering {
+
 // ### LineSymbolBorder ###
 
 void LineSymbolBorder::reset() noexcept
@@ -1702,19 +1704,19 @@ qreal LineSymbol::calculateLargestLineExtent() const
 
 void LineSymbol::setStartSymbol(PointSymbol* symbol)
 {
-	replaceSymbol(start_symbol, symbol, QCoreApplication::translate("LineSymbolSettings", "Start symbol"));
+	replaceSymbol(start_symbol, symbol, QCoreApplication::translate("OpenOrienteering::LineSymbolSettings", "Start symbol"));
 }
 void LineSymbol::setMidSymbol(PointSymbol* symbol)
 {
-	replaceSymbol(mid_symbol, symbol, QCoreApplication::translate("LineSymbolSettings", "Mid symbol"));
+	replaceSymbol(mid_symbol, symbol, QCoreApplication::translate("OpenOrienteering::LineSymbolSettings", "Mid symbol"));
 }
 void LineSymbol::setEndSymbol(PointSymbol* symbol)
 {
-	replaceSymbol(end_symbol, symbol, QCoreApplication::translate("LineSymbolSettings", "End symbol"));
+	replaceSymbol(end_symbol, symbol, QCoreApplication::translate("OpenOrienteering::LineSymbolSettings", "End symbol"));
 }
 void LineSymbol::setDashSymbol(PointSymbol* symbol)
 {
-	replaceSymbol(dash_symbol, symbol, QCoreApplication::translate("LineSymbolSettings", "Dash symbol"));
+	replaceSymbol(dash_symbol, symbol, QCoreApplication::translate("OpenOrienteering::LineSymbolSettings", "Dash symbol"));
 }
 void LineSymbol::replaceSymbol(PointSymbol*& old_symbol, PointSymbol* replace_with, const QString& name)
 {
@@ -2069,3 +2071,6 @@ bool LineSymbol::equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensit
 	
 	return true;
 }
+
+
+}  // namespace OpenOrienteering

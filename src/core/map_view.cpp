@@ -60,6 +60,10 @@ namespace literal
 	static const QLatin1String template_string("template");
 }
 
+
+
+namespace OpenOrienteering {
+
 const double MapView::zoom_in_limit = 512;
 const double MapView::zoom_out_limit = 1 / 16.0;
 
@@ -537,3 +541,6 @@ void MapView::setTemplateLoadingBlocked(bool blocked)
 {
 	template_loading_blocked = blocked;
 }
+
+
+}  // namespace OpenOrienteering

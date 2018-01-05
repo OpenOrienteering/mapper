@@ -25,7 +25,6 @@
 #include <QString>
 #include <QThread>
 
-
 #include "settings.h"
 
 

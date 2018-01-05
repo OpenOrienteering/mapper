@@ -27,6 +27,8 @@
 
 class QWidget;
 
+namespace OpenOrienteering {
+
 class Map;
 class MapColor;
 
@@ -70,5 +72,8 @@ protected:
 	const Map* map;
 	const bool spot_colors_only;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

@@ -54,10 +54,12 @@
 #include "util/encoding.h"
 
 
+namespace OpenOrienteering {
+
 // ### OCAD8FileFormat ###
 
 OCAD8FileFormat::OCAD8FileFormat()
- : FileFormat(MapFile, "OCAD78", ImportExport::tr("OCAD Versions 7, 8"), QString::fromLatin1("ocd"),
+ : FileFormat(MapFile, "OCAD78", ::OpenOrienteering::ImportExport::tr("OCAD Versions 7, 8"), QString::fromLatin1("ocd"),
               ImportSupported | ExportSupported | ExportLossy)
 {
 	// Nothing
@@ -115,12 +117,12 @@ void OCAD8FileImport::import(bool load_symbols_only)
 	if (!buffer)
 		throw FileFormatException(tr("Could not allocate buffer."));
 	if (stream->read((char*)buffer, size) != size)
-		throw FileFormatException(Importer::tr("Could not read file: %1").arg(stream->errorString()));
+		throw FileFormatException(::OpenOrienteering::Importer::tr("Could not read file: %1").arg(stream->errorString()));
 	int err = ocad_file_open_memory(&file, buffer, size);
-    if (err != 0) throw FileFormatException(Importer::tr("Could not read file: %1").arg(tr("libocad returned %1").arg(err)));
+    if (err != 0) throw FileFormatException(::OpenOrienteering::Importer::tr("Could not read file: %1").arg(tr("libocad returned %1").arg(err)));
 	
 	if (file->header->major <= 5 || file->header->major >= 9)
-		throw FileFormatException(Importer::tr("Could not read file: %1").arg(tr("OCAD files of version %1 are not supported!").arg(file->header->major)));
+		throw FileFormatException(::OpenOrienteering::Importer::tr("Could not read file: %1").arg(tr("OCAD files of version %1 are not supported!").arg(file->header->major)));
 
     //qDebug() << "file version is" << file->header->major << ", type is"
     //         << ((file->header->ftype == 2) ? "normal" : "other");
@@ -590,13 +592,13 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
     if( ocad_symbol->scnpts > 0 )
     {
 		symbol_line->dash_symbol = importPattern( ocad_symbol->scnpts, symbolptr);
-        symbol_line->dash_symbol->setName(QCoreApplication::translate("LineSymbolSettings", "Dash symbol"));
+        symbol_line->dash_symbol->setName(QCoreApplication::translate("OpenOrienteering::LineSymbolSettings", "Dash symbol"));
         symbolptr += ocad_symbol->scnpts; 
     }
     if( ocad_symbol->sbnpts > 0 )
     {
 		symbol_line->start_symbol = importPattern( ocad_symbol->sbnpts, symbolptr);
-        symbol_line->start_symbol->setName(QCoreApplication::translate("LineSymbolSettings", "Start symbol"));
+        symbol_line->start_symbol->setName(QCoreApplication::translate("OpenOrienteering::LineSymbolSettings", "Start symbol"));
         symbolptr += ocad_symbol->sbnpts;
     }
     if( ocad_symbol->senpts > 0 )
@@ -1558,7 +1560,7 @@ void OCAD8FileExport::doExport()
 	
 	// Create struct in memory
 	int err = ocad_file_new(&file);
-	if (err != 0) throw FileFormatException(Exporter::tr("Could not create new file: %1").arg(tr("libocad returned %1").arg(err)));
+	if (err != 0) throw FileFormatException(::OpenOrienteering::Exporter::tr("Could not create new file: %1").arg(tr("libocad returned %1").arg(err)));
 	
 	// Check for a neccessary offset (and add related warnings early).
 	auto area_offset = calculateAreaOffset();
@@ -2848,3 +2850,6 @@ void OCAD8FileExport::addStringTruncationWarning(const QString& text, int trunca
 	temp.insert(truncation_pos, QLatin1String("|||"));
 	addWarning(tr("String truncated (truncation marked with three '|'): %1").arg(temp));
 }
+
+
+}  // namespace OpenOrienteering

@@ -27,6 +27,8 @@
 
 class QWidget;
 
+namespace OpenOrienteering {
+
 
 /**
  * SegmentedButtonLayout is a horizontal box layout with no margin and no
@@ -75,5 +77,8 @@ public:
 private:
 	Q_DISABLE_COPY(SegmentedButtonLayout)
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif // OPENORIENTEERING_SEGMENTED_BUTTON_LAYOUT_H

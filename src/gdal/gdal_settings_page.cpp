@@ -40,6 +40,7 @@
 #include "util/backports.h"
 
 
+namespace OpenOrienteering {
 
 GdalSettingsPage::GdalSettingsPage(QWidget* parent)
 : SettingsPage(parent)
@@ -227,3 +228,6 @@ int GdalSettingsPage::findDuplicateKey(const QString& key, int row) const
 	}
 	return row;
 }
+
+
+}  // namespace OpenOrienteering

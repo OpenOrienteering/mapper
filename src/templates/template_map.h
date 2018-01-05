@@ -35,6 +35,8 @@ class QRectF;
 class QStringList;
 class QWidget;
 
+namespace OpenOrienteering {
+
 class Map;
 
 
@@ -89,5 +91,8 @@ private:
 	
 	static QStringList locked_maps;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

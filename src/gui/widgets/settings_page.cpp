@@ -21,6 +21,8 @@
 #include "settings_page.h"
 
 
+namespace OpenOrienteering {
+
 SettingsPage::SettingsPage(QWidget* parent)
 : QWidget(parent)
 {
@@ -28,3 +30,6 @@ SettingsPage::SettingsPage(QWidget* parent)
 }
 
 SettingsPage::~SettingsPage() = default;
+
+
+}  // namespace OpenOrienteering

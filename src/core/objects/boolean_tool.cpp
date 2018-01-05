@@ -51,8 +51,7 @@
  * This is a C++ language issue, not a Qt issue.
  * Cf. https://bugreports.qt-project.org/browse/QTBUG-34912
  */
-namespace ClipperLib
-{
+namespace ClipperLib {
 
 /**
  * Implements qHash for ClipperLib::IntPoint.
@@ -65,7 +64,12 @@ uint qHash(const IntPoint& point, uint seed)
 	return ::qHash(tmp, seed); // must use :: namespace to prevent endless recursion
 }
 
-} // namespace ClipperLib
+
+}  // namespace ClipperLib
+
+
+
+namespace OpenOrienteering {
 
 /**
  * Removes flags from the coordinate to be able to use it in the reconstruction.
@@ -1077,3 +1081,5 @@ bool BooleanTool::checkSegmentMatch(
 	return found;
 }
 
+
+}  // namespace OpenOrienteering

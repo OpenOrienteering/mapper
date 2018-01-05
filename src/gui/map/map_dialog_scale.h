@@ -31,7 +31,10 @@ class QRadioButton;
 class QDoubleSpinBox;
 class QWidget;
 
+namespace OpenOrienteering {
+
 class Map;
+
 
 /**
  * Dialog for scaling the whole map.
@@ -63,5 +66,8 @@ private:
 	
 	Map* map;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

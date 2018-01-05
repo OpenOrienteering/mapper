@@ -37,6 +37,8 @@ class QHideEvent;
 class QMouseEvent;
 class QPaintEvent;
 
+namespace OpenOrienteering {
+
 
 /** 
  * Displays a pie menu.
@@ -164,5 +166,7 @@ QPoint PieMenu::getPoint(double radius, double angle) const
 	return QPoint(total_radius + qRound(radius * -sin(angle)), total_radius + qRound(radius * -cos(angle)));
 }
 
+
+}  // namespace OpenOrienteering
 
 #endif

@@ -33,6 +33,8 @@ class QKeyEvent;
 class QPainter;
 class QRectF;
 
+namespace OpenOrienteering {
+
 class Map;
 class MapEditorController;
 class MapWidget;
@@ -109,4 +111,6 @@ private:
 	bool cut_away;
 };
 
+
+}  // namespace OpenOrienteering
 #endif

@@ -49,6 +49,8 @@
 #include "util/overriding_shortcut.h"
 
 
+namespace OpenOrienteering {
+
 namespace MimeType {
 
 /// The index of a symbol during drag-and-drop
@@ -63,7 +65,9 @@ const QString OpenOrienteeringSymbols()
 	return QStringLiteral("openorienteering/symbols");
 }
 
+
 }  // namespace MimeType
+
 
 
 //### SymbolIconDecorator ###
@@ -1256,3 +1260,6 @@ void SymbolRenderWidget::sort(T compare)
 	
 	update();
 }
+
+
+}  // namespace OpenOrienteering

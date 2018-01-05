@@ -27,9 +27,12 @@
 
 #include "fileformats/file_import_export.h"
 
+class QIODevice;
+
+namespace OpenOrienteering {
+
 class Map;
 class MapView;
-class QIODevice;
 
 
 /**
@@ -37,7 +40,7 @@ class QIODevice;
  */
 class OcdFileExport : public Exporter
 {
-	Q_DECLARE_TR_FUNCTIONS(OcdFileExport)
+	Q_DECLARE_TR_FUNCTIONS(OpenOrienteering::OcdFileExport)
 	
 public:
 	OcdFileExport(QIODevice* stream, Map *map, MapView *view);
@@ -52,5 +55,8 @@ public:
 	void doExport() override;
 	
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

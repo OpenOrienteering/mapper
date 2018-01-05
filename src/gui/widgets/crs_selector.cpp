@@ -38,9 +38,11 @@
 #include "core/georeferencing.h"
 
 
+namespace OpenOrienteering {
+
 // Helper functions for parameter widgets
-namespace
-{
+namespace {
+
 static const char* crsParameterWidgetProperty = "CRS parameter widget";
 static const char* crsParameterKeyProperty    = "CRS parameter key";
 
@@ -68,7 +70,7 @@ QString ParameterKey(const QWidget* w)
 	return w->property(crsParameterKeyProperty).toString();
 }
 
-} // namespace
+}  // namespace
 
 
 
@@ -383,3 +385,6 @@ void CRSSelector::changeEvent(QEvent* event)
 		; // nothing
 	}
 }
+
+
+}  // namespace OpenOrienteering

@@ -32,6 +32,9 @@
 #include "settings.h"
 #include "util/backports.h"
 
+
+namespace OpenOrienteering {
+
 PieMenu::PieMenu(QWidget* parent)
 : QWidget(parent, Qt::Popup | Qt::FramelessWindowHint),	// NOTE: use Qt::Window for debugging to avoid mouse grab
    minimum_action_count(3),
@@ -387,3 +390,6 @@ void PieMenu::updateCachedState()
 		actions_changed = false;
 	}
 }
+
+
+}  // namespace OpenOrienteering

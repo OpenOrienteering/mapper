@@ -54,6 +54,8 @@
 #include "gui/text_browser_dialog.h" // IWYU pragma: keep
 
 
+namespace OpenOrienteering {
+
 DoubleValidator::DoubleValidator(double bottom, double top, QObject* parent, int decimals)
 : QDoubleValidator(bottom, top, decimals, parent)
 {
@@ -75,8 +77,8 @@ QValidator::State DoubleValidator::validate(QString& input, int& pos) const
 
 
 
-namespace Util
-{
+namespace Util {
+	
 	// Implementation moved to settings.cpp
 	qreal mmToPixelPhysical(qreal millimeters);
 	
@@ -132,7 +134,7 @@ namespace Util
 			auto compiled_help = QFileInfo{ QString::fromUtf8("doc:Mapper " APP_VERSION " Manual.qch") };
 			if (!help_collection.exists() || !compiled_help.exists())
 			{
-				QMessageBox::warning(dialog_parent, QApplication::translate("Util", "Error"), QApplication::translate("Util", "Failed to locate the help files."));
+				QMessageBox::warning(dialog_parent, QApplication::translate("OpenOrienteering::Util", "Error"), QApplication::translate("OpenOrienteering::Util", "Failed to locate the help files."));
 				return;
 			}
 			
@@ -146,7 +148,7 @@ namespace Util
 				assistant_path = QStandardPaths::findExecutable(assistant);
 			if (assistant_path.isEmpty())
 			{
-				QMessageBox::warning(dialog_parent, QApplication::translate("Util", "Error"), QApplication::translate("Util", "Failed to locate the help browser (\"Qt Assistant\")."));
+				QMessageBox::warning(dialog_parent, QApplication::translate("OpenOrienteering::Util", "Error"), QApplication::translate("OpenOrienteering::Util", "Failed to locate the help browser (\"Qt Assistant\")."));
 				return;
 			}
 			
@@ -180,8 +182,8 @@ namespace Util
 			{
 				QMessageBox msg_box;
 				msg_box.setIcon(QMessageBox::Warning);
-				msg_box.setWindowTitle(QApplication::translate("Util", "Error"));
-				msg_box.setText(QApplication::translate("Util", "Failed to launch the help browser (\"Qt Assistant\")."));
+				msg_box.setWindowTitle(QApplication::translate("OpenOrienteering::Util", "Error"));
+				msg_box.setText(QApplication::translate("OpenOrienteering::Util", "Failed to launch the help browser (\"Qt Assistant\")."));
 				msg_box.setStandardButtons(QMessageBox::Ok);
 				auto details = assistant_process.readAllStandardError();
 				if (! details.isEmpty())
@@ -199,19 +201,19 @@ namespace Util
 	{
 		//: This "See more" is displayed as a link to the manual in What's-this tooltips.
 		return QStringLiteral("<a href=\"%1\">%2</a>").arg(
-				 QString::fromLatin1(reference_latin1), QApplication::translate("Util", "See more...") );
+				 QString::fromLatin1(reference_latin1), QApplication::translate("OpenOrienteering::Util", "See more...") );
 	}
 	
 	
 	
 	QString InputProperties<MapCoordF>::unit()
 	{
-		return QCoreApplication::translate("UnitOfMeasurement", "mm", "millimeters");
+		return QCoreApplication::translate("OpenOrienteering::UnitOfMeasurement", "mm", "millimeters");
 	}
 	
 	QString InputProperties<RealMeters>::unit()
 	{
-		return QCoreApplication::translate("UnitOfMeasurement", "m", "meters");
+		return QCoreApplication::translate("OpenOrienteering::UnitOfMeasurement", "m", "meters");
 	}
 	
 	
@@ -341,5 +343,9 @@ namespace Util
 		}
 		return maybe_markup;
 	}
+
 	
-}
+}  // namespace Util
+
+
+}  // namespace OpenOrienteering

@@ -31,7 +31,10 @@
 class QPrinter;
 class QWidget;
 
+namespace OpenOrienteering {
+
 class MapPrinter;
+
 
 /**
  * PrintProgressDialog is a variation of QProgressDialog to be used with MapPrinter.
@@ -84,5 +87,8 @@ private:
 };
 
 #endif
+
+
+}  // namespace OpenOrienteering
 
 #endif // QT_PRINTSUPPORT_LIB

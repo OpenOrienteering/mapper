@@ -25,6 +25,8 @@
 #include "fileformats/file_format.h"
 
 
+namespace OpenOrienteering {
+
 FileFormatRegistry FileFormats;
 
 
@@ -95,3 +97,6 @@ const FileFormat *FileFormatRegistry::findFormatForFilename(const QString& filen
 	}
 	return nullptr;
 }
+
+
+}  // namespace OpenOrienteering

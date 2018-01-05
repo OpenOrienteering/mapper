@@ -39,6 +39,8 @@ class QMouseEvent;
 class QPainter;
 class QToolButton;
 
+namespace OpenOrienteering {
+
 class AzimuthInfoHelper;
 class ConstrainAngleToolHelper;
 class FollowPathToolHelper;
@@ -173,5 +175,8 @@ protected:
 	bool finished_path_is_selected = false;  ///< True just after finishing a path
 	
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

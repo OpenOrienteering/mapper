@@ -29,6 +29,8 @@ class QIcon;
 class QTableWidget;
 class QToolButton;
 
+namespace OpenOrienteering {
+
 class Map;
 class MapEditorController;
 class MapView;
@@ -94,5 +96,8 @@ private:
 	
 	QTableWidget* tags_table;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif // TAGS_WIDGET_H

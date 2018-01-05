@@ -36,7 +36,10 @@ class QPushButton;
 class QRadioButton;
 class QWidget;
 
+namespace OpenOrienteering {
+
 class Map;
+
 
 class ConfigureGridDialog : public QDialog
 {
@@ -92,5 +95,8 @@ inline bool ConfigureGridDialog::gridVisible() const
 {
 	return grid_visible;
 }
+
+
+}  // namespace OpenOrienteering
 
 #endif

@@ -31,6 +31,8 @@
 // IWYU pragma: no_forward_declare QWidget
 
 
+namespace OpenOrienteering {
+
 SymbolWidget::SymbolWidget(Map* map, bool mobile_mode, QWidget* parent)
 : QScrollArea(parent)
 {
@@ -85,3 +87,6 @@ void SymbolWidget::contextMenuEvent(QContextMenuEvent* event)
 	render_widget->showContextMenu(event->globalPos());
 	event->accept();
 }
+
+
+}  // namespace OpenOrienteering

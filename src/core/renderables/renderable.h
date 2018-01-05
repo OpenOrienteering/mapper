@@ -37,9 +37,12 @@ class QPainter;
 class QPainterPath;
 // IWYU pragma: no_forward_declare QRectF
 
+namespace OpenOrienteering {
+
 class Map;
 class Object;
 class PainterConfig;
+
 
 /**
  * This class contains rendering configuration values.
@@ -373,8 +376,6 @@ private:
 
 // ### RenderConfig ###
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(RenderConfig::Options)
-
 inline
 bool RenderConfig::testFlag(const RenderConfig::Option flag) const
 {
@@ -475,6 +476,11 @@ bool MapRenderables::empty() const
 	return std::map<int, ObjectRenderablesMap>::empty();
 }
 
+
+}  // namespace OpenOrienteering
+
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(OpenOrienteering::RenderConfig::Options)
 
 
 #endif

@@ -30,10 +30,13 @@
 
 #include "core/map_coord.h"
 
+namespace OpenOrienteering {
+
 class Map;
 class Object;
 class PathObject;
 class TextObject;
+
 using SelectionInfoVector = std::vector<std::pair<int, Object*>>;
 
 
@@ -107,5 +110,7 @@ private:
 	bool constraints_calculated;
 };
 
+
+}  // namespace OpenOrienteering
 
 #endif

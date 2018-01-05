@@ -32,6 +32,8 @@
 #include "util/backports.h"
 
 
+namespace OpenOrienteering {
+
 TextBrowserDialog::TextBrowserDialog(QWidget* parent)
 : QDialog(parent)
 , text_browser(new TextBrowser())
@@ -140,3 +142,6 @@ void TextBrowserDialog::highlighted(const QString& link)
 		QToolTip::showText(tooltip_pos, link, this, {});
 	}
 }
+
+
+}  // namespace OpenOrienteering

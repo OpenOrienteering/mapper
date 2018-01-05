@@ -32,6 +32,8 @@ class QShowEvent;
 class QTableWidget;
 class QToolButton;
 
+namespace OpenOrienteering {
+
 class MainWindow;
 class Map;
 class MapColor;
@@ -92,5 +94,8 @@ private:
 	MainWindow* const window;
 	bool react_to_changes;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

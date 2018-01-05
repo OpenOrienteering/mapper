@@ -32,6 +32,8 @@
 
 class QIODevice;
 
+namespace OpenOrienteering {
+
 class Exporter;
 class Importer;
 class Map;
@@ -85,7 +87,7 @@ private:
  *  \code
  *  class MyCustomFileFormat : public FileFormat {
  *  public:
- *      MyCustomFileFormat : FileFormat("custom", ImportExport::tr("Custom file"), "custom", true, true) {
+ *      MyCustomFileFormat : FileFormat("custom", ::OpenOrienteering::ImportExport::tr("Custom file"), "custom", true, true) {
  *      }
  *
  *      Importer *createImporter(QIODevice* stream, Map *map, MapView *view) const {
@@ -270,10 +272,6 @@ const QString& FileFormatException::message() const noexcept
 
 // ### FileFormat inline and header code ###
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(FileFormat::FileTypes)
-
-Q_DECLARE_OPERATORS_FOR_FLAGS(FileFormat::FormatFeatures)
-
 inline
 FileFormat::FileType FileFormat::fileType() const
 {
@@ -328,6 +326,14 @@ bool FileFormat::isExportLossy() const
 {
 	return format_features.testFlag(FileFormat::ExportLossy);
 }
+
+
+}  // namespace OpenOrienteering
+
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(OpenOrienteering::FileFormat::FileTypes)
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(OpenOrienteering::FileFormat::FormatFeatures)
 
 
 #endif // OPENORIENTEERING_FILE_FORMAT_H

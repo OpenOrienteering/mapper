@@ -42,6 +42,8 @@
 #include "undo/undo_manager.h"
 
 
+namespace OpenOrienteering {
+
 // The SymbolRule member "query" may throw on copying.
 Q_STATIC_ASSERT(std::is_nothrow_constructible<SymbolRule>::value);
 Q_STATIC_ASSERT(std::is_nothrow_default_constructible<SymbolRule>::value);
@@ -411,3 +413,6 @@ void SymbolRuleSet::apply(Map& object_map, const Map& symbol_set, Options option
 	object_map.setSymbolsDirty();
 	object_map.undoManager().clear();
 }
+
+
+}  // namespace OpenOrienteering

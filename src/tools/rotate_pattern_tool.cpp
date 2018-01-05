@@ -48,6 +48,8 @@
 #include "util/util.h"
 
 
+namespace OpenOrienteering {
+
 RotatePatternTool::RotatePatternTool(MapEditorController* editor, QAction* tool_action)
 : MapEditorToolBase(QCursor(QPixmap(QString::fromLatin1(":/images/cursor-rotate.png")), 1, 1), Other, editor, tool_action)
 {
@@ -240,3 +242,6 @@ void RotatePatternTool::objectSelectionChangedImpl()
 	else
 		updateDirtyRect();
 }
+
+
+}  // namespace OpenOrienteering

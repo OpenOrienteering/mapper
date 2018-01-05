@@ -47,6 +47,8 @@
 #include "gui/widgets/segmented_button_layout.h"
 
 
+namespace OpenOrienteering {
+
 // ### TagSelectWidget ###
 
 TagSelectWidget::TagSelectWidget(QWidget* parent)
@@ -372,3 +374,6 @@ ObjectQuery TagSelectWidget::makeQuery() const
 
 	return query;
 }
+
+
+}  // namespace OpenOrienteering

@@ -31,6 +31,8 @@ class QDialogButtonBox;
 class QLabel;
 class QWidget;
 
+namespace OpenOrienteering {
+
 class CRSSelector;
 class Georeferencing;
 
@@ -87,6 +89,11 @@ private:
 	QDialogButtonBox* button_box;
 };
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(SelectCRSDialog::GeorefAlternatives)
+
+}  // namespace OpenOrienteering
+
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(OpenOrienteering::SelectCRSDialog::GeorefAlternatives)
+
 
 #endif

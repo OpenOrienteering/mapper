@@ -29,6 +29,8 @@
 class QVBoxLayout;
 class QWidget;
 
+namespace OpenOrienteering {
+
 class PointSymbol;
 class PointSymbolEditorWidget;
 class Symbol;
@@ -54,5 +56,8 @@ private:
 	QWidget* point_tab;
 	
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

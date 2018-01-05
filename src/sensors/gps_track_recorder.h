@@ -24,6 +24,8 @@
 #include <QObject>
 #include <QTimer>
 
+namespace OpenOrienteering {
+
 class MapWidget;
 class Template;
 class TemplateTrack;
@@ -51,5 +53,8 @@ private:
 	bool track_changed_since_last_update;
 	bool is_active;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

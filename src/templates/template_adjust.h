@@ -44,12 +44,15 @@ class QPushButton;
 class QTableWidget;
 class QCheckBox;
 
+namespace OpenOrienteering {
+
 class MapEditorController;
 class MapWidget;
 class Template;
 class TemplateAdjustDockWidget;
 class TemplateAdjustWidget;
 struct TemplateTransform;
+
 
 /**
  * Activity which allows the positioning of a template by
@@ -229,5 +232,8 @@ public:
 	void init() override;
 	const QCursor& getCursor() const override;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

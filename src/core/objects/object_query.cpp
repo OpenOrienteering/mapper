@@ -101,6 +101,8 @@ QString keyToString(const QString &key)
 
 
 
+namespace OpenOrienteering {
+
 // ### ObjectQuery::LogicalOperands ###
 
 ObjectQuery::LogicalOperands::LogicalOperands(const ObjectQuery::LogicalOperands& proto)
@@ -773,3 +775,6 @@ QString ObjectQueryParser::tokenAsString() const
 		string = fromEscaped(string);
 	return string;
 }
+
+
+}  // namespace OpenOrienteering

@@ -35,6 +35,8 @@
 #include "gui/widgets/settings_page.h"
 
 
+namespace OpenOrienteering {
+
 EditorSettingsPage::EditorSettingsPage(QWidget* parent)
  : SettingsPage(parent)
 {
@@ -157,3 +159,5 @@ void EditorSettingsPage::updateWidgets()
 	rectangle_preview_line_width->setChecked(getSetting(Settings::RectangleTool_PreviewLineWidth).toBool());
 }
 
+
+}  // namespace OpenOrienteering

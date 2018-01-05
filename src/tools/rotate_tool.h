@@ -33,6 +33,8 @@ class QKeyEvent;
 class QPainter;
 class QRectF;
 
+namespace OpenOrienteering {
+
 class MapEditorController;
 class MapWidget;
 
@@ -72,4 +74,6 @@ protected:
 	qreal current_rotation  = 0;
 };
 
+
+}  // namespace OpenOrienteering
 #endif

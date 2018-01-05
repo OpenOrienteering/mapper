@@ -26,6 +26,8 @@
 #include "gui/util_gui.h"
 
 
+namespace OpenOrienteering {
+
 CompassDisplay::CompassDisplay(QWidget* parent)
  : QWidget(parent)
  , azimuth(qSNaN())
@@ -114,3 +116,6 @@ void CompassDisplay::paintEvent(QPaintEvent*)
 		painter.drawLine(line);
 	}
 }
+
+
+}  // namespace OpenOrienteering

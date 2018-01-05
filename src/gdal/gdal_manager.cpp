@@ -36,6 +36,8 @@
 #include "util/backports.h"
 
 
+namespace OpenOrienteering {
+
 class GdalManager::GdalManagerPrivate
 {
 public:
@@ -347,3 +349,6 @@ void GdalManager::unsetParameter(const QString& key)
 {
 	p->unsetParameter(key);
 }
+
+
+}  // namespace OpenOrienteering

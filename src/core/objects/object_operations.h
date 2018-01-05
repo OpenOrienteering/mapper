@@ -26,6 +26,8 @@
 #include "core/objects/object.h"
 #include "core/symbols/symbol.h"
 
+namespace OpenOrienteering {
+
 /**
  * Object conditions and processors,
  * see methods Map::applyOnAllObjects() and MapPart::applyOnAllObjects()
@@ -122,5 +124,8 @@ namespace ObjectOp
 		}
 	};
 }
+
+
+}  // namespace OpenOrienteering
 
 #endif

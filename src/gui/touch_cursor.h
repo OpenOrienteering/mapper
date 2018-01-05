@@ -28,6 +28,8 @@
 class QMouseEvent;
 class QPainter;
 
+namespace OpenOrienteering {
+
 class MapWidget;
 
 
@@ -103,5 +105,8 @@ private:
 	QPoint last_touch_pos;
 	MapWidget* map_widget;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

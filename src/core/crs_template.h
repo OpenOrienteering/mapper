@@ -29,6 +29,8 @@
 
 class QWidget;
 
+namespace OpenOrienteering {
+
 class Georeferencing;
 
 
@@ -316,5 +318,8 @@ const CRSTemplateRegistry::TemplateList& CRSTemplateRegistry::list() const
 {
 	return *templates;
 }
+
+
+}  // namespace OpenOrienteering
 
 #endif

@@ -48,6 +48,8 @@ class QWidget;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 
+namespace OpenOrienteering {
+
 class Georeferencing;
 class Map;
 class MapCoordF;
@@ -175,5 +177,8 @@ private:
 	
 	TemplateImage* templ;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

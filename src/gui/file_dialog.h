@@ -27,11 +27,13 @@
 class QWidget;
 
 
+namespace OpenOrienteering {
+
 /**
  * A collection of file dialog utility functions.
  */
-namespace FileDialog
-{
+namespace FileDialog {
+	
 	/**
 	 * Returns true if upper case extensions have to be added explicitly
 	 * to filters in file dialogs.
@@ -84,6 +86,10 @@ namespace FileDialog
 		return QFileDialog::getSaveFileName(parent, caption, dir, filter, selected_filter, options);
 	}
 	
-}
+	
+}  // namespace FileDialog
+
+
+}  // namespace OpenOrienteering
 
 #endif

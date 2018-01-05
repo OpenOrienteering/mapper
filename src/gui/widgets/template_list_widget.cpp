@@ -53,6 +53,8 @@
 #include "util/item_delegates.h"
 
 
+namespace OpenOrienteering {
+
 // ### ApplyTemplateTransform ###
 
 /**
@@ -97,12 +99,12 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	auto top_bar_layout = new QHBoxLayout(top_bar_widget);
 	
 	// Reuse the translation from MapEditorController action.
-	all_hidden_check = new QCheckBox(MapEditorController::tr("Hide all templates"));
+	all_hidden_check = new QCheckBox(::OpenOrienteering::MapEditorController::tr("Hide all templates"));
 	top_bar_layout->addWidget(all_hidden_check);
 	
 	if (mobile_mode)
 	{
-		auto close_action = new QAction(QIcon(QString::fromLatin1(":/images/close.png")), MainWindow::tr("Close"), this);
+		auto close_action = new QAction(QIcon(QString::fromLatin1(":/images/close.png")), ::OpenOrienteering::MainWindow::tr("Close"), this);
 		connect(close_action, &QAction::triggered, this, &TemplateListWidget::closeClicked );
 		
 		auto close_button = new QToolButton();
@@ -235,7 +237,8 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	position_action->setCheckable(true);
 	import_action =  edit_menu->addAction(tr("Import and remove"), this, SLOT(importClicked()));
 	
-	edit_button = newToolButton(QIcon(QString::fromLatin1(":/images/settings.png")), MapEditorController::tr("&Edit").remove(QLatin1Char('&')));
+	edit_button = newToolButton(QIcon(QString::fromLatin1(":/images/settings.png")),
+	                            ::OpenOrienteering::MapEditorController::tr("&Edit").remove(QLatin1Char('&')));
 	edit_button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	edit_button->setPopupMode(QToolButton::InstantPopup);
 	edit_button->setMenu(edit_menu);
@@ -687,7 +690,7 @@ void TemplateListWidget::cellChange(int row, int column)
 							template_table->item(row, 0)->setCheckState(Qt::PartiallyChecked);
 							auto item_rect = template_table->visualItemRect(template_table->item(row, 1));
 							QToolTip::showText(template_table->mapToGlobal(item_rect.bottomLeft()),
-							                   qApp->translate("MainWindow", "Opening %1").arg(temp->getTemplateFilename()) );
+							                   qApp->translate("OpenOrienteering::MainWindow", "Opening %1").arg(temp->getTemplateFilename()) );
 							// QToolTip seems to need to event loop runs.
 							qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
 							qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
@@ -700,8 +703,9 @@ void TemplateListWidget::cellChange(int row, int column)
 							QToolTip::hideText();
 							if (temp->getTemplateState() != Template::Loaded)
 							{
-								QMessageBox::warning(this, qApp->translate("MainWindow", "Error"),
-								                     qApp->translate("Importer", "Failed to load template '%1', reason: %2")
+								QMessageBox::warning(this,
+								                     qApp->translate("OpenOrienteering::MainWindow", "Error"),
+								                     qApp->translate("OpenOrienteering::Importer", "Failed to load template '%1', reason: %2")
 								                     .arg(temp->getTemplateFilename(), temp->errorString()) );
 							}
 						}
@@ -1331,3 +1335,6 @@ void TemplateListWidget::showOpacitySlider(int row)
 	
 	dialog.exec();
 }
+
+
+}  // namespace OpenOrienteering

@@ -24,6 +24,8 @@
 
 #include "core/georeferencing.h"
 
+using namespace OpenOrienteering;
+
 
 /**
  * @test Tests the Georeferencing class.

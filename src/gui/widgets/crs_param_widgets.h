@@ -27,6 +27,8 @@
 
 class QLineEdit;
 
+namespace OpenOrienteering {
+
 class CRSParameterWidgetObserver;
 
 
@@ -50,5 +52,6 @@ private:
 };
 
 
+}  // namespace OpenOrienteering
 
 #endif

@@ -31,6 +31,8 @@ class QStyleHintReturn;
 class QStyleOption;
 class QWidget;
 
+namespace OpenOrienteering {
+
 
 /**
  * MapperProxyStyle customizes the platform's base style.
@@ -90,5 +92,8 @@ private:
 	
 	Q_DISABLE_COPY(MapperProxyStyle)
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif // OPENORIENTEERING_MAPPER_PROXYSTYLE_H

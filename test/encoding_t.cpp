@@ -28,6 +28,8 @@
 
 #include "util/encoding.h"
 
+using namespace OpenOrienteering;
+
 
 EncodingTest::EncodingTest(QObject* parent)
 : QObject(parent)

@@ -61,14 +61,17 @@
 #include "util/translation_util.h"
 
 
-namespace
-{
+namespace OpenOrienteering {
+
+namespace {
+	
 	constexpr QSize coloriconSize()
 	{
 		return QSize{32, 32};
 	}
-
-}
+	
+	
+}  // namespace
 
 
 
@@ -269,7 +272,7 @@ ColorDialog::ColorDialog(const Map& map, const MapColor& source_color, QWidget* 
 	layout->addWidget(color_preview_label, row, col); col++;
 	layout->addWidget(color_name_label, row, col, 1, 4);
 	row++; col = 0;
-	layout->addWidget(new QLabel(QApplication::translate("MapSymbolTranslation", "Text source:")), row, col, 1, 2); col+=2;
+	layout->addWidget(new QLabel(QApplication::translate("OpenOrienteering::MapSymbolTranslation", "Text source:")), row, col, 1, 2); col+=2;
 	layout->addWidget(language_combo, row, col); col++;
 	layout->addWidget(name_edit_button, row, col);
 	row++; col = 0;
@@ -511,8 +514,8 @@ void ColorDialog::reset()
 	updateWidgets();
 	
 	language_combo->clear();
-	language_combo->addItem(QApplication::translate("MapSymbolTranslation", "Map (%1)")
-	                        .arg(QApplication::translate("MapSymbolTranslation", "undefined language")));
+	language_combo->addItem(QApplication::translate("OpenOrienteering::MapSymbolTranslation", "Map (%1)")
+	                        .arg(QApplication::translate("OpenOrienteering::MapSymbolTranslation", "undefined language")));
 	auto name = color.getName();
 	auto display_name = map.raw_translation(name);
 	if (display_name.isEmpty())
@@ -527,10 +530,10 @@ void ColorDialog::reset()
 		auto language = TranslationUtil::languageFromSettings(QSettings());
 		if (!language.isValid())
 		{
-			language.displayName = QApplication::translate("MapSymbolTranslation", "undefined language");
+			language.displayName = QApplication::translate("OpenOrienteering::MapSymbolTranslation", "undefined language");
 		}
 
-		language_combo->addItem(QApplication::translate("MapSymbolTranslation", "Translation (%1)").arg(language.displayName));
+		language_combo->addItem(QApplication::translate("OpenOrienteering::MapSymbolTranslation", "Translation (%1)").arg(language.displayName));
 		language_combo->setCurrentIndex(1);
 		language_combo->setEnabled(true);
 		name_edit_button->setEnabled(true);
@@ -582,14 +585,14 @@ void ColorDialog::editClicked()
 	auto question = QString{};
 	if (language_combo->currentIndex() == 1)
 	{
-		question = QApplication::translate("MapSymbolTranslation",
+		question = QApplication::translate("OpenOrienteering::MapSymbolTranslation",
 		             "Before editing, the stored text will be "
 		             "replaced with the current translation. "
 		             "Do you want to continue?");
 	}
 	else
 	{
-		question = QApplication::translate("MapSymbolTranslation",
+		question = QApplication::translate("OpenOrienteering::MapSymbolTranslation",
 		             "After modifying the stored text, "
 		             "the translation may no longer be found. "
 		             "Do you want to continue?");
@@ -790,3 +793,5 @@ void ColorDialog::rgbValueChanged()
 	}
 }
 
+
+}  // namespace OpenOrienteering

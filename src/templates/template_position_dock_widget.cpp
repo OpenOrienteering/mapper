@@ -32,6 +32,9 @@
 #include "gui/map/map_editor.h"
 #include "templates/template.h"
 
+
+namespace OpenOrienteering {
+
 TemplatePositionDockWidget::TemplatePositionDockWidget(Template* temp, MapEditorController* controller, QWidget* parent)
  : QDockWidget(tr("Positioning"), parent), temp(temp), controller(controller)
 {
@@ -178,3 +181,6 @@ void TemplatePositionDockWidget::valueChanged()
 	controller->getMap()->emitTemplateChanged(temp);
 	react_to_changes = true;
 }
+
+
+}  // namespace OpenOrienteering

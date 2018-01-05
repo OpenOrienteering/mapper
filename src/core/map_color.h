@@ -31,6 +31,8 @@
 #include <QRgb>
 #include <QString>
 
+namespace OpenOrienteering {
+
 class MapColor;
 
 /**
@@ -439,9 +441,6 @@ protected:
 	SpotColorComponents components;
 };
 
-// Allow explicit use of MapColor pointers in QVariant
-Q_DECLARE_METATYPE(const MapColor*)
-
 /** Returns true if both MapColor are equal in all components. */
 bool operator==(const MapColor& lhs, const MapColor& rhs);
 
@@ -835,6 +834,13 @@ QColor colorWithOpacity(const MapColor& c)
 {
 	return colorWithOpacity(static_cast<const QColor&>(c), c.getOpacity());
 }
+
+
+}  // namespace OpenOrienteering
+
+
+// Allow explicit use of MapColor pointers in QVariant
+Q_DECLARE_METATYPE(const OpenOrienteering::MapColor*)
 
 
 #endif

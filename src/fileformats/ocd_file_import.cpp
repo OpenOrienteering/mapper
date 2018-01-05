@@ -74,6 +74,8 @@
 #include "util/util.h"
 
 
+namespace OpenOrienteering {
+
 namespace {
 
 static QTextCodec* codecFromSettings()
@@ -83,7 +85,9 @@ static QTextCodec* codecFromSettings()
 	return Util::codecForName(name);
 }	
 
-} // namespace
+
+}  // namespace
+
 
 
 OcdFileImport::OcdImportedPathObject::~OcdImportedPathObject()
@@ -1216,21 +1220,21 @@ void OcdFileImport::setupLineSymbolPointSymbol(OcdFileImport::OcdImportedLineSym
 	{
 		line_symbol->dash_symbol = new OcdImportedPointSymbol();
 		setupPointSymbolPattern(line_symbol->dash_symbol, attributes.corner_data_size, reinterpret_cast<const Ocd::PointSymbolElementV8*>(coords), ocd_version);
-		line_symbol->dash_symbol->setName(QCoreApplication::translate("LineSymbolSettings", "Dash symbol"));
+		line_symbol->dash_symbol->setName(QCoreApplication::translate("OpenOrienteering::LineSymbolSettings", "Dash symbol"));
 		coords += attributes.corner_data_size;
 	}
 	if (attributes.start_data_size > 0)
 	{
 		line_symbol->start_symbol = new OcdImportedPointSymbol();
 		setupPointSymbolPattern(line_symbol->start_symbol, attributes.start_data_size, reinterpret_cast<const Ocd::PointSymbolElementV8*>(coords), ocd_version);
-		line_symbol->start_symbol->setName(QCoreApplication::translate("LineSymbolSettings", "Start symbol"));
+		line_symbol->start_symbol->setName(QCoreApplication::translate("OpenOrienteering::LineSymbolSettings", "Start symbol"));
 		coords += attributes.start_data_size;
 	}
 	if (attributes.end_data_size > 0)
 	{
 		line_symbol->end_symbol = new OcdImportedPointSymbol();
 		setupPointSymbolPattern(line_symbol->end_symbol, attributes.end_data_size, reinterpret_cast<const Ocd::PointSymbolElementV8*>(coords), ocd_version);
-		line_symbol->end_symbol->setName(QCoreApplication::translate("LineSymbolSettings", "End symbol"));
+		line_symbol->end_symbol->setName(QCoreApplication::translate("OpenOrienteering::LineSymbolSettings", "End symbol"));
 	}
 	
 	// FIXME: not really sure how this translates... need test cases
@@ -2059,14 +2063,14 @@ void OcdFileImport::import(bool load_symbols_only)
 	buffer.clear();
 	buffer.append(stream->readAll());
 	if (buffer.isEmpty())
-		throw FileFormatException(Importer::tr("Could not read file: %1").arg(stream->errorString()));
+		throw FileFormatException(::OpenOrienteering::Importer::tr("Could not read file: %1").arg(stream->errorString()));
 	
 	if (size_t(buffer.size()) < sizeof(Ocd::FormatGeneric::FileHeader))
-		throw FileFormatException(Importer::tr("Could not read file: %1").arg(tr("Invalid data.")));
+		throw FileFormatException(::OpenOrienteering::Importer::tr("Could not read file: %1").arg(tr("Invalid data.")));
 	
 	const OcdFile<Ocd::FormatGeneric> generic_file(buffer);
 	if (generic_file.header()->vendor_mark != 0x0cad) // This also tests correct endianess...
-		throw FileFormatException(Importer::tr("Could not read file: %1").arg(tr("Invalid data.")));
+		throw FileFormatException(::OpenOrienteering::Importer::tr("Could not read file: %1").arg(tr("Invalid data.")));
 	
 	int version = generic_file.header()->version;
 	switch (version)
@@ -2096,7 +2100,7 @@ void OcdFileImport::import(bool load_symbols_only)
 		break;
 	default:
 		throw FileFormatException(
-		            Importer::tr("Could not read file: %1").
+		            ::OpenOrienteering::Importer::tr("Could not read file: %1").
 		            arg(tr("OCD files of version %1 are not supported!").arg(version))
 		            );
 	}
@@ -2132,3 +2136,6 @@ void OcdFileImport::handleStrings(const OcdFile<F>& file, std::initializer_list<
 		}
 	}
 }
+
+
+}  // namespace OpenOrienteering

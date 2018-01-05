@@ -92,8 +92,10 @@
 #include "util/scoped_signals_blocker.h"
 
 
-namespace
-{
+namespace OpenOrienteering {
+
+namespace {
+	
 	QToolButton* createPrintModeButton(const QIcon& icon, const QString& label, QWidget* parent = nullptr)
 	{
 		static const QSize icon_size(48,48);
@@ -106,7 +108,10 @@ namespace
 		button->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 		return button;
 	}
-}
+	
+	
+}  // namespace
+
 
 //### PrintWidget ###
 
@@ -1349,3 +1354,6 @@ bool PrintWidget::checkForEmptyMap()
 }
 
 #endif
+
+
+}  // namespace OpenOrienteering

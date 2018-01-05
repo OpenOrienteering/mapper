@@ -30,6 +30,9 @@
 #include "templates/template.h"
 #include "util/transformation.h"
 
+
+namespace OpenOrienteering {
+
 TemplateMoveTool::TemplateMoveTool(Template* templ, MapEditorController* editor, QAction* tool_action)
 : MapEditorTool(editor, Other, tool_action), templ(templ)
 {
@@ -123,3 +126,6 @@ void TemplateMoveTool::updateDragging(MapCoordF mouse_pos_map)
 	map()->setTemplatesDirty();
 	map()->emitTemplateChanged(templ);
 }
+
+
+}  // namespace OpenOrienteering

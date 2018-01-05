@@ -64,6 +64,8 @@ namespace literal
 
 
 
+namespace OpenOrienteering {
+
 // ### Object implementation ###
 
 Object::Object(Object::Type type, const Symbol* symbol)
@@ -404,7 +406,7 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 	Object::Type object_type = object_element.attribute<Object::Type>(literal::type);
 	Object* object = Object::getObjectForType(object_type);
 	if (!object)
-		throw FileFormatException(ImportExport::tr("Error while loading an object of type %1.").arg(object_type));
+		throw FileFormatException(::OpenOrienteering::ImportExport::tr("Error while loading an object of type %1.").arg(object_type));
 	
 	object->map = map;
 	
@@ -436,7 +438,7 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 				break;
 			default:
 				throw FileFormatException(
-				  ImportExport::tr("Unable to find symbol for object at %1:%2.").
+				  ::OpenOrienteering::ImportExport::tr("Unable to find symbol for object at %1:%2.").
 				  arg(xml.lineNumber()).arg(xml.columnNumber()) );
 		}
 	}
@@ -448,7 +450,7 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 		if (point_symbol && point_symbol->isRotatable())
 			point->setRotation(object_element.attribute<float>(literal::rotation));
 		else if (!point_symbol)
-			throw FileFormatException(ImportExport::tr("Point object with undefined or wrong symbol at %1:%2.").arg(xml.lineNumber()).arg(xml.columnNumber()));
+			throw FileFormatException(::OpenOrienteering::ImportExport::tr("Point object with undefined or wrong symbol at %1:%2.").arg(xml.lineNumber()).arg(xml.columnNumber()));
 	}
 	else if (object_type == Text)
 	{
@@ -468,7 +470,7 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 			}
 			catch (FileFormatException& e)
 			{
-				throw FileFormatException(ImportExport::tr("Error while loading an object of type %1 at %2:%3: %4").
+				throw FileFormatException(::OpenOrienteering::ImportExport::tr("Error while loading an object of type %1 at %2:%3: %4").
 				  arg(object_type).arg(xml.lineNumber()).arg(xml.columnNumber()).arg(e.message()));
 			}
 		}
@@ -488,7 +490,7 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 					}
 					catch (std::range_error& e)
 					{
-						throw FileFormatException(MapCoord::tr(e.what()));
+						throw FileFormatException(::OpenOrienteering::MapCoord::tr(e.what()));
 					}
 				}
 				else
@@ -842,6 +844,7 @@ void Object::includeControlPointsRect(QRectF& rect) const
 			rectInclude(rect, text_handle);
 	}
 }
+
 
 
 // ### PathPart ###
@@ -3256,3 +3259,6 @@ bool PointObject::intersectsBox(const QRectF& box) const
 {
 	return box.contains(QPointF(coords.front()));
 }
+
+
+}  // namespace OpenOrienteering

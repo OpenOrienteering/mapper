@@ -33,6 +33,8 @@ class QResizeEvent;
 class QToolButton;
 
 
+namespace OpenOrienteering {
+
 /**
  * A toolbar with a grid layout, whose button size depends on the ppi.
  */
@@ -121,4 +123,6 @@ protected:
 	std::vector< ActionGridBar* > include_overflow_from_list;
 };
 
+
+}  // namespace OpenOrienteering
 #endif

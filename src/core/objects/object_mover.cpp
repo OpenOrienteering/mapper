@@ -30,6 +30,8 @@
 #include "core/symbols/text_symbol.h"
 
 
+namespace OpenOrienteering {
+
 ObjectMover::ObjectMover(Map* map, const MapCoordF& start_pos)
  : start_position(start_pos), prev_drag_x(0), prev_drag_y(0), constraints_calculated(true)
 {
@@ -296,3 +298,4 @@ void ObjectMover::calculateConstraints()
 }
 
 
+}  // namespace OpenOrienteering
