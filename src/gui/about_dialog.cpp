@@ -157,7 +157,7 @@ QString AboutDialog::about()
 	  "<p>"
 	  "<em>%3</em><br/>"
 	  "<a href=\"%4\">%4</a></p>"
-	  "<p>Copyright (C) 2017 The OpenOrienteering developers</p>"
+	  "<p>Copyright (C) 2018 The OpenOrienteering developers</p>"
 	  "<p>%5</p>"
 	  "<p>%6</p>"
 	  "<p>%7</p>"
