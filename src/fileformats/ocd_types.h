@@ -304,14 +304,15 @@ namespace Ocd
  * called when the iterator is dereferencable or incrementable state,
  * respectively.
  * 
- * @param E the index entry type
+ * @param V the index value type
  */
-template< class E >
-class OcdEntityIndexIterator : public std::iterator<std::forward_iterator_tag, const E>
+template< class V >
+class OcdEntityIndexIterator : public std::iterator<std::input_iterator_tag, V, std::ptrdiff_t, void, V>
 {
 public:
-	using EntryType  = E;
-	using IndexBlock = const Ocd::IndexBlock<const EntryType>;
+	using value_type = V;
+	using EntryType  = typename V::EntryType;
+	using IndexBlock = const Ocd::IndexBlock<EntryType>;
 	
 	OcdEntityIndexIterator() noexcept = default;
 	OcdEntityIndexIterator(const OcdEntityIndexIterator&) noexcept = default;
@@ -326,13 +327,11 @@ public:
 	
 	OcdEntityIndexIterator operator++(int);
 	
-	const EntryType& operator*() const;
+	value_type operator*() const;
 	
-	const EntryType* operator->() const;
+	bool operator==(const OcdEntityIndexIterator<V>& rhs) const;
 	
-	bool operator==(const OcdEntityIndexIterator<E>& rhs) const;
-	
-	bool operator!=(const OcdEntityIndexIterator<E>& rhs) const;
+	bool operator!=(const OcdEntityIndexIterator<V>& rhs) const;
 	
 private:
 	const QByteArray* byte_array;
@@ -365,8 +364,19 @@ public:
 	/** The index entry type for the entity type. */
 	using EntryType = typename T::IndexEntryType;
 	
+	struct value_type
+	{
+		using EntityType = T;
+		using EntryType  = typename T::IndexEntryType;
+		const EntryType*  entry;
+		const EntityType* entity;
+		
+		template<class X = typename T::IndexEntryType, typename std::enable_if<std::is_same<X, Ocd::ParameterStringIndexEntry>::value, int>::type = 0>
+		operator QByteArray() const;
+	};
+	
 	/** The index iterator type. */
-	using const_iterator = OcdEntityIndexIterator<const EntryType>;
+	using const_iterator = OcdEntityIndexIterator<value_type>;
 	
 	/**
 	 * Constructs an entity index object.
@@ -451,11 +461,6 @@ public:
 	const QByteArray& byteArray() const;
 	
 	/**
-	 * Returns a const reference to the byte specified by file_pos.
-	 */
-	const char& operator[](quint32 file_pos) const;
-	
-	/**
 	 * Returns a pointer to the file header.
 	 */
 	const FileHeader* header() const;
@@ -466,29 +471,14 @@ public:
 	const StringIndex& strings() const;
 	
 	/**
-	 * Returns the raw data of the string.
-	 */
-	const QByteArray operator[](const typename StringIndex::EntryType& string) const;
-	
-	/**
 	 * Returns a const reference to the symbol index.
 	 */
 	const SymbolIndex& symbols() const;
 	
 	/**
-	 * Returns a const reference to the symbol referenced by an symbol index entry.
-	 */
-	const typename F::BaseSymbol& operator[](const typename SymbolIndex::EntryType& symbol_entry) const;
-	
-	/**
 	 * Returns a const reference to the object index.
 	 */
 	const ObjectIndex& objects() const;
-	
-	/**
-	 * Returns a const reference to the object referenced by an object index entry.
-	 */
-	const typename F::Object& operator[](const typename ObjectIndex::EntryType& object_entry) const;
 	
 private:
 	QByteArray byte_array;
@@ -501,8 +491,8 @@ private:
 
 // ### OcdEntityIndexIterator implementation ###
 
-template< class E >
-OcdEntityIndexIterator<E>::OcdEntityIndexIterator(const QByteArray& byte_array, IndexBlock* first_block)
+template< class V >
+OcdEntityIndexIterator<V>::OcdEntityIndexIterator(const QByteArray& byte_array, IndexBlock* first_block)
 : byte_array(&byte_array)
 , block(first_block)
 , index(0)
@@ -511,8 +501,8 @@ OcdEntityIndexIterator<E>::OcdEntityIndexIterator(const QByteArray& byte_array, 
 		operator++();
 }
 
-template< class E >
-OcdEntityIndexIterator<E>& OcdEntityIndexIterator<E>::operator++()
+template< class V >
+OcdEntityIndexIterator<V>& OcdEntityIndexIterator<V>::operator++()
 {
 	do
 	{
@@ -529,34 +519,28 @@ OcdEntityIndexIterator<E>& OcdEntityIndexIterator<E>::operator++()
 	return *this;
 }
 
-template< class E >
-OcdEntityIndexIterator<E> OcdEntityIndexIterator<E>::operator++(int)
+template< class V >
+OcdEntityIndexIterator<V> OcdEntityIndexIterator<V>::operator++(int)
 {
 	auto old_value(*this);
 	operator++();
 	return old_value;
 }
 
-template< class E >
-const typename OcdEntityIndexIterator<E>::EntryType& OcdEntityIndexIterator<E>::operator*() const
+template< class V >
+typename OcdEntityIndexIterator<V>::value_type OcdEntityIndexIterator<V>::operator*() const
 {
-	return block->entries[index];
+	return { &block->entries[index], reinterpret_cast<const typename value_type::EntityType*>(byte_array->data()+block->entries[index].pos) };
 }
 
-template< class E >
-const typename OcdEntityIndexIterator<E>::EntryType* OcdEntityIndexIterator<E>::operator->() const
-{
-	return &(block->entries[index]);
-}
-
-template< class E >
-bool OcdEntityIndexIterator<E>::operator==(const OcdEntityIndexIterator<E>& rhs) const
+template< class V >
+bool OcdEntityIndexIterator<V>::operator==(const OcdEntityIndexIterator<V>& rhs) const
 {
 	return (block == rhs.block && index == rhs.index);
 }
 
-template< class E >
-bool OcdEntityIndexIterator<E>::operator!=(const OcdEntityIndexIterator<E>& rhs) const
+template< class V >
+bool OcdEntityIndexIterator<V>::operator!=(const OcdEntityIndexIterator<V>& rhs) const
 {
 	return !operator==(rhs);
 }
@@ -613,6 +597,13 @@ typename OcdEntityIndex<F,T>::const_iterator OcdEntityIndex<F,T>::end() const no
 	return {};
 }
 
+template< class F, class T >
+template<class X, typename std::enable_if<std::is_same<X, Ocd::ParameterStringIndexEntry>::value, int>::type>
+OcdEntityIndex<F,T>::value_type::operator QByteArray() const
+{
+	return QByteArray::fromRawData(reinterpret_cast<const char*>(entity), int(entry->size));
+}
+
 
 
 // ### OcdFile implementation ###
@@ -635,12 +626,6 @@ const QByteArray& OcdFile<F>::byteArray() const
 }
 
 template< class F >
-const char& OcdFile<F>::operator[](quint32 file_pos) const
-{
-	return *(byte_array.constData() + file_pos);
-}
-
-template< class F >
 const typename F::FileHeader* OcdFile<F>::header() const
 {
 	return (byte_array.size() < int(sizeof(FileHeader))) ? nullptr : reinterpret_cast<const FileHeader*>(byte_array.constData());
@@ -653,33 +638,15 @@ const typename OcdFile<F>::StringIndex& OcdFile<F>::strings() const
 }
 
 template< class F >
-const QByteArray OcdFile<F>::operator[](const typename OcdFile<F>::StringIndex::EntryType& string) const
-{
-	return QByteArray::fromRawData(&(*this)[string.pos], string.size);
-}
-
-template< class F >
 const typename OcdFile<F>::SymbolIndex& OcdFile<F>::symbols() const
 {
 	return symbol_index;
 }
 
 template< class F >
-const typename F::BaseSymbol& OcdFile<F>::operator[](const typename OcdFile<F>::SymbolIndex::EntryType& symbol_entry) const
-{
-	return reinterpret_cast<const typename F::BaseSymbol&>((*this)[symbol_entry.pos]);
-}
-
-template< class F >
 const typename OcdFile<F>::ObjectIndex& OcdFile<F>::objects() const
 {
 	return object_index;
-}
-
-template< class F >
-const typename F::Object& OcdFile<F>::operator[](const typename OcdFile<F>::ObjectIndex::EntryType& object_entry) const
-{
-	return reinterpret_cast<const typename F::Object&>((*this)[object_entry.pos]);
 }
 
 #endif // OPENORIENTEERING_OCD_TYPES_H

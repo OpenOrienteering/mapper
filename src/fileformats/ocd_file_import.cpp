@@ -318,9 +318,9 @@ void OcdFileImport::importImplementation(bool load_symbols_only)
 	if (!qApp->applicationName().endsWith(QLatin1String("Test")))
 	{
 		qDebug("*** OcdFileImport: Importing a version %d.%d file", file.header()->version, file.header()->subversion);
-		for (const auto& string : file.strings())
+		for (const auto ocd_string : file.strings())
 		{
-			qDebug(" %d \t%s", string.type, qPrintable(convertOcdString< typename F::Encoding >(file[string])));
+			qDebug(" %d \t%s", ocd_string.entry->type, qPrintable(convertOcdString< typename F::Encoding >(ocd_string)));
 		}
 	}
 #endif
@@ -648,9 +648,9 @@ template< class F >
 void OcdFileImport::importSymbols(const OcdFile< F >& file)
 {
 	auto ocd_version = file.header()->version;
-	for (const auto& ocd_symbol_entry : file.symbols())
+	for (auto ocd_symbol_entry : file.symbols())
 	{
-		const auto& ocd_symbol = file[ocd_symbol_entry];
+		auto& ocd_symbol = *ocd_symbol_entry.entity;
 		
 		// When extra symbols are created, we want to insert the main symbol
 		// before them. That is why pos needs to be determined first.
@@ -720,11 +720,11 @@ void OcdFileImport::importObjects(const OcdFile<Ocd::FormatV8>& file)
 	MapPart* part = map->getCurrentPart();
 	Q_ASSERT(part);
 	
-	for (const auto& object_entry : file.objects())
+	for (auto ocd_object : file.objects())
 	{
-		if (object_entry.symbol)
+		if (ocd_object.entry->symbol)
 		{
-			if (auto object = importObject(file[object_entry], part, ocd_version))
+			if (auto object = importObject(*ocd_object.entity, part, ocd_version))
 				part->addObject(object, part->getNumObjects());
 		}
 	}
@@ -737,13 +737,13 @@ void OcdFileImport::importObjects(const OcdFile< F >& file)
 	MapPart* part = map->getCurrentPart();
 	Q_ASSERT(part);
 	
-	for (const auto& object_entry : file.objects())
+	for (auto ocd_object : file.objects())
 	{
-		if ( object_entry.symbol
-		     && object_entry.status != Ocd::ObjectDeleted
-		     && object_entry.status != Ocd::ObjectDeletedForUndo )
+		if ( ocd_object.entry->symbol
+		     && ocd_object.entry->status != Ocd::ObjectDeleted
+		     && ocd_object.entry->status != Ocd::ObjectDeletedForUndo )
 		{
-			if (auto object = importObject(file[object_entry], part, ocd_version))
+			if (auto object = importObject(*ocd_object.entity, part, ocd_version))
 				part->addObject(object, part->getNumObjects());
 		}
 	}
@@ -2223,13 +2223,13 @@ void OcdFileImport::finishImport()
 template< class F >
 void OcdFileImport::handleStrings(const OcdFile<F>& file, std::initializer_list<StringHandler> handlers)
 {
-	for (const auto& string : file.strings())
+	for (const auto ocd_string : file.strings())
 	{
 		for (const auto& handler : handlers)
 		{
-			if (string.type == handler.type)
+			if (ocd_string.entry->type == handler.type)
 			{
-				(this->*handler.callback)(convertOcdString<typename F::Encoding>(file[string]), file.header()->version);
+				(this->*handler.callback)(convertOcdString<typename F::Encoding>(ocd_string), file.header()->version);
 			}
 		}
 	}
