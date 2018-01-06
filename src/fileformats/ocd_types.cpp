@@ -44,4 +44,20 @@ namespace Ocd
 	
 	Q_STATIC_ASSERT(sizeof(FormatV12::FileHeader) == 60);
 	
+	
+	
+	const void* getBlockChecked(const QByteArray& byte_array, quint32 pos, quint32 block_size)
+	{
+		if (pos == 0)
+		{
+			return nullptr;
+		}
+		else if (Q_UNLIKELY(pos + block_size - 1 >= static_cast<quint32>(byte_array.size())))
+		{
+			qWarning("OcdEntityIndexIterator: Next index block is out of bounds");
+			return nullptr;
+		}
+		return byte_array.data() + pos;
+	}
+	
 } // namespace Ocd

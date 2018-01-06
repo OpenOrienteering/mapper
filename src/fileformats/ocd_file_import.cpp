@@ -339,6 +339,9 @@ void OcdFileImport::importImplementation(bool load_symbols_only)
 			importView(file);
 		}
 	}
+	
+	// No deep copy during import
+	Q_ASSERT(file.byteArray().constData() == buffer.constData());
 }
 
 
