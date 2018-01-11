@@ -84,7 +84,7 @@
     <message>
         <source>Cursor at %1, %2
 Press ESC to cancel</source>
-        <translation>Markør på %1, %2
+        <translation>Peker på %1, %2
 Trykk Esc for å avbryte</translation>
     </message>
     <message>
