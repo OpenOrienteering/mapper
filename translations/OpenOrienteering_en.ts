@@ -2,10 +2,10 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="en">
 <context>
-    <name>AutosaveDialog</name>
+    <name>OpenOrienteering::AutosaveDialog</name>
     <message numerus="yes">
-        <location filename="../src/gui/autosave_dialog.cpp" line="45"/>
-        <location filename="../src/gui/autosave_dialog.cpp" line="51"/>
+        <location filename="../src/gui/autosave_dialog.cpp" line="48"/>
+        <location filename="../src/gui/autosave_dialog.cpp" line="54"/>
         <source>%n bytes</source>
         <translation>
             <numerusform>%n byte</numerusform>
@@ -14,9 +14,9 @@
     </message>
 </context>
 <context>
-    <name>Importer</name>
+    <name>OpenOrienteering::Importer</name>
     <message numerus="yes">
-        <location filename="../src/fileformats/file_import_export.cpp" line="103"/>
+        <location filename="../src/fileformats/file_import_export.cpp" line="105"/>
         <source>Dropped %n irregular object(s).</source>
         <translation>
             <numerusform>Dropped one irregular object.</numerusform>
@@ -25,9 +25,9 @@
     </message>
 </context>
 <context>
-    <name>MapEditorController</name>
+    <name>OpenOrienteering::MapEditorController</name>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="1619"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1623"/>
         <source>Cut %n object(s)</source>
         <extracomment>Past tense. Displayed when an Edit &gt; Cut operation is completed.</extracomment>
         <translation>
@@ -36,7 +36,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="1672"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1676"/>
         <source>Copied %n object(s)</source>
         <translation>
             <numerusform>Copied one object</numerusform>
@@ -44,7 +44,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="1712"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1716"/>
         <source>Pasted %n object(s)</source>
         <translation>
             <numerusform>Pasted one object</numerusform>
@@ -52,7 +52,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="2491"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2495"/>
         <source>Duplicated %n object(s)</source>
         <translation>
             <numerusform>Duplicated one object</numerusform>
@@ -61,9 +61,9 @@
     </message>
 </context>
 <context>
-    <name>OCAD8FileImport</name>
+    <name>OpenOrienteering::OCAD8FileImport</name>
     <message numerus="yes">
-        <location filename="../src/fileformats/ocad8_file_format.cpp" line="147"/>
+        <location filename="../src/fileformats/ocad8_file_format.cpp" line="149"/>
         <source>%n color separation(s) were skipped, reason: Import disabled.</source>
         <translation>
             <numerusform>One color separation was skipped, reason: Import disabled.</numerusform>
@@ -72,13 +72,13 @@
     </message>
 </context>
 <context>
-    <name>OgrFileImport</name>
+    <name>OpenOrienteering::OgrFileImport</name>
     <message numerus="yes">
-        <location filename="../src/gdal/ogr_file_format.cpp" line="496"/>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="501"/>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="506"/>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="511"/>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="516"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="500"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="505"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="510"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="515"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="520"/>
         <source>Unable to load %n objects, reason: %1</source>
         <translation>
             <numerusform>Unable to load one object, reason: %1</numerusform>
@@ -87,9 +87,9 @@
     </message>
 </context>
 <context>
-    <name>TagSelectWidget</name>
+    <name>OpenOrienteering::TagSelectWidget</name>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_find_feature.cpp" line="229"/>
+        <location filename="../src/gui/map/map_find_feature.cpp" line="231"/>
         <source>%n object(s) selected</source>
         <translation>
             <numerusform>One object selected</numerusform>
@@ -98,9 +98,9 @@
     </message>
 </context>
 <context>
-    <name>TemplateTrack</name>
+    <name>OpenOrienteering::TemplateTrack</name>
     <message numerus="yes">
-        <location filename="../src/templates/template_track.cpp" line="529"/>
+        <location filename="../src/templates/template_track.cpp" line="532"/>
         <source>%n path object(s) could not be imported (reason: missing coordinates).</source>
         <translation>
             <numerusform>One path object could not be imported (reason: missing coordinates).</numerusform>
