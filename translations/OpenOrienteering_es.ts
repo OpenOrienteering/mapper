@@ -4625,7 +4625,7 @@ selecc</translation>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="105"/>
         <source>Query editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Editor de consultas</translation>
     </message>
 </context>
 <context>
@@ -5190,7 +5190,7 @@ zoom usando la rueda del ratón, si dispone de esos elementos.</translation>
         <location filename="../src/core/objects/object_query.cpp" line="307"/>
         <source>Text</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished">Texto</translation>
+        <translation>Texto</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="311"/>

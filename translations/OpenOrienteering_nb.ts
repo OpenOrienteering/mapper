@@ -969,7 +969,7 @@
         <location filename="../src/tools/draw_path_tool.cpp" line="1189"/>
         <location filename="../src/tools/draw_path_tool.cpp" line="1216"/>
         <source>&lt;b&gt;%1+%2&lt;/b&gt;: Segment azimuth and length. </source>
-        <translation type="unfinished">&lt;b&gt;%1+%2&lt;/b&gt;: Segmentets retning og lengde. </translation>
+        <translation>&lt;b&gt;%1+%2&lt;/b&gt;: Segmentets asimut og lengde. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1205"/>
@@ -2320,7 +2320,7 @@
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="295"/>
         <source>Geospatial vector data</source>
-        <translation>Vektordata</translation>
+        <translation type="unfinished">Vektor-geoposisjonsdata</translation>
     </message>
 </context>
 <context>
@@ -3452,7 +3452,7 @@ Importer data likevel?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="892"/>
         <source>Assign new symbols by cross-reference table</source>
-        <translation type="unfinished">Tildel nye symboler med kryssreferansetabell</translation>
+        <translation>Tildel nye symboler i tråd med kryssreferansetabell</translation>
     </message>
     <message>
         <source>Tag Selection</source>
@@ -4952,12 +4952,12 @@ rull musehjulet for å zoome.</translation>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1889"/>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1900"/>
         <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
-        <translation type="unfinished">Koordinater justeres for å passe i OCAD-8 -tegneområdet (-2 m … 2 m).</translation>
+        <translation>Koordinater justeres for å passe i OCAD-8s tegneområde (-2 m … 2 m).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1911"/>
         <source>Some coordinates remain outside of the OCAD 8 drawing area. They might be unreachable in OCAD.</source>
-        <translation type="unfinished">Noen koordinater er fremdeles utenfor OCAD-8 -tegneområdet. De kan kanskje ikke leses i OCAD.</translation>
+        <translation>Noen koordinater er fremdeles utenfor OCAD-8s tegneområde. De kan kanskje ikke leses i OCAD.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="2182"/>
@@ -5175,13 +5175,13 @@ rull musehjulet for å zoome.</translation>
         <location filename="../src/core/objects/object_query.cpp" line="304"/>
         <source>Search</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished">Søk</translation>
+        <translation>Søk</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="307"/>
         <source>Text</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished">Tekst</translation>
+        <translation>Tekst</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="311"/>
@@ -5465,13 +5465,13 @@ rull musehjulet for å zoome.</translation>
         <location filename="../src/gdal/ogr_file_format.cpp" line="564"/>
         <source>Cannot use this spatial reference:
 %1</source>
-        <translation type="unfinished">Kan ikke bruke dette siktepunktet:
+        <translation type="unfinished">Kan ikke bruke denne posisjonsreferansen:
 %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="623"/>
         <source>The geospatial data has no suitable spatial reference.</source>
-        <translation type="unfinished">Geosiktedataen har ikke noe passende referansessytem.</translation>
+        <translation type="unfinished">Geoposisjonsdatasettet har ikke noe passende posisjonsreferanse.</translation>
     </message>
 </context>
 <context>
@@ -6205,7 +6205,7 @@ separations</source>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="132"/>
         <source>Edit the symbol set ID:</source>
-        <translation type="unfinished">Rediger symbolsett-ID-en:</translation>
+        <translation>Endre ID for symbolsettet:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="135"/>
@@ -6216,7 +6216,7 @@ separations</source>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="139"/>
         <source>Match by symbol name</source>
-        <translation type="unfinished">Jamfør etter symbolnavn</translation>
+        <translation>Jamfør etter symbolnavn</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="144"/>
@@ -6231,7 +6231,7 @@ separations</source>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="157"/>
         <source>Clear replacements</source>
-        <translation type="unfinished">Tøm erstatninger</translation>
+        <translation>Nullstill erstatninger</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="160"/>
@@ -6267,7 +6267,7 @@ separations</source>
 %1
 
 %2</source>
-        <translation type="unfinished">Kan ikke åpne filen:
+        <translation>Klarte ikke åpne filen:
 %1
 
 %2</translation>
@@ -8111,7 +8111,7 @@ Høyeste støttede versjon er %2.</translation>
         <location filename="../src/tools/tool_helpers.cpp" line="622"/>
         <source>%1°</source>
         <comment>degree</comment>
-        <translation type="unfinished">%1°</translation>
+        <translation>%1°</translation>
     </message>
     <message>
         <location filename="../src/tools/tool_helpers.cpp" line="623"/>

@@ -444,7 +444,7 @@
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="83"/>
         <source>Opacity</source>
-        <translation>Läpinäkyvyys</translation>
+        <translation>Läpinäkymättömyys</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="83"/>
@@ -1654,7 +1654,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="395"/>
         <source>Primary screen resolution in pixels:</source>
-        <translation>Ensisijainen näytön resoluutio pikseleissä:</translation>
+        <translation>Ensisijainen näytön erotuskyky pikseleissä:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="399"/>
@@ -5808,7 +5808,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="235"/>
         <source>Resolution:</source>
-        <translation>Resoluutio:</translation>
+        <translation>Erotuskyky:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="237"/>
@@ -7329,7 +7329,7 @@ Jos et aio piirtää taustakartalle, tämä ei ole ongelma.</translation>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="147"/>
         <source>Opacity</source>
-        <translation>Läpinäkyvyys</translation>
+        <translation>Läpinäkymättömyys</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="147"/>
