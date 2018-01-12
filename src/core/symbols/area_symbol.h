@@ -38,6 +38,8 @@ class QRectF;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 
+namespace OpenOrienteering {
+
 class AreaRenderable;
 class LineSymbol;
 class Map;
@@ -302,8 +304,6 @@ protected:
 
 
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(AreaSymbol::FillPattern::Options)
-
 inline
 bool AreaSymbol::FillPattern::rotatable() const
 {
@@ -315,6 +315,12 @@ AreaSymbol::FillPattern::Options AreaSymbol::FillPattern::clipping() const
 {
 	return flags & Option::AlternativeToClipping;
 }
+
+
+}  // namespace OpenOrienteering
+
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(OpenOrienteering::AreaSymbol::FillPattern::Options)
 
 
 #endif

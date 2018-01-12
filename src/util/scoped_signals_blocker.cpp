@@ -24,6 +24,8 @@
 #include <QObject>
 
 
+namespace OpenOrienteering {
+
 ScopedMultiSignalsBlocker::~ScopedMultiSignalsBlocker()
 {
 #ifdef MAPPER_DEVELOPMENT_BUILD
@@ -45,3 +47,6 @@ void ScopedMultiSignalsBlocker::add(QObject* object)
 	items.push_back( {object, object && object->blockSignals(true)} );
 	Q_ASSERT(!object || object->signalsBlocked());
 }
+
+
+}  // namespace OpenOrienteering

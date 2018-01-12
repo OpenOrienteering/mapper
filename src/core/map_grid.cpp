@@ -31,6 +31,11 @@
 #include "util/util.h"
 #include "util/xml_stream_util.h"
 
+
+namespace OpenOrienteering {
+
+namespace {
+
 struct ProcessLine
 {
 	QPainter* painter;
@@ -41,6 +46,10 @@ void ProcessLine::processLine(QPointF a, QPointF b)
 {
 	painter->drawLine(a, b);
 }
+
+
+}  // namespace
+
 
 // ### MapGrid ###
 
@@ -215,3 +224,6 @@ bool operator!=(const MapGrid& lhs, const MapGrid& rhs)
 {
 	return !(lhs == rhs);
 }
+
+
+}  // namespace

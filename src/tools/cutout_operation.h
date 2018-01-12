@@ -26,6 +26,8 @@
 
 #include "core/objects/boolean_tool.h"
 
+namespace OpenOrienteering {
+
 class AddObjectsUndoStep;
 class Map;
 class Object;
@@ -87,5 +89,7 @@ private:
 	bool cut_away;
 };
 
+
+}  // namespace OpenOrienteering
 
 #endif

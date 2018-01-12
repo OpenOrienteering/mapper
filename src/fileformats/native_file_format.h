@@ -26,10 +26,14 @@
 
 #include "fileformats/file_format.h"
 
+class QIODevice;
+
 class Importer;
+
+namespace OpenOrienteering {
+
 class Map;
 class MapView;
-class QIODevice;
 
 
 /** Provides a description of the old native file format. 
@@ -73,5 +77,8 @@ public:
 };
 
 #endif // NO_NATIVE_FILE_FORMAT
+
+
+}  // namespace OpenOrienteering
 
 #endif // NATIVE_FILE_FORMAT_H

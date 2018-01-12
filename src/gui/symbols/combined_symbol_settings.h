@@ -30,6 +30,8 @@
 
 class QSpinBox;
 
+namespace OpenOrienteering {
+
 class CombinedSymbol;
 class Symbol;
 class SymbolSettingDialog;
@@ -64,5 +66,8 @@ private:
 	struct Widgets;
 	std::vector<Widgets> widgets;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

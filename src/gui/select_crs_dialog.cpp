@@ -36,6 +36,8 @@
 #include "gui/widgets/crs_selector.h"
 
 
+namespace OpenOrienteering {
+
 namespace {
 
 enum SpecialCRS {
@@ -44,7 +46,10 @@ enum SpecialCRS {
 	Geographic = 3
 };
 
-}
+
+}  // namespace
+
+
 
 SelectCRSDialog::SelectCRSDialog(
         const Georeferencing& georef,
@@ -85,7 +90,7 @@ SelectCRSDialog::SelectCRSDialog(
 		form_layout->addRow(new QLabel(description));
 		form_layout->addItem(Util::SpacerItem::create(this));
 	}
-	form_layout->addRow(QCoreApplication::translate("GeoreferencingDialog", "&Coordinate reference system:"), crs_selector);
+	form_layout->addRow(QCoreApplication::translate("OpenOrienteering::GeoreferencingDialog", "&Coordinate reference system:"), crs_selector);
 	form_layout->addRow(tr("Status:"), status_label);
 	form_layout->addItem(Util::SpacerItem::create(this));
 	crs_selector->setDialogLayout(form_layout);
@@ -135,3 +140,6 @@ void SelectCRSDialog::updateWidgets()
 	else
 		status_label->setText(QLatin1String("<b style=\"color:red\">") + georef.getErrorText() + QLatin1String("</b>"));
 }
+
+
+}  // namespace OpenOrienteering

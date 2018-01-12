@@ -30,6 +30,9 @@
 #include "settings.h"
 #include "gui/util_gui.h"
 
+
+namespace OpenOrienteering {
+
 ActionGridBar::ActionGridBar(Direction direction, int rows, QWidget* parent)
 : QWidget(parent)
 {
@@ -266,3 +269,6 @@ void ActionGridBar::resizeEvent(QResizeEvent* event)
 	
 	event->accept();
 }
+
+
+}  // namespace OpenOrienteering

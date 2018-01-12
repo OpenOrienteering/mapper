@@ -165,8 +165,10 @@
 #include "util/backports.h" // IWYU pragma: keep
 
 
-namespace
-{
+namespace OpenOrienteering {
+
+namespace {
+	
 	/**
 	 * Creates a partial, resizable widget overlay over the main window.
 	 * 
@@ -212,7 +214,8 @@ namespace
 		});
 	}
 	
-} // namespace
+	
+}  // namespace
 
 
 
@@ -224,7 +227,8 @@ QString OpenOrienteeringObjects()
 	return QStringLiteral("openorienteering/objects");
 }
 
-}
+
+}  // namespace MimeType
 
 
 
@@ -859,7 +863,7 @@ void MapEditorController::createActions()
 	select_all_act = newAction("select-all", tr("Select all"), this, SLOT(selectAll()), nullptr, QString{}, "edit_menu.html");
 	select_nothing_act = newAction("select-nothing", tr("Select nothing"), this, SLOT(selectNothing()), nullptr, QString{}, "edit_menu.html");
 	invert_selection_act = newAction("invert-selection", tr("Invert selection"), this, SLOT(invertSelection()), nullptr, QString{}, "edit_menu.html");
-	select_by_current_symbol_act = newAction("select-by-symbol", QApplication::translate("SymbolRenderWidget", "Select all objects with selected symbols"), this, SLOT(selectByCurrentSymbols()), nullptr, QString{}, "edit_menu.html");
+	select_by_current_symbol_act = newAction("select-by-symbol", QApplication::translate("OpenOrienteering::SymbolRenderWidget", "Select all objects with selected symbols"), this, SLOT(selectByCurrentSymbols()), nullptr, QString{}, "edit_menu.html");
 	find_feature.reset(new MapFindFeature(*this));
 	
 	clear_undo_redo_history_act = newAction("clearundoredohistory", tr("Clear undo / redo history"), this, SLOT(clearUndoRedoHistory()), nullptr, tr("Clear the undo / redo history to reduce map file size."), "edit_menu.html");
@@ -1279,7 +1283,7 @@ void MapEditorController::createMobileGUI()
 	
 	mobile_symbol_button_menu = new QMenu(window);
 	mobile_symbol_button_menu->addAction(QString{}); // reserved for symbol name
-	auto description_action = mobile_symbol_button_menu->addAction(QApplication::translate("SymbolPropertiesWidget", "Description"));
+	auto description_action = mobile_symbol_button_menu->addAction(QApplication::translate("OpenOrienteering::SymbolPropertiesWidget", "Description"));
 	connect(description_action, &QAction::triggered, [this]() {
 		auto symbol = symbol_widget->getSingleSelectedSymbol();
 		auto document = QString{ symbol->getNumberAsString() + QLatin1Char(' ')
@@ -1292,7 +1296,7 @@ void MapEditorController::createMobileGUI()
 		description_dialog.exec();
 	});
 	mobile_symbol_button_menu->addSeparator();
-	auto hide_symbol_action = mobile_symbol_button_menu->addAction(QApplication::translate("SymbolRenderWidget", "Hide objects with this symbol"));
+	auto hide_symbol_action = mobile_symbol_button_menu->addAction(QApplication::translate("OpenOrienteering::SymbolRenderWidget", "Hide objects with this symbol"));
 	hide_symbol_action->setCheckable(true);
 	connect(hide_symbol_action, &QAction::triggered, [this](bool value) {
 		auto symbol = symbol_widget->getSingleSelectedSymbol();
@@ -1303,7 +1307,7 @@ void MapEditorController::createMobileGUI()
 		map->setSymbolsDirty();
 		selectedSymbolsChanged();
 	});
-	auto protected_symbol_action = mobile_symbol_button_menu->addAction(QApplication::translate("SymbolRenderWidget", "Protect objects with this symbol"));
+	auto protected_symbol_action = mobile_symbol_button_menu->addAction(QApplication::translate("OpenOrienteering::SymbolRenderWidget", "Protect objects with this symbol"));
 	protected_symbol_action->setCheckable(true);
 	connect(protected_symbol_action, &QAction::triggered, [this](bool value) {
 		auto symbol = symbol_widget->getSingleSelectedSymbol();
@@ -3944,15 +3948,17 @@ bool MapEditorController::importMapFile(const QString& filename, bool show_error
 			QFile crt_file{ crt_filename };
 			if (!crt_file.open(QFile::ReadOnly))
 			{
-				QMessageBox::warning(window, Map::tr("Error"),
-				                     Map::tr("Cannot open file:\n%1\nfor reading.").arg(crt_filename));
+				QMessageBox::warning(window,
+				                     ::OpenOrienteering::Map::tr("Error"),
+				                     ::OpenOrienteering::Map::tr("Cannot open file:\n%1\nfor reading.").arg(crt_filename));
 				return false;
 			}
 			if (!ReplaceSymbolSetDialog::showDialogForCRT(window, imported_map, *map, crt_file))
 			{
-				auto choice = QMessageBox::question(window, Map::tr("Import..."),
-				                                    Map::tr("Symbol replacement was canceled.\n"
-				                                            "Import the data anyway?"),
+				auto choice = QMessageBox::question(window,
+				                                    ::OpenOrienteering::Map::tr("Import..."),
+				                                    ::OpenOrienteering::Map::tr("Symbol replacement was canceled.\n"
+				                                                                "Import the data anyway?"),
 				                                    QMessageBox::Yes | QMessageBox::No,
 				                                    QMessageBox::No);
 				if (choice == QMessageBox::No)
@@ -4051,3 +4057,6 @@ void MapEditorToolAction::triggeredImpl(bool checked)
 	else
 		setChecked(true);
 }
+
+
+}  // namespace OpenOrienteering

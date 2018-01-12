@@ -39,6 +39,8 @@
 #include "util/util.h"
 
 
+namespace OpenOrienteering {
+
 // ### NativeFileImport declaration ###
 
 /** An Importer for the native file format. This class delegates to the load() and loadImpl() methods of the
@@ -90,7 +92,7 @@ const int NativeFileFormat::current_file_format_version = 30;
 const char NativeFileFormat::magic_bytes[4] = {0x4F, 0x4D, 0x41, 0x50};	// "OMAP"
 
 NativeFileFormat::NativeFileFormat()
- : FileFormat(FileFormat::MapFile, "native (deprecated)", ImportExport::tr("OpenOrienteering Mapper").append(QLatin1String(" pre-0.5")), QString::fromLatin1("omap"),
+ : FileFormat(FileFormat::MapFile, "native (deprecated)", ::OpenOrienteering::ImportExport::tr("OpenOrienteering Mapper").append(QLatin1String(" pre-0.5")), QString::fromLatin1("omap"),
               FileFormat::ImportSupported)
 {
 	// Nothing
@@ -121,7 +123,7 @@ NativeFileImport::~NativeFileImport()
 
 void NativeFileImport::import(bool load_symbols_only)
 {
-    addWarning(Importer::tr("This file uses an obsolete format. "
+    addWarning(::OpenOrienteering::Importer::tr("This file uses an obsolete format. "
                             "Support for this format is to be removed from this program soon. "
                             "To be able to open the file in the future, save it again."));
 
@@ -134,15 +136,15 @@ void NativeFileImport::import(bool load_symbols_only)
     stream->read((char*)&version, sizeof(int));
     if (version < 0)
     {
-        addWarning(Importer::tr("Invalid file format version."));
+        addWarning(::OpenOrienteering::Importer::tr("Invalid file format version."));
     }
     else if (version < NativeFileFormat::least_supported_file_format_version)
     {
-        throw FileFormatException(Importer::tr("Unsupported old file format version. Please use an older program version to load and update the file."));
+        throw FileFormatException(::OpenOrienteering::Importer::tr("Unsupported old file format version. Please use an older program version to load and update the file."));
     }
     else if (version > NativeFileFormat::current_file_format_version)
     {
-        throw FileFormatException(Importer::tr("Unsupported new file format version. Some map features will not be loaded or saved by this version of the program. Consider updating."));
+        throw FileFormatException(::OpenOrienteering::Importer::tr("Unsupported new file format version. Some map features will not be loaded or saved by this version of the program. Consider updating."));
     }
 
     if (version <= 16)
@@ -198,7 +200,7 @@ void NativeFileImport::import(bool load_symbols_only)
 		if (geographic_crs_spec != Georeferencing::geographic_crs_spec)
 		{
 			addWarning(
-			  Importer::tr("The geographic coordinate reference system of the map was \"%1\". This CRS is not supported. Using \"%2\".").
+			  ::OpenOrienteering::Importer::tr("The geographic coordinate reference system of the map was \"%1\". This CRS is not supported. Using \"%2\".").
 			  arg(geographic_crs_spec, Georeferencing::geographic_crs_spec)
 			);
 		}
@@ -316,12 +318,12 @@ void NativeFileImport::import(bool load_symbols_only)
         Symbol* symbol = Symbol::getSymbolForType(static_cast<Symbol::Type>(symbol_type));
         if (!symbol)
         {
-            throw FileFormatException(Importer::tr("Error while loading a symbol with type %2.").arg(symbol_type));
+            throw FileFormatException(::OpenOrienteering::Importer::tr("Error while loading a symbol with type %2.").arg(symbol_type));
         }
 
         if (!symbol->load(stream, version, map))
         {
-            throw FileFormatException(Importer::tr("Error while loading a symbol."));
+            throw FileFormatException(::OpenOrienteering::Importer::tr("Error while loading a symbol."));
         }
         map->symbols[i] = symbol;
     }
@@ -393,7 +395,7 @@ void NativeFileImport::import(bool load_symbols_only)
 		{
 			if (!map->undoManager().load(stream, version))
 			{
-				throw FileFormatException(Importer::tr("Error while loading undo steps."));
+				throw FileFormatException(::OpenOrienteering::Importer::tr("Error while loading undo steps."));
 			}
 		}
 
@@ -403,7 +405,7 @@ void NativeFileImport::import(bool load_symbols_only)
 		int num_parts;
 		if (stream->read((char*)&num_parts, sizeof(int)) < (int)sizeof(int))
 		{
-			throw FileFormatException(Importer::tr("Error while reading map part count."));
+			throw FileFormatException(::OpenOrienteering::Importer::tr("Error while reading map part count."));
 		}
 		delete map->parts[0];
 		map->parts.resize(num_parts);
@@ -414,7 +416,7 @@ void NativeFileImport::import(bool load_symbols_only)
 			if (!part->load(stream, version, map))
 			{
 				delete part;
-				throw FileFormatException(Importer::tr("Error while loading map part %2.").arg(i+1));
+				throw FileFormatException(::OpenOrienteering::Importer::tr("Error while loading map part %2.").arg(i+1));
 			}
 			map->parts[i] = part;
 		}
@@ -423,5 +425,8 @@ void NativeFileImport::import(bool load_symbols_only)
 	emit map->currentMapPartIndexChanged(map->current_part_index);
 	emit map->currentMapPartChanged(map->getPart(map->current_part_index));
 }
+
+
+}  // namespace OpenOrienteering
 
 #endif

@@ -51,6 +51,8 @@
 class QChar;
 class QIODevice;
 
+namespace OpenOrienteering {
+
 class CombinedSymbol;
 class Georeferencing;
 class Map;
@@ -66,7 +68,7 @@ class Symbol;
  */
 class OcdFileImport : public Importer
 {
-	Q_DECLARE_TR_FUNCTIONS(OcdFileImport)
+	Q_DECLARE_TR_FUNCTIONS(OpenOrienteering::OcdFileImport)
 	
 protected:
 	/// Information about an OC*D rectangle symbol
@@ -457,5 +459,7 @@ MapColor *OcdFileImport::convertColor(int ocd_color)
 	return color_index[ocd_color];
 }
 
+
+}  // namespace OpenOrienteering
 
 #endif // OPENORIENTEERING_OCD_FILE_IMPORT

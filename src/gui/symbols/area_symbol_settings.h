@@ -37,6 +37,8 @@ class QListWidget;
 class QPushButton;
 class QToolButton;
 
+namespace OpenOrienteering {
+
 class ColorDropDown;
 class Map;
 class MapEditorController;
@@ -115,5 +117,8 @@ private:
 	
 	QComboBox*      pattern_clipping_edit;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

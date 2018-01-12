@@ -28,6 +28,8 @@
 #include "gui/map/map_editor.h"
 
 
+namespace OpenOrienteering {
+
 MainWindowController::~MainWindowController() = default;
 
 
@@ -81,3 +83,6 @@ MainWindowController* MainWindowController::controllerForFile(const QString& fil
 	
 	return nullptr;
 }
+
+
+}  // namespace OpenOrienteering

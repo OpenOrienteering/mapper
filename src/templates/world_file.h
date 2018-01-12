@@ -26,6 +26,8 @@
 #include <QTransform>
 
 
+namespace OpenOrienteering {
+
 /**
  * Handles pixel-to-world transformations given by world files.
  * 
@@ -46,5 +48,8 @@ struct WorldFile
 	/// Tries to find and load a world file for the given image path.
 	bool tryToLoadForImage(const QString& image_path);
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

@@ -28,6 +28,9 @@
 
 #include "settings.h"
 
+
+namespace OpenOrienteering {
+
 AutosavePrivate::AutosavePrivate(Autosave& document)
 : document(document)
 , autosave_needed(false)
@@ -135,3 +138,6 @@ bool Autosave::autosaveNeeded() const
 {
 	return autosave_controller->autosaveNeeded();
 }
+
+
+}  // namespace OpenOrienteering

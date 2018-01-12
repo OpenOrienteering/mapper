@@ -32,6 +32,8 @@ class QStackedWidget;
 class QTabWidget;
 class QWidget;
 
+namespace OpenOrienteering {
+
 class SettingsPage;
 
 
@@ -98,5 +100,8 @@ private:
 	 */
 	QDialogButtonBox* button_box;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

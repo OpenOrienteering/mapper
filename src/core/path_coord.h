@@ -28,6 +28,8 @@
 
 #include "map_coord.h"
 
+namespace OpenOrienteering {
+
 class PathCoordVector;
 
 
@@ -285,5 +287,8 @@ SplitPathCoord SplitPathCoord::at(const PathCoordVector& path_coords, SplitPathC
 {
 	return at(length, begin(path_coords));
 }
+
+
+}  // namespace OpenOrienteering
 
 #endif

@@ -24,6 +24,8 @@
 
 #include "core/autosave.h"
 
+using namespace OpenOrienteering;
+
 
 /**
  * @test A simple document class for AutosaveTest.

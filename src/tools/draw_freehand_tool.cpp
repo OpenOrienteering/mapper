@@ -38,6 +38,8 @@
 #include "tools/tool.h"
 
 
+namespace OpenOrienteering {
+
 DrawFreehandTool::DrawFreehandTool(MapEditorController* editor, QAction* tool_action, bool is_helper_tool)
 : DrawLineAndAreaTool(editor, DrawFreehand, tool_action, is_helper_tool)
 {
@@ -285,6 +287,9 @@ void DrawFreehandTool::updateStatusText()
 {
 	QString text;
 	text = tr("<b>Drag</b>: Draw a path. ") +
-			MapEditorTool::tr("<b>%1</b>: Abort. ").arg(ModifierKey::escape());
+			OpenOrienteering::MapEditorTool::tr("<b>%1</b>: Abort. ").arg(ModifierKey::escape());
 	setStatusBarText(text);
 }
+
+
+}  // namespace OpenOrienteering

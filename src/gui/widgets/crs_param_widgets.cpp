@@ -37,6 +37,8 @@
 // IWYU pragma: no_forward_declare QPushButton
 
 
+namespace OpenOrienteering {
+
 UTMZoneEdit::UTMZoneEdit(CRSParameterWidgetObserver& observer, QWidget* parent)
  : QWidget(parent)
  , observer(observer)
@@ -100,3 +102,6 @@ bool UTMZoneEdit::calculateValue()
 	
 	return !zone.isNull();
 }
+
+
+}  // namespace OpenOrienteering

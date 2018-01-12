@@ -83,6 +83,8 @@
 // IWYU pragma: no_forward_declare QTableWidgetItem
 
 
+namespace OpenOrienteering {
+
 ReplaceSymbolSetDialog::ReplaceSymbolSetDialog(QWidget* parent, Map& object_map, const Map& symbol_set, SymbolRuleSet& replacements, Mode mode)
  : QDialog{ parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint }
  , object_map{ object_map }
@@ -282,7 +284,7 @@ void ReplaceSymbolSetDialog::openCrtFile(const QString& path)
 					stream.setStatus(QTextStream::ReadCorruptData);
 					auto error_msg = tr("There are multiple replacements for symbol %1.")
 					                 .arg(item.query.symbolOperand()->getNumberAsString());
-					QMessageBox::warning(this, Map::tr("Error"),
+					QMessageBox::warning(this, ::OpenOrienteering::Map::tr("Error"),
 					  tr("Cannot open file:\n%1\n\n%2").arg(path, error_msg) );
 					return;
 				}
@@ -340,7 +342,7 @@ bool ReplaceSymbolSetDialog::saveCrtFile()
 			return true;
 		}
 		/// \todo Reused translation, consider generalized context
-		QMessageBox::warning(this, Map::tr("Error"),
+		QMessageBox::warning(this, ::OpenOrienteering::Map::tr("Error"),
 		                     tr("Cannot save file:\n%1\n\n%2")
 		                     .arg(path, crt_file.errorString()) );
 	}
@@ -420,27 +422,27 @@ void ReplaceSymbolSetDialog::updateMappingTable()
 				{
 				case Symbol::Area:
 					original_icon = object_map.getUndefinedLine()->getIcon(&object_map);
-					original_string = QGuiApplication::translate("SymbolRenderWidget", "Area");
+					original_string = QGuiApplication::translate("OpenOrienteering::SymbolRenderWidget", "Area");
 					compatible_symbols = Symbol::getCompatibleTypes(replacement_symbol->getType());
 					break;
 				case Symbol::Combined:
 					original_icon = object_map.getUndefinedLine()->getIcon(&object_map);
-					original_string = QGuiApplication::translate("SymbolRenderWidget", "Combined");
+					original_string = QGuiApplication::translate("OpenOrienteering::SymbolRenderWidget", "Combined");
 					compatible_symbols = Symbol::getCompatibleTypes(replacement_symbol->getType());
 					break;
 				case Symbol::Line:
 					original_icon = object_map.getUndefinedLine()->getIcon(&object_map);
-					original_string = QGuiApplication::translate("SymbolRenderWidget", "Line");
+					original_string = QGuiApplication::translate("OpenOrienteering::SymbolRenderWidget", "Line");
 					compatible_symbols = Symbol::getCompatibleTypes(replacement_symbol->getType());
 					break;
 				case Symbol::Point:
 					original_icon = object_map.getUndefinedPoint()->getIcon(&object_map);
-					original_string = QGuiApplication::translate("SymbolRenderWidget", "Point");
+					original_string = QGuiApplication::translate("OpenOrienteering::SymbolRenderWidget", "Point");
 					compatible_symbols = Symbol::getCompatibleTypes(replacement_symbol->getType());
 					break;
 				case Symbol::Text:
 					original_icon = object_map.getUndefinedText()->getIcon(&object_map);
-					original_string = QGuiApplication::translate("SymbolRenderWidget", "Text");
+					original_string = QGuiApplication::translate("OpenOrienteering::SymbolRenderWidget", "Text");
 					compatible_symbols = Symbol::getCompatibleTypes(replacement_symbol->getType());
 					break;
 				case Symbol::AllSymbols:
@@ -702,3 +704,6 @@ QString ReplaceSymbolSetDialog::discoverCrtFile(const QString& source_id, const 
 #endif
 	return name;
 }
+
+
+}  // namespace OpenOrienteering

@@ -41,6 +41,8 @@
 #include "undo/object_undo.h"
 
 
+namespace OpenOrienteering {
+
 // ### MapEditorToolBase::EditedItem ###
 
 MapEditorToolBase::EditedItem::EditedItem(Object* active_object)
@@ -644,3 +646,6 @@ void MapEditorToolBase::updateConstrainedPositions()
 		angle_helper->getConstrainedCursorPositions(constrained_pos_map, constrained_pos_map, constrained_pos, cur_map_widget);
 	}
 }
+
+
+}  // namespace OpenOrienteering

@@ -64,6 +64,8 @@
 #include "util/backports.h"
 
 
+using namespace OpenOrienteering;
+
 namespace
 {
 

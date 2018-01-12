@@ -36,6 +36,8 @@ class QMouseEvent;
 class QPainter;
 class QRectF;
 
+namespace OpenOrienteering {
+
 class MapEditorController;
 class MapRenderables;
 class MapWidget;
@@ -141,5 +143,8 @@ bool EditLineTool::hoveringOverFrame() const
 {
 	return hover_state == OverFrame;
 }
+
+
+}  // namespace OpenOrienteering
 
 #endif

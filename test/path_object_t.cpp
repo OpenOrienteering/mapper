@@ -27,6 +27,8 @@
 #include "core/objects/object.h"
 #include "core/symbols/line_symbol.h"
 
+using namespace OpenOrienteering;
+
 
 class DummyPathObject : public PathObject
 {

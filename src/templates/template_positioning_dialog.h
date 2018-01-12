@@ -31,6 +31,8 @@ class QDoubleSpinBox;
 class QRadioButton;
 class QWidget;
 
+namespace OpenOrienteering {
+
 
 /**
  * Dialog allowing for positioning of a template.
@@ -53,5 +55,8 @@ private:
 	
 	Q_DISABLE_COPY(TemplatePositioningDialog)
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

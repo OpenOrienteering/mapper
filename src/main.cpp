@@ -56,9 +56,17 @@
 
 // IWYU pragma: no_forward_declare QTranslator
 
+using namespace OpenOrienteering;
+
 
 // From map.h
+
+namespace OpenOrienteering {
+
 extern QPointer<QTranslator> map_symbol_translator;
+
+}  // namespace OpenOrienteering
+
 
 
 #if MAPPER_USE_QTSINGLEAPPLICATION

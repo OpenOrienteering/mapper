@@ -32,6 +32,8 @@ class QShowEvent;
 class QToolButton;
 class QWidget;
 
+namespace OpenOrienteering {
+
 class ObjectQuery;
 
 
@@ -74,5 +76,8 @@ private:
 
 	Q_DISABLE_COPY(TagSelectWidget)
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

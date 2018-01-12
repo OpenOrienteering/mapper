@@ -38,6 +38,8 @@
 #include "util/backports.h"
 
 
+namespace OpenOrienteering {
+
 GPSDisplay::GPSDisplay(MapWidget* widget, const Georeferencing& georeferencing, QObject* parent)
  : QObject(parent)
  , widget(widget)
@@ -360,3 +362,6 @@ void GPSDisplay::updateMapWidget()
 	// TODO: Limit update region to union of old and new bounding rect
 	widget->update();
 }
+
+
+}  // namespace OpenOrienteering

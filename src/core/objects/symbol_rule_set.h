@@ -29,6 +29,8 @@
 
 class QTextStream;
 
+namespace OpenOrienteering {
+
 class Map;
 class Object;
 class Symbol;
@@ -190,7 +192,11 @@ public:
 	
 };
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(SymbolRuleSet::Options)
+
+}  // namespace OpenOrienteering
+
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(OpenOrienteering::SymbolRuleSet::Options)
 
 
 #endif // OPENORIENTEERING_SYMBOL_RULE_SET_H

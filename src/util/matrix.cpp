@@ -34,6 +34,8 @@
 #include "util/xml_stream_util.h"
 
 
+namespace OpenOrienteering {
+
 #ifndef NO_NATIVE_FILE_FORMAT
 
 void Matrix::load(QIODevice* file)
@@ -217,3 +219,6 @@ void Matrix::print() const
 	}
 	printf("\n");
 }
+
+
+}  // namespace OpenOrienteering

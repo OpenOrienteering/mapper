@@ -57,6 +57,8 @@
 #include "util/backports.h"
 
 
+namespace OpenOrienteering {
+
 // ### DetermineFontSizeDialog ###
 
 /**
@@ -65,7 +67,7 @@
 class DetermineFontSizeDialog
 {
 public:
-	Q_DECLARE_TR_FUNCTIONS(DetermineFontSizeDialog)
+	Q_DECLARE_TR_FUNCTIONS(OpenOrienteering::DetermineFontSizeDialog)
 };
 
 
@@ -104,7 +106,7 @@ TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* 
 	auto letter_size_layout = new QHBoxLayout();
 	letter_size_layout->setMargin(0);
 	
-	letter_size_layout->addWidget(new QLabel(DetermineFontSizeDialog::tr("Letter:")));
+	letter_size_layout->addWidget(new QLabel(::OpenOrienteering::DetermineFontSizeDialog::tr("Letter:")));
 	//: "A" is the default letter which is used for determining letter height.
 	letter_edit = new QLineEdit(DetermineFontSizeDialog::tr("A"));
 	letter_edit->setMaxLength(3);
@@ -112,7 +114,7 @@ TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* 
 	
 	letter_size_layout->addSpacing(8);
 	
-	letter_size_layout->addWidget(new QLabel(DetermineFontSizeDialog::tr("Height:")));
+	letter_size_layout->addWidget(new QLabel(::OpenOrienteering::DetermineFontSizeDialog::tr("Height:")));
 	letter_size_edit = Util::SpinBox::create(2, 0.01, 10000.0, tr("mm"));
 	letter_size_layout->addWidget(letter_size_edit);
 	
@@ -598,3 +600,6 @@ void TextSymbolSettings::reset(Symbol* symbol)
 	updateFramingContents();
 	updateCompatibilityContents();
 }
+
+
+}  // namespace OpenOrienteering

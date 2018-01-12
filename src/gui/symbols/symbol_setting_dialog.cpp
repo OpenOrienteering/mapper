@@ -49,6 +49,8 @@
 #include "templates/template_image.h"
 
 
+namespace OpenOrienteering {
+
 SymbolSettingDialog::SymbolSettingDialog(const Symbol* source_symbol, Map* source_map, QWidget* parent)
 : QDialog(parent, Qt::CustomizeWindowHint | Qt::WindowTitleHint | Qt::WindowMaximizeButtonHint)
 , source_map(source_map)
@@ -499,3 +501,6 @@ void SymbolSettingDialog::updateButtons()
 	ok_button->setEnabled(symbol_modified && symbol->getNumberComponent(0)>=0 && !symbol->getName().isEmpty());
 	reset_button->setEnabled(symbol_modified);
 }
+
+
+}  // namespace OpenOrienteering

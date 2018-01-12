@@ -45,6 +45,8 @@ class QMouseEvent;
 class QPainter;
 class QRectF;
 
+namespace OpenOrienteering {
+
 class ConstrainAngleToolHelper;
 class KeyButtonBar;
 class MapEditorController;
@@ -318,4 +320,5 @@ private:
 };
 
 
+}  // namespace OpenOrienteering
 #endif

@@ -28,6 +28,8 @@
 #include "tools/tool.h"
 
 
+namespace OpenOrienteering {
+
 GPSTemporaryMarkers::GPSTemporaryMarkers(MapWidget* widget, GPSDisplay* gps_display): QObject()
 {
 	this->widget = widget;
@@ -124,3 +126,6 @@ void GPSTemporaryMarkers::updateMapWidget()
 	// NOTE: could limit the updated area here
 	widget->update();
 }
+
+
+}  // namespace OpenOrienteering

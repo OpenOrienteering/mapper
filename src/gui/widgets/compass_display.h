@@ -32,6 +32,8 @@ class QHideEvent;
 class QPaintEvent;
 class QShowEvent;
 
+namespace OpenOrienteering {
+
 
 /**
  * A widget which displays a compass.
@@ -73,5 +75,8 @@ protected:
 	qreal azimuth;
 	QTime last_update_time;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

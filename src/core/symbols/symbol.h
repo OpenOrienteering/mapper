@@ -35,6 +35,8 @@ class QIODevice;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 
+namespace OpenOrienteering {
+
 class AreaSymbol;
 class CombinedSymbol;
 class LineSymbol;
@@ -54,11 +56,14 @@ class VirtualCoordVector;
 
 typedef QHash<QString, Symbol*> SymbolDictionary;
 
+
 // From gui/util_gui.h, but avoiding extra dependencies
-namespace Util
-{
-	QString plainText(QString maybe_markup);
-}
+namespace Util {
+
+QString plainText(QString maybe_markup);
+
+
+}  // namespace Util
 
 
 /**
@@ -461,8 +466,13 @@ private:
 	bool is_protected;
 };
 
-Q_DECLARE_METATYPE(const Symbol*)
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(Symbol::RenderableOptions)
+}  // namespace OpenOrienteering
+
+
+Q_DECLARE_METATYPE(const OpenOrienteering::Symbol*)
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(OpenOrienteering::Symbol::RenderableOptions)
+
 
 #endif

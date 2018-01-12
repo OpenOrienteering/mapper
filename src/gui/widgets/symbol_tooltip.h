@@ -35,6 +35,8 @@ class QShortcut;
 class QShowEvent;
 // IWYU pragma: no_forward_declare QWidget
 
+namespace OpenOrienteering {
+
 class Map;
 class Symbol;
 
@@ -139,5 +141,8 @@ private:
 	bool description_shown;    /// If true, the full description is visible.
 	
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

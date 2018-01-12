@@ -41,6 +41,8 @@
 #include "core/symbols/symbol.h"
 
 
+namespace OpenOrienteering {
+
 CombinedSymbol::CombinedSymbol()
 : Symbol{Symbol::Combined}
 , private_parts{ false, false }
@@ -386,3 +388,6 @@ void CombinedSymbol::setPart(int i, const Symbol* symbol, bool is_private)
 	parts[index] = symbol;
 	private_parts[index] = symbol ? is_private : false;
 }
+
+
+}  // namespace OpenOrienteering

@@ -28,8 +28,9 @@
 #include "mapper_config.h"
 
 
-namespace MapperResource
-{
+namespace OpenOrienteering {
+
+namespace MapperResource {
 
 void setSeachPaths()
 {
@@ -78,4 +79,8 @@ void setSeachPaths()
 	QDir::setSearchPaths(QLatin1String("doc"), doc_paths);
 }
 
-} // namespace MapperResource
+
+}  // namespace MapperResource
+
+
+}  // namespace OpenOrienteering

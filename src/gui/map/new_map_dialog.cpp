@@ -58,6 +58,8 @@
 // IWYU pragma: no_forward_declare QVBoxLayout
 
 
+namespace OpenOrienteering {
+
 NewMapDialog::NewMapDialog(QWidget* parent) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
 {
 	this->setWhatsThis(Util::makeWhatThis("new_map.html"));
@@ -310,3 +312,6 @@ void NewMapDialog::loadSymbolSetDir(const QDir& symbol_set_dir)
 		item->second.append(symbol_set_files);
 	}
 }
+
+
+}  // namespace OpenOrienteering

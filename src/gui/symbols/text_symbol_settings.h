@@ -38,6 +38,8 @@ class QPushButton;
 class QRadioButton;
 class QWidget;
 
+namespace OpenOrienteering {
+
 class ColorDropDown;
 class Symbol;
 class SymbolSettingDialog;
@@ -126,5 +128,8 @@ private:
 	
 	bool react_to_changes;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

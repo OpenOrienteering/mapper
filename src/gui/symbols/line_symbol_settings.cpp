@@ -50,6 +50,8 @@
 #include "util/util.h"
 
 
+namespace OpenOrienteering {
+
 // ### LineSymbol ###
 
 SymbolPropertiesWidget* LineSymbol::createPropertiesWidget(SymbolSettingDialog* dialog)
@@ -784,3 +786,6 @@ void LineSymbolSettings::reset(Symbol* symbol)
 	setUpdatesEnabled(true);
 	old_symbol->cleanupPointSymbols();
 }
+
+
+}  // namespace OpenOrienteering

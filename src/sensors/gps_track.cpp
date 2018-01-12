@@ -34,6 +34,8 @@
 #include "util/dxfparser.h"
 
 
+namespace OpenOrienteering {
+
 // There is some (mis?)use of TrackPoint's gps_coord LatLon
 // as sort-of MapCoordF.
 // This function serves both for explicit conversion and highlighting.
@@ -414,7 +416,7 @@ bool Track::loadFromDXF(QFile* file, bool project_points, QWidget* dialog_parent
 	QString result = parser->parse();
 	if (!result.isEmpty())
 	{
-		QMessageBox::critical(dialog_parent, TemplateTrack::tr("Error reading"), TemplateTrack::tr("There was an error reading the DXF file %1:\n\n%2").arg(file->fileName(), result));
+		QMessageBox::critical(dialog_parent, OpenOrienteering::TemplateTrack::tr("Error reading"), OpenOrienteering::TemplateTrack::tr("There was an error reading the DXF file %1:\n\n%2").arg(file->fileName(), result));
 		delete parser;
 		return false;
 	}
@@ -425,7 +427,7 @@ bool Track::loadFromDXF(QFile* file, bool project_points, QWidget* dialog_parent
 	//       It does not fit here as this method is called again every time a map
 	//       containing a track is re-loaded, and in this case the question should
 	//       not be asked again.
-	//int res = QMessageBox::question(dialog_parent, TemplateTrack::tr("Question"), TemplateTrack::tr("Are the coordinates in the DXF file in degrees?"), QMessageBox::Yes|QMessageBox::No);
+	//int res = QMessageBox::question(dialog_parent, OpenOrienteering::TemplateTrack::tr("Question"), OpenOrienteering::TemplateTrack::tr("Are the coordinates in the DXF file in degrees?"), QMessageBox::Yes|QMessageBox::No);
 	for (auto&& path : paths)
 	{
 		if (path.type == POINT)
@@ -492,7 +494,7 @@ bool Track::loadFromOSM(QFile* file, bool project_points, QWidget* dialog_parent
 	{
 		if (xml.name() != QLatin1String("osm"))
 		{
-			QMessageBox::critical(dialog_parent, TemplateTrack::tr("Error"), TemplateTrack::tr("%1:\nNot an OSM file."));
+			QMessageBox::critical(dialog_parent, OpenOrienteering::TemplateTrack::tr("Error"), OpenOrienteering::TemplateTrack::tr("%1:\nNot an OSM file."));
 			return false;
 		}
 		else
@@ -501,15 +503,15 @@ bool Track::loadFromOSM(QFile* file, bool project_points, QWidget* dialog_parent
 			const double osm_version = attributes.value(QLatin1String("version")).toDouble();
 			if (osm_version < min_supported_version)
 			{
-				QMessageBox::critical(dialog_parent, TemplateTrack::tr("Error"),
-				                      TemplateTrack::tr("The OSM file has version %1.\nThe minimum supported version is %2.").arg(
+				QMessageBox::critical(dialog_parent, OpenOrienteering::TemplateTrack::tr("Error"),
+				                      OpenOrienteering::TemplateTrack::tr("The OSM file has version %1.\nThe minimum supported version is %2.").arg(
 				                          attributes.value(QLatin1String("version")).toString(), QString::number(min_supported_version, 'g', 1)));
 				return false;
 			}
 			if (osm_version > max_supported_version)
 			{
-				QMessageBox::critical(dialog_parent, TemplateTrack::tr("Error"),
-				                      TemplateTrack::tr("The OSM file has version %1.\nThe maximum supported version is %2.").arg(
+				QMessageBox::critical(dialog_parent, OpenOrienteering::TemplateTrack::tr("Error"),
+				                      OpenOrienteering::TemplateTrack::tr("The OSM file has version %1.\nThe maximum supported version is %2.").arg(
 				                          attributes.value(QLatin1String("version")).toString(), QString::number(max_supported_version, 'g', 1)));
 				return false;
 			}
@@ -609,7 +611,7 @@ bool Track::loadFromOSM(QFile* file, bool project_points, QWidget* dialog_parent
 	}
 	
 	if (node_problems > 0)
-		QMessageBox::warning(dialog_parent, TemplateTrack::tr("Problems"), TemplateTrack::tr("%1 nodes could not be processed correctly.").arg(node_problems));
+		QMessageBox::warning(dialog_parent, OpenOrienteering::TemplateTrack::tr("Problems"), OpenOrienteering::TemplateTrack::tr("%1 nodes could not be processed correctly.").arg(node_problems));
 	
 	return true;
 }
@@ -637,3 +639,6 @@ void Track::projectPoints()
 			segment_points[i].map_coord = map_georef.toMapCoordF(track_crs, fakeMapCoordF(segment_points[i].gps_coord), nullptr); // FIXME: check for errors
 	}
 }
+
+
+}  // namespace OpenOrienteering

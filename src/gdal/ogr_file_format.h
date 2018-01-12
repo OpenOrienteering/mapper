@@ -26,6 +26,8 @@
 
 class QIODevice;
 
+namespace OpenOrienteering {
+
 class Importer;
 class Map;
 class MapView;
@@ -60,5 +62,8 @@ public:
 	 */
 	Importer* createImporter(QIODevice* stream, Map *map, MapView *view) const override;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif // OPENORIENTEERING_OGR_FILE_FORMAT_H

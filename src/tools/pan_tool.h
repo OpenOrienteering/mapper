@@ -28,6 +28,8 @@
 
 class QAction;
 
+namespace OpenOrienteering {
+
 class MapEditorController;
 
 
@@ -50,5 +52,8 @@ protected:
 	void dragFinish() override;
 	void dragCanceled() override;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

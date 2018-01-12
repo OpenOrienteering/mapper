@@ -36,6 +36,8 @@ class QHideEvent;
 class QShowEvent;
 class QToolButton;
 
+namespace OpenOrienteering {
+
 
 /**
  * Shows a set of buttons for simulating keyboard input.
@@ -142,5 +144,8 @@ private:
 	
 	Q_DISABLE_COPY(KeyButtonBar)
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif // OPENORIENTEERING_KEY_BUTTON_BAR_H

@@ -35,6 +35,9 @@ class QIODevice;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 
+namespace OpenOrienteering {
+
+class LineSymbol;
 class Map;
 class MapColor;
 class MapColorMap;
@@ -52,8 +55,6 @@ class VirtualPath;
 using MapCoordVector = std::vector<MapCoord>;
 using MapCoordVectorF = std::vector<MapCoordF>;
 
-
-class LineSymbol;
 
 /** Settings for a line symbol's border. */
 struct LineSymbolBorder
@@ -374,5 +375,8 @@ protected:
 	LineSymbolBorder border;
 	LineSymbolBorder right_border;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

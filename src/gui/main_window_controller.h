@@ -28,6 +28,8 @@
 class QKeyEvent;
 class QWidget;
 
+namespace OpenOrienteering {
+
 class MainWindow;
 class FileFormat;
 
@@ -130,5 +132,8 @@ MainWindow* MainWindowController::getWindow() const
 {
 	return window;
 }
+
+
+}  // namespace OpenOrienteering
 
 #endif

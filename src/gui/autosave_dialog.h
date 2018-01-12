@@ -34,6 +34,8 @@ class QCloseEvent;
 class QListWidget;
 class QModelIndex;
 
+namespace OpenOrienteering {
+
 class MainWindow;
 
 
@@ -132,5 +134,8 @@ private:
 	QBoxLayout* layout;
 	QListWidget* list_widget;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif // OPENORIENTEERING_AUTOSAVE_DIALOG_H

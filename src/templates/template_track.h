@@ -40,6 +40,8 @@ class QWidget;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 
+namespace OpenOrienteering {
+
 class Georeferencing;
 class Map;
 class MapCoordF;
@@ -121,5 +123,8 @@ protected:
 private:
 	Q_DISABLE_COPY(TemplateTrack)
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

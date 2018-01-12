@@ -33,6 +33,8 @@ class QLabel;
 class QPainter;
 class QRectF;
 
+namespace OpenOrienteering {
+
 class GPSDisplay;
 class MapCoordF;
 class MapEditorController;
@@ -79,4 +81,6 @@ protected:
 	QPointer<QLabel> help_label;
 };
 
+
+}  // namespace OpenOrienteering
 #endif

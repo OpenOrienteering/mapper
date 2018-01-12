@@ -23,8 +23,9 @@
 class QString;
 class QTextCodec;
 
-namespace Util
-{
+namespace OpenOrienteering {
+
+namespace Util {
 
 /**
  * Determines the name of the 8-bit legacy codepage for a language.
@@ -48,6 +49,9 @@ const char* codepageForLanguage(const QString& language_name);
  */
 QTextCodec* codecForName(const char* name);
 
-}
+
+}  // namespace Util
+
+}  // namespace OpenOrienteering
 
 #endif

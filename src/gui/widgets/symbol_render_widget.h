@@ -43,10 +43,12 @@ class QPaintEvent;
 class QPainter;
 class QResizeEvent;
 
+namespace OpenOrienteering {
+
 class Map;
 class Symbol;
-class SymbolToolTip;
 class SymbolIconDecorator;
+class SymbolToolTip;
 
 
 /**
@@ -373,5 +375,8 @@ int SymbolRenderWidget::selectedSymbolsCount() const
 {
 	return (int)selected_symbols.size();
 }
+
+
+}  // namespace OpenOrienteering
 
 #endif

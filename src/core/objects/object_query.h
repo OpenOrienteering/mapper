@@ -28,6 +28,8 @@
 #include <QString>
 #include <QStringRef>
 
+namespace OpenOrienteering {
+
 class Object;
 class Symbol;
 
@@ -46,7 +48,7 @@ class Symbol;
  */
 class ObjectQuery
 {
-	Q_DECLARE_TR_FUNCTIONS(ObjectQuery)
+	Q_DECLARE_TR_FUNCTIONS(OpenOrienteering::ObjectQuery)
 	
 public:
 	enum Operator {
@@ -204,8 +206,6 @@ private:
 	
 };
 
-Q_DECLARE_METATYPE(ObjectQuery::Operator)
-
 bool operator==(const ObjectQuery& lhs, const ObjectQuery& rhs);
 
 bool operator!=(const ObjectQuery& lhs, const ObjectQuery& rhs);
@@ -275,5 +275,11 @@ bool operator!=(const ObjectQuery::StringOperands& lhs, const ObjectQuery::Strin
 {
 	return !(lhs==rhs);
 }
+
+
+}  // namespace OpenOrienteering
+
+Q_DECLARE_METATYPE(OpenOrienteering::ObjectQuery::Operator)
+
 
 #endif

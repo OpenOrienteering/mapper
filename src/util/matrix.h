@@ -30,6 +30,8 @@ class QString;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 
+namespace OpenOrienteering {
+
 
 /** Dynamically sized matrix of doubles. */
 class Matrix
@@ -195,4 +197,6 @@ private:
 	int m;
 };
 
+
+}  // namespace OpenOrienteering
 #endif

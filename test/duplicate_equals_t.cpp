@@ -28,6 +28,8 @@
 #include "core/map.h"
 #include "core/objects/object.h"
 
+using namespace OpenOrienteering;
+
 
 namespace
 {
@@ -36,7 +38,7 @@ static const auto test_files = {
   "data:test_map.omap",
 };
 
-} // namespace
+}  // namespace
 
 
 void DuplicateEqualsTest::initTestCase()

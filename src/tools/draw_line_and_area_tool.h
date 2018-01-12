@@ -35,6 +35,8 @@ class QEvent;
 class QPainter;
 class QRectF;
 
+namespace OpenOrienteering {
+
 class CombinedSymbol;
 class LineSymbol;
 struct LineSymbolBorder;
@@ -137,4 +139,6 @@ protected:
 	
 };
 
+
+}  // namespace OpenOrienteering
 #endif

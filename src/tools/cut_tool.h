@@ -28,9 +28,12 @@
 #include <QRectF>
 #include <QScopedPointer>
 
-class MapEditorController;
-class MapRenderables;
-class MapWidget;
+#include "core/map_coord.h"
+#include "core/path_coord.h"
+#include "core/objects/object.h"
+#include "tools/edit_tool.h"
+#include "tools/tool_base.h"
+
 class QAction;
 class QEvent;
 class QFocusEvent;
@@ -39,13 +42,12 @@ class QMouseEvent;
 class QPainter;
 class QRectF;
 
-#include "core/map_coord.h"
-#include "core/path_coord.h"
-#include "core/objects/object.h"
-#include "tools/tool_base.h"
-#include "tools/edit_tool.h"
+namespace OpenOrienteering {
 
 class DrawPathTool;
+class MapEditorController;
+class MapRenderables;
+class MapWidget;
 
 
 /**
@@ -145,5 +147,8 @@ protected:
 	 */
 	QScopedPointer<MapRenderables> renderables;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

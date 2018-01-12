@@ -46,11 +46,13 @@ class QPainter;
 class QPushButton;
 class QRect;
 
+namespace OpenOrienteering {
+
 class Map;
 class MapEditorController;
 class MapWidget;
-class Template;
 class PaintOnTemplatePaletteWidget;
+class Template;
 
 
 /** Tool to paint on image templates. */
@@ -143,5 +145,8 @@ private:
 	Template* selection;
 	QPushButton* draw_button;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

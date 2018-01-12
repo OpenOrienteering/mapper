@@ -48,21 +48,23 @@ class QToolBar;
 class QToolButton;
 class QWidget;
 
+namespace OpenOrienteering {
+
 class ActionGridBar;
 class CompassDisplay;
 class EditorDockWidget;
 class FileFormat;
-class GeoreferencingDialog;
-class MainWindow;
-class Map;
-class MapView;
-class MapWidget;
-class MapEditorActivity;
-class MapEditorTool;
-class MapFindFeature;
 class GPSDisplay;
 class GPSTemporaryMarkers;
 class GPSTrackRecorder;
+class GeoreferencingDialog;
+class MainWindow;
+class Map;
+class MapEditorActivity;
+class MapEditorTool;
+class MapFindFeature;
+class MapView;
+class MapWidget;
 class PrintWidget;
 class ReopenTemplateDialog;
 class Symbol;
@@ -782,5 +784,8 @@ Symbol* MapEditorController::activeSymbol() const
 {
 	return active_symbol;
 }
+
+
+}  // namespace OpenOrienteering
 
 #endif

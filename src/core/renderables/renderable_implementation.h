@@ -33,6 +33,8 @@
 class QPainter;
 class QPointF;
 
+namespace OpenOrienteering {
+
 class AreaSymbol;
 class LineSymbol;
 class MapColor;
@@ -143,5 +145,6 @@ const QPainterPath* AreaRenderable::painterPath() const
 }
 
 
+}  // namespace OpenOrienteering
 
 #endif

@@ -28,6 +28,8 @@
 #include "gui/widgets/home_screen_widget.h"
 
 
+namespace OpenOrienteering {
+
 HomeScreenController::HomeScreenController()
 : widget(nullptr)
 , current_tip(-1)
@@ -156,3 +158,6 @@ void HomeScreenController::goToTip(int index)
 		widget->setTipOfTheDay(tips[current_tip]);
 	}
 }
+
+
+}  // namespace OpenOrienteering

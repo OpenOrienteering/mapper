@@ -32,6 +32,8 @@
 #include "core/objects/object.h"
 
 
+namespace OpenOrienteering {
+
 ObjectSelector::ObjectSelector(Map* map)
  : map(map)
 {
@@ -177,3 +179,4 @@ bool ObjectSelector::selectionInfosEqual(const SelectionInfoVector& a, const Sel
 }
 
 
+}  // namespace OpenOrienteering

@@ -30,6 +30,9 @@
 #include "template.h"
 #include "gui/util_gui.h"
 
+
+namespace OpenOrienteering {
+
 ReopenTemplateDialog::ReopenTemplateDialog(QWidget* parent, Map* map, const QString& map_directory)
 : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
 , map(map)
@@ -163,3 +166,6 @@ void ReopenTemplateDialog::OpenTemplateList::dropEvent(QDropEvent* event)
 	// Always re-fill this list to update the list indices in the item data
 	dialog->updateClosedTemplateList();
 }
+
+
+}  // namespace OpenOrienteering

@@ -161,7 +161,7 @@ else()
 		endif()
 		add_custom_target(Mapper_${ts_filename}_update
 		  COMMAND "${Qt5_LUPDATE_EXECUTABLE}" ${lupdate_options} "@${listfile}" -ts "${CMAKE_CURRENT_SOURCE_DIR}/${translation}"
-		  COMMAND sed -i -e "/<name>Q[A-Z]/,/<context>/d" "${CMAKE_CURRENT_SOURCE_DIR}/${translation}"
+		  COMMAND sed -i -e "/<context>/N;/<name>Q[A-Z]/,/<.context>/d" "${CMAKE_CURRENT_SOURCE_DIR}/${translation}"
 		  VERBATIM
 		)
 		add_dependencies(Mapper_translations_update Mapper_${ts_filename}_update)

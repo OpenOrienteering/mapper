@@ -41,6 +41,8 @@
 #include "fileformats/xml_file_format.h"
 
 
+namespace OpenOrienteering {
+
 void writeLineBreak(QXmlStreamWriter& xml)
 {
 	if (!xml.autoFormatting())
@@ -196,7 +198,7 @@ void XmlElementReader::read(MapCoordVector& coords)
 			const QXmlStreamReader::TokenType token = xml.tokenType();
 			if (xml.error() || token == QXmlStreamReader::EndDocument)
 			{
-				throw FileFormatException(ImportExport::tr("Could not parse the coordinates."));
+				throw FileFormatException(::OpenOrienteering::ImportExport::tr("Could not parse the coordinates."));
 			}
 			else if (token == QXmlStreamReader::Characters && !xml.isWhitespace())
 			{
@@ -212,7 +214,7 @@ void XmlElementReader::read(MapCoordVector& coords)
 				{
 					Q_UNUSED(e)
 					qDebug("Could not parse the coordinates: %s", e.what());
-					throw FileFormatException(ImportExport::tr("Could not parse the coordinates."));
+					throw FileFormatException(::OpenOrienteering::ImportExport::tr("Could not parse the coordinates."));
 				}
 			}
 			else if (token == QXmlStreamReader::StartElement)
@@ -231,11 +233,14 @@ void XmlElementReader::read(MapCoordVector& coords)
 	}
 	catch (std::range_error &e)
 	{
-		throw FileFormatException(MapCoord::tr(e.what()));
+		throw FileFormatException(::OpenOrienteering::MapCoord::tr(e.what()));
 	}
 	
 	if (coords.size() != num_coords)
 	{
-		throw FileFormatException(ImportExport::tr("Expected %1 coordinates, found %2."));
+		throw FileFormatException(::OpenOrienteering::ImportExport::tr("Expected %1 coordinates, found %2."));
 	}
 }
+
+
+}  // namespace OpenOrienteering

@@ -37,6 +37,9 @@ class QListWidgetItem;
 class QPushButton;
 class QWidget;
 
+namespace OpenOrienteering {
+
+
 /**
  * Dialog for creating a new map.
  * Shows scale and symbol set selection.
@@ -130,4 +133,6 @@ private:
 	QPushButton* create_button;
 };
 
+
+}  // namespace OpenOrienteering
 #endif

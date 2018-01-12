@@ -28,6 +28,8 @@
 #include <QLatin1Char>
 
 
+namespace OpenOrienteering {
+
 // From crs_template_implementation.h/.cpp
 namespace CRSTemplates
 {
@@ -133,3 +135,6 @@ void CRSTemplateRegistry::add(std::unique_ptr<const CRSTemplate> temp)
 {
 	templates->push_back(std::move(temp));
 }
+
+
+}  // namespace OpenOrienteering

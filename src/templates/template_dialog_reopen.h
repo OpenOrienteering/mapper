@@ -32,6 +32,8 @@ class QDropEvent;
 class QPushButton;
 class QWidget;
 
+namespace OpenOrienteering {
+
 class Map;
 
 
@@ -73,5 +75,8 @@ private:
 	Map* map;
 	QString map_directory;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

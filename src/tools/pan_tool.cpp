@@ -30,6 +30,8 @@
 #include "tools/tool.h"
 
 
+namespace OpenOrienteering {
+
 PanTool::PanTool(MapEditorController* editor, QAction* tool_action)
  : MapEditorToolBase(QCursor(Qt::OpenHandCursor), Pan, editor, tool_action)
 {
@@ -82,3 +84,6 @@ void PanTool::objectSelectionChangedImpl()
 {
 	// Nothing
 }
+
+
+}  // namespace OpenOrienteering

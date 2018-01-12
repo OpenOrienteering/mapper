@@ -23,6 +23,9 @@
 #include <Qt>
 #include <QString>
 
+namespace OpenOrienteering {
+
+
 /**
  * A class that helps to deal efficiently with platform and localization issues
  * of modifier keys.
@@ -109,5 +112,7 @@ ModifierKey::operator QString() const
 	return native_text;
 }
 
+
+}  // namespace OpenOrienteering
 
 #endif

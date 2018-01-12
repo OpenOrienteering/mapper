@@ -23,7 +23,8 @@
 
 #include <QObject>
 
-class Object;
+namespace OpenOrienteering { class Object; }
+using OpenOrienteering::Object;
 
 
 /**

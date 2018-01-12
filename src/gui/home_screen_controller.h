@@ -25,8 +25,11 @@
 
 #include <QObject>
 
+namespace OpenOrienteering {
+
 class AbstractHomeScreenWidget;
 class MainWindow;
+
 
 /**
  * The controller of the OpenOrienteering Mapper home screen.
@@ -78,5 +81,8 @@ protected:
 	/** The index of the tip-of-the-day currently displayed. */
 	int current_tip;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

@@ -52,6 +52,8 @@
 #endif
 
 
+namespace OpenOrienteering {
+
 SettingsDialog::SettingsDialog(QWidget* parent)
  : QDialog        { parent }
  , tab_widget     { nullptr }
@@ -224,3 +226,6 @@ void SettingsDialog::buttonPressed(QAbstractButton* button)
 		qDebug("%s: Unexpected button '0x%x'", Q_FUNC_INFO, id);
 	}
 }
+
+
+}  // namespace OpenOrienteering

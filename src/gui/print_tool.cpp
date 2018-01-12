@@ -32,6 +32,8 @@
 #include "gui/map/map_widget.h"
 
 
+namespace OpenOrienteering {
+
 PrintTool::PrintTool(MapEditorController* editor, MapPrinter* map_printer)
 : MapEditorTool { editor, Other, nullptr }
 , map_printer   { map_printer }
@@ -375,3 +377,6 @@ void PrintTool::mouseMoved(MapCoordF mouse_pos_map, MapWidget* widget)
 }
 
 #endif // QT_PRINTSUPPORT_LIB
+
+
+}  // namespace OpenOrienteering

@@ -37,6 +37,8 @@ class QRectF;
 class QVariant;
 class QWidget;
 
+namespace OpenOrienteering {
+
 class MapCoordF;
 class MapEditorController;
 class MapWidget;
@@ -317,5 +319,7 @@ TextObject* TextObjectEditorHelper::object() const
 	return text_object;
 }
 
+
+}  // namespace OpenOrienteering
 
 #endif

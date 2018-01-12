@@ -36,9 +36,10 @@
 #include <QToolButton>
 
 
-namespace
-{
+namespace OpenOrienteering {
 
+namespace {
+	
 	int modifierFromKeyCode(Qt::Key key_code)
 	{
 		switch(key_code)
@@ -80,7 +81,8 @@ namespace
 		Q_UNREACHABLE();
 	}
 	
-}
+	
+}  // namespace
 
 
 
@@ -300,3 +302,6 @@ void KeyButtonBar::sendKeyReleaseEvent(Qt::Key key_code)
 	QKeyEvent event(QEvent::KeyRelease, key_code, active_modifiers);
 	QCoreApplication::sendEvent(receiver, &event);
 }
+
+
+}  // namespace OpenOrienteering

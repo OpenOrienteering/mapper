@@ -37,6 +37,8 @@
 #include "undo/undo.h"
 
 
+namespace OpenOrienteering {
+
 CutoutOperation::CutoutOperation(Map* map, PathObject* cutout_object, bool cut_away)
 : map(map)
 , cutout_object(cutout_object)
@@ -150,3 +152,6 @@ UndoStep* CutoutOperation::finish()
 	combined_step->push(delete_step);
 	return combined_step;
 }
+
+
+}  // namespace OpenOrienteering

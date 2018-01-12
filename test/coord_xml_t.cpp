@@ -26,6 +26,7 @@
 #include "fileformats/xml_file_format.h"
 #include "util/xml_stream_util.h"
 
+
 namespace literal
 {
 	static const QLatin1String x("x");
@@ -33,6 +34,8 @@ namespace literal
 	static const QLatin1String flags("flags");
 }
 
+
+namespace OpenOrienteering {
 
 void CoordXmlTest::initTestCase()
 {
@@ -1065,4 +1068,6 @@ bool CoordXmlTest::compare_all(MapCoordVector& coords, MapCoord& expected) const
 }
 
 
-QTEST_GUILESS_MAIN(CoordXmlTest)
+}  // namespace OpenOrienteering
+
+QTEST_GUILESS_MAIN(OpenOrienteering::CoordXmlTest)

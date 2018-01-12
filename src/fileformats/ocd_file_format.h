@@ -26,6 +26,8 @@
 
 class QIODevice;
 
+namespace OpenOrienteering {
+
 class Exporter;
 class Importer;
 class Map;
@@ -57,5 +59,8 @@ public:
 	/// \copydoc FileFormat::createExporter()
 	Exporter* createExporter(QIODevice* stream, Map* map, MapView* view) const override;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif // OPENORIENTEERING_OCD_FILE_FORMAT

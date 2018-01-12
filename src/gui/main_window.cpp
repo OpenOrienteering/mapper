@@ -64,6 +64,8 @@
 #include "util/backports.h"
 
 
+namespace OpenOrienteering {
+
 constexpr int MainWindow::max_recent_files;
 
 int MainWindow::num_open_files = 0;
@@ -1195,3 +1197,6 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 	
 	return false;
 }
+
+
+}  // namespace OpenOrienteering

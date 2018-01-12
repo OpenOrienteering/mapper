@@ -24,9 +24,12 @@
 #include <utility>
 #include <vector>
 
+namespace OpenOrienteering {
+
 class Map;
 class MapCoordF;
 class Object;
+
 using SelectionInfoVector = std::vector<std::pair<int, Object*>>;
 
 
@@ -71,5 +74,7 @@ private:
 	Map* map;
 };
 
+
+}  // namespace OpenOrienteering
 
 #endif

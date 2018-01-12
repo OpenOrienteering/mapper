@@ -29,6 +29,8 @@
 class QEvent;
 class QWidget;
 
+namespace OpenOrienteering {
+
 
 /**
  * OverridingShortcut is a variation of QShortcut which takes precedence over
@@ -75,5 +77,8 @@ private:
 	QElapsedTimer timer;
 	
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

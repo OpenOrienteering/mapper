@@ -29,6 +29,8 @@
 class QPainter;
 // IWYU pragma: no_forward_declare QPointF
 
+namespace OpenOrienteering {
+
 class MapCoordF;
 class MapWidget;
 class GPSDisplay;
@@ -66,5 +68,8 @@ private:
 	GPSDisplay* gps_display;
 	MapWidget* widget;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

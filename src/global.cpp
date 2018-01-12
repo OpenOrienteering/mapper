@@ -30,6 +30,8 @@
 #include "gdal/ogr_file_format.h"
 
 
+namespace OpenOrienteering {
+
 void doStaticInitializations()
 {
 	// Register the supported file formats
@@ -46,3 +48,6 @@ void doStaticInitializations()
 #endif
 #endif
 }
+
+
+}  // namespace OpenOrienteering

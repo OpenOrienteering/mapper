@@ -31,6 +31,8 @@ class QIODevice;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 
+namespace OpenOrienteering {
+
 class Map;
 class Object;
 
@@ -375,5 +377,8 @@ UndoStep* CombinedUndoStep::getSubStep(int i)
 {
 	return steps[i];
 }
+
+
+}  // namespace OpenOrienteering
 
 #endif

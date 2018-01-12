@@ -22,6 +22,8 @@
 #include <QCoreApplication>
 
 
+namespace OpenOrienteering {
+
 // ### FileFormatException ###
 
 // virtual
@@ -71,7 +73,7 @@ Importer *FileFormat::createImporter(QIODevice* stream, Map *map, MapView *view)
 	Q_UNUSED(stream);
 	Q_UNUSED(map);
 	Q_UNUSED(view);
-	throw FileFormatException(QCoreApplication::translate("Importer", "Format (%1) does not support import").arg(description()));
+	throw FileFormatException(QCoreApplication::translate("OpenOrienteering::Importer", "Format (%1) does not support import").arg(description()));
 }
 
 Exporter *FileFormat::createExporter(QIODevice* stream, Map *map, MapView *view) const
@@ -79,5 +81,8 @@ Exporter *FileFormat::createExporter(QIODevice* stream, Map *map, MapView *view)
 	Q_UNUSED(stream);
 	Q_UNUSED(map);
 	Q_UNUSED(view);
-	throw FileFormatException(QCoreApplication::translate("Exporter", "Format (%1) does not support export").arg(description()));
+	throw FileFormatException(QCoreApplication::translate("OpenOrienteering::Exporter", "Format (%1) does not support export").arg(description()));
 }
+
+
+}  // namespace OpenOrienteering

@@ -33,6 +33,8 @@ class QIODevice;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 
+namespace OpenOrienteering {
+
 class Map;
 class MapColor;
 class MapColorMap;
@@ -115,5 +117,8 @@ protected:
 	std::vector<const Symbol*> parts;
 	std::vector<int> temp_part_indices;	// temporary vector of the indices of the 'parts' symbols, used just for loading
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

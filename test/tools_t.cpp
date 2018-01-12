@@ -43,6 +43,8 @@
 #include "tools/edit_point_tool.h"
 #include "tools/edit_tool.h"
 
+using namespace OpenOrienteering;
+
 
 /// Creates a test map and provides pointers to specific map elements.
 /// NOTE: delete the map manually in case its ownership is not transferred to a MapEditorController or similar!

@@ -74,6 +74,8 @@
 #include "util/scoped_signals_blocker.h"
 
 
+namespace OpenOrienteering {
+
 // ### GeoreferencingDialog ###
 
 GeoreferencingDialog::GeoreferencingDialog(MapEditorController* controller, const Georeferencing* initial, bool allow_no_georeferencing)
@@ -765,3 +767,6 @@ const QCursor& GeoreferencingTool::getCursor() const
 	static auto const cursor = scaledToScreen(QCursor{ QPixmap{ QString::fromLatin1(":/images/cursor-crosshair.png") }, 11, 11 });
 	return cursor;
 }
+
+
+}  // namespace OpenOrienteering

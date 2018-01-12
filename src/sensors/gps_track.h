@@ -35,6 +35,8 @@ class QFile;
 class QWidget;
 class QXmlStreamWriter;
 
+namespace OpenOrienteering {
+
 
 /**
  * A point in a track or a waypoint, which stores position on ellipsoid and
@@ -174,5 +176,7 @@ const Track::ElementTags& Track::tags() const
 	return element_tags;
 }
 
+
+}  // namespace OpenOrienteering
 
 #endif

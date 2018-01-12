@@ -47,8 +47,11 @@ class QPrinter;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 
+namespace OpenOrienteering {
+
 class Map;
 class MapView;
+
 
 /** The MapPrinterPageFormat is a complete description of page properties. */
 class MapPrinterPageFormat
@@ -546,5 +549,8 @@ bool MapPrinter::separationsModeSelected() const
 }
 
 #endif
+
+
+}  // namespace OpenOrienteering
 
 #endif

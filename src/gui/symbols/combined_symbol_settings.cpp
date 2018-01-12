@@ -50,6 +50,8 @@
 #include "util/backports.h"
 
 
+namespace OpenOrienteering {
+
 // ### CombinedSymbol ###
 
 SymbolPropertiesWidget* CombinedSymbol::createPropertiesWidget(SymbolSettingDialog* dialog)
@@ -274,3 +276,6 @@ void CombinedSymbolSettings::showEditDialog(int index)
 		emit propertiesModified();
 	}
 }
+
+
+}  // namespace OpenOrienteering

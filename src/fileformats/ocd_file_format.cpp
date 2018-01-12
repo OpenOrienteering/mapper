@@ -32,10 +32,12 @@
 #include "fileformats/ocd_file_import.h"
 
 
+namespace OpenOrienteering {
+
 // ### OcdFileFormat ###
 
 OcdFileFormat::OcdFileFormat()
-: FileFormat { MapFile, "OCD", ImportExport::tr("OCAD"), QString::fromLatin1("ocd"),
+: FileFormat { MapFile, "OCD", ::OpenOrienteering::ImportExport::tr("OCAD"), QString::fromLatin1("ocd"),
                ImportSupported | ExportSupported | ExportLossy }
 {
 	// Nothing
@@ -59,3 +61,5 @@ Exporter* OcdFileFormat::createExporter(QIODevice* stream, Map* map, MapView* vi
 	return new OcdFileExport(stream, map, view);
 }
 
+
+}  // namespace OpenOrienteering

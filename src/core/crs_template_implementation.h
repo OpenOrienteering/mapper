@@ -33,14 +33,15 @@
 
 class QWidget;
 
+namespace OpenOrienteering {
+
 class LatLon;
 
 
 /**
  * This namespace collects CRS template implementations
  */
-namespace CRSTemplates
-{
+namespace CRSTemplates {
 
 /**
  * Creates and returns a list of known CRS Templates.
@@ -126,6 +127,9 @@ private:
 	const OutputList outputs;
 };
 
-} // namespace CRSTemplates
+
+}  // namespace CRSTemplates
+
+}  // namespace OpenOrienteering
 
 #endif

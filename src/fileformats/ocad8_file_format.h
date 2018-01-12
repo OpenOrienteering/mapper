@@ -26,6 +26,8 @@
 
 class QIODevice;
 
+namespace OpenOrienteering {
+
 class Exporter;
 class Importer;
 class Map;
@@ -43,5 +45,8 @@ public:
 	Importer* createImporter(QIODevice* stream, Map *map, MapView *view) const override;
 	Exporter* createExporter(QIODevice* stream, Map* map, MapView* view) const override;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif // OCAD8_FILE_IMPORT_H

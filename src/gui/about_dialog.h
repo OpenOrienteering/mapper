@@ -29,6 +29,8 @@ class QWidget;
 
 #include "gui/text_browser_dialog.h"
 
+namespace OpenOrienteering {
+
 
 /**
  * @brief A dialog which shows information about Mapper and its components.
@@ -59,5 +61,8 @@ protected:
 	 */
 	void updateWindowTitle() override;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

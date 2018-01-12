@@ -22,6 +22,9 @@
 
 #include <QImage>
 
+namespace OpenOrienteering {
+
+
 /**
  * ImageTransparencyFixup repairs a particular issue with composing
  * transparent pixels.
@@ -85,5 +88,8 @@ protected:
 	QRgb* dest;
 	QRgb* dest_end;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

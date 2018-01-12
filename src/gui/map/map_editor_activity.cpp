@@ -21,6 +21,8 @@
 #include "map_editor_activity.h"
 
 
+namespace OpenOrienteering {
+
 MapEditorActivity::~MapEditorActivity() = default;
 
 void MapEditorActivity::init()
@@ -33,3 +35,5 @@ void MapEditorActivity::draw(QPainter*, MapWidget*)
 	// nothing
 }
 
+
+}  // namespace OpenOrienteering

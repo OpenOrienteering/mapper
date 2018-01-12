@@ -36,6 +36,8 @@ class QPainter;
 class QPointF;
 class QRectF;
 
+namespace OpenOrienteering {
+
 class MapCoordF;
 class MapEditorController;
 class MapRenderables;
@@ -97,5 +99,8 @@ protected:
 	std::unique_ptr<PointObject> preview_object;
 	std::unique_ptr<MapRenderables> renderables;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

@@ -42,6 +42,8 @@
 #include "undo/undo_manager.h"
 #include "util/backports.h"
 
+using namespace OpenOrienteering;
+
 
 #ifdef QT_PRINTSUPPORT_LIB
 
@@ -325,7 +327,7 @@ namespace
 #endif
 	};
 	
-} // namespace
+}  // namespace
 
 
 

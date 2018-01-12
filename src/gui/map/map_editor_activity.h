@@ -25,6 +25,8 @@
 
 class QPainter;
 
+namespace OpenOrienteering {
+
 class MapWidget;
 
 
@@ -89,5 +91,7 @@ void* MapEditorActivity::getActivityObject() const
 	return activity_object;
 }
 
+
+}  // namespace OpenOrienteering
 
 #endif

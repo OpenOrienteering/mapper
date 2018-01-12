@@ -37,6 +37,8 @@ class QXmlStreamReader;
 class QXmlStreamWriter;
 // IWYU pragma: no_forward_declare QRectF
 
+namespace OpenOrienteering {
+
 class Map;
 class MapCoordF;
 class Object;
@@ -275,5 +277,7 @@ const Object* MapPart::getObject(int i) const
 	return objects[std::size_t(i)];
 }
 
+
+}  // namespace OpenOrienteering
 
 #endif

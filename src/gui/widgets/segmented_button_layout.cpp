@@ -24,6 +24,8 @@
 #include <QWidget>
 
 
+namespace OpenOrienteering {
+
 SegmentedButtonLayout::SegmentedButtonLayout()
  : QHBoxLayout()
 {
@@ -72,3 +74,6 @@ void SegmentedButtonLayout::invalidate()
 	
 	QHBoxLayout::invalidate();
 }
+
+
+}  // namespace OpenOrienteering

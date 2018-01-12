@@ -27,6 +27,8 @@
 
 class QXmlStreamWriter;
 
+namespace OpenOrienteering {
+
 
 /**
  * @test Benchmarks different implementations of saving and loading
@@ -105,5 +107,8 @@ private:
 	MapCoord proto_coord;
 	QBuffer buffer;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

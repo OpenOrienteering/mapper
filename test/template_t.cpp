@@ -37,6 +37,8 @@
 #include "templates/template.h"
 #include "templates/world_file.h"
 
+using namespace OpenOrienteering;
+
 
 /**
  * @test Tests template classes.

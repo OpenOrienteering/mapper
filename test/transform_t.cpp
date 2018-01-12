@@ -26,6 +26,8 @@
 #include "templates/template.h"
 #include "util/transformation.h"
 
+using namespace OpenOrienteering;
+
 
 TransformTest::TransformTest(QObject* parent)
 : QObject(parent)

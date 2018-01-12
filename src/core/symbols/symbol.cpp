@@ -56,6 +56,8 @@
 // IWYU pragma: no_include <QObject>
 
 
+namespace OpenOrienteering {
+
 Symbol::Symbol(Type type) noexcept
  : type { type }
  , number { -1, -1, -1 }
@@ -242,7 +244,7 @@ Symbol* Symbol::load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& sy
 	int symbol_type = xml.attributes().value(QLatin1String("type")).toInt();
 	Symbol* symbol = Symbol::getSymbolForType(static_cast<Symbol::Type>(symbol_type));
 	if (!symbol)
-		throw FileFormatException(ImportExport::tr("Error while loading a symbol of type %1 at line %2 column %3.").arg(symbol_type).arg(xml.lineNumber()).arg(xml.columnNumber()));
+		throw FileFormatException(::OpenOrienteering::ImportExport::tr("Error while loading a symbol of type %1 at line %2 column %3.").arg(symbol_type).arg(xml.lineNumber()).arg(xml.columnNumber()));
 	
 	QXmlStreamAttributes attributes = xml.attributes();
 	QString code = attributes.value(QLatin1String("code")).toString();
@@ -250,7 +252,7 @@ Symbol* Symbol::load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& sy
 	{
 		QString id = attributes.value(QLatin1String("id")).toString();
 		if (symbol_dict.contains(id)) 
-			throw FileFormatException(ImportExport::tr("Symbol ID '%1' not unique at line %2 column %3.").arg(id).arg(xml.lineNumber()).arg(xml.columnNumber()));
+			throw FileFormatException(::OpenOrienteering::ImportExport::tr("Symbol ID '%1' not unique at line %2 column %3.").arg(id).arg(xml.lineNumber()).arg(xml.columnNumber()));
 		
 		symbol_dict[id] = symbol;
 		
@@ -298,7 +300,7 @@ Symbol* Symbol::load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& sy
 	{
 		delete symbol;
 		throw FileFormatException(
-		            ImportExport::tr("Error while loading a symbol of type %1 at line %2 column %3: %4")
+		            ::OpenOrienteering::ImportExport::tr("Error while loading a symbol of type %1 at line %2 column %3: %4")
 		            .arg(symbol_type)
 		            .arg(xml.lineNumber())
 		            .arg(xml.columnNumber())
@@ -831,3 +833,6 @@ bool Symbol::compareByColor::operator() (const Symbol* s1, const Symbol* s2)
 	
 	return false; // s1 == s2
 }
+
+
+}  // namespace OpenOrienteering

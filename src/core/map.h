@@ -51,6 +51,8 @@ class QTranslator;
 class QWidget;
 // IWYU pragma: no_forward_declare QRectF
 
+namespace OpenOrienteering {
+
 class CombinedSymbol;
 class FileFormat;
 class Georeferencing;
@@ -89,7 +91,6 @@ Q_OBJECT
 friend class MapTest;
 friend class MapRenderables;
 friend class OCAD8FileImport;
-friend class XMLFileImport;
 friend class NativeFileImport;
 friend class NativeFileExport;
 friend class XMLFileImporter;
@@ -1560,12 +1561,9 @@ private:
 	static CombinedSymbol* covering_combined_line;
 };
 
-Q_DECLARE_METATYPE(const Map*)
 
 
 // ### Map inline code ###
-
-Q_DECLARE_OPERATORS_FOR_FLAGS(Map::ImportMode)
 
 inline
 int Map::getNumColors() const
@@ -1885,5 +1883,14 @@ TextSymbol* Map::getUndefinedText()
 {
 	return undefined_text;
 }
+
+
+}  // namespace OpenOrienteering
+
+
+Q_DECLARE_METATYPE(const OpenOrienteering::Map*)
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(OpenOrienteering::Map::ImportMode)
+
 
 #endif

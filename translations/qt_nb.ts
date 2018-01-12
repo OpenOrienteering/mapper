@@ -55,7 +55,7 @@
     </message>
     <message>
         <source>&amp;Sat:</source>
-        <translation type="unfinished">&amp;Metning:</translation>
+        <translation>&amp;Metning:</translation>
     </message>
     <message>
         <source>&amp;Val:</source>
@@ -84,7 +84,7 @@
     <message>
         <source>Cursor at %1, %2
 Press ESC to cancel</source>
-        <translation type="unfinished">Peker på %1, %2
+        <translation>Peker på %1, %2
 Trykk Esc for å avbryte</translation>
     </message>
     <message>
@@ -97,7 +97,7 @@ Trykk Esc for å avbryte</translation>
     </message>
     <message>
         <source>&amp;Basic colors</source>
-        <translation type="unfinished">&amp;Basisfarger</translation>
+        <translation>&amp;Grunnfarger</translation>
     </message>
     <message>
         <source>&amp;Custom colors</source>

@@ -29,6 +29,8 @@
 
 #include <clipper.hpp>
 
+namespace OpenOrienteering {
+
 class CombinedUndoStep;
 class Map;
 class PathCoord;
@@ -264,5 +266,8 @@ private:
 	const Operation op;
 	Map* const map;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

@@ -20,11 +20,13 @@
 
 #include "gps_track_recorder.h"
 
-#include "gps_display.h"
-#include "templates/template_track.h"
 #include "core/map.h"
 #include "gui/map/map_widget.h"
+#include "sensors/gps_display.h"
+#include "templates/template_track.h"
 
+
+namespace OpenOrienteering {
 
 GPSTrackRecorder::GPSTrackRecorder(GPSDisplay* gps_display, TemplateTrack* target_template, int draw_update_interval_milliseconds, MapWidget* widget)
  : QObject()
@@ -99,3 +101,6 @@ void GPSTrackRecorder::drawUpdate()
 		track_changed_since_last_update = false;
 	}
 }
+
+
+}  // namespace OpenOrienteering

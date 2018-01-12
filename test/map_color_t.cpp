@@ -32,6 +32,8 @@
 
 #include "core/map_color.h"
 
+using namespace OpenOrienteering;
+
 
 namespace QTest
 {

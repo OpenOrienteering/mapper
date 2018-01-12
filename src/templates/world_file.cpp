@@ -30,6 +30,8 @@
 #include <QTextStream>
 
 
+namespace OpenOrienteering {
+
 WorldFile::WorldFile()
 {
 	loaded = false;
@@ -99,3 +101,5 @@ bool WorldFile::tryToLoadForImage(const QString& image_path)
 	return false;
 }
 
+
+}  // namespace OpenOrienteering

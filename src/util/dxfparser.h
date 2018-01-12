@@ -33,6 +33,7 @@
 class QIODevice;
 class QPointF;
 
+namespace OpenOrienteering {
 
 struct DXFCoordinate
 {
@@ -153,5 +154,8 @@ DXFParser::DXFParser()
 {
 	; // nothing
 }
+
+
+}  // namespace OpenOrienteering
 
 #endif

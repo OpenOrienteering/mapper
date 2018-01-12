@@ -31,6 +31,8 @@ class QKeyEvent;
 class QPushButton;
 class QWidget;
 
+namespace OpenOrienteering {
+
 class TextObjectEditorHelper;
 
 
@@ -68,5 +70,8 @@ private:
 	int horizontal_alignment;
 	int vertical_alignment;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

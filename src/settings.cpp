@@ -31,6 +31,8 @@
 #include <QStringList>
 
 
+namespace OpenOrienteering {
+
 /*
  * Implementation for some functions which need a Settings instance.
  * 
@@ -322,3 +324,6 @@ int Settings::getStartDragDistancePx()
 {
 	return getSettingCached(Settings::General_StartDragDistance).toInt();
 }
+
+
+}  // namespace OpenOrienteering

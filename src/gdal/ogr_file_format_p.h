@@ -36,6 +36,8 @@
 
 class QFile;
 
+namespace OpenOrienteering {
+
 class AreaSymbol;
 class Georeferencing;
 class LatLon;
@@ -109,7 +111,7 @@ namespace ogr
  */
 class OgrFileImport : public Importer
 {
-	Q_DECLARE_TR_FUNCTIONS(OgrFileImport)
+	Q_DECLARE_TR_FUNCTIONS(OpenOrienteering::OgrFileImport)
 	
 public:
 	/**
@@ -271,5 +273,6 @@ MapCoord OgrFileImport::toMapCoord(double x, double y) const
 }
 
 
+}  // namespace OpenOrienteering
 
 #endif // OPENORIENTEERING_OGR_FILE_FORMAT_P_H

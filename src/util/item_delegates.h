@@ -36,6 +36,8 @@ class QTextDocument;
 class QStyleOptionViewItem;
 class QWidget;
 
+namespace OpenOrienteering {
+
 
 /**
  * An item delegate which respects colors from the model even when the item is selected.
@@ -242,5 +244,8 @@ protected:
 	 */
 	const Provider* const provider;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

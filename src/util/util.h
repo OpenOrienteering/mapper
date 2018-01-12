@@ -37,25 +37,6 @@ class QString;
 // IWYU pragma: no_forward_declare QPointF
 // IWYU pragma: no_forward_declare QRectF
 
-class MapCoordF;
-
-
-// clazy:excludeall=missing-qobject-macro
-
-
-/** Value to calculate the optimum handle distance of 4 cubic bezier curves
- *  used to approximate a circle. */
-#define BEZIER_KAPPA 0.5522847498
-
-/** When drawing a cubic bezier curve, the distance between start and end point
- *  is multiplied by this value to get the handle distance from start respectively
- *  end points.
- * 
- *  Calculated as BEZIER_HANDLE_DISTANCE = BEZIER_KAPPA / sqrt(2) */
-#define BEZIER_HANDLE_DISTANCE 0.390524291729
-
-
-
 namespace std
 {
 	/**
@@ -73,11 +54,32 @@ namespace std
 	template< class T >
 	constexpr double log2(T value)
 	{
-		static_assert(std::is_floating_point<T>::value,
+		static_assert(::std::is_floating_point<T>::value,
 					  "The argument to std::log2 must be called a floating point value");
 		return log(value)/M_LN2;
 	}
 }
+
+
+
+namespace OpenOrienteering {
+
+class MapCoordF;
+
+
+// clazy:excludeall=missing-qobject-macro
+
+
+/** Value to calculate the optimum handle distance of 4 cubic bezier curves
+ *  used to approximate a circle. */
+#define BEZIER_KAPPA 0.5522847498
+
+/** When drawing a cubic bezier curve, the distance between start and end point
+ *  is multiplied by this value to get the handle distance from start respectively
+ *  end points.
+ * 
+ *  Calculated as BEZIER_HANDLE_DISTANCE = BEZIER_KAPPA / sqrt(2) */
+#define BEZIER_HANDLE_DISTANCE 0.390524291729
 
 
 
@@ -303,5 +305,8 @@ namespace Util
 	}
 	
 }
+
+
+}  // namespace OpenOrienteering
 
 #endif

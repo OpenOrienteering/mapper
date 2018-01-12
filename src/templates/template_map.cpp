@@ -40,6 +40,8 @@
 #include "util/util.h"
 
 
+namespace OpenOrienteering {
+
 QStringList TemplateMap::locked_maps;
 
 const std::vector<QByteArray>& TemplateMap::supportedExtensions()
@@ -203,3 +205,6 @@ void TemplateMap::calculateTransformation()
 		/// \todo proper error message
 	}
 }
+
+
+}   // namespace OpenOrienteering

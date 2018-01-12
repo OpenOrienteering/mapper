@@ -45,6 +45,8 @@
 #include "undo/object_undo.h"
 
 
+namespace OpenOrienteering {
+
 CutHoleTool::CutHoleTool(MapEditorController* editor, QAction* tool_action, CutHoleTool::HoleType hole_type)
  : MapEditorTool(editor, Other, tool_action), hole_type(hole_type)
 {
@@ -247,3 +249,6 @@ void CutHoleTool::updateStatusText()
 		setStatusBarText(tr("<b>Click or drag</b>: Start drawing the hole. "));
 	}
 }
+
+
+}  // namespace OpenOrienteering

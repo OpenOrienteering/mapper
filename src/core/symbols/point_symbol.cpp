@@ -53,6 +53,8 @@
 // IWYU pragma: no_forward_declare QXmlStreamWriter
 
 
+namespace OpenOrienteering {
+
 PointSymbol::PointSymbol() noexcept
 : Symbol{Symbol::Point}
 , rotatable{false}
@@ -718,3 +720,6 @@ bool PointSymbol::equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensi
 	
 	return true;
 }
+
+
+}  // namespace OpenOrienteering

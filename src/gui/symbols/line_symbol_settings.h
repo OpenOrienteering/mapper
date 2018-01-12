@@ -37,6 +37,8 @@ class QScrollArea;
 class QSpinBox;
 class QWidget;
 
+namespace OpenOrienteering {
+
 class ColorDropDown;
 class LineSymbol;
 struct LineSymbolBorder;
@@ -186,5 +188,8 @@ private:
 	QScrollArea* scroll_area;
 	QWidget* widget_to_ensure_visible;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

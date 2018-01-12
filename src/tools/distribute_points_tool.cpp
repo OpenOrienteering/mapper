@@ -40,6 +40,7 @@
 #include "gui/util_gui.h"
 
 
+namespace OpenOrienteering {
 
 bool DistributePointsTool::showSettingsDialog(
         QWidget* parent,
@@ -175,3 +176,6 @@ void DistributePointsSettingsDialog::getValues(DistributePointsTool::Settings& s
 	settings.rotate_symbols = rotate_symbols_check->isChecked();
 	settings.additional_rotation = qDegreesToRadians(additional_rotation_edit->value());
 }
+
+
+}  // namespace OpenOrienteering

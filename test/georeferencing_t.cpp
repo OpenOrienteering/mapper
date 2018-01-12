@@ -26,6 +26,8 @@
 #include "core/crs_template.h"
 #include "fileformats/xml_file_format.h"
 
+using namespace OpenOrienteering;
+
 
 int XMLFileFormat::active_version = 6;
 

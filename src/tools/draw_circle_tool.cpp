@@ -44,6 +44,8 @@
 #include "util/util.h"
 
 
+namespace OpenOrienteering {
+
 DrawCircleTool::DrawCircleTool(MapEditorController* editor, QAction* tool_action, bool is_helper_tool)
  : DrawLineAndAreaTool(editor, DrawCircle, tool_action, is_helper_tool)
 {
@@ -312,7 +314,10 @@ void DrawCircleTool::updateStatusText()
 	{
 		text = tr("<b>Click</b>: Finish the circle. ")
 		       + tr("<b>Drag</b>: Draw an ellipse. ")
-		       + MapEditorTool::tr("<b>%1</b>: Abort. ").arg(ModifierKey::escape());
+		       + OpenOrienteering::MapEditorTool::tr("<b>%1</b>: Abort. ").arg(ModifierKey::escape());
 	}
 	setStatusBarText(text);
 }
+
+
+}  // namespace OpenOrienteering

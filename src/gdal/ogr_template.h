@@ -34,6 +34,8 @@ class QWidget;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 
+namespace OpenOrienteering {
+
 class Georeferencing;
 class Map;
 
@@ -104,5 +106,8 @@ private:
 	bool center_in_view               { false };  //  transient
 	bool reload_pending               { false };  //  transient
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif // OPENORIENTEERING_OGR_TEMPLATE_H

@@ -32,6 +32,8 @@ class QCheckBox;
 class QSpinBox;
 class QWidget;
 
+namespace OpenOrienteering {
+
 class PathObject;
 class PointObject;
 class PointSymbol;
@@ -129,4 +131,6 @@ private:
 	QDoubleSpinBox* additional_rotation_edit;
 };
 
+
+}  // namespace OpenOrienteering
 #endif

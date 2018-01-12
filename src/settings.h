@@ -31,6 +31,8 @@
 class QSettings;
 
 
+namespace OpenOrienteering {
+
 /** Singleton which handles the global application settings.
  *  If you need to do any action when the application settings are changed, connect to the settingsChanged() signal.
  */
@@ -137,5 +139,8 @@ private:
 	QHash<SettingsEnum, QString> setting_paths;
 	QHash<SettingsEnum, QVariant> setting_defaults;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

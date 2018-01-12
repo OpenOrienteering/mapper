@@ -36,6 +36,7 @@
 #include "gui/map/map_widget.h"
 
 
+namespace OpenOrienteering {
 
 PointHandles::PointHandles() noexcept
 {
@@ -233,3 +234,5 @@ const QImage PointHandles::loadHandleImage(unsigned int factor)
 	return shared_image;
 }
 
+
+}  // namespace OpenOrienteering

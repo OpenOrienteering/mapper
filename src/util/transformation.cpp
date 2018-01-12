@@ -32,6 +32,9 @@
 #include "util/matrix.h"
 #include "util/xml_stream_util.h"
 
+
+namespace OpenOrienteering {
+
 // ### PassPoint ###
 
 #ifndef NO_NATIVE_FILE_FORMAT
@@ -385,3 +388,6 @@ bool PassPointList::estimateNonIsometricSimilarityTransform(not_null<QTransform*
 		output.get(2, 0), output.get(5, 0), 1);
 	return true;
 }
+
+
+}  // namespace OpenOrienteering

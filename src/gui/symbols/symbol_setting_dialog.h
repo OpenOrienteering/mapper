@@ -33,6 +33,8 @@ class QPushButton;
 class QToolButton;
 class QWidget;
 
+namespace OpenOrienteering {
+
 class MainWindow;
 class Map;
 class MapEditorController;
@@ -40,6 +42,7 @@ class MapView;
 class Object;
 class Symbol;
 class SymbolPropertiesWidget;
+
 
 /** 
  * A dialog for editing symbol properties.
@@ -176,5 +179,8 @@ private:
 	
 	bool symbol_modified;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

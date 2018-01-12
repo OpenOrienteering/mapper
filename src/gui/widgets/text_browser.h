@@ -28,6 +28,8 @@
 class QUrl;
 class QWidget;
 
+namespace OpenOrienteering {
+
 
 /**
  * A text browser which handles .txt files.
@@ -45,5 +47,8 @@ public:
 	
 	QVariant loadResource(int type, const QUrl& name) override;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

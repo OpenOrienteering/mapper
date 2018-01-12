@@ -39,10 +39,14 @@
 #include "util/backports.h"
 
 
-// ### SymbolDropDown ###
-
 // allow explicit use of Symbol pointers in QVariant
-Q_DECLARE_METATYPE(Symbol*)
+Q_DECLARE_METATYPE(OpenOrienteering::Symbol*)
+
+
+
+namespace OpenOrienteering {
+
+// ### SymbolDropDown ###
 
 
 SymbolDropDown::SymbolDropDown(const Map* map, int filter, const Symbol* initial_symbol, const Symbol* excluded_symbol, QWidget* parent)
@@ -177,3 +181,6 @@ void SymbolDropDownDelegate::emitCommitData()
 {
 	emit commitData(qobject_cast<QWidget*>(sender()));
 }
+
+
+}  // namespace OpenOrienteering

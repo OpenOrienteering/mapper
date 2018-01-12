@@ -35,11 +35,14 @@ class QMouseEvent;
 class QPainter;
 class QRectF;
 
+namespace OpenOrienteering {
+
+class DrawLineAndAreaTool;
 class MapCoordF;
 class MapEditorController;
 class MapWidget;
 class PathObject;
-class DrawLineAndAreaTool;
+
 
 /** Tool to cut holes into area objects */
 class CutHoleTool : public MapEditorTool
@@ -89,4 +92,6 @@ protected:
 	MapWidget* edit_widget;
 };
 
+
+}  // namespace OpenOrienteering
 #endif

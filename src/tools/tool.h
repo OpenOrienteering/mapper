@@ -46,6 +46,8 @@ class QPainter;
 class QPointF;
 class QWidget;
 
+namespace OpenOrienteering {
+
 class MainWindow;
 class Map;
 class MapEditorController;
@@ -379,5 +381,7 @@ private:
 	bool draw_on_right_click  = false;
 };
 
+
+}  // namespace OpenOrienteering
 
 #endif

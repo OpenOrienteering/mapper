@@ -33,6 +33,8 @@
 class QPointF;
 
 
+namespace OpenOrienteering {
+
 void blockSignalsRecursively(QObject* obj, bool block)
 {
 	if (!obj)
@@ -201,3 +203,6 @@ void loadString(QIODevice* file, QString& str)
 	else
 		str.clear();
 }
+
+
+}  // namespace OpenOrienteering

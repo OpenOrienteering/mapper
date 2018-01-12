@@ -25,6 +25,7 @@
 
 class QDebug;
 
+namespace OpenOrienteering {
 
 /**
  * @brief Specifies geographic location by latitude and longitude.
@@ -130,5 +131,8 @@ constexpr bool LatLon::operator!=(const LatLon& rhs) const
 {
 	return !(*this == rhs);
 }
+
+
+}  // namespace OpenOrienteering
 
 #endif

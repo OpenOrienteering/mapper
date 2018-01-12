@@ -58,6 +58,9 @@
 #include "undo/object_undo.h"
 #include "util/util.h"
 
+
+namespace OpenOrienteering {
+
 DrawPointTool::DrawPointTool(MapEditorController* editor, QAction* tool_action)
 : MapEditorToolBase(QCursor(QPixmap(QString::fromLatin1(":/images/cursor-draw-point.png")), 11, 11), DrawPoint, editor, tool_action)
 , renderables(new MapRenderables(map()))
@@ -356,3 +359,6 @@ void DrawPointTool::objectSelectionChangedImpl()
 {
 	// nothing
 }
+
+
+}  // namespace OpenOrienteering

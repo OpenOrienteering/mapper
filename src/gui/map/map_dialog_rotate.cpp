@@ -39,6 +39,8 @@
 #include "gui/util_gui.h"
 
 
+namespace OpenOrienteering {
+
 RotateMapDialog::RotateMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), map(map)
 {
 	setWindowTitle(tr("Rotate map"));
@@ -162,3 +164,6 @@ void RotateMapDialog::okClicked()
 	map->rotateMap(rotation, center, adjust_georeferencing_check->isChecked(), adjust_declination_check->isChecked(), adjust_templates_check->isChecked());
 	accept();
 }
+
+
+}  // namespace OpenOrienteering

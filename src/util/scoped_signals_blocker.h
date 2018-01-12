@@ -25,6 +25,8 @@
 
 class QObject;
 
+namespace OpenOrienteering {
+
 
 /**
  * @brief A safe and scoped wrapper around QObject::blockSignals() of multiple objects.
@@ -108,5 +110,8 @@ void ScopedMultiSignalsBlocker::add() const noexcept
 {
 	// nothing
 }
+
+
+}  // namespace OpenOrienteering
 
 #endif

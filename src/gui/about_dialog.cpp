@@ -28,6 +28,8 @@
 #include "mapper_config.h"
 
 
+namespace OpenOrienteering {
+
 namespace {
 
 /**
@@ -77,7 +79,9 @@ QString formatBlock(const QStringList& items)
 	return block;
 }
 
+
 }  // namespace
+
 
 
 AboutDialog::AboutDialog(QWidget* parent)
@@ -189,3 +193,6 @@ QString AboutDialog::about()
 	
 	return mapper_about;
 }
+
+
+}  // namespace OpenOrienteering

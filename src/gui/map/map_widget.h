@@ -58,12 +58,15 @@ class QPixmap;
 class QResizeEvent;
 class QWheelEvent;
 
+namespace OpenOrienteering {
+
+class GPSDisplay;
+class GPSTemporaryMarkers;
 class MapEditorActivity;
 class MapEditorTool;
 class PieMenu;
 class TouchCursor;
-class GPSDisplay;
-class GPSTemporaryMarkers;
+
 
 /**
  * QWidget for displaying a map. Needs a pointer to a MapView which defines
@@ -588,5 +591,8 @@ MapWidget::CoordsType MapWidget::getCoordsDisplay() const
 {
 	return coords_type;
 }
+
+
+}  // namespace OpenOrienteering
 
 #endif

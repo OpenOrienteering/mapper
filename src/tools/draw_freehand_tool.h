@@ -38,6 +38,8 @@ class QKeyEvent;
 class QMouseEvent;
 class QPainter;
 
+namespace OpenOrienteering {
+
 class MapEditorController;
 class MapWidget;
 
@@ -79,5 +81,8 @@ private:
 	QPoint cur_pos;
 	MapCoordF cur_pos_map;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

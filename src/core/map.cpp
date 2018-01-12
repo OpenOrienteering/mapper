@@ -78,13 +78,15 @@
 // IWYU pragma: no_forward_declare QRectF
 
 
+namespace OpenOrienteering {
+
 QPointer<QTranslator> map_symbol_translator{};
 
 
-// ### Misc ###
 
-namespace
-{
+namespace {
+
+// ### Misc ###
 
 /** A record of information about the mapping of a color in a source MapColorSet
  *  to a color in a destination MapColorSet.
@@ -136,7 +138,8 @@ void showMessageBox(QWidget* parent, const QString& title, const QString& headli
 	qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
 }
 
-} // namespace
+
+}  // namespace
 
 
 
@@ -2669,3 +2672,6 @@ void Map::undoCleanChanged(bool is_clean)
 		setHasUnsavedChanges(true);
 	}
 }
+
+
+}  // namespace OpenOrienteering

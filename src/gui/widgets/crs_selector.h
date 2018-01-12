@@ -34,6 +34,8 @@ class QEvent;
 class QFormLayout;
 class QWidget;
 
+namespace OpenOrienteering {
+
 class Georeferencing;
 
 
@@ -185,5 +187,8 @@ private:
 	int num_custom_items;
 	const CRSTemplate* configured_crs;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

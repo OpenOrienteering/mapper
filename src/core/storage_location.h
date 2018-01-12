@@ -29,6 +29,7 @@
 #include <QCoreApplication>
 #include <QString>
 
+namespace OpenOrienteering {
 
 // noexcept since Qt 5.5
 constexpr bool qstring_is_nothrow_copy_constructible = std::is_nothrow_copy_constructible<QString>::value;
@@ -40,7 +41,7 @@ constexpr bool qstring_is_nothrow_move_constructible = std::is_nothrow_move_cons
  */
 class StorageLocation
 {
-	Q_DECLARE_TR_FUNCTIONS(StorageLocation)
+	Q_DECLARE_TR_FUNCTIONS(OpenOrienteering::StorageLocation)
 	
 public:
 	/** Various hints about locations. */
@@ -118,5 +119,8 @@ QString StorageLocation::hintText() const
 {
 	return fileHintTextTemplate(hint()).arg(path());
 }
+
+
+}  // namespace OpenOrienteering
 
 #endif // OPENORIENTEERING_STORAGE_LOCATION_H

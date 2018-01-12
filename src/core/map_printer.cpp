@@ -90,6 +90,8 @@ namespace literal
 
 
 
+namespace OpenOrienteering {
+
 // #### MapPrinterPageFormat ###
 
 MapPrinterPageFormat::MapPrinterPageFormat(QSizeF page_rect_size, qreal margin, qreal overlap) 
@@ -341,6 +343,7 @@ void MapPrinterConfig::save(QXmlStreamWriter& xml, const QLatin1String& element_
 #ifdef QT_PRINTSUPPORT_LIB
 
 // ### MapPrinter ###
+
 const QPrinterInfo* MapPrinter::pdfTarget()
 {
 	static QPrinterInfo pdf_target; // TODO: set name and features?
@@ -484,7 +487,7 @@ std::unique_ptr<QPrinter> MapPrinter::makePrinter() const
 		PlatformPrinterProperties::restore(printer.get(), native_data);
 	}
 	
-	printer->setDocName(tr("- Map -"));
+	printer->setDocName(::OpenOrienteering::MapPrinter::tr("- Map -"));
 	printer->setFullPage(true);
 	if (page_format.paper_size == QPrinter::Custom)
 	{
@@ -1235,8 +1238,8 @@ bool MapPrinter::printMap(QPrinter* printer)
 	int step = 0;
 	auto num_steps = v_page_pos.size() * h_page_pos.size();
 	const QString message_template( (options.mode == MapPrinterOptions::Separations) ?
-	  tr("Processing separations of page %1...") :
-	  tr("Processing page %1...") );
+	  ::OpenOrienteering::MapPrinter::tr("Processing separations of page %1...") :
+	  ::OpenOrienteering::MapPrinter::tr("Processing page %1...") );
 	auto message = message_template.arg(1);
 	emit printProgress(0, message);
 	
@@ -1286,16 +1289,16 @@ bool MapPrinter::printMap(QPrinter* printer)
 	
 	if (cancel_print_map)
 	{
-		emit printProgress(100, tr("Canceled"));
+		emit printProgress(100, ::OpenOrienteering::MapPrinter::tr("Canceled"));
 	}
 	else if (!painter.isActive())
 	{
-		emit printProgress(100, tr("Error"));
+		emit printProgress(100, ::OpenOrienteering::MapPrinter::tr("Error"));
 		return false;
 	}
 	else
 	{
-		emit printProgress(100, tr("Finished"));
+		emit printProgress(100, ::OpenOrienteering::MapPrinter::tr("Finished"));
 	}
 	return true;
 }
@@ -1304,5 +1307,8 @@ void MapPrinter::cancelPrintMap()
 {
 	cancel_print_map = true;
 }
+
+
+}  // namespace OpenOrienteering
 
 #endif // QT_PRINTSUPPORT_LIB

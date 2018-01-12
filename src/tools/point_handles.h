@@ -32,6 +32,8 @@
 
 class QPainter;
 
+namespace OpenOrienteering {
+
 class MapWidget;
 class Object;
 
@@ -166,5 +168,7 @@ private:
 	int display_radius = 0;
 };
 
+
+}  // namespace OpenOrienteering
 
 #endif // OPENORIENTEERING_POINT_HANDLES_H

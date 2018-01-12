@@ -32,6 +32,8 @@
 #include "core/map_color.h"
 
 
+namespace OpenOrienteering {
+
 ColorDropDown::ColorDropDown(const Map* map, const MapColor* initial_color, bool spot_colors_only, QWidget* parent)
 : QComboBox(parent)
 , map(map)
@@ -167,3 +169,6 @@ void ColorDropDown::onColorDeleted(int, const MapColor* color)
 {
 	removeColor(color);
 }
+
+
+}  // namespace OpenOrienteering

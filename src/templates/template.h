@@ -44,6 +44,8 @@ class QWidget;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 
+namespace OpenOrienteering {
+
 class Map;
 class MapView;
 
@@ -689,5 +691,8 @@ protected:
 	Matrix template_to_map;
 	Matrix template_to_map_other;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

@@ -34,6 +34,8 @@
 #include "segmented_button_layout.h"
 
 
+namespace OpenOrienteering {
+
 MapperProxyStyle::MapperProxyStyle(QStyle* base_style)
  : QProxyStyle(base_style)
 {
@@ -181,3 +183,6 @@ int MapperProxyStyle::styleHint(QStyle::StyleHint hint, const QStyleOption* opti
 	
 	return QProxyStyle::styleHint(hint, option, widget, return_data);
 }
+
+
+}  // namespace OpenOrienteering

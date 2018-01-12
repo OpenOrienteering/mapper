@@ -64,9 +64,11 @@ QString default_language()
 	return QLocale::system().name().left(2);
 }
 
-} // namespace
+}  // namespace
 
 
+
+namespace OpenOrienteering {
 
 QString TranslationUtil::base_name(QString::fromLatin1("qt_"));
 
@@ -204,3 +206,6 @@ TranslationUtil::Language TranslationUtil::languageFromSettings(const QSettings&
 	auto language_code = settings.value(QLatin1String("language"), default_language()).toString();
 	return languageFromCode(language_code);
 }
+
+
+}  // namespace OpenOrienteering

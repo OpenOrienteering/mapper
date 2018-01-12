@@ -51,6 +51,9 @@ namespace literal
 }
 
 
+
+namespace OpenOrienteering {
+
 MapPart::MapPart(const QString& name, Map* map)
 : name(name)
 , map(map)
@@ -367,3 +370,6 @@ void MapPart::applyOnAllObjects(const std::function<void (Object*, MapPart*, int
 		operation(objects[i], this, int(i));
 	}
 }
+
+
+}  // namespace OpenOrienteering

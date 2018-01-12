@@ -37,7 +37,10 @@ class QIODevice;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 
+namespace OpenOrienteering {
+
 class Map;
+
 
 /** 
  * Base class for undo steps which modify objects of a single map part.
@@ -438,5 +441,7 @@ int ObjectModifyingUndoStep::getPartIndex() const
 	return part_index;
 }
 
+
+}  // namespace OpenOrienteering
 
 #endif

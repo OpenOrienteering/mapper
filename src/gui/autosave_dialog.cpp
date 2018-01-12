@@ -29,6 +29,9 @@
 
 #include "main_window.h"
 
+
+namespace OpenOrienteering {
+
 AutosaveDialog::AutosaveDialog(const QString& path, const QString& autosave_path, const QString& actual_path, MainWindow* parent, Qt::WindowFlags f)
 : QDialog(parent, f)
 , main_window(parent)
@@ -190,3 +193,6 @@ const QTextDocument* AutosaveDialog::textDoc(const QModelIndex& index) const
 	
 	return ret;
 }
+
+
+}  // namespace OpenOrienteering

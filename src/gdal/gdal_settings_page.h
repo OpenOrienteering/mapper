@@ -29,6 +29,8 @@ class QCheckBox;
 class QTableWidget;
 class QWidget;
 
+namespace OpenOrienteering {
+
 
 class GdalSettingsPage : public SettingsPage
 {
@@ -58,5 +60,7 @@ private:
 	QTableWidget* parameters;
 };
 
+
+}  // namespace OpenOrienteering
 
 #endif

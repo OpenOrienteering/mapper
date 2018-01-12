@@ -36,6 +36,8 @@ class QWidget;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 
+namespace OpenOrienteering {
+
 class Map;
 class UndoStep;
 
@@ -342,5 +344,7 @@ private:
 	
 };
 
+
+}  // namespace OpenOrienteering
 
 #endif

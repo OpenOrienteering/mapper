@@ -35,6 +35,8 @@
 #include "undo/object_undo.h"
 
 
+namespace OpenOrienteering {
+
 TagsWidget::TagsWidget(Map* map, MapView* main_view, MapEditorController* controller, QWidget* parent)
  : QWidget(parent),
   map(map), 
@@ -262,3 +264,6 @@ void TagsWidget::cellChange(int row, int column)
 	
 	react_to_changes = true;
 }
+
+
+}  // namespace OpenOrienteering

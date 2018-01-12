@@ -52,8 +52,10 @@
 #include "templates/template_track.h"
 
 
-namespace
-{
+namespace OpenOrienteering {
+
+namespace {
+	
 	namespace literal
 	{
 		const auto crs_spec           = QLatin1String("crs_spec");
@@ -98,7 +100,7 @@ namespace
 		return false;
 	}
 	
-}
+}  // namespace
 
 
 
@@ -499,3 +501,6 @@ void OgrTemplate::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) c
 		explicit_georef->save(xml);
 	}
 }
+
+
+}  // namespace OpenOrienteering

@@ -35,6 +35,7 @@
 class QXmlStreamReader;
 class QXmlStreamWriter;
 
+namespace OpenOrienteering {
 
 #ifndef NO_NATIVE_FILE_FORMAT
 	
@@ -83,7 +84,7 @@ struct LegacyMapCoord
  */
 class MapCoord
 {
-	Q_DECLARE_TR_FUNCTIONS(MapCoord)
+	Q_DECLARE_TR_FUNCTIONS(OpenOrienteering::MapCoord)
 	
 public:
 	/**
@@ -662,9 +663,6 @@ typedef std::vector<MapCoordF> MapCoordVectorF;
 
 // ### MapCoord inline code ###
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(MapCoord::Flags)
-
-
 constexpr bool MapCoord::BoundsOffset::isZero() const
 {
 	return x==0 && y==0;
@@ -1184,6 +1182,11 @@ constexpr const MapCoordF operator/(const MapCoordF& lhs, qreal divisor)
 	return static_cast<const MapCoordF>(static_cast<const QPointF&>(lhs) / divisor);
 }
 
+
+}  // namespace OpenOrienteering
+
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(OpenOrienteering::MapCoord::Flags)
 
 
 #endif
