@@ -29,6 +29,7 @@
 #include <QTime>
 
 #ifdef QT_SENSORS_LIB
+
 #include <QThread>
 #include <QDebug>
 #include <QWaitCondition>
@@ -40,12 +41,16 @@
 #include <QtAndroidExtras/QAndroidJniObject>
 #endif
 
+#endif  // # QT_SENSORS_LIB
+
 
 // clazy:excludeall=missing-qobject-macro
 
 
 namespace OpenOrienteering {
 
+#ifdef QT_SENSORS_LIB
+	
 namespace SensorHelpers {
 	
 	void matrixMultiplication(float* A, float* B, float* result)
