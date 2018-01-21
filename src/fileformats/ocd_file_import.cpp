@@ -994,7 +994,8 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol, int ocd_version)
 	{
 		main_line = importLineSymbolBase(ocd_symbol.common);
 		setupBaseSymbol(main_line, ocd_symbol.base);
-		line_for_borders = main_line;
+		if (!main_line->isDashed())
+			line_for_borders = main_line;
 	}
 	
 	// Import a 'framing' line?
