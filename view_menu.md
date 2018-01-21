@@ -90,7 +90,7 @@ This toggle switches the display to full-screen mode and back.
 #### ![ ](../mapper-images/window-new.png) Tag editor
 **Ctrl+Shift+6**
 
-This toggle shows or hides the [tag editor](tag_editor.md).
+This toggle shows or hides the [tag editor](object_tags.md#the-tag-editor).
 
 
 #### ![ ](../mapper-images/colors.png) Color window

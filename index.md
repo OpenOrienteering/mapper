@@ -36,7 +36,7 @@ Modifying map colors and symbols
 [Map Parts](map_parts.md){: .subpage}  
 Organizing objects in maps
 
-[Tag Editor](tag_editor.md){: .subpage}  
+[Object tags](object_tags.md){: .subpage}
 Attaching arbitrary key-value pairs to objects
 
 [Tag Selector](tag_selector.md){: .subpage}  
