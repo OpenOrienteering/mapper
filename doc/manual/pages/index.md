@@ -1,6 +1,6 @@
 ---
 title: User Manual
-edited: 4 January 2017
+edited: 21 January 2018
 redirect_from:
   - /
   - /Home
@@ -12,53 +12,60 @@ redirect_from:
 
 ## Contents
 
-[Map Screen](main_window.md){: .subpage}  
+[Main window](main_window.md){: .subpage}
 Explanation of the main drawing window.
 
-[Reference](reference.md){: .subpage}  
+[Reference](reference.md){: .subpage}
 Toolbar and menu items, including explanations for [all drawing tools](toolbars.md#drawing-toolbar)
 
-[Starting a new map](new_map.md){: .subpage}  
+[Starting a new map](new_map.md){: .subpage}
 First steps
 
-[Georeferencing](georeferencing.md){: .subpage}  
+[Georeferencing](georeferencing.md){: .subpage}
 Defining the relationship between map paper coordinates and real world coordinates system
 
-[Map grid](grid.md){: .subpage}  
+[Map grid](grid.md){: .subpage}
 Showing a helper grid in the map view.
 
-[Templates](templates-index.md){: .subpage}  
+[Templates](templates-index.md){: .subpage}
 Working with templates
 
-[Colors and Symbols](colors_symbols.md){: .subpage}  
+[Colors and symbols](colors_symbols.md){: .subpage}
 Modifying map colors and symbols
 
-[Map Parts](map_parts.md){: .subpage}  
+[Map parts](map_parts.md){: .subpage}
 Organizing objects in maps
 
-[Tag Editor](tag_editor.md){: .subpage}  
+[Object tags](object_tags.md){: .subpage}
 Attaching arbitrary key-value pairs to objects
 
-[Tag Selector](tag_selector.md){: .subpage}  
-Selecting objects based on their tags
+[Find objects](find_objects.md){: .subpage}
+Finding objects based on there textual properties
 
-[Settings](settings.md){: .subpage}  
+[CRT files](crt_files.md){: .subpage}
+Providing rules for assigning symbols
+
+[Settings](settings.md){: .subpage}
 Adjusting the program to your preferences.
 
-[Course Design](course_design.md){: .subpage}  
+[Course design](course_design.md){: .subpage}
 Using the course design symbol set.
 
-[The Mapper App for Android](android-index.md){: .subpage}  
+[The Mapper app for Android](android-index.md){: .subpage}
 Working with the Android version of Mapper.
 
-[FAQ](faq.md){: .nosubpage}  
+[FAQ](faq.md){: .nosubpage}
 Frequently asked questions.
 
 
 ## Online resources
 
-[Blog](http://www.openorienteering.org/)  
+[Blog](http://www.openorienteering.org/)
 The latest news from OpenOrienteering.
 
-[Issues list](https://github.com/OpenOrienteering/mapper/issues)  
+[Issues list](https://github.com/OpenOrienteering/mapper/issues)
 Submit feedback, bug reports, feature requests, and contributions.
+
+[Releases](https://github.com/OpenOrienteering/mapper/releases)
+Releases, change information, links to known issues.
+

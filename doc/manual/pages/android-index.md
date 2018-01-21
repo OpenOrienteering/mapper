@@ -1,7 +1,7 @@
 ---
 title: The Mapper App for Android
 keywords: Android
-redirect_from: 
+redirect_from:
   - /android/
   - '/Android Manual/'
 ---
