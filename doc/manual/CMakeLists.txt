@@ -227,6 +227,7 @@ if(Mapper_MANUAL_PDF)
 	endif()
 	
 	set(Mapper_PDF_manual "Mapper ${Mapper_VERSION_DISPLAY} Manual.pdf")
+	string(REPLACE "-" "_" Mapper_VERSION_DISPLAY_PDFLATEX "${Mapper_VERSION_DISPLAY}")
 	
 	configure_file(Doxyfile-pdflatex.in Doxyfile-pdflatex @ONLY)
 	configure_file(preprocess-markdown-pdflatex.cmake.in preprocess-markdown-pdflatex.cmake @ONLY)
