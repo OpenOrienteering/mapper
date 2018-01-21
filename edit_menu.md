@@ -50,12 +50,12 @@ This action deletes the selected object(s).
 
 #### Find...
 
-Opens the "Find objects" dialog which can be used to find objects by contained text, symbol name or tag keys and values.
+Opens the ["Find objects" dialog](find_objects.md) which can be used to find objects by contained text, symbol name or tag keys and values.
 
 
 #### Find next
 
-Finds the next object matching the last query from the "Find objects" dialog.
+Finds the next object matching the last query from the ["Find objects" dialog](find_objects.md).
 
 
 ---

@@ -5,7 +5,7 @@ authors:
   - Fraser Mills
   - Kai Pastor
 keywords: Tagging
-edited: 20 January 2018
+edited: 21 January 2018
 ---
 
 ## About object tags
@@ -16,8 +16,9 @@ In orienteering, this is useful to record feature details for control descriptio
 (e.g. dimensions) or for converting between map variants (e.g. MTB ridability).
 Data formats such as OSM and DXF carry object details which will be imported in tags.
 
-The "Find objects" dialog allows to find objects based on their tag keys and values.
+The ["Find objects" dialog](find_objects.md) allows to find objects based on their tag keys and values.
 With CRT files, object tags can guide symbol assignment and replacement.
+
 
 ## The tag editor
 

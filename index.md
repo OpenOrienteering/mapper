@@ -1,6 +1,6 @@
 ---
 title: User Manual
-edited: 4 January 2017
+edited: 21 January 2018
 redirect_from:
   - /
   - /Home
@@ -39,8 +39,8 @@ Organizing objects in maps
 [Object tags](object_tags.md){: .subpage}
 Attaching arbitrary key-value pairs to objects
 
-[Tag Selector](tag_selector.md){: .subpage}  
-Selecting objects based on their tags
+[Find objects](find_objects.md){: .subpage}
+Find objects based on there textual properties
 
 [Settings](settings.md){: .subpage}  
 Adjusting the program to your preferences.
