@@ -60,7 +60,7 @@ Pressing the button again will restore the input field and make it show the quer
 
 ## Query editor
 
-![ ](images/tag_selector.png)
+![Query editor](images/query_editor.png)
 
 
 ### Editor Layout
