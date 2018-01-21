@@ -5,7 +5,7 @@ authors:
   - Thomas Schoeps
   - Kai Pastor
 keywords: Menus
-edited: 10 January 2016
+edited: 20 January 2018
 ---
 
 #### Georeferencing...
@@ -17,6 +17,8 @@ Opens the [georeferencing dialog](georeferencing.md).
 
 Shows the [grid configuration dialog](grid.md).
 
+
+---
 
 #### ![ ](../mapper-images/tool-scale.png) Change map scale...
 
@@ -32,6 +34,8 @@ Shows a dialog to rotate the whole map.
 
 Shows a text field for entering additional text which will be saved in the map file, without appearing on the map itself. This can for example be used to store information about map revisions.
 
+
+---
 
 #### Add new part...
 

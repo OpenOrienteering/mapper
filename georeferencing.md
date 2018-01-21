@@ -42,7 +42,7 @@ The **Map coordinates** field shows the map paper coordinates of this point. To 
 
 The next set of coordinates gives the reference point east-west and north-south position in **projected coordinates**, for example in UTM or Gauss-Kr&uuml;ger coordinates. Unless working with local coordinates, changing easting or northing will update the geographic coordinates. Easting and northing are given in meters.
 
-The third set of coordinates gives the reference point position in **geographic coordinates**. Note that after the selection of a coordinate reference system other than local, projected and geographic coordinates are linked together, so changing one will also change the other. Geographic coordinates specify a location on the planet's surface by 
+The third set of coordinates gives the reference point position in **geographic coordinates**. Note that after the selection of a coordinate reference system other than local, projected and geographic coordinates are linked together, so changing one will also change the other. Geographic coordinates specify a location on the planet's surface by
 latitude and longitude. Latitude and longitude are measured in decimal degrees. Also note that according to convention, the first coordinate here is the latitude (northing) and the second the longitude (easting).
 
  - The **latitude** specifies the north-south position of the reference point as an angle relative to the equatorial plane. Negative values indicate the southern hemisphere.

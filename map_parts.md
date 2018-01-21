@@ -19,7 +19,7 @@ See the [Map menu](map_menu.md) for actions which create and change map parts.
 Only a single map part can be the "current" one.
 It is the context where all selection, editing and drawing operations take place.
 The current map part is displayed and selected in the map part toolbar.
-This toolbar is not displayed as long as the map has only one part. 
+This toolbar is not displayed as long as the map has only one part.
 
 Other than templates, map parts are not drawn sequentially one after the other,
 but simultaneously according to the symbols and colors.

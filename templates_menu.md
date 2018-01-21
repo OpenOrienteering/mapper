@@ -3,8 +3,9 @@ title: Templates Menu
 authors:
   - Peter Hoban
   - Thomas Schoeps
+  - Kai Pastor
 keywords: Menus
-edited: 26 February 2013
+edited: 20 January 2018
 ---
 
 #### ![ ](../mapper-images/templates.png) Template setup window
@@ -12,6 +13,8 @@ edited: 26 February 2013
 
 Switches the display of the [template setup window](templates.md#setup) on the map screen. This provides access to the functions required to open, scale, and position a template, and to close it.
 
+
+---
 
 #### Open template...
 

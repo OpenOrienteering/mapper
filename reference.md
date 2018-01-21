@@ -5,7 +5,7 @@ edited: 26 November 2015
 ---
 
  - [Toolbars](toolbars.md){: .subpage}
-  - [Advanced drawing tools](toolbars.md#advanced-drawing-toolbar)
+   - [Advanced drawing tools](toolbars.md#advanced-drawing-toolbar)
 
 
  - [File Menu](file_menu.md){: .subpage}
