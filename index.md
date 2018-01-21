@@ -42,6 +42,9 @@ Attaching arbitrary key-value pairs to objects
 [Find objects](find_objects.md){: .subpage}
 Find objects based on there textual properties
 
+[CRT files](crt_files.md){: .subpage}
+Providing rules for assigning symbols
+
 [Settings](settings.md){: .subpage}  
 Adjusting the program to your preferences.
 

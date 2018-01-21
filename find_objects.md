@@ -44,8 +44,7 @@ AND has precedence over OR. You may use parentheses to nest operators in another
 You may use double quotes to deal with keys and values containing white space or the special words and signs.
 Inside double quotes, the backslash character is used to escape the special meaning of double quotes and backslash.
 
-**This query language may be used in the second column of CRT files.**
-For examples, see the OSM2....crt files in the symbol set directory.
+**This query language may be used in the second column of [CRT files](crt_files.md).**
 
 
 ## Buttons

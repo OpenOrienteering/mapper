@@ -40,5 +40,5 @@ Shows the [symbol set replacement dialog](symbol_replace_dialog.md).
 
 #### Load CRT file...
 
-This action lets you select a CRT file and replace symbols within the current map and symbol set.
+This action lets you select a [CRT file](crt_files.md) and replace symbols within the current map and symbol set.
 

@@ -17,7 +17,7 @@ In orienteering, this is useful to record feature details for control descriptio
 Data formats such as OSM and DXF carry object details which will be imported in tags.
 
 The ["Find objects" dialog](find_objects.md) allows to find objects based on their tag keys and values.
-With CRT files, object tags can guide symbol assignment and replacement.
+With [CRT files](crt_files.md), object tags can guide symbol assignment and replacement.
 
 
 ## The tag editor
