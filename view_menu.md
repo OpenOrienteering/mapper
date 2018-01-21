@@ -28,7 +28,7 @@ Zoom out (shrink) the map to see more of it.
 
 #### ![ ](../mapper-images/view-show-all.png) Show whole map {#zoom-all}
 
-Use this tool to display the whole map on your screen.  
+Use this tool to display the whole map on your screen.
 
 
 #### Set custom zoom factor...

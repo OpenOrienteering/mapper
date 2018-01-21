@@ -189,9 +189,9 @@ This tool draws both line and area objects by approximating the path taken by th
 #### ![ ](../mapper-images/tool-fill.png) Fill bounded areas {#tool_fill}
 F
 
-This tool fills areas of unbroken white space with an area symbol. To use this tool, select the area symbol then click on white space i.e. any place not already covered by another area object. Internally, this tool first finds all paths, which can belong to many different objects, that form a boundary around the unbroken white space. A new closed shape is created that has the same paths as the white space boundary and is filled with your chosen symbol. Also, if you use this tool with a line symbol selected, then a border around the white space will be created. 
+This tool fills areas of unbroken white space with an area symbol. To use this tool, select the area symbol then click on white space i.e. any place not already covered by another area object. Internally, this tool first finds all paths, which can belong to many different objects, that form a boundary around the unbroken white space. A new closed shape is created that has the same paths as the white space boundary and is filled with your chosen symbol. Also, if you use this tool with a line symbol selected, then a border around the white space will be created.
 
-*Attention:* This tool will not work if your chosen white space is not completely contained by other path objects. 
+*Attention:* This tool will not work if your chosen white space is not completely contained by other path objects.
 
 #### ![ ](../mapper-images/draw-text.png) Write text {#tool_draw_text}
 T
@@ -281,7 +281,7 @@ If the line describing the hole crosses the boundary of the object, the area out
 #### ![ ](../mapper-images/tool-rotate.png) Rotate object(s) {#rotate}
 R
 
-This tool rotates any selected object(s), which can include the whole map, about a selected pivot point and by any angle. Select the item(s) to be rotated using the [point edit tool](#tool_edit_point), then click the rotate tool. 
+This tool rotates any selected object(s), which can include the whole map, about a selected pivot point and by any angle. Select the item(s) to be rotated using the [point edit tool](#tool_edit_point), then click the rotate tool.
 
 The rotation center will be marked with a small circle. Initially it is located at the bounding box midpoint of the selected objects, but it can be set to any position by clicking on the map. Then click somewhere at a convenient radius from the rotation center and move the selected objects about the rotation center to the desired position by dragging the mouse. By holding Ctrl, the rotation angle can be constrained to angles in a fixed stepping.
 

@@ -35,7 +35,7 @@ If you want to use this functionality, you should best load a separate, initiall
 
  - [size 1024x1024](attachment/scribble_1024.png)
  - [size 2048x2048](attachment/scribble_2048.png)
- 
+
 The images contain a red border, but are transparent everywhere else. After downloading a file, load it in your map file and move it so it covers the area you want to draw scribbles on. Make sure that the image resolution of the template is good enough by drawing a test scribble. If not, you need to scale it down using the template settings. You may also create multiple copies of the file and load them as separate templates.
 
 Direct drawing onto base map images is NOT recommended because you will not be able to use the eraser without also erasing the base map and because these images usually are in the lossy JPEG format which will introduce visible artifacts when saving the file and loading it again.
