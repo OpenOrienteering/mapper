@@ -5,7 +5,7 @@ authors:
   - Thomas Schoeps
   - Kai Pastor
 keywords: Menus
-edited: 10 Januar 2016
+edited: 21 January 2018
 ---
 
 #### ![ ](../mapper-images/undo.png) Undo
@@ -19,6 +19,8 @@ This most important function reverses the last change made to the map. Repeating
 
 When you have taken Undo too far this will reverse the process &#8212; again one step at a time.
 
+
+---
 
 #### ![ ](../mapper-images/cut.png) Cut
 **Ctrl+X**
@@ -44,6 +46,20 @@ This inserts the map object(s) on the clipboard into the map. They will be cente
 This action deletes the selected object(s).
 
 
+---
+
+#### Find...
+
+Opens the "Find objects" dialog which can be used to find objects by contained text, symbol name or tag keys and values.
+
+
+#### Find next
+
+Finds the next object matching the last query from the "Find objects" dialog.
+
+
+---
+
 #### Select all
 **Ctrl+A**
 
@@ -66,6 +82,8 @@ This action inverts the selection in the current map part.
 
 After this action, the selection consists of all objects in the current map part which have the selected symbol(s).
 
+
+---
 
 #### Clear undo / redo history
 
