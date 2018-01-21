@@ -3878,12 +3878,12 @@ A bounding line may be drawn if there is no natural boundary, as follows:
         <message>
             <source>Out-of-bounds area, solid boundary</source>
             <comment>Name of symbol 709.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Заборонена територія, суцільна лінія</translation>
         </message>
         <message>
             <source>A solid line indicates that the boundary is marked continuously (tapes, etc.) on the ground.</source>
             <comment>Description of symbol 709.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Суцільна лінія вказує на суцільність розмітки (стрічка і подібні) на місцевості.</translation>
         </message>
         <message>
             <source>Out-of-bounds area, dashed boundary</source>
@@ -4309,7 +4309,7 @@ The symbol may not be drawn in free form or such that two elongated knoll symbol
         <message>
             <source>Broken ground</source>
             <comment>Name of symbol 117.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Нерівний ґрунт</translation>
         </message>
         <message>
             <source>An area of pits or knolls, which is too complex to be represented in detail. The density of randomly placed dots may vary according to the detail on the ground.</source>
@@ -4319,7 +4319,7 @@ The symbol may not be drawn in free form or such that two elongated knoll symbol
         <message>
             <source>Prominent landform feature</source>
             <comment>Name of symbol 118</comment>
-            <translation type="unfinished"></translation>
+            <translation>Особливий об’єкт рельєфу</translation>
         </message>
         <message>
             <source>A small landform feature which is significant or prominent. The definition of the symbol shall always be given in the map legend. The symbol is orientated to north.</source>
@@ -4780,7 +4780,7 @@ Minimum size: 4 dashes.</source>
         <message>
             <source>Prominent water feature</source>
             <comment>Name of symbol 314</comment>
-            <translation type="unfinished"></translation>
+            <translation>Особливий об’єкт гідрографії</translation>
         </message>
         <message>
             <source>A small water feature which is significant or prominent. The definition of the symbol shall always be given in the map legend. The symbol is orientated to north.</source>
@@ -4989,7 +4989,7 @@ Minimum width: 0.25 mm.</source>
         <message>
             <source>Prominent large tree</source>
             <comment>Name of symbol 418</comment>
-            <translation type="unfinished"></translation>
+            <translation>Окреме велике дерево</translation>
         </message>
         <message>
             <source>A prominent single tree.</source>
@@ -5009,7 +5009,7 @@ Minimum width: 0.25 mm.</source>
         <message>
             <source>Prominent vegetation feature</source>
             <comment>Name of symbol 420</comment>
-            <translation type="unfinished"></translation>
+            <translation>Особливий об’єкт рослинності</translation>
         </message>
         <message>
             <source>A vegetation feature which is significant or prominent. The definition of the symbol shall always be given in the map legend. The symbol is orientated to north.</source>
@@ -5344,7 +5344,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>Canopy</source>
             <comment>Name of symbol 526.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Навіс</translation>
         </message>
         <message>
             <source>A canopy is a building construction (with a roof), normally supported by pillars, poles or walls, such as passages, gangways, courts, bus stops, gas stations or garages. 
@@ -5914,12 +5914,12 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>Out-of-bounds area, solid boundary</source>
             <comment>Name of symbol 709.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Заборонена територія, суцільна лінія</translation>
         </message>
         <message>
             <source>A solid line indicates that the boundary is marked continuously (tapes, etc.) on the ground.</source>
             <comment>Description of symbol 709.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Суцільна лінія вказує на суцільність розмітки (стрічка і подібні) на місцевості.</translation>
         </message>
         <message>
             <source>Out-of-bounds area, dashed boundary</source>
@@ -9028,12 +9028,12 @@ A bounding line may be drawn if there is no natural boundary, as follows:
         <message>
             <source>Out-of-bounds area, solid boundary</source>
             <comment>Name of symbol 709.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Заборонена територія, суцільна лінія</translation>
         </message>
         <message>
             <source>A solid line indicates that the boundary is marked continuously (tapes, etc.) on the ground.</source>
             <comment>Description of symbol 709.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Суцільна лінія вказує на суцільність розмітки (стрічка і подібні) на місцевості.</translation>
         </message>
         <message>
             <source>Out-of-bounds area, dashed boundary</source>
@@ -9810,12 +9810,12 @@ A bounding line may be drawn if there is no natural boundary, as follows:
         <message>
             <source>Out-of-bounds area, solid boundary</source>
             <comment>Name of symbol 709.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Заборонена територія, суцільна лінія</translation>
         </message>
         <message>
             <source>A solid line indicates that the boundary is marked continuously (tapes, etc.) on the ground.</source>
             <comment>Description of symbol 709.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Суцільна лінія вказує на суцільність розмітки (стрічка і подібні) на місцевості.</translation>
         </message>
         <message>
             <source>Out-of-bounds area, dashed boundary</source>
