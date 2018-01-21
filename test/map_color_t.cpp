@@ -305,5 +305,18 @@ void MapColorTest::spotColorTest()
 	QVERIFY(spot_cyan_copy != *duplicate);
 }
 
+void MapColorTest::miscTest()
+{
+	MapColor color;
+	QVERIFY(color.isBlack());
+	QVERIFY(!color.isWhite());
+	color.setRgb({1.0, 1.0, 1.0});
+	QVERIFY(!color.isBlack());
+	QVERIFY(!color.isWhite());
+	color.setCmyk({0, 0, 0, 0});
+	QVERIFY(!color.isBlack());
+	QVERIFY(color.isWhite());
+}
+
 
 QTEST_GUILESS_MAIN(MapColorTest)
