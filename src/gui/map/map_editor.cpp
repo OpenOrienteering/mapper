@@ -870,7 +870,7 @@ void MapEditorController::createActions()
 	configure_grid_act->setMenuRole(QAction::NoRole);
 #endif
 	pan_act = newToolAction("panmap", tr("Pan"), this, SLOT(pan()), "move.png", QString{}, "view_menu.html");
-	move_to_gps_pos_act = newAction("movegps", tr("Move to GPS position"), this, SLOT(moveToGpsPos()), "move-to-gps.png", QString{}, "view_menu.html");
+	move_to_gps_pos_act = newAction("movegps", tr("Move to my location"), this, SLOT(moveToGpsPos()), "move-to-gps.png", QString{}, "view_menu.html");
 	move_to_gps_pos_act->setEnabled(false);
 	zoom_in_act = newAction("zoomin", tr("Zoom in"), this, SLOT(zoomIn()), "view-zoom-in.png", QString{}, "view_menu.html");
 	zoom_out_act = newAction("zoomout", tr("Zoom out"), this, SLOT(zoomOut()), "view-zoom-out.png", QString{}, "view_menu.html");
@@ -1381,11 +1381,11 @@ void MapEditorController::createMobileGUI()
 	bottom_action_bar->addAction(gps_temporary_path_act, 0, col);
 	bottom_action_bar->addAction(gps_temporary_point_act, 1, col++);
 	
+	bottom_action_bar->addAction(gps_temporary_clear_act, 0, col++);
+
 	bottom_action_bar->addAction(paint_on_template_act, 0, col);
 	bottom_action_bar->addAction(paint_on_template_settings_act, 1, col++);
 	
-	bottom_action_bar->addAction(gps_temporary_clear_act, 1, col++);
-
 	// Right side
 	bottom_action_bar->addActionAtEnd(mobile_symbol_selector_action, 0, 1, 2, 2);
 	auto button = bottom_action_bar->getButtonForAction(mobile_symbol_selector_action);
