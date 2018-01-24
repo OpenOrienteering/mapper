@@ -1,6 +1,6 @@
 ---
 title: User Manual
-edited: 21 January 2018
+edited: 24 January 2018
 redirect_from:
   - /
   - /Home
@@ -16,34 +16,34 @@ redirect_from:
 Explanation of the main drawing window.
 
 [Reference](reference.md){: .subpage}
-Toolbar and menu items, including explanations for [all drawing tools](toolbars.md#drawing-toolbar)
+Toolbar and menu items, including explanations for [all drawing tools](toolbars.md#drawing-toolbar).
 
 [Starting a new map](new_map.md){: .subpage}
-First steps
+First steps.
 
 [Georeferencing](georeferencing.md){: .subpage}
-Defining the relationship between map paper coordinates and real world coordinates system
+Defining the relationship between map paper coordinates and real world coordinates system.
 
 [Map grid](grid.md){: .subpage}
 Showing a helper grid in the map view.
 
 [Templates](templates-index.md){: .subpage}
-Working with templates
+Working with templates.
 
 [Colors and symbols](colors_symbols.md){: .subpage}
-Modifying map colors and symbols
+Modifying map colors and symbols,
 
 [Map parts](map_parts.md){: .subpage}
-Organizing objects in maps
+Organizing objects in maps.
 
 [Object tags](object_tags.md){: .subpage}
-Attaching arbitrary key-value pairs to objects
+Attaching arbitrary key-value pairs to objects.
 
 [Find objects](find_objects.md){: .subpage}
-Finding objects based on there textual properties
+Finding objects based on textual properties.
 
 [CRT files](crt_files.md){: .subpage}
-Providing rules for assigning symbols
+Providing rules for assigning symbols.
 
 [Settings](settings.md){: .subpage}
 Adjusting the program to your preferences.
@@ -51,7 +51,7 @@ Adjusting the program to your preferences.
 [Course design](course_design.md){: .subpage}
 Using the course design symbol set.
 
-[The Mapper app for Android](android-index.md){: .subpage}
+[The Mapper app for Android](android-app.md){: .subpage}
 Working with the Android version of Mapper.
 
 [FAQ](faq.md){: .nosubpage}
@@ -67,5 +67,5 @@ The latest news from OpenOrienteering.
 Submit feedback, bug reports, feature requests, and contributions.
 
 [Releases](https://github.com/OpenOrienteering/mapper/releases)
-Releases, change information, links to known issues.
+Releases, with links to change information and known issues.
 
