@@ -97,7 +97,7 @@ set(DOXYFILE_HTML_EXTRA )
 if(ANDROID)
 	set(DOXYFILE_HTML_EXTRA "
 FILE_PATTERNS          = android* toolbar*
-USE_MDFILE_AS_MAINPAGE = android-index.md
+USE_MDFILE_AS_MAINPAGE = android-app.md
 ")
 endif()
 
