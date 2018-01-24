@@ -12,6 +12,7 @@ edited: 5 December 2017
 * TOC
 {:toc}
 
+
 ## Navigation
 
 ### How do I move the map?
@@ -21,6 +22,7 @@ The easiest way is to hold the middle mouse button while moving the mouse. But y
 ### How to zoom in and out?
 
 You can use the mouse wheel, press F7/F8 or +/- keys, or click the zoom buttons in the toolbar.
+
 
 ## Drawing
 
@@ -64,7 +66,7 @@ Yes, Mapper reads .ocd files from different version (8 .. 12). But currently onl
 
 ### Will Mapper be available for Android?
 
-An Android version is available. It already has a special user interface, but it needs a lot of work. See the [instructions for the Android app](android-index.md).
+An Android version is available. It already has a special user interface, but it needs a lot of work. See the [instructions for the Android app](android-app.md).
 
 ### Will Mapper be available for iPhone / iPad?
 
@@ -73,6 +75,7 @@ Probably not, due to distribution issues. Technically, a build should be feasibl
 ### How do I hide/protect a symbol in the mobile UI?
 
 Tap-and-hold on the Symbol selector button. Context menu with hide and protect options will appear. Hidden and protected symbols are marked with usual signs in the symbol list.
+
 
 ## Experienced mappers' corner
 

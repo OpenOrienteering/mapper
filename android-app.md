@@ -1,16 +1,39 @@
 ---
-title: Using the Mapper App
+title: The Mapper App for Android
+authors:
+  - Kai Pastor
+  - Thomas Schoeps
 keywords: Android
+edited: 24 January 2018
+redirect_from:
+  - /android/
+  - '/Android Manual/'
+  - /mapper-manual/pages/android-index.html
 ---
+
+## Preliminary remarks
+
+The Android version of OpenOrienteering Mapper is not as self-descriptive as
+the desktop version, so please read this first for important instructions.
+
+[Device requirements and recommendations](android-requirements.md){: .subpage}
+
+[Preparing a map on the PC](android-pc.md){: .subpage}
+
+[Storing Maps and Templates on Android Devices](android-storage.md){: .subpage}
+
+{% if doxygen %}
+**Note:** The [online version](http://www.openorienteering.org/mapper-manual/android/) of this documentation may contain additions and corrections.
+{% endif %}
+
+
+## Using the Mapper app
 
 On startup, the app shows a list of map files available from the [supported storage locations](android-storage.md). To start editing a map, touch its filename.
 
-This will show a map editor screen which is similar to the desktop version. In the following, only the functionality which differs from the desktop version will be explained. To find out about the other symbols, see [Toolbars](toolbars.md) in the desktop application's manual.
-
-
-## The mobile map editor
-
 ![ ](images/Android_UI_explanation.png)
+
+The map editor is slightly different from the desktop version. This page focuses on specific features of the mobile version. To find out about the other symbols, see [Toolbars](toolbars.md) in the desktop application's manual.
 
 #### ![ ](../mapper-images/arrow-thin-upleft.png) Hide the top bar (1)
 

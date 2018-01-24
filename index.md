@@ -51,7 +51,7 @@ Adjusting the program to your preferences.
 [Course design](course_design.md){: .subpage}
 Using the course design symbol set.
 
-[The Mapper app for Android](android-index.md){: .subpage}
+[The Mapper app for Android](android-app.md){: .subpage}
 Working with the Android version of Mapper.
 
 [FAQ](faq.md){: .nosubpage}
