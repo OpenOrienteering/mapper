@@ -1308,7 +1308,7 @@ void MapPrinter::cancelPrintMap()
 	cancel_print_map = true;
 }
 
+#endif  // QT_PRINTSUPPORT_LIB
+
 
 }  // namespace OpenOrienteering
-
-#endif // QT_PRINTSUPPORT_LIB

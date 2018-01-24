@@ -76,9 +76,9 @@ public:
 	static const char magic_bytes[4];
 };
 
-#endif // NO_NATIVE_FILE_FORMAT
-
 
 }  // namespace OpenOrienteering
+
+#endif // NO_NATIVE_FILE_FORMAT
 
 #endif // NATIVE_FILE_FORMAT_H

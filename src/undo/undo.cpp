@@ -298,7 +298,7 @@ bool NoOpUndoStep::load(QIODevice*, int)
 	return false;
 }
 
+#endif  // NO_NATIVE_FILE_FORMAT
 
 }  // namespace OpenOrienteering
 
-#endif
