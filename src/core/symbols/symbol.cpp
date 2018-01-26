@@ -629,7 +629,11 @@ QImage Symbol::createIcon(const Map& map, int side_length, bool antialiasing, qr
 	
 	RenderConfig config = { map, QRectF(-10000, -10000, 20000, 20000), final_zoom, RenderConfig::HelperSymbols, 1.0 };
 	bool was_hidden = is_hidden;
-	is_hidden = false; // ensure that an icon is created for hidden symbols.
+	// Ensure that an icon is created for hidden symbols.
+	if (symbol_copy)
+		symbol_copy.get()->setHidden(false);
+	else
+		is_hidden = false;
 	icon_map.draw(&painter, config);
 	is_hidden = was_hidden;
 	
