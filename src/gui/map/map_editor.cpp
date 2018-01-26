@@ -107,6 +107,7 @@
 #include "core/symbols/point_symbol.h"
 #include "core/symbols/area_symbol.h"
 #include "core/symbols/symbol.h"
+#include "core/symbols/symbol_icon_decorator.h"
 #include "fileformats/file_format.h"
 #include "fileformats/file_format_registry.h"
 #include "gui/configure_grid_dialog.h"
@@ -2112,6 +2113,14 @@ void MapEditorController::selectedSymbolsChanged()
 		else //if (symbol_widget->getNumSelectedSymbols() == 1)
 		{
 			auto image = symbol->createIcon(*map, qMin(icon_size.width(), icon_size.height()));
+			if (symbol->isHidden() || symbol->isProtected())
+			{
+				QPainter p(&image);
+				if (symbol->isHidden())
+					HiddenSymbolDecorator(icon_size.width()).draw(p);
+				if (symbol->isProtected())
+					ProtectedSymbolDecorator(icon_size.width()).draw(p);
+			}
 			pixmap = QPixmap::fromImage(image);
 			
 			symbol_button->setMenu(mobile_symbol_button_menu);
