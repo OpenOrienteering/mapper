@@ -4217,7 +4217,7 @@ Importer data likevel?</translation>
         <source>No
 symbol
 selected</source>
-        <comment>Keep it short. Should not be much longer per line than the longest word in the original.</comment>
+        <extracomment>Keep it short. Should not be much longer per line than the longest word in the original.</extracomment>
         <translation>Ingen
 symboerl
 er valgt</translation>
@@ -4227,7 +4227,7 @@ er valgt</translation>
         <source>Multiple
 symbols
 selected</source>
-        <comment>Keep it short. Should not be much longer per line than the longest word in the original.</comment>
+        <extracomment>Keep it short. Should not be much longer per line than the longest word in the original.</extracomment>
         <translation>Flere
 symboler
 er valgt</translation>

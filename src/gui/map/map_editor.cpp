@@ -2104,8 +2104,10 @@ void MapEditorController::selectedSymbolsChanged()
 			QPainter painter(&pixmap);
 			painter.setFont(font);
 			QString text = (symbol_widget->selectedSymbolsCount() == 0) ?
-				tr("No\nsymbol\nselected", "Keep it short. Should not be much longer per line than the longest word in the original.") :
-				tr("Multiple\nsymbols\nselected", "Keep it short. Should not be much longer per line than the longest word in the original.");
+				//: Keep it short. Should not be much longer per line than the longest word in the original.
+				tr("No\nsymbol\nselected") :
+				//: Keep it short. Should not be much longer per line than the longest word in the original.
+				tr("Multiple\nsymbols\nselected");
 			painter.drawText(pixmap.rect(), Qt::AlignCenter, text);
 			
 			symbol_button->setMenu(nullptr);

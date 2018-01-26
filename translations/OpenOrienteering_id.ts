@@ -3791,7 +3791,7 @@ Import the data anyway?</source>
         <source>No
 symbol
 selected</source>
-        <comment>Keep it short. Should not be much longer per line than the longest word in the original.</comment>
+        <extracomment>Keep it short. Should not be much longer per line than the longest word in the original.</extracomment>
         <translation>Tidak
 simbol 
 yang dipilih</translation>
@@ -3801,7 +3801,7 @@ yang dipilih</translation>
         <source>Multiple
 symbols
 selected</source>
-        <comment>Keep it short. Should not be much longer per line than the longest word in the original.</comment>
+        <extracomment>Keep it short. Should not be much longer per line than the longest word in the original.</extracomment>
         <translation>Beberapa
 simbol 
 yang dipilih</translation>

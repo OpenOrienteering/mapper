@@ -4023,7 +4023,7 @@ Importovat data tak jako tak?</translation>
         <source>No
 symbol
 selected</source>
-        <comment>Keep it short. Should not be much longer per line than the longest word in the original.</comment>
+        <extracomment>Keep it short. Should not be much longer per line than the longest word in the original.</extracomment>
         <translation>Nevybrán
 žádný
 symbol</translation>
@@ -4033,7 +4033,7 @@ symbol</translation>
         <source>Multiple
 symbols
 selected</source>
-        <comment>Keep it short. Should not be much longer per line than the longest word in the original.</comment>
+        <extracomment>Keep it short. Should not be much longer per line than the longest word in the original.</extracomment>
         <translation>Vybráno
 více
 symbolů</translation>

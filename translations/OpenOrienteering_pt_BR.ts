@@ -3859,7 +3859,7 @@ Importar os dados assim mesmo?</translation>
         <source>No
 symbol
 selected</source>
-        <comment>Keep it short. Should not be much longer per line than the longest word in the original.</comment>
+        <extracomment>Keep it short. Should not be much longer per line than the longest word in the original.</extracomment>
         <translation>Nenhum
 símbolo
 selecionado</translation>
@@ -3869,7 +3869,7 @@ selecionado</translation>
         <source>Multiple
 symbols
 selected</source>
-        <comment>Keep it short. Should not be much longer per line than the longest word in the original.</comment>
+        <extracomment>Keep it short. Should not be much longer per line than the longest word in the original.</extracomment>
         <translation>Vários
 símbolos
 selecionados</translation>

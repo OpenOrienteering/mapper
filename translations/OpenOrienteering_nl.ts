@@ -4113,7 +4113,7 @@ Desondanks de gegevens importeren?</translation>
         <source>No
 symbol
 selected</source>
-        <comment>Keep it short. Should not be much longer per line than the longest word in the original.</comment>
+        <extracomment>Keep it short. Should not be much longer per line than the longest word in the original.</extracomment>
         <translation>Geen
 symbool
 gekozen</translation>
@@ -4123,7 +4123,7 @@ gekozen</translation>
         <source>Multiple
 symbols
 selected</source>
-        <comment>Keep it short. Should not be much longer per line than the longest word in the original.</comment>
+        <extracomment>Keep it short. Should not be much longer per line than the longest word in the original.</extracomment>
         <translation>Meerdere
 symbolen
 gekozen</translation>

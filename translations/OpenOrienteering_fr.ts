@@ -4172,7 +4172,7 @@ Faut-il poursuivre l&apos;import ?</translation>
         <source>No
 symbol
 selected</source>
-        <comment>Keep it short. Should not be much longer per line than the longest word in the original.</comment>
+        <extracomment>Keep it short. Should not be much longer per line than the longest word in the original.</extracomment>
         <translation>Aucun
 symbole
 sélectionné</translation>
@@ -4182,7 +4182,7 @@ sélectionné</translation>
         <source>Multiple
 symbols
 selected</source>
-        <comment>Keep it short. Should not be much longer per line than the longest word in the original.</comment>
+        <extracomment>Keep it short. Should not be much longer per line than the longest word in the original.</extracomment>
         <translation>Plusieurs
 symboles
 sdélectionnés</translation>

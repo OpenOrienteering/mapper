@@ -3754,7 +3754,7 @@ Import the data anyway?</source>
         <source>No
 symbol
 selected</source>
-        <comment>Keep it short. Should not be much longer per line than the longest word in the original.</comment>
+        <extracomment>Keep it short. Should not be much longer per line than the longest word in the original.</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3762,7 +3762,7 @@ selected</source>
         <source>Multiple
 symbols
 selected</source>
-        <comment>Keep it short. Should not be much longer per line than the longest word in the original.</comment>
+        <extracomment>Keep it short. Should not be much longer per line than the longest word in the original.</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
