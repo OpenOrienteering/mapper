@@ -76,6 +76,7 @@ set(Mapper_Common_SRCS
   core/symbols/line_symbol.cpp
   core/symbols/point_symbol.cpp
   core/symbols/symbol.cpp
+  core/symbols/symbol_icon_decorator.cpp
   core/symbols/text_symbol.cpp
   
   fileformats/file_format.cpp
