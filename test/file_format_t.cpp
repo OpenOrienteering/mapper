@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,18 +20,42 @@
 
 #include "file_format_t.h"
 
-#include <QtTest>
+#include <algorithm>
+#include <exception>
+#include <limits>
+#include <memory>
 
-#include "test_config.h"
+#include <Qt>
+#include <QtGlobal>
+#include <QtTest>
+#include <QBuffer>
+#include <QByteArray>
+#include <QCoreApplication>
+#include <QDir>
+#include <QFileInfo>
+#include <QHash>
+#include <QIODevice>
+#include <QLatin1String>
+#include <QPoint>
+#include <QPointF>
+#include <QRectF>
+#include <QSize>
+#include <QSizeF>
+#include <QString>
 
 #include "global.h"
+#include "test_config.h"
 #include "settings.h"
 #include "core/georeferencing.h"
+#include "core/latlon.h"
 #include "core/map.h"
 #include "core/map_color.h"
+#include "core/map_coord.h"
 #include "core/map_grid.h"
+#include "core/map_part.h"
 #include "core/map_printer.h"
 #include "core/objects/object.h"
+#include "core/symbols/symbol.h"
 #include "fileformats/file_format.h"
 #include "fileformats/file_format_registry.h"
 #include "fileformats/file_import_export.h"
@@ -49,9 +73,14 @@ using namespace OpenOrienteering;
 
 namespace QTest
 {
+	/*
+	 * This debug helper must use the parameter name 't' in order to avoid
+	 * a warning about a difference between declaration and definition.
+	 */
 	template<>
-	char* toString(const MapPrinterPageFormat& page_format)
+	char* toString(const MapPrinterPageFormat& t)
 	{
+		const auto& page_format = t;
 		QByteArray ba = "";
 		ba += MapPrinter::paperSizeNames()[page_format.paper_size];
 		ba += (page_format.orientation == MapPrinterPageFormat::Landscape) ? " landscape (" : " portrait (";
@@ -66,9 +95,14 @@ namespace QTest
 		return qstrdup(ba.data());
 	}
 	
+	/*
+	 * This debug helper must use the parameter name 't' in order to avoid
+	 * a warning about a difference between declaration and definition.
+	 */
 	template<>
-	char* toString(const MapPrinterOptions& options)
+	char* toString(const MapPrinterOptions& t)
 	{
+		const auto& options = t;
 		QByteArray ba = "";
 		ba += "1:" + QByteArray::number(options.scale) + ", ";
 		ba += QByteArray::number(options.resolution) + " dpi, ";

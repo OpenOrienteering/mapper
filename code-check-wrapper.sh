@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-#    Copyright 2017 Kai Pastor
+#    Copyright 2017, 2018 Kai Pastor
 #
 #    This file is part of OpenOrienteering.
 #    
@@ -49,6 +49,7 @@ PATTERN=" \
   combined_symbol.cpp \
   configure_grid_dialog.cpp \
   file_dialog.cpp \
+  file_format_t.cpp \
   file_import_export.cpp \
   georeferencing_dialog.cpp \
   gdal_manager.cpp \
