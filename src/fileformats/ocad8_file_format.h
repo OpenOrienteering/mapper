@@ -42,7 +42,7 @@ class OCAD8FileFormat : public FileFormat
 public:
 	OCAD8FileFormat();
 	
-	bool understands(const unsigned char *buffer, std::size_t sz) const override;
+	ImportSupportAssumption understands(const char* buffer, int size) const override;
 	std::unique_ptr<Importer> makeImporter(QIODevice* stream, Map *map, MapView *view) const override;
 	std::unique_ptr<Exporter> makeExporter(QIODevice* stream, Map* map, MapView* view) const override;
 };

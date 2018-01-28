@@ -50,8 +50,8 @@
 #include "templates/template.h"
 #include "templates/template_image.h"
 #include "templates/template_map.h"
-#include "util/util.h"
 #include "util/encoding.h"
+#include "util/util.h"
 
 
 namespace OpenOrienteering {
@@ -65,11 +65,16 @@ OCAD8FileFormat::OCAD8FileFormat()
 	// Nothing
 }
 
-bool OCAD8FileFormat::understands(const unsigned char* buffer, std::size_t sz) const
+
+FileFormat::ImportSupportAssumption OCAD8FileFormat::understands(const char* buffer, int size) const
 {
     // The first two bytes of the file must be AD 0C.
-    if (sz >= 2 && buffer[0] == 0xAD && buffer[1] == 0x0C) return true;
-    return false;
+	if (size < 2)
+		return Unknown;
+	else if (quint8(buffer[0]) == 0xAD && buffer[1] == 0x0C)
+		return FullySupported;
+	else
+		return NotSupported;
 }
 
 

@@ -20,7 +20,6 @@
 #ifndef OPENORIENTEERING_OGR_FILE_FORMAT_H
 #define OPENORIENTEERING_OGR_FILE_FORMAT_H
 
-#include <cstddef>
 #include <memory>
 
 #include "fileformats/file_format.h"
@@ -49,13 +48,6 @@ public:
 	 * Constructs a new OgrFileFormat.
 	 */
 	OgrFileFormat();
-	
-	/**
-	 * Always returns true.
-	 * 
-	 * There is no cheap way to determine the answer via OGR.
-	 */
-	bool understands(const unsigned char* buffer, std::size_t size) const override;
 	
 	
 	/**

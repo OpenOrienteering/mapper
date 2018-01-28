@@ -20,7 +20,6 @@
 #ifndef OPENORIENTEERING_OCD_FILE_FORMAT
 #define OPENORIENTEERING_OCD_FILE_FORMAT
 
-#include <cstddef>
 #include <memory>
 
 #include "fileformats/file_format.h"
@@ -46,13 +45,14 @@ public:
 	 */
 	OcdFileFormat();
 	
+	
 	/**
 	 * Detects whether the buffer may be the start of a valid OCD file.
 	 * 
 	 * At the moment, it requires at least two bytes of data.
 	 * It will return false if compiled for a big endian system.
 	 */
-	bool understands(const unsigned char *buffer, std::size_t sz) const override;
+	ImportSupportAssumption understands(const char* buffer, int size) const override;
 	
 	
 	/// \copydoc FileFormat::createImporter()

@@ -299,11 +299,6 @@ OgrFileFormat::OgrFileFormat()
 		addExtension(QString::fromLatin1(extension));
 }
 
-bool OgrFileFormat::understands(const unsigned char* /*buffer*/, std::size_t /*size*/) const
-{
-	return true;
-}
-
 
 std::unique_ptr<Importer> OgrFileFormat::makeImporter(QIODevice* stream, Map* map, MapView* view) const
 {

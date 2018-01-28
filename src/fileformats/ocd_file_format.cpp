@@ -45,12 +45,16 @@ OcdFileFormat::OcdFileFormat()
 	// Nothing
 }
 
-bool OcdFileFormat::understands(const unsigned char* buffer, std::size_t sz) const
+
+FileFormat::ImportSupportAssumption OcdFileFormat::understands(const char* buffer, int size) const
 {
-	// The first two bytes of the file must be 0x0cad in litte endian ordner.
-	// This test will refuse to understand OCD files on big endian systems:
-	// The importer's current implementation won't work there.
-	return (sz >= 2 && *reinterpret_cast<const quint16*>(buffer) == 0x0cad);
+	// The first two bytes of the file must be AD 0C.
+	if (size < 2)
+		return Unknown;
+	else if (quint8(buffer[0]) == 0xAD && buffer[1] == 0x0C)
+		return FullySupported;
+	else
+		return NotSupported;
 }
 
 

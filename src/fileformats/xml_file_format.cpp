@@ -76,12 +76,11 @@ int XMLFileFormat::active_version = 5; // updated by XMLFileExporter::doExport()
 
 namespace {
 
-const char* magic_string = "<?xml ";
-
 QString mapperNamespace()
 {
 	return QStringLiteral("http://openorienteering.org/apps/mapper/xml/v2");
 }
+
 
 }  // namespace
 
@@ -94,10 +93,28 @@ XMLFileFormat::XMLFileFormat()
 	addExtension(QString::fromLatin1("xmap"));
 }
 
-bool XMLFileFormat::understands(const unsigned char *buffer, std::size_t sz) const
+
+FileFormat::ImportSupportAssumption XMLFileFormat::understands(const char* buffer, int size) const
 {
-	static const uint len = qstrlen(magic_string);
-	return (sz >= len && qstrncmp(reinterpret_cast<const char*>(buffer), magic_string, len) == 0);
+	const auto data = QByteArray::fromRawData(buffer, size);
+	if (size > 38)  // length of "<?xml ...>"
+	{
+		QXmlStreamReader xml(data);
+		if (xml.readNextStartElement())
+		{
+			if (xml.name() != QLatin1String("map"))
+				return NotSupported;
+			else if (xml.namespaceUri() == mapperNamespace())
+				return FullySupported;
+			else if (xml.namespaceUri() == QLatin1String("http://oorienteering.sourceforge.net/mapper/xml/v2"))
+			    return FullySupported;
+		}
+	}
+	auto trimmed = data.trimmed();
+	if (!trimmed.isEmpty() && !trimmed.startsWith('<'))
+		return NotSupported;
+		
+	return Unknown;
 }
 
 

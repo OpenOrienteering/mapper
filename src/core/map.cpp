@@ -26,6 +26,7 @@
 #include <exception>
 #include <iterator>
 #include <memory>
+#include <type_traits>
 
 #include <Qt>
 #include <QtGlobal>
@@ -730,8 +731,8 @@ bool Map::loadFrom(const QString& path, QWidget* dialog_parent, MapView* view, b
 	reset();
 
 	// Read a block at the beginning of the file, that we can use for magic number checking.
-	unsigned char buffer[256];
-	size_t total_read = file.read((char *)buffer, 256);
+	char buffer[256];
+	auto total_read = file.read(buffer, file.isSequential() ? 0 : std::extent<decltype(buffer)>::value);
 	file.seek(0);
 
 	bool import_complete = false;
@@ -739,50 +740,51 @@ bool Map::loadFrom(const QString& path, QWidget* dialog_parent, MapView* view, b
 	for (auto format : FileFormats.formats())
 	{
 		// If the format supports import, and thinks it can understand the file header, then proceed.
-		if (format->supportsImport() && format->understands(buffer, total_read))
-		{
-			// Wrap everything in a try block, so we can gracefully recover if the importer balks.
-			try {
-				// Create an importer instance for this file and map.
-				auto importer = format->makeImporter(&file, this, view);
-
-				// Run the first pass.
-				importer->doImport(load_symbols_only, QFileInfo(path).absolutePath());
-
-				// Are there any actions the user must take to complete the import?
-				if (!importer->actions().empty())
-				{
-					// TODO: prompt the user to resolve the action items. All-in-one dialog.
-				}
-
-				// Finish the import.
-				importer->finishImport();
-				
-				file.close();
-
-				// Display any warnings.
-				if (!importer->warnings().empty() && show_error_messages)
-				{
-					showMessageBox(nullptr,
-					               tr("Warning"),
-					               tr("The map import generated warnings."),
-					               importer->warnings() );
-				}
-
-				import_complete = true;
-			}
-			catch (FileFormatException &e)
+		auto support = format->understands(buffer, int(total_read));
+		if (support == FileFormat::NotSupported)
+			continue;
+		
+		try {
+			auto importer = format->makeImporter(&file, this, view);
+			
+			// Run the first pass.
+			importer->doImport(load_symbols_only, QFileInfo(path).absolutePath());
+			
+			// Are there any actions the user must take to complete the import?
+			if (!importer->actions().empty())
 			{
-				error_msg = e.message();
+				// TODO: prompt the user to resolve the action items. All-in-one dialog.
 			}
-			catch (std::exception &e)
+			
+			// Finish the import.
+			importer->finishImport();
+			
+			file.close();
+			
+			// Display any warnings.
+			if (!importer->warnings().empty() && show_error_messages)
 			{
-				qDebug() << "Exception:" << e.what();
-				error_msg = QString::fromLatin1(e.what());
+				showMessageBox(nullptr,
+				               tr("Warning"),
+				               tr("The map import generated warnings."),
+				               importer->warnings() );
 			}
+			
+			import_complete = true;
 		}
-		// If the last importer finished successfully
-		if (import_complete) break;
+		catch (FileFormatException &e)
+		{
+			error_msg = e.message();
+		}
+		catch (std::exception &e)
+		{
+			qWarning("Exception: %s", e.what());
+			error_msg = QString::fromLatin1(e.what());
+		}
+		
+		// If the last importer finished successfully, or failed despite full support
+		if (import_complete || support == FileFormat::FullySupported)
+			break;
 	}
 	
 	if (view)

@@ -21,7 +21,6 @@
 #ifndef OPENORIENTEERING_FILE_FORMAT_H
 #define OPENORIENTEERING_FILE_FORMAT_H
 
-#include <cstddef>
 #include <exception>
 #include <memory>
 
@@ -143,6 +142,24 @@ public:
 	 */
 	Q_DECLARE_FLAGS(FormatFeatures, FormatFeatureFlag)
 	
+	
+	/**
+	 * A type which indicates the level of support for importing a file.
+	 * 
+	 * If a file format fully supports a file format, errors during import must
+	 * be regard as fatal. If the level of support is Unknown, an import can be
+	 * attempted, but an import failure allows no conclusion about whether the
+	 * file format is actually unsupported or the file contains invalid data for
+	 * a supported format.
+	 */
+	enum ImportSupportAssumption
+	{
+		NotSupported   = 0,  ///< The FileFormat does not support the file.
+		Unknown        = 1,  ///< The FileFormat support cannot be determine in advance.
+		FullySupported = 2   ///< The FileFormat supports the file.
+	};
+	
+	
 	/** Creates a new file format with the given parameters.
 	 * 
 	 *  Don't use a leading dot on the file extension.
@@ -205,13 +222,19 @@ public:
 	 */
 	bool isExportLossy() const;
 	
-	/** Returns true if this file format believes it is capable of understanding a file that
-	 *  starts with the given byte sequence. "Magic" numbers and version information is commonly
-	 *  placed at the beginning of a file, and this method is used by the application to pre-screen
-	 *  for a suitable Importer. If there is any doubt about whether the file format can successfully
-	 *  process a file, this method should return false.
+	
+	/** 
+	 * Determines whether this FileFormat is capable of understanding a file
+	 * which starts with the given byte sequence.
+	 * 
+	 * Magic numbers and version information are commonly placed at the
+	 * beginning of a file. This method is used by the application to pre-screen
+	 * for a suitable Importer.
+	 * 
+	 * The default implementation returns Unknown for file formats which support
+	 * import, and NotSupported otherwise.
 	 */
-	virtual bool understands(const unsigned char *buffer, std::size_t sz) const;
+	virtual ImportSupportAssumption understands(const char* buffer, int size) const;
 	
 	
 	/**

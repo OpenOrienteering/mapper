@@ -401,6 +401,62 @@ void FileFormatTest::mapCoordtoString()
 
 
 
+void FileFormatTest::understandsTest_data()
+{
+	quint8 ocd_start_raw[2] = { 0xAD, 0x0C };
+	auto ocd_start   = QByteArray::fromRawData(reinterpret_cast<const char*>(ocd_start_raw), 2).append("random data");
+	auto omap_start  = QByteArray("OMAP plus random data");
+	auto xml_start   = QByteArray("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+	auto xml_legacy  = QByteArray(xml_start + "\r\n<map xmlns=\"http://oorienteering.sourceforge.net/mapper/xml/v2\">");
+	auto xml_regular = QByteArray(xml_start + "\n<map xmlns=\"http://openorienteering.org/apps/mapper/xml/v2\" version=\"7\">");
+	auto xml_gpx     = QByteArray(xml_start + "\n<gpx>");
+	
+	// Add all file formats which support import and export
+	QTest::addColumn<QByteArray>("format_id");
+	QTest::addColumn<QByteArray>("data");
+	QTest::addColumn<int>("support");
+	
+	QTest::newRow("native < 'OMAPxxx'")     << QByteArray("native (deprecated)") << omap_start         << int(FileFormat::FullySupported);
+	QTest::newRow("native < 'OMAP'")        << QByteArray("native (deprecated)") << omap_start.left(4) << int(FileFormat::FullySupported);
+	QTest::newRow("native < 'OM'")          << QByteArray("native (deprecated)") << omap_start.left(2) << int(FileFormat::Unknown);
+	QTest::newRow("native < ''")            << QByteArray("native (deprecated)") << QByteArray()       << int(FileFormat::Unknown);
+	QTest::newRow("native < xml start")     << QByteArray("native (deprecated)") << xml_start          << int(FileFormat::NotSupported);
+	QTest::newRow("native < 0x0CADxxx")     << QByteArray("native (deprecated)") << ocd_start          << int(FileFormat::NotSupported);
+	
+	QTest::newRow("XML < xml legacy")       << QByteArray("XML") << xml_legacy        << int(FileFormat::FullySupported);
+	QTest::newRow("XML < xml regular")      << QByteArray("XML") << xml_regular       << int(FileFormat::FullySupported);
+	QTest::newRow("XML < xml start")        << QByteArray("XML") << xml_start         << int(FileFormat::Unknown);
+	QTest::newRow("XML < xml incomplete 1") << QByteArray("XML") << xml_regular.left(xml_start.length() - 10) << int(FileFormat::Unknown);
+	QTest::newRow("XML < xml incomplete 2") << QByteArray("XML") << xml_regular.left(xml_start.length() + 10) << int(FileFormat::Unknown);
+	QTest::newRow("XML < ''")               << QByteArray("XML") << QByteArray()      << int(FileFormat::Unknown);
+	QTest::newRow("XML < xml other")        << QByteArray("XML") << xml_gpx           << int(FileFormat::NotSupported);
+	QTest::newRow("XML < 'OMAPxxx'")        << QByteArray("XML") << omap_start        << int(FileFormat::NotSupported);
+	QTest::newRow("XML < 0x0CADxxx")        << QByteArray("XML") << ocd_start         << int(FileFormat::NotSupported);
+	
+	QTest::newRow("OCD < 0x0CADxxx")        << QByteArray("OCD") << ocd_start         << int(FileFormat::FullySupported);
+	QTest::newRow("OCD < 0x0CAD")           << QByteArray("OCD") << ocd_start.left(2) << int(FileFormat::FullySupported);
+	QTest::newRow("OCD < 0x0c")             << QByteArray("OCD") << ocd_start.left(1) << int(FileFormat::Unknown);
+	QTest::newRow("OCD < ''")               << QByteArray("OCD") << QByteArray()      << int(FileFormat::Unknown);
+	QTest::newRow("OCD < 'OMAPxxx'")        << QByteArray("OCD") << omap_start        << int(FileFormat::NotSupported);
+	QTest::newRow("OCD < xml start")        << QByteArray("OCD") << xml_start         << int(FileFormat::NotSupported);
+	
+	/// \todo Test OgrFileFormat (ID "OGR")
+}
+
+void FileFormatTest::understandsTest()
+{
+	QFETCH(QByteArray, format_id);
+	QFETCH(QByteArray, data);
+	QFETCH(int, support);
+	
+	auto format = FileFormats.findFormat(format_id);
+	QVERIFY(format);
+	QVERIFY(format->supportsImport());
+	QCOMPARE(int(format->understands(data.constData(), data.length())), support);
+}
+
+
+
 void FileFormatTest::issue_513_high_coordinates_data()
 {
 	QTest::addColumn<QString>("filename");

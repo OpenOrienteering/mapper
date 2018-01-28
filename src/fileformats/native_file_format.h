@@ -49,9 +49,10 @@ public:
 	 */
 	NativeFileFormat();
 	
+	
 	/** Returns true if the file starts with the magic byte sequence "OMAP" (0x4f 0x4d 0x41 0x50).
 	 */
-	bool understands(const unsigned char *buffer, std::size_t sz) const override;
+	FileFormat::ImportSupportAssumption understands(const char* buffer, int size) const override;
 	
 	
 	/** Creates an importer for this file type.

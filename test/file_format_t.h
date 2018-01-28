@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017  Kai Pastor
+ *    Copyright 2012-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -39,6 +39,12 @@ private slots:
 	 * Tests the MapCoord::toString() implementation which is used for export.
 	 */
 	void mapCoordtoString();
+	
+	/**
+	 * Tests FileFormat::understands() implementations.
+	 */
+	void understandsTest();
+	void understandsTest_data();
 	
 	/**
 	 * Tests that high coordinates are correctly moved to the central region

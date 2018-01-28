@@ -100,10 +100,16 @@ NativeFileFormat::NativeFileFormat()
 	// Nothing
 }
 
-bool NativeFileFormat::understands(const unsigned char *buffer, std::size_t sz) const
+
+FileFormat::ImportSupportAssumption NativeFileFormat::understands(const char* buffer, int size) const
 {
 	// The first four bytes of the file must be 'OMAP'.
-	return (sz >= 4 && memcmp(buffer, magic_bytes, 4) == 0);
+	if (size < 4)
+		return Unknown;
+	else if (qstrncmp(buffer, magic_bytes, 4) == 0)
+		return FullySupported;
+	else
+		return NotSupported;
 }
 
 
