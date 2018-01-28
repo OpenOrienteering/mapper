@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Pete Curtis
+ *    Copyright 2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -68,19 +69,14 @@ bool FileFormat::understands(const unsigned char *buffer, std::size_t sz) const
 	return false;
 }
 
-Importer *FileFormat::createImporter(QIODevice* stream, Map *map, MapView *view) const
+
+std::unique_ptr<Importer> FileFormat::makeImporter(QIODevice* /*stream*/, Map* /*map*/, MapView* /*view*/) const
 {
-	Q_UNUSED(stream);
-	Q_UNUSED(map);
-	Q_UNUSED(view);
 	throw FileFormatException(QCoreApplication::translate("OpenOrienteering::Importer", "Format (%1) does not support import").arg(description()));
 }
 
-Exporter *FileFormat::createExporter(QIODevice* stream, Map *map, MapView *view) const
+std::unique_ptr<Exporter> FileFormat::makeExporter(QIODevice* /*stream*/, Map* /*map*/, MapView* /*view*/) const
 {
-	Q_UNUSED(stream);
-	Q_UNUSED(map);
-	Q_UNUSED(view);
 	throw FileFormatException(QCoreApplication::translate("OpenOrienteering::Exporter", "Format (%1) does not support export").arg(description()));
 }
 

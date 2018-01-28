@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Thomas Schöps
- *    Copyright 2013-2017 Kai Pastor
+ *    Copyright 2013-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -673,7 +673,7 @@ bool Map::exportTo(const QString& path, MapView* view, const FileFormat* format)
 	}
 	
 	QSaveFile file(path);
-	QScopedPointer<Exporter> exporter(format->createExporter(&file, this, view));
+	auto exporter = format->makeExporter(&file, this, view);
 	bool success = false;
 	if (file.open(QIODevice::WriteOnly))
 	{
@@ -741,11 +741,10 @@ bool Map::loadFrom(const QString& path, QWidget* dialog_parent, MapView* view, b
 		// If the format supports import, and thinks it can understand the file header, then proceed.
 		if (format->supportsImport() && format->understands(buffer, total_read))
 		{
-			Importer *importer = nullptr;
 			// Wrap everything in a try block, so we can gracefully recover if the importer balks.
 			try {
 				// Create an importer instance for this file and map.
-				importer = format->createImporter(&file, this, view);
+				auto importer = format->makeImporter(&file, this, view);
 
 				// Run the first pass.
 				importer->doImport(load_symbols_only, QFileInfo(path).absolutePath());
@@ -781,7 +780,6 @@ bool Map::loadFrom(const QString& path, QWidget* dialog_parent, MapView* view, b
 				qDebug() << "Exception:" << e.what();
 				error_msg = QString::fromLatin1(e.what());
 			}
-			if (importer) delete importer;
 		}
 		// If the last importer finished successfully
 		if (import_complete) break;
@@ -998,46 +996,36 @@ QHash<const Symbol*, Symbol*> Map::importMap(
 
 
 bool Map::exportToIODevice(QIODevice* stream)
+try
 {
+	auto native_format = FileFormats.findFormat("XML");
 	stream->open(QIODevice::WriteOnly);
-	Exporter* exporter = nullptr;
-	try {
-		const FileFormat* native_format = FileFormats.findFormat("XML");
-		exporter = native_format->createExporter(stream, this, nullptr);
-		exporter->doExport();
-		stream->close();
-	}
-	catch (std::exception &e)
-	{
-		if (exporter)
-			delete exporter;
-		return false;
-	}
-	if (exporter)
-		delete exporter;
+	native_format->makeExporter(stream, this, nullptr)->doExport();
+	stream->close();
 	return true;
+}
+catch (std::exception& /*e*/)
+{
+	return false;
 }
 
+
 bool Map::importFromIODevice(QIODevice* stream)
+try
 {
-	Importer* importer = nullptr;
-	try {
-		const FileFormat* native_format = FileFormats.findFormat("XML");
-		importer = native_format->createImporter(stream, this, nullptr);
-		importer->doImport(false);
-		importer->finishImport();
-		stream->close();
-	}
-	catch (std::exception &e)
-	{
-		if (importer)
-			delete importer;
-		return false;
-	}
-	if (importer)
-		delete importer;
+	auto native_format = FileFormats.findFormat("XML");
+	auto importer = native_format->makeImporter(stream, this, nullptr);
+	importer->doImport(false);
+	importer->finishImport();
+	stream->close();
 	return true;
 }
+catch (std::exception& /*e*/)
+{
+	return false;
+}
+
+
 
 void Map::draw(QPainter* painter, const RenderConfig& config)
 {

@@ -1,5 +1,6 @@
 /*
- *    Copyright 2012, 2013, 2014 Pete Curtis, Kai Pastor
+ *    Copyright 2012-2014 Pete Curtis
+ *    Copyright 2012-2014, 2016, 2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,6 +22,7 @@
 #define OPENORIENTEERING_FILE_FORMAT_XML_H
 
 #include <cstddef>
+#include <memory>
 
 #include "fileformats/file_format.h"
 
@@ -49,13 +51,15 @@ public:
 	 */
 	bool understands(const unsigned char *buffer, std::size_t sz) const override;
 	
+	
 	/** @brief Creates an importer for XML files.
 	 */
-	Importer *createImporter(QIODevice* stream, Map *map, MapView *view) const override;
-	
+	std::unique_ptr<Importer> makeImporter(QIODevice* stream, Map* map, MapView* view) const override;
+		
 	/** @brief Creates an exporter for XML files.
 	 */
-	Exporter *createExporter(QIODevice* stream, Map *map, MapView *view) const override;
+	std::unique_ptr<Exporter> makeExporter(QIODevice* stream, Map* map, MapView* view) const override;
+	
 	
 	/** @brief The minimum XML file format version supported by this implementation.
 	 */

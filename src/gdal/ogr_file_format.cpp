@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016-2017 Kai Pastor
+ *    Copyright 2016-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,6 +21,7 @@
 #include "ogr_file_format_p.h"
 
 #include <algorithm>
+#include <cstddef>
 #include <iterator>
 #include <memory>
 #include <vector>
@@ -303,9 +304,10 @@ bool OgrFileFormat::understands(const unsigned char* /*buffer*/, std::size_t /*s
 	return true;
 }
 
-Importer* OgrFileFormat::createImporter(QIODevice* stream, Map *map, MapView *view) const
+
+std::unique_ptr<Importer> OgrFileFormat::makeImporter(QIODevice* stream, Map* map, MapView* view) const
 {
-	return new OgrFileImport(stream, map, view);
+	return std::make_unique<OgrFileImport>(stream, map, view);
 }
 
 

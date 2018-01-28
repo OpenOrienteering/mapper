@@ -1,7 +1,7 @@
 /*
  *    Copyright 2012 Pete Curtis
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017  Kai Pastor
+ *    Copyright 2012-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,6 +22,7 @@
 #include "xml_file_format.h"
 #include "xml_file_format_p.h"
 
+#include <cstddef>
 #include <memory>
 #include <vector>
 
@@ -99,14 +100,15 @@ bool XMLFileFormat::understands(const unsigned char *buffer, std::size_t sz) con
 	return (sz >= len && qstrncmp(reinterpret_cast<const char*>(buffer), magic_string, len) == 0);
 }
 
-Importer *XMLFileFormat::createImporter(QIODevice* stream, Map *map, MapView *view) const
+
+std::unique_ptr<Importer> XMLFileFormat::makeImporter(QIODevice* stream, Map* map, MapView* view) const
 {
-	return new XMLFileImporter(stream, map, view);
+	return std::make_unique<XMLFileImporter>(stream, map, view);
 }
 
-Exporter *XMLFileFormat::createExporter(QIODevice* stream, Map *map, MapView *view) const
+std::unique_ptr<Exporter> XMLFileFormat::makeExporter(QIODevice* stream, Map* map, MapView* view) const
 {
-	return new XMLFileExporter(stream, map, view);
+	return std::make_unique<XMLFileExporter>(stream, map, view);
 }
 
 

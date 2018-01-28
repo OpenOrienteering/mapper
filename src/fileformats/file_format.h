@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Pete Curtis
+ *    Copyright 2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,6 +23,7 @@
 
 #include <cstddef>
 #include <exception>
+#include <memory>
 
 #include <QtGlobal>
 #include <QByteArray>
@@ -211,21 +213,22 @@ public:
 	 */
 	virtual bool understands(const unsigned char *buffer, std::size_t sz) const;
 	
-	/** Creates an Importer that will read a map file from the given stream into the given map and view.
-	 *  The caller can then call doImport() in the returned object to start the import process. The caller
-	 *  is responsible for deleting the Importer when it's finished.
-	 *
-	 *  If the Importer could not be created, then this method should throw a FormatException.
-	 */
-	virtual Importer* createImporter(QIODevice* stream, Map *map, MapView *view) const;
 	
-	/** Creates an Exporter that will save the given map and view into the given stream.
-	 *  The caller can then call doExport() in the returned object to start the export process. The caller
-	 *  is responsible for deleting the Exporter when it's finished.
-	 *
-	 *  If the Exporter could not be created, then this method should throw a FormatException.
+	/**
+	 * Creates an Importer that will read a map file from the given stream.
+	 * 
+	 * If the Importer can not be created, a FileFormatException shall be
+	 * thrown. The default implementation does just that.
 	 */
-	virtual Exporter *createExporter(QIODevice* stream, Map *map, MapView *view) const;
+	virtual std::unique_ptr<Importer> makeImporter(QIODevice* stream, Map *map, MapView *view) const;
+	
+	/** 
+	 * Creates an Exporter that will save A map into the given stream.
+	 *
+	 * If the Exporter can not be created, a FileFormatException shall be
+	 * thrown. The default implementation does just that.
+	 */
+	virtual std::unique_ptr<Exporter> makeExporter(QIODevice* stream, Map *map, MapView *view) const;
 	
 private:
 	FileType file_type;

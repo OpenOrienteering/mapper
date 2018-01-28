@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013-2016 Kai Pastor
+ *    Copyright 2013-2016, 2018 Kai Pastor
  *
  *    Some parts taken from file_format_oc*d8{.h,_p.h,cpp} which are
  *    Copyright 2012 Pete Curtis
@@ -21,6 +21,8 @@
  */
 
 #include "ocd_file_format.h"
+
+#include <memory>
 
 #include <QtGlobal>
 #include <QCoreApplication>
@@ -51,14 +53,15 @@ bool OcdFileFormat::understands(const unsigned char* buffer, std::size_t sz) con
 	return (sz >= 2 && *reinterpret_cast<const quint16*>(buffer) == 0x0cad);
 }
 
-Importer* OcdFileFormat::createImporter(QIODevice* stream, Map *map, MapView *view) const
+
+std::unique_ptr<Importer> OcdFileFormat::makeImporter(QIODevice* stream, Map *map, MapView *view) const
 {
-	return new OcdFileImport(stream, map, view);
+	return std::make_unique<OcdFileImport>(stream, map, view);
 }
 
-Exporter* OcdFileFormat::createExporter(QIODevice* stream, Map* map, MapView* view) const
+std::unique_ptr<Exporter> OcdFileFormat::makeExporter(QIODevice* stream, Map* map, MapView* view) const
 {
-	return new OcdFileExport(stream, map, view);
+	return std::make_unique<OcdFileExport>(stream, map, view);
 }
 
 

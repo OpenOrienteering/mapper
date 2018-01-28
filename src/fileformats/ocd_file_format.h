@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013, 2016 Kai Pastor
+ *    Copyright 2013, 2014, 2016-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,6 +21,7 @@
 #define OPENORIENTEERING_OCD_FILE_FORMAT
 
 #include <cstddef>
+#include <memory>
 
 #include "fileformats/file_format.h"
 
@@ -53,11 +54,13 @@ public:
 	 */
 	bool understands(const unsigned char *buffer, std::size_t sz) const override;
 	
+	
 	/// \copydoc FileFormat::createImporter()
-	Importer* createImporter(QIODevice* stream, Map *map, MapView *view) const override;
+	std::unique_ptr<Importer> makeImporter(QIODevice* stream, Map* map, MapView* view) const override;
 	
 	/// \copydoc FileFormat::createExporter()
-	Exporter* createExporter(QIODevice* stream, Map* map, MapView* view) const override;
+	std::unique_ptr<Exporter> makeExporter(QIODevice* stream, Map* map, MapView* view) const override;
+	
 };
 
 

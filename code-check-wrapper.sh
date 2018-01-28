@@ -49,6 +49,7 @@ PATTERN=" \
   combined_symbol.cpp \
   configure_grid_dialog.cpp \
   file_dialog.cpp \
+  /file_format.cpp \
   file_format_t.cpp \
   file_import_export.cpp \
   georeferencing_dialog.cpp \
@@ -60,6 +61,7 @@ PATTERN=" \
   map_widget.cpp \
   object_mover.cpp \
   object_query.cpp \
+  ocd_file_format.cpp \
   ogr_file_format.cpp \
   ogr_template.cpp \
   overriding_shortcut.cpp \

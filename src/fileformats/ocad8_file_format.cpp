@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Pete Curtis
- *    Copyright 2013-2017  Kai Pastor
+ *    Copyright 2013-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -72,15 +72,18 @@ bool OCAD8FileFormat::understands(const unsigned char* buffer, std::size_t sz) c
     return false;
 }
 
-Importer* OCAD8FileFormat::createImporter(QIODevice* stream, Map *map, MapView *view) const
+
+std::unique_ptr<Importer> OCAD8FileFormat::makeImporter(QIODevice* stream, Map *map, MapView *view) const
 {
-	return new OCAD8FileImport(stream, map, view);
+	return std::make_unique<OCAD8FileImport>(stream, map, view);
 }
 
-Exporter* OCAD8FileFormat::createExporter(QIODevice* stream, Map* map, MapView* view) const
+std::unique_ptr<Exporter> OCAD8FileFormat::makeExporter(QIODevice* stream, Map* map, MapView* view) const
 {
-    return new OCAD8FileExport(stream, map, view);
+	return std::make_unique<OCAD8FileExport>(stream, map, view);
 }
+
+
 
 // ### OCAD8FileImport ###
 

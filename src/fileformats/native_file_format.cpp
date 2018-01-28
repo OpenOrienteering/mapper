@@ -1,7 +1,7 @@
 /*
  *    Copyright 2012 Pete Curtis
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015  Kai Pastor
+ *    Copyright 2012-2015, 2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,6 +22,8 @@
 #ifndef NO_NATIVE_FILE_FORMAT
 
 #include "native_file_format.h"
+
+#include <memory>
 
 #include <QScopedValueRollback>
 
@@ -104,9 +106,10 @@ bool NativeFileFormat::understands(const unsigned char *buffer, std::size_t sz) 
 	return (sz >= 4 && memcmp(buffer, magic_bytes, 4) == 0);
 }
 
-Importer *NativeFileFormat::createImporter(QIODevice* stream, Map* map, MapView* view) const
+
+std::unique_ptr<Importer> NativeFileFormat::makeImporter(QIODevice* stream, Map* map, MapView* view) const
 {
-	return new NativeFileImport(stream, map, view);
+	return std::make_unique<NativeFileImport>(stream, map, view);
 }
 
 
