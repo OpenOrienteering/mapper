@@ -97,6 +97,9 @@ XMLFileFormat::XMLFileFormat()
 FileFormat::ImportSupportAssumption XMLFileFormat::understands(const char* buffer, int size) const
 {
 	const auto data = QByteArray::fromRawData(buffer, size);
+	if (size >= 4 && qstrncmp(buffer, "OMAP", 4) == 0)
+	    return FullySupported;  // Legacy binary format. Final error raised in doImport().
+	
 	if (size > 38)  // length of "<?xml ...>"
 	{
 		QXmlStreamReader xml(data);
@@ -519,7 +522,19 @@ void XMLFileImporter::import(bool load_symbols_only)
 {
 	if (!xml.readNextStartElement() || xml.name() != literal::map)
 	{
-		xml.raiseError(::OpenOrienteering::Importer::tr("Unsupported file format."));
+		if (stream->seek(0))
+		{
+			char data[4] = {};
+			stream->read(data, 4);
+			if (qstrncmp(reinterpret_cast<const char*>(data), "OMAP", 4) == 0)
+			{
+				throw FileFormatException(::OpenOrienteering::Importer::tr(
+				  "Unsupported obsolete file format version. "
+				  "Please use program version v%1 or older "
+				  "to load and update the file.").arg(QLatin1String("0.8")));
+			}
+		}
+		throw FileFormatException(::OpenOrienteering::Importer::tr("Unsupported file format."));
 	}
 	
 	XmlElementReader map_element(xml);

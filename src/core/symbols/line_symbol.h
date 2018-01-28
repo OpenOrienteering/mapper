@@ -31,7 +31,6 @@
 #include "core/map_coord.h"  // IWYU pragma: keep
 #include "core/symbols/symbol.h"
 
-class QIODevice;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 
@@ -67,7 +66,6 @@ struct LineSymbolBorder
 	int break_length;
 	
 	void reset() noexcept;
-	bool load(QIODevice* file, int version, Map* map);
 	void save(QXmlStreamWriter& xml, const Map& map) const;
 	bool load(QXmlStreamReader& xml, const Map& map);
 	bool equals(const LineSymbolBorder* other) const;
@@ -250,9 +248,6 @@ public:
 	SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog) override;
 	
 protected:
-#ifndef NO_NATIVE_FILE_FORMAT
-	bool loadImpl(QIODevice* file, int version, Map* map) override;
-#endif
 	void saveImpl(QXmlStreamWriter& xml, const Map& map) const override;
 	bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict) override;
 	PointSymbol* loadPointSymbol(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict);

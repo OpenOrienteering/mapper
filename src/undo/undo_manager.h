@@ -31,7 +31,6 @@
 
 #include "core/symbols/symbol.h"
 
-class QIODevice;
 class QWidget;
 class QXmlStreamReader;
 class QXmlStreamWriter;
@@ -171,11 +170,6 @@ public:
 	
 	
 	/**
-	 * Loads the undo steps from the file in the old "native" format.
-	 */
-	bool load(QIODevice* file, int version);
-	
-	/**
 	 * Saves the undo steps to the file in xml format.
 	 */
 	void saveUndo(QXmlStreamWriter& xml);
@@ -297,8 +291,6 @@ protected:
 	void updateMapState(const UndoStep* step) const;
 	
 private:
-	bool loadSteps(StepList& steps, QIODevice* file, int version);
-	
 	StepList loadSteps(QXmlStreamReader& xml, SymbolDictionary& symbol_dict) const;
 	
 	/**

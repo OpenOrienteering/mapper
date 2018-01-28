@@ -80,7 +80,6 @@ class Georeferencing : public QObject  // clazy:exclude=copyable-polymorphic
 {
 Q_OBJECT
 
-friend class NativeFileImport;
 friend QDebug operator<<(QDebug dbg, const Georeferencing& georef);
 
 public:

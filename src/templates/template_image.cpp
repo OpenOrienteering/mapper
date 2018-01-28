@@ -103,20 +103,6 @@ bool TemplateImage::saveTemplateFile() const
 }
 
 
-#ifndef NO_NATIVE_FILE_FORMAT
-bool TemplateImage::loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version)
-{
-	Q_UNUSED(version);
-	
-	if (is_georeferenced)
-	{
-		loadString(stream, temp_crs_spec);
-	}
-	
-	return true;
-}
-#endif
-
 
 void TemplateImage::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const
 {

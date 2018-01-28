@@ -44,6 +44,7 @@
 #include <QString>
 
 #include "global.h"
+#include "mapper_resource.h"
 #include "test_config.h"
 #include "settings.h"
 #include "core/georeferencing.h"
@@ -355,10 +356,10 @@ namespace
 	  "data:issue-513-coords-outside-printable.xmap",
 	  "data:issue-513-coords-outside-printable.omap",
 	  "data:issue-513-coords-outside-qint32.omap",
-	  "data:spotcolor_overprint.xmap",
-#ifndef NO_NATIVE_FILE_FORMAT
-	  "data:test_map.omap"
-#endif
+	  "data:legacy_map.omap",
+	  "data:/examples/complete map.omap",
+	  "data:/examples/forest sample.omap",
+	  "data:/examples/overprinting.omap",
 	};
 	
 }  // namespace
@@ -371,11 +372,12 @@ void FileFormatTest::initTestCase()
 	QCoreApplication::setApplicationName(QString::fromLatin1("FileFormatTest"));
 	Settings::getInstance().setSetting(Settings::General_NewOcd8Implementation, true);
 	
+	MapperResource::setSeachPaths();
 	doStaticInitializations();
 	if (!FileFormats.findFormat("OCAD78"))
 		FileFormats.registerFormat(new OCAD8FileFormat());
 	
-	static const auto prefix = QString::fromLatin1("data");
+	const auto prefix = QString::fromLatin1("data");
 	QDir::addSearchPath(prefix, QDir(QString::fromUtf8(MAPPER_TEST_SOURCE_DIR)).absoluteFilePath(prefix));
 	
 	for (auto raw_path : test_files)
@@ -416,13 +418,6 @@ void FileFormatTest::understandsTest_data()
 	QTest::addColumn<QByteArray>("data");
 	QTest::addColumn<int>("support");
 	
-	QTest::newRow("native < 'OMAPxxx'")     << QByteArray("native (deprecated)") << omap_start         << int(FileFormat::FullySupported);
-	QTest::newRow("native < 'OMAP'")        << QByteArray("native (deprecated)") << omap_start.left(4) << int(FileFormat::FullySupported);
-	QTest::newRow("native < 'OM'")          << QByteArray("native (deprecated)") << omap_start.left(2) << int(FileFormat::Unknown);
-	QTest::newRow("native < ''")            << QByteArray("native (deprecated)") << QByteArray()       << int(FileFormat::Unknown);
-	QTest::newRow("native < xml start")     << QByteArray("native (deprecated)") << xml_start          << int(FileFormat::NotSupported);
-	QTest::newRow("native < 0x0CADxxx")     << QByteArray("native (deprecated)") << ocd_start          << int(FileFormat::NotSupported);
-	
 	QTest::newRow("XML < xml legacy")       << QByteArray("XML") << xml_legacy        << int(FileFormat::FullySupported);
 	QTest::newRow("XML < xml regular")      << QByteArray("XML") << xml_regular       << int(FileFormat::FullySupported);
 	QTest::newRow("XML < xml start")        << QByteArray("XML") << xml_start         << int(FileFormat::Unknown);
@@ -430,7 +425,7 @@ void FileFormatTest::understandsTest_data()
 	QTest::newRow("XML < xml incomplete 2") << QByteArray("XML") << xml_regular.left(xml_start.length() + 10) << int(FileFormat::Unknown);
 	QTest::newRow("XML < ''")               << QByteArray("XML") << QByteArray()      << int(FileFormat::Unknown);
 	QTest::newRow("XML < xml other")        << QByteArray("XML") << xml_gpx           << int(FileFormat::NotSupported);
-	QTest::newRow("XML < 'OMAPxxx'")        << QByteArray("XML") << omap_start        << int(FileFormat::NotSupported);
+	QTest::newRow("XML < 'OMAPxxx'")        << QByteArray("XML") << omap_start        << int(FileFormat::FullySupported);
 	QTest::newRow("XML < 0x0CADxxx")        << QByteArray("XML") << ocd_start         << int(FileFormat::NotSupported);
 	
 	QTest::newRow("OCD < 0x0CADxxx")        << QByteArray("OCD") << ocd_start         << int(FileFormat::FullySupported);
@@ -533,9 +528,12 @@ void FileFormatTest::saveAndLoad()
 	const FileFormat* format = FileFormats.findFormat(format_id);
 	QVERIFY(format);
 	
+	if (map_filename.contains(QLatin1String("legacy")))
+		QEXPECT_FAIL(QTest::currentDataTag(), "Unsupported legacy binary format", Abort);
+	
 	// Load the test map
 	auto original = std::make_unique<Map>();
-	original->loadFrom(map_filename, nullptr, nullptr, false, false);
+	QVERIFY(original->loadFrom(map_filename, nullptr, nullptr, false, false));
 	QVERIFY(!original->hasUnsavedChanges());
 	
 	// Fix precision of grid rotation

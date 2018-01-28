@@ -27,7 +27,6 @@
 #include <memory>
 
 #include <QtMath>
-#include <QIODevice>
 #include <QLatin1String>
 #include <QStringRef>
 #include <QXmlStreamReader> // IWYU pragma: keep
@@ -68,55 +67,7 @@ AreaSymbol::FillPattern::FillPattern() noexcept
 	// nothing else
 }
 
-#ifndef NO_NATIVE_FILE_FORMAT
 
-bool AreaSymbol::FillPattern::load(QIODevice* file, int version, Map* map)
-{
-	flags = Option::Default;
-	qint32 itype;
-	file->read((char*)&itype, sizeof(qint32));
-	type = (Type)itype;
-	file->read((char*)&angle, sizeof(float));
-	if (version >= 4)
-	{
-		bool is_rotatable;
-		file->read((char*)&is_rotatable, sizeof(bool));
-		setRotatable(is_rotatable);
-	}
-	file->read((char*)&line_spacing, sizeof(int));
-	if (version >= 3)
-	{
-		file->read((char*)&line_offset, sizeof(int));
-		file->read((char*)&offset_along_line, sizeof(int));
-	}
-	
-	if (type == LinePattern)
-	{
-		int color_index;
-		file->read((char*)&color_index, sizeof(int));
-		line_color = (color_index >= 0) ? map->getColor(color_index) : nullptr;
-		file->read((char*)&line_width, sizeof(int));
-	}
-	else
-	{
-		file->read((char*)&point_distance, sizeof(int));
-		bool have_point;
-		file->read((char*)&have_point, sizeof(bool));
-		if (have_point)
-		{
-			point = new PointSymbol();
-			if (!point->load(file, version, map))
-				return false;
-			if (version < 21)
-				point->setRotatable(true);
-		}
-		else
-			point = nullptr;
-	}
-	return true;
-}
-
-#endif
 
 void AreaSymbol::FillPattern::save(QXmlStreamWriter& xml, const Map& map) const
 {
@@ -804,27 +755,7 @@ bool AreaSymbol::hasRotatableFillPattern() const
 	});
 }
 
-#ifndef NO_NATIVE_FILE_FORMAT
 
-bool AreaSymbol::loadImpl(QIODevice* file, int version, Map* map)
-{
-	int temp;
-	file->read((char*)&temp, sizeof(int));
-	color = (temp >= 0) ? map->getColor(temp) : nullptr;
-	if (version >= 2)
-		file->read((char*)&minimum_area, sizeof(int));
-	
-	int size;
-	file->read((char*)&size, sizeof(int));
-	patterns.resize(size);
-	for (int i = 0; i < size; ++i)
-		if (!patterns[i].load(file, version, map))
-			return false;
-	
-	return true;
-}
-
-#endif
 
 void AreaSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 {

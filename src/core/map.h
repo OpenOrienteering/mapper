@@ -91,8 +91,6 @@ Q_OBJECT
 friend class MapTest;
 friend class MapRenderables;
 friend class OCAD8FileImport;
-friend class NativeFileImport;
-friend class NativeFileExport;
 friend class XMLFileImporter;
 friend class XMLFileExporter;
 public:

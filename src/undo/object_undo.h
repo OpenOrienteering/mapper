@@ -33,7 +33,6 @@
 #include "core/symbols/symbol.h"
 #include "undo/undo.h"
 
-class QIODevice;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 
@@ -104,14 +103,6 @@ public:
 	 */
 	void getModifiedObjects(int part_index, ObjectSet& out) const override;
 	
-	
-#ifndef NO_NATIVE_FILE_FORMAT
-	/**
-	 * Loads the undo step from the file in the old "native" format.
-	 * @deprecated Old file format.
-	 */
-	bool load(QIODevice* file, int version) override;
-#endif
 	
 protected:
 	/**
@@ -206,14 +197,6 @@ public:
 	 */
 	void getModifiedObjects(int, ObjectSet&) const override;
 	
-	
-#ifndef NO_NATIVE_FILE_FORMAT
-	/**
-	 * @copybrief UndoStep::load()
-	 * @deprecated Old file format.
-	 */
-	bool load(QIODevice* file, int version) override;
-#endif
 	
 public slots:
 	/**
@@ -335,9 +318,6 @@ public:
 	
 	UndoStep* undo() override;
 	
-#ifndef NO_NATIVE_FILE_FORMAT
-	bool load(QIODevice* file, int version) override;
-#endif
 	
 protected:
 	void saveImpl(QXmlStreamWriter& xml) const override;
@@ -367,9 +347,6 @@ public:
 	
 	UndoStep* undo() override;
 	
-#ifndef NO_NATIVE_FILE_FORMAT
-	bool load(QIODevice* file, int version) override;
-#endif
 	
 public slots:
 	virtual void symbolChanged(int pos, const Symbol* new_symbol, const Symbol* old_symbol);

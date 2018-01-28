@@ -68,17 +68,6 @@ TemplateTrack::~TemplateTrack()
 }
 
 
-#ifndef NO_NATIVE_FILE_FORMAT
-bool TemplateTrack::loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version)
-{
-	if (version >= 30)
-		loadString(stream, track_crs_spec);
-	else
-		track_crs_spec = Georeferencing::geographic_crs_spec;
-	return true;
-}
-#endif
-
 
 void TemplateTrack::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const
 {

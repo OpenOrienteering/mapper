@@ -28,7 +28,6 @@
 
 #include <QtGlobal>
 #include <QFlags>
-#include <QIODevice>
 #include <QLatin1String>
 #include <QMessageBox>
 #include <QString>
@@ -387,53 +386,7 @@ void UndoManager::emitChangedSignals(const UndoManager::State& old_state)
 		emit canRedoChanged(can_redo);
 }
 
-#ifndef NO_NATIVE_FILE_FORMAT
 
-bool UndoManager::load(QIODevice* file, int version)
-{
-	clear();
-	
-	StepList loaded_steps;
-	bool success = loadSteps(loaded_steps, file, version);
-	if (success)
-	{
-		UndoManager::State old_state(this);
-		undo_steps.swap(loaded_steps);
-		current_index = undo_steps.size();
-		setLoaded();
-		setClean();
-		
-		Q_ASSERT(loaded_steps.empty()); // as per above clear() + swap()
-		success = loadSteps(loaded_steps, file, version);
-		if (success)
-		{
-			std::move(loaded_steps.rbegin(), loaded_steps.rend(), std::back_inserter(undo_steps)); 
-		}
-		
-		emitChangedSignals(old_state);
-	}
-	
-	return success;
-}
-
-bool UndoManager::loadSteps(StepList& steps, QIODevice* file, int version)
-{
-	int size;
-	file->read((char*)&size, sizeof(int));
-	steps.resize(size);
-	bool success = true;
-	for (int i = 0; i < size && success; ++i)
-	{
-		int type;
-		file->read((char*)&type, sizeof(int));
-		UndoStep* step = UndoStep::getUndoStepForType((UndoStep::Type)type, map);
-		success = step->load(file, version);
-		steps[i].reset(step);
-	}
-	return success;
-}
-
-#endif
 
 void UndoManager::saveUndo(QXmlStreamWriter& xml)
 {

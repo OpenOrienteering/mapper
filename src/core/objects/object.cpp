@@ -25,7 +25,6 @@
 
 #include <QtMath>
 #include <QtNumeric>
-#include <QIODevice>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
@@ -255,96 +254,7 @@ const TextObject* Object::asText() const
 	return static_cast<const TextObject*>(this);
 }
 
-#ifndef NO_NATIVE_FILE_FORMAT
 
-void Object::load(QIODevice* file, int version, Map* map)
-{
-	this->map = map;
-	
-	int symbol_index;
-	file->read((char*)&symbol_index, sizeof(int));
-	if (map)
-	{
-		Symbol* read_symbol = map->getSymbol(symbol_index);
-		if (read_symbol)
-			symbol = read_symbol;
-	}
-	
-	int num_coords;
-	file->read((char*)&num_coords, sizeof(int));
-	coords.clear();
-	coords.reserve(num_coords);
-	
-	LegacyMapCoord coord;
-	for (int i = 0; i < num_coords; ++i)
-	{
-		file->read((char*)&coord, sizeof(LegacyMapCoord));
-		coords.emplace_back(coord);
-	}
-	
-	if (version <= 8)
-	{
-		bool path_closed;
-		file->read((char*)&path_closed, sizeof(bool));
-		if (path_closed)
-			coords[coords.size() - 1].setClosePoint(true);
-	}
-	
-	if (version >= 8)
-	{
-		if (type == Point)
-		{
-			PointObject* point = reinterpret_cast<PointObject*>(this);
-			const PointSymbol* point_symbol = reinterpret_cast<const PointSymbol*>(point->getSymbol());
-			if (point_symbol->isRotatable())
-			{
-				float rotation;
-				file->read((char*)&rotation, sizeof(float));
-				point->setRotation(rotation);
-			}
-		}
-		else if (type == Path)
-		{
-			PathObject* path = reinterpret_cast<PathObject*>(this);
-			if (version >= 21)
-			{
-				float rotation;
-				file->read((char*)&rotation, sizeof(float));
-				path->setPatternRotation(rotation);
-				LegacyMapCoord origin;
-				file->read((char*)&origin, sizeof(LegacyMapCoord));
-				path->setPatternOrigin(origin);
-			}
-		}
-		else if (type == Text)
-		{
-			TextObject* text = reinterpret_cast<TextObject*>(this);
-			float rotation;
-			file->read((char*)&rotation, sizeof(float));
-			text->setRotation(rotation);
-			
-			int temp;
-			file->read((char*)&temp, sizeof(int));
-			text->setHorizontalAlignment((TextObject::HorizontalAlignment)temp);
-			file->read((char*)&temp, sizeof(int));
-			text->setVerticalAlignment((TextObject::VerticalAlignment)temp);
-			
-			QString str;
-			loadString(file, str);
-			text->setText(str);
-		}
-	}
-	
-	if (type == Path)
-	{
-		PathObject* path = reinterpret_cast<PathObject*>(this);
-		path->recalculateParts();
-	}
-	
-	output_dirty = true;
-}
-
-#endif
 
 void Object::save(QXmlStreamWriter& xml) const
 {

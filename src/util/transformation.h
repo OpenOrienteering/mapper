@@ -26,7 +26,6 @@
 
 #include "core/map_coord.h"
 
-class QIODevice;
 class QTransform;
 class QXmlStreamReader;
 class QXmlStreamWriter;
@@ -39,8 +38,6 @@ struct TemplateTransform;
 /** Pair of source and destination coordinates used to calculate transformations. */
 struct PassPoint
 {
-	void load(QIODevice* file, int version);
-	
 	void save(QXmlStreamWriter& xml) const;
 	static PassPoint load(QXmlStreamReader& xml);
 	

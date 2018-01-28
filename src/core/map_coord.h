@@ -37,22 +37,6 @@ class QXmlStreamWriter;
 
 namespace OpenOrienteering {
 
-#ifndef NO_NATIVE_FILE_FORMAT
-	
-/**
- * The legacy MapCoord structure, only used for legacy native file format.
- * 
- * @deprecated
- */
-struct LegacyMapCoord
-{
-	qint64 x;
-	qint64 y;
-};
-
-#endif
-
-
 
 /**
  * Coordinates of a point in a map, with optional flags.
@@ -170,16 +154,6 @@ public:
 	
 	/** Copy constructor. */
 	constexpr MapCoord(const MapCoord&) noexcept = default;
-	
-#ifndef NO_NATIVE_FILE_FORMAT
-	
-	/** Creates a MapCoord from the legacy structure.
-	 * 
-	 * @deprecated
-	 */
-	MapCoord(const LegacyMapCoord& coord) noexcept;
-
-#endif	
 	
 	/** Creates a MapCoord from a position given in millimeters on the map.
 	 * 

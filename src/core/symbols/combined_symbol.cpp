@@ -27,7 +27,6 @@
 #include <numeric>
 
 #include <QtGlobal>
-#include <QIODevice>
 #include <QLatin1String>
 #include <QString>
 #include <QStringRef>
@@ -227,40 +226,7 @@ Symbol::Type CombinedSymbol::getContainedTypes() const
 	return Type(type);
 }
 
-#ifndef NO_NATIVE_FILE_FORMAT
 
-bool CombinedSymbol::loadImpl(QIODevice* file, int version, Map* map)
-{
-	int size;
-	file->read((char*)&size, sizeof(int));
-	temp_part_indices.resize(size);
-	parts.resize(size);
-	
-	for (int i = 0; i < size; ++i)
-	{
-		bool is_private = false;
-		if (version >= 22)
-			file->read((char*)&is_private, sizeof(bool));
-		private_parts[i] = is_private;
-		
-		if (is_private)
-		{
-			// Note on const_cast: private part is owned by this symbol.
-			if (!Symbol::loadSymbol(const_cast<Symbol*&>(parts[i]), file, version, map))
-				return false;
-			temp_part_indices[i] = -1;
-		}
-		else
-		{
-			int temp;
-			file->read((char*)&temp, sizeof(int));
-			temp_part_indices[i] = temp;
-		}
-	}
-	return true;
-}
-
-#endif
 
 void CombinedSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 {

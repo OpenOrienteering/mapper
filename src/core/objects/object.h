@@ -38,7 +38,6 @@
 #include "core/renderables/renderable.h"
 #include "core/symbols/symbol.h"
 
-class QIODevice;
 class QTransform;
 class QXmlStreamReader;
 class QXmlStreamWriter;
@@ -145,9 +144,6 @@ public:
 	TextObject* asText();
 	/** Convenience cast to TextObject with type checking */
 	const TextObject* asText() const;
-	
-	/** Loads the object in the old "native" file format from the given file. */
-	void load(QIODevice* file, int version, Map* map);
 	
 	/** Saves the object in xml format to the given stream. */
 	void save(QXmlStreamWriter& xml) const;

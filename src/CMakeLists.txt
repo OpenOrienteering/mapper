@@ -82,7 +82,6 @@ set(Mapper_Common_SRCS
   fileformats/file_format.cpp
   fileformats/file_format_registry.cpp
   fileformats/file_import_export.cpp
-  fileformats/native_file_format.cpp
   fileformats/ocad8_file_format.cpp
   fileformats/ocd_file_export.cpp
   fileformats/ocd_file_format.cpp

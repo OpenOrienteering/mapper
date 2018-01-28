@@ -195,25 +195,7 @@ void CombinedUndoStep::getModifiedObjects(int part_index, ObjectSet &out) const
 	}
 }
 
-#ifndef NO_NATIVE_FILE_FORMAT
 
-bool CombinedUndoStep::load(QIODevice* file, int version)
-{
-	int size;
-	file->read((char*)&size, sizeof(int));
-	steps.resize(size);
-	bool success = true;
-	for (std::size_t i = 0; i < steps.size() && success; ++i)
-	{
-		int type;
-		file->read((char*)&type, sizeof(int));
-		steps.insert(steps.begin(), UndoStep::getUndoStepForType((UndoStep::Type)type, map));
-		success = steps.front()->load(file, version);
-	}
-	return success;
-}
-
-#endif
 
 void CombinedUndoStep::saveImpl(QXmlStreamWriter& xml) const
 {
@@ -290,15 +272,6 @@ UndoStep* NoOpUndoStep::undo()
 	return new NoOpUndoStep(map, true);
 }
 
-#ifndef NO_NATIVE_FILE_FORMAT
-
-bool NoOpUndoStep::load(QIODevice*, int)
-{
-	qWarning("InvalidUndoStep::load(QIODevice*, int) must not be called");
-	return false;
-}
-
-#endif  // NO_NATIVE_FILE_FORMAT
 
 }  // namespace OpenOrienteering
 

@@ -23,8 +23,6 @@
 
 #include <algorithm>
 
-#include <QIODevice>
-
 #include "core/map.h"
 #include "core/objects/object.h"
 #include "core/symbols/symbol.h"
@@ -97,21 +95,7 @@ void ObjectModifyingUndoStep::getModifiedObjects(int part_index, ObjectSet& out)
 	}
 }
 
-#ifndef NO_NATIVE_FILE_FORMAT
 
-bool ObjectModifyingUndoStep::load(QIODevice* file, int version)
-{
-	Q_UNUSED(version);
-	file->read((char*)&part_index, sizeof(int));
-	int size;
-	file->read((char*)&size, sizeof(int));
-	modified_objects.resize(size);
-	for (int i = 0; i < size; ++i)
-		file->read((char*)&modified_objects[i], sizeof(int));
-	return true;
-}
-
-#endif
 
 void ObjectModifyingUndoStep::saveImpl(QXmlStreamWriter& xml) const
 {
@@ -202,28 +186,6 @@ void ObjectCreatingUndoStep::addObject(Object* existing, Object* object)
 	addObject(index, object);
 }
 
-#ifndef NO_NATIVE_FILE_FORMAT
-
-bool ObjectCreatingUndoStep::load(QIODevice* file, int version)
-{
-	if (!ObjectModifyingUndoStep::load(file, version))
-		return false;
-	
-	int size = (int)modified_objects.size();
-	objects.resize(size);
-	for (int i = 0; i < size; ++i)
-	{
-		int save_type;
-		file->read((char*)&save_type, sizeof(int));
-		objects[i] = Object::getObjectForType(static_cast<Object::Type>(save_type), nullptr);
-		if (!objects[i])
-			return false;
-		objects[i]->load(file, version, map);
-	}
-	return true;
-}
-
-#endif
 void ObjectCreatingUndoStep::getModifiedObjects(int part_index, ObjectSet& out) const
 {
 	if (part_index == getPartIndex())
@@ -480,16 +442,6 @@ UndoStep* SwitchPartUndoStep::undo()
 	return undo;
 }
 
-#ifndef NO_NATIVE_FILE_FORMAT
-
-// virtual
-bool SwitchPartUndoStep::load(QIODevice *, int)
-{
-	Q_ASSERT(false); // Not used in legacy file format
-	return false;
-}
-
-#endif
 
 // virtual
 void SwitchPartUndoStep::saveImpl(QXmlStreamWriter &xml) const
@@ -560,25 +512,7 @@ UndoStep* SwitchSymbolUndoStep::undo()
 	return undo_step;
 }
 
-#ifndef NO_NATIVE_FILE_FORMAT
 
-bool SwitchSymbolUndoStep::load(QIODevice* file, int version)
-{
-	if (!ObjectModifyingUndoStep::load(file, version))
-		return false;
-	
-	int size = (int)modified_objects.size();
-	target_symbols.resize(size);
-	for (int i = 0; i < size; ++i)
-	{
-		int index;
-		file->read((char*)&index, sizeof(int));
-		target_symbols[i] = map->getSymbol(index);
-	}
-	return true;
-}
-
-#endif
 
 void SwitchSymbolUndoStep::saveImpl(QXmlStreamWriter& xml) const
 {

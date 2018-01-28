@@ -29,7 +29,6 @@
 #include <QRectF>
 
 #include <Qt>
-#include <QIODevice>
 #include <QLatin1String>
 #include <QString>
 #include <QStringRef>
@@ -95,62 +94,7 @@ MapView::~MapView()
 	// nothing, not inlined
 }
 
-#ifndef NO_NATIVE_FILE_FORMAT
 
-void MapView::load(QIODevice* file, int version)
-{
-	qint64 center_x, center_y;
-	int unused;
-	file->read((char*)&zoom, sizeof(double));
-	file->read((char*)&rotation, sizeof(double));
-	file->read((char*)&center_x, sizeof(qint64));
-	file->read((char*)&center_y, sizeof(qint64));
-	file->read((char*)&unused /*view_x*/, sizeof(int));
-	file->read((char*)&unused /*view_y*/, sizeof(int));
-	file->read((char*)&pan_offset, sizeof(QPoint));
-	
-	try
-	{
-		center_pos = MapCoord::fromNative64withOffset(center_x, center_y);
-	}
-	catch (std::range_error)
-	{
-		// leave center_pos unchanged
-	}
-	
-	updateTransform();
-	
-	if (version >= 26)
-	{
-		file->read((char*)&map_visibility.visible, sizeof(bool));
-		file->read((char*)&map_visibility.opacity, sizeof(float));
-	}
-	
-	int num_template_visibilities;
-	file->read((char*)&num_template_visibilities, sizeof(int));
-	
-	for (int i = 0; i < num_template_visibilities; ++i)
-	{
-		int pos;
-		file->read((char*)&pos, sizeof(int));
-		
-		TemplateVisibility vis;
-		file->read((char*)&vis.visible, sizeof(bool));
-		file->read((char*)&vis.opacity, sizeof(float));
-		setTemplateVisibilityHelper(map->getTemplate(pos), vis);
-	}
-	
-	if (version >= 29)
-		file->read((char*)&all_templates_hidden, sizeof(bool));
-	
-	if (version >= 24)
-		file->read((char*)&grid_visible, sizeof(bool));
-	
-	emit viewChanged(CenterChange | ZoomChange | RotationChange);
-	emit visibilityChanged(MultipleFeatures, true);
-}
-
-#endif
 
 void MapView::save(QXmlStreamWriter& xml, const QLatin1String& element_name, bool template_details) const
 {

@@ -31,7 +31,6 @@
 #include <QtMath>
 #include <QtNumeric>
 #include <QCoreApplication>
-#include <QIODevice>
 #include <QLatin1String>
 #include <QStringRef>
 #include <QXmlStreamAttributes>
@@ -68,23 +67,7 @@ void LineSymbolBorder::reset() noexcept
 	break_length = 1 * 1000;
 }
 
-#ifndef NO_NATIVE_FILE_FORMAT
 
-bool LineSymbolBorder::load(QIODevice* file, int version, Map* map)
-{
-	Q_UNUSED(version);
-	int temp;
-	file->read((char*)&temp, sizeof(int));
-	color = (temp >= 0) ? map->getColor(temp) : nullptr;
-	file->read((char*)&width, sizeof(int));
-	file->read((char*)&shift, sizeof(int));
-	file->read((char*)&dashed, sizeof(bool));
-	file->read((char*)&dash_length, sizeof(int));
-	file->read((char*)&break_length, sizeof(int));
-	return true;
-}
-
-#endif
 
 void LineSymbolBorder::save(QXmlStreamWriter& xml, const Map& map) const
 {
@@ -1725,98 +1708,7 @@ void LineSymbol::replaceSymbol(PointSymbol*& old_symbol, PointSymbol* replace_wi
 	replace_with->setName(name);
 }
 
-#ifndef NO_NATIVE_FILE_FORMAT
 
-bool LineSymbol::loadImpl(QIODevice* file, int version, Map* map)
-{
-	file->read((char*)&line_width, sizeof(int));
-	int temp;
-	file->read((char*)&temp, sizeof(int));
-	color = (temp >= 0) ? map->getColor(temp) : nullptr;
-	if (version >= 2)
-		file->read((char*)&minimum_length, sizeof(int));
-	file->read((char*)&temp, sizeof(int));
-	cap_style = (CapStyle)temp;
-	file->read((char*)&temp, sizeof(int));
-	join_style = (JoinStyle)temp;
-	file->read((char*)&pointed_cap_length, sizeof(int));
-	bool have_symbol;
-	file->read((char*)&have_symbol, sizeof(bool));
-	if (have_symbol)
-	{
-		start_symbol = new PointSymbol();
-		if (!start_symbol->load(file, version, map))
-			return false;
-	}
-	file->read((char*)&have_symbol, sizeof(bool));
-	if (have_symbol)
-	{
-		mid_symbol = new PointSymbol();
-		if (!mid_symbol->load(file, version, map))
-			return false;
-	}
-	file->read((char*)&have_symbol, sizeof(bool));
-	if (have_symbol)
-	{
-		end_symbol = new PointSymbol();
-		if (!end_symbol->load(file, version, map))
-			return false;
-	}
-	file->read((char*)&have_symbol, sizeof(bool));
-	if (have_symbol)
-	{
-		dash_symbol = new PointSymbol();
-		if (!dash_symbol->load(file, version, map))
-			return false;
-	}
-	file->read((char*)&dashed, sizeof(bool));
-	file->read((char*)&segment_length, sizeof(int));
-	if (version >= 1)
-		file->read((char*)&end_length, sizeof(int));
-	if (version >= 5)
-		file->read((char*)&show_at_least_one_symbol, sizeof(bool));
-	if (version >= 2)
-	{
-		file->read((char*)&minimum_mid_symbol_count, sizeof(int));
-		file->read((char*)&minimum_mid_symbol_count_when_closed, sizeof(int));	
-	}
-	file->read((char*)&dash_length, sizeof(int));
-	file->read((char*)&break_length, sizeof(int));
-	file->read((char*)&dashes_in_group, sizeof(int));
-	file->read((char*)&in_group_break_length, sizeof(int));
-	file->read((char*)&half_outer_dashes, sizeof(bool));
-	file->read((char*)&mid_symbols_per_spot, sizeof(int));
-	file->read((char*)&mid_symbol_distance, sizeof(int));
-	file->read((char*)&have_border_lines, sizeof(bool));
-	
-	if (version <= 22)
-	{
-		if (!border.load(file, version, map))
-			return false;
-		right_border.assign(border, nullptr);
-	}
-	else
-	{
-		bool are_borders_different;
-		file->read((char*)&are_borders_different, sizeof(bool));
-		
-		if (!border.load(file, version, map))
-			return false;
-		if (are_borders_different)
-		{
-			if (!right_border.load(file, version, map))
-				return false;
-		}
-		else
-			right_border.assign(border, nullptr);
-	}
-	
-	cleanupPointSymbols();
-	
-	return true;
-}
-
-#endif
 
 void LineSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 {

@@ -27,7 +27,6 @@
 #include <memory>
 
 #include <QtMath>
-#include <QIODevice>
 #include <QLatin1String>
 #include <QPainterPath>
 #include <QPoint>
@@ -591,47 +590,6 @@ qreal PointSymbol::dimensionForIcon() const
 }
 
 
-
-#ifndef NO_NATIVE_FILE_FORMAT
-
-bool PointSymbol::loadImpl(QIODevice* file, int version, Map* map)
-{
-	file->read((char*)&rotatable, sizeof(bool));
-	
-	file->read((char*)&inner_radius, sizeof(int));
-	int temp;
-	file->read((char*)&temp, sizeof(int));
-	inner_color = (temp >= 0) ? map->getColor(temp) : nullptr;
-	
-	file->read((char*)&outer_width, sizeof(int));
-	file->read((char*)&temp, sizeof(int));
-	outer_color = (temp >= 0) ? map->getColor(temp) : nullptr;
-	
-	int num_elements;
-	file->read((char*)&num_elements, sizeof(int));
-	objects.resize(num_elements);
-	symbols.resize(num_elements);
-	for (int i = 0; i < num_elements; ++i)
-	{
-		int save_type;
-		file->read((char*)&save_type, sizeof(int));
-		symbols[i] = Symbol::getSymbolForType(static_cast<Symbol::Type>(save_type));
-		if (!symbols[i])
-			return false;
-		if (!symbols[i]->load(file, version, map))
-			return false;
-		
-		file->read((char*)&save_type, sizeof(int));
-		objects[i] = Object::getObjectForType(static_cast<Object::Type>(save_type), symbols[i]);
-		if (!objects[i])
-			return false;
-		objects[i]->load(file, version, nullptr);
-	}
-	
-	return true;
-}
-
-#endif
 
 void PointSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 {

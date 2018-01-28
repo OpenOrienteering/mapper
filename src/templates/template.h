@@ -36,7 +36,6 @@
 
 class QByteArray;
 class QColor;
-class QIODevice;
 class QPainter;
 class QRectF;
 class QTransform;
@@ -97,8 +96,6 @@ struct TemplateTransform
 	TemplateTransform() noexcept = default;
 	
 	static TemplateTransform fromQTransform(const QTransform& qt) noexcept;
-	
-	void load(QIODevice* file);
 	
 	void save(QXmlStreamWriter& xml, const QString& role) const;
  	void load(QXmlStreamReader& xml);
@@ -182,13 +179,6 @@ public:
 	 * saving type-specific parameters (e.g. filtering mode for images).
 	 */
 	void saveTemplateConfiguration(QXmlStreamWriter& xml, bool open);
-	
-	/**
-	 * Loads template parameters.
-	 * 
-	 * Returns true if successful
-	 */
-	bool loadTemplateConfiguration(not_null<QIODevice*> stream, int version);
 	
 	/**
 	 * Creates and returns a template from the configuration in the XML stream.
@@ -563,18 +553,6 @@ protected:
 	 * \todo Rewrite together with duplicate().
 	 */
 	virtual Template* duplicateImpl() const = 0;
-	
-	
-#ifndef NO_NATIVE_FILE_FORMAT
-	/**
-	 * Hook for loading parameters needed by the actual template type.
-	 * 
-	 * The default implementation does nothing.
-	 * 
-	 * Returns true on success.
-	 */
-	virtual bool loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version);
-#endif
 	
 	
 	/** 

@@ -29,7 +29,6 @@
 #include <QtGlobal>
 #include <QCoreApplication>
 #include <QFont>
-#include <QIODevice>
 #include <QLatin1String>
 #include <QPointF>
 #include <QRectF>
@@ -315,56 +314,7 @@ void TextSymbol::updateQFont()
 	tab_interval = 8.0 * metrics.averageCharWidth();
 }
 
-#ifndef NO_NATIVE_FILE_FORMAT
 
-bool TextSymbol::loadImpl(QIODevice* file, int version, Map* map)
-{
-	int temp;
-	file->read((char*)&temp, sizeof(int));
-	color = (temp >= 0) ? map->getColor(temp) : nullptr;
-	loadString(file, font_family);
-	file->read((char*)&font_size, sizeof(int));
-	file->read((char*)&bold, sizeof(bool));
-	file->read((char*)&italic, sizeof(bool));
-	file->read((char*)&underline, sizeof(bool));
-	file->read((char*)&line_spacing, sizeof(float));
-	if (version >= 13)
-		file->read((char*)&paragraph_spacing, sizeof(double));
-	if (version >= 14)
-		file->read((char*)&character_spacing, sizeof(double));
-	if (version >= 12)
-		file->read((char*)&kerning, sizeof(bool));
-	if (version >= 19)
-		loadString(file, icon_text);
-	if (version >= 20)
-	{
-		file->read((char*)&framing, sizeof(bool));
-		file->read((char*)&temp, sizeof(int));
-		framing_color = map->getColor(temp);
-		file->read((char*)&framing_mode, sizeof(int));
-		file->read((char*)&framing_line_half_width, sizeof(int));
-		file->read((char*)&framing_shadow_x_offset, sizeof(int));
-		file->read((char*)&framing_shadow_y_offset, sizeof(int));	
-	}
-	if (version >= 13)
-	{
-		file->read((char*)&line_below, sizeof(bool));
-		file->read((char*)&temp, sizeof(int));
-		line_below_color = (temp >= 0) ? map->getColor(temp) : nullptr;
-		file->read((char*)&line_below_width, sizeof(int));
-		file->read((char*)&line_below_distance, sizeof(int));
-		int num_custom_tabs;
-		file->read((char*)&num_custom_tabs, sizeof(int));
-		custom_tabs.resize(num_custom_tabs);
-		for (int i = 0; i < num_custom_tabs; ++i)
-			file->read((char*)&custom_tabs[i], sizeof(int));
-	}
-	
-	updateQFont();
-	return true;
-}
-
-#endif
 
 void TextSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 {

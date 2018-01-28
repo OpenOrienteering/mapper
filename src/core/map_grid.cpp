@@ -69,30 +69,7 @@ MapGrid::MapGrid()
 	vert_offset = 0;
 }
 
-#ifndef NO_NATIVE_FILE_FORMAT
 
-const MapGrid& MapGrid::load(QIODevice* file, int version)
-{
-	Q_UNUSED(version);
-	file->read((char*)&snapping_enabled, sizeof(bool));
-	file->read((char*)&color, sizeof(QRgb));
-	int temp;
-	file->read((char*)&temp, sizeof(int));
-	display = (DisplayMode)temp;
-	file->read((char*)&temp, sizeof(int));
-	alignment = (Alignment)temp;
-	file->read((char*)&additional_rotation, sizeof(double));
-	file->read((char*)&temp, sizeof(int));
-	unit = (Unit)temp;
-	file->read((char*)&horz_spacing, sizeof(double));
-	file->read((char*)&vert_spacing, sizeof(double));
-	file->read((char*)&horz_offset, sizeof(double));
-	file->read((char*)&vert_offset, sizeof(double));
-	
-	return *this;
-}
-
-#endif
 
 void MapGrid::save(QXmlStreamWriter& xml) const
 {

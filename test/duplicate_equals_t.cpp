@@ -25,6 +25,7 @@
 #include "test_config.h"
 
 #include "global.h"
+#include "mapper_resource.h"
 #include "core/map.h"
 #include "core/objects/object.h"
 
@@ -35,7 +36,9 @@ namespace
 {
 
 static const auto test_files = {
-  "data:test_map.omap",
+    "data:/examples/complete map.omap",
+    "data:/examples/forest sample.omap",
+    "data:/examples/overprinting.omap",
 };
 
 }  // namespace
@@ -43,10 +46,8 @@ static const auto test_files = {
 
 void DuplicateEqualsTest::initTestCase()
 {
+	MapperResource::setSeachPaths();
 	doStaticInitializations();
-	
-	static const auto prefix = QString::fromLatin1("data");
-	QDir::addSearchPath(prefix, QDir(QString::fromUtf8(MAPPER_TEST_SOURCE_DIR)).absoluteFilePath(prefix));
 	
 	for (auto raw_path : test_files)
 	{

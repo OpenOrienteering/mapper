@@ -31,7 +31,6 @@
 #include <QRgb>
 #include <QString>
 
-class QIODevice;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 
@@ -166,9 +165,6 @@ public:
 	
 	
 	// Saving and loading
-	
-	/** Loads the symbol in the old "native" file format. */
-	bool load(QIODevice* file, int version, Map* map);
 	
 	/**
 	 * Saves the symbol in xml format.
@@ -352,10 +348,6 @@ public:
 	/** Returns a newly created symbol of the given type */
 	static Symbol* getSymbolForType(Type type);
 	
-	/** Static read function; reads the type number, creates a symbol of
-	 *  this type and loads it. Returns true if successful. */
-	static bool loadSymbol(Symbol*& symbol, QIODevice* stream, int version, Map* map);
-	
 	/**
 	 * Returns if the symbol types can be applied to the same object types
 	 */
@@ -415,13 +407,6 @@ public:
 	static const int number_components = 3;
 	
 protected:
-#ifndef NO_NATIVE_FILE_FORMAT
-	/**
-	 * Must be overridden to load type-specific symbol properties. See saveImpl()
-	 */
-	virtual bool loadImpl(QIODevice* file, int version, Map* map) = 0;
-#endif
-	
 	/**
 	 * Must be overridden to save type-specific symbol properties.
 	 * The map pointer can be used to get persistent indices to any pointers on map data

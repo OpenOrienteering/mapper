@@ -33,7 +33,6 @@
 
 #include "symbol.h"
 
-class QIODevice;
 class QRectF;
 class QXmlStreamReader;
 class QXmlStreamWriter;
@@ -129,8 +128,7 @@ public:
 		
 		/** Creates a default fill pattern */
 		FillPattern() noexcept;
-		/** Loads the pattern in the old "native" format */
-		bool load(QIODevice* file, int version, Map* map);
+		
 		/** Saves the pattern in xml format */
 		void save(QXmlStreamWriter& file, const Map& map) const;
 		/** Loads the pattern in xml format */
@@ -284,9 +282,6 @@ public:
 	SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog) override;
 	
 protected:
-#ifndef NO_NATIVE_FILE_FORMAT
-	bool loadImpl(QIODevice* file, int version, Map* map) override;
-#endif
 	void saveImpl(QXmlStreamWriter& xml, const Map& map) const override;
 	bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict) override;
 	

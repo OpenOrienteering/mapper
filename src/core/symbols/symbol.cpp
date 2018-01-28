@@ -24,7 +24,6 @@
 #include <memory>
 
 #include <QtGlobal>
-#include <QIODevice>
 #include <QLatin1Char>
 #include <QLatin1String>
 #include <QPainter>
@@ -196,24 +195,7 @@ bool Symbol::numberEquals(const Symbol* other, bool ignore_trailing_zeros) const
 	return true;
 }
 
-#ifndef NO_NATIVE_FILE_FORMAT
 
-bool Symbol::load(QIODevice* file, int version, Map* map)
-{
-	loadString(file, name);
-	for (int i = 0; i < number_components; ++i)
-		file->read((char*)&number[i], sizeof(int));
-	loadString(file, description);
-	file->read((char*)&is_helper_symbol, sizeof(bool));
-	if (version >= 10)
-		file->read((char*)&is_hidden, sizeof(bool));
-	if (version >= 11)
-		file->read((char*)&is_protected, sizeof(bool));
-	
-	return loadImpl(file, version, map);
-}
-
-#endif
 
 void Symbol::save(QXmlStreamWriter& xml, const Map& map) const
 {
@@ -733,22 +715,6 @@ Symbol* Symbol::getSymbolForType(Symbol::Type type)
 		return nullptr;
 	}
 }
-
-#ifndef NO_NATIVE_FILE_FORMAT
-
-bool Symbol::loadSymbol(Symbol*& symbol, QIODevice* stream, int version, Map* map)
-{
-	int save_type;
-	stream->read((char*)&save_type, sizeof(int));
-	symbol = Symbol::getSymbolForType(static_cast<Symbol::Type>(save_type));
-	if (!symbol)
-		return false;
-	if (!symbol->load(stream, version, map))
-		return false;
-	return true;
-}
-
-#endif
 
 bool Symbol::areTypesCompatible(Symbol::Type a, Symbol::Type b)
 {

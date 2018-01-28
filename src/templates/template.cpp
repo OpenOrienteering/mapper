@@ -104,24 +104,6 @@ TemplateTransform TemplateTransform::fromQTransform(const QTransform& qt) noexce
 }
 
 
-#ifndef NO_NATIVE_FILE_FORMAT
-
-void TemplateTransform::load(QIODevice* file)
-{
-	qint64 tmp;
-	file->read((char*)&tmp, sizeof(qint64));
-	template_x = tmp;
-	file->read((char*)&tmp, sizeof(qint64));
-	template_y = tmp;
-	
-	static_assert(sizeof(qint64) == sizeof(double),
-	              "Legacy file format relies on sizeof(qint64) == sizeof(double)");
-	file->read((char*)&template_scale_x, sizeof(qint64));
-	file->read((char*)&template_scale_y, sizeof(qint64));
-	file->read((char*)&template_rotation, sizeof(qint64));
-}
-
-#endif
 
 void TemplateTransform::save(QXmlStreamWriter& xml, const QString& role) const
 {
@@ -235,58 +217,7 @@ void Template::setErrorString(const QString &text)
 	error_string = text;
 }
 
-#ifndef NO_NATIVE_FILE_FORMAT
 
-bool Template::loadTemplateConfiguration(not_null<QIODevice*> stream, int version)
-{
-	loadString(stream, template_file);
-	
-	if (version >= 27)
-		stream->read((char*)&is_georeferenced, sizeof(bool));
-	else
-		is_georeferenced = false;
-	
-	if (!is_georeferenced)
-	{
-		transform.load(stream);
-		other_transform.load(stream);
-		
-		stream->read((char*)&adjusted, sizeof(bool));
-		stream->read((char*)&adjustment_dirty, sizeof(bool));
-		
-		int num_passpoints;
-		stream->read((char*)&num_passpoints, sizeof(int));
-		passpoints.resize(num_passpoints);
-		for (int i = 0; i < num_passpoints; ++i)
-			passpoints[i].load(stream, version);
-		
-		map_to_template.load(stream);
-		template_to_map.load(stream);
-		template_to_map_other.load(stream);
-		
-		stream->read((char*)&template_group, sizeof(int));
-	}
-	
-	if (version >= 27)
-	{
-		if (!loadTypeSpecificTemplateConfiguration(stream, version))
-			return false;
-	}
-	else
-	{
-		// Adjust old file format version's templates
-		is_georeferenced = qstrcmp(getTemplateType(), "TemplateTrack") == 0;
-		if (qstrcmp(getTemplateType(), "TemplateImage") == 0)
-		{
-			transform.template_scale_x *= 1000.0 / map->getScaleDenominator();
-			transform.template_scale_y *= 1000.0 / map->getScaleDenominator();
-			updateTransformationMatrices();
-		}
-	}
-	return true;
-}
-
-#endif
 
 void Template::saveTemplateConfiguration(QXmlStreamWriter& xml, bool open)
 {
@@ -881,15 +812,6 @@ std::unique_ptr<Template> Template::templateForFile(const QString& path, Map* ma
 	return t;
 }
 
-
-#ifndef NO_NATIVE_FILE_FORMAT
-bool Template::loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version)
-{
-	Q_UNUSED(stream);
-	Q_UNUSED(version);
-	return true;
-}
-#endif
 
 
 void Template::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const
