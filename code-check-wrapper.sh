@@ -55,6 +55,7 @@ PATTERN=" \
   georeferencing_dialog.cpp \
   gdal_manager.cpp \
   key_button_bar.cpp \
+  line_symbol.cpp \
   /map.cpp \
   map_editor.cpp \
   map_find_feature.cpp \

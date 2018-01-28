@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -28,7 +28,6 @@
 #include <memory>
 #include <utility>
 
-#include <QtMath>
 #include <QtNumeric>
 #include <QCoreApplication>
 #include <QLatin1String>
@@ -54,6 +53,9 @@
 
 
 namespace OpenOrienteering {
+
+using length_type = PathCoord::length_type;
+
 
 // ### LineSymbolBorder ###
 
@@ -779,10 +781,10 @@ void LineSymbol::processContinuousLine(
         ObjectRenderables& output ) const
 {
 	bool create_line = true;
-	float effective_cap_length = 0.0f;
+	auto effective_cap_length = length_type(0);
 	if (cap_style == PointedCap && (has_start || has_end))
 	{
-		effective_cap_length = 0.001f * pointed_cap_length;
+		effective_cap_length = length_type(0.001) * pointed_cap_length;
 		int num_caps = 2 - (has_end ? 0 : 1) - (has_start ? 0 : 1);
 		auto max_effective_cap_length = (end.clen - start.clen) / num_caps;
 		if (effective_cap_length >= max_effective_cap_length)
@@ -795,7 +797,7 @@ void LineSymbol::processContinuousLine(
 	auto split      = start;
 	auto next_split = SplitPathCoord();
 	
-	if (has_start && effective_cap_length > 0.0f)
+	if (has_start && effective_cap_length > 0)
 	{
 		// Create pointed line cap start
 		next_split = SplitPathCoord::at(start.clen + effective_cap_length, start);
@@ -807,7 +809,7 @@ void LineSymbol::processContinuousLine(
 	{
 		// Add line to processed_coords/flags
 		
-		PathCoord::length_type mid_symbol_distance_f = 0.001 * mid_symbol_distance;
+		auto mid_symbol_distance_f = length_type(0.001) * mid_symbol_distance;
 		auto mid_symbols_length   = (qMax(1, mid_symbols_per_spot) - 1) * mid_symbol_distance_f;
 		auto effective_end_length = end.clen;
 		if (has_end)
@@ -850,7 +852,7 @@ void LineSymbol::processContinuousLine(
 		Q_ASSERT(!processed_flags[processed_flags.size()-2].isCurveStart());
 	}
 	
-	if (has_end && effective_cap_length > 0.0f)
+	if (has_end && effective_cap_length > 0)
 	{
 		// Create pointed line cap end
 		next_split = end;
@@ -873,9 +875,9 @@ void LineSymbol::createPointedLineCap(
 	AreaSymbol area_symbol;
 	area_symbol.setColor(color);
 	
-	float line_half_width = 0.001f * 0.5f * line_width;
-	float cap_length = 0.001f * pointed_cap_length;
-	float tan_angle = line_half_width / cap_length;
+	auto line_half_width = length_type(0.0005) * line_width;
+	auto cap_length = length_type(0.001) * pointed_cap_length;
+	auto tan_angle = qreal(line_half_width / cap_length);
 	
 	MapCoordVector cap_flags;
 	MapCoordVectorF cap_middle_coords;
@@ -892,19 +894,19 @@ void LineSymbol::createPointedLineCap(
 	// Calculate coordinates on the left and right side of the line
 	MapCoordVectorF cap_coords;
 	MapCoordVectorF cap_coords_left;
-	float sign = is_end ? (-1) : 1;
+	auto sign = is_end ? -1 : 1;
 	for (MapCoordVectorF::size_type i = 0; i < cap_size; ++i)
 	{
-		float dist_from_start = is_end ? (end.clen - cap_lengths[i]) : (cap_lengths[i] - start.clen);
-		float factor = dist_from_start / cap_length;
+		auto dist_from_start = is_end ? (end.clen - cap_lengths[i]) : (cap_lengths[i] - start.clen);
+		auto factor = dist_from_start / cap_length;
 		//Q_ASSERT(factor >= -0.01f && factor <= 1.01f); happens when using large break lengths as these are not adjusted
-		factor = qBound(0.0f, factor, 1.0f);
+		factor = qBound(length_type(0), factor, length_type(1));
 		
 		auto tangent_info = cap_middle_path.calculateTangentScaling(i);
 		auto right_vector = tangent_info.first.perpRight();
 		right_vector.normalize();
 		
-		auto radius = qBound(0.0, line_half_width*factor*tangent_info.second, line_half_width*2.0);
+		auto radius = qBound(qreal(0), qreal(line_half_width * factor) * tangent_info.second, qreal(line_half_width) * 2);
 		
 		cap_flags[i].setHolePoint(false);
 		cap_coords.emplace_back(cap_middle_coords[i] + radius * right_vector);
@@ -927,7 +929,7 @@ void LineSymbol::createPointedLineCap(
 			// TODO: Tangent scaling depending on curvature? Adaptive subdivision of the curves?
 			MapCoordF tangent = cap_middle_coords[i+1] - cap_middle_coords[i];
 			Q_ASSERT(tangent.lengthSquared() < 999*999);
-			float right_scale = tangent.length() * tan_angle * sign;
+			auto right_scale = tangent.length() * tan_angle * sign;
 			cap_coords.emplace_back(cap_coords[i] + tangent + right_vector * right_scale);
 			cap_coords_left.emplace_back(cap_coords_left[i] + tangent - right_vector * right_scale);
 			i += 2;
@@ -935,16 +937,16 @@ void LineSymbol::createPointedLineCap(
 	}
 	
 	// Create small overlap to avoid visual glitches with the on-screen display (should not matter for printing, could probably turn it off for this)
-	const float overlap_length = 0.05f;
-	if (end.clen - start.clen > 4 * overlap_length)
+	constexpr auto overlap_length = length_type(0.05);
+	if ((end.clen - start.clen) > 4 * overlap_length)
 	{
 		bool ok;
-		int end_pos = is_end ? 0 : (cap_size - 1);
-		int end_cap_pos = is_end ? 0 : (cap_coords.size() - 1);
+		auto end_pos = is_end ? 0 : (cap_size - 1);
+		auto end_cap_pos = is_end ? 0 : (cap_coords.size() - 1);
 		MapCoordF tangent = cap_middle_path.calculateTangent(end_pos, !is_end, ok);
 		if (ok)
 		{
-			tangent.setLength(overlap_length * sign);
+			tangent.setLength(qreal(overlap_length * sign));
 			auto right = MapCoordF{ is_end ? tangent : -tangent }.perpRight();
 			
 			MapCoordF shifted_coord = cap_coords[end_cap_pos];
@@ -1094,37 +1096,37 @@ SplitPathCoord LineSymbol::createDashGroups(
 	auto orientation = qreal(0);
 	bool mid_symbol_rotatable = bool(mid_symbol) && mid_symbol->isRotatable();
 	
-	double mid_symbol_distance_f = 0.001 * mid_symbol_distance;
+	auto mid_symbol_distance_f = length_type(0.001) * mid_symbol_distance;
 	
 	bool half_first_group = is_part_start ? (half_outer_dashes || path_closed)
 	                                      : (flags[start.index].isDashPoint() && dashes_in_group == 1);
 	
 	bool ends_with_dashpoint  = is_part_end ? path_closed : true;
 	
-	double dash_length_f           = 0.001 * dash_length;
-	double break_length_f          = 0.001 * break_length;
-	double in_group_break_length_f = 0.001 * in_group_break_length;
+	auto dash_length_f           = length_type(0.001) * dash_length;
+	auto break_length_f          = length_type(0.001) * break_length;
+	auto in_group_break_length_f = length_type(0.001) * in_group_break_length;
 	
-	double total_in_group_dash_length  = dashes_in_group * dash_length_f;
-	double total_in_group_break_length = (dashes_in_group - 1) * in_group_break_length_f;
-	double total_group_length = total_in_group_dash_length + total_in_group_break_length;
-	double total_group_and_break_length = total_group_length + break_length_f;
+	auto total_in_group_dash_length  = dashes_in_group * dash_length_f;
+	auto total_in_group_break_length = (dashes_in_group - 1) * in_group_break_length_f;
+	auto total_group_length = total_in_group_dash_length + total_in_group_break_length;
+	auto total_group_and_break_length = total_group_length + break_length_f;
 	
-	double length = end.clen - start.clen;
-	double length_plus_break = length + break_length_f;
+	auto length = end.clen - start.clen;
+	auto length_plus_break = length + break_length_f;
 	
 	bool half_last_group  = is_part_end ? (half_outer_dashes || path_closed)
 	                                    : (ends_with_dashpoint && dashes_in_group == 1);
 	int num_half_groups = (half_first_group ? 1 : 0) + (half_last_group ? 1 : 0);
 	
-	double num_dashgroups_f = num_half_groups +
-	                          (length_plus_break - num_half_groups * 0.5 * dash_length_f) / total_group_and_break_length;
+	auto num_dashgroups_f = num_half_groups +
+	                        (length_plus_break - num_half_groups * dash_length_f / 2) / total_group_and_break_length;
 
-	int lower_dashgroup_count = qRound(floor(num_dashgroups_f));
+	int lower_dashgroup_count = int(std::floor(num_dashgroups_f));
 	
-	double minimum_optimum_num_dashes = dashes_in_group * 2.0 - num_half_groups * 0.5;
-	double minimum_optimum_length  = 2.0 * total_group_and_break_length;
-	double switch_deviation        = 0.2 * total_group_and_break_length / dashes_in_group;
+	auto minimum_optimum_num_dashes = dashes_in_group * 2 - num_half_groups / 2;
+	auto minimum_optimum_length  = 2 * total_group_and_break_length;
+	auto switch_deviation        = length_type(0.2) * total_group_and_break_length / dashes_in_group;
 	
 	bool set_mid_symbols = length >= dash_length_f - switch_deviation;
 	if (mid_symbols_per_spot > 0 && mid_symbol && !mid_symbol->isEmpty())
@@ -1136,7 +1138,7 @@ SplitPathCoord LineSymbol::createDashGroups(
 			// Handle mid symbols at begin for explicit dash points when we draw the whole dash here
 			auto split = SplitPathCoord::begin(path_coords);
 			
-			PathCoord::length_type position = start.clen - (mid_symbols_per_spot - 1) * 0.5 * mid_symbol_distance_f;
+			auto position = start.clen - (mid_symbols_per_spot - 1) * mid_symbol_distance_f / 2;
 			for (int s = 0; s < mid_symbols_per_spot; s+=2)
 			{
 				if (position >= split.clen)
@@ -1155,8 +1157,8 @@ SplitPathCoord LineSymbol::createDashGroups(
 			// Handle mid symbols at start for closing point or explicit dash points.
 			auto split = start;
 			
-			PathCoord::length_type position = split.clen + (mid_symbols_per_spot%2 + 1) * 0.5 * mid_symbol_distance_f;
-			for (int s = 1; s < mid_symbols_per_spot && position <= path_coords.back().clen; s+=2)
+			auto position = split.clen + (mid_symbols_per_spot % 2 + 1) * mid_symbol_distance_f / 2;
+			for (int s = 1; s < mid_symbols_per_spot && position <= path_coords.back().clen; s += 2)
 			{
 				auto next_split = SplitPathCoord::at(position, split);
 				if (mid_symbol_rotatable)
@@ -1169,7 +1171,7 @@ SplitPathCoord LineSymbol::createDashGroups(
 		}
 	}
 	
-	if (length <= 0.0 || (lower_dashgroup_count <= 1 && length < minimum_optimum_length - minimum_optimum_num_dashes * switch_deviation))
+	if (length <= 0 || (lower_dashgroup_count <= 1 && length < minimum_optimum_length - minimum_optimum_num_dashes * switch_deviation))
 	{
 		// Line part too short for dashes
 		if (is_part_end)
@@ -1189,18 +1191,18 @@ SplitPathCoord LineSymbol::createDashGroups(
 	}
 	else
 	{
-		int higher_dashgroup_count = qRound(ceil(num_dashgroups_f));
-		double lower_dashgroup_deviation  = (length_plus_break - lower_dashgroup_count * total_group_and_break_length)  / lower_dashgroup_count;
-		double higher_dashgroup_deviation = (higher_dashgroup_count * total_group_and_break_length - length_plus_break) / higher_dashgroup_count;
-		Q_ASSERT(half_first_group || half_last_group || (lower_dashgroup_deviation >= -0.001 && higher_dashgroup_deviation >= -0.001)); // TODO; seems to fail as long as halving first/last dashes affects the outermost dash only
-		int num_dashgroups = (lower_dashgroup_deviation > higher_dashgroup_deviation) ? higher_dashgroup_count : lower_dashgroup_count;
+		auto higher_dashgroup_count = int(std::ceil(num_dashgroups_f));
+		auto lower_dashgroup_deviation  = (length_plus_break - lower_dashgroup_count * total_group_and_break_length)  / lower_dashgroup_count;
+		auto higher_dashgroup_deviation = (higher_dashgroup_count * total_group_and_break_length - length_plus_break) / higher_dashgroup_count;
+		Q_ASSERT(half_first_group || half_last_group || (lower_dashgroup_deviation >= length_type(-0.001) && higher_dashgroup_deviation >= length_type(-0.001))); // TODO; seems to fail as long as halving first/last dashes affects the outermost dash only
+		auto num_dashgroups = (lower_dashgroup_deviation > higher_dashgroup_deviation) ? higher_dashgroup_count : lower_dashgroup_count;
 		Q_ASSERT(num_dashgroups >= 2);
 		
-		int num_half_dashes = 2*num_dashgroups*dashes_in_group - num_half_groups;
-		double adjusted_dash_length = (length - (num_dashgroups-1) * break_length_f - num_dashgroups * total_in_group_break_length) / (0.5 * num_half_dashes);
-		adjusted_dash_length = qMax(adjusted_dash_length, 0.0);	// could be negative for large break lengths
+		auto num_half_dashes = 2 * num_dashgroups * dashes_in_group - num_half_groups;
+		auto adjusted_dash_length = (length - (num_dashgroups-1) * break_length_f - num_dashgroups * total_in_group_break_length) * 2 / num_half_dashes;
+		adjusted_dash_length = qMax(adjusted_dash_length, 0.0f);	// could be negative for large break lengths
 		
-		double cur_length = start.clen;
+		auto cur_length = start.clen;
 		SplitPathCoord dash_start = line_start;
 		
 		for (int dashgroup = 1; dashgroup <= num_dashgroups; ++dashgroup)
@@ -1222,7 +1224,7 @@ SplitPathCoord LineSymbol::createDashGroups(
 				Q_ASSERT(has_start || has_end); // At least one half must be left...
 				
 				bool is_half_dash = has_start != has_end;
-				double cur_dash_length = is_half_dash ? adjusted_dash_length / 2 : adjusted_dash_length;
+				auto cur_dash_length = is_half_dash ? adjusted_dash_length / 2 : adjusted_dash_length;
 				set_mid_symbols = !is_half_dash;
 				
 				if (!is_first_dash)
@@ -1260,7 +1262,7 @@ SplitPathCoord LineSymbol::createDashGroups(
 			// Handle mid symbols at end for closing point or for (some) explicit dash points.
 			auto split = start;
 			
-			PathCoord::length_type position = end.clen - (mid_symbols_per_spot-1) * 0.5 * mid_symbol_distance_f;
+			auto position = end.clen - (mid_symbols_per_spot-1) * mid_symbol_distance_f / 2;
 			for (int s = 0; s < mid_symbols_per_spot; s+=2)
 			{
 				auto next_split = SplitPathCoord::at(position, split);
@@ -1324,11 +1326,11 @@ void LineSymbol::createMidSymbolRenderables(
 	
 	int mid_symbol_num_gaps       = mid_symbols_per_spot - 1;
 	
-	double segment_length_f       = 0.001 * segment_length;
-	double end_length_f           = 0.001 * end_length;
-	double end_length_twice_f     = 0.002 * end_length;
-	double mid_symbol_distance_f  = 0.001 * mid_symbol_distance;
-	double mid_symbols_length     = mid_symbol_num_gaps * mid_symbol_distance_f;
+	auto segment_length_f       = length_type(0.001) * segment_length;
+	auto end_length_f           = length_type(0.001) * end_length;
+	auto end_length_twice_f     = length_type(0.002) * end_length;
+	auto mid_symbol_distance_f  = length_type(0.001) * mid_symbol_distance;
+	auto mid_symbols_length     = mid_symbol_num_gaps * mid_symbol_distance_f;
 	
 	auto& path_coords = path.path_coords;
 	Q_ASSERT(!path_coords.empty());
@@ -1349,13 +1351,13 @@ void LineSymbol::createMidSymbolRenderables(
 		auto groups_end = SplitPathCoord::at(path_coords, groups_end_path_coord_index);
 		
 		// The total length of the current continuous part
-		double length = groups_end.clen - groups_start.clen;
+		auto length = groups_end.clen - groups_start.clen;
 		// The length which is available for placing mid symbols
-		double segmented_length = qMax(0.0, length - end_length_twice_f) - mid_symbols_length;
+		auto segmented_length = qMax(length_type(0), length - end_length_twice_f) - mid_symbols_length;
 		// The number of segments to be created by mid symbols
-		double segment_count_raw = qMax((end_length == 0) ? 1.0 : 0.0, (segmented_length / (segment_length_f + mid_symbols_length)));
-		int lower_segment_count = qFloor(segment_count_raw);
-		int higher_segment_count = qCeil(segment_count_raw);
+		auto segment_count_raw = qMax((end_length == 0) ? length_type(1) : length_type(0), (segmented_length / (segment_length_f + mid_symbols_length)));
+		auto lower_segment_count = int(std::floor(segment_count_raw));
+		auto higher_segment_count = int(std::ceil(segment_count_raw));
 		
 		if (end_length > 0)
 		{
@@ -1376,23 +1378,23 @@ void LineSymbol::createMidSymbolRenderables(
 			}
 			else
 			{
-				double lower_abs_deviation = qAbs(length - lower_segment_count * segment_length_f - (lower_segment_count+1)*mid_symbols_length - end_length_twice_f);
-				double higher_abs_deviation = qAbs(length - higher_segment_count * segment_length_f - (higher_segment_count+1)*mid_symbols_length - end_length_twice_f);
-				int segment_count = (lower_abs_deviation >= higher_abs_deviation) ? higher_segment_count : lower_segment_count;
+				auto lower_abs_deviation = qAbs(length - lower_segment_count * segment_length_f - (lower_segment_count+1)*mid_symbols_length - end_length_twice_f);
+				auto higher_abs_deviation = qAbs(length - higher_segment_count * segment_length_f - (higher_segment_count+1)*mid_symbols_length - end_length_twice_f);
+				auto segment_count = (lower_abs_deviation >= higher_abs_deviation) ? higher_segment_count : lower_segment_count;
 				
-				double deviation = (lower_abs_deviation >= higher_abs_deviation) ? -higher_abs_deviation : lower_abs_deviation;
-				double ideal_length = segment_count * segment_length_f + end_length_twice_f;
-				double adjusted_end_length = end_length_f + deviation * (end_length_f / ideal_length);
-				double adjusted_segment_length = segment_length_f + deviation * (segment_length_f / ideal_length);
-				Q_ASSERT(qAbs(2*adjusted_end_length + segment_count*adjusted_segment_length + (segment_count + 1)*mid_symbols_length - length) < 0.001);
+				auto deviation = (lower_abs_deviation >= higher_abs_deviation) ? -higher_abs_deviation : lower_abs_deviation;
+				auto ideal_length = segment_count * segment_length_f + end_length_twice_f;
+				auto adjusted_end_length = end_length_f + deviation * (end_length_f / ideal_length);
+				auto adjusted_segment_length = segment_length_f + deviation * (segment_length_f / ideal_length);
+				Q_ASSERT(qAbs(2*adjusted_end_length + segment_count*adjusted_segment_length + (segment_count + 1)*mid_symbols_length - length) < 0.001f);
 				
-				if (adjusted_segment_length >= 0 && (show_at_least_one_symbol || higher_segment_count > 0 || length > end_length_twice_f - 0.5 * (segment_length_f + mid_symbols_length)))
+				if (adjusted_segment_length >= 0 && (show_at_least_one_symbol || higher_segment_count > 0 || length > end_length_twice_f - (segment_length_f + mid_symbols_length) / 2))
 				{
 					adjusted_segment_length += mid_symbols_length;
 					auto split = groups_start;
 					for (int i = 0; i < segment_count + 1; ++i)
 					{
-						double position = groups_start.clen + adjusted_end_length + i * adjusted_segment_length - mid_symbol_distance_f;
+						auto position = groups_start.clen + adjusted_end_length + i * adjusted_segment_length - mid_symbol_distance_f;
 						for (int s = 0; s < mid_symbols_per_spot; ++s)
 						{
 							position += mid_symbol_distance_f;
@@ -1410,18 +1412,18 @@ void LineSymbol::createMidSymbolRenderables(
 			// end_length == 0
 			if (length > mid_symbols_length)
 			{
-				double lower_segment_deviation = qAbs(length - lower_segment_count * segment_length_f - (lower_segment_count+1)*mid_symbols_length) / lower_segment_count;
-				double higher_segment_deviation = qAbs(length - higher_segment_count * segment_length_f - (higher_segment_count+1)*mid_symbols_length) / higher_segment_count;
+				auto lower_segment_deviation = qAbs(length - lower_segment_count * segment_length_f - (lower_segment_count+1)*mid_symbols_length) / lower_segment_count;
+				auto higher_segment_deviation = qAbs(length - higher_segment_count * segment_length_f - (higher_segment_count+1)*mid_symbols_length) / higher_segment_count;
 				int segment_count = (lower_segment_deviation > higher_segment_deviation) ? higher_segment_count : lower_segment_count;
-				double adapted_segment_length = (length - (segment_count+1)*mid_symbols_length) / segment_count + mid_symbols_length;
-				Q_ASSERT(qAbs(segment_count * adapted_segment_length + mid_symbols_length) - length < 0.001f);
+				auto adapted_segment_length = (length - (segment_count+1)*mid_symbols_length) / segment_count + mid_symbols_length;
+				Q_ASSERT(qAbs(segment_count * adapted_segment_length + mid_symbols_length) - length < length_type(0.001));
 				
 				if (adapted_segment_length >= mid_symbols_length)
 				{
 					auto split = groups_start;
 					for (int i = 0; i <= segment_count; ++i)
 					{
-						double position = groups_start.clen + i * adapted_segment_length - mid_symbol_distance_f;
+						auto position = groups_start.clen + i * adapted_segment_length - mid_symbol_distance_f;
 						for (int s = 0; s < mid_symbols_per_spot; ++s)
 						{
 							position += mid_symbol_distance_f;
