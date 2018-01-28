@@ -117,7 +117,7 @@ void PointSymbol::createRenderables(
         RenderableOptions options ) const
 {
 	auto point = object->asPoint();
-	auto rotation = isRotatable() ? -point->getRotation() : 0.0f;
+	auto rotation = isRotatable() ? -point->getRotation() : qreal(0);
 	
 	if (options.testFlag(Symbol::RenderBaselines))
 	{
@@ -139,7 +139,7 @@ void PointSymbol::createRenderables(
 	}
 }
 
-void PointSymbol::createRenderablesScaled(MapCoordF coord, float rotation, ObjectRenderables& output, float coord_scale) const
+void PointSymbol::createRenderablesScaled(MapCoordF coord, qreal rotation, ObjectRenderables& output, float coord_scale) const
 {
 	if (inner_color && inner_radius > 0)
 		output.insertRenderable(new DotRenderable(this, coord));
@@ -152,7 +152,7 @@ void PointSymbol::createRenderablesScaled(MapCoordF coord, float rotation, Objec
 		auto offset_y = coord.y();
 		auto cosr = 1.0;
 		auto sinr = 0.0;
-		if (rotation != 0.0)
+		if (!qIsNull(rotation))
 		{
 			cosr = cos(rotation);
 			sinr = sin(rotation);
@@ -207,7 +207,7 @@ void PointSymbol::createRenderablesIfCenterInside(MapCoordF point_coord, qreal r
 		auto offset_y = point_coord.y();
 		auto cosr = 1.0;
 		auto sinr = 0.0;
-		if (rotation != 0.0)
+		if (!qIsNull(rotation))
 		{
 			cosr = qCos(rotation);
 			sinr = qSin(rotation);
@@ -287,7 +287,7 @@ void PointSymbol::createRenderablesIfCompletelyInside(MapCoordF point_coord, qre
 		auto offset_y = point_coord.y();
 		auto cosr = 1.0;
 		auto sinr = 0.0;
-		if (rotation != 0.0)
+		if (!qIsNull(rotation))
 		{
 			cosr = qCos(rotation);
 			sinr = qSin(rotation);
@@ -377,7 +377,7 @@ void PointSymbol::createRenderablesIfPartiallyInside(MapCoordF point_coord, qrea
 		auto offset_y = point_coord.y();
 		auto cosr = 1.0;
 		auto sinr = 0.0;
-		if (rotation != 0.0)
+		if (!qIsNull(rotation))
 		{
 			cosr = qCos(rotation);
 			sinr = qSin(rotation);

@@ -315,7 +315,7 @@ void LineSymbol::createPathCoordRenderables(const Object* object, const VirtualP
 	// Start or end symbol?
 	if (start_symbol && !start_symbol->isEmpty())
 	{
-		auto orientation = 0.0f;
+		auto orientation = qreal(0);
 		if (start_symbol->isRotatable())
 		{
 			bool ok;
@@ -329,7 +329,7 @@ void LineSymbol::createPathCoordRenderables(const Object* object, const VirtualP
 	if (end_symbol && !end_symbol->isEmpty())
 	{
 		std::size_t last = coords.size() - 1;
-		auto orientation = 0.0f;
+		auto orientation = qreal(0);
 		if (end_symbol->isRotatable())
 		{
 			bool ok;
@@ -823,7 +823,7 @@ void LineSymbol::processContinuousLine(
 			path.copy(split, next_split, processed_flags, processed_coords);
 			split = next_split;
 			
-			auto orientation = 0.0f;
+			auto orientation = qreal(0);
 			bool mid_symbol_rotatable = bool(mid_symbol) && mid_symbol->isRotatable();
 			for (auto i = mid_symbols_per_spot; i > 0; --i)
 			{
@@ -1091,7 +1091,7 @@ SplitPathCoord LineSymbol::createDashGroups(
 	auto& flags = path.coords.flags;
 	auto& path_coords = path.path_coords;
 	
-	auto orientation = 0.0f;
+	auto orientation = qreal(0);
 	bool mid_symbol_rotatable = bool(mid_symbol) && mid_symbol->isRotatable();
 	
 	double mid_symbol_distance_f = 0.001 * mid_symbol_distance;
@@ -1319,7 +1319,7 @@ void LineSymbol::createMidSymbolRenderables(
         ObjectRenderables& output) const
 {
 	Q_ASSERT(mid_symbol);
-	auto orientation = 0.0f;
+	auto orientation = qreal(0);
 	bool mid_symbol_rotatable = bool(mid_symbol) && mid_symbol->isRotatable();
 	
 	int mid_symbol_num_gaps       = mid_symbols_per_spot - 1;

@@ -100,7 +100,7 @@ public:
 		 * 
 		 * \todo Switch to qreal when legacy native file format is dropped.
 		 */
-		float angle;
+		qreal angle;
 		/** Distance between parallel lines, as usual in 0.001mm */
 		int line_spacing;
 		/** Offset of the first line from the origin */
@@ -187,7 +187,7 @@ public:
 		 */
 		void createRenderables(
 			const AreaRenderable& outline,
-			float delta_rotation,
+			qreal delta_rotation,
 			const MapCoord& pattern_origin,
 			ObjectRenderables& output
 		) const;
@@ -196,7 +196,7 @@ public:
 		template <int type>
 		void createRenderables(
 			const AreaRenderable& outline,
-			float delta_rotation,
+			qreal delta_rotation,
 			const MapCoord& pattern_origin,
 			const QRectF& point_extent,
 			LineSymbol* line,
@@ -210,7 +210,7 @@ public:
 			MapCoordF first, MapCoordF second,
 			qreal delta_offset,
 			LineSymbol* line,
-			float rotation,
+			qreal rotation,
 			const AreaRenderable& outline,
 			ObjectRenderables& output
 		) const;
@@ -219,7 +219,7 @@ public:
 		void createPointPatternLine(
 			MapCoordF first, MapCoordF second,
 			qreal delta_offset,
-			float rotation,
+			qreal rotation,
 			const AreaRenderable& outline,
 			ObjectRenderables& output
 		) const;

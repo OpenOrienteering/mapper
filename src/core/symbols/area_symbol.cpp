@@ -137,7 +137,7 @@ bool AreaSymbol::FillPattern::equals(const AreaSymbol::FillPattern& other, Qt::C
 {
 	if (type != other.type)
 		return false;
-	if (qAbs(angle - other.angle) > 1e-05f)
+	if (qAbs(angle - other.angle) > 1e-05)
 		return false;
 	if (flags != other.flags)
 		return false;
@@ -239,7 +239,7 @@ void AreaSymbol::FillPattern::createLine<AreaSymbol::FillPattern::LinePattern>(
         MapCoordF first, MapCoordF second,
         qreal,
         LineSymbol* line,
-        float,
+        qreal,
         const AreaRenderable&,
         ObjectRenderables& output ) const
 {
@@ -254,7 +254,7 @@ void AreaSymbol::FillPattern::createLine<AreaSymbol::FillPattern::PointPattern>(
         MapCoordF first, MapCoordF second,
         qreal delta_offset,
         LineSymbol*,
-        float rotation,
+        qreal rotation,
         const AreaRenderable& outline,
         ObjectRenderables& output ) const
 {
@@ -272,7 +272,7 @@ void AreaSymbol::FillPattern::createLine<AreaSymbol::FillPattern::PointPattern>(
 template <int T>
 void AreaSymbol::FillPattern::createRenderables(
         const AreaRenderable& outline,
-        float delta_rotation,
+        qreal delta_rotation,
         const MapCoord& pattern_origin,
         const QRectF& point_extent,
         LineSymbol* line,
@@ -419,7 +419,7 @@ void AreaSymbol::FillPattern::createRenderables(
 }
 
 
-void AreaSymbol::FillPattern::createRenderables(const AreaRenderable& outline, float delta_rotation, const MapCoord& pattern_origin, ObjectRenderables& output) const
+void AreaSymbol::FillPattern::createRenderables(const AreaRenderable& outline, qreal delta_rotation, const MapCoord& pattern_origin, ObjectRenderables& output) const
 {
 	if (line_spacing <= 0)
 		return;
@@ -428,7 +428,7 @@ void AreaSymbol::FillPattern::createRenderables(const AreaRenderable& outline, f
 		delta_rotation = 0;
 	
 	// Make rotation unique
-	auto rotation = double(angle + delta_rotation);
+	auto rotation = angle + delta_rotation;
 	rotation = fmod(1.0 * rotation, M_PI);
 	if (rotation < 0)
 		rotation = M_PI + rotation;
@@ -475,7 +475,7 @@ void AreaSymbol::FillPattern::createRenderables(const AreaRenderable& outline, f
 void AreaSymbol::FillPattern::createPointPatternLine(
         MapCoordF first, MapCoordF second,
         qreal delta_offset,
-        float rotation,
+        qreal rotation,
         const AreaRenderable& outline,
         ObjectRenderables& output ) const
 {
