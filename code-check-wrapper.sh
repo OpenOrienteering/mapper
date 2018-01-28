@@ -66,6 +66,7 @@ PATTERN=" \
   ogr_file_format.cpp \
   ogr_template.cpp \
   overriding_shortcut.cpp \
+  point_symbol.cpp \
   print_widget.cpp \
   renderable.cpp \
   renderable_implementation.cpp \

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,12 +22,15 @@
 #ifndef OPENORIENTEERING_POINT_SYMBOL_H
 #define OPENORIENTEERING_POINT_SYMBOL_H
 
+#include <memory>
 #include <vector>
 
 #include <Qt>
 #include <QtGlobal>
 
 #include "symbol.h"
+
+// IWYU pragma: no_include "core/objects/object.h"
 
 class QPainterPath;
 class QXmlStreamReader;
@@ -39,7 +42,7 @@ class Map;
 class MapColor;
 class MapColorMap;
 class MapCoordF;
-class Object;
+class Object;  // IWYU pragma: keep
 class ObjectRenderables;
 class SymbolPropertiesWidget;
 class SymbolSettingDialog;
@@ -140,8 +143,13 @@ protected:
 	bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict) override;
 	bool equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensitivity) const override;
 	
-	std::vector<Object*> objects;
-	std::vector<Symbol*> symbols;
+	/// \todo Expose elements more directly in PointSymbol API.
+	struct Element
+	{
+		std::unique_ptr<Symbol> symbol;
+		std::unique_ptr<Object> object;
+	};
+	std::vector<Element> elements;
 	
 	bool rotatable;
 	int inner_radius;		// in 1/1000 mm
