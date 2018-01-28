@@ -128,18 +128,18 @@ void PointSymbol::createRenderables(
 			const MapColor* temp_color = point->getInnerColor();
 			point->setInnerColor(dominant_color);
 			
-			point->createRenderablesScaled(coords[0], rotation, output, 1.0f);
+			point->createRenderablesScaled(coords[0], rotation, output);
 			
 			point->setInnerColor(temp_color);
 		}
 	}
 	else
 	{
-		createRenderablesScaled(coords[0], rotation, output, 1.0f);
+		createRenderablesScaled(coords[0], rotation, output);
 	}
 }
 
-void PointSymbol::createRenderablesScaled(MapCoordF coord, qreal rotation, ObjectRenderables& output, float coord_scale) const
+void PointSymbol::createRenderablesScaled(MapCoordF coord, qreal rotation, ObjectRenderables& output, qreal coord_scale) const
 {
 	if (inner_color && inner_radius > 0)
 		output.insertRenderable(new DotRenderable(this, coord));
