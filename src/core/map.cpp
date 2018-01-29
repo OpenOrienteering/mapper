@@ -1657,7 +1657,7 @@ QHash<const Symbol*, Symbol*> Map::importSymbols(
 				}
 			}
 			
-			auto new_symbol = symbol->duplicate(&color_map);
+			auto new_symbol = symbol->duplicate(color_map);
 			out_pointermap.insert(symbol, new_symbol);
 			created_symbols.push_back(new_symbol);
 		}

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -567,6 +567,19 @@ AreaSymbol::AreaSymbol() noexcept
 	// nothing else
 }
 
+AreaSymbol::AreaSymbol(const AreaSymbol& proto)
+: Symbol { proto }
+, patterns { proto.patterns }
+, color { proto.color }
+, minimum_area { proto.minimum_area }
+{
+	for (auto& new_pattern : patterns)
+	{
+		if (new_pattern.type == FillPattern::PointPattern)
+			new_pattern.point = new_pattern.point->duplicate();
+	}
+}
+
 AreaSymbol::~AreaSymbol()
 {
 	for (auto& pattern : patterns)
@@ -576,22 +589,21 @@ AreaSymbol::~AreaSymbol()
 	}
 }
 
-Symbol* AreaSymbol::duplicate(const MapColorMap* color_map) const
+
+AreaSymbol* AreaSymbol::duplicate() const
 {
-	auto new_area = new AreaSymbol();
-	new_area->duplicateImplCommon(this);
-	new_area->color = color_map ? color_map->value(color) : color;
-	new_area->minimum_area = minimum_area;
-	new_area->patterns = patterns;
-	for (auto& new_pattern : new_area->patterns)
-	{
-		if (new_pattern.type == FillPattern::PointPattern)
-			new_pattern.point = static_cast<PointSymbol*>(new_pattern.point->duplicate(color_map));
-		else if (new_pattern.type == FillPattern::LinePattern && color_map)
-			new_pattern.line_color = color_map->value(new_pattern.line_color);
-	}
+	return new AreaSymbol(*this);
+}
+
+
+AreaSymbol* AreaSymbol::duplicate(const MapColorMap& color_map) const
+{
+	auto new_area = new AreaSymbol(*this);
+	new_area->replaceColors(color_map);
 	return new_area;
 }
+
+
 
 void AreaSymbol::createRenderables(
         const Object *object,
@@ -722,6 +734,24 @@ const MapColor* AreaSymbol::guessDominantColor() const
 		++pattern;
 	}
 	return color;
+}
+
+
+void AreaSymbol::replaceColors(const MapColorMap& color_map)
+{
+	color = color_map.value(color);
+	for (auto& pattern : patterns)
+	{
+		switch (pattern.type)
+		{
+		case FillPattern::LinePattern:
+			pattern.line_color = color_map.value(pattern.line_color);
+			break;
+		case FillPattern::PointPattern:
+			pattern.point->replaceColors(color_map);
+			break;
+		}
+	}
 }
 
 

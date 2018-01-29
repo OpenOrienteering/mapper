@@ -55,38 +55,48 @@
 namespace OpenOrienteering {
 
 PointSymbol::PointSymbol() noexcept
-: Symbol{Symbol::Point}
-, rotatable{false}
-, inner_radius{1000}
-, inner_color{nullptr}
-, outer_width{0}
-, outer_color{nullptr}
+: Symbol { Symbol::Point }
+, inner_color { nullptr }
+, outer_color { nullptr }
+, inner_radius { 1000 }
+, outer_width { 0 }
+, rotatable { false }
 {
 	// nothing else
+}
+
+
+PointSymbol::PointSymbol(const PointSymbol& proto)
+: Symbol { proto }
+, inner_color { proto.inner_color }
+, outer_color { proto.outer_color }
+, inner_radius { proto.inner_radius }
+, outer_width { proto.outer_width }
+, rotatable { proto.rotatable }
+{
+	elements.reserve(proto.elements.size());
+	std::transform(begin(proto.elements), end(proto.elements), std::back_inserter(elements), [](const auto& element) {
+		auto new_element = Element { std::unique_ptr<Symbol>(element.symbol->duplicate()),
+		                             std::unique_ptr<Object>(element.object->duplicate()) };
+		new_element.object->setSymbol(new_element.symbol.get(), true);
+		return new_element;
+	});
 }
 
 
 PointSymbol::~PointSymbol() = default;
 
 
-Symbol* PointSymbol::duplicate(const MapColorMap* color_map) const
+PointSymbol* PointSymbol::duplicate() const
 {
-	auto new_point = new PointSymbol();
-	new_point->duplicateImplCommon(this);
-	
-	new_point->rotatable = rotatable;
-	new_point->inner_radius = inner_radius;
-	new_point->inner_color = color_map ? color_map->value(inner_color) : inner_color;
-	new_point->outer_width = outer_width;
-	new_point->outer_color = color_map ? color_map->value(outer_color) : outer_color;
-	
-	new_point->elements.reserve(elements.size());
-	std::transform(begin(elements), end(elements), std::back_inserter(new_point->elements), [color_map](const auto& element) {
-		auto new_element = Element { std::unique_ptr<Symbol>(element.symbol->duplicate(color_map)),
-		                             std::unique_ptr<Object>(element.object->duplicate()) };
-		new_element.object->setSymbol(new_element.symbol.get(), true);
-		return new_element;
-	});
+	return new PointSymbol(*this);
+}
+
+
+PointSymbol* PointSymbol::duplicate(const MapColorMap& color_map) const
+{
+	auto new_point = new PointSymbol(*this);
+	new_point->replaceColors(color_map);
 	return new_point;
 }
 
@@ -518,6 +528,17 @@ const MapColor* PointSymbol::guessDominantColor() const
 	}
 	return nullptr;
 }
+
+
+void PointSymbol::replaceColors(const MapColorMap& color_map)
+{
+	inner_color = color_map.value(inner_color);
+	outer_color = color_map.value(outer_color);
+	for (auto& element : elements)
+		element.symbol->replaceColors(color_map);
+}
+
+
 
 void PointSymbol::scale(double factor)
 {

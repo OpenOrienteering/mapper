@@ -22,6 +22,8 @@
 #ifndef OPENORIENTEERING_SYMBOL_H
 #define OPENORIENTEERING_SYMBOL_H
 
+#include <array>
+
 #include <Qt>
 #include <QtGlobal>
 #include <QFlags>
@@ -102,12 +104,16 @@ public:
 	/** Constructs an empty symbol */
 	Symbol(Type type) noexcept;
 	
-	Symbol(const Symbol&) = delete;
+protected:
+	explicit Symbol(const Symbol& proto);
+	
+public:
 	Symbol(Symbol&&) = delete;
 	
 	virtual ~Symbol();
 	
-	virtual Symbol* duplicate(const MapColorMap* color_map = nullptr) const = 0;
+	virtual Symbol* duplicate() const = 0;
+	virtual Symbol* duplicate(const MapColorMap& color_map) const = 0;
 	
 	Symbol& operator=(const Symbol&) = delete;
 	Symbol& operator=(Symbol&&) = delete;
@@ -246,6 +252,8 @@ public:
 	 * in case it is impossible to determine it uniquely.
 	 */
 	virtual const MapColor* guessDominantColor() const = 0;
+	
+	virtual void replaceColors(const MapColorMap& color_map) = 0;
 	
 	/**
 	 * Called by the map in which the symbol is to notify it of a symbol being
@@ -404,7 +412,7 @@ public:
 	/**
 	 * Number of components of symbol numbers.
 	 */
-	static const int number_components = 3;
+	constexpr static auto number_components = 3u;
 	
 protected:
 	/**
@@ -425,12 +433,6 @@ protected:
 	 */
 	virtual bool equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensitivity) const = 0;
 	
-	/**
-	 * Duplicates properties which are common for all
-	 * symbols from other to this object
-	 */
-	void duplicateImplCommon(const Symbol* other);
-	
 	
 private:
 	/** Symbol icon. If icon.isNull() is true, it is not generated yet. */
@@ -439,10 +441,10 @@ private:
 	QString name;
 	/** Symbol description */
 	QString description;
+	/** Symbol number */
+	std::array<int, number_components> number;
 	/** The symbol type, determined by the subclass */
 	Type type;
-	/** Symbol number */
-	int number[number_components];
 	/** Helper symbol flag, see isHelperSymbol() */
 	bool is_helper_symbol;
 	/** Hidden flag, see isHidden() */

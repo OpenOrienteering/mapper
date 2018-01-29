@@ -83,8 +83,14 @@ public:
 	
 	/** Creates an empty text symbol. */
 	TextSymbol();
+	
+protected:
+	explicit TextSymbol(const TextSymbol& proto);
+	
+public:
 	~TextSymbol() override;
-	Symbol* duplicate(const MapColorMap* color_map = nullptr) const override;
+	TextSymbol* duplicate() const override;
+	TextSymbol* duplicate(const MapColorMap& color_map) const override;
 	
 	void createRenderables(
 	        const Object *object,
@@ -102,6 +108,7 @@ public:
 	void colorDeleted(const MapColor* color) override;
 	bool containsColor(const MapColor* color) const override;
 	const MapColor* guessDominantColor() const override;
+	void replaceColors(const MapColorMap& color_map) override;
 	void scale(double factor) override;
 	
 	/** Updates the internal QFont from the font settings. */
@@ -149,38 +156,38 @@ protected:
 	bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict) override;
 	bool equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensitivity) const override;
 	
+	
+	// Members ordered for minimizing padding
+	
 	QFont qfont;
 	QFontMetricsF metrics;
+	QString font_family;
+	QString icon_text;			// text to be drawn in the symbol's icon
 	
 	const MapColor* color;
-	QString font_family;
-	int font_size;				// this defines the font size in 1000 mm. How big the letters really are depends on the design of the font though
-	bool bold;
-	bool italic;
-	bool underline;
-	float line_spacing;			// as factor of original line spacing
-	// (BEGIN) DON'T CHANGE THE ORDER OF THESE FIELDS BEFORE SOLVING [tickets:#428]
-	int paragraph_spacing;		// in mm
-	float character_spacing;	// as a factor of the space character width
-	bool kerning;
-	QString icon_text;			// text to be drawn in the symbol's icon
-	//  (END)  DON'T CHANGE THE ORDER OF THESE FIELDS BEFORE SOLVING [tickets:#428]
-	
-	bool framing;
 	const MapColor* framing_color;
+	const MapColor* line_below_color;
+	
+	std::vector<int> custom_tabs;
+	
+	double tab_interval;		/// default tab interval length in text coordinates
+	float line_spacing;			// as factor of original line spacing
+	float character_spacing;	// as a factor of the space character width
+	int font_size;				// this defines the font size in 1000 mm. How big the letters really are depends on the design of the font though
+	int paragraph_spacing;		// in mm
 	int framing_mode;
 	int framing_line_half_width;
 	int framing_shadow_x_offset;
 	int framing_shadow_y_offset;
-	
-	// OCAD compatibility features
-	bool line_below;
-	const MapColor* line_below_color;
 	int line_below_width;
 	int line_below_distance;
-	std::vector<int> custom_tabs;
+	bool bold;
+	bool italic;
+	bool underline;
+	bool kerning;
+	bool framing;
+	bool line_below;
 	
-	double tab_interval;		/// default tab interval length in text coordinates
 };
 
 

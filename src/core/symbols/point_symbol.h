@@ -68,8 +68,15 @@ friend class XMLImportExport;
 public:
 	/** Constructs an empty point symbol. */
 	PointSymbol() noexcept;
+	
+protected:
+	explicit PointSymbol(const PointSymbol& proto);
+	
+public:
 	~PointSymbol() override;
-	Symbol* duplicate(const MapColorMap* color_map = nullptr) const override;
+	
+	PointSymbol* duplicate() const override;
+	PointSymbol* duplicate(const MapColorMap& color_map) const override;
 	
 	bool validate() const override;
 	
@@ -90,6 +97,7 @@ public:
 	void colorDeleted(const MapColor* color) override;
 	bool containsColor(const MapColor* color) const override;
 	const MapColor* guessDominantColor() const override;
+	void replaceColors(const MapColorMap& color_map) override;
 	void scale(double factor) override;
 	
 	qreal dimensionForIcon() const override;
@@ -143,6 +151,7 @@ protected:
 	bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict) override;
 	bool equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensitivity) const override;
 	
+	
 	/// \todo Expose elements more directly in PointSymbol API.
 	struct Element
 	{
@@ -151,11 +160,11 @@ protected:
 	};
 	std::vector<Element> elements;
 	
-	bool rotatable;
-	int inner_radius;		// in 1/1000 mm
 	const MapColor* inner_color;
-	int outer_width;		// in 1/1000 mm
 	const MapColor* outer_color;
+	int inner_radius;		// in 1/1000 mm
+	int outer_width;		// in 1/1000 mm
+	bool rotatable;
 };
 
 

@@ -58,11 +58,24 @@
 namespace OpenOrienteering {
 
 Symbol::Symbol(Type type) noexcept
- : type { type }
- , number { -1, -1, -1 }
- , is_helper_symbol(false)
- , is_hidden(false)
- , is_protected(false)
+: number { { -1, -1, -1 } }
+, type { type }
+, is_helper_symbol { false }
+, is_hidden { false }
+, is_protected { false }
+{
+	// nothing else
+}
+
+Symbol::Symbol(const Symbol& proto)
+: icon { proto.icon }
+, name { proto.name }
+, description { proto.description }
+, number { proto.number }
+, type { proto.type }
+, is_helper_symbol { proto.is_helper_symbol }
+, is_hidden { proto.is_hidden }
+, is_protected { proto.is_protected }
 {
 	// nothing else
 }
@@ -83,7 +96,7 @@ bool Symbol::equals(const Symbol* other, Qt::CaseSensitivity case_sensitivity, b
 {
 	if (type != other->type)
 		return false;
-	for (int i = 0; i < number_components; ++i)
+	for (auto i = 0u; i < number_components; ++i)
 	{
 		if (number[i] != other->number[i])
 			return false;
@@ -171,7 +184,7 @@ bool Symbol::numberEquals(const Symbol* other, bool ignore_trailing_zeros) const
 {
 	if (ignore_trailing_zeros)
 	{
-		for (int i = 0; i < number_components; ++i)
+		for (auto i = 0u; i < number_components; ++i)
 		{
 			if (number[i] == -1 && other->number[i] == -1)
 				return true;
@@ -184,7 +197,7 @@ bool Symbol::numberEquals(const Symbol* other, bool ignore_trailing_zeros) const
 	}
 	else
 	{
-		for (int i = 0; i < number_components; ++i)
+		for (auto i = 0u; i < number_components; ++i)
 		{
 			if (number[i] != other->number[i])
 				return false;
@@ -242,23 +255,17 @@ Symbol* Symbol::load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& sy
 			code = id;
 	}
 	
-	if (code.isEmpty())
-		symbol->number[0] = -1;
-	else
+	std::fill(begin(symbol->number), end(symbol->number), -1);
+	if (!code.isEmpty())
 	{
-		for (int i = 0, index = 0; i < number_components && index >= 0; ++i)
+		int pos = 0;
+		for (auto i = 0u; i < number_components; ++i)
 		{
-			if (index == -1)
-				symbol->number[i] = -1;
-			else
-			{
-				int dot = code.indexOf(QLatin1Char('.'), index+1);
-				int num = code.midRef(index, (dot == -1) ? -1 : (dot - index)).toInt();
-				symbol->number[i] = num;
-				index = dot;
-				if (index != -1)
-					index++;
-			}
+			int dot = code.indexOf(QLatin1Char('.'), pos+1);
+			symbol->number[i] = code.midRef(pos, (dot == -1) ? -1 : (dot - pos)).toInt();
+			pos = ++dot;
+			if (pos < 1)
+				break;
 		}
 	}
 	
@@ -734,17 +741,6 @@ int Symbol::getCompatibleTypes(Symbol::Type type)
 	return type;
 }
 
-void Symbol::duplicateImplCommon(const Symbol* other)
-{
-	type = other->type;
-	name = other->name;
-	for (int i = 0; i < number_components; ++i)
-		number[i] = other->number[i];
-	description = other->description;
-	is_helper_symbol = other->is_helper_symbol;
-	is_hidden = other->is_hidden;
-	icon = other->icon;
-}
 
 
 bool Symbol::compareByNumber(const Symbol* s1, const Symbol* s2)

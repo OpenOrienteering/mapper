@@ -59,18 +59,6 @@ using length_type = PathCoord::length_type;
 
 // ### LineSymbolBorder ###
 
-void LineSymbolBorder::reset() noexcept
-{
-	color = nullptr;
-	width = 0;
-	shift = 0;
-	dashed = false;
-	dash_length = 2 * 1000;
-	break_length = 1 * 1000;
-}
-
-
-
 void LineSymbolBorder::save(QXmlStreamWriter& xml, const Map& map) const
 {
 	xml.writeStartElement(QString::fromLatin1("border"));
@@ -161,42 +149,70 @@ void LineSymbolBorder::scale(double factor)
 // ### LineSymbol ###
 
 LineSymbol::LineSymbol() noexcept
-: Symbol(Symbol::Line)
+: Symbol ( Symbol::Line )
+, start_symbol ( nullptr )
+, mid_symbol ( nullptr )
+, end_symbol ( nullptr )
+, dash_symbol ( nullptr )
+, color ( nullptr )
+, line_width ( 0 )
+, minimum_length ( 0 )
+, pointed_cap_length ( 1000 )
+, mid_symbols_per_spot ( 1 )
+, mid_symbol_distance ( 0 )
+, minimum_mid_symbol_count ( 0 )
+, minimum_mid_symbol_count_when_closed ( 0 )
+, segment_length ( 4000 )
+, end_length ( 0 )
+, dash_length ( 4000 )
+, break_length ( 1000 )
+, dashes_in_group ( 1 )
+, in_group_break_length ( 500 )
+, cap_style ( FlatCap )
+, join_style ( MiterJoin )
+, dashed ( false )
+, half_outer_dashes ( false )
+, show_at_least_one_symbol ( true )
+, suppress_dash_symbol_at_ends ( false )
+, scale_dash_symbol ( true )
+, have_border_lines ( false )
 {
-	line_width = 0;
-	color = nullptr;
-	minimum_length = 0;
-	cap_style = FlatCap;
-	join_style = MiterJoin;
-	pointed_cap_length = 1000;
-	
-	start_symbol = nullptr;
-	mid_symbol = nullptr;
-	end_symbol = nullptr;
-	dash_symbol = nullptr;
-	
-	dashed = false;
-	
-	segment_length = 4000;
-	end_length = 0;
-	show_at_least_one_symbol = true;
-	minimum_mid_symbol_count = 0;
-	minimum_mid_symbol_count_when_closed = 0;
+	// nothing else
+}
 
-	dash_length = 4000;
-	break_length = 1000;
-	dashes_in_group = 1;
-	in_group_break_length = 500;
-	half_outer_dashes = false;
-	mid_symbols_per_spot = 1;
-	mid_symbol_distance = 0;
-	suppress_dash_symbol_at_ends = false;
-	scale_dash_symbol = true;
-	
-	// Border lines
-	have_border_lines = false;
-	border.reset();
-	right_border.reset();
+
+LineSymbol::LineSymbol(const LineSymbol& proto)
+: Symbol ( proto )
+, border ( proto.border )
+, right_border ( proto.right_border )
+, start_symbol ( proto.start_symbol ? proto.start_symbol->duplicate() : nullptr )
+, mid_symbol ( proto.mid_symbol ? proto.mid_symbol->duplicate() : nullptr )
+, end_symbol ( proto.end_symbol ? proto.end_symbol->duplicate() : nullptr )
+, dash_symbol ( proto.dash_symbol ? proto.dash_symbol->duplicate() : nullptr )
+, color ( proto.color )
+, line_width ( proto.line_width )
+, minimum_length ( proto.minimum_length )
+, pointed_cap_length ( proto.pointed_cap_length )
+, mid_symbols_per_spot ( proto.mid_symbols_per_spot )
+, mid_symbol_distance ( proto.mid_symbol_distance )
+, minimum_mid_symbol_count ( proto.minimum_mid_symbol_count )
+, minimum_mid_symbol_count_when_closed ( proto.minimum_mid_symbol_count_when_closed )
+, segment_length ( proto.segment_length )
+, end_length ( proto.end_length )
+, dash_length ( proto.dash_length )
+, break_length ( proto.break_length )
+, dashes_in_group ( proto.dashes_in_group )
+, in_group_break_length ( proto.in_group_break_length )
+, cap_style ( proto.cap_style )
+, join_style ( proto.join_style )
+, dashed ( proto.dashed )
+, half_outer_dashes ( proto.half_outer_dashes )
+, show_at_least_one_symbol ( proto.show_at_least_one_symbol )
+, suppress_dash_symbol_at_ends ( proto.suppress_dash_symbol_at_ends )
+, scale_dash_symbol ( proto.scale_dash_symbol )
+, have_border_lines ( proto.have_border_lines )
+{
+	// nothing else
 }
 
 
@@ -209,43 +225,17 @@ LineSymbol::~LineSymbol()
 }
 
 
-Symbol* LineSymbol::duplicate(const MapColorMap* color_map) const
+
+LineSymbol* LineSymbol::duplicate() const
 {
-	auto new_line = new LineSymbol();
-	new_line->duplicateImplCommon(this);
-	new_line->line_width = line_width;
-	new_line->color = color_map ? color_map->value(color) : color;
-	new_line->minimum_length = minimum_length;
-	new_line->cap_style = cap_style;
-	new_line->join_style = join_style;
-	new_line->pointed_cap_length = pointed_cap_length;
-	
-	using MemberSymbol = PointSymbol* LineSymbol::*;
-	MemberSymbol members[4] = { &LineSymbol::start_symbol, &LineSymbol::mid_symbol, &LineSymbol::end_symbol, &LineSymbol::dash_symbol };
-	for (auto member : members)
-	{
-		auto sub_symbol = this->*member;
-		if (sub_symbol && !sub_symbol->isEmpty())
-			new_line->*member = static_cast<PointSymbol*>(sub_symbol->duplicate(color_map));
-	}
-	new_line->dashed = dashed;
-	new_line->segment_length = segment_length;
-	new_line->end_length = end_length;
-	new_line->show_at_least_one_symbol = show_at_least_one_symbol;
-	new_line->minimum_mid_symbol_count = minimum_mid_symbol_count;
-	new_line->minimum_mid_symbol_count_when_closed = minimum_mid_symbol_count_when_closed;
-	new_line->dash_length = dash_length;
-	new_line->break_length = break_length;
-	new_line->dashes_in_group = dashes_in_group;
-	new_line->in_group_break_length = in_group_break_length;
-	new_line->half_outer_dashes = half_outer_dashes;
-	new_line->mid_symbols_per_spot = mid_symbols_per_spot;
-	new_line->mid_symbol_distance = mid_symbol_distance;
-	new_line->suppress_dash_symbol_at_ends = suppress_dash_symbol_at_ends;
-	new_line->scale_dash_symbol = scale_dash_symbol;
-	new_line->have_border_lines = have_border_lines;
-	new_line->border.assign(border, color_map);
-	new_line->right_border.assign(right_border, color_map);
+	return new LineSymbol(*this);
+}
+
+
+LineSymbol* LineSymbol::duplicate(const MapColorMap& color_map) const
+{
+	auto new_line = new LineSymbol(*this);
+	new_line->replaceColors(color_map);
 	return new_line;
 }
 
@@ -1569,6 +1559,21 @@ const MapColor* LineSymbol::guessDominantColor() const
 	
 	return nullptr;
 }
+
+
+void LineSymbol::replaceColors(const MapColorMap& color_map)
+{
+	color = color_map.value(color);
+	border.color = color_map.value(border.color);
+	right_border.color = color_map.value(right_border.color);
+	for (auto member : { &LineSymbol::start_symbol, &LineSymbol::mid_symbol, &LineSymbol::end_symbol, &LineSymbol::dash_symbol })
+	{
+		if (auto sub_symbol = this->*member)
+			sub_symbol->replaceColors(color_map);
+	}
+}
+
+
 
 void LineSymbol::scale(double factor)
 {

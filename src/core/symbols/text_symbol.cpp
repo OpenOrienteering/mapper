@@ -56,64 +56,80 @@
 namespace OpenOrienteering {
 
 TextSymbol::TextSymbol()
-: Symbol(Symbol::Text)
-, metrics(QFont())
+: Symbol { Symbol::Text }
+, qfont {}
+, metrics { qfont }
+, font_family { QStringLiteral("Arial") }
+, icon_text { }
+, color { nullptr }
+, framing_color { nullptr }
+, line_below_color { nullptr }
+, line_spacing { 1 }
+, character_spacing { 0 }
+, font_size { 4 * 1000 }
+, paragraph_spacing { 0 }
+, framing_mode { LineFraming }
+, framing_line_half_width { 200 }
+, framing_shadow_x_offset { 200 }
+, framing_shadow_y_offset { 200 }
+, line_below_width { 0 }
+, line_below_distance { 0 }
+, bold { false }
+, italic { false }
+, underline { false }
+, kerning { true }
+, framing { false }
+, line_below { false }
 {
-	color = nullptr;
-	font_family = QString::fromLatin1("Arial");
-	font_size = 4 * 1000;
-	bold = false;
-	italic = false;
-	underline = false;
-	line_spacing = 1;
-	paragraph_spacing = 0;
-	character_spacing = 0;
-	kerning = true;
-	icon_text = QString{};
-	framing = false;
-	framing_color = nullptr;
-	framing_mode = LineFraming;
-	framing_line_half_width = 200;
-	framing_shadow_x_offset = 200;
-	framing_shadow_y_offset = 200;
-	line_below = false;
-	line_below_color = nullptr;
-	line_below_width = 0;
-	line_below_distance = 0;
 	updateQFont();
+}
+
+
+TextSymbol::TextSymbol(const TextSymbol& proto)
+: Symbol { proto }
+, qfont { proto.qfont }
+, metrics { proto.metrics }
+, font_family { proto.font_family }
+, icon_text { proto.icon_text }
+, color { proto.color }
+, framing_color { proto.framing_color }
+, line_below_color { proto.line_below_color }
+, custom_tabs { proto.custom_tabs }
+, tab_interval { proto.tab_interval }
+, line_spacing { proto.line_spacing }
+, character_spacing { proto.character_spacing }
+, font_size { proto.font_size }
+, paragraph_spacing { proto.paragraph_spacing }
+, framing_mode { proto.framing_mode }
+, framing_line_half_width { proto.framing_line_half_width }
+, framing_shadow_x_offset { proto.framing_shadow_x_offset }
+, framing_shadow_y_offset { proto.framing_shadow_y_offset }
+, line_below_width { proto.line_below_width }
+, line_below_distance { proto.line_below_distance }
+, bold { proto.bold }
+, italic { proto.italic }
+, underline { proto.underline }
+, kerning { proto.kerning }
+, framing { proto.framing }
+, line_below { proto.line_below }
+{
+	// nothing else
 }
 
 
 TextSymbol::~TextSymbol() = default;
 
 
-Symbol* TextSymbol::duplicate(const MapColorMap* color_map) const
+TextSymbol* TextSymbol::duplicate() const
 {
-	auto new_text = new TextSymbol();
-	new_text->duplicateImplCommon(this);
-	new_text->color = color_map ? color_map->value(color) : color;
-	new_text->font_family = font_family;
-	new_text->font_size = font_size;
-	new_text->bold = bold;
-	new_text->italic = italic;
-	new_text->underline = underline;
-	new_text->line_spacing = line_spacing;
-	new_text->paragraph_spacing = paragraph_spacing;
-	new_text->character_spacing = character_spacing;
-	new_text->kerning = kerning;
-	new_text->icon_text = icon_text;
-	new_text->framing = framing;
-	new_text->framing_color = color_map ? color_map->value(framing_color) : framing_color;
-	new_text->framing_mode = framing_mode;
-	new_text->framing_line_half_width = framing_line_half_width;
-	new_text->framing_shadow_x_offset = framing_shadow_x_offset;
-	new_text->framing_shadow_y_offset = framing_shadow_y_offset;
-	new_text->line_below = line_below;
-	new_text->line_below_color = color_map ? color_map->value(line_below_color) : line_below_color;
-	new_text->line_below_width = line_below_width;
-	new_text->line_below_distance = line_below_distance;
-	new_text->custom_tabs = custom_tabs;
-	new_text->updateQFont();
+	return new TextSymbol(*this);
+}
+
+
+TextSymbol* TextSymbol::duplicate(const MapColorMap& color_map) const
+{
+	auto new_text = new TextSymbol(*this);
+	new_text->replaceColors(color_map);
 	return new_text;
 }
 
@@ -281,6 +297,13 @@ const MapColor* TextSymbol::guessDominantColor() const
 	if (!c)
 		c = line_below_color;
 	return c;
+}
+
+void TextSymbol::replaceColors(const MapColorMap& color_map)
+{
+	color = color_map.value(color);
+	framing_color = color_map.value(framing_color);
+	line_below_color = color_map.value(line_below_color);
 }
 
 void TextSymbol::scale(double factor)

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -43,39 +43,47 @@
 namespace OpenOrienteering {
 
 CombinedSymbol::CombinedSymbol()
-: Symbol{Symbol::Combined}
-, private_parts{ false, false }
-, parts{ private_parts.size(), nullptr }
+: Symbol { Symbol::Combined }
+, private_parts { false, false }
+, parts { private_parts.size(), nullptr }
 {
 	Q_ASSERT(private_parts.size() == parts.size());
 	// nothing else
 }
 
-CombinedSymbol::~CombinedSymbol()
+
+CombinedSymbol::CombinedSymbol(const CombinedSymbol& proto)
+: Symbol { proto }
+, private_parts { proto.private_parts }
+, parts { proto.parts }
 {
-	auto is_private = begin(private_parts);
-	for (auto subsymbol : parts)
-	{
-		if (*is_private)
-			delete subsymbol;
-		++is_private;
-	};
+	std::transform(begin(parts), end(parts), begin(private_parts), begin(parts), [](auto part, auto is_private) {
+		return (part && is_private) ? part->duplicate() : part;
+	});
 }
 
-Symbol* CombinedSymbol::duplicate(const MapColorMap* color_map) const
+
+CombinedSymbol::~CombinedSymbol()
 {
-	auto new_symbol = new CombinedSymbol();
-	new_symbol->duplicateImplCommon(this);
-	new_symbol->parts = parts;
-	new_symbol->private_parts = private_parts;
-	auto is_private = begin(new_symbol->private_parts);
-	for (auto& subsymbol : new_symbol->parts)
-	{
-		if (*is_private)
-			subsymbol = subsymbol->duplicate(color_map);
-		++is_private;
-	}
-	return new_symbol;
+	std::transform(begin(parts), end(parts), begin(private_parts), begin(parts), [](auto part, auto is_private) {
+		if (part && is_private)
+			delete part;
+		return nullptr;
+	});
+}
+
+
+CombinedSymbol* CombinedSymbol::duplicate() const
+{
+	return new CombinedSymbol(*this);
+}
+
+
+CombinedSymbol* CombinedSymbol::duplicate(const MapColorMap& color_map) const
+{
+	auto new_combined = new CombinedSymbol(*this);
+	new_combined->replaceColors(color_map);
+	return new_combined;
 }
 
 
@@ -161,6 +169,18 @@ const MapColor* CombinedSymbol::guessDominantColor() const
 	
 	return dominant_color;
 }
+
+
+void CombinedSymbol::replaceColors(const MapColorMap& color_map)
+{
+	std::transform(begin(parts), end(parts), begin(private_parts), begin(parts), [&color_map](auto part, auto is_private) {
+		if (part && is_private)
+			const_cast<Symbol*>(part)->replaceColors(color_map);
+		return part;
+	});
+}
+
+
 
 bool CombinedSymbol::symbolChanged(const Symbol* old_symbol, const Symbol* new_symbol)
 {

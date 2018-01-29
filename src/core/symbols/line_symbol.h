@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -58,14 +58,13 @@ using MapCoordVectorF = std::vector<MapCoordF>;
 /** Settings for a line symbol's border. */
 struct LineSymbolBorder
 {
-	const MapColor* color;
-	int width;
-	int shift;
-	bool dashed;
-	int dash_length;
-	int break_length;
+	const MapColor* color = nullptr;
+	int width             = 0;
+	int shift             = 0;
+	int dash_length       = 2000;
+	int break_length      = 1000;
+	bool dashed           = false;
 	
-	void reset() noexcept;
 	void save(QXmlStreamWriter& xml, const Map& map) const;
 	bool load(QXmlStreamReader& xml, const Map& map);
 	bool equals(const LineSymbolBorder* other) const;
@@ -101,8 +100,15 @@ public:
 	
 	/** Constructs an empty line symbol. */
 	LineSymbol() noexcept;
+	
+protected:
+	explicit LineSymbol(const LineSymbol& proto);
+	
+public:
 	~LineSymbol() override;
-	Symbol* duplicate(const MapColorMap* color_map = nullptr) const override;
+	
+	LineSymbol* duplicate() const override;
+	LineSymbol* duplicate(const MapColorMap& color_map) const override;
 	
 	bool validate() const override;
 	
@@ -136,6 +142,7 @@ public:
 	void colorDeleted(const MapColor* color) override;
 	bool containsColor(const MapColor* color) const override;
 	const MapColor* guessDominantColor() const override;
+	void replaceColors(const MapColorMap& color_map) override;
 	void scale(double factor) override;
 	
 	/**
@@ -330,15 +337,11 @@ protected:
 	
 	void replaceSymbol(PointSymbol*& old_symbol, PointSymbol* replace_with, const QString& name);
 	
-	// Base line
-	int line_width;		// in 1/1000 mm
-	const MapColor* color;
-	int minimum_length;
-	CapStyle cap_style;
-	JoinStyle join_style;
-	int pointed_cap_length;
+	// Members ordered for minimizing padding
 	
-	bool dashed;
+	// Border line details
+	LineSymbolBorder border;
+	LineSymbolBorder right_border;
 	
 	// Point symbols
 	PointSymbol* start_symbol;
@@ -346,29 +349,37 @@ protected:
 	PointSymbol* end_symbol;
 	PointSymbol* dash_symbol;
 	
+	// Base line
+	const MapColor* color;
+	int line_width;		// in 1/1000 mm
+	int minimum_length;
+	int pointed_cap_length;
+	
 	int mid_symbols_per_spot;
 	int mid_symbol_distance;
-	bool suppress_dash_symbol_at_ends;
-	bool scale_dash_symbol;
+	int minimum_mid_symbol_count;
+	int minimum_mid_symbol_count_when_closed;
 	
 	// Not dashed
 	int segment_length;
 	int end_length;
-	bool show_at_least_one_symbol;
-	int minimum_mid_symbol_count;
-	int minimum_mid_symbol_count_when_closed;
 	
 	// Dashed
 	int dash_length;
 	int break_length;
 	int dashes_in_group;
 	int in_group_break_length;
-	bool half_outer_dashes;
 	
-	// Border lines
+	CapStyle cap_style;
+	JoinStyle join_style;
+	
+	// Various flags
+	bool dashed;
+	bool half_outer_dashes;
+	bool show_at_least_one_symbol;
+	bool suppress_dash_symbol_at_ends;
+	bool scale_dash_symbol;
 	bool have_border_lines;
-	LineSymbolBorder border;
-	LineSymbolBorder right_border;
 };
 
 
