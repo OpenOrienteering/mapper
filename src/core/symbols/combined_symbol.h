@@ -69,7 +69,6 @@ public:
 	~CombinedSymbol() override;
 	
 	CombinedSymbol* duplicate() const override;
-	CombinedSymbol* duplicate(const MapColorMap& color_map) const override;
 	
 	bool validate() const override;
 	

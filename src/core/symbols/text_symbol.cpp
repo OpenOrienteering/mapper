@@ -126,13 +126,6 @@ TextSymbol* TextSymbol::duplicate() const
 }
 
 
-TextSymbol* TextSymbol::duplicate(const MapColorMap& color_map) const
-{
-	auto new_text = new TextSymbol(*this);
-	new_text->replaceColors(color_map);
-	return new_text;
-}
-
 void TextSymbol::createRenderables(
         const Object *object,
         const VirtualCoordVector &coords,

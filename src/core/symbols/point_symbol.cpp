@@ -93,14 +93,6 @@ PointSymbol* PointSymbol::duplicate() const
 }
 
 
-PointSymbol* PointSymbol::duplicate(const MapColorMap& color_map) const
-{
-	auto new_point = new PointSymbol(*this);
-	new_point->replaceColors(color_map);
-	return new_point;
-}
-
-
 
 bool PointSymbol::validate() const
 {

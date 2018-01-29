@@ -76,7 +76,6 @@ public:
 	~PointSymbol() override;
 	
 	PointSymbol* duplicate() const override;
-	PointSymbol* duplicate(const MapColorMap& color_map) const override;
 	
 	bool validate() const override;
 	

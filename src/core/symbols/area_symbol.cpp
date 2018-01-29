@@ -596,14 +596,6 @@ AreaSymbol* AreaSymbol::duplicate() const
 }
 
 
-AreaSymbol* AreaSymbol::duplicate(const MapColorMap& color_map) const
-{
-	auto new_area = new AreaSymbol(*this);
-	new_area->replaceColors(color_map);
-	return new_area;
-}
-
-
 
 void AreaSymbol::createRenderables(
         const Object *object,

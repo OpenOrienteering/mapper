@@ -79,14 +79,6 @@ CombinedSymbol* CombinedSymbol::duplicate() const
 }
 
 
-CombinedSymbol* CombinedSymbol::duplicate(const MapColorMap& color_map) const
-{
-	auto new_combined = new CombinedSymbol(*this);
-	new_combined->replaceColors(color_map);
-	return new_combined;
-}
-
-
 
 bool CombinedSymbol::validate() const
 {

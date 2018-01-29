@@ -241,7 +241,6 @@ public:
 	~AreaSymbol() override;
 	
 	AreaSymbol* duplicate() const override;
-	AreaSymbol* duplicate(const MapColorMap& color_map) const override;
 	
 	void createRenderables(
 	        const Object *object,

@@ -113,7 +113,6 @@ public:
 	virtual ~Symbol();
 	
 	virtual Symbol* duplicate() const = 0;
-	virtual Symbol* duplicate(const MapColorMap& color_map) const = 0;
 	
 	Symbol& operator=(const Symbol&) = delete;
 	Symbol& operator=(Symbol&&) = delete;

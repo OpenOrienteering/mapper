@@ -90,7 +90,6 @@ protected:
 public:
 	~TextSymbol() override;
 	TextSymbol* duplicate() const override;
-	TextSymbol* duplicate(const MapColorMap& color_map) const override;
 	
 	void createRenderables(
 	        const Object *object,

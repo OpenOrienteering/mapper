@@ -232,14 +232,6 @@ LineSymbol* LineSymbol::duplicate() const
 }
 
 
-LineSymbol* LineSymbol::duplicate(const MapColorMap& color_map) const
-{
-	auto new_line = new LineSymbol(*this);
-	new_line->replaceColors(color_map);
-	return new_line;
-}
-
-
 
 bool LineSymbol::validate() const
 {

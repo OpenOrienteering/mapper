@@ -108,7 +108,6 @@ public:
 	~LineSymbol() override;
 	
 	LineSymbol* duplicate() const override;
-	LineSymbol* duplicate(const MapColorMap& color_map) const override;
 	
 	bool validate() const override;
 	
