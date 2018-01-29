@@ -32,6 +32,10 @@
 #include "core/map.h"
 #include "core/map_part.h"
 #include "core/objects/object.h"
+#include "core/symbols/area_symbol.h"
+#include "core/symbols/combined_symbol.h"
+#include "core/symbols/line_symbol.h"
+#include "core/symbols/point_symbol.h"
 #include "core/symbols/symbol.h"
 
 using namespace OpenOrienteering;
@@ -45,6 +49,59 @@ static const auto test_files = {
     "data:/examples/forest sample.omap",
     "data:/examples/overprinting.omap",
 };
+
+
+void testDecoupling(const AreaSymbol& a, const AreaSymbol& b)
+{
+	Q_ASSERT(&a != &b);
+	for (int i = 0; i < a.getNumFillPatterns(); ++i)
+	{
+		auto& pattern_a = a.getFillPattern(i);
+		auto& pattern_b = b.getFillPattern(i);
+		QVERIFY(&a != &b);
+		switch (pattern_a.type)
+		{
+		case AreaSymbol::FillPattern::LinePattern:
+			break;
+		case AreaSymbol::FillPattern::PointPattern:
+			QVERIFY(pattern_a.point == nullptr || pattern_a.point != pattern_b.point);
+			break;
+		}
+	}
+}
+
+
+void testDecoupling(const CombinedSymbol& a, const CombinedSymbol& b)
+{
+	Q_ASSERT(&a != &b);
+	for (int i = 0; i < a.getNumParts(); ++i)
+	{
+		if (a.isPartPrivate(i))
+			QVERIFY(a.getPart(i) == nullptr || a.getPart(i) != b.getPart(i));
+	}
+}
+
+
+void testDecoupling(const LineSymbol& a, const LineSymbol& b)
+{
+	Q_ASSERT(&a != &b);
+	QVERIFY(a.getStartSymbol() == nullptr || a.getStartSymbol() != b.getStartSymbol());
+	QVERIFY(a.getMidSymbol() == nullptr || a.getMidSymbol() != b.getMidSymbol());
+	QVERIFY(a.getEndSymbol() == nullptr || a.getEndSymbol() != b.getEndSymbol());
+	QVERIFY(a.getDashSymbol() == nullptr || a.getDashSymbol() != b.getDashSymbol());
+}
+
+
+void testDecoupling(const PointSymbol& a, const PointSymbol& b)
+{
+	Q_ASSERT(&a != &b);
+	for (int i = 0; i < a.getNumElements(); ++i)
+	{
+		QVERIFY(a.getElementSymbol(i) == nullptr || a.getElementSymbol(i) != b.getElementSymbol(i));
+		QVERIFY(a.getElementObject(i) == nullptr || a.getElementObject(i) != b.getElementObject(i));
+	}
+}
+
 
 }  // namespace
 
@@ -81,7 +138,34 @@ void DuplicateEqualsTest::symbols()
 	{
 		const auto original = map.getSymbol(symbol);
 		auto duplicate = std::unique_ptr<Symbol>(original->duplicate());
-		QVERIFY(duplicate->equals(original));
+		switch(original->getType())
+		{
+		case Symbol::Area:
+			QVERIFY(duplicate->equals(original));
+			testDecoupling(static_cast<const AreaSymbol&>(*original),
+			               static_cast<const AreaSymbol&>(*duplicate));
+			break;
+		case Symbol::Combined:
+			QVERIFY(duplicate->equals(original));
+			testDecoupling(static_cast<const CombinedSymbol&>(*original),
+			               static_cast<const CombinedSymbol&>(*duplicate));
+			break;
+		case Symbol::Line:
+			QVERIFY(duplicate->equals(original));
+			testDecoupling(static_cast<const LineSymbol&>(*original),
+			               static_cast<const LineSymbol&>(*duplicate));
+			break;
+		case Symbol::Point:
+			QVERIFY(duplicate->equals(original));
+			testDecoupling(static_cast<const PointSymbol&>(*original),
+			               static_cast<const PointSymbol&>(*duplicate));
+			break;
+		case Symbol::Text:
+			QVERIFY(duplicate->equals(original));
+			break;
+		default:
+			Q_UNREACHABLE();
+		}
 	}
 }
 
