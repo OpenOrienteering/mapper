@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,14 +20,19 @@
 
 #include "duplicate_equals_t.h"
 
-#include <QtTest>
+#include <memory>
 
-#include "test_config.h"
+#include <QtTest>
+#include <QFileInfo>
+#include <QString>
+#include <QtGlobal>
 
 #include "global.h"
 #include "mapper_resource.h"
 #include "core/map.h"
+#include "core/map_part.h"
 #include "core/objects/object.h"
+#include "core/symbols/symbol.h"
 
 using namespace OpenOrienteering;
 
@@ -69,18 +74,15 @@ void DuplicateEqualsTest::symbols_data()
 void DuplicateEqualsTest::symbols()
 {
 	QFETCH(QString, map_filename);
-	Map* map = new Map();
-	map->loadFrom(map_filename, nullptr, nullptr, false, false);
+	Map map {};
+	map.loadFrom(map_filename, nullptr, nullptr, false, false);
 	
-	for (int symbol = 0; symbol < map->getNumSymbols(); ++symbol)
+	for (int symbol = 0; symbol < map.getNumSymbols(); ++symbol)
 	{
-		Symbol* original = map->getSymbol(symbol);
-		Symbol* duplicate = original->duplicate();
-		QVERIFY(original->equals(duplicate));
-		delete duplicate;
+		const auto original = map.getSymbol(symbol);
+		auto duplicate = std::unique_ptr<Symbol>(original->duplicate());
+		QVERIFY(duplicate->equals(original));
 	}
-	
-	delete map;
 }
 
 
@@ -96,29 +98,26 @@ void DuplicateEqualsTest::objects_data()
 void DuplicateEqualsTest::objects()
 {
 	QFETCH(QString, map_filename);
-	Map* map = new Map();
-	map->loadFrom(map_filename, nullptr, nullptr, false, false);
+	Map map {};
+	map.loadFrom(map_filename, nullptr, nullptr, false, false);
 	
-	for (int part_number = 0; part_number < map->getNumParts(); ++part_number)
+	for (int part_number = 0; part_number < map.getNumParts(); ++part_number)
 	{
-		MapPart* part = map->getPart(part_number);
+		auto part = map.getPart(part_number);
 		for (int object = 0; object < part->getNumObjects(); ++object)
 		{
-			const Object* original = part->getObject(object);
-			Object* duplicate = original->duplicate();
-			QVERIFY(original->equals(duplicate, true));
+			const auto original = part->getObject(object);
+			auto duplicate = std::unique_ptr<Object>(original->duplicate());
+			QVERIFY(duplicate->equals(original, true));
 			QVERIFY(!duplicate->getMap());
-			delete duplicate;
 			
-			Object* assigned = Object::getObjectForType(original->getType(), original->getSymbol());
-			QVERIFY(assigned);
-			assigned->copyFrom(*original);
-			QVERIFY(original->equals(assigned, true));
-			QVERIFY(!assigned->getMap());
+			duplicate.reset(Object::getObjectForType(original->getType(), original->getSymbol()));
+			QVERIFY(bool(duplicate));
+			duplicate->copyFrom(*original);
+			QVERIFY(duplicate->equals(original, true));
+			QVERIFY(!duplicate->getMap());
 		}
 	}
-	
-	delete map;
 }
 
 
