@@ -875,6 +875,8 @@ void MapEditorController::createActions()
 	configure_grid_act->setMenuRole(QAction::NoRole);
 #endif
 	pan_act = newToolAction("panmap", tr("Pan"), this, SLOT(pan()), "move.png", QString{}, "view_menu.html");
+	move_to_gps_pos_act = newAction("movegps", tr("Move to my location"), this, SLOT(moveToGpsPos()), "move-to-gps.png", QString{}, "view_menu.html");
+	move_to_gps_pos_act->setEnabled(false);
 	zoom_in_act = newAction("zoomin", tr("Zoom in"), this, SLOT(zoomIn()), "view-zoom-in.png", QString{}, "view_menu.html");
 	zoom_out_act = newAction("zoomout", tr("Zoom out"), this, SLOT(zoomOut()), "view-zoom-out.png", QString{}, "view_menu.html");
 	show_all_act = newAction("showall", tr("Show whole map"), this, SLOT(showWholeMap()), "view-show-all.png", QString{}, "view_menu.html");
@@ -1367,11 +1369,25 @@ void MapEditorController::createMobileGUI()
 	bottom_action_bar->addAction(pan_act, 1, col++);
 	
 	bottom_action_bar->addAction(zoom_out_act, 0, col);
-	bottom_action_bar->addAction(gps_temporary_clear_act, 1, col++);
+	auto zoom_out_button = bottom_action_bar->getButtonForAction(zoom_out_act);
+	auto mobile_zoom_out_menu = new QMenu(zoom_out_button);
+	auto zoom_1x_action = mobile_zoom_out_menu->addAction(tr("1x zoom"));
+	connect(zoom_1x_action, &QAction::triggered, [this]() {
+		main_view->setZoom(1);
+	});
+	auto zoom_2x_action = mobile_zoom_out_menu->addAction(tr("2x zoom"));
+	connect(zoom_2x_action, &QAction::triggered, [this]() {
+		main_view->setZoom(2);
+	});
+	zoom_out_button->setMenu(mobile_zoom_out_menu);
+
+	bottom_action_bar->addAction(move_to_gps_pos_act, 1, col++);
 	
 	bottom_action_bar->addAction(gps_temporary_path_act, 0, col);
 	bottom_action_bar->addAction(gps_temporary_point_act, 1, col++);
 	
+	bottom_action_bar->addAction(gps_temporary_clear_act, 0, col++);
+
 	bottom_action_bar->addAction(paint_on_template_act, 0, col);
 	bottom_action_bar->addAction(paint_on_template_settings_act, 1, col++);
 	
@@ -1761,6 +1777,15 @@ void MapEditorController::pan()
 {
 	setTool(new PanTool(this, pan_act));
 }
+
+void MapEditorController::moveToGpsPos()
+{
+	if (!gps_display->hasValidPosition())
+		return;
+	auto cur_gps_pos = gps_display->getLatestGPSCoord();
+	main_view->setCenter({ cur_gps_pos.x(), cur_gps_pos.y() });
+}
+
 void MapEditorController::zoomIn()
 {
 	main_view->zoomSteps(1);
@@ -3370,6 +3395,7 @@ void MapEditorController::updateDrawPointGPSAvailability()
 {
 	const Symbol* symbol = activeSymbol();
 	draw_point_gps_act->setEnabled(symbol && gps_display->isVisible() && symbol->getType() == Symbol::Point && !symbol->isHidden());
+	move_to_gps_pos_act->setEnabled(gps_display->isVisible());
 }
 
 void MapEditorController::drawPointGPSClicked()
