@@ -28,6 +28,7 @@
 #include <numeric>
 
 #include <QtGlobal>
+#include <QFlags>
 #include <QLatin1String>
 #include <QString>
 #include <QStringRef>
@@ -112,7 +113,7 @@ void CombinedSymbol::createRenderables(
 	}
 }
 
-void CombinedSymbol::colorDeleted(const MapColor* color)
+void CombinedSymbol::colorDeletedEvent(const MapColor* color)
 {
 	if (containsColor(color))
 		resetIcon();
@@ -121,7 +122,7 @@ void CombinedSymbol::colorDeleted(const MapColor* color)
 	for (auto subsymbol : parts)
 	{
 		if (*is_private)
-			const_cast<Symbol*>(subsymbol)->colorDeleted(color);
+			const_cast<Symbol*>(subsymbol)->colorDeletedEvent(color);
 		++is_private;
 	};
 }
@@ -175,7 +176,7 @@ void CombinedSymbol::replaceColors(const MapColorMap& color_map)
 
 
 
-bool CombinedSymbol::symbolChanged(const Symbol* old_symbol, const Symbol* new_symbol)
+bool CombinedSymbol::symbolChangedEvent(const Symbol* old_symbol, const Symbol* new_symbol)
 {
 	bool have_symbol = false;
 	for (auto& subsymbol : parts)
@@ -226,17 +227,17 @@ void CombinedSymbol::scale(double factor)
 	resetIcon();
 }
 
-Symbol::Type CombinedSymbol::getContainedTypes() const
+Symbol::TypeCombination CombinedSymbol::getContainedTypes() const
 {
-	auto type = int(getType());
+	auto combination = TypeCombination(getType());
 	
 	for (auto subsymbol : parts)
 	{
 		if (subsymbol)
-			type |= subsymbol->getContainedTypes();
+			combination |= subsymbol->getContainedTypes();
 	}
 	
-	return Type(type);
+	return combination;
 }
 
 
@@ -318,7 +319,7 @@ bool CombinedSymbol::equalsImpl(const Symbol* other, Qt::CaseSensitivity case_se
 	});
 }
 
-bool CombinedSymbol::loadFinished(Map* map)
+bool CombinedSymbol::loadingFinishedEvent(Map* map)
 {
 	const auto num_symbols = map->getNumSymbols();
 	const auto last = std::find_if(begin(temp_part_indices), end(temp_part_indices),

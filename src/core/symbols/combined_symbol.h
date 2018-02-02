@@ -82,16 +82,16 @@ public:
 	        ObjectRenderables &output,
 	        Symbol::RenderableOptions options) const override;
 	
-	void colorDeleted(const MapColor* color) override;
+	void colorDeletedEvent(const MapColor* color) override;
 	bool containsColor(const MapColor* color) const override;
 	const MapColor* guessDominantColor() const override;
 	void replaceColors(const MapColorMap& color_map) override;
-	bool symbolChanged(const Symbol* old_symbol, const Symbol* new_symbol) override;
+	bool symbolChangedEvent(const Symbol* old_symbol, const Symbol* new_symbol) override;
 	bool containsSymbol(const Symbol* symbol) const override;
 	void scale(double factor) override;
-	Type getContainedTypes() const override;
+	TypeCombination getContainedTypes() const override;
 	
-	bool loadFinished(Map* map) override;
+	bool loadingFinishedEvent(Map* map) override;
 	
 	qreal dimensionForIcon() const override;
 	

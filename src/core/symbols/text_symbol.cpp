@@ -126,6 +126,7 @@ TextSymbol* TextSymbol::duplicate() const
 }
 
 
+
 void TextSymbol::createRenderables(
         const Object *object,
         const VirtualCoordVector &coords,
@@ -251,7 +252,7 @@ void TextSymbol::createLineBelowRenderables(const Object* object, ObjectRenderab
 	}
 }
 
-void TextSymbol::colorDeleted(const MapColor* c)
+void TextSymbol::colorDeletedEvent(const MapColor* c)
 {
 	auto changes = 0;
 	if (c == color)

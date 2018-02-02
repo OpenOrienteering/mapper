@@ -402,7 +402,7 @@ void ReplaceSymbolSetDialog::updateMappingTable()
 		const Symbol* original_symbol = nullptr;
 		auto original_icon = QImage{};
 		auto original_string = QString{};
-		auto compatible_symbols = int(Symbol::AllSymbols);
+		auto compatible_symbols = Symbol::TypeCombination(Symbol::AllSymbols);
 		const auto replacement_symbol = item.symbol;
 		
 		if (item.query.getOperator() == ObjectQuery::OperatorSymbol
@@ -452,7 +452,7 @@ void ReplaceSymbolSetDialog::updateMappingTable()
 			}
 			
 			const Symbol* unique_symbol = nullptr;
-			auto matching_types = int(Symbol::NoSymbol);
+			auto matching_types = Symbol::TypeCombination(Symbol::NoSymbol);
 			auto update_matching = [&unique_symbol, &matching_types](Object* object) {
 				if (auto symbol = object->getSymbol())
 				{

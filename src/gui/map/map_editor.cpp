@@ -2518,7 +2518,7 @@ void MapEditorController::switchSymbolClicked()
 	Symbol* symbol = activeSymbol();
 	
 	bool close_paths = false, split_up = false;
-	Symbol::Type contained_types = symbol->getContainedTypes();
+	auto contained_types = symbol->getContainedTypes();
 	if (contained_types & Symbol::Area && !(contained_types & Symbol::Line))
 		close_paths = true;
 	else if (contained_types & Symbol::Line && !(contained_types & Symbol::Area))
@@ -2635,7 +2635,7 @@ void MapEditorController::fillBorderClicked()
 	new_objects.reserve(map->getNumSelectedObjects());
 	
 	bool close_paths = false, split_up = false;
-	Symbol::Type contained_types = symbol->getContainedTypes();
+	auto contained_types = symbol->getContainedTypes();
 	if (contained_types & Symbol::Area && !(contained_types & Symbol::Line))
 		close_paths = true;
 	else if (contained_types & Symbol::Line && !(contained_types & Symbol::Area))

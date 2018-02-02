@@ -609,7 +609,7 @@ void Object::transform(const QTransform& t)
 int Object::isPointOnObject(MapCoordF coord, float tolerance, bool treat_areas_as_paths, bool extended_selection) const
 {
 	Symbol::Type type = symbol->getType();
-	Symbol::Type contained_types = symbol->getContainedTypes();
+	auto contained_types = symbol->getContainedTypes();
 	
 	// Points
 	if (type == Symbol::Point)
@@ -2343,7 +2343,7 @@ int PathObject::isPointOnPath(MapCoordF coord, float tolerance, bool treat_areas
 		side_tolerance = qMax(side_tolerance, float(symbol->calculateLargestLineExtent()));
 	}
 	
-	Symbol::Type contained_types = symbol->getContainedTypes();
+	auto contained_types = symbol->getContainedTypes();
 	if ((contained_types & Symbol::Line || treat_areas_as_paths) && tolerance > 0)
 	{
 		update();

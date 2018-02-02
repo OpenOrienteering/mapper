@@ -997,17 +997,17 @@ void SymbolRenderWidget::invertSelection()
 
 void SymbolRenderWidget::sortByNumber()
 {
-    sort(Symbol::compareByNumber);
+    sort(Symbol::lessByNumber);
 }
 
 void SymbolRenderWidget::sortByColor()
 {
-	sort(Symbol::compareByColor(map));
+	sort(Symbol::lessByColor(map));
 }
 
 void SymbolRenderWidget::sortByColorPriority()
 {
-	sort(Symbol::compareByColorPriority);
+	sort(Symbol::lessByColorPriority);
 }
 
 void SymbolRenderWidget::showContextMenu(QPoint global_pos)

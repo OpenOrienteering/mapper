@@ -23,6 +23,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include <cstddef>
 #include <iterator>
 
 #include <memory>
@@ -54,9 +55,8 @@
 #include "core/symbols/text_symbol.h"
 #include "fileformats/file_format.h"
 #include "fileformats/file_import_export.h"
+#include "util/xml_stream_util.h"
 #include "gui/util_gui.h"
-#include "util/util.h"
-#include "settings.h"
 
 // IWYU pragma: no_include <QObject>
 
@@ -72,6 +72,7 @@ Symbol::Symbol(Type type) noexcept
 {
 	// nothing else
 }
+
 
 Symbol::Symbol(const Symbol& proto)
 : icon { proto.icon }
@@ -98,30 +99,24 @@ bool Symbol::validate() const
 
 
 
-bool Symbol::equals(const Symbol* other, Qt::CaseSensitivity case_sensitivity, bool compare_state) const
+bool Symbol::equals(const Symbol* other, Qt::CaseSensitivity case_sensitivity) const
 {
-	if (type != other->type)
-		return false;
-	for (auto i = 0u; i < number_components; ++i)
-	{
-		if (number[i] != other->number[i])
-			return false;
-		if (number[i] == -1 && other->number[i] == -1)
-			break;
-	}
-	if (is_helper_symbol != other->is_helper_symbol)
-		return false;
-	
-	if (compare_state && (is_hidden != other->is_hidden || is_protected != other->is_protected))
-		return false;
-	
-	if (name.compare(other->name, case_sensitivity) != 0)
-		return false;
-	if (description.compare(other->description, case_sensitivity) != 0)
-		return false;
-	
-	return equalsImpl(other, case_sensitivity);
+	return type == other->type
+	       && numberEquals(other)
+	       && is_helper_symbol == other->is_helper_symbol
+	       && name.compare(other->name, case_sensitivity) == 0
+	       && description.compare(other->description, case_sensitivity) == 0
+	       && equalsImpl(other, case_sensitivity);
 }
+
+
+bool Symbol::stateEquals(const Symbol* other) const
+{
+	return is_hidden == other->is_hidden
+	       && is_protected == other->is_protected;
+}
+
+
 
 const PointSymbol* Symbol::asPoint() const
 {
@@ -174,42 +169,73 @@ CombinedSymbol* Symbol::asCombined()
 	return static_cast<CombinedSymbol*>(this);
 }
 
-bool Symbol::isTypeCompatibleTo(const Object* object) const
-{
-	if (type == Point && object->getType() == Object::Point)
-		return true;
-	else if ((type == Line || type == Area || type == Combined) && object->getType() == Object::Path)
-		return true;
-	else if (type == Text && object->getType() == Object::Text)
-		return true;
 
-	return false;
+
+Symbol::TypeCombination Symbol::getContainedTypes() const
+{
+	return getType();
 }
 
-bool Symbol::numberEquals(const Symbol* other, bool ignore_trailing_zeros) const
+
+bool Symbol::isTypeCompatibleTo(const Object* object) const
 {
-	if (ignore_trailing_zeros)
+	switch (object->getType())
 	{
-		for (auto i = 0u; i < number_components; ++i)
-		{
-			if (number[i] == -1 && other->number[i] == -1)
-				return true;
-			if ((number[i] == 0 || number[i] == -1) &&
-				(other->number[i] == 0 || other->number[i] == -1))
-				continue;
-			if (number[i] != other->number[i])
-				return false;
-		}
+	case Object::Point:
+		return type == Point;
+	case Object::Path:
+		return type == Line || type == Area || type == Combined;
+	case Object::Text:
+		return type == Text;
 	}
-	else
+}
+
+
+
+bool Symbol::numberEquals(const Symbol* other) const
+{
+	for (auto lhs = begin(number), rhs = begin(other->number); lhs != end(number); ++lhs, ++rhs)
 	{
-		for (auto i = 0u; i < number_components; ++i)
+		if (*lhs != *rhs)
+			return false;
+		if (*lhs == -1 && *rhs == -1)
+			break;
+	}
+	return true;
+}
+
+
+bool Symbol::numberEqualsRelaxed(const Symbol* other) const
+{
+	for (auto lhs = begin(number), rhs = begin(other->number); lhs != end(number) && rhs != end(other->number); ++lhs, ++rhs)
+	{
+		// When encountering -1 on one side and 0 on the other side,
+		// move forward over all zeros on the other side.
+		if (Q_UNLIKELY(*lhs == -1 && *rhs == 0))
 		{
-			if (number[i] != other->number[i])
-				return false;
-			if (number[i] == -1)
-				return true;
+			do
+			{
+				++rhs;
+				if (rhs == end(other->number))
+					return true;
+			}
+			while (*rhs == 0);
 		}
+		else if (Q_UNLIKELY(*lhs == 0 && *rhs == -1))
+		{
+			do
+			{
+				++lhs;
+				if (lhs == end(number))
+					return true;
+			}
+			while (*lhs == 0);
+		}
+		
+		if (*lhs != *rhs)
+			return false;
+		if (*lhs == -1 && *rhs == -1)
+			break;
 	}
 	return true;
 }
@@ -218,40 +244,35 @@ bool Symbol::numberEquals(const Symbol* other, bool ignore_trailing_zeros) const
 
 void Symbol::save(QXmlStreamWriter& xml, const Map& map) const
 {
-	xml.writeStartElement(QString::fromLatin1("symbol"));
-	xml.writeAttribute(QString::fromLatin1("type"), QString::number(type));
-	int id = map.findSymbolIndex(this);
+	XmlElementWriter symbol_element(xml, QLatin1String("symbol"));
+	symbol_element.writeAttribute(QLatin1String("type"), int(type));
+	auto id = map.findSymbolIndex(this);
 	if (id >= 0)
-		xml.writeAttribute(QString::fromLatin1("id"), QString::number(id)); // unique if given
-	xml.writeAttribute(QString::fromLatin1("code"), getNumberAsString()); // not always unique
+		symbol_element.writeAttribute(QLatin1String("id"), id); // unique if given
+	symbol_element.writeAttribute(QLatin1String("code"), getNumberAsString()); // not always unique
 	if (!name.isEmpty())
-		xml.writeAttribute(QString::fromLatin1("name"), name);
-	if (is_helper_symbol)
-		xml.writeAttribute(QString::fromLatin1("is_helper_symbol"), QString::fromLatin1("true"));
-	if (is_hidden)
-		xml.writeAttribute(QString::fromLatin1("is_hidden"), QString::fromLatin1("true"));
-	if (is_protected)
-		xml.writeAttribute(QString::fromLatin1("is_protected"), QString::fromLatin1("true"));
+		symbol_element.writeAttribute(QLatin1String("name"), name);
+	symbol_element.writeAttribute(QLatin1String("is_helper_symbol"), is_helper_symbol);
+	symbol_element.writeAttribute(QLatin1String("is_hidden"), is_hidden);
+	symbol_element.writeAttribute(QLatin1String("is_protected"), is_protected);
 	if (!description.isEmpty())
-		xml.writeTextElement(QString::fromLatin1("description"), description);
+		xml.writeTextElement(QLatin1String("description"), description);
 	saveImpl(xml, map);
-	xml.writeEndElement(/*symbol*/);
 }
 
 std::unique_ptr<Symbol> Symbol::load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict)
 {
 	Q_ASSERT(xml.name() == QLatin1String("symbol"));
-	
-	int symbol_type = xml.attributes().value(QLatin1String("type")).toInt();
+	XmlElementReader symbol_element(xml);
+	auto symbol_type = symbol_element.attribute<int>(QLatin1String("type"));
 	auto symbol = Symbol::makeSymbolForType(static_cast<Symbol::Type>(symbol_type));
 	if (!symbol)
 		throw FileFormatException(::OpenOrienteering::ImportExport::tr("Error while loading a symbol of type %1 at line %2 column %3.").arg(symbol_type).arg(xml.lineNumber()).arg(xml.columnNumber()));
 	
-	QXmlStreamAttributes attributes = xml.attributes();
-	QString code = attributes.value(QLatin1String("code")).toString();
-	if (attributes.hasAttribute(QLatin1String("id")))
+	auto code = symbol_element.attribute<QString>(QLatin1String("code"));
+	if (symbol_element.hasAttribute(QLatin1String("id")))
 	{
-		QString id = attributes.value(QLatin1String("id")).toString();
+		auto id = symbol_element.attribute<QString>(QLatin1String("id"));
 		if (symbol_dict.contains(id)) 
 			throw FileFormatException(::OpenOrienteering::ImportExport::tr("Symbol ID '%1' not unique at line %2 column %3.").arg(id).arg(xml.lineNumber()).arg(xml.columnNumber()));
 		
@@ -275,10 +296,10 @@ std::unique_ptr<Symbol> Symbol::load(QXmlStreamReader& xml, const Map& map, Symb
 		}
 	}
 	
-	symbol->name = attributes.value(QLatin1String("name")).toString();
-	symbol->is_helper_symbol = (attributes.value(QLatin1String("is_helper_symbol")) == QLatin1String("true"));
-	symbol->is_hidden = (attributes.value(QLatin1String("is_hidden")) == QLatin1String("true"));
-	symbol->is_protected = (attributes.value(QLatin1String("is_protected")) == QLatin1String("true"));
+	symbol->name = symbol_element.attribute<QString>(QLatin1String("name"));
+	symbol->is_helper_symbol = symbol_element.attribute<bool>(QLatin1String("is_helper_symbol"));
+	symbol->is_hidden = symbol_element.attribute<bool>(QLatin1String("is_hidden"));
+	symbol->is_protected = symbol_element.attribute<bool>(QLatin1String("is_protected"));
 	
 	while (xml.readNextStartElement())
 	{
@@ -304,19 +325,27 @@ std::unique_ptr<Symbol> Symbol::load(QXmlStreamReader& xml, const Map& map, Symb
 	return symbol;
 }
 
-bool Symbol::loadFinished(Map* map)
+
+
+bool Symbol::loadingFinishedEvent(Map* /*map*/)
 {
-	Q_UNUSED(map);
 	return true;
 }
 
-void Symbol::createRenderables(const PathObject*, const PathPartVector&, ObjectRenderables&, Symbol::RenderableOptions) const
+
+
+void Symbol::createRenderables(
+        const PathObject* /*object*/,
+        const PathPartVector& /*path_parts*/,
+        ObjectRenderables& /*output*/,
+        Symbol::RenderableOptions /*options*/) const
 {
-	qWarning("Missing implementation of Symbol::createRenderables(const PathObject*, const PathPartVector&, ObjectRenderables&)");
+	qWarning("Missing implementation of Symbol::createRenderables(const PathObject*, const PathPartVector&, ObjectRenderables&, Symbol::RenderableOptions)");
 }
 
+
 void Symbol::createBaselineRenderables(
-        const PathObject*,
+        const PathObject* /*object*/,
         const PathPartVector& path_parts,
         ObjectRenderables& output,
         const MapColor* color) const
@@ -331,24 +360,25 @@ void Symbol::createBaselineRenderables(
 		line_symbol.setLineWidth(0);
 		for (const auto& part : path_parts)
 		{
-			auto line_renderable = new LineRenderable(&line_symbol, part, false);
-			output.insertRenderable(line_renderable);
+			output.insertRenderable(new LineRenderable(&line_symbol, part, false));
 		}
 	}
 }
 
-bool Symbol::symbolChanged(const Symbol* old_symbol, const Symbol* new_symbol)
+
+
+bool Symbol::symbolChangedEvent(const Symbol* /*old_symbol*/, const Symbol* /*new_symbol*/)
 {
-	Q_UNUSED(old_symbol);
-	Q_UNUSED(new_symbol);
 	return false;
 }
 
-bool Symbol::containsSymbol(const Symbol* symbol) const
+
+bool Symbol::containsSymbol(const Symbol* /*symbol*/) const
 {
-	Q_UNUSED(symbol);
 	return false;
 }
+
+
 
 QImage Symbol::getIcon(const Map* map) const
 {
@@ -622,16 +652,19 @@ QImage Symbol::createIcon(const Map& map, int side_length, bool antialiasing, qr
 		painter.translate(MapCoordF(-offset));
 	}
 	
-	RenderConfig config = { map, QRectF(-10000, -10000, 20000, 20000), final_zoom, RenderConfig::HelperSymbols, 1.0 };
-	bool was_hidden = is_hidden;
 	// Ensure that an icon is created for hidden symbols.
+	if (is_hidden && !symbol_copy)
+	{
+		symbol_copy = duplicate(*this);
+		object->setSymbol(symbol_copy.get(), true);
+	}
 	if (symbol_copy)
+	{
 		symbol_copy->setHidden(false);
-	else
-		is_hidden = false;
-	icon_map.draw(&painter, config);
-	is_hidden = was_hidden;
+	}
 	
+	auto config = RenderConfig { map, QRectF(-10000, -10000, 20000, 20000), final_zoom, RenderConfig::HelperSymbols, 1.0 };
+	icon_map.draw(&painter, config);
 	painter.end();
 	
 	// Add shadow to dominant white on transparent
@@ -696,18 +729,26 @@ qreal Symbol::calculateLargestLineExtent() const
 
 
 
+QString Symbol::getPlainTextName() const
+{
+	return Util::plainText(name);
+}
+
+
+
 QString Symbol::getNumberAsString() const
 {
-	QString str;
+	QString string;
+	string.reserve(4 * number_components - 1);
 	for (auto n : number)
 	{
 		if (n < 0)
 			break;
-		if (!str.isEmpty())
-			str += QLatin1Char('.');
-		str += QString::number(n);
+		string.append(QString::number(n));
+		string.append(QLatin1Char('.'));
 	}
-	return str;
+	string.chop(1);
+	return string;
 }
 
 
@@ -738,34 +779,35 @@ bool Symbol::areTypesCompatible(Symbol::Type a, Symbol::Type b)
 	return (getCompatibleTypes(a) & b) != 0;
 }
 
-int Symbol::getCompatibleTypes(Symbol::Type type)
+
+Symbol::TypeCombination Symbol::getCompatibleTypes(Symbol::Type type)
 {
-	if (type == Point)
-		return Point;
-	else if (type == Line || type == Area || type == Combined)
+	switch (type)
+	{
+	case Area:
+	case Combined:
+	case Line:
 		return Line | Area | Combined;
-	else if (type == Text)
-		return Text;
-	
-	Q_ASSERT(false);
-	return type;
+	case Point:
+	case Text:
+	default:
+		return type;
+	}
 }
 
 
 
-bool Symbol::compareByNumber(const Symbol* s1, const Symbol* s2)
+bool Symbol::lessByNumber(const Symbol* s1, const Symbol* s2)
 {
-	int n1 = s1->number_components, n2 = s2->number_components;
-	for (int i = 0; i < n1 && i < n2; i++)
+	for (auto i = 0u; i < number_components; i++)
 	{
-		if (s1->getNumberComponent(i) < s2->getNumberComponent(i)) return true;  // s1 < s2
-		if (s1->getNumberComponent(i) > s2->getNumberComponent(i)) return false; // s1 > s2
-		// if s1 == s2, loop to the next component
+		if (s1->number[i] < s2->number[i]) return true;  // s1 < s2
+		if (s1->number[i] > s2->number[i]) return false; // s1 > s2
 	}
 	return false; // s1 == s2
 }
 
-bool Symbol::compareByColorPriority(const Symbol* s1, const Symbol* s2)
+bool Symbol::lessByColorPriority(const Symbol* s1, const Symbol* s2)
 {
 	const MapColor* c1 = s1->guessDominantColor();
 	const MapColor* c2 = s2->guessDominantColor();
@@ -774,40 +816,43 @@ bool Symbol::compareByColorPriority(const Symbol* s1, const Symbol* s2)
 		return c1->comparePriority(*c2);
 	else if (c2)
 		return true;
-	else if (c1)
+	else
+		return false;
+}
+
+
+
+Symbol::lessByColor::lessByColor(const Map* map)
+{
+	colors.reserve(std::size_t(map->getNumColors()));
+	for (int i = 0; i < map->getNumColors(); ++i)
+		colors.push_back(QRgb(*map->getColor(i)));
+}
+
+
+bool Symbol::lessByColor::operator() (const Symbol* s1, const Symbol* s2) const
+{
+	auto c2 = s2->guessDominantColor();
+	if (!c2)
 		return false;
 	
-	return false; // s1 == s2
-}
-
-Symbol::compareByColor::compareByColor(Map* map)
-{
-	int next_priority = map->getNumColors() - 1;
-	// Iterating in reverse order so identical colors are at the position where they appear with lowest priority.
-	for (int i = map->getNumColors() - 1; i >= 0; --i)
-	{
-		QRgb color_code = QRgb(*map->getColor(i));
-		if (!color_map.contains(color_code))
-		{
-			color_map.insert(color_code, next_priority);
-			--next_priority;
-		}
-	}
-}
-
-bool Symbol::compareByColor::operator() (const Symbol* s1, const Symbol* s2)
-{
-	const MapColor* c1 = s1->guessDominantColor();
-	const MapColor* c2 = s2->guessDominantColor();
-	
-	if (c1 && c2)
-		return color_map.value(QRgb(*c1)) < color_map.value(QRgb(*c2));
-	else if (c2)
+	auto c1 = s1->guessDominantColor();
+	if (!c1)
 		return true;
-	else if (c1)
+	
+	const auto rgb_c1 = QRgb(*c1);
+	const auto rgb_c2 = QRgb(*c2);
+	if (rgb_c1 == rgb_c2)
 		return false;
 	
-	return false; // s1 == s2
+	const auto last = rend(colors);
+	auto first = std::find_if(rbegin(colors), last, [rgb_c2](const auto rgb) {
+		return rgb == rgb_c2;
+	});
+	auto second = std::find_if(first, last, [rgb_c1](const auto rgb) {
+		return rgb == rgb_c1;
+	});
+	return second != last;
 }
 
 

@@ -71,7 +71,9 @@ PATTERN=" \
   print_widget.cpp \
   renderable.cpp \
   renderable_implementation.cpp \
+  /symbol.cpp \
   symbol_rule_set.cpp \
+  symbol_t.cpp \
   tag_select_widget.cpp \
   template_image.cpp \
   template_tool \

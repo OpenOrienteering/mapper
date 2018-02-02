@@ -21,6 +21,7 @@
 
 #include "file_import_export.h"
 
+#include <QFlags>
 #include <QLatin1Char>
 
 #include "core/map.h"
@@ -91,7 +92,7 @@ void Importer::doImport(bool load_symbols_only, const QString& map_path)
 			if (object->getType() == Object::Path)
 			{
 				PathObject* path = object->asPath();
-				Symbol::Type contained_types = path->getSymbol()->getContainedTypes();
+				auto contained_types = path->getSymbol()->getContainedTypes();
 				if (contained_types & Symbol::Area && !(contained_types & Symbol::Line))
 					path->closeAllParts();
 				
@@ -108,7 +109,7 @@ void Importer::doImport(bool load_symbols_only, const QString& map_path)
 	// Symbol post processing
 	for (int i = 0; i < map->getNumSymbols(); ++i)
 	{
-		if (!map->getSymbol(i)->loadFinished(map))
+		if (!map->getSymbol(i)->loadingFinishedEvent(map))
 			throw FileFormatException(::OpenOrienteering::Importer::tr("Error during symbol post-processing."));
 	}
 	

@@ -461,7 +461,7 @@ bool PointSymbol::isSymmetrical() const
 
 
 
-void PointSymbol::colorDeleted(const MapColor* color)
+void PointSymbol::colorDeletedEvent(const MapColor* color)
 {
 	bool change = false;
 	
@@ -478,7 +478,7 @@ void PointSymbol::colorDeleted(const MapColor* color)
 	
 	for (auto& element : elements)
 	{
-		element.symbol->colorDeleted(color);
+		element.symbol->colorDeletedEvent(color);
 		change = true;
 	}
 	

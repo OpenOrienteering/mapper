@@ -192,7 +192,7 @@ void AreaSymbol::FillPattern::colorDeleted(const MapColor* color)
 	switch (type)
 	{
 	case FillPattern::PointPattern:
-		point->colorDeleted(color);
+		point->colorDeletedEvent(color);
 		break;
 	case FillPattern::LinePattern:
 		if (line_color == color)
@@ -696,7 +696,7 @@ void AreaSymbol::createHatchingRenderables(
 
 
 
-void AreaSymbol::colorDeleted(const MapColor* color)
+void AreaSymbol::colorDeletedEvent(const MapColor* color)
 {
 	if (containsColor(color))
 	{

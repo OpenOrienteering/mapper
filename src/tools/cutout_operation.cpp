@@ -25,6 +25,7 @@
 #include <vector>
 
 #include <QtGlobal>
+#include <QFlags>
 #include <QRectF>
 
 #include "core/map.h"

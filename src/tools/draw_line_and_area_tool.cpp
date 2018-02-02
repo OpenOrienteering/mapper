@@ -26,6 +26,7 @@
 #include <iterator>
 
 #include <QtGlobal>
+#include <QFlags>
 #include <QPainter>
 #include <QPoint>
 

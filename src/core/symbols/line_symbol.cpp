@@ -1435,27 +1435,27 @@ void LineSymbol::createMidSymbolRenderables(
 	}
 }
 
-void LineSymbol::colorDeleted(const MapColor* color)
+void LineSymbol::colorDeletedEvent(const MapColor* color)
 {
 	bool have_changes = false;
 	if (mid_symbol && mid_symbol->containsColor(color))
 	{
-		mid_symbol->colorDeleted(color);
+		mid_symbol->colorDeletedEvent(color);
 		have_changes = true;
 	}
 	if (start_symbol && start_symbol->containsColor(color))
 	{
-		start_symbol->colorDeleted(color);
+		start_symbol->colorDeletedEvent(color);
 		have_changes = true;
 	}
 	if (end_symbol && end_symbol->containsColor(color))
 	{
-		end_symbol->colorDeleted(color);
+		end_symbol->colorDeletedEvent(color);
 		have_changes = true;
 	}
 	if (dash_symbol && dash_symbol->containsColor(color))
 	{
-		dash_symbol->colorDeleted(color);
+		dash_symbol->colorDeletedEvent(color);
 		have_changes = true;
 	}
     if (color == this->color)

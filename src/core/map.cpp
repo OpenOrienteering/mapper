@@ -1498,12 +1498,12 @@ void Map::deleteColor(int pos)
 	for (Symbol* symbol : symbols)
 	{
 		if (symbol->getType() == Symbol::Combined)
-			symbol->colorDeleted(color);
+			symbol->colorDeletedEvent(color);
 	}
 	for (Symbol* symbol : symbols)
 	{
 		if (symbol->getType() != Symbol::Combined)
-			symbol->colorDeleted(color);
+			symbol->colorDeletedEvent(color);
 	}
 	emit colorDeleted(pos, color);
 	
@@ -1647,7 +1647,7 @@ QHash<const Symbol*, Symbol*> Map::importSymbols(
 			{
 				// Check if symbol is already present
 				auto match = std::find_if(begin(symbols), end(symbols), [symbol](auto s) {
-					return s->equals(symbol, Qt::CaseInsensitive, false);
+					return s->equals(symbol, Qt::CaseInsensitive);
 				});
 				if (match != end(symbols))
 				{
@@ -1680,7 +1680,7 @@ QHash<const Symbol*, Symbol*> Map::importSymbols(
 		for (auto it = out_pointermap.constBegin(); it != out_pointermap.constEnd(); ++it)
 		{
 			// symbol is what was created by duplicate() above.
-			symbol->symbolChanged(it.key(), it.value());
+			symbol->symbolChangedEvent(it.key(), it.value());
 		}
 	}
 	
@@ -1807,7 +1807,7 @@ void Map::setSymbol(Symbol* symbol, int pos)
 		if (i == pos)
 			continue;
 		
-		if (symbols[i]->symbolChanged(symbols[pos], symbol))
+		if (symbols[i]->symbolChangedEvent(symbols[pos], symbol))
 			updateAllObjectsWithSymbol(symbols[i]);
 	}
 	
@@ -1832,7 +1832,7 @@ void Map::deleteSymbol(int pos)
 		if (i == pos)
 			continue;
 		
-		if (symbols[i]->symbolChanged(symbols[pos], nullptr))
+		if (symbols[i]->symbolChangedEvent(symbols[pos], nullptr))
 			updateAllObjectsWithSymbol(symbols[i]);
 	}
 	

@@ -211,9 +211,14 @@ namespace
 		for (int i = 0; i < a.getNumSymbols(); ++i)
 		{
 			const Symbol* a_symbol = a.getSymbol(i);
-			if (!a_symbol->equals(b.getSymbol(i), Qt::CaseSensitive, true))
+			if (!a_symbol->equals(b.getSymbol(i), Qt::CaseSensitive))
 			{
 				error = QString::fromLatin1("Symbol #%1 (%2) differs.").arg(i).arg(a_symbol->getName());
+				return false;
+			}
+			if (!a_symbol->stateEquals(b.getSymbol(i)))
+			{
+				error = QString::fromLatin1("State of symbol #%1 (%2) differs.").arg(i).arg(a_symbol->getName());
 				return false;
 			}
 		}

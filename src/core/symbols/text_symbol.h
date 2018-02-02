@@ -103,7 +103,7 @@ public:
 	        ObjectRenderables &output) const;
 	
 	void createLineBelowRenderables(const Object* object, ObjectRenderables& output) const;
-	void colorDeleted(const MapColor* color) override;
+	void colorDeletedEvent(const MapColor* color) override;
 	bool containsColor(const MapColor* color) const override;
 	const MapColor* guessDominantColor() const override;
 	void replaceColors(const MapColorMap& color_map) override;
