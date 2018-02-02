@@ -849,7 +849,7 @@ void SymbolRenderWidget::duplicateSymbol()
 {
 	Q_ASSERT(current_symbol_index >= 0);
 	
-	map->addSymbol(map->getSymbol(current_symbol_index)->duplicate(), current_symbol_index + 1);
+	map->addSymbol(duplicate(*map->getSymbol(current_symbol_index)).release(), current_symbol_index + 1);
 	selectSingleSymbol(current_symbol_index + 1);
 }
 

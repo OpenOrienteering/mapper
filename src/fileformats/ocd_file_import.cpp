@@ -1314,11 +1314,11 @@ Symbol* OcdFileImport::importAreaSymbol(const S& ocd_symbol, int ocd_version)
 		setupBaseSymbol(combined, ocd_symbol);
 		combined->setNumParts(2);
 		combined->setPart(0, symbol, true);
-		auto border = map->getUndefinedLine()->duplicate();
+		auto border = duplicate(*map->getUndefinedLine());
 		border->setNumberComponent(0, symbol->getNumberComponent(0));
 		border->setNumberComponent(1, symbol->getNumberComponent(1));
 		border->setNumberComponent(2, static_cast<int>(ocd_symbol.border_symbol));
-		combined->setPart(1, border, true);
+		combined->setPart(1, border.release(), true);
 		addSymbolWarning(symbol, OcdFileImport::tr("This symbol cannot be saved as a proper OCD symbol again."));
 		return combined;
 	}
@@ -1370,7 +1370,7 @@ void OcdFileImport::setupAreaSymbolCommon(OcdImportedAreaSymbol* symbol, bool fi
 		pattern.offset_along_line = 0;
 		// FIXME: somebody needs to own this symbol and be responsible for deleting it
 		// Right now it looks like a potential memory leak
-		pattern.point = new OcdImportedPointSymbol();
+		pattern.point= new OcdImportedPointSymbol();
 		setupPointSymbolPattern(pattern.point, data_size, elements, ocd_version);
 		
 		// OC*D 8 has a "staggered" pattern mode, where successive rows are shifted width/2 relative
@@ -1383,7 +1383,7 @@ void OcdFileImport::setupAreaSymbolCommon(OcdImportedAreaSymbol* symbol, bool fi
 			
 			pattern.line_offset = pattern.line_spacing / 2;
 			pattern.offset_along_line = pattern.point_distance / 2;
-			pattern.point = pattern.point->duplicate()->asPoint();
+			pattern.point = duplicate(*pattern.point).release();
 		}
 		symbol->patterns.push_back(pattern);
 	}

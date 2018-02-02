@@ -68,15 +68,13 @@ friend class XMLImportExport;
 public:
 	/** Constructs an empty point symbol. */
 	PointSymbol() noexcept;
+	~PointSymbol() override;
 	
 protected:
 	explicit PointSymbol(const PointSymbol& proto);
-	
-public:
-	~PointSymbol() override;
-	
 	PointSymbol* duplicate() const override;
 	
+public:
 	bool validate() const override;
 	
 	void createRenderables(

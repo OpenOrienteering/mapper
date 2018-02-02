@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,22 +21,28 @@
 
 #include "symbol.h"
 
+#include <algorithm>
+#include <cmath>
+#include <iterator>
+
 #include <memory>
 
 #include <QtGlobal>
+#include <QCoreApplication>
 #include <QLatin1Char>
 #include <QLatin1String>
 #include <QPainter>
+#include <QPoint>
+#include <QPointF>
 #include <QRectF>
 #include <QStringRef>
-#include <QXmlStreamAttributes>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
+#include "settings.h"
 #include "core/map.h"
 #include "core/map_color.h"
 #include "core/map_coord.h"
-#include "core/map_view.h"
 #include "core/objects/object.h"
 #include "core/objects/text_object.h"
 #include "core/renderables/renderable.h"
@@ -232,12 +238,12 @@ void Symbol::save(QXmlStreamWriter& xml, const Map& map) const
 	xml.writeEndElement(/*symbol*/);
 }
 
-Symbol* Symbol::load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict)
+std::unique_ptr<Symbol> Symbol::load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict)
 {
 	Q_ASSERT(xml.name() == QLatin1String("symbol"));
 	
 	int symbol_type = xml.attributes().value(QLatin1String("type")).toInt();
-	Symbol* symbol = Symbol::getSymbolForType(static_cast<Symbol::Type>(symbol_type));
+	auto symbol = Symbol::makeSymbolForType(static_cast<Symbol::Type>(symbol_type));
 	if (!symbol)
 		throw FileFormatException(::OpenOrienteering::ImportExport::tr("Error while loading a symbol of type %1 at line %2 column %3.").arg(symbol_type).arg(xml.lineNumber()).arg(xml.columnNumber()));
 	
@@ -249,7 +255,7 @@ Symbol* Symbol::load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& sy
 		if (symbol_dict.contains(id)) 
 			throw FileFormatException(::OpenOrienteering::ImportExport::tr("Symbol ID '%1' not unique at line %2 column %3.").arg(id).arg(xml.lineNumber()).arg(xml.columnNumber()));
 		
-		symbol_dict[id] = symbol;
+		symbol_dict[id] = symbol.get();  // Will be dangling pointer when we throw an exception later
 		
 		if (code.isEmpty())
 			code = id;
@@ -287,7 +293,6 @@ Symbol* Symbol::load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& sy
 	
 	if (xml.error())
 	{
-		delete symbol;
 		throw FileFormatException(
 		            ::OpenOrienteering::ImportExport::tr("Error while loading a symbol of type %1 at line %2 column %3: %4")
 		            .arg(symbol_type)
@@ -352,6 +357,7 @@ QImage Symbol::getIcon(const Map* map) const
 	
 	return icon;
 }
+
 
 QImage Symbol::createIcon(const Map& map, int side_length, bool antialiasing, qreal zoom) const
 {
@@ -434,7 +440,7 @@ QImage Symbol::createIcon(const Map& map, int side_length, bool antialiasing, qr
 			    if (!line->getShowAtLeastOneSymbol())
 				{
 					if (!symbol_copy)
-						symbol_copy.reset(line->duplicate());
+						symbol_copy = duplicate(*line);
 					auto icon_line = static_cast<LineSymbol*>(symbol_copy.get());
 					icon_line->setShowAtLeastOneSymbol(true);
 				}
@@ -483,7 +489,7 @@ QImage Symbol::createIcon(const Map& map, int side_length, bool antialiasing, qr
 				auto factor = qMin(qreal(0.5), line_length_half / qMax(qreal(0.001), ideal_length_half));
 				
 				if (!symbol_copy)
-					symbol_copy.reset(line->duplicate());
+					symbol_copy = duplicate(*line);
 				
 				auto icon_line = static_cast<LineSymbol*>(symbol_copy.get());
 				icon_line->setDashLength(qRound(factor * icon_line->getDashLength()));
@@ -552,10 +558,10 @@ QImage Symbol::createIcon(const Map& map, int side_length, bool antialiasing, qr
 					if (!proto)
 						continue;
 					
-					auto copy = proto->duplicate();
+					auto copy = duplicate(*proto);
 					if (copy->getType() == Line)
 					{
-						auto icon_line = static_cast<LineSymbol*>(copy);
+						auto icon_line = static_cast<LineSymbol*>(copy.get());
 						icon_line->setDashLength(qRound(factor * icon_line->getDashLength()));
 						icon_line->setBreakLength(qRound(factor * icon_line->getBreakLength()));
 						icon_line->setInGroupBreakLength(qRound(factor * icon_line->getInGroupBreakLength()));
@@ -565,7 +571,7 @@ QImage Symbol::createIcon(const Map& map, int side_length, bool antialiasing, qr
 						icon_line->getRightBorder().dash_length *= factor;
 						icon_line->getRightBorder().break_length *= factor;
 					}
-					static_cast<CombinedSymbol*>(symbol_copy.get())->setPart(i, copy, true);
+					static_cast<CombinedSymbol*>(symbol_copy.get())->setPart(i, copy.release(), true);
 				}
 			}
 		}
@@ -620,7 +626,7 @@ QImage Symbol::createIcon(const Map& map, int side_length, bool antialiasing, qr
 	bool was_hidden = is_hidden;
 	// Ensure that an icon is created for hidden symbols.
 	if (symbol_copy)
-		symbol_copy.get()->setHidden(false);
+		symbol_copy->setHidden(false);
 	else
 		is_hidden = false;
 	icon_map.draw(&painter, config);
@@ -704,24 +710,28 @@ QString Symbol::getNumberAsString() const
 	return str;
 }
 
-Symbol* Symbol::getSymbolForType(Symbol::Type type)
+
+
+std::unique_ptr<Symbol> Symbol::makeSymbolForType(Symbol::Type type)
 {
-	if (type == Symbol::Point)
-		return new PointSymbol();
-	else if (type == Symbol::Line)
-		return new LineSymbol();
-	else if (type == Symbol::Area)
-		return new AreaSymbol();
-	else if (type == Symbol::Text)
-		return new TextSymbol();
-	else if (type == Symbol::Combined)
-		return new CombinedSymbol();
-	else
+	switch (type)
 	{
-		Q_ASSERT(false);
-		return nullptr;
+	case Area:
+		return std::make_unique<AreaSymbol>();
+	case Combined:
+		return std::make_unique<CombinedSymbol>();
+	case Line:
+		return std::make_unique<LineSymbol>();
+	case Point:
+		return std::make_unique<PointSymbol>();
+	case Text:
+		return std::make_unique<TextSymbol>();
+	default:
+		return std::unique_ptr<Symbol>();
 	}
 }
+
+
 
 bool Symbol::areTypesCompatible(Symbol::Type a, Symbol::Type b)
 {

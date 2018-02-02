@@ -233,15 +233,13 @@ public:
 	};
 	
 	AreaSymbol() noexcept;
+	~AreaSymbol() override;
 	
 protected:
 	explicit AreaSymbol(const AreaSymbol& proto);
-	
-public:
-	~AreaSymbol() override;
-	
 	AreaSymbol* duplicate() const override;
 	
+public:
 	void createRenderables(
 	        const Object *object,
 	        const VirtualCoordVector &coords,

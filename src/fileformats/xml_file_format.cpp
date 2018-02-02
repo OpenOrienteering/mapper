@@ -876,7 +876,7 @@ void XMLFileImporter::importSymbols()
 	{
 		if (xml.name() == literal::symbol)
 		{
-			map->symbols.push_back(Symbol::load(xml, *map, symbol_dict));
+			map->symbols.push_back(Symbol::load(xml, *map, symbol_dict).release());
 		}
 		else
 		{

@@ -100,15 +100,13 @@ public:
 	
 	/** Constructs an empty line symbol. */
 	LineSymbol() noexcept;
+	~LineSymbol() override;
 	
 protected:
 	explicit LineSymbol(const LineSymbol& proto);
-	
-public:
-	~LineSymbol() override;
-	
 	LineSymbol* duplicate() const override;
 	
+public:
 	bool validate() const override;
 	
 	void createRenderables(

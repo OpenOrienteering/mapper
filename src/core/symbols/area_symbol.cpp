@@ -124,7 +124,7 @@ void AreaSymbol::FillPattern::load(QXmlStreamReader& xml, const Map& map, Symbol
 		while (xml.readNextStartElement())
 		{
 			if (xml.name() == QLatin1String("symbol"))
-				point = static_cast<PointSymbol*>(Symbol::load(xml, map, symbol_dict));
+				point = static_cast<PointSymbol*>(Symbol::load(xml, map, symbol_dict).release());
 			else
 				xml.skipCurrentElement();
 		}
@@ -576,7 +576,7 @@ AreaSymbol::AreaSymbol(const AreaSymbol& proto)
 	for (auto& new_pattern : patterns)
 	{
 		if (new_pattern.type == FillPattern::PointPattern)
-			new_pattern.point = new_pattern.point->duplicate();
+			new_pattern.point = Symbol::duplicate(*new_pattern.point).release();
 	}
 }
 

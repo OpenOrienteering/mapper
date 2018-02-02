@@ -185,10 +185,10 @@ LineSymbol::LineSymbol(const LineSymbol& proto)
 : Symbol ( proto )
 , border ( proto.border )
 , right_border ( proto.right_border )
-, start_symbol ( proto.start_symbol ? proto.start_symbol->duplicate() : nullptr )
-, mid_symbol ( proto.mid_symbol ? proto.mid_symbol->duplicate() : nullptr )
-, end_symbol ( proto.end_symbol ? proto.end_symbol->duplicate() : nullptr )
-, dash_symbol ( proto.dash_symbol ? proto.dash_symbol->duplicate() : nullptr )
+, start_symbol ( proto.start_symbol ? Symbol::duplicate(*proto.start_symbol).release() : nullptr )
+, mid_symbol ( proto.mid_symbol ? Symbol::duplicate(*proto.mid_symbol).release() : nullptr )
+, end_symbol ( proto.end_symbol ? Symbol::duplicate(*proto.end_symbol).release() : nullptr )
+, dash_symbol ( proto.dash_symbol ? Symbol::duplicate(*proto.dash_symbol).release() : nullptr )
 , color ( proto.color )
 , line_width ( proto.line_width )
 , minimum_length ( proto.minimum_length )
@@ -1868,7 +1868,7 @@ PointSymbol* LineSymbol::loadPointSymbol(QXmlStreamReader& xml, const Map& map, 
 	{
 		if (xml.name() == QLatin1String("symbol"))
 		{
-			PointSymbol* symbol = static_cast<PointSymbol*>(Symbol::load(xml, map, symbol_dict));
+			auto symbol = static_cast<PointSymbol*>(Symbol::load(xml, map, symbol_dict).release());
 			xml.skipCurrentElement();
 			return symbol;
 		}

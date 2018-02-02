@@ -76,7 +76,7 @@ PointSymbol::PointSymbol(const PointSymbol& proto)
 {
 	elements.reserve(proto.elements.size());
 	std::transform(begin(proto.elements), end(proto.elements), std::back_inserter(elements), [](const auto& element) {
-		auto new_element = Element { std::unique_ptr<Symbol>(element.symbol->duplicate()),
+		auto new_element = Element { Symbol::duplicate(*element.symbol),
 		                             std::unique_ptr<Object>(element.object->duplicate()) };
 		new_element.object->setSymbol(new_element.symbol.get(), true);
 		return new_element;
@@ -622,7 +622,7 @@ bool PointSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictiona
 			{
 				if (xml.name() == QLatin1String("symbol") && !symbol)
 				{
-					symbol.reset(Symbol::load(xml, map, symbol_dict));
+					symbol = Symbol::load(xml, map, symbol_dict);
 				}
 				else if (xml.name() == QLatin1String("object") && symbol)
 				{

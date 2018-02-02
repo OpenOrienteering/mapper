@@ -137,31 +137,31 @@ void DuplicateEqualsTest::symbols()
 	for (int symbol = 0; symbol < map.getNumSymbols(); ++symbol)
 	{
 		const auto original = map.getSymbol(symbol);
-		auto duplicate = std::unique_ptr<Symbol>(original->duplicate());
+		auto copy = duplicate(*original);
 		switch(original->getType())
 		{
 		case Symbol::Area:
-			QVERIFY(duplicate->equals(original));
+			QVERIFY(copy->equals(original));
 			testDecoupling(static_cast<const AreaSymbol&>(*original),
-			               static_cast<const AreaSymbol&>(*duplicate));
+			               static_cast<const AreaSymbol&>(*copy));
 			break;
 		case Symbol::Combined:
-			QVERIFY(duplicate->equals(original));
+			QVERIFY(copy->equals(original));
 			testDecoupling(static_cast<const CombinedSymbol&>(*original),
-			               static_cast<const CombinedSymbol&>(*duplicate));
+			               static_cast<const CombinedSymbol&>(*copy));
 			break;
 		case Symbol::Line:
-			QVERIFY(duplicate->equals(original));
+			QVERIFY(copy->equals(original));
 			testDecoupling(static_cast<const LineSymbol&>(*original),
-			               static_cast<const LineSymbol&>(*duplicate));
+			               static_cast<const LineSymbol&>(*copy));
 			break;
 		case Symbol::Point:
-			QVERIFY(duplicate->equals(original));
+			QVERIFY(copy->equals(original));
 			testDecoupling(static_cast<const PointSymbol&>(*original),
-			               static_cast<const PointSymbol&>(*duplicate));
+			               static_cast<const PointSymbol&>(*copy));
 			break;
 		case Symbol::Text:
-			QVERIFY(duplicate->equals(original));
+			QVERIFY(copy->equals(original));
 			break;
 		default:
 			Q_UNREACHABLE();

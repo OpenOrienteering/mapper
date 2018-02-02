@@ -61,15 +61,13 @@ friend class PointSymbolEditorWidget;
 friend class OCAD8FileImport;
 public:
 	CombinedSymbol();
+	~CombinedSymbol() override;
 	
 protected:
 	explicit CombinedSymbol(const CombinedSymbol& proto);
-	
-public:
-	~CombinedSymbol() override;
-	
 	CombinedSymbol* duplicate() const override;
 	
+public:
 	bool validate() const override;
 	
 	void createRenderables(

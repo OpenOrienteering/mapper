@@ -24,6 +24,7 @@
 #include <algorithm>
 #include <cstddef>
 #include <iterator>
+#include <memory>
 #include <numeric>
 
 #include <QtGlobal>
@@ -58,7 +59,7 @@ CombinedSymbol::CombinedSymbol(const CombinedSymbol& proto)
 , parts { proto.parts }
 {
 	std::transform(begin(parts), end(parts), begin(private_parts), begin(parts), [](auto part, auto is_private) {
-		return (part && is_private) ? part->duplicate() : part;
+		return (part && is_private) ? Symbol::duplicate(*part).release() : part;
 	});
 }
 
@@ -286,7 +287,7 @@ bool CombinedSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDicti
 			if (is_private)
 			{
 				xml.readNextStartElement();
-				parts.push_back(Symbol::load(xml, map, symbol_dict));
+				parts.push_back(Symbol::load(xml, map, symbol_dict).release());
 				temp_part_indices.push_back(-1);
 			}
 			else

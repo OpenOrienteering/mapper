@@ -83,14 +83,13 @@ public:
 	
 	/** Creates an empty text symbol. */
 	TextSymbol();
+	~TextSymbol() override;
 	
 protected:
 	explicit TextSymbol(const TextSymbol& proto);
-	
-public:
-	~TextSymbol() override;
 	TextSymbol* duplicate() const override;
 	
+public:
 	void createRenderables(
 	        const Object *object,
 	        const VirtualCoordVector &coords,

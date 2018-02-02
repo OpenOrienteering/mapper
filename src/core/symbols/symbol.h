@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -23,6 +23,8 @@
 #define OPENORIENTEERING_SYMBOL_H
 
 #include <array>
+#include <type_traits>
+#include <memory>
 
 #include <Qt>
 #include <QtGlobal>
@@ -103,16 +105,28 @@ public:
 	
 	/** Constructs an empty symbol */
 	Symbol(Type type) noexcept;
+	virtual ~Symbol();
 	
 protected:
 	explicit Symbol(const Symbol& proto);
+	virtual Symbol* duplicate() const = 0;
 	
 public:
-	Symbol(Symbol&&) = delete;
-	
-	virtual ~Symbol();
-	
-	virtual Symbol* duplicate() const = 0;
+	/**
+	 * Duplicates a symbol.
+	 * 
+	 * This template function mitigates the incompatibility of std::unique_ptr
+	 * with covariant return types when duplicating instances of the
+	 * polymorphic type Symbol.
+	 * 
+	 * For convenient use outside of (child class) method implementatations,
+	 * there is a free template function duplicate(const Derived& d).
+	 */
+	template<class S>
+	static std::unique_ptr<S> duplicate(const S& s)
+	{
+		return std::unique_ptr<S>(static_cast<S*>(static_cast<const Symbol&>(s).duplicate()));
+	}
 	
 	Symbol& operator=(const Symbol&) = delete;
 	Symbol& operator=(Symbol&&) = delete;
@@ -184,7 +198,7 @@ public:
 	 * @param map Reference to the map containing the symbol.
 	 * @param symbol_dict Dictionary mapping symbol IDs to symbol pointers.
 	 */
-	static Symbol* load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict);
+	static std::unique_ptr<Symbol> load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict);
 	
 	/**
 	 * Called after loading of the map is finished.
@@ -353,7 +367,7 @@ public:
 	// Static
 	
 	/** Returns a newly created symbol of the given type */
-	static Symbol* getSymbolForType(Type type);
+	static std::unique_ptr<Symbol> makeSymbolForType(Type type);
 	
 	/**
 	 * Returns if the symbol types can be applied to the same object types
@@ -451,6 +465,29 @@ private:
 	/** Protected flag, see isProtected() */
 	bool is_protected;
 };
+
+
+
+/**
+ * Duplicates a symbol.
+ * 
+ * This free template function mitigates the incompatibility of std::unique_ptr
+ * with covariant return types when duplicating instances of the
+ * polymorphic type Symbol.
+ * 
+ * Synopsis:
+ * 
+ *    AreaSymbol s;
+ *    auto s1 = duplicate(s);          // unique_ptr<AreaSymbol>
+ *    auto s2 = duplicate<Symbol>(s);  // unique_ptr<Symbol>
+ *    std::unique_ptr<Symbol> s3 = std::move(s1);
+ */
+template<class S>
+typename std::enable_if<std::is_base_of<Symbol, S>::value, std::unique_ptr<S>>::type
+/*std::unique_ptr<S>*/ duplicate(const S& s)
+{
+	return Symbol::duplicate<S>(s);
+}
 
 
 }  // namespace OpenOrienteering
