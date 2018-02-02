@@ -45,6 +45,8 @@ set(Mapper_translations
   OpenOrienteering_uk.ts
   OpenOrienteering_zh_CN.ts
 )
+# Make translation list available for Qt translation lookup
+set(Mapper_translations ${Mapper_translations} PARENT_SCOPE)
 
 # Translation files which are updated but not deployed.
 set(Mapper_translations_template
