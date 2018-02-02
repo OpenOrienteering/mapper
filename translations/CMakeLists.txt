@@ -90,7 +90,6 @@ set(qt_translations
   qt_eo.ts
   qt_et.ts
   qt_id.ts
-  qt_lv.ts
   qt_nb.ts
   qt_nl.ts
 )
