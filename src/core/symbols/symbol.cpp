@@ -188,6 +188,7 @@ bool Symbol::isTypeCompatibleTo(const Object* object) const
 	case Object::Text:
 		return type == Text;
 	}
+	return false;
 }
 
 
