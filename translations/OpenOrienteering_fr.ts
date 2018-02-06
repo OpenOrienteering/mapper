@@ -4626,7 +4626,7 @@ sdélectionnés</translation>
         <location filename="../src/gui/color_dialog.cpp" line="588"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="216"/>
         <source>Before editing, the stored text will be replaced with the current translation. Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Avant l&apos;édition, le texte enregistré sera remplacé par l&apos;actuelle traduction. Voulez-vous continuer ?</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="595"/>
