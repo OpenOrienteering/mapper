@@ -5375,7 +5375,7 @@ utiliser la molette de la souris pour zoomer.</translation>
         <location filename="../src/gdal/ogr_file_format.cpp" line="520"/>
         <source>Unable to load %n objects, reason: %1</source>
         <translation><numerusform>Impossible de charger %n objets, car: %1</numerusform>
-        <numerusform></numerusform>
+        <numerusform>Impossible de charger %n objets, car: %1</numerusform>
         </translation></message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="501"/>
