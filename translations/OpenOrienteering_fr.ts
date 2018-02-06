@@ -4821,7 +4821,7 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/gui/map/new_map_dialog.cpp" line="77"/>
         <source>Scale:  1 : </source>
-        <translation>Échelle:  1 : </translation>
+        <translation>Échelle :  1 : </translation>
     </message>
     <message>
         <location filename="../src/gui/map/new_map_dialog.cpp" line="82"/>
