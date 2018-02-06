@@ -11,7 +11,7 @@
     <message>
         <location filename="../packaging/translations.cpp" line="11"/>
         <source>Software for drawing orienteering maps</source>
-        <translation type="unfinished"></translation>
+        <translation>Logiciel de dessin de cartes de course d&apos;orientation</translation>
     </message>
 </context>
 <context>
@@ -1014,7 +1014,7 @@
         <location filename="../src/tools/draw_path_tool.cpp" line="106"/>
         <source>Info</source>
         <comment>Show segment azimuth and length</comment>
-        <translation type="unfinished"></translation>
+        <translation>Info</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="109"/>
@@ -1357,7 +1357,7 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="46"/>
         <source>Symbol icon size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Taille icone de symbole:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="65"/>
@@ -4160,7 +4160,7 @@ Faut-il poursuivre l&apos;import ?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1885"/>
         <source>Edit the symbol set ID:</source>
-        <translation type="unfinished"></translation>
+        <translation>Editer l&apos;ID du symbole:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2044"/>
@@ -4422,85 +4422,77 @@ sdélectionnés</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="935"/>
         <source>Rotate objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Pivoter les objets</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="937"/>
         <source>Scale objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Redimensionner les objets</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/map/map_editor.cpp" line="1624"/>
         <source>Cut %n object(s)</source>
         <extracomment>Past tense. Displayed when an Edit &gt; Cut operation is completed.</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n objet(s) coupé(s)</numerusform>
+        <numerusform>%n objets coupés</numerusform>
+        </translation></message>
     <message numerus="yes">
         <location filename="../src/gui/map/map_editor.cpp" line="1677"/>
         <source>Copied %n object(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n objets(s) copié(s)</numerusform>
+        <numerusform>% objets copiés</numerusform>
+        </translation></message>
     <message numerus="yes">
         <location filename="../src/gui/map/map_editor.cpp" line="1717"/>
         <source>Pasted %n object(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n objet(s) collé(s)</numerusform>
+        <numerusform>%n objets collés</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2310"/>
         <source>Deletes the selected objects.</source>
-        <translation type="unfinished"></translation>
+        <translation>Efface les objets sélectionnés.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2312"/>
         <source>Duplicate the selected objects.</source>
-        <translation type="unfinished"></translation>
+        <translation>Effacer les objets sélectionnés.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2314"/>
         <source>Rotate the selected objects.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pivoter les objets sélectionnés.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2316"/>
         <source>Scale the selected objects.</source>
-        <translation type="unfinished"></translation>
+        <translation>Redimensionner les objets sélectionnés.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2331"/>
         <source>Cut the selected objects into smaller parts.</source>
-        <translation type="unfinished"></translation>
+        <translation>Couper les objets sélectionnés en petits morceaux.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2385"/>
         <source>Switches the symbol of the selected objects to the selected symbol.</source>
-        <translation type="unfinished"></translation>
+        <translation>Echanger le symbole des objets sélectionnés avec le symbole sélectionné.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2387"/>
         <source>Fill the selected lines or create a border for the selected areas.</source>
-        <translation type="unfinished"></translation>
+        <translation>Remplir les lignes sélectionnées ou créer un contour aux surfaces sélectionnées.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/map/map_editor.cpp" line="2506"/>
         <source>Duplicated %n object(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n objet(s) dupliqué(s)</numerusform>
+        <numerusform>%n objets dupliqués</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2716"/>
         <source>No objects were selected because there are no objects with the selected symbols.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aucun objet sélectionné car il n&apos;y a pas d&apos;objets ayant le symbole sélectionné.</translation>
     </message>
 </context>
 <context>
@@ -4541,32 +4533,32 @@ sdélectionnés</translation>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="55"/>
         <source>&amp;Find...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Rechercher...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="62"/>
         <source>Find &amp;next</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechercher &amp;suivant</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="92"/>
         <source>Find objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechercher objets</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="99"/>
         <source>&amp;Find next</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Rechercher suivant</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="102"/>
         <source>Find &amp;all</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Tout rechercher</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="105"/>
         <source>Query editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Editeur de requête</translation>
     </message>
 </context>
 <context>
@@ -4614,7 +4606,7 @@ sdélectionnés</translation>
         <location filename="../src/gui/color_dialog.cpp" line="517"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="325"/>
         <source>Map (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Carte (%1)</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="518"/>
@@ -4622,13 +4614,13 @@ sdélectionnés</translation>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="326"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="339"/>
         <source>undefined language</source>
-        <translation type="unfinished"></translation>
+        <translation>langage inconnu</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="536"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="342"/>
         <source>Translation (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Traduction (%1)</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="588"/>
@@ -5133,7 +5125,7 @@ utiliser la molette de la souris pour zoomer.</translation>
         <location filename="../src/core/objects/object_query.cpp" line="307"/>
         <source>Text</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished">Texte</translation>
+        <translation>Texte</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="311"/>
@@ -8019,7 +8011,7 @@ La version maximale supportée est la version %2.</translation>
         <location filename="../src/tools/tool_helpers.cpp" line="622"/>
         <source>%1°</source>
         <comment>degree</comment>
-        <translation type="unfinished">%1°</translation>
+        <translation>%1°</translation>
     </message>
     <message>
         <location filename="../src/tools/tool_helpers.cpp" line="623"/>
