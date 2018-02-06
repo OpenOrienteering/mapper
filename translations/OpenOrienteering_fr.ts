@@ -4581,7 +4581,7 @@ sdélectionnés</translation>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1292"/>
         <source>Canceled</source>
-        <translation>Annuler</translation>
+        <translation>Annulé(e)</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1296"/>
@@ -4614,7 +4614,7 @@ sdélectionnés</translation>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="326"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="339"/>
         <source>undefined language</source>
-        <translation>langage inconnu</translation>
+        <translation>langue inconnue</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="536"/>
