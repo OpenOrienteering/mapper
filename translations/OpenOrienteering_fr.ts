@@ -4433,19 +4433,19 @@ sdélectionnés</translation>
         <location filename="../src/gui/map/map_editor.cpp" line="1624"/>
         <source>Cut %n object(s)</source>
         <extracomment>Past tense. Displayed when an Edit &gt; Cut operation is completed.</extracomment>
-        <translation><numerusform>%n objet(s) coupé(s)</numerusform>
+        <translation><numerusform>%n objet coupé</numerusform>
         <numerusform>%n objets coupés</numerusform>
         </translation></message>
     <message numerus="yes">
         <location filename="../src/gui/map/map_editor.cpp" line="1677"/>
         <source>Copied %n object(s)</source>
-        <translation><numerusform>%n objets(s) copié(s)</numerusform>
-        <numerusform>% objets copiés</numerusform>
+        <translation><numerusform>%n objet copié</numerusform>
+        <numerusform>%n objets copiés</numerusform>
         </translation></message>
     <message numerus="yes">
         <location filename="../src/gui/map/map_editor.cpp" line="1717"/>
         <source>Pasted %n object(s)</source>
-        <translation><numerusform>%n objet(s) collé(s)</numerusform>
+        <translation><numerusform>%n objet collé</numerusform>
         <numerusform>%n objets collés</numerusform>
         </translation></message>
     <message>
@@ -4486,7 +4486,7 @@ sdélectionnés</translation>
     <message numerus="yes">
         <location filename="../src/gui/map/map_editor.cpp" line="2506"/>
         <source>Duplicated %n object(s)</source>
-        <translation><numerusform>%n objet(s) dupliqué(s)</numerusform>
+        <translation><numerusform>%n objet dupliqué</numerusform>
         <numerusform>%n objets dupliqués</numerusform>
         </translation></message>
     <message>
@@ -6990,8 +6990,8 @@ traverser les jattes de kiwis
     <message numerus="yes">
         <location filename="../src/gui/map/map_find_feature.cpp" line="231"/>
         <source>%n object(s) selected</source>
-        <translation><numerusform>% objets sélectionné(s)</numerusform>
-        <numerusform>% objets sélectionnés</numerusform>
+        <translation><numerusform>%n objet sélectionné</numerusform>
+        <numerusform>%n objets sélectionnés</numerusform>
         </translation></message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="177"/>
