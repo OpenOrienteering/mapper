@@ -6,7 +6,7 @@
     <message>
         <location filename="../packaging/translations.cpp" line="10"/>
         <source>Orienteering map</source>
-        <translation type="unfinished"></translation>
+        <translation>Carte d&apos;orientation</translation>
     </message>
     <message>
         <location filename="../packaging/translations.cpp" line="11"/>
