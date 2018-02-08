@@ -231,9 +231,10 @@ next_found:
 		// Search along curve
 		Q_ASSERT(index > path_coords[path_coord_index].index);
 		// Attention, switching from MapCoordVectorF index to PathCoordVector index.
-		index = std::upper_bound(std::begin(path_coords)+path_coord_index, std::end(path_coords)-1, index, PathCoord::valueLessThanIndex)->index;
+		auto pc = std::upper_bound(std::begin(path_coords)+path_coord_index, std::end(path_coords)-1, index, PathCoord::valueLessThanIndex);
+		index = std::distance(std::begin(path_coords), pc);
 		last_index = path_coord_index + 1;
-		while (index > path_coord_index)
+		while (index > last_index)
 		{
 			--index;
 			prev = path_coords[index].pos;
