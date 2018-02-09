@@ -109,7 +109,7 @@ MapCoordF SplitPathCoord::tangentVector() const
 	}
 	
 	// Search along current edge
-	if (index < last_index && param != 0.0)
+	if (index < last_index && param != 0.0f)
 	{
 		do
 		{
@@ -118,7 +118,7 @@ MapCoordF SplitPathCoord::tangentVector() const
 			if (pos.distanceSquaredTo(next) >= PathCoord::tangentEpsilonSquared())
 				goto next_found;
 		}
-		while (path_coords[index].param != 0.0);
+		while (path_coords[index].param != 0.0f);
 	}
 		
 	// Attention, switching from PathCoordVector index to MapCoordVectorF index.
@@ -192,9 +192,9 @@ next_found:
 	index = path_coord_index;
 	
 	// Search along curve
-	if (param != 0.0)
+	if (param != 0.0f)
 	{
-		while (path_coords[index].param != 0.0)
+		while (path_coords[index].param != 0.0f)
 		{
 			--index;
 			prev = path_coords[index].pos;
@@ -417,18 +417,18 @@ SplitPathCoord SplitPathCoord::at(
 			factor = qBound(0.0f, (length - prev_coord.clen) / curve_length, 1.0f);
 			auto prev_param    = prev_coord.param;
 			auto current_param = current_coord.param;
-			if (current_param == 0.0)
-				current_param = 1.0;
+			if (current_param == 0.0f)
+				current_param = 1.0f;
 			split.param = prev_param + (current_param - prev_param) * factor;
-			Q_ASSERT(split.param >= 0.0 && split.param <= 1.0);
-			if (split.param == 1.0)
-				split.param = 0.0;
+			Q_ASSERT(split.param >= 0.0f && split.param <= 1.0f);
+			if (split.param == 1.0f)
+				split.param = 0.0f;
 		}
 		
 		if (!split.is_curve_end)
 		{
 			// Straight
-			split.pos = prev_coord.pos + factor * (current_coord.pos - prev_coord.pos);
+			split.pos = prev_coord.pos + qreal(factor) * (current_coord.pos - prev_coord.pos);
 			
 			if (current_coord.index > path_coords.front().index)
 				split.curve_end[1] = coords[current_coord.index-1];
@@ -437,7 +437,7 @@ SplitPathCoord SplitPathCoord::at(
 			
 			split.curve_start[0] = current_coord.pos;
 		}
-		else if (split.param == 0.0)
+		else if (split.param == 0.0f)
 		{
 			// At a node, after a curve
 			split.pos          = current_coord.pos;
@@ -483,7 +483,7 @@ SplitPathCoord SplitPathCoord::at(
 			}
 		}
 		
-		if (split.param == 0.0)
+		if (split.param == 0.0f)
 		{
 			// Handle curve_start for non-in-bezier splits.
 			split.is_curve_start = flags[current_coord.index].isCurveStart();
