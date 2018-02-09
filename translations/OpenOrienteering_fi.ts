@@ -271,11 +271,9 @@
         <location filename="../src/gui/autosave_dialog.cpp" line="48"/>
         <location filename="../src/gui/autosave_dialog.cpp" line="54"/>
         <source>%n bytes</source>
-        <translation>
-            <numerusform>%n byte</numerusform>
-            <numerusform>%n byteä</numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n tavu</numerusform>
+        <numerusform>%n tavua</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="52"/>
         <source>File saved by the user</source>
@@ -289,7 +287,7 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="61"/>
         <source>File %1 was not properly closed. At the moment, there are two versions:</source>
-        <translation>Tiedosto %1 ei suljettu oikein. Tällä hetkellä tiedostosta on 2 versiota:</translation>
+        <translation>Tiedosto %1 ei suljettu oikein. Tällä hetkellä tiedostosta on kaksi versiota:</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="75"/>
@@ -403,7 +401,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="259"/>
         <source>Desktop</source>
-        <translation>Tulostus</translation>
+        <translation>Työpöytä</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="260"/>
@@ -529,7 +527,7 @@
     </message>
     <message>
         <source>Please enter a percentage from 0% to 100%!</source>
-        <translation type="vanished">Aseta prosenttiluku välillä 0%-100%!</translation>
+        <translation>Ole hyvä ja aseta prosenttiluku välillä 0%-100%!</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="409"/>
@@ -773,7 +771,7 @@
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="108"/>
         <source>&lt;b&gt;Click&lt;/b&gt; on a line: Split it into two. &lt;b&gt;Drag&lt;/b&gt; along a line: Remove this line part. &lt;b&gt;Click or Drag&lt;/b&gt; at an area boundary: Start a split line. </source>
-        <translation>&lt;b&gt;Klikkaa&lt;/b&gt;viivalle: Katkaise kahdeksi.&lt;b&gt;Vedä&lt;/b&gt;viivaa pitkin: Poista viivan tämä osa. &lt;b&gt;Klikkaa tai vedä&lt;/b&gt;alueen reunaviivalla: Aloita katkaisuviiva. </translation>
+        <translation>&lt;b&gt;Klikkaa&lt;/b&gt;viivalle: Katkaise kahdeksi. &lt;b&gt;Vedä&lt;/b&gt;viivaa pitkin: Poista viivan tämä osa. &lt;b&gt;Klikkaa tai vedä&lt;/b&gt; alueen reunaviivalla: Aloita katkaisuviiva. </translation>
     </message>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="368"/>
@@ -975,7 +973,7 @@
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="102"/>
         <source>Finish</source>
-        <translation>Loppu</translation>
+        <translation>Lopeta</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="103"/>
@@ -1019,7 +1017,7 @@
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1167"/>
         <source>&lt;b&gt;Length:&lt;/b&gt; %1 m </source>
-        <translation>&lt;b&gt;Pituus:&lt;/b&gt;%1 m </translation>
+        <translation>&lt;b&gt;Pituus:&lt;/b&gt; %1 m </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1195"/>
@@ -1107,7 +1105,7 @@
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="90"/>
         <source>Finish</source>
-        <translation>Loppu</translation>
+        <translation>Lopeta</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="91"/>
@@ -2357,7 +2355,7 @@ löytääksesi taustakarttatiedoston nimen.</translation>
         <location filename="../src/fileformats/native_file_format.cpp" line="143"/>
         <location filename="../src/fileformats/xml_file_format.cpp" line="511"/>
         <source>Unsupported old file format version. Please use an older program version to load and update the file.</source>
-        <translation>Näin vanhaa tiedostomuotoa ei tueta. Käytä vanhempaa ohjelmaa päivittääksesi tiedoston.</translation>
+        <translation>Näin vanhaa tiedostomuotoa ei tueta. Ole hyvä ja käytä vanhempaa ohjelmaa päivittääksesi tiedoston.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/native_file_format.cpp" line="147"/>
@@ -2675,7 +2673,7 @@ löytääksesi taustakarttatiedoston nimen.</translation>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="286"/>
         <source>Scale the dash symbol at corners</source>
-        <translation type="unfinished">Skaalaa väliviiva symbooli nurkissa</translation>
+        <translation>Skaalaa väliviiva symbooli nurkissa</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="531"/>
@@ -2960,7 +2958,7 @@ Paina Ei valitaksesi toisen tiedostomuodon.</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1094"/>
         <source>Please report this as a bug.</source>
-        <translation>Ilmoita tämä bugina.</translation>
+        <translation>Ole hyvä ja ilmoita tämä bugina.</translation>
     </message>
 </context>
 <context>
@@ -3409,7 +3407,7 @@ Haluatko silti tuoda datan?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="551"/>
         <source>The map is currently being edited. Please finish the edit operation before saving.</source>
-        <translation>Karttaa muokataan. Lopeta editointi ennen tallentamista.</translation>
+        <translation>Karttaa muokataan. Ole hyvä ja lopeta editointi ennen tallentamista.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="872"/>
@@ -4088,7 +4086,7 @@ Haluatko silti tuoda datan?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="943"/>
         <source>Merge area holes</source>
-        <translation type="unfinished">Yhdistä alueen reiät</translation>
+        <translation>Yhdistä alueen reiät</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="955"/>
@@ -4298,7 +4296,7 @@ valittu</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2364"/>
         <source>Select one area object with holes to activate this tool.</source>
-        <translation type="unfinished">Valitse yksi alue-esine reikien kanssa aktivoidaksesi tämän työkalun.</translation>
+        <translation>Valitse yksi alue-esine reikien kanssa aktivoidaksesi tämän työkalun.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2333"/>
@@ -7097,7 +7095,7 @@ jokapäiväinen ilmiö
     <message>
         <location filename="../src/templates/template.cpp" line="621"/>
         <source>Is the format of the file correct for this template type?</source>
-        <translation type="unfinished"></translation>
+        <translation>Onko tiedostomuoto oikea tälle taustakartalle?</translation>
     </message>
     <message>
         <location filename="../src/templates/template.cpp" line="628"/>
@@ -7457,7 +7455,7 @@ Jos et aio piirtää taustakartalle, tämä ei ole ongelma.</translation>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="745"/>
         <source>Please enter a valid integer number to set a group or leave the field empty to ungroup the template!</source>
-        <translation>Kirjoita sopiva kokonaisluku asettaaksesi ryhmän tai jätä kenttä tyhjäksi jos et halua ryhmitellä taustakarttaa!</translation>
+        <translation>Ole hyvä ja kirjoita sopiva kokonaisluku asettaaksesi ryhmän tai jätä kenttä tyhjäksi jos et halua ryhmitellä taustakarttaa!</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="998"/>
