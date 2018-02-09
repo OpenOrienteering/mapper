@@ -129,7 +129,7 @@ execute_process(
   COMMAND "${Qt5_LUPDATE_EXECUTABLE}" -version
   OUTPUT_VARIABLE lupdate_version
 )
-string(REGEX REPLACE "^.*([0-9]\\.[0-9]\\.[0-9]).*" "\\1" lupdate_version "${lupdate_version}")
+string(REGEX REPLACE "^.*([0-9]\\.1?[0-9]\\.[0-9]).*" "\\1" lupdate_version "${lupdate_version}")
 if(lupdate_version VERSION_LESS 5.6.1)
 	message(AUTHOR_WARNING "lupdate version ${lupdate_version} is less than 5.6.1. Updates disabled.")
 else()
