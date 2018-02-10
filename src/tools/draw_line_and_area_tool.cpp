@@ -21,29 +21,37 @@
 
 #include "draw_line_and_area_tool.h"
 
+#include <algorithm>
+#include <cstddef>
+#include <iterator>
+
+#include <QtGlobal>
 #include <QPainter>
+#include <QPoint>
 
 #include "core/map.h"
-#include "gui/map/map_editor.h"
-#include "undo/object_undo.h"
-#include "gui/map/map_widget.h"
+#include "core/map_coord.h"
+#include "core/map_part.h"
+#include "core/map_view.h"
 #include "core/objects/object.h"
 #include "core/renderables/renderable.h"
-#include "core/symbols/symbol.h"
 #include "core/symbols/combined_symbol.h"
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/point_symbol.h"
+#include "core/symbols/symbol.h"
+#include "gui/map/map_editor.h"
+#include "gui/map/map_widget.h"
+#include "undo/object_undo.h"
 #include "util/util.h"
+
+
+namespace OpenOrienteering {
 
 DrawLineAndAreaTool::DrawLineAndAreaTool(MapEditorController* editor, Type type, QAction* tool_action, bool is_helper_tool)
 : MapEditorTool(editor, type, tool_action)
-, is_helper_tool(is_helper_tool)
-, drawing_symbol(NULL)
-, preview_point_radius(0)
-, preview_points_shown(false)
 , path_combination(Map::getCoveringCombinedLine()->duplicate()->asCombined())
-, preview_path(NULL)
 , renderables(new MapRenderables(map()))
+, is_helper_tool(is_helper_tool)
 {
 	// Helper tools don't draw the active symbol.
 	if (!is_helper_tool)
@@ -54,13 +62,16 @@ DrawLineAndAreaTool::DrawLineAndAreaTool(MapEditorController* editor, Type type,
 		
 	}
 	
-	connect(editor, SIGNAL(activeSymbolChanged(const Symbol*)), this, SLOT(setDrawingSymbol(const Symbol*)));
+	connect(editor, &MapEditorController::activeSymbolChanged, this, &DrawLineAndAreaTool::setDrawingSymbol);
 }
+
 
 DrawLineAndAreaTool::~DrawLineAndAreaTool()
 {
 	deletePreviewObjects();
 }
+
+
 
 void DrawLineAndAreaTool::leaveEvent(QEvent* event)
 {
@@ -74,7 +85,7 @@ void DrawLineAndAreaTool::setDrawingSymbol(const Symbol* symbol)
 {
 	// Avoid using deleted symbol
 	if (map()->findSymbolIndex(drawing_symbol) == -1)
-		symbol = NULL;
+		symbol = nullptr;
 	
 	// End current editing
 	if (editingInProgress())
@@ -107,25 +118,24 @@ void DrawLineAndAreaTool::createPreviewPoints()
 	addPreviewPointSymbols(drawing_symbol);
 	
 	// Create objects for the new symbols
-	std::size_t size = preview_point_symbols.size();
-	for (std::size_t p = 0; p < 2; ++p)
+	for (auto& preview_point_vector : preview_points)
 	{
-		preview_points[p].resize(size);
-		for (std::size_t i = 0; i < size; ++i)
-			preview_points[p][i] = new PointObject(preview_point_symbols[i]);
+		preview_point_vector.resize(preview_point_symbols.size());
+		std::transform(begin(preview_point_symbols), end(preview_point_symbols), begin(preview_point_vector),
+		               [](const auto symbol) { return new PointObject(symbol); });
 	}
 }
 
-void DrawLineAndAreaTool::setPreviewPointsPosition(MapCoordF map_coord, int index)
+void DrawLineAndAreaTool::setPreviewPointsPosition(MapCoordF map_coord, int points_index)
 {
-	std::size_t size = preview_points[index].size();
-	for (std::size_t i = 0; i < size; ++i)
+	const auto& preview_point_vector = preview_points[std::size_t(points_index)];
+	for (const auto preview_point : preview_point_vector)
 	{
 		if (preview_points_shown)
-			renderables->removeRenderablesOfObject(preview_points[index][i], false);
-		preview_points[index][i]->setPosition(map_coord);
-		preview_points[index][i]->update();
-		renderables->insertRenderablesOfObject(preview_points[index][i]);
+			renderables->removeRenderablesOfObject(preview_point, false);
+		preview_point->setPosition(map_coord);
+		preview_point->update();
+		renderables->insertRenderablesOfObject(preview_point);
 	}
 	preview_points_shown = true;
 }
@@ -134,11 +144,10 @@ void DrawLineAndAreaTool::hidePreviewPoints()
 {
 	if (preview_points_shown)
 	{
-		for (std::size_t p = 0; p < 2; ++p)
+		for (const auto& preview_point_vector : preview_points)
 		{
-			std::size_t size = preview_points[p].size();
-			for (std::size_t i = 0; i < size; ++i)
-				renderables->removeRenderablesOfObject(preview_points[p][i], false);
+			for (const auto preview_point : preview_point_vector)
+				renderables->removeRenderablesOfObject(preview_point, false);
 		}
 		
 		preview_points_shown = false;
@@ -152,11 +161,10 @@ void DrawLineAndAreaTool::includePreviewRects(QRectF& rect)
 	
 	if (preview_points_shown)
 	{
-		for (std::size_t p = 0; p < 2; ++p)
+		for (const auto& preview_point_vector : preview_points)
 		{
-			std::size_t size = preview_points[p].size();
-			for (std::size_t i = 0; i < size; ++i)
-				rectIncludeSafe(rect, preview_points[p][i]->getExtent());
+			for (const auto preview_point : preview_point_vector)
+				rectIncludeSafe(rect, preview_point->getExtent());
 		}
 	}
 }
@@ -191,7 +199,7 @@ void DrawLineAndAreaTool::startDrawing()
 		path_combination->setNumParts(num_symbol_parts);
 	}
 	
-	preview_path = new PathObject(path_combination.data());
+	preview_path = new PathObject(path_combination.get());
 	
 	setEditingInProgress(true);
 }
@@ -209,7 +217,7 @@ void DrawLineAndAreaTool::abortDrawing()
 	delete preview_path;
 	map()->clearDrawingBoundingBox();
 	
-	preview_path = NULL;
+	preview_path = nullptr;
 	
 	setEditingInProgress(false);
 	
@@ -218,7 +226,7 @@ void DrawLineAndAreaTool::abortDrawing()
 
 void DrawLineAndAreaTool::finishDrawing()
 {
-    finishDrawing(NULL);
+    finishDrawing(nullptr);
 }
 
 void DrawLineAndAreaTool::finishDrawing(PathObject* append_to_object)
@@ -237,15 +245,15 @@ void DrawLineAndAreaTool::finishDrawing(PathObject* append_to_object)
 		
 		if (can_be_appended)
 		{
-			Object* undo_duplicate = append_to_object->duplicate();
+			auto undo_duplicate = append_to_object->duplicate();
 			append_to_object->connectIfClose(preview_path, 0.01*0.01);
 			delete preview_path;
 			
 			map()->clearObjectSelection(false);
 			map()->addObjectToSelection(append_to_object, true);
 			
-			MapPart* cur_part = map()->getCurrentPart();
-			ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(map());
+			auto cur_part = map()->getCurrentPart();
+			auto undo_step = new ReplaceObjectsUndoStep(map());
 			undo_step->addObject(cur_part->findObjectIndex(append_to_object), undo_duplicate);
 			map()->push(undo_step);
 		}
@@ -255,7 +263,7 @@ void DrawLineAndAreaTool::finishDrawing(PathObject* append_to_object)
 			map()->clearObjectSelection(false);
 			map()->addObjectToSelection(preview_path, true);
 			
-			DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(map());
+			auto undo_step = new DeleteObjectsUndoStep(map());
 			undo_step->addObject(index);
 			map()->push(undo_step);
 		}
@@ -271,35 +279,32 @@ void DrawLineAndAreaTool::finishDrawing(PathObject* append_to_object)
 		{
 			// Ugly HACK to make it possible to delete this tool as response to pathFinished
 			PathObject* temp_path = preview_path;
-			preview_path = NULL;
-			emit(pathFinished(temp_path));
+			preview_path = nullptr;
+			emit pathFinished(temp_path);
 			delete temp_path;
 		}
 		else
-			emit(pathAborted());
+			emit pathAborted();
 	}
 	else
-		preview_path = NULL;
+		preview_path = nullptr;
 }
 
 void DrawLineAndAreaTool::deletePreviewObjects()
 {
-	for (int p = 0; p < 2; ++p)
+	for (auto& preview_point_vector : preview_points)
 	{
-		int size = (int)preview_points[p].size();
-		for (int i = 0; i < size; ++i)
-		{
-			renderables->removeRenderablesOfObject(preview_points[p][i], false);
-			delete preview_points[p][i];
-		}
-		preview_points[p].clear();
+		for (const auto preview_point : preview_point_vector)
+			renderables->removeRenderablesOfObject(preview_point, false);
+		preview_point_vector.clear();
 	}
 	
-	int size = (int)preview_point_symbols.size();
-	for (int i = 0; i < size; ++i)
+	auto is_external = begin(preview_point_symbols_external);
+	for (const auto symbol : preview_point_symbols)
 	{
-		if (!preview_point_symbols_external[i])
-			delete preview_point_symbols[i];
+		if (!*is_external)
+			delete symbol;
+		++is_external;
 	}
 	preview_point_symbols.clear();
 	preview_point_symbols_external.clear();
@@ -308,7 +313,7 @@ void DrawLineAndAreaTool::deletePreviewObjects()
 	{
 		renderables->removeRenderablesOfObject(preview_path, false);
 		delete preview_path;
-		preview_path = NULL;
+		preview_path = nullptr;
 	}
 	//drawing_in_progress = false; // FIXME: does not belong here
 }
@@ -324,18 +329,18 @@ void DrawLineAndAreaTool::addPreviewPointSymbols(const Symbol* symbol)
 	{
 		const LineSymbol* line = reinterpret_cast<const LineSymbol*>(symbol);
 		
-		bool has_main_line = line->getLineWidth() > 0 && line->getColor() != NULL;
+		bool has_main_line = line->getLineWidth() > 0 && line->getColor();
 		bool has_border_line = line->hasBorder() && (line->getBorder().isVisible() || line->getRightBorder().isVisible());
 		if (has_main_line || has_border_line)
 		{
 			if (has_main_line)
 			{
-				PointSymbol* preview = new PointSymbol();
+				auto preview = new PointSymbol();
 				preview->setInnerRadius(line->getLineWidth() / 2);
 				preview->setInnerColor(line->getColor());
 				preview_point_symbols.push_back(preview);
 				preview_point_symbols_external.push_back(false);
-				if (preview->getInnerColor() != NULL)
+				if (preview->getInnerColor())
 					preview_point_radius = qMax(preview_point_radius, preview->getInnerRadius());
 			}
 			if (has_border_line)
@@ -349,9 +354,9 @@ void DrawLineAndAreaTool::addPreviewPointSymbols(const Symbol* symbol)
 		{
 			preview_point_symbols.push_back(line->getMidSymbol());
 			preview_point_symbols_external.push_back(true);
-			if (line->getMidSymbol()->getOuterColor() != NULL)
+			if (line->getMidSymbol()->getOuterColor())
 				preview_point_radius = qMax(preview_point_radius, line->getMidSymbol()->getInnerRadius() + line->getMidSymbol()->getOuterWidth());
-			else if (line->getMidSymbol()->getInnerColor() != NULL)
+			else if (line->getMidSymbol()->getInnerColor())
 				preview_point_radius = qMax(preview_point_radius, line->getMidSymbol()->getInnerRadius());
 		}
 	}
@@ -373,7 +378,7 @@ void DrawLineAndAreaTool::addPreviewPointSymbolsForBorder(const LineSymbol* line
 	if (!border->isVisible())
 		return;
 	
-	PointSymbol* preview = new PointSymbol();
+	auto preview = new PointSymbol();
 	preview->setInnerRadius(line->getLineWidth() / 2 - border->width / 2 + border->shift);
 	preview->setOuterWidth(border->width);
 	preview->setOuterColor(border->color);
@@ -381,7 +386,9 @@ void DrawLineAndAreaTool::addPreviewPointSymbolsForBorder(const LineSymbol* line
 	preview_point_symbols.push_back(preview);
 	preview_point_symbols_external.push_back(false);
 	
-	if (preview->getOuterColor() != NULL)
+	if (preview->getOuterColor())
 		preview_point_radius = qMax(preview_point_radius, preview->getInnerRadius() + preview->getOuterWidth());
 }
 
+
+}  // namespace OpenOrienteering

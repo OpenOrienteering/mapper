@@ -18,25 +18,28 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_FILE_FORMAT_XML_P_H
-#define _OPENORIENTEERING_FILE_FORMAT_XML_P_H
+#ifndef OPENORIENTEERING_FILE_FORMAT_XML_P_H
+#define OPENORIENTEERING_FILE_FORMAT_XML_P_H
 
-#include "file_import_export.h"
-
+#include <QCoreApplication>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
 #include "core/symbols/symbol.h"
+#include "fileformats/file_import_export.h"
+
+namespace OpenOrienteering {
 
 /** Map exporter for the xml based map format. */
 class XMLFileExporter : public Exporter
 {
-Q_OBJECT
+	Q_DECLARE_TR_FUNCTIONS(OpenOrienteering::XMLFileExporter)
+	
 public:
 	XMLFileExporter(QIODevice* stream, Map *map, MapView *view);
-	virtual ~XMLFileExporter() {}
+	~XMLFileExporter() override {}
 	
-	virtual void doExport();
+	void doExport() override;
 	
 protected:
 	void exportGeoreferencing();
@@ -57,13 +60,14 @@ private:
 /** Map importer for the xml based map format. */
 class XMLFileImporter : public Importer
 {
-Q_OBJECT
+	Q_DECLARE_TR_FUNCTIONS(OpenOrienteering::XMLFileImporter)
+	
 public:
 	XMLFileImporter(QIODevice* stream, Map *map, MapView *view);
-	virtual ~XMLFileImporter() {}
+	~XMLFileImporter() override {}
 
 protected:
-	virtual void import(bool load_symbols_only);
+	void import(bool load_symbols_only) override;
 	
 	void importElements(bool load_symbols_only);
 	
@@ -83,5 +87,8 @@ protected:
 	SymbolDictionary symbol_dict;
 	bool georef_offset_adjusted;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

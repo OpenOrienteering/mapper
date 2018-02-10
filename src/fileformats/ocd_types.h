@@ -20,6 +20,8 @@
 #ifndef OPENORIENTEERING_OCD_TYPES_H
 #define OPENORIENTEERING_OCD_TYPES_H
 
+#include <cstddef>
+
 #include <QtGlobal>
 #include <QByteArray>
 #include <QChar>
@@ -782,7 +784,7 @@ void OcdEntityIndex<F,T>::setData(const OcdFile< F >* file)
 template< class F, class T >
 typename OcdEntityIndex<F,T>::iterator OcdEntityIndex<F,T>::begin() const
 {
-	Q_ASSERT(data != nullptr);
+	Q_ASSERT(data);
 	
 	quint32 file_pos = FirstIndexBlock<F,T>()(data);
 	iterator it(data, reinterpret_cast<const typename iterator::IndexBlock*>(file_pos ? &(*data)[file_pos] : nullptr));
@@ -829,7 +831,7 @@ template< class F >
 inline
 const typename F::FileHeader* OcdFile<F>::header() const
 {
-	return (byte_array.size() < (int)sizeof(FileHeader)) ? nullptr : (const FileHeader*)byte_array.constData();
+	return (byte_array.size() < int(sizeof(FileHeader))) ? nullptr : reinterpret_cast<const FileHeader*>(byte_array.constData());
 }
 
 template< class F >

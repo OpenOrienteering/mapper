@@ -20,6 +20,9 @@ find_package(Qt5Gui REQUIRED COMPONENTS Private)
 find_package(Qt5PrintSupport REQUIRED COMPONENTS Private)
 find_package(ZLIB REQUIRED)
 
+set(CMAKE_CXX_CLANG_TIDY "")
+set(CMAKE_CXX_INCLUDE_WHAT_YOU_USE "")
+
 if (${Qt5PrintSupport_VERSION} VERSION_LESS 5.3.0)
 	set(FORK_VERSION qt-5.2.1)
 else()

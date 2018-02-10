@@ -20,15 +20,26 @@
 
 #include "locale_t.h"
 
-#include <QtTest/QtTest>
+#include <QtTest>
+#include <QLatin1String>
+#include <QLocale>
+#include <QString>
 
 #include "util/translation_util.h"
 
+using namespace OpenOrienteering;
+
+
+namespace OpenOrienteering {
 
 inline
 bool operator==(const TranslationUtil::Language& first, const TranslationUtil::Language& second) {
 	return first.code == second.code && first.displayName == second.displayName;
 }
+
+
+}  // namespace OpenOrienteering
+
 
 
 LocaleTest::LocaleTest(QObject* parent)

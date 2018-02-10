@@ -21,13 +21,15 @@
 #ifndef OPENORIENTEERING_CRS_PARAM_WIDGETS_H
 #define OPENORIENTEERING_CRS_PARAM_WIDGETS_H
 
+#include <QObject>
+#include <QString>
 #include <QWidget>
 
 class QLineEdit;
 
-class BaseGeoreferencingDialog;
+namespace OpenOrienteering {
+
 class CRSParameterWidgetObserver;
-class LatLon;
 
 
 class UTMZoneEdit : public QWidget
@@ -35,7 +37,7 @@ class UTMZoneEdit : public QWidget
 	Q_OBJECT
 public:
 	UTMZoneEdit(CRSParameterWidgetObserver& observer, QWidget* parent = nullptr);
-	virtual ~UTMZoneEdit();
+	~UTMZoneEdit() override;
 	
 	QString text() const;
 	void setText(const QString& text);
@@ -50,5 +52,6 @@ private:
 };
 
 
+}  // namespace OpenOrienteering
 
 #endif

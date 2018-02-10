@@ -22,10 +22,38 @@
 #ifndef OPENORIENTEERING_LINE_SYMBOL_H
 #define OPENORIENTEERING_LINE_SYMBOL_H
 
-#include "symbol.h"
+#include <vector>  // IWYU pragma: keep
 
+#include <Qt>
+#include <QtGlobal>
+#include <QString>
+
+#include "core/map_coord.h"  // IWYU pragma: keep
+#include "core/symbols/symbol.h"
+
+class QIODevice;
+class QXmlStreamReader;
+class QXmlStreamWriter;
+
+namespace OpenOrienteering {
+
+class LineSymbol;
+class Map;
+class MapColor;
+class MapColorMap;
+class Object;
+class ObjectRenderables;
+class PathObject;
+class PathPartVector;
+class PointSymbol;
 class SplitPathCoord;
+class SymbolPropertiesWidget;
+class SymbolSettingDialog;
+class VirtualCoordVector;
 class VirtualPath;
+
+using MapCoordVector = std::vector<MapCoord>;
+using MapCoordVectorF = std::vector<MapCoordF>;
 
 
 /** Settings for a line symbol's border. */
@@ -38,7 +66,7 @@ struct LineSymbolBorder
 	int dash_length;
 	int break_length;
 	
-	void reset();
+	void reset() noexcept;
 	bool load(QIODevice* file, int version, Map* map);
 	void save(QXmlStreamWriter& xml, const Map& map) const;
 	bool load(QXmlStreamReader& xml, const Map& map);
@@ -74,9 +102,11 @@ public:
 	};
 	
 	/** Constructs an empty line symbol. */
-	LineSymbol();
-	virtual ~LineSymbol();
+	LineSymbol() noexcept;
+	~LineSymbol() override;
 	Symbol* duplicate(const MapColorMap* color_map = nullptr) const override;
+	
+	bool validate() const override;
 	
 	void createRenderables(
 	        const Object *object,
@@ -130,10 +160,18 @@ public:
 	 */
 	void cleanupPointSymbols();
 	
+	
+	/**
+	 * Returns the dimension which shall considered when scaling the icon.
+	 */
+	qreal dimensionForIcon() const override;
+	
 	/**
 	 * Returns the largest extent (half width) of the components of this line.
 	 */
-	float calculateLargestLineExtent(Map* map) const override;
+	qreal calculateLargestLineExtent() const override;
+	
+	
 	
 	/**
 	 * Returns the limit for miter joins in units of the line width.
@@ -141,7 +179,7 @@ public:
 	 * TODO: Should that better be a line property?
 	 * FIXME: shall be 0 for border lines.
 	 */
-	static float miterLimit() {return 1;}
+	static constexpr qreal miterLimit() { return 1; }
 	
 	// Getters / Setters
 	inline int getLineWidth() const {return line_width;}
@@ -175,6 +213,8 @@ public:
 	
 	inline bool getSuppressDashSymbolAtLineEnds() const {return suppress_dash_symbol_at_ends;}
 	inline void setSuppressDashSymbolAtLineEnds(bool value) {suppress_dash_symbol_at_ends = value;}
+	bool getScaleDashSymbol() const { return scale_dash_symbol; }
+	void setScaleDashSymbol(bool value) { scale_dash_symbol = value; }
 	
 	inline int getSegmentLength() const {return segment_length;}
 	inline void setSegmentLength(int value) {segment_length = value;}
@@ -314,6 +354,7 @@ protected:
 	int mid_symbols_per_spot;
 	int mid_symbol_distance;
 	bool suppress_dash_symbol_at_ends;
+	bool scale_dash_symbol;
 	
 	// Not dashed
 	int segment_length;
@@ -334,5 +375,8 @@ protected:
 	LineSymbolBorder border;
 	LineSymbolBorder right_border;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

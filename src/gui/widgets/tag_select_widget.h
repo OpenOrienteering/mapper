@@ -1,5 +1,6 @@
 /*
  *    Copyright 2016 Mitchell Krome
+ *    Copyright 2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,49 +22,33 @@
 #ifndef OPENORIENTEERING_TAG_SELECT_WIDGET_H
 #define OPENORIENTEERING_TAG_SELECT_WIDGET_H
 
-#include <QWidget>
+#include <QtGlobal>
+#include <QIcon>
+#include <QObject>
+#include <QString>
+#include <QTableWidget>
 
-class QBoxLayout;
-class QLabel;
-class QTableWidget;
+class QShowEvent;
 class QToolButton;
+class QWidget;
 
-class Map;
-class MapEditorController;
-class MapView;
-class Object;
+namespace OpenOrienteering {
+
 class ObjectQuery;
+
 
 /**
  * This widget allows the user to make selections based on an objects tags.
  */
-class TagSelectWidget : public QWidget
+class TagSelectWidget : public QTableWidget
 {
 Q_OBJECT
 public:
-	TagSelectWidget(Map* map, MapView* main_view, MapEditorController* controller, QWidget* parent = nullptr);
+	TagSelectWidget(QWidget* parent = nullptr);
 	~TagSelectWidget() override;
 	
-	void resetSelectionInfo();
+	QWidget* makeButtons(QWidget* parent = nullptr);
 	
-protected:
-	/**
-	 * Returns a new QToolButton with a unified appearance.
-	 */
-	QToolButton* newToolButton(const QIcon& icon, const QString& text);
-	
-	void showEvent(QShowEvent* event) override;
-	
-	void showHelp();
-	void addRow();
-	void deleteRow();
-	void moveRow(bool up);
-	void makeSelection();
-
-private:
-	void addRowItems(int row);
-	void cellChanged(int row, int column);
-
 	/**
 	 * Builds a query based on the current state of the query table.
 	 * 
@@ -71,21 +56,28 @@ private:
 	 */
 	ObjectQuery makeQuery() const;
 	
-	Map* map;
-	MapView* main_view;
-	MapEditorController* controller;
+protected:
+	void showEvent(QShowEvent* event) override;
 	
-	QTableWidget* query_table;
-	QBoxLayout* all_query_layout;
+private:
+	/**
+	 * Returns a new QToolButton with a unified appearance.
+	 */
+	QToolButton* newToolButton(const QIcon& icon, const QString& text);
 	
-	// Buttons
-	QWidget* list_buttons_group;
-	QToolButton* add_button;
-	QToolButton* delete_button;
-	QToolButton* move_up_button;
-	QToolButton* move_down_button;
-	QToolButton* select_button;
-	QLabel* selection_info;
+	void addRow();
+	void deleteRow();
+	void moveRow(bool up);
+	void moveRowDown();
+	void moveRowUp();
+
+	void addRowItems(int row);
+	void onCellChanged(int row, int column);
+
+	Q_DISABLE_COPY(TagSelectWidget)
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

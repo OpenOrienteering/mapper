@@ -21,17 +21,17 @@
 
 #include "main_window_controller.h"
 
-#include <QKeyEvent>
+#include <QtGlobal>
 
+#include "fileformats/file_format.h"
+#include "fileformats/file_format_registry.h"
 #include "gui/map/map_editor.h"
-#include "../fileformats/file_format.h"
-#include "../fileformats/file_format_registry.h"
 
 
-MainWindowController::~MainWindowController()
-{
-	// nothing
-}
+namespace OpenOrienteering {
+
+MainWindowController::~MainWindowController() = default;
+
 
 bool MainWindowController::save(const QString& path)
 {
@@ -78,8 +78,11 @@ bool MainWindowController::keyReleaseEventFilter(QKeyEvent* event)
 MainWindowController* MainWindowController::controllerForFile(const QString& filename)
 {
 	const FileFormat* format = FileFormats.findFormatForFilename(filename);
-	if (format != NULL && format->supportsImport()) 
+	if (format && format->supportsImport()) 
 		return new MapEditorController(MapEditorController::MapEditor);
 	
-	return NULL;
+	return nullptr;
 }
+
+
+}  // namespace OpenOrienteering

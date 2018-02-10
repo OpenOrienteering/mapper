@@ -63,7 +63,9 @@ set(Mapper_Common_SRCS
   
   core/objects/boolean_tool.cpp
   core/objects/object.cpp
+  core/objects/object_mover.cpp
   core/objects/object_query.cpp
+  core/objects/symbol_rule_set.cpp
   core/objects/text_object.cpp
   
   core/renderables/renderable.cpp
@@ -74,6 +76,7 @@ set(Mapper_Common_SRCS
   core/symbols/line_symbol.cpp
   core/symbols/point_symbol.cpp
   core/symbols/symbol.cpp
+  core/symbols/symbol_icon_decorator.cpp
   core/symbols/text_symbol.cpp
   
   fileformats/file_format.cpp
@@ -90,14 +93,13 @@ set(Mapper_Common_SRCS
   gui/about_dialog.cpp
   gui/autosave_dialog.cpp
   gui/color_dialog.cpp
-  gui/color_dock_widget.cpp
   gui/configure_grid_dialog.cpp
+  gui/file_dialog.cpp
   gui/georeferencing_dialog.cpp
   gui/home_screen_controller.cpp
   gui/main_window.cpp
   gui/main_window_controller.cpp
   gui/modifier_key.cpp
-  gui/point_handles.cpp
   gui/print_progress_dialog.cpp
   gui/print_tool.cpp
   gui/print_widget.cpp
@@ -106,12 +108,14 @@ set(Mapper_Common_SRCS
   gui/task_dialog.cpp
   gui/text_browser_dialog.cpp
   gui/touch_cursor.cpp
+  gui/util_gui.cpp
   
-  gui/map/map_dialog_new.cpp
+  gui/map/new_map_dialog.cpp
   gui/map/map_dialog_rotate.cpp
   gui/map/map_dialog_scale.cpp
   gui/map/map_editor.cpp
   gui/map/map_editor_activity.cpp
+  gui/map/map_find_feature.cpp
   gui/map/map_widget.cpp
   
   gui/symbols/area_symbol_settings.cpp
@@ -126,6 +130,7 @@ set(Mapper_Common_SRCS
   
   gui/widgets/action_grid_bar.cpp
   gui/widgets/color_dropdown.cpp
+  gui/widgets/color_list_widget.cpp
   gui/widgets/compass_display.cpp
   gui/widgets/crs_param_widgets.cpp
   gui/widgets/crs_selector.cpp
@@ -168,6 +173,7 @@ set(Mapper_Common_SRCS
   
   tools/cut_tool.cpp
   tools/cut_hole_tool.cpp
+  tools/cutout_operation.cpp
   tools/cutout_tool.cpp
   tools/distribute_points_tool.cpp
   tools/draw_line_and_area_tool.cpp
@@ -182,7 +188,9 @@ set(Mapper_Common_SRCS
   tools/edit_point_tool.cpp
   tools/edit_line_tool.cpp
   tools/fill_tool.cpp
+  tools/object_selector.cpp
   tools/pan_tool.cpp
+  tools/point_handles.cpp
   tools/rotate_tool.cpp
   tools/rotate_pattern_tool.cpp
   tools/scale_tool.cpp
@@ -228,7 +236,6 @@ set(Mapper_Common_HEADERS
   fileformats/ocd_types_v12.h
   fileformats/xml_file_format_p.h
   
-  gui/util_gui.h
   gui/map/map_editor_p.h
   
   templates/world_file.h
@@ -276,11 +283,10 @@ target_compile_definitions(Mapper_Common PRIVATE
   QT_NO_CAST_FROM_ASCII
   QT_NO_CAST_TO_ASCII
   QT_USE_QSTRINGBUILDER
+  # MAPPER_ENABLE_COMPATIBILITY
 )
 
-qt5_translations_sources(
-  SOURCES ${Mapper_Common_SRCS} ${Mapper_Common_HEADERS}
-)
+mapper_translations_sources(${Mapper_Common_SRCS} ${Mapper_Common_HEADERS})
 
 
 # Mapper executable
@@ -322,10 +328,9 @@ install(TARGETS Mapper
 # Workaround Qt private include dir issue
 # Cf. https://bugreports.qt.io/browse/QTBUG-37417
 
+set(PRIVATE_MODULES Core Gui)
 if(WIN32)
-	set(PRIVATE_MODULES Core Gui PrintSupport)
-else()
-	set(PRIVATE_MODULES)
+	list(APPEND PRIVATE_MODULES PrintSupport)
 endif()
 foreach(module ${PRIVATE_MODULES})
 	set(qt_module Qt${module})
@@ -339,16 +344,3 @@ foreach(module ${PRIVATE_MODULES})
 	endif()
 	target_include_directories(Mapper_Common PRIVATE ${${qt5_module}_PRIVATE_INCLUDE_DIRS})
 endforeach()
-
-
-# qmake configuration
-
-foreach(cpp_file ${Mapper_Common_SRCS})
-	string(REPLACE ".cpp" ".h" h_file "${cpp_file}")
-	if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${h_file}")
-		list(APPEND Mapper_Common_HEADERS "${h_file}")
-	endif()
-endforeach()
-list(REMOVE_DUPLICATES Mapper_Common_HEADERS)
-list(SORT Mapper_Common_HEADERS)
-list(SORT Mapper_Common_SRCS)

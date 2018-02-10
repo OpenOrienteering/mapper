@@ -18,16 +18,23 @@
  */
 
 
-#ifndef _OPENORIENTEERING_AUTOSAVE_DIALOG_H_
-#define _OPENORIENTEERING_AUTOSAVE_DIALOG_H_
+#ifndef OPENORIENTEERING_AUTOSAVE_DIALOG_H
+#define OPENORIENTEERING_AUTOSAVE_DIALOG_H
 
+#include <Qt>
 #include <QDialog>
+#include <QObject>
+#include <QString>
 #include <QTextDocument>
 
-#include "../util/item_delegates.h"
+#include "util/item_delegates.h"
 
 class QBoxLayout;
+class QCloseEvent;
 class QListWidget;
+class QModelIndex;
+
+namespace OpenOrienteering {
 
 class MainWindow;
 
@@ -50,12 +57,12 @@ public:
 	 * @param actual_path    The path which is currently selected.
 	 * @param parent         The parent window.
 	 */
-	AutosaveDialog(QString original_path, QString autosave_path, QString actual_path, MainWindow* parent = NULL, Qt::WindowFlags f = 0);
+	AutosaveDialog(const QString& original_path, const QString& autosave_path, const QString& actual_path, MainWindow* parent = nullptr, Qt::WindowFlags f = 0);
 	
 	/**
 	 * Destructor.
 	 */
-	virtual ~AutosaveDialog();
+	~AutosaveDialog() override;
 	
 	/**
 	 * @brief Returns the currently selected path.
@@ -66,9 +73,9 @@ public:
 	 * @brief Provides the text documents for the list widget items.
 	 * 
 	 * @param index The model index for which the text documents is requested for.
-	 * @return      A QTextDocument representing the list item, or NULL.
+	 * @return      A QTextDocument representing the list item, or nullptr.
 	 */
-	const QTextDocument* textDoc(const QModelIndex& index) const;
+	const QTextDocument* textDoc(const QModelIndex& index) const override;
 	
 public slots:
 	/**
@@ -78,14 +85,14 @@ public slots:
 	 * 
 	 * @return The result (QDialog::DialogCode).
 	 */
-	virtual int exec();
+	int exec() override;
 	
 	/**
 	 * @brief Sets the selected item to the one representing the given path.
 	 * 
 	 * If the path does not match either item, nothing is selected.
 	 */
-	void setSelectedPath(QString path);
+	void setSelectedPath(const QString& path);
 	
 	/**
 	 * @brief Informs the dialog that the conflict is resolved.
@@ -100,7 +107,7 @@ signals:
 	 * 
 	 * @param path The path which belongs to the newly selected item.
 	 */
-	void pathSelected(QString path);
+	void pathSelected(const QString& path);
 	
 protected:
 	/**
@@ -108,7 +115,7 @@ protected:
 	 * 
 	 * @override
 	 */
-	virtual void closeEvent(QCloseEvent* event);
+	void closeEvent(QCloseEvent* event) override;
 	
 private slots:
 	void currentRowChanged(int row);
@@ -128,4 +135,7 @@ private:
 	QListWidget* list_widget;
 };
 
-#endif // _OPENORIENTEERING_AUTOSAVE_DIALOG_H_
+
+}  // namespace OpenOrienteering
+
+#endif // OPENORIENTEERING_AUTOSAVE_DIALOG_H

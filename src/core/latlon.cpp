@@ -21,7 +21,8 @@
 
 #include <QDebug>
 
-#include "georeferencing.h"
+
+namespace OpenOrienteering {
 
 QDebug operator<<(QDebug dbg, const LatLon& lat_lon)
 {
@@ -30,3 +31,6 @@ QDebug operator<<(QDebug dbg, const LatLon& lat_lon)
 	  << lat_lon.latitude() << lat_lon.longitude();
 	return dbg.space();
 }
+
+
+}  // namespace OpenOrienteering

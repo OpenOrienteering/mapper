@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,25 +21,40 @@
 
 #include "symbol_tooltip.h"
 
+#include <Qt>
+#include <QtGlobal>
 #include <QApplication>
+#include <QCursor>
 #include <QDesktopWidget>
+#include <QFlags>
 #include <QHideEvent>
 #include <QLabel>
+#include <QLatin1Char>
+#include <QLatin1String>
 #include <QPainter>
 #include <QPalette>
+#include <QPoint>
 #include <QShortcut>
 #include <QShowEvent>
+#include <QSize>
+#include <QString>
+#include <QStyle>
 #include <QStyleOption>
 #include <QVBoxLayout>
 
+#include "core/map.h"
 #include "core/symbols/symbol.h"
 
+// IWYU pragma: no_forward_declare QWidget
+
+
+namespace OpenOrienteering {
 
 SymbolToolTip::SymbolToolTip(QWidget* parent, QShortcut* shortcut)
- : QWidget(parent),
-   shortcut(shortcut),
-   symbol(NULL),
-   description_shown(false)
+: QWidget{ parent }
+, shortcut{ shortcut }
+, symbol{ nullptr }
+, description_shown{ false }
 {
 	setWindowFlags(Qt::ToolTip | Qt::FramelessWindowHint);
 	setAttribute(Qt::WA_OpaquePaintEvent);
@@ -53,7 +69,7 @@ SymbolToolTip::SymbolToolTip(QWidget* parent, QShortcut* shortcut)
 	description_label->setWordWrap(true);
 	description_label->hide();
 	
-	QVBoxLayout* layout = new QVBoxLayout();
+	auto layout = new QVBoxLayout();
 	QStyleOption style_option;
 	layout->setContentsMargins(
 	  style()->pixelMetric(QStyle::PM_LayoutLeftMargin, &style_option) / 2,
@@ -66,12 +82,12 @@ SymbolToolTip::SymbolToolTip(QWidget* parent, QShortcut* shortcut)
 	setLayout(layout);
 	
 	tooltip_timer.setSingleShot(true);
-	connect(&tooltip_timer, SIGNAL(timeout()), this, SLOT(show()));
+	connect(&tooltip_timer, &QTimer::timeout, this, &QWidget::show);
 	
 	if (shortcut)
 	{
 		shortcut->setEnabled(false);
-		connect(shortcut, SIGNAL(activated()), this, SLOT(showDescription()));
+		connect(shortcut, &QShortcut::activated, this, &SymbolToolTip::showDescription);
 	}
 }
 
@@ -81,7 +97,7 @@ void SymbolToolTip::showDescription()
 	{
 		description_label->show();
 		adjustSize();
-		adjustPosition();
+		adjustPosition(false);
 		description_shown = true;
 	}
 	
@@ -91,7 +107,7 @@ void SymbolToolTip::showDescription()
 
 void SymbolToolTip::reset()
 {
-	symbol = NULL;
+	symbol = nullptr;
 	tooltip_timer.stop();
 	hide();
 	description_label->hide();
@@ -122,43 +138,65 @@ void SymbolToolTip::paintEvent(QPaintEvent* event)
 	painter.end();
 }
 
-void SymbolToolTip::adjustPosition()
+void SymbolToolTip::adjustPosition(bool mobile_mode)
 {
-	QSize size = this->size();
-	QRect desktop = QApplication::desktop()->screenGeometry(QCursor::pos());
+	auto size = this->size();
+	auto desktop = QApplication::desktop()->screenGeometry(QCursor::pos());
 	
 	const int margin = 3;
-	const bool hasRoomToLeft  = (icon_rect.left()   - size.width()  - margin >= desktop.left());
-	const bool hasRoomToRight = (icon_rect.right()  + size.width()  + margin <= desktop.right());
-	const bool hasRoomAbove   = (icon_rect.top()    - size.height() - margin >= desktop.top());
-	const bool hasRoomBelow   = (icon_rect.bottom() + size.height() + margin <= desktop.bottom());
-	if (!hasRoomAbove && !hasRoomBelow && !hasRoomToLeft && !hasRoomToRight) {
+	bool has_room_to_left  = (icon_rect.left()   - size.width()  - margin >= desktop.left());
+	bool has_room_to_right = (icon_rect.right()  + size.width()  + margin <= desktop.right());
+	bool has_room_above    = (icon_rect.top()    - size.height() - margin >= desktop.top());
+	bool has_room_below    = (icon_rect.bottom() + size.height() + margin <= desktop.bottom());
+	if (!has_room_above && !has_room_below && !has_room_to_left && !has_room_to_right) {
 		return;
 	}
 	
+	if (mobile_mode)
+	{
+		// Change precedence.
+		if (has_room_above)
+		{
+			has_room_below = false;
+		}
+		else if (has_room_to_left)
+		{
+			has_room_below = false;
+			has_room_to_right = false;
+		}
+		else if (has_room_to_right)
+		{
+			has_room_below = false;
+		}
+	}
+		
 	int x = 0;
 	int y = 0;
 	
-	if (hasRoomBelow || hasRoomAbove) {
-		y = hasRoomBelow ? icon_rect.bottom() + margin : icon_rect.top() - size.height() - margin;
+	if (has_room_below || has_room_above)
+	{
+		y = has_room_below ? icon_rect.bottom() + margin : icon_rect.top() - size.height() - margin;
 		x = qMin(qMax(desktop.left() + margin, icon_rect.center().x() - size.width() / 2), desktop.right() - size.width() - margin);
 	} else {
-		Q_ASSERT(hasRoomToLeft || hasRoomToRight);
-		x = hasRoomToRight ? icon_rect.right() + margin : icon_rect.left() - size.width() - margin;
+		x = has_room_to_right ? icon_rect.right() + margin : icon_rect.left() - size.width() - margin;
 		y = qMin(qMax(desktop.top() + margin, icon_rect.center().y() - size.height() / 2), desktop.bottom() - size.height() - margin);
 	}
 	
 	move(QPoint(x, y));
 }
 
-void SymbolToolTip::scheduleShow(const Symbol* symbol, QRect icon_rect)
+void SymbolToolTip::scheduleShow(const Symbol* symbol, const Map* map, QRect icon_rect, bool mobile_mode)
 {
 	this->icon_rect = icon_rect;
 	this->symbol = symbol;
 	
-	name_label->setText(symbol->getNumberAsString() + QLatin1String(" <b>") + symbol->getName() + QLatin1String("</b>"));
+	Q_ASSERT(map);
+	name_label->setText(symbol->getNumberAsString()
+	                    + QLatin1String(" <b>")
+	                    + map->translate(symbol->getName())
+	                    + QLatin1String("</b>"));
 	
-	QString help_text(symbol->getDescription());
+	auto help_text = map->translate(symbol->getDescription());
 	if (help_text.isEmpty())
 	{
 		help_text = tr("No description!");
@@ -174,7 +212,7 @@ void SymbolToolTip::scheduleShow(const Symbol* symbol, QRect icon_rect)
 	shortcut->setEnabled(isVisible());
 	
 	adjustSize();
-	adjustPosition();
+	adjustPosition(mobile_mode);
 	
 	static const int delay = 150;
 	tooltip_timer.start(delay);
@@ -200,3 +238,6 @@ const Symbol* SymbolToolTip::getSymbol() const
 {
 	return symbol;
 }
+
+
+}  // namespace OpenOrienteering

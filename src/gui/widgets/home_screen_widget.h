@@ -18,26 +18,32 @@
  */
 
 
-#ifndef _OPENORIENTEERING_HOME_SCREEN_WIDGET_H_
-#define _OPENORIENTEERING_HOME_SCREEN_WIDGET_H_
+#ifndef OPENORIENTEERING_HOME_SCREEN_WIDGET_H
+#define OPENORIENTEERING_HOME_SCREEN_WIDGET_H
 
 #include <vector>
 
+#include <QObject>
+#include <QPixmap>
+#include <QString>
+#include <QStringList>
 #include <QWidget>
 
-QT_BEGIN_NAMESPACE
 class QAbstractButton;
 class QCheckBox;
+class QIcon;
 class QLabel;
 class QListWidget;
 class QListWidgetItem;
-class QMouseEvent;
 class QPaintEvent;
 class QPushButton;
+class QResizeEvent;
 class QStackedLayout;
-QT_END_NAMESPACE
+
+namespace OpenOrienteering {
 
 class HomeScreenController;
+
 
 /**
  * The user interface of the OpenOrienteering Mapper home screen.
@@ -49,10 +55,10 @@ class AbstractHomeScreenWidget : public QWidget
 Q_OBJECT
 public:
 	/** Creates a new AbstractHomeScreenWidget for the given controller. */
-	AbstractHomeScreenWidget(HomeScreenController* controller, QWidget* parent = NULL);
+	AbstractHomeScreenWidget(HomeScreenController* controller, QWidget* parent = nullptr);
 	
 	/** Destroys the AbstractHomeScreenWidget. */
-	virtual ~AbstractHomeScreenWidget();
+	~AbstractHomeScreenWidget() override;
 	
 public slots:
 	/** Sets the list of recent files. */
@@ -71,16 +77,16 @@ public slots:
 	
 protected:
 	/** Returns a QLabel for displaying a headline in the home screen. */
-	QLabel* makeHeadline(const QString& text, QWidget* parent = NULL) const;
+	QLabel* makeHeadline(const QString& text, QWidget* parent = nullptr) const;
 	
 	/** Returns a button with the given text
 	 *  for triggering a top level activity in the home screen.
 	 *  There will be no icon or a default icon. */
-	QAbstractButton* makeButton(const QString& text, QWidget* parent = NULL) const;
+	QAbstractButton* makeButton(const QString& text, QWidget* parent = nullptr) const;
 	
 	/** Returns a button with the given text and icon
 	 *  for triggering a top level activity in the home screen. */
-	QAbstractButton* makeButton(const QString& text, const QIcon& icon, QWidget* parent = NULL) const;
+	QAbstractButton* makeButton(const QString& text, const QIcon& icon, QWidget* parent = nullptr) const;
 	
 	
 	HomeScreenController* controller;
@@ -95,25 +101,25 @@ class HomeScreenWidgetDesktop : public AbstractHomeScreenWidget
 Q_OBJECT
 public:
 	/** Creates a new HomeScreenWidgetDesktop for the given controller. */
-	HomeScreenWidgetDesktop(HomeScreenController* controller, QWidget* parent = NULL);
+	HomeScreenWidgetDesktop(HomeScreenController* controller, QWidget* parent = nullptr);
 	
 	/** Destroys the HomeScreenWidgetDesktop. */
-	virtual ~HomeScreenWidgetDesktop();
+	~HomeScreenWidgetDesktop() override;
 	
 public slots:
 	/** Sets the list of recent files. */
-	virtual void setRecentFiles(const QStringList& files);
+	void setRecentFiles(const QStringList& files) override;
 	
 	/** Sets the "checked" state of the control for opening
 	 *  the most recently used file on startup. */
-	virtual void setOpenMRUFileChecked(bool state);
+	void setOpenMRUFileChecked(bool state) override;
 	
 	/** Sets the text of the the tip-of-the-day. */
-	virtual void setTipOfTheDay(const QString& text);
+	void setTipOfTheDay(const QString& text) override;
 	
 	/** Sets the visiblity of the tip-of-the-day, and
 	 *  sets the "checked" state of the control for displaying the tip. */
-	virtual void setTipsVisible(bool state);
+	void setTipsVisible(bool state) override;
 	
 protected slots:
 	/** Opens a file when its is list item is clicked. */
@@ -121,16 +127,16 @@ protected slots:
 	
 protected:
 	/** Draws the home screen background when a paint event occurs. */
-	virtual void paintEvent(QPaintEvent* event);
+	void paintEvent(QPaintEvent* event) override;
 	
 	/** Creates the activities widget. */
-	QWidget* makeMenuWidget(HomeScreenController* controller, QWidget* parent = NULL);
+	QWidget* makeMenuWidget(HomeScreenController* controller, QWidget* parent = nullptr);
 	
 	/** Creates the recent files widget. */
-	QWidget* makeRecentFilesWidget(HomeScreenController* controller, QWidget* parent = NULL);
+	QWidget* makeRecentFilesWidget(HomeScreenController* controller, QWidget* parent = nullptr);
 	
 	/** Creates the tip-of-the-day widget. */
-	QWidget* makeTipsWidget(HomeScreenController* controller, QWidget* parent = NULL);
+	QWidget* makeTipsWidget(HomeScreenController* controller, QWidget* parent = nullptr);
 	
 	
 	QListWidget* recent_files_list;
@@ -149,25 +155,25 @@ class HomeScreenWidgetMobile : public AbstractHomeScreenWidget
 Q_OBJECT
 public:
 	/** Creates a new HomeScreenWidgetMobile for the given controller. */
-	HomeScreenWidgetMobile(HomeScreenController* controller, QWidget* parent = NULL);
+	HomeScreenWidgetMobile(HomeScreenController* controller, QWidget* parent = nullptr);
 	
 	/** Destroys the HomeScreenWidgetMobile. */
-	virtual ~HomeScreenWidgetMobile();
+	~HomeScreenWidgetMobile() override;
 	
 public slots:
 	/** Sets the list of recent files. */
-	virtual void setRecentFiles(const QStringList& files);
+	void setRecentFiles(const QStringList& files) override;
 	
 	/** Sets the "checked" state of the control for opening
 	 *  the most recently used file on startup. */
-	virtual void setOpenMRUFileChecked(bool state);
+	void setOpenMRUFileChecked(bool state) override;
 	
 	/** Sets the text of the the tip-of-the-day. */
-	virtual void setTipOfTheDay(const QString& text);
+	void setTipOfTheDay(const QString& text) override;
 	
 	/** Sets the visiblity of the tip-of-the-day, and
 	 *  sets the "checked" state of the control for displaying the tip. */
-	virtual void setTipsVisible(bool state);
+	void setTipsVisible(bool state) override;
 	
 	/** Adds the examples to the list of files
 	 *  if they are not already there. */
@@ -182,13 +188,13 @@ protected slots:
 	
 protected:
 	/** Triggers title image adjustment on resize events. */
-	virtual void resizeEvent(QResizeEvent* event);
+	void resizeEvent(QResizeEvent* event) override;
 	
 	/** Resizes the title image to fit both the labels width and height */
 	void adjustTitlePixmapSize();
 	
 	/** Creates the file list widget. */
-	QWidget* makeFileListWidget(HomeScreenController* controller, QWidget* parent = NULL);
+	QWidget* makeFileListWidget(HomeScreenController* controller, QWidget* parent = nullptr);
 	
 	/** Iterates over all files at the given path and adds all map files to the list */
 	void addFilesToFileList(QListWidget* file_list, const QString& path);
@@ -201,4 +207,6 @@ private:
 	QPushButton* examples_button;
 };
 
+
+}  // namespace OpenOrienteering
 #endif

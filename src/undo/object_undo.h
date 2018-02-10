@@ -19,20 +19,27 @@
  */
 
 
-#ifndef _OPENORIENTEERING_MAP_UNDO_H_
-#define _OPENORIENTEERING_MAP_UNDO_H_
+#ifndef OPENORIENTEERING_MAP_UNDO_H
+#define OPENORIENTEERING_MAP_UNDO_H
 
+#include <cstddef>
 #include <map>
+#include <utility>
+#include <vector>
+
+#include <QObject>
 
 #include "core/objects/object.h"
 #include "core/symbols/symbol.h"
-#include "undo.h"
+#include "undo/undo.h"
 
-QT_BEGIN_NAMESPACE
 class QIODevice;
 class QXmlStreamReader;
 class QXmlStreamWriter;
-QT_END_NAMESPACE
+
+namespace OpenOrienteering {
+
+class Map;
 
 
 /** 
@@ -54,7 +61,7 @@ public:
 	/**
 	 * Destructor.
 	 */
-	virtual ~ObjectModifyingUndoStep();
+	~ObjectModifyingUndoStep() override;
 	
 	
 	/**
@@ -88,14 +95,14 @@ public:
 	 * 
 	 * @return True if there are objects modified by this undo step, false otherwise.
 	 */
-	virtual bool getModifiedParts(PartSet& out) const;
+	bool getModifiedParts(PartSet& out) const override;
 	
 	/**
 	 * Adds the list of the step's modified objects to the container provided by out.
 	 * 
 	 * Only adds objects when the given part_index matches this step's part index.
 	 */
-	virtual void getModifiedObjects(int part_index, ObjectSet& out) const;
+	void getModifiedObjects(int part_index, ObjectSet& out) const override;
 	
 	
 #ifndef NO_NATIVE_FILE_FORMAT
@@ -103,7 +110,7 @@ public:
 	 * Loads the undo step from the file in the old "native" format.
 	 * @deprecated Old file format.
 	 */
-	virtual bool load(QIODevice* file, int version);
+	bool load(QIODevice* file, int version) override;
 #endif
 	
 protected:
@@ -113,7 +120,7 @@ protected:
 	 * Implementations in derived classes shall first call the parent class'
 	 * implementation, and then start a new element for additional properties.
 	 */
-	virtual void saveImpl(QXmlStreamWriter& xml) const;
+	void saveImpl(QXmlStreamWriter& xml) const override;
 	
 	/**
 	 * Loads undo properties from the the xml stream.
@@ -122,7 +129,7 @@ protected:
 	 * for one of their own elements, and otherwise call the parent class'
 	 * implementation.
 	 */
-	virtual void loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict);
+	void loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict) override;
 	
 	
 private:
@@ -164,7 +171,7 @@ public:
 	/**
 	 * Destructor.
 	 */
-	virtual ~ObjectCreatingUndoStep();
+	~ObjectCreatingUndoStep() override;
 	
 	
 	/**
@@ -172,7 +179,7 @@ public:
 	 * 
 	 * The value returned by this function is taken from the "valid" member variable.
 	 */
-	virtual bool isValid() const;
+	bool isValid() const override;
 	
 	/**
 	 * Must not be called.
@@ -182,7 +189,7 @@ public:
 	 * Does nothing in release builds. Aborts the program in non-release builds.
 	 * Reimplemented from ObjectModifyingUndoStep::addObject()).
 	 */
-	virtual void addObject(int index);
+	void addObject(int index) override;
 	
 	/**
 	 * Adds an object to the undo step with given index.
@@ -197,7 +204,7 @@ public:
 	/**
 	 * @copybrief ObjectModifyingUndoStep::getModifiedObjects
 	 */
-	virtual void getModifiedObjects(int, ObjectSet&) const;
+	void getModifiedObjects(int, ObjectSet&) const override;
 	
 	
 #ifndef NO_NATIVE_FILE_FORMAT
@@ -205,7 +212,7 @@ public:
 	 * @copybrief UndoStep::load()
 	 * @deprecated Old file format.
 	 */
-	virtual bool load(QIODevice* file, int version);
+	bool load(QIODevice* file, int version) override;
 #endif
 	
 public slots:
@@ -223,12 +230,12 @@ protected:
 	/**
 	 * @copybrief UndoStep::saveImpl()
 	 */
-	virtual void saveImpl(QXmlStreamWriter& xml) const;
+	void saveImpl(QXmlStreamWriter& xml) const override;
 	
 	/**
 	 * @copybrief UndoStep::loadImpl()
 	 */
-	virtual void loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict);
+	void loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict) override;
 	
 	/**
 	 * A list of object instance which are currently not part of the map.
@@ -252,9 +259,9 @@ Q_OBJECT
 public:
 	ReplaceObjectsUndoStep(Map* map);
 	
-	virtual ~ReplaceObjectsUndoStep();
+	~ReplaceObjectsUndoStep() override;
 	
-	virtual UndoStep* undo();
+	UndoStep* undo() override;
 	
 private:
 	bool undone;
@@ -271,13 +278,13 @@ class DeleteObjectsUndoStep : public ObjectModifyingUndoStep
 public:
 	DeleteObjectsUndoStep(Map* map);
 	
-	virtual ~DeleteObjectsUndoStep();
+	~DeleteObjectsUndoStep() override;
 	
-	virtual UndoStep* undo();
+	UndoStep* undo() override;
 	
-	virtual bool getModifiedParts(PartSet& out) const;
+	bool getModifiedParts(PartSet& out) const override;
 	
-	virtual void getModifiedObjects(int part_index, ObjectSet& out) const;
+	void getModifiedObjects(int part_index, ObjectSet& out) const override;
 };
 
 /**
@@ -292,9 +299,9 @@ Q_OBJECT
 public:
 	AddObjectsUndoStep(Map* map);
 	
-	~AddObjectsUndoStep();
+	~AddObjectsUndoStep() override;
 	
-	virtual UndoStep* undo();
+	UndoStep* undo() override;
 	
 	/**
 	 * Removes all contained objects from the map.
@@ -324,18 +331,18 @@ public:
 	
 	SwitchPartUndoStep(Map* map);
 	
-	virtual ~SwitchPartUndoStep();
+	~SwitchPartUndoStep() override;
 	
-	virtual UndoStep* undo();
+	UndoStep* undo() override;
 	
 #ifndef NO_NATIVE_FILE_FORMAT
-	virtual bool load(QIODevice* file, int version);
+	bool load(QIODevice* file, int version) override;
 #endif
 	
 protected:
-	virtual void saveImpl(QXmlStreamWriter& xml) const;
+	void saveImpl(QXmlStreamWriter& xml) const override;
 	
-	virtual void loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict);
+	void loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict) override;
 	
 	std::size_t source_index;
 };
@@ -351,17 +358,17 @@ Q_OBJECT
 public:
 	SwitchSymbolUndoStep(Map* map);
 	
-	virtual ~SwitchSymbolUndoStep();
+	~SwitchSymbolUndoStep() override;
 	
-	bool isValid() const;
+	bool isValid() const override;
 	
 	using ObjectModifyingUndoStep::addObject;
 	virtual void addObject(int index, const Symbol* target_symbol);
 	
-	virtual UndoStep* undo();
+	UndoStep* undo() override;
 	
 #ifndef NO_NATIVE_FILE_FORMAT
-	virtual bool load(QIODevice* file, int version);
+	bool load(QIODevice* file, int version) override;
 #endif
 	
 public slots:
@@ -370,9 +377,9 @@ public slots:
 	virtual void symbolDeleted(int pos, const Symbol* old_symbol);
 	
 protected:
-	virtual void saveImpl(QXmlStreamWriter& xml) const;
+	void saveImpl(QXmlStreamWriter& xml) const override;
 	
-	virtual void loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict);
+	void loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict) override;
 	
 	std::vector<const Symbol*> target_symbols;
 	
@@ -391,9 +398,9 @@ class SwitchDashesUndoStep : public ObjectModifyingUndoStep
 public:
 	SwitchDashesUndoStep(Map* map);
 	
-	virtual ~SwitchDashesUndoStep();
+	~SwitchDashesUndoStep() override;
 	
-	virtual UndoStep* undo();
+	UndoStep* undo() override;
 };
 
 
@@ -409,16 +416,16 @@ class ObjectTagsUndoStep : public ObjectModifyingUndoStep
 public:
 	ObjectTagsUndoStep(Map* map);
 	
-	virtual ~ObjectTagsUndoStep();
+	~ObjectTagsUndoStep() override;
 	
-	virtual void addObject(int index);
+	void addObject(int index) override;
 	
-	virtual UndoStep* undo();
+	UndoStep* undo() override;
 	
 protected:
-	virtual void saveImpl(QXmlStreamWriter& xml) const;
+	void saveImpl(QXmlStreamWriter& xml) const override;
 	
-	virtual void loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict);
+	void loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict) override;
 	
 	typedef std::map<int, Object::Tags> ObjectTagsMap;
 	
@@ -434,5 +441,7 @@ int ObjectModifyingUndoStep::getPartIndex() const
 	return part_index;
 }
 
+
+}  // namespace OpenOrienteering
 
 #endif

@@ -24,11 +24,13 @@
 
 #include <vector>
 
+#include <QtGlobal>
+
 #include "map_coord.h"
 
-class PathCoordVector;
-class SplitPathCoord;
+namespace OpenOrienteering {
 
+class PathCoordVector;
 
 
 /**
@@ -285,5 +287,8 @@ SplitPathCoord SplitPathCoord::at(const PathCoordVector& path_coords, SplitPathC
 {
 	return at(length, begin(path_coords));
 }
+
+
+}  // namespace OpenOrienteering
 
 #endif

@@ -21,14 +21,31 @@
 
 #include "text_object_editor_helper.h"
 
+#include <QtGlobal>
+#include <QBrush>
+#include <QChar>
+#include <QClipboard>
+#include <QEvent>
+#include <QFlags>
 #include <QGuiApplication>
+#include <QInputMethod>
+#include <QInputMethodEvent>
 #include <QKeyEvent>
+#include <QKeySequence>
+#include <QLatin1Char>
 #include <QMimeData>
 #include <QMouseEvent>
 #include <QPainter>
+#include <QPointF>
+#include <QRectF>
+#include <QRgb>
 #include <QStyle>
 #include <QTimer>
+#include <QTransform>
+#include <QVariant>
+#include <QWidget>
 
+#include "core/map_coord.h"
 #include "core/objects/text_object.h"
 #include "gui/main_window.h"
 #include "gui/map/map_editor.h"
@@ -43,6 +60,9 @@
 #  endif
 #endif
 //#  define INPUT_METHOD_BUGS_RESOLVED
+
+
+namespace OpenOrienteering {
 
 // ### TextObjectEditorHelper::BatchEdit ###
 
@@ -123,7 +143,7 @@ TextObjectEditorHelper::TextObjectEditorHelper(not_null<TextObject*> text_object
 #else
 	// Workaround to set the focus to the map widget again after it was lost
 	// to the new dock widget (on X11, at least)
-	QTimer::singleShot(20, this, SLOT(claimFocus()));
+	QTimer::singleShot(20, this, SLOT(claimFocus()));  // clazy:exclude=old-style-connect
 #endif
 }
 
@@ -333,7 +353,7 @@ int TextObjectEditorHelper::blockEnd() const
 }
 
 
-QVariant TextObjectEditorHelper::inputMethodQuery(Qt::InputMethodQuery property, QVariant argument) const
+QVariant TextObjectEditorHelper::inputMethodQuery(Qt::InputMethodQuery property, const QVariant& argument) const
 {
 	switch (property)
 	{
@@ -551,7 +571,7 @@ bool TextObjectEditorHelper::mouseMoveEvent(QMouseEvent* event, MapCoordF map_co
 	}
 	
 	if (sendMouseEventToInputContext(event, map_coord))
-		return true;
+		return true;  // NOLINT
 	
 	return false;
 }
@@ -753,7 +773,7 @@ bool TextObjectEditorHelper::keyPressEvent(QKeyEvent* event)
 		return false;
 	}
 	else if (!event->text().isEmpty()
-	         && event->text()[0].isPrint() )
+	         && event->text().at(0).isPrint() )
 	{
 		replaceSelectionText(event->text());
 	}
@@ -861,7 +881,7 @@ QRectF TextObjectEditorHelper::cursorRectangle() const
 }
 
 
-void TextObjectEditorHelper::foreachLineRect(int begin, int end, std::function<void (const QRectF&)> worker) const
+void TextObjectEditorHelper::foreachLineRect(int begin, int end, const std::function<void (const QRectF&)>& worker) const
 {
 	Q_ASSERT(begin <= end);
 	for (int line = 0, num_lines = text_object->getNumLines(); line != num_lines; ++line)
@@ -893,3 +913,6 @@ void TextObjectEditorHelper::foreachLineRect(int begin, int end, std::function<v
 		worker({left, line_info->line_y - line_info->ascent, width, line_info->ascent + line_info->descent});
 	}
 }
+
+
+}  // namespace OpenOrienteering

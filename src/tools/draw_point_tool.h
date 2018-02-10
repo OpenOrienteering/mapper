@@ -19,18 +19,32 @@
  */
 
 
-#ifndef _OPENORIENTEERING_DRAW_POINT_H_
-#define _OPENORIENTEERING_DRAW_POINT_H_
+#ifndef OPENORIENTEERING_DRAW_POINT_H
+#define OPENORIENTEERING_DRAW_POINT_H
 
 #include <memory>
 
+#include <QObject>
+#include <QPointF>
+
 #include "tool_base.h"
 
+class QAction;
+class QEvent;
+class QKeyEvent;
+class QPainter;
+class QPointF;
+class QRectF;
+
+namespace OpenOrienteering {
+
+class MapCoordF;
+class MapEditorController;
+class MapRenderables;
 class MapWidget;
 class PointObject;
 class Symbol;
-class SymbolWidget;
-class KeyButtonBar;
+
 
 /**
  * Tool to draw PointObjects.
@@ -85,5 +99,8 @@ protected:
 	std::unique_ptr<PointObject> preview_object;
 	std::unique_ptr<MapRenderables> renderables;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

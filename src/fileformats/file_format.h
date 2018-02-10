@@ -17,24 +17,32 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_FILE_FORMAT_H
-#define _OPENORIENTEERING_FILE_FORMAT_H
+#ifndef OPENORIENTEERING_FILE_FORMAT_H
+#define OPENORIENTEERING_FILE_FORMAT_H
 
+#include <cstddef>
 #include <exception>
 
+#include <QtGlobal>
+#include <QByteArray>
 #include <QFlags>
+#include <QList>
+#include <QString>
 #include <QStringList>
 
 class QIODevice;
+
+namespace OpenOrienteering {
 
 class Exporter;
 class Importer;
 class Map;
 class MapView;
 
+
 /** An exception type thrown by an importer or exporter if it encounters a fatal error.
  */
-class FileFormatException : public std::exception
+class FileFormatException : public std::exception  // clazy:exclude=copyable-polymorphic
 {
 public:
 	/** Creates a new exception with the given message
@@ -53,7 +61,7 @@ public:
 	
 	/** Destroys the exception object.
 	 */
-	virtual ~FileFormatException() noexcept;
+	~FileFormatException() noexcept override;
 	
 	/** Returns the message as a QString. 
 	 */
@@ -61,7 +69,7 @@ public:
 	
 	/** Returns the message as a C string.
 	 */
-	virtual const char* what() const noexcept;
+	const char* what() const noexcept override;
 	
 private:
 	QString const msg;
@@ -79,7 +87,7 @@ private:
  *  \code
  *  class MyCustomFileFormat : public FileFormat {
  *  public:
- *      MyCustomFileFormat : FileFormat("custom", ImportExport::tr("Custom file"), "custom", true, true) {
+ *      MyCustomFileFormat : FileFormat("custom", ::OpenOrienteering::ImportExport::tr("Custom file"), "custom", true, true) {
  *      }
  *
  *      Importer *createImporter(QIODevice* stream, Map *map, MapView *view) const {
@@ -140,8 +148,14 @@ public:
 	 */
 	FileFormat(FileType file_type, const char* id, const QString& description, const QString& file_extension, FormatFeatures features);
 	
+	FileFormat(const FileFormat&) = delete;
+	FileFormat(FileFormat&&) = delete;
+	
 	/** Destroys the file format information. */
 	virtual ~FileFormat();
+	
+	FileFormat& operator=(const FileFormat&) = delete;
+	FileFormat& operator=(FileFormat&&) = delete;
 	
 	/** Registers an alternative file name extension.
 	 *  It is used by the filter.
@@ -195,7 +209,7 @@ public:
 	 *  for a suitable Importer. If there is any doubt about whether the file format can successfully
 	 *  process a file, this method should return false.
 	 */
-	virtual bool understands(const unsigned char *buffer, size_t sz) const;
+	virtual bool understands(const unsigned char *buffer, std::size_t sz) const;
 	
 	/** Creates an Importer that will read a map file from the given stream into the given map and view.
 	 *  The caller can then call doImport() in the returned object to start the import process. The caller
@@ -258,10 +272,6 @@ const QString& FileFormatException::message() const noexcept
 
 // ### FileFormat inline and header code ###
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(FileFormat::FileTypes)
-
-Q_DECLARE_OPERATORS_FOR_FLAGS(FileFormat::FormatFeatures)
-
 inline
 FileFormat::FileType FileFormat::fileType() const
 {
@@ -318,4 +328,12 @@ bool FileFormat::isExportLossy() const
 }
 
 
-#endif // _OPENORIENTEERING_FILE_FORMAT_H
+}  // namespace OpenOrienteering
+
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(OpenOrienteering::FileFormat::FileTypes)
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(OpenOrienteering::FileFormat::FormatFeatures)
+
+
+#endif // OPENORIENTEERING_FILE_FORMAT_H

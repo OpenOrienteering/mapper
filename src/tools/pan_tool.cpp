@@ -21,18 +21,26 @@
 
 #include "pan_tool.h"
 
-#include "gui/map/map_widget.h"
+#include <Qt>
+#include <QCursor>
+#include <QPoint>
 
-PanTool::PanTool(MapEditorController* editor, QAction* tool_button)
- : MapEditorToolBase(QCursor(Qt::OpenHandCursor), Pan, editor, tool_button)
+#include "core/map_view.h"
+#include "gui/map/map_widget.h"
+#include "tools/tool.h"
+
+
+namespace OpenOrienteering {
+
+PanTool::PanTool(MapEditorController* editor, QAction* tool_action)
+ : MapEditorToolBase(QCursor(Qt::OpenHandCursor), Pan, editor, tool_action)
 {
 	useTouchCursor(false);
 }
 
-PanTool::~PanTool()
-{
-	// Nothing, not inlined
-}
+PanTool::~PanTool() = default;
+
+
 
 void PanTool::clickPress()
 {
@@ -76,3 +84,6 @@ void PanTool::objectSelectionChangedImpl()
 {
 	// Nothing
 }
+
+
+}  // namespace OpenOrienteering

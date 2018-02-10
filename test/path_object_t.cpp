@@ -20,17 +20,30 @@
 
 #include "path_object_t.h"
 
+#include <QtTest>
+
+#include "global.h"
 #include "core/map.h"
+#include "core/objects/object.h"
 #include "core/symbols/line_symbol.h"
+
+using namespace OpenOrienteering;
+
 
 class DummyPathObject : public PathObject
 {
 public:
-	DummyPathObject() : PathObject()
+	DummyPathObject()
+	: PathObject()
 	{
 		// Set a dummy symbol to make the object calculate path coordinates
 		setSymbol(Map::getCoveringRedLine(), true);
 	}
+	
+	DummyPathObject(const DummyPathObject&) = delete;
+	DummyPathObject(DummyPathObject&&) = delete;
+	DummyPathObject& operator=(const DummyPathObject&) = delete;
+	DummyPathObject& operator=(DummyPathObject&&) = delete;
 };
 
 PathObjectTest::PathObjectTest(QObject* parent): QObject(parent)
@@ -435,22 +448,23 @@ void PathObjectTest::atypicalPathTest()
 		switch (i)
 		{
 		case 0:
-			QCOMPARE(path_coords[i].index, 0u);
+		case 2:
+		case 4:
+		case 6:
+			QCOMPARE(std::size_t(path_coords[i].index), (i/2)*3);
 			QCOMPARE(path_coords[i].param, 0.0f);
+			QCOMPARE(path_coords[i].clen, 0.0f);
+			break;
+		case 1:
+		case 3:
+		case 5:
+			QCOMPARE(path_coords[i].index, path_coords[i-1].index);
+			QVERIFY(path_coords[i].param > 0.0f);
+			QVERIFY(path_coords[i].param < 1.0f);
 			QCOMPARE(path_coords[i].clen, 0.0f);
 			break;
 		default:
-			if (path_coords[i].param == 0.0)
-				QVERIFY(path_coords[i-1].index < path_coords[i].index);
-			else
-				QVERIFY(path_coords[i-1].index == path_coords[i].index);
-			QCOMPARE(path_coords[i].clen, 0.0f);
-			break;
-		case 9:
-			QCOMPARE(path_coords[i].index, 9u);
-			QCOMPARE(path_coords[i].param, 0.0f);
-			QCOMPARE(path_coords[i].clen, 0.0f);
-			break;
+			Q_UNREACHABLE();
 		}
 		
 		auto split = SplitPathCoord::at(path_coords, i);

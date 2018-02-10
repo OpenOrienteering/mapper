@@ -18,18 +18,19 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_FILE_FORMAT_OCAD_P_H
-#define _OPENORIENTEERING_FILE_FORMAT_OCAD_P_H
-
-#include "file_import_export.h"
+#ifndef OPENORIENTEERING_FILE_FORMAT_OCAD_P_H
+#define OPENORIENTEERING_FILE_FORMAT_OCAD_P_H
 
 #include <set>
 
+#include <QCoreApplication>
 #include <QRgb>
 
+#include "core/map_coord.h"
+#include "fileformats/file_import_export.h"
 #include "libocad/libocad.h"
 
-#include "core/map_coord.h"
+namespace OpenOrienteering {
 
 class Map;
 class MapColor;
@@ -45,11 +46,14 @@ class PointSymbol;
 class Template;
 class TextSymbol;
 
+
 /** Importer for OCD version 8 files. */
 class OCAD8FileImport : public Importer
 {
 	friend class OcdFileImport;
-Q_OBJECT
+	
+	Q_DECLARE_TR_FUNCTIONS(OpenOrienteering::OCAD8FileImport)
+	
 private:
 	/// Information about an OCAD rectangle symbol
 	struct RectangleInfo
@@ -70,12 +74,12 @@ private:
 	
 public:
 	OCAD8FileImport(QIODevice* stream, Map *map, MapView *view);
-	~OCAD8FileImport();
+	~OCAD8FileImport() override;
 
 	void setStringEncodings(const char *narrow, const char *wide = "UTF-16LE");
 
 protected:
-	void import(bool load_symbols_only);
+	void import(bool load_symbols_only) override;
 	
 	// Symbol import
 	Symbol *importPointSymbol(const OCADPointSymbol *ocad_symbol);
@@ -106,8 +110,8 @@ protected:
 
 	// Unit conversion functions
 	QString convertPascalString(const char *p);
-	QString convertCString(const char *p, size_t n, bool ignore_first_newline);
-	QString convertWideCString(const char *p, size_t n, bool ignore_first_newline);
+	QString convertCString(const char *p, std::size_t n, bool ignore_first_newline);
+	QString convertWideCString(const char *p, std::size_t n, bool ignore_first_newline);
 	float convertRotation(int angle);
 	void convertPoint(MapCoord &c, s32 ocad_x, s32 ocad_y);
 	qint32 convertSize(int ocad_size);
@@ -146,17 +150,22 @@ private:
 /** Exporter for OCD version 8 files. */
 class OCAD8FileExport : public Exporter
 {
-Q_OBJECT
+	Q_DECLARE_TR_FUNCTIONS(OpenOrienteering::OCAD8FileExport)
+	
 public:
 	OCAD8FileExport(QIODevice* stream, Map *map, MapView *view);
-	~OCAD8FileExport();
+	~OCAD8FileExport() override;
 	
-	void doExport();
+	void doExport() override;
+	
 	
 protected:
+	// Determines an offset for moving objects to the OCD drawing area.
+	MapCoord calculateAreaOffset();
 	
 	// Symbol export
 	void exportCommonSymbolFields(const Symbol* symbol, OCADSymbol* ocad_symbol, int size);
+	void exportSymbolIcon(const Symbol* symbol, u8 ocad_icon[]);
 	int getPatternSize(const PointSymbol* point);
 	s16 exportPattern(const PointSymbol* point, OCADPoint** buffer);		// returns the number of written coordinates, including the headers
 	s16 exportSubPattern(const Object* object, const Symbol* symbol, OCADPoint** buffer);
@@ -169,10 +178,10 @@ protected:
 	std::set<s16> exportCombinedSymbol(const CombinedSymbol* combination);
 	
 	// Helper functions
-	/// Returns the number of exported coordinates. If not NULL, the given symbol is used to determine the meaning of dash points.
+	/// Returns the number of exported coordinates. If not nullptr, the given symbol is used to determine the meaning of dash points.
 	u16 exportCoordinates(const MapCoordVector& coords, OCADPoint** buffer, const Symbol* symbol);
 	u16 exportTextCoordinates(TextObject* object, OCADPoint** buffer);
-	int getOcadColor(QRgb rgb);
+	static int getOcadColor(QRgb rgb);
 	s16 getPointSymbolExtent(const PointSymbol* symbol);
 	
 	// Conversion functions
@@ -213,11 +222,11 @@ private:
 	/// In .ocd 8, text alignment needs to be specified in the text symbols instead of objects, so it is possible
 	/// that multiple ocd text symbols have to be created for one native TextSymbol.
 	/// This structure maps text symbols to lists containing information about the already created ocd symbols.
-	/// The TextObject in each pair just gives information about the alignment option used for the symbol indexed by the
+	/// The first member in each pair just gives information about the alignment option used for the symbol indexed by the
 	/// second part of the pair.
 	/// If there is no entry for a TextSymbol in this map yet, no object using this symbol has been encountered yet,
 	/// no no specific formatting was set in the corresponding symbol (which has to be looked up using symbol_index).
-	typedef std::vector< std::pair< TextObject*, s16 > > TextFormatList;
+	typedef std::vector< std::pair< int, s16 > > TextFormatList;
 	QHash<const TextSymbol*, TextFormatList > text_format_map;
 	
 	/// Helper object for pattern export
@@ -225,5 +234,8 @@ private:
 	
 	void addStringTruncationWarning(const QString& text, int truncation_pos);
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

@@ -22,29 +22,36 @@
 #ifndef OPENORIENTEERING_OBJECT_H
 #define OPENORIENTEERING_OBJECT_H
 
+#include <algorithm>
 #include <limits>
 #include <vector>
 
-#include <QRectF>
+#include <QtGlobal>
 #include <QHash>
+#include <QRectF>
+#include <QString>
+// IWYU pragma: no_include <QTransform>
 
 #include "core/map_coord.h"
 #include "core/path_coord.h"
 #include "core/virtual_path.h"
-#include "fileformats/file_format.h"
 #include "core/renderables/renderable.h"
 #include "core/symbols/symbol.h"
 
-QT_BEGIN_NAMESPACE
 class QIODevice;
+class QTransform;
 class QXmlStreamReader;
 class QXmlStreamWriter;
-QT_END_NAMESPACE
+// IWYU pragma: no_forward_declare QRectF
+
+namespace OpenOrienteering {
 
 class Map;
 class PointObject;
 class PathObject;
 class TextObject;
+class VirtualCoordVector;
+
 
 /**
  * Abstract base class which combines coordinates and a symbol to form an object
@@ -57,7 +64,7 @@ class TextObject;
  * that is a set of renderables and the calculation of the object's extent (bounding box).
  * The renderables can then be inserted into a map where they are used to display the object.
  */
-class Object
+class Object  // clazy:exclude=copyable-polymorphic
 {
 friend class ObjectRenderables;
 friend class OCAD8FileImport;
@@ -91,6 +98,7 @@ public:
 	/** Creates an empty object with the given type, symbol, coords and (optional) map. */
 	explicit Object(Type type, const Symbol* symbol, const MapCoordVector& coords, Map* map = nullptr);
 	
+protected:
 	/**
 	 * Constructs a Object, initialized from the given prototype.
 	 * 
@@ -99,11 +107,13 @@ public:
 	 */
 	explicit Object(const Object& proto);
 	
+public:
 	/** Destructs the object. */
 	virtual ~Object();
 	
-	/** Assignment, replaces this object's content with that of the other. */
-	virtual Object& operator= (const Object& other);
+	Object& operator=(const Object& other) = delete;
+	
+	virtual void copyFrom(const Object& other);
 	
 	/** Creates an identical copy of the object.
 	 *
@@ -117,6 +127,8 @@ public:
 	 * also the symbols are compared for having the same properties.
 	 */
 	bool equals(const Object* other, bool compare_symbol) const;
+	
+	virtual bool validate() const;
 	
 	/** Returns the object type determined by the subclass */
 	inline Type getType() const;
@@ -211,7 +223,7 @@ public:
 	/**
 	 * Checks if a path point (excluding curve control points) is included in the given box.
 	 */
-	virtual bool intersectsBox(QRectF box) const = 0;
+	virtual bool intersectsBox(const QRectF& box) const = 0;
 	
 	/** Takes ownership of the renderables */
 	void takeRenderables();
@@ -337,7 +349,8 @@ public:
 	        const VirtualPath& path
 	);
 	
-public:
+	~PathPart() = default;
+	
 	PathPart& operator=(const PathPart& rhs);
 	
 	/**
@@ -406,7 +419,7 @@ public:
  * is ended by a coordinate with the "hole point" flag. For all types of
  * flags which can be set, see the MapCoord documentation.
  */
-class PathObject : public Object
+class PathObject : public Object  // clazy:exclude=copyable-polymorphic
 {
 	friend class PathPart;
 	
@@ -459,9 +472,11 @@ public:
 	/** Constructs a PathObject, assigning initial coords from a single piece of a line. */
 	PathObject(const Symbol* symbol, const PathObject& proto, MapCoordVector::size_type piece);
 	
+protected:
 	/** Constructs a PathObject, initalized from the given prototype. */
 	explicit PathObject(const PathObject& proto);
 	
+public:
 	/** Constructs a PathObject, initalized from the given part of another object. */
 	explicit PathObject(const PathPart& proto_part);
 	
@@ -470,20 +485,22 @@ public:
 	 * 
 	 * Use asPath() on the result to obtain an object of type PathObject.
 	 */
-	Object* duplicate() const override;
+	PathObject* duplicate() const override;
+	
+	PathObject& operator=(const PathObject& other) = delete;
 	
 	/** Replaces this object's contents by those of the other. */
-	PathObject& operator=(const PathObject& other);
+	void copyFrom(const Object& other) override;
 	
-	/** Replaces this object's contents by those of the other. */
-	Object& operator=(const Object& other) override;
+	
+	bool validate() const override;
 	
 	
 	/** Checks the path for valid flags, and makes corrections as neccessary. */
 	void normalize();
 	
 	
-	bool intersectsBox(QRectF box) const override;
+	bool intersectsBox(const QRectF& box) const override;
 	
 	
 	// Coordinate access methods
@@ -930,24 +947,28 @@ bool operator== (const PathObject::Intersection& lhs, const PathObject::Intersec
  * 
  * Has exactly one coordinate, and additionally a rotation parameter.
  */
-class PointObject : public Object
+class PointObject : public Object  // clazy:exclude=copyable-polymorphic
 {
 public:
 	/** Constructs a PointObject, optionally assigning the symbol. */
 	explicit PointObject(const Symbol* symbol = nullptr);
 	
+protected:
 	/** Constructs a PointObject, initalized from the given prototype. */
 	explicit PointObject(const PointObject& proto);
 	
+public:
 	/**
 	 * Creates a duplicate of the point.
 	 * 
 	 * Use asPoint() on the result to obtain an object of type PointObject.
 	 */
-	Object* duplicate() const override;
+	PointObject* duplicate() const override;
+	
+	PointObject& operator=(const PointObject& other) = delete;
 	
 	/** Replaces the content of this object by that of anothe. */
-	Object& operator=(const Object& other) override;
+	void copyFrom(const Object& other) override;
 	
 	
 	/** Sets the point's position to a new position given in native map coordinates. */
@@ -987,7 +1008,7 @@ public:
 	float getRotation() const;
 	
 	
-	bool intersectsBox(QRectF box) const override;
+	bool intersectsBox(const QRectF& box) const override;
 	
 	
 private:
@@ -1264,6 +1285,7 @@ constexpr ObjectPathCoord::operator bool() const
 	return bool { object };
 }
 
+}  // namespace OpenOrienteering
 
 
 #endif

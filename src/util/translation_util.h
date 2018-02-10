@@ -22,9 +22,15 @@
 #define OPENORIENTEERING_TRANSLATION_UTIL_H
 
 #include <vector>
+#include <memory>
 
-#include <QLocale>
+#include <QString>
 #include <QTranslator>
+
+class QSettings;
+// IWYU pragma: no_forward_declare QTranslator
+
+namespace OpenOrienteering {
 
 
 /**
@@ -65,6 +71,20 @@ public:
 	
 	
 	/**
+	 * Creates a new translation utility for the file or language from the settings.
+	 * 
+	 * The base name of the translation files must be set in advance.
+	 */
+	TranslationUtil();
+	
+	/**
+	 * Creates a new translation utility for the file or language from the given settings.
+	 * 
+	 * The base name of the translation files must be set in advance.
+	 */
+	TranslationUtil(const QSettings& settings);
+	
+	/**
 	 * Creates a new translation utility for the given language.
 	 * 
 	 * The base name of the translation files must be set in advance.
@@ -103,22 +123,35 @@ public:
 	static LanguageList availableLanguages();
 	
 	/**
-	 * Returns the Translation for a given translation file.
+	 * Returns the language for a given translation file.
 	 */
 	static Language languageFromFilename(const QString& path);
 	
 	/**
-	 * Returns the Translation for a language name.
+	 * Returns the language for a language name.
 	 */
 	static Language languageFromCode(const QString& code);
 	
+	/**
+	 * Returns the language for the given settings object.
+	 */
+	static Language languageFromSettings(const QSettings& settings);
+	
+	
+	/**
+	 * Tries to create a QTranslator for the named translation.
+	 * 
+	 * If the named translation cannot be loaded from the search path,
+	 * returns an unset unique_prt.
+	 */
+	std::unique_ptr<QTranslator> load(const QString& translation_name) const;
 	
 protected:
 	/**
 	 * Finds a named translation from the search path and loads it
 	 * to the translator.
 	 */
-	bool load(QTranslator& translator, QString translation_name) const;
+	bool load(QTranslator& translator, const QString& translation_name) const;
 	
 	
 	static QString base_name;
@@ -136,5 +169,7 @@ bool operator<(const TranslationUtil::Language& first, const TranslationUtil::La
 	return first.code < second.code;
 }
 
+
+}  // namespace OpenOrienteering
 
 #endif

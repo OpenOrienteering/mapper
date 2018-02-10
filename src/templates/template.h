@@ -24,16 +24,27 @@
 
 #include <memory>
 
+#include <QtGlobal>
+#include <QObject>
+#include <QPointF>
+#include <QString>
+#include <vector>
+
+#include "core/map_coord.h"
 #include "util/matrix.h"
 #include "util/transformation.h"
 
-QT_BEGIN_NAMESPACE
+class QByteArray;
+class QColor;
 class QIODevice;
 class QPainter;
 class QRectF;
+class QTransform;
+class QWidget;
 class QXmlStreamReader;
 class QXmlStreamWriter;
-QT_END_NAMESPACE
+
+namespace OpenOrienteering {
 
 class Map;
 class MapView;
@@ -89,7 +100,7 @@ struct TemplateTransform
 	
 	void load(QIODevice* file);
 	
-	void save(QXmlStreamWriter& xml, const QString role) const;
+	void save(QXmlStreamWriter& xml, const QString& role) const;
  	void load(QXmlStreamReader& xml);
 };
 
@@ -134,7 +145,7 @@ protected:
 	Template(const QString& path, not_null<Map*> map);
 
 public:	
-	virtual ~Template();
+	~Template() override;
 	
 	/**
 	 * Creates a duplicate of the template
@@ -225,7 +236,7 @@ public:
 	bool configureAndLoad(QWidget* dialog_parent, MapView* view);
 	
 	/**
-	 * Tries to find and load the template file non-interactively.
+	 * Tries to find the template file non-interactively.
 	 * 
 	 * This function searches for the template in the following locations:
 	 *  - saved relative position to map file, if available and map_directory is not empty
@@ -234,10 +245,23 @@ public:
 	 * 
 	 * Returns true if successful.
 	 * 
-	 * If out_loaded_from_map_dir is given, it is set to true if the template file is successfully
-	 * loaded using the template filename in the map's directory (3rd alternative).
+	 * If out_found_from_map_dir is given, it is set to true if the template file
+	 * is found using the template filename in the map's directory (3rd alternative).
+	 */
+	bool tryToFindTemplateFile(QString map_directory, bool* out_found_from_map_dir = nullptr);
+	
+	/**
+	 * Tries to find and load the template file non-interactively.
+	 * 
+	 * Returns true if the template was loaded successful.
+	 * 
+	 * If out_loaded_from_map_dir is given, it is set to true if the template file
+	 * is found using the template filename in the map's directory.
+	 * 
+	 * \see tryToFindTemplateFile
 	 */
 	bool tryToFindAndReloadTemplateFile(QString map_directory, bool* out_loaded_from_map_dir = nullptr);
+	
 	
 	/** 
 	 * Does configuration before the actual template is loaded.
@@ -299,7 +323,7 @@ public:
 	 * The scale is the combined view & template scale. It can be used to give
 	 * a minimum size to elements.
 	 */
-    virtual void drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, bool on_screen, float opacity) const = 0;
+    virtual void drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, float opacity) const = 0;
 	
 	
 	/** 
@@ -469,6 +493,11 @@ public:
 	MapCoord templatePosition() const;
 	void setTemplatePosition(MapCoord coord);
 	
+	MapCoord templatePositionOffset() const;
+	void setTemplatePositionOffset(MapCoord offset);
+	void applyTemplatePositionOffset();
+	void resetTemplatePositionOffset();
+	
 	inline qint64 getTemplateX() const {return transform.template_x;}
 	inline void setTemplateX(qint64 x) {transform.template_x = x; updateTransformationMatrices();}
 	
@@ -536,6 +565,7 @@ protected:
 	virtual Template* duplicateImpl() const = 0;
 	
 	
+#ifndef NO_NATIVE_FILE_FORMAT
 	/**
 	 * Hook for loading parameters needed by the actual template type.
 	 * 
@@ -544,6 +574,7 @@ protected:
 	 * Returns true on success.
 	 */
 	virtual bool loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version);
+#endif
 	
 	
 	/** 
@@ -622,12 +653,21 @@ protected:
 	/// Is the template in georeferenced mode?
 	bool is_georeferenced;
 	
-	
+private:	
 	// Properties for non-georeferenced templates (invalid if is_georeferenced is true) 
 	
 	/// Bounds correction offset for map templates. Must be masked out when saving.
-	QPointF accounted_offset;
+	MapCoord accounted_offset;
 	
+	/**
+	 * This class reverts the template's accounted offset for its lifetime.
+	 * 
+	 * \todo Copy/restore the transformation matrices when this no longer needs
+	 *       allocations.
+	 */
+	class ScopedOffsetReversal;
+	
+protected:
 	/// Currently active transformation. NOTE: after direct changes here call updateTransformationMatrices()
 	TemplateTransform transform;
 	
@@ -651,5 +691,8 @@ protected:
 	Matrix template_to_map;
 	Matrix template_to_map_other;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

@@ -17,10 +17,10 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OPENORIENTEERING_COORD_T_H
-#define OPENORIENTEERING_COORD_T_H
+#ifndef OPENORIENTEERING_TRANSFORM_T_H
+#define OPENORIENTEERING_TRANSFORM_T_H
 
-#include <QtTest/QtTest>
+#include <QObject>
 
 
 /**
@@ -30,7 +30,7 @@ class TransformTest : public QObject
 {
 Q_OBJECT
 public:
-	explicit TransformTest(QObject* parent = NULL);
+	explicit TransformTest(QObject* parent = nullptr);
 	
 private slots:
 	/**

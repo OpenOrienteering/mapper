@@ -3,29 +3,26 @@ title: Storing Maps and Templates on Android Devices
 keywords: Android
 ---
 
-Storage locations
------------------
+## Storage locations
 
 Android organizes storage and permissions different than PCs.
 Especially on SD cards, write access for apps is restricted.
 
 You can choose the following locations for storing data which you want to edit and to display in OpenOrienteering Mapper:
 
-- Folder "OOMapper" at the top level of the primary storage volume. On most devices, the primary storage volume is a part of the built-in storage. 
+ - Folder "OOMapper" at the top level of the primary storage volume. On most devices, the primary storage volume is a part of the built-in storage.
   Files in this area are stored permanently, until you decide to remove them.
   Unfortunately, there is usually only limited capacity available - this memory is expensive when buying the device.
 
-- Path "Android/data/org.openorienteering.mapper/files" on arbitrary storage volumes such as SD cards (since Mapper 0.6.5).
+ - Path "Android/data/org.openorienteering.mapper/files" on arbitrary storage volumes such as SD cards (since Mapper 0.6.5).
   This is the only convenient way to store map data on cheap extra memory cards.
   However, you need to be aware of the fact that these folders are removed by Android when you uninstall the Mapper app.
   So please carefully save your changes to a PC.
 
-OpenOrienteering Mapper for Android will create these folders when they are missing, and scan them for map files.
-It will display warnings when you open maps from the non-permanent app-specific folders or from read-only locations. (Top-level "OOMapper" folders on secondary storage volumes are scanned, but cannot be written to.)
+OpenOrienteering Mapper for Android will create these folders when they are missing, and scan them for map files. It will display warnings when you open maps from the non-permanent app-specific folders or from read-only locations. (Top-level "OOMapper" folders on secondary storage volumes are scanned, but cannot be written to.)
 
 
-File transfer
--------------
+## File transfer
 
 You can transfer files from and to a PC via a USB cable. Android supports multiple file transfer protocols.
 

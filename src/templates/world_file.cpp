@@ -21,9 +21,16 @@
 
 #include "world_file.h"
 
+#include <QCharRef>
 #include <QFile>
+#include <QFlags>
+#include <QIODevice>
+#include <QLatin1Char>
+#include <QLatin1String>
 #include <QTextStream>
 
+
+namespace OpenOrienteering {
 
 WorldFile::WorldFile()
 {
@@ -42,24 +49,24 @@ bool WorldFile::load(const QString& path)
 	QTextStream text_stream(&file);
 	
 	bool ok = false;
-	double numbers[6];
-	for (int i = 0; i < 6; ++i)
+	double parameters[6];
+	for (auto& parameter : parameters)
 	{
-		double number = text_stream.readLine().toDouble(&ok);
+		auto value = text_stream.readLine().toDouble(&ok);
 		if (!ok)
 		{
 			file.close();
 			loaded = false;
 			return false;
 		}
-		numbers[i] = number;
+		parameter = value;
 	}
 	
 	file.close();
 	
 	pixel_to_world.setMatrix(
-		numbers[0], numbers[2], numbers[4],
-		numbers[1], numbers[3], numbers[5],
+		parameters[0], parameters[2], parameters[4],
+		parameters[1], parameters[3], parameters[5],
 		0, 0, 1);
 	pixel_to_world = pixel_to_world.transposed();
 	loaded = true;
@@ -89,8 +96,10 @@ bool WorldFile::tryToLoadForImage(const QString& image_path)
 	// Possibility 3: replace original extension by 'wld'
 	test_path = path_without_ext + QLatin1String("wld");
 	if (load(test_path))
-		return true;
+		return true; // NOLINT
 	
 	return false;
 }
 
+
+}  // namespace OpenOrienteering

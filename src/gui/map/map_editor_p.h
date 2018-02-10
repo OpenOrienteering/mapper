@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013, 2014 Thomas Schöps
- *    Copyright 2013, 2014 Kai Pastor
+ *    Copyright 2013, 2014, 2015, 2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,15 +19,21 @@
  */
 
 
-#ifndef _OPENORIENTEERING_MAP_EDITOR_P_H_
-#define _OPENORIENTEERING_MAP_EDITOR_P_H_
+#ifndef OPENORIENTEERING_MAP_EDITOR_P_H
+#define OPENORIENTEERING_MAP_EDITOR_P_H
 
 #include <QAction>
 #include <QDockWidget>
 
-QT_BEGIN_NAMESPACE
-class QSizeGrip;
-QT_END_NAMESPACE
+class QEvent;
+class QIcon;
+class QObject;
+class QResizeEvent;
+class QSizeGrip; // IWYU pragma: keep
+class QString;
+class QWidget;
+
+namespace OpenOrienteering {
 
 class MapEditorController;
 class Template;
@@ -45,8 +51,8 @@ public:
 					 MapEditorController* editor, QWidget* parent = nullptr);
 	
 protected:
-	virtual bool event(QEvent* event) override;
-	virtual void resizeEvent(QResizeEvent *event) override;
+	bool event(QEvent* event) override;
+	void resizeEvent(QResizeEvent *event) override;
 	
 private:
 	QAction* action;
@@ -74,5 +80,8 @@ signals:
 private slots:
 	void triggeredImpl(bool checked);
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

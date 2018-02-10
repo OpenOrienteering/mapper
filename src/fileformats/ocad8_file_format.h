@@ -17,10 +17,22 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OCAD8_FILE_IMPORT_H
-#define OCAD8_FILE_IMPORT_H
+#ifndef OPENORIENTEERING_OCAD8_FILE_FORMAT_H
+#define OPENORIENTEERING_OCAD8_FILE_FORMAT_H
+
+#include <cstddef>
 
 #include "file_format.h"
+
+class QIODevice;
+
+namespace OpenOrienteering {
+
+class Exporter;
+class Importer;
+class Map;
+class MapView;
+
 
 /** Representation of the format used by OCAD 8. 
  */
@@ -29,9 +41,12 @@ class OCAD8FileFormat : public FileFormat
 public:
 	OCAD8FileFormat();
 	
-	bool understands(const unsigned char *buffer, size_t sz) const;
-	virtual Importer* createImporter(QIODevice* stream, Map *map, MapView *view) const;
-	virtual Exporter* createExporter(QIODevice* stream, Map* map, MapView* view) const;
+	bool understands(const unsigned char *buffer, std::size_t sz) const override;
+	Importer* createImporter(QIODevice* stream, Map *map, MapView *view) const override;
+	Exporter* createExporter(QIODevice* stream, Map* map, MapView* view) const override;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif // OCAD8_FILE_IMPORT_H

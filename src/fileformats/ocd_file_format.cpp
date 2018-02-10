@@ -22,20 +22,28 @@
 
 #include "ocd_file_format.h"
 
-#include "ocd_file_export.h"
-#include "ocd_file_import.h"
+#include <QtGlobal>
+#include <QCoreApplication>
+#include <QFlags>
+#include <QString>
 
+#include "fileformats/file_import_export.h"
+#include "fileformats/ocd_file_export.h"
+#include "fileformats/ocd_file_import.h"
+
+
+namespace OpenOrienteering {
 
 // ### OcdFileFormat ###
 
 OcdFileFormat::OcdFileFormat()
-: FileFormat { MapFile, "OCD", ImportExport::tr("OCAD"), QString::fromLatin1("ocd"),
+: FileFormat { MapFile, "OCD", ::OpenOrienteering::ImportExport::tr("OCAD"), QString::fromLatin1("ocd"),
                ImportSupported | ExportSupported | ExportLossy }
 {
 	// Nothing
 }
 
-bool OcdFileFormat::understands(const unsigned char* buffer, size_t sz) const
+bool OcdFileFormat::understands(const unsigned char* buffer, std::size_t sz) const
 {
 	// The first two bytes of the file must be 0x0cad in litte endian ordner.
 	// This test will refuse to understand OCD files on big endian systems:
@@ -53,3 +61,5 @@ Exporter* OcdFileFormat::createExporter(QIODevice* stream, Map* map, MapView* vi
 	return new OcdFileExport(stream, map, view);
 }
 
+
+}  // namespace OpenOrienteering

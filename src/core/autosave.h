@@ -22,7 +22,12 @@
 
 #include <QScopedPointer>
 
+class QString;
+
+namespace OpenOrienteering {
+
 class AutosavePrivate;
+
 
 /**
  * @brief Class Autosave implements autosaving behaviour.
@@ -80,5 +85,8 @@ private:
 	
 	QScopedPointer<AutosavePrivate> autosave_controller;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

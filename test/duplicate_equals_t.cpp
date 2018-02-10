@@ -20,9 +20,15 @@
 
 #include "duplicate_equals_t.h"
 
+#include <QtTest>
+
+#include "test_config.h"
+
 #include "global.h"
 #include "core/map.h"
 #include "core/objects/object.h"
+
+using namespace OpenOrienteering;
 
 
 namespace
@@ -32,7 +38,7 @@ static const auto test_files = {
   "data:test_map.omap",
 };
 
-} // namespace
+}  // namespace
 
 
 void DuplicateEqualsTest::initTestCase()
@@ -40,7 +46,7 @@ void DuplicateEqualsTest::initTestCase()
 	doStaticInitializations();
 	
 	static const auto prefix = QString::fromLatin1("data");
-	QDir::addSearchPath(prefix, QFileInfo(QString::fromUtf8(__FILE__)).dir().absoluteFilePath(prefix));
+	QDir::addSearchPath(prefix, QDir(QString::fromUtf8(MAPPER_TEST_SOURCE_DIR)).absoluteFilePath(prefix));
 	
 	for (auto raw_path : test_files)
 	{
@@ -105,7 +111,7 @@ void DuplicateEqualsTest::objects()
 			
 			Object* assigned = Object::getObjectForType(original->getType(), original->getSymbol());
 			QVERIFY(assigned);
-			*assigned = *original;
+			assigned->copyFrom(*original);
 			QVERIFY(original->equals(assigned, true));
 			QVERIFY(!assigned->getMap());
 		}
@@ -122,7 +128,9 @@ void DuplicateEqualsTest::objects()
  * while running with "minimal" platform plugin.
  */
 #ifndef Q_OS_MACOS
-static auto qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");
+namespace  {
+	auto qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");  // clazy:exclude=non-pod-global-static
+}
 #endif
 
 

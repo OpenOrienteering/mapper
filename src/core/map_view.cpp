@@ -21,12 +21,26 @@
 
 #include "map_view.h"
 
+#include <algorithm>
+#include <cmath>
+#include <iterator>
+#include <stdexcept>
+
 #include <QRectF>
 
-#include "map.h"
-#include "../templates/template.h"
+#include <Qt>
+#include <QIODevice>
+#include <QLatin1String>
+#include <QString>
+#include <QStringRef>
+#include <QXmlStreamReader>
+
+#include "core/map.h"
+#include "core/map_coord.h"
+#include "gui/util_gui.h"
+#include "templates/template.h" // IWYU pragma: keep
 #include "util/util.h"
-#include "../util/xml_stream_util.h"
+#include "util/xml_stream_util.h"
 
 
 namespace literal
@@ -45,6 +59,10 @@ namespace literal
 	static const QLatin1String ref("ref");
 	static const QLatin1String template_string("template");
 }
+
+
+
+namespace OpenOrienteering {
 
 const double MapView::zoom_in_limit = 512;
 const double MapView::zoom_out_limit = 1 / 16.0;
@@ -446,10 +464,20 @@ TemplateVisibility MapView::getTemplateVisibility(const Template* temp) const
 		return { 1.0f, false };
 }
 
-void MapView::setTemplateVisibility(const Template* temp, TemplateVisibility vis)
+void MapView::setTemplateVisibility(Template* temp, TemplateVisibility vis)
 {
+	auto visible = vis.visible && vis.opacity > 0;
+	if (visible
+	    && temp->getTemplateState() != Template::Loaded
+	    && !templateLoadingBlocked())
+	{
+		vis.visible = visible = temp->loadTemplateFile(false);
+	}
+	
 	if (setTemplateVisibilityHelper(temp, vis))
-		emit visibilityChanged(VisibilityFeature::TemplateVisible, vis.visible && vis.opacity > 0, temp);
+	{
+		emit visibilityChanged(VisibilityFeature::TemplateVisible, visible, temp);
+	}
 }
 
 bool MapView::setTemplateVisibilityHelper(const Template *temp, TemplateVisibility vis)
@@ -469,7 +497,7 @@ bool MapView::setTemplateVisibilityHelper(const Template *temp, TemplateVisibili
 	return false;
 }
 
-void MapView::onTemplateAdded(int, const Template* temp)
+void MapView::onTemplateAdded(int, Template* temp)
 {
 	setTemplateVisibility(temp, { 1.0f, true });
 }
@@ -506,3 +534,13 @@ void MapView::setOverprintingSimulationEnabled(bool enabled)
 		emit visibilityChanged(VisibilityFeature::OverprintingEnabled, enabled);
 	}
 }
+
+
+
+void MapView::setTemplateLoadingBlocked(bool blocked)
+{
+	template_loading_blocked = blocked;
+}
+
+
+}  // namespace OpenOrienteering

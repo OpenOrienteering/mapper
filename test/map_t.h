@@ -21,9 +21,7 @@
 #ifndef OPENORIENTEERING_MAP_T_H
 #define OPENORIENTEERING_MAP_T_H
 
-#include <QtTest/QtTest>
-
-#include "core/objects/object.h"
+#include <QObject>
 
 
 /**
@@ -37,6 +35,9 @@ Q_OBJECT
 private slots:
 	void initTestCase();
 	
+	/** Test icon scaling */
+	void iconTest();
+	 
 	/** Tests basic print configuration properties. */
 	void printerConfigTest();
 	
@@ -46,6 +47,14 @@ private slots:
 	/** Tests various modes of Map::importMap(). */
 	void importTest_data();
 	void importTest();
+	
+	/** Basic tests for symbol set replacements. */
+	void crtFileTest();
+	
+	/** Tests symbol set replacements with example files. */
+	void matchQuerySymbolNumberTest_data();
+	void matchQuerySymbolNumberTest();
+	
 };
 
 #endif

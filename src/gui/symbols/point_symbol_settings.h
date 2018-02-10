@@ -22,16 +22,18 @@
 #ifndef OPENORIENTEERING_POINT_SYMBOL_SETTINGS_H
 #define OPENORIENTEERING_POINT_SYMBOL_SETTINGS_H
 
+#include <QObject>
+
 #include "gui/symbols/symbol_properties_widget.h"
 
-#include "core/symbols/point_symbol.h"
-
-QT_BEGIN_NAMESPACE
 class QVBoxLayout;
 class QWidget;
-QT_END_NAMESPACE
 
+namespace OpenOrienteering {
+
+class PointSymbol;
 class PointSymbolEditorWidget;
+class Symbol;
 class SymbolSettingDialog;
 
 
@@ -40,8 +42,9 @@ class PointSymbolSettings : public SymbolPropertiesWidget
 Q_OBJECT
 public:
 	PointSymbolSettings(PointSymbol* symbol, SymbolSettingDialog* dialog);
+	~PointSymbolSettings() override;
 	
-	virtual void reset(Symbol* symbol);
+	void reset(Symbol* symbol) override;
 	
 public slots:
 	void tabChanged(int index);
@@ -53,5 +56,8 @@ private:
 	QWidget* point_tab;
 	
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

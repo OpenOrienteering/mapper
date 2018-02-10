@@ -18,30 +18,34 @@
  */
 
 
-#ifndef _OPENORIENTEERING_TEMPLATE_POSITION_DOCK_WIDGET_H_
-#define _OPENORIENTEERING_TEMPLATE_POSITION_DOCK_WIDGET_H_
+#ifndef OPENORIENTEERING_TEMPLATE_POSITION_DOCK_WIDGET_H
+#define OPENORIENTEERING_TEMPLATE_POSITION_DOCK_WIDGET_H
 
 #include <QDockWidget>
+#include <QObject>
 
-QT_BEGIN_NAMESPACE
+class QEvent;
+class QCloseEvent;
 class QLineEdit;
-QT_END_NAMESPACE
+class QWidget;
+
+namespace OpenOrienteering {
 
 class MapEditorController;
 class Template;
-class TemplateListWidget;
+
 
 /** Dock widget allowing to enter template positioning properties numerically. */
 class TemplatePositionDockWidget : public QDockWidget
 {
 Q_OBJECT
 public:
-	TemplatePositionDockWidget(Template* temp, MapEditorController* controller, QWidget* parent = NULL);
+	TemplatePositionDockWidget(Template* temp, MapEditorController* controller, QWidget* parent = nullptr);
 	
 	void updateValues();
 	
-	virtual bool event(QEvent* event);
-	virtual void closeEvent(QCloseEvent* event);
+	bool event(QEvent* event) override;
+	void closeEvent(QCloseEvent* event) override;
 	
 public slots:
 	void templateChanged(int index, const Template* temp);
@@ -59,5 +63,8 @@ private:
 	Template* temp;
 	MapEditorController* controller;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

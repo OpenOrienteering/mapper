@@ -22,16 +22,30 @@
 
 #include <QFileInfo>
 
-#include "core/map.h"
-#include "core/symbols/symbol.h"
-#include "../templates/template.h"
-#include "core/objects/object.h"
+#include "fileformats/file_format.h"
 
+
+namespace OpenOrienteering {
 
 FileFormatRegistry FileFormats;
 
 
 // ### FormatRegistry ###
+
+FileFormatRegistry::FileFormatRegistry() noexcept
+: default_format_id{ nullptr }
+{
+	// nothing else
+}
+
+
+FileFormatRegistry::~FileFormatRegistry()
+{
+	for (auto format : fmts)
+		delete format;
+}
+
+
 
 void FileFormatRegistry::registerFormat(FileFormat *format)
 {
@@ -59,16 +73,19 @@ const FileFormat *FileFormatRegistry::findFormat(const char* id) const
 	{
 		if (qstrcmp(format->id(), id) == 0) return format;
 	}
-	return NULL;
+	return nullptr;
 }
 
 const FileFormat *FileFormatRegistry::findFormatByFilter(const QString& filter) const
 {
 	for (auto format : fmts)
 	{
-		if (format->filter() == filter) return format;
+		// Compare only before closing ')'. Needed for QTBUG 51712 workaround in
+		// file_dialog.cpp, and warranted by Q_ASSERT in registerFormat().
+		if (filter.startsWith(format->filter().leftRef(format->filter().length()-1)))
+			return format;
 	}
-	return NULL;
+	return nullptr;
 }
 
 const FileFormat *FileFormatRegistry::findFormatForFilename(const QString& filename) const
@@ -78,13 +95,8 @@ const FileFormat *FileFormatRegistry::findFormatForFilename(const QString& filen
 	{
 		if (format->fileExtensions().contains(file_extension, Qt::CaseInsensitive)) return format;
 	}
-	return NULL;
+	return nullptr;
 }
 
-FileFormatRegistry::~FileFormatRegistry()
-{
-	for (std::vector<FileFormat *>::reverse_iterator it = fmts.rbegin(); it != fmts.rend(); ++it)
-	{
-		delete *it;
-	}
-}
+
+}  // namespace OpenOrienteering

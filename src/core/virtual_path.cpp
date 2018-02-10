@@ -24,9 +24,11 @@
 #include "util/util.h"
 
 
+namespace OpenOrienteering {
 
 namespace
 {
+
 	/**
 	 * Global position error threshold for approximating
 	 * bezier curves with straight segments.
@@ -43,7 +45,9 @@ namespace
 	 * This is counteracted by generating many segments.
 	 */
 	const PathCoord::length_type bezier_segment_maxlen_squared = 1.0;
-}
+	
+	
+}  // namespace
 
 
 
@@ -193,7 +197,7 @@ QRectF PathCoordVector::calculateExtent() const
 	return extent;
 }
 
-bool PathCoordVector::intersectsBox(QRectF box) const
+bool PathCoordVector::intersectsBox(const QRectF& box) const
 {
 	bool result = false;
 	if (!empty())
@@ -836,3 +840,6 @@ void VirtualPath::copyLengths(
 	
 	out_lengths.push_back(last.clen);
 }
+
+
+}  // namespace OpenOrienteering

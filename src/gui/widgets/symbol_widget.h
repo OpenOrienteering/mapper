@@ -19,14 +19,21 @@
  */
 
 
-#ifndef _OPENORIENTEERING_SYMBOL_WIDGET_H_
-#define _OPENORIENTEERING_SYMBOL_WIDGET_H_
+#ifndef OPENORIENTEERING_SYMBOL_WIDGET_H
+#define OPENORIENTEERING_SYMBOL_WIDGET_H
 
+#include <QObject>
 #include <QScrollArea>
+
+class QContextMenuEvent;
+class QWidget;
+
+namespace OpenOrienteering {
 
 class Map;
 class Symbol;
 class SymbolRenderWidget;
+
 
 /**
  * @brief Shows all symbols from a map in a scrollable widget.
@@ -43,28 +50,28 @@ Q_OBJECT
 public:
 	/**
 	 * @brief Constructs a new SymbolWidget.
-	 * @param map The map which provides the symbols. Must not be NULL.
+	 * @param map The map which provides the symbols. Must not be nullptr.
 	 * @param mobile_mode If true, enables a special mode for mobile devices.
 	 * @param parent The parent QWidget.
 	 */
-	SymbolWidget(Map* map, bool mobile_mode, QWidget* parent = NULL);
+	SymbolWidget(Map* map, bool mobile_mode, QWidget* parent = nullptr);
 	
 	/**
 	 * @brief Destroys the SymbolWidget.
 	 */
-	virtual ~SymbolWidget();
+	~SymbolWidget() override;
 	
 	/**
 	 * @brief If exactly one symbol is selected, returns this symbol.
 	 * 
-	 * Otherwise returns NULL.
+	 * Otherwise returns nullptr.
 	 */
 	const Symbol* getSingleSelectedSymbol() const;
 	
 	/**
 	 * @brief If exactly one symbol is selected, returns this symbol.
 	 * 
-	 * Otherwise returns NULL.
+	 * Otherwise returns nullptr.
 	 */
 	Symbol* getSingleSelectedSymbol();
 	
@@ -117,10 +124,13 @@ protected:
 	/**
 	 * @brief Receives context menu events and opens the context menu.
 	 */
-	virtual void contextMenuEvent(QContextMenuEvent* event);
+	void contextMenuEvent(QContextMenuEvent* event) override;
 	
 private:
 	SymbolRenderWidget* render_widget;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

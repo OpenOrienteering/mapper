@@ -18,15 +18,14 @@
  */
 
 
-#ifndef _OPENORIENTEERING_LATLON_H_
-#define _OPENORIENTEERING_LATLON_H_
+#ifndef OPENORIENTEERING_LATLON_H
+#define OPENORIENTEERING_LATLON_H
 
-#include <qmath.h>
+#include <QtMath>
 
-QT_BEGIN_NAMESPACE
 class QDebug;
-QT_END_NAMESPACE
 
+namespace OpenOrienteering {
 
 /**
  * @brief Specifies geographic location by latitude and longitude.
@@ -54,34 +53,34 @@ public:
 	/**
 	 * Constructs a new LatLon for the latitude and longitude given in degrees.
 	 */
-	LatLon(double latitude = 0.0, double longitude = 0.0);
+	constexpr LatLon(double latitude = 0.0, double longitude = 0.0) noexcept;
 	
 	/**
 	 * Returns a new LatLon for the latitude and longitude given in radiant.
 	 */
-	static LatLon fromRadiant(double latitude, double longitude);
+	constexpr static LatLon fromRadiant(double latitude, double longitude) noexcept;
 	
 	/**
 	 * Returns the latitude value in degrees.
 	 */
-	double latitude() const;
+	constexpr double latitude() const;
 	
 	/**
 	 * Returns the longitude value in degrees.
 	 */
-	double longitude() const;
+	constexpr double longitude() const;
 	
 	/**
 	 * Returns true if this object has exactly the same latitude and longitude
 	 * like another. FP precision issues are not taken into account.
 	 */
-	bool operator==(const LatLon& rhs) const;
+	constexpr bool operator==(const LatLon& rhs) const;
 	
 	/**
 	 * Returns true if this object has not exactly the same latitude and longitude
 	 * like another. FP precision issues are not taken into account.
 	 */
-	bool operator!=(const LatLon& rhs) const;
+	constexpr bool operator!=(const LatLon& rhs) const;
 };
 
 /**
@@ -96,7 +95,7 @@ QDebug operator<<(QDebug dbg, const LatLon &lat_lon);
 //### LatLon inline code ###
 
 inline
-LatLon::LatLon(double latitude, double longitude)
+constexpr LatLon::LatLon(double latitude, double longitude) noexcept
 : latitude_value(latitude)
 , longitude_value(longitude)
 {
@@ -104,33 +103,36 @@ LatLon::LatLon(double latitude, double longitude)
 }
 
 inline
-LatLon LatLon::fromRadiant(double latitude, double longitude)
+constexpr LatLon LatLon::fromRadiant(double latitude, double longitude) noexcept
 {
-	return LatLon(latitude * 180.0 / M_PI, longitude * 180.0 / M_PI);
+	return LatLon(qRadiansToDegrees(latitude), qRadiansToDegrees(longitude));
 }
 
 inline
-double LatLon::latitude() const
+constexpr double LatLon::latitude() const
 {
 	return latitude_value;
 }
 
 inline
-double LatLon::longitude() const
+constexpr double LatLon::longitude() const
 {
 	return longitude_value;
 }
 
 inline
-bool LatLon::operator==(const LatLon& rhs) const
+constexpr bool LatLon::operator==(const LatLon& rhs) const
 {
 	return (this->latitude_value == rhs.latitude_value) && (this->longitude_value == rhs.longitude_value);
 }
 
 inline
-bool LatLon::operator!=(const LatLon& rhs) const
+constexpr bool LatLon::operator!=(const LatLon& rhs) const
 {
 	return !(*this == rhs);
 }
+
+
+}  // namespace OpenOrienteering
 
 #endif

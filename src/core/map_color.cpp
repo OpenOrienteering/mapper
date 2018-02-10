@@ -21,11 +21,19 @@
 
 #include "map_color.h"
 
-#include <QCoreApplication>
+#include <algorithm>
+#include <iterator>
 
+#include <Qt>
+#include <QCoreApplication>
+#include <QLatin1Char>
+#include <QLatin1String>
+
+
+namespace OpenOrienteering {
 
 MapColor::MapColor()
-: name(QCoreApplication::translate("Map", "New color")),
+: name(QCoreApplication::translate("OpenOrienteering::Map", "New color")),
   priority(Undefined),
   opacity(1.0f),
   q_color(Qt::black),
@@ -39,7 +47,7 @@ MapColor::MapColor()
 }
 
 MapColor::MapColor(int priority)
-: name(QCoreApplication::translate("Map", "New color")),
+: name(QCoreApplication::translate("OpenOrienteering::Map", "New color")),
   priority(priority),
   opacity(1.0f),
   q_color(Qt::black),
@@ -68,7 +76,7 @@ MapColor::MapColor(int priority)
 			break;
 		case Registration:
 			Q_ASSERT(isBlack());
-			name = QCoreApplication::translate("MapColor", "Registration black (all printed colors)");
+			name = QCoreApplication::translate("OpenOrienteering::MapColor", "Registration black (all printed colors)");
 			break;
 		default:
 			; // no change
@@ -108,61 +116,33 @@ MapColor* MapColor::duplicate() const
 
 bool MapColor::isBlack() const
 {
-	Q_ASSERT(rgb.isBlack() == cmyk.isBlack());
-	return rgb.isBlack();
+	return rgb.isBlack() && cmyk.isBlack();
 }
 
 bool MapColor::isWhite() const
 {
-	Q_ASSERT(rgb.isWhite() == cmyk.isWhite());
-	return rgb.isWhite();
+	return rgb.isWhite() && cmyk.isWhite();
 }
 
 
-bool operator==(const SpotColorComponents &lhs, const SpotColorComponents& rhs)
+bool operator==(const SpotColorComponents& lhs, const SpotColorComponents& rhs)
 {
-	if (lhs.size() != rhs.size())
-		return false;
-	
-	// Not efficient, but correct.
-	SpotColorComponents::const_iterator rhs_it, rhs_end = rhs.end();
-	for (SpotColorComponents::const_iterator lhs_it = lhs.begin(), lhs_end = lhs.end(); lhs_it != lhs_end; ++lhs_it)
-	{
-		for (rhs_it = rhs.begin(); rhs_it != rhs_end; ++rhs_it)
-		{
-			if (*lhs_it->spot_color != *rhs_it->spot_color)
-				continue;
-			if (qAbs(lhs_it->factor - rhs_it->factor) < 1e-03)
-				break;
-		}
-		if (rhs_it == rhs_end)
-			return false; // No match for *lhs_it
-	}
-	return true;
+	return lhs.size() == rhs.size()
+	       && std::is_permutation(begin(lhs), end(lhs), begin(rhs), [](const auto& left, const auto& right) {
+		return *left.spot_color == *right.spot_color
+		       && qAbs(left.factor - right.factor) < 1e-03;
+	});
 }
 
 bool MapColor::componentsEqual(const MapColor& other, bool compare_priority) const
 {
 	const SpotColorComponents& lhs(components);
 	const SpotColorComponents& rhs(other.components);
-	if (lhs.size() != rhs.size())
-		return false;
-	
-	// Not efficient, but correct.
-	SpotColorComponents::const_iterator rhs_it, rhs_end = rhs.end();
-	for (SpotColorComponents::const_iterator lhs_it = lhs.begin(), lhs_end = lhs.end(); lhs_it != lhs_end; ++lhs_it)
-	{
-		for (rhs_it = rhs.begin(); rhs_it != rhs_end; ++rhs_it)
-		{
-			if (!lhs_it->spot_color->equals(*rhs_it->spot_color, compare_priority))
-				continue;
-			if (qAbs(lhs_it->factor - rhs_it->factor) < 1e-03)
-				break;
-		}
-		if (rhs_it == rhs_end)
-			return false; // No match for *lhs_it
-	}
-	return true;
+	return lhs.size() == rhs.size()
+	       && std::is_permutation(begin(lhs), end(lhs), begin(rhs), [compare_priority](const auto& left, const auto& right) {
+		return left.spot_color->equals(*right.spot_color, compare_priority)
+		       && qAbs(left.factor - right.factor) < 1e-03;
+	});
 }
 
 bool MapColor::equals(const MapColor& other, bool compare_priority) const
@@ -379,3 +359,6 @@ MapColorRgb MapColor::rgbFromSpotColors() const
 	}
 	return rgb;
 }
+
+
+}  // namespace OpenOrienteering

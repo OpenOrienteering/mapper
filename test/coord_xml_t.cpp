@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013-2015 Kai Pastor
+ *    Copyright 2013-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,8 +21,11 @@
 
 #include <algorithm>
 
-#include "../src/fileformats/xml_file_format.h"
-#include "../src/util/xml_stream_util.h"
+#include <QtTest>
+
+#include "fileformats/xml_file_format.h"
+#include "util/xml_stream_util.h"
+
 
 namespace literal
 {
@@ -32,9 +35,11 @@ namespace literal
 }
 
 
+namespace OpenOrienteering {
+
 void CoordXmlTest::initTestCase()
 {
-	proto_coord = MapCoord::fromNative(12345, -6789, 3);
+	proto_coord = MapCoord::fromNative(12345, -6789, MapCoord::DashPoint);
 	buffer.buffer().reserve(5000000);
 }
 
@@ -393,7 +398,7 @@ void CoordXmlTest::readXml()
 		writeXml_implementation(coords, xml);
 		xml.writeEndElement(/* coords */);
 		
-		xml.setDevice(NULL);
+		xml.setDevice(nullptr);
 		
 		buffer.close();
 		header.close();
@@ -431,7 +436,7 @@ void CoordXmlTest::readXml()
 			XmlElementReader element(xml);
 			auto x = element.attribute<qint32>(literal::x);
 			auto y = element.attribute<qint32>(literal::y);
-			auto flags = element.attribute<int>(literal::flags);
+			auto flags = MapCoord::Flags(element.attribute<unsigned int>(literal::flags));
 			coords.push_back(MapCoord::fromNative(x, y, flags));
 		}
 	}
@@ -475,7 +480,7 @@ void CoordXmlTest::readHumanReadableStream()
 		writeHumanReadableString_implementation(coords, xml);
 		xml.writeEndElement();
 		
-		xml.setDevice(NULL);
+		xml.setDevice(nullptr);
 		
 		buffer.close();
 		header.close();
@@ -529,14 +534,14 @@ void CoordXmlTest::readHumanReadableStream()
 				while (!stream.atEnd())
 				{
 					qint32 x, y;
-					int flags = 0;
+					MapCoord::Flags::Int flags = 0;
 					char separator;
 					stream >> x >> y >> separator;
 					if (separator != ';')
 					{
 						stream >> flags >> separator;
 					}
-					coords.push_back(MapCoord::fromNative(x, y, flags));
+					coords.push_back(MapCoord::fromNative(x, y, MapCoord::Flags{flags}));
 				}
 				if (stream.status() == QTextStream::ReadCorruptData)
 				{
@@ -588,7 +593,7 @@ void CoordXmlTest::readHumanReadableStringRef()
 		writeHumanReadableString_implementation(coords, xml);
 		xml.writeEndElement();
 		
-		xml.setDevice(NULL);
+		xml.setDevice(nullptr);
 		
 		buffer.close();
 		header.close();
@@ -778,7 +783,7 @@ void CoordXmlTest::readCompressed()
 		writeCompressed_implementation(coords, xml);
 		xml.writeEndElement();
 		
-		xml.setDevice(NULL);
+		xml.setDevice(nullptr);
 		
 		buffer.close();
 		header.close();
@@ -1017,7 +1022,7 @@ void CoordXmlTest::readFastImplementation()
 			element.write(coords);
 		}
 		
-		xml.setDevice(NULL);
+		xml.setDevice(nullptr);
 		
 		buffer.close();
 		header.close();
@@ -1063,4 +1068,6 @@ bool CoordXmlTest::compare_all(MapCoordVector& coords, MapCoord& expected) const
 }
 
 
-QTEST_GUILESS_MAIN(CoordXmlTest)
+}  // namespace OpenOrienteering
+
+QTEST_GUILESS_MAIN(OpenOrienteering::CoordXmlTest)

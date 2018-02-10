@@ -22,60 +22,81 @@
 #include "xml_file_format.h"
 #include "xml_file_format_p.h"
 
-#include <QBuffer>
-#include <QDebug>
-#include <QFile>
+#include <memory>
+#include <vector>
+
+#include <QtGlobal>
+#include <QByteArray>
+#include <QCoreApplication>
+#include <QDir>
+#include <QExplicitlySharedDataPointer>
+#include <QFileDevice>
+#include <QFileInfo>
+#include <QFlags>
+#include <QIODevice>
+#include <QLatin1String>
+#include <QObject>
+#include <QRectF>
 #include <QScopedValueRollback>
+#include <QString>
+#include <QStringRef>
+#include <QVariant>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
-#ifdef QT_PRINTSUPPORT_LIB
-#  include <QPrinter>
-#endif
-
-#include "file_import_export.h"
 #include "settings.h"
 #include "core/georeferencing.h"
-#include "core/map_color.h"
-#include "core/map_grid.h"
-#include "core/map_printer.h"
-#include "core/map_view.h"
 #include "core/map.h"
-#include "core/objects/object.h"
-#include "core/objects/text_object.h"
-#include "core/symbols/area_symbol.h"
-#include "core/symbols/combined_symbol.h"
+#include "core/map_color.h"
+#include "core/map_coord.h"
+#include "core/map_grid.h"
+#include "core/map_part.h"
+#include "core/map_printer.h"  // IWYU pragma: keep
+#include "core/map_view.h"
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/point_symbol.h"
-#include "core/symbols/text_symbol.h"
+#include "core/symbols/symbol.h"
+#include "fileformats/file_import_export.h"
 #include "templates/template.h"
 #include "undo/undo_manager.h"
 #include "util/xml_stream_util.h"
 
 
+namespace OpenOrienteering {
+
 // ### XMLFileFormat definition ###
 
-const int XMLFileFormat::minimum_version = 2;
-const int XMLFileFormat::current_version = 6;
+constexpr int XMLFileFormat::minimum_version = 2;
+constexpr int XMLFileFormat::current_version = 7;
 
 int XMLFileFormat::active_version = 5; // updated by XMLFileExporter::doExport()
 
+
+
 namespace {
+
 const char* magic_string = "<?xml ";
-const QString mapper_namespace = QString::fromLatin1("http://openorienteering.org/apps/mapper/xml/v2");
+
+QString mapperNamespace()
+{
+	return QStringLiteral("http://openorienteering.org/apps/mapper/xml/v2");
 }
 
+}  // namespace
+
+
+
 XMLFileFormat::XMLFileFormat()
- : FileFormat(MapFile, "XML", ImportExport::tr("OpenOrienteering Mapper"), QString::fromLatin1("omap"),
+ : FileFormat(MapFile, "XML", ::OpenOrienteering::ImportExport::tr("OpenOrienteering Mapper"), QString::fromLatin1("omap"),
               ImportSupported | ExportSupported) 
 {
 	addExtension(QString::fromLatin1("xmap"));
 }
 
-bool XMLFileFormat::understands(const unsigned char *buffer, size_t sz) const
+bool XMLFileFormat::understands(const unsigned char *buffer, std::size_t sz) const
 {
 	static const uint len = qstrlen(magic_string);
-	return (sz >= len && memcmp(buffer, magic_string, len) == 0);
+	return (sz >= len && qstrncmp(reinterpret_cast<const char*>(buffer), magic_string, len) == 0);
 }
 
 Importer *XMLFileFormat::createImporter(QIODevice* stream, Map *map, MapView *view) const
@@ -130,6 +151,7 @@ namespace literal
 	static const QLatin1String opacity("opacity");
 	
 	static const QLatin1String symbols("symbols");
+	static const QLatin1String id("id");
 	static const QLatin1String symbol("symbol");
 	
 	static const QLatin1String parts("parts");
@@ -176,16 +198,20 @@ void XMLFileExporter::doExport()
 	if (option(QString::fromLatin1("autoFormatting")).toBool())
 		xml.setAutoFormatting(true);
 	
+#ifdef MAPPER_ENABLE_COMPATIBILITY
 	int current_version = XMLFileFormat::current_version;
 	bool retain_compatibility = Settings::getInstance().getSetting(Settings::General_RetainCompatiblity).toBool();
-	XMLFileFormat::active_version = retain_compatibility ? current_version-1 : current_version;
+	XMLFileFormat::active_version = retain_compatibility ? 5 : current_version;
 	
 	if (XMLFileFormat::active_version < 6 && map->getNumParts() != 1)
 	{
 		throw FileFormatException(tr("Older versions of Mapper do not support multiple map parts. To save the map in compatibility mode, you must first merge all map parts."));
 	}
+#else
+	XMLFileFormat::active_version = XMLFileFormat::current_version;
+#endif
 	
-	xml.writeDefaultNamespace(mapper_namespace);
+	xml.writeDefaultNamespace(mapperNamespace());
 	xml.writeStartDocument();
 	writeLineBreak(xml);
 	
@@ -201,7 +227,7 @@ void XMLFileExporter::doExport()
 		exportColors();
 		writeLineBreak(xml);
 
-		XmlElementWriter* barrier = NULL;
+		XmlElementWriter* barrier = nullptr;
 		if (XMLFileFormat::active_version >= 6)
 		{
 			// Prevent Mapper versions < 0.6.0 from crashing
@@ -224,17 +250,21 @@ void XMLFileExporter::doExport()
 		delete barrier;
 		writeLineBreak(xml);
 
-		// Prevent Mapper versions < 0.6.0 from crashing
-		// when compatibilty mode IS activated
-		// Incompatible feature: new undo step types
-		barrier = new XmlElementWriter(xml, literal::barrier);
-		barrier->writeAttribute(literal::version, 6);
-		barrier->writeAttribute(literal::required, "0.6.0");
-		writeLineBreak(xml);
-		exportUndo();
-		exportRedo();
-		delete barrier;
-		writeLineBreak(xml);
+		if (Settings::getInstance().getSetting(Settings::General_SaveUndoRedo).toBool())
+		{
+			{
+				// Prevent Mapper versions < 0.6.0 from crashing
+				// when compatibilty mode IS activated
+				// Incompatible feature: new undo step types
+				XmlElementWriter barrier(xml, literal::barrier);
+				barrier.writeAttribute(literal::version, 6);
+				barrier.writeAttribute(literal::required, "0.6.0");
+				writeLineBreak(xml);
+				exportUndo();
+				exportRedo();
+			}
+			writeLineBreak(xml);
+		}
 	}
 	
 	xml.writeEndDocument();
@@ -329,8 +359,11 @@ void XMLFileExporter::exportColors()
 void XMLFileExporter::exportSymbols()
 {
 	XmlElementWriter symbols_element(xml, literal::symbols);
+	auto id = map->symbolSetId();
 	int num_symbols = map->getNumSymbols();
 	symbols_element.writeAttribute(literal::count, num_symbols);
+	if (!id.isEmpty())
+		symbols_element.writeAttribute(literal::id, id);
 	for (int i = 0; i < num_symbols; ++i)
 	{
 		writeLineBreak(xml);
@@ -343,10 +376,10 @@ void XMLFileExporter::exportMapParts()
 {
 	XmlElementWriter parts_element(xml, literal::parts);
 	
-	int num_parts = map->getNumParts();
+	auto num_parts = std::size_t(map->getNumParts());
 	parts_element.writeAttribute(literal::count, num_parts);
 	parts_element.writeAttribute(literal::current, map->current_part_index);
-	for (int i = 0; i < num_parts; ++i)
+	for (auto i = 0u; i < num_parts; ++i)
 	{
 		writeLineBreak(xml);
 		map->getPart(i)->save(xml);
@@ -356,6 +389,28 @@ void XMLFileExporter::exportMapParts()
 
 void XMLFileExporter::exportTemplates()
 {
+	// Update the relative paths of templates
+	if (auto file = qobject_cast<const QFileDevice*>(stream))
+	{
+		auto filename = file->fileName();
+		auto map_dir = QFileInfo(filename).absoluteDir();
+		if (!filename.isEmpty() && map_dir.exists())
+		{
+			for (int i = 0; i < map->getNumTemplates(); ++i)
+			{
+				auto temp = map->getTemplate(i);
+				if (temp->getTemplateState() != Template::Invalid)
+					temp->setTemplateRelativePath(map_dir.relativeFilePath(temp->getTemplatePath()));
+			}
+			for (int i = 0; i < map->getNumClosedTemplates(); ++i)
+			{
+				auto temp = map->getClosedTemplate(i);
+				if (temp->getTemplateState() != Template::Invalid)
+					temp->setTemplateRelativePath(map_dir.relativeFilePath(temp->getTemplatePath()));
+			}
+		}
+	}
+	
 	XmlElementWriter templates_element(xml, literal::templates);
 	
 	int num_templates = map->getNumTemplates() + map->getNumClosedTemplates();
@@ -445,17 +500,17 @@ void XMLFileImporter::import(bool load_symbols_only)
 {
 	if (!xml.readNextStartElement() || xml.name() != literal::map)
 	{
-		xml.raiseError(Importer::tr("Unsupported file format."));
+		xml.raiseError(::OpenOrienteering::Importer::tr("Unsupported file format."));
 	}
 	
 	XmlElementReader map_element(xml);
 	const int version = map_element.attribute<int>(literal::version);
 	if (version < 1)
-		xml.raiseError(Importer::tr("Invalid file format version."));
+		xml.raiseError(::OpenOrienteering::Importer::tr("Invalid file format version."));
 	else if (version < XMLFileFormat::minimum_version)
-		xml.raiseError(Importer::tr("Unsupported old file format version. Please use an older program version to load and update the file."));
+		xml.raiseError(::OpenOrienteering::Importer::tr("Unsupported old file format version. Please use an older program version to load and update the file."));
 	else if (version > XMLFileFormat::current_version)
-		addWarning(Importer::tr("Unsupported new file format version. Some map features will not be loaded or saved by this version of the program."));
+		addWarning(::OpenOrienteering::Importer::tr("Unsupported new file format version. Some map features will not be loaded or saved by this version of the program."));
 	
 	QScopedValueRollback<MapCoord::BoundsOffset> rollback { MapCoord::boundsOffset() };
 	MapCoord::boundsOffset().reset(true);
@@ -582,8 +637,7 @@ void XMLFileImporter::importGeoreferencing(bool load_symbols_only)
 		if (error_text.isEmpty())
 			error_text = tr("Unknown error");
 		addWarning(tr("Unsupported or invalid georeferencing specification '%1': %2").
-		           arg(georef.getProjectedCRSSpec()).
-		           arg(error_text));
+		           arg(georef.getProjectedCRSSpec(), error_text));
 	}
 	
 	if (MapCoord::boundsOffset().isZero())
@@ -613,10 +667,10 @@ typedef std::vector<XMLFileImporterColorBacklogItem> XMLFileImporterColorBacklog
 void XMLFileImporter::importColors()
 {
 	XmlElementReader all_colors_element(xml);
-	int num_colors = all_colors_element.attribute<int>(literal::count);
+	auto num_colors = all_colors_element.attribute<std::size_t>(literal::count);
 	
 	Map::ColorVector& colors(map->color_set->colors);
-	colors.reserve(qMin(num_colors, 100)); // 100 is not a limit
+	colors.reserve(qMin(num_colors, std::size_t(100))); // 100 is not a limit
 	XMLFileImporterColorBacklog backlog;
 	backlog.reserve(colors.size());
 	while (xml.readNextStartElement())
@@ -725,7 +779,7 @@ void XMLFileImporter::importColors()
 		}
 	}
 	
-	if (num_colors > 0 && num_colors != (int)colors.size())
+	if (num_colors > 0 && num_colors != colors.size())
 		addWarning(tr("Expected %1 colors, found %2.").
 		  arg(num_colors).
 		  arg(colors.size())
@@ -740,7 +794,7 @@ void XMLFileImporter::importColors()
 		for (auto&& in_component : item.components)
 		{
 			const MapColor* out_color = map->getColor(in_component.spot_color->getPriority());
-			if (out_color == NULL || out_color->getSpotColorMethod() != MapColor::SpotColor)
+			if (!out_color || out_color->getSpotColorMethod() != MapColor::SpotColor)
 			{
 				addWarning(tr("Spot color %1 not found while processing %2 (%3).").
 				  arg(in_component.spot_color->getPriority()).
@@ -777,8 +831,9 @@ void XMLFileImporter::importSymbols()
 	MapCoord::boundsOffset().reset(false);
 	
 	XmlElementReader symbols_element(xml);
-	int num_symbols = symbols_element.attribute<int>(literal::count);
-	map->symbols.reserve(qMin(num_symbols, 1000)); // 1000 is not a limit
+	map->setSymbolSetId(symbols_element.attribute<QString>(literal::id));
+	auto num_symbols = symbols_element.attribute<std::size_t>(literal::count);
+	map->symbols.reserve(qMin(num_symbols, std::size_t(1000))); // 1000 is not a limit
 	
 	symbol_dict[QString::number(map->findSymbolIndex(map->getUndefinedPoint()))] = map->getUndefinedPoint();
 	symbol_dict[QString::number(map->findSymbolIndex(map->getUndefinedLine()))] = map->getUndefinedLine();
@@ -806,10 +861,10 @@ void XMLFileImporter::importSymbols()
 void XMLFileImporter::importMapParts()
 {
 	XmlElementReader mapparts_element(xml);
-	int num_parts = mapparts_element.attribute<int>(literal::parts);
-	int current_part_index = mapparts_element.attribute<int>(literal::current);
+	auto num_parts = mapparts_element.attribute<std::size_t>(literal::parts);
+	auto current_part_index = mapparts_element.attribute<std::size_t>(literal::current);
 	map->parts.clear();
-	map->parts.reserve(qMin(num_parts, 20)); // 20 is not a limit
+	map->parts.reserve(qMin(num_parts, std::size_t(20))); // 20 is not a limit
 	
 	while (xml.readNextStartElement())
 	{
@@ -832,7 +887,7 @@ void XMLFileImporter::importMapParts()
 		}
 	}
 	
-	if (0 <= current_part_index && current_part_index < map->getNumParts())
+	if (current_part_index < map->getNumParts())
 		map->current_part_index = current_part_index;
 	
 	if (num_parts > 0 && num_parts != map->getNumParts())
@@ -852,9 +907,9 @@ void XMLFileImporter::importTemplates()
 	XmlElementReader templates_element(xml);
 	int first_front_template = templates_element.attribute<int>(literal::first_front_template);
 	
-	int num_templates = templates_element.attribute<int>(literal::count);
-	map->templates.reserve(qMin(num_templates, 20)); // 20 is not a limit
-	map->closed_templates.reserve(qMin(num_templates, 20)); // 20 is not a limit
+	auto num_templates = templates_element.attribute<std::size_t>(literal::count);
+	map->templates.reserve(qMin(num_templates, std::size_t(20))); // 20 is not a limit
+	map->closed_templates.reserve(qMin(num_templates, std::size_t(20))); // 20 is not a limit
 	
 	while (xml.readNextStartElement())
 	{
@@ -877,7 +932,7 @@ void XMLFileImporter::importTemplates()
 		}
 		else
 		{
-			qDebug() << "Unsupported element: " << xml.qualifiedName();
+			qDebug("Unsupported element: %s", qPrintable(xml.qualifiedName().toString()));
 			xml.skipCurrentElement();
 		}
 	}
@@ -923,20 +978,26 @@ void XMLFileImporter::importPrint()
 	}
 	catch (FileFormatException& e)
 	{
-		addWarning(ImportExport::tr("Error while loading the printing configuration at %1:%2: %3")
+		addWarning(::OpenOrienteering::ImportExport::tr("Error while loading the printing configuration at %1:%2: %3")
 		           .arg(xml.lineNumber()).arg(xml.columnNumber()).arg(e.message()));
 	}
 }
 
 void XMLFileImporter::importUndo()
 {
+	if (!Settings::getInstance().getSetting(Settings::General_SaveUndoRedo).toBool())
+	{
+		xml.skipCurrentElement();
+		return;
+	}
+	
 	try
 	{
 		map->undoManager().loadUndo(xml, symbol_dict);
 	}
 	catch (FileFormatException& e)
 	{
-		addWarning(ImportExport::tr("Error while loading the undo/redo steps at %1:%2: %3")
+		addWarning(::OpenOrienteering::ImportExport::tr("Error while loading the undo/redo steps at %1:%2: %3")
 		           .arg(xml.lineNumber()).arg(xml.columnNumber()).arg(e.message()));
 		map->undoManager().clear();
 	}
@@ -944,14 +1005,23 @@ void XMLFileImporter::importUndo()
 
 void XMLFileImporter::importRedo()
 {
+	if (!Settings::getInstance().getSetting(Settings::General_SaveUndoRedo).toBool())
+	{
+		xml.skipCurrentElement();
+		return;
+	}
+	
 	try
 	{
 		map->undoManager().loadRedo(xml, symbol_dict);
 	}
 	catch (FileFormatException& e)
 	{
-		addWarning(ImportExport::tr("Error while loading the undo/redo steps at %1:%2: %3")
+		addWarning(::OpenOrienteering::ImportExport::tr("Error while loading the undo/redo steps at %1:%2: %3")
 		           .arg(xml.lineNumber()).arg(xml.columnNumber()).arg(e.message()));
 		map->undoManager().clear();
 	}
 }
+
+
+}  // namespace OpenOrienteering

@@ -18,11 +18,13 @@
  */
 
 
-#ifndef _OPENORIENTEERING_GPS_TRACK_RECORDER_H_
-#define _OPENORIENTEERING_GPS_TRACK_RECORDER_H_
+#ifndef OPENORIENTEERING_GPS_TRACK_RECORDER_H
+#define OPENORIENTEERING_GPS_TRACK_RECORDER_H
 
 #include <QObject>
 #include <QTimer>
+
+namespace OpenOrienteering {
 
 class MapWidget;
 class Template;
@@ -35,7 +37,7 @@ class GPSTrackRecorder : public QObject
 {
 Q_OBJECT
 public:
-	GPSTrackRecorder(GPSDisplay* gps_display, TemplateTrack* target_template, int draw_update_interval_milliseconds = -1, MapWidget* widget = NULL);
+	GPSTrackRecorder(GPSDisplay* gps_display, TemplateTrack* target_template, int draw_update_interval_milliseconds = -1, MapWidget* widget = nullptr);
 
 public slots:
 	void newPosition(double latitude, double longitude, double altitude, float accuracy);
@@ -51,5 +53,8 @@ private:
 	bool track_changed_since_last_update;
 	bool is_active;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

@@ -18,16 +18,20 @@
  */
 
 
-#ifndef _OPENORIENTEERING_TOUCH_CURSOR_H_
-#define _OPENORIENTEERING_TOUCH_CURSOR_H_
+#ifndef OPENORIENTEERING_TOUCH_CURSOR_H
+#define OPENORIENTEERING_TOUCH_CURSOR_H
+
+#include <QPoint>
+#include <QPointF>
 
 #include "core/map_coord.h"
-
-QT_BEGIN_NAMESPACE
 class QMouseEvent;
 class QPainter;
-QT_END_NAMESPACE
+
+namespace OpenOrienteering {
+
 class MapWidget;
+
 
 /**
  * Handles drawing and controlling a helper cursor inside the map widget for the mobile UI.
@@ -101,5 +105,8 @@ private:
 	QPoint last_touch_pos;
 	MapWidget* map_widget;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

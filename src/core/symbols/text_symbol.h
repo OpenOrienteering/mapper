@@ -24,10 +24,30 @@
 
 #include "symbol.h"
 
-#include <QFontMetricsF>
+#include <vector>
 
+#include <Qt>
+#include <QFont>
+#include <QFontMetricsF>
+#include <QString>
+
+class QIODevice;
+class QXmlStreamReader;
+class QXmlStreamWriter;
+// IWYU pragma: no_forward_declare QFontMetricsF
+
+namespace OpenOrienteering {
+
+class Map;
+class MapColor;
+class MapColorMap;
+class Object;
+class ObjectRenderables;
+class SymbolPropertiesWidget;
 class SymbolSettingDialog;
 class TextObject;
+class VirtualCoordVector;
+
 
 
 /** Symbol for text, can be applied to TextObjects.
@@ -64,8 +84,8 @@ public:
 	
 	/** Creates an empty text symbol. */
 	TextSymbol();
-	virtual ~TextSymbol();
-	Symbol* duplicate(const MapColorMap* color_map = NULL) const override;
+	~TextSymbol() override;
+	Symbol* duplicate(const MapColorMap* color_map = nullptr) const override;
 	
 	void createRenderables(
 	        const Object *object,
@@ -121,7 +141,7 @@ public:
 	
 	double getNextTab(double pos) const;
 	
-	static const float internal_point_size;
+	constexpr static qreal internal_point_size = 256;
 	
 	SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog) override;
 	
@@ -166,5 +186,8 @@ protected:
 	
 	double tab_interval;		/// default tab interval length in text coordinates
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

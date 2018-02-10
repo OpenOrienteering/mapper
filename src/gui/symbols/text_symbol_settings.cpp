@@ -21,22 +21,43 @@
 
 #include "text_symbol_settings.h"
 
-#include <QDialogButtonBox>
+#include <vector>
+
+#include <QAbstractButton>
+#include <QCheckBox>
+#include <QComboBox>
+#include <QCoreApplication>
+#include <QDoubleSpinBox>
+#include <QFont>
 #include <QFontComboBox>
 #include <QFormLayout>
 #include <QHBoxLayout>
+#include <QIcon>
 #include <QInputDialog>
+#include <QLabel>
+#include <QLatin1Char>
 #include <QLineEdit>
 #include <QListWidget>
+#include <QListWidgetItem>
+#include <QLocale>
+#include <QPainterPath>
 #include <QPushButton>
 #include <QRadioButton>
+#include <QRectF>
+#include <QSignalBlocker>
+#include <QSpacerItem>
+#include <QVBoxLayout>
+#include <QWidget>
 
+#include "core/symbols/symbol.h"
+#include "core/symbols/text_symbol.h"
+#include "gui/util_gui.h"
 #include "gui/symbols/symbol_setting_dialog.h"
 #include "gui/widgets/color_dropdown.h"
-#include "gui/util_gui.h"
 #include "util/backports.h"
-#include "util/scoped_signals_blocker.h"
 
+
+namespace OpenOrienteering {
 
 // ### DetermineFontSizeDialog ###
 
@@ -46,8 +67,9 @@
 class DetermineFontSizeDialog
 {
 public:
-	Q_DECLARE_TR_FUNCTIONS(DetermineFontSizeDialog)
+	Q_DECLARE_TR_FUNCTIONS(OpenOrienteering::DetermineFontSizeDialog)
 };
+
 
 
 // ### TextSymbol ###
@@ -65,13 +87,13 @@ TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* 
   symbol(symbol), 
   dialog(dialog)
 {
-	Map* map = dialog->getPreviewMap();
+	auto map = dialog->getPreviewMap();
 	react_to_changes = true;
 	
-	QWidget* text_tab = new QWidget();
+	auto text_tab = new QWidget();
 	addPropertiesGroup(tr("Text settings"), text_tab);
 	
-	QFormLayout* layout = new QFormLayout();
+	auto layout = new QFormLayout();
 	text_tab->setLayout(layout);
 	
 	font_edit = new QFontComboBox();
@@ -81,10 +103,10 @@ TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* 
 	font_size_edit = Util::SpinBox::create(2, 0.04, 40000.0, tr("pt"));
 	layout->addRow(tr("Font size:"), font_size_edit);
 	
-	QHBoxLayout* letter_size_layout = new QHBoxLayout();
+	auto letter_size_layout = new QHBoxLayout();
 	letter_size_layout->setMargin(0);
 	
-	letter_size_layout->addWidget(new QLabel(DetermineFontSizeDialog::tr("Letter:")));
+	letter_size_layout->addWidget(new QLabel(::OpenOrienteering::DetermineFontSizeDialog::tr("Letter:")));
 	//: "A" is the default letter which is used for determining letter height.
 	letter_edit = new QLineEdit(DetermineFontSizeDialog::tr("A"));
 	letter_edit->setMaxLength(3);
@@ -92,7 +114,7 @@ TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* 
 	
 	letter_size_layout->addSpacing(8);
 	
-	letter_size_layout->addWidget(new QLabel(DetermineFontSizeDialog::tr("Height:")));
+	letter_size_layout->addWidget(new QLabel(::OpenOrienteering::DetermineFontSizeDialog::tr("Height:")));
 	letter_size_edit = Util::SpinBox::create(2, 0.01, 10000.0, tr("mm"));
 	letter_size_layout->addWidget(letter_size_edit);
 	
@@ -103,7 +125,7 @@ TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* 
 	color_edit = new ColorDropDown(map, symbol->getColor());
 	layout->addRow(tr("Text color:"), color_edit);
 	
-	QVBoxLayout* text_style_layout = new QVBoxLayout();
+	auto text_style_layout = new QVBoxLayout();
 	bold_check = new QCheckBox(tr("bold"));
 	text_style_layout->addWidget(bold_check);
 	italic_check = new QCheckBox(tr("italic"));
@@ -145,7 +167,7 @@ TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* 
 	framing_widget = new QWidget();
 	addPropertiesGroup(tr("Framing"), framing_widget);
 	
-	QFormLayout* framing_layout = new QFormLayout();
+	auto framing_layout = new QFormLayout();
 	framing_widget->setLayout(framing_layout);
 	
 	framing_color_edit = new ColorDropDown(map, symbol->getFramingColor());
@@ -170,7 +192,7 @@ TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* 
 	ocad_compat_widget = new QWidget();
 	addPropertiesGroup(tr("OCAD compatibility"), ocad_compat_widget);
 	
-	QFormLayout* ocad_compat_layout = new QFormLayout();
+	auto ocad_compat_layout = new QFormLayout();
 	ocad_compat_widget->setLayout(ocad_compat_layout);
 	
 	ocad_compat_layout->addRow(Util::Headline::create(tr("Line below paragraphs")));
@@ -194,7 +216,7 @@ TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* 
 	custom_tab_list = new QListWidget();
 	ocad_compat_layout->addRow(custom_tab_list);
 	
-	QHBoxLayout* custom_tabs_button_layout = new QHBoxLayout();
+	auto custom_tabs_button_layout = new QHBoxLayout();
 	custom_tab_add = new QPushButton(QIcon(QStringLiteral(":/images/plus.png")), QString{});
 	custom_tabs_button_layout->addWidget(custom_tab_add);
 	custom_tab_remove = new QPushButton(QIcon(QStringLiteral(":/images/minus.png")), QString{});
@@ -209,43 +231,43 @@ TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* 
 	updateFramingContents();
 	updateCompatibilityContents();
 	
-	connect(font_edit, SIGNAL(currentFontChanged(QFont)), this, SLOT(fontChanged(QFont)));
-	connect(font_size_edit, SIGNAL(valueChanged(double)), this, SLOT(fontSizeChanged(double)));
+	connect(font_edit, &QFontComboBox::currentFontChanged, this, &TextSymbolSettings::fontChanged);
+	connect(font_size_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &TextSymbolSettings::fontSizeChanged);
 	connect(letter_edit, &QLineEdit::textEdited, this, &TextSymbolSettings::letterSizeChanged);
 	connect(letter_size_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &TextSymbolSettings::letterSizeChanged);
-	connect(color_edit, SIGNAL(currentIndexChanged(int)), this, SLOT(colorChanged()));
-	connect(bold_check, SIGNAL(clicked(bool)), this, SLOT(checkToggled(bool)));
-	connect(italic_check, SIGNAL(clicked(bool)), this, SLOT(checkToggled(bool)));
-	connect(underline_check, SIGNAL(clicked(bool)), this, SLOT(checkToggled(bool)));
-	connect(line_spacing_edit, SIGNAL(valueChanged(double)), this, SLOT(spacingChanged(double)));
-	connect(paragraph_spacing_edit, SIGNAL(valueChanged(double)), this, SLOT(spacingChanged(double)));
-	connect(character_spacing_edit, SIGNAL(valueChanged(double)), this, SLOT(spacingChanged(double)));
-	connect(kerning_check, SIGNAL(clicked(bool)), this, SLOT(checkToggled(bool)));
-	connect(icon_text_edit, SIGNAL(textEdited(QString)), this, SLOT(iconTextEdited(QString)));
-	connect(framing_check, SIGNAL(clicked(bool)), this, SLOT(framingCheckClicked(bool)));
-	connect(ocad_compat_check, SIGNAL(clicked(bool)), this, SLOT(ocadCompatibilityButtonClicked(bool)));
+	connect(color_edit, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &TextSymbolSettings::colorChanged);
+	connect(bold_check, &QAbstractButton::clicked, this, &TextSymbolSettings::checkToggled);
+	connect(italic_check, &QAbstractButton::clicked, this, &TextSymbolSettings::checkToggled);
+	connect(underline_check, &QAbstractButton::clicked, this, &TextSymbolSettings::checkToggled);
+	connect(line_spacing_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &TextSymbolSettings::spacingChanged);
+	connect(paragraph_spacing_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &TextSymbolSettings::spacingChanged);
+	connect(character_spacing_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &TextSymbolSettings::spacingChanged);
+	connect(kerning_check, &QAbstractButton::clicked, this, &TextSymbolSettings::checkToggled);
+	connect(icon_text_edit, &QLineEdit::textEdited, this, &TextSymbolSettings::iconTextEdited);
+	connect(framing_check, &QAbstractButton::clicked, this, &TextSymbolSettings::framingCheckClicked);
+	connect(ocad_compat_check, &QAbstractButton::clicked, this, &TextSymbolSettings::ocadCompatibilityButtonClicked);
 	
-	connect(framing_color_edit, SIGNAL(currentIndexChanged(int)), this, SLOT(framingColorChanged()));
-	connect(framing_line_radio, SIGNAL(clicked(bool)), this, SLOT(framingModeChanged()));
-	connect(framing_line_half_width_edit, SIGNAL(valueChanged(double)), this, SLOT(framingSettingChanged()));
-	connect(framing_shadow_radio, SIGNAL(clicked(bool)), this, SLOT(framingModeChanged()));
-	connect(framing_shadow_x_offset_edit, SIGNAL(valueChanged(double)), this, SLOT(framingSettingChanged()));
-	connect(framing_shadow_y_offset_edit, SIGNAL(valueChanged(double)), this, SLOT(framingSettingChanged()));
+	connect(framing_color_edit, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &TextSymbolSettings::framingColorChanged);
+	connect(framing_line_radio, &QAbstractButton::clicked, this, &TextSymbolSettings::framingModeChanged);
+	connect(framing_line_half_width_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &TextSymbolSettings::framingSettingChanged);
+	connect(framing_shadow_radio, &QAbstractButton::clicked, this, &TextSymbolSettings::framingModeChanged);
+	connect(framing_shadow_x_offset_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &TextSymbolSettings::framingSettingChanged);
+	connect(framing_shadow_y_offset_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &TextSymbolSettings::framingSettingChanged);
 	
-	connect(line_below_check, SIGNAL(clicked(bool)), this, SLOT(lineBelowCheckClicked(bool)));
-	connect(line_below_color_edit, SIGNAL(currentIndexChanged(int)), this, SLOT(lineBelowSettingChanged()));
-	connect(line_below_width_edit, SIGNAL(valueChanged(double)), this, SLOT(lineBelowSettingChanged()));
-	connect(line_below_distance_edit, SIGNAL(valueChanged(double)), this, SLOT(lineBelowSettingChanged()));
-	connect(custom_tab_list, SIGNAL(currentRowChanged(int)), this, SLOT(customTabRowChanged(int)));
-	connect(custom_tab_add, SIGNAL(clicked(bool)), this, SLOT(addCustomTabClicked()));
-	connect(custom_tab_remove, SIGNAL(clicked(bool)), this, SLOT(removeCustomTabClicked()));
+	connect(line_below_check, &QAbstractButton::clicked, this, &TextSymbolSettings::lineBelowCheckClicked);
+	connect(line_below_color_edit, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &TextSymbolSettings::lineBelowSettingChanged);
+	connect(line_below_width_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &TextSymbolSettings::lineBelowSettingChanged);
+	connect(line_below_distance_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &TextSymbolSettings::lineBelowSettingChanged);
+	connect(custom_tab_list, &QListWidget::currentRowChanged, this, &TextSymbolSettings::customTabRowChanged);
+	connect(custom_tab_add, &QAbstractButton::clicked, this, &TextSymbolSettings::addCustomTabClicked);
+	connect(custom_tab_remove, &QAbstractButton::clicked, this, &TextSymbolSettings::removeCustomTabClicked);
 }
 
-TextSymbolSettings::~TextSymbolSettings()
-{
-}
+TextSymbolSettings::~TextSymbolSettings() = default;
 
-void TextSymbolSettings::fontChanged(QFont font)
+
+
+void TextSymbolSettings::fontChanged(const QFont& font)
 {
 	if (!react_to_changes)
 		return;
@@ -289,7 +311,7 @@ qreal TextSymbolSettings::calculateLetterHeight() const
 {
 	QPainterPath path;
 	path.addText(0.0, 0.0, symbol->getQFont(), letter_edit->text());
-	return path.boundingRect().height() / qreal(TextSymbol::internal_point_size);
+	return path.boundingRect().height() / TextSymbol::internal_point_size;
 }
 
 void TextSymbolSettings::updateLetterSizeEdit()
@@ -336,7 +358,7 @@ void TextSymbolSettings::spacingChanged(double value)
 	
 	symbol->line_spacing = 0.01 * line_spacing_edit->value();
 	symbol->paragraph_spacing = qRound(1000.0 * paragraph_spacing_edit->value());
-	symbol->character_spacing = 0.01f * character_spacing_edit->value();
+	symbol->character_spacing = 0.01 * character_spacing_edit->value();
 	symbol->updateQFont();
 	emit propertiesModified();
 }
@@ -414,7 +436,7 @@ void TextSymbolSettings::lineBelowCheckClicked(bool checked)
 		// Set defaults such that the line becomes visible
 		if (symbol->line_below_width == 0)
 			line_below_width_edit->setValue(0.1);
-		if (symbol->line_below_color == NULL)
+		if (!symbol->line_below_color)
 			line_below_color_edit->setCurrentIndex(1);
 	}
 	
@@ -449,7 +471,10 @@ void TextSymbolSettings::addCustomTabClicked()
 {
 	bool ok = false;
 	// FIXME: Unit of measurement display in unusual way
-	double position = QInputDialog::getDouble(dialog, tr("Add custom tabulator"), QString::fromLatin1("%1 (%2)").arg(tr("Position:")).arg(tr("mm")), 0, 0, 999999, 3, &ok);
+	double position = QInputDialog::getDouble(dialog, 
+	                                          tr("Add custom tabulator"),
+	                                          QStringLiteral("%1 (%2)").arg(tr("Position:"), tr("mm")),
+	                                          0, 0, 999999, 3, &ok);
 	if (ok)
 	{
 		int int_position = qRound(1000 * position);
@@ -527,9 +552,9 @@ void TextSymbolSettings::updateFramingContents()
 	framing_shadow_y_offset_edit->setValue(-0.001 * symbol->framing_shadow_y_offset);
 	
 	
-	framing_line_radio->setEnabled(symbol->framing_color != NULL);
-	framing_shadow_radio->setEnabled(symbol->framing_color != NULL);
-	if (symbol->framing_color == NULL)
+	framing_line_radio->setEnabled(symbol->framing_color);
+	framing_shadow_radio->setEnabled(symbol->framing_color);
+	if (!symbol->framing_color)
 	{
 		framing_line_half_width_edit->setEnabled(false);
 		framing_shadow_x_offset_edit->setEnabled(false);
@@ -575,3 +600,6 @@ void TextSymbolSettings::reset(Symbol* symbol)
 	updateFramingContents();
 	updateCompatibilityContents();
 }
+
+
+}  // namespace OpenOrienteering

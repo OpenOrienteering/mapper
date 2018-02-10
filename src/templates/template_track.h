@@ -22,12 +22,32 @@
 #ifndef OPENORIENTEERING_TEMPLATE_TRACK_H
 #define OPENORIENTEERING_TEMPLATE_TRACK_H
 
-#include "template.h"
+#include <vector>
 
+#include <QtGlobal>
+#include <QObject>
+#include <QRectF>
+#include <QString>
+
+#include "templates/template.h"
 #include "sensors/gps_track.h"
 
+class QByteArray;
+class QIODevice;
+class QPainter;
+class QRectF;
+class QWidget;
+class QXmlStreamReader;
+class QXmlStreamWriter;
+
+namespace OpenOrienteering {
+
+class Georeferencing;
+class Map;
+class MapCoordF;
 class PathObject;
 class PointObject;
+
 
 /** A template consisting of a set of tracks (polylines) and waypoints */
 class TemplateTrack : public Template
@@ -40,20 +60,20 @@ public:
 	static const std::vector<QByteArray>& supportedExtensions();
 	
 	TemplateTrack(const QString& path, Map* map);
-    virtual ~TemplateTrack();
-	virtual const char* getTemplateType() const {return "TemplateTrack";}
-	virtual bool isRasterGraphics() const {return false;}
+    ~TemplateTrack() override;
+	const char* getTemplateType() const override {return "TemplateTrack";}
+	bool isRasterGraphics() const override {return false;}
 	
-	virtual bool saveTemplateFile() const;
+	bool saveTemplateFile() const override;
 	
-	virtual bool loadTemplateFileImpl(bool configuring);
-	virtual bool postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view);
-	virtual void unloadTemplateFileImpl();
+	bool loadTemplateFileImpl(bool configuring) override;
+	bool postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view) override;
+	void unloadTemplateFileImpl() override;
 	
-    virtual void drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, bool on_screen, float opacity) const;
-	virtual QRectF getTemplateExtent() const;
-    virtual QRectF calculateTemplateBoundingBox() const;
-    virtual int getTemplateBoundingBoxPixelBorder();
+    void drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, float opacity) const override;
+	QRectF getTemplateExtent() const override;
+    QRectF calculateTemplateBoundingBox() const override;
+    int getTemplateBoundingBoxPixelBorder() override;
 	
 	
 	/// Draws all tracks.
@@ -64,7 +84,7 @@ public:
 	
 	/// Import the track as map object(s), returns true if something has been imported.
 	/// TODO: should this be moved to the Track class?
-	bool import(QWidget* dialog_parent = NULL);
+	bool import(QWidget* dialog_parent = nullptr);
 	
 	/// Replaces the calls to pre/postLoadConfiguration() if creating a new GPS track.
 	/// Assumes that the map's georeferencing is valid.
@@ -77,13 +97,17 @@ public slots:
 	void updateGeoreferencing();
 	
 protected:
-	virtual Template* duplicateImpl() const;
-    virtual bool loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version);
-    virtual void saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const;
-    virtual bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml);
+	Template* duplicateImpl() const override;
+#ifndef NO_NATIVE_FILE_FORMAT
+    bool loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version) override;
+#endif
+    void saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const override;
+    bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml) override;
 	
 	/// Projects the track in non-georeferenced mode
-	void calculateLocalGeoreferencing();
+	QString calculateLocalGeoreferencing() const;
+	
+	void applyProjectedCrsSpec();
 	
 	PathObject* importPathStart();
 	void importPathEnd(PathObject* path);
@@ -92,9 +116,15 @@ protected:
 	
 	Track track;
 	QString track_crs_spec;
+	QString projected_crs_spec;
+	friend class OgrTemplate; // for migration
+	std::unique_ptr<Georeferencing> preserved_georef;
 	
 private:
 	Q_DISABLE_COPY(TemplateTrack)
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

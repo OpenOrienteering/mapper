@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2016 Kai Pastor
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,13 +21,26 @@
 
 #include "template_map.h"
 
-#include <QPainter>
+#include <algorithm>
 
-#include "core/georeferencing.h"
-#include "gui/map/map_widget.h"
-#include "core/renderables/renderable.h"
+#include <QtGlobal>
+#include <QByteArray>
+#include <QPainter>
+#include <QRectF>
+#include <QStringList>
+#include <QTransform>
+#include <QVariant>
+
 #include "settings.h"
+#include "core/georeferencing.h"
+#include "core/map.h"
+#include "core/map_coord.h"
+#include "core/renderables/renderable.h"
+#include "util/transformation.h"
 #include "util/util.h"
+
+
+namespace OpenOrienteering {
 
 QStringList TemplateMap::locked_maps;
 
@@ -104,7 +117,7 @@ void TemplateMap::unloadTemplateFileImpl()
 	template_map.reset();
 }
 
-void TemplateMap::drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, bool on_screen, float opacity) const
+void TemplateMap::drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, float opacity) const
 {
 	if (!is_georeferenced)
 		applyTemplateTransform(painter);
@@ -144,7 +157,7 @@ QRectF TemplateMap::getTemplateExtent() const
 
 Template* TemplateMap::duplicateImpl() const
 {
-	TemplateMap* copy = new TemplateMap(template_path, map);
+	auto copy = new TemplateMap(template_path, map);
 	if (template_state == Loaded)
 		copy->loadTemplateFileImpl(false);
 	return copy;
@@ -192,3 +205,6 @@ void TemplateMap::calculateTransformation()
 		/// \todo proper error message
 	}
 }
+
+
+}   // namespace OpenOrienteering

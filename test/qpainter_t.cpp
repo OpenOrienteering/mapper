@@ -20,7 +20,13 @@
 
 #include "qpainter_t.h"
 
-#include "../src/core/image_transparency_fixup.h"
+#include <Qt>
+#include <QtTest>
+#include <QRgb>
+
+#include "core/image_transparency_fixup.h"
+
+using namespace OpenOrienteering;
 
 
 QPainterTest::QPainterTest(QObject* parent)

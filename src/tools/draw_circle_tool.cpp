@@ -21,25 +21,35 @@
 
 #include "draw_circle_tool.h"
 
+#include <memory>
+
+#include <Qt>
+#include <QtGlobal>
+#include <QCursor>
+#include <QFlags>
 #include <QKeyEvent>
 #include <QMouseEvent>
+#include <QLatin1String>
+#include <QPixmap>
+#include <QRectF>
+#include <QString>
 
 #include "core/map.h"
 #include "core/objects/object.h"
-#include "settings.h"
-#include "util/util.h"
+#include "gui/map/map_editor.h"
+#include "gui/map/map_widget.h"
 #include "gui/modifier_key.h"
 #include "gui/widgets/key_button_bar.h"
-#include "gui/map/map_editor.h"
+#include "tools/tool.h"
+#include "util/util.h"
 
 
-DrawCircleTool::DrawCircleTool(MapEditorController* editor, QAction* tool_button, bool is_helper_tool)
- : DrawLineAndAreaTool(editor, DrawCircle, tool_button, is_helper_tool),
-   key_button_bar(NULL)
+namespace OpenOrienteering {
+
+DrawCircleTool::DrawCircleTool(MapEditorController* editor, QAction* tool_action, bool is_helper_tool)
+ : DrawLineAndAreaTool(editor, DrawCircle, tool_action, is_helper_tool)
 {
-	dragging = false;
-	first_point_set = false;
-	second_point_set = false;
+	// nothing else
 }
 
 DrawCircleTool::~DrawCircleTool()
@@ -55,8 +65,8 @@ void DrawCircleTool::init()
 	if (editor->isInMobileMode())
 	{
 		// Create key replacement bar
-		key_button_bar = new KeyButtonBar(this, editor->getMainWidget());
-		key_button_bar->addModifierKey(Qt::Key_Control, Qt::ControlModifier, tr("From center", "Draw circle starting from center"));
+		key_button_bar = new KeyButtonBar(editor->getMainWidget());
+		key_button_bar->addModifierButton(Qt::ControlModifier, tr("From center", "Draw circle starting from center"));
 		editor->showPopupWidget(key_button_bar, QString{});
 	}
 }
@@ -83,7 +93,7 @@ bool DrawCircleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 			opposite_pos_map = map_coord;
 			dragging = false;
 			first_point_set = true;
-			start_from_center = (event->modifiers() | (key_button_bar ? key_button_bar->activeModifiers() : 0)) & Qt::ControlModifier;
+			start_from_center = event->modifiers() & Qt::ControlModifier;
 			
 			if (!editingInProgress())
 				startDrawing();
@@ -136,7 +146,7 @@ bool DrawCircleTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, Map
 		if (!editingInProgress())
 			return false;
 		
-		if ((event->pos() - click_pos).manhattanLength() >= Settings::getInstance().getStartDragDistancePx())
+		if ((event->pos() - click_pos).manhattanLength() >= startDragDistance())
 		{
 			if (!dragging)
 			{
@@ -280,7 +290,7 @@ void DrawCircleTool::setDirtyRect()
 	includePreviewRects(rect);
 	
 	if (is_helper_tool)
-		emit(dirtyRectChanged(rect));
+		emit dirtyRectChanged(rect);
 	else
 	{
 		if (rect.isValid())
@@ -304,7 +314,10 @@ void DrawCircleTool::updateStatusText()
 	{
 		text = tr("<b>Click</b>: Finish the circle. ")
 		       + tr("<b>Drag</b>: Draw an ellipse. ")
-		       + MapEditorTool::tr("<b>%1</b>: Abort. ").arg(ModifierKey::escape());
+		       + OpenOrienteering::MapEditorTool::tr("<b>%1</b>: Abort. ").arg(ModifierKey::escape());
 	}
 	setStatusBarText(text);
 }
+
+
+}  // namespace OpenOrienteering

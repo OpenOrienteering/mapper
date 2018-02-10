@@ -21,18 +21,20 @@
 
 #include "map_grid.h"
 
-#include <limits>
-
-#include <qmath.h>
+#include <QtMath>
 #include <QPainter>
 #include <QXmlStreamReader>
-#include <QXmlStreamWriter>
 
 #include "core/georeferencing.h"
-#include "map.h"
-#include "map_coord.h"
+#include "core/map.h"
+#include "core/map_coord.h"
 #include "util/util.h"
 #include "util/xml_stream_util.h"
+
+
+namespace OpenOrienteering {
+
+namespace {
 
 struct ProcessLine
 {
@@ -44,6 +46,10 @@ void ProcessLine::processLine(QPointF a, QPointF b)
 {
 	painter->drawLine(a, b);
 }
+
+
+}  // namespace
+
 
 // ### MapGrid ###
 
@@ -124,7 +130,7 @@ const MapGrid& MapGrid::load(QXmlStreamReader& xml)
 	return *this;
 }
 
-void MapGrid::draw(QPainter* painter, QRectF bounding_box, Map* map, bool on_screen) const
+void MapGrid::draw(QPainter* painter, const QRectF& bounding_box, Map* map, bool on_screen) const
 {
 	double final_horz_spacing, final_vert_spacing;
 	double final_horz_offset, final_vert_offset;
@@ -218,3 +224,6 @@ bool operator!=(const MapGrid& lhs, const MapGrid& rhs)
 {
 	return !(lhs == rhs);
 }
+
+
+}  // namespace

@@ -23,6 +23,7 @@
 #include <memory>
 
 #include <QByteArray>
+#include <QCoreApplication>
 #include <QHash>
 
 // The GDAL/OGR C API is more stable than the C++ API.
@@ -30,12 +31,12 @@
 #include <ogr_srs_api.h>
 
 #include "core/map_coord.h"
-#include "fileformats/file_import_export.h"
 #include "core/symbols/symbol.h"
+#include "fileformats/file_import_export.h"
 
-QT_BEGIN_NAMESPACE
 class QFile;
-QT_END_NAMESPACE
+
+namespace OpenOrienteering {
 
 class AreaSymbol;
 class Georeferencing;
@@ -110,7 +111,8 @@ namespace ogr
  */
 class OgrFileImport : public Importer
 {
-Q_OBJECT
+	Q_DECLARE_TR_FUNCTIONS(OpenOrienteering::OgrFileImport)
+	
 public:
 	/**
 	 * The unit type indicates the coordinate system the data units refers to.
@@ -134,6 +136,12 @@ public:
 	~OgrFileImport() override;
 	
 	
+	/**
+	 * Enables the import of georeferencing from the geospatial data.
+	 * 
+	 * If this import is not enabled, the georeferencing of the Map given to
+	 * the constructor will be used instead.
+	 */
 	void setGeoreferencingImportEnabled(bool enabled);
 	
 	
@@ -153,9 +161,20 @@ public:
 	
 	
 protected:
+	ogr::unique_srs srsFromMap();
+	
+	/**
+	 * Tests if the file's spatial references can be used with the given georeferencing.
+	 * 
+	 * This returns true only if all layers' spatial references can be
+	 * transformed to the spatial reference systems represented by georef.
+	 * It will always return false for a local or invalid Georeferencing.
+	 */
+	static bool checkGeoreferencing(OGRDataSourceH data_source, const Georeferencing& georef);
+	
 	void import(bool load_symbols_only) override;
 	
-	void importGeoreferencing(OGRDataSourceH data_source);
+	ogr::unique_srs importGeoreferencing(OGRDataSourceH data_source);
 	
 	void importStyles(OGRDataSourceH data_source);
 	
@@ -163,15 +182,17 @@ protected:
 	
 	void importFeature(MapPart* map_part, OGRFeatureDefnH feature_definition, OGRFeatureH feature, OGRGeometryH geometry);
 	
-	Object* importGeometry(MapPart* map_part, OGRFeatureH feature, OGRGeometryH geometry);
+	using ObjectList = std::vector<Object*>;
 	
-	Object* importGeometryCollection(MapPart* map_part, OGRFeatureH feature, OGRGeometryH geometry);
+	ObjectList importGeometry(OGRFeatureH feature, OGRGeometryH geometry);
 	
-	Object* importPointGeometry(MapPart* map_part, OGRFeatureH feature, OGRGeometryH geometry);
+	ObjectList importGeometryCollection(OGRFeatureH feature, OGRGeometryH geometry);
 	
-	PathObject* importLineStringGeometry(MapPart* map_part, OGRFeatureH feature, OGRGeometryH geometry);
+	Object* importPointGeometry(OGRFeatureH feature, OGRGeometryH geometry);
 	
-	PathObject* importPolygonGeometry(MapPart* map_part, OGRFeatureH feature, OGRGeometryH geometry);
+	PathObject* importLineStringGeometry(OGRFeatureH feature, OGRGeometryH geometry);
+	
+	PathObject* importPolygonGeometry(OGRFeatureH feature, OGRGeometryH geometry);
 	
 	
 	Symbol* getSymbol(Symbol::Type type, const char* raw_style_string);
@@ -230,11 +251,11 @@ private:
 	
 	ogr::unique_stylemanager manager;
 	
-	unsigned int empty_geometries;
-	unsigned int no_transformation;
-	unsigned int failed_transformation;
-	unsigned int unsupported_geometry_type;
-	unsigned int too_few_coordinates;
+	int empty_geometries;
+	int no_transformation;
+	int failed_transformation;
+	int unsupported_geometry_type;
+	int too_few_coordinates;
 	
 	UnitType unit_type;
 	
@@ -252,5 +273,6 @@ MapCoord OgrFileImport::toMapCoord(double x, double y) const
 }
 
 
+}  // namespace OpenOrienteering
 
 #endif // OPENORIENTEERING_OGR_FILE_FORMAT_P_H

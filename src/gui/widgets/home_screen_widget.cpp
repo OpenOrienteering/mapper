@@ -21,30 +21,28 @@
 
 #include "home_screen_widget.h"
 
-#include <QApplication>
+#include <QApplication> // IWYU pragma: keep
 #include <QAbstractButton>
 #include <QCheckBox>
 #include <QCommandLinkButton>
-#include <QDialogButtonBox>
 #include <QDirIterator>
 #include <QFileInfo>
-#include <QFormLayout>
 #include <QGridLayout>
 #include <QLabel>
 #include <QListWidget>
 #include <QMessageBox>
 #include <QPainter>
-#include <QProcessEnvironment>
-#include <QScrollArea>
 #include <QScroller>
 #include <QStackedLayout>
 
-#include "../home_screen_controller.h"
-#include "../main_window.h"
-#include "../settings_dialog.h"
-#include "../../core/storage_location.h"
-#include "../../fileformats/file_format_registry.h"
+#include "core/storage_location.h" // IWYU pragma: keep
+#include "fileformats/file_format_registry.h"
+#include "gui/home_screen_controller.h"
+#include "gui/main_window.h"
+#include "gui/settings_dialog.h"
 
+
+namespace OpenOrienteering {
 
 //### AbstractHomeScreenWidget ###
 
@@ -52,7 +50,7 @@ AbstractHomeScreenWidget::AbstractHomeScreenWidget(HomeScreenController* control
 : QWidget(parent),
   controller(controller)
 {
-	Q_ASSERT(controller->getWindow() != NULL);
+	Q_ASSERT(controller->getWindow());
 }
 
 AbstractHomeScreenWidget::~AbstractHomeScreenWidget()
@@ -166,12 +164,12 @@ QWidget* HomeScreenWidgetDesktop::makeMenuWidget(HomeScreenController* controlle
 	  tr("Exit"), QIcon(QString::fromLatin1(":/qt-project.org/styles/commonstyle/images/standardbutton-close-32.png"))); // From Qt5
 	menu_layout->addWidget(button_exit);
 	
-	connect(button_new_map, SIGNAL(clicked(bool)), window, SLOT(showNewMapWizard()));
-	connect(button_open_map, SIGNAL(clicked(bool)), window, SLOT(showOpenDialog()));
-	connect(button_settings, SIGNAL(clicked(bool)), window, SLOT(showSettings()));
-	connect(button_about, SIGNAL(clicked(bool)), window, SLOT(showAbout()));
-	connect(button_help, SIGNAL(clicked(bool)), window, SLOT(showHelp()));
-	connect(button_exit, SIGNAL(clicked(bool)), qApp, SLOT(closeAllWindows()));
+	connect(button_new_map, &QAbstractButton::clicked, window, &MainWindow::showNewMapWizard);
+	connect(button_open_map, &QAbstractButton::clicked, window, &MainWindow::showOpenDialog);
+	connect(button_settings, &QAbstractButton::clicked, window, &MainWindow::showSettings);
+	connect(button_about, &QAbstractButton::clicked, window, &MainWindow::showAbout);
+	connect(button_help, &QAbstractButton::clicked, window, &MainWindow::showHelp);
+	connect(button_exit, &QAbstractButton::clicked, qApp, &QApplication::closeAllWindows);
 	
 	QWidget* menu_widget = new QWidget(parent);
 	menu_widget->setLayout(menu_layout);
@@ -217,9 +215,9 @@ QWidget* HomeScreenWidgetDesktop::makeRecentFilesWidget(HomeScreenController* co
 	recent_files_layout->setRowStretch(1, 1);
 	recent_files_layout->setColumnStretch(0, 1);
 	
-	connect(recent_files_list, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(recentFileClicked(QListWidgetItem*)));
-	connect(open_mru_file_check, SIGNAL(clicked(bool)), controller, SLOT(setOpenMRUFile(bool)));
-	connect(clear_list_button, SIGNAL(clicked(bool)), controller, SLOT(clearRecentFiles()));
+	connect(recent_files_list, &QListWidget::itemClicked, this, &HomeScreenWidgetDesktop::recentFileClicked);
+	connect(open_mru_file_check, &QAbstractButton::clicked, controller, &HomeScreenController::setOpenMRUFile);
+	connect(clear_list_button, &QAbstractButton::clicked, controller, &HomeScreenController::clearRecentFiles);
 	
 	QWidget* recent_files_widget = new QWidget(parent);
 	recent_files_widget->setLayout(recent_files_layout);
@@ -254,10 +252,10 @@ QWidget* HomeScreenWidgetDesktop::makeTipsWidget(HomeScreenController* controlle
 	tips_children.push_back(next_button);
 	
 	MainWindow* window = controller->getWindow();
-	connect(tips_label, SIGNAL(linkActivated(QString)), window, SLOT(linkClicked(QString)));
-	connect(tips_check, SIGNAL(clicked(bool)), controller, SLOT(setTipsVisible(bool)));
-	connect(prev_button, SIGNAL(clicked(bool)), controller, SLOT(goToPreviousTip()));
-	connect(next_button, SIGNAL(clicked(bool)), controller, SLOT(goToNextTip()));
+	connect(tips_label, &QLabel::linkActivated, window, &MainWindow::linkClicked);
+	connect(tips_check, &QAbstractButton::clicked, controller, &HomeScreenController::setTipsVisible);
+	connect(prev_button, &QAbstractButton::clicked, controller, &HomeScreenController::goToPreviousTip);
+	connect(next_button, &QAbstractButton::clicked, controller, &HomeScreenController::goToNextTip);
 	
 	QWidget* tips_widget = new QWidget(parent);
 	tips_widget->setLayout(tips_layout);
@@ -279,8 +277,11 @@ void HomeScreenWidgetDesktop::setRecentFiles(const QStringList& files)
 
 void HomeScreenWidgetDesktop::recentFileClicked(QListWidgetItem* item)
 {
+	setEnabled(false);
+	qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
 	QString path = item->data(Qt::UserRole).toString();
 	controller->getWindow()->openPath(path);
+	setEnabled(true);
 }
 
 void HomeScreenWidgetDesktop::paintEvent(QPaintEvent*)
@@ -309,7 +310,7 @@ void HomeScreenWidgetDesktop::setTipsVisible(bool state)
 	{
 		widget->setVisible(state);
 	}
-	if (layout != NULL)
+	if (layout)
 		layout->setRowStretch(2, state ? 3 : 0);
 	
 	tips_check->setChecked(state);
@@ -441,10 +442,13 @@ void HomeScreenWidgetMobile::fileClicked(QListWidgetItem* item)
 {
 	QString hint_text = item->data(Qt::UserRole+1).toString();
 	if (!hint_text.isEmpty())
-		QMessageBox::warning(this, MainWindow::tr("Warning"), hint_text.arg(item->data(Qt::DisplayRole).toString()));
+		QMessageBox::warning(this, ::OpenOrienteering::MainWindow::tr("Warning"), hint_text.arg(item->data(Qt::DisplayRole).toString()));
 	
+	setEnabled(false);
+	qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
 	QString path = item->data(Qt::UserRole).toString();
 	controller->getWindow()->openPath(path);
+	setEnabled(true);
 }
 
 QWidget* HomeScreenWidgetMobile::makeFileListWidget(HomeScreenController* controller, QWidget* parent)
@@ -510,7 +514,8 @@ QWidget* HomeScreenWidgetMobile::makeFileListWidget(HomeScreenController* contro
 		QDirIterator it(location.path(), QDir::Files | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
 		while (it.hasNext()) {
 			it.next();
-			if (!FileFormats.findFormatForFilename(it.filePath()))
+			auto format = FileFormats.findFormatForFilename(it.filePath());
+			if (!format || !format->supportsExport())
 				continue;
 			
 			QListWidgetItem* new_item = new QListWidgetItem(it.fileInfo().fileName());
@@ -545,7 +550,7 @@ QWidget* HomeScreenWidgetMobile::makeFileListWidget(HomeScreenController* contro
 		file_list_stack->setCurrentWidget(message_label);
 	}
 	
-	connect(file_list, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(fileClicked(QListWidgetItem*)));
+	connect(file_list, &QListWidget::itemClicked, this, &HomeScreenWidgetMobile::fileClicked);
 	
 	QWidget* file_list_widget = new QWidget();
 	file_list_widget->setLayout(file_list_layout);
@@ -558,7 +563,7 @@ void HomeScreenWidgetMobile::addFilesToFileList(QListWidget* file_list, const QS
 	QDirIterator it(path, QDir::Files | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
 	while (it.hasNext()) {
 		it.next();
-		if (FileFormats.findFormatForFilename(it.filePath()) == NULL)
+		if (FileFormats.findFormatForFilename(it.filePath()) == nullptr)
 			continue;
 		
 		QListWidgetItem* new_item = new QListWidgetItem(it.fileInfo().fileName());
@@ -567,3 +572,6 @@ void HomeScreenWidgetMobile::addFilesToFileList(QListWidget* file_list, const QS
 		file_list->addItem(new_item);
 	}
 }
+
+
+}  // namespace OpenOrienteering

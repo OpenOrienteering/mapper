@@ -19,34 +19,34 @@
  */
 
 
-#ifndef _OPENORIENTEERING_GEOREFERENCING_DIALOG_H_
-#define _OPENORIENTEERING_GEOREFERENCING_DIALOG_H_
+#ifndef OPENORIENTEERING_GEOREFERENCING_DIALOG_H
+#define OPENORIENTEERING_GEOREFERENCING_DIALOG_H
 
 #include <QDialog>
-#include <QLocale>
-#include <QString>
+#include <QObject>
 #include <QScopedPointer>
 
+#include "core/map_coord.h"
 #include "tools/tool.h"
 
-QT_BEGIN_NAMESPACE
-class QComboBox;
+class QAction;
+class QCursor;
 class QDialogButtonBox;
 class QDoubleSpinBox;
-class QFormLayout;
 class QLabel;
-class QLineEdit;
+class QMouseEvent;
 class QPushButton;
 class QRadioButton;
-class QSpinBox;
 class QNetworkReply;
-QT_END_NAMESPACE
+class QWidget;
+
+namespace OpenOrienteering {
 
 class CRSSelector;
 class Georeferencing;
-class GeoreferencingTool;
 class Map;
 class MapEditorController;
+class MapWidget;
 
 
 /**
@@ -102,7 +102,7 @@ public:
 	/**
 	 * Releases resources.
 	 */
-	virtual ~GeoreferencingDialog();
+	~GeoreferencingDialog() override;
 	
 	
 	/**
@@ -294,13 +294,13 @@ public:
 	GeoreferencingTool(
 	        GeoreferencingDialog* dialog,
 	        MapEditorController* controller,
-	        QAction* toolAction = nullptr
+	        QAction* action = nullptr
 	);
 	
 	/**
 	 * Notifies the dialog that the tool is deleted.
 	 */
-	virtual ~GeoreferencingTool();
+	~GeoreferencingTool() override;
 	
 	/**
 	 * Activates the tool.
@@ -328,5 +328,6 @@ private:
 };
 
 
+}  // namespace OpenOrienteering
 
 #endif

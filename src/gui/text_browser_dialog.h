@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013, 2014 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2015, 2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -18,13 +18,21 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_TEXT_BROWSER_DIALOG_H_
-#define _OPENORIENTEERING_TEXT_BROWSER_DIALOG_H_
+#ifndef OPENORIENTEERING_TEXT_BROWSER_DIALOG_H
+#define OPENORIENTEERING_TEXT_BROWSER_DIALOG_H
 
 #include <QDialog>
+#include <QObject>
+#include <QSize>
+#include <QString>
+
+class QWidget;
 
 class QTextBrowser;
 class QUrl;
+
+
+namespace OpenOrienteering {
 
 /**
  * @brief A dialog for basic browsing of HTML pages.
@@ -32,11 +40,21 @@ class QUrl;
 class TextBrowserDialog : public QDialog
 {
 Q_OBJECT
+protected:
+	explicit TextBrowserDialog(QWidget* parent = nullptr);
+	
 public:
 	/**
-	 * @brief Construct a new dialog.
+	 * @brief Construct a new dialog and loads the text from the initial_url.
 	 */
 	TextBrowserDialog(const QUrl& initial_url, QWidget* parent = nullptr);
+	
+	/**
+	 * @brief Construct a new dialog and sets the given text.
+	 */
+	TextBrowserDialog(const QString& text, QWidget* parent = nullptr);
+	
+	~TextBrowserDialog() override;
 	
 protected slots:
 	/**
@@ -58,12 +76,15 @@ protected:
 	/**
 	 * @brief Returns a size hint based on the text browser's content.
 	 */
-	virtual QSize sizeHint() const override;
+	QSize sizeHint() const override;
 	
 	/**
 	 * @brief The TextBrowser is the main widget of this dialog.
 	 */
 	QTextBrowser* const text_browser;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

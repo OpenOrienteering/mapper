@@ -18,18 +18,21 @@
  */
 
 
-#ifndef _OPENORIENTEERING_MAP_COLOR_H_
-#define _OPENORIENTEERING_MAP_COLOR_H_
+#ifndef OPENORIENTEERING_MAP_COLOR_H
+#define OPENORIENTEERING_MAP_COLOR_H
 
 #include <vector>
 
-#include <qmath.h>
+#include <QtGlobal>
+#include <QtMath>
 #include <QColor>
 #include <QHash>
 #include <QMetaType>
+#include <QRgb>
 #include <QString>
 
-class Map;
+namespace OpenOrienteering {
+
 class MapColor;
 
 /**
@@ -41,28 +44,28 @@ class MapColor;
 struct MapColorCmyk
 {
 	/** The cyan component. */
-	float c;
+	float c = 0;
 	/** The magenta component. */
-	float m;
+	float m = 0;
 	/** The yellow component. */
-	float y;
+	float y = 0;
 	/** The black component (aka key). */
-	float k;
+	float k = 1;
 	
 	/** Constructs a black color. */
-	MapColorCmyk();
+	MapColorCmyk() noexcept = default;
 	
 	/** Constructs a color with the given components. */
-	MapColorCmyk(float c, float m, float y, float k);
+	MapColorCmyk(float c, float m, float y, float k) noexcept;
 	
 	/** Constructs a copy of the given CMYK color. */
-	MapColorCmyk(const MapColorCmyk& other);
+	MapColorCmyk(const MapColorCmyk& other) noexcept = default;
 	
 	/** Constructs a CMYK color of the given QColor. Used for type conversions. */
-	MapColorCmyk(const QColor& other);
+	MapColorCmyk(const QColor& other) noexcept;
 	
 	/** Assigns another color's value to this color. */
-	void operator=(const MapColorCmyk& other);
+	MapColorCmyk& operator=(const MapColorCmyk& other) = default;
 	
 	/** Converts this color to a QColor. */
 	operator QColor() const;
@@ -90,26 +93,26 @@ bool operator!=(const MapColorCmyk& lhs, const MapColorCmyk& rhs);
 struct MapColorRgb
 {
 	/** The red component. */
-	float r;
+	float r = 0;
 	/** The green component. */
-	float g;
+	float g = 0;
 	/** The blue component. */
-	float b;
+	float b = 0;
 	
 	/** Constructs a black color. */
-	MapColorRgb();
+	MapColorRgb() noexcept = default;
 	
 	/** Constructs a color with the given components. */
-	MapColorRgb(float r, float g, float b);
+	MapColorRgb(float r, float g, float b) noexcept;
 	
 	/** Constructs a copy of the given RGB color. */
-	MapColorRgb(const MapColorRgb& other);
+	MapColorRgb(const MapColorRgb& other) noexcept = default;
 	
 	/** Constructs a RGB color of the given QColor. Used for type conversions. */
-	MapColorRgb(const QColor& other);
+	MapColorRgb(const QColor& other) noexcept;
 	
 	/** Assigns another color's value to this color. */
-	void operator=(const MapColorRgb& other);
+	MapColorRgb& operator=(const MapColorRgb& other) noexcept = default;
 	
 	/** Converts this color to a QColor. */
 	operator QColor() const;
@@ -382,7 +385,7 @@ public:
 	bool equals(const MapColor& other, bool compare_priority) const;
 	
 	/** Compares two colors given by pointers.
-	 *  Returns true if the colors are equal or if both pointers are NULL. */
+	 *  Returns true if the colors are equal or if both pointers are nullptr. */
 	static bool equal(const MapColor* color, const MapColor* other);
 	
 	/** Returns true if this color's priority is less than the other's. */
@@ -438,9 +441,6 @@ protected:
 	SpotColorComponents components;
 };
 
-// Allow explicit use of MapColor pointers in QVariant
-Q_DECLARE_METATYPE(const MapColor*)
-
 /** Returns true if both MapColor are equal in all components. */
 bool operator==(const MapColor& lhs, const MapColor& rhs);
 
@@ -474,7 +474,7 @@ public:
 	 * 
 	 * Returns the user-defined value for the key color if it is defined.
 	 * Otherwise, if the key color's priority is from the RESERVED domain,
-	 * returns key. Otherwise returns NULL.
+	 * returns key. Otherwise returns nullptr.
 	 */
 	const MapColor* value(const MapColor* key) const;
 	
@@ -482,7 +482,7 @@ public:
 	 * 
 	 * Returns the user-defined value for the key color if it is defined.
 	 * Otherwise, if the key color's priority is from the RESERVED domain,
-	 * returns key. Otherwise returns NULL.
+	 * returns key. Otherwise returns nullptr.
 	 */
 	const MapColor* operator[](const MapColor* key) const;
 	
@@ -516,40 +516,17 @@ QColor colorWithOpacity(const MapColor& c);
 // ### MapColorCmyk inline code ###
 
 inline
-MapColorCmyk::MapColorCmyk()
- : c(0.0f), m(0.0f), y(0.0f), k(1.0f)
-{
-	Q_ASSERT(isBlack());
-}
-
-inline
-MapColorCmyk::MapColorCmyk(float c, float m, float y, float k)
+MapColorCmyk::MapColorCmyk(float c, float m, float y, float k) noexcept
  : c(c), m(m), y(y), k(k) 
 {
 	// Nothing
 }
 
 inline
-MapColorCmyk::MapColorCmyk(const MapColorCmyk& other)
- : c(other.c), m(other.m), y(other.y), k(other.k)
-{
-	// Nothing
-}
-
-inline
-MapColorCmyk::MapColorCmyk(const QColor& other)
+MapColorCmyk::MapColorCmyk(const QColor& other) noexcept
  : c(other.cyanF()), m(other.magentaF()), y(other.yellowF()), k(other.blackF())
 {
 	// Nothing
-}
-
-inline
-void MapColorCmyk::operator=(const MapColorCmyk& other)
-{
-	c = other.c;
-	m = other.m;
-	y = other.y;
-	k = other.k;
 }
 
 inline
@@ -592,39 +569,17 @@ bool operator!=(const MapColorCmyk& lhs, const MapColorCmyk& rhs)
 // ### MapColorRgb inline code ###
 
 inline
-MapColorRgb::MapColorRgb()
- : r(0.0f), g(0.0f), b(0.0f)
-{
-	Q_ASSERT(isBlack());
-}
-
-inline
-MapColorRgb::MapColorRgb(float r, float g, float b)
+MapColorRgb::MapColorRgb(float r, float g, float b) noexcept
  : r(r), g(g), b(b)
 {
 	// Nothing
 }
 
 inline
-MapColorRgb::MapColorRgb(const MapColorRgb& other)
- : r(other.r), g(other.g), b(other.b)
-{
-	// Nothing
-}
-
-inline
-MapColorRgb::MapColorRgb(const QColor& other)
+MapColorRgb::MapColorRgb(const QColor& other) noexcept
  : r(other.redF()), g(other.greenF()), b(other.blueF())
 {
 	// Nothing
-}
-
-inline
-void MapColorRgb::operator=(const MapColorRgb& other)
-{
-	r = other.r;
-	g = other.g;
-	b = other.b;
 }
 
 inline
@@ -667,7 +622,7 @@ bool operator!=(const MapColorRgb& lhs, const MapColorRgb& rhs)
 
 inline
 SpotColorComponent::SpotColorComponent()
- : spot_color(NULL),
+ : spot_color(nullptr),
    factor(0.0f)
 {
 	// Nothing
@@ -684,7 +639,7 @@ SpotColorComponent::SpotColorComponent(const MapColor* spot_color, float factor)
 inline
 bool SpotColorComponent::isValid() const
 {
-	return spot_color != NULL;
+	return spot_color;
 }
 
 
@@ -844,13 +799,13 @@ const MapColor* MapColorMap::value(const MapColor* key) const
 	{
 		return mapping.value(key);
 	}
-	else if (key != NULL && key->getPriority() < 0)
+	else if (key && key->getPriority() < 0)
 	{
 		return key;
 	}
 	else
 	{
-		return NULL;
+		return nullptr;
 	}
 }
 
@@ -879,6 +834,13 @@ QColor colorWithOpacity(const MapColor& c)
 {
 	return colorWithOpacity(static_cast<const QColor&>(c), c.getOpacity());
 }
+
+
+}  // namespace OpenOrienteering
+
+
+// Allow explicit use of MapColor pointers in QVariant
+Q_DECLARE_METATYPE(const OpenOrienteering::MapColor*)
 
 
 #endif

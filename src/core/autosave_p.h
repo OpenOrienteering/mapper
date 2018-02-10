@@ -25,6 +25,9 @@
 
 #include "autosave.h"
 
+namespace OpenOrienteering {
+
+
 /**
  * @brief AutosavePrivate is a helper class of Autosave.
  * 
@@ -40,7 +43,7 @@ Q_OBJECT
 public:	
 	AutosavePrivate(Autosave& document);
 	
-	virtual ~AutosavePrivate();
+	~AutosavePrivate() override;
 	
 	bool autosaveNeeded();
 	
@@ -59,5 +62,8 @@ private:
 	bool autosave_needed;
 	int  autosave_interval;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

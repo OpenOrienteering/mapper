@@ -18,14 +18,27 @@
  */
 
 
-#ifndef _OPENORIENTEERING_TEMPLATE_MAP_H_
-#define _OPENORIENTEERING_TEMPLATE_MAP_H_
-
-#include "template.h"
+#ifndef OPENORIENTEERING_TEMPLATE_MAP_H
+#define OPENORIENTEERING_TEMPLATE_MAP_H
 
 #include <memory>
+#include <vector>
 
-#include <QStringList>
+#include <QObject>
+#include <QString>
+
+#include "templates/template.h"
+
+class QByteArray;
+class QPainter;
+class QRectF;
+class QStringList;
+class QWidget;
+
+namespace OpenOrienteering {
+
+class Map;
+
 
 /**
  * Template displaying a map file.
@@ -42,7 +55,7 @@ public:
 	
 	TemplateMap(const QString& path, Map* map);
 	
-	virtual ~TemplateMap() override;
+	~TemplateMap() override;
 	
 	
 	const char* getTemplateType() const override;
@@ -57,7 +70,7 @@ public:
 	void unloadTemplateFileImpl() override;
 	
 	
-	void drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, bool on_screen, float opacity) const override;
+	void drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, float opacity) const override;
 	
 	QRectF getTemplateExtent() const override;
 	
@@ -78,5 +91,8 @@ private:
 	
 	static QStringList locked_maps;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

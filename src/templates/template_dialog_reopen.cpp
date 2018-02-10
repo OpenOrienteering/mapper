@@ -21,7 +21,6 @@
 
 #include "template_dialog_reopen.h"
 
-#include <qmath.h>
 #include <QDialogButtonBox>
 #include <QGridLayout>
 #include <QLabel>
@@ -30,6 +29,9 @@
 #include "core/map.h"
 #include "template.h"
 #include "gui/util_gui.h"
+
+
+namespace OpenOrienteering {
 
 ReopenTemplateDialog::ReopenTemplateDialog(QWidget* parent, Map* map, const QString& map_directory)
 : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
@@ -80,8 +82,8 @@ ReopenTemplateDialog::ReopenTemplateDialog(QWidget* parent, Map* map, const QStr
 	layout->addWidget(button_box, row++, 0, 1, 2);
 	setLayout(layout);
 	
-	connect(clear_button, SIGNAL(clicked()), this, SLOT(clearClicked()));
-	connect(button_box, SIGNAL(clicked(QAbstractButton*)), this, SLOT(doAccept(QAbstractButton*)));
+	connect(clear_button, &QAbstractButton::clicked, this, &ReopenTemplateDialog::clearClicked);
+	connect(button_box, &QDialogButtonBox::clicked, this, &ReopenTemplateDialog::doAccept);
 }
 
 void ReopenTemplateDialog::updateClosedTemplateList()
@@ -164,3 +166,6 @@ void ReopenTemplateDialog::OpenTemplateList::dropEvent(QDropEvent* event)
 	// Always re-fill this list to update the list indices in the item data
 	dialog->updateClosedTemplateList();
 }
+
+
+}  // namespace OpenOrienteering

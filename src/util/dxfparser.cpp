@@ -24,16 +24,18 @@
 #include <QDebug>
 
 
+namespace OpenOrienteering {
+
 QString DXFParser::parse()
 {
-	Q_ASSERT(device != NULL); // Programmer's responsibility
+	Q_ASSERT(device); // Programmer's responsibility
 	
 	bool must_close_device = false;
 	if (!device->isOpen())
 	{
 		if (!device->open(QIODevice::ReadOnly))
 		{
-			return QApplication::translate("DXFParser", "Could not open the file.");
+			return QApplication::translate("OpenOrienteering::DXFParser", "Could not open the file.");
 		}
 		must_close_device = true;
 	}
@@ -49,7 +51,7 @@ QString DXFParser::parse()
 	if (code != 0 || value != QLatin1String("SECTION"))
 	{
 		// File does not start with DXF section
-		return QApplication::translate("DXFParser", "The file is not an DXF file.");
+		return QApplication::translate("OpenOrienteering::DXFParser", "The file is not an DXF file.");
 	}
 
 	paths = QList<DXFPath>();
@@ -178,9 +180,9 @@ void DXFParser::parseCommon(int code, const QString& value, DXFPath& path)
 	else if (code == 420)
 	{
 		QColor color;
-		color.setRed(value.left(2).toInt());
-		color.setGreen(value.mid(2, 2).toInt());
-		color.setBlue(value.right(2).toInt());
+		color.setRed(value.leftRef(2).toInt());
+		color.setGreen(value.midRef(2, 2).toInt());
+		color.setBlue(value.rightRef(2).toInt());
 		path.color = color;
 	}
 	else if (code == 430)
@@ -598,3 +600,6 @@ void DXFParser::parseUnknown(QIODevice *d)
 		; // nothing
 	}
 }
+
+
+}  // namespace OpenOrienteering

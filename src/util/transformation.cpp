@@ -23,17 +23,17 @@
 
 #include <cmath>
 
-#include <qmath.h>
-#include <QScopedValueRollback>
 #include <QTransform>
-#include <QXmlStreamWriter>
 
 #include "core/map_coord.h"
 #include "fileformats/file_format.h"
-#include "matrix.h"
 #include "templates/template.h"
-#include "util/backports.h"          // Reason: std::hypot on Android
+#include "util/backports.h"          // IWYU pragma: keep
+#include "util/matrix.h"
 #include "util/xml_stream_util.h"
+
+
+namespace OpenOrienteering {
 
 // ### PassPoint ###
 
@@ -388,3 +388,6 @@ bool PassPointList::estimateNonIsometricSimilarityTransform(not_null<QTransform*
 		output.get(2, 0), output.get(5, 0), 1);
 	return true;
 }
+
+
+}  // namespace OpenOrienteering

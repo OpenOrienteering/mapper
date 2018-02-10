@@ -21,37 +21,53 @@
 
 #include "edit_point_tool.h"
 
+#include <map>
+#include <memory>
 #include <limits>
+#include <vector>
 
+#include <QtGlobal>
+#include <QtMath>
+#include <QCursor>
+#include <QEvent>
+#include <QFlags>
 #include <QKeyEvent>
+#include <QLatin1String>
+#include <QLocale>
 #include <QMouseEvent>
 #include <QPainter>
-#include <QScopedValueRollback>
+#include <QPoint>
+#include <QPointF>
+#include <QToolButton>
 
 #include "settings.h"
 #include "core/map.h"
+#include "core/map_part.h"
+#include "core/map_view.h"
+#include "core/path_coord.h"
 #include "core/objects/object.h"
+#include "core/objects/object_mover.h"
 #include "core/objects/text_object.h"
 #include "core/symbols/line_symbol.h"
-#include "core/symbols/text_symbol.h"
-#include "core/renderables/renderable.h"
 #include "core/symbols/symbol.h"
-#include "gui/main_window.h"
 #include "gui/modifier_key.h"
 #include "gui/map/map_editor.h"
 #include "gui/map/map_widget.h"
 #include "gui/widgets/key_button_bar.h"
-#include "tools/tool_helpers.h"
-#include "tools/draw_text_tool.h"
+#include "tools/object_selector.h"
+#include "tools/point_handles.h"
 #include "tools/text_object_editor_helper.h"
+#include "tools/tool.h"
+#include "tools/tool_base.h"
+#include "tools/tool_helpers.h"
 #include "undo/object_undo.h"
 #include "util/util.h"
 
-class SymbolWidget;
 
+namespace OpenOrienteering {
 
-namespace
-{
+namespace {
+	
 	/**
 	 * Maximum number of objects in the selection for which point handles
 	 * will still be displayed (and can be edited).
@@ -62,19 +78,14 @@ namespace
 	 * The value which indicates that no point of the current object is hovered.
 	 */
 	static auto no_point = std::numeric_limits<MapCoordVector::size_type>::max();
+	
+	
 }
 
 
 
-EditPointTool::EditPointTool(MapEditorController* editor, QAction* tool_button)
- : EditTool { editor, EditPoint, tool_button }
- , hover_state { OverNothing }
- , hover_object { nullptr }
- , hover_point { 0 }
- , box_selection { false }
- , waiting_for_mouse_release { false }
- , space_pressed { false }
- , text_editor { nullptr }
+EditPointTool::EditPointTool(MapEditorController* editor, QAction* tool_action)
+ : EditTool { editor, EditPoint, tool_action }
 {
 	// noting else
 }
@@ -168,7 +179,7 @@ void EditPointTool::clickPress()
 		PathCoord path_coord;
 		path->calcClosestPointOnPath(cur_pos_map, distance_sq, path_coord);
 		
-		float click_tolerance_map_sq = cur_map_widget->getMapView()->pixelToLength(clickTolerance());
+		auto click_tolerance_map_sq = cur_map_widget->getMapView()->pixelToLength(clickTolerance());
 		click_tolerance_map_sq = click_tolerance_map_sq * click_tolerance_map_sq;
 		
 		if (distance_sq <= click_tolerance_map_sq)
@@ -176,7 +187,7 @@ void EditPointTool::clickPress()
 			startDragging();
 			hover_state = OverObjectNode;
 			hover_point = path->subdivide(path_coord);
-			if (addDashPointDefault() ^ space_pressed)
+			if (addDashPointDefault() ^ switch_dash_points)
 			{
 				MapCoord point = path->getCoordinate(hover_point);
 				point.setDashPoint(true);
@@ -194,7 +205,7 @@ void EditPointTool::clickPress()
 		PathObject* hover_object = this->hover_object->asPath();
 		Q_ASSERT(hover_point < hover_object->getCoordinateCount());
 		
-		if (space_pressed &&
+		if (switch_dash_points &&
 		    !hover_object->isCurveHandle(hover_point))
 		{
 			// Switch point between dash / normal point
@@ -278,6 +289,9 @@ void EditPointTool::clickPress()
 	{
 		box_selection = false;
 		
+		if (key_button_bar)
+			key_button_bar->hide();
+		
 		TextObject* hover_object = map()->getFirstSelectedObject()->asText();
 		startEditing(hover_object);
 		
@@ -292,7 +306,7 @@ void EditPointTool::clickPress()
 		connect(text_editor, &TextObjectEditorHelper::finished, this, &EditPointTool::finishEditing);
 		
 		// Send clicked position
-		QMouseEvent event { QEvent::MouseButtonPress, click_pos, Qt::LeftButton, Qt::LeftButton, active_modifiers };
+		QMouseEvent event { QEvent::MouseButtonPress, click_pos, Qt::LeftButton, Qt::LeftButton, Qt::KeyboardModifiers{} };
 		text_editor->mousePressEvent(&event, click_pos_map, cur_map_widget);
 	}
 	
@@ -350,7 +364,7 @@ void EditPointTool::dragMove()
 			handle_offset = MapCoordF(0, 0);
 		}
 		
-		object_mover->move(constrained_pos_map, !(active_modifiers & Qt::ShiftModifier));
+		object_mover->move(constrained_pos_map, moveOppositeHandle());
 		updatePreviewObjectsAsynchronously();
 	}
 	else if (box_selection)
@@ -393,7 +407,9 @@ void EditPointTool::focusOutEvent(QFocusEvent* event)
 	
 	// Deactivate modifiers - not always correct, but should be
 	// wrong only in unusual cases and better than leaving the modifiers on forever
-	space_pressed = false;
+	switch_dash_points = false;
+	if (dash_points_button)
+		dash_points_button->setChecked(switch_dash_points);
 	updateStatusText();
 }
 
@@ -424,7 +440,12 @@ bool EditPointTool::keyPress(QKeyEvent* event)
 		return true;
 		
 	case Qt::Key_Space:
-		space_pressed = true;
+		if (event->modifiers().testFlag(Qt::ControlModifier))
+			switch_dash_points = !switch_dash_points;
+		else
+			switch_dash_points = true;
+		if (dash_points_button)
+			dash_points_button->setChecked(switch_dash_points);
 		updateStatusText();
 		return true;
 		
@@ -473,7 +494,12 @@ bool EditPointTool::keyRelease(QKeyEvent* event)
 		return false; // not consuming Shift
 		
 	case Qt::Key_Space:
-		space_pressed = false;
+		if (event->modifiers().testFlag(Qt::ControlModifier))
+			return true;
+		
+		switch_dash_points = false;
+		if (dash_points_button)
+			dash_points_button->setChecked(switch_dash_points);
 		updateStatusText();
 		return true;
 		
@@ -490,7 +516,7 @@ bool EditPointTool::inputMethodEvent(QInputMethodEvent* event)
 	return MapEditorTool::inputMethodEvent(event);
 }
 
-QVariant EditPointTool::inputMethodQuery(Qt::InputMethodQuery property, QVariant argument) const
+QVariant EditPointTool::inputMethodQuery(Qt::InputMethodQuery property, const QVariant& argument) const
 {
 	auto result = QVariant { };
 	if (text_editor)
@@ -505,10 +531,12 @@ void EditPointTool::initImpl()
 	if (editor->isInMobileMode())
 	{
 		// Create key replacement bar
-		key_button_bar = new KeyButtonBar(this, editor->getMainWidget());
-		key_button_bar->addModifierKey(Qt::Key_Shift, Qt::ShiftModifier, tr("Snap", "Snap to existing objects"));
-		key_button_bar->addModifierKey(Qt::Key_Control, Qt::ControlModifier, tr("Point / Angle", "Modify points or use constrained angles"));
-		key_button_bar->addModifierKey(Qt::Key_Space, 0, tr("Toggle dash", "Toggle dash points"));
+		key_button_bar = new KeyButtonBar(editor->getMainWidget());
+		key_button_bar->addModifierButton(Qt::ShiftModifier, tr("Snap", "Snap to existing objects"));
+		key_button_bar->addModifierButton(Qt::ControlModifier, tr("Point / Angle", "Modify points or use constrained angles"));
+		dash_points_button = key_button_bar->addKeyButton(Qt::Key_Space, Qt::ControlModifier, tr("Toggle dash", "Toggle dash points"));
+		dash_points_button->setCheckable(true);
+		dash_points_button->setChecked(switch_dash_points);
 		editor->showPopupWidget(key_button_bar, QString{});
 	}
 }
@@ -546,13 +574,13 @@ int EditPointTool::updateDirtyRectImpl(QRectF& rect)
 	map()->includeSelectionRect(selection_extent);
 	
 	rectInclude(rect, selection_extent);
-	int pixel_border = show_object_points ? (scaleFactor() * 6) : 1;
+	int pixel_border = show_object_points ? pointHandles().displayRadius() : 1;
 	
 	// Control points
 	if (show_object_points)
 	{
-		for (Map::ObjectSelection::const_iterator it = map()->selectedObjectsBegin(), end = map()->selectedObjectsEnd(); it != end; ++it)
-			(*it)->includeControlPointsRect(rect);
+		for (auto object : map()->selectedObjects())
+			object->includeControlPointsRect(rect);
 	}
 	
 	// Text selection
@@ -574,7 +602,7 @@ void EditPointTool::drawImpl(QPainter* painter, MapWidget* widget)
 	auto num_selected_objects = map()->selectedObjects().size();
 	if (num_selected_objects > 0)
 	{
-		drawSelectionOrPreviewObjects(painter, widget, text_editor != nullptr);
+		drawSelectionOrPreviewObjects(painter, widget, bool(text_editor));
 		
 		if (!text_editor)
 		{
@@ -629,6 +657,9 @@ void EditPointTool::finishEditing()
 		
 		waiting_for_mouse_release = true;
 		
+		if (key_button_bar)
+			key_button_bar->show();
+		
 		if (!editedObjectsModified())
 		{
 			abortEditing();
@@ -650,7 +681,7 @@ void EditPointTool::finishEditing()
 			{
 				part->deleteObject(index, true);
 				
-				AddObjectsUndoStep* undo_step = new AddObjectsUndoStep(map);
+				auto undo_step = new AddObjectsUndoStep(map);
 				undo_step->addObject(index, text_object);
 				map->push(undo_step);
 				map->setObjectsDirty();
@@ -687,14 +718,14 @@ void EditPointTool::updateStatusText()
 	else if (editingInProgress())
 	{
 		MapCoordF drag_vector = constrained_pos_map - click_pos_map;
-		text = EditTool::tr("<b>Coordinate offset:</b> %1, %2 mm  <b>Distance:</b> %3 m ").
-		       arg(QLocale().toString(drag_vector.x(), 'f', 1)).
-		       arg(QLocale().toString(-drag_vector.y(), 'f', 1)).
-		       arg(QLocale().toString(0.001 * map()->getScaleDenominator() * drag_vector.length(), 'f', 1)) +
+		text = ::OpenOrienteering::EditTool::tr("<b>Coordinate offset:</b> %1, %2 mm  <b>Distance:</b> %3 m ").
+		       arg(QLocale().toString(drag_vector.x(), 'f', 1),
+		           QLocale().toString(-drag_vector.y(), 'f', 1),
+		           QLocale().toString(0.001 * map()->getScaleDenominator() * drag_vector.length(), 'f', 1)) +
 		       QLatin1String("| ");
 		
 		if (!angle_helper->isActive())
-			text += EditTool::tr("<b>%1</b>: Fixed angles. ").arg(ModifierKey::control());
+			text += ::OpenOrienteering::EditTool::tr("<b>%1</b>: Fixed angles. ").arg(ModifierKey::control());
 		
 		if (!(active_modifiers & Qt::ShiftModifier))
 		{
@@ -705,16 +736,16 @@ void EditPointTool::updateStatusText()
 			}	
 			else 
 			{
-				text += EditTool::tr("<b>%1</b>: Snap to existing objects. ").arg(ModifierKey::shift());
+				text += ::OpenOrienteering::EditTool::tr("<b>%1</b>: Snap to existing objects. ").arg(ModifierKey::shift());
 			}
 		}
 	}
 	else
 	{
-		text = EditTool::tr("<b>Click</b>: Select a single object. <b>Drag</b>: Select multiple objects. <b>%1+Click</b>: Toggle selection. ").arg(ModifierKey::shift());
+		text = ::OpenOrienteering::EditTool::tr("<b>Click</b>: Select a single object. <b>Drag</b>: Select multiple objects. <b>%1+Click</b>: Toggle selection. ").arg(ModifierKey::shift());
 		if (map()->getNumSelectedObjects() > 0)
 		{
-			text += EditTool::tr("<b>%1</b>: Delete selected objects. ").arg(ModifierKey(DeleteObjectKey));
+			text += ::OpenOrienteering::EditTool::tr("<b>%1</b>: Delete selected objects. ").arg(ModifierKey(DeleteObjectKey));
 			
 			if (map()->selectedObjects().size() <= max_objects_for_handle_display)
 			{
@@ -728,10 +759,10 @@ void EditPointTool::updateStatusText()
 						text = tr("<b>%1+Click</b> on point: Delete it; on path: Add a new point; with <b>%2</b>: Add a dash point. ").
 						       arg(ModifierKey::control(), ModifierKey::space());
 				}
-				else if (space_pressed)
+				else if (switch_dash_points)
 					text = tr("<b>%1+Click</b> on point to switch between dash and normal point. ").arg(ModifierKey::space());
 				else
-					text += QLatin1String("| ") + MapEditorTool::tr("More: %1, %2").arg(ModifierKey::control(), ModifierKey::space());
+					text += QLatin1String("| ") + ::OpenOrienteering::MapEditorTool::tr("More: %1, %2").arg(ModifierKey::control(), ModifierKey::space());
 			}
 		}
 	}
@@ -789,7 +820,7 @@ void EditPointTool::updateHoverState(MapCoordF cursor_pos)
 						
 						if (distance_sq >= +0.0 &&
 						    distance_sq < best_distance_sq &&
-						    distance_sq < qMax(click_tolerance_sq, qPow(path->getSymbol()->calculateLargestLineExtent(map()), 2)))
+						    distance_sq < qMax(click_tolerance_sq, qPow(path->getSymbol()->calculateLargestLineExtent(), 2)))
 						{
 							new_hover_state |= OverPathEdge;
 							new_hover_object = path;
@@ -821,14 +852,11 @@ void EditPointTool::updateHoverState(MapCoordF cursor_pos)
 		// We have got a Map*, so we may get an non-const Object*.
 		hover_object = const_cast<Object*>(new_hover_object);
 		hover_point  = new_hover_point;
-		if (hover_state != OverNothing)
-			start_drag_distance = 0;
-		else
-			start_drag_distance = Settings::getInstance().getStartDragDistancePx();
+		effective_start_drag_distance = (hover_state == OverNothing) ? startDragDistance() : 0;
 		updateDirtyRect();
 	}
 	
-	Q_ASSERT((hover_state.testFlag(OverObjectNode) || hover_state.testFlag(OverPathEdge)) == (hover_object != nullptr));
+	Q_ASSERT((hover_state.testFlag(OverObjectNode) || hover_state.testFlag(OverPathEdge)) == bool(hover_object));
 }
 
 void EditPointTool::setupAngleHelperFromHoverObject()
@@ -916,3 +944,13 @@ bool EditPointTool::hoveringOverCurveHandle() const
 	       && hover_object->getType() == Object::Path
 	       && hover_object->asPath()->isCurveHandle(hover_point);
 }
+
+
+bool EditPointTool::moveOppositeHandle() const
+{
+	return !(active_modifiers & Qt::ShiftModifier)
+	       && hoveringOverCurveHandle();
+}
+
+
+}  // namespace OpenOrienteering

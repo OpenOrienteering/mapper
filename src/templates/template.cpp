@@ -22,27 +22,64 @@
 #include "template.h"
 
 #include <cmath>
+#include <new>
 
 #include <QCoreApplication>
 #include <QDebug>
-#include <QFileDialog>
 #include <QFileInfo>
 #include <QMessageBox>
 #include <QPainter>
-#include <QPixmap>
 #include <QScopedValueRollback>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
 #include "core/map_view.h"
 #include "core/map.h"
-#include "template_image.h"
-#include "template_map.h"
-#include "template_track.h"
+#include "fileformats/file_format.h"
 #include "gdal/ogr_template.h"
-#include "util/backports.h"          // Reason: std::hypot on Android
+#include "gui/file_dialog.h"
+#include "templates/template_image.h"
+#include "templates/template_map.h"
+#include "templates/template_track.h"
+#include "util/backports.h"  // IWYU pragma: keep
 #include "util/util.h"
 #include "util/xml_stream_util.h"
+
+
+namespace OpenOrienteering {
+
+class Template::ScopedOffsetReversal
+{
+public:
+	ScopedOffsetReversal(Template& temp)
+	: temp(temp)
+	, copy(temp.transform)
+	, needed(temp.accounted_offset != MapCoord{} )
+	{
+		if (needed)
+		{
+			// Temporarily revert the offset the saved data is expected to
+			// match the original data before bounds checking / correction
+			temp.applyTemplatePositionOffset();
+		}
+	}
+	
+	~ScopedOffsetReversal()
+	{
+		if (needed)
+		{
+			temp.transform = copy;
+			temp.updateTransformationMatrices();
+		}
+	}
+	
+private:
+	Template& temp;
+	const TemplateTransform copy;
+	const bool needed;
+};
+
+
 
 // ### TemplateTransform ###
 
@@ -86,7 +123,7 @@ void TemplateTransform::load(QIODevice* file)
 
 #endif
 
-void TemplateTransform::save(QXmlStreamWriter& xml, const QString role) const
+void TemplateTransform::save(QXmlStreamWriter& xml, const QString& role) const
 {
 	xml.writeStartElement(QString::fromLatin1("transformation"));
 	xml.writeAttribute(QString::fromLatin1("role"), role);
@@ -269,43 +306,27 @@ void Template::saveTemplateConfiguration(QXmlStreamWriter& xml, bool open)
 	}
 	else
 	{
-		{
-			QScopedValueRollback<TemplateTransform> rollback{transform};
-			if (!accounted_offset.isNull())
-			{
-				// Temporarily revert the offset the saved data is expected to
-				// match the original data before bounds checking / correction
-				QTransform t;
-				t.rotate(-getTemplateRotation() * (180 / M_PI));
-				t.scale(getTemplateScaleX(), getTemplateScaleY());
-				setTemplatePosition(templatePosition() - MapCoord{t.map(accounted_offset)});
-			}
-			
-			xml.writeStartElement(QString::fromLatin1("transformations"));
-			if (adjusted)
-				xml.writeAttribute(QString::fromLatin1("adjusted"), QString::fromLatin1("true"));
-			if (adjustment_dirty)
-				xml.writeAttribute(QString::fromLatin1("adjustment_dirty"), QString::fromLatin1("true"));
-			int num_passpoints = (int)passpoints.size();
-			xml.writeAttribute(QString::fromLatin1("passpoints"), QString::number(num_passpoints));
-			
-			transform.save(xml, QString::fromLatin1("active"));
-			other_transform.save(xml, QString::fromLatin1("other"));
-			
-			for (int i = 0; i < num_passpoints; ++i)
-				passpoints[i].save(xml);
-			
-			map_to_template.save(xml, QString::fromLatin1("map_to_template"));
-			template_to_map.save(xml, QString::fromLatin1("template_to_map"));
-			template_to_map_other.save(xml, QString::fromLatin1("template_to_map_other"));
-			
-			xml.writeEndElement(/*transformations*/);
-		}
+		ScopedOffsetReversal no_offset{*this};
 		
-		if (!accounted_offset.isNull())
-		{
-			updateTransformationMatrices();
-		}
+		xml.writeStartElement(QString::fromLatin1("transformations"));
+		if (adjusted)
+			xml.writeAttribute(QString::fromLatin1("adjusted"), QString::fromLatin1("true"));
+		if (adjustment_dirty)
+			xml.writeAttribute(QString::fromLatin1("adjustment_dirty"), QString::fromLatin1("true"));
+		int num_passpoints = (int)passpoints.size();
+		xml.writeAttribute(QString::fromLatin1("passpoints"), QString::number(num_passpoints));
+		
+		transform.save(xml, QString::fromLatin1("active"));
+		other_transform.save(xml, QString::fromLatin1("other"));
+		
+		for (int i = 0; i < num_passpoints; ++i)
+			passpoints[i].save(xml);
+		
+		map_to_template.save(xml, QString::fromLatin1("map_to_template"));
+		template_to_map.save(xml, QString::fromLatin1("template_to_map"));
+		template_to_map_other.save(xml, QString::fromLatin1("template_to_map_other"));
+		
+		xml.writeEndElement(/*transformations*/);
 	}
 	
 	saveTypeSpecificTemplateConfiguration(xml);
@@ -453,10 +474,10 @@ void Template::switchTemplateFile(const QString& new_path, bool load_file)
 
 bool Template::execSwitchTemplateFileDialog(QWidget* dialog_parent)
 {
-	QString new_path = QFileDialog::getOpenFileName(dialog_parent,
-	                                                tr("Find the moved template file"),
-												    QString(),
-	                                                tr("All files (*.*)") );
+	QString new_path = FileDialog::getOpenFileName(dialog_parent,
+	                                               tr("Find the moved template file"),
+	                                               QString(),
+	                                               tr("All files (*.*)") );
 	new_path = QFileInfo(new_path).canonicalFilePath();
 	if (new_path.isEmpty())
 		return false;
@@ -467,7 +488,7 @@ bool Template::execSwitchTemplateFileDialog(QWidget* dialog_parent)
 	switchTemplateFile(new_path, true);
 	if (getTemplateState() != Loaded)
 	{
-		QString error_template = QCoreApplication::translate("TemplateListWidget", "Cannot open template\n%1:\n%2").arg(new_path);
+		QString error_template = QCoreApplication::translate("OpenOrienteering::TemplateListWidget", "Cannot open template\n%1:\n%2").arg(new_path);
 		QString error = errorString();
 		Q_ASSERT(!error.isEmpty());
 		QMessageBox::warning(dialog_parent,
@@ -510,13 +531,15 @@ bool Template::configureAndLoad(QWidget* dialog_parent, MapView* view)
 	return true;
 }
 
-bool Template::tryToFindAndReloadTemplateFile(QString map_directory, bool* out_loaded_from_map_dir)
+
+
+bool Template::tryToFindTemplateFile(QString map_directory, bool* out_found_in_map_dir)
 {
 	if (!map_directory.isEmpty() && !map_directory.endsWith(QLatin1Char('/')))
 		map_directory.append(QLatin1Char('/'));
 	
-	if (out_loaded_from_map_dir)
-		*out_loaded_from_map_dir = false;
+	if (out_found_in_map_dir)
+		*out_found_in_map_dir = false;
 	
 	const QString old_absolute_path = getTemplatePath();
 	
@@ -524,30 +547,29 @@ bool Template::tryToFindAndReloadTemplateFile(QString map_directory, bool* out_l
 	if (!getTemplateRelativePath().isEmpty() && !map_directory.isEmpty())
 	{
 		auto path = QString{ map_directory + getTemplateRelativePath() };
-		if (QFileInfo(path).exists())
+		if (QFileInfo::exists(path))
 		{
 			setTemplatePath(path);
-			return loadTemplateFile(false);
+			return true;
 		}
 	}
 	
 	// Second try absolute path
-	if (QFileInfo(template_path).exists())
+	if (QFileInfo::exists(template_path))
 	{
-		return loadTemplateFile(false);
+		return true;
 	}
 	
 	// Third try the template filename in the map's directory
 	if (!map_directory.isEmpty())
 	{
 		auto path = QString{ map_directory + getTemplateFilename() };
-		if (QFileInfo(path).exists())
+		if (QFileInfo::exists(path))
 		{
 			setTemplatePath(path);
-			bool success = loadTemplateFile(false);
-			if (out_loaded_from_map_dir)
-				*out_loaded_from_map_dir = true;
-			return success;
+			if (out_found_in_map_dir)
+				*out_found_in_map_dir = true;
+			return true;
 		}
 	}
 	
@@ -555,6 +577,13 @@ bool Template::tryToFindAndReloadTemplateFile(QString map_directory, bool* out_l
 	template_state = Invalid;
 	setErrorString(tr("No such file."));
 	return false;
+}
+
+
+bool Template::tryToFindAndReloadTemplateFile(QString map_directory, bool* out_loaded_from_map_dir)
+{
+	return tryToFindTemplateFile(map_directory, out_loaded_from_map_dir)
+	       && loadTemplateFile(false);
 }
 
 bool Template::preLoadConfiguration(QWidget* dialog_parent)
@@ -568,17 +597,16 @@ bool Template::loadTemplateFile(bool configuring)
 	Q_ASSERT(template_state != Loaded);
 	
 	const State old_state = template_state;
-	bool result = QFileInfo(template_path).exists();
-	if (!result)
+	
+	setErrorString(QString());
+	try
 	{
-		template_state = Invalid;
-		setErrorString(tr("No such file."));
-	}
-	else
-	{
-		setErrorString(QString());
-		result = loadTemplateFileImpl(configuring);
-		if (result)
+		if (!QFileInfo::exists(template_path))
+		{
+			template_state = Invalid;
+			setErrorString(tr("No such file."));
+		}
+		else if (loadTemplateFileImpl(configuring))
 		{
 			template_state = Loaded;
 		}
@@ -593,13 +621,22 @@ bool Template::loadTemplateFile(bool configuring)
 				setErrorString(tr("Is the format of the file correct for this template type?"));
 			}
 		}
-		
+	}
+	catch (std::bad_alloc&)
+	{
+		template_state = Invalid;
+		setErrorString(tr("Not enough free memory."));
+	}
+	catch (FileFormatException& e)
+	{
+		template_state = Invalid;
+		setErrorString(e.message());
 	}
 	
 	if (old_state != template_state)
 		emit templateStateChanged();
 		
-	return result;
+	return template_state == Loaded;
 }
 
 bool Template::postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view)
@@ -641,17 +678,24 @@ void Template::scale(double factor, const MapCoord& center)
 	setTemplatePosition(center + factor * (templatePosition() - center));
 	setTemplateScaleX(factor * getTemplateScaleX());
 	setTemplateScaleY(factor * getTemplateScaleY());
+	
+	accounted_offset *= factor;
 }
 
 void Template::rotate(double rotation, const MapCoord& center)
 {
 	Q_ASSERT(!is_georeferenced);
 	
+	auto offset = templatePositionOffset();
+	setTemplatePositionOffset({});
+	
 	setTemplateRotation(getTemplateRotation() + rotation);
 	
-	MapCoordF offset = MapCoordF { templatePosition() - center };
-	offset.rotate(rotation);
-	setTemplatePosition(MapCoord { offset });
+	auto position = MapCoordF{templatePosition() - center};
+	position.rotate(-rotation);
+	setTemplatePosition(MapCoord{position} + center);
+	
+	setTemplatePositionOffset(offset);
 }
 
 void Template::setTemplateAreaDirty()
@@ -799,6 +843,7 @@ const std::vector<QByteArray>& Template::supportedExtensions()
 		auto& track_extensions = TemplateTrack::supportedExtensions();
 		extensions.reserve(image_extensions.size()
 		                   + map_extensions.size()
+		                   + ogr_extensions.size()
 		                   + track_extensions.size());
 		extensions.insert(end(extensions), begin(image_extensions), end(image_extensions));
 		extensions.insert(end(extensions), begin(map_extensions), end(map_extensions));
@@ -828,16 +873,24 @@ std::unique_ptr<Template> Template::templateForFile(const QString& path, Map* ma
 #endif
 	else if (path_ends_with_any_of(TemplateTrack::supportedExtensions()))
 		t.reset(new TemplateTrack(path, map));
+#ifdef MAPPER_USE_GDAL
+	else
+		t.reset(new OgrTemplate(path, map));
+#endif
 	
 	return t;
 }
 
+
+#ifndef NO_NATIVE_FILE_FORMAT
 bool Template::loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version)
 {
 	Q_UNUSED(stream);
 	Q_UNUSED(version);
 	return true;
 }
+#endif
+
 
 void Template::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const
 {
@@ -873,6 +926,36 @@ void Template::setTemplatePosition(MapCoord coord)
 	updateTransformationMatrices();
 }
 
+MapCoord Template::templatePositionOffset() const
+{
+	return accounted_offset;
+}
+
+void Template::setTemplatePositionOffset(MapCoord offset)
+{
+	const auto move = accounted_offset - offset;
+	if (move != MapCoord{})
+	{
+		accounted_offset = move;
+		applyTemplatePositionOffset();
+	}
+	accounted_offset = offset;
+}
+
+void Template::applyTemplatePositionOffset()
+{
+	QTransform t;
+	t.rotate(-qRadiansToDegrees(getTemplateRotation()));
+	t.scale(getTemplateScaleX(), getTemplateScaleY());
+	setTemplatePosition(templatePosition() - MapCoord{t.map(QPointF{accounted_offset})});
+}
+
+void Template::resetTemplatePositionOffset()
+{
+	accounted_offset = {};
+}
+
+
 void Template::updateTransformationMatrices()
 {
 	double cosr = cos(-transform.template_rotation);
@@ -893,3 +976,6 @@ void Template::updateTransformationMatrices()
 	
 	template_to_map.invert(map_to_template);
 }
+
+
+}  // namespace OpenOrienteering

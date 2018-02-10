@@ -22,23 +22,28 @@
 #ifndef OPENORIENTEERING_TEXT_SYMBOL_SETTINGS_H
 #define OPENORIENTEERING_TEXT_SYMBOL_SETTINGS_H
 
+#include <QtGlobal>
+#include <QObject>
+#include <QString>
+
 #include "gui/symbols/symbol_properties_widget.h"
 
-#include "core/symbols/text_symbol.h"
-
-
-QT_BEGIN_NAMESPACE
 class QCheckBox;
 class QDoubleSpinBox;
+class QFont;
 class QFontComboBox;
 class QLineEdit;
 class QListWidget;
 class QPushButton;
 class QRadioButton;
-QT_END_NAMESPACE
+class QWidget;
+
+namespace OpenOrienteering {
 
 class ColorDropDown;
+class Symbol;
 class SymbolSettingDialog;
+class TextSymbol;
 
 
 class TextSymbolSettings : public SymbolPropertiesWidget
@@ -46,9 +51,9 @@ class TextSymbolSettings : public SymbolPropertiesWidget
 Q_OBJECT
 public:
 	TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* dialog);
-    virtual ~TextSymbolSettings();
+    ~TextSymbolSettings() override;
 	
-	virtual void reset(Symbol* symbol);
+	void reset(Symbol* symbol) override;
 	
 	void updateGeneralContents();
 	
@@ -59,7 +64,7 @@ public:
 	void updateCompatibilityContents();
 	
 protected slots:
-	void fontChanged(QFont font);
+	void fontChanged(const QFont& font);
 	void fontSizeChanged(double value);
 	void letterSizeChanged();
 	void colorChanged();
@@ -123,5 +128,8 @@ private:
 	
 	bool react_to_changes;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

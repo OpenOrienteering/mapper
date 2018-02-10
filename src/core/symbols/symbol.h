@@ -22,18 +22,20 @@
 #ifndef OPENORIENTEERING_SYMBOL_H
 #define OPENORIENTEERING_SYMBOL_H
 
+#include <Qt>
+#include <QtGlobal>
+#include <QFlags>
 #include <QHash>
 #include <QImage>
+#include <QMetaType>
 #include <QRgb>
+#include <QString>
 
-#include "core/map_coord.h"
-#include "fileformats/file_format.h"
-
-QT_BEGIN_NAMESPACE
 class QIODevice;
 class QXmlStreamReader;
 class QXmlStreamWriter;
-QT_END_NAMESPACE
+
+namespace OpenOrienteering {
 
 class AreaSymbol;
 class CombinedSymbol;
@@ -41,13 +43,11 @@ class LineSymbol;
 class Map;
 class MapColor;
 class MapColorMap;
-class MapRenderables;
 class Object;
 class ObjectRenderables;
 class PathObject;
 class PathPartVector;
 class PointSymbol;
-class Renderable;
 class Symbol;
 class SymbolPropertiesWidget;
 class SymbolSettingDialog;
@@ -55,6 +55,15 @@ class TextSymbol;
 class VirtualCoordVector;
 
 typedef QHash<QString, Symbol*> SymbolDictionary;
+
+
+// From gui/util_gui.h, but avoiding extra dependencies
+namespace Util {
+
+QString plainText(QString maybe_markup);
+
+
+}  // namespace Util
 
 
 /**
@@ -92,9 +101,20 @@ public:
 	Q_DECLARE_FLAGS(RenderableOptions, RenderableOption)
 	
 	/** Constructs an empty symbol */
-	Symbol(Type type);
+	Symbol(Type type) noexcept;
+	
+	Symbol(const Symbol&) = delete;
+	Symbol(Symbol&&) = delete;
+	
 	virtual ~Symbol();
+	
 	virtual Symbol* duplicate(const MapColorMap* color_map = nullptr) const = 0;
+	
+	Symbol& operator=(const Symbol&) = delete;
+	Symbol& operator=(Symbol&&) = delete;
+	
+	virtual bool validate() const;
+	
 	
 	/**
 	 * Checks for equality to the other symbol.
@@ -234,7 +254,7 @@ public:
 	/**
 	 * Called by the map in which the symbol is to notify it of a symbol being
 	 * changed (pointer becomes invalid).
-	 * If new_symbol == nullptr, the symbol is being deleted.
+	 * If !new_symbol, the symbol is being deleted.
 	 * Must return true if this symbol contained the deleted symbol.
 	 */
 	virtual bool symbolChanged(const Symbol* old_symbol, const Symbol* new_symbol);
@@ -248,27 +268,42 @@ public:
 	/** Scales the whole symbol */
 	virtual void scale(double factor) = 0;
 	
-	/**
-	 * Returns the symbol's icon, creates it if it was not created yet.
-	 * update == true forces an update of the icon.
-	 */
-	QImage getIcon(const Map* map, bool update = false) const;
 	
 	/**
-	 * Creates a new image with the given side length and draws the smybol icon onto it.
-	 * Returns an image pointer which you must delete yourself when no longer needed.
+	 * Returns the symbol's icon.
+	 * 
+	 * This icon uses a default size and zoom, and it is cached, making
+	 * repeated calls cheap.
 	 */
-	QImage createIcon(const Map* map, int side_length, bool antialiasing, int bottom_right_border = 0, qreal best_zoom = 2) const;
-	
-	/** Clear the symbol's icon. It will be recreated when it is needed. */
-	void resetIcon() { icon = QImage(); }
+	QImage getIcon(const Map* map) const;
 	
 	/**
-	 * Returns the largest extent (half width) of all line symbols
-	 * which may be included in this symbol.
-	 * TODO: may fit into a subclass "PathSymbol"?
+	 * Creates a symbol icon with the given side length (pixels).
+	 * 
+	 * If the zoom parameter is zero, the map's symbolIconZoom() is used.
+	 * At a zoom of 1.0 (100%), a square symbol of 1 mm side length would fill
+	 * 50% of the icon width and height. Larger symbols may be scaled down.
 	 */
-	virtual float calculateLargestLineExtent(Map* map) const;
+	QImage createIcon(const Map& map, int side_length, bool antialiasing = true, qreal zoom = 0) const;
+	
+	/**
+	 * Clear the symbol's cached icon.
+	 * 
+	 * It will be recreated the next time getIcon() gets called.
+	 */
+	void resetIcon();
+	
+	/**
+	 * Returns the dimension which shall considered when scaling the icon.
+	 */
+	virtual qreal dimensionForIcon() const;
+	
+	/**
+	 * Returns the largest extent of all primitive lines which are part of the symbol.
+	 * 
+	 * Effectively, this is the half line width.
+	 */
+	virtual qreal calculateLargestLineExtent() const;
 	
 	
 	// Getters / Setters
@@ -276,7 +311,7 @@ public:
 	/** Returns the symbol name. */
 	inline const QString& getName() const {return name;}
 	/** Returns the symbol name after stripping all HTML. */
-	QString getPlainTextName() const;
+	QString getPlainTextName() const { return Util::plainText(name); }
 	/** Sets the symbol name. */
 	inline void setName(const QString& new_name) {name = new_name;}
 	
@@ -431,8 +466,13 @@ private:
 	bool is_protected;
 };
 
-Q_DECLARE_METATYPE(const Symbol*)
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(Symbol::RenderableOptions)
+}  // namespace OpenOrienteering
+
+
+Q_DECLARE_METATYPE(const OpenOrienteering::Symbol*)
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(OpenOrienteering::Symbol::RenderableOptions)
+
 
 #endif

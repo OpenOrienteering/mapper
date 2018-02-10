@@ -22,26 +22,39 @@
 #ifndef OPENORIENTEERING_MAP_EDITOR_TOOL_H
 #define OPENORIENTEERING_MAP_EDITOR_TOOL_H
 
+#include <Qt>
+#include <QtGlobal>
 #include <QAction>
+#include <QCursor>
+#include <QObject>
 #include <QPointer>
+#include <QPointF>
+#include <QRgb>
+#include <QString>
+#include <QVariant>
 
 #include "core/map_coord.h"
-#include "gui/point_handles.h"
+#include "tools/point_handles.h"
 
-class QAction;
+class QEvent;
 class QFocusEvent;
 class QGestureEvent;
+class QInputMethodEvent;
 class QKeyEvent;
 class QMouseEvent;
+class QPainter;
+class QPointF;
+class QWidget;
+
+namespace OpenOrienteering {
 
 class MainWindow;
 class Map;
 class MapEditorController;
-class MapRenderables;
 class MapWidget;
 class Object;
-class Renderable;
 class Symbol;
+
 
 /** 
  * @brief An abstract tool for editing a map.
@@ -88,12 +101,12 @@ public:
 	 * @param tool_action  Optional button which will be unchecked on
 	 *                     destruction of this tool.
 	 */
-	MapEditorTool(MapEditorController* editor, Type tool_type, QAction* tool_action = nullptr);
+	MapEditorTool(MapEditorController* editor, Type type, QAction* tool_action = nullptr);
 	
 	/**
 	 * @brief Destructs the MapEditorTool.
 	 */
-	virtual ~MapEditorTool();
+	~MapEditorTool() override;
 	
 	/**
 	 * @brief Performs initialization when the tool becomes active.
@@ -158,8 +171,8 @@ public:
 	virtual void focusOutEvent(QFocusEvent* event);
 	
 	// Input method support
-	virtual bool inputMethodEvent(QInputMethodEvent *event);
-	virtual QVariant inputMethodQuery(Qt::InputMethodQuery, QVariant) const;
+	virtual bool inputMethodEvent(QInputMethodEvent* event);
+	virtual QVariant inputMethodQuery(Qt::InputMethodQuery property, const QVariant& argument) const;
 	
 	// Gesture input
 	virtual bool gestureEvent(QGestureEvent* event, MapWidget* widget);
@@ -175,19 +188,19 @@ public:
 	/**
 	 * @brief Returns the type of this tool.
 	 */
-	Type toolType() const;
+	Type toolType() const { return tool_type; }
 	
 	
 	/**
 	 * @brief Returns the action which repesents this tool.
 	 */
-	QAction* toolAction() const;
+	QAction* toolAction() const { return tool_action; }
 	
 	
 	/**
 	 * @brief Returns whether to use the touch helper cursor for this tool.
 	 */
-	bool usesTouchCursor() const;
+	bool usesTouchCursor() const { return uses_touch_cursor; }
 	
 	
 	/** 
@@ -216,7 +229,7 @@ public:
 	/**
 	 * Returns true if Mapper is configured to finish drawing on right click.
 	 */
-	bool drawOnRightClickEnabled() const;
+	bool drawOnRightClickEnabled() const { return draw_on_right_click; }
 	
 	
 	/**
@@ -229,7 +242,7 @@ public:
 	 * 
 	 * @return Returns true if there is an ongoing edition operation, false otherwise.
 	 */
-	bool editingInProgress() const;
+	bool editingInProgress() const { return editing_in_progress; }
 	
 	/**
 	 * @brief Finishes editing if it is currently in progress.
@@ -250,19 +263,25 @@ public:
 	/**
 	 * @brief Returns the point handles utility for this tool.
 	 */
-	const PointHandles& pointHandles() const;
+	const PointHandles& pointHandles() const { return point_handles; }
 	
 	/**
 	 * @brief The factor by which all drawing shall be scaled.
 	 * 
 	 * @see PointHandles::scaleFactor()
 	 */
-	int scaleFactor() const;
+	unsigned int scaleFactor() const { return scale_factor; }
 	
 	/**
 	 * @brief A value representing how close the user must click or hover to select a point.
 	 */
-	float clickTolerance() const;
+	qreal clickTolerance() const { return click_tolerance; }
+	
+	/**
+	 * The number of pixels the mouse has to be moved to start dragging.
+	 */
+	int startDragDistance() const { return start_drag_distance; }
+	
 	
 	// General color definitions which are used by all tools
 	
@@ -337,17 +356,13 @@ protected:
 	bool isDrawingButton(Qt::MouseButton button) const;
 	
 	
-	/**
-	 * @brief Returns the drawing scale value for the current pixel-per-inch setting.
-	 */
-	static int newScaleFactor();
-	
-private slots:
+private:
 	/**
 	 * Updates cached settings.
 	 */
 	void settingsChanged();
-
+	
+	
 protected:
 	/**
 	 * @brief The map editor which uses this tool.
@@ -355,66 +370,18 @@ protected:
 	MapEditorController* const editor;
 	
 private:	
+	PointHandles point_handles;
 	QPointer<QAction> tool_action;
 	Type tool_type;
-	float click_tolerance;
-	int scale_factor;
-	bool editing_in_progress;
-	bool uses_touch_cursor;
-	bool draw_on_right_click;
-	PointHandles point_handles;
+	qreal click_tolerance     = 4;
+	int start_drag_distance   = 4;
+	unsigned int scale_factor = 1;
+	bool editing_in_progress  = false;
+	bool uses_touch_cursor    = false;
+	bool draw_on_right_click  = false;
 };
 
 
-
-//### MapEditorTool inline code ###
-
-inline
-MapEditorTool::Type MapEditorTool::toolType() const
-{
-	return tool_type;
-}
-
-inline
-QAction* MapEditorTool::toolAction() const
-{
-	return tool_action;
-}
-
-inline
-bool MapEditorTool::usesTouchCursor() const
-{
-	return uses_touch_cursor;
-}
-
-inline
-bool MapEditorTool::drawOnRightClickEnabled() const
-{
-	return draw_on_right_click;
-}
-
-inline
-bool MapEditorTool::editingInProgress() const
-{
-	return editing_in_progress;
-}
-
-inline
-const PointHandles& MapEditorTool::pointHandles() const
-{
-	return point_handles;
-}
-
-inline
-int MapEditorTool::scaleFactor() const
-{
-	return point_handles.scaleFactor();
-}
-
-inline
-float MapEditorTool::clickTolerance() const
-{
-	return click_tolerance;
-}
+}  // namespace OpenOrienteering
 
 #endif

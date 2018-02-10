@@ -22,15 +22,20 @@
 #define OPENORIENTEERING_SETTINGS_DIALOG_H
 
 #include <QDialog>
+#include <QObject>
 
-QT_BEGIN_NAMESPACE
 class QAbstractButton;
+class QCloseEvent;
 class QDialogButtonBox;
+class QKeyEvent;
 class QStackedWidget;
 class QTabWidget;
-QT_END_NAMESPACE
+class QWidget;
+
+namespace OpenOrienteering {
 
 class SettingsPage;
+
 
 /** 
  * A dialog for editing Mapper's settings.
@@ -95,5 +100,8 @@ private:
 	 */
 	QDialogButtonBox* button_box;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

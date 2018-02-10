@@ -27,9 +27,10 @@ set(TAG_FILES
   qtcore.tags
   qtgui.tags
   qtwidgets.tags
-  qtxml.tags
   qtnetwork.tags
   qtprintsupport.tags
+  qtsensors.tags
+  qtpositioning.tags
 )
 
 find_program(DOXYGEN_EXECUTABLE NAMES doxygen
@@ -81,7 +82,7 @@ elseif(TARGET api-docs)
 	)
 
 	add_custom_target(api-docs-commit
-	  COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/api-docs-commit.sh" "${API_DOCS_PATH}"
+	  COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/api-docs-commit.sh" "${API_DOCS_PATH}" "${CMAKE_CURRENT_BINARY_DIR}"
 	  COMMENT "Committing changed API docs"
 	  SOURCES api-docs-commit.sh
 	)

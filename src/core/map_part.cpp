@@ -22,17 +22,20 @@
 #include "map_part.h"
 
 #include <algorithm>
+#include <iterator>
 
-#include <qmath.h>
+#include <QtGlobal>
+#include <QIODevice>
+#include <QLatin1String>
+#include <QObject>
+#include <QStringRef>
 #include <QTransform>
 #include <QXmlStreamReader>
-#include <QXmlStreamWriter>
 
-#include "map.h"
+#include "core/map.h"
+#include "core/map_coord.h"
 #include "core/objects/object.h"
-#include "core/objects/object_operations.h"
-#include "core/renderables/renderable.h"
-#include "fileformats/file_format.h"
+#include "core/symbols/symbol.h"
 #include "undo/object_undo.h"
 #include "util/util.h"
 #include "util/xml_stream_util.h"
@@ -47,6 +50,9 @@ namespace literal
 	const QLatin1String count("count");
 }
 
+
+
+namespace OpenOrienteering {
 
 MapPart::MapPart(const QString& name, Map* map)
 : name(name)
@@ -116,7 +122,7 @@ MapPart* MapPart::load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol
 	Q_ASSERT(xml.name() == literal::part);
 	
 	XmlElementReader part_element(xml);
-	MapPart* part = new MapPart(part_element.attribute<QString>(literal::name), &map);
+	auto part = new MapPart(part_element.attribute<QString>(literal::name), &map);
 	
 	while (xml.readNextStartElement())
 	{
@@ -126,7 +132,7 @@ MapPart* MapPart::load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol
 			
 			std::size_t num_objects = objects_element.attribute<std::size_t>(literal::count);
 			if (num_objects > 0)
-				part->objects.reserve(qMin(num_objects, (std::size_t)20000)); // 20000 is not a limit
+				part->objects.reserve(qMin(num_objects, std::size_t(20000))); // 20000 is not a limit
 			
 			while (xml.readNextStartElement())
 			{
@@ -209,13 +215,13 @@ bool MapPart::deleteObject(Object* object, bool remove_only)
 	return false;
 }
 
-void MapPart::importPart(const MapPart* other, QHash<const Symbol*, Symbol*>& symbol_map, const QTransform& transform, bool select_new_objects)
+void MapPart::importPart(const MapPart* other, const QHash<const Symbol*, Symbol*>& symbol_map, const QTransform& transform, bool select_new_objects)
 {
 	if (other->getNumObjects() == 0)
 		return;
 	
 	bool first_objects = map->getNumObjects() == 0;
-	DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(map);
+	auto undo_step = new DeleteObjectsUndoStep(map);
 	if (select_new_objects)
 		map->clearObjectSelection(false);
 	
@@ -292,7 +298,7 @@ void MapPart::findObjectsAtBox(
 	}
 }
 
-int MapPart::countObjectsInRect(QRectF map_coord_rect, bool include_hidden_objects) const
+int MapPart::countObjectsInRect(const QRectF& map_coord_rect, bool include_hidden_objects) const
 {
 	int count = 0;
 	for (const Object* object : objects)
@@ -320,3 +326,50 @@ QRectF MapPart::calculateExtent(bool include_helper_symbols) const
 	}
 	return rect;
 }
+
+
+
+bool MapPart::existsObject(const std::function<bool(const Object*)>& condition) const
+{
+	return std::any_of(begin(objects), end(objects), condition);
+}
+
+
+void MapPart::applyOnMatchingObjects(const std::function<void (Object*)>& operation, const std::function<bool (const Object*)>& condition)
+{
+	std::for_each(objects.rbegin(), objects.rend(), [&operation, &condition](auto object) {
+		if (condition(object))
+			operation(object);
+	});
+}
+
+
+void MapPart::applyOnMatchingObjects(const std::function<void (Object*, MapPart*, int)>& operation, const std::function<bool (const Object*)>& condition)
+{
+	for (auto i = objects.size(); i > 0; )
+	{
+		--i;
+		Object* const object = objects[i];
+		if (condition(object))
+			operation(object, this, int(i));
+	}
+}
+
+
+void MapPart::applyOnAllObjects(const std::function<void (Object*)>& operation)
+{
+	std::for_each(objects.rbegin(), objects.rend(), operation);
+}
+
+
+void MapPart::applyOnAllObjects(const std::function<void (Object*, MapPart*, int)>& operation)
+{
+	for (auto i = objects.size(); i > 0; )
+	{
+		--i;
+		operation(objects[i], this, int(i));
+	}
+}
+
+
+}  // namespace OpenOrienteering

@@ -17,11 +17,20 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_OVERRIDING_SHORTCUT_H_
-#define _OPENORIENTEERING_OVERRIDING_SHORTCUT_H_
+#ifndef OPENORIENTEERING_OVERRIDING_SHORTCUT_H
+#define OPENORIENTEERING_OVERRIDING_SHORTCUT_H
 
+#include <Qt>
+#include <QKeySequence>
+#include <QObject>
 #include <QShortcut>
-#include <QTime>
+#include <QElapsedTimer>
+
+class QEvent;
+class QWidget;
+
+namespace OpenOrienteering {
+
 
 /**
  * OverridingShortcut is a variation of QShortcut which takes precedence over
@@ -43,27 +52,33 @@ Q_OBJECT
 public:
 	/**
 	 * Constructs a OverridingShortcut object for the given parent widget.
-	 * parent must not be NULL.
+	 * parent must not be nullptr.
 	 * @see QShortcut::QShortcut(QWidget*)
 	 */
 	OverridingShortcut(QWidget* parent);
 	
 	/**
 	 * Constructs a OverridingShortcut object.
-	 * parent must not be NULL.
+	 * parent must not be nullptr.
 	 * @see QShortcut::QShortcut(const QKeySequence&, QWidget*, const char*, const char*, Qt::ShortcutContext)
 	 */
-	OverridingShortcut(const QKeySequence& key, QWidget* parent, const char* member = 0, const char* ambiguousMember = 0, Qt::ShortcutContext context = Qt::WindowShortcut);
+	OverridingShortcut(const QKeySequence& key, QWidget* parent, const char* member = nullptr, const char* ambiguousMember = 0, Qt::ShortcutContext context = Qt::WindowShortcut);
+	
+	~OverridingShortcut();
 	
 	/**
 	 * Filters events of type QEvent::ShortcutOverride which match this
 	 * shortcut's key sequence, and passes them as corresponding
 	 * QShortcutEvent to QShortcut::event().
 	 */
-	virtual bool eventFilter(QObject* watched, QEvent* event);
+	bool eventFilter(QObject* watched, QEvent* event) override;
 	
 private:
-	QTime time;
+	QElapsedTimer timer;
+	
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

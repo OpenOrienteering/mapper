@@ -1,5 +1,6 @@
 /*
  *    Copyright 2014 Thomas Schöps
+ *    Copyright 2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -18,63 +19,133 @@
  */
 
 
-#ifndef _OPENORIENTEERING_KEY_BUTTON_BAR_H_
-#define _OPENORIENTEERING_KEY_BUTTON_BAR_H_
+#ifndef OPENORIENTEERING_KEY_BUTTON_BAR_H
+#define OPENORIENTEERING_KEY_BUTTON_BAR_H
 
-#include <QWidget>
+#include <Qt>
+#include <QtGlobal>
 #include <QIcon>
+#include <QObject>
+#include <QString>
+#include <QVarLengthArray>
+#include <QWidget>
 
-QT_BEGIN_NAMESPACE
+class QEvent;
 class QHBoxLayout;
+class QHideEvent;
+class QShowEvent;
 class QToolButton;
-QT_END_NAMESPACE
 
-class MapEditorController;
-class MapEditorTool;
-class MapWidget;
+namespace OpenOrienteering {
 
 
-/** Shows a set of buttons for simulating key presses.
- *  This is used to simulate keys in Mapper's mobile GUI. */
+/**
+ * Shows a set of buttons for simulating keyboard input.
+ * 
+ * This is used to simulate keys in Mapper's mobile GUI where a physical
+ * keyboard is not present.
+ * 
+ * For modifier keys, the GUI buttons indicate wether the keys are in pressed
+ * state or not. However, the labels are not expected to display the name of the
+ * key but the associated tool behaviour. The tools need to make sure that the
+ * actual behaviour is consistent with the indicated state.
+ */
 class KeyButtonBar : public QWidget
 {
 Q_OBJECT
 public:
-	KeyButtonBar(MapEditorTool* tool, MapWidget* map_widget, QWidget* parent = 0);
+	/**
+	 * Constructs a new button bar acting on the given receiver.
+	 * 
+	 * The constructor will install this object as an event filter on the given
+	 * receiver, independent of object ownership.
+	 */
+	KeyButtonBar(QWidget* receiver, QWidget* parent = nullptr, Qt::WindowFlags f = Qt::WindowFlags());
 	
-	/** Adds a non-checkable button. */
-	void addPressKey(int key_code, QString text, QIcon icon = QIcon());
+	~KeyButtonBar() override;
 	
-	/** Adds a non-checkable button for which in addition a modifier key is pressed while the key is pressed. */
-	void addPressKeyWithModifier(int key_code, int modifier_code, QString text, QIcon icon = QIcon());
 	
-	/** Adds a checkable button which may add a modifier code while checked. */
-	void addModifierKey(int key_code, int modifier_code, QString text, QIcon icon = QIcon());
+	/**
+	 * Adds a button for a regular key.
+	 */
+	QToolButton* addKeyButton(Qt::Key key_code, const QString& text, const QIcon& icon = {});
 	
-	/** Returns the active modifier flags. Is intended to be combined with the modifier flags returned by mouse events,
-	 *  because the key simulation cannot insert modifiers there. */
-	int activeModifiers() const;
+	/**
+	 * Adds a button for a combination of a regular key with a modifier key.
+	 * 
+	 * By default, the button is not checkable and sends a sequence of a press
+	 * event and a relase event for the given key_code. If a modifier_code
+	 * different from Qt::NoModifier is given, and this modifier key is not
+	 * already active, a press event for the corresponding modifier key code is
+	 * sent first, and a release event for the modifier key code is send after
+	 * the the event for the key_code.
+	 * 
+	 * Application code may turn this into a checkable button if it also takes
+	 * care of maintaining the state.
+	 */
+	QToolButton* addKeyButton(Qt::Key key_code, Qt::KeyboardModifier modifier_code, const QString& text, const QIcon& icon = {});
 	
-public slots:
-	void buttonClicked(bool checked);
+	
+	/** Adds a checkable button for a modifier key.
+	 * 
+	 * The button sends a key press event when the user activates the checked
+	 * state, and it sends a key release event when the user unsets the checked
+	 * state.
+	 * 
+	 * Upon regular input events for the corresponding modifier key, the checked
+	 * state of the button is updated accordingly.
+	 */
+	QToolButton* addModifierButton(Qt::KeyboardModifier modifier_code, const QString& text, const QIcon& icon = {});
+	
+	
+	/**
+	 * Returns the currently active set of modifier keys.
+	 */
+	Qt::KeyboardModifiers keyboardModifiers() const { return active_modifiers; }
+	
+	
+	/**
+	 * The event filter synchronizes the buttons' state and changes with input events.
+	 * 
+	 * It acts on the receiver widget given in the KeyButtonBar constructor.
+	 */
+	bool eventFilter(QObject* watched, QEvent* event) override;
+	
+	
+protected:
+	void showEvent(QShowEvent* event) override;
+	
+	void hideEvent(QHideEvent* event) override;
+	
 	
 private:
+	void sendKeyPressAndRelease();
+	
+	void sendModifierChange(bool checked);
+	
+	void sendKeyPressEvent(Qt::Key key_code);
+	
+	void sendKeyReleaseEvent(Qt::Key key_code);
+	
+	
 	struct ButtonInfo
 	{
-		int key_code;
-		int modifier_code;
-		bool is_checkable;
+		QToolButton*         button;
+		Qt::Key              key;
+		Qt::KeyboardModifier modifier;
 	};
 	
-	QToolButton* createButton(int key_code, QString text, QIcon icon, bool is_checkable, int modifier_code);
-	void sendKeyPressEvent(int key_code, int modifier_code);
-	void sendKeyReleaseEvent(int key_code, int modifier_code);
-	
-	int active_modifiers;
-	QHash<QToolButton*, ButtonInfo> button_info;
+	QVarLengthArray<ButtonInfo, 10> button_infos;
+	QWidget* receiver;
 	QHBoxLayout* layout;
-	MapWidget* map_widget;
-	MapEditorTool* tool;
+	Qt::KeyboardModifiers active_modifiers;
+	bool active = false;
+	
+	
+	Q_DISABLE_COPY(KeyButtonBar)
 };
 
-#endif // _OPENORIENTEERING_KEY_BUTTON_BAR_H_
+
+}  // namespace OpenOrienteering
+
+#endif // OPENORIENTEERING_KEY_BUTTON_BAR_H

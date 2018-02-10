@@ -21,14 +21,18 @@
 #ifndef OPENORIENTEERING_EDITOR_SETTINGS_PAGE_H
 #define OPENORIENTEERING_EDITOR_SETTINGS_PAGE_H
 
+#include <QObject>
+#include <QString>
+
 #include "settings_page.h"
 
 class QCheckBox;
 class QComboBox;
 class QSpinBox;
+class QWidget;
 
-class MainWindow;
 
+namespace OpenOrienteering {
 
 class EditorSettingsPage : public SettingsPage
 {
@@ -48,6 +52,7 @@ protected:
 	void updateWidgets();
 	
 private:
+	QSpinBox* icon_size;
 	QCheckBox* antialiasing;
 	QCheckBox* text_antialiasing;
 	QSpinBox* tolerance;
@@ -65,5 +70,7 @@ private:
 	QCheckBox* rectangle_preview_line_width;
 };
 
+
+}  // namespace OpenOrienteering
 
 #endif

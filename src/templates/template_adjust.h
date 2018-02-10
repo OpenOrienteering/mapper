@@ -18,26 +18,41 @@
  */
 
 
-#ifndef _OPENORIENTEERING_TEMPLATE_ADJUST_H_
-#define _OPENORIENTEERING_TEMPLATE_ADJUST_H_
+#ifndef OPENORIENTEERING_TEMPLATE_ADJUST_H
+#define OPENORIENTEERING_TEMPLATE_ADJUST_H
 
 #include <QWidget>
 #include <QDockWidget>
 
+#include <QColor>
+#include <QObject>
+#include <QString>
+
+#include "core/map_coord.h"
 #include "gui/map/map_editor_activity.h"
-#include "template.h"
 #include "tools/tool.h"
 
-QT_BEGIN_NAMESPACE
-class QGridLayout;
+class QAction;
+class QCloseEvent;
+class QCursor;
+class QEvent;
+class QKeyEvent;
+class QMouseEvent;
+class QPainter;
+class QPoint;
 class QPushButton;
 class QTableWidget;
 class QCheckBox;
-QT_END_NAMESPACE
 
+namespace OpenOrienteering {
+
+class MapEditorController;
+class MapWidget;
 class Template;
 class TemplateAdjustDockWidget;
 class TemplateAdjustWidget;
+struct TemplateTransform;
+
 
 /**
  * Activity which allows the positioning of a template by
@@ -48,10 +63,10 @@ class TemplateAdjustActivity : public MapEditorActivity
 Q_OBJECT
 public:
 	TemplateAdjustActivity(Template* temp, MapEditorController* controller);
-	virtual ~TemplateAdjustActivity();
+	~TemplateAdjustActivity() override;
 	
-	virtual void init();
-	virtual void draw(QPainter* painter, MapWidget* widget);
+	void init() override;
+	void draw(QPainter* painter, MapWidget* widget) override;
 	
 	inline TemplateAdjustDockWidget* getDockWidget() const {return dock;}
 	
@@ -77,8 +92,8 @@ class TemplateAdjustDockWidget : public QDockWidget
 Q_OBJECT
 public:
 	TemplateAdjustDockWidget(const QString& title, MapEditorController* controller, QWidget* parent = 0);
-	virtual bool event(QEvent* event);
-	virtual void closeEvent(QCloseEvent* event);
+	bool event(QEvent* event) override;
+	void closeEvent(QCloseEvent* event) override;
 	
 signals:
 	void closed();
@@ -92,8 +107,8 @@ class TemplateAdjustWidget : public QWidget
 {
 Q_OBJECT
 public:
-	TemplateAdjustWidget(Template* temp, MapEditorController* controller, QWidget* parent = NULL);
-	virtual ~TemplateAdjustWidget();
+	TemplateAdjustWidget(Template* temp, MapEditorController* controller, QWidget* parent = nullptr);
+	~TemplateAdjustWidget() override;
 	
 	void addPassPoint(MapCoordF src, MapCoordF dest);
 	void deletePassPoint(int number);
@@ -143,7 +158,7 @@ Q_OBJECT
 public:
 	TemplateAdjustEditTool(MapEditorController* editor, QAction* tool_action, TemplateAdjustWidget* widget);
 	
-	virtual void draw(QPainter* painter, MapWidget* widget);
+	void draw(QPainter* painter, MapWidget* widget) override;
 	
 protected:
 	void findHoverPoint(QPoint mouse_pos, MapWidget* map_widget);
@@ -161,14 +176,14 @@ Q_OBJECT
 public:
 	TemplateAdjustAddTool(MapEditorController* editor, QAction* tool_action, TemplateAdjustWidget* widget);
 	
-	virtual void init();
-	virtual const QCursor& getCursor() const;
+	void init() override;
+	const QCursor& getCursor() const override;
 	
-	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool keyPressEvent(QKeyEvent* event);
+	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool keyPressEvent(QKeyEvent* event) override;
 	
-	virtual void draw(QPainter* painter, MapWidget* widget);
+	void draw(QPainter* painter, MapWidget* widget) override;
 	
 protected:
 	void setDirtyRect(MapCoordF mouse_pos);
@@ -187,12 +202,12 @@ Q_OBJECT
 public:
 	TemplateAdjustMoveTool(MapEditorController* editor, QAction* tool_action, TemplateAdjustWidget* widget);
 	
-	virtual void init();
-	virtual const QCursor& getCursor() const;
+	void init() override;
+	const QCursor& getCursor() const override;
 	
-	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
 	
 	static QCursor* cursor;
 	static QCursor* cursor_invisible;
@@ -211,11 +226,14 @@ Q_OBJECT
 public:
 	TemplateAdjustDeleteTool(MapEditorController* editor, QAction* tool_action, TemplateAdjustWidget* widget);
 	
-	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
 	
-	virtual void init();
-	virtual const QCursor& getCursor() const;
+	void init() override;
+	const QCursor& getCursor() const override;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

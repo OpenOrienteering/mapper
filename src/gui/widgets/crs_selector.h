@@ -22,16 +22,21 @@
 #ifndef OPENORIENTEERING_CRS_SELECTOR_H
 #define OPENORIENTEERING_CRS_SELECTOR_H
 
+#include <vector>
+
 #include <QComboBox>
+#include <QObject>
+#include <QString>
 
-#include "../../core/crs_template.h"
+#include "core/crs_template.h"
 
-QT_BEGIN_NAMESPACE
+class QEvent;
 class QFormLayout;
-QT_END_NAMESPACE
+class QWidget;
 
-class BaseGeoreferencingDialog;
-class CRSTemplate;
+namespace OpenOrienteering {
+
+class Georeferencing;
 
 
 /** 
@@ -64,7 +69,7 @@ public:
 	/**
 	 * Destructor.
 	 */
-	virtual ~CRSSelector();
+	~CRSSelector() override;
 	
 	
 	/**
@@ -182,5 +187,8 @@ private:
 	int num_custom_items;
 	const CRSTemplate* configured_crs;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

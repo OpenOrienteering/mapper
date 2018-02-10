@@ -19,6 +19,12 @@
 
 #include "modifier_key.h"
 
+#include <QFlags>
+#include <QLatin1Char>
+#include <QKeySequence>
+
+
+namespace OpenOrienteering {
 
 ModifierKey::ModifierKey(int key)
  : native_text { QKeySequence((int)key).toString(QKeySequence::NativeText) }
@@ -95,3 +101,5 @@ const ModifierKey& ModifierKey::escape()
 	return key;
 }
 
+
+}  // namespace OpenOrienteering

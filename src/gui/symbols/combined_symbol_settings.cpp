@@ -21,21 +21,36 @@
 
 #include "combined_symbol_settings.h"
 
-#include <QDialogButtonBox>
+#include <algorithm>
+#include <cstddef>
+#include <iterator>
+#include <memory>
+#include <vector>
+
+#include <Qt>
+#include <QtGlobal>
+#include <QAbstractButton>
+#include <QComboBox>
+#include <QDialog>
+#include <QFlags>
 #include <QFormLayout>
+#include <QHBoxLayout>
 #include <QLabel>
-#include <QListWidget>
-#include <QMenu>
 #include <QMessageBox>
 #include <QPushButton>
-#include <QSignalMapper>
+#include <QSignalBlocker>
 #include <QSpinBox>
+#include <QString>
+#include <QWidget>
 
-#include "core/map.h"
-#include "core/objects/object.h"
-#include "gui/widgets/symbol_dropdown.h"
+#include "core/symbols/combined_symbol.h"
+#include "core/symbols/symbol.h"
 #include "gui/symbols/symbol_setting_dialog.h"
+#include "gui/widgets/symbol_dropdown.h"
+#include "util/backports.h"
 
+
+namespace OpenOrienteering {
 
 // ### CombinedSymbol ###
 
@@ -48,71 +63,108 @@ SymbolPropertiesWidget* CombinedSymbol::createPropertiesWidget(SymbolSettingDial
 
 // ### CombinedSymbolSettings ###
 
-const int CombinedSymbolSettings::max_count = 5;
+struct CombinedSymbolSettings::Widgets
+{
+	QLabel*         label;
+	SymbolDropDown* edit;
+	QPushButton*    button;
+};
+
+
 
 CombinedSymbolSettings::CombinedSymbolSettings(CombinedSymbol* symbol, SymbolSettingDialog* dialog) 
- : SymbolPropertiesWidget(symbol, dialog), symbol(symbol)
+: SymbolPropertiesWidget(symbol, dialog)
+, symbol(symbol)
 {
-	const CombinedSymbol* source_symbol = static_cast<const CombinedSymbol*>(dialog->getUnmodifiedSymbol());
-	Map* source_map = dialog->getSourceMap();
+	auto source_symbol = static_cast<const CombinedSymbol*>(dialog->getUnmodifiedSymbol());
+	auto source_map = dialog->getSourceMap();
 	
-	QFormLayout* layout = new QFormLayout();
+	auto layout = new QFormLayout();
 	
 	number_edit = new QSpinBox();
-	number_edit->setRange(2, qMax<int>(max_count, symbol->getNumParts()));
+	number_edit->setRange(2, qMax(5, symbol->getNumParts()));
 	number_edit->setValue(symbol->getNumParts());
-	connect(number_edit, SIGNAL(valueChanged(int)), this, SLOT(numberChanged(int)));
+	connect(number_edit, QOverload<int>::of(&QSpinBox::valueChanged), this, &CombinedSymbolSettings::numberChanged);
 	layout->addRow(tr("&Number of parts:"), number_edit);
 	
-	QSignalMapper* button_signal_mapper = new QSignalMapper(this);
-	connect(button_signal_mapper, SIGNAL(mapped(int)), this, SLOT(editClicked(int)));
-	QSignalMapper* symbol_signal_mapper = new QSignalMapper(this);
-	connect(symbol_signal_mapper, SIGNAL(mapped(int)), this, SLOT(symbolChanged(int)));
-	
-	symbol_labels = new QLabel*[max_count];
-	symbol_edits = new SymbolDropDown*[max_count];
-	edit_buttons = new QPushButton*[max_count];
-	for (int i = 0; i < max_count; ++i)
+	widgets.resize(std::size_t(number_edit->maximum()));
+	for (auto i = 0u; i < widgets.size(); ++i)
 	{
-		symbol_labels[i] = new QLabel(tr("Symbol %1:").arg(i+1));
+		auto label = new QLabel(tr("Symbol %1:").arg(i+1));
 		
-		symbol_edits[i] = new SymbolDropDown(source_map, Symbol::Line | Symbol::Area | Symbol::Combined, ((int)symbol->parts.size() > i) ? symbol->parts[i] : NULL, source_symbol);
-		symbol_edits[i]->addCustomItem(tr("- Private line symbol -"), 1);
-		symbol_edits[i]->addCustomItem(tr("- Private area symbol -"), 2);
-		if (((int)symbol->parts.size() > i) && symbol->isPartPrivate(i))
-			symbol_edits[i]->setCustomItem((symbol->getPart(i)->getType() == Symbol::Line) ? 1 : 2);
-		connect(symbol_edits[i], SIGNAL(currentIndexChanged(int)), symbol_signal_mapper, SLOT(map()));
-		symbol_signal_mapper->setMapping(symbol_edits[i], i);
+		auto edit = new SymbolDropDown(source_map, Symbol::Line | Symbol::Area | Symbol::Combined, (symbol->parts.size() > i) ? symbol->parts[i] : nullptr, source_symbol);
+		edit->addCustomItem(tr("- Private line symbol -"), 1);
+		edit->addCustomItem(tr("- Private area symbol -"), 2);
+		connect(edit, QOverload<int>::of(&SymbolDropDown::currentIndexChanged), this, &CombinedSymbolSettings::symbolChanged);
 		
-		edit_buttons[i] = new QPushButton(tr("Edit private symbol..."));
-		edit_buttons[i]->setEnabled((int)symbol->parts.size() > i && symbol->private_parts[i]);
-		connect(edit_buttons[i], SIGNAL(clicked()), button_signal_mapper, SLOT(map()));
-		button_signal_mapper->setMapping(edit_buttons[i], i);
+		auto button = new QPushButton(tr("Edit private symbol..."));
+		connect(button, QOverload<bool>::of(&QAbstractButton::clicked), this, QOverload<>::of(&CombinedSymbolSettings::editButtonClicked));
 		
-		QHBoxLayout* row_layout = new QHBoxLayout();
-		row_layout->addWidget(symbol_edits[i]);
-		row_layout->addWidget(edit_buttons[i]);
-		layout->addRow(symbol_labels[i], row_layout);
+		auto row_layout = new QHBoxLayout();
+		row_layout->addWidget(edit);
+		row_layout->addWidget(button);
+		layout->addRow(label, row_layout);
 		
-		if (i >= symbol->getNumParts())
-		{
-			symbol_labels[i]->hide();
-			symbol_edits[i]->hide();
-			edit_buttons[i]->hide();
-		}
+		widgets[i] = { label, edit, button };
 	}
+	updateContents();
 	
-	QWidget* widget = new QWidget;
+	auto widget = new QWidget;
 	widget->setLayout(layout);
 	addPropertiesGroup(tr("Combination settings"), widget);
 }
 
-CombinedSymbolSettings::~CombinedSymbolSettings()
+
+CombinedSymbolSettings::~CombinedSymbolSettings() = default;
+
+
+
+void CombinedSymbolSettings::reset(Symbol* symbol)
 {
-	delete[] symbol_labels;
-	delete[] symbol_edits;
-	delete[] edit_buttons;
+	if (Q_UNLIKELY(symbol->getType() != Symbol::Combined))
+	{
+		qWarning("Not a combined symbol: %s", symbol ? "nullptr" : qPrintable(symbol->getPlainTextName()));
+		return;
+	}
+	
+	SymbolPropertiesWidget::reset(symbol);
+	this->symbol = static_cast<CombinedSymbol*>(symbol);
+	updateContents();
 }
+
+
+
+void CombinedSymbolSettings::updateContents()
+{
+	auto num_parts = symbol->parts.size();
+	for (auto i = 0u; i < num_parts; ++i)
+	{
+		auto& w = widgets[i];
+		auto is_private = symbol->isPartPrivate(int(i));
+		QSignalBlocker block{w.edit};
+		w.label->setVisible(true);
+		if (is_private)
+			w.edit->setCustomItem((symbol->parts[i]->getType() == Symbol::Line) ? 1 : 2);
+		else
+			w.edit->setSymbol(symbol->parts[i]);
+		w.edit->setVisible(true);
+		w.button->setEnabled(is_private);
+		w.button->setVisible(true);
+	}
+	for (auto i = num_parts; i < widgets.size(); ++i)
+	{
+		auto& w = widgets[i];
+		w.label->setVisible(false);
+		w.edit->setSymbol(nullptr);
+		w.edit->setVisible(false);
+		w.button->setVisible(false);
+	}
+	
+	QSignalBlocker block{number_edit};
+	number_edit->setValue(int(num_parts));
+}
+
+
 
 void CombinedSymbolSettings::numberChanged(int value)
 {
@@ -120,42 +172,57 @@ void CombinedSymbolSettings::numberChanged(int value)
 	if (old_num_items == value)
 		return;
 	
-	int num_items = value;
-	symbol->setNumParts(num_items);
-	for (int i = 0; i < max_count; ++i)
+	value =	qMin(int(widgets.size()), value);
+	symbol->setNumParts(value);
+	for (auto i = std::size_t(old_num_items); i < std::size_t(value); ++i)
 	{
-		symbol_labels[i]->setVisible(i < num_items);
-		symbol_edits[i]->setVisible(i < num_items);
-		edit_buttons[i]->setVisible(i < num_items);
-		
-		if (i >= old_num_items && i < num_items)
-		{
-			// This item appears now
-			symbol->setPart(i, NULL, false);
-			symbol_edits[i]->blockSignals(true);
-			symbol_edits[i]->setSymbol(NULL);
-			symbol_edits[i]->blockSignals(false);
-			edit_buttons[i]->setEnabled(symbol->isPartPrivate(i));
-		}
+		// This item appears now.
+		auto& w = widgets[i];
+		QSignalBlocker block{w.edit};
+		w.label->setVisible(true);
+		w.edit->setSymbol(nullptr);
+		w.edit->setVisible(true);
+		w.button->setEnabled(false);
+		w.button->setVisible(true);
+	}
+	for (auto i = std::size_t(value); i < std::size_t(old_num_items); ++i)
+	{
+		// This item disappears now.
+		auto& w = widgets[i];
+		w.label->setVisible(false);
+		w.edit->setVisible(false);
+		w.button->setVisible(false);
 	}
 	emit propertiesModified();
 }
 
-void CombinedSymbolSettings::symbolChanged(int index)
+
+
+void CombinedSymbolSettings::symbolChanged()
 {
-	if (symbol_edits[index]->symbol() != NULL)
-		symbol->setPart(index, symbol_edits[index]->symbol(), false);
-	else if (symbol_edits[index]->customID() > 0)
+	const auto edit = sender();
+	auto widget = std::find_if(begin(widgets), end(widgets), [edit](const auto& w) {
+		return w.edit == edit;
+	});
+	if (widget == end(widgets))
+		return;
+	
+	auto index = int(std::distance(begin(widgets), widget));
+	if (widget->edit->symbol())
+	{
+		symbol->setPart(index, widget->edit->symbol(), false);
+	}
+	else if (widget->edit->customID() > 0)
 	{
 		// Changing to a private symbol
 		Symbol::Type new_symbol_type;
-		if (symbol_edits[index]->customID() == 1)
+		if (widget->edit->customID() == 1)
 			new_symbol_type = Symbol::Line;
 		else // if (symbol_edits[index]->customID() == 2)
 			new_symbol_type = Symbol::Area;
 		
-		Symbol* new_symbol = NULL;
-		if (symbol->getPart(index) != NULL && new_symbol_type == symbol->getPart(index)->getType())
+		Symbol* new_symbol = nullptr;
+		if (symbol->getPart(index) && new_symbol_type == symbol->getPart(index)->getType())
 		{
 			if (QMessageBox::question(this, tr("Change from public to private symbol"),
 				tr("Take the old symbol as template for the private symbol?"), QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
@@ -164,73 +231,51 @@ void CombinedSymbolSettings::symbolChanged(int index)
 			}
 		}
 		
-		if (new_symbol == NULL)
+		if (!new_symbol)
 			new_symbol = Symbol::getSymbolForType(new_symbol_type);
 		
 		symbol->setPart(index, new_symbol, true);
-		editClicked(index);
+		showEditDialog(index);
 	}
 	else
-		symbol->setPart(index, NULL, false);
+	{
+		symbol->setPart(index, nullptr, false);
+	}
 	
-	edit_buttons[index]->setEnabled(symbol->isPartPrivate(index));
+	widget->button->setEnabled(symbol->isPartPrivate(index));
 	emit propertiesModified();
 }
 
-void CombinedSymbolSettings::editClicked(int index)
+
+
+void CombinedSymbolSettings::editButtonClicked()
 {
-	Q_ASSERT(symbol->isPartPrivate(index));
-	if (!symbol->isPartPrivate(index))
+	const auto button = sender();
+	auto widget = std::find_if(begin(widgets), end(widgets), [button](const auto& w) {
+		return w.button == button;
+	});
+	if (widget != end(widgets))
+		showEditDialog(int(std::distance(begin(widgets), widget)));
+}
+
+
+void CombinedSymbolSettings::showEditDialog(int index)
+{
+	if (Q_UNLIKELY(!symbol->isPartPrivate(index)))
+	{
+		qWarning("Symbol settings dialog requested for non-private subsymbol %d", index);
 		return;
+	}
 	
-	QScopedPointer<Symbol> part(symbol->getPart(index)->duplicate());
-	SymbolSettingDialog sub_dialog(part.data(), dialog->getSourceMap(), this);
+	auto part = std::unique_ptr<Symbol>(symbol->getPart(index)->duplicate());
+	SymbolSettingDialog sub_dialog(part.get(), dialog->getSourceMap(), this);
 	sub_dialog.setWindowModality(Qt::WindowModal);
 	if (sub_dialog.exec() == QDialog::Accepted)
 	{
-		symbol->setPart(index, sub_dialog.getNewSymbol(), true);
+		symbol->setPart(index, sub_dialog.getNewSymbol().release(), true);
 		emit propertiesModified();
 	}
 }
 
-void CombinedSymbolSettings::reset(Symbol* symbol)
-{
-	Q_ASSERT(symbol->getType() == Symbol::Combined);
-	
-	SymbolPropertiesWidget::reset(symbol);
-	
-	this->symbol = symbol->asCombined();
-	updateContents();
-}
 
-void CombinedSymbolSettings::updateContents()
-{
-	int num_parts = symbol->getNumParts();
-	for (int i = 0; i < max_count; ++i)
-	{
-		symbol_edits[i]->blockSignals(true);
-		if (i < num_parts)
-		{
-			if (symbol->isPartPrivate(i))
-				symbol_edits[i]->setCustomItem((symbol->getPart(i)->getType() == Symbol::Line) ? 1 : 2);
-			else
-				symbol_edits[i]->setSymbol(symbol->parts[i]);
-			symbol_edits[i]->show();
-			symbol_labels[i]->show();
-			edit_buttons[i]->setEnabled(symbol->isPartPrivate(i));
-			edit_buttons[i]->show();
-		}
-		else
-		{
-			symbol_edits[i]->setSymbol(NULL);
-			symbol_edits[i]->hide();
-			symbol_labels[i]->hide();
-			edit_buttons[i]->hide();
-		}
-		symbol_edits[i]->blockSignals(false);
-	}
-	
-	number_edit->blockSignals(true);
-	number_edit->setValue(num_parts);
-	number_edit->blockSignals(false);
-}
+}  // namespace OpenOrienteering

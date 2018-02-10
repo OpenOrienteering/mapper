@@ -55,17 +55,18 @@ git clone https://github.com/OpenOrienteering/mapper.git
 The standard g++ (>= 4.9) compiler from a recent distribution should work. Make
 sure that the required development and tool packages are installed. For a Ubuntu
 or Debian system, install:
-
-cmake,
-doxygen,
-libcups2-dev,
-libgdal-dev,
-libpolyclipping-dev
-libproj-dev,
-qt5-default,
-qtbase5-dev, qtbase5-private-dev, qtbase5-dev-tools,
-qttools5-dev, qttools5-dev-tools, libqt5sql5-sqlite,
+```
+cmake \
+doxygen \
+libcups2-dev \
+libgdal-dev \
+libpolyclipping-dev \
+libproj-dev \
+qt5-default \
+qtbase5-dev qtbase5-private-dev qtbase5-dev-tools \
+qttools5-dev qttools5-dev-tools libqt5sql5-sqlite \
 zlib1g-dev
+```
 
 When not using Qt Creator, open a terminal, and create a build directory, e.g.
 as subdirectory build in the source directory, and change to that directory.

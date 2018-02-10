@@ -18,17 +18,20 @@
  */
 
 
-#ifndef _OPENORIENTEERING_GPS_TEMPORARY_MARKERS_H_
-#define _OPENORIENTEERING_GPS_TEMPORARY_MARKERS_H_
+#ifndef OPENORIENTEERING_GPS_TEMPORARY_MARKERS_H
+#define OPENORIENTEERING_GPS_TEMPORARY_MARKERS_H
+
+#include <vector>
 
 #include <QObject>
+#include <QPointF>
 
-#include "core/map_coord.h"
-
-QT_BEGIN_NAMESPACE
 class QPainter;
-QT_END_NAMESPACE
+// IWYU pragma: no_forward_declare QPointF
 
+namespace OpenOrienteering {
+
+class MapCoordF;
 class MapWidget;
 class GPSDisplay;
 
@@ -39,7 +42,7 @@ class GPSTemporaryMarkers : public QObject
 Q_OBJECT
 public:
 	GPSTemporaryMarkers(MapWidget* widget, GPSDisplay* gps_display);
-	virtual ~GPSTemporaryMarkers();
+	~GPSTemporaryMarkers() override;
 	
 	/** Returns false if no point was added due to not having a valid position yet. */
 	bool addPoint();
@@ -65,5 +68,8 @@ private:
 	GPSDisplay* gps_display;
 	MapWidget* widget;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

@@ -22,7 +22,20 @@
 #ifndef OPENORIENTEERING_TOOL_ROTATE_PATTERN_H
 #define OPENORIENTEERING_TOOL_ROTATE_PATTERN_H
 
-#include "tool_base.h"
+#include <QObject>
+
+#include "tools/tool_base.h"
+
+class QAction;
+class QKeyEvent;
+class QPainter;
+class QRectF;
+
+namespace OpenOrienteering {
+
+class MapEditorController;
+class MapWidget;
+
 
 /**
  * Tool to rotate patterns of area objects, or to set the direction of rotatable point objects.
@@ -50,5 +63,8 @@ protected:
 	void updateStatusText() override;
 	void objectSelectionChangedImpl() override;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

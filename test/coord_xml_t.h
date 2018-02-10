@@ -17,16 +17,17 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_XML_BENCHMARK_T_H
-#define _OPENORIENTEERING_XML_BENCHMARK_T_H
-
-#include <QtTest/QtTest>
+#ifndef OPENORIENTEERING_XML_BENCHMARK_T_H
+#define OPENORIENTEERING_XML_BENCHMARK_T_H
 
 #include <QBuffer>
-#include <QXmlStreamReader>
-#include <QXmlStreamWriter>
+#include <QObject>
 
 #include "core/map_coord.h"
+
+class QXmlStreamWriter;
+
+namespace OpenOrienteering {
 
 
 /**
@@ -106,5 +107,8 @@ private:
 	MapCoord proto_coord;
 	QBuffer buffer;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

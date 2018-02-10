@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -18,13 +19,21 @@
  */
 
 
-#ifndef _OPENORIENTEERING_SYMBOL_SETTING_DIALOG_H_
-#define _OPENORIENTEERING_SYMBOL_SETTING_DIALOG_H_
+#ifndef OPENORIENTEERING_SYMBOL_SETTING_DIALOG_H
+#define OPENORIENTEERING_SYMBOL_SETTING_DIALOG_H
+
+#include <memory>
+#include <vector>
 
 #include <QDialog>
+#include <QObject>
 
 class QLabel;
+class QPushButton;
 class QToolButton;
+class QWidget;
+
+namespace OpenOrienteering {
 
 class MainWindow;
 class Map;
@@ -33,6 +42,7 @@ class MapView;
 class Object;
 class Symbol;
 class SymbolPropertiesWidget;
+
 
 /** 
  * A dialog for editing symbol properties.
@@ -46,19 +56,17 @@ public:
 	/**
 	 * Constructs a new dialog for a given symbol and map. 
 	 */
-	SymbolSettingDialog(Symbol* source_symbol, Map* source_map, QWidget* parent);
+	SymbolSettingDialog(const Symbol* source_symbol, Map* source_map, QWidget* parent);
 	
 	/**
 	 * Destructs the dialog and cleans up temporary objects. 
 	 */
-	virtual ~SymbolSettingDialog();
+	~SymbolSettingDialog() override;
 	
 	/**
 	 * Returns a copy of the currently edited symbol. 
-	 * 
-	 * The caller is responsible for deleting the returned object.
 	 */
-	Symbol* getNewSymbol() const;
+	std::unique_ptr<Symbol> getNewSymbol() const;
 	
 	/**
 	 * Returns a pointer to the unmodifed symbol which is currently edited.
@@ -69,7 +77,7 @@ public:
 	/**
 	 * Returns a pointer to a copy of the unmodifed symbol which is currently edited.
 	 */
-	inline const Symbol* getUnmodifiedSymbolCopy() const { return source_symbol_copy; }
+	inline const Symbol* getUnmodifiedSymbolCopy() const { return &*source_symbol_copy; }
 	
 	/**
 	 * Returns true if the edited symbol has modfications.
@@ -146,13 +154,14 @@ protected:
 	void createPreviewMap();
 	
 private:
-	bool symbol_modified;
+	Map* source_map;
+	const Symbol* source_symbol;
+	std::unique_ptr<const Symbol> source_symbol_copy;
 	
-	Map* const source_map;
-	Symbol* const source_symbol;
-	Symbol* const source_symbol_copy;
-
-	Symbol* symbol;
+	// properties_widget must be deleted before symbol.
+	std::unique_ptr<Symbol> symbol;
+	std::unique_ptr<SymbolPropertiesWidget> properties_widget;
+	
 	Map* preview_map;
 	MainWindow* preview_widget;
 	MapView* preview_map_view;
@@ -168,7 +177,10 @@ private:
 	QLabel* symbol_icon_label;
 	QLabel* symbol_text_label;
 	
-	SymbolPropertiesWidget* properties_widget;
+	bool symbol_modified;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

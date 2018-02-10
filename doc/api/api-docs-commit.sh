@@ -17,7 +17,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
 
-# Usage: api-docs-commit.sh PATH
+# Usage: api-docs-commit.sh PATH [PROJECT_BINARY_DIR]
 
 for I in "repository/${1:-.}"/*; do
 	if [ -e "$I" -a "${I##*/}" != "README.md" ]; then
@@ -35,4 +35,4 @@ cd repository
 git add -A "${1:-.}"
 git commit -m "Update${1:+ in $1}"
 
-echo "Now call \"make api-docs-push\" to publish the updated API docs."
+echo "Now call 'cd \"${2:-[CURRENT_BINARY_DIR]}/repository\" && git commit' to publish the updated API docs."

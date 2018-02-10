@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2015 Kai Pastor
+ *    Copyright 2015, 2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,15 +21,25 @@
 
 #include "color_dropdown.h"
 
+#include <Qt>
+#include <QIcon>
+#include <QPixmap>
+#include <QString>
+#include <QStyle>
+#include <QVariant>
+
 #include "core/map.h"
 #include "core/map_color.h"
 
 
+namespace OpenOrienteering {
+
 ColorDropDown::ColorDropDown(const Map* map, const MapColor* initial_color, bool spot_colors_only, QWidget* parent)
 : QComboBox(parent)
+, map(map)
 , spot_colors_only(spot_colors_only)
 {
-	addItem(tr("- none -"), QVariant::fromValue<const MapColor*>(NULL));
+	addItem(tr("- none -"), QVariant::fromValue<const MapColor*>(nullptr));
 	
 	int icon_size = style()->pixelMetric(QStyle::PM_SmallIconSize);
 	QPixmap pixmap(icon_size, icon_size);
@@ -46,7 +56,7 @@ ColorDropDown::ColorDropDown(const Map* map, const MapColor* initial_color, bool
 			initial_index = count();
 		
 		pixmap.fill(colorWithOpacity(*color));
-		QString name = spot_colors_only ? color->getSpotColorName() : color->getName();
+		QString name = spot_colors_only ? color->getSpotColorName() : map->translate(color->getName());
 		addItem(QIcon(pixmap), name, QVariant::fromValue(color));
 	}
 	if (!spot_colors_only)
@@ -67,10 +77,10 @@ ColorDropDown::ColorDropDown(const Map* map, const MapColor* initial_color, bool
 	connect(map, &Map::colorDeleted, this, &ColorDropDown::onColorDeleted);
 }
 
-ColorDropDown::~ColorDropDown()
-{
-	// Nothing, not inlined.
-}
+
+ColorDropDown::~ColorDropDown() = default;
+
+
 
 const MapColor* ColorDropDown::color() const
 {
@@ -96,7 +106,7 @@ void ColorDropDown::addColor(const MapColor* color)
 		int icon_size = style()->pixelMetric(QStyle::PM_SmallIconSize);
 		QPixmap pixmap(icon_size, icon_size);
 		pixmap.fill(*color);
-		insertItem(pos, color->getName(), QVariant::fromValue(color));
+		insertItem(pos, map->translate(color->getName()), QVariant::fromValue(color));
 		setItemData(pos, pixmap, Qt::DecorationRole);
 	}
 }
@@ -117,7 +127,7 @@ void ColorDropDown::updateColor(const MapColor* color)
 			int icon_size = style()->pixelMetric(QStyle::PM_SmallIconSize);
 			QPixmap pixmap(icon_size, icon_size);
 			pixmap.fill(*color);
-			setItemText(pos, color->getName());
+			setItemText(pos, map->translate(color->getName()));
 			setItemData(pos, pixmap, Qt::DecorationRole);
 		}
 		else
@@ -159,3 +169,6 @@ void ColorDropDown::onColorDeleted(int, const MapColor* color)
 {
 	removeColor(color);
 }
+
+
+}  // namespace OpenOrienteering

@@ -22,13 +22,12 @@
 #include <QCoreApplication>
 
 
+namespace OpenOrienteering {
+
 // ### FileFormatException ###
 
 // virtual
-FileFormatException::~FileFormatException() noexcept
-{
-	// Nothing, not inlined
-}
+FileFormatException::~FileFormatException() noexcept = default;
 
 // virtual
 const char* FileFormatException::what() const noexcept
@@ -53,18 +52,16 @@ FileFormat::FileFormat(FileFormat::FileType file_type, const char* id, const QSt
 		addExtension(file_extension);
 }
 
-FileFormat::~FileFormat()
-{
-	// Nothing
-}
+FileFormat::~FileFormat() = default;
+
 
 void FileFormat::addExtension(const QString& file_extension)
 {
-	file_extensions << file_extension << file_extension.toUpper();
+	file_extensions << file_extension;
 	format_filter = QString::fromLatin1("%1 (*.%2)").arg(format_description, file_extensions.join(QString::fromLatin1(" *.")));
 }
 
-bool FileFormat::understands(const unsigned char *buffer, size_t sz) const
+bool FileFormat::understands(const unsigned char *buffer, std::size_t sz) const
 {
 	Q_UNUSED(buffer);
 	Q_UNUSED(sz);
@@ -76,7 +73,7 @@ Importer *FileFormat::createImporter(QIODevice* stream, Map *map, MapView *view)
 	Q_UNUSED(stream);
 	Q_UNUSED(map);
 	Q_UNUSED(view);
-	throw FileFormatException(QCoreApplication::translate("Importer", "Format (%1) does not support import").arg(description()));
+	throw FileFormatException(QCoreApplication::translate("OpenOrienteering::Importer", "Format (%1) does not support import").arg(description()));
 }
 
 Exporter *FileFormat::createExporter(QIODevice* stream, Map *map, MapView *view) const
@@ -84,5 +81,8 @@ Exporter *FileFormat::createExporter(QIODevice* stream, Map *map, MapView *view)
 	Q_UNUSED(stream);
 	Q_UNUSED(map);
 	Q_UNUSED(view);
-	throw FileFormatException(QCoreApplication::translate("Exporter", "Format (%1) does not support export").arg(description()));
+	throw FileFormatException(QCoreApplication::translate("OpenOrienteering::Exporter", "Format (%1) does not support export").arg(description()));
 }
+
+
+}  // namespace OpenOrienteering

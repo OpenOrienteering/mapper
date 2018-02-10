@@ -25,9 +25,17 @@ include(FeatureSummary)
 
 # Project declaration
 
-project(Mapper VERSION 0.7.0 LANGUAGES CXX C)
+project(Mapper VERSION 0.8.0 LANGUAGES CXX C)
 
-set(Mapper_COPYRIGHT "(C) 2012-2017 The OpenOrienteering developers")
+if(Mapper_VERSION_DISPLAY)
+	message(STATUS "Custom version display string: \"${Mapper_VERSION_DISPLAY}\"")
+elseif(CMAKE_BUILD_TYPE AND NOT CMAKE_BUILD_TYPE MATCHES "Release|MinSizeRel|RelWithDebInfo")
+	set(Mapper_VERSION_DISPLAY "${CMAKE_BUILD_TYPE} ${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}")
+else()
+	set(Mapper_VERSION_DISPLAY "${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}")
+endif()
+
+set(Mapper_COPYRIGHT "(C) 2012-2018 The OpenOrienteering developers")
 
 set(android_manifest "${PROJECT_SOURCE_DIR}/android/AndroidManifest.xml")
 file(READ "${android_manifest}" current)
@@ -55,8 +63,6 @@ if(APPLE)
 	SET(Mapper_MACOSX_VERSION "10.7" CACHE STRING
 	  "Minimum Mac OS X version to build for, recommended: 10.7")
 endif()
-
-option(Mapper_TRANSLATIONS_EMBEDDED "Embed all translations in the program executable")
 
 option(Mapper_DEBUG_TRANSLATIONS "Debug missing translations" OFF)
 
@@ -187,8 +193,21 @@ if(NOT TARGET PROJ4::proj)
 	find_package(PROJ4 MODULE REQUIRED)
 endif()
 
-find_package(GDAL REQUIRED)
+if(Mapper_USE_GDAL)
+	find_package(GDAL REQUIRED)
+endif()
 
+
+include("TestBigEndian")
+test_big_endian(big_endian)
+if(big_endian)
+	add_definitions(-DMAPPER_BIG_ENDIAN)
+endif()
+
+
+if(ANDROID OR big_endian)
+	add_definitions(-DNO_NATIVE_FILE_FORMAT)
+endif()
 
 if(UNIX AND NOT APPLE)
 #	set(CMAKE_INSTALL_RPATH "\$ORIGIN/../lib/${Mapper_PACKAGE_NAME}/lib")
@@ -204,12 +223,6 @@ if(Mapper_DEVELOPMENT_BUILD)
 	configure_file(suppress.txt.in suppress.txt COPYONLY)
 else()
 	add_definitions(-DQT_NO_DEBUG -DQT_NO_DEBUG_OUTPUT -DQT_NO_WARNING_OUTPUT -DNDEBUG)
-endif()
-
-if(NOT Mapper_VERSION_PATCH LESS 99)
-	set(Mapper_VERSION_DISPLAY "unstable ${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}")
-else()
-	set(Mapper_VERSION_DISPLAY "${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}")
 endif()
 
 # Subdirectories

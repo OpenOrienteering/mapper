@@ -25,12 +25,31 @@
 #include <QElapsedTimer>
 #include <QScopedPointer>
 
-#include "edit_tool.h"
+#include <Qt>
+#include <QObject>
+#include <QPointer>
+#include <QRectF>
+#include <QString>
+#include <QVariant>
 
+#include "core/map_coord.h"
+#include "tools/edit_tool.h"
+
+class QAction;
+class QFocusEvent;
+class QInputMethodEvent;
+class QKeyEvent;
+class QMouseEvent;
+class QPainter;
+class QRectF;
+class QToolButton;
+
+namespace OpenOrienteering {
+
+class MapEditorController;
 class MapWidget;
-class CombinedSymbol;
-class PointObject;
-class Symbol;
+class Object;
+class ObjectMover;
 class TextObjectEditorHelper;
 
 
@@ -44,7 +63,7 @@ class EditPointTool : public EditTool
 Q_OBJECT
 public:
 	EditPointTool(MapEditorController* editor, QAction* tool_action);
-	virtual ~EditPointTool();
+	~EditPointTool() override;
 	
 	/**
 	 * Returns true if new points shall be added as dash points by default.
@@ -79,7 +98,7 @@ protected:
 	bool keyPress(QKeyEvent* event) override;
 	bool keyRelease(QKeyEvent* event) override;
 	bool inputMethodEvent(QInputMethodEvent* event) override;
-	QVariant inputMethodQuery(Qt::InputMethodQuery property, QVariant argument) const override;
+	QVariant inputMethodQuery(Qt::InputMethodQuery property, const QVariant& argument) const override;
 	
 	void initImpl() override;
 	void objectSelectionChangedImpl() override;
@@ -122,6 +141,14 @@ protected:
 	 */
 	bool hoveringOverFrame() const;
 	
+	/**
+	 * Checks if a the opposite handle should be moved synchronously.
+	 */
+	bool moveOppositeHandle() const;
+	
+	
+	QPointer<QToolButton> dash_points_button;
+	
 	
 	/** Measures the time a click takes to decide whether to do selection. */
 	QElapsedTimer click_timer;
@@ -133,27 +160,27 @@ protected:
 	/**
 	 * Provides general information on what is hovered over.
 	 */
-	HoverState hover_state;
+	HoverState hover_state = OverNothing;
 	
 	/**
 	 * Object which is hovered over (if any).
 	 */
-	Object* hover_object;
+	Object* hover_object = nullptr;
 	
 	/**
 	 * Index of the object's coordinate which is hovered over.
 	 */
-	MapCoordVector::size_type hover_point;
+	MapCoordVector::size_type hover_point = 0;
 	
 	
 	/** Is a box selection in progress? */
-	bool box_selection;
+	bool box_selection = false;
 	
 	QScopedPointer<ObjectMover> object_mover;
 	
 	// Mouse / key handling
-	bool waiting_for_mouse_release;
-	bool space_pressed;
+	bool waiting_for_mouse_release = false;
+	bool switch_dash_points = false;
 	
 	/**
 	 * Offset from cursor position to drag handle of moved element.
@@ -162,7 +189,7 @@ protected:
 	MapCoordF handle_offset;
 	
 	/** Text editor tool helper */
-	TextObjectEditorHelper* text_editor;
+	TextObjectEditorHelper* text_editor = nullptr;
 	
 	/**
 	 * To prevent creating an undo step if text edit mode is entered and
@@ -184,5 +211,8 @@ bool EditPointTool::hoveringOverFrame() const
 {
 	return hover_state == OverFrame;
 }
+
+
+}  // namespace OpenOrienteering
 
 #endif

@@ -18,10 +18,14 @@
  */
 
 
-#ifndef _OPENORIENTEERING_COMPASS_H_
-#define _OPENORIENTEERING_COMPASS_H_
+#ifndef OPENORIENTEERING_COMPASS_H
+#define OPENORIENTEERING_COMPASS_H
 
 #include <QObject>
+
+class QMetaMethod;
+
+namespace OpenOrienteering {
 
 class CompassPrivate;
 
@@ -32,7 +36,7 @@ class Compass : public QObject
 Q_OBJECT
 friend class CompassPrivate;
 public:
-	~Compass();
+	~Compass() override;
 	
 	/** Singleton accessor method. Constructs the object on first use. */
 	static Compass& getInstance();
@@ -73,5 +77,8 @@ private:
 	int reference_counter;
 	CompassPrivate* p;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

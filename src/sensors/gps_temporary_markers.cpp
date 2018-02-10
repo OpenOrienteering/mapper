@@ -26,8 +26,9 @@
 #include "gui/map/map_widget.h"
 #include "gps_display.h"
 #include "tools/tool.h"
-#include "util/util.h"
 
+
+namespace OpenOrienteering {
 
 GPSTemporaryMarkers::GPSTemporaryMarkers(MapWidget* widget, GPSDisplay* gps_display): QObject()
 {
@@ -35,14 +36,14 @@ GPSTemporaryMarkers::GPSTemporaryMarkers(MapWidget* widget, GPSDisplay* gps_disp
 	this->gps_display = gps_display;
 	recording_path = false;
 	
-	connect(gps_display, SIGNAL(mapPositionUpdated(MapCoordF,float)), this, SLOT(newGPSPosition(MapCoordF,float)));
+	connect(gps_display, &GPSDisplay::mapPositionUpdated, this, &GPSTemporaryMarkers::newGPSPosition);
 	
 	widget->setTemporaryMarkerDisplay(this);
 }
 
 GPSTemporaryMarkers::~GPSTemporaryMarkers()
 {
-	widget->setTemporaryMarkerDisplay(NULL);
+	widget->setTemporaryMarkerDisplay(nullptr);
 }
 
 bool GPSTemporaryMarkers::addPoint()
@@ -85,25 +86,25 @@ void GPSTemporaryMarkers::paint(QPainter* painter)
 	painter->setBrush(Qt::NoBrush);
 
 	painter->setPen(QPen(QBrush(qRgb(255, 255, 255)), scale_factor * 0.3f));
-	for (size_t path_number = 0; path_number < paths.size(); ++ path_number)
-		painter->drawPolyline(paths[path_number].data(), paths[path_number].size());
+	for (const auto& path : paths)
+		painter->drawPolyline(path.data(), path.size());
 	
 	painter->setPen(QPen(QBrush(MapEditorTool::active_color), scale_factor * 0.2f));
-	for (size_t path_number = 0; path_number < paths.size(); ++ path_number)
-		painter->drawPolyline(paths[path_number].data(), paths[path_number].size());
+	for (const auto& path : paths)
+		painter->drawPolyline(path.data(), path.size());
 	
 	// Draw points
 	painter->setPen(Qt::NoPen);
 	
 	painter->setBrush(QBrush(qRgb(255, 255, 255)));
 	float point_radius = scale_factor * 0.5f;
-	for (size_t point_number = 0; point_number < points.size(); ++ point_number)
-		painter->drawEllipse(points[point_number], point_radius, point_radius);
+	for (const auto& point : points)
+		painter->drawEllipse(point, point_radius, point_radius);
 	
 	painter->setBrush(QBrush(MapEditorTool::inactive_color));
 	point_radius = scale_factor * 0.4f;
-	for (size_t point_number = 0; point_number < points.size(); ++ point_number)
-		painter->drawEllipse(points[point_number], point_radius, point_radius);
+	for (const auto& point : points)
+		painter->drawEllipse(point, point_radius, point_radius);
 	
 	painter->restore();
 }
@@ -125,3 +126,6 @@ void GPSTemporaryMarkers::updateMapWidget()
 	// NOTE: could limit the updated area here
 	widget->update();
 }
+
+
+}  // namespace OpenOrienteering

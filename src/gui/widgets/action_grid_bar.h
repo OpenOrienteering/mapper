@@ -18,15 +18,22 @@
  */
 
 
-#ifndef _OPENORIENTEERING_ACTION_GRID_BAR_H_
-#define _OPENORIENTEERING_ACTION_GRID_BAR_H_
+#ifndef OPENORIENTEERING_ACTION_GRID_BAR_H
+#define OPENORIENTEERING_ACTION_GRID_BAR_H
 
+#include <vector>
+
+#include <QObject>
+#include <QSize>
 #include <QWidget>
 
-QT_BEGIN_NAMESPACE
-class QToolButton;
+class QAction;
 class QMenu;
-QT_END_NAMESPACE
+class QResizeEvent;
+class QToolButton;
+
+
+namespace OpenOrienteering {
 
 /**
  * A toolbar with a grid layout, whose button size depends on the ppi.
@@ -52,7 +59,7 @@ public:
 	 * @param height_items Number of rows in the direction opposite to the main
 	 *    toolbar direction.
 	 */
-	ActionGridBar(Direction direction, int height_items, QWidget* parent = NULL);
+	ActionGridBar(Direction direction, int height_items, QWidget* parent = nullptr);
 	
 	/** Returns the number of grid rows. */
 	int getRows() const;
@@ -77,12 +84,12 @@ public:
 	/** Configures this bar to put its overflow actions into another bar. */
 	void setToUseOverflowActionFrom(ActionGridBar* other_bar);
 	
-	/** Finds and returns the button corresponding to the given action or NULL
+	/** Finds and returns the button corresponding to the given action or nullptr
 	 *  if either the action has not been inserted into the action bar,
 	 *  or the button is hidden because of a collision. */
 	QToolButton* getButtonForAction(QAction* action);
 	
-	virtual QSize sizeHint() const;
+	QSize sizeHint() const override;
 	
 protected slots:
 	void overflowActionClicked();
@@ -102,7 +109,7 @@ protected:
 	};
 	
 	static bool compareItemPtrId(GridItem* a, GridItem* b);
-	virtual void resizeEvent(QResizeEvent* event);
+	void resizeEvent(QResizeEvent* event) override;
 	
 	Direction direction;
 	int rows;
@@ -116,4 +123,6 @@ protected:
 	std::vector< ActionGridBar* > include_overflow_from_list;
 };
 
+
+}  // namespace OpenOrienteering
 #endif

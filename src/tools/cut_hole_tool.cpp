@@ -21,33 +21,41 @@
 
 #include "cut_hole_tool.h"
 
-#include <QApplication>
+#include <map>
+#include <memory>
+
+#include <Qt>
+#include <QtGlobal>
+#include <QCursor>
+#include <QFlags>
 #include <QMouseEvent>
-#include <QMessageBox>
+#include <QPixmap>
+#include <QString>
 
 #include "core/map.h"
+#include "core/map_coord.h"
 #include "core/objects/boolean_tool.h"
 #include "core/objects/object.h"
 #include "core/symbols/symbol.h"
-#include "core/symbols/combined_symbol.h"
-#include "gui/modifier_key.h"
-#include "gui/map/map_widget.h"
 #include "tools/draw_circle_tool.h"
+#include "tools/draw_line_and_area_tool.h"
 #include "tools/draw_path_tool.h"
 #include "tools/draw_rectangle_tool.h"
+#include "tools/tool.h"
 #include "undo/object_undo.h"
-#include "util/util.h"
 
 
-CutHoleTool::CutHoleTool(MapEditorController* editor, QAction* tool_button, CutHoleTool::HoleType hole_type)
- : MapEditorTool(editor, Other, tool_button), hole_type(hole_type)
+namespace OpenOrienteering {
+
+CutHoleTool::CutHoleTool(MapEditorController* editor, QAction* tool_action, CutHoleTool::HoleType hole_type)
+ : MapEditorTool(editor, Other, tool_action), hole_type(hole_type)
 {
-	path_tool = NULL;
+	path_tool = nullptr;
 }
 
 void CutHoleTool::init()
 {
-	connect(map(), SIGNAL(objectSelectionChanged()), this, SLOT(objectSelectionChanged()));
+	connect(map(), &Map::objectSelectionChanged, this, &CutHoleTool::objectSelectionChanged);
 	updateDirtyRect();
 	updateStatusText();
 	
@@ -79,20 +87,20 @@ bool CutHoleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 	switch (hole_type)
 	{
 	case CutHoleTool::Path:
-		path_tool = new DrawPathTool(editor, NULL, true, true);
+		path_tool = new DrawPathTool(editor, nullptr, true, true);
 		break;
 	case CutHoleTool::Circle:
-		path_tool = new DrawCircleTool(editor, NULL, true);
+		path_tool = new DrawCircleTool(editor, nullptr, true);
 		break;
 	case CutHoleTool::Rect:
-		path_tool = new DrawRectangleTool(editor, NULL, true);
+		path_tool = new DrawRectangleTool(editor, nullptr, true);
 		break;
 	/* no default; watch compiler warnings for unhandled cases! */
 	}
 	
-	connect(path_tool, SIGNAL(dirtyRectChanged(QRectF)), this, SLOT(pathDirtyRectChanged(QRectF)));
-	connect(path_tool, SIGNAL(pathAborted()), this, SLOT(pathAborted()));
-	connect(path_tool, SIGNAL(pathFinished(PathObject*)), this, SLOT(pathFinished(PathObject*)));
+	connect(path_tool, &DrawLineAndAreaTool::dirtyRectChanged, this, &CutHoleTool::pathDirtyRectChanged);
+	connect(path_tool, &DrawLineAndAreaTool::pathAborted, this, &CutHoleTool::pathAborted);
+	connect(path_tool, &DrawLineAndAreaTool::pathFinished, this, &CutHoleTool::pathFinished);
 	
 	path_tool->init();
 	path_tool->mousePressEvent(event, map_coord, widget);
@@ -126,7 +134,7 @@ bool CutHoleTool::mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord,
 void CutHoleTool::leaveEvent(QEvent* event)
 {
 	if (path_tool)
-		return path_tool->leaveEvent(event);
+		path_tool->leaveEvent(event);
 }
 
 bool CutHoleTool::keyPressEvent(QKeyEvent* event)
@@ -146,12 +154,12 @@ bool CutHoleTool::keyReleaseEvent(QKeyEvent* event)
 void CutHoleTool::focusOutEvent(QFocusEvent* event)
 {
 	if (path_tool)
-		return path_tool->focusOutEvent(event);
+		path_tool->focusOutEvent(event);
 }
 
 void CutHoleTool::draw(QPainter* painter, MapWidget* widget)
 {
-	map()->drawSelection(painter, true, widget, NULL);
+	map()->drawSelection(painter, true, widget, nullptr);
 	
 	if (path_tool)
 		path_tool->draw(painter, widget);
@@ -187,7 +195,7 @@ void CutHoleTool::pathDirtyRectChanged(const QRectF& rect)
 void CutHoleTool::pathAborted()
 {
 	path_tool->deleteLater();
-	path_tool = NULL;
+	path_tool = nullptr;
 	updateDirtyRect();
 	updateStatusText();
 }
@@ -224,7 +232,7 @@ void CutHoleTool::pathFinished(PathObject* hole_path)
 		out_objects.pop_back();
 	}
 	
-	ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(map());
+	auto undo_step = new ReplaceObjectsUndoStep(map());
 	undo_step->addObject(edited_object, undo_duplicate);
 	map()->push(undo_step);
 	map()->setObjectsDirty();
@@ -241,3 +249,6 @@ void CutHoleTool::updateStatusText()
 		setStatusBarText(tr("<b>Click or drag</b>: Start drawing the hole. "));
 	}
 }
+
+
+}  // namespace OpenOrienteering

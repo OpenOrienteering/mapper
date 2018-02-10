@@ -22,7 +22,19 @@
 
 #ifndef NO_NATIVE_FILE_FORMAT
 
-#include "file_format.h"
+#include <cstddef>
+
+#include "fileformats/file_format.h"
+
+class QIODevice;
+
+class Importer;
+
+namespace OpenOrienteering {
+
+class Map;
+class MapView;
+
 
 /** Provides a description of the old native file format. 
  *  This is an (architecture-dependent) binary packed format
@@ -39,11 +51,11 @@ public:
 	
 	/** Returns true if the file starts with the magic byte sequence "OMAP" (0x4f 0x4d 0x41 0x50).
 	 */
-	bool understands(const unsigned char *buffer, size_t sz) const;
+	bool understands(const unsigned char *buffer, std::size_t sz) const override;
 	
 	/** Creates an importer for this file type.
 	 */
-	Importer *createImporter(QIODevice* stream, Map *map, MapView *view) const;
+	Importer *createImporter(QIODevice* stream, Map *map, MapView *view) const override;
 	
 #ifdef MAPPER_ENABLE_NATIVE_EXPORTER
 	/** Creates an exporter for this file type.
@@ -63,6 +75,9 @@ public:
 	 */
 	static const char magic_bytes[4];
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif // NO_NATIVE_FILE_FORMAT
 

@@ -22,9 +22,39 @@
 #ifndef OPENORIENTEERING_AREA_SYMBOL_H
 #define OPENORIENTEERING_AREA_SYMBOL_H
 
+#include <cstddef>
+#include <vector>
+
+#include <Qt>
+#include <QtGlobal>
+#include <QFlags>
+#include <QRectF>
+#include <QString>
+
 #include "symbol.h"
 
-class PointObject;
+class QIODevice;
+class QRectF;
+class QXmlStreamReader;
+class QXmlStreamWriter;
+
+namespace OpenOrienteering {
+
+class AreaRenderable;
+class LineSymbol;
+class Map;
+class MapColor;
+class MapColorMap;
+class MapCoord;
+class MapCoordF;
+class Object;
+class ObjectRenderables;
+class PathObject;
+class PathPartVector;
+class PointSymbol;
+class SymbolPropertiesWidget;
+class SymbolSettingDialog;
+class VirtualCoordVector;
 
 
 /**
@@ -49,12 +79,29 @@ public:
 			PointPattern = 2
 		};
 		
+		/**
+		 * Flags for pattern properties.
+		 */
+		enum Option
+		{
+			Default                      = 0x00,
+			NoClippingIfCompletelyInside = 0x01,
+			NoClippingIfCenterInside     = 0x02,
+			NoClippingIfPartiallyInside  = 0x03,
+			AlternativeToClipping        = 0x03, ///< Bitmask for NoClipping* options
+			Rotatable                    = 0x10, ///< Pattern is rotatable per-object
+		};
+		Q_DECLARE_FLAGS(Options, Option)
+		
 		/** Type of the pattern */
 		Type type;
-		/** Rotation angle in radians */
+		/** Basic properties of the pattern. */
+		Options flags;
+		/** Rotation angle in radians
+		 * 
+		 * \todo Switch to qreal when legacy native file format is dropped.
+		 */
 		float angle;
-		/** True if the pattern is rotatable per-object. */
-		bool rotatable;
 		/** Distance between parallel lines, as usual in 0.001mm */
 		int line_spacing;
 		/** Offset of the first line from the origin */
@@ -81,7 +128,7 @@ public:
 		
 		
 		/** Creates a default fill pattern */
-		FillPattern();
+		FillPattern() noexcept;
 		/** Loads the pattern in the old "native" format */
 		bool load(QIODevice* file, int version, Map* map);
 		/** Saves the pattern in xml format */
@@ -94,35 +141,102 @@ public:
 		 */
 		bool equals(const FillPattern& other, Qt::CaseSensitivity case_sensitivity) const;
 		
+		
 		/**
-		 * Creates renderables for this pattern in the area given by extent.
-		 * @param extent Rectangular area to create renderables for.
+		 * Returns true if the pattern is rotatable per object.
+		 */
+		bool rotatable() const;
+		
+		/**
+		 * Controls whether the pattern is rotatable per object.
+		 */
+		void setRotatable(bool value);
+		
+		
+		/**
+		 * Returns the flags which control drawing at boundary.
+		 */
+		Options clipping() const;
+		
+		/**
+		 * Sets the flags which control drawing at boundary.
+		 */
+		void setClipping(Options clipping);
+		
+		
+		/**
+		 * Removes the pattern's references to the deleted color.
+		 */
+		void colorDeleted(const MapColor* color);
+		                  
+		/**
+		 * Tests if the pattern contains the given color.
+		 */
+		bool containsColor(const MapColor* color) const;
+		
+		/**
+		 * Returns the patterns primary color.
+		 */
+		const MapColor* guessDominantColor() const;
+		
+		
+		/**
+		 * Creates renderables for this pattern to fill the area surrounded by the outline.
+		 * @param outline A renderable giving the extent and outline.
 		 * @param delta_rotation Rotation offest which is added to the pattern angle.
 		 * @param pattern_origin Origin point for line / point placement.
 		 * @param output Created renderables will be inserted here.
 		 */
 		void createRenderables(
-			QRectF extent,
+			const AreaRenderable& outline,
 			float delta_rotation,
 			const MapCoord& pattern_origin,
 			ObjectRenderables& output
 		) const;
 		
-		/** Creates one line of renderables, called by createRenderables(). */
-		void createLine(
-			MapCoordF first, MapCoordF second,
-			float delta_offset,
+		/** Does the heavy-lifting in loops over lines. */
+		template <int type>
+		void createRenderables(
+			const AreaRenderable& outline,
+			float delta_rotation,
+			const MapCoord& pattern_origin,
+			const QRectF& point_extent,
 			LineSymbol* line,
-			float rotation,
+			qreal rotation,
 			ObjectRenderables& output
 		) const;
+		
+		/** Creates one line of renderables, called by createRenderables(). */
+		template <int type>
+		void createLine(
+			MapCoordF first, MapCoordF second,
+			qreal delta_offset,
+			LineSymbol* line,
+			float rotation,
+			const AreaRenderable& outline,
+			ObjectRenderables& output
+		) const;
+		
+		/** Creates a single line of renderables for a PointPattern. */
+		void createPointPatternLine(
+			MapCoordF first, MapCoordF second,
+			qreal delta_offset,
+			float rotation,
+			const AreaRenderable& outline,
+			ObjectRenderables& output
+		) const;
+		
+		
 		/** Spatially scales the pattern settings by the given factor. */
 		void scale(double factor);
+		
+		qreal dimensionForIcon() const;
+		
 	};
 	
-	AreaSymbol();
-	virtual ~AreaSymbol();
-	Symbol* duplicate(const MapColorMap* color_map = NULL) const override;
+	AreaSymbol() noexcept;
+	~AreaSymbol() override;
+	Symbol* duplicate(const MapColorMap* color_map = nullptr) const override;
 	
 	void createRenderables(
 	        const Object *object,
@@ -156,14 +270,16 @@ public:
 	const MapColor* guessDominantColor() const override;
 	void scale(double factor) override;
 	
+	qreal dimensionForIcon() const override;
+	
 	// Getters / Setters
 	inline const MapColor* getColor() const {return color;}
 	inline void setColor(const MapColor* color) {this->color = color;}
 	inline int getMinimumArea() const {return minimum_area; }
-	inline int getNumFillPatterns() const {return (int)patterns.size();}
-	inline void setNumFillPatterns(int count) {patterns.resize(count);}
-	inline FillPattern& getFillPattern(int i) {return patterns[i];}
-	inline const FillPattern& getFillPattern(int i) const {return patterns[i];}
+	inline int getNumFillPatterns() const {return int(patterns.size());}
+	inline void setNumFillPatterns(int count) {patterns.resize(std::size_t(count));}
+	inline FillPattern& getFillPattern(int i) {return patterns[std::size_t(i)];}
+	inline const FillPattern& getFillPattern(int i) const {return patterns[std::size_t(i)];}
 	bool hasRotatableFillPattern() const;
 	SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog) override;
 	
@@ -173,11 +289,38 @@ protected:
 #endif
 	void saveImpl(QXmlStreamWriter& xml, const Map& map) const override;
 	bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict) override;
+	
+	/**
+	 * Compares AreaSymbol objects for equality.
+	 * 
+	 * Fill patterns are only compared in order.
+	 */
 	bool equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensitivity) const override;
 	
 	const MapColor* color;
 	int minimum_area;	// in mm^2 // FIXME: unit (factor) wrong
 	std::vector<FillPattern> patterns;
 };
+
+
+
+inline
+bool AreaSymbol::FillPattern::rotatable() const
+{
+	return flags.testFlag(Option::Rotatable);
+}
+
+inline
+AreaSymbol::FillPattern::Options AreaSymbol::FillPattern::clipping() const
+{
+	return flags & Option::AlternativeToClipping;
+}
+
+
+}  // namespace OpenOrienteering
+
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(OpenOrienteering::AreaSymbol::FillPattern::Options)
+
 
 #endif

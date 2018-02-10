@@ -30,11 +30,15 @@
 #include "core/symbols/symbol.h"
 #include "util/xml_stream_util.h"
 
+
 namespace literal
 {
 	const QLatin1String source("source");
 	const QLatin1String part("part");
 }
+
+
+namespace OpenOrienteering {
 
 // ### ObjectModifyingUndoStep ###
 
@@ -85,10 +89,10 @@ void ObjectModifyingUndoStep::getModifiedObjects(int part_index, ObjectSet& out)
 	if (part_index == getPartIndex())
 	{
 		MapPart* const map_part = map->getPart(part_index);
-		for (std::vector<int>::const_iterator it = modified_objects.begin(), end = modified_objects.end(); it != end; ++it)
+		for (int object_index : modified_objects)
 		{
-			Q_ASSERT(*it >= 0 && *it < map_part->getNumObjects());
-			out.insert(map_part->getObject(*it));
+			Q_ASSERT(object_index >= 0 && object_index < map_part->getNumObjects());
+			out.insert(map_part->getObject(object_index));
 		}
 	}
 }
@@ -162,8 +166,8 @@ ObjectCreatingUndoStep::ObjectCreatingUndoStep(Type type, Map* map)
 : ObjectModifyingUndoStep(type, map)
 , valid(true)
 {
-	connect(map, SIGNAL(symbolChanged(int, const Symbol*, const Symbol*)), this, SLOT(symbolChanged(int, const Symbol*, const Symbol*)));
-	connect(map, SIGNAL(symbolDeleted(int, const Symbol*)), this, SLOT(symbolDeleted(int, const Symbol*)));
+	connect(map, &Map::symbolChanged, this, &ObjectCreatingUndoStep::symbolChanged);
+	connect(map, &Map::symbolDeleted, this, &ObjectCreatingUndoStep::symbolDeleted);
 }
 
 ObjectCreatingUndoStep::~ObjectCreatingUndoStep()
@@ -180,7 +184,7 @@ bool ObjectCreatingUndoStep::isValid() const
 
 void ObjectCreatingUndoStep::addObject(int)
 {
-	Q_ASSERT(false && "This implementation must not be called");
+	qWarning("This implementation must not be called");
 	return;
 }
 
@@ -211,7 +215,7 @@ bool ObjectCreatingUndoStep::load(QIODevice* file, int version)
 	{
 		int save_type;
 		file->read((char*)&save_type, sizeof(int));
-		objects[i] = Object::getObjectForType(static_cast<Object::Type>(save_type), NULL);
+		objects[i] = Object::getObjectForType(static_cast<Object::Type>(save_type), nullptr);
 		if (!objects[i])
 			return false;
 		objects[i]->load(file, version, map);
@@ -515,8 +519,8 @@ SwitchSymbolUndoStep::SwitchSymbolUndoStep(Map* map)
 : ObjectModifyingUndoStep(SwitchSymbolUndoStepType, map)
 , valid(true)
 {
-	connect(map, SIGNAL(symbolChanged(int, const Symbol*, const Symbol*)), this, SLOT(symbolChanged(int, const Symbol*, const Symbol*)));
-	connect(map, SIGNAL(symbolDeleted(int, const Symbol*)), this, SLOT(symbolDeleted(int, const Symbol*)));
+	connect(map, &Map::symbolChanged, this, &SwitchSymbolUndoStep::symbolChanged);
+	connect(map, &Map::symbolDeleted, this, &SwitchSymbolUndoStep::symbolDeleted);
 }
 
 SwitchSymbolUndoStep::~SwitchSymbolUndoStep()
@@ -660,13 +664,13 @@ UndoStep* SwitchDashesUndoStep::undo()
 	undo_step->setPartIndex(part_index);
 	
 	MapPart* part = map->getPart(part_index);
-	for (ObjectList::iterator it = modified_objects.begin(), end = modified_objects.end(); it != end; ++it)
+	for (const auto object_index : modified_objects)
 	{
-		PathObject* object = reinterpret_cast<PathObject*>(part->getObject(*it));
+		PathObject* object = reinterpret_cast<PathObject*>(part->getObject(object_index));
 		object->reverse();
 		object->update();
 		
-		undo_step->addObject(*it);
+		undo_step->addObject(object_index);
 	}
 	
 	return undo_step;
@@ -703,10 +707,10 @@ UndoStep* ObjectTagsUndoStep::undo()
 	MapPart* const map_part = map->getPart(part_index);
 	
 	redo_step->setPartIndex(part_index);
-	for (ObjectTagsMap::iterator it = object_tags_map.begin(), end = object_tags_map.end(); it != end; ++it)
+	for (const auto& object_tags : object_tags_map)
 	{
-		redo_step->addObject(it->first);
-		map_part->getObject(it->first)->setTags(it->second);
+		redo_step->addObject(object_tags.first);
+		map_part->getObject(object_tags.first)->setTags(object_tags.second);
 	}
 	
 	return redo_step;
@@ -724,13 +728,13 @@ void ObjectTagsUndoStep::saveImpl(QXmlStreamWriter &xml) const
 	if (size > 8)
 		element.writeAttribute(QLatin1String("count"), size);
 	
-	for (ObjectTagsMap::const_iterator it = object_tags_map.begin(), end = object_tags_map.end(); it != end; ++it)
+	for (const auto& object_tags : object_tags_map)
 	{
 		namespace literal = XmlStreamLiteral;
 		
 		XmlElementWriter tags_element(xml, QLatin1String("ref"));
-		tags_element.writeAttribute(literal::object, it->first);
-		tags_element.write(it->second);
+		tags_element.writeAttribute(literal::object, object_tags.first);
+		tags_element.write(object_tags.second);
 	}
 }
 
@@ -767,3 +771,6 @@ void ObjectTagsUndoStep::loadImpl(QXmlStreamReader &xml, SymbolDictionary &symbo
 		UndoStep::loadImpl(xml, symbol_dict);
 	}
 }
+
+
+}  // namespace OpenOrienteering

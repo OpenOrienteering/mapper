@@ -38,7 +38,7 @@ public:
 	explicit AdvancedPdfPrinter(const QPrinterInfo& printer, PrinterMode mode = ScreenResolution);
 	
 	/** Destructor. */
-	~AdvancedPdfPrinter();
+	~AdvancedPdfPrinter() override;
 	
 	/** Returns the paint engine type which is used for advanced pdf generation. */
 	static QPaintEngine::Type paintEngineType();

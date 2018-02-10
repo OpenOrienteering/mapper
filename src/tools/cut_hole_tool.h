@@ -18,13 +18,31 @@
  */
 
 
-#ifndef _OPENORIENTEERING_TOOL_CUT_HOLE_H_
-#define _OPENORIENTEERING_TOOL_CUT_HOLE_H_
+#ifndef OPENORIENTEERING_TOOL_CUT_HOLE_H
+#define OPENORIENTEERING_TOOL_CUT_HOLE_H
+
+#include <QObject>
+#include <QRectF>
 
 #include "tool.h"
 
-class PathObject;
+class QAction;
+class QCursor;
+class QEvent;
+class QFocusEvent;
+class QKeyEvent;
+class QMouseEvent;
+class QPainter;
+class QRectF;
+
+namespace OpenOrienteering {
+
 class DrawLineAndAreaTool;
+class MapCoordF;
+class MapEditorController;
+class MapWidget;
+class PathObject;
+
 
 /** Tool to cut holes into area objects */
 class CutHoleTool : public MapEditorTool
@@ -41,22 +59,22 @@ public:
 	};
 	
 	CutHoleTool(MapEditorController* editor, QAction* tool_action, CutHoleTool::HoleType hole_type);
-	virtual ~CutHoleTool();
+	~CutHoleTool() override;
 	
-	virtual void init();
-	virtual const QCursor& getCursor() const;
+	void init() override;
+	const QCursor& getCursor() const override;
 	
-	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual void leaveEvent(QEvent* event);
+	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	void leaveEvent(QEvent* event) override;
 	
-	virtual bool keyPressEvent(QKeyEvent* event);
-	virtual bool keyReleaseEvent(QKeyEvent* event);
-	virtual void focusOutEvent(QFocusEvent* event);
+	bool keyPressEvent(QKeyEvent* event) override;
+	bool keyReleaseEvent(QKeyEvent* event) override;
+	void focusOutEvent(QFocusEvent* event) override;
 	
-	virtual void draw(QPainter* painter, MapWidget* widget);
+	void draw(QPainter* painter, MapWidget* widget) override;
 	
 public slots:
 	void objectSelectionChanged();
@@ -66,7 +84,7 @@ public slots:
 	
 protected:
 	void updateStatusText();
-	void updateDirtyRect(const QRectF* path_rect = NULL);
+	void updateDirtyRect(const QRectF* path_rect = nullptr);
 	void updateDragging(MapCoordF cursor_pos_map, MapWidget* widget);
 	
 	CutHoleTool::HoleType hole_type;
@@ -74,4 +92,6 @@ protected:
 	MapWidget* edit_widget;
 };
 
+
+}  // namespace OpenOrienteering
 #endif

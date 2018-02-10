@@ -22,7 +22,21 @@
 #ifndef OPENORIENTEERING_TOOL_ROTATE_H
 #define OPENORIENTEERING_TOOL_ROTATE_H
 
-#include "tool_base.h"
+#include <QtGlobal>
+#include <QObject>
+
+#include "core/map_coord.h"
+#include "tools/tool_base.h"
+
+class QAction;
+class QKeyEvent;
+class QPainter;
+class QRectF;
+
+namespace OpenOrienteering {
+
+class MapEditorController;
+class MapWidget;
 
 
 /**
@@ -56,8 +70,10 @@ protected:
 	
 	// Mouse handling
 	MapCoordF rotation_center;
-	qreal original_rotation;
-	qreal current_rotation;
+	qreal original_rotation = 0;
+	qreal current_rotation  = 0;
 };
 
+
+}  // namespace OpenOrienteering
 #endif

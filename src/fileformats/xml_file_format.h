@@ -17,10 +17,22 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_FILE_FORMAT_XML_H
-#define _OPENORIENTEERING_FILE_FORMAT_XML_H
+#ifndef OPENORIENTEERING_FILE_FORMAT_XML_H
+#define OPENORIENTEERING_FILE_FORMAT_XML_H
 
-#include "file_format.h"
+#include <cstddef>
+
+#include "fileformats/file_format.h"
+
+class QIODevice;
+
+namespace OpenOrienteering {
+
+class Exporter;
+class Importer;
+class Map;
+class MapView;
+
 
 /** @brief Interface for dealing with XML files of maps.
  */
@@ -35,15 +47,15 @@ public:
 	 * 
 	 *  @todo Needs to deal with different encodings. Provide test cases.
 	 */
-	bool understands(const unsigned char *buffer, size_t sz) const;
+	bool understands(const unsigned char *buffer, std::size_t sz) const override;
 	
 	/** @brief Creates an importer for XML files.
 	 */
-	Importer *createImporter(QIODevice* stream, Map *map, MapView *view) const;
+	Importer *createImporter(QIODevice* stream, Map *map, MapView *view) const override;
 	
 	/** @brief Creates an exporter for XML files.
 	 */
-	Exporter *createExporter(QIODevice* stream, Map *map, MapView *view) const;
+	Exporter *createExporter(QIODevice* stream, Map *map, MapView *view) const override;
 	
 	/** @brief The minimum XML file format version supported by this implementation.
 	 */
@@ -61,4 +73,7 @@ public:
 	
 };
 
-#endif // _OPENORIENTEERING_FILE_FORMAT_XML_H
+
+}  // namespace OpenOrienteering
+
+#endif // OPENORIENTEERING_FILE_FORMAT_XML_H

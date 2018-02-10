@@ -21,20 +21,19 @@
 #include "map_editor_activity.h"
 
 
-MapEditorActivity::~MapEditorActivity()
-{
-	// nothing
-}
+namespace OpenOrienteering {
+
+MapEditorActivity::~MapEditorActivity() = default;
 
 void MapEditorActivity::init()
 {
 	// nothing
 }
 
-void MapEditorActivity::draw(QPainter* painter, MapWidget* widget)
+void MapEditorActivity::draw(QPainter*, MapWidget*)
 {
-	Q_UNUSED(painter);
-	Q_UNUSED(widget);
 	// nothing
 }
 
+
+}  // namespace OpenOrienteering

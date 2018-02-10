@@ -25,14 +25,14 @@
 #include <QIcon>
 #include <QKeyEvent>
 #include <QPushButton>
-#include <QSignalMapper>
 
 #include "core/objects/text_object.h"
-#include "../../tools/text_object_editor_helper.h"
+#include "tools/text_object_editor_helper.h"
 
 
-namespace
-{
+namespace OpenOrienteering {
+
+namespace {
 
 struct AlignmentOption
 {
@@ -42,19 +42,20 @@ struct AlignmentOption
 };
 
 const AlignmentOption horizontal_options[] = { 
-    { TextObject::AlignLeft,    QT_TRANSLATE_NOOP("TextObjectAlignmentDockWidget", "Left"),    ":/images/text-align-left.png" },
-    { TextObject::AlignHCenter, QT_TRANSLATE_NOOP("TextObjectAlignmentDockWidget", "Center"),  ":/images/text-align-hcenter.png" },
-    { TextObject::AlignRight,   QT_TRANSLATE_NOOP("TextObjectAlignmentDockWidget", "Right"),   ":/images/text-align-right.png" },
+    { TextObject::AlignLeft,    QT_TRANSLATE_NOOP("OpenOrienteering::TextObjectAlignmentDockWidget", "Left"),    ":/images/text-align-left.png" },
+    { TextObject::AlignHCenter, QT_TRANSLATE_NOOP("OpenOrienteering::TextObjectAlignmentDockWidget", "Center"),  ":/images/text-align-hcenter.png" },
+    { TextObject::AlignRight,   QT_TRANSLATE_NOOP("OpenOrienteering::TextObjectAlignmentDockWidget", "Right"),   ":/images/text-align-right.png" },
 };
 
 const AlignmentOption vertical_options[] = { 
-    { TextObject::AlignTop,     QT_TRANSLATE_NOOP("TextObjectAlignmentDockWidget", "Top"),     ":/images/text-align-top.png" },
-    { TextObject::AlignVCenter, QT_TRANSLATE_NOOP("TextObjectAlignmentDockWidget", "Center"),  ":/images/text-align-vcenter.png" },
-    { TextObject::AlignBaseline,QT_TRANSLATE_NOOP("TextObjectAlignmentDockWidget", "Baseline"),":/images/text-align-baseline.png" },
-    { TextObject::AlignBottom,  QT_TRANSLATE_NOOP("TextObjectAlignmentDockWidget", "Bottom"),  ":/images/text-align-bottom.png" },
+    { TextObject::AlignTop,     QT_TRANSLATE_NOOP("OpenOrienteering::TextObjectAlignmentDockWidget", "Top"),     ":/images/text-align-top.png" },
+    { TextObject::AlignVCenter, QT_TRANSLATE_NOOP("OpenOrienteering::TextObjectAlignmentDockWidget", "Center"),  ":/images/text-align-vcenter.png" },
+    { TextObject::AlignBaseline,QT_TRANSLATE_NOOP("OpenOrienteering::TextObjectAlignmentDockWidget", "Baseline"),":/images/text-align-baseline.png" },
+    { TextObject::AlignBottom,  QT_TRANSLATE_NOOP("OpenOrienteering::TextObjectAlignmentDockWidget", "Bottom"),  ":/images/text-align-bottom.png" },
 };
 
-}
+
+}  // namespace
 
 
 TextObjectAlignmentDockWidget::TextObjectAlignmentDockWidget(TextObjectEditorHelper* text_editor, QWidget* parent)
@@ -111,7 +112,6 @@ TextObjectAlignmentDockWidget::~TextObjectAlignmentDockWidget()
 {
 	// nothing, not inlined
 }
-
 
 bool TextObjectAlignmentDockWidget::event(QEvent* event)
 {
@@ -181,3 +181,6 @@ QPushButton* TextObjectAlignmentDockWidget::makeButton(const QString& icon_path,
 	button->setCheckable(true);
 	return button;
 }
+
+
+}  // namespace OpenOrienteering

@@ -21,20 +21,28 @@
 
 #include "crs_template_implementation.h"
 
-#include <QCompleter>
+#include <cmath>
+#include <memory>
+
+#include <QtGlobal>
+#include <QLatin1String>
 #include <QLineEdit>
+#include <QObject>
+#include <QSignalBlocker>
 #include <QSpinBox>
 #include <QVariant>
+#include <QWidget>
 
+#include "core/crs_template.h"
 #include "core/georeferencing.h"
-#include "gui/georeferencing_dialog.h"
+#include "core/latlon.h"
 #include "gui/util_gui.h"
 #include "gui/widgets/crs_param_widgets.h"
-#include "util/scoped_signals_blocker.h"
 
 
-namespace CRSTemplates
-{
+namespace OpenOrienteering {
+
+namespace CRSTemplates {
 
 CRSTemplateRegistry::TemplateList defaultList()
 {
@@ -44,22 +52,22 @@ CRSTemplateRegistry::TemplateList defaultList()
 	// UTM
 	auto temp = std::make_unique<CRSTemplate>(
 	  QString::fromLatin1("UTM"),
-	  Georeferencing::tr("UTM", "UTM coordinate reference system"),
-	  Georeferencing::tr("UTM coordinates"),
+	  ::OpenOrienteering::Georeferencing::tr("UTM", "UTM coordinate reference system"),
+	  ::OpenOrienteering::Georeferencing::tr("UTM coordinates"),
 	  QString::fromLatin1("+proj=utm +datum=WGS84 +zone=%1"),
 	  CRSTemplate::ParameterList {
-	    new UTMZoneParameter(QString::fromLatin1("zone"), Georeferencing::tr("UTM Zone (number north/south)"))
+	    new UTMZoneParameter(QString::fromLatin1("zone"), ::OpenOrienteering::Georeferencing::tr("UTM Zone (number north/south)"))
 	  } );
 	templates.push_back(std::move(temp));
 	
 	// Gauss-Krueger
 	temp = std::make_unique<CRSTemplate>(
 	  QString::fromLatin1("Gauss-Krueger, datum: Potsdam"),
-	  Georeferencing::tr("Gauss-Krueger, datum: Potsdam", "Gauss-Krueger coordinate reference system"),
-	  Georeferencing::tr("Gauss-Krueger coordinates"),
+	  ::OpenOrienteering::Georeferencing::tr("Gauss-Krueger, datum: Potsdam", "Gauss-Krueger coordinate reference system"),
+	  ::OpenOrienteering::Georeferencing::tr("Gauss-Krueger coordinates"),
 	  QString::fromLatin1("+proj=tmerc +lat_0=0 +lon_0=%1 +k=1.000000 +x_0=%2 +y_0=0 +ellps=bessel +datum=potsdam +units=m +no_defs"),
 	  CRSTemplate::ParameterList {
-	    new IntRangeParameter(QString::fromLatin1("zone"), Georeferencing::tr("Zone number (1 to 119)", "Zone number for Gauss-Krueger coordinates"),
+	    new IntRangeParameter(QString::fromLatin1("zone"), ::OpenOrienteering::Georeferencing::tr("Zone number (1 to 119)", "Zone number for Gauss-Krueger coordinates"),
 	                          1, 119, { {3, 0}, {1000000, 500000} })
 	  } );
 	templates.push_back(std::move(temp));
@@ -67,23 +75,23 @@ CRSTemplateRegistry::TemplateList defaultList()
 	// EPSG
 	temp = std::make_unique<CRSTemplate>(
 	  QString::fromLatin1("EPSG"),
-	  Georeferencing::tr("by EPSG code", "as in: The CRS is specified by EPSG code"),
+	  ::OpenOrienteering::Georeferencing::tr("by EPSG code", "as in: The CRS is specified by EPSG code"),
 	  //: Don't translate @code@. It is placeholder.
-	  Georeferencing::tr("EPSG @code@ coordinates"),
+	  ::OpenOrienteering::Georeferencing::tr("EPSG @code@ coordinates"),
 	  QString::fromLatin1("+init=epsg:%1"),
 	  CRSTemplate::ParameterList {
-	    new IntRangeParameter(QString::fromLatin1("code"), Georeferencing::tr("EPSG code"), 1000, 99999)
+	    new IntRangeParameter(QString::fromLatin1("code"), ::OpenOrienteering::Georeferencing::tr("EPSG code"), 1000, 99999)
 	  } );
 	templates.push_back(std::move(temp));
 	
 	// Custom
 	temp = std::make_unique<CRSTemplate>(
 	  QString::fromLatin1("PROJ.4"), // Don't change this ID.
-	  Georeferencing::tr("Custom PROJ.4", "PROJ.4 specification"),
-	  Georeferencing::tr("Local coordinates"),
+	  ::OpenOrienteering::Georeferencing::tr("Custom PROJ.4", "PROJ.4 specification"),
+	  ::OpenOrienteering::Georeferencing::tr("Local coordinates"),
 	  QString::fromLatin1("%1"),
 	  CRSTemplate::ParameterList {
-	    new FullSpecParameter(QString::fromLatin1("spec"), Georeferencing::tr("Specification", "PROJ.4 specification"))
+	    new FullSpecParameter(QString::fromLatin1("spec"), ::OpenOrienteering::Georeferencing::tr("Specification", "PROJ.4 specification"))
 	  } );
 	templates.push_back(std::move(temp));
 	
@@ -102,7 +110,7 @@ TextParameter::TextParameter(const QString& key, const QString& name)
 
 QWidget* TextParameter::createEditor(WidgetObserver& observer) const
 {
-	auto widget = new TextParameter::Editor();
+	auto widget = new Editor();
 	QObject::connect(widget, &TextParameter::Editor::textChanged, [&observer](){ observer.crsParameterEdited(); });
 	return widget;
 }
@@ -110,7 +118,7 @@ QWidget* TextParameter::createEditor(WidgetObserver& observer) const
 QString TextParameter::value(const QWidget* edit_widget) const
 {
 	QString value;
-	auto field = qobject_cast<const QLineEdit*>(edit_widget);
+	auto field = qobject_cast<const Editor*>(edit_widget);
 	if (field)
 		value = field->text();
 	return value;
@@ -118,7 +126,7 @@ QString TextParameter::value(const QWidget* edit_widget) const
 
 void TextParameter::setValue(QWidget* edit_widget, const QString& value)
 {
-	auto field = qobject_cast<QLineEdit*>(edit_widget);
+	auto field = qobject_cast<Editor*>(edit_widget);
 	if (field)
 		field->setText(value);
 }
@@ -213,7 +221,7 @@ QVariant UTMZoneParameter::calculateUTMZone(const LatLon lat_lon)
 			zone_no = 2 * (int(floor(lon) + 3.0) / 12) + 31; // Svalbard
 		QString zone = QString::number(zone_no);
 		if (zone_no < 10)
-			zone.prepend(QLatin1Char('0'));
+			zone.prepend(QLatin1String("0"));
 		zone.append((lat >= 0.0) ? QLatin1String(" N") : QLatin1String(" S"));
 		ret = zone;
 	}
@@ -281,5 +289,6 @@ void IntRangeParameter::setValue(QWidget* edit_widget, const QString& value)
 }
 
 
+}  // namespace CRSTemplates
 
-} // namespace CRSTemplates
+}  // namespace OpenOrienteering

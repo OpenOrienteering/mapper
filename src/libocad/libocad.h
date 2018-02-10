@@ -697,7 +697,7 @@ int ocad_file_reserve(OCADFile *file, int amount);
 
 /** Opens a file with the given filename. The file is loaded into memory and is accessible through
  *  the various ocad_file_* methods. The first argument can either be a pointer to a pre-allocated
- *  OCADFile object (e.g., on the stack), or NULL to cause the object to be allocated on the heap.
+ *  OCADFile object (e.g., on the stack), or nullptr to cause the object to be allocated on the heap.
  *  In the first case, the preallocated memory is considered to be uninitialized and will be zeroed
  *  before opening the file.
  *
@@ -792,7 +792,7 @@ int ocad_color_count(OCADFile *pfile);
 
 
 /** Returns a pointer to a particular color in the color table. If index is less than zero or greater
- *  than the maximum color index, then NULL is returned. Otherwise, a valid pointer to a color is
+ *  than the maximum color index, then nullptr is returned. Otherwise, a valid pointer to a color is
  *  returned. Note that the color index defined the order that colors are drawn (from top to bottom),
  *  and is independent from the color number that is used by symbol definition. The color number is
  *  available from (OCADColor *)->number.
@@ -801,7 +801,7 @@ OCADColor *ocad_color_at(OCADFile *pfile, int index);
 
 
 /** Returns a pointer to a color in the color table with the given number. If a color with that number
- *  is not found, NULL is returned. 
+ *  is not found, nullptr is returned. 
  */
 OCADColor *ocad_color(OCADFile *pfile, u8 number);
 
@@ -815,7 +815,7 @@ int ocad_separation_count(OCADFile *pfile);
 
 /** Returns a pointer to a particular spot color definition in the separations
  *  table. If index is less than zero, greater than the maximum color index or
- *  greater than 32, then NULL is returned. The index corresponds to the index
+ *  greater than 32, then nullptr is returned. The index corresponds to the index
  *  in the spot color table at OCADColor::spot.
  */
 OCADColorSeparation *ocad_separation_at(OCADFile *pfile, int index);
@@ -833,13 +833,13 @@ void ocad_color_to_rgb(const OCADColor *c, int *arr);
 void ocad_color_to_rgbf(const OCADColor *c, float *arr);
 
 
-/** Returns a pointer to the first symbol index block, or NULL if the file isn't valid. Also returns
- *  NULL if the file contains no symbols.
+/** Returns a pointer to the first symbol index block, or nullptr if the file isn't valid. Also returns
+ *  nullptr if the file contains no symbols.
  */
 OCADSymbolIndex *ocad_symidx_first(OCADFile *pfile);
 
 
-/** Returns a pointer to the next symbol index block after the given one, or NULL if there is none.
+/** Returns a pointer to the next symbol index block after the given one, or nullptr if there is none.
  */
 OCADSymbolIndex *ocad_symidx_next(OCADFile *pfile, OCADSymbolIndex *current);
 
@@ -854,13 +854,13 @@ int ocad_symbol_count(OCADFile *pfile);
 OCADSymbol *ocad_symbol_new(OCADFile *pfile, int size);
 
 
-/** Returns a pointer to the symbol in the specified location within the index block, or NULL if there
+/** Returns a pointer to the symbol in the specified location within the index block, or nullptr if there
  *  is no such symbol.
  */
 OCADSymbol *ocad_symbol_at(OCADFile *pfile, OCADSymbolIndex *current, int index);
 
 
-/** Finds the symbol with a particular number, or NULL if no such symbol exists.
+/** Finds the symbol with a particular number, or nullptr if no such symbol exists.
  */
 OCADSymbol *ocad_symbol(OCADFile *pfile, word number);
 
@@ -892,19 +892,19 @@ bool ocad_symbol_element_iterate(s16 ngrp, OCADPoint *pts, OCADSymbolElementCall
 bool ocad_symbol_elements_use_color(s16 ngrp, OCADPoint *pts, s16 number);
 
 
-/** Returns a pointer to the first object index block, or NULL if the file isn't valid. Also returns
- *  NULL if the file contains no object.
+/** Returns a pointer to the first object index block, or nullptr if the file isn't valid. Also returns
+ *  nullptr if the file contains no object.
  */
 OCADObjectIndex *ocad_objidx_first(OCADFile *pfile);
 
 
-/** Returns a pointer to the next object index block after the given one, or NULL if there is none.
+/** Returns a pointer to the next object index block after the given one, or nullptr if there is none.
  */
 OCADObjectIndex *ocad_objidx_next(OCADFile *pfile, OCADObjectIndex *current);
 
 
-/** Returns a pointer to the given object index entry, or NULL if the file isn't valid. Also returns
- *  NULL if the index is out of range, but always returns a valid pointer if the file, index block,
+/** Returns a pointer to the given object index entry, or nullptr if the file isn't valid. Also returns
+ *  nullptr if the index is out of range, but always returns a valid pointer if the file, index block,
  *  and index are valid.
  */
 OCADObjectEntry *ocad_object_entry_at(OCADFile *pfile, OCADObjectIndex *current, int index);
@@ -924,7 +924,7 @@ void ocad_object_entry_refresh(OCADFile *pfile, OCADObjectEntry *entry, OCADObje
 
 /** Returns a pointer to the first empty object index entry large enough to fit an object with the
  *  given number of points. If no suitable object index entry is found, a new entry will be created.
- *  This method will only return NULL if the file isn't valid or if there is a memory allocation
+ *  This method will only return nullptr if the file isn't valid or if there is a memory allocation
  *  problem.
  *
  *  The returned entry will have its ptr and npts fields set; the caller is responsible for writing
@@ -948,13 +948,13 @@ int ocad_object_remove(OCADFile *pfile, OCADObjectEntry *entry);
 bool ocad_object_entry_iterate(OCADFile *pfile, OCADObjectEntryCallback callback, void *param);
 
 
-/** Returns a pointer to the object in the specified location within the index block, or NULL if there
+/** Returns a pointer to the object in the specified location within the index block, or nullptr if there
  *  is no such object.
  */
 OCADObject *ocad_object_at(OCADFile *pfile, OCADObjectIndex *current, int index);
 
 
-/** Returns a pointer to an object, given a valid pointer to its index entry. Returns NULL if the
+/** Returns a pointer to an object, given a valid pointer to its index entry. Returns nullptr if the
  *  file isn't valid or the index entry is empty.
  */
 OCADObject *ocad_object(OCADFile *pfile, OCADObjectEntry *entry);
@@ -980,7 +980,7 @@ u32 ocad_object_size_npts(u32 npts);
  *  This object can then be manipulated with the ocad_object_* functions, and finally saved back into
  *  the file with ocad_object_add() or ocad_object_replace().
  *
- *  You may pass a NULL parameter to create a new, empty object.
+ *  You may pass a nullptr parameter to create a new, empty object.
  */
 OCADObject *ocad_object_alloc(const OCADObject *source);
 
@@ -990,23 +990,23 @@ OCADObject *ocad_object_alloc(const OCADObject *source);
  *  an object by passing a pointer to an object already in the file.
  *
  *  The provided object is copied into the file and is left unchanged by this call. A pointer to the new
- *  object is returned, or NULL if the object could not be added.
+ *  object is returned, or nullptr if the object could not be added.
  */
 OCADObject *ocad_object_add(OCADFile *file, const OCADObject *object, OCADObjectEntry** out_entry);
 
-/** Returns a pointer to the first string index block, or NULL if the file isn't valid. Also returns
- *  NULL if the file contains no object.
+/** Returns a pointer to the first string index block, or nullptr if the file isn't valid. Also returns
+ *  nullptr if the file contains no object.
  */
 OCADStringIndex *ocad_string_index_first(OCADFile *pfile);
 
 
-/** Returns a pointer to the next string index block after the given one, or NULL if there is none.
+/** Returns a pointer to the next string index block after the given one, or nullptr if there is none.
  */
 OCADStringIndex *ocad_string_index_next(OCADFile *pfile, OCADStringIndex *current);
 
 
-/** Returns a pointer to the given string index entry, or NULL if the file isn't valid. Also returns
- *  NULL if the index is out of range, but always returns a valid pointer if the file, index block,
+/** Returns a pointer to the given string index entry, or nullptr if the file isn't valid. Also returns
+ *  nullptr if the index is out of range, but always returns a valid pointer if the file, index block,
  *  and index are valid.
  */
 OCADStringEntry *ocad_string_entry_at(OCADFile *pfile, OCADStringIndex *current, int index);
@@ -1017,7 +1017,7 @@ OCADStringEntry *ocad_string_entry_at(OCADFile *pfile, OCADStringIndex *current,
  *  allocated. The entry returned will have its ptr and size fields set; the size field may be larger
  *  than the size requested in the parameter. The caller is responsible for copying data into the
  *  actual string (retrieved via ocad_string()). If there is not enough memory to create a new
- *  entry, NULL is returned.
+ *  entry, nullptr is returned.
  */
 OCADStringEntry *ocad_string_entry_new(OCADFile *pfile, u32 size);
 
@@ -1033,13 +1033,13 @@ int ocad_string_remove(OCADFile *pfile, OCADStringEntry *entry);
 bool ocad_string_entry_iterate(OCADFile *pfile, OCADStringEntryCallback callback, void *param);
 
 
-/** Returns a pointer to the string in the specified location within the index block, or NULL if there
+/** Returns a pointer to the string in the specified location within the index block, or nullptr if there
  *  is no such string.
  */
 OCADCString *ocad_string_at(OCADFile *pfile, OCADStringIndex *current, int index);
 
 
-/** Returns a pointer to a string, given a valid pointer to its index entry. Returns NULL if the
+/** Returns a pointer to a string, given a valid pointer to its index entry. Returns nullptr if the
  *  file isn't valid or the index entry is empty.
  */
 OCADCString *ocad_string(OCADFile *pfile, OCADStringEntry *entry);
@@ -1061,7 +1061,7 @@ int ocad_paint_data_free(OCADPaintData *data);
 
 
 /** Initializes the given OCADPaintData object and fills it with references to all objects intersecting
- *  the specified rectangle. The rectangle may be NULL to indicate no spatial filtering.
+ *  the specified rectangle. The rectangle may be nullptr to indicate no spatial filtering.
  *
  *  If this call completes successfully, then the OCADPaintData object can be passed to ocad_paint().
  *  The object can be cached and used for later calls to ocad_paint(), if desired.

@@ -19,23 +19,25 @@
  */
 
 
-#ifndef _OPENORIENTEERING_TOOL_DISTRIBUTE_POINTS_H_
-#define _OPENORIENTEERING_TOOL_DISTRIBUTE_POINTS_H_
+#ifndef OPENORIENTEERING_TOOL_DISTRIBUTE_POINTS_H
+#define OPENORIENTEERING_TOOL_DISTRIBUTE_POINTS_H
 
 #include <vector>
 
 #include <QDialog>
+#include <QObject>
 
-class Map;
+class QDoubleSpinBox;
+class QCheckBox;
+class QSpinBox;
+class QWidget;
+
+namespace OpenOrienteering {
+
 class PathObject;
 class PointObject;
 class PointSymbol;
 
-QT_BEGIN_NAMESPACE
-class QDoubleSpinBox;
-class QCheckBox;
-class QSpinBox;
-QT_END_NAMESPACE
 
 /**
  * Provides methods to create evenly spaced point objects along a line.
@@ -129,4 +131,6 @@ private:
 	QDoubleSpinBox* additional_rotation_edit;
 };
 
+
+}  // namespace OpenOrienteering
 #endif

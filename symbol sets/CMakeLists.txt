@@ -24,38 +24,20 @@ if(ANDROID)
 endif()
 
 set(Mapper_SYMBOL_SETS
-  4000/ISSOM_4000.omap
-  5000/ISSOM_5000.omap
+  10000/ISOM2017_10000.omap
+  15000/ISOM2017_15000.omap
+  
   10000/ISOM2000_10000.omap
   15000/ISOM2000_15000.omap
   
-  4000/ISSOM_cs_4000.omap
-  5000/ISSOM_cs_5000.omap
-  10000/ISOM2000_cs_10000.omap
-  15000/ISOM2000_cs_15000.omap
-  
-  4000/ISSOM_fi_4000.omap
-  5000/ISSOM_fi_5000.omap
-  10000/ISOM2000_fi_10000.omap
-  15000/ISOM2000_fi_15000.omap
-  
-  4000/ISSOM_fr_4000.omap
-  5000/ISSOM_fr_5000.omap
-  
-  10000/ISOM2000_ru_10000.omap
-  15000/ISOM2000_ru_15000.omap
+  4000/ISSOM_4000.omap
+  5000/ISSOM_5000.omap
   
   5000/ISMTBOM_5000.omap
   7500/ISMTBOM_7500.omap
   10000/ISMTBOM_10000.omap
   15000/ISMTBOM_15000.omap
   20000/ISMTBOM_20000.omap
-  
-  5000/ISMTBOM_uk_5000.omap
-  7500/ISMTBOM_uk_7500.omap
-  10000/ISMTBOM_uk_10000.omap
-  15000/ISMTBOM_uk_15000.omap
-  20000/ISMTBOM_uk_20000.omap
   
   5000/ISSkiOM_5000.omap
   10000/ISSkiOM_10000.omap
@@ -67,8 +49,16 @@ set(Mapper_SYMBOL_SETS
   15000/Course_Design_15000.omap
 )
 
-set(_symbol_sets)
-foreach(_symbol_set ${Mapper_SYMBOL_SETS})
+set(Mapper_CRT_FILES
+  ./ISOM2000-ISOM2017.crt
+  ./ISOM2000-ISSOM.crt
+  ./OSM-ISOM2000.crt
+  ./OSM-ISOM2017.crt
+  ./OSM-ISSOM.crt
+)
+
+set(symbol_sets)
+foreach(_symbol_set ${Mapper_SYMBOL_SETS} ${Mapper_CRT_FILES})
 	get_filename_component(_dir  ${_symbol_set} PATH)
 	install(FILES ${_symbol_set} DESTINATION "${MAPPER_DATA_DESTINATION}/symbol sets/${_dir}")
 
@@ -80,11 +70,12 @@ foreach(_symbol_set ${Mapper_SYMBOL_SETS})
 	  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/${_symbol_set} ${CMAKE_CURRENT_BINARY_DIR}/${_copy_name}
 	  DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/${_symbol_set}
 	  VERBATIM)
-	list(APPEND _symbol_sets "${CMAKE_CURRENT_BINARY_DIR}/${_copy_name}")
+	list(APPEND symbol_sets "${CMAKE_CURRENT_BINARY_DIR}/${_copy_name}")
 endforeach()
 
 # Copy symbol sets to the build tree
 add_custom_target(Mapper_symbol_sets
   ALL
-  DEPENDS ${_symbol_sets})
+  DEPENDS ${symbol_sets}
+)
 

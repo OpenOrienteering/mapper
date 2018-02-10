@@ -21,44 +21,72 @@
 
 #include "combined_symbol.h"
 
+#include <algorithm>
+#include <cstddef>
+#include <iterator>
+#include <numeric>
+
+#include <QtGlobal>
 #include <QIODevice>
+#include <QLatin1String>
+#include <QString>
+#include <QStringRef>
+#include <QXmlStreamAttributes>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
 #include "core/map.h"
+#include "core/map_color.h"
 #include "core/objects/object.h"
+#include "core/symbols/symbol.h"
 
 
-CombinedSymbol::CombinedSymbol() : Symbol(Symbol::Combined)
+namespace OpenOrienteering {
+
+CombinedSymbol::CombinedSymbol()
+: Symbol{Symbol::Combined}
+, private_parts{ false, false }
+, parts{ private_parts.size(), nullptr }
 {
-	parts.resize(2);
-	parts[0] = NULL;
-	parts[1] = NULL;
-	private_parts.assign(2, false);
+	Q_ASSERT(private_parts.size() == parts.size());
+	// nothing else
 }
 
 CombinedSymbol::~CombinedSymbol()
 {
-	for (int i = 0, size = (int)parts.size(); i < size; ++i)
+	auto is_private = begin(private_parts);
+	for (auto subsymbol : parts)
 	{
-		if (private_parts[i])
-			delete parts[i];
-	}
+		if (*is_private)
+			delete subsymbol;
+		++is_private;
+	};
 }
 
 Symbol* CombinedSymbol::duplicate(const MapColorMap* color_map) const
 {
-	CombinedSymbol* new_symbol = new CombinedSymbol();
+	auto new_symbol = new CombinedSymbol();
 	new_symbol->duplicateImplCommon(this);
 	new_symbol->parts = parts;
 	new_symbol->private_parts = private_parts;
-	for (int i = 0, size = (int)parts.size(); i < size; ++i)
+	auto is_private = begin(new_symbol->private_parts);
+	for (auto& subsymbol : new_symbol->parts)
 	{
-		if (private_parts[i])
-			new_symbol->parts[i] = parts[i]->duplicate(color_map);
+		if (*is_private)
+			subsymbol = subsymbol->duplicate(color_map);
+		++is_private;
 	}
 	return new_symbol;
 }
+
+
+
+bool CombinedSymbol::validate() const
+{
+	return std::all_of(begin(parts), end(parts), [](auto& symbol) { return symbol->validate(); });
+}
+
+
 
 void CombinedSymbol::createRenderables(
         const Object *object,
@@ -88,36 +116,33 @@ void CombinedSymbol::colorDeleted(const MapColor* color)
 {
 	if (containsColor(color))
 		resetIcon();
-	for (int i = 0, size = (int)parts.size(); i < size; ++i)
+	
+	auto is_private = begin(private_parts);
+	for (auto subsymbol : parts)
 	{
-		if (private_parts[i])
-			// Note on const_cast: private part is owned by this symbol.
-			const_cast<Symbol*>(parts[i])->colorDeleted(color);
-	}
+		if (*is_private)
+			const_cast<Symbol*>(subsymbol)->colorDeleted(color);
+		++is_private;
+	};
 }
 
 bool CombinedSymbol::containsColor(const MapColor* color) const
 {
-	for (int i = 0, size = (int)parts.size(); i < size; ++i)
-	{
-		if (parts[i] && parts[i]->containsColor(color))
-		{
-			return true;
-		}
-	}
-	return false;
+	return std::any_of(begin(parts), end(parts), [color](const auto& part) {
+		return part && part->containsColor(color);
+	});
 }
 
 const MapColor* CombinedSymbol::guessDominantColor() const
 {
 	// Speculative heuristic. Prefers areas and non-white colors.
-	const MapColor* dominant_color = NULL;
-	for (int i = 0, size = (int)parts.size(); i < size; ++i)
+	const MapColor* dominant_color = nullptr;
+	for (auto subsymbol : parts)
 	{
-		if (parts[i] && parts[i]->getContainedTypes() & Symbol::Area)
+		if (subsymbol && subsymbol->getContainedTypes() & Symbol::Area)
 		{
-			dominant_color = parts[i]->guessDominantColor();
-			if (! dominant_color->isWhite())
+			dominant_color = subsymbol->guessDominantColor();
+			if (dominant_color && !dominant_color->isWhite())
 				return dominant_color;
 		}
 	}
@@ -125,12 +150,12 @@ const MapColor* CombinedSymbol::guessDominantColor() const
 	if (dominant_color)
 		return dominant_color;
 	
-	for (int i = 0, size = (int)parts.size(); i < size; ++i)
+	for (auto subsymbol : parts)
 	{
-		if (parts[i] && !(parts[i]->getContainedTypes() & Symbol::Area))
+		if (subsymbol && !(subsymbol->getContainedTypes() & Symbol::Area))
 		{
-			dominant_color = parts[i]->guessDominantColor();
-			if (dominant_color->isWhite())
+			dominant_color = subsymbol->guessDominantColor();
+			if (dominant_color && !dominant_color->isWhite())
 				return dominant_color;
 		}
 	}
@@ -141,12 +166,12 @@ const MapColor* CombinedSymbol::guessDominantColor() const
 bool CombinedSymbol::symbolChanged(const Symbol* old_symbol, const Symbol* new_symbol)
 {
 	bool have_symbol = false;
-	for (int i = 0, size = (int)parts.size(); i < size; ++i)
+	for (auto& subsymbol : parts)
 	{
-		if (parts[i] == old_symbol)
+		if (subsymbol == old_symbol)
 		{
 			have_symbol = true;
-			parts[i] = new_symbol;
+			subsymbol = new_symbol;
 		}
 	}
 	
@@ -158,15 +183,17 @@ bool CombinedSymbol::symbolChanged(const Symbol* old_symbol, const Symbol* new_s
 
 bool CombinedSymbol::containsSymbol(const Symbol* symbol) const
 {
-	for (int i = 0, size = (int)parts.size(); i < size; ++i)
+	for (auto subsymbol : parts)
 	{
-		if (parts[i] == symbol)
+		if (subsymbol == symbol)
 			return true;
-		else if (parts[i] == NULL)
+		
+		if (subsymbol == nullptr)
 			continue;
-		if (parts[i]->getType() == Symbol::Combined)	// TODO: see TODO in SymbolDropDown constructor.
+		
+		if (subsymbol->getType() == Symbol::Combined)	// TODO: see TODO in SymbolDropDown constructor.
 		{
-			const CombinedSymbol* combined_symbol = reinterpret_cast<const CombinedSymbol*>(parts[i]);
+			const CombinedSymbol* combined_symbol = reinterpret_cast<const CombinedSymbol*>(subsymbol);
 			if (combined_symbol->containsSymbol(symbol))
 				return true;
 		}
@@ -176,30 +203,28 @@ bool CombinedSymbol::containsSymbol(const Symbol* symbol) const
 
 void CombinedSymbol::scale(double factor)
 {
-	for (int i = 0, size = (int)parts.size(); i < size; ++i)
+	auto is_private = begin(private_parts);
+	for (auto subsymbol : parts)
 	{
-		if (private_parts[i])
-		{
-			// Note on const_cast: private part is owned by this symbol.
-			const_cast<Symbol*>(parts[i])->scale(factor);
-		}
-	}
+		if (*is_private)
+			const_cast<Symbol*>(subsymbol)->scale(factor);
+		++is_private;
+	};
 	
 	resetIcon();
 }
 
 Symbol::Type CombinedSymbol::getContainedTypes() const
 {
-	int type = (int)getType();
+	auto type = int(getType());
 	
-	int size = (int)parts.size();
-	for (int i = 0; i < size; ++i)
+	for (auto subsymbol : parts)
 	{
-		if (parts[i])
-			type |= parts[i]->getContainedTypes();
+		if (subsymbol)
+			type |= subsymbol->getContainedTypes();
 	}
 	
-	return (Type)type;
+	return Type(type);
 }
 
 #ifndef NO_NATIVE_FILE_FORMAT
@@ -240,23 +265,25 @@ bool CombinedSymbol::loadImpl(QIODevice* file, int version, Map* map)
 void CombinedSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 {
 	xml.writeStartElement(QString::fromLatin1("combined_symbol"));
-	int num_parts = (int)parts.size();
+	int num_parts = int(parts.size());
 	xml.writeAttribute(QString::fromLatin1("parts"), QString::number(num_parts));
-	for (int i = 0; i < num_parts; ++i)
+	
+	auto is_private = begin(private_parts);
+	for (const auto subsymbol : parts)
 	{
 		xml.writeStartElement(QString::fromLatin1("part"));
-		bool is_private = private_parts[i];
-		if (is_private)
+		if (*is_private)
 		{
 			xml.writeAttribute(QString::fromLatin1("private"), QString::fromLatin1("true"));
-			parts[i]->save(xml, map);
+			subsymbol->save(xml, map);
 		}
 		else
 		{
-			int temp = (parts[i] == NULL) ? -1 : map.findSymbolIndex(parts[i]);
-			xml.writeAttribute(QString::fromLatin1("symbol"), QString::number(temp));
+			auto index = map.findSymbolIndex(subsymbol);
+			xml.writeAttribute(QString::fromLatin1("symbol"), QString::number(index));
 		}
 		xml.writeEndElement(/*part*/);
+		++is_private;
 	}
 	xml.writeEndElement(/*combined_symbol*/);
 }
@@ -288,7 +315,7 @@ bool CombinedSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDicti
 			{
 				int temp = xml.attributes().value(QLatin1String("symbol")).toInt();
 				temp_part_indices.push_back(temp);
-				parts.push_back(NULL);
+				parts.push_back(nullptr);
 			}
 			xml.skipCurrentElement();
 		}
@@ -302,56 +329,65 @@ bool CombinedSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDicti
 bool CombinedSymbol::equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensitivity) const
 {
 	const CombinedSymbol* combination = static_cast<const CombinedSymbol*>(other);
-	if (parts.size() != combination->parts.size())
-		return false;
-	// TODO: parts are only compared in order
-	for (size_t i = 0, end = parts.size(); i < end; ++i)
+	return parts.size() == combination->parts.size()
+	       && std::equal(begin(private_parts), end(private_parts), begin(combination->private_parts))
+	       && std::equal(begin(parts), end(parts), begin(combination->parts),
+	                      [case_sensitivity](const auto lhs, const auto rhs)
 	{
-		if (private_parts[i] != combination->private_parts[i])
-			return false;
-		if ((parts[i] == NULL && combination->parts[i] != NULL) ||
-			(parts[i] != NULL && combination->parts[i] == NULL))
-			return false;
-		if (parts[i] && !parts[i]->equals(combination->parts[i], case_sensitivity))
-			return false;
-	}
-	return true;
+		return (!lhs && !rhs)
+		       || (lhs && rhs && lhs->equals(rhs, case_sensitivity));
+	});
 }
 
 bool CombinedSymbol::loadFinished(Map* map)
 {
-	int size = (int)temp_part_indices.size();
-	if (size == 0)
-		return true;
-	for (int i = 0; i < size; ++i)
+	const auto num_symbols = map->getNumSymbols();
+	const auto last = std::find_if(begin(temp_part_indices), end(temp_part_indices),
+	                               [num_symbols](const auto index)
 	{
-		int index = temp_part_indices[i];
-		if (index < 0)
-			continue;	// part is private and has already been loaded
-		if (index >= map->getNumSymbols())
-			return false;
-		parts[i] = map->getSymbol(index);
-	}
-	temp_part_indices.clear();
-	return true;
+		return index >= num_symbols;
+	});
+	
+	std::transform(begin(temp_part_indices), last, begin(parts), begin(parts),
+	               [map](const auto index, const auto& subsymbol) -> const Symbol*
+	{
+		return (index < 0) ? subsymbol : map->getSymbol(index);
+	});
+	
+	return last == end(temp_part_indices);
 }
 
-float CombinedSymbol::calculateLargestLineExtent(Map* map) const
+
+
+qreal CombinedSymbol::dimensionForIcon() const
 {
-	float result = 0;
-	for (size_t i = 0, end = parts.size(); i < end; ++i)
+	return std::accumulate(begin(parts), end(parts), qreal(0), [](qreal value, auto subsymbol)
 	{
-		if (parts[i])
-			result = qMax(result, parts[i]->calculateLargestLineExtent(map));
-	}
-	return result;
+		return subsymbol ? qMax(value, subsymbol->dimensionForIcon()) : value;
+	});
 }
+
+
+qreal CombinedSymbol::calculateLargestLineExtent() const
+{
+	return std::accumulate(begin(parts), end(parts), qreal(0), [](qreal value, auto subsymbol)
+	{
+		return subsymbol ? qMax(value, subsymbol->calculateLargestLineExtent()) : value;
+	});
+}
+
+
 
 void CombinedSymbol::setPart(int i, const Symbol* symbol, bool is_private)
 {
-	if (private_parts[i])
-		delete parts[i];
+	const auto index = std::size_t(i);
 	
-	parts[i] = symbol;
-	private_parts[i] = (symbol == NULL) ? false : is_private;
+	if (private_parts[index])
+		delete parts[index];
+	
+	parts[index] = symbol;
+	private_parts[index] = symbol ? is_private : false;
 }
+
+
+}  // namespace OpenOrienteering

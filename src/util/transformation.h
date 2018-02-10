@@ -26,14 +26,15 @@
 
 #include "core/map_coord.h"
 
-QT_BEGIN_NAMESPACE
 class QIODevice;
 class QTransform;
 class QXmlStreamReader;
 class QXmlStreamWriter;
-QT_END_NAMESPACE
+
+namespace OpenOrienteering {
 
 struct TemplateTransform;
+
 
 /** Pair of source and destination coordinates used to calculate transformations. */
 struct PassPoint
@@ -78,5 +79,8 @@ public:
 	/** Estimates an affine transformation without shearing. */
 	bool estimateNonIsometricSimilarityTransform(not_null<QTransform*> out);
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2016 Kai Pastor
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,22 +22,32 @@
 #ifndef OPENORIENTEERING_TOOL_HELPERS_H
 #define OPENORIENTEERING_TOOL_HELPERS_H
 
+#include <cstddef>
 #include <memory>
 #include <set>
 
+#include <QtGlobal>
+#include <QColor>
+#include <QFont>
 #include <QObject>
+#include <QRectF>
+#include <QString>
 
+#include "core/map_coord.h"
 #include "core/path_coord.h"
-#include "tool.h"
+#include "tools/point_handles.h"
 
-QT_BEGIN_NAMESPACE
 class QPainter;
+class QPoint;
+class QPointF;
 class QRectF;
-QT_END_NAMESPACE
+class QWidget;
+
+namespace OpenOrienteering {
 
 class Map;
+class MapEditorTool;
 class MapWidget;
-class MapEditorController;
 class Object;
 class PathObject;
 
@@ -55,8 +65,9 @@ public:
 	 * Use addAngle() and / or addAngles() to add allowed lines.
 	 */
 	ConstrainAngleToolHelper();
-	ConstrainAngleToolHelper(const MapCoordF& center);
-	~ConstrainAngleToolHelper();
+	
+	~ConstrainAngleToolHelper() override;
+	
 	
 	/** Sets the center of the lines */
 	void setCenter(const MapCoordF& center);
@@ -65,28 +76,28 @@ public:
 	 * Adds a single allowed angle. Zero is to the right,
 	 * the direction counter-clockwise in Qt's coordinate system.
 	 */
-	void addAngle(double angle);
+	void addAngle(qreal angle);
 	
 	/**
 	 * Adds a circular set of allowed angles, starting from 'base' with
 	 * interval 'stepping'. Zero is to the right, the direction counter-clockwise
 	 * in Qt's coordinate system.
 	 */
-	void addAngles(double base, double stepping);
+	void addAngles(qreal base, qreal stepping);
 	
 	/**
 	 * Like addAngles, but in degrees. Helps to avoid floating-point
 	 * inaccuracies if using angle steppings like 15 degrees which could lead
 	 * to two near-zero allowed angles otherwise.
 	 */
-	void addAnglesDeg(double base, double stepping);
+	void addAnglesDeg(qreal base, qreal stepping);
 	
 	/**
 	 * Adds the default angles given by the MapEditor_FixedAngleStepping setting.
 	 * Usage of this method has the advantage that the stepping is updated
 	 * automatically when the setting is changed.
 	 */
-	void addDefaultAnglesDeg(double base);
+	void addDefaultAnglesDeg(qreal base);
 	
 	/** Removes all allowed angles */
 	void clearAngles();
@@ -124,7 +135,7 @@ public:
 	/** Version of setActive() which does not override the center */
 	void setActive(bool active);
 	
-	inline bool isActive() const {return active;}
+	bool isActive() const { return active; }
 	
 	/**
 	 * Draws the set of allowed angles as lines radiating out from the
@@ -136,10 +147,11 @@ public:
 	void includeDirtyRect(QRectF& rect);
 	
 	/** Returns the radius of the visualization in pixels */
-	inline int getDisplayRadius() const {return active ? 40 : 0;}
+	int getDisplayRadius() const { return active ? 40 : 0; }
 	
-public slots:
+	
 	void settingsChanged();
+	
 	
 signals:
 	/** Emitted when the angle the cursor position is constrained to changes */
@@ -151,26 +163,30 @@ signals:
 	 */
 	void displayChanged() const;
 	
+	
 private:
 	inline void emitActiveAngleChanged() const {emit activeAngleChanged(); emit displayChanged();}
 	
 	/** The active angle or a negative number if no angle is active */
-	double active_angle;
+	qreal active_angle = -1;
 	/** The set of allowed angles. Values are in the range [0, 2*M_PI) */
-	std::set<double> angles;
+	std::set<qreal> angles;
 	/** The center point of all lines */
-	MapCoordF center;
+	MapCoordF center = {};
 	/** Is this helper active? */
-	bool active;
+	bool active = true;
 	
-	bool have_default_angles_only;
-	double default_angles_base;
+	bool have_default_angles_only = false;
+	qreal default_angles_base = 1;
 };
 
 
-class SnappingToolHelperSnapInfo;
 
-/** Helper class to snap to existing objects or a grid on the map. */
+struct SnappingToolHelperSnapInfo;
+
+/**
+ * Helper class to snap to existing objects or a grid on the map.
+ */
 class SnappingToolHelper : public QObject
 {
 Q_OBJECT
@@ -191,6 +207,8 @@ public:
 	 */
 	SnappingToolHelper(MapEditorTool* tool, SnapObjects filter = NoSnapping);
 	
+	~SnappingToolHelper() override;
+	
 	/** Constrain the objects to snap onto. */
 	void setFilter(SnapObjects filter);
 	SnapObjects getFilter() const;
@@ -208,7 +226,7 @@ public:
 	 * 
 	 * TODO: widget parameter is only used for getMapView(). Replace by view parameter?
 	 */
-	MapCoord snapToObject(MapCoordF position, MapWidget* widget, SnappingToolHelperSnapInfo* info = NULL, Object* exclude_object = NULL, float snap_distance = -1);
+	MapCoord snapToObject(MapCoordF position, MapWidget* widget, SnappingToolHelperSnapInfo* info = nullptr, Object* exclude_object = nullptr);
 	
 	/**
 	 * Checks for existing objects in map at position and if one is found,
@@ -216,7 +234,7 @@ public:
 	 * Internally remembers the position so the next call to draw() will
 	 * draw the snap mark there.
 	 */
-	bool snapToDirection(MapCoordF position, MapWidget* widget, ConstrainAngleToolHelper* angle_tool, MapCoord* out_snap_position = NULL);
+	bool snapToDirection(MapCoordF position, MapWidget* widget, ConstrainAngleToolHelper* angle_tool, MapCoord* out_snap_position = nullptr);
 	
 	/** Draws the snap mark which was last returned by snapToObject(). */
 	void draw(QPainter* painter, MapWidget* widget);
@@ -236,30 +254,36 @@ signals:
 	void displayChanged() const;
 	
 private:
+	PointHandles point_handles;
 	SnapObjects filter;
-	
-	SnapObjects snapped_type;
-	MapCoord snap_mark;
-	
 	Map* map;
 	
-	PointHandles point_handles;
+	MapCoord snap_mark = {};
+	SnapObjects snapped_type = NoSnapping;
+	
 };
 
-/** Information returned from a snap process from SnappingToolHelper. */
-class SnappingToolHelperSnapInfo
+
+
+/**
+ * Information returned from a snap process from SnappingToolHelper.
+ */
+struct SnappingToolHelperSnapInfo
 {
-public:
 	/** Type of object snapped onto */
 	SnappingToolHelper::SnapObjects type;
-	/** Object snapped onto, if type is ObjectCorners or ObjectPaths, else NULL */
+	
+	/** Object snapped onto, if type is ObjectCorners or ObjectPaths, else nullptr */
 	Object* object;
+	
 	/** Index of the map coordinate which was snapped onto if type is ObjectCorners,
 	 *  else -1 (not snapped to a specific coordinate) */
 	MapCoordVector::size_type coord_index;
+	
 	/** The closest point on the snapped path is returned
 	 *  in path_coord if type == ObjectPaths  */
 	PathCoord path_coord;
+	
 };
 
 
@@ -275,6 +299,7 @@ public:
 	 * Constructs a new helper.
 	 */
 	FollowPathToolHelper();
+	
 	
 	/**
 	 * Starts following the given object from a coordinate.
@@ -297,13 +322,19 @@ public:
 	 */
 	std::unique_ptr<PathObject> updateFollowing(const PathCoord& end_coord);
 	
+	
+	/**
+	 * Returns the object which is being followed.
+	 */
+	const PathObject* followed_object() const { return path; }
+	
 	/**
 	 * Returns the index of the path part which is being followed.
 	 */
-	std::size_t getPartIndex() const;
+	std::size_t partIndex() const { return part_index; }
 	
 private:
-	const PathObject* path;
+	const PathObject* path = nullptr;
 	
 	PathCoord::length_type start_clen;
 	PathCoord::length_type end_clen;
@@ -313,11 +344,40 @@ private:
 
 
 
-// ### FollowPathToolHelper inline code ###
-inline
-std::size_t FollowPathToolHelper::getPartIndex() const
+/**
+ * A utility for displaying azimuth and distance while drawing.
+ */
+class AzimuthInfoHelper
 {
-	return part_index;
-}
+protected:
+	static constexpr int text_offset = 25;
+	
+	QColor text_color;
+	QFont  text_font;
+	QString azimuth_template;
+	QString distance_template;
+	QRectF display_rect;
+	int line_0_offset;
+	int line_1_offset; 
+	bool active = false;
+
+public:
+	AzimuthInfoHelper(const QWidget* widget, QColor color);
+	
+	bool isActive() const { return active; }
+
+	void setActive(bool active);
+	
+	/** Returns this helper's drawing region. */
+	QRectF dirtyRect(MapWidget* widget, const MapCoordF& pos_map) const;
+	
+	/** Draws the azimuth and distance info text. */
+	void draw(QPainter* painter, const MapWidget* widget, const Map* map,
+	          const MapCoordF& start_pos, const MapCoordF& end_pos);
+
+};
+
+
+}  // namespace OpenOrienteering
 
 #endif

@@ -31,6 +31,8 @@
 #include "core/symbols/line_symbol.h"
 
 
+namespace OpenOrienteering {
+
 MeasureWidget::MeasureWidget(Map* map, QWidget* parent)
 : QTextBrowser(parent)
 , map(map)
@@ -44,10 +46,8 @@ MeasureWidget::MeasureWidget(Map* map, QWidget* parent)
 	objectSelectionChanged();
 }
 
-MeasureWidget::~MeasureWidget()
-{
-	// nothing
-}
+MeasureWidget::~MeasureWidget() = default;
+
 
 void MeasureWidget::objectSelectionChanged()
 {
@@ -148,7 +148,7 @@ void MeasureWidget::objectSelectionChanged()
 				if (paper_length < minimum_length && paper_length_text != minimum_length_text)
 				{
 					extra_text = QLatin1String("<b>") + tr("This line is too short.") + QLatin1String("</b><br/>")
-					             + tr("The minimum length is %1 %2.").arg(minimum_length_text).arg(tr("mm"));
+					             + tr("The minimum length is %1 %2.").arg(minimum_length_text, tr("mm"));
 				}
 			}
 			
@@ -160,3 +160,6 @@ void MeasureWidget::objectSelectionChanged()
 		body.append(QLatin1String("<p>") + extra_text + QLatin1String("</p>"));
 	setHtml(QLatin1String("<p><b>") + headline + QLatin1String("</b></p>") + body);
 }
+
+
+}  // namespace OpenOrienteering

@@ -63,12 +63,12 @@ int array_clear(PtrArray *array);
 u32 array_count(const PtrArray *array);
 
 /** Returns the pointer at a given position in the array. If the index is out of bounds,
- *  a NULL pointer is returned.
+ *  a nullptr pointer is returned.
  */
 void *array_get(const PtrArray *array, u32 index);
 
 /** Sets the pointer at a given position in the array and returns the former pointer at that location.
- *  If the index is out of bounds, the provided pointer is not stored, and NULL is returned. The caller
+ *  If the index is out of bounds, the provided pointer is not stored, and nullptr is returned. The caller
  *  is responsible for owning the previous pointer, and determining whether to free it.
  */
 void *array_set(PtrArray *array, u32 index, void *value);
@@ -84,7 +84,7 @@ int array_add(PtrArray *array, void *value);
 int array_insert(PtrArray *array, u32 index, void *value);
 
 /** Removes the value at the given index from the array and returns the former pointer at that location.
- *  If the index is out of bounds, the array is unchanged and NULL is returned. The caller is responsible
+ *  If the index is out of bounds, the array is unchanged and nullptr is returned. The caller is responsible
  *  for owning the previous pointer, and determining whether to free it.
  */
 void *array_remove(PtrArray *array, u32 index);

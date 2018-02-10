@@ -20,10 +20,18 @@
 
 
 #include <clocale>
+#include <memory>
 
-#include <QLibraryInfo>
+#include <Qt>
+#include <QtGlobal>
+#include <QApplication>
+#include <QLatin1String>
 #include <QLocale>
-#include <QSettings>
+#include <QObject>
+#include <QPointer>
+#include <QSettings>  // IWYU pragma: keep
+#include <QString>
+#include <QStringList>
 #include <QStyle>
 #include <QStyleFactory>
 #include <QTranslator>
@@ -31,22 +39,62 @@
 #include <mapper_config.h>
 
 #if defined(QT_NETWORK_LIB)
-#define MAPPER_USE_QTSINGLEAPPLICATION 1
-#include <QtSingleApplication>
+#  define MAPPER_USE_QTSINGLEAPPLICATION 1
+#  include <QtSingleApplication>  // IWYU pragma: keep
 #else
-#define MAPPER_USE_QTSINGLEAPPLICATION 0
-#include <QApplication>
+#  define MAPPER_USE_QTSINGLEAPPLICATION 0
 #endif
 
 #include "global.h"
 #include "mapper_resource.h"
-#include "settings.h"
 #include "gui/home_screen_controller.h"
 #include "gui/main_window.h"
 #include "gui/widgets/mapper_proxystyle.h"
 #include "util/backports.h"
-#include "util/recording_translator.h"
+#include "util/recording_translator.h"  // IWYU pragma: keep
 #include "util/translation_util.h"
+
+// IWYU pragma: no_forward_declare QTranslator
+
+using namespace OpenOrienteering;
+
+
+// From map.h
+
+namespace OpenOrienteering {
+
+extern QPointer<QTranslator> map_symbol_translator;
+
+}  // namespace OpenOrienteering
+
+
+
+#if MAPPER_USE_QTSINGLEAPPLICATION
+
+void resetActivationWindow()
+{
+	auto app = qobject_cast<QtSingleApplication*>(qApp);
+	app->setActivationWindow(nullptr);
+	
+	if (!app->closingDown())
+	{
+		const auto old_window = app->activationWindow();
+		const auto top_level_widgets = app->topLevelWidgets();
+		for (const auto widget : top_level_widgets)
+		{	
+			auto new_window = qobject_cast<MainWindow*>(widget);
+			if (new_window && new_window != old_window)
+			{
+				app->setActivationWindow(new_window);
+				QObject::connect(new_window, &QObject::destroyed, &resetActivationWindow);
+				QObject::connect(app, &QtSingleApplication::messageReceived, new_window, &MainWindow::openPath);
+				break;
+			}
+		}
+	}
+}
+
+#endif
 
 
 int main(int argc, char** argv)
@@ -68,13 +116,9 @@ int main(int argc, char** argv)
 	Q_INIT_RESOURCE(resources);
 	
 	// QSettings on OS X benefits from using an internet domain here.
-	QCoreApplication::setOrganizationName(QString::fromLatin1("OpenOrienteering.org"));
-	QCoreApplication::setApplicationName(QString::fromLatin1("Mapper"));
+	QApplication::setOrganizationName(QString::fromLatin1("OpenOrienteering.org"));
+	QApplication::setApplicationName(QString::fromLatin1("Mapper"));
 	qapp.setApplicationDisplayName(APP_NAME + QString::fromUtf8(" " APP_VERSION));
-	
-	// Set settings defaults
-	Settings& settings = Settings::getInstance();
-	settings.applySettings();
 	
 #ifdef WIN32
 	// Load plugins on Windows
@@ -84,16 +128,15 @@ int main(int argc, char** argv)
 	MapperResource::setSeachPaths();
 	
 	// Localization
+	QSettings settings;
 	TranslationUtil::setBaseName(QLatin1String("OpenOrienteering"));
-	auto language = settings.getSetting(Settings::General_Language).toString();
-	auto translation_file = settings.getSetting(Settings::General_TranslationFile).toString();
-	TranslationUtil translation(language, translation_file);
+	TranslationUtil translation(settings);
 	QLocale::setDefault(QLocale(translation.code()));
 #if defined(Q_OS_MACOS)
 	// Normally this is done in Settings::apply() because it is too late here.
 	// But Mapper 0.6.2/0.6.3 accidently wrote a string instead of a list. This
 	// error caused crashes when opening native dialogs (i.e. the open-file dialog!).
-	QSettings().setValue(QString::fromLatin1("AppleLanguages"), QStringList{ translation.code() });
+	settings.setValue(QString::fromLatin1("AppleLanguages"), QStringList{ translation.code() });
 #endif
 #if defined(Mapper_DEBUG_TRANSLATIONS)
 	if (!translation.getAppTranslator().isEmpty())
@@ -104,6 +147,9 @@ int main(int argc, char** argv)
 #endif
 	qapp.installTranslator(&translation.getQtTranslator());
 	qapp.installTranslator(&translation.getAppTranslator());
+	map_symbol_translator = translation.load(QString::fromLatin1("map_symbols")).release();
+	if (map_symbol_translator)
+		map_symbol_translator->setParent(&qapp);
 	
 	// Avoid numeric issues in libraries such as GDAL
 	setlocale(LC_NUMERIC, "C");
@@ -112,8 +158,8 @@ int main(int argc, char** argv)
 	doStaticInitializations();
 	
 	QStyle* base_style = nullptr;
-#if !defined(Q_OS_WIN) && !defined(Q_OS_OSX)
-	if (QGuiApplication::platformName() == QLatin1String("xcb"))
+#if !defined(Q_OS_WIN) && !defined(Q_OS_MACOS)
+	if (QApplication::platformName() == QLatin1String("xcb"))
 	{
 		// Use the modern 'fusion' style instead of the 
 		// default "windows" style on X11.
@@ -121,14 +167,14 @@ int main(int argc, char** argv)
 	}
 #endif
 	QApplication::setStyle(new MapperProxyStyle(base_style));
-#if !defined(Q_OS_OSX)
+#if !defined(Q_OS_MACOS)
 	QApplication::setPalette(QApplication::style()->standardPalette());
 #endif
 	
 	// Create first main window
-	MainWindow first_window;
-	first_window.setAttribute(Qt::WA_DeleteOnClose, false);
-	first_window.setController(new HomeScreenController());
+	auto first_window = new MainWindow();
+	Q_ASSERT(first_window->testAttribute(Qt::WA_DeleteOnClose));
+	first_window->setController(new HomeScreenController());
 	
 	// Open given files later, i.e. after the initial home screen has been
 	// displayed. In this way, error messages for missing files will show on 
@@ -139,19 +185,17 @@ int main(int argc, char** argv)
 	args.removeFirst(); // the program name
 	for (const auto& arg : qAsConst(args))
 	{
-		first_window.openPathLater(arg);
+		first_window->openPathLater(arg);
 	}
 	
-	first_window.applicationStateChanged();
+	first_window->applicationStateChanged();
 	
 #if MAPPER_USE_QTSINGLEAPPLICATION
-	// If we need to respond to a second app launch, do so, but also accept a file open request.
-	qapp.setActivationWindow(&first_window);
-	QObject::connect(&qapp, &QtSingleApplication::messageReceived, &first_window, &MainWindow::openPath);
+	resetActivationWindow();
 #endif
 	
 	// Let application run
-	first_window.setVisible(true);
-	first_window.raise();
+	first_window->setVisible(true);
+	first_window->raise();
 	return qapp.exec();
 }

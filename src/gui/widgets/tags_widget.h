@@ -21,10 +21,15 @@
 #ifndef OPENORIENTEERING_TAGS_WIDGET_H
 #define OPENORIENTEERING_TAGS_WIDGET_H
 
+#include <QObject>
+#include <QString>
 #include <QWidget>
 
+class QIcon;
 class QTableWidget;
 class QToolButton;
+
+namespace OpenOrienteering {
 
 class Map;
 class MapEditorController;
@@ -40,10 +45,10 @@ class TagsWidget : public QWidget
 Q_OBJECT
 public:
 	/** Constructs a new tags widget for the given map. */
-	explicit TagsWidget(Map* map, MapView* main_view, MapEditorController* controller, QWidget* parent = NULL);
+	explicit TagsWidget(Map* map, MapView* main_view, MapEditorController* controller, QWidget* parent = nullptr);
 	
 	/** Destroys the widget. */
-	virtual ~TagsWidget();
+	~TagsWidget() override;
 	
 protected slots:
 	/**
@@ -91,5 +96,8 @@ private:
 	
 	QTableWidget* tags_table;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif // TAGS_WIDGET_H

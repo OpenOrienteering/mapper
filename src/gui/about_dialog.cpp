@@ -28,6 +28,10 @@
 #include "mapper_config.h"
 
 
+namespace OpenOrienteering {
+
+namespace {
+
 /**
  * @brief An URL identifying the main "about" page.
  * 
@@ -35,12 +39,16 @@
  * But an empty URL will be ignored by QTextBrowser's history, leading to
  * unexpected behaviour of backward navigation.
  */
-const QUrl about_page_url = QUrl(QString::fromLatin1("#ABOUT"));
+const QUrl& aboutPageUrl()
+{
+	static auto url = QUrl(QString::fromLatin1("#ABOUT"));
+	return url;
+}
 
 /**
  * Puts the items of a QStringList into an HTML block or a sequence of blocks.
  */
-static QString formatBlock(const QStringList& items)
+QString formatBlock(const QStringList& items)
 {
 #if defined(Q_OS_ANDROID) // or any other small-screen device
 	QString block = QLatin1String("<p>")
@@ -72,8 +80,12 @@ static QString formatBlock(const QStringList& items)
 }
 
 
+}  // namespace
+
+
+
 AboutDialog::AboutDialog(QWidget* parent)
- : TextBrowserDialog(about_page_url, parent)
+ : TextBrowserDialog(aboutPageUrl(), parent)
 {
 	text_browser->setHtml(about());
 	text_browser->document()->adjustSize();
@@ -82,7 +94,7 @@ AboutDialog::AboutDialog(QWidget* parent)
 
 void AboutDialog::sourceChanged(const QUrl& url)
 {
-	if (url == about_page_url)
+	if (url == aboutPageUrl())
 		text_browser->setHtml(about());
 }
 
@@ -149,7 +161,7 @@ QString AboutDialog::about()
 	  "<p>"
 	  "<em>%3</em><br/>"
 	  "<a href=\"%4\">%4</a></p>"
-	  "<p>Copyright (C) 2017 The OpenOrienteering developers</p>"
+	  "<p>Copyright (C) 2018 The OpenOrienteering developers</p>"
 	  "<p>%5</p>"
 	  "<p>%6</p>"
 	  "<p>%7</p>"
@@ -181,3 +193,6 @@ QString AboutDialog::about()
 	
 	return mapper_about;
 }
+
+
+}  // namespace OpenOrienteering

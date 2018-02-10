@@ -1,0 +1,32 @@
+#
+#    Copyright 2017 Kai Pastor
+#    
+#    This file is part of OpenOrienteering.
+# 
+#    OpenOrienteering is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+# 
+#    OpenOrienteering is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+# 
+#    You should have received a copy of the GNU General Public License
+#    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
+
+file(GLOB input_files RELATIVE "@CMAKE_CURRENT_BINARY_DIR@" "@CMAKE_CURRENT_BINARY_DIR@/pdflatex/*.tex")
+foreach(file ${input_files})
+	file(READ "@CMAKE_CURRENT_BINARY_DIR@/${file}" input)
+	
+	# Turn internal typewriter-face hrefs into regular PDF hyperlinks
+	string(REGEX REPLACE "\\\\href{#([^}]*)}{\\\\tt ([^}]*)}" "\\\\hyperlink{\\1}{\\2}" output "${input}")
+	
+	string(MD5 input_md5 "${input}")
+	string(MD5 output_md5 "${output}")
+	if(NOT "${output_md5}" STREQUAL "${input_md5}")
+		message(STATUS "Updating ${file}")
+		file(WRITE "${file}" "${output}")
+	endif()
+endforeach()

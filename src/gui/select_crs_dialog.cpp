@@ -21,16 +21,22 @@
 
 #include "select_crs_dialog.h"
 
+#include <Qt>
 #include <QCoreApplication>
 #include <QDialogButtonBox>
 #include <QFormLayout>
+#include <QLabel>
+#include <QLatin1String>
 #include <QPushButton>
+#include <QSpacerItem>
 #include <QVBoxLayout>
 
-#include "../core/georeferencing.h"
-#include "util_gui.h"
-#include "widgets/crs_selector.h"
+#include "core/georeferencing.h"
+#include "gui/util_gui.h"
+#include "gui/widgets/crs_selector.h"
 
+
+namespace OpenOrienteering {
 
 namespace {
 
@@ -40,7 +46,10 @@ enum SpecialCRS {
 	Geographic = 3
 };
 
-}
+
+}  // namespace
+
+
 
 SelectCRSDialog::SelectCRSDialog(
         const Georeferencing& georef,
@@ -81,7 +90,7 @@ SelectCRSDialog::SelectCRSDialog(
 		form_layout->addRow(new QLabel(description));
 		form_layout->addItem(Util::SpacerItem::create(this));
 	}
-	form_layout->addRow(QCoreApplication::translate("GeoreferencingDialog", "&Coordinate reference system:"), crs_selector);
+	form_layout->addRow(QCoreApplication::translate("OpenOrienteering::GeoreferencingDialog", "&Coordinate reference system:"), crs_selector);
 	form_layout->addRow(tr("Status:"), status_label);
 	form_layout->addItem(Util::SpacerItem::create(this));
 	crs_selector->setDialogLayout(form_layout);
@@ -110,7 +119,7 @@ QString SelectCRSDialog::currentCRSSpec() const
 		// nothing
 		break;
 	case SpecialCRS::Geographic:
-		spec = QLatin1String("+proj=latlong +datum=WGS84");
+		spec = Georeferencing::geographic_crs_spec;
 		break;
 	default:
 		spec = crs_selector->currentCRSSpec();
@@ -131,3 +140,6 @@ void SelectCRSDialog::updateWidgets()
 	else
 		status_label->setText(QLatin1String("<b style=\"color:red\">") + georef.getErrorText() + QLatin1String("</b>"));
 }
+
+
+}  // namespace OpenOrienteering

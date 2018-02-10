@@ -20,6 +20,10 @@
 
 #include "file_format_t.h"
 
+#include <QtTest>
+
+#include "test_config.h"
+
 #include "global.h"
 #include "settings.h"
 #include "core/georeferencing.h"
@@ -34,9 +38,11 @@
 #include "fileformats/ocad8_file_format.h"
 #include "fileformats/xml_file_format.h"
 #include "templates/template.h"
+#include "undo/undo.h"
 #include "undo/undo_manager.h"
 #include "util/backports.h"
 
+using namespace OpenOrienteering;
 
 
 #ifdef QT_PRINTSUPPORT_LIB
@@ -195,7 +201,8 @@ namespace
 			MapPart* b_part = b.getPart(part);
 			if (a_part->getName().compare(b_part->getName(), Qt::CaseSensitive) != 0)
 			{
-				error = QString::fromLatin1("The names of part #%1 differ (%2 <-> %3).").arg(part).arg(a_part->getName()).arg(b_part->getName());
+				error = QString::fromLatin1("The names of part #%1 differ (%2 <-> %3).")
+				        .arg(QString::number(part), a_part->getName(), b_part->getName());
 				return false;
 			}
 			if (a_part->getNumObjects() != b_part->getNumObjects())
@@ -207,7 +214,8 @@ namespace
 			{
 				if (!a_part->getObject(i)->equals(b_part->getObject(i), true))
 				{
-					error = QString::fromLatin1("Object #%1 (with symbol %2) in part #%3 differs.").arg(i).arg(a_part->getObject(i)->getSymbol()->getName()).arg(part);
+					error = QString::fromLatin1("Object #%1 (with symbol %2) in part #%3 differs.")
+					        .arg(QString::number(i), a_part->getObject(i)->getSymbol()->getName(), QString::number(part));
 					return false;
 				}
 			}
@@ -226,9 +234,9 @@ namespace
 			error = QString::fromLatin1("The first selected object differs.");
 			return false;
 		}
-		for (Map::ObjectSelection::const_iterator it = a.selectedObjectsBegin(), end = a.selectedObjectsEnd(); it != end; ++it)
+		for (auto object_index : qAsConst(a.selectedObjects()))
 		{
-			if (!b.isObjectSelected(b.getCurrentPart()->getObject(a.getCurrentPart()->findObjectIndex(*it))))
+			if (!b.isObjectSelected(b.getCurrentPart()->getObject(a.getCurrentPart()->findObjectIndex(object_index))))
 			{
 				error = QString::fromLatin1("The selected objects differ.");
 				return false;
@@ -314,10 +322,12 @@ namespace
 	  "data:issue-513-coords-outside-printable.omap",
 	  "data:issue-513-coords-outside-qint32.omap",
 	  "data:spotcolor_overprint.xmap",
+#ifndef NO_NATIVE_FILE_FORMAT
 	  "data:test_map.omap"
+#endif
 	};
 	
-} // namespace
+}  // namespace
 
 
 
@@ -332,7 +342,7 @@ void FileFormatTest::initTestCase()
 		FileFormats.registerFormat(new OCAD8FileFormat());
 	
 	static const auto prefix = QString::fromLatin1("data");
-	QDir::addSearchPath(prefix, QFileInfo(QString::fromUtf8(__FILE__)).dir().absoluteFilePath(prefix));
+	QDir::addSearchPath(prefix, QDir(QString::fromUtf8(MAPPER_TEST_SOURCE_DIR)).absoluteFilePath(prefix));
 	
 	for (auto raw_path : test_files)
 	{
@@ -351,8 +361,8 @@ void FileFormatTest::mapCoordtoString()
 	auto native_x = MapCoord().nativeX();
 	using bounds = std::numeric_limits<decltype(native_x)>;
 	static_assert(sizeof(decltype(native_x)) == sizeof(qint32), "This test assumes qint32 native coordinates");
-	QCOMPARE(MapCoord::fromNative(bounds::max(), bounds::max(), 8).toString(), QString::fromLatin1("2147483647 2147483647 8;"));
-	QCOMPARE(MapCoord::fromNative(bounds::min(), bounds::min(), 1).toString(), QString::fromLatin1("-2147483648 -2147483648 1;"));
+	QCOMPARE(MapCoord::fromNative(bounds::max(), bounds::max(), MapCoord::Flags{MapCoord::Flags::Int(8)}).toString(), QString::fromLatin1("2147483647 2147483647 8;"));
+	QCOMPARE(MapCoord::fromNative(bounds::min(), bounds::min(), MapCoord::Flags{MapCoord::Flags::Int(1)}).toString(), QString::fromLatin1("-2147483648 -2147483648 1;"));
 }
 
 
@@ -436,7 +446,7 @@ void FileFormatTest::saveAndLoad()
 	// Load the test map
 	auto original = std::make_unique<Map>();
 	original->loadFrom(map_filename, nullptr, nullptr, false, false);
-	QVERIFY(!original->hasUnsavedChanged());
+	QVERIFY(!original->hasUnsavedChanges());
 	
 	// Fix precision of grid rotation
 	MapGrid grid = original->getGrid();
@@ -513,7 +523,9 @@ void FileFormatTest::pristineMapTest()
  * while running with "minimal" platform plugin.
  */
 #ifndef Q_OS_MACOS
-static auto qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");
+namespace  {
+	auto qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");  // clazy:exclude=non-pod-global-static
+}
 #endif
 
 

@@ -22,7 +22,19 @@
 #ifndef OPENORIENTEERING_SCALE_TOOL_H
 #define OPENORIENTEERING_SCALE_TOOL_H
 
-#include "tool_base.h"
+#include <QObject>
+
+#include "core/map_coord.h"
+#include "tools/tool_base.h"
+
+class QAction;
+class QPainter;
+class QRectF;
+
+namespace OpenOrienteering {
+
+class MapEditorController;
+class MapWidget;
 
 
 /**
@@ -51,8 +63,11 @@ protected:
 	void objectSelectionChangedImpl() override;
 	
 	MapCoordF scaling_center;
-	double reference_length;
-	double scaling_factor;
+	double reference_length = 0;
+	double scaling_factor   = 1;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

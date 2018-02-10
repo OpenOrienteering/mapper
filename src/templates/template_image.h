@@ -22,20 +22,38 @@
 #ifndef OPENORIENTEERING_TEMPLATE_IMAGE_H
 #define OPENORIENTEERING_TEMPLATE_IMAGE_H
 
-#include "template.h"
+#include <vector>
 
+#include <QColor>
 #include <QDialog>
 #include <QImage>
-#include <QLineEdit>
+#include <QObject>
+#include <QPointF>
+#include <QRectF>
+#include <QRgb>
+#include <QScopedPointer>
+#include <QString>
 
-QT_BEGIN_NAMESPACE
-class QCheckBox;
+#include "templates/template.h"
+
+class QByteArray;
+class QIODevice;
+class QLineEdit;
+class QPainter;
+class QPointF;
+class QPushButton;
 class QRadioButton;
+class QRectF;
+class QWidget;
 class QXmlStreamReader;
 class QXmlStreamWriter;
-QT_END_NAMESPACE
+
+namespace OpenOrienteering {
 
 class Georeferencing;
+class Map;
+class MapCoordF;
+
 
 /**
  * Template showing a raster image.
@@ -58,22 +76,24 @@ public:
 	static const std::vector<QByteArray>& supportedExtensions();
 	
 	TemplateImage(const QString& path, Map* map);
-    virtual ~TemplateImage();
-	virtual const char* getTemplateType() const {return "TemplateImage";}
-	virtual bool isRasterGraphics() const {return true;}
+    ~TemplateImage() override;
+	const char* getTemplateType() const override {return "TemplateImage";}
+	bool isRasterGraphics() const override {return true;}
 
-	virtual bool saveTemplateFile() const;
-	virtual bool loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version);
-	virtual void saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const;
-	virtual bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml);
+	bool saveTemplateFile() const override;
+#ifndef NO_NATIVE_FILE_FORMAT
+	bool loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version) override;
+#endif
+	void saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const override;
+	bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml) override;
 
-	virtual bool loadTemplateFileImpl(bool configuring);
-	virtual bool postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view);
-	virtual void unloadTemplateFileImpl();
+	bool loadTemplateFileImpl(bool configuring) override;
+	bool postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view) override;
+	void unloadTemplateFileImpl() override;
 	
-    virtual void drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, bool on_screen, float opacity) const;
-	virtual QRectF getTemplateExtent() const;
-	virtual bool canBeDrawnOnto() const {return true;}
+    void drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, float opacity) const override;
+	QRectF getTemplateExtent() const override;
+	bool canBeDrawnOnto() const override {return true;}
 
 	/**
 	 * Calculates the image's center of gravity in template coordinates by
@@ -107,9 +127,9 @@ protected:
 		int y;
 	};
 	
-	virtual Template* duplicateImpl() const;
-	virtual void drawOntoTemplateImpl(MapCoordF* coords, int num_coords, QColor color, float width);
-	virtual void drawOntoTemplateUndo(bool redo);
+	Template* duplicateImpl() const override;
+	void drawOntoTemplateImpl(MapCoordF* coords, int num_coords, QColor color, float width) override;
+	void drawOntoTemplateUndo(bool redo) override;
 	void addUndoStep(const DrawOnImageUndoStep& new_step);
 	void calculateGeoreferencing();
 	void updatePosFromGeoreferencing();
@@ -157,5 +177,8 @@ private:
 	
 	TemplateImage* templ;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

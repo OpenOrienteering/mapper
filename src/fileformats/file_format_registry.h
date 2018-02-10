@@ -18,23 +18,18 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_FILE_FORMAT_REGISTRY_H
-#define _OPENORIENTEERING_FILE_FORMAT_REGISTRY_H
+#ifndef OPENORIENTEERING_FILE_FORMAT_REGISTRY_H
+#define OPENORIENTEERING_FILE_FORMAT_REGISTRY_H
 
 #include <memory>
 #include <vector>
 
-#include <QHash>
-#include <QVariant>
+#include <QString>
 
-class QIODevice;
-
-class Importer;
-class Exporter;
-class Map;
-class MapView;
+namespace OpenOrienteering {
 
 class FileFormat;
+
 
 /** Provides a registry for file formats, and takes ownership of the supported format objects.
  */
@@ -43,28 +38,36 @@ class FileFormatRegistry
 public:
 	/** Creates an empty file format registry.
 	 */
-	FileFormatRegistry() {};
+	FileFormatRegistry() noexcept;
+	
+	FileFormatRegistry(const FileFormatRegistry&) = delete;
 	
 	/** Destroys a file format registry.
 	 */
 	~FileFormatRegistry();
 	
+	FileFormatRegistry& operator=(const FileFormatRegistry&) = delete;
+	
 	/** Returns an immutable list of the available file formats.
 	 */
 	inline const std::vector<FileFormat *> &formats() const { return fmts; }
 	
-	/** Finds a file format with the given internal ID, or returns NULL if no format
+	/** Finds a file format with the given internal ID, or returns nullptr if no format
 	 *  is found.
 	 */
 	const FileFormat *findFormat(const char* id) const;
 	
-	/** Finds a file format which implements the given filter, or returns NULL if no 
+	/** Finds a file format which implements the given filter, or returns nullptr if no 
 	 * format is found.
+	 * 
+	 * Only the file format's filter string before the closing ')' is taken into
+	 * account for matching, i.e. the given parameter 'filter' may contain
+	 * additional extensions following the original ones.
 	 */
 	const FileFormat *findFormatByFilter(const QString& filter) const;
 	
-	/** Finds a file format whose file extension matches the fie extension of the given
-	 *  path, or returns NULL if no matching format is found.
+	/** Finds a file format whose file extension matches the file extension of the given
+	 *  path, or returns nullptr if no matching format is found.
 	 */
 	const FileFormat *findFormatForFilename(const QString& filename) const;
 	
@@ -95,4 +98,6 @@ private:
 extern FileFormatRegistry FileFormats;
 
 
-#endif // _OPENORIENTEERING_FILE_FORMAT_REGISTRY_H
+}  // namespace OpenOrienteering
+
+#endif // OPENORIENTEERING_FILE_FORMAT_REGISTRY_H

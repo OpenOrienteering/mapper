@@ -24,22 +24,17 @@
 #include <QApplication>
 #include <QFile>
 #include <QHash>
-#include <QInputDialog> // TODO: get rid of this
 #include <QMessageBox>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
+// IWYU pragma: no_include <qxmlstream.h>
 
-#include "util/dxfparser.h"
+#include "core/georeferencing.h"
 #include "templates/template_track.h"
+#include "util/dxfparser.h"
 
 
-namespace
-{
-	// Shared definition of standard geographic CRS.
-	// TODO: Merge with Georeferencing.
-	static const QString geographic_crs_spec = QString::fromLatin1("+proj=latlong +datum=WGS84");
-}
-
+namespace OpenOrienteering {
 
 // There is some (mis?)use of TrackPoint's gps_coord LatLon
 // as sort-of MapCoordF.
@@ -49,7 +44,7 @@ MapCoordF fakeMapCoordF(const LatLon &latlon)
 	return MapCoordF(latlon.longitude(), latlon.latitude());
 }
 
-TrackPoint::TrackPoint(LatLon coord, QDateTime datetime, float elevation, int num_satellites, float hDOP)
+TrackPoint::TrackPoint(LatLon coord, const QDateTime& datetime, float elevation, int num_satellites, float hDOP)
 {
 	gps_coord = coord;
 	is_curve_start = false;
@@ -64,7 +59,7 @@ void TrackPoint::save(QXmlStreamWriter* stream) const
 	stream->writeAttribute(QStringLiteral("lon"), QString::number(gps_coord.longitude(), 'f', 12));
 	
 	if (datetime.isValid())
-		stream->writeTextElement(QStringLiteral("time"), datetime.toString(Qt::ISODate) + QLatin1Char('Z'));
+		stream->writeTextElement(QStringLiteral("time"), datetime.toString(Qt::ISODate));
 	if (elevation > -9999)
 		stream->writeTextElement(QStringLiteral("ele"), QString::number(elevation, 'f', 3));
 	if (num_satellites >= 0)
@@ -77,12 +72,12 @@ void TrackPoint::save(QXmlStreamWriter* stream) const
 
 // ### Track ###
 
-Track::Track() : track_crs(NULL)
+Track::Track() : track_crs(nullptr)
 {
 	current_segment_finished = true;
 }
 
-Track::Track(const Georeferencing& map_georef) : track_crs(NULL), map_georef(map_georef)
+Track::Track(const Georeferencing& map_georef) : track_crs(nullptr), map_georef(map_georef)
 {
 	current_segment_finished = true;
 }
@@ -102,7 +97,7 @@ Track::Track(const Track& other)
 	
 	map_georef = other.map_georef;
 	
-	if (other.track_crs != NULL)
+	if (other.track_crs)
 	{
 		track_crs = new Georeferencing(*other.track_crs);
 	}
@@ -115,6 +110,9 @@ Track::~Track()
 
 Track& Track::operator=(const Track& rhs)
 {
+	if (this == &rhs)
+		return *this;
+	
 	clear();
 	
 	waypoints = rhs.waypoints;
@@ -130,7 +128,7 @@ Track& Track::operator=(const Track& rhs)
 	
 	map_georef = rhs.map_georef;
 	
-	if (rhs.track_crs != NULL)
+	if (rhs.track_crs)
 	{
 		track_crs = new Georeferencing(*rhs.track_crs);
 	}
@@ -148,7 +146,7 @@ void Track::clear()
 	current_segment_finished = true;
 	element_tags.clear();
 	delete track_crs;
-	track_crs = NULL;
+	track_crs = nullptr;
 }
 
 bool Track::loadFrom(const QString& path, bool project_points, QWidget* dialog_parent)
@@ -227,7 +225,7 @@ bool Track::saveTo(const QString& path) const
 
 void Track::appendTrackPoint(TrackPoint& point)
 {
-	point.map_coord = map_georef.toMapCoordF(point.gps_coord, NULL); // TODO: check for errors
+	point.map_coord = map_georef.toMapCoordF(point.gps_coord, nullptr); // TODO: check for errors
 	segment_points.push_back(point);
 	
 	if (current_segment_finished)
@@ -243,7 +241,7 @@ void Track::finishCurrentSegment()
 
 void Track::appendWaypoint(TrackPoint& point, const QString& name)
 {
-	point.map_coord = map_georef.toMapCoordF(point.gps_coord, NULL); // TODO: check for errors
+	point.map_coord = map_georef.toMapCoordF(point.gps_coord, nullptr); // TODO: check for errors
 	waypoints.push_back(point);
 	waypoint_names.push_back(name);
 }
@@ -345,7 +343,7 @@ bool Track::loadFromGPX(QFile* file, bool project_points, QWidget* dialog_parent
 	Q_UNUSED(dialog_parent);
 	
 	track_crs = new Georeferencing();
-	track_crs->setProjectedCRS({}, geographic_crs_spec);
+	track_crs->setProjectedCRS({}, Georeferencing::geographic_crs_spec);
 	track_crs->setTransformationDirectly(QTransform());
 	
 	TrackPoint point;
@@ -418,7 +416,7 @@ bool Track::loadFromDXF(QFile* file, bool project_points, QWidget* dialog_parent
 	QString result = parser->parse();
 	if (!result.isEmpty())
 	{
-		QMessageBox::critical(dialog_parent, TemplateTrack::tr("Error reading"), TemplateTrack::tr("There was an error reading the DXF file %1:\n\n%2").arg(file->fileName(), result));
+		QMessageBox::critical(dialog_parent, OpenOrienteering::TemplateTrack::tr("Error reading"), OpenOrienteering::TemplateTrack::tr("There was an error reading the DXF file %1:\n\n%2").arg(file->fileName(), result));
 		delete parser;
 		return false;
 	}
@@ -429,7 +427,7 @@ bool Track::loadFromDXF(QFile* file, bool project_points, QWidget* dialog_parent
 	//       It does not fit here as this method is called again every time a map
 	//       containing a track is re-loaded, and in this case the question should
 	//       not be asked again.
-	//int res = QMessageBox::question(dialog_parent, TemplateTrack::tr("Question"), TemplateTrack::tr("Are the coordinates in the DXF file in degrees?"), QMessageBox::Yes|QMessageBox::No);
+	//int res = QMessageBox::question(dialog_parent, OpenOrienteering::TemplateTrack::tr("Question"), OpenOrienteering::TemplateTrack::tr("Are the coordinates in the DXF file in degrees?"), QMessageBox::Yes|QMessageBox::No);
 	for (auto&& path : paths)
 	{
 		if (path.type == POINT)
@@ -481,7 +479,7 @@ bool Track::loadFromDXF(QFile* file, bool project_points, QWidget* dialog_parent
 bool Track::loadFromOSM(QFile* file, bool project_points, QWidget* dialog_parent)
 {
 	track_crs = new Georeferencing();
-	track_crs->setProjectedCRS({}, geographic_crs_spec);
+	track_crs->setProjectedCRS({}, Georeferencing::geographic_crs_spec);
 	track_crs->setTransformationDirectly(QTransform());
 	
 	// Basic OSM file support
@@ -496,7 +494,7 @@ bool Track::loadFromOSM(QFile* file, bool project_points, QWidget* dialog_parent
 	{
 		if (xml.name() != QLatin1String("osm"))
 		{
-			QMessageBox::critical(dialog_parent, TemplateTrack::tr("Error"), TemplateTrack::tr("%1:\nNot an OSM file."));
+			QMessageBox::critical(dialog_parent, OpenOrienteering::TemplateTrack::tr("Error"), OpenOrienteering::TemplateTrack::tr("%1:\nNot an OSM file."));
 			return false;
 		}
 		else
@@ -505,15 +503,15 @@ bool Track::loadFromOSM(QFile* file, bool project_points, QWidget* dialog_parent
 			const double osm_version = attributes.value(QLatin1String("version")).toDouble();
 			if (osm_version < min_supported_version)
 			{
-				QMessageBox::critical(dialog_parent, TemplateTrack::tr("Error"),
-				                      TemplateTrack::tr("The OSM file has version %1.\nThe minimum supported version is %2.").arg(
+				QMessageBox::critical(dialog_parent, OpenOrienteering::TemplateTrack::tr("Error"),
+				                      OpenOrienteering::TemplateTrack::tr("The OSM file has version %1.\nThe minimum supported version is %2.").arg(
 				                          attributes.value(QLatin1String("version")).toString(), QString::number(min_supported_version, 'g', 1)));
 				return false;
 			}
 			if (osm_version > max_supported_version)
 			{
-				QMessageBox::critical(dialog_parent, TemplateTrack::tr("Error"),
-				                      TemplateTrack::tr("The OSM file has version %1.\nThe maximum supported version is %2.").arg(
+				QMessageBox::critical(dialog_parent, OpenOrienteering::TemplateTrack::tr("Error"),
+				                      OpenOrienteering::TemplateTrack::tr("The OSM file has version %1.\nThe maximum supported version is %2.").arg(
 				                          attributes.value(QLatin1String("version")).toString(), QString::number(max_supported_version, 'g', 1)));
 				return false;
 			}
@@ -613,31 +611,34 @@ bool Track::loadFromOSM(QFile* file, bool project_points, QWidget* dialog_parent
 	}
 	
 	if (node_problems > 0)
-		QMessageBox::warning(dialog_parent, TemplateTrack::tr("Problems"), TemplateTrack::tr("%1 nodes could not be processed correctly.").arg(node_problems));
+		QMessageBox::warning(dialog_parent, OpenOrienteering::TemplateTrack::tr("Problems"), OpenOrienteering::TemplateTrack::tr("%1 nodes could not be processed correctly.").arg(node_problems));
 	
 	return true;
 }
 
 void Track::projectPoints()
 {
-	if (track_crs->getProjectedCRSSpec() == geographic_crs_spec)
+	if (track_crs->getProjectedCRSSpec() == Georeferencing::geographic_crs_spec)
 	{
 		int size = waypoints.size();
 		for (int i = 0; i < size; ++i)
-			waypoints[i].map_coord = map_georef.toMapCoordF(waypoints[i].gps_coord, NULL); // FIXME: check for errors
+			waypoints[i].map_coord = map_georef.toMapCoordF(waypoints[i].gps_coord, nullptr); // FIXME: check for errors
 			
 		size = segment_points.size();
 		for (int i = 0; i < size; ++i)
-			segment_points[i].map_coord = map_georef.toMapCoordF(segment_points[i].gps_coord, NULL); // FIXME: check for errors
+			segment_points[i].map_coord = map_georef.toMapCoordF(segment_points[i].gps_coord, nullptr); // FIXME: check for errors
 	}
 	else
 	{
 		int size = waypoints.size();
 		for (int i = 0; i < size; ++i)
-			waypoints[i].map_coord = map_georef.toMapCoordF(track_crs, fakeMapCoordF(waypoints[i].gps_coord), NULL); // FIXME: check for errors
+			waypoints[i].map_coord = map_georef.toMapCoordF(track_crs, fakeMapCoordF(waypoints[i].gps_coord), nullptr); // FIXME: check for errors
 			
 		size = segment_points.size();
 		for (int i = 0; i < size; ++i)
-			segment_points[i].map_coord = map_georef.toMapCoordF(track_crs, fakeMapCoordF(segment_points[i].gps_coord), NULL); // FIXME: check for errors
+			segment_points[i].map_coord = map_georef.toMapCoordF(track_crs, fakeMapCoordF(segment_points[i].gps_coord), nullptr); // FIXME: check for errors
 	}
 }
+
+
+}  // namespace OpenOrienteering

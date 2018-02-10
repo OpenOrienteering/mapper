@@ -18,17 +18,23 @@
  */
 
 
-#ifndef _OPENORIENTEERING_UTIL_TASK_DIALOG_H_
-#define _OPENORIENTEERING_UTIL_TASK_DIALOG_H_
+#ifndef OPENORIENTEERING_UTIL_TASK_DIALOG_H
+#define OPENORIENTEERING_UTIL_TASK_DIALOG_H
 
 #include <QDialog>
 #include <QDialogButtonBox>
+#include <QObject>
+#include <QString>
 
-QT_BEGIN_NAMESPACE
-class QVBoxLayout;
+class QAbstractButton;
 class QCommandLinkButton;
+class QPushButton;
 class QSignalMapper;
-QT_END_NAMESPACE
+class QVBoxLayout;
+class QWidget;
+
+namespace OpenOrienteering {
+
 
 /**
  * Shows a dialog similar to a message box, but with the option to add
@@ -102,5 +108,8 @@ private:
 	QDialogButtonBox* button_box;
 	QSignalMapper* signal_mapper;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

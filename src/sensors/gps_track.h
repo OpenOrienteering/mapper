@@ -18,23 +18,25 @@
  */
 
 
-#ifndef _OPENORIENTEERING_GPS_TRACK_H_
-#define _OPENORIENTEERING_GPS_TRACK_H_
+#ifndef OPENORIENTEERING_GPS_TRACK_H
+#define OPENORIENTEERING_GPS_TRACK_H
 
 #include <vector>
 
-#include <QDate>
+#include <QDateTime>
 #include <QHash>
 #include <QString>
 
 #include "core/georeferencing.h"
+#include "core/latlon.h"
+#include "core/map_coord.h"
 
-QT_BEGIN_NAMESPACE
 class QFile;
+class QWidget;
 class QXmlStreamWriter;
-QT_END_NAMESPACE
 
-class MapEditorController;
+namespace OpenOrienteering {
+
 
 /**
  * A point in a track or a waypoint, which stores position on ellipsoid and
@@ -51,7 +53,7 @@ struct TrackPoint
 	int num_satellites;		// -1 if invalid
 	float hDOP;				// -1 if invalid
 	
-	TrackPoint(LatLon coord = LatLon(), QDateTime datetime = QDateTime(),
+	TrackPoint(LatLon coord = LatLon(), const QDateTime& datetime = QDateTime(),
 			   float elevation = -9999, int num_satellites = -1, float hDOP = -1);
 	void save(QXmlStreamWriter* stream) const;
 };
@@ -77,7 +79,7 @@ public:
 	
 	/// Attempts to load the track from the given file.
 	/// If you choose not to project_point, you have to call changeProjectionParams() afterwards.
-	bool loadFrom(const QString& path, bool project_points, QWidget* dialog_parent = NULL);
+	bool loadFrom(const QString& path, bool project_points, QWidget* dialog_parent = nullptr);
 	/// Attempts to save the track to the given file
 	bool saveTo(const QString& path) const;
 	
@@ -122,7 +124,7 @@ public:
 	const TrackPoint& getWaypoint(int number) const;
 	const QString& getWaypointName(int number) const;
 	
-	bool hasTrackCRS() const {return track_crs != NULL;}
+	bool hasTrackCRS() const {return track_crs;}
 	Georeferencing* getTrackCRS() const {return track_crs;}
 	
 	/// Averages all track coordinates
@@ -174,5 +176,7 @@ const Track::ElementTags& Track::tags() const
 	return element_tags;
 }
 
+
+}  // namespace OpenOrienteering
 
 #endif

@@ -19,17 +19,35 @@
  */
 
 
-#ifndef _OPENORIENTEERING_DRAW_RECTANGLE_H_
-#define _OPENORIENTEERING_DRAW_RECTANGLE_H_
+#ifndef OPENORIENTEERING_DRAW_RECTANGLE_H
+#define OPENORIENTEERING_DRAW_RECTANGLE_H
 
-#include "draw_line_and_area_tool.h"
+#include <vector>
+
+#include <QObject>
+#include <QPoint>
+
+#include "core/map_coord.h"
+#include "tools/draw_line_and_area_tool.h"
 
 #include <QPointer>
 #include <QScopedPointer>
 
+class QAction;
+class QCursor;
+class QKeyEvent;
+class QMouseEvent;
+class QPainter;
+class QToolButton;
+
+namespace OpenOrienteering {
+
 class ConstrainAngleToolHelper;
-class SnappingToolHelper;
 class KeyButtonBar;
+class MapEditorController;
+class MapWidget;
+class SnappingToolHelper;
+
 
 /**
  * Tool to draw rectangular PathObjects (but also 45 degree angles).
@@ -39,27 +57,27 @@ class DrawRectangleTool : public DrawLineAndAreaTool
 Q_OBJECT
 public:
 	DrawRectangleTool(MapEditorController* editor, QAction* tool_action, bool is_helper_tool);
-    virtual ~DrawRectangleTool();
+    ~DrawRectangleTool() override;
 	
-	virtual void init();
-	virtual const QCursor& getCursor() const;
+	void init() override;
+	const QCursor& getCursor() const override;
 	
-	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
 	
-	virtual bool keyPressEvent(QKeyEvent* event);
-    virtual bool keyReleaseEvent(QKeyEvent* event);
+	bool keyPressEvent(QKeyEvent* event) override;
+    bool keyReleaseEvent(QKeyEvent* event) override;
 	
-	virtual void draw(QPainter* painter, MapWidget* widget);
+	void draw(QPainter* painter, MapWidget* widget) override;
 	
 protected slots:
 	void updateDirtyRect();
 	
 protected:
-	virtual void finishDrawing();
-	virtual void abortDrawing();
+	void finishDrawing() override;
+	void abortDrawing() override;
 	
 	/**
 	 * Deletes the last drawn point.
@@ -110,11 +128,11 @@ protected:
 	MapCoordF cur_pos_map;
 	MapCoordF constrained_pos_map;
 	bool dragging;
-	bool draw_dash_points;
-	bool shift_pressed;
-	bool ctrl_pressed;
-	bool picked_direction;
-	bool snapped_to_line;
+	bool draw_dash_points = true;
+	bool shift_pressed    = false;
+	bool ctrl_pressed     = false;
+	bool picked_direction = false;
+	bool snapped_to_line  = false;
 	MapCoord snapped_to_line_a;
 	MapCoord snapped_to_line_b;
 	
@@ -122,7 +140,7 @@ protected:
 	 * This can be set to true when a mouse button is pressed down to disable all
 	 * actions for the next mouse button release.
 	 */
-	bool no_more_effect_on_click;
+	bool no_more_effect_on_click = false;
 	
 	/**
 	 * List of angles for first, second, etc. edge.
@@ -139,6 +157,9 @@ protected:
 	MapWidget* cur_map_widget;
 	
 	QPointer<KeyButtonBar> key_button_bar;
+	QPointer<QToolButton> dash_points_button;
 };
 
+
+}  // namespace OpenOrienteering
 #endif

@@ -20,19 +20,18 @@
 
 #include "action_grid_bar.h"
 
-#include <qmath.h>
-#include <QApplication>
-#include <QGridLayout>
-#include <QToolButton>
+#include <QtMath>
 #include <QAction>
-#include <QScreen>
-#include <QKeyEvent>
-#include <QPainter>
-#include <QDebug>
+#include <QGridLayout>
 #include <QMenu>
+#include <QResizeEvent>
+#include <QToolButton>
 
-#include "util/util.h"
-#include "../../settings.h"
+#include "settings.h"
+#include "gui/util_gui.h"
+
+
+namespace OpenOrienteering {
 
 ActionGridBar::ActionGridBar(Direction direction, int rows, QWidget* parent)
 : QWidget(parent)
@@ -51,8 +50,8 @@ ActionGridBar::ActionGridBar(Direction direction, int rows, QWidget* parent)
 	
 	// Create overflow action
 	overflow_action = new QAction(QIcon(QString::fromLatin1(":/images/three-dots.png")), tr("Show remaining items"), this);
- 	connect(overflow_action, SIGNAL(triggered()), this, SLOT(overflowActionClicked()));
-	overflow_button = NULL;
+ 	connect(overflow_action, &QAction::triggered, this, &ActionGridBar::overflowActionClicked);
+	overflow_button = nullptr;
 	overflow_menu = new QMenu(this);
 	include_overflow_from_list.push_back(this);
 }
@@ -136,13 +135,12 @@ void ActionGridBar::setToUseOverflowActionFrom(ActionGridBar* other_bar)
 
 QToolButton* ActionGridBar::getButtonForAction(QAction* action)
 {
-	for (size_t i = 0, end = items.size(); i < end; ++ i)
+	for (auto& item : items)
 	{
-		GridItem& item = items[i];
 		if (item.action == action)
-			return item.button_hidden ? NULL : item.button;
+			return item.button_hidden ? nullptr : item.button;
 	}
-	return NULL;
+	return nullptr;
 }
 
 QSize ActionGridBar::sizeHint() const
@@ -162,11 +160,10 @@ bool ActionGridBar::compareItemPtrId(ActionGridBar::GridItem* a, ActionGridBar::
 void ActionGridBar::overflowActionClicked()
 {
 	overflow_menu->clear();
-	for (size_t k = 0; k < include_overflow_from_list.size(); ++ k)
+	for (const auto source_bar : include_overflow_from_list)
 	{
-		ActionGridBar* source_bar = include_overflow_from_list[k];
-		for (size_t i = 0, end = source_bar->hidden_items.size(); i < end; ++ i)
-			overflow_menu->addAction(source_bar->hidden_items[i]->action);
+		for (const auto hidden_item : source_bar->hidden_items)
+			overflow_menu->addAction(hidden_item->action);
 	}
 	if (overflow_button)
 		overflow_menu->popup(overflow_button->mapToGlobal(QPoint(0, overflow_button->height())));
@@ -204,7 +201,7 @@ void ActionGridBar::resizeEvent(QResizeEvent* event)
 				{
 					// Check which item "wins" this spot and which will be hidden
 					if (item.at_end == other.at_end)
-						qDebug() << "Warning: two items set to same position in ActionGridBar, this case is not handled!";
+						qDebug("Warning: two items set to same position in ActionGridBar, this case is not handled!");
 					if ((item.at_end && resulting_col <= cols / 2)
 						|| (! item.at_end && resulting_col > cols / 2))
 					{
@@ -272,3 +269,6 @@ void ActionGridBar::resizeEvent(QResizeEvent* event)
 	
 	event->accept();
 }
+
+
+}  // namespace OpenOrienteering

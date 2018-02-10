@@ -19,19 +19,25 @@
 
 #include "undo_manager_t.h"
 
+#include <QtTest>
 
+#include "undo/undo.h"
 #include "undo/undo_manager.h"
+
+namespace OpenOrienteering { class Map; }
+
+using namespace OpenOrienteering;
 
 
 // test
 void UndoManagerTest::testUndoRedo()
 {
-	Map* const map = NULL;
+	Map* const map = nullptr;
 	UndoManager undo_manager(map);
-	connect(&undo_manager, SIGNAL(loadedChanged(bool)),  this, SLOT(loadedChanged(bool)));
-	connect(&undo_manager, SIGNAL(cleanChanged(bool)),   this, SLOT(cleanChanged(bool)));
-	connect(&undo_manager, SIGNAL(canRedoChanged(bool)), this, SLOT(canRedoChanged(bool)));
-	connect(&undo_manager, SIGNAL(canUndoChanged(bool)), this, SLOT(canUndoChanged(bool)));
+	connect(&undo_manager, &UndoManager::loadedChanged,  this, &UndoManagerTest::loadedChanged);
+	connect(&undo_manager, &UndoManager::cleanChanged,   this, &UndoManagerTest::cleanChanged);
+	connect(&undo_manager, &UndoManager::canRedoChanged, this, &UndoManagerTest::canRedoChanged);
+	connect(&undo_manager, &UndoManager::canUndoChanged, this, &UndoManagerTest::canUndoChanged);
 	
 	undo_manager.setClean();
 	QVERIFY(undo_manager.isClean());
@@ -45,7 +51,7 @@ void UndoManagerTest::testUndoRedo()
 	
 	// Add undo step A
 	resetAllChanged();
-	undo_manager.push(new NoOpUndoStep(map, true));
+	undo_manager.push(std::unique_ptr<UndoStep>(new NoOpUndoStep(map, true)));
 	
 	// State: [current, loaded]:A, [clean]:EOL
 	QVERIFY(loaded_changed);
@@ -62,7 +68,7 @@ void UndoManagerTest::testUndoRedo()
 	
 	// Add undo step B
 	resetAllChanged();
-	undo_manager.push(new NoOpUndoStep(map, true));
+	undo_manager.push(std::unique_ptr<UndoStep>(new NoOpUndoStep(map, true)));
 	
 	// State: [loaded,clean]:A, B, [current]:EOL
 	QVERIFY(!loaded_changed);
@@ -136,7 +142,7 @@ void UndoManagerTest::testUndoRedo()
 	
 	// Add undo step C
 	resetAllChanged();
-	undo_manager.push(new NoOpUndoStep(map, true));
+	undo_manager.push(std::unique_ptr<UndoStep>(new NoOpUndoStep(map, true)));
 	
 	// State: [loaded]:A, [clean]:B, [current]:C, EOL
 	QVERIFY(!loaded_changed);
@@ -185,7 +191,7 @@ void UndoManagerTest::testUndoRedo()
 	
 	// Add undo step D: clean state now no longer reachable
 	resetAllChanged();
-	undo_manager.push(new NoOpUndoStep(map, true));
+	undo_manager.push(std::unique_ptr<UndoStep>(new NoOpUndoStep(map, true)));
 	
 	// State: [loaded,current]:D, EOL [clean:invalid]
 	QVERIFY(loaded_changed);

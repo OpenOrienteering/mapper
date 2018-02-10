@@ -24,18 +24,25 @@
 #include <memory>
 
 #include <QWidget>
+#include <QObject>
+#include <QString>
 
-#include "../../core/map_view.h"
+#include "core/map_view.h"
 
+class QAction;
 class QBoxLayout;
 class QCheckBox;
+class QEvent;
+class QIcon;
 class QTableWidget;
 class QToolButton;
 
+namespace OpenOrienteering {
+
 class Map;
 class MapEditorController;
-class MapView;
 class Template;
+
 
 /**
  * Widget showing the list of templates, including the map layer.
@@ -47,7 +54,7 @@ class TemplateListWidget : public QWidget
 Q_OBJECT
 public:
 	TemplateListWidget(Map* map, MapView* main_view, MapEditorController* controller, QWidget* parent = nullptr);
-	virtual ~TemplateListWidget();
+	~TemplateListWidget() override;
 	
 	void addTemplateAt(Template* new_template, int pos);
 	
@@ -68,7 +75,7 @@ protected:
 	 * When key events for Qt::Key_Space are sent to the template_table,
 	 * this will toggle the visibility of the current template.
 	 */
-	virtual bool eventFilter(QObject* watched, QEvent* event);
+	bool eventFilter(QObject* watched, QEvent* event) override;
 	
 	/**
 	 * Returns a new QToolButton with a unified appearance.
@@ -147,5 +154,8 @@ private:
 	//QToolButton* group_button;
 	//QToolButton* more_button;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

@@ -19,22 +19,37 @@
  */
 
 
-#ifndef _OPENORIENTEERING_SYMBOL_RENDER_WIDGET_H_
-#define _OPENORIENTEERING_SYMBOL_RENDER_WIDGET_H_
+#ifndef OPENORIENTEERING_SYMBOL_RENDER_WIDGET_H
+#define OPENORIENTEERING_SYMBOL_RENDER_WIDGET_H
 
 #include <set>
 
+#include <QObject>
+#include <QPoint>
+#include <QRect>
 #include <QScopedPointer>
+#include <QSize>
 #include <QWidget>
 
-QT_BEGIN_NAMESPACE
+class QAction;
+class QContextMenuEvent;
+class QDragEnterEvent;
+class QDragMoveEvent;
+class QDropEvent;
+class QEvent;
 class QMenu;
-QT_END_NAMESPACE
+class QMouseEvent;
+class QPaintEvent;
+class QPainter;
+class QResizeEvent;
+
+namespace OpenOrienteering {
 
 class Map;
 class Symbol;
-class SymbolToolTip;
 class SymbolIconDecorator;
+class SymbolToolTip;
+
 
 /**
  * @brief Shows all symbols from a map in a size-constrained widget.
@@ -50,16 +65,16 @@ Q_OBJECT
 public:
 	/**
 	 * @brief Constructs a new SymbolRenderWidget.
-	 * @param map         The map which provides the symbols. Must not be NULL.
+	 * @param map         The map which provides the symbols. Must not be nullptr.
 	 * @param mobile_mode If true, enables a special mode for mobile devices.
 	 * @param parent      The parent QWidget.
 	 */
-	SymbolRenderWidget(Map* map, bool mobile_mode, QWidget* parent = NULL);
+	SymbolRenderWidget(Map* map, bool mobile_mode, QWidget* parent = nullptr);
 	
 	/**
 	 * @brief Destroys the SymbolRenderWidget.
 	 */
-	virtual ~SymbolRenderWidget();
+	~SymbolRenderWidget() override;
 
 	/**
 	 * @brief Returns the number of selected symbols.
@@ -79,14 +94,14 @@ public:
 	/**
 	 * @brief If exactly one symbol is selected, returns this symbol.
 	 * 
-	 * Otherwise returns NULL.
+	 * Otherwise returns nullptr.
 	 */
 	const Symbol* singleSelectedSymbol() const;
 	
 	/**
 	 * @brief If exactly one symbol is selected, returns this symbol.
 	 * 
-	 * Otherwise returns NULL.
+	 * Otherwise returns nullptr.
 	 */
 	Symbol* singleSelectedSymbol();
 	
@@ -110,7 +125,7 @@ public:
 	 * 
 	 * Reimplemented from QWidget::sizeHint().
 	 */
-	virtual QSize sizeHint() const;
+	QSize sizeHint() const override;
 	
 	/**
 	 * @brief Opens the context menu at the given global position.
@@ -127,6 +142,11 @@ public slots:
 	 * @brief Marks the icon with the given index for repainting.
 	 */
 	void updateSingleIcon(int i);
+	
+	/**
+	 * Observes settings changes related to symbol display.
+	 */
+	void settingsChanged();
 	
 signals:
 	/**
@@ -197,7 +217,7 @@ protected slots:
 	void sortByColorPriority();
 	
 protected:
-	virtual void resizeEvent(QResizeEvent* event);
+	void resizeEvent(QResizeEvent* event) override;
 	
 	/**
 	 * @brief Recalculates the layout and size.
@@ -221,7 +241,7 @@ protected:
 	int symbolIndexAt(QPoint pos) const;
 	
 	
-	virtual void paintEvent(QPaintEvent* event);
+	void paintEvent(QPaintEvent* event) override;
 	
 	/**
 	 * @brief Draws the icon and its decoration (hidden, protected).
@@ -233,11 +253,11 @@ protected:
 	void drawIcon(QPainter& painter, int i) const;
 	
 	
-	virtual void mouseMoveEvent(QMouseEvent* event);
-	virtual void mousePressEvent(QMouseEvent* event);
-	virtual void mouseReleaseEvent(QMouseEvent* event);
-	virtual void mouseDoubleClickEvent(QMouseEvent* event);
-	virtual void leaveEvent(QEvent* event);
+	void mouseMoveEvent(QMouseEvent* event) override;
+	void mousePressEvent(QMouseEvent* event) override;
+	void mouseReleaseEvent(QMouseEvent* event) override;
+	void mouseDoubleClickEvent(QMouseEvent* event) override;
+	void leaveEvent(QEvent* event) override;
 	
 	/**
 	 * @brief Handles hovering over the icons, i.e. controlling the tool tip.
@@ -246,9 +266,9 @@ protected:
 	void hover(QPoint pos);
 	
 	
-	virtual void dragEnterEvent(QDragEnterEvent* event);
-	virtual void dragMoveEvent(QDragMoveEvent* event);
-	virtual void dropEvent(QDropEvent* event);
+	void dragEnterEvent(QDragEnterEvent* event) override;
+	void dragMoveEvent(QDragMoveEvent* event) override;
+	void dropEvent(QDropEvent* event) override;
 	
 	/**
 	 * @brief Determines the drop location for a given pointing device position.
@@ -299,7 +319,7 @@ protected:
 	/**
 	 * @brief Receives context menu events and opens the context menu.
 	 */
-	virtual void contextMenuEvent(QContextMenuEvent* event);
+	void contextMenuEvent(QContextMenuEvent* event) override;
 	
 	/** 
 	 * @brief Updates the state of the actions in the context menu.
@@ -355,5 +375,8 @@ int SymbolRenderWidget::selectedSymbolsCount() const
 {
 	return (int)selected_symbols.size();
 }
+
+
+}  // namespace OpenOrienteering
 
 #endif

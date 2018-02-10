@@ -22,18 +22,19 @@
 #ifndef OPENORIENTEERING_VIRTUAL_PATH_H
 #define OPENORIENTEERING_VIRTUAL_PATH_H
 
+#include <memory>
+#include <utility>
 #include <vector>
 
 #include <QRectF>
 
-#include "map_coord.h"
-#include "path_coord.h"
-#include "virtual_coord_vector.h"
+#include "core/map_coord.h"
+#include "core/path_coord.h"
+#include "core/virtual_coord_vector.h"
 
+// IWYU pragma: no_forward_declare QRectF
 
-class SplitPathCoord;
-
-
+namespace OpenOrienteering {
 
 class PathCoordVector : public std::vector<PathCoord>
 {
@@ -116,7 +117,7 @@ public:
 	
 	QRectF calculateExtent() const;
 	
-	bool intersectsBox(QRectF box) const;
+	bool intersectsBox(const QRectF& box) const;
 	
 	bool isPointInside(MapCoordF coord) const;
 	
@@ -232,7 +233,7 @@ public:
 	
 	QRectF calculateExtent() const;
 	
-	bool intersectsBox(QRectF box) const;
+	bool intersectsBox(const QRectF& box) const;
 	
 	bool isPointInside(MapCoordF coord) const;
 	
@@ -407,7 +408,7 @@ QRectF VirtualPath::calculateExtent() const
 }
 
 inline
-bool VirtualPath::intersectsBox(QRectF box) const
+bool VirtualPath::intersectsBox(const QRectF& box) const
 {
 	return path_coords.intersectsBox(box);
 }
@@ -419,5 +420,6 @@ bool VirtualPath::isPointInside(MapCoordF coord) const
 }
 
 
+}  // namespace OpenOrienteering
 
 #endif

@@ -20,13 +20,21 @@
 
 #ifdef QT_PRINTSUPPORT_LIB
 
-#ifndef _OPENORIENTEERING_PRINT_WIDGET_P_H_
-#define _OPENORIENTEERING_PRINT_WIDGET_P_H_
+#ifndef OPENORIENTEERING_PRINT_WIDGET_P_H
+#define OPENORIENTEERING_PRINT_WIDGET_P_H
 
+#include <Qt>
+#include <QObject>
 #include <QProgressDialog>
+#include <QString>
 
 class QPrinter;
+class QWidget;
+
+namespace OpenOrienteering {
+
 class MapPrinter;
+
 
 /**
  * PrintProgressDialog is a variation of QProgressDialog to be used with MapPrinter.
@@ -51,7 +59,7 @@ public:
 	/**
 	 * Destructor.
 	 */
-	~PrintProgressDialog();
+	~PrintProgressDialog() override;
 	
 public slots:
 	/**
@@ -72,12 +80,15 @@ protected slots:
 	 * @param value   The progress, from 0 (not started) to 100 (finished).
 	 * @param message The text to be shown as a label to the progress.
 	 */
-	void setProgress(int value, QString message);
+	void setProgress(int value, const QString& message);
 	
 private:
 	MapPrinter* const map_printer;
 };
 
 #endif
+
+
+}  // namespace OpenOrienteering
 
 #endif // QT_PRINTSUPPORT_LIB

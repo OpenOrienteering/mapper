@@ -23,15 +23,21 @@
 #include <QHBoxLayout>
 #include <QLineEdit>
 #include <QPushButton>
+#include <QRegExp>
 #include <QRegExpValidator>
+#include <QStringList>
+#include <QVariant>
 
-#include "../../core/crs_template.h"
-#include "../../core/crs_template_implementation.h"
-#include "../../core/georeferencing.h"
-#include "../../core/latlon.h"
-#include "../georeferencing_dialog.h"
+#include "core/crs_template.h"
+#include "core/crs_template_implementation.h"
+#include "core/georeferencing.h"
+
+// IWYU pragma: no_forward_declare QCompleter
+// IWYU pragma: no_forward_declare QHBoxLayout
+// IWYU pragma: no_forward_declare QPushButton
 
 
+namespace OpenOrienteering {
 
 UTMZoneEdit::UTMZoneEdit(CRSParameterWidgetObserver& observer, QWidget* parent)
  : QWidget(parent)
@@ -41,6 +47,7 @@ UTMZoneEdit::UTMZoneEdit(CRSParameterWidgetObserver& observer, QWidget* parent)
 	static QStringList zone_list;
 	if (zone_list.isEmpty())
 	{
+		zone_list.reserve((60 + 9) * 2);
 		for (int i = 1; i <= 60; ++i)
 		{
 			QString zone = QString::number(i);
@@ -95,3 +102,6 @@ bool UTMZoneEdit::calculateValue()
 	
 	return !zone.isNull();
 }
+
+
+}  // namespace OpenOrienteering

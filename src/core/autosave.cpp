@@ -20,7 +20,16 @@
 #include "autosave.h"
 #include "autosave_p.h"
 
-#include "../settings.h"
+#include <QtGlobal>
+#include <QLatin1String>
+#include <QString>
+#include <QTimer>
+#include <QVariant>
+
+#include "settings.h"
+
+
+namespace OpenOrienteering {
 
 AutosavePrivate::AutosavePrivate(Autosave& document)
 : document(document)
@@ -129,3 +138,6 @@ bool Autosave::autosaveNeeded() const
 {
 	return autosave_controller->autosaveNeeded();
 }
+
+
+}  // namespace OpenOrienteering

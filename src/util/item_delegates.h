@@ -17,15 +17,27 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_ITEM_DELEGATES_H_
-#define _OPENORIENTEERING_ITEM_DELEGATES_H_
+#ifndef OPENORIENTEERING_ITEM_DELEGATES_H
+#define OPENORIENTEERING_ITEM_DELEGATES_H
 
 #include <QItemDelegate>
+#include <QLocale>
+#include <QObject>
+#include <QSize>
+#include <QString>
 #include <QStyledItemDelegate>
+#include <QStyleOptionViewItem>
+#include <QVariant>
 
-QT_BEGIN_NAMESPACE
+class QAbstractItemModel;
+class QModelIndex;
+class QPainter;
 class QTextDocument;
-QT_END_NAMESPACE
+class QStyleOptionViewItem;
+class QWidget;
+
+namespace OpenOrienteering {
+
 
 /**
  * An item delegate which respects colors from the model even when the item is selected.
@@ -40,10 +52,10 @@ Q_OBJECT
 
 public:
 	/** Constructs a new ColorItemDelegate. */
-	ColorItemDelegate(QObject* parent = NULL);
+	ColorItemDelegate(QObject* parent = nullptr);
 	
 	/** Renders the delegate. Reimplemented from QStyledItemDelegate. */
-	virtual void paint (QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
+	void paint (QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
 };
 
 
@@ -84,19 +96,19 @@ public:
 	/** Returns a new QSpinBox configured according to the delegates properties. 
 	 *  @see QItemDelegate::createEditor().
 	 */
-	virtual QWidget* createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const;
+	QWidget* createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
 	
 	/** Updates the spin box value from the model data with role Qt::UserData.
 	 *  @see QItemDelegate::setEditorData().
 	 */
-	virtual void setEditorData(QWidget* editor, const QModelIndex& index) const;
+	void setEditorData(QWidget* editor, const QModelIndex& index) const override;
 	
 	/** Updates the model from the spin box value. The integer value is stored
 	 *  with role Qt::UserData. Qt::DisplayValue is set to the number followed
 	 *  by a space character and the unit.
 	 *  @see QItemDelegate::setModelData().
 	 */
-	virtual void setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const;
+	void setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const override;
 	
 	/** Updates the model from the given value. The integer value is stored
 	 *  with role Qt::UserData. Qt::DisplayValue is set to the number followed
@@ -108,7 +120,7 @@ public:
 	
 	/** @see QItemDelegate::updateEditorGeometry().
 	 */
-	virtual void updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& index) const;
+	void updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
 	
 private:
 	const int min;
@@ -142,28 +154,28 @@ public:
 	PercentageDelegate(int step = 0);
 	
 	/** Formats the raw value as integer percentage. */
-	virtual QString	displayText(const QVariant& value, const QLocale& locale) const;
+	QString	displayText(const QVariant& value, const QLocale& locale) const override;
 	
 	/** Returns a new QSpinBox configured according to the delegates properties. 
 	 *  @see QItemDelegate::createEditor().
 	 */
-	virtual QWidget* createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const;
+	QWidget* createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
 	
 	/** Updates the spin box value from the model data with role Qt::UserData.
 	 *  @see QItemDelegate::setEditorData().
 	 */
-	virtual void setEditorData(QWidget* editor, const QModelIndex& index) const;
+	void setEditorData(QWidget* editor, const QModelIndex& index) const override;
 	
 	/** Updates the model from the spin box value. The integer value is stored
 	 *  with role Qt::UserData. Qt::DisplayValue is set to the number followed
 	 *  by a space character and the unit.
 	 *  @see QItemDelegate::setModelData().
 	 */
-	virtual void setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const;
+	void setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const override;
 	
 	/** @see QItemDelegate::updateEditorGeometry().
 	 */
-	virtual void updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& index) const;
+	void updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
 	
 private:
 	const int step;
@@ -188,8 +200,14 @@ public:
 	class Provider
 	{
 	public:
+		Provider() noexcept = default;
+		Provider(const Provider&) = delete;
+		Provider(Provider&&) = delete;
+		Provider& operator=(const Provider&) = delete;
+		Provider& operator=(Provider&&) = delete;
+		
 		/**
-		 * Returns the QTextDocument corresponding to the given index, or NULL.
+		 * Returns the QTextDocument corresponding to the given index, or nullptr.
 		 */
 		virtual const QTextDocument* textDoc(const QModelIndex& index) const = 0;
 	};
@@ -197,28 +215,28 @@ public:
 	/**
 	 * Constructs a new delegate.
 	 * 
-	 * The provider must not be NULL.
+	 * The provider must not be nullptr.
 	 */
 	TextDocItemDelegate(QObject* parent, const Provider* provider);
 	
 	/**
 	 * Destructor.
 	 */
-	virtual ~TextDocItemDelegate();
+	~TextDocItemDelegate() override;
 	
 	/**
 	 * Paints the item using a QTextDocument if one is available from the Provider.
 	 * 
 	 * @override
 	 */
-	virtual void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex & index) const;
+	void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex & index) const override;
 	
 	/**
 	* Determines the size hint from a QTextDocument if one is available from the Provider.
 	* 
 	* @override
 	*/
-	virtual QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const;
+	QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const override;
 	
 protected:
 	/**
@@ -226,5 +244,8 @@ protected:
 	 */
 	const Provider* const provider;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

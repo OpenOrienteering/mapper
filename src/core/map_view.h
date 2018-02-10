@@ -22,20 +22,28 @@
 #ifndef OPENORIENTEERING_MAP_VIEW_H
 #define OPENORIENTEERING_MAP_VIEW_H
 
-#include <memory>
+#include <vector>
 
+#include <QtGlobal>
+#include <QFlags>
 #include <QObject>
+#include <QPoint>
+#include <QPointF>
 #include <QRectF>
 #include <QTransform>
 
 #include "map_coord.h"
 
-class Map;
-class Template;
-class TemplateVisibility;
-
+class QIODevice;
+class QLatin1String;
+class QRectF;
 class QXmlStreamReader;
 class QXmlStreamWriter;
+
+namespace OpenOrienteering {
+
+class Map;
+class Template;
 
 
 /**
@@ -288,7 +296,7 @@ public:
 	/**
 	 * Sets the template visibility, and emits a change signal.
 	 */
-	void setTemplateVisibility(const Template* temp, TemplateVisibility vis);
+	void setTemplateVisibility(Template* temp, TemplateVisibility vis);
 	
 	
 	/** Enables or disables hiding all templates in this view */
@@ -313,6 +321,13 @@ public:
 	
 	/** Enables or disables overprinting simulation. */
 	void setOverprintingSimulationEnabled(bool enabled);
+	
+	
+	/** Temporarily blocks automatic template loading on visibility changes. */
+	void setTemplateLoadingBlocked(bool blocked);
+	
+	/** Returns true when template loading on visibility changes is disabled. */
+	bool templateLoadingBlocked() const { return template_loading_blocked; }
 	
 	
 signals:
@@ -355,7 +370,7 @@ protected:
 	/**
 	 * Creates the visibility data when a template is added to the map.
 	 */
-	void onTemplateAdded(int pos, const Template* temp);
+	void onTemplateAdded(int pos, Template* temp);
 	
 	/**
 	 * Removes the visibility data when a template is deleted.
@@ -405,6 +420,8 @@ private:
 	bool all_templates_hidden;
 	bool grid_visible;
 	bool overprinting_simulation_enabled;
+	
+	bool template_loading_blocked;
 };
 
 
@@ -427,8 +444,6 @@ bool operator!=(TemplateVisibility lhs, TemplateVisibility rhs)
 
 
 // ### MapView inline code ###
-
-Q_DECLARE_OPERATORS_FOR_FLAGS(MapView::ChangeFlags)
 
 inline
 MapCoord MapView::viewToMap(QPointF point) const
@@ -514,6 +529,11 @@ bool MapView::isOverprintingSimulationEnabled() const
 	return overprinting_simulation_enabled;
 }
 
+
+}  // namespace OpenOrienteering
+
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(OpenOrienteering::MapView::ChangeFlags)
 
 
 #endif

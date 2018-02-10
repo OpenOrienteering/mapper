@@ -21,7 +21,14 @@
 #ifndef OPENORIENTEERING_TEXT_BROWSER_H
 #define OPENORIENTEERING_TEXT_BROWSER_H
 
+#include <QObject>
 #include <QTextBrowser>
+#include <QVariant>
+
+class QUrl;
+class QWidget;
+
+namespace OpenOrienteering {
 
 
 /**
@@ -40,5 +47,8 @@ public:
 	
 	QVariant loadResource(int type, const QUrl& name) override;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

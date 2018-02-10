@@ -21,19 +21,28 @@
 
 #include "crs_selector.h"
 
+#include <iterator>
+#include <memory>
+
+#include <QtGlobal>
 #include <QEvent>
 #include <QFormLayout>
 #include <QLabel>
+#include <QLatin1Char>
+#include <QLayoutItem>
+#include <QSignalBlocker>
+#include <QVariant>
+#include <QWidget>
 
-#include "../georeferencing_dialog.h"
-#include "../../core/crs_template.h"
-#include "../../core/georeferencing.h"
-#include "../../util/scoped_signals_blocker.h"
+#include "core/crs_template.h"
+#include "core/georeferencing.h"
 
+
+namespace OpenOrienteering {
 
 // Helper functions for parameter widgets
-namespace
-{
+namespace {
+
 static const char* crsParameterWidgetProperty = "CRS parameter widget";
 static const char* crsParameterKeyProperty    = "CRS parameter key";
 
@@ -61,7 +70,7 @@ QString ParameterKey(const QWidget* w)
 	return w->property(crsParameterKeyProperty).toString();
 }
 
-} // namespace
+}  // namespace
 
 
 
@@ -78,11 +87,7 @@ CRSSelector::CRSSelector(const Georeferencing& georef, QWidget* parent)
 	}
 }
 
-CRSSelector::~CRSSelector()
-{
-	// nothing, not inlined
-}
-
+CRSSelector::~CRSSelector() = default;
 
 void CRSSelector::setDialogLayout(QFormLayout* dialog_layout)
 {
@@ -380,3 +385,6 @@ void CRSSelector::changeEvent(QEvent* event)
 		; // nothing
 	}
 }
+
+
+}  // namespace OpenOrienteering

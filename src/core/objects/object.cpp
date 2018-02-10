@@ -23,26 +23,25 @@
 
 #include <cmath>
 
-#include <qmath.h>
-#include <QtCore/qnumeric.h>
-#include <QDebug>
+#include <QtMath>
+#include <QtNumeric>
 #include <QIODevice>
-#include <QXmlStreamAttributes>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
 #include <private/qbezier_p.h>
 
-#include "util/util.h"
-#include "fileformats/file_import_export.h"
-#include "core/symbols/symbol.h"
-#include "core/symbols/point_symbol.h"
-#include "core/symbols/line_symbol.h"
-#include "core/symbols/text_symbol.h"
-#include "core/map.h"
-#include "text_object.h"
-#include "core/renderables/renderable.h"
 #include "settings.h"
+#include "core/map.h"
+#include "core/objects/text_object.h"
+#include "core/renderables/renderable.h"
+#include "core/symbols/line_symbol.h"
+#include "core/symbols/point_symbol.h"
+#include "core/symbols/symbol.h"
+#include "core/symbols/text_symbol.h"
+#include "fileformats/file_format.h"
+#include "fileformats/file_import_export.h"
+#include "util/util.h"
 #include "util/xml_stream_util.h"
 
 
@@ -64,6 +63,8 @@ namespace literal
 }
 
 
+
+namespace OpenOrienteering {
 
 // ### Object implementation ###
 
@@ -108,16 +109,20 @@ Object::~Object()
 	// nothing
 }
 
-Object& Object::operator=(const Object& other)
+void Object::copyFrom(const Object& other)
 {
-	Q_ASSERT(type == other.type);
+	if (&other == this)
+		return;
+	
+	if (type != other.type)
+		throw std::invalid_argument(Q_FUNC_INFO);
+	
 	symbol = other.symbol;
 	coords = other.coords;
 	// map unchanged!
 	object_tags = other.object_tags;
 	output_dirty = true;
 	extent = other.extent;
-	return *this;
 }
 
 bool Object::equals(const Object* other, bool compare_symbol) const
@@ -126,8 +131,7 @@ bool Object::equals(const Object* other, bool compare_symbol) const
 		return false;
 	if (compare_symbol)
 	{
-		if ((!symbol && other->symbol) ||
-			(symbol && !other->symbol))
+		if (bool(symbol) != bool(other->symbol))
 			return false;
 		if (symbol && !symbol->equals(other->symbol))
 			return false;
@@ -205,6 +209,15 @@ bool Object::equals(const Object* other, bool compare_symbol) const
 	
 	return true;
 }
+
+
+
+bool Object::validate() const
+{
+	return true;
+}
+
+
 
 PointObject* Object::asPoint()
 {
@@ -393,7 +406,7 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 	Object::Type object_type = object_element.attribute<Object::Type>(literal::type);
 	Object* object = Object::getObjectForType(object_type);
 	if (!object)
-		throw FileFormatException(ImportExport::tr("Error while loading an object of type %1.").arg(object_type));
+		throw FileFormatException(::OpenOrienteering::ImportExport::tr("Error while loading an object of type %1.").arg(object_type));
 	
 	object->map = map;
 	
@@ -403,7 +416,7 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 	{
 		QString symbol_id =  object_element.attribute<QString>(literal::symbol);
 		object->symbol = symbol_dict[symbol_id]; // FIXME: cannot work for forward references
-		// NOTE: object->symbol may be NULL.
+		// NOTE: object->symbol may be nullptr.
 	}
 	
 	if (!object->symbol || !object->symbol->isTypeCompatibleTo(object))
@@ -425,7 +438,7 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 				break;
 			default:
 				throw FileFormatException(
-				  ImportExport::tr("Unable to find symbol for object at %1:%2.").
+				  ::OpenOrienteering::ImportExport::tr("Unable to find symbol for object at %1:%2.").
 				  arg(xml.lineNumber()).arg(xml.columnNumber()) );
 		}
 	}
@@ -437,7 +450,7 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 		if (point_symbol && point_symbol->isRotatable())
 			point->setRotation(object_element.attribute<float>(literal::rotation));
 		else if (!point_symbol)
-			throw FileFormatException(ImportExport::tr("Point object with undefined or wrong symbol at %1:%2.").arg(xml.lineNumber()).arg(xml.columnNumber()));
+			throw FileFormatException(::OpenOrienteering::ImportExport::tr("Point object with undefined or wrong symbol at %1:%2.").arg(xml.lineNumber()).arg(xml.columnNumber()));
 	}
 	else if (object_type == Text)
 	{
@@ -457,7 +470,7 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 			}
 			catch (FileFormatException& e)
 			{
-				throw FileFormatException(ImportExport::tr("Error while loading an object of type %1 at %2:%3: %4").
+				throw FileFormatException(::OpenOrienteering::ImportExport::tr("Error while loading an object of type %1 at %2:%3: %4").
 				  arg(object_type).arg(xml.lineNumber()).arg(xml.columnNumber()).arg(e.message()));
 			}
 		}
@@ -477,7 +490,7 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 					}
 					catch (std::range_error& e)
 					{
-						throw FileFormatException(MapCoord::tr(e.what()));
+						throw FileFormatException(::OpenOrienteering::MapCoord::tr(e.what()));
 					}
 				}
 				else
@@ -827,10 +840,11 @@ void Object::includeControlPointsRect(QRectF& rect) const
 	{
 		const TextObject* text = asText();
 		std::vector<QPointF> text_handles(text->controlPoints());
-		for (std::size_t i = 0; i < text_handles.size(); ++i)
-			rectInclude(rect, text_handles[i]);
+		for (auto& text_handle : text_handles)
+			rectInclude(rect, text_handle);
 	}
 }
+
 
 
 // ### PathPart ###
@@ -1030,19 +1044,18 @@ PathObject::PathObject(const PathPart &proto_part)
 	path_parts.emplace_back(*this, proto_part);
 }
    
-Object* PathObject::duplicate() const
+PathObject* PathObject::duplicate() const
 {
 	return new PathObject(*this);
 }
 
-PathObject& PathObject::operator=(const PathObject& other)
+void PathObject::copyFrom(const Object& other)
 {
-	return static_cast<PathObject&>(operator=(static_cast<const Object&>(other)));
-}
-
-Object& PathObject::operator=(const Object& other)
-{
-	Object::operator=(other);
+	if (&other == this)
+		return;
+	
+	Object::copyFrom(other);
+	
 	const PathObject& other_path = *other.asPath();
 	pattern_rotation = other_path.getPatternRotation();
 	pattern_origin = other_path.getPatternOrigin();
@@ -1053,8 +1066,19 @@ Object& PathObject::operator=(const Object& other)
 	{
 		path_parts.emplace_back(*this, part);
 	}
-	return *this;
 }
+
+
+
+bool PathObject::validate() const
+{
+	return std::all_of(begin(path_parts), end(path_parts), [](auto &part) {
+		return !part.isClosed()
+		       || part.coords[part.first_index] == part.coords[part.last_index];
+	});
+}
+
+
 
 void PathObject::normalize()
 {
@@ -1090,7 +1114,7 @@ void PathObject::normalize()
 	}
 }
 
-bool PathObject::intersectsBox(QRectF box) const
+bool PathObject::intersectsBox(const QRectF& box) const
 {
 	// Check path parts for an intersection with box
 	if (std::any_of(begin(path_parts), end(path_parts), [&box](const PathPart& part) { return part.intersectsBox(box); }))
@@ -2424,7 +2448,7 @@ int PathObject::isPointOnPath(MapCoordF coord, float tolerance, bool treat_areas
 	if (extended_selection && map && (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Combined))
 	{
 		// TODO: precalculate largest line extent for all symbols to move it out of this time critical method?
-		side_tolerance = qMax(side_tolerance, symbol->calculateLargestLineExtent(map));
+		side_tolerance = qMax(side_tolerance, float(symbol->calculateLargestLineExtent()));
 	}
 	
 	Symbol::Type contained_types = symbol->getContainedTypes();
@@ -3169,20 +3193,23 @@ PointObject::PointObject(const PointObject& proto)
 	// nothing
 }
 
-Object* PointObject::duplicate() const
+PointObject* PointObject::duplicate() const
 {
 	return new PointObject(*this);
 }
 
-Object& PointObject::operator=(const Object& other)
+void PointObject::copyFrom(const Object& other)
 {
-	Object::operator=(other);
+	if (&other == this)
+		return;
+	
+	Object::copyFrom(other);
 	const PointObject* point_other = other.asPoint();
 	const PointSymbol* point_symbol = getSymbol()->asPoint();
 	if (point_symbol && point_symbol->isRotatable())
 		setRotation(point_other->getRotation());
-	return *this;
 }
+
 
 void PointObject::setPosition(qint32 x, qint32 y)
 {
@@ -3228,7 +3255,10 @@ void PointObject::setRotation(MapCoordF vector)
 	setRotation(atan2(vector.x(), vector.y()));
 }
 
-bool PointObject::intersectsBox(QRectF box) const
+bool PointObject::intersectsBox(const QRectF& box) const
 {
 	return box.contains(QPointF(coords.front()));
 }
+
+
+}  // namespace OpenOrienteering

@@ -22,18 +22,29 @@
 
 #include <vector>
 
+#include <QtGlobal>
 #include <QHash>
+#include <QLatin1String>
 #include <QRectF>
+#include <QSizeF>
 #include <QString>
+#include <QStringRef>
+#include <QXmlStreamAttributes>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
-#include "fileformats/file_format.h"
+// IWYU pragma: no_include "core/map_coord.h"
 
+class QRectF;
+class QSizeF;
+class QXmlStreamReader;
+class QXmlStreamWriter;
 
-// Originally defined in map_coord.h, but we want to avoid the depedency.
-class MapCoord;
-typedef std::vector<MapCoord> MapCoordVector;
+namespace OpenOrienteering {
+
+class MapCoord;  // IWYU pragma: keep
+
+using MapCoordVector = std::vector<MapCoord>;
 
 
 /**
@@ -129,10 +140,18 @@ public:
 	 */
 	XmlElementWriter(QXmlStreamWriter& xml, const QLatin1String& element_name);
 	
+	XmlElementWriter(const XmlElementWriter&) = delete;
+	XmlElementWriter(XmlElementWriter&&) = delete;
+	
 	/**
 	 * Writes the end tag of the element.
 	 */
 	~XmlElementWriter();
+	
+	
+	XmlElementWriter& operator=(const XmlElementWriter&) = delete;
+	XmlElementWriter& operator=(XmlElementWriter&&) = delete;
+	
 	
 	/**
 	 * Writes an attribute with the given name and value.
@@ -272,12 +291,20 @@ public:
 	 */
 	XmlElementReader(QXmlStreamReader& xml);
 	
+	XmlElementReader(const XmlElementReader&) = delete;
+	XmlElementReader(XmlElementReader&&) = delete;
+	
 	/**
 	 * Destructor.
 	 * 
 	 * Reads until the end of the current element, skipping any child nodes.
 	 */
 	~XmlElementReader();
+	
+	
+	XmlElementReader& operator=(const XmlElementReader&) = delete;
+	XmlElementReader& operator=(XmlElementReader&&) = delete;
+	
 	
 	/**
 	 * Tests whether the element has an attribute with the given name.
@@ -440,13 +467,13 @@ void XmlElementWriter::writeAttribute(const QLatin1String& qualifiedName, const 
 inline
 void XmlElementWriter::writeAttribute(const QLatin1String& qualifiedName, const float value)
 {
-	xml.writeAttribute(qualifiedName, QString::number(value));
+	xml.writeAttribute(qualifiedName, QString::number(double(value)));
 }
 
 inline
 void XmlElementWriter::writeAttribute(const QLatin1String& qualifiedName, const float value, int precision)
 {
-	xml.writeAttribute(qualifiedName, QString::number(value, 'f', precision));
+	xml.writeAttribute(qualifiedName, QString::number(double(value), 'f', precision));
 }
 
 inline
@@ -617,7 +644,7 @@ long unsigned int XmlElementReader::attribute(const QLatin1String& qualifiedName
 	unsigned int value = 0;
 	const QStringRef ref = attributes.value(qualifiedName);
 	if (ref.size())
-		value = QString::fromRawData(ref.data(), ref.size()).toULong();
+		value = QString::fromRawData(ref.data(), ref.size()).toUInt();
 	return value;
 }
 
@@ -728,5 +755,8 @@ void XmlElementReader::read(QHash<QString, QString> &tags)
 			xml.skipCurrentElement();
 	}
 }
+
+
+}  // namespace OpenOrienteering
 
 #endif

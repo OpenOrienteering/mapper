@@ -20,8 +20,11 @@
 
 #include "recording_translator.h"
 
+#include <QtGlobal>
 #include <QDebug>
 
+
+namespace OpenOrienteering {
 
 RecordingTranslator::RecordingTranslator(QObject* parent)
  : QTranslator(parent)
@@ -45,3 +48,6 @@ QString RecordingTranslator::translate(const char* context, const char* sourceTe
 	static const QString null_string;
 	return null_string;
 }
+
+
+}  // namespace OpenOrienteering

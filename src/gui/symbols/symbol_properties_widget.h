@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012 Kai Pastor
+ *    Copyright 2012-2014, 2016, 2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,13 +22,24 @@
 #ifndef OPENORIENTEERING_SYMBOL_PROPERTIES_WIDGET_H
 #define OPENORIENTEERING_SYMBOL_PROPERTIES_WIDGET_H
 
+
+#include <vector>
+
+#include <QObject>
+#include <QString>
 #include <QTabWidget>
 
-#include "core/symbols/symbol.h"
-
-class QLineEdit;
-class QTextEdit;
 class QCheckBox;
+class QComboBox;
+class QLineEdit;
+class QPushButton;
+class QTextEdit;
+class QWidget;
+
+namespace OpenOrienteering {
+
+class Symbol;
+class SymbolSettingDialog;
 
 
 /**
@@ -43,7 +54,7 @@ public:
 	  */
 	SymbolPropertiesWidget(Symbol* symbol, SymbolSettingDialog* dialog);
 	
-	virtual ~SymbolPropertiesWidget();
+	~SymbolPropertiesWidget() override;
 	
 	/** Add a widget as a named group of properties */
 	void addPropertiesGroup(const QString& name, QWidget* widget);
@@ -75,19 +86,28 @@ signals:
 	void propertiesModified();
 	
 protected slots:
-	void numberChanged(QString text);
-	void nameChanged(QString text);
+	void numberChanged(const QString& text);
+	void languageChanged();
+	void editClicked();
+	void nameChanged(const QString& text);
 	void descriptionChanged();
 	void helperSymbolChanged(bool checked);
 	
 protected:
+	void updateTextEdits();
+	
 	Symbol* symbol;
 	SymbolSettingDialog* const dialog;
 	
-	QLineEdit** number_edit;
+	std::vector<QLineEdit*> number_editors;
+	QComboBox* language_combo;
+	QPushButton* edit_button;
 	QLineEdit* name_edit;
 	QTextEdit* description_edit;
 	QCheckBox* helper_symbol_check;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif // OPENORIENTEERING_SYMBOL_PROPERTIES_WIDGET_H

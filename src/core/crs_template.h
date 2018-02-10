@@ -19,18 +19,20 @@
  */
 
 
-#ifndef _OPENORIENTEERING_CRS_TEMPLATE_H_
-#define _OPENORIENTEERING_CRS_TEMPLATE_H_
+#ifndef OPENORIENTEERING_CRS_TEMPLATE_H
+#define OPENORIENTEERING_CRS_TEMPLATE_H
 
 #include <memory>
 #include <vector>
 
 #include <QString>
 
-class QObject;
 class QWidget;
 
+namespace OpenOrienteering {
+
 class Georeferencing;
+
 
 /**
  * Abstract base class for users of CRS parameter widgets.
@@ -38,6 +40,16 @@ class Georeferencing;
 class CRSParameterWidgetObserver
 {
 public:
+	CRSParameterWidgetObserver() noexcept = default;
+	
+	CRSParameterWidgetObserver(const CRSParameterWidgetObserver&) = delete;
+	CRSParameterWidgetObserver(CRSParameterWidgetObserver&&) = delete;
+	
+	virtual ~CRSParameterWidgetObserver();
+	
+	CRSParameterWidgetObserver& operator=(const CRSParameterWidgetObserver&) = delete;
+	CRSParameterWidgetObserver& operator=(CRSParameterWidgetObserver&&) = delete;
+	
 	/**
 	 * Informs the observer about a change in a CRS parameter widget.
 	 */
@@ -66,10 +78,16 @@ public:
 	 */
 	CRSTemplateParameter(const QString& id, const QString& name);
 	
+	CRSTemplateParameter(const CRSTemplateParameter&) = delete;
+	CRSTemplateParameter(CRSTemplateParameter&&) = delete;
+	
 	/**
 	 * Destructor.
 	 */
 	virtual ~CRSTemplateParameter();
+	
+	CRSTemplateParameter& operator=(const CRSTemplateParameter&) = delete;
+	CRSTemplateParameter& operator=(CRSTemplateParameter&&) = delete;
 	
 	/**
 	 * Returns the parameter's permanent unique ID.
@@ -300,5 +318,8 @@ const CRSTemplateRegistry::TemplateList& CRSTemplateRegistry::list() const
 {
 	return *templates;
 }
+
+
+}  // namespace OpenOrienteering
 
 #endif

@@ -19,11 +19,15 @@
 
 #include "map_part_undo.h"
 
-#include <vector>
+#include <QtGlobal>
+#include <QLatin1String>
+#include <QStringRef>
+#include <QXmlStreamReader>
 
 #include "core/map.h"
 #include "core/map_part.h"
 #include "util/xml_stream_util.h"
+
 
 namespace literal
 {
@@ -35,6 +39,10 @@ namespace literal
 	const QLatin1String modify("modify");
 	const QLatin1String name("name");
 }
+
+
+
+namespace OpenOrienteering {
 
 MapPartUndoStep::MapPartUndoStep(Map* map, MapPartChange change, const MapPart* part)
 : UndoStep(UndoStep::MapPartUndoStepType, map)
@@ -78,7 +86,7 @@ bool MapPartUndoStep::isValid() const
 // virtual
 UndoStep* MapPartUndoStep::undo()
 {
-	UndoStep* redo_step = NULL;
+	UndoStep* redo_step = nullptr;
 	switch (change)
 	{
 	case AddMapPart:
@@ -131,11 +139,13 @@ void MapPartUndoStep::getModifiedObjects(int, ObjectSet &) const
 	// nothing
 }
 
+#ifndef NO_NATIVE_FILE_FORMAT
 bool MapPartUndoStep::load(QIODevice *, int )
 {
 	// not supported
 	return false;
 }
+#endif
 
 // virtual
 void MapPartUndoStep::saveImpl(QXmlStreamWriter &xml) const
@@ -171,3 +181,6 @@ void MapPartUndoStep::loadImpl(QXmlStreamReader &xml, SymbolDictionary &)
 		name  = change_element.attribute<QString>(literal::name);
 	}
 }
+
+
+}  // namespace OpenOrienteering

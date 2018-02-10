@@ -21,7 +21,7 @@
 #ifndef OPENORIENTEERING_FILE_FORMAT_T_H
 #define OPENORIENTEERING_FILE_FORMAT_T_H
 
-#include <QtTest/QtTest>
+#include <QObject>
 
 
 /**
@@ -63,4 +63,4 @@ private slots:
 	void pristineMapTest();
 };
 
-#endif // _OPENORIENTEERING_FILE_FORMAT_T_H
+#endif // OPENORIENTEERING_FILE_FORMAT_T_H

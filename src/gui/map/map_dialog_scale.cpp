@@ -20,6 +20,8 @@
 
 #include "map_dialog_scale.h"
 
+#include <QDoubleSpinBox>
+#include <QCheckBox>
 #include <QDialogButtonBox>
 #include <QFormLayout>
 #include <QLabel>
@@ -30,6 +32,9 @@
 #include "core/map.h"
 #include "templates/template.h"
 #include "gui/util_gui.h"
+
+
+namespace OpenOrienteering {
 
 ScaleMapDialog::ScaleMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), map(map)
 {
@@ -109,11 +114,11 @@ ScaleMapDialog::ScaleMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt::
 	
 	setLayout(layout);
 	
-	connect(center_origin_radio, SIGNAL(clicked(bool)), this, SLOT(updateWidgets()));
-	connect(center_georef_radio, SIGNAL(clicked(bool)), this, SLOT(updateWidgets()));
-	connect(center_other_radio, SIGNAL(clicked(bool)), this, SLOT(updateWidgets()));
-	connect(button_box, SIGNAL(accepted()), this, SLOT(okClicked()));
-	connect(button_box, SIGNAL(rejected()), this, SLOT(reject()));
+	connect(center_origin_radio, &QAbstractButton::clicked, this, &ScaleMapDialog::updateWidgets);
+	connect(center_georef_radio, &QAbstractButton::clicked, this, &ScaleMapDialog::updateWidgets);
+	connect(center_other_radio, &QAbstractButton::clicked, this, &ScaleMapDialog::updateWidgets);
+	connect(button_box, &QDialogButtonBox::accepted, this, &ScaleMapDialog::okClicked);
+	connect(button_box, &QDialogButtonBox::rejected, this, &QDialog::reject);
 	
 	updateWidgets();
 }
@@ -137,3 +142,6 @@ void ScaleMapDialog::okClicked()
 	map->changeScale(scale, center, adjust_symbols_check->isChecked(), adjust_objects_check->isChecked(), adjust_georeferencing_check->isChecked(), adjust_templates_check->isChecked());
 	accept();
 }
+
+
+}  // namespace OpenOrienteering

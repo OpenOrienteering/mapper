@@ -28,6 +28,8 @@ class QString;
 class QStringList;
 
 
+namespace OpenOrienteering {
+
 /**
  * A utility class which takes care of GDAL settings and options.
  * 
@@ -105,5 +107,8 @@ public:
 	 */
 	void unsetParameter(const QString& key);
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif // OPENORIENTEERING_GDAL_MANAGER_H

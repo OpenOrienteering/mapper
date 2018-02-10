@@ -19,25 +19,26 @@
  */
 
 
-#ifndef _OPENORIENTEERING_GPS_DISPLAY_H_
-#define _OPENORIENTEERING_GPS_DISPLAY_H_
+#ifndef OPENORIENTEERING_GPS_DISPLAY_H
+#define OPENORIENTEERING_GPS_DISPLAY_H
 
 #include <QObject>
 #if defined(QT_POSITIONING_LIB)
-	#include <QtPositioning/QGeoPositionInfo>
-	#include <QtPositioning/QGeoPositionInfoSource>
+#  include <QGeoPositionInfo>  // IWYU pragma: keep
+#  include <QGeoPositionInfoSource>  // IWYU pragma: keep
+#else
+class QGeoPositionInfo;
+class QGeoPositionInfoSource;  // IWYU pragma: keep
 #endif
 
 #include "core/map_coord.h"
 
-QT_BEGIN_NAMESPACE
 class QPainter;
-class QGeoPositionInfo;
-class QGeoPositionInfoSource;
-QT_END_NAMESPACE
 
-class MapWidget;
+namespace OpenOrienteering {
+
 class Georeferencing;
+class MapWidget;
 
 
 /**
@@ -132,5 +133,8 @@ private:
 	bool distance_rings_enabled;
 	bool heading_indicator_enabled;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

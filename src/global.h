@@ -20,10 +20,15 @@
 #ifndef OPENORIENTEERING_GLOBAL_H
 #define OPENORIENTEERING_GLOBAL_H
 
+namespace OpenOrienteering {
+
 /** 
  * This is called at startup in main() and by the test cases
  * to do the global initializations.
  */
 void doStaticInitializations();
+
+
+}  // namespace OpenOrienteering
 
 #endif

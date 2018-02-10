@@ -21,6 +21,8 @@
 #include "text_browser.h"
 
 
+namespace OpenOrienteering {
+
 TextBrowser::TextBrowser(QWidget* parent)
 : QTextBrowser{ parent }
 {
@@ -28,10 +30,8 @@ TextBrowser::TextBrowser(QWidget* parent)
 }
 
 
-TextBrowser::~TextBrowser()
-{
-	// nothing, not inlined
-}
+TextBrowser::~TextBrowser() = default;
+
 
 
 QVariant TextBrowser::loadResource(int type, const QUrl& name)
@@ -52,3 +52,6 @@ QVariant TextBrowser::loadResource(int type, const QUrl& name)
 	}
 	return result;
 }
+
+
+}  // namespace OpenOrienteering

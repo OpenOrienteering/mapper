@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,25 +21,53 @@
 
 #include "template_image.h"
 
+#include <iterator>
+
+#include <Qt>
+#include <QtGlobal>
+#include <QtMath>
+#include <QAbstractButton>
+#include <QByteArray>
 #include <QDebug>
-#include <QFile>
+#include <QFlags>
 #include <QHBoxLayout>
+#include <QIcon>
 #include <QImageReader>
+#include <QIntValidator>
 #include <QLabel>
+#include <QLatin1String>
 #include <QLineEdit>
+#include <QList>
 #include <QMessageBox>
 #include <QPainter>
+#include <QPen>
+#include <QPoint>
 #include <QPushButton>
 #include <QRadioButton>
+#include <QRect>
+#include <QSize>
+#include <QStringRef>
+#include <QTransform>
+#include <QVBoxLayout>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
-#include "world_file.h"
 #include "core/georeferencing.h"
+#include "core/latlon.h"
 #include "core/map.h"
+#include "core/map_coord.h"
 #include "gui/georeferencing_dialog.h"
 #include "gui/select_crs_dialog.h"
+#include "gui/util_gui.h"
+#include "templates/world_file.h"
+#include "util/transformation.h"
 #include "util/util.h"
+
+// IWYU pragma: no_forward_declare QHBoxLayout
+// IWYU pragma: no_forward_declare QVBoxLayout
+
+
+namespace OpenOrienteering {
 
 const std::vector<QByteArray>& TemplateImage::supportedExtensions()
 {
@@ -60,8 +88,8 @@ TemplateImage::TemplateImage(const QString& path, Map* map) : Template(path, map
 	georef.reset(new Georeferencing());
 	
 	const Georeferencing& georef = map->getGeoreferencing();
-	connect(&georef, SIGNAL(projectionChanged()), this, SLOT(updateGeoreferencing()));
-	connect(&georef, SIGNAL(transformationChanged()), this, SLOT(updateGeoreferencing()));
+	connect(&georef, &Georeferencing::projectionChanged, this, &TemplateImage::updateGeoreferencing);
+	connect(&georef, &Georeferencing::transformationChanged, this, &TemplateImage::updateGeoreferencing);
 }
 TemplateImage::~TemplateImage()
 {
@@ -74,6 +102,8 @@ bool TemplateImage::saveTemplateFile() const
 	return image.save(template_path);
 }
 
+
+#ifndef NO_NATIVE_FILE_FORMAT
 bool TemplateImage::loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version)
 {
 	Q_UNUSED(version);
@@ -85,6 +115,8 @@ bool TemplateImage::loadTypeSpecificTemplateConfiguration(QIODevice* stream, int
 	
 	return true;
 }
+#endif
+
 
 void TemplateImage::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const
 {
@@ -240,7 +272,7 @@ void TemplateImage::unloadTemplateFileImpl()
 	image = QImage();
 }
 
-void TemplateImage::drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, bool on_screen, float opacity) const
+void TemplateImage::drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, float opacity) const
 {
 	Q_UNUSED(clip_rect);
 	Q_UNUSED(scale);
@@ -296,7 +328,7 @@ void TemplateImage::updateGeoreferencing()
 
 Template* TemplateImage::duplicateImpl() const
 {
-	TemplateImage* new_template = new TemplateImage(template_path, map);
+	auto new_template = new TemplateImage(template_path, map);
 	new_template->image = image;
 	new_template->available_georef = available_georef;
 	return new_template;
@@ -457,9 +489,17 @@ void TemplateImage::calculateGeoreferencing()
 			// TODO: world file lost, disable georeferencing or unload template
 			return;
 		}
-		if (!temp_crs_spec.isEmpty())
-			georef->setProjectedCRS(QString{}, temp_crs_spec);
-		georef->setTransformationDirectly(world_file.pixel_to_world);
+		auto pixel_to_world = world_file.pixel_to_world;
+		if (georef->isGeographic())
+		{
+			constexpr auto factor = qDegreesToRadians(1.0);
+			pixel_to_world = {
+			    pixel_to_world.m11() * factor, pixel_to_world.m12() * factor, 0,
+			    pixel_to_world.m21() * factor, pixel_to_world.m22() * factor, 0,
+			    pixel_to_world.m31() * factor, pixel_to_world.m32() * factor, 1
+			};
+		}
+		georef->setTransformationDirectly(pixel_to_world);
 	}
 	else if (available_georef == Georeferencing_GeoTiff)
 	{
@@ -569,31 +609,31 @@ TemplateImageOpenDialog::TemplateImageOpenDialog(TemplateImage* templ, QWidget* 
 	else
 		dpi_radio->setChecked(true);
 	
-	QHBoxLayout* mpp_layout = new QHBoxLayout();
+	auto mpp_layout = new QHBoxLayout();
 	mpp_layout->addWidget(mpp_radio);
 	mpp_layout->addWidget(mpp_edit);
 	mpp_layout->addStretch(1);
-	QHBoxLayout* dpi_layout = new QHBoxLayout();
+	auto dpi_layout = new QHBoxLayout();
 	dpi_layout->addWidget(dpi_radio);
 	dpi_layout->addWidget(dpi_edit);
 	dpi_layout->addWidget(dpi_label);
 	dpi_layout->addStretch(1);
-	QHBoxLayout* scale_layout = new QHBoxLayout();
+	auto scale_layout = new QHBoxLayout();
 	scale_layout->addSpacing(16);
 	scale_layout->addWidget(scale_label);
 	scale_layout->addWidget(scale_edit);
 	scale_layout->addStretch(1);
 	
-	QPushButton* cancel_button = new QPushButton(tr("Cancel"));
+	auto cancel_button = new QPushButton(tr("Cancel"));
 	open_button = new QPushButton(QIcon(QString::fromLatin1(":/images/arrow-right.png")), tr("Open"));
 	open_button->setDefault(true);
 	
-	QHBoxLayout* buttons_layout = new QHBoxLayout();
+	auto buttons_layout = new QHBoxLayout();
 	buttons_layout->addWidget(cancel_button);
 	buttons_layout->addStretch(1);
 	buttons_layout->addWidget(open_button);
 	
-	QVBoxLayout* layout = new QVBoxLayout();
+	auto layout = new QVBoxLayout();
 	layout->addWidget(size_label);
 	layout->addSpacing(16);
 	layout->addWidget(desc_label);
@@ -605,14 +645,14 @@ TemplateImageOpenDialog::TemplateImageOpenDialog(TemplateImage* templ, QWidget* 
 	layout->addLayout(buttons_layout);
 	setLayout(layout);
 	
-	connect(mpp_edit, SIGNAL(textEdited(QString)), this, SLOT(setOpenEnabled()));
-	connect(dpi_edit, SIGNAL(textEdited(QString)), this, SLOT(setOpenEnabled()));
-	connect(scale_edit, SIGNAL(textEdited(QString)), this, SLOT(setOpenEnabled()));
-	connect(cancel_button, SIGNAL(clicked(bool)), this, SLOT(reject()));
-	connect(open_button, SIGNAL(clicked(bool)), this, SLOT(doAccept()));
-	connect(georef_radio, SIGNAL(clicked(bool)), this, SLOT(radioClicked()));
-	connect(mpp_radio, SIGNAL(clicked(bool)), this, SLOT(radioClicked()));
-	connect(dpi_radio, SIGNAL(clicked(bool)), this, SLOT(radioClicked()));
+	connect(mpp_edit, &QLineEdit::textEdited, this, &TemplateImageOpenDialog::setOpenEnabled);
+	connect(dpi_edit, &QLineEdit::textEdited, this, &TemplateImageOpenDialog::setOpenEnabled);
+	connect(scale_edit, &QLineEdit::textEdited, this, &TemplateImageOpenDialog::setOpenEnabled);
+	connect(cancel_button, &QAbstractButton::clicked, this, &QDialog::reject);
+	connect(open_button, &QAbstractButton::clicked, this, &TemplateImageOpenDialog::doAccept);
+	connect(georef_radio, &QAbstractButton::clicked, this, &TemplateImageOpenDialog::radioClicked);
+	connect(mpp_radio, &QAbstractButton::clicked, this, &TemplateImageOpenDialog::radioClicked);
+	connect(dpi_radio, &QAbstractButton::clicked, this, &TemplateImageOpenDialog::radioClicked);
 	
 	radioClicked();
 }
@@ -656,3 +696,6 @@ void TemplateImageOpenDialog::doAccept()
 	templ->getMap()->setImageTemplateDefaults(mpp_radio->isChecked(), mpp_edit->text().toDouble(), dpi_edit->text().toDouble(), scale_edit->text().toDouble());
 	accept();
 }
+
+
+}  // namespace OpenOrienteering

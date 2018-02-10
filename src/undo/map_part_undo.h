@@ -17,12 +17,23 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_MAP_PART_UNDO_H_
-#define _OPENORIENTEERING_MAP_PART_UNDO_H_
+#ifndef OPENORIENTEERING_MAP_PART_UNDO_H
+#define OPENORIENTEERING_MAP_PART_UNDO_H
 
-#include "undo.h"
+#include <QString>
 
+#include "core/symbols/symbol.h"
+#include "undo/undo.h"
+
+class QIODevice;
+class QXmlStreamReader;
+class QXmlStreamWriter;
+
+namespace OpenOrienteering {
+
+class Map;
 class MapPart;
+
 
 /**
  * @brief A map part undo step handles addition, deletion and renaming of map parts.
@@ -58,30 +69,32 @@ public:
 	 */
 	MapPartUndoStep(Map* map);
 	
-	virtual ~MapPartUndoStep();
+	~MapPartUndoStep() override;
 	
 	/**
 	 * Returns true unless this step's type is UndefinedChange.
 	 */
-	virtual bool isValid() const;
+	bool isValid() const override;
 	
-	virtual UndoStep* undo();
+	UndoStep* undo() override;
 
-	virtual bool getModifiedParts(PartSet& out) const;
+	bool getModifiedParts(PartSet& out) const override;
 	
-	virtual void getModifiedObjects(int part_index, ObjectSet& out) const;
+	void getModifiedObjects(int part_index, ObjectSet& out) const override;
 	
+#ifndef NO_NATIVE_FILE_FORMAT
 	/**
 	 * Not implemented.
 	 * 
 	 * @deprecated Legacy file format.
 	 */
-	virtual bool load(QIODevice* file, int version);
+	bool load(QIODevice* file, int version) override;
+#endif
 	
 protected:
-	virtual void saveImpl(QXmlStreamWriter& xml) const;
+	void saveImpl(QXmlStreamWriter& xml) const override;
 	
-	virtual void loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict);
+	void loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict) override;
 	
 	MapPartChange change;
 	
@@ -89,5 +102,8 @@ protected:
 	
 	QString name;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif // MAP_PART_UNDO_H

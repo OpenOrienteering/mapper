@@ -21,7 +21,7 @@
 
 #include "global.h"
 
-#include "mapper_config.h"
+#include "mapper_config.h" // IWYU pragma: keep
 
 #include "fileformats/file_format_registry.h"
 #include "fileformats/native_file_format.h"
@@ -30,15 +30,24 @@
 #include "gdal/ogr_file_format.h"
 
 
+namespace OpenOrienteering {
+
 void doStaticInitializations()
 {
 	// Register the supported file formats
 	FileFormats.registerFormat(new XMLFileFormat());
+#ifndef MAPPER_BIG_ENDIAN
 	FileFormats.registerFormat(new OcdFileFormat());
+#endif
 #ifdef MAPPER_USE_GDAL
 	FileFormats.registerFormat(new OgrFileFormat());
 #endif
+#ifndef MAPPER_BIG_ENDIAN
 #ifndef NO_NATIVE_FILE_FORMAT
 	FileFormats.registerFormat(new NativeFileFormat()); // TODO: Remove before release 1.0
 #endif
+#endif
 }
+
+
+}  // namespace OpenOrienteering

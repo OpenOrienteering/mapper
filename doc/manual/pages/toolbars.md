@@ -21,7 +21,7 @@ todo:
  * [Editing toolbar](#editing-toolbar)
  * [Advanced drawing](#advanced-drawing-toolbar)
 
-## Toolbar positions and visibility
+## Toolbar positions and visibility  {#toolbar-visibility}
 
 Toolbars may be moved to a more convenient position. To detach and move, pick the handle at the left end and drag the toolbar to your preferred position. The resulting order of your toolbars may thus be different from this page.
 
@@ -189,9 +189,9 @@ This tool draws both line and area objects by approximating the path taken by th
 #### ![ ](../mapper-images/tool-fill.png) Fill bounded areas {#tool_fill}
 F
 
-This tool fills areas of unbroken white space with an area symbol. To use this tool, select the area symbol then click on white space i.e. any place not already covered by another area object. Internally, this tool first finds all paths, which can belong to many different objects, that form a boundary around the unbroken white space. A new closed shape is created that has the same paths as the white space boundary and is filled with your chosen symbol. Also, if you use this tool with a line symbol selected, then a border around the white space will be created. 
+This tool fills areas of unbroken white space with an area symbol. To use this tool, select the area symbol then click on white space i.e. any place not already covered by another area object. Internally, this tool first finds all paths, which can belong to many different objects, that form a boundary around the unbroken white space. A new closed shape is created that has the same paths as the white space boundary and is filled with your chosen symbol. Also, if you use this tool with a line symbol selected, then a border around the white space will be created.
 
-*Attention:* This tool will not work if your chosen white space is not completely contained by other path objects. 
+*Attention:* This tool will not work if your chosen white space is not completely contained by other path objects.
 
 #### ![ ](../mapper-images/draw-text.png) Write text {#tool_draw_text}
 T
@@ -233,7 +233,7 @@ This tool changes the symbols of the selected objects to another. To use it, sel
 #### ![ ](../mapper-images/tool-fill-border.png) Fill / Create border {#fill_create_border}
 Ctrl+F
 
-Having drawn a [closed boundary](drawing_toolbar.md#closed-paths) which requires a fill (such as a fence containing a thicket) select the boundary on the map (using the [point edit tool](#tool_edit_point) tool), then choose the required fill symbol in the symbols window. (*Attention:* with default settings, it is not possible to do this the other way round as selecting an object will select its symbol, so the initial symbol selection is discarded.) A left click on the fill tool will put the chosen fill into the selected boundary.
+Having drawn a [closed boundary](#drawing-toolbar) which requires a fill (such as a fence containing a thicket) select the boundary on the map (using the [point edit tool](#tool_edit_point) tool), then choose the required fill symbol in the symbols window. (*Attention:* with default settings, it is not possible to do this the other way round as selecting an object will select its symbol, so the initial symbol selection is discarded.) A left click on the fill tool will put the chosen fill into the selected boundary.
 
 Internally, this tool creates a duplicate of the selected object and assigns it the selected symbol. So, in addition to filling closed boundaries, it is also possible to create a boundary around an area, or create duplicates of lines with another symbol using this tool.
 
@@ -263,7 +263,7 @@ K
 
 This tool cuts a selected existing line or area object into two parts.
 
-To cut **lines*, click at the point where it is desired to break the line. The object will be split into two at this point and both will be selected, so it is possible to insert more cuts after the first. It is also possible to click on a line and drag the mouse along it to remove the marked part completely.
+To cut **lines**, click at the point where it is desired to break the line. The object will be split into two at this point and both will be selected, so it is possible to insert more cuts after the first. It is also possible to click on a line and drag the mouse along it to remove the marked part completely.
 
 To cut an **area object**, select it and draw a cut line from one side of its boundary to another. Drawing works exactly as with the [draw path tool](#tool_draw_path). It is necessary to start and end the cut line on the boundary of the area to be cut. It is not sufficient to cross the boundary; both ends of the line must be on the boundary within a tolerance of 5 pixels (this may be altered in the [settings dialog](settings.md)). The cut line may contain any number of internal vertices and can be polygonal or curved. The cut occurs immediately when the line is finished on the boundary (with a right click or double click).
 
@@ -281,7 +281,7 @@ If the line describing the hole crosses the boundary of the object, the area out
 #### ![ ](../mapper-images/tool-rotate.png) Rotate object(s) {#rotate}
 R
 
-This tool rotates any selected object(s), which can include the whole map, about a selected pivot point and by any angle. Select the item(s) to be rotated using the [point edit tool](#tool_edit_point), then click the rotate tool. 
+This tool rotates any selected object(s), which can include the whole map, about a selected pivot point and by any angle. Select the item(s) to be rotated using the [point edit tool](#tool_edit_point), then click the rotate tool.
 
 The rotation center will be marked with a small circle. Initially it is located at the bounding box midpoint of the selected objects, but it can be set to any position by clicking on the map. Then click somewhere at a convenient radius from the rotation center and move the selected objects about the rotation center to the desired position by dragging the mouse. By holding Ctrl, the rotation angle can be constrained to angles in a fixed stepping.
 

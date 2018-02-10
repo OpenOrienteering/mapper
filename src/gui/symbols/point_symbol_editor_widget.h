@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -18,32 +19,42 @@
  */
 
 
-#ifndef _OPENORIENTEERING_SYMBOL_POINT_EDITOR_H_
-#define _OPENORIENTEERING_SYMBOL_POINT_EDITOR_H_
+#ifndef OPENORIENTEERING_SYMBOL_POINT_EDITOR_H
+#define OPENORIENTEERING_SYMBOL_POINT_EDITOR_H
 
+#include <QtGlobal>
+#include <QObject>
+#include <QString>
 #include <QWidget>
 
-#include "tools/tool.h"
+#include "core/map_coord.h"
 #include "gui/map/map_editor_activity.h"
+#include "tools/tool.h"
 
 class QCheckBox;
 class QComboBox;
+class QCursor;
 class QDoubleSpinBox;
 class QLabel;
-class QLineEdit;
 class QListWidget;
+class QMouseEvent;
+class QPainter;
 class QPushButton;
-class QSpinBox;
 class QStackedWidget;
 class QTableWidget;
 
-class PointSymbolEditorActivity;
+namespace OpenOrienteering {
+
+class ColorDropDown;
+class Map;
+class MapEditorController;
+class MapWidget;
+class Object;
 class PointObject;
 class PointSymbol;
-class ColorDropDown;
+class PointSymbolEditorActivity;
 class Symbol;
-class Object;
-class Map;
+
 
 /** A Widget for editing point symbol definitions */
 class PointSymbolEditorWidget : public QWidget
@@ -57,9 +68,9 @@ public:
 	 * @param offset_y The vertical offset of the point symbol preview/editor from the origin
 	 * @param permanent_preview A flag indicating wheter the preview shall be visible even if the editor is not visible
 	 */
-	PointSymbolEditorWidget(MapEditorController* controller, PointSymbol* symbol, float offset_y = 0, bool permanent_preview = false, QWidget* parent = 0);
+	PointSymbolEditorWidget(MapEditorController* controller, PointSymbol* symbol, qreal offset_y = 0, bool permanent_preview = false, QWidget* parent = 0);
 	
-	virtual ~PointSymbolEditorWidget();
+	~PointSymbolEditorWidget() override;
 	
 	/** Add a coordinate to the current element.
 	 *  @return true if successful
@@ -75,7 +86,7 @@ public:
 	void setEditorActive(bool active);
 	
 	/** Request to hide or show the editor. */
-	virtual void setVisible(bool visible);
+	void setVisible(bool visible) override;
 	
 signals:
 	/** This signal gets emitted whenever the symbol appearance is modified. */
@@ -157,7 +168,7 @@ private:
 	QPushButton* delete_coord_button;
 	QPushButton* center_coords_button;
 	
-	const float offset_y;
+	const qreal offset_y;
 	PointSymbolEditorActivity* activity;
 	Map* map;
 	MapEditorController* controller;
@@ -166,18 +177,21 @@ private:
 
 
 
-/** PointSymbolEditorActivity allows to add or modify coordinates of point symbol elements
- *  by clicking in the map.
+/**
+ * PointSymbolEditorActivity allows to add or modify coordinates of point symbol elements
+ * by clicking in the map.
  */
 class PointSymbolEditorTool : public MapEditorTool
 {
 Q_OBJECT
+	
 public:
 	PointSymbolEditorTool(MapEditorController* editor, PointSymbolEditorWidget* symbol_editor);
+	~PointSymbolEditorTool() override;
 	
-	virtual void init();
-	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* map_widget);
-	virtual const QCursor& getCursor() const;
+	void init() override;
+	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* map_widget) override;
+	const QCursor& getCursor() const override;
 	
 private:
 	PointSymbolEditorWidget* const symbol_editor;
@@ -185,17 +199,22 @@ private:
 
 
 
-/** PointSymbolEditorActivity draws a small cross in the origin of the map coordinate system.
- *  FIXME: This cross may cover the symbol at small scales.
+/**
+ * PointSymbolEditorActivity draws a small cross in the origin of the map coordinate system.
+ * 
+ * \todo Fix that thes cross may cover the symbol at small scales.
  */
 class PointSymbolEditorActivity : public MapEditorActivity
 {
+	Q_OBJECT
+	
 public:
 	PointSymbolEditorActivity(Map* map, PointSymbolEditorWidget* symbol_editor);
+	~PointSymbolEditorActivity() override;
 	
-	virtual void init();
+	void init() override;
 	void update();
-	virtual void draw(QPainter* painter, MapWidget* map_widget);
+	void draw(QPainter* painter, MapWidget* map_widget) override;
 	
 private:
 	Map* const map;
@@ -203,5 +222,8 @@ private:
 	
 	static const int cross_radius; // NOTE: This could be a configuration option.
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

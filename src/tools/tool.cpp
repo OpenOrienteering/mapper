@@ -21,23 +21,27 @@
 
 #include "tool.h"
 
+#include <cstddef>
+#include <limits>
+#include <vector>
+
 #include <QAction>
-#include <QApplication>
-#include <QMouseEvent>
+#include <QBrush>
 #include <QPainter>
-#include <QTimer>
+#include <QPen>
+#include <QPixmap>
+#include <QPoint>
+#include <QRect>
 
 #include "settings.h"
-#include "core/map.h"
 #include "core/objects/object.h"
 #include "core/objects/text_object.h"
 #include "gui/main_window.h"
 #include "gui/map/map_editor.h"
 #include "gui/map/map_widget.h"
-#include "tool_helpers.h"
-#include "undo/object_undo.h"
-#include "util/util.h"
 
+
+namespace OpenOrienteering {
 
 namespace {
 
@@ -49,7 +53,10 @@ qreal distanceSquared(QPointF a, const QPointF& b)
 	return QPointF::dotProduct(a, a); // introduced in Qt 5.1
 }
 
-} // namespace
+
+}  // namespace
+
+
 
 const QRgb MapEditorTool::inactive_color = qRgb(0, 0, 255);
 const QRgb MapEditorTool::active_color = qRgb(255, 150, 0);
@@ -60,13 +67,8 @@ MapEditorTool::MapEditorTool(MapEditorController* editor, Type type, QAction* to
 , editor(editor)
 , tool_action(tool_action)
 , tool_type(type)
-, click_tolerance(Settings::getInstance().getMapEditorClickTolerancePx())
-, scale_factor(newScaleFactor())
-, editing_in_progress(false)
-, uses_touch_cursor(true)
-, draw_on_right_click(Settings::getInstance().getSettingCached(Settings::MapEditor_DrawLastPointOnRightClick).toBool())
-, point_handles(scale_factor)
 {
+	settingsChanged();
 	connect(&Settings::getInstance(), &Settings::settingsChanged, this, &MapEditorTool::settingsChanged);
 }
 
@@ -115,63 +117,63 @@ void MapEditorTool::setEditingInProgress(bool state)
 }
 
 
-void MapEditorTool::draw(QPainter*, MapWidget*)
+void MapEditorTool::draw(QPainter* /*painter*/, MapWidget* /*widget*/)
 {
 	// nothing
 }
 
 
-bool MapEditorTool::mousePressEvent(QMouseEvent*, MapCoordF, MapWidget* )
+bool MapEditorTool::mousePressEvent(QMouseEvent* /*event*/, MapCoordF /*map_coord*/, MapWidget* /*widget*/)
 {
 	return false;
 }
 
-bool MapEditorTool::mouseMoveEvent(QMouseEvent*, MapCoordF, MapWidget*)
+bool MapEditorTool::mouseMoveEvent(QMouseEvent* /*event*/, MapCoordF /*map_coord*/, MapWidget* /*widget*/)
 {
 	return false;
 }
 
-bool MapEditorTool::mouseReleaseEvent(QMouseEvent*, MapCoordF, MapWidget*)
+bool MapEditorTool::mouseReleaseEvent(QMouseEvent* /*event*/, MapCoordF /*map_coord*/, MapWidget* /*widget*/)
 {
 	return false;
 }
 
-bool MapEditorTool::mouseDoubleClickEvent(QMouseEvent*, MapCoordF, MapWidget*)
+bool MapEditorTool::mouseDoubleClickEvent(QMouseEvent* /*event*/, MapCoordF /*map_coord*/, MapWidget* /*widget*/)
 {
 	return false;
 }
 
-void MapEditorTool::leaveEvent(QEvent*)
+void MapEditorTool::leaveEvent(QEvent* /*event*/)
 {
 	// nothing
 }
 
-bool MapEditorTool::keyPressEvent(QKeyEvent*)
+bool MapEditorTool::keyPressEvent(QKeyEvent* /*event*/)
 {
 	return false;
 }
 
-bool MapEditorTool::keyReleaseEvent(QKeyEvent*)
+bool MapEditorTool::keyReleaseEvent(QKeyEvent* /*event*/)
 {
 	return false;
 }
 
-void MapEditorTool::focusOutEvent(QFocusEvent*)
+void MapEditorTool::focusOutEvent(QFocusEvent* /*event*/)
 {
 	// nothing
 }
 
-bool MapEditorTool::inputMethodEvent(QInputMethodEvent*)
+bool MapEditorTool::inputMethodEvent(QInputMethodEvent* /*event*/)
 {
 	return false;
 }
 
-QVariant MapEditorTool::inputMethodQuery(Qt::InputMethodQuery, QVariant) const
+QVariant MapEditorTool::inputMethodQuery(Qt::InputMethodQuery /*property*/, const QVariant& /*argument*/) const
 {
 	return {};
 }
 
-bool MapEditorTool::gestureEvent(QGestureEvent*, MapWidget*)
+bool MapEditorTool::gestureEvent(QGestureEvent* /*event*/, MapWidget* /*widget*/)
 {
 	return false;
 }
@@ -185,14 +187,14 @@ void MapEditorTool::gestureStarted()
 // static
 QCursor MapEditorTool::scaledToScreen(const QCursor& unscaled_cursor)
 {
-	auto scale = Settings::getInstance().getSetting(Settings::General_PixelsPerInch).toReal() / 96.0;
+	auto scale = Settings::getInstance().getSetting(Settings::General_PixelsPerInch).toReal() / 96;
 	if (unscaled_cursor.shape() == Qt::BitmapCursor
 	    && scale > 1.5)
 	{
 		// Need to scale our low res image for high DPI screen
 		const auto unscaled_pixmap = unscaled_cursor.pixmap();
 		const auto scaled_hotspot = QPointF{ unscaled_cursor.hotSpot() } * scale;
-		return QCursor{ unscaled_pixmap.scaledToWidth(unscaled_pixmap.width() * scale, Qt::SmoothTransformation),
+		return QCursor{ unscaled_pixmap.scaledToWidth(qRound(unscaled_pixmap.width() * scale), Qt::SmoothTransformation),
 		                qRound(scaled_hotspot.x()), qRound(scaled_hotspot.y()) };
 	}
 	else
@@ -266,7 +268,7 @@ void MapEditorTool::drawSelectionBox(QPainter* painter, MapWidget* widget, const
 
 MapCoordVector::size_type MapEditorTool::findHoverPoint(QPointF cursor, const MapWidget* widget, const Object* object, bool include_curve_handles, MapCoordF* out_handle_pos) const
 {
-	const float click_tolerance_squared = click_tolerance * click_tolerance;
+	const auto click_tolerance_squared = click_tolerance * click_tolerance;
 	auto best_index = std::numeric_limits<MapCoordVector::size_type>::max();
 	
 	if (object->getType() == Object::Point)
@@ -298,15 +300,15 @@ MapCoordVector::size_type MapEditorTool::findHoverPoint(QPointF cursor, const Ma
 		const PathObject* path = reinterpret_cast<const PathObject*>(object);
 		auto size = path->getCoordinateCount();
 		
-		float best_dist_sq = click_tolerance_squared;
+		auto best_dist_sq = click_tolerance_squared;
 		for (auto i = size - 1; i < size; --i)
 		{
 			if (!path->getCoordinate(i).isClosePoint())
 			{
-				float distance_sq = distanceSquared(widget->mapToViewport(path->getCoordinate(i)), cursor);
-				bool is_handle = (i >= 1 && path->getCoordinate(i - 1).isCurveStart()) ||
-									(i >= 2 && path->getCoordinate(i - 2).isCurveStart());
-				if (distance_sq < best_dist_sq || (distance_sq == best_dist_sq && is_handle))
+				auto distance_sq = distanceSquared(widget->mapToViewport(path->getCoordinate(i)), cursor);
+				bool is_handle = (i >= 1 && path->getCoordinate(i - 1).isCurveStart())
+				                 || (i >= 2 && path->getCoordinate(i - 2).isCurveStart() );
+				if (distance_sq < best_dist_sq || (is_handle && qIsNull(distance_sq - best_dist_sq)))
 				{
 					best_index = i;
 					best_dist_sq = distance_sq;
@@ -342,26 +344,37 @@ bool MapEditorTool::isDrawingButton(Qt::MouseButton button) const
 	return (draw_on_right_click && button == Qt::RightButton && editingInProgress());
 }
 
-// static
-int MapEditorTool::newScaleFactor()
+
+namespace
 {
-	// NOTE: The returned value must be supported by PointHandles::loadHandleImage() !
-	int factor = 1;
-	const float base_dpi = 96.0f;
-	const float ppi = Settings::getInstance().getSettingCached(Settings::General_PixelsPerInch).toFloat();
-	if (ppi > base_dpi*2)
-		factor = 4;
-	else if (ppi > base_dpi)
-		factor = 2;
-	return factor;
-}
+	/**
+	 * Returns the drawing scale value for the current pixel-per-inch setting.
+	 */
+	unsigned int calculateScaleFactor()
+	{
+		// NOTE: The returned value must be supported by PointHandles::loadHandleImage() !
+		const auto base_dpi = qreal(96);
+		const auto ppi = Settings::getInstance().getSettingCached(Settings::General_PixelsPerInch).toReal();
+		if (ppi <= base_dpi)
+			return 1;
+		else if (ppi <= base_dpi*2)
+			return 2;
+		else
+			return 4;
+	}
+	
+}  // namespace
+
 
 // slot
 void MapEditorTool::settingsChanged()
 {
 	click_tolerance = Settings::getInstance().getMapEditorClickTolerancePx();
-	scale_factor = newScaleFactor();
-	point_handles = PointHandles(scale_factor);
+	start_drag_distance = Settings::getInstance().getStartDragDistancePx();
+	scale_factor = calculateScaleFactor();
+	point_handles.setScaleFactor(scale_factor);
 	draw_on_right_click = Settings::getInstance().getSettingCached(Settings::MapEditor_DrawLastPointOnRightClick).toBool();
 }
 
+
+}  // namespace OpenOrienteering

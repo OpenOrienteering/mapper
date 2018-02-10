@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,36 +19,40 @@
  */
 
 
-#ifndef _OPENORIENTEERING_RENDERABLE_IMPLENTATION_H_
-#define _OPENORIENTEERING_RENDERABLE_IMPLENTATION_H_
+#ifndef OPENORIENTEERING_RENDERABLE_IMPLENTATION_H
+#define OPENORIENTEERING_RENDERABLE_IMPLENTATION_H
 
-#include <QPainter>
+#include <Qt>
+#include <QtGlobal>
+#include <QPainterPath>
+#include <QPointF>
+#include <QRectF>
 
-#include "core/objects/object.h"
 #include "renderable.h"
 
-class QPainterPath;
+class QPainter;
+class QPointF;
+
+namespace OpenOrienteering {
 
 class AreaSymbol;
 class LineSymbol;
-class Map;
 class MapColor;
 class MapCoordF;
-class Object;
-class PathCoordVector;
+class PathPartVector;
 class PointSymbol;
-class Symbol;
 class TextObject;
-struct TextObjectLineInfo;
 class TextSymbol;
+class VirtualPath;
+
 
 /** Renderable for displaying a filled dot. */
 class DotRenderable : public Renderable
 {
 public:
 	DotRenderable(const PointSymbol* symbol, MapCoordF coord);
-	virtual void render(QPainter& painter, const RenderConfig& config) const override;
-	virtual PainterConfig getPainterConfig(const QPainterPath* clip_path = nullptr) const override;
+	void render(QPainter& painter, const RenderConfig& config) const override;
+	PainterConfig getPainterConfig(const QPainterPath* clip_path = nullptr) const override;
 };
 
 /** Renderable for displaying a circle. */
@@ -56,11 +60,11 @@ class CircleRenderable : public Renderable
 {
 public:
 	CircleRenderable(const PointSymbol* symbol, MapCoordF coord);
-	virtual void render(QPainter& painter, const RenderConfig& config) const override;
-	virtual PainterConfig getPainterConfig(const QPainterPath* clip_path = nullptr) const override;
+	void render(QPainter& painter, const RenderConfig& config) const override;
+	PainterConfig getPainterConfig(const QPainterPath* clip_path = nullptr) const override;
 	
 protected:
-	const float line_width;
+	const qreal line_width;
 	QRectF rect;
 };
 
@@ -70,15 +74,15 @@ class LineRenderable : public Renderable
 public:
 	LineRenderable(const LineSymbol* symbol, const VirtualPath& virtual_path, bool closed);
 	LineRenderable(const LineSymbol* symbol, QPointF first, QPointF second);
-	virtual void render(QPainter& painter, const RenderConfig& config) const override;
-	virtual PainterConfig getPainterConfig(const QPainterPath* clip_path = nullptr) const override;
+	void render(QPainter& painter, const RenderConfig& config) const override;
+	PainterConfig getPainterConfig(const QPainterPath* clip_path = nullptr) const override;
 	
 protected:
-	void extentIncludeCap(quint32 i, float half_line_width, bool end_cap, const LineSymbol* symbol, const VirtualPath& path);
+	void extentIncludeCap(quint32 i, qreal half_line_width, bool end_cap, const LineSymbol* symbol, const VirtualPath& path);
 	
-	void extentIncludeJoin(quint32 i, float half_line_width, const LineSymbol* symbol, const VirtualPath& path);
+	void extentIncludeJoin(quint32 i, qreal half_line_width, const LineSymbol* symbol, const VirtualPath& path);
 	
-	const float line_width;
+	const qreal line_width;
 	QPainterPath path;
 	Qt::PenCapStyle cap_style;
 	Qt::PenJoinStyle join_style;
@@ -90,8 +94,8 @@ class AreaRenderable : public Renderable
 public:
 	AreaRenderable(const AreaSymbol* symbol, const PathPartVector& path_parts);
 	AreaRenderable(const AreaSymbol* symbol, const VirtualPath& path);
-	virtual void render(QPainter& painter, const RenderConfig& config) const override;
-	virtual PainterConfig getPainterConfig(const QPainterPath* clip_path = nullptr) const override;
+	void render(QPainter& painter, const RenderConfig& config) const override;
+	PainterConfig getPainterConfig(const QPainterPath* clip_path = nullptr) const override;
 	
 	inline const QPainterPath* painterPath() const;
 	
@@ -113,10 +117,10 @@ protected:
 	void renderCommon(QPainter& painter, const RenderConfig& config) const;
 	
 	QPainterPath path;
-	double anchor_x;
-	double anchor_y;
-	double rotation;
-	double scale_factor;
+	qreal anchor_x;
+	qreal anchor_y;
+	qreal rotation;
+	qreal scale_factor;
 };
 
 /** Renderable for displaying framing line for text. */
@@ -128,7 +132,7 @@ public:
 	void render(QPainter& painter, const RenderConfig& config) const override;
 	
 protected:
-	double framing_line_width;
+	qreal framing_line_width;
 };
 
 
@@ -141,5 +145,6 @@ const QPainterPath* AreaRenderable::painterPath() const
 }
 
 
+}  // namespace OpenOrienteering
 
 #endif

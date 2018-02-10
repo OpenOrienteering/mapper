@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -18,12 +18,14 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_RENDERABLE_H_
-#define _OPENORIENTEERING_RENDERABLE_H_
+#ifndef OPENORIENTEERING_RENDERABLE_H
+#define OPENORIENTEERING_RENDERABLE_H
 
 #include <map>
 #include <vector>
 
+#include <QtGlobal>
+#include <QFlags>
 #include <QRectF>
 #include <QSharedData>
 #include <QExplicitlySharedDataPointer>
@@ -33,10 +35,14 @@
 class QColor;
 class QPainter;
 class QPainterPath;
+// IWYU pragma: no_forward_declare QRectF
+
+namespace OpenOrienteering {
 
 class Map;
 class Object;
 class PainterConfig;
+
 
 /**
  * This class contains rendering configuration values.
@@ -108,23 +114,23 @@ public:
  * This is the abstract base class. Inheriting classes must implement the
  * abstract methods, and they must set the extent during construction.
  */
-class Renderable
+class Renderable  // clazy:exclude=copyable-polymorphic
 {
 protected:
 	/** The constructor for new renderables. */
 	explicit Renderable(const MapColor* color);
 	
-	/** The copy constructor is default but protected. */
-	explicit Renderable(const Renderable&) = default;
-	
-	/** The assignment operator is default but protected. */
-	Renderable& operator=(const Renderable&) = default;
-	
 public:
+	Renderable(const Renderable&) = delete;
+	Renderable(Renderable&&) = delete;
+	
 	/**
 	 * The destructor.
 	 */
 	virtual ~Renderable();
+	
+	Renderable& operator=(const Renderable&) = delete;
+	Renderable& operator=(Renderable&&) = delete;
 	
 	/**
 	 * Returns the extent (bounding box).
@@ -235,6 +241,9 @@ class SharedRenderables : public QSharedData, public std::map< PainterConfig, Re
 {
 public:
 	typedef QExplicitlySharedDataPointer<SharedRenderables> Pointer;
+	SharedRenderables() = default;
+	SharedRenderables(const SharedRenderables&) = delete;
+	SharedRenderables& operator=(const SharedRenderables&) = delete;
 	~SharedRenderables();
 	void deleteRenderables();
 	void compact(); // release memory which is occupied by unused PainterConfig, FIXME: maybe call this regularly...
@@ -251,20 +260,25 @@ class ObjectRenderables : protected std::map<int, SharedRenderables::Pointer>
 friend class MapRenderables;
 public:
 	ObjectRenderables(Object& object);
+	ObjectRenderables(const ObjectRenderables&) = delete;
+	ObjectRenderables& operator=(const ObjectRenderables&) = delete;
 	~ObjectRenderables();
 	
 	inline void insertRenderable(Renderable* r);
-	void insertRenderable(Renderable* r, PainterConfig state);
+	void insertRenderable(Renderable* r, const PainterConfig& state);
 	
 	void clear();
 	void deleteRenderables();
 	void takeRenderables();
 	
 	/**
-	 * Draws all renderables in this container directly with the given color.
-	 * May e.g. be used to encode object ids as colors.
+	 * Draws all renderables matching the given map color with the given color.
+	 * 
+	 * If map_color is -1, this functions draws all renderables of color which
+	 * are not in the list of map colors (i.e. objects with undefined symbol).
+	 * Used by FillTool to encode object IDs as colors.
 	 */
-	void draw(const QColor& color, QPainter* painter, const RenderConfig& config) const;
+	void draw(int map_color, const QColor& color, QPainter* painter, const RenderConfig& config) const;
 	
 	void setClipPath(const QPainterPath* path);
 	const QPainterPath* getClipPath() const;
@@ -273,7 +287,7 @@ public:
 	
 private:
 	QRectF& extent;
-	const QPainterPath* clip_path; // no memory management here!
+	const QPainterPath* clip_path = nullptr; // no memory management here!
 };
 
 
@@ -361,8 +375,6 @@ private:
 
 
 // ### RenderConfig ###
-
-Q_DECLARE_OPERATORS_FOR_FLAGS(RenderConfig::Options)
 
 inline
 bool RenderConfig::testFlag(const RenderConfig::Option flag) const
@@ -464,6 +476,11 @@ bool MapRenderables::empty() const
 	return std::map<int, ObjectRenderablesMap>::empty();
 }
 
+
+}  // namespace OpenOrienteering
+
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(OpenOrienteering::RenderConfig::Options)
 
 
 #endif

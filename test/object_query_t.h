@@ -1,5 +1,6 @@
 /*
  *    Copyright 2016 Mitchell Krome
+ *    Copyright 2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,9 +21,11 @@
 #ifndef OPENORIENTEERING_OBJECT_QUERY_T_H
 #define OPENORIENTEERING_OBJECT_QUERY_T_H
 
-#include <QtTest/QtTest>
+#include <QObject>
 
-class Object;
+namespace OpenOrienteering { class Object; }
+using OpenOrienteering::Object;
+
 
 /**
  * @test Tests object query
@@ -39,6 +42,11 @@ private slots:
 	void testContainsQuery();
 	void testOrQuery();
 	void testAndQuery();
+	void testSearch();
+	void testObjectText();
+	void testSymbol();
+	void testToString();
+	void testParser();
 
 private:
 	const Object* testObject();

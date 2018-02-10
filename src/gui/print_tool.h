@@ -24,11 +24,22 @@
 
 #ifdef QT_PRINTSUPPORT_LIB
 
-#include <QWidget>
+#include <QObject>
+#include <QPoint>
 
+#include "core/map_coord.h"
 #include "tools/tool.h"
 
+class QCursor;
+class QMouseEvent;
+class QPainter;
+
+namespace OpenOrienteering {
+
+class MapEditorController;
 class MapPrinter;
+class MapWidget;
+
 
 /**
  * The PrintTool lets the user see and modify the print area on the map
@@ -113,5 +124,8 @@ protected:
 };
 
 #endif // QT_PRINTSUPPORT_LIB
+
+
+}  // namespace OpenOrienteering
 
 #endif // OPENORIENTEERING_PRINT_TOOL_H

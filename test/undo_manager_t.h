@@ -17,12 +17,10 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_UNDO_MANAGER_T_H
-#define _OPENORIENTEERING_UNDO_MANAGER_T_H
+#ifndef OPENORIENTEERING_UNDO_MANAGER_T_H
+#define OPENORIENTEERING_UNDO_MANAGER_T_H
 
-#include <QtTest/QtTest>
-
-#include "undo/undo_manager.h"
+#include <QObject>
 
 
 /**
@@ -79,4 +77,4 @@ protected slots:
 	void canRedoChanged(bool can_redo);
 };
 
-#endif // _OPENORIENTEERING_UNDO_MANAGER_T_H
+#endif // OPENORIENTEERING_UNDO_MANAGER_T_H

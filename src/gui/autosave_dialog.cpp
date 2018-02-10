@@ -29,7 +29,10 @@
 
 #include "main_window.h"
 
-AutosaveDialog::AutosaveDialog(QString path, QString autosave_path, QString actual_path, MainWindow* parent, Qt::WindowFlags f)
+
+namespace OpenOrienteering {
+
+AutosaveDialog::AutosaveDialog(const QString& path, const QString& autosave_path, const QString& actual_path, MainWindow* parent, Qt::WindowFlags f)
 : QDialog(parent, f)
 , main_window(parent)
 , original_path(path)
@@ -40,15 +43,15 @@ AutosaveDialog::AutosaveDialog(QString path, QString autosave_path, QString actu
 	
 	QFileInfo autosaved_file_info(autosave_path);
 	autosaved_text.setHtml(text_template.
-	   arg(tr("Autosaved file")).
-	   arg(autosaved_file_info.lastModified().toLocalTime().toString()).
-	   arg(tr("%n bytes", 0, autosaved_file_info.size())));
+	   arg(tr("Autosaved file"),
+	       autosaved_file_info.lastModified().toLocalTime().toString(),
+	       tr("%n bytes", 0, autosaved_file_info.size())));
 	
 	QFileInfo user_saved_file_info(path);
 	user_saved_text.setHtml(text_template.
-	   arg(tr("File saved by the user")).
-	   arg(user_saved_file_info.lastModified().toLocalTime().toString()).
-	   arg(tr("%n bytes", 0, user_saved_file_info.size())));
+	   arg(tr("File saved by the user"),
+	       user_saved_file_info.lastModified().toLocalTime().toString(),
+	       tr("%n bytes", 0, user_saved_file_info.size())) );
 	
 	layout = new QVBoxLayout();
 	setLayout(layout);
@@ -75,7 +78,7 @@ AutosaveDialog::AutosaveDialog(QString path, QString autosave_path, QString actu
 	
 	setSelectedPath(actual_path);
 	
-	connect(list_widget, SIGNAL(currentRowChanged(int)), this, SLOT(currentRowChanged(int)), Qt::QueuedConnection);
+	connect(list_widget, &QListWidget::currentRowChanged, this, &AutosaveDialog::currentRowChanged, Qt::QueuedConnection);
 	
 #if defined(Q_OS_ANDROID)
 	setWindowState((windowState() & ~(Qt::WindowMinimized | Qt::WindowFullScreen))
@@ -93,8 +96,8 @@ int AutosaveDialog::exec()
 {
 	QDialogButtonBox button_box(QDialogButtonBox::Open | QDialogButtonBox::Cancel);
 	layout->addWidget(&button_box);
-	connect(&button_box, SIGNAL(accepted()), this, SLOT(accept()));
-	connect(&button_box, SIGNAL(rejected()), this, SLOT(reject()));
+	connect(&button_box, &QDialogButtonBox::accepted, this, &QDialog::accept);
+	connect(&button_box, &QDialogButtonBox::rejected, this, &QDialog::reject);
 	const int result = QDialog::exec();
 	resolved = true;
 	return result;
@@ -130,13 +133,13 @@ QString AutosaveDialog::selectedPath() const
 	case -1:
 		break; // Nothing selected?
 	default:
-		Q_ASSERT(false && "Undefined index");
+		qWarning("Undefined index");
 	}
 	return QString();
 }
 
 // slot
-void AutosaveDialog::setSelectedPath(QString path)
+void AutosaveDialog::setSelectedPath(const QString& path)
 {
 	if (path == original_path)
 		list_widget->setCurrentRow(1);
@@ -159,13 +162,13 @@ void AutosaveDialog::currentRowChanged(int row)
 	case -1:
 		return; // Nothing selected?
 	default:
-		Q_ASSERT(false && "Undefined index");
+		qWarning("Undefined index");
 	}
 }
 
 const QTextDocument* AutosaveDialog::textDoc(const QModelIndex& index) const
 {
-	const QTextDocument* ret = NULL;
+	const QTextDocument* ret = nullptr;
 	
 	bool ok = true;
 	int i = index.data(Qt::UserRole).toInt(&ok);
@@ -180,13 +183,16 @@ const QTextDocument* AutosaveDialog::textDoc(const QModelIndex& index) const
 			ret = &user_saved_text;
 			break;
 		default:
-			Q_ASSERT(false && "Undefined index");
+			qWarning("Undefined index");
 		}
 	}
 	else
 	{
-		Q_ASSERT(false && "Invalid data for UserRole");
+		qWarning("Invalid data for UserRole");
 	}
 	
 	return ret;
 }
+
+
+}  // namespace OpenOrienteering

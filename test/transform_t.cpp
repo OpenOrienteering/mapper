@@ -20,11 +20,13 @@
 
 #include "transform_t.h"
 
-#include <QtTest/QtTest>
+#include <QtTest>
 #include <QTransform>
 
+#include "templates/template.h"
 #include "util/transformation.h"
-#include "../src/templates/template.h"
+
+using namespace OpenOrienteering;
 
 
 TransformTest::TransformTest(QObject* parent)

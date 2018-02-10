@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2016 Kai Pastor
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,37 +21,60 @@
 
 #include "georeferencing_dialog.h"
 
-#include <QComboBox>
+#include <vector>
+
+#include <Qt>
+#include <QtGlobal>
+#include <QCursor>
 #include <QDate>
 #include <QDebug>
-#include <QDesktopServices>
+#include <QDesktopServices>  // IWYU pragma: keep
 #include <QDialogButtonBox>
-#include <QHBoxLayout>
+#include <QDoubleSpinBox>
+#include <QFlags>
 #include <QFormLayout>
-#include <QLineEdit>
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QLatin1Char>
+#include <QLatin1String>
+#include <QLocale>
 #include <QMessageBox>
 #include <QMouseEvent>
+#include <QPixmap>
+#include <QPointF>
 #include <QPushButton>
 #include <QRadioButton>
+#include <QSignalBlocker>
+#include <QSize>
+#include <QSpacerItem>
+#include <QString>
+#include <QStringRef>
+#include <QTimer>
+#include <QUrl>
 #include <QUrlQuery>
+#include <QVBoxLayout>
 #include <QXmlStreamReader>
+// IWYU pragma: no_include <qxmlstream.h>
 
 #if defined(QT_NETWORK_LIB)
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
+#include <QNetworkRequest>
 #endif
 
-#include "../core/crs_template.h"
-#include "../core/georeferencing.h"
-#include "main_window.h"
+#include "core/crs_template.h"
+#include "core/georeferencing.h"
+#include "core/latlon.h"
 #include "core/map.h"
-#include "gui/map/map_editor.h"
+#include "gui/main_window.h"
 #include "gui/map/map_dialog_rotate.h"
-#include "util_gui.h"
-#include "util/util.h"
-#include "../util/scoped_signals_blocker.h"
-#include "widgets/crs_selector.h"
+#include "gui/map/map_editor.h"
+#include "gui/widgets/crs_selector.h"
+#include "gui/util_gui.h"
+#include "util/scoped_signals_blocker.h"
 
+
+namespace OpenOrienteering {
 
 // ### GeoreferencingDialog ###
 
@@ -91,7 +114,7 @@ GeoreferencingDialog::GeoreferencingDialog(
 	setWindowModality(Qt::WindowModal);
 	
 	// Create widgets
-	QLabel* map_crs_label = Util::Headline::create(tr("Map coordinate reference system"));
+	auto map_crs_label = Util::Headline::create(tr("Map coordinate reference system"));
 	
 	crs_selector = new CRSSelector(*georef, nullptr);
 	crs_selector->addCustomItem(tr("- local -"), Georeferencing::Local);
@@ -105,17 +128,17 @@ GeoreferencingDialog::GeoreferencingDialog(
 	auto scale_factor_label = new QLabel(tr("Grid scale factor:"));
 	scale_factor_edit = Util::SpinBox::create(Georeferencing::scaleFactorPrecision(), 0.001, 1000.0);
 	
-	QLabel* reference_point_label = Util::Headline::create(tr("Reference point"));
+	auto reference_point_label = Util::Headline::create(tr("Reference point"));
 	
 	ref_point_button = new QPushButton(tr("&Pick on map"));
 	int ref_point_button_width = ref_point_button->sizeHint().width();
-	QLabel* geographic_datum_label = new QLabel(tr("(Datum: WGS84)"));
+	auto geographic_datum_label = new QLabel(tr("(Datum: WGS84)"));
 	int geographic_datum_label_width = geographic_datum_label->sizeHint().width();
 	
 	map_x_edit = Util::SpinBox::create<MapCoordF>(tr("mm"));
 	map_y_edit = Util::SpinBox::create<MapCoordF>(tr("mm"));
-	ref_point_button->setEnabled(controller != nullptr);
-	QHBoxLayout* map_ref_layout = new QHBoxLayout();
+	ref_point_button->setEnabled(controller);
+	auto map_ref_layout = new QHBoxLayout();
 	map_ref_layout->addWidget(map_x_edit, 1);
 	map_ref_layout->addWidget(new QLabel(tr("X", "x coordinate")), 0);
 	map_ref_layout->addWidget(map_y_edit, 1);
@@ -126,7 +149,7 @@ GeoreferencingDialog::GeoreferencingDialog(
 	
 	easting_edit = Util::SpinBox::create<Util::RealMeters>(tr("m"));
 	northing_edit = Util::SpinBox::create<Util::RealMeters>(tr("m"));
-	QHBoxLayout* projected_ref_layout = new QHBoxLayout();
+	auto projected_ref_layout = new QHBoxLayout();
 	projected_ref_layout->addWidget(easting_edit, 1);
 	projected_ref_layout->addWidget(new QLabel(tr("E", "west / east")), 0);
 	projected_ref_layout->addWidget(northing_edit, 1);
@@ -136,7 +159,7 @@ GeoreferencingDialog::GeoreferencingDialog(
 	projected_ref_label = new QLabel();
 	lat_edit = Util::SpinBox::create(8, -90.0, +90.0, trUtf8("°"));
 	lon_edit = Util::SpinBox::create(8, -180.0, +180.0, trUtf8("°"));
-	QHBoxLayout* geographic_ref_layout = new QHBoxLayout();
+	auto geographic_ref_layout = new QHBoxLayout();
 	geographic_ref_layout->addWidget(lat_edit, 1);
 	geographic_ref_layout->addWidget(new QLabel(tr("N", "north")), 0);
 	geographic_ref_layout->addWidget(lon_edit, 1);
@@ -161,11 +184,11 @@ GeoreferencingDialog::GeoreferencingDialog(
 		keep_projected_radio->setCheckable(true);
 	}
 	
-	QLabel* map_north_label = Util::Headline::create(tr("Map north"));
+	auto map_north_label = Util::Headline::create(tr("Map north"));
 	
 	declination_edit = Util::SpinBox::create(Georeferencing::declinationPrecision(), -180.0, +180.0, trUtf8("°"));
 	declination_button = new QPushButton(tr("Lookup..."));
-	QHBoxLayout* declination_layout = new QHBoxLayout();
+	auto declination_layout = new QHBoxLayout();
 	declination_layout->addWidget(declination_edit, 1);
 	declination_layout->addWidget(declination_button, 0);
 	
@@ -175,8 +198,8 @@ GeoreferencingDialog::GeoreferencingDialog(
 	  QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Reset | QDialogButtonBox::Help,
 	  Qt::Horizontal);
 	reset_button = buttons_box->button(QDialogButtonBox::Reset);
-	reset_button->setEnabled(initial != nullptr);
-	QPushButton* help_button = buttons_box->button(QDialogButtonBox::Help);
+	reset_button->setEnabled(initial);
+	auto help_button = buttons_box->button(QDialogButtonBox::Help);
 	
 	auto edit_layout = new QFormLayout();
 	
@@ -201,7 +224,7 @@ GeoreferencingDialog::GeoreferencingDialog(
 	edit_layout->addRow(tr("Declination:"), declination_layout);
 	edit_layout->addRow(tr("Grivation:"), grivation_label);
 	
-	QVBoxLayout* layout = new QVBoxLayout();
+	auto layout = new QVBoxLayout();
 	layout->addLayout(edit_layout);
 	layout->addStretch();
 	layout->addSpacing(16);
@@ -329,8 +352,7 @@ void GeoreferencingDialog::projectionChanged()
 	  arg(latitude).arg(longitude);
 	link_label->setText(
 	  tr("<a href=\"%1\">OpenStreetMap</a> | <a href=\"%2\">World of O Maps</a>").
-	  arg(osm_link).
-	  arg(worldofo_link)
+	  arg(osm_link, worldofo_link)
 	);
 	
 	QString error = georef->getErrorText();
@@ -389,7 +411,7 @@ void GeoreferencingDialog::requestDeclination(bool no_confirm)
 	declination_query_in_progress = true;
 	updateDeclinationButton();
 	
-	QNetworkAccessManager *network = new QNetworkAccessManager(this);
+	auto network = new QNetworkAccessManager(this);
 	connect(network, &QNetworkAccessManager::finished, this, &GeoreferencingDialog::declinationReplyFinished);
 	network->get(QNetworkRequest(service_url));
 #endif
@@ -464,7 +486,7 @@ void GeoreferencingDialog::accept()
 
 void GeoreferencingDialog::updateWidgets()
 {
-	ref_point_button->setEnabled(controller != nullptr);
+	ref_point_button->setEnabled(controller);
 	
 	if (crs_selector->currentCRSTemplate())
 		projected_ref_label->setText(crs_selector->currentCRSTemplate()->coordinatesName(crs_selector->parameters()) + QLatin1Char(':'));
@@ -518,7 +540,7 @@ void GeoreferencingDialog::crsEdited()
 	switch (selected_item_id)
 	{
 	default:
-		Q_ASSERT(false && "Unsupported CRS item id");
+		qWarning("Unsupported CRS item id");
 		// fall through
 	case Georeferencing::Local:
 		// Local
@@ -705,7 +727,7 @@ void GeoreferencingTool::init()
 	MapEditorTool::init();
 }
 
-bool GeoreferencingTool::mousePressEvent(QMouseEvent* event, MapCoordF, MapWidget*)
+bool GeoreferencingTool::mousePressEvent(QMouseEvent* event, MapCoordF /*map_coord*/, MapWidget* /*widget*/)
 {
 	bool handled = false;
 	switch (event->button())
@@ -721,7 +743,7 @@ bool GeoreferencingTool::mousePressEvent(QMouseEvent* event, MapCoordF, MapWidge
 	return handled;
 }
 
-bool GeoreferencingTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget*)
+bool GeoreferencingTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* /*widget*/)
 {
 	bool handled = false;
 	switch (event->button())
@@ -730,7 +752,7 @@ bool GeoreferencingTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coo
 		dialog->setMapRefPoint(MapCoord(map_coord));
 		// fall through
 	case Qt::RightButton:
-		QTimer::singleShot(0, dialog, SIGNAL(exec()));
+		QTimer::singleShot(0, dialog, SIGNAL(exec()));  // clazy:exclude=old-style-connect
 		handled = true;
 		break;
 	default:
@@ -745,3 +767,6 @@ const QCursor& GeoreferencingTool::getCursor() const
 	static auto const cursor = scaledToScreen(QCursor{ QPixmap{ QString::fromLatin1(":/images/cursor-crosshair.png") }, 11, 11 });
 	return cursor;
 }
+
+
+}  // namespace OpenOrienteering

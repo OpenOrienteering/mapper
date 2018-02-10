@@ -19,11 +19,21 @@
  */
 
 
-#ifndef _OPENORIENTEERING_COMPASS_DISPLAY_H_
-#define _OPENORIENTEERING_COMPASS_DISPLAY_H_
+#ifndef OPENORIENTEERING_COMPASS_DISPLAY_H
+#define OPENORIENTEERING_COMPASS_DISPLAY_H
 
+#include <QtGlobal>
+#include <QObject>
+#include <QSize>
 #include <QTime>
 #include <QWidget>
+
+class QHideEvent;
+class QPaintEvent;
+class QShowEvent;
+
+namespace OpenOrienteering {
+
 
 /**
  * A widget which displays a compass.
@@ -65,5 +75,8 @@ protected:
 	qreal azimuth;
 	QTime last_update_time;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

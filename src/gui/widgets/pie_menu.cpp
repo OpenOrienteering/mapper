@@ -21,21 +21,25 @@
 
 #include "pie_menu.h"
 
-#include <qmath.h>
+#include <QtMath>
 #include <QAction>
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QMouseEvent>
 #include <QPainter>
-#include <QStyleOption>
+#include <QStyleOptionMenuItem>
 
-#include "../../settings.h"
+#include "settings.h"
+#include "util/backports.h"
+
+
+namespace OpenOrienteering {
 
 PieMenu::PieMenu(QWidget* parent)
 : QWidget(parent, Qt::Popup | Qt::FramelessWindowHint),	// NOTE: use Qt::Window for debugging to avoid mouse grab
    minimum_action_count(3),
    icon_size(24),
-   active_action(NULL),
+   active_action(nullptr),
    actions_changed(true),
    clicked(false)
 {
@@ -71,33 +75,22 @@ void PieMenu::setMinimumActionCount(int count)
 
 int PieMenu::visibleActionCount() const
 {
-	int count = 0;
-	for (int i = 0, end = actions().size(); i < end; ++i)
-	{
-		const QAction* action = actions()[i];
-		if (action->isVisible() && !action->isSeparator())
-			++count;
-	}
-	return count;
+	const auto actions = this->actions();
+	return int(std::count_if(actions.begin(), actions.end(), [](const auto action) {
+		return action->isVisible() && !action->isSeparator();
+	}));
 }
 
 bool PieMenu::isEmpty() const
 {
-	for (int i = 0, end = actions().size(); i < end; ++i)
-	{
-		const QAction* action = actions()[i];
-		if (action->isVisible() && !action->isSeparator())
-			return false;
-	}
-	return true;
+	return visibleActionCount() == 0;
 }
 
 void PieMenu::clear()
 {
-	while (!actions().isEmpty())
-	{
-		removeAction(actions().last());
-	}
+	const auto actions = this->actions();
+	for (auto action : actions)
+		removeAction(action);
 }
 
 int PieMenu::iconSize() const
@@ -117,16 +110,16 @@ void PieMenu::setIconSize(int icon_size)
 
 QAction* PieMenu::actionAt(const QPoint& pos) const
 {
-	for (size_t i = 0, end = actions().size(); i < end; ++i)
+	const auto actions = this->actions();
+	for (auto action : actions)
 	{
-		QAction* action = actions()[i];
 		if (geometries.contains(action) &&
 		    geometries[action].area.containsPoint(pos, Qt::WindingFill))
 		{
 			return action;
 		}
 	}
-	return NULL;
+	return nullptr;
 }
 
 PieMenu::ItemGeometry PieMenu::actionGeometry(QAction* action) const
@@ -146,7 +139,7 @@ QAction* PieMenu::activeAction() const
 void PieMenu::setActiveAction(QAction* action)
 {
 	QAction* const prev_action = active_action;
-	active_action = (action && action->isEnabled() && action->isVisible() && !action->isSeparator()) ? action : NULL;
+	active_action = (action && action->isEnabled() && action->isVisible() && !action->isSeparator()) ? action : nullptr;
 	if (isVisible())
 	{
 		if (active_action && active_action != prev_action)
@@ -185,7 +178,7 @@ void PieMenu::popup(const QPoint pos)
 	setGeometry(pos.x() - total_radius, pos.y() - total_radius, 2 * total_radius, 2 * total_radius);
 	
 	clicked = false;
-	active_action = NULL;
+	active_action = nullptr;
 	
 	emit aboutToShow();
 	show();
@@ -198,7 +191,7 @@ void PieMenu::actionEvent(QActionEvent* event)
 		QAction* const action = event->action();
 		geometries.remove(action);
 		if (action == active_action)
-			setActiveAction(NULL);
+			setActiveAction(nullptr);
 	}
 	
 	actions_changed = true;
@@ -211,7 +204,7 @@ void PieMenu::hideEvent(QHideEvent* event)
 	if (!event->spontaneous())
 	{
 		emit aboutToHide();
-		setActiveAction(NULL);
+		setActiveAction(nullptr);
 		QString empty_string;
 		QStatusTipEvent e(empty_string);
 		QApplication::sendEvent(parent(), &e);
@@ -295,9 +288,9 @@ void PieMenu::paintEvent(QPaintEvent* event)
 	painter.drawConvexPolygon(inner_border);
 	
 	// Items
-	for (int i = 0, end = actions().size(); i < end; ++i)
+	const auto actions = this->actions();
+	for (auto action : actions)
 	{
-		QAction* const action = actions()[i];
 		if (!geometries.contains(action))
 			continue;
 		
@@ -371,9 +364,10 @@ void PieMenu::updateCachedState()
 		setMask(outer_border.subtracted(inner_border));
 		
 		// The items
-		for (int i = 0, j = 0, end = actions().size(); j < end; ++j)
+		int i = 0;
+		const auto actions = this->actions();
+		for (auto action : actions)
 		{
-			QAction* const action = actions()[j];
 			if (action->isVisible() && !action->isSeparator())
 			{
 				ItemGeometry geometry;
@@ -396,3 +390,6 @@ void PieMenu::updateCachedState()
 		actions_changed = false;
 	}
 }
+
+
+}  // namespace OpenOrienteering

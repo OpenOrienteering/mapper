@@ -19,38 +19,42 @@
 
 #include "gdal_manager.h"
 
-#include <ogr_api.h>
 #include <cpl_conv.h>
+#include <gdal.h> // IWYU pragma: keep
+#include <ogr_api.h>
 
+#include <QtGlobal>
 #include <QByteArray>
+#include <QDir>
 #include <QFileInfo>
+#include <QLatin1String>
 #include <QSettings>
+#include <QString>
+#include <QStringList>
+#include <QVariant>
 
 #include "util/backports.h"
 
 
-
-namespace
-{
-	const QString gdal_manager_group{ QString::fromLatin1("GdalManager") };
-	const QString gdal_configuration_group{ QString::fromLatin1("GdalConfiguration") };
-	const QString gdal_dxf_key{ QString::fromLatin1("dxf") };
-	const QString gdal_gpx_key{ QString::fromLatin1("gpx") };
-	const QString gdal_osm_key{ QString::fromLatin1("osm") };
-	
-}
-
-
+namespace OpenOrienteering {
 
 class GdalManager::GdalManagerPrivate
 {
 public:
+	const QString gdal_manager_group{ QStringLiteral("GdalManager") };
+	const QString gdal_configuration_group{ QStringLiteral("GdalConfiguration") };
+	const QString gdal_dxf_key{ QStringLiteral("dxf") };
+	const QString gdal_gpx_key{ QStringLiteral("gpx") };
+	const QString gdal_osm_key{ QStringLiteral("osm") };
+	
 	GdalManagerPrivate()
 	: dirty{ true }
 	{
 		// GDAL 2.0: GDALAllRegister();
 		OGRRegisterAll();
 	}
+	
+	GdalManagerPrivate(const GdalManagerPrivate&) = delete;
 	
 	void configure()
 	{
@@ -100,7 +104,7 @@ public:
 		}
 		QSettings settings;
 		settings.beginGroup(gdal_manager_group);
-		return settings.value(key).toBool();
+		return !settings.contains(key) || settings.value(key).toBool();
 	}
 	
 	const std::vector<QByteArray>& supportedRasterExtensions() const
@@ -113,21 +117,21 @@ public:
 	const std::vector<QByteArray>& supportedVectorExtensions() const
 	{
 		if (dirty)
-			update();
+			const_cast<GdalManagerPrivate*>(this)->update();
 		return enabled_vector_extensions;
 	}
 	
 	QStringList parameterKeys() const
 	{
 		if (dirty)
-			update();
+			const_cast<GdalManagerPrivate*>(this)->update();
 		return applied_parameters;
 	}
 	
 	QString parameterValue(const QString& key) const
 	{
 		if (dirty)
-			update();
+			const_cast<GdalManagerPrivate*>(this)->update();
 		QSettings settings;
 		settings.beginGroup(gdal_configuration_group);
 		return settings.value(key).toString();
@@ -150,12 +154,55 @@ public:
 	}
 	
 private:
-	void update() const
+	void update()
 	{
 		QSettings settings;
 		
-		/// \todo Build from driver list in GDAL/OGR >= 2.0
-		static const std::vector<QByteArray> default_extensions = { "shp", "shx" };
+#ifdef GDAL_DMD_EXTENSIONS
+		// GDAL >= 2.0
+		settings.beginGroup(gdal_manager_group);
+		auto count = GDALGetDriverCount();
+		enabled_vector_extensions.clear();
+		enabled_vector_extensions.reserve(std::size_t(count));
+		for (auto i = 0; i < count; ++i)
+		{
+			auto driver_data = GDALGetDriver(i);
+			auto type = GDALGetMetadataItem(driver_data, GDAL_DCAP_VECTOR, nullptr);
+			if (qstrcmp(type, "YES") != 0)
+				continue;
+			
+			// Skip write-only drivers.
+			auto cap_open = GDALGetMetadataItem(driver_data, GDAL_DCAP_OPEN, nullptr);
+			if (qstrcmp(cap_open, "YES") != 0)
+				continue;
+			
+			auto extensions_raw = GDALGetMetadataItem(driver_data, GDAL_DMD_EXTENSIONS, nullptr);
+			auto extensions = QByteArray::fromRawData(extensions_raw, int(qstrlen(extensions_raw)));
+			for (auto pos = 0; pos >= 0; )
+			{
+				auto start = pos ? pos + 1 : 0;
+				pos = extensions.indexOf(' ', start);
+				auto extension = extensions.mid(start, pos - start);
+				if (extension.isEmpty())
+					continue;
+				if (extension == "dxf" && !settings.value(gdal_dxf_key).toBool())
+					continue;
+				if (extension == "gpx" && !settings.value(gdal_gpx_key).toBool())
+					continue;
+				if (extension == "osm" && !settings.value(gdal_osm_key).toBool())
+					continue;
+				enabled_vector_extensions.emplace_back(extension);
+			}
+		}
+		settings.endGroup();
+#else
+		// GDAL < 2.0 does not provide the supported extensions 
+		static const std::vector<QByteArray> default_extensions = {
+		    "shp", "dbf",
+		    /* "dxf", */
+		    /* "gpx", */
+		    /* "osm", */ "pbf",
+		};
 		enabled_vector_extensions.reserve(default_extensions.size() + 3);
 		enabled_vector_extensions = default_extensions;
 		
@@ -167,12 +214,17 @@ private:
 		if (settings.value(gdal_osm_key).toBool())
 			enabled_vector_extensions.push_back("osm");
 		settings.endGroup();
+#endif
 		
-		auto gdal_data = QFileInfo(QLatin1String("data:/gdal"));
-		if (gdal_data.exists())
+		// Using osmconf.ini to detect a directory with data from gdal. The
+		// data:/gdal directory will always exist, due to mapper-osmconf.ini.
+		auto osm_conf_ini = QFileInfo(QLatin1String("data:/gdal/osmconf.ini"));
+		if (osm_conf_ini.exists())
 		{
+			auto gdal_data = osm_conf_ini.absolutePath();
+			Q_ASSERT(!gdal_data.contains(QStringLiteral("data:")));
 			// The user may overwrite this default in the settings.
-			CPLSetConfigOption("GDAL_DATA", gdal_data.absoluteFilePath().toLocal8Bit());
+			CPLSetConfigOption("GDAL_DATA", QDir::toNativeSeparators(gdal_data).toLocal8Bit());
 		}
 		
 		settings.beginGroup(gdal_configuration_group);
@@ -192,6 +244,29 @@ private:
 			}
 		}
 		
+		osm_conf_ini = QFileInfo(QLatin1String("data:/gdal/mapper-osmconf.ini"));
+		if (osm_conf_ini.exists())
+		{
+			auto osm_conf_ini_path = QDir::toNativeSeparators(osm_conf_ini.absoluteFilePath()).toLocal8Bit();
+			auto key = QString::fromLatin1("OSM_CONFIG_FILE");
+			auto update_settings = !settings.contains(key);
+			if (!update_settings)
+			{
+				auto current = settings.value(key).toByteArray();
+				settings.beginGroup(QLatin1String("default"));
+				auto current_default = settings.value(key).toByteArray();
+				settings.endGroup();
+				update_settings = (current == current_default && current != osm_conf_ini_path);
+			}
+			if (update_settings)
+			{
+				settings.setValue(key, osm_conf_ini_path);
+				settings.beginGroup(QLatin1String("default"));
+				settings.setValue(key, osm_conf_ini_path);
+				settings.endGroup();
+			}
+		}
+		
 		auto new_parameters = settings.childKeys();
 		new_parameters.sort();
 		for (const auto& parameter : qAsConst(new_parameters))
@@ -208,6 +283,7 @@ private:
 		}
 		applied_parameters.swap(new_parameters);
 		
+		CPLFinderClean(); // force re-initialization of file finding tools
 		dirty = false;
 	}
 	
@@ -273,3 +349,6 @@ void GdalManager::unsetParameter(const QString& key)
 {
 	p->unsetParameter(key);
 }
+
+
+}  // namespace OpenOrienteering

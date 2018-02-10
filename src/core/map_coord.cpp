@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014, 2015 Kai Pastor
+ *    Copyright 2014-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,15 +20,21 @@
 
 #include "map_coord.h"
 
+#include <cstddef>
+#include <limits>
+#include <stdexcept>
 #include <type_traits>
 
+#include <QChar>
+#include <QLatin1Char>
+#include <QLatin1String>
 #include <QLineF>
-#include <QTextStream>
-#include <QXmlStreamReader>
-#include <QXmlStreamWriter>
+#include <QStringRef>
 
 #include "util/xml_stream_util.h"
 
+
+namespace OpenOrienteering {
 
 static_assert(sizeof(qint32) <= sizeof(int), 
               "MapCoord::setX/Y uses qRound() returning int, xp/yp is of type qint32");
@@ -69,37 +75,37 @@ static_assert(-MapCoord(-2, 1) == MapCoord(2, -1),
 
 static_assert(!MapCoord(0.0, 0.0).isCurveStart(),
               "MapCoord::isCurveStart() must return false by default.");
-static_assert(MapCoord(0.0, 0.0, MapCoord::CurveStart).isCurveStart(),
+static_assert(MapCoord(0.0, 0.0, MapCoord::Flags(MapCoord::CurveStart)).isCurveStart(),
               "MapCoord::CurveStart must result in MapCoord::isCurveStart() returning true.");
 
 static_assert(!MapCoord(0.0, 0.0).isClosePoint(),
               "MapCoord::isClosePoint() must return false by default.");
-static_assert(MapCoord(0.0, 0.0, MapCoord::ClosePoint).isClosePoint(),
+static_assert(MapCoord(0.0, 0.0, MapCoord::Flags(MapCoord::ClosePoint)).isClosePoint(),
               "MapCoord::ClosePoint must result in MapCoord::isClosePoint() returning true.");
 
 static_assert(!MapCoord(0.0, 0.0).isHolePoint(),
               "MapCoord::isHolePoint() must return false by default.");
-static_assert(MapCoord(0.0, 0.0, MapCoord::HolePoint).isHolePoint(),
+static_assert(MapCoord(0.0, 0.0, MapCoord::Flags(MapCoord::HolePoint)).isHolePoint(),
               "MapCoord::HolePoint must result in MapCoord::isHolePoint() returning true.");
 
 static_assert(!MapCoord(0.0, 0.0).isDashPoint(),
               "MapCoord::isDashPoint() must return false by default.");
-static_assert(MapCoord(0.0, 0.0, MapCoord::DashPoint).isDashPoint(),
+static_assert(MapCoord(0.0, 0.0, MapCoord::Flags(MapCoord::DashPoint)).isDashPoint(),
               "MapCoord::DashPoint must result in MapCoord::isDashPoint() returning true.");
 
 static_assert(!MapCoord(0.0, 0.0).isGapPoint(),
               "MapCoord::isGapPoint() must return false by default.");
-static_assert(MapCoord(0.0, 0.0, MapCoord::GapPoint).isGapPoint(),
+static_assert(MapCoord(0.0, 0.0, MapCoord::Flags(MapCoord::GapPoint)).isGapPoint(),
               "MapCoord::GapPoint must result in MapCoord::isGapPoint() returning true.");
 
 static_assert(MapCoord(-1.0, 2.0).x() == -1,
               "MapCoord::x() must return original value (w/o flags)");
-static_assert(MapCoord(-1.0, 2.0, 255).x() == -1.0,
+static_assert(MapCoord(-1.0, 2.0, MapCoord::Flags{255}).x() == -1.0,
               "MapCoord::x() must return original value (with flags)");
 
 static_assert(MapCoord::fromNative(-1, 2).nativeX() == -1,
               "MapCoord::nativeX() must return original value (w/o flags)");
-static_assert(MapCoord::fromNative(-1, 2, 255).nativeX() == -1,
+static_assert(MapCoord::fromNative(-1, 2, MapCoord::Flags{255}).nativeX() == -1,
               "MapCoord::nativeX() must return original value (with flags)");
 
 #ifndef MAPPER_NO_QREAL_CHECK
@@ -173,11 +179,11 @@ void ensureBoundsForQint32(qint64 x64, qint64 y64)
 		 || y64 < std::numeric_limits<qint32>::min()
 		 || y64 > std::numeric_limits<qint32>::max() )
 	{
-		throw std::range_error(QT_TRANSLATE_NOOP("MapCoord", "Coordinates are out-of-bounds."));
+		throw std::range_error(QT_TRANSLATE_NOOP("OpenOrienteering::MapCoord", "Coordinates are out-of-bounds."));
 	}
 }
 
-} // namespace
+}  // namespace
 
 
 
@@ -226,14 +232,14 @@ MapCoord MapCoord::load(QXmlStreamReader& xml)
 	XmlElementReader element(xml);
 	auto x64 = element.attribute<qint64>(literal::x);
 	auto y64 = element.attribute<qint64>(literal::y);
-	auto flags = element.attribute<Flags::Int>(literal::flags);
+	auto flags = Flags{element.attribute<Flags::Int>(literal::flags)};
 	
 	handleBoundsOffset(x64, y64);
 	ensureBoundsForQint32(x64, y64);
 	return MapCoord { static_cast<qint32>(x64), static_cast<qint32>(y64), flags };
 }
 
-MapCoord MapCoord::load(qreal x, qreal y, int flags)
+MapCoord MapCoord::load(qreal x, qreal y, Flags flags)
 {
 	auto x64 = qRound64(x * 1000);
 	auto y64 = qRound64(y * 1000);
@@ -243,14 +249,14 @@ MapCoord MapCoord::load(qreal x, qreal y, int flags)
 	return MapCoord { static_cast<qint32>(x64), static_cast<qint32>(y64), flags };
 }
 
-MapCoord MapCoord::load(QPointF p, int flags)
+MapCoord MapCoord::load(QPointF p, MapCoord::Flags flags)
 {
 	return MapCoord::load(p.x(), p.y(), flags);
 }
 
 #ifndef NO_NATIVE_FILE_FORMAT
 	
-MapCoord::MapCoord(const LegacyMapCoord& coord)
+MapCoord::MapCoord(const LegacyMapCoord& coord) noexcept
  : xp{ decltype(xp)(coord.x >> 4) }
  , yp{ decltype(yp)(coord.y >> 4) }
  , fp{ Flags::Int((coord.x & 0xf) | ((coord.y & 0xf) << 4)) }
@@ -286,7 +292,7 @@ QString MapCoord::toString() const
 	buffer[j] = QLatin1Char{';'};
 	--j;
 	
-	int flags = fp;
+	auto flags = Flags::Int(fp);
 	if (flags > 0)
 	{
 		do
@@ -452,3 +458,6 @@ MapCoord::MapCoord(QStringRef& text)
 	++i;
 	text = text.mid(i, len-i);
 }
+
+
+}  // namespace OpenOrienteering

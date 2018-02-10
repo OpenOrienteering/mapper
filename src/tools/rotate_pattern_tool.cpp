@@ -21,34 +21,43 @@
 
 #include "rotate_pattern_tool.h"
 
-#include <qmath.h>
+#include <cmath>
+#include <memory>
+
+#include <Qt>
+#include <QtMath>
+#include <QCursor>
 #include <QGuiApplication>
 #include <QKeyEvent>
+#include <QLatin1String>
 #include <QLocale>
 #include <QPainter>
+#include <QPixmap>
+#include <QRectF>
+#include <QString>
 
 #include "core/map.h"
+#include "core/map_coord.h"
 #include "gui/map/map_widget.h"
 #include "core/objects/object.h"
-#include "core/renderables/renderable.h"
 #include "core/symbols/symbol.h"
 #include "core/symbols/point_symbol.h"
-#include "tool_helpers.h"
-#include "util/util.h"
 #include "gui/modifier_key.h"
+#include "tools/tool.h"
+#include "tools/tool_helpers.h"
+#include "util/util.h"
 
 
-RotatePatternTool::RotatePatternTool(MapEditorController* editor, QAction* tool_button)
-: MapEditorToolBase(QCursor(QPixmap(QString::fromLatin1(":/images/cursor-rotate.png")), 1, 1), Other, editor, tool_button)
+namespace OpenOrienteering {
+
+RotatePatternTool::RotatePatternTool(MapEditorController* editor, QAction* tool_action)
+: MapEditorToolBase(QCursor(QPixmap(QString::fromLatin1(":/images/cursor-rotate.png")), 1, 1), Other, editor, tool_action)
 {
 	// Nothing else here, but there is initImpl().
 }
 
 
-RotatePatternTool::~RotatePatternTool()
-{
-	// Nothing, not inlined
-}
+RotatePatternTool::~RotatePatternTool() = default;
 
 
 
@@ -69,7 +78,7 @@ void RotatePatternTool::updateStatusText()
 		constexpr auto pi_x_1_5 = M_PI * 1.5;
 		constexpr auto pi_x_2 = M_PI * 2.0;
 		constexpr auto to_deg = 180.0 / M_PI;
-		const auto rotation = fmod(-(constrained_pos_map - click_pos_map).angle() + pi_x_1_5, pi_x_2) * to_deg;
+		const auto rotation = std::fmod(-(constrained_pos_map - click_pos_map).angle() + pi_x_1_5, pi_x_2) * to_deg;
 		text = trUtf8("<b>Angle:</b> %1° ").arg(QLocale().toString(rotation, 'f', 1));
 	}
 	else
@@ -233,3 +242,6 @@ void RotatePatternTool::objectSelectionChangedImpl()
 	else
 		updateDirtyRect();
 }
+
+
+}  // namespace OpenOrienteering

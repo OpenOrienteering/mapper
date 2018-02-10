@@ -20,21 +20,23 @@
 
 package org.openorienteering.mapper;
 
-import android.os.Bundle;
-import android.os.Looper;
-import android.os.Build;
-import android.os.SystemClock;
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.location.GpsStatus;
 import android.location.Location;
 import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.location.LocationListener;
-import android.location.GpsStatus;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Looper;
+import android.os.SystemClock;
 import android.provider.Settings;
+import android.view.Gravity;
 import android.view.Surface;
 import android.widget.Toast;
 
@@ -49,6 +51,9 @@ public class MapperActivity extends org.qtproject.qt5.android.bindings.QtActivit
 	private String yes_string;
 	private String no_string;
 	private String gps_disabled_string;
+	
+	private static Toast toast;
+	private static CountDownTimer toast_reset;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -127,13 +132,50 @@ public class MapperActivity extends org.qtproject.qt5.android.bindings.QtActivit
 		instance.gps_disabled_string = gps_disabled_string;
 	}
 	
-	public static void showShortMessage(final String message)
+	public static void showToast(final String message, final int duration)
 	{
 		instance.runOnUiThread(new Runnable() {
 			public void run() {
-				Toast.makeText(instance, message, Toast.LENGTH_SHORT).show();
+				if (toast_reset != null)
+					toast_reset.cancel();
+				
+				if (toast == null)
+				{
+					toast = Toast.makeText(instance, "", Toast.LENGTH_SHORT);
+					toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 4);
+				}
+				
+				toast.setText(message);
+				toast.show();
+				
+				if (duration <= 0)
+					return;
+				
+				toast_reset = new CountDownTimer(duration, 500) {
+					public void onTick(long millisUntilFinished)
+					{
+						toast.show();
+					}
+					
+					public void onFinish() {
+						toast.cancel();
+					}
+				};
+				toast_reset.start();
 			}
-		});
+		} );
+	}
+	
+	public static void hideToast()
+	{
+		instance.runOnUiThread(new Runnable() {
+			public void run() {
+				if (toast_reset != null)
+					toast_reset.cancel();
+				if (toast != null)
+					toast.cancel();
+			}
+		} );
 	}
 	
 	/** Locks the current display orientation.

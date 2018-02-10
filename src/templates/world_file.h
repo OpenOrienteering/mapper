@@ -22,12 +22,11 @@
 #ifndef OPENORIENTEERING_WORLD_FILE_H
 #define OPENORIENTEERING_WORLD_FILE_H
 
+#include <QString>
 #include <QTransform>
 
-QT_BEGIN_NAMESPACE
-class QString;
-QT_END_NAMESPACE
 
+namespace OpenOrienteering {
 
 /**
  * Handles pixel-to-world transformations given by world files.
@@ -49,5 +48,8 @@ struct WorldFile
 	/// Tries to find and load a world file for the given image path.
 	bool tryToLoadForImage(const QString& image_path);
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

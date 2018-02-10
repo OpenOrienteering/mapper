@@ -18,18 +18,20 @@
  */
 
 
-#ifndef _WORDS_MATRIX_H_
-#define _WORDS_MATRIX_H_
+#ifndef OPENORIENTEERING_UTIL_MATRIX_H
+#define OPENORIENTEERING_UTIL_MATRIX_H
 
 #include <cstring>
 
-#include <QtNumeric>
+#include <QtGlobal>
 
-QT_BEGIN_NAMESPACE
 class QIODevice;
+class QString;
 class QXmlStreamReader;
 class QXmlStreamWriter;
-QT_END_NAMESPACE
+
+namespace OpenOrienteering {
+
 
 /** Dynamically sized matrix of doubles. */
 class Matrix
@@ -37,7 +39,7 @@ class Matrix
 public:
 	
 	/** Constructs a 0x0 matrix. */
-	inline Matrix() : d(NULL), n(0), m(0) {}
+	inline Matrix() : d(nullptr), n(0), m(0) {}
 	
 	/** Copy constructor. */
 	Matrix(const Matrix& other)
@@ -65,7 +67,7 @@ public:
 	void load(QIODevice* file);
 	
 	/** Saves the matrix in xml format with the given value of the role attribute. */
-	void save(QXmlStreamWriter& xml, const QString role) const;
+	void save(QXmlStreamWriter& xml, const QString& role) const;
 	/** Loads the matrix in xml format. */
  	void load(QXmlStreamReader& xml);
 	
@@ -75,13 +77,17 @@ public:
 	inline int getCols() const {return m;}
 	
 	/** Assignment */
-	void operator=(const Matrix& other)
+	Matrix& operator=(const Matrix& other)
 	{
+		if (this == &other)
+			return *this;
+		
 		delete[] d;
 		n = other.n;
 		m = other.m;
 		d = new double[n * m];
 		memcpy(d, other.d, n * m * sizeof(double));
+		return *this;
 	}
 	
 	/**
@@ -191,4 +197,6 @@ private:
 	int m;
 };
 
+
+}  // namespace OpenOrienteering
 #endif

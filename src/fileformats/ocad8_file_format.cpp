@@ -21,48 +21,51 @@
 #include "ocad8_file_format.h"
 #include "ocad8_file_format_p.h"
 
-#include <qmath.h>
+#include <QtMath>
 #include <QCoreApplication>
-#include <QDateTime>
-#include <QDebug>
 #include <QDir>
 #include <QFileInfo>
+#include <QImage>
 #include <QImageReader>
+#include <QRgb>
 #include <QTextCodec>
 
+#include "settings.h"
 #include "core/georeferencing.h"
+#include "core/map.h"
 #include "core/map_color.h"
 #include "core/map_coord.h"
-#include "core/map_view.h"
-#include "xml_file_format.h"
-#include "file_import_export.h"
-#include "core/map.h"
 #include "core/map_part.h"
+#include "core/map_view.h"
 #include "core/objects/object.h"
 #include "core/objects/text_object.h"
-#include "../settings.h"
 #include "core/symbols/symbol.h"
 #include "core/symbols/area_symbol.h"
 #include "core/symbols/combined_symbol.h"
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/point_symbol.h"
 #include "core/symbols/text_symbol.h"
-#include "../templates/template.h"
-#include "../templates/template_image.h"
-#include "../templates/template_map.h"
+#include "fileformats/xml_file_format.h"
+#include "fileformats/file_import_export.h"
+#include "templates/template.h"
+#include "templates/template_image.h"
+#include "templates/template_map.h"
 #include "util/util.h"
-#include "../util/encoding.h"
+#include "util/encoding.h"
+
+
+namespace OpenOrienteering {
 
 // ### OCAD8FileFormat ###
 
 OCAD8FileFormat::OCAD8FileFormat()
- : FileFormat(MapFile, "OCAD78", ImportExport::tr("OCAD Versions 7, 8"), QString::fromLatin1("ocd"),
+ : FileFormat(MapFile, "OCAD78", ::OpenOrienteering::ImportExport::tr("OCAD Versions 7, 8"), QString::fromLatin1("ocd"),
               ImportSupported | ExportSupported | ExportLossy)
 {
 	// Nothing
 }
 
-bool OCAD8FileFormat::understands(const unsigned char* buffer, size_t sz) const
+bool OCAD8FileFormat::understands(const unsigned char* buffer, std::size_t sz) const
 {
     // The first two bytes of the file must be AD 0C.
     if (sz >= 2 && buffer[0] == 0xAD && buffer[1] == 0x0C) return true;
@@ -81,7 +84,7 @@ Exporter* OCAD8FileFormat::createExporter(QIODevice* stream, Map* map, MapView* 
 
 // ### OCAD8FileImport ###
 
-OCAD8FileImport::OCAD8FileImport(QIODevice* stream, Map* map, MapView* view) : Importer(stream, map, view), file(NULL)
+OCAD8FileImport::OCAD8FileImport(QIODevice* stream, Map* map, MapView* view) : Importer(stream, map, view), file(nullptr)
 {
     ocad_init();
     const QByteArray enc_name = Settings::getInstance().getSetting(Settings::General_Local8BitEncoding).toByteArray();
@@ -114,12 +117,12 @@ void OCAD8FileImport::import(bool load_symbols_only)
 	if (!buffer)
 		throw FileFormatException(tr("Could not allocate buffer."));
 	if (stream->read((char*)buffer, size) != size)
-		throw FileFormatException(Importer::tr("Could not read file: %1").arg(stream->errorString()));
+		throw FileFormatException(::OpenOrienteering::Importer::tr("Could not read file: %1").arg(stream->errorString()));
 	int err = ocad_file_open_memory(&file, buffer, size);
-    if (err != 0) throw FileFormatException(Importer::tr("Could not read file: %1").arg(tr("libocad returned %1").arg(err)));
+    if (err != 0) throw FileFormatException(::OpenOrienteering::Importer::tr("Could not read file: %1").arg(tr("libocad returned %1").arg(err)));
 	
 	if (file->header->major <= 5 || file->header->major >= 9)
-		throw FileFormatException(Importer::tr("Could not read file: %1").arg(tr("OCAD files of version %1 are not supported!").arg(file->header->major)));
+		throw FileFormatException(::OpenOrienteering::Importer::tr("Could not read file: %1").arg(tr("OCAD files of version %1 are not supported!").arg(file->header->major)));
 
     //qDebug() << "file version is" << file->header->major << ", type is"
     //         << ((file->header->ftype == 2) ? "normal" : "other");
@@ -190,7 +193,8 @@ void OCAD8FileImport::import(bool load_symbols_only)
 			if (ocad_halftone <= 200)
 			{
 				float halftone = 0.005f * ocad_halftone;
-				components.push_back(SpotColorComponent(separations[j], halftone));
+				components.reserve(std::size_t(num_separations));  // reserves only once for same capacity
+				components.push_back(SpotColorComponent(separations[j], halftone));  // clazy:exclude=reserve-candidates
 			}
 		}
 		if (!components.empty())
@@ -206,7 +210,7 @@ void OCAD8FileImport::import(bool load_symbols_only)
 		if (i == 0 && color->isBlack() && color->getName() == QLatin1String("Registration black")
 		           && XMLFileFormat::active_version >= 6 )
 		{
-			delete color; color = NULL;
+			delete color; color = nullptr;
 			color_index[ocad_color->number] = Map::getRegistrationColor();
 			addWarning(tr("Color \"Registration black\" is imported as a special color."));
 			// NOTE: This does not make a difference in output
@@ -228,14 +232,14 @@ void OCAD8FileImport::import(bool load_symbols_only)
 	}
 	
     // Load symbols
-    for (OCADSymbolIndex *idx = ocad_symidx_first(file); idx != NULL; idx = ocad_symidx_next(file, idx))
+    for (OCADSymbolIndex *idx = ocad_symidx_first(file); idx; idx = ocad_symidx_next(file, idx))
     {
         for (int i = 0; i < 256; i++)
         {
             OCADSymbol *ocad_symbol = ocad_symbol_at(file, idx, i);
-            if (ocad_symbol != NULL && ocad_symbol->number != 0)
+            if (ocad_symbol && ocad_symbol->number != 0)
             {
-                Symbol *symbol = NULL;
+                Symbol *symbol = nullptr;
                 if (ocad_symbol->type == OCAD_POINT_SYMBOL)
                 {
                     symbol = importPointSymbol((OCADPointSymbol *)ocad_symbol);
@@ -286,16 +290,16 @@ void OCAD8FileImport::import(bool load_symbols_only)
 
 		// Place all objects into a single OCAD import part
 		MapPart* part = new MapPart(tr("OCAD import layer"), map);
-		for (OCADObjectIndex *idx = ocad_objidx_first(file); idx != NULL; idx = ocad_objidx_next(file, idx))
+		for (OCADObjectIndex *idx = ocad_objidx_first(file); idx; idx = ocad_objidx_next(file, idx))
 		{
 			for (int i = 0; i < 256; i++)
 			{
 				OCADObjectEntry *entry = ocad_object_entry_at(file, idx, i);
 				OCADObject *ocad_obj = ocad_object(file, entry);
-				if (ocad_obj != NULL)
+				if (ocad_obj)
 				{
 					Object *object = importObject(ocad_obj, part);
-					if (object != NULL) {
+					if (object) {
 						part->objects.push_back(object);
 					}
 				}
@@ -307,7 +311,7 @@ void OCAD8FileImport::import(bool load_symbols_only)
 
 		// Load templates
 		map->templates.clear();
-		for (OCADStringIndex *idx = ocad_string_index_first(file); idx != NULL; idx = ocad_string_index_next(file, idx))
+		for (OCADStringIndex *idx = ocad_string_index_first(file); idx; idx = ocad_string_index_next(file, idx))
 		{
 			for (int i = 0; i < 256; i++)
 			{
@@ -376,10 +380,10 @@ Symbol *OCAD8FileImport::importPointSymbol(const OCADPointSymbol *ocad_symbol)
 
 Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
 {
-	LineSymbol* line_for_borders = NULL;
+	LineSymbol* line_for_borders = nullptr;
 	
 	// Import a main line?
-	LineSymbol* main_line = NULL;
+	LineSymbol* main_line = nullptr;
 	if (ocad_symbol->dmode == 0 || ocad_symbol->width > 0)
 	{
 		main_line = new LineSymbol();
@@ -478,7 +482,7 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
 	}
 	
 	// Import a 'framing' line?
-	LineSymbol* framing_line = NULL;
+	LineSymbol* framing_line = nullptr;
 	if (ocad_symbol->fwidth > 0)
 	{
 		framing_line = new LineSymbol();
@@ -510,7 +514,7 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
 	
 	// Import a 'double' line?
 	bool has_border_line = ocad_symbol->lwidth > 0 || ocad_symbol->rwidth > 0;
-	LineSymbol *double_line = NULL;
+	LineSymbol *double_line = nullptr;
 	if (ocad_symbol->dmode != 0 && (ocad_symbol->dflags & 1 || (has_border_line && !line_for_borders)))
 	{
 		double_line = new LineSymbol();
@@ -521,7 +525,7 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
 		if (ocad_symbol->dflags & 1)
 			double_line->color = convertColor(ocad_symbol->dcolor);
 		else
-			double_line->color = NULL;
+			double_line->color = nullptr;
 		
 		double_line->cap_style = LineSymbol::FlatCap;
 		double_line->join_style = LineSymbol::MiterJoin;
@@ -566,7 +570,7 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
 	
     // Create point symbols along line; middle ("normal") dash, corners, start, and end.
     LineSymbol* symbol_line = main_line ? main_line : double_line;	// Find the line to attach the symbols to
-    if (symbol_line == NULL)
+    if (!symbol_line)
 	{
 		main_line = new LineSymbol();
 		symbol_line = main_line;
@@ -588,13 +592,13 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
     if( ocad_symbol->scnpts > 0 )
     {
 		symbol_line->dash_symbol = importPattern( ocad_symbol->scnpts, symbolptr);
-        symbol_line->dash_symbol->setName(QCoreApplication::translate("LineSymbolSettings", "Dash symbol"));
+        symbol_line->dash_symbol->setName(QCoreApplication::translate("OpenOrienteering::LineSymbolSettings", "Dash symbol"));
         symbolptr += ocad_symbol->scnpts; 
     }
     if( ocad_symbol->sbnpts > 0 )
     {
 		symbol_line->start_symbol = importPattern( ocad_symbol->sbnpts, symbolptr);
-        symbol_line->start_symbol->setName(QCoreApplication::translate("LineSymbolSettings", "Start symbol"));
+        symbol_line->start_symbol->setName(QCoreApplication::translate("OpenOrienteering::LineSymbolSettings", "Start symbol"));
         symbolptr += ocad_symbol->sbnpts;
     }
     if( ocad_symbol->senpts > 0 )
@@ -609,7 +613,7 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
 	// Suppress dash symbol at line ends if both start symbol and end symbol exist,
 	// but don't create a warning unless a dash symbol is actually defined
 	// and the line symbol is not Mapper's 799 Simple orienteering course.
-	if (symbol_line->start_symbol != NULL && symbol_line->end_symbol != NULL)
+	if (symbol_line->start_symbol && symbol_line->end_symbol)
 	{
 		symbol_line->setSuppressDashSymbolAtLineEnds(true);
 		if (symbol_line->dash_symbol && symbol_line->getNumberComponent(0) != 799)
@@ -618,11 +622,11 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
 	
     // TODO: taper fields (tmode and tlast)
 	
-    if (main_line == NULL && framing_line == NULL)
+    if (!main_line && !framing_line)
 		return double_line;
-	else if (double_line == NULL && framing_line == NULL)
+	else if (!double_line && !framing_line)
 		return main_line;
-	else if (main_line == NULL && double_line == NULL)
+	else if (!main_line && !double_line)
 		return framing_line;
 	else
 	{
@@ -660,9 +664,9 @@ Symbol *OCAD8FileImport::importAreaSymbol(const OCADAreaSymbol *ocad_symbol)
 
     // Basic area symbol fields: minimum_area, color
     symbol->minimum_area = 0;
-    symbol->color = ocad_symbol->fill ? convertColor(ocad_symbol->color) : NULL;
+    symbol->color = ocad_symbol->fill ? convertColor(ocad_symbol->color) : nullptr;
     symbol->patterns.clear();
-    AreaSymbol::FillPattern *pat = NULL;
+    AreaSymbol::FillPattern *pat = nullptr;
 
     // Hatching
     if (ocad_symbol->hmode > 0)
@@ -670,7 +674,7 @@ Symbol *OCAD8FileImport::importAreaSymbol(const OCADAreaSymbol *ocad_symbol)
         int n = symbol->patterns.size(); symbol->patterns.resize(n + 1); pat = &(symbol->patterns[n]);
         pat->type = AreaSymbol::FillPattern::LinePattern;
         pat->angle = convertRotation(ocad_symbol->hangle1);
-        pat->rotatable = true;
+        pat->flags = AreaSymbol::FillPattern::Option::Rotatable;
         pat->line_spacing = convertSize(ocad_symbol->hdist + ocad_symbol->hwidth);
         pat->line_offset = 0;
         pat->line_color = convertColor(ocad_symbol->hcolor);
@@ -693,7 +697,7 @@ Symbol *OCAD8FileImport::importAreaSymbol(const OCADAreaSymbol *ocad_symbol)
         int n = symbol->patterns.size(); symbol->patterns.resize(n + 1); pat = &(symbol->patterns[n]);
         pat->type = AreaSymbol::FillPattern::PointPattern;
         pat->angle = convertRotation(ocad_symbol->pangle);
-        pat->rotatable = true;
+        pat->flags = AreaSymbol::FillPattern::Option::Rotatable;
         pat->point_distance = convertSize(ocad_symbol->pwidth);
         pat->line_spacing = spacing;
         pat->line_offset = 0;
@@ -706,7 +710,7 @@ Symbol *OCAD8FileImport::importAreaSymbol(const OCADAreaSymbol *ocad_symbol)
             int n = symbol->patterns.size(); symbol->patterns.resize(n + 1); pat = &(symbol->patterns[n]);
             pat->type = AreaSymbol::FillPattern::PointPattern;
             pat->angle = convertRotation(ocad_symbol->pangle);
-            pat->rotatable = true;
+            pat->flags = AreaSymbol::FillPattern::Option::Rotatable;
             pat->point_distance = convertSize(ocad_symbol->pwidth);
             pat->line_spacing = spacing;
             pat->line_offset = pat->line_spacing / 2;
@@ -862,7 +866,7 @@ PointSymbol *OCAD8FileImport::importPattern(s16 npts, OCADPoint *pts)
 				PointSymbol* element_symbol = multiple_elements ? (new PointSymbol()) : symbol;
 				element_symbol->inner_color = convertColor(elt->color);
 				element_symbol->inner_radius = inner_radius;
-				element_symbol->outer_color = NULL;
+				element_symbol->outer_color = nullptr;
 				element_symbol->outer_width = 0;
 				if (multiple_elements)
 				{
@@ -880,7 +884,7 @@ PointSymbol *OCAD8FileImport::importPattern(s16 npts, OCADPoint *pts)
 			if (outer_width > 0 && inner_radius > 0)
 			{
 				PointSymbol* element_symbol = (multiple_elements) ? (new PointSymbol()) : symbol;
-				element_symbol->inner_color = NULL;
+				element_symbol->inner_color = nullptr;
 				element_symbol->inner_radius = inner_radius;
 				element_symbol->outer_color = convertColor(elt->color);
 				element_symbol->outer_width = outer_width;
@@ -948,14 +952,14 @@ Object *OCAD8FileImport::importObject(const OCADObject* ocad_object, MapPart* pa
 			else
 			{
 				addWarning(tr("Unable to load object"));
-				return NULL;
+				return nullptr;
 			}
 		}
 		else
 		{
 			if (!importRectangleObject(ocad_object, part, rectangle_info[ocad_object->symbol]))
 				addWarning(tr("Unable to import rectangle object"));
-			return NULL;
+			return nullptr;
 		}
     }
     else
@@ -994,7 +998,7 @@ Object *OCAD8FileImport::importObject(const OCADObject* ocad_object, MapPart* pa
 		t->setVerticalAlignment(TextObject::AlignBaseline);
 
         const char *text_ptr = (const char *)(ocad_object->pts + ocad_object->npts);
-        size_t text_len = sizeof(OCADPoint) * ocad_object->ntext;
+        std::size_t text_len = sizeof(OCADPoint) * ocad_object->ntext;
         if (ocad_object->unicode) t->setText(convertWideCString(text_ptr, text_len, true));
         else t->setText(convertCString(text_ptr, text_len, true));
 
@@ -1004,7 +1008,7 @@ Object *OCAD8FileImport::importObject(const OCADObject* ocad_object, MapPart* pa
             addWarning(tr("Not importing text symbol, couldn't figure out path' (npts=%1): %2")
                            .arg(ocad_object->npts).arg(t->getText()));
             delete t;
-            return NULL;
+            return nullptr;
         }
         t->setMap(map);
         return t;
@@ -1021,7 +1025,7 @@ Object *OCAD8FileImport::importObject(const OCADObject* ocad_object, MapPart* pa
 		return p;
     }
 
-    return NULL;
+    return nullptr;
 }
 
 bool OCAD8FileImport::importRectangleObject(const OCADObject* ocad_object, MapPart* part, const OCAD8FileImport::RectangleInfo& rect)
@@ -1178,7 +1182,7 @@ void OCAD8FileImport::importString(OCADStringEntry *entry)
 
 Template *OCAD8FileImport::importTemplate(OCADCString* ocad_str)
 {
-	Template* templ = NULL;
+	Template* templ = nullptr;
 	QByteArray data(ocad_str->str); // copies the data.
 	QString filename = encoding_1byte->toUnicode(data.left(data.indexOf('\t', 0)));
 	QString clean_path = QDir::cleanPath(QString(filename).replace(QLatin1Char('\\'), QLatin1Char('/')));
@@ -1194,7 +1198,7 @@ Template *OCAD8FileImport::importTemplate(OCADCString* ocad_str)
 	else
 	{
 		addWarning(tr("Unable to import template: background \"%1\" doesn't seem to be a raster image").arg(filename));
-		return NULL;
+		return nullptr;
 	}
 	
 	OCADBackground background = importBackground(data);
@@ -1302,7 +1306,7 @@ Template *OCAD8FileImport::importRasterTemplate(const OCADBackground &background
     {
         addWarning(tr("Unable to import template: background \"%1\" doesn't seem to be a raster image").arg(filename));
     }
-    return NULL;
+    return nullptr;
 }
 
 void OCAD8FileImport::setPathHolePoint(Object *object, int i)
@@ -1439,7 +1443,7 @@ QString OCAD8FileImport::convertPascalString(const char *p) {
  *  length (in bytes) that will be scanned for a zero terminator; if none is found,
  *  the string will be truncated at that location.
  */
-QString OCAD8FileImport::convertCString(const char *p, size_t n, bool ignore_first_newline) {
+QString OCAD8FileImport::convertCString(const char *p, std::size_t n, bool ignore_first_newline) {
     size_t i = 0;
     for (; i < n; i++) {
         if (p[i] == 0) break;
@@ -1461,7 +1465,7 @@ QString OCAD8FileImport::convertCString(const char *p, size_t n, bool ignore_fir
  *  length (in bytes) that will be scanned for a zero terminator; if none is found,
  *  the string will be truncated at that location.
  */
-QString OCAD8FileImport::convertWideCString(const char *p, size_t n, bool ignore_first_newline) {
+QString OCAD8FileImport::convertWideCString(const char *p, std::size_t n, bool ignore_first_newline) {
     const u16 *q = (const u16 *)p;
     size_t i = 0;
     for (; i < n; i++) {
@@ -1517,7 +1521,7 @@ const MapColor *OCAD8FileImport::convertColor(int color) {
 	if (!color_index.contains(color))
 	{
 		addWarning(tr("Color id not found: %1, ignoring this color").arg(color));
-		return NULL;
+		return nullptr;
 	}
 	else
 		return color_index[color];
@@ -1534,7 +1538,7 @@ double OCAD8FileImport::convertTemplateScale(double ocad_scale)
 OCAD8FileExport::OCAD8FileExport(QIODevice* stream, Map* map, MapView* view)
  : Exporter(stream, map, view),
    uses_registration_color(false),
-   file(NULL)
+   file(nullptr)
 {
 	ocad_init();
 	encoding_1byte = QTextCodec::codecForName("Windows-1252");
@@ -1556,7 +1560,10 @@ void OCAD8FileExport::doExport()
 	
 	// Create struct in memory
 	int err = ocad_file_new(&file);
-	if (err != 0) throw FileFormatException(Exporter::tr("Could not create new file: %1").arg(tr("libocad returned %1").arg(err)));
+	if (err != 0) throw FileFormatException(::OpenOrienteering::Exporter::tr("Could not create new file: %1").arg(tr("libocad returned %1").arg(err)));
+	
+	// Check for a neccessary offset (and add related warnings early).
+	auto area_offset = calculateAreaOffset();
 	
 	// Fill header struct
 	OCADFileHeader* header = file->header;
@@ -1578,7 +1585,7 @@ void OCAD8FileExport::doExport()
 	OCADSetup* setup = file->setup;
 	if (view)
 	{
-		setup->center = convertPoint(view->center());
+		setup->center = convertPoint(view->center() - area_offset);
 		setup->zoom = view->getZoom();
 	}
 	else
@@ -1587,7 +1594,7 @@ void OCAD8FileExport::doExport()
 	// Scale and georeferencing parameters
 	const Georeferencing& georef = map->getGeoreferencing();
 	setup->scale = georef.getScaleDenominator();
-	const QPointF offset(georef.toProjectedCoords(MapCoord {0, 0}));
+	const QPointF offset(georef.toProjectedCoords(area_offset));
 	setup->offsetx = offset.x();
 	setup->offsety = offset.y();
 	setup->angle = georef.getGrivation();
@@ -1667,13 +1674,21 @@ void OCAD8FileExport::doExport()
 	}
 	
 	// Objects
-	OCADObject* ocad_object = ocad_object_alloc(NULL);
+	OCADObject* ocad_object = ocad_object_alloc(nullptr);
 	for (int l = 0; l < map->getNumParts(); ++l)
 	{
 		for (int o = 0; o < map->getPart(l)->getNumObjects(); ++o)
 		{
 			memset(ocad_object, 0, sizeof(OCADObject) - sizeof(OCADPoint) + 8 * (ocad_object->npts + ocad_object->ntext));
 			Object* object = map->getPart(l)->getObject(o);
+			std::unique_ptr<Object> duplicate;
+			if (area_offset.nativeX() != 0 || area_offset.nativeY() != 0)
+			{
+				// Create a safely managed duplicate and move it as needed.
+				duplicate.reset(object->duplicate());
+				duplicate->move(-area_offset);
+				object = duplicate.get();
+			}
 			object->update();
 			
 			// Fill some common entries of object struct
@@ -1717,9 +1732,9 @@ void OCAD8FileExport::doExport()
 			else
 				index_set.insert(-1);	// export as undefined symbol
 			
-			for (std::set<s16>::const_iterator it = index_set.begin(), end = index_set.end(); it != end; ++it)
+			for (const auto index : index_set)
 			{
-				s16 index_to_use = *it;
+				s16 index_to_use = index;
 				
 				// For text objects, check if we have to change / create a new text symbol because of the formatting
 				if (object->getType() == Object::Text && symbol_index.contains(object->getSymbol()))
@@ -1729,11 +1744,11 @@ void OCAD8FileExport::doExport()
 					if (!text_format_map.contains(text_symbol))
 					{
 						// Adjust the formatting in the first created symbol to this object
-						OCADTextSymbol* ocad_text_symbol = (OCADTextSymbol*)ocad_symbol(file, *it);
+						OCADTextSymbol* ocad_text_symbol = (OCADTextSymbol*)ocad_symbol(file, index);
 						setTextSymbolFormatting(ocad_text_symbol, text_object);
 						
 						TextFormatList new_list;
-						new_list.push_back(std::make_pair(text_object, *it));
+						new_list.push_back(std::make_pair(text_object->getHorizontalAlignment(), index));
 						text_format_map.insert(text_symbol, new_list);
 					}
 					else
@@ -1744,7 +1759,7 @@ void OCAD8FileExport::doExport()
 						bool found = false;
 						for (size_t i = 0, end = format_list.size(); i < end; ++i)
 						{
-							if (format_list[i].first->getHorizontalAlignment() == text_object->getHorizontalAlignment())
+							if (format_list[i].first == text_object->getHorizontalAlignment())
 							{
 								index_to_use = format_list[i].second;
 								found = true;
@@ -1755,10 +1770,10 @@ void OCAD8FileExport::doExport()
 						{
 							// Copy the symbol and adjust the formatting
 							// TODO: insert these symbols directly after the original symbols
-							OCADTextSymbol* ocad_text_symbol = (OCADTextSymbol*)ocad_symbol(file, *it);
+							OCADTextSymbol* ocad_text_symbol = (OCADTextSymbol*)ocad_symbol(file, index);
 							OCADTextSymbol* new_symbol = (OCADTextSymbol*)ocad_symbol_new(file, ocad_text_symbol->size);
 							// Get the pointer to the first symbol again as it might have changed during ocad_symbol_new()
-							ocad_text_symbol = (OCADTextSymbol*)ocad_symbol(file, *it);
+							ocad_text_symbol = (OCADTextSymbol*)ocad_symbol(file, index);
 							
 							memcpy(new_symbol, ocad_text_symbol, ocad_text_symbol->size);
 							setTextSymbolFormatting(new_symbol, text_object);
@@ -1773,7 +1788,7 @@ void OCAD8FileExport::doExport()
 							// otherwise when compiling for Android this causes the error:
 							// cannot bind packed field 'new_symbol->_OCADTextSymbol::number' to 'short int&'
 							s16 new_symbol_number = new_symbol->number;
-							format_list.push_back(std::make_pair(text_object, new_symbol_number));
+							format_list.push_back(std::make_pair(text_object->getHorizontalAlignment(), new_symbol_number));
 						}
 					}
 				}
@@ -1828,7 +1843,7 @@ void OCAD8FileExport::doExport()
 			int p = 0;
 			int s = 1;	// enabled
 			int t = 0;
-			OCADPoint pos = convertPoint(temp->getTemplateX(), temp->getTemplateY());
+			OCADPoint pos = convertPoint(temp->getTemplateX()-area_offset.nativeX(), temp->getTemplateY()-area_offset.nativeY());
 			int x = pos.x >> 8;
 			int y = pos.y >> 8;
 			double u = convertTemplateScale(temp->getTemplateScaleX());
@@ -1837,8 +1852,9 @@ void OCAD8FileExport::doExport()
 			template_path.replace(QLatin1Char('/'), QLatin1Char('\\'));
 			
 			QString string;
+			auto template_path_8bit = encoding_1byte->fromUnicode(template_path);
 			string.sprintf("%s\ts%d\tx%d\ty%d\ta%f\tu%f\tv%f\td%d\tp%d\tt%d\to%d",
-				encoding_1byte->fromUnicode(template_path).data(), s, x, y, a, u, v, d, p, t, o
+				template_path_8bit.data(), s, x, y, a, u, v, d, p, t, o
 			);
 			
 			OCADStringEntry* entry = ocad_string_entry_new(file, string.length() + 1);
@@ -1855,6 +1871,61 @@ void OCAD8FileExport::doExport()
 	
 	ocad_file_close(file);
 }
+
+
+MapCoord OCAD8FileExport::calculateAreaOffset()
+{
+	auto area_offset = QPointF{};
+	
+	// Attention: When changing ocd_bounds, update the warning messages, too.
+	auto ocd_bounds = QRectF{QPointF{-2000, -2000}, QPointF{2000, 2000}};
+	auto objects_extent = map->calculateExtent();
+	if (!ocd_bounds.contains(objects_extent))
+	{
+		if (objects_extent.width() < ocd_bounds.width()
+		    && objects_extent.height() < ocd_bounds.height())
+		{
+			// The extent fits into the limited area.
+			addWarning(tr("Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m)."));
+			area_offset = objects_extent.center();
+		}
+		else
+		{
+			// The extent is too wide to fit.
+			
+			// Only move the objects if they are completely outside the drawing area.
+			// This avoids repeated moves on open/save/close cycles.
+			if (!objects_extent.intersects(ocd_bounds))
+			{
+				addWarning(tr("Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m)."));
+				std::size_t count = 0;
+				auto calculate_average_center = [&area_offset, &count](Object* object)
+				{
+					area_offset *= qreal(count)/qreal(count+1);
+					++count;
+					area_offset += object->getExtent().center() / count;
+				};
+				map->applyOnAllObjects(calculate_average_center);
+			}
+			
+			addWarning(tr("Some coordinates remain outside of the OCAD 8 drawing area."
+			              " They might be unreachable in OCAD."));
+		}
+		
+		if (area_offset.manhattanLength() > 0)
+		{
+			// Round offset to 100 m in projected coordinates, to avoid crude grid offset.
+			constexpr auto unit = 100;
+			auto projected_offset = map->getGeoreferencing().toProjectedCoords(MapCoordF(area_offset));
+			projected_offset.rx() = qreal(qRound(projected_offset.x()/unit)) * unit;
+			projected_offset.ry() = qreal(qRound(projected_offset.y()/unit)) * unit;
+			area_offset = map->getGeoreferencing().toMapCoordF(projected_offset);
+		}
+	}
+	
+	return MapCoord{area_offset};
+}
+
 
 void OCAD8FileExport::exportCommonSymbolFields(const Symbol* symbol, OCADSymbol* ocad_symbol, int size)
 {
@@ -1892,17 +1963,60 @@ void OCAD8FileExport::exportCommonSymbolFields(const Symbol* symbol, OCADSymbol*
 		}
 	}
 	
-	// Icon: 22x22 with 4 bit color code, origin at bottom left, some padding
-	const int icon_size = 22;
-	QImage image = symbol->createIcon(map, icon_size, false, 0);
-	u8* ocad_icon = (u8*)ocad_symbol->icon;
+	exportSymbolIcon(symbol, ocad_symbol->icon);
+}
+
+void OCAD8FileExport::exportSymbolIcon(const Symbol* symbol, u8 ocad_icon[])
+{
+	// Icon: 22x22 with 4 bit color code, origin at bottom left
+	constexpr int icon_size = 22;
+	QImage image = symbol->createIcon(*map, icon_size, false)
+	               .convertToFormat(QImage::Format_ARGB32_Premultiplied);
+	
+	auto process_pixel = [&image](int x, int y)->int
+	{
+		// Apply premultiplied pixel on white background
+		auto premultiplied = image.pixel(x, y);
+		auto alpha = qAlpha(premultiplied);
+		auto r = 255 - alpha + qRed(premultiplied);
+		auto g = 255 - alpha + qGreen(premultiplied);
+		auto b = 255 - alpha + qBlue(premultiplied);
+		auto pixel = qRgb(r, g, b);
+		
+		// Ordered dithering 2x2 threshold matrix, adjusted for o-map halftones
+		static int threshold[4] = { 24, 192, 136, 80 };
+		auto palette_color = getOcadColor(pixel);
+		switch (palette_color)
+		{
+		case 0:
+			// Black to gray (50%)
+			return  qGray(pixel) < 128-threshold[(x%2 + 2*(y%2))]/2 ? 0 : 7;
+			
+		case 7:
+			// Gray (50%) to light gray 
+			return  qGray(pixel) < 192-threshold[(x%2 + 2*(y%2))]/4 ? 7 : 8;
+			
+		case 8:
+			// Light gray to white
+			return  qGray(pixel) < 256-threshold[(x%2 + 2*(y%2))]/4 ? 8 : 15;
+			
+		case 15:
+			// Pure white
+			return palette_color;
+			
+		default:
+			// Color to white
+			return  QColor(pixel).saturation() >= threshold[(x%2 + 2*(y%2))] ? palette_color : 15;
+		}
+	};
+	
 	for (int y = icon_size - 1; y >= 0; --y)
 	{
 		for (int x = 0; x < icon_size; x += 2)
 		{
-			int first = getOcadColor(image.pixel(x, y));
-			int second = getOcadColor(image.pixel(x + 1, y));
-			*(ocad_icon++) = (first << 4) + (second);
+			auto first = process_pixel(x, y);
+			auto second = process_pixel(x+1, y);
+			*(ocad_icon++) = u8((first << 4) + second);
 		}
 		ocad_icon++;
 	}
@@ -1921,16 +2035,16 @@ int OCAD8FileExport::getPatternSize(const PointSymbol* point)
 		{
 			factor = 0;
 			const PointSymbol* point_symbol = static_cast<const PointSymbol*>(point->getElementSymbol(i));
-			if (point_symbol->getInnerRadius() > 0 && point_symbol->getInnerColor() != NULL)
+			if (point_symbol->getInnerRadius() > 0 && point_symbol->getInnerColor())
 				++factor;
-			if (point_symbol->getOuterWidth() > 0 && point_symbol->getOuterColor() != NULL)
+			if (point_symbol->getOuterWidth() > 0 && point_symbol->getOuterColor())
 				++factor;
 		}
 		npts += factor * (2 + point->getElementObject(i)->getRawCoordinateVector().size());
 	}
-	if (point->getInnerRadius() > 0 && point->getInnerColor() != NULL)
+	if (point->getInnerRadius() > 0 && point->getInnerColor())
 		npts += 2 + 1;
-	if (point->getOuterWidth() > 0 && point->getOuterColor() != NULL)
+	if (point->getOuterWidth() > 0 && point->getOuterColor())
 		npts += 2 + 1;
 	
 	return npts * sizeof(OCADPoint);
@@ -1957,7 +2071,7 @@ s16 OCAD8FileExport::exportSubPattern(const Object* object, const Symbol* symbol
 	if (symbol->getType() == Symbol::Point)
 	{
 		const PointSymbol* point_symbol = static_cast<const PointSymbol*>(symbol);
-		if (point_symbol->getInnerRadius() > 0 && point_symbol->getInnerColor() != NULL)
+		if (point_symbol->getInnerRadius() > 0 && point_symbol->getInnerColor())
 		{
 			element->type = 4;
 			element->color = convertColor(point_symbol->getInnerColor());
@@ -1966,7 +2080,7 @@ s16 OCAD8FileExport::exportSubPattern(const Object* object, const Symbol* symbol
 			element->npts = exportCoordinates(object->getRawCoordinateVector(), buffer, point_symbol);
 			num_coords += 2 + element->npts;
 		}
-		if (point_symbol->getOuterWidth() > 0 && point_symbol->getOuterColor() != NULL)
+		if (point_symbol->getOuterWidth() > 0 && point_symbol->getOuterColor())
 		{
 			element = (OCADSymbolElement*)*buffer;
 			element->type = 3;
@@ -2047,7 +2161,7 @@ s16 OCAD8FileExport::exportLineSymbol(const LineSymbol* line)
 	extent = qMax(extent, getPointSymbolExtent(line->getDashSymbol()));
 	ocad_symbol->extent = extent;
 	ocad_symbol->color = convertColor(line->getColor());
-	if (line->getColor() != NULL)
+	if (line->getColor())
 		ocad_symbol->width = convertSize(line->getLineWidth());
 	
 	// Cap and Join
@@ -2086,7 +2200,7 @@ s16 OCAD8FileExport::exportLineSymbol(const LineSymbol* line)
 	// Dash pattern
 	if (line->isDashed())
 	{
-		if (line->getMidSymbol() != NULL && !line->getMidSymbol()->isEmpty())
+		if (line->getMidSymbol() && !line->getMidSymbol()->isEmpty())
 		{
 			if (line->getDashesInGroup() > 1)
 				addWarning(tr("In line symbol \"%1\", neglecting the dash grouping.").arg(line->getPlainTextName()));
@@ -2199,7 +2313,7 @@ s16 OCAD8FileExport::exportAreaSymbol(const AreaSymbol* area)
 	// Basic settings
 	ocad_symbol->type = OCAD_AREA_SYMBOL;
 	ocad_symbol->extent = 0;
-	if (area->getColor() != NULL)
+	if (area->getColor())
 	{
 		ocad_symbol->fill = 1;
 		ocad_symbol->color = convertColor(area->getColor());
@@ -2219,7 +2333,7 @@ s16 OCAD8FileExport::exportAreaSymbol(const AreaSymbol* area)
 				continue;
 			}
 			
-			if (pattern.rotatable)
+			if (pattern.rotatable())
 				ocad_symbol->base_flags |= 1;
 			
 			++ocad_symbol->hmode;
@@ -2240,13 +2354,13 @@ s16 OCAD8FileExport::exportAreaSymbol(const AreaSymbol* area)
 	}
 	
 	// Struct
-	PointSymbol* point_pattern = NULL;
+	PointSymbol* point_pattern = nullptr;
 	for (int i = 0, end = area->getNumFillPatterns(); i < end; ++i)
 	{
 		const AreaSymbol::FillPattern& pattern = area->getFillPattern(i);
 		if (pattern.type == AreaSymbol::FillPattern::PointPattern)
 		{
-			if (pattern.rotatable)
+			if (pattern.rotatable())
 				ocad_symbol->base_flags |= 1;
 			
 			++ocad_symbol->pmode;
@@ -2321,7 +2435,7 @@ s16 OCAD8FileExport::exportTextSymbol(const TextSymbol* text)
 	for (int i = 0; i < qMin((s16)32, ocad_symbol->ntabs); ++i)
 		ocad_symbol->tab[i] = convertSize(text->getCustomTab(i));
 	
-	if (text->getFramingMode() != TextSymbol::NoFraming && text->getFramingColor() != NULL)
+	if (text->getFramingMode() != TextSymbol::NoFraming && text->getFramingColor())
 	{
 		ocad_symbol->fcolor = convertColor(text->getFramingColor());
 		if (text->getFramingMode() == TextSymbol::ShadowFraming)
@@ -2402,12 +2516,12 @@ u16 OCAD8FileExport::exportCoordinates(const MapCoordVector& coords, OCADPoint**
 		OCADPoint p = convertPoint(point);
 		if (point.isDashPoint())
 		{
-			if (symbol == NULL || symbol->getType() != Symbol::Line)
+			if (!symbol || symbol->getType() != Symbol::Line)
 				p.y |= PY_CORNER;
 			else
 			{
 				const LineSymbol* line_symbol = static_cast<const LineSymbol*>(symbol);
-				if ((line_symbol->getDashSymbol() == NULL || line_symbol->getDashSymbol()->isEmpty()) && line_symbol->isDashed())
+				if ((line_symbol->getDashSymbol() == nullptr || line_symbol->getDashSymbol()->isEmpty()) && line_symbol->isDashed())
 					p.y |= PY_DASH;
 				else
 					p.y |= PY_CORNER;
@@ -2502,9 +2616,9 @@ u16 OCAD8FileExport::exportTextCoordinates(TextObject* object, OCADPoint** buffe
 	}
 }
 
+// static
 int OCAD8FileExport::getOcadColor(QRgb rgb)
 {
-	// Simple comparison function which takes the best matching color.
 	static const QColor ocad_colors[16] = {
 		QColor(  0,   0,   0).toHsv(),
 		QColor(128,   0,   0).toHsv(),
@@ -2524,37 +2638,46 @@ int OCAD8FileExport::getOcadColor(QRgb rgb)
 		QColor(255, 255, 255).toHsv()
 	};
 	
-	// Return white for transparent areas
-	if (qAlpha(rgb) < 128)
+	Q_ASSERT(qAlpha(rgb) == 255);
+	
+	// Quick return for frequent values
+	if (rgb == qRgb(255, 255, 255))
 		return 15;
+	else if (rgb == qRgb(0, 0, 0))
+		return 0;
 	
 	QColor color = QColor(rgb).toHsv();
-	int best_index = 0;
-	float best_distance = 999999;
-	for (int i = 0; i < 16; ++i)
+	if (color.hue() == -1 || color.saturation() < 32)
 	{
+		auto gray = qGray(rgb);  // qGray is used for dithering
+		if (gray >= 192)
+			return 8;
+		if (gray >= 128)
+			return 7;
+		return 0;
+	}
+	
+	int best_index = 0;
+	auto best_distance = std::numeric_limits<qreal>::max();
+	for (auto i : { 1, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14 })
+	{
+		// True color
 		int hue_dist = qAbs(color.hue() - ocad_colors[i].hue());
 		hue_dist = qMin(hue_dist, 360 - hue_dist);
-		float distance = qPow(hue_dist, 2) + 
-						  0.1f * qPow(color.saturation() - ocad_colors[i].saturation(), 2) +
-						  0.1f * qPow(color.value() - ocad_colors[i].value(), 2);
+		auto distance = qPow(hue_dist, 2)
+		                + 0.1 * qPow(color.saturation() - ocad_colors[i].saturation(), 2)
+		                + 0.1 * qPow(color.value() - ocad_colors[i].value(), 2);
 		
 		// (Too much) manual tweaking for orienteering colors
 		if (i == 1)
 			distance *= 1.5;	// Dark red
 		else if (i == 3)
 			distance *= 2;		// Olive
-		else if (i == 7)
-			distance *= 2;		// Dark gray
-		else if (i == 8)
-			distance *= 3;		// Light gray
 		else if (i == 11)
 			distance *= 2;		// Yellow
 		else if (i == 9)
 			distance *= 3;		// Red is unlikely
-		else if (i == 15)
-			distance *= 4;		// White is very unlikely
-			
+		
 		if (distance < best_distance)
 		{
 			best_distance = distance;
@@ -2578,9 +2701,9 @@ s16 OCAD8FileExport::getPointSymbolExtent(const PointSymbol* symbol)
 		object->clearRenderables();
 	}
 	float float_extent = 0.5f * qMax(extent.width(), extent.height());
-	if (symbol->getInnerColor() != NULL)
+	if (symbol->getInnerColor())
 		float_extent = qMax(float_extent, 0.001f * symbol->getInnerRadius());
-	if (symbol->getOuterColor() != NULL)
+	if (symbol->getOuterColor())
 		float_extent = qMax(float_extent, 0.001f * (symbol->getInnerRadius() + symbol->getOuterWidth()));
 	return convertSize(1000 * float_extent);
 }
@@ -2727,3 +2850,6 @@ void OCAD8FileExport::addStringTruncationWarning(const QString& text, int trunca
 	temp.insert(truncation_pos, QLatin1String("|||"));
 	addWarning(tr("String truncated (truncation marked with three '|'): %1").arg(temp));
 }
+
+
+}  // namespace OpenOrienteering

@@ -24,8 +24,16 @@
 #ifndef OPENORIENTEERING_PRINT_WIDGET_H
 #define OPENORIENTEERING_PRINT_WIDGET_H
 
-#include <QPrinterInfo>
+#include <QFlags>
+#include <QList>
+#include <QObject>
+#include <QPrinter>
+// IWYU pragma: no_include <QRectF>
+#include <QSize>
+#include <QString>
+#include <QStringList>
 #include <QWidget>
+
 
 class QAbstractButton;
 class QButtonGroup;
@@ -36,18 +44,23 @@ class QDoubleSpinBox;
 class QFormLayout;
 class QLabel;
 class QPushButton;
+class QPrinterInfo;
+class QRectF;
 class QScrollArea;
 class QSpinBox;
 class QToolButton;
 
+namespace OpenOrienteering {
+
+class MainWindow;
 class Map;
 class MapEditorController;
 class MapPrinter;
 class MapPrinterOptions;
 class MapPrinterPageFormat;
 class MapView;
-class MainWindow;
 class PrintTool;
+
 
 /**
  * The print widget lets the user adjust targets and parameters
@@ -110,7 +123,7 @@ public slots:
 	void setPrintArea(const QRectF& area);
 	
 	/** Sets output options: resolution, overprinting. */
-	void setOptions(const MapPrinterOptions& parameters);
+	void setOptions(const MapPrinterOptions& options);
 	
 	/** Listens to view feature changes. */
 	void onVisibilityChanged();
@@ -120,7 +133,7 @@ signals:
 	 * This signal is emitted when the type of task changes.
 	 * It may be used to set a window title.
 	 */
-	void taskChanged(QString name);
+	void taskChanged(const QString& name);
 	
 	/**
 	 * This signal is emitted when a print or export job has been started 
@@ -301,11 +314,7 @@ private:
 	QPushButton* print_button;
 	QPushButton* export_button;
 	
-#if QT_VERSION < 0x050300
-	QList<QPrinterInfo> printers;
-#else
 	QStringList printers;
-#endif
 	
 	PrintAreaPolicy policy;
 	
@@ -319,8 +328,14 @@ private:
 	bool active;
 };
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(PrintWidget::TaskFlags)
 
 #endif
+
+
+}  // namespace OpenOrienteering
+
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(OpenOrienteering::PrintWidget::TaskFlags)
+
 
 #endif

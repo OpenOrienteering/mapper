@@ -21,38 +21,46 @@
 
 #include "draw_point_gps_tool.h"
 
+#include <Qt>
+#include <QtGlobal>
+#include <QCursor>
 #include <QKeyEvent>
 #include <QLabel>
 #include <QPainter>
+#include <QPixmap>
+#include <QPoint>
+#include <QString>
 
 #include "core/map.h"
-#include "gui/map/map_editor.h"
-#include "undo/object_undo.h"
-#include "gui/map/map_widget.h"
+#include "core/map_coord.h"
+#include "core/map_view.h"
 #include "core/objects/object.h"
 #include "core/renderables/renderable.h"
-#include "core/symbols/symbol.h"
 #include "core/symbols/point_symbol.h"
-#include "tool_helpers.h"
-#include "util/util.h"
-#include "sensors/gps_display.h"
+#include "core/symbols/symbol.h"
 #include "gui/map/map_editor.h"
+#include "gui/map/map_widget.h"
+#include "sensors/gps_display.h"
+#include "tools/tool.h"
+#include "undo/object_undo.h"
+#include "util/util.h"
 
 
-DrawPointGPSTool::DrawPointGPSTool(GPSDisplay* gps_display, MapEditorController* editor, QAction* tool_button)
-: MapEditorToolBase(QCursor(QPixmap(QString::fromLatin1(":/images/cursor-draw-point.png")), 11, 11), DrawPoint, editor, tool_button)
+namespace OpenOrienteering {
+
+DrawPointGPSTool::DrawPointGPSTool(GPSDisplay* gps_display, MapEditorController* editor, QAction* tool_action)
+: MapEditorToolBase(QCursor(QPixmap(QString::fromLatin1(":/images/cursor-draw-point.png")), 11, 11), DrawPoint, editor, tool_action)
 , renderables(new MapRenderables(map()))
-, help_label(NULL)
 {
 	useTouchCursor(false);
 	
-	preview_object = NULL;
+	preview_object = nullptr;
 	if (gps_display->hasValidPosition())
 		newGPSPosition(gps_display->getLatestGPSCoord(), gps_display->getLatestGPSCoordAccuracy());
 	
-	connect(gps_display, SIGNAL(mapPositionUpdated(MapCoordF,float)), this, SLOT(newGPSPosition(MapCoordF,float)));
-	connect(editor, SIGNAL(activeSymbolChanged(const Symbol*)), this, SLOT(activeSymbolChanged(const Symbol*)));
-	connect(map(), SIGNAL(symbolDeleted(int, const Symbol*)), this, SLOT(symbolDeleted(int, const Symbol*)));
+	connect(gps_display, &GPSDisplay::mapPositionUpdated, this, &DrawPointGPSTool::newGPSPosition);
+	connect(editor, &MapEditorController::activeSymbolChanged, this, &DrawPointGPSTool::activeSymbolChanged);
+	connect(map(), &Map::symbolDeleted, this, &DrawPointGPSTool::symbolDeleted);
 }
 
 DrawPointGPSTool::~DrawPointGPSTool()
@@ -77,7 +85,7 @@ void DrawPointGPSTool::initImpl()
 
 void DrawPointGPSTool::newGPSPosition(MapCoordF coord, float accuracy)
 {
-	PointSymbol* point = reinterpret_cast<PointSymbol*>(editor->activeSymbol());
+	auto point = reinterpret_cast<PointSymbol*>(editor->activeSymbol());
 	
 	// Calculate weight from accuracy. This is arbitrarily chosen.
 	float weight;
@@ -123,7 +131,7 @@ void DrawPointGPSTool::clickRelease()
 	if (! preview_object)
 		return;
 
-	PointObject* point = preview_object->duplicate()->asPoint();
+	auto point = preview_object->duplicate()->asPoint();
 	
 	int index = map()->addObject(point);
 	map()->clearObjectSelection(false);
@@ -132,7 +140,7 @@ void DrawPointGPSTool::clickRelease()
 	map()->clearDrawingBoundingBox();
 	renderables->removeRenderablesOfObject(preview_object, false);
 	
-	DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(map());
+	auto undo_step = new DeleteObjectsUndoStep(map());
 	undo_step->addObject(index);
 	map()->push(undo_step);
 	
@@ -192,7 +200,7 @@ void DrawPointGPSTool::objectSelectionChangedImpl()
 
 void DrawPointGPSTool::activeSymbolChanged(const Symbol* symbol)
 {
-	if (symbol == NULL || symbol->getType() != Symbol::Point || symbol->isHidden())
+	if (!symbol || symbol->getType() != Symbol::Point || symbol->isHidden())
 	{
 		if (symbol && symbol->isHidden())
 			deactivate();
@@ -210,3 +218,6 @@ void DrawPointGPSTool::symbolDeleted(int pos, const Symbol* old_symbol)
 	if (last_used_symbol == old_symbol)
 		deactivate();
 }
+
+
+}  // namespace OpenOrienteering

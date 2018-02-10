@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -18,26 +19,40 @@
  */
 
 
-#ifndef _OPENORIENTEERING_TEMPLATE_TOOL_MOVE_H_
-#define _OPENORIENTEERING_TEMPLATE_TOOL_MOVE_H_
+#ifndef OPENORIENTEERING_TEMPLATE_TOOL_MOVE_H
+#define OPENORIENTEERING_TEMPLATE_TOOL_MOVE_H
 
+#include <QtGlobal>
+#include <QObject>
+
+#include "core/map_coord.h"
 #include "tools/tool.h"
 
+class QAction;
+class QCursor;
+class QMouseEvent;
+
+namespace OpenOrienteering {
+
+class MapEditorController;
+class MapWidget;
 class Template;
+
 
 /** Tool to move a template by hand. */
 class TemplateMoveTool : public MapEditorTool
 {
 Q_OBJECT
 public:
-	TemplateMoveTool(Template* templ, MapEditorController* editor, QAction* toolAction = NULL);
+	TemplateMoveTool(Template* templ, MapEditorController* editor, QAction* tool_action = nullptr);
+	~TemplateMoveTool();
 	
-	virtual void init();
-	virtual const QCursor& getCursor() const;
+	void init() override;
+	const QCursor& getCursor() const override;
 	
-	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
 	
 public slots:
 	void templateDeleted(int index, const Template* temp);
@@ -46,8 +61,13 @@ private:
 	void updateDragging(MapCoordF mouse_pos_map);
 	
 	Template* templ;
-	bool dragging;
+	bool dragging = false;
 	MapCoordF click_pos_map;
+	
+	Q_DISABLE_COPY(TemplateMoveTool)
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

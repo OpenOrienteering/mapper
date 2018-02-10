@@ -19,12 +19,26 @@
  */
 
 
-#ifndef _OPENORIENTEERING_PIE_MENU_H_
-#define _OPENORIENTEERING_PIE_MENU_H_
+#ifndef OPENORIENTEERING_PIE_MENU_H
+#define OPENORIENTEERING_PIE_MENU_H
 
 #include <cmath>
 
+#include <QtGlobal>
+#include <QHash>
+#include <QObject>
+#include <QPoint>
+#include <QPolygon>
 #include <QWidget>
+
+class QAction;
+class QActionEvent;
+class QHideEvent;
+class QMouseEvent;
+class QPaintEvent;
+
+namespace OpenOrienteering {
+
 
 /** 
  * Displays a pie menu.
@@ -47,7 +61,7 @@ public:
 	};
 	
 	/** Constructs a pie menu with default settings. */
-	PieMenu(QWidget* parent = NULL);
+	PieMenu(QWidget* parent = nullptr);
 	
 	/** Returns the minimum number of actions in the menu. */
 	int minimumActionCount() const;
@@ -78,7 +92,7 @@ public:
 	void setIconSize(int icon_size);
 	
 	/** Returns the action at pos.
-	 *  Returns NULL if there is no action at this place. */
+	 *  Returns nullptr if there is no action at this place. */
 	QAction* actionAt(const QPoint& pos) const;
 	
 	/** Returns the geometry of the given action.
@@ -88,7 +102,7 @@ public:
 	ItemGeometry actionGeometry(QAction* action) const;
 	
 	/** Returns the currently highlighted action.
-	 *  Returns NULL if no action is highlighted.
+	 *  Returns nullptr if no action is highlighted.
 	 *  @see QMenu::activeAction */
 	QAction* activeAction() const;
 	
@@ -120,12 +134,12 @@ signals:
 	void triggered(QAction* action);
 	
 protected:
-	virtual void actionEvent(QActionEvent* event);
-	virtual void hideEvent(QHideEvent* event);
-	virtual void mouseMoveEvent(QMouseEvent* event);
-	virtual void mousePressEvent(QMouseEvent* event);
-	virtual void mouseReleaseEvent(QMouseEvent* event);
-	virtual void paintEvent(QPaintEvent* event);
+	void actionEvent(QActionEvent* event) override;
+	void hideEvent(QHideEvent* event) override;
+	void mouseMoveEvent(QMouseEvent* event) override;
+	void mousePressEvent(QMouseEvent* event) override;
+	void mouseReleaseEvent(QMouseEvent* event) override;
+	void paintEvent(QPaintEvent* event) override;
 	
 	void updateCachedState();
 	
@@ -152,5 +166,7 @@ QPoint PieMenu::getPoint(double radius, double angle) const
 	return QPoint(total_radius + qRound(radius * -sin(angle)), total_radius + qRound(radius * -cos(angle)));
 }
 
+
+}  // namespace OpenOrienteering
 
 #endif

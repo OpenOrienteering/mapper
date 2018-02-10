@@ -20,7 +20,7 @@
 #ifndef OPENORIENTEERING_LOCALE_T_H
 #define OPENORIENTEERING_LOCALE_T_H
 
-#include <QtTest/QtTest>
+#include <QObject>
 
 
 /**

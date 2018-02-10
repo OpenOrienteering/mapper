@@ -20,26 +20,31 @@
 
 #include "georeferencing.h"
 
-#include <qmath.h>
-#include <QCoreApplication>
+#include <cstddef>
+#include <algorithm>
+#include <iterator>
+#include <utility>
+
+#include <QtGlobal>
+#include <QByteArray>
 #include <QDebug>
-#include <QDir>
-#include <QLineEdit>
+#include <QDir> // IWYU pragma: keep
+#include <QFileInfo>
+#include <QLatin1String>
 #include <QLocale>
-#include <QSpinBox>
-#include <QTemporaryDir>
-#include <QXmlStreamAttributes>
+#include <QPoint>
+#include <QSignalBlocker>
+#include <QStringRef>
+#include <QTemporaryDir> // IWYU pragma: keep
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
 #include <proj_api.h>
 
-#include "crs_template.h"
-#include "../fileformats/file_format.h"
-#include "../fileformats/xml_file_format.h"
-#include "gui/util_gui.h"
-#include "../util/xml_stream_util.h"
-#include "../util/scoped_signals_blocker.h"
+#include "core/crs_template.h"
+#include "fileformats/file_format.h"
+#include "fileformats/xml_file_format.h"
+#include "util/xml_stream_util.h"
 
 
 // ### A namespace which collects various string constants of type QLatin1String. ###
@@ -72,6 +77,10 @@ namespace literal
 	static const QLatin1String proj_4("PROJ.4");
 	static const QLatin1String geographic_coordinates("Geographic coordinates");
 }
+
+
+
+namespace OpenOrienteering {
 
 namespace
 {
@@ -118,13 +127,23 @@ namespace
 	/**
 	 * List of substitutions for specifications which are known to be broken in Proj.4.
 	 */
-	std::vector< std::pair<QString, QString> > spec_substitutions {
-		// #542, S-JTSK (Greenwich) / Krovak East North
-		{ QString::fromLatin1("+init=epsg:5514"),
-		  QString::fromLatin1("+proj=krovak +lat_0=49.5 +lon_0=24.83333333333333 +alpha=30.28813972222222 +k=0.9999 +x_0=0 +y_0=0 "
-		                      "+ellps=bessel +towgs84=542.5,89.2,456.9,5.517,2.275,5.516,6.96 +pm=greenwich +units=m +no_defs") },
+	const char* spec_substitutions[][2] = {
+	    // #542, S-JTSK (Greenwich) / Krovak East North
+	    { "+init=epsg:5514", "+proj=krovak"
+	                         " +lat_0=49.5 +lon_0=24.83333333333333"
+	                         " +alpha=30.28813972222222 +k=0.9999"
+	                         " +x_0=0 +y_0=0"
+	                         " +ellps=bessel"
+	                         " +pm=greenwich"
+	                         " +towgs84=542.5,89.2,456.9,5.517,2.275,5.516,6.96"
+	                         " +units=m"
+	                         " +no_defs"
+	    },
 	};
-}
+	
+	
+}  // namespace
+
 
 
 //### Georeferencing ###
@@ -146,9 +165,9 @@ Georeferencing::Georeferencing()
 	updateTransformation();
 	
 	projected_crs_id = QString::fromLatin1("Local");
-	projected_crs  = NULL;
+	projected_crs  = nullptr;
 	geographic_crs = pj_init_plus_no_defs(geographic_crs_spec);
-	Q_ASSERT(geographic_crs != NULL);
+	Q_ASSERT(geographic_crs);
 }
 
 Georeferencing::Georeferencing(const Georeferencing& other)
@@ -169,20 +188,23 @@ Georeferencing::Georeferencing(const Georeferencing& other)
 	updateTransformation();
 	
 	geographic_crs = pj_init_plus_no_defs(geographic_crs_spec);
-	Q_ASSERT(geographic_crs != NULL);
+	Q_ASSERT(geographic_crs);
 	projected_crs  = pj_init_plus_no_defs(projected_crs_spec);
 }
 
 Georeferencing::~Georeferencing()
 {
-	if (projected_crs != NULL)
+	if (projected_crs)
 		pj_free(projected_crs);
-	if (geographic_crs != NULL)
+	if (geographic_crs)
 		pj_free(geographic_crs);
 }
 
 Georeferencing& Georeferencing::operator=(const Georeferencing& other)
 {
+	if (&other == this)
+		return *this;
+	
 	state                    = other.state;
 	scale_denominator        = other.scale_denominator;
 	grid_scale_factor        = other.grid_scale_factor;
@@ -199,7 +221,7 @@ Georeferencing& Georeferencing::operator=(const Georeferencing& other)
 	projected_crs_parameters = other.projected_crs_parameters;
 	geographic_ref_point     = other.geographic_ref_point;
 	
-	if (projected_crs != NULL)
+	if (projected_crs)
 		pj_free(projected_crs);
 	projected_crs       = pj_init_plus_no_defs(projected_crs_spec);
 	
@@ -210,6 +232,15 @@ Georeferencing& Georeferencing::operator=(const Georeferencing& other)
 	
 	return *this;
 }
+
+
+
+bool Georeferencing::isGeographic() const
+{
+	return projected_crs && pj_is_latlong(projected_crs);
+}
+
+
 
 void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only)
 {
@@ -331,7 +362,7 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only)
 	emit declinationChanged();
 	if (!projected_crs_spec.isEmpty())
 	{
-		if (projected_crs != NULL)
+		if (projected_crs)
 			pj_free(projected_crs);
 		projected_crs = pj_init_plus_no_defs(projected_crs_spec);
 		if (0 == *pj_get_errno_ref())
@@ -375,10 +406,10 @@ void Georeferencing::save(QXmlStreamWriter& xml) const
 		
 		if (!projected_crs_parameters.empty())
 		{
-			for (size_t i = 0; i < projected_crs_parameters.size(); ++i)
+			for (const auto& projected_crs_parameter : projected_crs_parameters)
 			{
 				XmlElementWriter parameter_element(xml, literal::parameter);
-				xml.writeCharacters(projected_crs_parameters[i]);
+				xml.writeCharacters(projected_crs_parameter);
 				Q_UNUSED(parameter_element); // Suppress compiler warnings
 			}
 		}
@@ -424,7 +455,7 @@ void Georeferencing::setState(Georeferencing::State value)
 		updateTransformation();
 		
 		if (state != Normal)
-			setProjectedCRS(QString::fromLatin1("Local"));
+			setProjectedCRS(QStringLiteral("Local"), {});
 		
 		emit stateChanged();
 	}
@@ -499,7 +530,7 @@ void Georeferencing::setProjectedRefPoint(QPointF point, bool update_grivation)
 		switch (state)
 		{
 		default:
-			Q_ASSERT(false && "Undefined georeferencing state");
+			qWarning("Undefined georeferencing state");
 			// fall through
 		case Local:
 			break;
@@ -618,6 +649,18 @@ void Georeferencing::setTransformationDirectly(const QTransform& transform)
 	}
 }
 
+QTransform Georeferencing::mapToProjected() const
+{
+	return to_projected;
+}
+
+QTransform Georeferencing::projectedToMap() const
+{
+	return from_projected;
+}
+
+
+
 bool Georeferencing::setProjectedCRS(const QString& id, QString spec, std::vector<QString> params)
 {
 	// Default return value if no change is neccessary
@@ -625,9 +668,9 @@ bool Georeferencing::setProjectedCRS(const QString& id, QString spec, std::vecto
 	
 	for (const auto& substitution : spec_substitutions)
 	{
-		if (substitution.first == spec)
+		if (QLatin1String(substitution[0]) == spec)
 		{
-			spec = substitution.second;
+			spec = QString::fromLatin1(substitution[1]);
 			break;
 		}
 	}
@@ -639,7 +682,7 @@ bool Georeferencing::setProjectedCRS(const QString& id, QString spec, std::vecto
 	    || !std::equal(begin(params), end(params), begin(projected_crs_parameters))
 	    || (!ok && !spec.isEmpty()) )
 	{
-		if (projected_crs != NULL)
+		if (projected_crs)
 			pj_free(projected_crs);
 		
 		projected_crs_id = id;
@@ -647,7 +690,7 @@ bool Georeferencing::setProjectedCRS(const QString& id, QString spec, std::vecto
 		if (projected_crs_spec.isEmpty())
 		{
 			projected_crs_parameters.clear();
-			projected_crs = NULL;
+			projected_crs = nullptr;
 			ok = (state != Normal);
 		}
 		else
@@ -692,13 +735,13 @@ LatLon Georeferencing::toGeographicCoords(const MapCoordF& map_coords, bool* ok)
 
 LatLon Georeferencing::toGeographicCoords(const QPointF& projected_coords, bool* ok) const
 {
-	if (ok != NULL)
+	if (ok)
 		*ok = false;
 
 	double easting = projected_coords.x(), northing = projected_coords.y();
 	if (projected_crs && geographic_crs) {
-		int ret = pj_transform(projected_crs, geographic_crs, 1, 1, &easting, &northing, NULL);
-		if (ok != NULL) 
+		int ret = pj_transform(projected_crs, geographic_crs, 1, 1, &easting, &northing, nullptr);
+		if (ok) 
 			*ok = (ret == 0);
 	}
 	return LatLon::fromRadiant(northing, easting);
@@ -706,13 +749,13 @@ LatLon Georeferencing::toGeographicCoords(const QPointF& projected_coords, bool*
 
 QPointF Georeferencing::toProjectedCoords(const LatLon& lat_lon, bool* ok) const
 {
-	if (ok != NULL)
+	if (ok)
 		*ok = false;
 	
 	double easting = degToRad(lat_lon.longitude()), northing = degToRad(lat_lon.latitude());
 	if (projected_crs && geographic_crs) {
-		int ret = pj_transform(geographic_crs, projected_crs, 1, 1, &easting, &northing, NULL);
-		if (ok != NULL) 
+		int ret = pj_transform(geographic_crs, projected_crs, 1, 1, &easting, &northing, nullptr);
+		if (ok) 
 			*ok = (ret == 0);
 	}
 	return QPointF(easting, northing);
@@ -730,7 +773,7 @@ MapCoordF Georeferencing::toMapCoordF(const LatLon& lat_lon, bool* ok) const
 
 MapCoordF Georeferencing::toMapCoordF(const Georeferencing* other, const MapCoordF& map_coords, bool* ok) const
 {
-	if (other == NULL)
+	if (!other)
 	{
 		if (ok)
 			*ok = true;
@@ -744,26 +787,26 @@ MapCoordF Georeferencing::toMapCoordF(const Georeferencing* other, const MapCoor
 	}
 	else
 	{
-		if (ok != NULL)
+		if (ok)
 			*ok = false;
 		
 		QPointF projected_coords = other->toProjectedCoords(map_coords);
 		double easting = projected_coords.x(), northing = projected_coords.y();
 		if (projected_crs && other->projected_crs) {
 			// Direct transformation:
-			//int ret = pj_transform(other->projected_crs, projected_crs, 1, 1, &easting, &northing, NULL);
+			//int ret = pj_transform(other->projected_crs, projected_crs, 1, 1, &easting, &northing, nullptr);
 			// Use geographic coordinates as intermediate step to enforce
 			// that coordinates are assumed to have WGS84 datum if datum is specified in only one CRS spec:
-			int ret = pj_transform(other->projected_crs, geographic_crs, 1, 1, &easting, &northing, NULL);
-			ret |= pj_transform(geographic_crs, projected_crs, 1, 1, &easting, &northing, NULL);
+			int ret = pj_transform(other->projected_crs, geographic_crs, 1, 1, &easting, &northing, nullptr);
+			ret |= pj_transform(geographic_crs, projected_crs, 1, 1, &easting, &northing, nullptr);
 			
 			if (ret != 0)
 			{
-				if (ok != NULL) 
+				if (ok) 
 					*ok = false;
 				return MapCoordF(easting, northing);
 			}
-			if (ok != NULL)
+			if (ok)
 				*ok = true;
 		}
 		return toMapCoordF(QPointF(easting, northing));
@@ -815,6 +858,11 @@ QDebug operator<<(QDebug dbg, const Georeferencing &georef)
 	return dbg.space();
 }
 
+
+}  // namespace OpenOrienteering
+
+
+
 #if defined(Q_OS_ANDROID)
 
 QScopedPointer<QTemporaryDir> temp_dir;  // removed upon destruction
@@ -834,7 +882,7 @@ extern "C"
 	 * If the file exists in the temporary folder (or copying was successful)
 	 * this function returns the full path of this file as a C string.
 	 * This string becomes invalid the next time this function is called.
-	 * Otherwise it returns NULL.
+	 * Otherwise it returns nullptr.
 	 */
 	const char* projFileHelperAndroid(const char *name)
 	{
@@ -849,7 +897,7 @@ extern "C"
 			}
 		}
 		qDebug() << "Could not projection data file" << name;
-		return NULL;
+		return nullptr;
 	}
 	
 	void registerProjFileHelper()
@@ -867,4 +915,4 @@ extern "C"
 	}
 }
 
-#endif
+#endif  // defined(Q_OS_ANDROID)

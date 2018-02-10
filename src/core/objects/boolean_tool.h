@@ -22,17 +22,21 @@
 #ifndef OPENORIENTEERING_BOOLEAN_TOOL_H
 #define OPENORIENTEERING_BOOLEAN_TOOL_H
 
+#include <utility>
 #include <vector>
 
 #include <QHash>
 
 #include <clipper.hpp>
-#include "core/objects/object.h"
+
+namespace OpenOrienteering {
 
 class CombinedUndoStep;
+class Map;
 class PathCoord;
 class PathObject;
-class Symbol;
+class PathPart;
+
 
 /**
  * Wraps some helper functions for boolean operations.
@@ -68,7 +72,7 @@ public:
 	/**
 	 * Constructs a tool for the given operation and map.
 	 * 
-	 * map must not be NULL (for some member functions).
+	 * map must not be nullptr (for some member functions).
 	 */
 	BooleanTool(Operation op, Map* map);
 	
@@ -262,5 +266,8 @@ private:
 	const Operation op;
 	Map* const map;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

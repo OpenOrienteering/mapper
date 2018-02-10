@@ -22,7 +22,29 @@
 #ifndef OPENORIENTEERING_POINT_SYMBOL_H
 #define OPENORIENTEERING_POINT_SYMBOL_H
 
+#include <vector>
+
+#include <Qt>
+#include <QtGlobal>
+
 #include "symbol.h"
+
+class QIODevice;
+class QPainterPath;
+class QXmlStreamReader;
+class QXmlStreamWriter;
+
+namespace OpenOrienteering {
+
+class Map;
+class MapColor;
+class MapColorMap;
+class MapCoordF;
+class Object;
+class ObjectRenderables;
+class SymbolPropertiesWidget;
+class SymbolSettingDialog;
+class VirtualCoordVector;
 
 
 /**
@@ -43,9 +65,11 @@ friend class OCAD8FileImport;
 friend class XMLImportExport;
 public:
 	/** Constructs an empty point symbol. */
-	PointSymbol();
-	virtual ~PointSymbol();
-	Symbol* duplicate(const MapColorMap* color_map = NULL) const override;
+	PointSymbol() noexcept;
+	~PointSymbol() override;
+	Symbol* duplicate(const MapColorMap* color_map = nullptr) const override;
+	
+	bool validate() const override;
 	
 	void createRenderables(
 	        const Object *object,
@@ -55,10 +79,18 @@ public:
 	
 	void createRenderablesScaled(MapCoordF coord, float rotation, ObjectRenderables& output, float coord_scale = 1.0f) const;
 	
+	void createRenderablesIfCenterInside(MapCoordF point_coord, qreal rotation, const QPainterPath* outline, ObjectRenderables& output) const;
+	void createPrimitivesIfCompletelyInside(MapCoordF point_coord, const QPainterPath* outline, ObjectRenderables& output) const;
+	void createRenderablesIfCompletelyInside(MapCoordF point_coord, qreal rotation, const QPainterPath* outline, ObjectRenderables& output) const;
+	void createPrimitivesIfPartiallyInside(MapCoordF point_coord, const QPainterPath* outline, ObjectRenderables& output) const;
+	void createRenderablesIfPartiallyInside(MapCoordF point_coord, qreal rotation, const QPainterPath* outline, ObjectRenderables& output) const;
+	
 	void colorDeleted(const MapColor* color) override;
 	bool containsColor(const MapColor* color) const override;
 	const MapColor* guessDominantColor() const override;
 	void scale(double factor) override;
+	
+	qreal dimensionForIcon() const override;
 	
 	// Contained objects and symbols (elements)
 	
@@ -121,5 +153,8 @@ protected:
 	int outer_width;		// in 1/1000 mm
 	const MapColor* outer_color;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

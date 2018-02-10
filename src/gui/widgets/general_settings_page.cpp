@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Jan Dalheimer
- *    Copyright 2012-2016  Kai Pastor
+ *    Copyright 2012-2017  Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,29 +20,56 @@
 
 #include "general_settings_page.h"
 
+#include <algorithm>
+#include <iterator>
+#include <vector>
+
+#include <Qt>
+#include <QtGlobal>
 #include <QtMath>
 #include <QApplication>
+#include <QAbstractButton>
+#include <QByteArray>
 #include <QCheckBox>
 #include <QComboBox>
 #include <QCompleter>
+#include <QDialog>
 #include <QDialogButtonBox>
-#include <QFileDialog>
+#include <QDoubleSpinBox>
+#include <QEvent>
+#include <QFlags>
 #include <QFormLayout>
+#include <QHBoxLayout>
+#include <QIcon>
+#include <QLabel>
+#include <QLatin1Char>
+#include <QLatin1String>
 #include <QLineEdit>
+#include <QList>
+#include <QLocale>
 #include <QMessageBox>
 #include <QScreen>
-#include <QSettings>
+#include <QSettings> // IWYU pragma: keep
+#include <QSignalBlocker>
+#include <QSize>
+#include <QSpacerItem>
+#include <QSpinBox>
+#include <QStringList>
 #include <QTextCodec>
 #include <QToolButton>
+#include <QVBoxLayout>
+#include <QWidget>
 
-#include "home_screen_widget.h"
-#include "../main_window.h"
+#include "settings.h"
+#include "gui/file_dialog.h"
+#include "gui/main_window.h"
 #include "gui/util_gui.h"
+#include "gui/widgets/home_screen_widget.h"
+#include "gui/widgets/settings_page.h"
 #include "util/translation_util.h"
-#include "../../util/backports.h"
-#include "../../util/encoding.h"
-#include "../../util/scoped_signals_blocker.h"
 
+
+namespace OpenOrienteering {
 
 GeneralSettingsPage::GeneralSettingsPage(QWidget* parent)
 : SettingsPage(parent)
@@ -60,7 +87,7 @@ GeneralSettingsPage::GeneralSettingsPage(QWidget* parent)
 	language_box = new QComboBox(this);
 	language_layout->addWidget(language_box);
 	
-	QAbstractButton* language_file_button = new QToolButton();
+	auto language_file_button = new QToolButton();
 	if (MainWindow::mobileMode())
 	{
 		language_file_button->setVisible(false);
@@ -82,26 +109,32 @@ GeneralSettingsPage::GeneralSettingsPage(QWidget* parent)
 	ppi_edit = Util::SpinBox::create(2, 0.01, 9999);
 	ppi_layout->addWidget(ppi_edit);
 	
-	QAbstractButton* ppi_calculate_button = new QToolButton();
+	auto ppi_calculate_button = new QToolButton();
 	ppi_calculate_button->setIcon(QIcon(QLatin1String(":/images/settings.png")));
 	ppi_layout->addWidget(ppi_calculate_button);
 	
 	layout->addItem(Util::SpacerItem::create(this));
 	layout->addRow(Util::Headline::create(tr("Program start")));
 	
-	open_mru_check = new QCheckBox(AbstractHomeScreenWidget::tr("Open most recently used file"));
+	open_mru_check = new QCheckBox(::OpenOrienteering::AbstractHomeScreenWidget::tr("Open most recently used file"));
 	layout->addRow(open_mru_check);
 	
-	tips_visible_check = new QCheckBox(AbstractHomeScreenWidget::tr("Show tip of the day"));
+	tips_visible_check = new QCheckBox(::OpenOrienteering::AbstractHomeScreenWidget::tr("Show tip of the day"));
 	layout->addRow(tips_visible_check);
 	
 	layout->addItem(Util::SpacerItem::create(this));
 	layout->addRow(Util::Headline::create(tr("Saving files")));
 	
 	compatibility_check = new QCheckBox(tr("Retain compatibility with Mapper %1").arg(QLatin1String("0.5")));
+#ifdef MAPPER_ENABLE_COMPATIBILITY
 	layout->addRow(compatibility_check);
+#else
+	// Let compatibility_check be valid, but not leak
+	connect(this, &QObject::destroyed, compatibility_check, &QObject::deleteLater);
+#endif
 	
-	// Possible point: limit size of undo/redo journal
+	undo_check = new QCheckBox(tr("Save undo/redo history"));
+	layout->addRow(undo_check);
 	
 	autosave_check = new QCheckBox(tr("Save information for automatic recovery"));
 	layout->addRow(autosave_check);
@@ -119,6 +152,7 @@ GeneralSettingsPage::GeneralSettingsPage(QWidget* parent)
 	encoding_box->addItem(available_codecs.first());
 	encoding_box->addItem(QString::fromLatin1("Windows-1252")); // Serves as an example, not translated.
 	const auto available_codecs_raw = QTextCodec::availableCodecs();
+	available_codecs.reserve(available_codecs_raw.size());
 	for (const QByteArray& item : available_codecs_raw)
 	{
 		available_codecs.append(QString::fromUtf8(item));
@@ -129,7 +163,7 @@ GeneralSettingsPage::GeneralSettingsPage(QWidget* parent)
 		available_codecs.removeDuplicates();
 		encoding_box->addItem(tr("More..."));
 	}
-	QCompleter* completer = new QCompleter(available_codecs, this);
+	auto completer = new QCompleter(available_codecs, this);
 	completer->setModelSorting(QCompleter::CaseInsensitivelySortedModel);
 	completer->setCaseSensitivity(Qt::CaseInsensitive);
 	completer->setCompletionMode(QCompleter::UnfilteredPopupCompletion);
@@ -149,10 +183,9 @@ GeneralSettingsPage::GeneralSettingsPage(QWidget* parent)
 	
 }
 
-GeneralSettingsPage::~GeneralSettingsPage()
-{
-	// nothing, not inlined
-}
+GeneralSettingsPage::~GeneralSettingsPage() = default;
+
+
 
 QString GeneralSettingsPage::title() const
 {
@@ -200,6 +233,7 @@ void GeneralSettingsPage::apply()
 	setSetting(Settings::HomeScreen_TipsVisible, tips_visible_check->isChecked());
 	setSetting(Settings::General_NewOcd8Implementation, ocd_importer_check->isChecked());
 	setSetting(Settings::General_RetainCompatiblity, compatibility_check->isChecked());
+	setSetting(Settings::General_SaveUndoRedo, undo_check->isChecked());
 	setSetting(Settings::General_PixelsPerInch, ppi_edit->value());
 	
 	auto encoding = encoding_box->currentText().toLatin1();
@@ -259,7 +293,7 @@ void GeneralSettingsPage::updateWidgets()
 	open_mru_check->setChecked(getSetting(Settings::General_OpenMRUFile).toBool());
 	tips_visible_check->setChecked(getSetting(Settings::HomeScreen_TipsVisible).toBool());
 	compatibility_check->setChecked(getSetting(Settings::General_RetainCompatiblity).toBool());
-	
+	undo_check->setChecked(getSetting(Settings::General_SaveUndoRedo).toBool());
 	int autosave_interval = getSetting(Settings::General_AutosaveInterval).toInt();
 	autosave_check->setChecked(autosave_interval > 0);
 	autosave_interval_edit->setEnabled(autosave_interval > 0);
@@ -319,7 +353,7 @@ void GeneralSettingsPage::openTranslationFileDialog()
 	if (filename.isEmpty())
 		filename = getSetting(Settings::General_TranslationFile).toString();
 	
-	filename = QFileDialog::getOpenFileName(this,
+	filename = FileDialog::getOpenFileName(this,
 	  tr("Open translation"), filename, tr("Translation files (*.qm)"));
 	if (!filename.isNull())
 	{
@@ -347,7 +381,7 @@ void GeneralSettingsPage::openPPICalculationDialog()
 	double old_ppi = ppi_edit->value();
 	double old_screen_diagonal_inches = screen_diagonal_pixels / old_ppi;
 	
-	QDialog* dialog = new QDialog(window(), Qt::WindowSystemMenuHint | Qt::WindowTitleHint);
+	auto dialog = new QDialog(window(), Qt::WindowSystemMenuHint | Qt::WindowTitleHint);
 	if (MainWindow::mobileMode())
 	{
 		dialog->setGeometry(window()->geometry());
@@ -357,10 +391,10 @@ void GeneralSettingsPage::openPPICalculationDialog()
 	
 	auto form_layout = new QFormLayout();
 	
-	QLabel* resolution_display = new QLabel(tr("%1 x %2").arg(primary_screen_width).arg(primary_screen_height));
+	auto resolution_display = new QLabel(tr("%1 x %2").arg(primary_screen_width).arg(primary_screen_height));
 	form_layout->addRow(tr("Primary screen resolution in pixels:"), resolution_display);
 	
-	QDoubleSpinBox* size_edit = Util::SpinBox::create(2, 0.01, 9999);
+	auto size_edit = Util::SpinBox::create(2, 0.01, 9999);
 	size_edit->setValue(old_screen_diagonal_inches);
 	form_layout->addRow(tr("Primary screen size in inches (diagonal):"), size_edit);
 	
@@ -368,7 +402,7 @@ void GeneralSettingsPage::openPPICalculationDialog()
 	
 	layout->addItem(Util::SpacerItem::create(this));
 	
-	QDialogButtonBox* button_box = new QDialogButtonBox(QDialogButtonBox::Cancel | QDialogButtonBox::Ok);
+	auto button_box = new QDialogButtonBox(QDialogButtonBox::Cancel | QDialogButtonBox::Ok);
 	layout->addWidget(button_box);
 	
 	connect(button_box, &QDialogButtonBox::accepted, dialog, &QDialog::accept);
@@ -384,8 +418,10 @@ void GeneralSettingsPage::openPPICalculationDialog()
 bool GeneralSettingsPage::eventFilter(QObject* /* watched */, QEvent* event)
 {
 	if (event->type() == QEvent::LanguageChange)
-		return true;
+		return true; // NOLINT
 	
 	return false;
 }
 
+
+}  // namespace OpenOrienteering

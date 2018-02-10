@@ -19,7 +19,10 @@
 
 #include "virtual_coord_vector.h"
 
+#include "core/map_coord.h"
 
+
+namespace OpenOrienteering {
 
 //### VirtualCoordVector ###
 
@@ -34,3 +37,4 @@ MapCoordF VirtualCoordVector::fromMapCoord(size_type index) const
 }
 
 
+}  // namespace OpenOrienteering

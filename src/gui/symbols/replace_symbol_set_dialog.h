@@ -23,18 +23,22 @@
 #define OPENORIENTEERING_REPLACE_SYMBOL_SET_DIALOG_H
 
 #include <memory>
+#include <vector>
 
+#include <QObject>
 #include <QDialog>
-#include <QHash>
 
-QT_BEGIN_NAMESPACE
 class QCheckBox;
+class QIODevice;
+class QComboBox;
 class QTableWidget;
-QT_END_NAMESPACE
+class QWidget;
+
+namespace OpenOrienteering {
 
 class Map;
-class Symbol;
 class SymbolDropDownDelegate;
+class SymbolRuleSet;
 
 
 /**
@@ -47,56 +51,74 @@ class ReplaceSymbolSetDialog : public QDialog
 {
 Q_OBJECT
 public:
-	using SymbolMapping      = QHash<const Symbol*, Symbol*>;
-	using ConstSymbolMapping = QHash<const Symbol*, const Symbol*>;
-	
 	/**
-	 * Lets the user select a file to load the symbols from and shows the dialog.
+	 * Lets the user select a symbol set file, and shows the dialog.
 	 * 
 	 * Returns true if the replacement has been finished, false if aborted.
 	 */
-	static bool showDialog(QWidget* parent, Map* map);
+	static bool showDialog(QWidget* parent, Map& object_map);
 	
 	/**
-	 * Shows the dialog for a given base map, imported map, and cross reference file.
+	 * Lets the user select a CRT file, and shows the dialog.
 	 * 
-	 * The replacement takes place in the imported map.
 	 * Returns true if the replacement has been finished, false if aborted.
 	 */
-	static bool showDialogForCRT(QWidget* parent, const Map* base_map, Map* imported_map, QIODevice& crt_file);
+	static bool showDialogForCRT(QWidget* parent, Map& object_map, const Map& symbol_set);
 	
-private slots:
-	void matchByNumberClicked(bool checked);
-	void showHelp();
-	void apply();
+	/**
+	 * Shows the dialog for a given object map, symbol map, and cross reference file.
+	 * 
+	 * Returns true if the replacement has been finished, false if aborted.
+	 */
+	static bool showDialogForCRT(QWidget* parent, Map& object_map, const Map& symbol_set, QIODevice& crt_file);
+	
+	/**
+	 * Returns the suggested path (including name) for finding a CRT file
+	 * for the given symbol set IDs.
+	 */
+	static QString discoverCrtFile(const QString& source_id, const QString& target_id);
 	
 private:
 	enum Mode
 	{
-		ModeStandard,
-		ModeCRT
+		ReplaceSymbolSet,  ///< Replace current current symbols
+		AssignByPattern,   ///< Assign new symbols based on a pattern
 	};
 	
-	ReplaceSymbolSetDialog(QWidget* parent, Map* map, const Map* symbol_map, Mode mode = ModeStandard);
-	virtual ~ReplaceSymbolSetDialog();
+	ReplaceSymbolSetDialog(QWidget* parent, Map& object_map, const Map& symbol_set, SymbolRuleSet& replacements, Mode mode);
+	~ReplaceSymbolSetDialog() override;
 	
-	void calculateNumberMatchMapping();
-	const Symbol* findNumberMatch(const Symbol* original, bool ignore_trailing_zeros);
+	void showHelp();
+	
+	void matchByName();
+	void matchByNumber();
+	void resetReplacements();
+	
+	void openCrtFile();
+	void openCrtFile(const QString& path);
+	bool saveCrtFile();
+	
+	void done(int r) override;
+	
 	void updateMappingTable();
 	void updateMappingFromTable();
 	
-	Map* map;
-	const Map* symbol_map;
-	ConstSymbolMapping mapping;
-	Mode mode;
+	Map& object_map;
+	const Map& symbol_set;
+	SymbolRuleSet& replacements;
 	
 	QCheckBox* import_all_check;
 	QCheckBox* delete_unused_symbols_check;
 	QCheckBox* delete_unused_colors_check;
 	QCheckBox* preserve_symbol_states_check;
-	QCheckBox* match_by_number_check;
+	QComboBox* id_edit;
 	QTableWidget* mapping_table;
 	std::vector<std::unique_ptr<SymbolDropDownDelegate>> symbol_widget_delegates;
+	
+	Mode mode;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

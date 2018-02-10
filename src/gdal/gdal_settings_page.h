@@ -20,10 +20,16 @@
 #ifndef OPENORIENTEERING_GDAL_SETTINGS_PAGE_H
 #define OPENORIENTEERING_GDAL_SETTINGS_PAGE_H
 
+#include <QObject>
+#include <QString>
+
 #include "gui/widgets/settings_page.h"
 
 class QCheckBox;
 class QTableWidget;
+class QWidget;
+
+namespace OpenOrienteering {
 
 
 class GdalSettingsPage : public SettingsPage
@@ -54,5 +60,7 @@ private:
 	QTableWidget* parameters;
 };
 
+
+}  // namespace OpenOrienteering
 
 #endif

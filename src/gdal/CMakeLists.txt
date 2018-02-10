@@ -32,13 +32,12 @@ set(MAPPER_GDAL_SOURCES
   gdal_settings_page.cpp
   ogr_file_format.cpp
   ogr_template.cpp
+  mapper-osmconf.ini
 )
 	
-qt5_translations_sources(
-  SOURCES ${MAPPER_GDAL_HEADERS} ${MAPPER_GDAL_SOURCES}
-)
+mapper_translations_sources(${MAPPER_GDAL_HEADERS} ${MAPPER_GDAL_SOURCES})
 
-add_library(mapper-gdal STATIC ${MAPPER_GDAL_HEADERS} ${MAPPER_GDAL_SOURCES})
+add_library(mapper-gdal STATIC ${MAPPER_GDAL_HEADERS} ${MAPPER_GDAL_SOURCES} "${PROJECT_BINARY_DIR}/gdal/mapper-osmconf.ini")
 
 target_compile_definitions(mapper-gdal PRIVATE
   QT_NO_CAST_FROM_ASCII
@@ -53,3 +52,12 @@ target_include_directories(mapper-gdal PRIVATE "${GDAL_INCLUDE_DIR}" "${PROJECT_
 target_link_libraries(mapper-gdal "${GDAL_LIBRARY}" Qt5::Core Qt5::Gui Qt5::Widgets)
 
 set_target_properties(mapper-gdal PROPERTIES PREFIX "")
+
+install(FILES mapper-osmconf.ini DESTINATION "${MAPPER_DATA_DESTINATION}/gdal")
+
+# Let mapper-osmconf.ini be found via "data:/gdal" during development.
+add_custom_command(OUTPUT "${PROJECT_BINARY_DIR}/gdal/mapper-osmconf.ini"
+  COMMAND "${CMAKE_COMMAND}" -E make_directory "gdal"
+  COMMAND "${CMAKE_COMMAND}" -E copy "${CMAKE_CURRENT_SOURCE_DIR}/mapper-osmconf.ini" "gdal/mapper-osmconf.ini"
+  WORKING_DIRECTORY "${PROJECT_BINARY_DIR}"
+)

@@ -18,10 +18,17 @@
  */
 
 
-#ifndef _OPENORIENTEERING_SEGMENTED_BUTTON_LAYOUT_H_
-#define _OPENORIENTEERING_SEGMENTED_BUTTON_LAYOUT_H_
+#ifndef OPENORIENTEERING_SEGMENTED_BUTTON_LAYOUT_H
+#define OPENORIENTEERING_SEGMENTED_BUTTON_LAYOUT_H
 
+#include <QtGlobal>
+#include <QObject>
 #include <QHBoxLayout>
+
+class QWidget;
+
+namespace OpenOrienteering {
+
 
 /**
  * SegmentedButtonLayout is a horizontal box layout with no margin and no
@@ -48,13 +55,13 @@ public:
 	/**
 	 * Destroys the object.
 	 */
-	virtual ~SegmentedButtonLayout();
+	~SegmentedButtonLayout() override;
 	
 	/**
 	 * Resets the information about neighboring segments and any other cached
 	 * information about the layout.
 	 */
-	virtual void invalidate();
+	void invalidate() override;
 	
 	/**
 	 * Types of segment neighborhood.
@@ -71,4 +78,7 @@ private:
 	Q_DISABLE_COPY(SegmentedButtonLayout)
 };
 
-#endif // _OPENORIENTEERING_SEGMENTED_BUTTON_LAYOUT_H_
+
+}  // namespace OpenOrienteering
+
+#endif // OPENORIENTEERING_SEGMENTED_BUTTON_LAYOUT_H

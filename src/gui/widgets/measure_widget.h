@@ -22,9 +22,15 @@
 #ifndef OPENORIENTEERING_MEASURE_WIDGET_H
 #define OPENORIENTEERING_MEASURE_WIDGET_H
 
+#include <QObject>
 #include <QTextBrowser>
 
+class QWidget;
+
+namespace OpenOrienteering {
+
 class Map;
+
 
 /**
  * The widget which is shown in a dock widget when the measure tool is active.
@@ -50,5 +56,8 @@ protected slots:
 private:
 	Map* map;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

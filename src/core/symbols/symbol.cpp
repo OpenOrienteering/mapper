@@ -21,30 +21,44 @@
 
 #include "symbol.h"
 
-#include <qmath.h>
+#include <memory>
+
+#include <QtGlobal>
 #include <QIODevice>
+#include <QLatin1Char>
+#include <QLatin1String>
 #include <QPainter>
-#include <QTextDocument>
+#include <QRectF>
+#include <QStringRef>
+#include <QXmlStreamAttributes>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
 #include "core/map.h"
 #include "core/map_color.h"
+#include "core/map_coord.h"
 #include "core/map_view.h"
 #include "core/objects/object.h"
 #include "core/objects/text_object.h"
+#include "core/renderables/renderable.h"
 #include "core/renderables/renderable_implementation.h"
 #include "core/symbols/area_symbol.h"
 #include "core/symbols/combined_symbol.h"
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/point_symbol.h"
 #include "core/symbols/text_symbol.h"
+#include "fileformats/file_format.h"
 #include "fileformats/file_import_export.h"
+#include "gui/util_gui.h"
 #include "util/util.h"
 #include "settings.h"
 
+// IWYU pragma: no_include <QObject>
 
-Symbol::Symbol(Type type)
+
+namespace OpenOrienteering {
+
+Symbol::Symbol(Type type) noexcept
  : type { type }
  , number { -1, -1, -1 }
  , is_helper_symbol(false)
@@ -55,9 +69,13 @@ Symbol::Symbol(Type type)
 }
 
 
-Symbol::~Symbol()
+Symbol::~Symbol() = default;
+
+
+
+bool Symbol::validate() const
 {
-	// nothing
+	return true;
 }
 
 
@@ -226,7 +244,7 @@ Symbol* Symbol::load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& sy
 	int symbol_type = xml.attributes().value(QLatin1String("type")).toInt();
 	Symbol* symbol = Symbol::getSymbolForType(static_cast<Symbol::Type>(symbol_type));
 	if (!symbol)
-		throw FileFormatException(ImportExport::tr("Error while loading a symbol of type %1 at line %2 column %3.").arg(symbol_type).arg(xml.lineNumber()).arg(xml.columnNumber()));
+		throw FileFormatException(::OpenOrienteering::ImportExport::tr("Error while loading a symbol of type %1 at line %2 column %3.").arg(symbol_type).arg(xml.lineNumber()).arg(xml.columnNumber()));
 	
 	QXmlStreamAttributes attributes = xml.attributes();
 	QString code = attributes.value(QLatin1String("code")).toString();
@@ -234,7 +252,7 @@ Symbol* Symbol::load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& sy
 	{
 		QString id = attributes.value(QLatin1String("id")).toString();
 		if (symbol_dict.contains(id)) 
-			throw FileFormatException(ImportExport::tr("Symbol ID '%1' not unique at line %2 column %3.").arg(id).arg(xml.lineNumber()).arg(xml.columnNumber()));
+			throw FileFormatException(::OpenOrienteering::ImportExport::tr("Symbol ID '%1' not unique at line %2 column %3.").arg(id).arg(xml.lineNumber()).arg(xml.columnNumber()));
 		
 		symbol_dict[id] = symbol;
 		
@@ -253,7 +271,7 @@ Symbol* Symbol::load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& sy
 			else
 			{
 				int dot = code.indexOf(QLatin1Char('.'), index+1);
-				int num = code.mid(index, (dot == -1) ? -1 : (dot - index)).toInt();
+				int num = code.midRef(index, (dot == -1) ? -1 : (dot - index)).toInt();
 				symbol->number[i] = num;
 				index = dot;
 				if (index != -1)
@@ -282,7 +300,7 @@ Symbol* Symbol::load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& sy
 	{
 		delete symbol;
 		throw FileFormatException(
-		            ImportExport::tr("Error while loading a symbol of type %1 at line %2 column %3: %4")
+		            ::OpenOrienteering::ImportExport::tr("Error while loading a symbol of type %1 at line %2 column %3: %4")
 		            .arg(symbol_type)
 		            .arg(xml.lineNumber())
 		            .arg(xml.columnNumber())
@@ -338,62 +356,57 @@ bool Symbol::containsSymbol(const Symbol* symbol) const
 	return false;
 }
 
-QImage Symbol::getIcon(const Map* map, bool update) const
+QImage Symbol::getIcon(const Map* map) const
 {
-	if (update || icon.isNull())
-		icon = createIcon(map, Settings::getInstance().getSymbolWidgetIconSizePx(), true, 1);
+	if (icon.isNull() && map)
+		icon = createIcon(*map, Settings::getInstance().getSymbolWidgetIconSizePx());
 	
 	return icon;
 }
 
-QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, int bottom_right_border, qreal best_zoom) const
+QImage Symbol::createIcon(const Map& map, int side_length, bool antialiasing, qreal zoom) const
 {
-	Type contained_types = getContainedTypes();
-	
-	// Create icon map and view
-	Map icon_map;
-	// const_cast promise: We won't change the colors, thus we won't change map.
-	icon_map.useColorsFrom(const_cast<Map*>(map));
-	icon_map.setScaleDenominator(map->getScaleDenominator());
-	MapView view{ &icon_map };
-	
-	// If the icon is bigger than the rectangle with this zoom factor, it is zoomed out to fit into the rectangle
-	view.setZoom(best_zoom);
-	int white_border_pixels = 0;
-	if (contained_types & Line || contained_types & Area || type == Combined)
-		white_border_pixels = 0;
-	else if (contained_types & Point || contained_types & Text)
-		white_border_pixels = 2;
-	else
-		Q_ASSERT(false);
-	const auto max_icon_mm = view.pixelToLength(side_length - bottom_right_border - white_border_pixels) / 1000;
-	const auto max_icon_mm_half = max_icon_mm / 2;
+	// Desktop default used to be 2x zoom at 8 mm side length, plus/minus
+	// a border of one white pixel around some objects.
+	// If the icon is bigger than the rectangle with this zoom factor, the zoom
+	// is reduced later to make the icon fit into the rectangle.
+	if (zoom <= 0)
+		zoom = map.symbolIconZoom();
+	auto max_icon_mm_half = 0.5 / zoom;
 	
 	// Create image
 	QImage image(side_length, side_length, QImage::Format_ARGB32_Premultiplied);
-	QPainter painter;
-	painter.begin(&image);
+	QPainter painter(&image);
 	if (antialiasing)
 		painter.setRenderHint(QPainter::Antialiasing);
 	
 	// Make background transparent
-	QPainter::CompositionMode mode = painter.compositionMode();
+	auto mode = painter.compositionMode();
 	painter.setCompositionMode(QPainter::CompositionMode_Clear);
 	painter.fillRect(image.rect(), Qt::transparent);
 	painter.setCompositionMode(mode);
+	painter.translate(0.5 * side_length, 0.5 * side_length);
 	
 	// Create geometry
 	Object* object = nullptr;
-	Symbol* icon_symbol = nullptr;
+	std::unique_ptr<Symbol> symbol_copy;
+	auto offset = MapCoord{};
+	auto contained_types = getContainedTypes();
 	if (type == Point)
 	{
-		PointObject* point = new PointObject(static_cast<const PointSymbol*>(this));
-		point->setPosition(0, 0);
-		object = point;
+		max_icon_mm_half *= 0.90; // white border
+		object = new PointObject(static_cast<const PointSymbol*>(this));
 	}
-	else if (type == Area || (type == Combined && getContainedTypes() & Area))
+	else if (type == Text)
 	{
-		PathObject* path = new PathObject(this);
+		max_icon_mm_half *= 0.95; // white border
+		auto text = new TextObject(this);
+		text->setText(static_cast<const TextSymbol*>(this)->getIconText());
+		object = text;
+	}
+	else if (type == Area || (type == Combined && contained_types & Area))
+	{
+		auto path = new PathObject(this);
 		path->addCoordinate(0, MapCoord(-max_icon_mm_half, -max_icon_mm_half));
 		path->addCoordinate(1, MapCoord(max_icon_mm_half, -max_icon_mm_half));
 		path->addCoordinate(2, MapCoord(max_icon_mm_half, max_icon_mm_half));
@@ -403,37 +416,174 @@ QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, in
 	}
 	else if (type == Line || type == Combined)
 	{
-		const Symbol* symbol_to_use = this;
 		bool show_dash_symbol = false;
+		auto line_length_half = max_icon_mm_half;
 		if (type == Line)
 		{
-			// If there are breaks in the line, scale them down so they fit into the icon exactly
-			// TODO: does not work for combined lines yet. Could be done by checking every contained line and scaling the painter horizontally
-			const LineSymbol* line = asLine();
+			auto line = static_cast<const LineSymbol*>(this);
+			if (line->getCapStyle() == LineSymbol::RoundCap)
+			{
+				offset.setNativeX(-line->getLineWidth()/3);
+			}
+			else if (line->getCapStyle() == LineSymbol::PointedCap)
+			{
+				line_length_half = std::max(line_length_half, 0.0012 * line->getPointedCapLength());
+			}
+			
+			if (line->getDashSymbol() && !line->getDashSymbol()->isEmpty())
+			{
+				line_length_half = std::max(line_length_half, line->getDashSymbol()->dimensionForIcon());
+				show_dash_symbol = true;
+			}
+
+			if (line->getMidSymbol() && !line->getMidSymbol()->isEmpty())
+			{
+				auto icon_size = line->getMidSymbol()->dimensionForIcon();
+				icon_size += line->getMidSymbolDistance() * (line->getMidSymbolsPerSpot() - 1) / 2000;
+				line_length_half = std::max(line_length_half, icon_size);
+
+			    if (!line->getShowAtLeastOneSymbol())
+				{
+					if (!symbol_copy)
+						symbol_copy.reset(line->duplicate());
+					auto icon_line = static_cast<LineSymbol*>(symbol_copy.get());
+					icon_line->setShowAtLeastOneSymbol(true);
+				}
+			}
+
+			if (line->getStartSymbol() && !line->getStartSymbol()->isEmpty())
+			{
+				line_length_half = std::max(line_length_half, line->getStartSymbol()->dimensionForIcon() / 2);
+			}
+
+			if (line->getEndSymbol() && !line->getEndSymbol()->isEmpty())
+			{
+				line_length_half = std::max(line_length_half, line->getEndSymbol()->dimensionForIcon() / 2);
+			}
+
+			// If there are breaks in the line, scale them down so they fit into the icon exactly.
+			auto max_ideal_length = 0;
 			if (line->isDashed() && line->getBreakLength() > 0)
 			{
-				LineSymbol* icon_line = duplicate()->asLine();
+				auto ideal_length = 2 * line->getDashesInGroup() * line->getDashLength()
+				                    + 2 * (line->getDashesInGroup() - 1) * line->getInGroupBreakLength()
+				                    + line->getBreakLength();
+				if (max_ideal_length < ideal_length)
+					max_ideal_length = ideal_length;
+			}
+			if (line->hasBorder())
+			{
+			    auto& border = line->getBorder();
+				if (border.dashed && border.break_length > 0)
+				{
+					auto ideal_length = 2 * border.dash_length + border.break_length;
+					if (max_ideal_length < ideal_length)
+						max_ideal_length = ideal_length;
+				}
+				auto& right_border = line->getRightBorder();
+				if (line->areBordersDifferent() && right_border.dashed && right_border.break_length > 0)
+				{
+					auto ideal_length = 2 * right_border.dash_length + right_border.break_length;
+					if (max_ideal_length < ideal_length)
+						max_ideal_length = ideal_length;
+				}
+			}
+			if (max_ideal_length > 0)
+			{
+				auto ideal_length_half = qreal(max_ideal_length) / 2000;
+				auto factor = qMin(qreal(0.5), line_length_half / qMax(qreal(0.001), ideal_length_half));
 				
-				auto ideal_length = qreal(2 * line->getDashesInGroup() * line->getDashLength() + 2 * (line->getDashesInGroup() - 1) * line->getInGroupBreakLength() + line->getBreakLength()) / 1000;
-				auto real_length = max_icon_mm;
-				auto factor = qMin(qreal(1), real_length / qMax(qreal(0.001), ideal_length));
+				if (!symbol_copy)
+					symbol_copy.reset(line->duplicate());
 				
+				auto icon_line = static_cast<LineSymbol*>(symbol_copy.get());
 				icon_line->setDashLength(qRound(factor * icon_line->getDashLength()));
 				icon_line->setBreakLength(qRound(factor * icon_line->getBreakLength()));
 				icon_line->setInGroupBreakLength(qRound(factor * icon_line->getInGroupBreakLength()));
-				
-				icon_symbol = icon_line;
-				symbol_to_use = icon_symbol;
+				icon_line->setShowAtLeastOneSymbol(true);
+				icon_line->getBorder().dash_length *= factor;
+				icon_line->getBorder().break_length *= factor;
+				icon_line->getRightBorder().dash_length *= factor;
+				icon_line->getRightBorder().break_length *= factor;
 			}
-			else if (line->getDashSymbol() != nullptr)
+		}
+		else if (type == Combined)
+		{
+			auto max_ideal_length = 0;
+			auto combined = static_cast<const CombinedSymbol*>(this);
+			for (int i = 0; i < combined->getNumParts(); ++i)
 			{
-				show_dash_symbol = !line->getDashSymbol()->isEmpty();
+				auto part = combined->getPart(i);
+				if (part && part->getType() == Line)
+				{
+					auto line = static_cast<const LineSymbol*>(part);
+					auto dash_symbol = line->getDashSymbol();
+					if (dash_symbol && !dash_symbol->isEmpty())
+						show_dash_symbol = true;
+					
+					if (line->isDashed() && line->getBreakLength() > 0)
+					{
+						auto ideal_length = 2 * line->getDashesInGroup() * line->getDashLength()
+						                    + 2 * (line->getDashesInGroup() - 1) * line->getInGroupBreakLength()
+						                    + line->getBreakLength();
+						if (max_ideal_length < ideal_length)
+							max_ideal_length = ideal_length;
+					}
+					if (line->hasBorder())
+					{
+					    auto& border = line->getBorder();
+						if (border.dashed && border.break_length > 0)
+						{
+							auto ideal_length = 2 * border.dash_length + border.break_length;
+							if (max_ideal_length < ideal_length)
+								max_ideal_length = ideal_length;
+						}
+						auto& right_border = line->getRightBorder();
+						if (line->areBordersDifferent() && right_border.dashed && right_border.break_length > 0)
+						{
+							auto ideal_length = 2 * right_border.dash_length + right_border.break_length;
+							if (max_ideal_length < ideal_length)
+								max_ideal_length = ideal_length;
+						}
+					}
+				}
+			}
+			// If there are breaks in the line, scale them down so they fit into the icon exactly.
+			if (max_ideal_length > 0)
+			{
+				auto ideal_length_half = qreal(max_ideal_length) / 2000;
+				auto factor = qMin(qreal(0.5), line_length_half / qMax(qreal(0.001), ideal_length_half));
+				
+				symbol_copy.reset(new CombinedSymbol());
+				static_cast<CombinedSymbol*>(symbol_copy.get())->setNumParts(combined->getNumParts());
+				
+				for (int i = 0; i < combined->getNumParts(); ++i)
+				{
+					auto proto = static_cast<const CombinedSymbol*>(combined)->getPart(i);
+					if (!proto)
+						continue;
+					
+					auto copy = proto->duplicate();
+					if (copy->getType() == Line)
+					{
+						auto icon_line = static_cast<LineSymbol*>(copy);
+						icon_line->setDashLength(qRound(factor * icon_line->getDashLength()));
+						icon_line->setBreakLength(qRound(factor * icon_line->getBreakLength()));
+						icon_line->setInGroupBreakLength(qRound(factor * icon_line->getInGroupBreakLength()));
+						icon_line->setShowAtLeastOneSymbol(true);
+						icon_line->getBorder().dash_length *= factor;
+						icon_line->getBorder().break_length *= factor;
+						icon_line->getRightBorder().dash_length *= factor;
+						icon_line->getRightBorder().break_length *= factor;
+					}
+					static_cast<CombinedSymbol*>(symbol_copy.get())->setPart(i, copy, true);
+				}
 			}
 		}
 		
-		PathObject* path = new PathObject(symbol_to_use);
-		path->addCoordinate(0, MapCoord(-max_icon_mm_half, 0.0));
-		path->addCoordinate(1, MapCoord(max_icon_mm_half, 0.0));
+		auto path = new PathObject(symbol_copy ? symbol_copy.get() : this);
+		path->addCoordinate(0, MapCoord(-line_length_half, 0.0));
+		path->addCoordinate(1, MapCoord(line_length_half, 0.0));
 		if (show_dash_symbol)
 		{
 			MapCoord dash_coord(0, 0);
@@ -442,97 +592,125 @@ QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, in
 		}
 		object = path;
 	}
-	else if (type == Text)
-	{
-		TextObject* text = new TextObject(this);
-		text->setAnchorPosition(0, 0);
-		text->setHorizontalAlignment(TextObject::AlignHCenter);
-		text->setVerticalAlignment(TextObject::AlignVCenter);
-		text->setText(dynamic_cast<const TextSymbol*>(this)->getIconText());
-		object = text;
-	}
-	/*else if (type == Combined)
-	{
-		PathObject* path = new PathObject(this);
-		for (int i = 0; i < 5; ++i)
-			path->addCoordinate(i, MapCoord(sin(2*M_PI * i/5.0) * max_icon_mm_half, -cos(2*M_PI * i/5.0) * max_icon_mm_half));
-		path->parts().front().setClosed(true, false);
-		object = path;
-	}*/
 	else
-		Q_ASSERT(false);
+	{
+		qWarning("Unhandled symbol: %s", qPrintable(getDescription()));
+		return image;
+	}
 	
+	// Create icon map and view
+	Map icon_map;
+	// const_cast promise: We won't change the colors, thus we won't change map.
+	icon_map.useColorsFrom(const_cast<Map*>(&map));
+	icon_map.setScaleDenominator(map.getScaleDenominator());
 	icon_map.addObject(object);
 	
-	qreal real_icon_mm_half;
-	if (type == Point || type == Text)
+	const auto& extent = object->getExtent();
+	auto w = std::max(std::abs(extent.left()), std::abs(extent.right()));
+	auto h = std::max(std::abs(extent.top()), std::abs(extent.bottom()));
+	auto real_icon_mm_half = std::max(w, h);
+	auto final_zoom = side_length * zoom * std::min(qreal(1), max_icon_mm_half / real_icon_mm_half);
+	painter.scale(final_zoom, final_zoom);
+	
+	if (type == Text)
 	{
-		// Center on the object's extent center
-		real_icon_mm_half = qMax(object->getExtent().width() / 2, object->getExtent().height() / 2);
-		view.setCenter(MapCoord{ object->getExtent().center() });
+		// Center text
+		painter.translate(-extent.center());
+	}
+	else if (type == Point)
+	{
+		// Do not completely offset the symbols relative position
+		painter.translate(-extent.center() / 2);
 	}
 	else if (contained_types & Line && !(contained_types & Area))
 	{
-		// Center horizontally on extent
-		real_icon_mm_half = qMax(object->getExtent().width() / 2, object->getExtent().bottom());
-		real_icon_mm_half = qMax(real_icon_mm_half, -object->getExtent().top());
-		auto pos = MapCoord{ object->getExtent().center() };
-		pos.setY(0);
-		view.setCenter(pos);
+		painter.translate(MapCoordF(-offset));
 	}
-	else
-	{
-		// Center on coordinate system origin
-		real_icon_mm_half = qMax(object->getExtent().right(), object->getExtent().bottom());
-		real_icon_mm_half = qMax(real_icon_mm_half, -object->getExtent().left());
-		real_icon_mm_half = qMax(real_icon_mm_half, -object->getExtent().top());
-	}
-	if (real_icon_mm_half > max_icon_mm_half)
-		view.setZoom(best_zoom * (max_icon_mm_half / real_icon_mm_half));
 	
-	painter.translate((side_length - bottom_right_border)/2, (side_length - bottom_right_border)/2);
-	painter.setWorldTransform(view.worldTransform(), true);
-	
-	RenderConfig config = { *map, QRectF(-10000, -10000, 20000, 20000), view.calculateFinalZoomFactor(), RenderConfig::HelperSymbols, 1.0 };
+	RenderConfig config = { map, QRectF(-10000, -10000, 20000, 20000), final_zoom, RenderConfig::HelperSymbols, 1.0 };
 	bool was_hidden = is_hidden;
-	is_hidden = false; // ensure that an icon is created for hidden symbols.
+	// Ensure that an icon is created for hidden symbols.
+	if (symbol_copy)
+		symbol_copy.get()->setHidden(false);
+	else
+		is_hidden = false;
 	icon_map.draw(&painter, config);
 	is_hidden = was_hidden;
 	
-	delete icon_symbol;
 	painter.end();
+	
+	// Add shadow to dominant white on transparent
+	auto color = guessDominantColor();
+	if (color && color->isWhite())
+	{
+		for (int y = image.height() - 1; y >= 0; --y)
+		{
+			for (int x = image.width() - 1; x >= 0; --x)
+			{
+				if (qAlpha(image.pixel(x, y)) > 0)
+					continue;
+				
+				auto is_white = [](const QRgb& rgb) {
+					return rgb > 0
+					       && qAlpha(rgb) == qRed(rgb)
+						   && qRed(rgb) == qGreen(rgb)
+						   && qGreen(rgb) == qBlue(rgb);
+				};
+				if (x > 0)
+				{
+					auto preceding = image.pixel(x-1, y);
+					if (is_white(preceding))
+					{
+						image.setPixel(x, y, qPremultiply(qRgba(0, 0, 0, 127)));
+						continue;
+					}
+				}
+				if (y > 0)
+				{
+					auto preceding = image.pixel(x, y-1);
+					if (is_white(preceding))
+					{
+						image.setPixel(x, y, qPremultiply(qRgba(0, 0, 0, 127)));
+					}
+				}
+			}
+		}
+	}
 	
 	return image;
 }
 
-float Symbol::calculateLargestLineExtent(Map* map) const
+
+void Symbol::resetIcon()
 {
-	Q_UNUSED(map);
-	return 0.0f;
+	icon = {};
 }
 
-QString Symbol::getPlainTextName() const
+
+qreal Symbol::dimensionForIcon() const
 {
-	if (name.contains(QLatin1Char('<')))
-	{
-		QTextDocument doc;
-		doc.setHtml(name);
-		return doc.toPlainText();
-	}
-	else
-		return name;
+	return 0;
 }
+
+
+
+qreal Symbol::calculateLargestLineExtent() const
+{
+	return 0;
+}
+
+
 
 QString Symbol::getNumberAsString() const
 {
 	QString str;
-	for (int i = 0; i < number_components; ++i)
+	for (auto n : number)
 	{
-		if (number[i] < 0)
+		if (n < 0)
 			break;
 		if (!str.isEmpty())
 			str += QLatin1Char('.');
-		str += QString::number(number[i]);
+		str += QString::number(n);
 	}
 	return str;
 }
@@ -659,3 +837,6 @@ bool Symbol::compareByColor::operator() (const Symbol* s1, const Symbol* s2)
 	
 	return false; // s1 == s2
 }
+
+
+}  // namespace OpenOrienteering

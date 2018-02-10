@@ -20,42 +20,72 @@
 
 #include "translation_util.h"
 
+#include <vector>
+
+#include <Qt>
+#include <QtGlobal>
 #include <QDir>
 #include <QFileInfo>
+#include <QLatin1Char>
+#include <QLatin1String>
 #include <QLibraryInfo>
 #include <QLocale>
+#include <QSettings>
+#include <QStringList>
 #include <QTranslator>
+#include <QVariant>
 
-#include "mapper_config.h"
+// IWYU pragma: no_forward_declare QTranslator
 
 
 namespace
 {
 
-QStringList searchPath()
+std::vector<QString> makeSearchPath()
 {
-	static QStringList search_path;
-	if (search_path.isEmpty())
-	{
-		const auto data_paths = QDir::searchPaths(QLatin1String("data"));
-#if !defined(Mapper_TRANSLATIONS_EMBEDDED)
-		search_path.reserve(data_paths.size() + 1);
-		// Always load embedded translations first if enabled
-		search_path.append(QLatin1String(":/translations"));
-#else
-		search_path.reserve(data_paths.size());
-#endif
-		for (const auto& path : data_paths)
-			search_path.append(path + QLatin1String("/translations"));
-	}
+	std::vector<QString> search_path;
+	const auto data_paths = QDir::searchPaths(QLatin1String("data"));
+	search_path.reserve(1 + std::size_t(data_paths.size()));
+	// Always load embedded translations first if enabled
+	search_path.emplace_back(QLatin1String(":/translations"));
+	for (const auto& path : data_paths)
+		search_path.emplace_back(path + QLatin1String("/translations"));
 	return search_path;
 }
 
-} // namespace
+const std::vector<QString>& searchPath()
+{
+	static auto search_path = makeSearchPath();
+	return search_path;
+}
+
+QString default_language()
+{
+	return QLocale::system().name().left(2);
+}
+
+}  // namespace
 
 
+
+namespace OpenOrienteering {
 
 QString TranslationUtil::base_name(QString::fromLatin1("qt_"));
+
+
+TranslationUtil::TranslationUtil()
+: TranslationUtil{ QSettings{} }
+{
+	// nothing else
+}
+
+
+TranslationUtil::TranslationUtil(const QSettings& settings)
+: TranslationUtil{ settings.value(QLatin1String("language"), default_language()).toString(),
+                   settings.value(QLatin1String("translationFile")).toString() }
+{
+	// nothing else
+}
 
 
 TranslationUtil::TranslationUtil(const QString& code, QString translation_file)
@@ -79,7 +109,19 @@ TranslationUtil::TranslationUtil(const QString& code, QString translation_file)
 	load(app_translator, translation_file);
 }
 
-bool TranslationUtil::load(QTranslator& translator, QString translation_name) const
+
+std::unique_ptr<QTranslator> TranslationUtil::load(const QString& base_name) const
+{
+	auto translator = std::make_unique<QTranslator>();
+	auto translation_name = QString{base_name + QLatin1Char('_') + language.code};
+	auto success = load(*translator, translation_name);
+	if (!success)
+		translator.reset();
+	return translator;
+}
+
+
+bool TranslationUtil::load(QTranslator& translator, const QString& translation_name) const
 {
 	for (const auto& translation_dir : searchPath())
 	{
@@ -89,7 +131,7 @@ bool TranslationUtil::load(QTranslator& translator, QString translation_name) co
 			return true;
 		}
 	}
-	if(translator.load(translation_name))
+	if (translator.load(translation_name))
 	{
 		qDebug("TranslationUtil: Using %s from %s", qPrintable(translation_name), "default path");
 		return true;
@@ -157,3 +199,13 @@ TranslationUtil::Language TranslationUtil::languageFromCode(const QString& code)
 	return language;
 }
 
+// static
+TranslationUtil::Language TranslationUtil::languageFromSettings(const QSettings& settings)
+{
+	// Only the stored code matters. The stored filename must match the code or is inactive.
+	auto language_code = settings.value(QLatin1String("language"), default_language()).toString();
+	return languageFromCode(language_code);
+}
+
+
+}  // namespace OpenOrienteering

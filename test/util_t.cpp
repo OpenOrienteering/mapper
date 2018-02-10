@@ -18,9 +18,14 @@
  */
 
 
-#include <QtTest/QtTest>
+#include <QtTest>
+#include <QObject>
+#include <QPointF>
+#include <QRectF>
 
 #include "util/util.h"
+
+using namespace OpenOrienteering;
 
 
 /**
@@ -116,4 +121,4 @@ void UtilTest::rectIncludeSafeTest()
 
 
 QTEST_APPLESS_MAIN(UtilTest)
-#include "util_t.moc"
+#include "util_t.moc"  // IWYU pragma: keep

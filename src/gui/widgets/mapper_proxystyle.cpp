@@ -20,13 +20,21 @@
 
 #include "mapper_proxystyle.h"
 
-#include <QFormLayout>
+#include <Qt>
+#include <QBrush>
+#include <QFlags>
+#include <QFormLayout>  // IWYU pragma: keep
 #include <QPainter>
+#include <QPalette>
+#include <QRect>
 #include <QStyleOption>
+#include <QVariant>
 #include <QWidget>
 
 #include "segmented_button_layout.h"
 
+
+namespace OpenOrienteering {
 
 MapperProxyStyle::MapperProxyStyle(QStyle* base_style)
  : QProxyStyle(base_style)
@@ -175,3 +183,6 @@ int MapperProxyStyle::styleHint(QStyle::StyleHint hint, const QStyleOption* opti
 	
 	return QProxyStyle::styleHint(hint, option, widget, return_data);
 }
+
+
+}  // namespace OpenOrienteering

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2015, 2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -34,22 +34,28 @@
 #include <QToolBar>
 #include <QVBoxLayout>
 
+#include "core/map.h"
 #include "gui/main_window.h"
+#include "gui/modifier_key.h"
+#include "gui/util_gui.h"
 #include "gui/map/map_editor.h"
 #include "gui/map/map_widget.h"
-#include "template.h"
+#include "templates/template.h"
 #include "util/transformation.h"
 #include "util/util.h"
-#include "gui/modifier_key.h"
+
+
+namespace OpenOrienteering {
 
 float TemplateAdjustActivity::cross_radius = 4;
 
 TemplateAdjustActivity::TemplateAdjustActivity(Template* temp, MapEditorController* controller) : controller(controller)
 {
 	setActivityObject(temp);
-	connect(controller->getMap(), SIGNAL(templateChanged(int, const Template*)), this, SLOT(templateChanged(int, const Template*)));
-	connect(controller->getMap(), SIGNAL(templateDeleted(int, const Template*)), this, SLOT(templateDeleted(int, const Template*)));
+	connect(controller->getMap(), &Map::templateChanged, this, &TemplateAdjustActivity::templateChanged);
+	connect(controller->getMap(), &Map::templateDeleted, this, &TemplateAdjustActivity::templateDeleted);
 }
+
 TemplateAdjustActivity::~TemplateAdjustActivity()
 {
 	widget->stopTemplateAdjust();
@@ -58,7 +64,7 @@ TemplateAdjustActivity::~TemplateAdjustActivity()
 
 void TemplateAdjustActivity::init()
 {
-	Template* temp = reinterpret_cast<Template*>(activity_object);
+	auto temp = reinterpret_cast<Template*>(activity_object);
 	
 	dock = new TemplateAdjustDockWidget(tr("Template adjustment"), controller, controller->getWindow());
 	widget = new TemplateAdjustWidget(temp, controller, dock);
@@ -72,12 +78,12 @@ void TemplateAdjustActivity::init()
 
 void TemplateAdjustActivity::draw(QPainter* painter, MapWidget* widget)
 {
-	Template* temp = reinterpret_cast<Template*>(activity_object);
+	auto temp = reinterpret_cast<Template*>(activity_object);
 	bool adjusted = temp->isAdjustmentApplied();
     
 	for (int i = 0; i < temp->getNumPassPoints(); ++i)
 	{
-		PassPoint* point = temp->getPassPoint(i);
+		auto point = temp->getPassPoint(i);
 		QPointF start = widget->mapToViewport(adjusted ? point->calculated_coords : point->src_coords);
 		QPointF end = widget->mapToViewport(point->dest_coords);
 		
@@ -86,6 +92,7 @@ void TemplateAdjustActivity::draw(QPainter* painter, MapWidget* widget)
 		drawCross(painter, end.toPoint(), QColor(Qt::green));
 	}
 }
+
 void TemplateAdjustActivity::drawCross(QPainter* painter, QPoint midpoint, QColor color)
 {
 	painter->setPen(color);
@@ -103,7 +110,7 @@ int TemplateAdjustActivity::findHoverPoint(Template* temp, QPoint mouse_pos, Map
 	
 	for (int i = 0; i < temp->getNumPassPoints(); ++i)
 	{
-		PassPoint* point = temp->getPassPoint(i);
+		auto point = temp->getPassPoint(i);
 		
 		QPointF display_pos_src = adjusted ? widget->mapToViewport(point->calculated_coords) : widget->mapToViewport(point->src_coords);
 		float distance_sq = (display_pos_src.x() - mouse_pos.x())*(display_pos_src.x() - mouse_pos.x()) + (display_pos_src.y() - mouse_pos.y())*(display_pos_src.y() - mouse_pos.y());
@@ -147,7 +154,7 @@ bool TemplateAdjustActivity::calculateTemplateAdjust(Template* temp, TemplateTra
 void TemplateAdjustActivity::templateChanged(int index, const Template* temp)
 {
 	Q_UNUSED(index);
-	if ((Template*)activity_object == temp)
+	if (static_cast<Template*>(activity_object) == temp)
 	{
 		widget->updateDirtyRect(true);
 		widget->updateAllRows();
@@ -156,9 +163,11 @@ void TemplateAdjustActivity::templateChanged(int index, const Template* temp)
 void TemplateAdjustActivity::templateDeleted(int index, const Template* temp)
 {
 	Q_UNUSED(index);
-	if ((Template*)activity_object == temp)
-		controller->setEditorActivity(NULL);
+	if (static_cast<Template*>(activity_object) == temp)
+		controller->setEditorActivity(nullptr);
 }
+
+
 
 // ### TemplateAdjustDockWidget ###
 
@@ -175,22 +184,23 @@ bool TemplateAdjustDockWidget::event(QEvent* event)
 		event->accept();
     return QDockWidget::event(event);
 }
+
 void TemplateAdjustDockWidget::closeEvent(QCloseEvent* event)
 {
 	Q_UNUSED(event);
-	emit(closed());
-	controller->setEditorActivity(NULL);
+	emit closed();
+	controller->setEditorActivity(nullptr);
 }
 
 TemplateAdjustWidget::TemplateAdjustWidget(Template* temp, MapEditorController* controller, QWidget* parent): QWidget(parent), temp(temp), controller(controller)
 {
 	react_to_changes = true;
 	
-	QToolBar* toolbar = new QToolBar();
+	auto toolbar = new QToolBar();
 	toolbar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	toolbar->setFloatable(false);
 	
-	QLabel* passpoint_label = new QLabel(tr("Pass points:"));
+	auto passpoint_label = new QLabel(tr("Pass points:"));
 	
 	new_act = new QAction(QIcon(QString::fromLatin1(":/images/cursor-georeferencing-add.png")), tr("New"), this);
 	new_act->setCheckable(true);
@@ -210,7 +220,7 @@ TemplateAdjustWidget::TemplateAdjustWidget(Template* temp, MapEditorController* 
 	table->setHorizontalHeaderLabels(QStringList() << tr("Template X") << tr("Template Y") << tr("Map X") << tr("Map Y") << tr("Error"));
 	table->verticalHeader()->setVisible(false);
 	
-	QHeaderView* header_view = table->horizontalHeader();
+	auto header_view = table->horizontalHeader();
 	for (int i = 0; i < 5; ++i)
 		header_view->setSectionResizeMode(i, QHeaderView::ResizeToContents);
 	header_view->setSectionsClickable(false);
@@ -220,18 +230,18 @@ TemplateAdjustWidget::TemplateAdjustWidget(Template* temp, MapEditorController* 
 	
 	apply_check = new QCheckBox(tr("Apply pass points"));
 	apply_check->setChecked(temp->isAdjustmentApplied());
-	QPushButton* help_button = new QPushButton(QIcon(QString::fromLatin1(":/images/help.png")), tr("Help"));
+	auto help_button = new QPushButton(QIcon(QString::fromLatin1(":/images/help.png")), tr("Help"));
 	clear_and_apply_button = new QPushButton(tr("Apply && clear all"));
 	clear_and_revert_button = new QPushButton(tr("Clear all"));
 	
-	QHBoxLayout* buttons_layout = new QHBoxLayout();
+	auto buttons_layout = new QHBoxLayout();
 	buttons_layout->addWidget(help_button);
 	buttons_layout->addStretch(1);
 	buttons_layout->addWidget(clear_and_revert_button);
 	buttons_layout->addWidget(clear_and_apply_button);
 
 	
-	QVBoxLayout* layout = new QVBoxLayout();
+	auto layout = new QVBoxLayout();
 	layout->addWidget(passpoint_label);
 	layout->addWidget(toolbar);
 	layout->addWidget(table, 1);
@@ -242,21 +252,21 @@ TemplateAdjustWidget::TemplateAdjustWidget(Template* temp, MapEditorController* 
 	
 	updateActions();
 	
-	connect(new_act, SIGNAL(triggered(bool)), this, SLOT(newClicked(bool)));
-	connect(move_act, SIGNAL(triggered(bool)), this, SLOT(moveClicked(bool)));
-	connect(delete_act, SIGNAL(triggered(bool)), this, SLOT(deleteClicked(bool)));
+	connect(new_act, &QAction::triggered, this, &TemplateAdjustWidget::newClicked);
+	connect(move_act, &QAction::triggered, this, &TemplateAdjustWidget::moveClicked);
+	connect(delete_act, &QAction::triggered, this, &TemplateAdjustWidget::deleteClicked);
 	
-	connect(apply_check, SIGNAL(clicked(bool)), this, SLOT(applyClicked(bool)));
-	connect(help_button, SIGNAL(clicked(bool)), this, SLOT(showHelp()));
-	connect(clear_and_apply_button, SIGNAL(clicked(bool)), this, SLOT(clearAndApplyClicked(bool)));
-	connect(clear_and_revert_button, SIGNAL(clicked(bool)), this, SLOT(clearAndRevertClicked(bool)));
+	connect(apply_check, &QAbstractButton::clicked, this, &TemplateAdjustWidget::applyClicked);
+	connect(help_button, &QAbstractButton::clicked, this, &TemplateAdjustWidget::showHelp);
+	connect(clear_and_apply_button, &QAbstractButton::clicked, this, &TemplateAdjustWidget::clearAndApplyClicked);
+	connect(clear_and_revert_button, &QAbstractButton::clicked, this, &TemplateAdjustWidget::clearAndRevertClicked);
 	
 	updateDirtyRect();
 }
-TemplateAdjustWidget::~TemplateAdjustWidget()
-{
 
-}
+TemplateAdjustWidget::~TemplateAdjustWidget() = default;
+
+
 
 void TemplateAdjustWidget::addPassPoint(MapCoordF src, MapCoordF dest)
 {
@@ -294,6 +304,7 @@ void TemplateAdjustWidget::addPassPoint(MapCoordF src, MapCoordF dest)
 	updateDirtyRect();
 	updateActions();
 }
+
 void TemplateAdjustWidget::deletePassPoint(int number)
 {
 	Q_ASSERT(number >= 0 && number < temp->getNumPassPoints());
@@ -315,12 +326,13 @@ void TemplateAdjustWidget::deletePassPoint(int number)
 	updateDirtyRect(false);
 	updateActions();
 }
+
 void TemplateAdjustWidget::stopTemplateAdjust()
 {
 	// If one of these is checked, the corresponding tool should be set. The last condition is just to be sure.
 	if ((new_act->isChecked() || move_act->isChecked() || delete_act->isChecked()) && controller->getTool())
 	{
-		controller->setTool(NULL);
+		controller->setTool(nullptr);
 	}
 }
 
@@ -354,6 +366,7 @@ void TemplateAdjustWidget::newClicked(bool checked)
 	else
 		new_act->setChecked(true);
 }
+
 void TemplateAdjustWidget::moveClicked(bool checked)
 {
 	if (checked)
@@ -361,6 +374,7 @@ void TemplateAdjustWidget::moveClicked(bool checked)
 	else
 		move_act->setChecked(true);
 }
+
 void TemplateAdjustWidget::deleteClicked(bool checked)
 {
 	if (checked)
@@ -435,12 +449,12 @@ void TemplateAdjustWidget::addRow(int row)
 	
 	for (int i = 0; i < 4; ++i)
 	{
-		QTableWidgetItem* item = new QTableWidgetItem();
+		auto item = new QTableWidgetItem();
 		item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);	// TODO: make editable    Qt::ItemIsEditable | 
 		table->setItem(row, i, item);
 	}
 	
-	QTableWidgetItem* item = new QTableWidgetItem();
+	auto item = new QTableWidgetItem();
 	item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
 	table->setItem(row, 4, item);
 	
@@ -448,6 +462,7 @@ void TemplateAdjustWidget::addRow(int row)
 	
 	react_to_changes = true;
 }
+
 void TemplateAdjustWidget::updatePointErrors()
 {
 	react_to_changes = false;
@@ -460,12 +475,14 @@ void TemplateAdjustWidget::updatePointErrors()
 	
 	react_to_changes = true;
 }
+
 void TemplateAdjustWidget::updateAllRows()
 {
 	if (!react_to_changes) return;
 	for (int row = 0; row < temp->getNumPassPoints(); ++row)
 		updateRow(row);
 }
+
 void TemplateAdjustWidget::updateRow(int row)
 {
 	react_to_changes = false;
@@ -505,6 +522,8 @@ void TemplateAdjustWidget::updateDirtyRect(bool redraw)
 	}
 }
 
+
+
 // ### TemplateAdjustEditTool ###
 
 TemplateAdjustEditTool::TemplateAdjustEditTool(MapEditorController* editor, QAction* tool_button, TemplateAdjustWidget* widget): MapEditorTool(editor, Other, tool_button), widget(widget)
@@ -518,7 +537,7 @@ void TemplateAdjustEditTool::draw(QPainter* painter, MapWidget* widget)
 	
 	if (active_point >= 0)
 	{
-		PassPoint* point = this->widget->getTemplate()->getPassPoint(active_point);
+		auto point = this->widget->getTemplate()->getPassPoint(active_point);
 		MapCoordF position = active_point_is_src ? (adjusted ? point->calculated_coords : point->src_coords) : point->dest_coords;
 		QPoint viewport_pos = widget->mapToViewport(position).toPoint();
 		
@@ -543,7 +562,7 @@ void TemplateAdjustEditTool::findHoverPoint(QPoint mouse_pos, MapWidget* map_wid
 		
 		if (active_point >= 0)
 		{
-			PassPoint* point = this->widget->getTemplate()->getPassPoint(active_point);
+			auto point = this->widget->getTemplate()->getPassPoint(active_point);
 			if (active_point_is_src)
 			{
 				if (adjusted)
@@ -558,6 +577,8 @@ void TemplateAdjustEditTool::findHoverPoint(QPoint mouse_pos, MapWidget* map_wid
 			map()->clearDrawingBoundingBox();
 	}
 }
+
+
 
 // ### TemplateAdjustAddTool ###
 
@@ -595,7 +616,7 @@ bool TemplateAdjustAddTool::mousePressEvent(QMouseEvent* event, MapCoordF map_co
 		setDirtyRect(map_coord);
 		
 		setStatusBarText(tr("<b>Click</b>: Set the map position of the pass point. ") +
-		                 MapEditorTool::tr("<b>%1</b>: Abort. ").arg(ModifierKey::escape()) );
+		                 OpenOrienteering::MapEditorTool::tr("<b>%1</b>: Abort. ").arg(ModifierKey::escape()) );
 	}
 	else
 	{
@@ -661,10 +682,12 @@ void TemplateAdjustAddTool::setDirtyRect(MapCoordF mouse_pos)
 	map()->setDrawingBoundingBox(rect, TemplateAdjustActivity::cross_radius);
 }
 
+
+
 // ### TemplateAdjustMoveTool ###
 
-QCursor* TemplateAdjustMoveTool::cursor = NULL;
-QCursor* TemplateAdjustMoveTool::cursor_invisible = NULL;
+QCursor* TemplateAdjustMoveTool::cursor = nullptr;
+QCursor* TemplateAdjustMoveTool::cursor_invisible = nullptr;
 
 TemplateAdjustMoveTool::TemplateAdjustMoveTool(MapEditorController* editor, QAction* tool_button, TemplateAdjustWidget* widget): TemplateAdjustEditTool(editor, tool_button, widget)
 {
@@ -676,6 +699,7 @@ TemplateAdjustMoveTool::TemplateAdjustMoveTool(MapEditorController* editor, QAct
 		cursor_invisible = new QCursor(QPixmap(QString::fromLatin1(":/images/cursor-invisible.png")), 0, 0);
 	}
 }
+
 void TemplateAdjustMoveTool::init()
 {
 	setStatusBarText(tr("<b>Drag</b>: Move pass points. "));
@@ -698,7 +722,7 @@ bool TemplateAdjustMoveTool::mousePressEvent(QMouseEvent* event, MapCoordF map_c
 	active_point = TemplateAdjustActivity::findHoverPoint(this->widget->getTemplate(), event->pos(), widget, active_point_is_src);
 	if (active_point >= 0)
 	{
-		PassPoint* point = this->widget->getTemplate()->getPassPoint(active_point);
+		auto point = this->widget->getTemplate()->getPassPoint(active_point);
 		MapCoordF* point_coords;
 		if (active_point_is_src)
 		{
@@ -718,6 +742,7 @@ bool TemplateAdjustMoveTool::mousePressEvent(QMouseEvent* event, MapCoordF map_c
 	
 	return false;
 }
+
 bool TemplateAdjustMoveTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
 	if (!dragging)
@@ -727,11 +752,12 @@ bool TemplateAdjustMoveTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_co
 	
 	return true;
 }
+
 bool TemplateAdjustMoveTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
 	Q_UNUSED(event);
 	
-	Template* temp = this->widget->getTemplate();
+	auto temp = this->widget->getTemplate();
 	
 	if (dragging)
 	{
@@ -759,7 +785,7 @@ void TemplateAdjustMoveTool::setActivePointPosition(MapCoordF map_coord)
 {
 	bool adjusted = this->widget->getTemplate()->isAdjustmentApplied();
 	
-	PassPoint* point = this->widget->getTemplate()->getPassPoint(active_point);
+	auto point = this->widget->getTemplate()->getPassPoint(active_point);
 	MapCoordF* changed_coords;
 	if (active_point_is_src)
 	{
@@ -794,6 +820,8 @@ void TemplateAdjustMoveTool::setActivePointPosition(MapCoordF map_coord)
 	this->widget->getTemplate()->setAdjustmentDirty(true);
 }
 
+
+
 // ### TemplateAdjustDeleteTool ###
 
 TemplateAdjustDeleteTool::TemplateAdjustDeleteTool(MapEditorController* editor, QAction* tool_button, TemplateAdjustWidget* widget): TemplateAdjustEditTool(editor, tool_button, widget)
@@ -826,7 +854,7 @@ bool TemplateAdjustDeleteTool::mousePressEvent(QMouseEvent* event, MapCoordF map
 	active_point = TemplateAdjustActivity::findHoverPoint(this->widget->getTemplate(), event->pos(), widget, active_point_is_src);
 	if (active_point >= 0)
 	{
-		PassPoint* point = this->widget->getTemplate()->getPassPoint(active_point);
+		auto point = this->widget->getTemplate()->getPassPoint(active_point);
 		QRectF changed_rect = QRectF(adjusted ? point->calculated_coords : point->src_coords, QSizeF(0, 0));
 		rectInclude(changed_rect, point->dest_coords);
 		
@@ -836,6 +864,7 @@ bool TemplateAdjustDeleteTool::mousePressEvent(QMouseEvent* event, MapCoordF map
 	}
 	return true;
 }
+
 bool TemplateAdjustDeleteTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
 	Q_UNUSED(map_coord);
@@ -843,3 +872,6 @@ bool TemplateAdjustDeleteTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_
 	findHoverPoint(event->pos(), widget);
 	return true;
 }
+
+
+}  // namespace OpenOrienteering

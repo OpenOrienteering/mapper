@@ -21,13 +21,15 @@
 #include "settings_page.h"
 
 
+namespace OpenOrienteering {
+
 SettingsPage::SettingsPage(QWidget* parent)
 : QWidget(parent)
 {
 	// nothing
 }
 
-SettingsPage::~SettingsPage()
-{
-	// nothing, not inlined
-}
+SettingsPage::~SettingsPage() = default;
+
+
+}  // namespace OpenOrienteering

@@ -21,11 +21,20 @@
 
 #include "text_object.h"
 
-#include <qmath.h>
+#include <QtMath>
+#include <QChar>
+#include <QLatin1Char>
+#include <QPointF>
 
-#include "core/symbols/symbol.h"
-#include "core/symbols/text_symbol.h"
 #include "settings.h"
+#include "core/objects/object.h"
+#include "core/symbols/text_symbol.h"
+#include "core/symbols/symbol.h"
+
+// IWYU pragma: no_forward_declare QPointF
+
+
+namespace OpenOrienteering {
 
 // ### TextObjectPartInfo ###
 
@@ -135,21 +144,23 @@ TextObject::TextObject(const TextObject& proto)
 	// nothing
 }
 
-Object* TextObject::duplicate() const
+TextObject* TextObject::duplicate() const
 {
 	return new TextObject(*this);
 }
 
-Object& TextObject::operator=(const Object& other)
+void TextObject::copyFrom(const Object& other)
 {
-	Object::operator=(other);
+	if (&other == this)
+		return;
+	
+	Object::copyFrom(other);
 	const TextObject& other_text = *other.asText();
 	text = other_text.text;
 	h_align = other_text.h_align;
 	v_align = other_text.v_align;
 	rotation = other_text.rotation;
 	line_infos = other_text.line_infos;
-	return *this;
 }
 
 void TextObject::setAnchorPosition(qint32 x, qint32 y)
@@ -201,7 +212,7 @@ std::vector<QPointF> TextObject::controlPoints() const
 	else
 	{
 		QTransform transform;
-		transform.rotate(-180.0 * getRotation() / M_PI);
+		transform.rotate(-qRadiansToDegrees(qreal(getRotation())));
 		
 		handles[0] += transform.map(QPointF(+getBoxWidth() / 2, -getBoxHeight() / 2));
 		handles[1] += transform.map(QPointF(+getBoxWidth() / 2, +getBoxHeight() / 2));
@@ -266,7 +277,7 @@ void TextObject::setRotation(float new_rotation)
 	setOutputDirty();
 }
 
-bool TextObject::intersectsBox(QRectF box) const
+bool TextObject::intersectsBox(const QRectF& box) const
 {
 	return getExtent().intersects(box);
 }
@@ -279,7 +290,7 @@ int TextObject::calcTextPositionAt(MapCoordF coord, bool find_line_only) const
 // FIXME actually this is two functions, selected by parameter find_line_only; make two functions or return TextObjectLineInfo reference
 int TextObject::calcTextPositionAt(QPointF point, bool find_line_only) const
 {
-	float click_tolerance = Settings::getInstance().getMapEditorClickTolerancePx();
+	auto click_tolerance = Settings::getInstance().getMapEditorClickTolerancePx();
 	
 	for (int line = 0; line < getNumLines(); ++line)
 	{
@@ -502,3 +513,6 @@ void TextObject::prepareLineInfos() const
 		}
 	}
 }
+
+
+}  // namespace OpenOrienteering

@@ -21,29 +21,44 @@
 
 #include "edit_line_tool.h"
 
-#include <algorithm>
+#include <map>
+#include <memory>
 #include <limits>
+#include <vector>
 
+#include <Qt>
+#include <QtGlobal>
+#include <QtMath>
+#include <QFlags>
+#include <QLatin1String>
 #include <QKeyEvent>
+#include <QLocale>
+#include <QMouseEvent>
+#include <QPoint>
+#include <QPointF>
+#include <QPointer>
+#include <QString>
 
 #include "core/map.h"
-#include "undo/object_undo.h"
-#include "gui/map/map_widget.h"
+#include "core/map_view.h"
+#include "core/path_coord.h"
 #include "core/objects/object.h"
+#include "core/objects/object_mover.h"
 #include "core/objects/text_object.h"
 #include "core/renderables/renderable.h"
 #include "core/symbols/combined_symbol.h"
-#include "core/symbols/line_symbol.h"
-#include "settings.h"
 #include "core/symbols/symbol.h"
-#include "tool_helpers.h"
-#include "util/util.h"
-#include "gui/map/map_editor.h"
-#include "gui/main_window.h"
 #include "gui/modifier_key.h"
+#include "gui/map/map_editor.h"
+#include "gui/map/map_widget.h"
 #include "gui/widgets/key_button_bar.h"
+#include "tools/object_selector.h"
+#include "tools/point_handles.h"
+#include "tools/tool.h"
+#include "tools/tool_base.h"
+#include "tools/tool_helpers.h"
+#include "util/util.h"
 
-class SymbolWidget;
 
 namespace
 {
@@ -55,14 +70,10 @@ namespace
 }
 
 
+namespace OpenOrienteering {
 
-EditLineTool::EditLineTool(MapEditorController* editor, QAction* tool_button)
- : EditTool(editor, EditLine, tool_button)
- , hover_state(OverNothing)
- , hover_object(nullptr)
- , highlight_object(nullptr)
- , box_selection(false)
- , waiting_for_mouse_release(false)
+EditLineTool::EditLineTool(MapEditorController* editor, QAction* tool_action)
+ : EditTool(editor, EditLine, tool_action)
  , highlight_renderables(new MapRenderables(map()))
 {
 	// nothing
@@ -213,8 +224,8 @@ void EditLineTool::dragStart()
 		object_mover.reset(new ObjectMover(map, click_pos_map));
 		if (hoveringOverFrame())
 		{
-			for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(), it_end = map->selectedObjectsEnd(); it != it_end; ++it)
-				object_mover->addObject(*it);
+			for (auto object : map->selectedObjects())
+				object_mover->addObject(object);
 		}
 		else
 		{
@@ -276,7 +287,7 @@ void EditLineTool::dragMove()
 		}
 		
 		qint32 dx, dy;
-		object_mover->move(constrained_pos_map, !(active_modifiers & Qt::ShiftModifier), &dx, &dy);
+		object_mover->move(constrained_pos_map, false, &dx, &dy);
 		if (highlight_object)
 		{
 			highlight_renderables->removeRenderablesOfObject(highlight_object, false);
@@ -390,9 +401,9 @@ void EditLineTool::initImpl()
 	if (editor->isInMobileMode())
 	{
 		// Create key replacement bar
-		key_button_bar = new KeyButtonBar(this, editor->getMainWidget());
-		key_button_bar->addModifierKey(Qt::Key_Shift, Qt::ShiftModifier, tr("Snap", "Snap to existing objects"));
-		key_button_bar->addModifierKey(Qt::Key_Control, Qt::ControlModifier, tr("Toggle curve", "Toggle between curved and flat segment"));
+		key_button_bar = new KeyButtonBar(editor->getMainWidget());
+		key_button_bar->addModifierButton(Qt::ShiftModifier, tr("Snap", "Snap to existing objects"));
+		key_button_bar->addModifierButton(Qt::ControlModifier, tr("Toggle curve", "Toggle between curved and flat segment"));
 		editor->showPopupWidget(key_button_bar, QString{});
 	}
 }
@@ -419,13 +430,13 @@ int EditLineTool::updateDirtyRectImpl(QRectF& rect)
 	map()->includeSelectionRect(selection_extent);
 	
 	rectInclude(rect, selection_extent);
-	int pixel_border = show_object_points ? (scaleFactor() * 6) : 1;
+	int pixel_border = show_object_points ? pointHandles().displayRadius() : 1;
 	
 	// Control points
 	if (show_object_points)
 	{
-		for (Map::ObjectSelection::const_iterator it = map()->selectedObjectsBegin(), end = map()->selectedObjectsEnd(); it != end; ++it)
-			(*it)->includeControlPointsRect(rect);
+		for (auto object : map()->selectedObjects())
+			object->includeControlPointsRect(rect);
 	}
 	
 	// Box selection
@@ -497,7 +508,7 @@ void EditLineTool::updateStatusText()
 	if (editingInProgress())
 	{
 		MapCoordF drag_vector = constrained_pos_map - click_pos_map;
-		text = EditTool::tr("<b>Coordinate offset:</b> %1, %2 mm  <b>Distance:</b> %3 m ").arg(
+		text = ::OpenOrienteering::EditTool::tr("<b>Coordinate offset:</b> %1, %2 mm  <b>Distance:</b> %3 m ").arg(
 		         QLocale().toString(drag_vector.x(), 'f', 1),
 		         QLocale().toString(-drag_vector.y(), 'f', 1),
 		         QLocale().toString(0.001 * map()->getScaleDenominator() * drag_vector.length(), 'f', 1))
@@ -506,23 +517,23 @@ void EditLineTool::updateStatusText()
 		if (angle_helper->isActive())
 			text += tr("<b>%1</b>: Free movement. ").arg(ModifierKey::control());
 		if (!(active_modifiers & Qt::ShiftModifier))
-			text += EditTool::tr("<b>%1</b>: Snap to existing objects. ").arg(ModifierKey::shift());
+			text += ::OpenOrienteering::EditTool::tr("<b>%1</b>: Snap to existing objects. ").arg(ModifierKey::shift());
 		else
 			text.chop(2); // Remove "| "
 	}
 	else
 	{
-		text = EditTool::tr("<b>Click</b>: Select a single object. <b>Drag</b>: Select multiple objects. <b>%1+Click</b>: Toggle selection. ").arg(ModifierKey::shift());
+		text = ::OpenOrienteering::EditTool::tr("<b>Click</b>: Select a single object. <b>Drag</b>: Select multiple objects. <b>%1+Click</b>: Toggle selection. ").arg(ModifierKey::shift());
 		if (map()->getNumSelectedObjects() > 0)
 		{
-			text += EditTool::tr("<b>%1</b>: Delete selected objects. ").arg(ModifierKey(DeleteObjectKey));
+			text += ::OpenOrienteering::EditTool::tr("<b>%1</b>: Delete selected objects. ").arg(ModifierKey(DeleteObjectKey));
 			
 			if (map()->selectedObjects().size() <= max_objects_for_handle_display)
 			{
 				if (active_modifiers & Qt::ControlModifier)
 					text = tr("<b>%1+Click</b> on segment: Toggle between straight and curved. ").arg(ModifierKey::control());
 				else
-					text += MapEditorTool::tr("More: %1").arg(ModifierKey::control());
+					text += ::OpenOrienteering::MapEditorTool::tr("More: %1").arg(ModifierKey::control());
 			}
 		}
 	}
@@ -554,7 +565,7 @@ void EditLineTool::updateHoverState(MapCoordF cursor_pos)
 					
 					if (distance_sq >= +0.0 &&
 					    distance_sq < best_distance_sq &&
-					    distance_sq < qMax(click_tolerance_sq, (float)qPow(path->getSymbol()->calculateLargestLineExtent(map()), 2)))
+					    distance_sq < qMax(click_tolerance_sq, (float)qPow(path->getSymbol()->calculateLargestLineExtent(), 2)))
 					{
 						new_hover_state  = OverPathEdge;
 						new_hover_object = path;
@@ -607,7 +618,10 @@ void EditLineTool::updateHoverState(MapCoordF cursor_pos)
 			highlight_renderables->insertRenderablesOfObject(highlight_object);
 		}
 		
-		start_drag_distance = (hover_state != OverNothing) ? 0 : Settings::getInstance().getStartDragDistancePx();
+		effective_start_drag_distance = (hover_state == OverNothing) ? startDragDistance() : 0;
 		updateDirtyRect();
 	}
 }
+
+
+}  // namespace OpenOrienteering

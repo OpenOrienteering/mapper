@@ -22,14 +22,25 @@
 #include "boolean_tool.h"
 
 #include <algorithm>
+#include <cmath>
+#include <cstddef>
 #include <memory>
+#include <stdexcept>
+#include <type_traits>
 
+#include <QtGlobal>
 #include <QDebug>
+#include <QScopedPointer>
 
 #include "core/map.h"
-#include "core/symbols/symbol.h"
+#include "core/map_coord.h"
+#include "core/map_part.h"
+#include "core/path_coord.h"
+#include "core/virtual_path.h"
 #include "core/objects/object.h"
+#include "core/symbols/symbol.h"
 #include "undo/object_undo.h"
+#include "undo/undo.h"
 #include "util/util.h"
 
 
@@ -40,8 +51,7 @@
  * This is a C++ language issue, not a Qt issue.
  * Cf. https://bugreports.qt-project.org/browse/QTBUG-34912
  */
-namespace ClipperLib
-{
+namespace ClipperLib {
 
 /**
  * Implements qHash for ClipperLib::IntPoint.
@@ -50,11 +60,16 @@ namespace ClipperLib
  */
 uint qHash(const IntPoint& point, uint seed)
 {
-	qint64 tmp = (point.X & 0xffffffff) | (point.Y << 32);
+	quint64 tmp = (quint64(point.X) & 0xffffffff) | (quint64(point.Y) << 32);
 	return ::qHash(tmp, seed); // must use :: namespace to prevent endless recursion
 }
 
-} // namespace ClipperLib
+
+}  // namespace ClipperLib
+
+
+
+namespace OpenOrienteering {
 
 /**
  * Removes flags from the coordinate to be able to use it in the reconstruction.
@@ -98,7 +113,7 @@ bool BooleanTool::execute()
 	Object* const primary_object = map->getFirstSelectedObject();
 	if (primary_object->getType() != Object::Path)
 	{
-		Q_ASSERT(false && "The first selected object must be a path.");
+		qWarning("The first selected object must be a path.");
 		return false; // in release build
 	}
 
@@ -281,7 +296,7 @@ bool BooleanTool::executeForObjects(PathObject* subject, PathObjects& in_objects
 	case MergeHoles:    clip_type = ClipperLib::ctUnion;
 	                    fill_type = ClipperLib::pftPositive;
 	                    break;
-	default:            Q_ASSERT(false && "Undefined operation");
+	default:            qWarning("Undefined operation");
 	                    return false;
 	}
 
@@ -304,7 +319,7 @@ void BooleanTool::polyTreeToPathObjects(const ClipperLib::PolyTree& tree, PathOb
 
 void BooleanTool::outerPolyNodeToPathObjects(const ClipperLib::PolyNode& node, PathObjects& out_objects, const PathObject* proto, const PolyMap& polymap)
 {
-	auto object = std::unique_ptr<PathObject>{ new PathObject{ *proto } };
+	auto object = std::unique_ptr<PathObject>{ proto->duplicate() };
 	object->clearCoordinates();
 	
 	try
@@ -347,8 +362,8 @@ void BooleanTool::executeForLine(const PathObject* area, const PathObject* line,
 	line->calcAllIntersectionsWith(area, intersections);
 	intersections.normalize();
 	
-	PathObject* first_segment = NULL;
-	PathObject* last_segment = NULL;
+	PathObject* first_segment = nullptr;
+	PathObject* last_segment = nullptr;
 	
 	const auto& part        = line->parts().front();
 	const auto& path_coords = part.path_coords;
@@ -359,7 +374,7 @@ void BooleanTool::executeForLine(const PathObject* area, const PathObject* line,
 		auto middle_length = part.length();
 		auto middle = SplitPathCoord::at(path_coords, middle_length);
 		if (area->isPointInsideArea(middle.pos) == (op == BooleanTool::Intersection))
-			out_objects.push_back(new PathObject(*line));
+			out_objects.push_back(line->duplicate());
 		return;
 	}
 	
@@ -368,7 +383,7 @@ void BooleanTool::executeForLine(const PathObject* area, const PathObject* line,
 	auto middle = SplitPathCoord::at(path_coords, middle_length);
 	if (area->isPointInsideArea(middle.pos) == (op == BooleanTool::Intersection))
 	{
-		PathObject* segment = new PathObject(*line);
+		PathObject* segment = line->duplicate();
 		segment->changePathBounds(0, 0.0, intersections[0].length);
 		first_segment = segment;
 	}
@@ -380,7 +395,7 @@ void BooleanTool::executeForLine(const PathObject* area, const PathObject* line,
 		auto middle = SplitPathCoord::at(path_coords, middle_length);
 		if (area->isPointInsideArea(middle.pos) == (op == BooleanTool::Intersection))
 		{
-			PathObject* segment = new PathObject(*line);
+			PathObject* segment = line->duplicate();
 			segment->changePathBounds(0, intersections[i].length, intersections[i+1].length);
 			out_objects.push_back(segment);
 		}
@@ -391,7 +406,7 @@ void BooleanTool::executeForLine(const PathObject* area, const PathObject* line,
 	middle = SplitPathCoord::at(path_coords, middle_length);
 	if (area->isPointInsideArea(middle.pos) == (op == BooleanTool::Intersection))
 	{
-		PathObject* segment = new PathObject(*line);
+		PathObject* segment = line->duplicate();
 		segment->changePathBounds(0, intersections.back().length, part.length());
 		last_segment = segment;
 	}
@@ -430,6 +445,7 @@ void BooleanTool::pathObjectToPolygons(
 			--path_coords_end;
 		
 		ClipperLib::Path polygon;
+		polygon.reserve(path_coords_end);
 		for (auto i = 0u; i < path_coords_end; ++i)
 		{
 			auto& path_coord = path_coords[i];
@@ -1065,3 +1081,5 @@ bool BooleanTool::checkSegmentMatch(
 	return found;
 }
 
+
+}  // namespace OpenOrienteering

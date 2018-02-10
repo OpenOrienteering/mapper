@@ -22,18 +22,29 @@
 #ifndef OPENORIENTEERING_MAIN_WINDOW_H
 #define OPENORIENTEERING_MAIN_WINDOW_H
 
+#include <Qt>
 #include <QMainWindow>
+#include <QObject>
+#include <QString>
+#include <QStringList>
 
-#include "../core/autosave.h"
-#include "../fileformats/file_format.h"
+#include "core/autosave.h"
+#include "fileformats/file_format.h"
 
-QT_BEGIN_NAMESPACE
+class QAction;
+class QCloseEvent;
+class QEvent;
+class QKeyEvent;
 class QLabel;
+class QMenu;
 class QStackedWidget;
-class QTimer;
-QT_END_NAMESPACE
+class QToolBar;
+class QWidget;
+
+namespace OpenOrienteering {
 
 class MainWindowController;
+
 
 /**
  * The MainWindow class provides the generic application window.
@@ -557,5 +568,8 @@ bool MainWindow::homeScreenDisabled() const
 {
 	return homescreen_disabled;
 }
+
+
+}  // namespace OpenOrienteering
 
 #endif

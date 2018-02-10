@@ -19,10 +19,19 @@
  */
 
 
-#ifndef _OPENORIENTEERING_TOOL_PAN_H_
-#define _OPENORIENTEERING_TOOL_PAN_H_
+#ifndef OPENORIENTEERING_TOOL_PAN_H
+#define OPENORIENTEERING_TOOL_PAN_H
 
-#include "tool_base.h"
+#include <QObject>
+
+#include "tools/tool_base.h"
+
+class QAction;
+
+namespace OpenOrienteering {
+
+class MapEditorController;
+
 
 /** 
  * Tool to pan the map.
@@ -32,16 +41,19 @@ class PanTool : public MapEditorToolBase
 Q_OBJECT
 public:
 	PanTool(MapEditorController* editor, QAction* tool_action);
-	virtual ~PanTool();
+	~PanTool() override;
 	
 protected:
-	virtual void updateStatusText() override;
-	virtual void objectSelectionChangedImpl() override;
-	virtual void clickPress() override;
-	virtual void dragStart() override;
-	virtual void dragMove() override;
-	virtual void dragFinish() override;
-	virtual void dragCanceled() override;
+	void updateStatusText() override;
+	void objectSelectionChangedImpl() override;
+	void clickPress() override;
+	void dragStart() override;
+	void dragMove() override;
+	void dragFinish() override;
+	void dragCanceled() override;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

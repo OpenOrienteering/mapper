@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012, 2013, 2014 Kai Pastor
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,33 +20,77 @@
 
 #include "color_dialog.h"
 
+#include <cstddef>
+#include <memory>
+
+#include <Qt>
+#include <QAbstractButton>
+#include <QApplication>
 #include <QButtonGroup>
+#include <QCheckBox>
+#include <QColor>
+#include <QComboBox>
 #include <QDialogButtonBox>
+#include <QDoubleSpinBox>
+#include <QFlags>
 #include <QGridLayout>
+#include <QLabel>
+#include <QLatin1Char>
+#include <QLatin1String>
 #include <QLineEdit>
+#include <QMessageBox>
+#include <QPixmap>
 #include <QPushButton>
 #include <QRadioButton>
 #include <QSettings>
+#include <QSignalBlocker>
+#include <QSize>
+#include <QSpacerItem>
+#include <QString>
+#include <QStyle>
+#include <QTabWidget>
+#include <QVariant>
+#include <QWidget>
 
-#include "core/map_color.h"
 #include "core/map.h"
+#include "core/map_color.h"
+#include "gui/util_gui.h"
+#include "gui/widgets/color_dropdown.h"
+#include "util/backports.h"
 #include "util/util.h"
-#include "util_gui.h"
-#include "widgets/color_dropdown.h"
+#include "util/translation_util.h"
+
+
+namespace OpenOrienteering {
+
+namespace {
+	
+	constexpr QSize coloriconSize()
+	{
+		return QSize{32, 32};
+	}
+	
+	
+}  // namespace
+
+
 
 ColorDialog::ColorDialog(const Map& map, const MapColor& source_color, QWidget* parent, Qt::WindowFlags f)
-: QDialog(parent, f),
-  map(map),
-  source_color(source_color),
-  color(source_color),
-  color_modified(false),
-  react_to_changes(true)
+: QDialog(parent, f)
+, map(map)
+, source_color(source_color)
+, color(source_color)
+, color_modified(false)
+, react_to_changes(true)
 {
 	setWindowTitle(tr("Edit map color"));
 	setSizeGripEnabled(true);
 	
 	color_preview_label = new QLabel();
+	color_name_label = new QLabel();
 	mc_name_edit = new QLineEdit();
+	language_combo = new QComboBox();
+	name_edit_button = new QPushButton(tr("Edit"));
 	
 	prof_color_layout = new QGridLayout();
 	int col = 0;
@@ -56,7 +100,7 @@ ColorDialog::ColorDialog(const Map& map, const MapColor& source_color, QWidget* 
 	int row = 0;
 	prof_color_layout->addWidget(Util::Headline::create("Spot color printing"), row, col, 1, 2);
 	
-	QButtonGroup* spot_color_options = new QButtonGroup(this);
+	auto spot_color_options = new QButtonGroup(this);
 	
 	++row;
 	full_tone_option = new QRadioButton(tr("Defines a spot color:"));
@@ -72,12 +116,12 @@ ColorDialog::ColorDialog(const Map& map, const MapColor& source_color, QWidget* 
 	spot_color_options->addButton(composition_option, MapColor::CustomColor);
 	prof_color_layout->addWidget(composition_option, row, col, 1, 2);
 	
-	int num_components = 0 /*color.getComponents().size()*/; // FIXME: cleanup
+	std::size_t num_components = 0 /*color.getComponents().size()*/; // FIXME: cleanup
 	components_row0 = row+1;
 	components_col0 = col;
 	component_colors.resize(num_components+1);
 	component_halftone.resize(num_components+1);
-	for (int i = 0; i <= num_components; i++)
+	for (std::size_t i = 0; i <= num_components; i++)
 	{
 		++row;
 		component_colors[i] = new ColorDropDown(&map, &color, true);
@@ -92,18 +136,18 @@ ColorDialog::ColorDialog(const Map& map, const MapColor& source_color, QWidget* 
 	prof_color_layout->addWidget(knockout_option, row, col, 1, 2);
 	knockout_option->setEnabled(false);
 	
-	row = 0, col += 2;
+	row = 0; col += 2;
 	prof_color_layout->setColumnStretch(col, 1);
 	
 	const int spacing = style()->pixelMetric(QStyle::PM_LayoutTopMargin);
 	prof_color_layout->addItem(new QSpacerItem(3*spacing, spacing), row, col, 7, 1);
 	
-	row = 0, col +=1;
+	row = 0; col +=1;
 	prof_color_layout->setColumnStretch(col, 1);
 	prof_color_layout->setColumnStretch(col+1, 3);
 	prof_color_layout->addWidget(Util::Headline::create("CMYK"), row, col, 1, 2);
 	
-	QButtonGroup* cmyk_color_options = new QButtonGroup(this);
+	auto cmyk_color_options = new QButtonGroup(this);
 	
 	++row;
 	cmyk_spot_color_option = new QRadioButton(tr("Calculate from spot colors"));
@@ -147,12 +191,12 @@ ColorDialog::ColorDialog(const Map& map, const MapColor& source_color, QWidget* 
 	prof_color_layout->addWidget(stretch, row, col);
 	prof_color_layout->setRowStretch(row, 1);
 	
-	QWidget* prof_color_widget = new QWidget();
+	auto prof_color_widget = new QWidget();
 	prof_color_widget->setLayout(prof_color_layout);
 	prof_color_widget->setObjectName(QString::fromLatin1("professional"));
 	
 	
-	QGridLayout* desktop_layout = new QGridLayout();
+	auto desktop_layout = new QGridLayout();
 	col = 0;
 	desktop_layout->setColumnStretch(col, 1);
 	desktop_layout->setColumnStretch(col+1, 3);
@@ -160,7 +204,7 @@ ColorDialog::ColorDialog(const Map& map, const MapColor& source_color, QWidget* 
 	row = 0;
 	desktop_layout->addWidget(Util::Headline::create("RGB"), row, col, 1, 2);
 	
-	QButtonGroup* rgb_color_options = new QButtonGroup(this);
+	auto rgb_color_options = new QButtonGroup(this);
 	
 	++row;
 	rgb_spot_color_option = new QRadioButton(tr("Calculate from spot colors"));
@@ -201,12 +245,12 @@ ColorDialog::ColorDialog(const Map& map, const MapColor& source_color, QWidget* 
 	desktop_layout->addWidget(new QWidget(), row, col);
 	desktop_layout->setRowStretch(row, 1);
 	
-	row = 0, col += 2;
+	row = 0; col += 2;
 	desktop_layout->setColumnStretch(col, 7);
 	
 	desktop_layout->addItem(new QSpacerItem(3*spacing, spacing), row, col, 7, 1);
 	
-	QWidget* desktop_color_widget = new QWidget();
+	auto desktop_color_widget = new QWidget();
 	desktop_color_widget->setLayout(desktop_layout);
 	desktop_color_widget->setObjectName(QString::fromLatin1("desktop"));
 	
@@ -215,46 +259,58 @@ ColorDialog::ColorDialog(const Map& map, const MapColor& source_color, QWidget* 
 	properties_widget->addTab(desktop_color_widget, tr("Desktop"));
 	properties_widget->addTab(prof_color_widget, tr("Professional printing"));
 	
-	QDialogButtonBox* button_box = new QDialogButtonBox(QDialogButtonBox::Cancel | QDialogButtonBox::Ok | QDialogButtonBox::Reset | QDialogButtonBox::Help);
+	auto button_box = new QDialogButtonBox(QDialogButtonBox::Cancel | QDialogButtonBox::Ok | QDialogButtonBox::Reset | QDialogButtonBox::Help);
 	ok_button = button_box->button(QDialogButtonBox::Ok);
 	reset_button = button_box->button(QDialogButtonBox::Reset);
-	connect(button_box, SIGNAL(rejected()), this, SLOT(reject()));
-	connect(button_box, SIGNAL(accepted()), this, SLOT(accept()));
-	connect(reset_button, SIGNAL(clicked(bool)), this, SLOT(reset()));
-	connect(button_box->button(QDialogButtonBox::Help), SIGNAL(clicked(bool)), this, SLOT(showHelp()));
+	connect(button_box, &QDialogButtonBox::rejected, this, &QDialog::reject);
+	connect(button_box, &QDialogButtonBox::accepted, this, &ColorDialog::accept);
+	connect(reset_button, &QAbstractButton::clicked, this, &ColorDialog::reset);
+	connect(button_box->button(QDialogButtonBox::Help), &QAbstractButton::clicked, this, &ColorDialog::showHelp);
 	
-	QGridLayout* layout = new QGridLayout();
-	layout->addWidget(color_preview_label, 0, 0);
-	layout->addWidget(mc_name_edit, 0, 1);
-	layout->addWidget(properties_widget, 1, 0, 1, 2);
-	layout->addWidget(button_box, 2, 0, 1, 2);
-	layout->setColumnStretch(1, 1);
+	auto layout = new QGridLayout();
+	row = 0; col = 0;
+	layout->addWidget(color_preview_label, row, col); col++;
+	layout->addWidget(color_name_label, row, col, 1, 4);
+	row++; col = 0;
+	layout->addWidget(new QLabel(QApplication::translate("OpenOrienteering::MapSymbolTranslation", "Text source:")), row, col, 1, 2); col+=2;
+	layout->addWidget(language_combo, row, col); col++;
+	layout->addWidget(name_edit_button, row, col);
+	row++; col = 0;
+	layout->addWidget(new QLabel(tr("Name")), row, col, 1, 2); col+=2;
+	layout->addWidget(mc_name_edit, row, col, 1, 3);
+	row++; col = 0;
+	layout->addWidget(properties_widget, row, col, 1, 5);
+	row++;
+	layout->addWidget(button_box, row, col, 1, 5);
+	layout->setColumnStretch(4, 1);
 	setLayout(layout);
 	
-	updateWidgets();
+	reset();
 	updateButtons();
 	
-	connect(mc_name_edit, SIGNAL(textChanged(QString)), this, SLOT(mapColorNameChanged()));
+	connect(language_combo, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &ColorDialog::languageChanged);
+	connect(name_edit_button, &QPushButton::clicked, this, &ColorDialog::editClicked);
+	connect(mc_name_edit, &QLineEdit::textChanged, this, &ColorDialog::mapColorNameChanged);
 	
-	connect(spot_color_options, SIGNAL(buttonClicked(int)), this, SLOT(spotColorTypeChanged(int)));
-	connect(sc_name_edit, SIGNAL(textChanged(QString)), this, SLOT(spotColorNameChanged()));
-	for (int i = 0; i < (int)component_colors.size(); i++)
+	connect(spot_color_options, QOverload<int>::of(&QButtonGroup::buttonClicked), this, &ColorDialog::spotColorTypeChanged);
+	connect(sc_name_edit, &QLineEdit::textChanged, this, &ColorDialog::spotColorNameChanged);
+	for (std::size_t i = 0; i < component_colors.size(); i++)
 	{
-		connect(component_colors[i], SIGNAL(currentIndexChanged(int)), this, SLOT(spotColorCompositionChanged()));
-		connect(component_halftone[i], SIGNAL(valueChanged(double)), this, SLOT(spotColorCompositionChanged()));
+		connect(component_colors[i], QOverload<int>::of(&ColorDropDown::currentIndexChanged), this, &ColorDialog::spotColorCompositionChanged);
+		connect(component_halftone[i], QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &ColorDialog::spotColorCompositionChanged);
 	}
-	connect(knockout_option, SIGNAL(clicked(bool)), this, SLOT(knockoutChanged()));
+	connect(knockout_option, &QAbstractButton::clicked, this, &ColorDialog::knockoutChanged);
 	
-	connect(cmyk_color_options, SIGNAL(buttonClicked(int)), this, SLOT(cmykColorTypeChanged(int)));
-	connect(c_edit, SIGNAL(valueChanged(double)), this, SLOT(cmykValueChanged()));
-	connect(m_edit, SIGNAL(valueChanged(double)), this, SLOT(cmykValueChanged()));
-	connect(y_edit, SIGNAL(valueChanged(double)), this, SLOT(cmykValueChanged()));
-	connect(k_edit, SIGNAL(valueChanged(double)), this, SLOT(cmykValueChanged()));
+	connect(cmyk_color_options, QOverload<int>::of(&QButtonGroup::buttonClicked), this, &ColorDialog::cmykColorTypeChanged);
+	connect(c_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &ColorDialog::cmykValueChanged);
+	connect(m_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &ColorDialog::cmykValueChanged);
+	connect(y_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &ColorDialog::cmykValueChanged);
+	connect(k_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &ColorDialog::cmykValueChanged);
 	
-	connect(rgb_color_options, SIGNAL(buttonClicked(int)), this, SLOT(rgbColorTypeChanged(int)));
-	connect(r_edit, SIGNAL(valueChanged(double)), this, SLOT(rgbValueChanged()));
-	connect(g_edit, SIGNAL(valueChanged(double)), this, SLOT(rgbValueChanged()));
-	connect(b_edit, SIGNAL(valueChanged(double)), this, SLOT(rgbValueChanged()));
+	connect(rgb_color_options, QOverload<int>::of(&QButtonGroup::buttonClicked), this, &ColorDialog::rgbColorTypeChanged);
+	connect(r_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &ColorDialog::rgbValueChanged);
+	connect(g_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &ColorDialog::rgbValueChanged);
+	connect(b_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &ColorDialog::rgbValueChanged);
 	
 	QSettings settings;
 	settings.beginGroup(QString::fromLatin1("ColorDialog"));
@@ -263,23 +319,35 @@ ColorDialog::ColorDialog(const Map& map, const MapColor& source_color, QWidget* 
 	properties_widget->setCurrentWidget(properties_widget->findChild<QWidget*>(default_view));
 }
 
+
+ColorDialog::~ColorDialog() = default;
+
+
+
+void ColorDialog::updateColorLabel()
+{
+	auto name = map.translate(color.getName());
+	if (name.isEmpty())
+		name = tr("- unnamed -");
+	color_name_label->setText(QLatin1String("<b>") + name + QLatin1String("</b>"));
+}
+
+
 void ColorDialog::updateWidgets()
 {
 	react_to_changes = false;
 	
-	QPixmap pixmap(icon_size, icon_size);
+	QPixmap pixmap(coloriconSize());
 	pixmap.fill(colorWithOpacity(color));
 	color_preview_label->setPixmap(pixmap);
-	
-	mc_name_edit->setText(color.getName());
 	
 	sc_name_edit->setText(color.getSpotColorName());
 	
 	const MapColorCmyk& cmyk = color.getCmyk();
-	c_edit->setValue(100.0 * cmyk.c);
-	m_edit->setValue(100.0 * cmyk.m);
-	y_edit->setValue(100.0 * cmyk.y);
-	k_edit->setValue(100.0 * cmyk.k);
+	c_edit->setValue(100.0 * double(cmyk.c));
+	m_edit->setValue(100.0 * double(cmyk.m));
+	y_edit->setValue(100.0 * double(cmyk.y));
+	k_edit->setValue(100.0 * double(cmyk.k));
 	
 	knockout_option->setChecked(color.getKnockout());
 	
@@ -321,10 +389,10 @@ void ColorDialog::updateWidgets()
 	}
 	
 	const SpotColorComponents& color_components = color.getComponents();
-	int num_components = color_components.size();
-	int num_editors = component_colors.size();
+	auto num_components = color_components.size();
+	auto num_editors = component_colors.size();
 	
-	for (int i = num_components+1; i < num_editors; ++i)
+	for (auto i = num_components+1; i < num_editors; ++i)
 	{
 		prof_color_layout->removeWidget(component_colors[i]);
 		delete component_colors[i];
@@ -335,37 +403,37 @@ void ColorDialog::updateWidgets()
 	if (num_editors != num_components+1)
 	{
 		prof_color_layout->removeWidget(knockout_option);
-		prof_color_layout->addWidget(knockout_option, components_row0+num_components+1, components_col0);
+		prof_color_layout->addWidget(knockout_option, components_row0+int(num_components)+1, components_col0);
 	}
 	
 	component_colors.resize(num_components+1);
 	component_halftone.resize(num_components+1);
-	for (int i = num_editors; i <= num_components; ++i)
+	for (auto i = num_editors; i <= num_components; ++i)
 	{
 		component_colors[i] = new ColorDropDown(&map, &color, true);
 		component_colors[i]->removeColor(&source_color);
-		prof_color_layout->addWidget(component_colors[i], components_row0+i, components_col0);
-		connect(component_colors[i], SIGNAL(currentIndexChanged(int)), this, SLOT(spotColorCompositionChanged()));
+		prof_color_layout->addWidget(component_colors[i], components_row0+int(i), components_col0);
+		connect(component_colors[i], QOverload<int>::of(&ColorDropDown::currentIndexChanged), this, &ColorDialog::spotColorCompositionChanged);
 		component_halftone[i] = Util::SpinBox::create(1, 0.0, 100.0, tr("%"), 10.0);
-		prof_color_layout->addWidget(component_halftone[i], components_row0+i, components_col0+1);
-		connect(component_halftone[i], SIGNAL(valueChanged(double)), this, SLOT(spotColorCompositionChanged()));
+		prof_color_layout->addWidget(component_halftone[i], components_row0+int(i), components_col0+1);
+		connect(component_halftone[i], QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &ColorDialog::spotColorCompositionChanged);
 	}
 	
 	num_editors = component_colors.size();
 	bool enable_component = composition_option->isChecked();
-	for (int i = 0; i < num_editors; i++)
+	for (std::size_t i = 0; i < num_editors; i++)
 	{
-		bool have_component = (i < (int)num_components);
-		const MapColor* component_color = have_component ? color_components[i].spot_color : NULL;
+		bool have_component = (i < num_components);
+		const MapColor* component_color = have_component ? color_components[i].spot_color : nullptr;
 		component_colors[i]->setEnabled(enable_component);
 		component_colors[i]->setColor(component_color);
 		
 		bool enable_halftone = enable_component && have_component;
-		float component_factor = enable_halftone ? color_components[i].factor : 0.0f;
+		auto component_factor = enable_halftone ? double(color_components[i].factor) : 0.0;
 		component_halftone[i]->setEnabled(enable_halftone);
 		component_halftone[i]->setValue(component_factor * 100.0);
 		
-		prof_color_layout->setRowStretch(components_row0 + i, 0);
+		prof_color_layout->setRowStretch(components_row0 + int(i), 0);
 		
 		enable_component = enable_component && enable_halftone;
 	}
@@ -373,7 +441,7 @@ void ColorDialog::updateWidgets()
 	if (color.getSpotColorMethod() == MapColor::UndefinedMethod)
 		component_colors[0]->setEnabled(true);
 	
-	int stretch_row = qMax(stretch_row0, components_row0+num_editors);
+	auto stretch_row = qMax(stretch_row0, components_row0+int(num_editors));
 	if (stretch_row != stretch_row0)
 	{
 		prof_color_layout->removeWidget(stretch);
@@ -402,9 +470,9 @@ void ColorDialog::updateWidgets()
 	
 	
 	const MapColorRgb& rgb = color.getRgb();
-	r_edit->setValue(255.0 * rgb.r);
-	g_edit->setValue(255.0 * rgb.g);
-	b_edit->setValue(255.0 * rgb.b);
+	r_edit->setValue(255.0 * double(rgb.r));
+	g_edit->setValue(255.0 * double(rgb.g));
+	b_edit->setValue(255.0 * double(rgb.b));
 	html_edit->setText(QColor(rgb).name());
 	
 	bool custom_rgb = false;
@@ -444,11 +512,41 @@ void ColorDialog::reset()
 {
 	color = source_color;
 	updateWidgets();
+	
+	language_combo->clear();
+	language_combo->addItem(QApplication::translate("OpenOrienteering::MapSymbolTranslation", "Map (%1)")
+	                        .arg(QApplication::translate("OpenOrienteering::MapSymbolTranslation", "undefined language")));
+	auto name = color.getName();
+	auto display_name = map.raw_translation(name);
+	if (display_name.isEmpty())
+	{
+		language_combo->setEnabled(false);
+		name_edit_button->setEnabled(false);
+		mc_name_edit->setText(name);
+		mc_name_edit->setEnabled(true);
+	}
+	else
+	{
+		auto language = TranslationUtil::languageFromSettings(QSettings());
+		if (!language.isValid())
+		{
+			language.displayName = QApplication::translate("OpenOrienteering::MapSymbolTranslation", "undefined language");
+		}
+
+		language_combo->addItem(QApplication::translate("OpenOrienteering::MapSymbolTranslation", "Translation (%1)").arg(language.displayName));
+		language_combo->setCurrentIndex(1);
+		language_combo->setEnabled(true);
+		name_edit_button->setEnabled(true);
+		mc_name_edit->setText(display_name);
+		mc_name_edit->setEnabled(false);
+	}
+	
 	setColorModified(false);
 }
 
 void ColorDialog::setColorModified(bool modified)
 {
+	updateColorLabel();
 	if (color_modified != modified)
 	{
 		color_modified = modified;
@@ -466,6 +564,67 @@ void ColorDialog::showHelp()
 {
 	Util::showHelp(this, "color_dock_widget.html", "editor");
 }
+
+
+
+void ColorDialog::languageChanged()
+{
+	auto name = color.getName();
+	if (language_combo->currentIndex() == 1)
+	{
+		name = map.raw_translation(name);
+	}
+	QSignalBlocker block(mc_name_edit);
+	mc_name_edit->setText(name);
+}
+
+
+void ColorDialog::editClicked()
+{
+	int result;
+	auto question = QString{};
+	if (language_combo->currentIndex() == 1)
+	{
+		question = QApplication::translate("OpenOrienteering::MapSymbolTranslation",
+		             "Before editing, the stored text will be "
+		             "replaced with the current translation. "
+		             "Do you want to continue?");
+	}
+	else
+	{
+		question = QApplication::translate("OpenOrienteering::MapSymbolTranslation",
+		             "After modifying the stored text, "
+		             "the translation may no longer be found. "
+		             "Do you want to continue?");
+	}
+	result = QMessageBox::warning(this, tr("Warning"), question,
+	                              QMessageBox::Yes | QMessageBox::No,
+	                              QMessageBox::Yes);
+	if (result == QMessageBox::Yes)
+	{
+		language_combo->setEnabled(false);
+		name_edit_button->setEnabled(false);
+		mc_name_edit->setEnabled(true);
+		if (language_combo->currentIndex() == 1)
+		{
+			{
+				QSignalBlocker block(language_combo);
+				language_combo->setCurrentIndex(0);
+			}
+			auto name = mc_name_edit->text();
+			if (name.isEmpty())
+			{
+				QSignalBlocker block(mc_name_edit);
+				name = color.getName();
+				mc_name_edit->setText(name);
+			}
+			color.setName(name);
+		}
+		setColorModified(true);
+	}
+}
+
+
 
 // slot
 void ColorDialog::mapColorNameChanged()
@@ -524,19 +683,19 @@ void ColorDialog::spotColorCompositionChanged()
 	
 	SpotColorComponents components;
 	SpotColorComponent component;
-	int num_editors = component_colors.size();
+	auto num_editors = component_colors.size();
 	components.reserve(num_editors);
-	for (int i = 0; i < num_editors; i++)
+	for (std::size_t i = 0; i < num_editors; i++)
 	{
 		if (!component_colors[i]->isEnabled())
 			break;
 		
 		const MapColor* spot_color = component_colors[i]->color();
-		if (spot_color == NULL)
+		if (!spot_color)
 			continue;
 		
 		component.spot_color = spot_color;
-		component.factor = component_halftone[i]->value() / 100.0f;
+		component.factor = float(component_halftone[i]->value() / 100);
 		components.push_back(component);
 	}
 	color.setSpotColorComposition(components);
@@ -587,7 +746,7 @@ void ColorDialog::cmykValueChanged()
 	if (custom_cmyk_option->isChecked())
 	{
 		color.setCmyk( MapColorCmyk(
-		  c_edit->value()/100.0, m_edit->value()/100.0, y_edit->value()/100.0, k_edit->value()/100.0
+		  float(c_edit->value()/100), float(m_edit->value()/100), float(y_edit->value()/100), float(k_edit->value()/100)
 		) );
 		updateWidgets();
 		setColorModified(true);
@@ -627,10 +786,12 @@ void ColorDialog::rgbValueChanged()
 	if (custom_rgb_option->isChecked())
 	{
 		color.setRgb( MapColorRgb(
-		  r_edit->value()/255.0, g_edit->value()/255.0, b_edit->value()/255.0
+		  float(r_edit->value()/255), float(g_edit->value()/255), float(b_edit->value()/255)
 		) );
 		updateWidgets();
 		setColorModified(true);
 	}
 }
 
+
+}  // namespace OpenOrienteering

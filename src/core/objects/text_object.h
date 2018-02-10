@@ -19,20 +19,30 @@
  */
 
 
-#ifndef _OPENORIENTEERING_OBJECT_TEXT_H_
-#define _OPENORIENTEERING_OBJECT_TEXT_H_
+#ifndef OPENORIENTEERING_OBJECT_TEXT_H
+#define OPENORIENTEERING_OBJECT_TEXT_H
 
+#include <memory>
 #include <vector>
 
+#include <QtGlobal>
 #include <QString>
 #include <QFontMetricsF>
 #include <QPointF>
+#include <QRectF>
 #include <QTransform>
 
-#include "object.h"
+#include "core/map_coord.h"
+#include "core/objects/object.h"
 
-class MapCoordF;
+// IWYU pragma: no_forward_declare QPointF
+// IWYU pragma: no_forward_declare QRectF
+// IWYU pragma: no_forward_declare QTransform
+
+namespace OpenOrienteering {
+
 class Symbol;
+
 
 /** 
  * TextObjectPartInfo contains layout information for a continuous sequence of printable characters
@@ -109,7 +119,7 @@ struct TextObjectLineInfo
  * coordinate does not specify a real coordinate in this case, but is misused
  * as extent. Change this?
  */
-class TextObject : public Object
+class TextObject : public Object  // clazy:exclude=copyable-polymorphic
 {
 public:
 	enum HorizontalAlignment
@@ -137,15 +147,19 @@ public:
 	 */
 	explicit TextObject(const Symbol* symbol = nullptr);
 	
+protected:
 	/** Constructs a TextObject, initalized from the given prototype. */
 	explicit TextObject(const TextObject& proto);
 	
+public:
 	/** Creates a duplicate of the text object.
 	 *  @return a new object with same text, symbol and formatting.
 	 */
-	Object* duplicate() const override;
+	TextObject* duplicate() const override;
+
+	TextObject& operator=(const TextObject&) = delete;
 	
-	Object& operator=(const Object& other) override;
+	void copyFrom(const Object& other) override;
 	
 	
 	/** Returns true if the text object has a single anchor, false if it has as word wrap box
@@ -231,7 +245,7 @@ public:
 	float getRotation() const;
 	
 	
-	bool intersectsBox(QRectF box) const override;
+	bool intersectsBox(const QRectF& box) const override;
 	
 	
 	/** Returns a QTransform from text coordinates to map coordinates.
@@ -369,5 +383,6 @@ const TextObjectLineInfo*TextObject::getLineInfo(int i) const
 }
 
 
+}  // namespace OpenOrienteering
 
 #endif

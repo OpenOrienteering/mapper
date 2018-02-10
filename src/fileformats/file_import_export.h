@@ -17,21 +17,20 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_IMPORT_EXPORT_H
-#define _OPENORIENTEERING_IMPORT_EXPORT_H
+#ifndef OPENORIENTEERING_IMPORT_EXPORT_H
+#define OPENORIENTEERING_IMPORT_EXPORT_H
 
 #include <vector>
 
+#include <QCoreApplication>
 #include <QHash>
-#include <QObject>
+#include <QString>
 #include <QVariant>
-
-#include "file_format.h"
 
 class QIODevice;
 
-class Importer;
-class Exporter;
+namespace OpenOrienteering {
+
 class Map;
 class MapView;
 
@@ -42,16 +41,18 @@ class MapView;
  *  Subclasses should define default values for options they intend to use in their constructors,
  *  by calling setOption() with the relevant values. There is no such thing as an "implicit default"
  *  for options.
- * 
- *  ImportExport inherits QObject for translation purposes.
  */
-class ImportExport : public QObject
+class ImportExport
 {
-Q_OBJECT
+	Q_DECLARE_TR_FUNCTIONS(OpenOrienteering::ImportExport)
+	
 public:
 	/** Creates a new importer or exporter with the given input stream, map, and view.
 	 */
 	ImportExport(QIODevice* stream, Map *map, MapView *view);
+	
+	ImportExport(const ImportExport&) = delete;
+	ImportExport(ImportExport&&) = delete;
 	
 	/** Destroys an importer or exporter.
 	 */
@@ -63,7 +64,7 @@ public:
 	
 	/** Sets an option in this importer or exporter.
 	 */
-	void setOption(const QString& name, QVariant value);
+	void setOption(const QString& name, const QVariant& value);
 	
 	/** Retrieves the value of an options in this importer or exporter. If the option does not have
 	 *  a value - either a default value assigned in the constructor, or a custom value assigned
@@ -122,7 +123,8 @@ class ImportAction
  */
 class Importer : public ImportExport
 {
-Q_OBJECT
+	Q_DECLARE_TR_FUNCTIONS(OpenOrienteering::Importer)
+	
 public:
 	/** Creates a new Importer with the given output stream, map, and view.
 	 */
@@ -130,7 +132,7 @@ public:
 	
 	/** Destroys this Importer.
 	 */
-	virtual ~Importer();
+	~Importer() override;
 	
 	/** Returns the current list of action items.
 	 */
@@ -177,7 +179,8 @@ private:
  */
 class Exporter : public ImportExport
 {
-Q_OBJECT
+	Q_DECLARE_TR_FUNCTIONS(OpenOrienteering::Exporter)
+	
 public:
 	/** Creates a new Importer with the given i/o stream, map, and view.
 	 */
@@ -185,7 +188,7 @@ public:
 	
 	/** Destroys the current Exporter.
 	 */
-	virtual ~Exporter();
+	~Exporter() override;
 	
 	/** Exports the map and view to the given file. If a fatal error is encountered (such as a
 	 *  permission problem), than this method should throw a FormatException. If the export can
@@ -218,18 +221,12 @@ void ImportExport::addWarning(const QString& str)
 }
 
 inline
-void ImportExport::setOption(const QString& name, QVariant value)
+void ImportExport::setOption(const QString& name, const QVariant& value)
 {
 	options[name] = value;
 }
 
-inline
-QVariant ImportExport::option(const QString& name) const
-{
-	if (!options.contains(name))
-		throw FileFormatException(ImportExport::tr("No such option: %1", "No such import / export option").arg(name));
-	return options[name];
-}
+
 
 
 // ### Importer inline code ###
@@ -264,4 +261,6 @@ Exporter::Exporter(QIODevice* stream, Map* map, MapView* view)
 }
 
 
-#endif // _OPENORIENTEERING_IMPORT_EXPORT_H
+}  // namespace OpenOrienteering
+
+#endif // OPENORIENTEERING_IMPORT_EXPORT_H

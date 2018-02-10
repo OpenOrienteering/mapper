@@ -1,5 +1,6 @@
 /*
  *    Copyright 2014 Thomas Schöps
+ *    Copyright 2014, 2015, 2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -18,10 +19,29 @@
  */
 
 
-#ifndef _OPENORIENTEERING_DRAW_FREEHAND_H_
-#define _OPENORIENTEERING_DRAW_FREEHAND_H_
+#ifndef OPENORIENTEERING_DRAW_FREEHAND_TOOL_H
+#define OPENORIENTEERING_DRAW_FREEHAND_TOOL_H
 
-#include "draw_line_and_area_tool.h"
+#include <cstddef>
+#include <vector>
+
+#include <QtGlobal>
+#include <QObject>
+#include <QPoint>
+
+#include "core/map_coord.h"
+#include "tools/draw_line_and_area_tool.h"
+
+class QAction;
+class QCursor;
+class QKeyEvent;
+class QMouseEvent;
+class QPainter;
+
+namespace OpenOrienteering {
+
+class MapEditorController;
+class MapWidget;
 
 
 /** Tool for free-hand drawing. */
@@ -30,34 +50,39 @@ class DrawFreehandTool : public DrawLineAndAreaTool
 Q_OBJECT
 public:
 	DrawFreehandTool(MapEditorController* editor, QAction* tool_action, bool is_helper_tool);
-	virtual ~DrawFreehandTool();
+	~DrawFreehandTool() override;
 	
-	virtual void init();
-	virtual const QCursor& getCursor() const;
+	void init() override;
+	const QCursor& getCursor() const override;
 	
-	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
 	
-	virtual bool keyPressEvent(QKeyEvent* event);
+	bool keyPressEvent(QKeyEvent* event) override;
 	
-	virtual void draw(QPainter* painter, MapWidget* widget);
+	void draw(QPainter* painter, MapWidget* widget) override;
 	
 protected:
-	virtual void finishDrawing();
-	virtual void abortDrawing();
+	void finishDrawing() override;
+	void abortDrawing() override;
 	
 	void updatePath();
 	void setDirtyRect();
 	void updateStatusText();
 	
-	void checkLineSegment(int a, int b, std::vector<bool>& point_mask);
+private:
+	void checkLineSegment(std::size_t first, std::size_t last);
 	
-	QPoint click_pos;
-	MapCoordF last_pos_map;
+	std::vector<bool> point_mask;
+	qreal split_distance_sq;
+	
+	QPoint last_pos;
 	QPoint cur_pos;
 	MapCoordF cur_pos_map;
-	bool dragging;
 };
+
+
+}  // namespace OpenOrienteering
 
 #endif

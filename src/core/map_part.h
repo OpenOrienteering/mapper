@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,32 +19,34 @@
  */
 
 
-#ifndef _OPENORIENTEERING_MAP_PART_H_
-#define _OPENORIENTEERING_MAP_PART_H_
+#ifndef OPENORIENTEERING_MAP_PART_H
+#define OPENORIENTEERING_MAP_PART_H
 
+#include <cstddef>
+#include <functional>
 #include <vector>
+#include <utility>
 
 #include <QHash>
-#include <QRect>
+#include <QRectF>
 #include <QString>
 
-QT_BEGIN_NAMESPACE
 class QIODevice;
 class QTransform;
 class QXmlStreamReader;
 class QXmlStreamWriter;
-QT_END_NAMESPACE
+// IWYU pragma: no_forward_declare QRectF
+
+namespace OpenOrienteering {
 
 class Map;
-class MapCoord;
 class MapCoordF;
 class Object;
-class OCAD8FileImport;
 class Symbol;
-typedef QHash<QString, Symbol*> SymbolDictionary; // from symbol.h
+using SymbolDictionary = QHash<QString, Symbol*>; // from symbol.h
 
 
-typedef std::vector< std::pair< int, Object* > > SelectionInfoVector;
+using SelectionInfoVector = std::vector<std::pair<int, Object*>> ;
 
 
 /**
@@ -70,10 +72,15 @@ public:
 	 */
 	MapPart(const QString& name, Map* map);
 	
+	MapPart(const MapPart&) = delete;
+	
 	/**
 	 * Destroys the map part.
 	 */
 	~MapPart();
+	
+	
+	MapPart& operator=(const MapPart&) = delete;
 	
 	
 	/**
@@ -173,7 +180,7 @@ public:
 	 * Uses symbol_map to replace all symbols contained there.
 	 * No replacement is done for symbols which are not in the symbol_map.
 	 */
-	void importPart(const MapPart* other, QHash<const Symbol*, Symbol*>& symbol_map,
+	void importPart(const MapPart* other, const QHash<const Symbol*, Symbol*>& symbol_map,
 		const QTransform& transform, bool select_new_objects);
 	
 	
@@ -194,7 +201,7 @@ public:
 	/** 
 	 * @see Map::countObjectsInRect().
 	 */
-	int countObjectsInRect(QRectF map_coord_rect, bool include_hidden_objects) const;
+	int countObjectsInRect(const QRectF& map_coord_rect, bool include_hidden_objects) const;
 	
 	/**
 	 * Calculates and returns the bounding box of all objects in this map part.
@@ -207,29 +214,32 @@ public:
 	 * 
 	 * @return True if there is an object matching the condition, false otherwise.
 	 */
-	template<typename Condition>
-	bool existsObject(const Condition& condition) const;
+	bool existsObject(const std::function<bool (const Object*)>& condition) const;
+	
+	/**
+	 * @copybrief   Map::applyOnMatchingObjects()
+	 * @copydetails Map::applyOnMatchingObjects()
+	 */
+	void applyOnMatchingObjects(const std::function<void (Object*)>& operation, const std::function<bool (const Object*)>& condition);
+	
+	/**
+	 * @copybrief   Map::applyOnMatchingObjects()
+	 * @copydetails Map::applyOnMatchingObjects()
+	 */
+	void applyOnMatchingObjects(const std::function<void (Object*, MapPart*, int)>& operation, const std::function<bool (const Object*)>& condition);
 	
 	/**
 	 * @copybrief   Map::applyOnAllObjects()
-	 * @copyetails Map::applyOnAllObjects()
+	 * @copydetails Map::applyOnAllObjects()
 	 */
-	template<typename Operation, typename Condition>
-	bool applyOnMatchingObjects(const Operation& operation, const Condition& condition);
+	void applyOnAllObjects(const std::function<void (Object*)>& operation);
 	
 	/**
 	 * @copybrief   Map::applyOnAllObjects()
-	 * @copyetails Map::applyOnAllObjects()
+	 * @copydetails Map::applyOnAllObjects()
 	 */
-	template<typename Operation>
-	bool applyOnAllObjects(const Operation& operation);
+	void applyOnAllObjects(const std::function<void (Object*, MapPart*, int)>& operation);
 	
-	/**
-	 * @copybrief   Map::applyOnAllObjects()
-	 * @copyetails Map::applyOnAllObjects()
-	 */
-	template<typename Operation>
-	bool applyOnAllObjects(Operation& operation);
 	
 private:
 	typedef std::vector<Object*> ObjectList;
@@ -252,83 +262,22 @@ const QString& MapPart::getName() const
 inline
 int MapPart::getNumObjects() const
 {
-	return (int)objects.size();
+	return int(objects.size());
 }
 
 inline
 Object* MapPart::getObject(int i)
 {
-	return objects[i];
+	return objects[std::size_t(i)];
 }
 
 inline
 const Object* MapPart::getObject(int i) const
 {
-	return objects[i];
+	return objects[std::size_t(i)];
 }
 
-template<typename Condition>
-bool MapPart::existsObject(const Condition& condition) const
-{
-   for (ObjectList::const_iterator object = objects.begin(), end = objects.end(); object != end; ++object)
-   {
-	   if (condition(*object))
-		   return true;
-   }
-   return false;
-}
 
-template<typename Operation, typename Condition>
-bool MapPart::applyOnMatchingObjects(const Operation& operation, const Condition& condition)
-{
-   bool result = true;
-   if (!objects.empty())
-   {
-	   std::size_t i = objects.size();
-	   do
-	   {
-		   --i;
-		   Object* const object = objects[i];
-		   if (condition(object))
-			   result &= operation(object, this, i);
-	   }
-	   while (i > 0);
-   }
-   return result;
-}
-
-template<typename Operation>
-bool MapPart::applyOnAllObjects(const Operation& operation)
-{
-   bool result = true;
-   if (!objects.empty())
-   {
-	   std::size_t i = objects.size();
-	   do
-	   {
-		   --i;
-		   result &= operation(objects[i], this, i);
-	   }
-	   while (i > 0);
-   }
-   return result;
-}
-
-template<typename Operation>
-bool MapPart::applyOnAllObjects(Operation& operation)
-{
-	bool result = true;
-	if (!objects.empty())
-	{
-		std::size_t i = objects.size();
-		do
-		{
-			--i;
-			result &= operation(objects[i], this, i);
-		}
-		while (i > 0);
-	}
-	return result;
-}
+}  // namespace OpenOrienteering
 
 #endif

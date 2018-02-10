@@ -1,6 +1,6 @@
 ---
 title: User Manual
-edited: 4 January 2017
+edited: 24 January 2018
 redirect_from:
   - /
   - /Home
@@ -10,57 +10,62 @@ redirect_from:
 **Note:** The [online version](http://www.openorienteering.org/mapper-manual/) of this documentation may contain additions and corrections.
 {% endif %}
 
-Contents    {#index_contents}
-========
+## Contents
 
-[Map Screen](main_window.md){: .subpage} <br/>
+[Main window](main_window.md){: .subpage}
 Explanation of the main drawing window.
 
-[Reference](reference.md){: .subpage} <br/>
-Toolbar and menu items, including explanations for [all drawing tools](toolbars.md#drawing-toolbar)
+[Reference](reference.md){: .subpage}
+Toolbar and menu items, including explanations for [all drawing tools](toolbars.md#drawing-toolbar).
 
-[Starting a new map](new_map.md){: .subpage} <br/>
-First steps
+[Starting a new map](new_map.md){: .subpage}
+First steps.
 
-[Georeferencing](georeferencing.md){: .subpage} <br />
-Defining the relationship between map paper coordinates and real world coordinates system
+[Georeferencing](georeferencing.md){: .subpage}
+Defining the relationship between map paper coordinates and real world coordinates system.
 
-[Map grid](grid.md){: .subpage} <br />
+[Map grid](grid.md){: .subpage}
 Showing a helper grid in the map view.
 
-[Templates](templates-index.md){: .subpage} <br/>
-Working with templates
+[Templates](templates-index.md){: .subpage}
+Working with templates.
 
-[Colors and Symbols](colors_symbols.md){: .subpage} <br/>
-Modifying map colors and symbols
+[Colors and symbols](colors_symbols.md){: .subpage}
+Modifying map colors and symbols,
 
-[Map Parts](map_parts.md){: .subpage} <br/>
-Organizing objects in maps
+[Map parts](map_parts.md){: .subpage}
+Organizing objects in maps.
 
-[Tag Editor](tag_editor.md){: .subpage} <br/>
-Attaching arbitrary key-value pairs to objects
+[Object tags](object_tags.md){: .subpage}
+Attaching arbitrary key-value pairs to objects.
 
-[Tag Selector](tag_selector.md){: .subpage} <br/>
-Selecting objects based on their tags
+[Find objects](find_objects.md){: .subpage}
+Finding objects based on textual properties.
 
-[Settings](settings.md){: .subpage} <br/>
+[CRT files](crt_files.md){: .subpage}
+Providing rules for assigning symbols.
+
+[Settings](settings.md){: .subpage}
 Adjusting the program to your preferences.
 
-[Course Design](course_design.md){: .subpage} <br/>
+[Course design](course_design.md){: .subpage}
 Using the course design symbol set.
 
-[The Mapper App for Android](android-index.md){: .subpage} <br/>
+[The Mapper app for Android](android-app.md){: .subpage}
 Working with the Android version of Mapper.
 
-[FAQ](faq.md){: .nosubpage} <br/>
+[FAQ](faq.md){: .nosubpage}
 Frequently asked questions.
 
 
-Online resources    {#index_online_resources}
-================
+## Online resources
 
-[Blog](http://www.openorienteering.org/) <br/>
+[Blog](http://www.openorienteering.org/)
 The latest news from OpenOrienteering.
 
-[Issues list](https://github.com/OpenOrienteering/mapper/issues) <br/>
+[Issues list](https://github.com/OpenOrienteering/mapper/issues)
 Submit feedback, bug reports, feature requests, and contributions.
+
+[Releases](https://github.com/OpenOrienteering/mapper/releases)
+Releases, with links to change information and known issues.
+

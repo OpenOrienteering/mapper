@@ -19,19 +19,30 @@
  */
 
 
-#ifndef _OPENORIENTEERING_EDIT_LINE_TOOL_H_
-#define _OPENORIENTEERING_EDIT_LINE_TOOL_H_
+#ifndef OPENORIENTEERING_EDIT_LINE_TOOL_H
+#define OPENORIENTEERING_EDIT_LINE_TOOL_H
 
-#include <QScopedPointer>
 #include <QElapsedTimer>
+#include <QObject>
+#include <QRectF>
+#include <QScopedPointer>
 
-#include "edit_tool.h"
+#include "core/map_coord.h"
+#include "tools/edit_tool.h"
 
+class QAction;
+class QKeyEvent;
+class QMouseEvent;
+class QPainter;
+class QRectF;
+
+namespace OpenOrienteering {
+
+class MapEditorController;
+class MapRenderables;
 class MapWidget;
-class CombinedSymbol;
-class PointObject;
+class ObjectMover;
 class PathObject;
-class Symbol;
 
 
 /**
@@ -42,7 +53,7 @@ class EditLineTool : public EditTool
 Q_OBJECT
 public:
 	EditLineTool(MapEditorController* editor, QAction* tool_action);
-	virtual ~EditLineTool();
+	~EditLineTool() override;
 	
 	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
 	bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
@@ -90,12 +101,12 @@ private:
 	/**
 	 * Provides general information on what is hovered over.
 	 */
-	HoverState hover_state;
+	HoverState hover_state = OverNothing;
 	
 	/**
 	 * Object which is hovered over (if any).
 	 */
-	PathObject* hover_object;
+	PathObject* hover_object = nullptr;
 	
 	/**
 	 * Coordinate identifying the hover_object's line which is hovered over.
@@ -105,13 +116,13 @@ private:
 	/**
 	 * An object created for the current hover_line.
 	 */
-	PathObject* highlight_object;
+	PathObject* highlight_object = nullptr;
 	
 	
 	/** Is a box selection in progress? */
-	bool box_selection;
+	bool box_selection = false;
 	
-	bool waiting_for_mouse_release;
+	bool waiting_for_mouse_release = false;
 	
 	/**
 	 * Offset from cursor position to drag handle of moved element.
@@ -132,5 +143,8 @@ bool EditLineTool::hoveringOverFrame() const
 {
 	return hover_state == OverFrame;
 }
+
+
+}  // namespace OpenOrienteering
 
 #endif
