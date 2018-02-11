@@ -45,6 +45,8 @@ set(Mapper_translations
   OpenOrienteering_uk.ts
   OpenOrienteering_zh_CN.ts
 )
+# Make translation list available for Qt translation lookup
+set(Mapper_translations ${Mapper_translations} PARENT_SCOPE)
 
 # Translation files which are updated but not deployed.
 set(Mapper_translations_template
@@ -104,7 +106,7 @@ install(
 
 if(APPLE)
 	# Localized resources just to enable localized native dialogs.
-	foreach(mapper_trans en ${Mapper_translations})
+	foreach(mapper_trans ${Mapper_translations})
 		get_filename_component(mapper_lang ${mapper_trans} NAME_WE)
 		string(REPLACE OpenOrienteering_ "" language_code ${mapper_lang})
 		configure_file(locversion.plist.in ${language_code}.lproj/locversion.plist @ONLY)
@@ -127,7 +129,7 @@ execute_process(
   COMMAND "${Qt5_LUPDATE_EXECUTABLE}" -version
   OUTPUT_VARIABLE lupdate_version
 )
-string(REGEX REPLACE "^.*([0-9]\\.[0-9]\\.[0-9]).*" "\\1" lupdate_version "${lupdate_version}")
+string(REGEX REPLACE "^.*([0-9]\\.1?[0-9]\\.[0-9]).*" "\\1" lupdate_version "${lupdate_version}")
 if(lupdate_version VERSION_LESS 5.6.1)
 	message(AUTHOR_WARNING "lupdate version ${lupdate_version} is less than 5.6.1. Updates disabled.")
 else()

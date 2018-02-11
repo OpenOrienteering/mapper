@@ -161,7 +161,7 @@ bool TemplateImage::loadTemplateFileImpl(bool configuring)
 	// Check if georeferencing information is available
 	available_georef = Georeferencing_None;
 	
-	// TODO: GeoTiff
+	// TODO: GeoTIFF
 	
 	WorldFile world_file;
 	if (available_georef == Georeferencing_None && world_file.tryToLoadForImage(template_path))
@@ -489,7 +489,7 @@ void TemplateImage::calculateGeoreferencing()
 	}
 	else if (available_georef == Georeferencing_GeoTiff)
 	{
-		// TODO: GeoTiff
+		// TODO: GeoTIFF
 	}
 	
 	if (map->getGeoreferencing().isValid())
@@ -567,7 +567,7 @@ TemplateImageOpenDialog::TemplateImageOpenDialog(TemplateImage* templ, QWidget* 
 	if (templ->getAvailableGeoreferencing() == TemplateImage::Georeferencing_WorldFile)
 		georef_type_string = tr("World file");
 	else if (templ->getAvailableGeoreferencing() == TemplateImage::Georeferencing_GeoTiff)
-		georef_type_string = tr("GeoTiff");
+		georef_type_string = tr("GeoTIFF");
 	else if (templ->getAvailableGeoreferencing() == TemplateImage::Georeferencing_None)
 		georef_type_string = tr("no georeferencing information");
 	
