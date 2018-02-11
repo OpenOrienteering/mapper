@@ -7871,7 +7871,7 @@ Tänker du inte rita på bakgrunden är det inget problem.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="584"/>
-        <source>GeoTiff</source>
+        <source>GeoTIFF</source>
         <translation></translation>
     </message>
     <message>
