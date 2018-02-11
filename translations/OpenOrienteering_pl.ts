@@ -7363,8 +7363,8 @@ Jeśli nie masz zamiaru rysować na tym podkładzie, nie masz się czym martwić
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="584"/>
-        <source>GeoTiff</source>
-        <translation>GeoTiff</translation>
+        <source>GeoTIFF</source>
+        <translation>GeoTIFF</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="572"/>
