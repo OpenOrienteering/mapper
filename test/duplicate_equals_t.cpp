@@ -22,13 +22,14 @@
 
 #include <memory>
 
+#include <QtGlobal>
 #include <QtTest>
+#include <QDir>
 #include <QFileInfo>
 #include <QString>
-#include <QtGlobal>
 
 #include "global.h"
-#include "mapper_resource.h"
+#include "test_config.h"
 #include "core/map.h"
 #include "core/map_part.h"
 #include "core/objects/object.h"
@@ -108,7 +109,7 @@ void testDecoupling(const PointSymbol& a, const PointSymbol& b)
 
 void DuplicateEqualsTest::initTestCase()
 {
-	MapperResource::setSeachPaths();
+	QDir::addSearchPath(QStringLiteral("data"), QDir(QString::fromUtf8(MAPPER_TEST_SOURCE_DIR)).absoluteFilePath(QStringLiteral("..")));
 	doStaticInitializations();
 	
 	for (auto raw_path : test_files)

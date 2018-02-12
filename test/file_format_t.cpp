@@ -44,7 +44,6 @@
 #include <QString>
 
 #include "global.h"
-#include "mapper_resource.h"
 #include "test_config.h"
 #include "settings.h"
 #include "core/georeferencing.h"
@@ -377,13 +376,13 @@ void FileFormatTest::initTestCase()
 	QCoreApplication::setApplicationName(QString::fromLatin1("FileFormatTest"));
 	Settings::getInstance().setSetting(Settings::General_NewOcd8Implementation, true);
 	
-	MapperResource::setSeachPaths();
 	doStaticInitializations();
 	if (!FileFormats.findFormat("OCAD78"))
 		FileFormats.registerFormat(new OCAD8FileFormat());
 	
 	const auto prefix = QString::fromLatin1("data");
 	QDir::addSearchPath(prefix, QDir(QString::fromUtf8(MAPPER_TEST_SOURCE_DIR)).absoluteFilePath(prefix));
+	QDir::addSearchPath(prefix, QDir(QString::fromUtf8(MAPPER_TEST_SOURCE_DIR)).absoluteFilePath(QStringLiteral("..")));
 	
 	for (auto raw_path : test_files)
 	{

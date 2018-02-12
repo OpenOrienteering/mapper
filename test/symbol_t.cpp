@@ -21,11 +21,12 @@
 
 #include <QtGlobal>
 #include <QtTest>
+#include <QDir>
 #include <QObject>
 #include <QString>
 
 #include "global.h"
-#include "mapper_resource.h"
+#include "test_config.h"
 #include "core/map.h"
 #include "core/map_color.h"
 #include "core/symbols/symbol.h"
@@ -56,7 +57,7 @@ class SymbolTest : public QObject
 private slots:
 	void initTestCase()
 	{
-		MapperResource::setSeachPaths();
+		QDir::addSearchPath(QStringLiteral("data"), QDir(QString::fromUtf8(MAPPER_TEST_SOURCE_DIR)).absoluteFilePath(QStringLiteral("..")));
 		doStaticInitializations();
 	}
 	
