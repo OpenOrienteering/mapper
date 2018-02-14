@@ -4060,7 +4060,7 @@ Haluatko silti tuoda datan?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="878"/>
         <source>Move to my location</source>
-        <translation type="unfinished"></translation>
+        <translation>Keskitä sijaintiini</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="893"/>
@@ -4173,12 +4173,12 @@ Haluatko silti tuoda datan?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1374"/>
         <source>1x zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>1x lähennys</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1378"/>
         <source>2x zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>2x lähennys</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1606"/>
@@ -4308,7 +4308,7 @@ valittu</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2389"/>
         <source>Merge area holes together, or merge holes with the object boundary to cut out this part.</source>
-        <translation type="unfinished"></translation>
+        <translation>Yhdistä reiät tai yhdistä reiät kohteen reunoihin leikaten</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2389"/>
@@ -5428,7 +5428,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="623"/>
         <source>The geospatial data has no suitable spatial reference.</source>
-        <translation type="unfinished">Geospatiaalisella tiedolla ei ole sopivaa välillistä viittausta.</translation>
+        <translation>Sijaintitiedolla ei ole sopivaa viitejärjestelmää.</translation>
     </message>
 </context>
 <context>
@@ -6146,7 +6146,7 @@ erottelut</translation>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="114"/>
         <source>Keep the symbols&apos; hidden / protected states of the old symbol set</source>
-        <translation type="unfinished"></translation>
+        <translation>Säilytä vanhojen symbolijoukkojen symbolien piilotettu ja suojattu -tilat </translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="137"/>
@@ -6215,7 +6215,7 @@ erottelut</translation>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="285"/>
         <source>There are multiple replacements for symbol %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbolille %1 on useita korvaavia vaihtoehtoja</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="288"/>
@@ -7513,7 +7513,7 @@ Jos et aio piirtää taustakartalle, tämä ei ole ongelma.</translation>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1033"/>
         <source>The template will be invisible in the overprinting simulation. Switch to normal view?</source>
-        <translation type="unfinished"></translation>
+        <translation>Taustakartta ei näy päällepainatus -tilassa. Vaihdetaanko normaalitilaan?</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1166"/>
