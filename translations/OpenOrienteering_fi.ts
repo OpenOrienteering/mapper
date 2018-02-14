@@ -5428,7 +5428,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="623"/>
         <source>The geospatial data has no suitable spatial reference.</source>
-        <translation>Sijaintitieto käyttää tuntematonta viitejärjestelmää.</translation>
+        <translation>Paikkatieto käyttää tuntematonta viitejärjestelmää.</translation>
     </message>
 </context>
 <context>
@@ -6778,7 +6778,7 @@ Haluatko tallentaa muutokset?</translation>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1063"/>
         <source>Remove all objects with this symbol from selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Poista valinnasta kaikki tämän symbolin kohteet</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1302"/>
@@ -6800,7 +6800,7 @@ Haluatko tallentaa muutokset?</translation>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1071"/>
         <source>Remove all objects with selected symbols from selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Poista valinnasta kaikki valitun symbolin kohteet</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1072"/>
