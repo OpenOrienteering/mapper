@@ -715,7 +715,7 @@ bool PainterConfig::activate(QPainter* painter, const QPainterPath*& current_cli
 	if (mode == PainterConfig::PenOnly)
 	{
 #ifdef Q_OS_ANDROID
-		if (pen_width * config.scaling < 0.1)
+		if (pen_width > 0 && pen_width * config.scaling < 0.1)
 			return false;
 #endif
 		if (config.testFlag(RenderConfig::ForceMinSize) && pen_width * config.scaling <= 1.0)
