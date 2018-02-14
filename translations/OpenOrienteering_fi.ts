@@ -4308,7 +4308,7 @@ valittu</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2389"/>
         <source>Merge area holes together, or merge holes with the object boundary to cut out this part.</source>
-        <translation>Yhdistä reiät tai yhdistä reiät kohteen reunoihin leikaten</translation>
+        <translation>Yhdistä reiät tai yhdistä reiät kohteen reunoihin leikaten.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2389"/>
@@ -6146,7 +6146,7 @@ erottelut</translation>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="114"/>
         <source>Keep the symbols&apos; hidden / protected states of the old symbol set</source>
-        <translation>Säilytä vanhojen symbolijoukkojen symbolien piilotettu ja suojattu -tilat </translation>
+        <translation>Säilytä vanhojen symbolijoukkojen symbolien piilotettu ja suojattu -tilat</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="137"/>
@@ -6215,7 +6215,7 @@ erottelut</translation>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="285"/>
         <source>There are multiple replacements for symbol %1.</source>
-        <translation>Symbolille %1 on useita korvaavia vaihtoehtoja</translation>
+        <translation>Symbolille %1 on useita korvaavia vaihtoehtoja.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="288"/>
