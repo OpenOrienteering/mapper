@@ -5428,7 +5428,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="623"/>
         <source>The geospatial data has no suitable spatial reference.</source>
-        <translation>Sijaintitiedolla ei ole sopivaa viitejärjestelmää.</translation>
+        <translation>Sijaintitieto käyttää tuntematonta viitejärjestelmää.</translation>
     </message>
 </context>
 <context>
