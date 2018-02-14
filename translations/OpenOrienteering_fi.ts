@@ -6576,22 +6576,22 @@ Haluatko tallentaa muutokset?</translation>
     <message>
         <location filename="../src/core/storage_location.cpp" line="288"/>
         <source>&apos;%1&apos; is stored in a regular location.</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos; on tallennettu tavanomaiseen tallennuspaikkaan.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="291"/>
         <source>&apos;%1&apos; is located in app storage. The files will be removed when uninstalling the app.</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos; sijaitsee sovellushakemistossa. Tiedosto poistetaan sovelluksen poiston yhteydessä.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="294"/>
         <source>&apos;%1&apos; is not writable. Changes cannot be saved.</source>
-        <translation>&apos;%1&apos; ei voi kirjoittaa. Muutoksia ei voida tallentaa.</translation>
+        <translation>&apos;%1&apos; on kirjoitussuojattu. Muutoksia ei voida tallentaa.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="297"/>
         <source>&apos;%1&apos; is not a valid storage location.</source>
-        <translation>&apos;%1&apos; ei ole kelvollista tallennuspaikkaa.</translation>
+        <translation>&apos;%1&apos; ei ole kelvollinen tallennuspaikka.</translation>
     </message>
 </context>
 <context>
@@ -8071,7 +8071,7 @@ Tuetaan vain versioon %2 asti.</translation>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="208"/>
         <source>Older versions of Mapper do not support multiple map parts. To save the map in compatibility mode, you must first merge all map parts.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mapperin vanhemmat versiot eivät mahdollista moniosaisia karttoja. Tallentaaksesi kartan yhtensopivassa tilassa, yhdistä ensin kartan osat.</translation>
     </message>
 </context>
 <context>
