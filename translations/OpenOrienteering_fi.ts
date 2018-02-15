@@ -8125,7 +8125,7 @@ Tuetaan vain versioon %2 asti.</translation>
         <location filename="../src/fileformats/xml_file_format.cpp" line="770"/>
         <location filename="../src/fileformats/xml_file_format.cpp" line="823"/>
         <source>Could not set knockout property of color &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Värin &apos;%1&apos; aukottavuutta (knock-out) ei voida asettaa.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="783"/>
