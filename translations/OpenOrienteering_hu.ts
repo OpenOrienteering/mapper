@@ -1755,7 +1755,7 @@
     <message>
         <location filename="../src/core/georeferencing.cpp" line="264"/>
         <source>Invalid grid scale factor: %1</source>
-        <translation type="unfinished">Érvénytelen rács méretarány: %1</translation>
+        <translation type="unfinished">Érvénytelen rács méretfaktor: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="301"/>
