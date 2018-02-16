@@ -124,6 +124,106 @@ Premu ESC por rezigni</translation>
     </message>
 </context>
 <context>
+    <name>QCupsJobWidget</name>
+    <message>
+        <source>Job Control</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scheduled printing:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Billing information:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Job priority:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Banner Pages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>End:</source>
+        <comment>Banner page at end</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start:</source>
+        <comment>Banner page at start</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print Immediately</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hold Indefinitely</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Day (06:00 to 17:59)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Night (18:00 to 05:59)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Second Shift (16:00 to 23:59)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Third Shift (00:00 to 07:59)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weekend (Saturday to Sunday)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specific Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>None</source>
+        <comment>CUPS Banner page</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Standard</source>
+        <comment>CUPS Banner page</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unclassified</source>
+        <comment>CUPS Banner page</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confidential</source>
+        <comment>CUPS Banner page</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Classified</source>
+        <comment>CUPS Banner page</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Secret</source>
+        <comment>CUPS Banner page</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Top Secret</source>
+        <comment>CUPS Banner page</comment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QDialog</name>
     <message>
         <source>What&apos;s This?</source>
@@ -771,12 +871,36 @@ Bonvolu kontroli, ke dosiernomo estis ĝusta.</translation>
         <translation>Coloj (in)</translation>
     </message>
     <message>
+        <source>Pica (P̸)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Didot (DD)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cicero (CC)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Reverse landscape</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Height:</source>
         <translation>Alteco:</translation>
+    </message>
+    <message>
+        <source>Page Layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Page order:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pages per sheet:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -821,6 +945,50 @@ Bonvolu kontroli, ke dosiernomo estis ĝusta.</translation>
 </context>
 <context>
     <name>QPrintDialog</name>
+    <message>
+        <source>Left to Right, Top to Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left to Right, Bottom to Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Right to Left, Bottom to Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Right to Left, Top to Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bottom to Top, Left to Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bottom to Top, Right to Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Top to Bottom, Left to Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Top to Bottom, Right to Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All Pages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Odd Pages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Even Pages</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <source>A0</source>
         <translation>A0</translation>
@@ -1085,6 +1253,17 @@ Bonvolu elekti malsaman dosiernomon.</translation>
     <message>
         <source>Export to PostScript</source>
         <translation>Eksporti al PostScript</translation>
+    </message>
+</context>
+<context>
+    <name>QPrintPropertiesDialog</name>
+    <message>
+        <source>Printer Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Job Options</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
