@@ -54,7 +54,7 @@ namespace OpenOrienteering {
 TagSelectWidget::TagSelectWidget(QWidget* parent)
 : QTableWidget{1, 4, parent}
 {
-	setWhatsThis(Util::makeWhatThis("tag_selector.html"));
+	setWhatsThis(Util::makeWhatThis("find_objects.html#query-editor"));
 	
 	setEditTriggers(QAbstractItemView::AllEditTriggers);
 	setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -129,7 +129,7 @@ QToolButton* TagSelectWidget::newToolButton(const QIcon& icon, const QString& te
 	button->setToolTip(text);
 	button->setIcon(icon);
 	button->setText(text);
-	button->setWhatsThis(Util::makeWhatThis("tag_selector.html"));
+	button->setWhatsThis(Util::makeWhatThis("find_objects.html#query-editor"));
 	return button;
 }
 
