@@ -4060,7 +4060,7 @@ Haluatko silti tuoda datan?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="878"/>
         <source>Move to my location</source>
-        <translation type="unfinished"></translation>
+        <translation>Keskitä sijaintiini</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="893"/>
@@ -4173,12 +4173,12 @@ Haluatko silti tuoda datan?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1374"/>
         <source>1x zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>1x lähennys</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1378"/>
         <source>2x zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>2x lähennys</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1606"/>
@@ -4308,7 +4308,7 @@ valittu</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2389"/>
         <source>Merge area holes together, or merge holes with the object boundary to cut out this part.</source>
-        <translation type="unfinished"></translation>
+        <translation>Yhdistä reiät tai yhdistä reiät kohteen reunoihin leikaten.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2389"/>
@@ -5428,7 +5428,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="623"/>
         <source>The geospatial data has no suitable spatial reference.</source>
-        <translation type="unfinished">Geospatiaalisella tiedolla ei ole sopivaa välillistä viittausta.</translation>
+        <translation>Paikkatieto käyttää tuntematonta viitejärjestelmää.</translation>
     </message>
 </context>
 <context>
@@ -6146,7 +6146,7 @@ erottelut</translation>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="114"/>
         <source>Keep the symbols&apos; hidden / protected states of the old symbol set</source>
-        <translation type="unfinished"></translation>
+        <translation>Säilytä vanhojen symbolijoukkojen symbolien piilotettu ja suojattu -tilat</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="137"/>
@@ -6215,7 +6215,7 @@ erottelut</translation>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="285"/>
         <source>There are multiple replacements for symbol %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbolille %1 on useita korvaavia vaihtoehtoja.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="288"/>
@@ -6576,22 +6576,22 @@ Haluatko tallentaa muutokset?</translation>
     <message>
         <location filename="../src/core/storage_location.cpp" line="288"/>
         <source>&apos;%1&apos; is stored in a regular location.</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos; on tallennettu tavanomaiseen tallennuspaikkaan.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="291"/>
         <source>&apos;%1&apos; is located in app storage. The files will be removed when uninstalling the app.</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos; sijaitsee sovellushakemistossa. Tiedosto poistetaan sovelluksen poiston yhteydessä.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="294"/>
         <source>&apos;%1&apos; is not writable. Changes cannot be saved.</source>
-        <translation>&apos;%1&apos; ei voi kirjoittaa. Muutoksia ei voida tallentaa.</translation>
+        <translation>&apos;%1&apos; on kirjoitussuojattu. Muutoksia ei voida tallentaa.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="297"/>
         <source>&apos;%1&apos; is not a valid storage location.</source>
-        <translation>&apos;%1&apos; ei ole kelvollista tallennuspaikkaa.</translation>
+        <translation>&apos;%1&apos; ei ole kelvollinen tallennuspaikka.</translation>
     </message>
 </context>
 <context>
@@ -6778,7 +6778,7 @@ Haluatko tallentaa muutokset?</translation>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1063"/>
         <source>Remove all objects with this symbol from selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Poista valinnasta kaikki tämän symbolin kohteet</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1302"/>
@@ -6800,7 +6800,7 @@ Haluatko tallentaa muutokset?</translation>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1071"/>
         <source>Remove all objects with selected symbols from selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Poista valinnasta kaikki valitun symbolin kohteet</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1072"/>
@@ -7513,7 +7513,7 @@ Jos et aio piirtää taustakartalle, tämä ei ole ongelma.</translation>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1033"/>
         <source>The template will be invisible in the overprinting simulation. Switch to normal view?</source>
-        <translation type="unfinished"></translation>
+        <translation>Taustakartta ei näy päällepainatus -tilassa. Vaihdetaanko normaalitilaan?</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1166"/>
@@ -8071,7 +8071,7 @@ Tuetaan vain versioon %2 asti.</translation>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="208"/>
         <source>Older versions of Mapper do not support multiple map parts. To save the map in compatibility mode, you must first merge all map parts.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mapperin vanhemmat versiot eivät mahdollista moniosaisia karttoja. Tallentaaksesi kartan yhtensopivassa tilassa, yhdistä ensin kartan osat.</translation>
     </message>
 </context>
 <context>
@@ -8125,7 +8125,7 @@ Tuetaan vain versioon %2 asti.</translation>
         <location filename="../src/fileformats/xml_file_format.cpp" line="770"/>
         <location filename="../src/fileformats/xml_file_format.cpp" line="823"/>
         <source>Could not set knockout property of color &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Värin &apos;%1&apos; aukottavuutta (knock-out) ei voida asettaa.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="783"/>
