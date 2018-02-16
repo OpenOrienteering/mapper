@@ -98,7 +98,7 @@ ColorDialog::ColorDialog(const Map& map, const MapColor& source_color, QWidget* 
 	prof_color_layout->setColumnStretch(col+1, 3);
 	
 	int row = 0;
-	prof_color_layout->addWidget(Util::Headline::create("Spot color printing"), row, col, 1, 2);
+	prof_color_layout->addWidget(Util::Headline::create(tr("Spot color printing")), row, col, 1, 2);
 	
 	auto spot_color_options = new QButtonGroup(this);
 	
@@ -145,7 +145,7 @@ ColorDialog::ColorDialog(const Map& map, const MapColor& source_color, QWidget* 
 	row = 0; col +=1;
 	prof_color_layout->setColumnStretch(col, 1);
 	prof_color_layout->setColumnStretch(col+1, 3);
-	prof_color_layout->addWidget(Util::Headline::create("CMYK"), row, col, 1, 2);
+	prof_color_layout->addWidget(Util::Headline::create(tr("CMYK")), row, col, 1, 2);
 	
 	auto cmyk_color_options = new QButtonGroup(this);
 	
@@ -202,7 +202,7 @@ ColorDialog::ColorDialog(const Map& map, const MapColor& source_color, QWidget* 
 	desktop_layout->setColumnStretch(col+1, 3);
 	
 	row = 0;
-	desktop_layout->addWidget(Util::Headline::create("RGB"), row, col, 1, 2);
+	desktop_layout->addWidget(Util::Headline::create(tr("RGB")), row, col, 1, 2);
 	
 	auto rgb_color_options = new QButtonGroup(this);
 	
