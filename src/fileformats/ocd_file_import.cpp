@@ -1751,7 +1751,7 @@ Object* OcdFileImport::importObject(const O& ocd_object, MapPart* part, int ocd_
 		p->setPatternRotation(convertAngle(ocd_object.angle));
 		
 		// Normal path
-		fillPathCoords(p, symbol->getType() == Symbol::Area, ocd_object.num_items, reinterpret_cast<const Ocd::OcdPoint32 *>(ocd_object.coords));
+		fillPathCoords(p, symbol->getContainedTypes() & Symbol::Area, ocd_object.num_items, reinterpret_cast<const Ocd::OcdPoint32 *>(ocd_object.coords));
 		p->recalculateParts();
 		p->setMap(map);
 		return p;
@@ -1948,13 +1948,8 @@ void OcdFileImport::setPointFlags(OcdImportedPathObject* object, quint32 pos, bo
 		object->coords[pos-1].setCurveStart(true);
 	if ((ocd_point.y & Ocd::OcdPoint32::FlagDash) || (ocd_point.y & Ocd::OcdPoint32::FlagCorner))
 		object->coords[pos].setDashPoint(true);
-	if (ocd_point.y & Ocd::OcdPoint32::FlagHole)
-	{
-		if (!is_area)
-			setPathHolePoint(object, pos);
-		else if (pos > 0)
-			setPathHolePoint(object, pos - 1);
-	}
+	if (ocd_point.y & Ocd::OcdPoint32::FlagHole && pos > 1 && is_area)
+		setPathHolePoint(object, pos - 1);
 }
 
 /** Translates the OC*D path given in the last two arguments into an Object.
