@@ -1315,7 +1315,7 @@ Symbol* OcdFileImport::importAreaSymbol(const S& ocd_symbol, int ocd_version)
 	
 	if (ocd_symbol.border_symbol == ocd_symbol.base.number)
 	{
-		addSymbolWarning(symbol, OcdFileImport::tr("The border of this symbol could not loaded."));
+		addSymbolWarning(symbol, OcdFileImport::tr("The border of this symbol could not be loaded."));
 		return symbol;
 	}
 	
