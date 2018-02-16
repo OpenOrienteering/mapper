@@ -58,7 +58,7 @@ The "Query editor" button will replace the input field with a table for entering
 Pressing the button again will restore the input field and make it show the query from editor view.
 
 
-## Query editor
+## Query editor  {#query-editor}
 
 ![Query editor](images/query_editor.png)
 
