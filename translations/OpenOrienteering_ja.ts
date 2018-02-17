@@ -319,7 +319,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="101"/>
         <source>Spot color printing</source>
-        <translation type="unfinished"></translation>
+        <translation>スポットカラー印刷</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="106"/>
@@ -3502,7 +3502,7 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="878"/>
         <source>Move to my location</source>
-        <translation type="unfinished"></translation>
+        <translation>自分の場所に移動</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="880"/>
@@ -4770,12 +4770,12 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1374"/>
         <source>1x zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>1 倍ズーム</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1378"/>
         <source>2x zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>2 倍ズーム</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/map/map_editor.cpp" line="1640"/>
@@ -5675,7 +5675,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1318"/>
         <source>The border of this symbol could not be loaded.</source>
-        <translation type="unfinished"></translation>
+        <translation>この記号の境界を読み込みできませんでした。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1595"/>
