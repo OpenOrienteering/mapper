@@ -23,7 +23,6 @@
 
 #include <algorithm>
 #include <cmath>
-#include <cstddef>
 #include <iterator>
 #include <memory>
 #include <utility>
@@ -254,7 +253,8 @@ void LineSymbol::createRenderables(
         RenderableOptions options ) const
 {
 	Q_UNUSED(options);
-	PathPartVector path_parts = PathPart::calculatePathParts(coords);
+	const auto path_parts = PathPart::calculatePathParts(coords);
+	createStartEndSymbolRenderables(path_parts, output);
 	for (const auto& part : path_parts)
 	{
 		createSinglePathRenderables(object, part, part.isClosed(), output);
@@ -273,6 +273,7 @@ void LineSymbol::createRenderables(
 	}
 	else
 	{
+		createStartEndSymbolRenderables(path_parts, output);
 		for (const auto& part : path_parts)
 		{
 			createSinglePathRenderables(object, part, part.isClosed(), output);
@@ -287,34 +288,6 @@ void LineSymbol::createSinglePathRenderables(const Object* object, const Virtual
 		return;
 	
 	auto& coords = path.coords;
-	
-	// Start or end symbol?
-	if (start_symbol && !start_symbol->isEmpty())
-	{
-		auto orientation = qreal(0);
-		if (start_symbol->isRotatable())
-		{
-			bool ok;
-			MapCoordF tangent = path.calculateOutgoingTangent(0, ok);
-			if (ok)
-				orientation = tangent.angle();
-		}
-		start_symbol->createRenderablesScaled(coords[0], orientation, output);
-	}
-	
-	if (end_symbol && !end_symbol->isEmpty())
-	{
-		std::size_t last = coords.size() - 1;
-		auto orientation = qreal(0);
-		if (end_symbol->isRotatable())
-		{
-			bool ok;
-			MapCoordF tangent = path.calculateIncomingTangent(last, ok);
-			if (ok)
-				orientation = tangent.angle();
-		}				
-		end_symbol->createRenderablesScaled(coords[last], orientation, output);
-	}
 	
 	// Dash symbols?
 	if (dash_symbol && !dash_symbol->isEmpty())
@@ -1426,6 +1399,45 @@ void LineSymbol::createMidSymbolRenderables(
 		groups_start = groups_end; // Search then next split (node) after groups_end (current node).
 	}
 }
+
+
+void LineSymbol::createStartEndSymbolRenderables(
+            const PathPartVector& path_parts,
+            ObjectRenderables& output) const
+{
+	if (path_parts.empty())
+		return;
+	
+	if (start_symbol && !start_symbol->isEmpty())
+	{
+		const auto& path = path_parts.front();
+		auto orientation = qreal(0);
+		if (start_symbol->isRotatable())
+		{
+			bool ok;
+			MapCoordF tangent = path.calculateOutgoingTangent(path.first_index, ok);
+			if (ok)
+				orientation = tangent.angle();
+		}
+		start_symbol->createRenderablesScaled(path.coords[path.first_index], orientation, output);
+	}
+	
+	if (end_symbol && !end_symbol->isEmpty())
+	{
+		const auto& path = path_parts.back();
+		auto orientation = qreal(0);
+		if (end_symbol->isRotatable())
+		{
+			bool ok;
+			MapCoordF tangent = path.calculateIncomingTangent(path.last_index, ok);
+			if (ok)
+				orientation = tangent.angle();
+		}				
+		end_symbol->createRenderablesScaled(path.coords[path.last_index], orientation, output);
+	}
+}
+
+
 
 void LineSymbol::colorDeletedEvent(const MapColor* color)
 {

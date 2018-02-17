@@ -124,11 +124,13 @@ public:
 	/**
 	 * Creates the renderables for a single path (i.e. a single part).
 	 * 
-	 * For the single path part represented by VirtualPath, this function takes
-	 * care of all renderables for the main line, borders, start symbol, end
-	 * symbol, mid symbol and dash symbol being added to the output.
+	 * For the single path part represented by VirtualPath, this function
+	 * takes care of all renderables for the main line, borders, mid symbol
+	 * and dash symbol being added to the output. It does not deal with
+	 * start symbols and end symbols.
 	 */
 	void createSinglePathRenderables(const Object* object, const VirtualPath& path, bool path_closed, ObjectRenderables& output) const;
+	
 	
 	void colorDeletedEvent(const MapColor* color) override;
 	bool containsColor(const MapColor* color) const override;
@@ -358,6 +360,18 @@ protected:
 	        bool path_closed,
 	        ObjectRenderables& output
 	) const;
+	
+	/**
+	 * Adds just the start and end symbol renderables to the output.
+	 * 
+	 * The start symbol is placed at the start of the first part,
+	 * and the end symbols is placed at the end of the last part.
+	 */
+	void createStartEndSymbolRenderables(
+	        const PathPartVector& path_parts,
+	        ObjectRenderables& output
+	) const;
+	
 	
 	void replaceSymbol(PointSymbol*& old_symbol, PointSymbol* replace_with, const QString& name);
 	
