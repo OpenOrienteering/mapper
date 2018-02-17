@@ -124,7 +124,7 @@ bool LineSymbolBorder::isVisible() const
 	return width > 0 && color && !(dash_length == 0 && dashed);
 }
 
-void LineSymbolBorder::createSymbol(LineSymbol& out) const
+void LineSymbolBorder::setupSymbol(LineSymbol& out) const
 {
 	out.setLineWidth(0.001 * width);
 	out.setColor(color);
@@ -280,14 +280,6 @@ void LineSymbol::createRenderables(
 	}
 }
 
-void LineSymbol::createPathRenderables(const Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) const
-{
-	auto path = VirtualPath { flags, coords };
-	auto last = path.path_coords.update(0);
-	createPathCoordRenderables(object, path, path_closed, output);
-	
-	Q_ASSERT(last+1 == coords.size()); Q_UNUSED(last);
-}
 
 void LineSymbol::createPathCoordRenderables(const Object* object, const VirtualPath& path, bool path_closed, ObjectRenderables& output) const
 {
@@ -400,76 +392,76 @@ void LineSymbol::createBorderLines(
         const VirtualPath& path,
         ObjectRenderables& output) const
 {
-	double main_shift = 0.0005 * line_width;
+	const auto main_shift = 0.0005 * line_width;
+	const auto path_closed = path.isClosed();
 	
-	if (!areBordersDifferent())
+	MapCoordVector border_flags;
+	MapCoordVectorF border_coords;
+	
+	auto border_dashed = false;
+	// The following variables are needed for dashed borders only, but default
+	// initialization should be cheap enough so that we can always create them
+	// on the stack for easy sharing of state between symmetrical dashed borders,
+	// and even for reusing allocated memory in case of different dash patterns.
+	MapCoordVector dashed_flags;
+	MapCoordVectorF dashed_coords;
+	
+	LineSymbol border_symbol;
+	border_symbol.setJoinStyle(join_style == RoundJoin ? RoundJoin : MiterJoin);
+	
+	if (border.isVisible())
 	{
-		MapCoordVector border_flags;
-		MapCoordVectorF border_coords;
-		LineSymbol border_symbol;
-		border.createSymbol(border_symbol);
-		border_symbol.setJoinStyle(join_style == RoundJoin ? RoundJoin : MiterJoin);
-		
-		if (border.dashed && border.dash_length > 0 && border.break_length > 0)
+		border.setupSymbol(border_symbol);
+		border_dashed = border.dashed && border.dash_length > 0 && border.break_length > 0;
+		if (border_dashed)
 		{
-			MapCoordVector dashed_flags;
-			MapCoordVectorF dashed_coords;
-			border_symbol.processDashedLine(path, path.isClosed(), dashed_flags, dashed_coords, output);
+			// Left border is dashed
+			border_symbol.processDashedLine(path, path_closed, dashed_flags, dashed_coords, output);
 			border_symbol.dashed = false;	// important, otherwise more dashes might be added by createRenderables()!
-			
-			auto dashed_path = VirtualPath { dashed_flags, dashed_coords };
-			shiftCoordinates(dashed_path, main_shift, border_flags, border_coords);
-			border_symbol.createPathRenderables(object, path.isClosed(), border_flags, border_coords, output);
-			shiftCoordinates(dashed_path, -main_shift, border_flags, border_coords);
-			border_symbol.createPathRenderables(object, path.isClosed(), border_flags, border_coords, output);
+			shiftCoordinates({dashed_flags, dashed_coords}, -main_shift, border_flags, border_coords);
 		}
 		else
 		{
-			shiftCoordinates(path, main_shift, border_flags, border_coords);
-			border_symbol.createPathRenderables(object, path.isClosed(), border_flags, border_coords, output);
+			// Solid left border
 			shiftCoordinates(path, -main_shift, border_flags, border_coords);
-			border_symbol.createPathRenderables(object, path.isClosed(), border_flags, border_coords, output);
 		}
+		auto border_path = VirtualPath{border_flags, border_coords};
+		auto last = border_path.path_coords.update(0);
+		Q_ASSERT(last+1 == border_coords.size()); Q_UNUSED(last);
+		border_symbol.createPathCoordRenderables(object, border_path, path_closed, output);
 	}
-	else
+		
+	if (right_border.isVisible())
 	{
-		createBorderLine(object, path, path.isClosed(), output, border, -main_shift);
-		createBorderLine(object, path, path.isClosed(), output, right_border, main_shift);
+		right_border.setupSymbol(border_symbol);
+		auto right_border_dashed = right_border.dashed && right_border.dash_length > 0 && right_border.break_length > 0;
+		if (right_border_dashed)
+		{
+			if (areBordersDifferent()
+			    && (!border_dashed
+			        || (border.dash_length != right_border.dash_length
+			            || border.break_length != right_border.break_length)))
+			{
+				// Right border is dashed, but different from left border
+				dashed_flags.clear();
+				dashed_coords.clear();
+				border_symbol.processDashedLine(path, path_closed, dashed_flags, dashed_coords, output);
+			}
+			border_symbol.dashed = false;	// important, otherwise more dashes might be added by createRenderables()!
+			shiftCoordinates({dashed_flags, dashed_coords}, main_shift, border_flags, border_coords);
+		}
+		else
+		{
+			// Solid right border
+			shiftCoordinates(path, main_shift, border_flags, border_coords);
+		}
+		auto border_path = VirtualPath{border_flags, border_coords};
+		auto last = border_path.path_coords.update(0);
+		Q_ASSERT(last+1 == border_coords.size()); Q_UNUSED(last);
+		border_symbol.createPathCoordRenderables(object, border_path, path_closed, output);
 	}
 }
 
-void LineSymbol::createBorderLine(
-        const Object* object,
-        const VirtualPath& path,
-        bool path_closed,
-        ObjectRenderables& output,
-        const LineSymbolBorder& border,
-        double main_shift ) const
-{
-	MapCoordVector border_flags;
-	MapCoordVectorF border_coords;
-	LineSymbol border_symbol;
-	border.createSymbol(border_symbol);
-	border_symbol.setJoinStyle(join_style == RoundJoin ? RoundJoin : MiterJoin);
-	
-	if (border.dashed && border.dash_length > 0 && border.break_length > 0)
-	{
-		MapCoordVector dashed_flags;
-		MapCoordVectorF dashed_coords;
-		
-		border_symbol.processDashedLine(path, path_closed, dashed_flags, dashed_coords, output);
-		border_symbol.dashed = false;	// important, otherwise more dashes might be added by createRenderables()!
-		
-		auto dashed_path = VirtualPath { dashed_flags, dashed_coords };
-		shiftCoordinates(dashed_path, main_shift, border_flags, border_coords);
-	}
-	else
-	{
-		shiftCoordinates(path, main_shift, border_flags, border_coords);
-	}
-	
-	border_symbol.createPathRenderables(object, path_closed, border_flags, border_coords, output);
-}
 
 void LineSymbol::shiftCoordinates(const VirtualPath& path, double main_shift, MapCoordVector& out_flags, MapCoordVectorF& out_coords) const
 {

@@ -71,7 +71,7 @@ struct LineSymbolBorder
 	void assign(const LineSymbolBorder& other, const MapColorMap* color_map);
 	
 	bool isVisible() const;
-	void createSymbol(LineSymbol& out) const;
+	void setupSymbol(LineSymbol& out) const;
 	void scale(double factor);
 };
 
@@ -120,16 +120,6 @@ public:
 	        const PathPartVector& path_parts,
 	        ObjectRenderables &output,
 	        Symbol::RenderableOptions options ) const override;
-	
-	/**
-	 * Creates the renderables for a single path.
-	 * 
-	 * @deprecated
-	 * 
-	 * Calls to this function need to be replaced by calls to createPathCoordRenderables()
-	 * as soon as it is no longer neccesary to update the PathCoordVector in advance.
-	 */
-	void createPathRenderables(const Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) const;
 	
 	/**
 	 * Creates the renderables for a single VirtualPath.
@@ -261,15 +251,6 @@ protected:
 	        const Object* object,
 	        const VirtualPath& path,
 	        ObjectRenderables& output
-	) const;
-	
-	void createBorderLine(
-	        const Object* object,
-	        const VirtualPath& path,
-	        bool path_closed,
-	        ObjectRenderables& output,
-	        const LineSymbolBorder& border,
-	        double main_shift
 	) const;
 	
 	void shiftCoordinates(
