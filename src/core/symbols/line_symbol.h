@@ -122,9 +122,13 @@ public:
 	        Symbol::RenderableOptions options ) const override;
 	
 	/**
-	 * Creates the renderables for a single VirtualPath.
+	 * Creates the renderables for a single path (i.e. a single part).
+	 * 
+	 * For the single path part represented by VirtualPath, this function takes
+	 * care of all renderables for the main line, borders, start symbol, end
+	 * symbol, mid symbol and dash symbol being added to the output.
 	 */
-	void createPathCoordRenderables(const Object* object, const VirtualPath& path, bool path_closed, ObjectRenderables& output) const;
+	void createSinglePathRenderables(const Object* object, const VirtualPath& path, bool path_closed, ObjectRenderables& output) const;
 	
 	void colorDeletedEvent(const MapColor* color) override;
 	bool containsColor(const MapColor* color) const override;
@@ -247,6 +251,12 @@ protected:
 	PointSymbol* loadPointSymbol(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict);
 	bool equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensitivity) const override;
 	
+	/**
+	 * Creates the border lines' renderables for a single path (i.e. a single part).
+	 * 
+	 * For the single path part represented by VirtualPath, this function takes
+	 * care of all renderables for the border lines being added to the output.
+	 */
 	void createBorderLines(
 	        const Object* object,
 	        const VirtualPath& path,
@@ -260,6 +270,12 @@ protected:
 	        MapCoordVectorF& out_coords
 	) const;
 	
+	/**
+	 * Creates flags and coords for a continuous line segment, and 
+	 * adds pointed line caps and mid symbol renderables to the output.
+	 * 
+	 * Note that this function does not create LineRenderables.
+	 */
 	void processContinuousLine(
 	        const VirtualPath& path,
 	        const SplitPathCoord& start,
@@ -280,6 +296,13 @@ protected:
 	        ObjectRenderables& output
 	) const;
 	
+	/**
+	 * Creates flags and coords for a single dashed path (i.e. a single part)
+	 * which may consist of multiple sections separated by dash points,
+	 * and adds pointed line caps and mid symbol renderables to the output.
+	 * 
+	 * Note that this function does not create LineRenderables.
+	 */
 	void processDashedLine(
 	        const VirtualPath& path,
 	        bool path_closed,
@@ -288,6 +311,18 @@ protected:
 	        ObjectRenderables& output
 	) const;
 	
+	/**
+	 * Creates flags and coords for a single dashed path section, and adds
+	 * pointed line caps and mid symbol renderables to the output.
+	 * 
+	 * This is the main function determining the layout of dash patterns.
+	 * A path section is delimited by the part start, the part end, and/or
+	 * by dash points.
+	 * 
+	 * Note that this function does not create LineRenderables.
+	 * 
+	 * \see LineSymbol::createMidSymbolRenderables
+	 */
 	SplitPathCoord createDashGroups(
 	        const VirtualPath& path,
 	        bool path_closed,
@@ -307,6 +342,17 @@ protected:
 	        ObjectRenderables& output
 	) const;
 	
+	/**
+	 * Adds just the mid symbol renderables for a single solid path
+	 * (i.e. a single part) to the output.
+	 * 
+	 * This is the main function determining the layout of mid symbols
+	 * when the path is solid, not dashed.
+	 * 
+	 * Note that this function does not create LineRenderables.
+	 * 
+	 * \see LineSymbol::createDashGroups
+	 */
 	void createMidSymbolRenderables(
 	        const VirtualPath& path,
 	        bool path_closed,
