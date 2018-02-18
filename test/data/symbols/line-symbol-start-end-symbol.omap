@@ -3,10 +3,10 @@
 <notes>Line symbol start/end symbol test file</notes>
 <georeferencing scale="10000"><projected_crs id="Local"/></georeferencing>
 <colors count="4">
-<color priority="0" name="Grey" c="0.000" m="0.000" y="0.000" k="0.300" opacity="1.000"><spotcolors><component factor="0.3" spotcolor="1"/></spotcolors><cmyk method="spotcolor"/><rgb method="cmyk" r="0.700" g="0.700" b="0.700"/></color>
-<color priority="1" name="Black" c="0.000" m="0.000" y="0.000" k="1.000" opacity="1.000"><spotcolors knockout="true"><namedcolor>BLACK</namedcolor></spotcolors><cmyk method="custom"/><rgb method="cmyk" r="0.000" g="0.000" b="0.000"/></color>
-<color priority="2" name="Brown" c="0.000" m="0.560" y="1.000" k="0.180" opacity="1.000"><spotcolors><namedcolor>BROWN</namedcolor></spotcolors><cmyk method="custom"/><rgb method="cmyk" r="0.820" g="0.361" b="0.000"/></color>
-<color priority="3" name="Blue" c="0.870" m="0.180" y="0.000" k="0.000" opacity="1.000"><spotcolors><namedcolor>BLUE</namedcolor></spotcolors><cmyk method="custom"/><rgb method="cmyk" r="0.130" g="0.820" b="1.000"/></color>
+<color priority="0" name="Blue" c="1.000" m="1.000" y="0.000" k="0.000" opacity="1.000"><cmyk method="rgb"/><rgb method="custom" r="0.000" g="0.000" b="1.000"/></color>
+<color priority="1" name="Black" c="1.000" m="1.000" y="1.000" k="1.000" opacity="1.000"><cmyk method="rgb"/><rgb method="custom" r="0.000" g="0.000" b="0.000"/></color>
+<color priority="2" name="Red" c="0.000" m="1.000" y="1.000" k="0.000" opacity="1.000"><cmyk method="rgb"/><rgb method="custom" r="1.000" g="0.000" b="0.000"/></color>
+<color priority="3" name="Green" c="1.000" m="0.000" y="1.000" k="0.000" opacity="1.000"><cmyk method="rgb"/><rgb method="custom" r="0.000" g="1.000" b="0.000"/></color>
 </colors>
 <barrier version="6" required="0.6.0">
 <symbols count="2">
