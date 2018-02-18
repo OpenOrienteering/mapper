@@ -247,17 +247,16 @@ bool LineSymbol::validate() const
 
 
 void LineSymbol::createRenderables(
-        const Object* object,
+        const Object* /*object*/,
         const VirtualCoordVector& coords,
         ObjectRenderables& output,
-        RenderableOptions options ) const
+        RenderableOptions /*options*/) const
 {
-	Q_UNUSED(options);
 	const auto path_parts = PathPart::calculatePathParts(coords);
 	createStartEndSymbolRenderables(path_parts, output);
 	for (const auto& part : path_parts)
 	{
-		createSinglePathRenderables(object, part, part.isClosed(), output);
+		createSinglePathRenderables(part, part.isClosed(), output);
 	}
 }
 
@@ -276,13 +275,13 @@ void LineSymbol::createRenderables(
 		createStartEndSymbolRenderables(path_parts, output);
 		for (const auto& part : path_parts)
 		{
-			createSinglePathRenderables(object, part, part.isClosed(), output);
+			createSinglePathRenderables(part, part.isClosed(), output);
 		}
 	}
 }
 
 
-void LineSymbol::createSinglePathRenderables(const Object* object, const VirtualPath& path, bool path_closed, ObjectRenderables& output) const
+void LineSymbol::createSinglePathRenderables(const VirtualPath& path, bool path_closed, ObjectRenderables& output) const
 {
 	if (path.size() < 2)
 		return;
@@ -355,13 +354,12 @@ void LineSymbol::createSinglePathRenderables(const Object* object, const Virtual
 		
 		if (create_border)
 		{
-			createBorderLines(object, path, output);
+			createBorderLines(path, output);
 		}
 	}
 }
 
 void LineSymbol::createBorderLines(
-        const Object* object,
         const VirtualPath& path,
         ObjectRenderables& output) const
 {
@@ -401,7 +399,7 @@ void LineSymbol::createBorderLines(
 		auto border_path = VirtualPath{border_flags, border_coords};
 		auto last = border_path.path_coords.update(0);
 		Q_ASSERT(last+1 == border_coords.size()); Q_UNUSED(last);
-		border_symbol.createSinglePathRenderables(object, border_path, path_closed, output);
+		border_symbol.createSinglePathRenderables(border_path, path_closed, output);
 	}
 		
 	if (right_border.isVisible())
@@ -431,7 +429,7 @@ void LineSymbol::createBorderLines(
 		auto border_path = VirtualPath{border_flags, border_coords};
 		auto last = border_path.path_coords.update(0);
 		Q_ASSERT(last+1 == border_coords.size()); Q_UNUSED(last);
-		border_symbol.createSinglePathRenderables(object, border_path, path_closed, output);
+		border_symbol.createSinglePathRenderables(border_path, path_closed, output);
 	}
 }
 

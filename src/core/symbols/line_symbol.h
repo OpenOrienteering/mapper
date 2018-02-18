@@ -129,7 +129,7 @@ public:
 	 * and dash symbol being added to the output. It does not deal with
 	 * start symbols and end symbols.
 	 */
-	void createSinglePathRenderables(const Object* object, const VirtualPath& path, bool path_closed, ObjectRenderables& output) const;
+	void createSinglePathRenderables(const VirtualPath& path, bool path_closed, ObjectRenderables& output) const;
 	
 	
 	void colorDeletedEvent(const MapColor* color) override;
@@ -260,7 +260,6 @@ protected:
 	 * care of all renderables for the border lines being added to the output.
 	 */
 	void createBorderLines(
-	        const Object* object,
 	        const VirtualPath& path,
 	        ObjectRenderables& output
 	) const;
