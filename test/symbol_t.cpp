@@ -19,16 +19,28 @@
 
 #include <memory>
 
+#include <Qt>
 #include <QtGlobal>
 #include <QtTest>
+#include <QColor>
 #include <QDir>
+#include <QFile>
+#include <QFileInfo>
+#include <QImage>
+#include <QLatin1String>
 #include <QObject>
+#include <QPainter>
+#include <QPoint>
+#include <QRect>
+#include <QRectF>
+#include <QSize>
 #include <QString>
 
 #include "global.h"
 #include "test_config.h"
 #include "core/map.h"
 #include "core/map_color.h"
+#include "core/renderables/renderable.h"
 #include "core/symbols/symbol.h"
 
 using namespace OpenOrienteering;
@@ -37,7 +49,7 @@ using namespace OpenOrienteering;
 namespace
 {
 
-static const auto test_files = {
+static const auto example_files = {
     "data:/examples/complete map.omap",
     "data:/examples/forest sample.omap",
     "data:/examples/overprinting.omap",
@@ -58,6 +70,7 @@ private slots:
 	void initTestCase()
 	{
 		QDir::addSearchPath(QStringLiteral("data"), QDir(QString::fromUtf8(MAPPER_TEST_SOURCE_DIR)).absoluteFilePath(QStringLiteral("..")));
+		QDir::addSearchPath(QStringLiteral("testdata"), QDir(QString::fromUtf8(MAPPER_TEST_SOURCE_DIR)).absoluteFilePath(QStringLiteral("data")));
 		doStaticInitializations();
 	}
 	
@@ -127,10 +140,67 @@ private slots:
 	}
 	
 	
+	void renderTest_data()
+	{
+		const auto render_test_files = {
+		    "testdata:symbols/line-symbol-border-variants.omap",
+		    "testdata:symbols/line-symbol-start-end-symbol.omap",
+		    "testdata:symbols/line-symbol-mid-symbol-variants.omap",
+		};
+		QTest::addColumn<QString>("map_filename");
+		for (auto raw_path : render_test_files)
+		{
+			QTest::newRow(raw_path) << QString::fromUtf8(raw_path);
+		}
+	}
+	
+	void renderTest()
+	{
+		QFETCH(QString, map_filename);
+		
+		Map map;
+		QVERIFY(map.loadFrom(map_filename, nullptr, nullptr, false, false));
+		
+		const auto extent = map.calculateExtent().toAlignedRect().adjusted(-1, -1, +1, +1);
+		constexpr auto pixel_per_mm = 50;
+		
+		auto image = QImage{pixel_per_mm * extent.size(), QImage::Format_ARGB32_Premultiplied};
+		image.fill(QColor(Qt::white));
+		
+		QPainter painter{&image};
+		painter.setRenderHint(QPainter::Antialiasing, false);
+		painter.scale(pixel_per_mm, pixel_per_mm);
+		painter.translate(-extent.topLeft());
+		painter.setClipRect(extent);
+		map.draw(&painter, RenderConfig{map, extent, pixel_per_mm, RenderConfig::DisableAntialiasing, 1});
+		painter.end();
+		
+		auto image_filename = QFileInfo{map_filename}.absoluteFilePath();
+		image_filename.chop(4);
+		image_filename.append(QLatin1String{"png"});
+		
+#ifdef MAPPER_DEVELOPMENT_BUILD
+		auto out_filename = image_filename;
+		out_filename.insert(image_filename.length() - 4, QLatin1String(".tmp"));
+		QVERIFY(image.save(out_filename, "PNG", 1));
+#endif
+		
+		QVERIFY(QFileInfo::exists(image_filename));
+		QImage expected_image;
+		QVERIFY(expected_image.load(image_filename));
+		image = image.convertToFormat(expected_image.format());
+		QCOMPARE(image, expected_image);
+		
+#ifdef MAPPER_DEVELOPMENT_BUILD
+		QVERIFY(QFile::remove(out_filename));
+#endif
+	}
+	
+	
 	void invariantTest_data()
 	{
 		QTest::addColumn<QString>("map_filename");
-		for (auto raw_path : test_files)
+		for (auto raw_path : example_files)
 		{
 			QTest::newRow(raw_path) << QString::fromUtf8(raw_path);
 		}
