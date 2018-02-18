@@ -354,6 +354,11 @@
         <translation>Redigera</translation>
     </message>
     <message>
+        <location filename="../src/gui/color_dialog.cpp" line="101"/>
+        <source>Spot color printing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/gui/color_dialog.cpp" line="106"/>
         <source>Defines a spot color:</source>
         <translation>Definiera en dekorfärg:</translation>
@@ -377,6 +382,11 @@
         <location filename="../src/gui/color_dialog.cpp" line="135"/>
         <source>Knockout: erases lower colors</source>
         <translation>Knockout: tar bort lägre färger</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/color_dialog.cpp" line="148"/>
+        <source>CMYK</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="153"/>
@@ -413,6 +423,11 @@
         <location filename="../src/gui/color_dialog.cpp" line="184"/>
         <source>Black</source>
         <translation>Svart</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/color_dialog.cpp" line="205"/>
+        <source>RGB</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="215"/>
@@ -2723,10 +2738,10 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="120"/>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="122"/>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="125"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2066"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2069"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2073"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2103"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2076"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2080"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2110"/>
         <source>Could not read file: %1</source>
         <translation>Kunde inte läsa fil: %1</translation>
     </message>
@@ -5692,47 +5707,47 @@ zooma med scrollhjulet om tillgängligt.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="969"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1322"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1331"/>
         <source>This symbol cannot be saved as a proper OCD symbol again.</source>
         <translation>Denna symbol kan inte sparas som en OCD-symbol igen.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1977"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1984"/>
         <source>Justified alignment is not supported.</source>
         <translation>Berättigad justering stöds inte.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1992"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1999"/>
         <source>Vertical alignment &apos;%1&apos; is not supported.</source>
         <translation>Vertikal justering &apos;%1&apos; stöds ej.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1964"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1971"/>
         <source>Ignoring custom weight (%1).</source>
         <translation>Ignorerar egeninställd tjocklek (%1).</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2001"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2008"/>
         <source>Custom character spacing may be incorrect.</source>
         <translation>Eget symbolmellanrum kan vara inkorrekt.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2006"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2013"/>
         <source>Ignoring custom word spacing (%1 %).</source>
         <translation>Ignorerar eget ord mellanrum (%1 %).</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2030"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2037"/>
         <source>Ignoring custom indents (%1/%2).</source>
         <translation>Ignorerar eget indrag (%1/%2).</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2052"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2059"/>
         <source>Ignoring text framing (mode %1).</source>
         <translation>Ignorerar textinramning (läge %1).</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1411"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1418"/>
         <source>Line text symbols are not yet supported. Marking the symbol as hidden.</source>
         <translation>Linjetextsymboler stöds inte än. Markerar symbolen som gömd.</translation>
     </message>
@@ -5747,28 +5762,33 @@ zooma med scrollhjulet om tillgängligt.</translation>
         <translation>I areasymbol %1 &apos;%2&apos;: %3</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1588"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1318"/>
+        <source>The border of this symbol could not be loaded.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1595"/>
         <source>Unable to load object</source>
         <translation>Kunde inte ladda objekt</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1598"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1605"/>
         <source>Unable to import rectangle object</source>
         <translation>Kunde inte importera rektangelobjekt</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1639"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1646"/>
         <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
         <translation>Importerar inte textsymbol, kunde inte beräkna bana (npts=%1): %2</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1939"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1946"/>
         <source>Trying to import a text object with unknown coordinate format</source>
         <translation>Försöker importera textobjekt med okänt koordinatformat</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2069"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2073"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2076"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2080"/>
         <source>Invalid data.</source>
         <translation>Felaktig data.</translation>
     </message>
@@ -5777,7 +5797,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
         <translation type="vanished">Otestad fil-importerare för format: OCD %1</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2104"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2111"/>
         <source>OCD files of version %1 are not supported!</source>
         <translation>OCD-filer med version %1 stöds ej!</translation>
     </message>

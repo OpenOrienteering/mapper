@@ -6,12 +6,12 @@
     <message>
         <location filename="../packaging/translations.cpp" line="10"/>
         <source>Orienteering map</source>
-        <translation type="unfinished"></translation>
+        <translation>Tájfutó térkép</translation>
     </message>
     <message>
         <location filename="../packaging/translations.cpp" line="11"/>
         <source>Software for drawing orienteering maps</source>
-        <translation type="unfinished"></translation>
+        <translation>Szoftver tájfutó térképek rajzolásához</translation>
     </message>
 </context>
 <context>
@@ -197,27 +197,27 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="229"/>
         <source>Element drawing at boundary</source>
-        <translation type="unfinished"></translation>
+        <translation>Elem rajzolása a határolónál</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="231"/>
         <source>Clip elements at the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Elem kivágása a határolónál</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="232"/>
         <source>Draw elements if the center is inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Elemek rajzolása ha a középpont a határolón belül van.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="233"/>
         <source>Draw elements if any point is inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Elemek rajzolása ha a középpont a határolón belül van.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="234"/>
         <source>Draw elements if all points are inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Elemek rajzolása, ha minden pont a határolón belül van.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="249"/>
@@ -306,7 +306,12 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="93"/>
         <source>Edit</source>
-        <translation type="unfinished">Szerkeszt</translation>
+        <translation>Szerkeszt</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/color_dialog.cpp" line="101"/>
+        <source>Spot color printing</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="106"/>
@@ -332,6 +337,11 @@
         <location filename="../src/gui/color_dialog.cpp" line="135"/>
         <source>Knockout: erases lower colors</source>
         <translation>Kiütés: törli a gyengébb színeket</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/color_dialog.cpp" line="148"/>
+        <source>CMYK</source>
+        <translation>CMYK</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="153"/>
@@ -368,6 +378,11 @@
         <location filename="../src/gui/color_dialog.cpp" line="184"/>
         <source>Black</source>
         <translation>Fekete</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/color_dialog.cpp" line="205"/>
+        <source>RGB</source>
+        <translation>RGB</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="215"/>
@@ -412,17 +427,17 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="279"/>
         <source>Name</source>
-        <translation type="unfinished">Név</translation>
+        <translation>Név</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="331"/>
         <source>- unnamed -</source>
-        <translation type="unfinished"></translation>
+        <translation>- névtelen -</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="600"/>
         <source>Warning</source>
-        <translation type="unfinished">Figyelmeztetés</translation>
+        <translation>Figyelmeztetés</translation>
     </message>
 </context>
 <context>
@@ -515,7 +530,7 @@
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="250"/>
         <source>%1 (duplicate)</source>
         <extracomment>Future replacement for COLOR_NAME + &quot; (Duplicate)&quot;, for better localization.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 (megkettőzés)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="251"/>
@@ -1002,7 +1017,7 @@
         <location filename="../src/tools/draw_path_tool.cpp" line="106"/>
         <source>Info</source>
         <comment>Show segment azimuth and length</comment>
-        <translation type="unfinished"></translation>
+        <translation>Infó</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="109"/>
@@ -1169,7 +1184,7 @@
         <location filename="../src/tools/draw_text_tool.cpp" line="113"/>
         <source>Snap</source>
         <extracomment>Snap to existing objects</extracomment>
-        <translation type="unfinished">Illeszt</translation>
+        <translation>Létező objektumokhoz illeszt</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="476"/>
@@ -1179,7 +1194,7 @@
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="477"/>
         <source>&lt;b&gt;%1+%2&lt;/b&gt;: Cancel editing. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;1%1+%2&lt;/b&gt;2: Szerkesztés elvetése. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="482"/>
@@ -1349,7 +1364,7 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="46"/>
         <source>Symbol icon size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Jelkulcs ikon méret:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="65"/>
@@ -1497,42 +1512,42 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="50"/>
         <source>Import with GDAL/OGR:</source>
-        <translation type="unfinished"></translation>
+        <translation>Importálás GDAL/OGR -rel:</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="52"/>
         <source>DXF</source>
-        <translation type="unfinished"></translation>
+        <translation>DXF</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="55"/>
         <source>GPX</source>
-        <translation type="unfinished"></translation>
+        <translation>GPX</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="58"/>
         <source>OSM</source>
-        <translation type="unfinished"></translation>
+        <translation>OSM</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="62"/>
         <source>Configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfiguráció</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="70"/>
         <source>Parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Paraméter</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="70"/>
         <source>Value</source>
-        <translation type="unfinished">Érték</translation>
+        <translation>Érték</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="89"/>
         <source>GDAL/OGR</source>
-        <translation type="unfinished"></translation>
+        <translation>GDAL/OGR</translation>
     </message>
 </context>
 <context>
@@ -1575,7 +1590,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="136"/>
         <source>Save undo/redo history</source>
-        <translation type="unfinished"></translation>
+        <translation>Mégsem/mégis történet mentése</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="139"/>
@@ -1613,7 +1628,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="149"/>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Alapértelmezett</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="173"/>
@@ -1658,7 +1673,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="394"/>
         <source>%1 x %2</source>
-        <translation type="unfinished">%1 x %2</translation>
+        <translation>%1 x %2</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="395"/>
@@ -1755,7 +1770,7 @@
     <message>
         <location filename="../src/core/georeferencing.cpp" line="264"/>
         <source>Invalid grid scale factor: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Érvénytelen rács méretfaktor: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="301"/>
@@ -1949,7 +1964,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="207"/>
         <location filename="../src/gui/select_crs_dialog.cpp" line="93"/>
         <source>&amp;Coordinate reference system:</source>
-        <translation type="unfinished">&amp;Koordináta hivatkozási rendszer:</translation>
+        <translation>&amp;Koordináta hivatkozási rendszer:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="214"/>
@@ -2241,12 +2256,12 @@
         <location filename="../src/fileformats/file_import_export.cpp" line="47"/>
         <source>No such option: %1</source>
         <comment>No such import / export option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nincs ilyen opció: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="295"/>
         <source>Geospatial vector data</source>
-        <translation type="unfinished"></translation>
+        <translation>Térbeli vektoradat</translation>
     </message>
 </context>
 <context>
@@ -2353,10 +2368,10 @@
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="120"/>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="122"/>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="125"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2066"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2069"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2073"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2103"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2076"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2080"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2110"/>
         <source>Could not read file: %1</source>
         <translation>Nem olvasható a %1 fájl</translation>
     </message>
@@ -2380,7 +2395,7 @@
         <location filename="../src/gdal/ogr_file_format.cpp" line="1285"/>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1338"/>
         <source>Could not read &apos;%1&apos;: %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nem tudta olvasni %1:%2</translation>
     </message>
 </context>
 <context>
@@ -2848,7 +2863,7 @@ Do you want to scale the symbols to the selected scale?</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="155"/>
         <source>You must close the current file before you can open another one.</source>
-        <translation type="unfinished"></translation>
+        <translation>Egy új fájl megnyitása előtt az aktuális fájlt be kell zárni.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="735"/>
@@ -3048,13 +3063,14 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3996"/>
         <source>Import...</source>
-        <translation type="unfinished">Importálás...</translation>
+        <translation>Importálás...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3997"/>
         <source>Symbol replacement was canceled.
 Import the data anyway?</source>
-        <translation type="unfinished"></translation>
+        <translation>A szimbólumcserét elvetette.
+Az adatokat mégis importálja?</translation>
     </message>
 </context>
 <context>
@@ -3582,7 +3598,7 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="799"/>
         <source>Ctrl+A</source>
-        <translation type="unfinished">Ctrl+A</translation>
+        <translation>Ctrl+A</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="800"/>
@@ -3712,7 +3728,7 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="865"/>
         <source>Select nothing</source>
-        <translation type="unfinished"></translation>
+        <translation>Semmi sincs kiválasztva</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="866"/>
@@ -3727,22 +3743,22 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="893"/>
         <source>Symbol set ID...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Jelkulcs készlet azonosító...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="893"/>
         <source>Edit the symbol set ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Jelkulcs készlet azonosító szerkesztése</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="895"/>
         <source>Load CRT file...</source>
-        <translation type="unfinished"></translation>
+        <translation>CRT fájl betöltése</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="895"/>
         <source>Assign new symbols by cross-reference table</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Új szimbólumok kijelölése a keresztreferencia táblázat  által</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1005"/>
@@ -3880,12 +3896,12 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1909"/>
         <source>Symbol set ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Jelkulcs azonosító</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1910"/>
         <source>Edit the symbol set ID:</source>
-        <translation type="unfinished"></translation>
+        <translation>Jelkulcs azonosító szerkesztése:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1937"/>
@@ -4314,12 +4330,12 @@ kiválasztva</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3620"/>
         <source>Do you want to remove map part &quot;%1&quot; and all its objects?</source>
-        <translation type="unfinished"></translation>
+        <translation>Eltávolítja a(z) &quot;%1&quot; térképrészt és minden objektumát?</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3675"/>
         <source>Switched to map part &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>A(z) &quot;%1&quot; rész térképre átváltva.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3784"/>
@@ -4354,81 +4370,81 @@ kiválasztva</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="937"/>
         <source>Rotate objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Objektum forgatása</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="939"/>
         <source>Scale objects</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Objektumok méretezése</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/map/map_editor.cpp" line="1640"/>
         <source>Cut %n object(s)</source>
         <extracomment>Past tense. Displayed when an Edit &gt; Cut operation is completed.</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n objektum kivágva</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/map/map_editor.cpp" line="1693"/>
         <source>Copied %n object(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Egy  objektum másolva</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/map/map_editor.cpp" line="1733"/>
         <source>Pasted %n object(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n objektum beillesztve</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2335"/>
         <source>Deletes the selected objects.</source>
-        <translation type="unfinished"></translation>
+        <translation>Törli a kiválasztott objektumokat.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2337"/>
         <source>Duplicate the selected objects.</source>
-        <translation type="unfinished"></translation>
+        <translation>Megkettőzi a kiválasztott objektumokat.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2339"/>
         <source>Rotate the selected objects.</source>
-        <translation type="unfinished"></translation>
+        <translation>Elforgatja a kiválasztott objektumokat.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2341"/>
         <source>Scale the selected objects.</source>
-        <translation type="unfinished"></translation>
+        <translation>Méretezi a kiválasztott objektumokat.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2356"/>
         <source>Cut the selected objects into smaller parts.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kivágja a kiválasztott objektumokat kisebb részekbe.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2410"/>
         <source>Switches the symbol of the selected objects to the selected symbol.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kicseréli a kiválasztott objektum szimbólumát a kiválasztott szimbólumra.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2412"/>
         <source>Fill the selected lines or create a border for the selected areas.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kitölti a kiválasztott vonalat vagy létrehoz egy határolót a kiválasztott területekhez.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/map/map_editor.cpp" line="2531"/>
         <source>Duplicated %n object(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Megkettőzve %n objektum</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2741"/>
         <source>No objects were selected because there are no objects with the selected symbols.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem választottak ki objektumokat, mert objektumok nincsenek a kiválasztott szimbólumokkal.</translation>
     </message>
 </context>
 <context>
@@ -4469,32 +4485,32 @@ kiválasztva</translation>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="55"/>
         <source>&amp;Find...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Keresés...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="62"/>
         <source>Find &amp;next</source>
-        <translation type="unfinished"></translation>
+        <translation>Következő k&amp;eresése</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="92"/>
         <source>Find objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Objektumok keresése</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="99"/>
         <source>&amp;Find next</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Következő keresése</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="102"/>
         <source>Find &amp;all</source>
-        <translation type="unfinished"></translation>
+        <translation>Mind &amp;megkeresése</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="105"/>
         <source>Query editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Kérdés szerkesztő</translation>
     </message>
 </context>
 <context>
@@ -4502,7 +4518,7 @@ kiválasztva</translation>
     <message>
         <location filename="../src/core/map_printer.cpp" line="490"/>
         <source>- Map -</source>
-        <translation type="unfinished">- Térkép -</translation>
+        <translation>- Térkép -</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1241"/>
@@ -4536,13 +4552,13 @@ kiválasztva</translation>
         <location filename="../src/gui/color_dialog.cpp" line="275"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="83"/>
         <source>Text source:</source>
-        <translation type="unfinished"></translation>
+        <translation>Szöveg forrása:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="517"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="325"/>
         <source>Map (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Térkép (%1)</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="518"/>
@@ -4550,25 +4566,25 @@ kiválasztva</translation>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="326"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="339"/>
         <source>undefined language</source>
-        <translation type="unfinished"></translation>
+        <translation>nem megadott nyelv</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="536"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="342"/>
         <source>Translation (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fordítás (%1)</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="588"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="216"/>
         <source>Before editing, the stored text will be replaced with the current translation. Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Szerkesztés előtt a tárolt szöveget le fogják cserélni az aktuális fordításra. Folytatni akarod?</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="595"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="223"/>
         <source>After modifying the stored text, the translation may no longer be found. Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Miután módosította a tárolt szöveget, a fordítást már nem találhatják meg. Folytatni akarod?</translation>
     </message>
 </context>
 <context>
@@ -4837,12 +4853,12 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1889"/>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1900"/>
         <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
-        <translation type="unfinished"></translation>
+        <translation>A koordináták adaptáltva lettek, hogy illeszkedjenek OCAD-8-rajz területbe (-2 m … 2 m).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1911"/>
         <source>Some coordinates remain outside of the OCAD 8 drawing area. They might be unreachable in OCAD.</source>
-        <translation type="unfinished"></translation>
+        <translation>Néhány koordináta kívül esik az OCAD 8 rajzterületen. Lehet, hogy elérhetetlenek lesznek OCAD-ben.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="2182"/>
@@ -5037,7 +5053,7 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
         <location filename="../src/core/objects/object_query.cpp" line="295"/>
         <source>is</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>van</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="298"/>
@@ -5049,43 +5065,43 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
         <location filename="../src/core/objects/object_query.cpp" line="301"/>
         <source>contains</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>tartalmaz</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="304"/>
         <source>Search</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Keres</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="307"/>
         <source>Text</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished">Szöveg</translation>
+        <translation>Szöveg</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="311"/>
         <source>and</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>és</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="314"/>
         <source>or</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>vagy</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="318"/>
         <source>Symbol</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Szimbólum</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="322"/>
         <source>invalid</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>érvénytelen</translation>
     </message>
 </context>
 <context>
@@ -5103,7 +5119,7 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="412"/>
         <source>Could not load the coordinate reference system &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem tudta betölteni a %1 koordináta vonatkoztatási rendszert.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="446"/>
@@ -5171,83 +5187,88 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="969"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1322"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1331"/>
         <source>This symbol cannot be saved as a proper OCD symbol again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ezt a szimbólumot nem lehet megfelelő OCD szimbólumként menteni megint.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1977"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1984"/>
         <source>Justified alignment is not supported.</source>
         <translation>Az igazított illesztés nem támogatott.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1992"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1999"/>
         <source>Vertical alignment &apos;%1&apos; is not supported.</source>
         <translation>A vertikális illesztés &apos;%1&apos; nem támogatott.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1964"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1971"/>
         <source>Ignoring custom weight (%1).</source>
         <translation>Egyedi súlyozás (%1) figyelmen kivül hagyva.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2001"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2008"/>
         <source>Custom character spacing may be incorrect.</source>
         <translation>Az egyedi karaktertávolság lehet, hogy hibás.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2006"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2013"/>
         <source>Ignoring custom word spacing (%1 %).</source>
         <translation>Egyedi szóköztávolság (%1 %) figyelmen kívül hagyása.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2030"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2037"/>
         <source>Ignoring custom indents (%1/%2).</source>
         <translation>Egyedi behúzás (%1/%2) figyelmen kívül hagyása.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2052"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2059"/>
         <source>Ignoring text framing (mode %1).</source>
         <translation>Szöveg keret (%1 mód) figyelmen kívül hagyása.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1411"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1418"/>
         <source>Line text symbols are not yet supported. Marking the symbol as hidden.</source>
         <translation>Vonal-szöveg szimbólum még nem támogatott. Rejtett szimbólumként jelölve.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="105"/>
         <source>Encoding &apos;%1&apos; is not available. Check the settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>A &apos;%1&apos; kódolás nem elérhető. Ellenőrizd a beállításokat.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="142"/>
         <source>In area symbol %1 &apos;%2&apos;: %3</source>
+        <translation type="unfinished">A terület szimbólum %1 &apos;%2&apos;: %3</translation>
+    </message>
+    <message>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1318"/>
+        <source>The border of this symbol could not be loaded.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1588"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1595"/>
         <source>Unable to load object</source>
         <translation>Objektum betöltése sikertelen</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1598"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1605"/>
         <source>Unable to import rectangle object</source>
         <translation>Szögletes objektum importálása sikertelen</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1639"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1646"/>
         <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
         <translation>Szöveg szimbólum importálása sikertelen, útvonal nem található (npts=%1): %2</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1939"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1946"/>
         <source>Trying to import a text object with unknown coordinate format</source>
         <translation>Ismeretlen koordináta formátumú szöveges objektum importálási kísérlete</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2069"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2073"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2076"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2080"/>
         <source>Invalid data.</source>
         <translation>Érvénytelen adat.</translation>
     </message>
@@ -5256,14 +5277,14 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
         <translation type="vanished">Nem tesztelt fájl importálás az alábbi formátumhoz: OCD %1</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2104"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2111"/>
         <source>OCD files of version %1 are not supported!</source>
         <translation>A %1 verziójú OCD fájlok nem támogatottak!</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.h" line="455"/>
         <source>Color id not found: %1, ignoring this color</source>
-        <translation type="unfinished">Színkód nem ismert: %1, ez a szín figyelmen kívül hagyva</translation>
+        <translation>Színkód nem található: %1, ez a szín figyelmen kívül hagyva</translation>
     </message>
 </context>
 <context>
@@ -5271,37 +5292,37 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="392"/>
         <source>Unable to setup &quot;%1&quot; SRS for GDAL: %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nem lehet beállítani a &quot;%1&quot; SRS (térbeli hivatkozási rendszer)-t a %2 GDAL(Térbeli adatabsztrakció könyvtár)-hoz</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="326"/>
         <source>Purple</source>
-        <translation type="unfinished"></translation>
+        <translation>Lila</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="339"/>
         <source>Point</source>
-        <translation type="unfinished">Pont</translation>
+        <translation>Pont</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="346"/>
         <source>Line</source>
-        <translation type="unfinished">Vonal</translation>
+        <translation>Vonal</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="355"/>
         <source>Area</source>
-        <translation type="unfinished">Terület</translation>
+        <translation>Terület</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="361"/>
         <source>Text</source>
-        <translation type="unfinished">Szöveg</translation>
+        <translation>Szöveg</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="452"/>
         <source>Unable to load layer %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem lehet betölteni a %1 réteget.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gdal/ogr_file_format.cpp" line="500"/>
@@ -5311,44 +5332,44 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
         <location filename="../src/gdal/ogr_file_format.cpp" line="520"/>
         <source>Unable to load %n objects, reason: %1</source>
         <translation type="unfinished">
-            <numerusform></numerusform>
+            <numerusform>Nem lehet egy objektumot betölteni indoklás:%1</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="501"/>
         <source>Empty geometry.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Üritse a geometriát</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="506"/>
         <source>Can&apos;t determine the coordinate transformation: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nem tudja meghatározni akoordináta átalakítást: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="511"/>
         <source>Failed to transform the coordinates.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem sikerült transzformálni a koordinátákat.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="516"/>
         <source>Unknown or unsupported geometry type.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ismeretlen vagy nem támogatott geometria típus.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="521"/>
         <source>Not enough coordinates.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem elég koordináta.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="564"/>
         <source>Cannot use this spatial reference:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem tudja használni ezt a térbeli referenciát: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="623"/>
         <source>The geospatial data has no suitable spatial reference.</source>
-        <translation type="unfinished"></translation>
+        <translation>A térbeli adatnak nincs megfelelő térbeli referenciája.</translation>
     </message>
 </context>
 <context>
@@ -5580,13 +5601,13 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
         <location filename="../src/gui/print_progress_dialog.cpp" line="58"/>
         <source>Printing</source>
         <comment>PrintWidget</comment>
-        <translation type="unfinished">Nyomtatás</translation>
+        <translation>Nyomtatás</translation>
     </message>
     <message>
         <location filename="../src/gui/print_progress_dialog.cpp" line="59"/>
         <source>An error occurred during processing.</source>
         <comment>PrintWidget</comment>
-        <translation type="unfinished"></translation>
+        <translation>Egy hiba történt a feldolgozás alatt.</translation>
     </message>
 </context>
 <context>
@@ -5721,7 +5742,7 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="140"/>
         <source>Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Tulajdonságok</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="203"/>
@@ -5756,17 +5777,17 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="270"/>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Alapértelmezett</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="271"/>
         <source>Device CMYK (experimental)</source>
-        <translation type="unfinished"></translation>
+        <translation>CMYK eszköz (kísérleti)</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="272"/>
         <source>Color mode:</source>
-        <translation type="unfinished"></translation>
+        <translation>Szín mód:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="296"/>
@@ -5809,7 +5830,7 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1107"/>
         <source>Failed to prepare the preview.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem sikerült elkészíteni az előnézetet.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1118"/>
@@ -5849,12 +5870,12 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1176"/>
         <source>Failed to prepare the image. Not enough memory.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem sikerült elkészíteni a képet. Nem elég a memória.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1210"/>
         <source>Failed to prepare the PDF export.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem sikerült elkészíteni a PDF exportot.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1220"/>
@@ -5878,7 +5899,7 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1259"/>
         <source>Failed to prepare the printing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem  sikerült elkészíteni a nyomtatást.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1268"/>
@@ -5938,7 +5959,7 @@ separations</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1240"/>
         <source>Failed to finish the PDF export.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem sikerült befejezni a PDF exportot.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1250"/>
@@ -5963,7 +5984,7 @@ separations</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1273"/>
         <source>An error occurred during printing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Egy hiba történt a nyomtatás alatt.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1334"/>
@@ -6068,7 +6089,7 @@ separations</source>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="132"/>
         <source>Edit the symbol set ID:</source>
-        <translation type="unfinished"></translation>
+        <translation>Szerkeszti a jelkulcs készlet azonosítót:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="135"/>
@@ -6079,7 +6100,7 @@ separations</source>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="139"/>
         <source>Match by symbol name</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Szimbólum névvel kijelöl</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="144"/>
@@ -6861,7 +6882,7 @@ a lusta kutyát átugrotta
     <message>
         <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="495"/>
         <source>- unnamed -</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">- névtelen -</translation>
     </message>
 </context>
 <context>

@@ -327,6 +327,11 @@
         <translation>Upravit</translation>
     </message>
     <message>
+        <location filename="../src/gui/color_dialog.cpp" line="101"/>
+        <source>Spot color printing</source>
+        <translation>Tisk přímými barvami</translation>
+    </message>
+    <message>
         <location filename="../src/gui/color_dialog.cpp" line="106"/>
         <source>Defines a spot color:</source>
         <translation>Definovat přímou barvu:</translation>
@@ -352,6 +357,11 @@
         <translation>Knockout: vymaže spodní barvy</translation>
     </message>
     <message>
+        <location filename="../src/gui/color_dialog.cpp" line="148"/>
+        <source>CMYK</source>
+        <translation>CMYK</translation>
+    </message>
+    <message>
         <location filename="../src/gui/color_dialog.cpp" line="163"/>
         <source>Custom process color:</source>
         <translation>Vlastní procesní barva:</translation>
@@ -375,6 +385,11 @@
         <location filename="../src/gui/color_dialog.cpp" line="184"/>
         <source>Black</source>
         <translation>Černá</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/color_dialog.cpp" line="205"/>
+        <source>RGB</source>
+        <translation>RGB</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="279"/>
@@ -2430,10 +2445,10 @@
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="120"/>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="122"/>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="125"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2066"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2069"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2073"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2103"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2076"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2080"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2110"/>
         <source>Could not read file: %1</source>
         <translation>Nepodařilo se přečíst soubor: %1</translation>
     </message>
@@ -3441,7 +3456,7 @@ Importovat data tak jako tak?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="878"/>
         <source>Move to my location</source>
-        <translation type="unfinished"></translation>
+        <translation>Posun na moji pozici</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="893"/>
@@ -4288,12 +4303,12 @@ symbolů</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1374"/>
         <source>1x zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>1x přiblížit</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1378"/>
         <source>2x zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>2x přiblížit</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2243"/>
@@ -5345,47 +5360,47 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="969"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1322"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1331"/>
         <source>This symbol cannot be saved as a proper OCD symbol again.</source>
         <translation>Tento symbol nelze znovu uložit jako řádný symbol OCD.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1977"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1984"/>
         <source>Justified alignment is not supported.</source>
         <translation>Zarovnání do bloku není podporováno.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1992"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1999"/>
         <source>Vertical alignment &apos;%1&apos; is not supported.</source>
         <translation>Svislé zarovnání &apos;%1&apos; není podporováno.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1964"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1971"/>
         <source>Ignoring custom weight (%1).</source>
         <translation>Přehlíží se vlastní tloušťka písma (%1).</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2001"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2008"/>
         <source>Custom character spacing may be incorrect.</source>
         <translation>Vlastní rozestupy znaků nemusí být správně.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2006"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2013"/>
         <source>Ignoring custom word spacing (%1 %).</source>
         <translation>Přehlíží se vlastní rozestupy slov (%1 %).</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2030"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2037"/>
         <source>Ignoring custom indents (%1/%2).</source>
         <translation>Přehlíží se vlastní odsazení (%1/%2).</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2052"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2059"/>
         <source>Ignoring text framing (mode %1).</source>
         <translation>Přehlíží se rámování textu (režim %1).</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1411"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1418"/>
         <source>Line text symbols are not yet supported. Marking the symbol as hidden.</source>
         <translation>Liniové textové symboly ještě nejsou podporovány. Symbol je označen jako skrytý.</translation>
     </message>
@@ -5400,28 +5415,33 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
         <translation>V plošném symbolu %1 &apos;%2&apos;: %3</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1588"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1318"/>
+        <source>The border of this symbol could not be loaded.</source>
+        <translation>Ohraničení tohoto symbolu nelze načíst.</translation>
+    </message>
+    <message>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1595"/>
         <source>Unable to load object</source>
         <translation>Nelze nahrát objekt</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1598"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1605"/>
         <source>Unable to import rectangle object</source>
         <translation>Nelze importovat obdélníkový objekt</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1639"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1646"/>
         <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
         <translation>Textový symbol nebyl importován: Nepodařilo se vypátrat cestu (npts=%1): %2</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1939"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1946"/>
         <source>Trying to import a text object with unknown coordinate format</source>
         <translation>Pokus o import textového objektu s neznámým formátem souřadnic</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2069"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2073"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2076"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2080"/>
         <source>Invalid data.</source>
         <translation>Neplatná data.</translation>
     </message>
@@ -5430,7 +5450,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
         <translation type="vanished">Nevyzkoušená funkce importu pro souborový formát OCD %1</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2104"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2111"/>
         <source>OCD files of version %1 are not supported!</source>
         <translation>Soubory OCD verze %1 nejsou podporovány!</translation>
     </message>
