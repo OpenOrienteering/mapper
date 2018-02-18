@@ -300,7 +300,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="101"/>
         <source>Spot color printing</source>
-        <translation type="unfinished"></translation>
+        <translation>Echtfarbendruck</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="106"/>
@@ -3736,7 +3736,7 @@ Daten trotzdem importieren?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="878"/>
         <source>Move to my location</source>
-        <translation type="unfinished"></translation>
+        <translation>Zu meiner Position gehen</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="893"/>
@@ -4380,12 +4380,12 @@ gewählt</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1374"/>
         <source>1x zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>1x Zoom</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1378"/>
         <source>2x zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>2x Zoom</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/map/map_editor.cpp" line="1640"/>
@@ -5259,7 +5259,7 @@ Zoomen ist mit dem Mausrad möglich.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1318"/>
         <source>The border of this symbol could not be loaded.</source>
-        <translation type="unfinished"></translation>
+        <translation>Der Rand dieses Symbol konnte nicht geladen werden.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1595"/>
