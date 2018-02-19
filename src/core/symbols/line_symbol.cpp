@@ -271,8 +271,6 @@ void LineSymbol::createSinglePathRenderables(const VirtualPath& path, bool path_
 	if (path.size() < 2)
 		return;
 	
-	auto& coords = path.coords;
-	
 	// Dash symbols?
 	if (dash_symbol && !dash_symbol->isEmpty())
 	{
@@ -283,19 +281,19 @@ void LineSymbol::createSinglePathRenderables(const VirtualPath& path, bool path_
 	MapCoordVector processed_flags;
 	MapCoordVectorF processed_coords;
 	bool create_border = have_border_lines && (border.isVisible() || right_border.isVisible());
-	bool pointed_cap = cap_style == PointedCap && pointed_cap_length > 0;
 	if (!dashed)
 	{
 		// Base line?
 		if (line_width > 0)
 		{
+			bool pointed_cap = cap_style == PointedCap && pointed_cap_length > 0;
 			if (color && !pointed_cap && !create_border)
 			{
 				output.insertRenderable(new LineRenderable(this, path, path_closed));
 			}
 			else if (create_border || pointed_cap)
 			{
-				auto last = coords.size();
+				auto last = path.coords.size();
 				auto part_start = MapCoordVector::size_type { 0 };
 				auto next_part_start = last; //path_coords.update(part_start);
 				
