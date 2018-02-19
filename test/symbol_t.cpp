@@ -56,6 +56,48 @@ static const auto example_files = {
 };
 
 
+/**
+ * Tests if any pixel from the image in the region given by x0, y0, x1, y1 matches
+ * the given value.
+ */
+bool anyEqualPixel(const QImage& image, const quint32 value, int x0, int y0, int x1, int y1)
+{
+	for (int y = y0; y < y1; ++y)
+	{
+		const auto scanline = reinterpret_cast<const quint32*>(image.scanLine(y));
+		for (int x = x0; x < x1; ++x)
+		{
+			if (value == scanline[x])
+				return true;
+		}
+	}
+	return false;
+}
+
+
+/**
+ * Tests if the images are equal, ignoring edges which differ in location by one pixel.
+ */
+bool fuzzyEqual(const QImage& lhs, const QImage& rhs)
+{
+	if (lhs.size() != rhs.size())
+		return false;
+	
+	for (auto y = 0; y < lhs.height(); ++y)
+	{
+		const auto left = reinterpret_cast<const quint32*>(lhs.scanLine(y));
+		const auto right = reinterpret_cast<const quint32*>(rhs.scanLine(y));
+		for (auto x = 0; x < lhs.width(); ++x)
+		{
+			if (Q_UNLIKELY(left[x] != right[x])
+				&& !anyEqualPixel(lhs, right[x], qMax(x-1, 0), qMax(y-1, 0), qMin(x+2, lhs.width()), qMin(y+2, lhs.height())))
+			    return false;
+		}
+	}
+	return true;
+}
+
+
 }  // namespace
 
 
@@ -189,7 +231,7 @@ private slots:
 		QImage expected_image;
 		QVERIFY(expected_image.load(image_filename));
 		image = image.convertToFormat(expected_image.format());
-		QCOMPARE(image, expected_image);
+		QVERIFY(fuzzyEqual(image, expected_image));
 		
 #ifdef MAPPER_DEVELOPMENT_BUILD
 		QVERIFY(QFile::remove(out_filename));
