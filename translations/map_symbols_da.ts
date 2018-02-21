@@ -172,7 +172,7 @@ til midten af linjen (fodaftryk 4 m).</translation>
         <message>
             <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. An index contour may be represented as an ordinary contour line in an area with much detail. Small contour knolls and depressions are normally not represented using index contours.</source>
             <comment>Description of symbol 102</comment>
-            <translation>Hver femte kurve skal tegnes med en tykkere linje. Dette er en hjælp til at give et overblik over højdeforskellen og den overordnede form på terrænet. En tællekurve kan tegnes som en almindelig kurve i et område med mange detaljer. Små kurvehøjder og lavninger tegnes normalt ikke med tællekurve.</translation>
+            <translation>Hver femte højdekurve skal tegnes med en tykkere linje. Dette  skal hjælpe med at give et hurtigt overblik over højdeforskelle og terrænnets overordnede form. En index højdekurve kan tegnes som en almindelig højdekurve i et område med mange detaljer. Små høje og lavninger tegnes normalt ikke med index højdekurver.</translation>
     </message>
         <message>
             <source>Contour value</source>
@@ -11745,8 +11745,8 @@ The orientation of the symbol indicates the direction in which the corner points
         <message>
             <source>Manned control site where the control card is checked.</source>
             <comment>Description of symbol 12.4</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Bemandet post, hvor kontrolkortet bliver tjekket.</translation>
+    </message>
         <message>
             <source>Taped Route, away from control</source>
             <comment>Name of symbol 13.1</comment>
@@ -11805,8 +11805,8 @@ The orientation of the symbol indicates the direction in which the corner points
         <message>
             <source>Mandatory route from the last control to the Finish. Re-emphasises what is shown on the map. Gives the distance from the last control to Finish.</source>
             <comment>Description of symbol 14.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Obligatorisk rute fra sidste post til målet. Understreger hvad der vises på kortet. Viser afstanden fra sidste post til målet.</translation>
+    </message>
         <message>
             <source>Taped Route from finish funnel to Finish</source>
             <comment>Name of symbol 14.2</comment>
