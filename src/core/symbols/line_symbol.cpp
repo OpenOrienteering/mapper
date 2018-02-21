@@ -281,66 +281,57 @@ void LineSymbol::createSinglePathRenderables(const VirtualPath& path, bool path_
 	MapCoordVector processed_flags;
 	MapCoordVectorF processed_coords;
 	bool create_border = have_border_lines && (border.isVisible() || right_border.isVisible());
-	if (!dashed)
-	{
-		// Base line?
-		if (line_width > 0)
-		{
-			bool pointed_cap = cap_style == PointedCap && pointed_cap_length > 0;
-			if (color && !pointed_cap && !create_border)
-			{
-				output.insertRenderable(new LineRenderable(this, path, path_closed));
-			}
-			else if (create_border || pointed_cap)
-			{
-				auto last = path.coords.size();
-				auto part_start = MapCoordVector::size_type { 0 };
-				auto next_part_start = last; //path_coords.update(part_start);
-				
-				bool has_start = !(part_start == 0 && path_closed);
-				bool has_end = !(next_part_start == last && path_closed);
-				
-				auto start = SplitPathCoord::begin(path.path_coords);
-				auto end   = SplitPathCoord::end(path.path_coords);
-				processContinuousLine(path, start, end,
-				                      has_start, has_end, processed_flags, processed_coords, false, output);
-				
-			}
-		}
-		
-		// Symbols?
-		if (mid_symbol && !mid_symbol->isEmpty() && segment_length > 0)
-			createMidSymbolRenderables(path, path_closed, output);
-	}
-	else if (dash_length > 0)
+	if (dashed)
 	{
 		// Dashed lines
+		if (dash_length <= 0)
+			return;
+		
 		processDashedLine(path, path_closed, processed_flags, processed_coords, output);
 	}
 	else
 	{
-		// Invalid configuration
-		return;	
-	}
-	
-	if (!processed_coords.empty() && (color || create_border))
-	{
-		Q_ASSERT(processed_coords.size() != 1);
+		// Symbols?
+		if (mid_symbol && !mid_symbol->isEmpty() && segment_length > 0)
+			createMidSymbolRenderables(path, path_closed, output);
 		
-		VirtualPath path = { processed_flags, processed_coords };
-		path.path_coords.update(path.first_index);
+		if (line_width == 0)
+			return;
 		
-		if (color)
+		if (create_border || cap_style == PointedCap)
+		{
+			auto last = path.coords.size();
+			auto part_start = MapCoordVector::size_type { 0 };
+			auto next_part_start = last; //path_coords.update(part_start);
+			
+			bool has_start = !(part_start == 0 && path_closed);
+			bool has_end = !(next_part_start == last && path_closed);
+			
+			auto start = SplitPathCoord::begin(path.path_coords);
+			auto end   = SplitPathCoord::end(path.path_coords);
+			processContinuousLine(path, start, end,
+			                      has_start, has_end, processed_flags, processed_coords, false, output);
+		}
+		else if (color)
 		{
 			output.insertRenderable(new LineRenderable(this, path, path_closed));
 		}
 		
-		if (create_border)
-		{
-			createBorderLines(path, output);
-		}
 	}
+	
+	if (processed_coords.empty() || (!color && !create_border))
+		return;
+	
+	Q_ASSERT(processed_coords.size() != 1);
+	
+	VirtualPath processed_path = { processed_flags, processed_coords };
+	processed_path.path_coords.update(path.first_index);
+	if (color)
+		output.insertRenderable(new LineRenderable(this, processed_path, path_closed));
+	if (create_border)
+		createBorderLines(processed_path, output);
 }
+
 
 void LineSymbol::createBorderLines(
         const VirtualPath& path,
