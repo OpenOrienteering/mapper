@@ -86,7 +86,7 @@
         <message>
             <source>Opaque White over Green</source>
             <comment>Color 16</comment>
-            <translation>Uigennemsigtige hvide over grøn</translation>
+            <translation>Uigennemsigtige hvid over grøn</translation>
     </message>
         <message>
             <source>Opaque Green 20%</source>
@@ -121,7 +121,7 @@
         <message>
             <source>Green below light greens</source>
             <comment>Color 23</comment>
-            <translation>Grøn under lysegrønne</translation>
+            <translation>Grøn under lysegrøn</translation>
     </message>
         <message>
             <source>Green 50% over Yellow</source>
@@ -339,24 +339,26 @@ Symbolet må ikke berøre eller overlappe kurver.</translation>
             <source>A small depression or hollow without steep sides that is too small to be shown by contours. Minimum depth: 1 m. Minimum width: 2 m.
 Small depressions with steep sides are represented with symbol 112 (pit). The symbol may not touch or overlap other brown symbols. Location is the centre of gravity of the symbol, and the symbol is orientated to north.</source>
             <comment>Description of symbol 111</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>En lille lavning eller hul uden bratte sider, som er for lille til at blive tegnet i kurvebilledet. Mindste dybde: 1 m. Minimum bredde: 2 m.
+Små fordybninger med stejle sider tegnes med symbol 112 (hul). Symbolet må ikke røre eller overlappe andre brune symboler. Placeringen er centrum for tyngdepunktet af symbolet, og symbolet er orienteret mod nord.</translation>
+    </message>
         <message>
             <source>Pit</source>
             <comment>Name of symbol 112</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Hul</translation>
+    </message>
         <message>
             <source>Pits and holes with distinct steep sides which cannot be shown to scale using symbol 104 (earth bank). Minimum depth: 1 m. Minimum width: 1 m. A pit larger than 5 m x 5 m should normally be exaggerated and drawn using symbol 104 (earth bank). Pits without steep sides are represented with symbol 111 (small depression). The symbol may not touch or overlap other brown symbols. Location is the centre of
 gravity of the symbol, and the symbol is orientated to north.</source>
             <comment>Description of symbol 112</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Gruber og huller med tydeligt stejle sider, og som er for små til at blive tegnet med symbolet 104 (jordskrænt). Mindste dybde: 1 m. Minimum bredde: 1 m.
+Huller uden stejle sider er repræsenteret med symbol 111 (lille lavning). Symbolet må ikke røre eller overlappe andre brune symboler. Placeringen er centrum for tyngdepunktet af symbolet, og symbolet er orienteret mod nord.</translation>
+    </message>
         <message>
             <source>Broken ground</source>
             <comment>Name of symbol 113</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ujævnt terræn</translation>
+    </message>
         <message>
             <source>An area of pits and/or knolls which is too intricate to be shown in detail, or other types of rough and uneven ground that is clearly distinguishable but has little impact on runnability.
 This is an area symbol.
@@ -364,23 +366,26 @@ The minimum number of dots is three (footprint 10 m x 10 m).
 Contours shall not be cut in broken ground areas.
 Density: 3 to 5 dots / mm² (9-16%).</source>
             <comment>Description of symbol 113</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Et område med huller og / eller småknolde, som er for kompliceret til at blive vist i detaljer, eller andre typer af grov og ujævn jord, der klart kan skelnes,
+men har ringe indflydelse på gennemløbeligheden.
+Punkterne skal fordeles tilfældigt uden at ødelægge læsbarheden af vigtige terrændetaljer og objekter.
+Mindste antal prikker er tre (fodaftryk 10 m x 10 m).</translation>
+    </message>
         <message>
             <source>Broken ground, individual dot</source>
             <comment>Name of symbol 113.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ujævnt område, individuel prik</translation>
+    </message>
         <message>
             <source>An area of pits or knolls which is too intricate to be shown in detail. The density of randomly placed dots may vary according to the detail on the ground.</source>
             <comment>Description of symbol 113.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Et område med huller og / eller småknolde, som er for kompliceret til at blive vist i detaljer, eller andre typer af grov og ujævn jord, der klart kan skelnes, men har ringe indflydelse på gennemløbeligheden.</translation>
+    </message>
         <message>
             <source>Very broken ground</source>
             <comment>Name of symbol 114</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Meget ujævnt terræn</translation>
+    </message>
         <message>
             <source>An area of pits and/or knolls, which is too intricate to be shown in detail, or other types of rough and uneven ground that is clearly distinguishable and affects runnability.
 This is an area symbol.
@@ -388,18 +393,20 @@ The minimum number of dots is three (footprint 7m x 7m).
 Contours shall not be cut in broken ground areas.
 Density: 8 to 10 dots / mm² (25-32%).</source>
             <comment>Description of symbol 114</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Et område med huller og / eller småknolde, som er for kompliceret til at blive vist i detaljer, eller andre typer af grov og ujævn jord, der klart kan skelnes,
+og som har indflydelse på gennemløbeligheden. Punkterne skal fordeles tilfældigt, men må ikke ødelægge læsbarheden af vigtige terrændetaljer og objekter.
+Mindste antal prikker er tre (fodaftryk 7 m x 7 m).</translation>
+    </message>
         <message>
             <source>Prominent landform feature</source>
             <comment>Name of symbol 115</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Speciel terrængenstand</translation>
+    </message>
         <message>
             <source>The feature must be very clearly distinguishable from its surroundings. Location is the centre of gravity of the symbol, which is orientated to north. The symbol may not touch or overlap other brown symbols.</source>
             <comment>Description of symbol 115</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terrængenstanden skal være meget tydelig at skelne fra omgivelserne. Placeringen er tyngdepunktet af symbolet, som er orienteret mod nord. Symbolet må ikke røre eller overlappe andre brune symboler.</translation>
+    </message>
         <message>
             <source>Impassable cliff</source>
             <comment>Name of symbol 201</comment>
