@@ -49,7 +49,7 @@
 #include "core/symbols/symbol.h"
 #include "core/virtual_coord_vector.h"
 #include "core/virtual_path.h"
-
+#include "util/xml_stream_util.h"
 
 namespace OpenOrienteering {
 
@@ -60,67 +60,38 @@ using length_type = PathCoord::length_type;
 
 void LineSymbolBorder::save(QXmlStreamWriter& xml, const Map& map) const
 {
-	xml.writeStartElement(QString::fromLatin1("border"));
-	xml.writeAttribute(QString::fromLatin1("color"), QString::number(map.findColorIndex(color)));
-	xml.writeAttribute(QString::fromLatin1("width"), QString::number(width));
-	xml.writeAttribute(QString::fromLatin1("shift"), QString::number(shift));
+	XmlElementWriter element(xml, QLatin1String("border"));
+	element.writeAttribute(QLatin1String("color"), map.findColorIndex(color));
+	element.writeAttribute(QLatin1String("width"), width);
+	element.writeAttribute(QLatin1String("shift"), shift);
 	if (dashed)
-		xml.writeAttribute(QString::fromLatin1("dashed"), QString::fromLatin1("true"));
-	xml.writeAttribute(QString::fromLatin1("dash_length"), QString::number(dash_length));
-	xml.writeAttribute(QString::fromLatin1("break_length"), QString::number(break_length));
-	xml.writeEndElement(/*border*/);
+	{
+		element.writeAttribute(QLatin1String("dashed"), true);
+		element.writeAttribute(QLatin1String("dash_length"), dash_length);
+		element.writeAttribute(QLatin1String("break_length"), break_length);
+	}
 }
 
 bool LineSymbolBorder::load(QXmlStreamReader& xml, const Map& map)
 {
 	Q_ASSERT(xml.name() == QLatin1String("border"));
-	
-	QXmlStreamAttributes attributes = xml.attributes();
-	int temp = attributes.value(QLatin1String("color")).toInt();
-	color = map.getColor(temp);
-	width = attributes.value(QLatin1String("width")).toInt();
-	shift = attributes.value(QLatin1String("shift")).toInt();
-	dashed = (attributes.value(QLatin1String("dashed")) == QLatin1String("true"));
-	dash_length = attributes.value(QLatin1String("dash_length")).toInt();
-	break_length = attributes.value(QLatin1String("break_length")).toInt();
-	xml.skipCurrentElement();
+	XmlElementReader element(xml);
+	color = map.getColor(element.attribute<int>(QLatin1String("color")));
+	width = element.attribute<int>(QLatin1String("width"));
+	shift = element.attribute<int>(QLatin1String("shift"));
+	dashed = element.attribute<bool>(QLatin1String("dashed"));
+	if (dashed)
+	{
+		dash_length = element.attribute<int>(QLatin1String("dash_length"));
+		break_length = element.attribute<int>(QLatin1String("break_length"));
+	}
 	return !xml.error();
 }
 
-bool LineSymbolBorder::equals(const LineSymbolBorder* other) const
-{
-	if (!MapColor::equal(color, other->color))
-		return false;
-	
-	if (width != other->width)
-		return false;
-	if (shift != other->shift)
-		return false;
-	if (dashed != other->dashed)
-		return false;
-	if (dashed)
-	{
-		if (dash_length != other->dash_length)
-			return false;
-		if (break_length != other->break_length)
-			return false;
-	}
-	return true;
-}
-
-void LineSymbolBorder::assign(const LineSymbolBorder& other, const MapColorMap* color_map)
-{
-	color = color_map ? color_map->value(other.color) : other.color;
-	width = other.width;
-	shift = other.shift;
-	dashed = other.dashed;
-	dash_length = other.dash_length;
-	break_length = other.break_length;
-}
 
 bool LineSymbolBorder::isVisible() const
 {
-	return width > 0 && color && !(dash_length == 0 && dashed);
+	return width > 0 && color && !(dashed && dash_length == 0);
 }
 
 void LineSymbolBorder::setupSymbol(LineSymbol& out) const
@@ -143,6 +114,20 @@ void LineSymbolBorder::scale(double factor)
 	dash_length = qRound(factor * dash_length);
 	break_length = qRound(factor * break_length);
 }
+
+
+bool operator==(const LineSymbolBorder& lhs, const LineSymbolBorder& rhs) noexcept
+{
+	return  ((!lhs.color && !rhs.color)
+	         || (lhs.color && rhs.color && *lhs.color == *rhs.color))
+	        && lhs.width == rhs.width
+	        && lhs.shift == rhs.shift
+	        && lhs.dashed == rhs.dashed
+	        && (!lhs.dashed
+	            || (lhs.dash_length == rhs.dash_length
+	                && lhs.break_length == rhs.break_length));
+}
+
 
 
 // ### LineSymbol ###
@@ -1853,7 +1838,7 @@ bool LineSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionar
 			}
 			
 			if (have_border_lines && !right_border_loaded)
-				right_border.assign(border, nullptr);
+				right_border = border;
 		}
 		else
 			xml.skipCurrentElement(); // unknown
@@ -1958,7 +1943,7 @@ bool LineSymbol::equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensit
 		return false;
 	if (have_border_lines)
 	{
-		if (!border.equals(&line->border) || !right_border.equals(&line->right_border))
+		if (border != line->border || right_border != line->right_border)
 			return false;
 	}
 	

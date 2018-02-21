@@ -1944,7 +1944,7 @@ Impassable trenches shall be represented using symbol 201 (impassable cliff).
 Collapsed and easily crossable trenches should be mapped as erosion gullies.</description>
                 <line_symbol color="-1" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="0" end_length="0" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="0" mid_symbol_distance="0">
                     <borders>
-                        <border color="1" width="100" shift="50" dash_length="2000" break_length="1000"/>
+                        <border color="1" width="100" shift="50"/>
                     </borders>
                 </line_symbol>
             </symbol>
@@ -2686,7 +2686,7 @@ feature is so close to the road edge that it cannot practically be shown as a se
 symbol.</description>
                 <line_symbol color="5" line_width="300" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                     <borders>
-                        <border color="6" width="140" shift="70" dash_length="2000" break_length="1000"/>
+                        <border color="6" width="140" shift="70"/>
                     </borders>
                 </line_symbol>
             </symbol>
@@ -2694,7 +2694,7 @@ symbol.</description>
                 <description>Formerly &quot;502 Major road&quot;, provided for migration from ISOM 2000. Use of this symbol is discouraged for new maps.</description>
                 <line_symbol color="5" line_width="500" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                     <borders>
-                        <border color="6" width="140" shift="70" dash_length="2000" break_length="1000"/>
+                        <border color="6" width="140" shift="70"/>
                     </borders>
                 </line_symbol>
             </symbol>
@@ -2705,7 +2705,7 @@ symbol.</description>
                         <symbol type="2" code="501.1" name="Motorway, outer part">
                             <line_symbol color="5" line_width="780" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                                 <borders>
-                                    <border color="6" width="140" shift="70" dash_length="2000" break_length="1000"/>
+                                    <border color="6" width="140" shift="70"/>
                                 </borders>
                             </line_symbol>
                         </symbol>
@@ -2807,7 +2807,7 @@ If it is forbidden to run along the railway, it shall be combined with the overp
                         <symbol type="2" code="509.0.2" name="Railway, Black background">
                             <line_symbol color="2" line_width="350" minimum_length="4000" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1500" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                                 <borders>
-                                    <border color="1" width="100" shift="0" dash_length="2000" break_length="1000"/>
+                                    <border color="1" width="100" shift="0"/>
                                 </borders>
                             </line_symbol>
                         </symbol>
@@ -2864,7 +2864,7 @@ The lines may be broken to improve legibility. Very large carrying masts shall b
                         </symbol>
                     </dash_symbol>
                     <borders>
-                        <border color="1" width="140" shift="0" dash_length="2000" break_length="1000"/>
+                        <border color="1" width="140" shift="0"/>
                     </borders>
                 </line_symbol>
             </symbol>
@@ -2893,7 +2893,7 @@ The lines may be broken to improve legibility. Very large carrying masts shall b
                         </symbol>
                     </dash_symbol>
                     <borders>
-                        <border color="1" width="140" shift="0" dash_length="2000" break_length="1000"/>
+                        <border color="1" width="140" shift="0"/>
                     </borders>
                 </line_symbol>
             </symbol>

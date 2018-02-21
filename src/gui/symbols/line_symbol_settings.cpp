@@ -497,7 +497,7 @@ void LineSymbolSettings::differentBordersClicked(bool checked)
 	}
 	else
 	{
-		symbol->getRightBorder().assign(symbol->getBorder(), nullptr);
+		symbol->getRightBorder() = symbol->getBorder();
 		emit propertiesModified();
 		updateStates();
 	}
@@ -509,7 +509,7 @@ void LineSymbolSettings::borderChanged()
 	if (different_borders_check->isChecked())
 		updateBorder(symbol->getRightBorder(), right_border_widgets);
 	else
-		symbol->getRightBorder().assign(symbol->getBorder(), nullptr);
+		symbol->getRightBorder() = symbol->getBorder();
 	
 	emit propertiesModified();
 }
