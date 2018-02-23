@@ -3320,7 +3320,7 @@ void MapEditorController::enableGPSDisplay(bool enable)
 		gps_display->startUpdates();
 		
 		// Create gps_track_recorder if we can determine a template track filename
-		const float gps_track_draw_update_interval = 10 * 1000; // in milliseconds
+		constexpr int gps_track_draw_update_interval = 10 * 1000; // in milliseconds
 		if (! window->currentPath().isEmpty())
 		{
 			// Find or create a template for the track with a specific name
