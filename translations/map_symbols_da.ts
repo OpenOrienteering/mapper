@@ -410,67 +410,76 @@ Mindste antal prikker er tre (fodaftryk 7 m x 7 m).</translation>
         <message>
             <source>Impassable cliff</source>
             <comment>Name of symbol 201</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Impassabel klippe</translation>
+    </message>
         <message>
             <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
 For vertical rock faces the tags may be omitted if space is short. Ends of the top line may be rounded or square. Shorter tags may be used at the ends.
 The gap between two impassable cliffs or between impassable cliffs and other impassable feature symbols must exceed 0.3 mm on the map.
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.</source>
             <comment>Description of symbol 201</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>En klippevæg, stenbrud eller jordskrænt, som er farlig eller umulig at passere eller klatre på.
+For lodrette stenskrænter kan faldstregerne udelades, hvis der er dårlig plads. Enden på begrænsningslinjen, der angiver skræntens overkant, kan være afrundet eller firkantet. For den plane bredde er minimumbredden 0,35 mm. Kortere faldstreger kan bruges i enderne.
+Afstanden mellem mellem to impassable klipper eller mellem impassable klipper og andre impassable symboler skal være mere end 0,3 mm på kortet.
+I det tilfælde, hvor klippevæggen ligger så tæt på vand, at passage under den ikke kan finde sted, tegnes faldstregerne ud i vandet, eller søkant udelades. Symbolet for impassabel klippe skal naturligt indgå i det øvrige terræn vist med kurver.</translation>
+    </message>
         <message>
             <source>Impassable cliff, minimum size</source>
             <comment>Name of symbol 201.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Impassabel klippe, minimum størrelse</translation>
+    </message>
         <message>
             <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
 Ends of the top line may be rounded or square.
 The gap between two impassable cliffs or between impassable cliffs and other impassable feature symbols must exceed 0.3 mm on the map.
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.</source>
             <comment>Description of symbol 201.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>En klippevæg, stenbrud eller jordskrænt, som er farlig eller umulig at passere eller klatre på.
+For lodrette stenskrænter kan faldstregerne udelades, hvis der er dårlig plads. Enden på begrænsningslinjen, der angiver skræntens overkant, kan være afrundet eller firkantet.
+Afstanden mellem mellem to impassable klipper eller mellem impassable klipper og andre impassable symboler skal være mere end 0,3 mm på kortet.
+I det tilfælde, hvor klippevæggen ligger så tæt på vand, at passage under den ikke kan finde sted, tegnes faldstregerne ud i vandet, eller søkant udelades. Symbolet for impassabel klippe skal naturligt indgå i det øvrige terræn vist med kurver.</translation>
+    </message>
         <message>
             <source>Impassable cliff, plan shape representation</source>
             <comment>Name of symbol 201.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Impassabel klippe, flade form</translation>
+    </message>
         <message>
             <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
 For vertical rock faces the tags may be omitted if space is short. &lt;b&gt;For plan shape representation, the minimum width is 0.35 mm.&lt;/b&gt; Shorter tags may be used at the ends.
 The gap between two impassable cliffs or between impassable cliffs and other impassable feature symbols must exceed 0.3 mm on the map.
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.</source>
             <comment>Description of symbol 201.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>En klippevæg, stenbrud eller jordskrænt, som er farlig eller umulig at passere eller klatre på.
+For lodrette stenskrænter kan faldstregerne udelades, hvis der er dårlig plads. Enden på begrænsningslinjen, der angiver skræntens overkant, kan være afrundet eller firkantet. &lt;b&gt;For den plane bredde er minimumbredden 0,35 mm.&lt;/b&gt; Kortere faldstreger kan bruges i enderne.
+Afstanden mellem mellem to impassable klipper eller mellem impassable klipper og andre impassable symboler skal være mere end 0,3 mm på kortet.
+I det tilfælde, hvor klippevæggen ligger så tæt på vand, at passage under den ikke kan finde sted, tegnes faldstregerne ud i vandet, eller søkant udelades. Symbolet for impassabel klippe skal naturligt indgå i det øvrige terræn vist med kurver.</translation>
+    </message>
         <message>
             <source>Impassable cliff, top line</source>
             <comment>Name of symbol 201.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Impassabel klippe, toplinje</translation>
+    </message>
         <message>
             <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
             <comment>Description of symbol 201.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>For lodrette stenskrænter kan faldstregerne udelades, hvis der er dårlig plads.</translation>
+    </message>
         <message>
             <source>Impassable cliff, tag line</source>
             <comment>Name of symbol 201.4</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Impassabel klippe, faldstreg</translation>
+    </message>
         <message>
             <source>Use this symbol to display the full extent of a wide cliff.</source>
             <comment>Description of symbol 201.4</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Faldstreg bruges til at vise klippen fulde udstrækning.</translation>
+    </message>
         <message>
             <source>Impassable cliff, minimum size (from ISOM2000)</source>
             <comment>Name of symbol 201.9</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Impassabel klippe, minimum størrelse (fra ISOM2000)</translation>
+    </message>
         <message>
             <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
 Ends of the top line may be rounded or square.
