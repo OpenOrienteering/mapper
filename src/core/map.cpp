@@ -1980,6 +1980,8 @@ void Map::updateSymbolIconZoom()
 	values.reserve(symbols.size());
 	for (const auto symbol : symbols)
 	{
+		if (symbol->isHelperSymbol())
+			continue;
 		auto size = symbol->dimensionForIcon();
 		if (size > 0)
 			values.push_back(size);
