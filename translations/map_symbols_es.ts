@@ -1106,7 +1106,7 @@ No se puede combinar con otros símbolos de área excepto los símbolos 113 (ter
         <message>
             <source>Rough open land</source>
             <comment>Name of symbol 403</comment>
-            <translation>Campo abierto y escabroso</translation>
+            <translation>Monte despejado</translation>
     </message>
         <message>
             <source>Heath, moorland, felled areas, newly planted areas (trees lower than ca. 1 m) or other generally open land with rough ground vegetation, heather or tall grass offering the same runnability as typical open forest.
@@ -1120,7 +1120,7 @@ Se puede combinar con el símbolo 407 (vegetación, carrera lenta, buena visibil
         <message>
             <source>Rough open land with scattered trees</source>
             <comment>Name of symbol 404</comment>
-            <translation>Campo abierto y escabroso con árboles dispersos</translation>
+            <translation>Monte despejado con árboles dispersos</translation>
     </message>
         <message>
             <source>Areas with scattered trees or bushes in rough open land may be generalised by using a regular pattern of large dots in the yellow screen.
@@ -1138,7 +1138,7 @@ Anchura mínima: 1,5 mm (huella 22,5 m). Área mínima: 2,5 x 2,5 mm. Las áreas
         <message>
             <source>Rough open land with scattered bushes</source>
             <comment>Name of symbol 404.1</comment>
-            <translation>Campo abierto y escabroso con arbustos dispersos</translation>
+            <translation>Monte despejado con arbustos dispersos</translation>
     </message>
         <message>
             <source>Areas with scattered trees or bushes in rough open land may be generalised by using a regular pattern of large dots in the yellow screen.
@@ -2466,13 +2466,13 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Slope line</source>
             <comment>Name of symbol 104</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Línea de pendiente</translation>
+    </message>
         <message>
             <source>Slope lines may be drawn on the lower side of a contour line, e.g. along the line of a re-entrant or in a depression. They are used only where it is necessary to clarify the direction of slope.</source>
             <comment>Description of symbol 104</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Se pueden dibujar líneas de pendiente hacia el lado más bajo de una curva de nivel, p. ej. a lo largo de una vaguada o en una depresión. Se utilizan solo donde es necesario clarificar la dirección de la pendiente.</translation>
+    </message>
         <message>
             <source>Contour value</source>
             <comment>Name of symbol 105</comment>
@@ -2481,8 +2481,8 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
             <comment>Description of symbol 105</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>La altitud de las curvas de nivel se puede incluir para ayudar a valorar las grandes diferencias en altitud. Se insertan en las curvas maestras en posiciones donde no se oculten otros detalles. Los dígitos deberían orientarse de tal forma que su parte superior esté en el lado más alto de la curva de nivel.</translation>
+    </message>
         <message>
             <source>Earth bank</source>
             <comment>Name of symbol 106</comment>
@@ -2491,8 +2491,8 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
             <comment>Description of symbol 106</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un terraplén es un abrupto desnivel en el terreno que se puede distinguir claramente en el entorno, p. ej. canteras de grava o arena, cortes o rellenos de carreteras y vías férreas. Las líneas de extensión representan la extensión completa del terraplén. Si dos terraplenes están muy juntos, las líneas de extensión se pueden omitir. Los terraplenes impasables se deben representar utilizando el símbolo 201 (cortado impasable). La anchura de línea de terraplenes muy altos puede ser 0.25 mm.</translation>
+    </message>
         <message>
             <source>Earth bank, minimum size</source>
             <comment>Name of symbol 106.0.1</comment>
@@ -2501,28 +2501,28 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
             <comment>Description of symbol 106.0.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un terraplén es un abrupto desnivel en el terreno que se puede distinguir claramente en el entorno, p. ej. canteras de grava o arena, cortes o rellenos de carreteras y vías férreas. Las líneas de extensión representan la extensión completa del terraplén. Si dos terraplenes están muy juntos, las líneas de extensión se pueden omitir. Los terraplenes impasables se deben representar utilizando el símbolo 201 (cortado impasable). La anchura de línea de terraplenes muy altos puede ser 0.25 mm.</translation>
+    </message>
         <message>
             <source>Earth bank, very high</source>
             <comment>Name of symbol 106.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terraplén, muy alto</translation>
+    </message>
         <message>
             <source>The line width of very high earth banks may be 0.25 mm.</source>
             <comment>Description of symbol 106.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>La anchura de línea de terraplenes muy altos puede ser 0.25 mm.</translation>
+    </message>
         <message>
             <source>Earth bank, very high, minimum size</source>
             <comment>Name of symbol 106.1.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terraplén, muy alto, tamaño mínimo</translation>
+    </message>
         <message>
             <source>The line width of very high earth banks may be 0.25 mm.</source>
             <comment>Description of symbol 106.1.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>La anchura de línea de terraplenes muy altos puede ser 0.25 mm.</translation>
+    </message>
         <message>
             <source>Earth bank, tag line</source>
             <comment>Name of symbol 106.2</comment>
@@ -2561,8 +2561,8 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>An erosion gully or trench which is too small to be shown by symbol 106 is shown by a single line. The line width reflects the size of the gully. Minimum depth 1 m. The end of the line is pointed.</source>
             <comment>Description of symbol 109</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un surco de erosión o trinchera que es demasiado pequeño para representarse con el símbolo 106 se representa con una simple línea. La anchura de la línea refleja el tamaño del surco. Profundidad mínima 1 m. El final de la línea está afilado.</translation>
+    </message>
         <message>
             <source>Small erosion gully</source>
             <comment>Name of symbol 110</comment>
@@ -2571,8 +2571,8 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>A small erosion gully or trench. Minimum depth 0.5 m.</source>
             <comment>Description of symbol 110</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un pequeño surco de erosión o trinchera. Profundidad mínima 0.5 m.</translation>
+    </message>
         <message>
             <source>Small knoll</source>
             <comment>Name of symbol 112</comment>
@@ -2581,18 +2581,18 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>A small obvious mound or rocky knoll which cannot be drawn to scale with a contour (diameter of mound less than ca. 5 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. The symbol may not touch a contour line.</source>
             <comment>Description of symbol 112</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un pequeño pero obvio montículo o colina rocosa que no puede representarse a escala con una curva (diámetro del montículo menor de 5 m). La altura de la colina debería ser de al menos 1 m sobre el terreno de alrededor. El símbolo no puede tocar una curva de nivel.</translation>
+    </message>
         <message>
             <source>Elongated knoll</source>
             <comment>Name of symbol 113</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Colina alargada</translation>
+    </message>
         <message>
             <source>A small obvious elongated knoll which cannot be drawn to scale with a contour (length less than 12 m and width less than 4 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. Knolls larger than this must be shown by contours. The symbol may not be drawn in free form or such that two elongated knoll symbols overlap. The symbol may not touch a contour line.</source>
             <comment>Description of symbol 113</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una pequeña pero obvia colina alargada que no puede representarse a escala con una curva (longitud menor de 12 m y anchura menor de 4 m). La altura de la colina debería ser de al menos 1 m sobre el terreno circundante. Las colinas mayores de estas dimensiones se deben representar con curvas. El símbolo no se puede dibujar con forma libre ni de tal forma que dos colinas alargadas se solapen. El símbolo no puede tocar una curva de nivel.</translation>
+    </message>
         <message>
             <source>Small depression</source>
             <comment>Name of symbol 115</comment>
@@ -2601,8 +2601,8 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Small shallow natural depressions and hollows (minimum diameter 2 m) which cannot be shown to scale by contours are represented by a semicircle. Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol, which is orientated to north. Symbol 116 is used for man-made pits.</source>
             <comment>Description of symbol 115</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Pequeñas y suaves depresiones naturales y hoyos (diámetro mínimo 2 m) que no se pueden representar a escala por curvas se representan con un semicírculo. La profundidad mínima bajo el terreno circundante debería ser 1 m. La ubicación es el centro de gravedad del símbolo, que estará orientado al norte. El símbolo 116 se utiliza para agujeros excavados.</translation>
+    </message>
         <message>
             <source>Pit</source>
             <comment>Name of symbol 116</comment>
@@ -2611,13 +2611,13 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Pits and holes with distinct steep sides which cannot be shown to scale by symbol 106 (minimum diameter 2 m). Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol which is orientated to north.</source>
             <comment>Description of symbol 116</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Hoyos y agujeros con laterales prominentes que no pueden representarse a escala por el símbolo 106 (diámetro mínimo 2 m). La profundidad mínima bajo el terreno circundante debería ser de 1 m. La ubicación es el centro de gravedad del símbolo, que estará orientado al norte.</translation>
+    </message>
         <message>
             <source>Broken ground, small</source>
             <comment>Name of symbol 117.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terreno irregular, pequeño</translation>
+    </message>
         <message>
             <source>An area of pits or knolls which is too intricate to be shown in detail. The density of randomly placed dots may vary according to the detail on the ground.</source>
             <comment>Description of symbol 117.1</comment>
@@ -2626,23 +2626,23 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Broken ground, big</source>
             <comment>Name of symbol 117.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terreno roto, grande</translation>
+    </message>
         <message>
             <source>The size of the dots may vary.</source>
             <comment>Description of symbol 117.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>El tamaño de los puntos puede variar.</translation>
+    </message>
         <message>
             <source>Special land form feature</source>
             <comment>Name of symbol 118</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Elemento especial de forma del terreno</translation>
+    </message>
         <message>
             <source>This symbol can be used for a special small land form feature. The definition of the symbol must be given in the map legend.</source>
             <comment>Description of symbol 118</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Este símbolo se puede utilizar para una forma especial del terreno pequeña. La definición del símbolo se debe dar en la leyenda del mapa.</translation>
+    </message>
         <message>
             <source>Impassable cliff</source>
             <comment>Name of symbol 201</comment>
@@ -3076,7 +3076,7 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Rough open land</source>
             <comment>Name of symbol 403</comment>
-            <translation>Campo abierto y escabroso</translation>
+            <translation>Monte despejado</translation>
     </message>
         <message>
             <source>Heath, moorland, felled areas, newly planted areas (trees lower than ca. 1 m) or other generally open land with rough ground vegetation, heather or tall grass. Symbol 403 may be combined with symbols 407 and 409 to show reduced runnability.</source>
@@ -3086,7 +3086,7 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Rough open land with scattered trees</source>
             <comment>Name of symbol 404</comment>
-            <translation>Campo abierto y escabroso con árboles dispersos</translation>
+            <translation>Monte despejado con árboles dispersos</translation>
     </message>
         <message>
             <source>Where there are scattered trees in rough open land, areas of white (or green) should appear in the tone. Such an area may be generalised by using a regular pattern of large white dots in the yellow screen. Areas smaller than 16 mm in the maps scale are shown as rough open land (403). Individual trees may be added (418, 419, 420).</source>
