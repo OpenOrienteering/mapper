@@ -5387,7 +5387,7 @@ zoom usando la rueda del ratón, si dispone de esos elementos.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1318"/>
         <source>The border of this symbol could not be loaded.</source>
-        <translation>El contorno de este símbolo no se pudo cargar</translation>
+        <translation>El contorno de este símbolo no se pudo cargar.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1595"/>
