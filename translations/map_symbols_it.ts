@@ -6,13 +6,13 @@
         <message>
             <source>Purple</source>
             <comment>Color 0</comment>
-            <translation></translation>
-        </message>
+            <translation type="unfinished">Viola</translation>
+    </message>
         <message>
             <source>Black</source>
             <comment>Color 1</comment>
-            <translation></translation>
-        </message>
+            <translation type="unfinished">Nero</translation>
+    </message>
         <message>
             <source>Opaque White below Black</source>
             <comment>Color 2</comment>
@@ -21,18 +21,18 @@
         <message>
             <source>Black 65%</source>
             <comment>Color 3</comment>
-            <translation></translation>
-        </message>
+            <translation>Nero 65%</translation>
+    </message>
         <message>
             <source>Black 20%</source>
             <comment>Color 4</comment>
-            <translation></translation>
-        </message>
+            <translation>Nero 20%</translation>
+    </message>
         <message>
             <source>Brown 50%</source>
             <comment>Color 5</comment>
-            <translation></translation>
-        </message>
+            <translation>Marrone 50%</translation>
+    </message>
         <message>
             <source>Black below light browns</source>
             <comment>Color 6</comment>
@@ -41,63 +41,63 @@
         <message>
             <source>Opaque Blue</source>
             <comment>Color 7</comment>
-            <translation></translation>
-        </message>
+            <translation>Blu opaco</translation>
+    </message>
         <message>
             <source>Blue</source>
             <comment>Color 8</comment>
-            <translation></translation>
-        </message>
+            <translation>Blu</translation>
+    </message>
         <message>
             <source>Blue 50%</source>
             <comment>Color 9</comment>
-            <translation></translation>
-        </message>
+            <translation>Blu 50%</translation>
+    </message>
         <message>
             <source>Brown</source>
             <comment>Color 10</comment>
-            <translation></translation>
-        </message>
+            <translation>Marrone</translation>
+    </message>
         <message>
             <source>OpenOrienteering Orange</source>
             <comment>Color 11</comment>
-            <translation></translation>
-        </message>
+            <translation type="unfinished">OpenOrienteering Arancione</translation>
+    </message>
         <message>
             <source>Black 25% (Grey)</source>
             <comment>Color 12</comment>
-            <translation></translation>
-        </message>
+            <translation type="unfinished">Nero 25% (Grigio)</translation>
+    </message>
         <message>
             <source>Green 50%, Yellow</source>
             <comment>Color 13</comment>
-            <translation></translation>
-        </message>
+            <translation type="unfinished">Verde  50%, Giallo</translation>
+    </message>
         <message>
             <source>Green</source>
             <comment>Color 14</comment>
-            <translation></translation>
-        </message>
+            <translation>Verde</translation>
+    </message>
         <message>
             <source>Opaque Yellow</source>
             <comment>Color 15</comment>
-            <translation></translation>
-        </message>
+            <translation type="unfinished">Giallo scuro</translation>
+    </message>
         <message>
             <source>Opaque White over Green</source>
             <comment>Color 16</comment>
-            <translation></translation>
-        </message>
+            <translation type="unfinished">Bianco opaco sopra il verde</translation>
+    </message>
         <message>
             <source>Opaque Green 20%</source>
             <comment>Color 17</comment>
-            <translation></translation>
-        </message>
+            <translation type="unfinished">Verde opaco 20%</translation>
+    </message>
         <message>
             <source>Opaque Green 50%</source>
             <comment>Color 18</comment>
-            <translation></translation>
-        </message>
+            <translation>Verde opaco 50%</translation>
+    </message>
         <message>
             <source>Green, Black 50%</source>
             <comment>Color 19</comment>
