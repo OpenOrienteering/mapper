@@ -37,6 +37,13 @@ WorldFile::WorldFile()
 	loaded = false;
 }
 
+WorldFile::WorldFile(const QTransform& wld)
+    : loaded{true}
+    , pixel_to_world{wld}
+{
+	// nothing else
+}
+
 
 bool WorldFile::load(const QString& path)
 {
@@ -71,6 +78,26 @@ bool WorldFile::load(const QString& path)
 	pixel_to_world = pixel_to_world.transposed();
 	loaded = true;
 	return true;
+}
+
+bool WorldFile::save(const QString &path)
+{
+	if (!loaded) { return false;}
+
+	QFile file(path);
+	if (file.open(QIODevice::WriteOnly | QIODevice::Text))
+	{
+		QTextStream stream(&file);
+		stream.setRealNumberPrecision(10);
+		stream << pixel_to_world.m11() << endl;
+		stream << pixel_to_world.m12() << endl;
+		stream << pixel_to_world.m21() << endl;
+		stream << pixel_to_world.m22() << endl;
+		stream << pixel_to_world.m31() << endl;
+		stream << pixel_to_world.m32() << endl;
+		file.close();
+	}
+	return file.error() == QFileDevice::NoError;
 }
 
 bool WorldFile::tryToLoadForImage(const QString& image_path)
