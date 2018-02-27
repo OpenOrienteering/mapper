@@ -77,6 +77,7 @@
 
 #include <printer_properties.h>
 
+#include "core/georeferencing.h"
 #include "core/map.h"
 #include "core/map_printer.h"
 #include "core/map_view.h"
@@ -88,6 +89,7 @@
 #include "gui/map/map_editor.h"
 #include "gui/map/map_widget.h"
 #include "templates/template.h" // IWYU pragma: keep
+#include "templates/world_file.h"
 #include "util/backports.h"
 #include "util/scoped_signals_blocker.h"
 
@@ -264,6 +266,10 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	
 	overprinting_check = new QCheckBox(tr("Simulate overprinting"));
 	layout->addRow(overprinting_check);
+
+	world_file_check = new QCheckBox(tr("Save world file"));
+	layout->addRow(world_file_check);
+	world_file_check->hide();
 	
 	color_mode_combo = new QComboBox();
 	color_mode_combo->setEditable(false);
@@ -327,6 +333,7 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	connect(show_templates_check, &QAbstractButton::clicked, this, &PrintWidget::showTemplatesClicked);
 	connect(show_grid_check, &QAbstractButton::clicked, this, &PrintWidget::showGridClicked);
 	connect(overprinting_check, &QAbstractButton::clicked, this, &PrintWidget::overprintingClicked);
+	connect(world_file_check, &QAbstractButton::clicked, this, &PrintWidget::worldFileClicked);
 	connect(color_mode_combo, &QComboBox::currentTextChanged, this, &PrintWidget::colorModeChanged);
 	
 	connect(preview_button, &QAbstractButton::clicked, this, &PrintWidget::previewClicked);
@@ -597,6 +604,8 @@ void PrintWidget::setTarget(const QPrinterInfo* target)
 	export_button->setDefault(!is_printer);
 	if (printer_properties_button)
 		printer_properties_button->setEnabled(is_printer);
+
+	world_file_check->setVisible(!is_printer);
 	
 	bool is_image_target = target == MapPrinter::imageTarget();
 	vector_mode_button->setEnabled(!is_image_target);
@@ -1083,6 +1092,11 @@ void PrintWidget::overprintingClicked(bool checked)
 	map_printer->setSimulateOverprinting(checked);
 }
 
+void PrintWidget::worldFileClicked(bool checked)
+{
+	map_printer->setSaveWorldFile(checked);
+}
+
 void PrintWidget::colorModeChanged()
 {
 	if (color_mode_combo->currentData().toBool())
@@ -1197,9 +1211,38 @@ void PrintWidget::exportToImage()
 	else
 	{
 		main_window->showStatusBarMessage(tr("Exported successfully to %1").arg(path), 4000);
+		if (map_printer->getOptions().save_world_file)
+			exportWorldFile(path);
 		emit finished(0);
 	}
 	return;
+}
+
+const void PrintWidget::exportWorldFile(QString path)
+{
+	const auto& georef = map->getGeoreferencing();
+	const auto& ref_transform = georef.mapToProjected();
+
+	qreal pixel_per_mm = (map_printer->getOptions().resolution / 25.4) * map_printer->getScaleAdjustment();
+	const auto center_of_pixel = QPointF{0.5/pixel_per_mm, 0.5/pixel_per_mm};
+	const auto top_left = georef.toProjectedCoords(MapCoord{map_printer->getPrintArea().topLeft() + center_of_pixel});
+
+
+	const auto xscale = ref_transform.m11() / pixel_per_mm;
+	const auto yscale = ref_transform.m22() / pixel_per_mm;
+	const auto xskew  = ref_transform.m12() / pixel_per_mm;
+	const auto yskew  = ref_transform.m21() / pixel_per_mm;
+
+	QTransform final_wld(xscale, yskew, 0, xskew, yscale, 0, top_left.x(), top_left.y());
+	WorldFile wld(final_wld);
+
+	// Compute the path for the file which is the original file name with the suffix replaced with wld
+	QFileInfo file_info(path);
+	QString wld_path = file_info.canonicalPath()
+	                   + QLatin1Char('/')
+	                   + file_info.completeBaseName()
+	                   + QStringLiteral(".wld");
+	wld.save(wld_path);
 }
 
 void PrintWidget::exportToPdf()

@@ -158,7 +158,8 @@ MapPrinterOptions::MapPrinterOptions(unsigned int scale, int resolution, MapPrin
    color_mode(DefaultColorMode),
    show_templates(false),
    show_grid(false),
-   simulate_overprinting(false)
+   simulate_overprinting(false),
+   save_world_file(false)
 {
 	// nothing
 }
@@ -711,6 +712,15 @@ void MapPrinter::setSimulateOverprinting(bool enabled)
 	else if (options.simulate_overprinting != enabled)
 	{
 		options.simulate_overprinting = enabled;
+		emit optionsChanged(options);
+	}
+}
+
+void MapPrinter::setSaveWorldFile(bool enabled)
+{
+	if (options.save_world_file != enabled)
+	{
+		options.save_world_file = enabled;
 		emit optionsChanged(options);
 	}
 }

@@ -210,6 +210,9 @@ protected slots:
 	
 	/** This slot reacts to changes of the "Simulate overprinting" option. */
 	void overprintingClicked(bool checked);
+
+    /** This slot reacts to changes of the "Save world file" option */
+	void worldFileClicked(bool checked);
 	
 	/** This slot reacts to changes of the "Color mode" option. */
 	void colorModeChanged();
@@ -259,6 +262,9 @@ protected:
 	
 	/** Exports to an image file. */
 	void exportToImage();
+
+	/** Export a world file */
+	const void exportWorldFile(QString path);
 	
 	/** Exports to a PDF file. */
 	void exportToPdf();
@@ -294,6 +300,7 @@ private:
 	QLabel* templates_warning_text;
 	QCheckBox* show_grid_check;
 	QCheckBox* overprinting_check;
+	QCheckBox* world_file_check;
 	QCheckBox* different_scale_check;
 	QSpinBox* different_scale_edit;
 	QComboBox* color_mode_combo;
