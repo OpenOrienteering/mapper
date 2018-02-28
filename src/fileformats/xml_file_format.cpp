@@ -861,7 +861,7 @@ void XMLFileImporter::importSymbols()
 void XMLFileImporter::importMapParts()
 {
 	XmlElementReader mapparts_element(xml);
-	auto num_parts = mapparts_element.attribute<std::size_t>(literal::parts);
+	auto num_parts = mapparts_element.attribute<std::size_t>(literal::count);
 	auto current_part_index = mapparts_element.attribute<std::size_t>(literal::current);
 	map->parts.clear();
 	map->parts.reserve(qMin(num_parts, std::size_t(20))); // 20 is not a limit
