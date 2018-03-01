@@ -4,7 +4,7 @@
      <sub-class-of type="text/xml"/>
      <comment>Orienteering map</comment>
      <comment xml:lang="cs">Mapa pro orientační běh</comment>
-     <comment xml:lang="da">Orienteringsløb-kort</comment>
+     <comment xml:lang="da">Orienteringskort</comment>
      <comment xml:lang="de">Orientierungslaufkarte</comment>
      <comment xml:lang="eo">Orientiĝa mapo</comment>
      <comment xml:lang="es">Mapa de orientación</comment>
@@ -26,7 +26,7 @@
    <mime-type type="application/x-openorienteering-ocd">
      <comment>Orienteering map</comment>
      <comment xml:lang="cs">Mapa pro orientační běh</comment>
-     <comment xml:lang="da">Orienteringsløb-kort</comment>
+     <comment xml:lang="da">Orienteringskort</comment>
      <comment xml:lang="de">Orientierungslaufkarte</comment>
      <comment xml:lang="eo">Orientiĝa mapo</comment>
      <comment xml:lang="es">Mapa de orientación</comment>
