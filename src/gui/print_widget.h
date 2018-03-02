@@ -264,7 +264,7 @@ protected:
 	void exportToImage();
 
 	/** Export a world file */
-	const void exportWorldFile(QString path);
+	void exportWorldFile(const QString& path) const;
 	
 	/** Exports to a PDF file. */
 	void exportToPdf();

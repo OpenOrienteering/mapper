@@ -1218,7 +1218,7 @@ void PrintWidget::exportToImage()
 	return;
 }
 
-const void PrintWidget::exportWorldFile(QString path)
+void PrintWidget::exportWorldFile(const QString& path) const
 {
 	const auto& georef = map->getGeoreferencing();
 	const auto& ref_transform = georef.mapToProjected();
