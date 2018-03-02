@@ -211,9 +211,6 @@ protected slots:
 	/** This slot reacts to changes of the "Simulate overprinting" option. */
 	void overprintingClicked(bool checked);
 
-    /** This slot reacts to changes of the "Save world file" option */
-	void worldFileClicked(bool checked);
-	
 	/** This slot reacts to changes of the "Color mode" option. */
 	void colorModeChanged();
 	

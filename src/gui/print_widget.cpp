@@ -333,7 +333,6 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	connect(show_templates_check, &QAbstractButton::clicked, this, &PrintWidget::showTemplatesClicked);
 	connect(show_grid_check, &QAbstractButton::clicked, this, &PrintWidget::showGridClicked);
 	connect(overprinting_check, &QAbstractButton::clicked, this, &PrintWidget::overprintingClicked);
-	connect(world_file_check, &QAbstractButton::clicked, this, &PrintWidget::worldFileClicked);
 	connect(color_mode_combo, &QComboBox::currentTextChanged, this, &PrintWidget::colorModeChanged);
 	
 	connect(preview_button, &QAbstractButton::clicked, this, &PrintWidget::previewClicked);
@@ -606,6 +605,9 @@ void PrintWidget::setTarget(const QPrinterInfo* target)
 		printer_properties_button->setEnabled(is_printer);
 
 	world_file_check->setVisible(!is_printer);
+	// If MapCoord (0,0) maps to projected (0,0), then there is probably
+	// no point in writing a world file.
+	world_file_check->setChecked(!map->getGeoreferencing().toProjectedCoords(MapCoordF{}).isNull());
 	
 	bool is_image_target = target == MapPrinter::imageTarget();
 	vector_mode_button->setEnabled(!is_image_target);
@@ -1092,11 +1094,6 @@ void PrintWidget::overprintingClicked(bool checked)
 	map_printer->setSimulateOverprinting(checked);
 }
 
-void PrintWidget::worldFileClicked(bool checked)
-{
-	map_printer->setSaveWorldFile(checked);
-}
-
 void PrintWidget::colorModeChanged()
 {
 	if (color_mode_combo->currentData().toBool())
@@ -1211,8 +1208,8 @@ void PrintWidget::exportToImage()
 	else
 	{
 		main_window->showStatusBarMessage(tr("Exported successfully to %1").arg(path), 4000);
-		if (map_printer->getOptions().save_world_file)
-			exportWorldFile(path);
+		if (world_file_check->isChecked())
+			exportWorldFile(path);  /// \todo Handle errors
 		emit finished(0);
 	}
 	return;
