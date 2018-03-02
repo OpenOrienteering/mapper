@@ -53,6 +53,10 @@ struct WorldFile
 	
 	/// Tries to find and load a world file for the given image path.
 	bool tryToLoadForImage(const QString& image_path);
+	
+	/// Returns the proposed world file path for the given image path.
+	static QString pathForImage(const QString& image_path);
+	
 };
 
 

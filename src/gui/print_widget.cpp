@@ -1235,14 +1235,7 @@ void PrintWidget::exportWorldFile(const QString& path) const
 
 	QTransform final_wld(xscale, yskew, 0, xskew, yscale, 0, top_left.x(), top_left.y());
 	WorldFile wld(final_wld);
-
-	// Compute the path for the file which is the original file name with the suffix replaced with wld
-	QFileInfo file_info(path);
-	QString wld_path = file_info.canonicalPath()
-	                   + QLatin1Char('/')
-	                   + file_info.completeBaseName()
-	                   + QStringLiteral(".wld");
-	wld.save(wld_path);
+	wld.save(WorldFile::pathForImage(path));
 }
 
 void PrintWidget::exportToPdf()
