@@ -890,6 +890,8 @@ Symbol* OgrFileImport::getSymbol(Symbol::Type type, const char* raw_style_string
 		symbol = point_symbols.value(style_string);
 		if (!symbol)
 			symbol = getSymbolForPointGeometry(style_string);
+		if (!symbol)
+			symbol = default_point_symbol;
 		break;
 		
 	case Symbol::Combined:
@@ -979,17 +981,17 @@ void OgrFileImport::applyBrushColor(OGRStyleToolH tool, AreaSymbol* area_symbol)
 Symbol* OgrFileImport::getSymbolForPointGeometry(const QByteArray& style_string)
 {
 	if (style_string.isEmpty())
-		return default_point_symbol;
+		return nullptr;
 	
 	auto manager = this->manager.get();
 	
 	auto data = style_string.constData();
 	if (!OGR_SM_InitStyleString(manager, data))
-		return default_point_symbol;
+		return nullptr;
 	
 	auto num_parts = OGR_SM_GetPartCount(manager, data);
 	if (!num_parts)
-		return default_point_symbol;
+		return nullptr;
 	
 	Symbol* symbol = nullptr;
 	for (int i = 0; !symbol && i < num_parts; ++i)
@@ -1003,6 +1005,8 @@ Symbol* OgrFileImport::getSymbolForPointGeometry(const QByteArray& style_string)
 		auto type = OGR_ST_GetType(tool);
 		switch (type)
 		{
+		case OGRSTCBrush:
+		case OGRSTCPen:
 		case OGRSTCSymbol:
 			symbol = getSymbolForOgrSymbol(tool, style_string);
 			break;
@@ -1105,16 +1109,30 @@ AreaSymbol* OgrFileImport::getAreaSymbol(const QByteArray& style_string)
 
 PointSymbol* OgrFileImport::getSymbolForOgrSymbol(OGRStyleToolH tool, const QByteArray& style_string)
 {
-	Q_ASSERT(OGR_ST_GetType(tool) == OGRSTCSymbol);
-	
 	auto raw_tool_key = OGR_ST_GetStyleString(tool);
 	auto tool_key = QByteArray::fromRawData(raw_tool_key, qstrlen(raw_tool_key));
 	auto symbol = point_symbols.value(tool_key);
 	if (symbol && symbol->getType() == Symbol::Point)
 		return static_cast<PointSymbol*>(symbol);
 	
+	int color_key;
+	switch (OGR_ST_GetType(tool))
+	{
+	case OGRSTCBrush:
+		color_key = OGRSTBrushFColor;
+		break;
+	case OGRSTCPen:
+		color_key = OGRSTPenColor;
+		break;
+	case OGRSTCSymbol:
+		color_key = OGRSTSymbolColor;
+		break;
+	default:
+		return nullptr;
+	};
+	
 	int is_null;
-	auto color_string = OGR_ST_GetParamStr(tool, OGRSTSymbolColor, &is_null);
+	auto color_string = OGR_ST_GetParamStr(tool, color_key, &is_null);
 	if (is_null)
 		return nullptr;
 	

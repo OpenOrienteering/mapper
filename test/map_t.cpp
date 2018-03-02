@@ -76,7 +76,8 @@ void MapTest::iconTest()
 	
 	// Explict update on newly constructed map
 	map.updateSymbolIconZoom();
-	QVERIFY(!qIsNull(map.symbolIconZoom()));
+	const auto default_zoom = map.symbolIconZoom();
+	QVERIFY(default_zoom > 0);
 	
 	// Single symbol, 1 mm
 	auto symbol = duplicate(*map.getUndefinedPoint()).release();
@@ -84,7 +85,15 @@ void MapTest::iconTest()
 	QCOMPARE(symbol->dimensionForIcon(), qreal(1));
 	map.addSymbol(symbol, 0);
 	map.updateSymbolIconZoom();
-	QCOMPARE(map.symbolIconZoom() * symbol->dimensionForIcon(), qreal(0.9));
+	// Helper symbols do not affect the symbol icon zoom.
+	symbol->setIsHelperSymbol(true);
+	QCOMPARE(map.symbolIconZoom(), default_zoom);
+	
+	// The first regular symbol affects the symbol icon zoom.
+	symbol->setIsHelperSymbol(false);
+	map.updateSymbolIconZoom();
+	QVERIFY(!qFuzzyCompare(map.symbolIconZoom(), default_zoom));
+	QCOMPARE(map.symbolIconZoom() * symbol->dimensionForIcon(), qreal(0.9)); // 90%
 	
 	// Change symbol size to 4 mm
 	symbol->setInnerRadius(2000);

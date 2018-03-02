@@ -479,7 +479,7 @@
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="83"/>
         <source>K.o.</source>
-        <translation>Altapoisto</translation>
+        <translation>K.o.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="89"/>

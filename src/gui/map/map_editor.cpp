@@ -3320,7 +3320,7 @@ void MapEditorController::enableGPSDisplay(bool enable)
 		gps_display->startUpdates();
 		
 		// Create gps_track_recorder if we can determine a template track filename
-		const float gps_track_draw_update_interval = 10 * 1000; // in milliseconds
+		constexpr int gps_track_draw_update_interval = 10 * 1000; // in milliseconds
 		if (! window->currentPath().isEmpty())
 		{
 			// Find or create a template for the track with a specific name
@@ -3332,37 +3332,46 @@ void MapEditorController::enableGPSDisplay(bool enable)
 				+ QDate::currentDate().toString(Qt::ISODate)
 				+ QLatin1String(".gpx");
 			
-			int template_index = -1;
-			for (int i = 0; i < map->getNumTemplates(); ++ i)
+			bool new_template = true;  // Indicates that we really add a new template.
+			TemplateTrack* track = nullptr;
+			int template_index = 0;
+			for ( ; template_index < map->getNumTemplates(); ++template_index)
 			{
-				if (map->getTemplate(i)->getTemplatePath().compare(gpx_file_path) == 0
-				    && qstrcmp(map->getTemplate(i)->getTemplateType(), "TemplateTrack") == 0)
+				auto temp = map->getTemplate(template_index);
+				if (temp->getTemplatePath() == gpx_file_path)
 				{
-					template_index = i;
-					if (map->getTemplate(i)->getTemplateState() != Template::Loaded)
+					// There is a template for this track.
+					new_template = false;
+					track = qobject_cast<TemplateTrack*>(temp);
+					if (!track)
 					{
-						// If the template file could not be loaded, don't care
-						// at this point; simply create a new file.
-						TemplateTrack* track = static_cast<TemplateTrack*>(map->getTemplate(i));
-						track->configureForGPSTrack();
-						track->setHasUnsavedChanges(true);
+						// Need to replace the template at template_index
+						map->setTemplateAreaDirty(template_index);
+						map->deleteTemplate(template_index);
 					}
 					break;
 				}
 			}
 			
-			if (template_index == -1)
+			if (!track)
 			{
-				// Create a new template
-				auto new_template = new TemplateTrack(gpx_file_path, map);
-				new_template->configureForGPSTrack();
-				template_index = map->getNumTemplates();
-				map->addTemplate(new_template, template_index);
-				map->setTemplateAreaDirty(template_index);
+				track = new TemplateTrack(gpx_file_path, map);
+				map->addTemplate(track, template_index);
+			}
+			if (track->getTemplateState() != Template::Loaded)
+			{
+				track->loadTemplateFile(false);
+			}
+			track->configureForGPSTrack();
+			map->setTemplateAreaDirty(template_index);
+			if (new_template)
+			{
+				// When the map is saved, the new track must be saved even if it is empty.
+				track->setHasUnsavedChanges(true);
 				map->setTemplatesDirty();
 			}
-			
-			gps_track_recorder = new GPSTrackRecorder(gps_display, static_cast<TemplateTrack*>(map->getTemplate(template_index)), gps_track_draw_update_interval, map_widget);
+				
+			gps_track_recorder = new GPSTrackRecorder(gps_display, track, gps_track_draw_update_interval, map_widget);
 		}
 	}
 	else

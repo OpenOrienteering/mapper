@@ -380,9 +380,11 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 					{
 						path->setPatternOrigin(MapCoord::load(xml));
 					}
-					catch (std::range_error& e)
+					catch (const std::range_error& e)
 					{
-						throw FileFormatException(::OpenOrienteering::MapCoord::tr(e.what()));
+						/// \todo Add a warning, but don't throw - throwing lets loading fail.
+						// throw FileFormatException(::OpenOrienteering::MapCoord::tr(e.what()));
+						qDebug("%s", e.what());
 					}
 				}
 				else

@@ -5259,7 +5259,7 @@ Zoomen ist mit dem Mausrad möglich.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1318"/>
         <source>The border of this symbol could not be loaded.</source>
-        <translation>Der Rand dieses Symbol konnte nicht geladen werden.</translation>
+        <translation>Der Rand dieses Symbols konnte nicht geladen werden.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1595"/>

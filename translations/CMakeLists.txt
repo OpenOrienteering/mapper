@@ -66,6 +66,7 @@ set(map_symbols_translations
   map_symbols_es.ts
   map_symbols_fi.ts
   map_symbols_fr.ts
+  map_symbols_it.ts
   map_symbols_nl.ts
   map_symbols_ru.ts
   map_symbols_sv.ts
