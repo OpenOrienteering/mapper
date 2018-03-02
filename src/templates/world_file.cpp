@@ -23,6 +23,7 @@
 
 #include <QCharRef>
 #include <QFile>
+#include <QFileInfo>
 #include <QFlags>
 #include <QIODevice>
 #include <QLatin1Char>
@@ -126,6 +127,26 @@ bool WorldFile::tryToLoadForImage(const QString& image_path)
 		return true; // NOLINT
 	
 	return false;
+}
+
+QString WorldFile::pathForImage(const QString& image_path)
+{
+	// Just use QFileInfo rather than rolling our own path processing.
+	const QFileInfo info(image_path);
+	const QString base = info.path() + QLatin1Char('/') + info.completeBaseName(); 
+	const auto suffix = info.suffix();
+	switch (suffix.length())
+	{
+	case 0:
+		// If there is no suffix, append ".wld"
+		return base + QLatin1String(".wld");
+	case 3:
+		// If there are three chars, remove middle char and append 'w'
+		return base + QLatin1Char('.') + suffix[0] + suffix[2] + QLatin1Char('w');
+	default:
+		// Otherwise, just append 'w'
+		return base + QLatin1Char('.') + suffix + QLatin1Char('w');
+	}
 }
 
 
