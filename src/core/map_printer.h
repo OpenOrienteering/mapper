@@ -165,10 +165,6 @@ public:
 	 *  Only available in MapPrinterOptions::Raster mode.
 	 */
 	bool simulate_overprinting;
-
-	/** Controls whether to save a world file when outputting an image
-	 */
-	bool save_world_file;
 };
 
 
@@ -347,9 +343,6 @@ public slots:
 	
 	/** Controls whether to print in overprinting simulation mode. */
 	void setSimulateOverprinting(bool enabled);
-
-	/** Controls whether to save a world file */
-	void setSaveWorldFile(bool enabled);
 	
 	/** Controls the color mode. */
 	void setColorMode(MapPrinterOptions::ColorMode color_mode);
