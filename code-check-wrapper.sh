@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-#    Copyright 2017 Kai Pastor
+#    Copyright 2017, 2018 Kai Pastor
 #
 #    This file is part of OpenOrienteering.
 #    
@@ -48,24 +48,32 @@ ENABLE_IWYU=true
 PATTERN=" \
   combined_symbol.cpp \
   configure_grid_dialog.cpp \
+  duplicate_equals_t.cpp \
   file_dialog.cpp \
+  /file_format.cpp \
+  file_format_t.cpp \
   file_import_export.cpp \
   georeferencing_dialog.cpp \
   gdal_manager.cpp \
   key_button_bar.cpp \
+  line_symbol.cpp \
   /map.cpp \
   map_editor.cpp \
   map_find_feature.cpp \
   map_widget.cpp \
   object_mover.cpp \
   object_query.cpp \
+  ocd_file_format.cpp \
   ogr_file_format.cpp \
   ogr_template.cpp \
   overriding_shortcut.cpp \
+  point_symbol.cpp \
   print_widget.cpp \
   renderable.cpp \
   renderable_implementation.cpp \
+  /symbol.cpp \
   symbol_rule_set.cpp \
+  symbol_t.cpp \
   tag_select_widget.cpp \
   template_image.cpp \
   template_tool \
@@ -75,6 +83,7 @@ PATTERN=" \
   /util_gui.cpp \
   world_file.cpp \
   xml_file_format.cpp \
+  xml_stream_util.cpp \
   \
   ocd \
   src/tools/ \

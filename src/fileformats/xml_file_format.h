@@ -1,5 +1,6 @@
 /*
- *    Copyright 2012, 2013, 2014 Pete Curtis, Kai Pastor
+ *    Copyright 2012-2014 Pete Curtis
+ *    Copyright 2012-2014, 2016, 2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,7 +21,7 @@
 #ifndef OPENORIENTEERING_FILE_FORMAT_XML_H
 #define OPENORIENTEERING_FILE_FORMAT_XML_H
 
-#include <cstddef>
+#include <memory>
 
 #include "fileformats/file_format.h"
 
@@ -43,19 +44,20 @@ public:
 	 */
 	XMLFileFormat();
 	
-	/** @brief Returns true if the file starts with the character sequence "<?xml".
-	 * 
-	 *  @todo Needs to deal with different encodings. Provide test cases.
+	
+	/** @brief Returns true for an XML file using the Mapper namespace.
 	 */
-	bool understands(const unsigned char *buffer, std::size_t sz) const override;
+	ImportSupportAssumption understands(const char* buffer, int size) const override;
+	
 	
 	/** @brief Creates an importer for XML files.
 	 */
-	Importer *createImporter(QIODevice* stream, Map *map, MapView *view) const override;
+	std::unique_ptr<Importer> makeImporter(QIODevice* stream, Map* map, MapView* view) const override;
 	
 	/** @brief Creates an exporter for XML files.
 	 */
-	Exporter *createExporter(QIODevice* stream, Map *map, MapView *view) const override;
+	std::unique_ptr<Exporter> makeExporter(QIODevice* stream, Map* map, MapView* view) const override;
+	
 	
 	/** @brief The minimum XML file format version supported by this implementation.
 	 */

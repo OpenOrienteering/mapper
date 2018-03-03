@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016-2017 Kai Pastor
+ *    Copyright 2016-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,7 +20,7 @@
 #ifndef OPENORIENTEERING_OGR_FILE_FORMAT_H
 #define OPENORIENTEERING_OGR_FILE_FORMAT_H
 
-#include <cstddef>
+#include <memory>
 
 #include "fileformats/file_format.h"
 
@@ -49,18 +49,11 @@ public:
 	 */
 	OgrFileFormat();
 	
-	/**
-	 * Always returns true.
-	 * 
-	 * There is no cheap way to determine the answer via OGR.
-	 */
-	bool understands(const unsigned char* buffer, std::size_t size) const override;
 	
 	/**
-	 * Creates an importer object and configures it for the given input stream
-	 * and output map and view.
+	 * Creates an importer for files supported by OGR.
 	 */
-	Importer* createImporter(QIODevice* stream, Map *map, MapView *view) const override;
+	std::unique_ptr<Importer> makeImporter(QIODevice* stream, Map* map, MapView* view) const override;
 };
 
 

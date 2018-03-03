@@ -51,17 +51,6 @@
 
 namespace OpenOrienteering {
 
-// ### Symbol ###
-
-SymbolPropertiesWidget* Symbol::createPropertiesWidget(SymbolSettingDialog* dialog)
-{
-	return new SymbolPropertiesWidget(this, dialog);
-}
-
-
-
-// ### SymbolPropertiesWidget ###
-
 SymbolPropertiesWidget::SymbolPropertiesWidget(Symbol* symbol, SymbolSettingDialog* dialog)
 : QTabWidget()
 , dialog(dialog)

@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Pete Curtis
+ *    Copyright 2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,8 +21,8 @@
 #ifndef OPENORIENTEERING_FILE_FORMAT_H
 #define OPENORIENTEERING_FILE_FORMAT_H
 
-#include <cstddef>
 #include <exception>
+#include <memory>
 
 #include <QtGlobal>
 #include <QByteArray>
@@ -141,6 +142,24 @@ public:
 	 */
 	Q_DECLARE_FLAGS(FormatFeatures, FormatFeatureFlag)
 	
+	
+	/**
+	 * A type which indicates the level of support for importing a file.
+	 * 
+	 * If a file format fully supports a file format, errors during import must
+	 * be regard as fatal. If the level of support is Unknown, an import can be
+	 * attempted, but an import failure allows no conclusion about whether the
+	 * file format is actually unsupported or the file contains invalid data for
+	 * a supported format.
+	 */
+	enum ImportSupportAssumption
+	{
+		NotSupported   = 0,  ///< The FileFormat does not support the file.
+		Unknown        = 1,  ///< The FileFormat support cannot be determine in advance.
+		FullySupported = 2   ///< The FileFormat supports the file.
+	};
+	
+	
 	/** Creates a new file format with the given parameters.
 	 * 
 	 *  Don't use a leading dot on the file extension.
@@ -203,29 +222,36 @@ public:
 	 */
 	bool isExportLossy() const;
 	
-	/** Returns true if this file format believes it is capable of understanding a file that
-	 *  starts with the given byte sequence. "Magic" numbers and version information is commonly
-	 *  placed at the beginning of a file, and this method is used by the application to pre-screen
-	 *  for a suitable Importer. If there is any doubt about whether the file format can successfully
-	 *  process a file, this method should return false.
-	 */
-	virtual bool understands(const unsigned char *buffer, std::size_t sz) const;
 	
-	/** Creates an Importer that will read a map file from the given stream into the given map and view.
-	 *  The caller can then call doImport() in the returned object to start the import process. The caller
-	 *  is responsible for deleting the Importer when it's finished.
-	 *
-	 *  If the Importer could not be created, then this method should throw a FormatException.
+	/** 
+	 * Determines whether this FileFormat is capable of understanding a file
+	 * which starts with the given byte sequence.
+	 * 
+	 * Magic numbers and version information are commonly placed at the
+	 * beginning of a file. This method is used by the application to pre-screen
+	 * for a suitable Importer.
+	 * 
+	 * The default implementation returns Unknown for file formats which support
+	 * import, and NotSupported otherwise.
 	 */
-	virtual Importer* createImporter(QIODevice* stream, Map *map, MapView *view) const;
+	virtual ImportSupportAssumption understands(const char* buffer, int size) const;
 	
-	/** Creates an Exporter that will save the given map and view into the given stream.
-	 *  The caller can then call doExport() in the returned object to start the export process. The caller
-	 *  is responsible for deleting the Exporter when it's finished.
-	 *
-	 *  If the Exporter could not be created, then this method should throw a FormatException.
+	
+	/**
+	 * Creates an Importer that will read a map file from the given stream.
+	 * 
+	 * If the Importer can not be created, a FileFormatException shall be
+	 * thrown. The default implementation does just that.
 	 */
-	virtual Exporter *createExporter(QIODevice* stream, Map *map, MapView *view) const;
+	virtual std::unique_ptr<Importer> makeImporter(QIODevice* stream, Map *map, MapView *view) const;
+	
+	/** 
+	 * Creates an Exporter that will save A map into the given stream.
+	 *
+	 * If the Exporter can not be created, a FileFormatException shall be
+	 * thrown. The default implementation does just that.
+	 */
+	virtual std::unique_ptr<Exporter> makeExporter(QIODevice* stream, Map *map, MapView *view) const;
 	
 private:
 	FileType file_type;

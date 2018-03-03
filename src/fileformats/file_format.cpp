@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Pete Curtis
+ *    Copyright 2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -61,26 +62,20 @@ void FileFormat::addExtension(const QString& file_extension)
 	format_filter = QString::fromLatin1("%1 (*.%2)").arg(format_description, file_extensions.join(QString::fromLatin1(" *.")));
 }
 
-bool FileFormat::understands(const unsigned char *buffer, std::size_t sz) const
+
+FileFormat::ImportSupportAssumption FileFormat::understands(const char* /*buffer*/, int /*size*/) const
 {
-	Q_UNUSED(buffer);
-	Q_UNUSED(sz);
-	return false;
+	return supportsImport() ? Unknown : NotSupported;
 }
 
-Importer *FileFormat::createImporter(QIODevice* stream, Map *map, MapView *view) const
+
+std::unique_ptr<Importer> FileFormat::makeImporter(QIODevice* /*stream*/, Map* /*map*/, MapView* /*view*/) const
 {
-	Q_UNUSED(stream);
-	Q_UNUSED(map);
-	Q_UNUSED(view);
 	throw FileFormatException(QCoreApplication::translate("OpenOrienteering::Importer", "Format (%1) does not support import").arg(description()));
 }
 
-Exporter *FileFormat::createExporter(QIODevice* stream, Map *map, MapView *view) const
+std::unique_ptr<Exporter> FileFormat::makeExporter(QIODevice* /*stream*/, Map* /*map*/, MapView* /*view*/) const
 {
-	Q_UNUSED(stream);
-	Q_UNUSED(map);
-	Q_UNUSED(view);
 	throw FileFormatException(QCoreApplication::translate("OpenOrienteering::Exporter", "Format (%1) does not support export").arg(description()));
 }
 

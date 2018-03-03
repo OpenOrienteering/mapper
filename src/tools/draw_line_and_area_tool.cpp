@@ -26,6 +26,7 @@
 #include <iterator>
 
 #include <QtGlobal>
+#include <QFlags>
 #include <QPainter>
 #include <QPoint>
 
@@ -49,7 +50,7 @@ namespace OpenOrienteering {
 
 DrawLineAndAreaTool::DrawLineAndAreaTool(MapEditorController* editor, Type type, QAction* tool_action, bool is_helper_tool)
 : MapEditorTool(editor, type, tool_action)
-, path_combination(Map::getCoveringCombinedLine()->duplicate()->asCombined())
+, path_combination(duplicate(*Map::getCoveringCombinedLine()))
 , renderables(new MapRenderables(map()))
 , is_helper_tool(is_helper_tool)
 {

@@ -39,6 +39,8 @@ Saves the currently opened file. OCD files will be saved in version 8 format.
 Shows the file dialog for choosing a file name and file format to save the currently opened map.
 
 
+---
+
 #### Import...
 
 Permits the import of maps or data in other formats. Currently the following formats are supported: .omap, .xmap, .ocd (version 6 to 11), .gpx, .osm, .dxf.
@@ -49,16 +51,22 @@ Permits the import of maps or data in other formats. Currently the following for
 Permits the export of the currently opened map to another format. Currently pdf and raster image export are supported.
 
 
+---
+
 #### ![ ](../mapper-images/print.png) Print
 **Ctrl+P**
 
 Shows the print dialog to print the currently opened map.
 
 
+---
+
 #### Settings
 
 Opens the [settings dialog](settings.md). (On OS X, the settings are in the usual place instead.)
 
+
+---
 
 #### ![ ](../mapper-images/close.png) Close
 **Ctrl+W, Ctrl+F4**

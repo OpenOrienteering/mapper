@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -27,7 +27,6 @@
 #include <memory>
 
 #include <QtMath>
-#include <QIODevice>
 #include <QLatin1String>
 #include <QStringRef>
 #include <QXmlStreamReader> // IWYU pragma: keep
@@ -68,55 +67,7 @@ AreaSymbol::FillPattern::FillPattern() noexcept
 	// nothing else
 }
 
-#ifndef NO_NATIVE_FILE_FORMAT
 
-bool AreaSymbol::FillPattern::load(QIODevice* file, int version, Map* map)
-{
-	flags = Option::Default;
-	qint32 itype;
-	file->read((char*)&itype, sizeof(qint32));
-	type = (Type)itype;
-	file->read((char*)&angle, sizeof(float));
-	if (version >= 4)
-	{
-		bool is_rotatable;
-		file->read((char*)&is_rotatable, sizeof(bool));
-		setRotatable(is_rotatable);
-	}
-	file->read((char*)&line_spacing, sizeof(int));
-	if (version >= 3)
-	{
-		file->read((char*)&line_offset, sizeof(int));
-		file->read((char*)&offset_along_line, sizeof(int));
-	}
-	
-	if (type == LinePattern)
-	{
-		int color_index;
-		file->read((char*)&color_index, sizeof(int));
-		line_color = (color_index >= 0) ? map->getColor(color_index) : nullptr;
-		file->read((char*)&line_width, sizeof(int));
-	}
-	else
-	{
-		file->read((char*)&point_distance, sizeof(int));
-		bool have_point;
-		file->read((char*)&have_point, sizeof(bool));
-		if (have_point)
-		{
-			point = new PointSymbol();
-			if (!point->load(file, version, map))
-				return false;
-			if (version < 21)
-				point->setRotatable(true);
-		}
-		else
-			point = nullptr;
-	}
-	return true;
-}
-
-#endif
 
 void AreaSymbol::FillPattern::save(QXmlStreamWriter& xml, const Map& map) const
 {
@@ -173,7 +124,7 @@ void AreaSymbol::FillPattern::load(QXmlStreamReader& xml, const Map& map, Symbol
 		while (xml.readNextStartElement())
 		{
 			if (xml.name() == QLatin1String("symbol"))
-				point = static_cast<PointSymbol*>(Symbol::load(xml, map, symbol_dict));
+				point = static_cast<PointSymbol*>(Symbol::load(xml, map, symbol_dict).release());
 			else
 				xml.skipCurrentElement();
 		}
@@ -186,7 +137,7 @@ bool AreaSymbol::FillPattern::equals(const AreaSymbol::FillPattern& other, Qt::C
 {
 	if (type != other.type)
 		return false;
-	if (qAbs(angle - other.angle) > 1e-05f)
+	if (qAbs(angle - other.angle) > 1e-05)
 		return false;
 	if (flags != other.flags)
 		return false;
@@ -241,7 +192,7 @@ void AreaSymbol::FillPattern::colorDeleted(const MapColor* color)
 	switch (type)
 	{
 	case FillPattern::PointPattern:
-		point->colorDeleted(color);
+		point->colorDeletedEvent(color);
 		break;
 	case FillPattern::LinePattern:
 		if (line_color == color)
@@ -288,7 +239,7 @@ void AreaSymbol::FillPattern::createLine<AreaSymbol::FillPattern::LinePattern>(
         MapCoordF first, MapCoordF second,
         qreal,
         LineSymbol* line,
-        float,
+        qreal,
         const AreaRenderable&,
         ObjectRenderables& output ) const
 {
@@ -303,7 +254,7 @@ void AreaSymbol::FillPattern::createLine<AreaSymbol::FillPattern::PointPattern>(
         MapCoordF first, MapCoordF second,
         qreal delta_offset,
         LineSymbol*,
-        float rotation,
+        qreal rotation,
         const AreaRenderable& outline,
         ObjectRenderables& output ) const
 {
@@ -321,7 +272,7 @@ void AreaSymbol::FillPattern::createLine<AreaSymbol::FillPattern::PointPattern>(
 template <int T>
 void AreaSymbol::FillPattern::createRenderables(
         const AreaRenderable& outline,
-        float delta_rotation,
+        qreal delta_rotation,
         const MapCoord& pattern_origin,
         const QRectF& point_extent,
         LineSymbol* line,
@@ -468,7 +419,7 @@ void AreaSymbol::FillPattern::createRenderables(
 }
 
 
-void AreaSymbol::FillPattern::createRenderables(const AreaRenderable& outline, float delta_rotation, const MapCoord& pattern_origin, ObjectRenderables& output) const
+void AreaSymbol::FillPattern::createRenderables(const AreaRenderable& outline, qreal delta_rotation, const MapCoord& pattern_origin, ObjectRenderables& output) const
 {
 	if (line_spacing <= 0)
 		return;
@@ -477,7 +428,7 @@ void AreaSymbol::FillPattern::createRenderables(const AreaRenderable& outline, f
 		delta_rotation = 0;
 	
 	// Make rotation unique
-	auto rotation = double(angle + delta_rotation);
+	auto rotation = angle + delta_rotation;
 	rotation = fmod(1.0 * rotation, M_PI);
 	if (rotation < 0)
 		rotation = M_PI + rotation;
@@ -524,7 +475,7 @@ void AreaSymbol::FillPattern::createRenderables(const AreaRenderable& outline, f
 void AreaSymbol::FillPattern::createPointPatternLine(
         MapCoordF first, MapCoordF second,
         qreal delta_offset,
-        float rotation,
+        qreal rotation,
         const AreaRenderable& outline,
         ObjectRenderables& output ) const
 {
@@ -616,6 +567,19 @@ AreaSymbol::AreaSymbol() noexcept
 	// nothing else
 }
 
+AreaSymbol::AreaSymbol(const AreaSymbol& proto)
+: Symbol { proto }
+, patterns { proto.patterns }
+, color { proto.color }
+, minimum_area { proto.minimum_area }
+{
+	for (auto& new_pattern : patterns)
+	{
+		if (new_pattern.type == FillPattern::PointPattern)
+			new_pattern.point = Symbol::duplicate(*new_pattern.point).release();
+	}
+}
+
 AreaSymbol::~AreaSymbol()
 {
 	for (auto& pattern : patterns)
@@ -625,22 +589,13 @@ AreaSymbol::~AreaSymbol()
 	}
 }
 
-Symbol* AreaSymbol::duplicate(const MapColorMap* color_map) const
+
+AreaSymbol* AreaSymbol::duplicate() const
 {
-	auto new_area = new AreaSymbol();
-	new_area->duplicateImplCommon(this);
-	new_area->color = color_map ? color_map->value(color) : color;
-	new_area->minimum_area = minimum_area;
-	new_area->patterns = patterns;
-	for (auto& new_pattern : new_area->patterns)
-	{
-		if (new_pattern.type == FillPattern::PointPattern)
-			new_pattern.point = static_cast<PointSymbol*>(new_pattern.point->duplicate(color_map));
-		else if (new_pattern.type == FillPattern::LinePattern && color_map)
-			new_pattern.line_color = color_map->value(new_pattern.line_color);
-	}
-	return new_area;
+	return new AreaSymbol(*this);
 }
+
+
 
 void AreaSymbol::createRenderables(
         const Object *object,
@@ -741,7 +696,7 @@ void AreaSymbol::createHatchingRenderables(
 
 
 
-void AreaSymbol::colorDeleted(const MapColor* color)
+void AreaSymbol::colorDeletedEvent(const MapColor* color)
 {
 	if (containsColor(color))
 	{
@@ -771,6 +726,24 @@ const MapColor* AreaSymbol::guessDominantColor() const
 		++pattern;
 	}
 	return color;
+}
+
+
+void AreaSymbol::replaceColors(const MapColorMap& color_map)
+{
+	color = color_map.value(color);
+	for (auto& pattern : patterns)
+	{
+		switch (pattern.type)
+		{
+		case FillPattern::LinePattern:
+			pattern.line_color = color_map.value(pattern.line_color);
+			break;
+		case FillPattern::PointPattern:
+			pattern.point->replaceColors(color_map);
+			break;
+		}
+	}
 }
 
 
@@ -804,27 +777,7 @@ bool AreaSymbol::hasRotatableFillPattern() const
 	});
 }
 
-#ifndef NO_NATIVE_FILE_FORMAT
 
-bool AreaSymbol::loadImpl(QIODevice* file, int version, Map* map)
-{
-	int temp;
-	file->read((char*)&temp, sizeof(int));
-	color = (temp >= 0) ? map->getColor(temp) : nullptr;
-	if (version >= 2)
-		file->read((char*)&minimum_area, sizeof(int));
-	
-	int size;
-	file->read((char*)&size, sizeof(int));
-	patterns.resize(size);
-	for (int i = 0; i < size; ++i)
-		if (!patterns[i].load(file, version, map))
-			return false;
-	
-	return true;
-}
-
-#endif
 
 void AreaSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 {

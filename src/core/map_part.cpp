@@ -25,7 +25,6 @@
 #include <iterator>
 
 #include <QtGlobal>
-#include <QIODevice>
 #include <QLatin1String>
 #include <QObject>
 #include <QStringRef>
@@ -77,29 +76,6 @@ void MapPart::setName(const QString& new_name)
 }
 
 
-#ifndef NO_NATIVE_FILE_FORMAT
-
-bool MapPart::load(QIODevice* file, int version, Map* map)
-{
-	loadString(file, name);
-	
-	int size;
-	file->read((char*)&size, sizeof(int));
-	objects.resize(size, nullptr);
-	
-	for (Object*& object : objects)
-	{
-		int save_type;
-		file->read((char*)&save_type, sizeof(int));
-		object = Object::getObjectForType(static_cast<Object::Type>(save_type), nullptr);
-		if (!object)
-			return false;
-		object->load(file, version, map);
-	}
-	return true;
-}
-
-#endif
 
 void MapPart::save(QXmlStreamWriter& xml) const
 {

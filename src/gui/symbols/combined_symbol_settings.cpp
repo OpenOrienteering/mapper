@@ -221,20 +221,20 @@ void CombinedSymbolSettings::symbolChanged()
 		else // if (symbol_edits[index]->customID() == 2)
 			new_symbol_type = Symbol::Area;
 		
-		Symbol* new_symbol = nullptr;
+		std::unique_ptr<Symbol> new_symbol;
 		if (symbol->getPart(index) && new_symbol_type == symbol->getPart(index)->getType())
 		{
 			if (QMessageBox::question(this, tr("Change from public to private symbol"),
 				tr("Take the old symbol as template for the private symbol?"), QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
 			{
-				new_symbol = symbol->getPart(index)->duplicate();
+				new_symbol = duplicate(*symbol->getPart(index));
 			}
 		}
 		
 		if (!new_symbol)
-			new_symbol = Symbol::getSymbolForType(new_symbol_type);
+			new_symbol = Symbol::makeSymbolForType(new_symbol_type);
 		
-		symbol->setPart(index, new_symbol, true);
+		symbol->setPart(index, new_symbol.release(), true);
 		showEditDialog(index);
 	}
 	else
@@ -267,7 +267,7 @@ void CombinedSymbolSettings::showEditDialog(int index)
 		return;
 	}
 	
-	auto part = std::unique_ptr<Symbol>(symbol->getPart(index)->duplicate());
+	auto part = Symbol::duplicate(*symbol->getPart(index));
 	SymbolSettingDialog sub_dialog(part.get(), dialog->getSourceMap(), this);
 	sub_dialog.setWindowModality(Qt::WindowModal);
 	if (sub_dialog.exec() == QDialog::Accepted)

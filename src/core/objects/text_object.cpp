@@ -124,9 +124,9 @@ int TextObjectLineInfo::getIndex(double pos_x) const
 
 TextObject::TextObject(const Symbol* symbol)
  : Object(Object::Text, symbol)
+ , rotation(0)
  , h_align(AlignHCenter)
  , v_align(AlignVCenter)
- , rotation(0.0f)
 {
 	Q_ASSERT(!symbol || (symbol->getType() == Symbol::Text));
 	coords.reserve(2);
@@ -136,9 +136,9 @@ TextObject::TextObject(const Symbol* symbol)
 TextObject::TextObject(const TextObject& proto)
  : Object(proto)
  , text(proto.text)
+ , rotation(proto.rotation)
  , h_align(proto.h_align)
  , v_align(proto.v_align)
- , rotation(proto.rotation)
  , line_infos(proto.line_infos)
 {
 	// nothing
@@ -212,7 +212,7 @@ std::vector<QPointF> TextObject::controlPoints() const
 	else
 	{
 		QTransform transform;
-		transform.rotate(-qRadiansToDegrees(qreal(getRotation())));
+		transform.rotate(-qRadiansToDegrees(getRotation()));
 		
 		handles[0] += transform.map(QPointF(+getBoxWidth() / 2, -getBoxHeight() / 2));
 		handles[1] += transform.map(QPointF(+getBoxWidth() / 2, +getBoxHeight() / 2));
@@ -271,7 +271,7 @@ void TextObject::setVerticalAlignment(TextObject::VerticalAlignment v_align)
 	setOutputDirty();
 }
 
-void TextObject::setRotation(float new_rotation)
+void TextObject::setRotation(qreal new_rotation)
 {
 	rotation = new_rotation;
 	setOutputDirty();

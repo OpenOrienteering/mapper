@@ -34,7 +34,6 @@
 
 #include "map_coord.h"
 
-class QIODevice;
 class QLatin1String;
 class QRectF;
 class QXmlStreamReader;
@@ -115,8 +114,6 @@ public:
 	/** Destroys the map view. */
 	~MapView() override;
 	
-	/** Loads the map view in the old "native" format from the file. */
-	void load(QIODevice* file, int version);
 	
 	/**
 	 * Saves the map view state to an XML stream.

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Pete Curtis
- *    Copyright 2013-2017  Kai Pastor
+ *    Copyright 2013-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -50,8 +50,8 @@
 #include "templates/template.h"
 #include "templates/template_image.h"
 #include "templates/template_map.h"
-#include "util/util.h"
 #include "util/encoding.h"
+#include "util/util.h"
 
 
 namespace OpenOrienteering {
@@ -65,22 +65,30 @@ OCAD8FileFormat::OCAD8FileFormat()
 	// Nothing
 }
 
-bool OCAD8FileFormat::understands(const unsigned char* buffer, std::size_t sz) const
+
+FileFormat::ImportSupportAssumption OCAD8FileFormat::understands(const char* buffer, int size) const
 {
     // The first two bytes of the file must be AD 0C.
-    if (sz >= 2 && buffer[0] == 0xAD && buffer[1] == 0x0C) return true;
-    return false;
+	if (size < 2)
+		return Unknown;
+	else if (quint8(buffer[0]) == 0xAD && buffer[1] == 0x0C)
+		return FullySupported;
+	else
+		return NotSupported;
 }
 
-Importer* OCAD8FileFormat::createImporter(QIODevice* stream, Map *map, MapView *view) const
+
+std::unique_ptr<Importer> OCAD8FileFormat::makeImporter(QIODevice* stream, Map *map, MapView *view) const
 {
-	return new OCAD8FileImport(stream, map, view);
+	return std::make_unique<OCAD8FileImport>(stream, map, view);
 }
 
-Exporter* OCAD8FileFormat::createExporter(QIODevice* stream, Map* map, MapView* view) const
+std::unique_ptr<Exporter> OCAD8FileFormat::makeExporter(QIODevice* stream, Map* map, MapView* view) const
 {
-    return new OCAD8FileExport(stream, map, view);
+	return std::make_unique<OCAD8FileExport>(stream, map, view);
 }
+
+
 
 // ### OCAD8FileImport ###
 

@@ -79,7 +79,7 @@ void MapTest::iconTest()
 	QVERIFY(!qIsNull(map.symbolIconZoom()));
 	
 	// Single symbol, 1 mm
-	auto symbol = static_cast<PointSymbol*>(map.getUndefinedPoint()->duplicate());
+	auto symbol = duplicate(*map.getUndefinedPoint()).release();
 	symbol->setInnerRadius(500);
 	QCOMPARE(symbol->dimensionForIcon(), qreal(1));
 	map.addSymbol(symbol, 0);
@@ -92,11 +92,11 @@ void MapTest::iconTest()
 	map.updateSymbolIconZoom();
 	QCOMPARE(map.symbolIconZoom() * symbol->dimensionForIcon(), qreal(1));
 	
-	map.addSymbol(symbol->duplicate(), 1);
+	map.addSymbol(duplicate(*symbol).release(), 1);
 	map.updateSymbolIconZoom();
 	QCOMPARE(map.symbolIconZoom() * symbol->dimensionForIcon(), qreal(1));
 	
-	map.addSymbol(symbol->duplicate(), 2);
+	map.addSymbol(duplicate(*symbol).release(), 2);
 	map.updateSymbolIconZoom();
 	QCOMPARE(map.symbolIconZoom() * symbol->dimensionForIcon(), qreal(1));
 	

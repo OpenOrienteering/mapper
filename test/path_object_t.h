@@ -48,7 +48,6 @@ private slots:
 	
 	/** Tests finding intersections with calcAllIntersectionsWith(). */
 	void calcIntersectionsTest();
-	void calcIntersectionsTest_data();
 	
 	/** Tests PathCoord and SplitPathCoord for a non-trivial zero-length path. */
 	void atypicalPathTest();

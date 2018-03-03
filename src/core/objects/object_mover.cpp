@@ -233,8 +233,11 @@ void ObjectMover::calculateConstraints()
 				
 				// If a curve ends here, add last handle
 				auto& part = *path->findPartForIndex(index);
-				if (index != part.first_index &&
-				    path->getCoordinate(part.prevCoordIndex(index)).isCurveStart())
+				if (index == part.first_index && part.isClosed())
+				{
+					index = part.last_index;
+				}
+				if (index > part.first_index && path->getCoordinate(part.prevCoordIndex(index)).isCurveStart())
 				{
 					handles.push_back(index - 1);
 				}

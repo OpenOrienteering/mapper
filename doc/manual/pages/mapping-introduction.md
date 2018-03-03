@@ -13,21 +13,21 @@ edited: 1 December 2015
 
 ## Topics to be covered
 
- - Suitability of orienteering terrains, permissions, scale.  
+ - Suitability of orienteering terrains, permissions, scale.
    Things to consider before starting a new map.
- - Acquiring map templates (aka base maps)  
+ - Acquiring map templates (aka base maps)
    Good templates save you lots of time, so it is often worth looking for the best templates available.
- - Loading and matching templates  
+ - Loading and matching templates
    After getting the templates, the map file is created where they need to be put into a common coordinate system.
- - Orienteering symbol sets  
+ - Orienteering symbol sets
    Before starting to map, you should become (more) familiar with the orienteering symbol sets.
- - Surveying: classic method  
+ - Surveying: classic method
    Surveying the terrain by printing out templates, drawing in map details, scanning your drawings and doing the final drawing at home.
- - Surveying: digital method  
+ - Surveying: digital method
    Surveying the terrain with help of mobile computers.
- - Drawing  
+ - Drawing
    Doing the final drawing with OpenOrienteering Mapper.
- - Generalization  
+ - Generalization
    The importance of generalization.
 
 ## Surveying (classic method)
@@ -79,9 +79,9 @@ The IOF Map Commission has prepared an offset printed paper test sheet (Print Te
 3. The difference between those two sets of values will indicate the adjustments required. Using the example values the Color Window line for 100% brown should have no adjustment to the cyan field, +.111 to magenta, +.049 to yellow, and +.314 to black. Those adjustments must be made in the OOMapper Color Window. Having made similar adjustments for all colors, then run the step 2 print trial again.
 4. In a perfect world the differences will all reduce to zero. In practice they may not because of non-linearities in the hardware and colors like brown are poorly defined on the color palette. Several iterations may be required to get a good match.
 
-The same general approach may be employed but using the RGB color space instead. 
+The same general approach may be employed but using the RGB color space instead.
 
-When a contour is printed in an area of green on the map the brown of the contour loses contrast and the contour line becomes harder to see.  If the map is offset printed the green is laid down without a gap and the brown is printed over it while the green ink is still wet, with the result that the green and brown blend together where they are coincident. This creates a segment of line which is somewhat darker than the 100% brown line outside the green and the darker color is noted to be easier to see. This very desirable result is called an over-printing effect. 
+When a contour is printed in an area of green on the map the brown of the contour loses contrast and the contour line becomes harder to see.  If the map is offset printed the green is laid down without a gap and the brown is printed over it while the green ink is still wet, with the result that the green and brown blend together where they are coincident. This creates a segment of line which is somewhat darker than the 100% brown line outside the green and the darker color is noted to be easier to see. This very desirable result is called an over-printing effect.
 
 The Print Tech Test Sheet is designed to demonstrate beneficial over-printing effects where these are achieved. Consider the visibility of the wavy contour lines (and blue creek lines) printed against a variety of backgrounds on the lower left of the sheet.
 

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map xmlns="http://openorienteering.org/apps/mapper/xml/v2" version="7">
+<notes>Line symbol start/end symbol test file</notes>
+<georeferencing scale="10000"><projected_crs id="Local"/></georeferencing>
+<colors count="4">
+<color priority="0" name="Blue" c="1.000" m="1.000" y="0.000" k="0.000" opacity="1.000"><cmyk method="rgb"/><rgb method="custom" r="0.000" g="0.000" b="1.000"/></color>
+<color priority="1" name="Black" c="1.000" m="1.000" y="1.000" k="1.000" opacity="1.000"><cmyk method="rgb"/><rgb method="custom" r="0.000" g="0.000" b="0.000"/></color>
+<color priority="2" name="Red" c="0.000" m="1.000" y="1.000" k="0.000" opacity="1.000"><cmyk method="rgb"/><rgb method="custom" r="1.000" g="0.000" b="0.000"/></color>
+<color priority="3" name="Green" c="1.000" m="0.000" y="1.000" k="0.000" opacity="1.000"><cmyk method="rgb"/><rgb method="custom" r="0.000" g="1.000" b="0.000"/></color>
+</colors>
+<barrier version="6" required="0.6.0">
+<symbols count="2">
+<symbol type="2" id="0" code="1" name="Line symbol with start symbol and end symbol"><line_symbol color="1" line_width="270" minimum_length="0" join_style="0" cap_style="0" pointed_cap_length="1500" dashed="true" segment_length="6000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="6000" break_length="1500" dashes_in_group="1" in_group_break_length="750" mid_symbols_per_spot="1" mid_symbol_distance="0"><start_symbol><symbol type="1" code="" name="Start symbol"><point_symbol rotatable="true" inner_radius="1000" inner_color="2" outer_width="0" outer_color="-1" elements="0"/></symbol></start_symbol><end_symbol><symbol type="1" code="" name="End symbol"><point_symbol rotatable="true" inner_radius="675" inner_color="0" outer_width="0" outer_color="-1" elements="0"/></symbol></end_symbol></line_symbol></symbol>
+<symbol type="16" id="1" code="3" name="Combined symbol, area symbol + line symbol"><combined_symbol parts="2"><part private="true"><symbol type="4" code="2" name="Area symbol"><area_symbol inner_color="3" min_area="2250" patterns="0"/></symbol></part><part symbol="0"/></combined_symbol></symbol>
+</symbols>
+<parts count="1" current="0">
+<part name="default part"><objects count="4">
+<object type="1" symbol="0"><coords count="2">-5000 5000;35000 5000;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
+<object type="1" symbol="0"><coords count="5">-5000 10000 32;5000 10000 32;5000 20000 32;-5000 20000 32;-5000 10000 50;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
+<object type="1" symbol="1"><coords count="5">10000 10000 32;20000 10000 32;20000 20000 32;10000 20000 32;10000 10000 50;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
+<object type="1" symbol="1"><coords count="10">25000 10000 32;35000 10000 32;35000 20000 32;25000 20000 32;25000 10000 50;32478 17362 32;32478 12500;27404 12500;27404 17362 32;32478 17362 50;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
+</objects></part>
+</parts>
+<templates count="0" first_front_template="0">
+<defaults use_meters_per_pixel="true" meters_per_pixel="0" dpi="0" scale="0"/>
+</templates>
+<view>
+<grid color="#80646464" display="0" alignment="0" additional_rotation="0" unit="0" h_spacing="5" v_spacing="5" h_offset="0" v_offset="0" snapping_enabled="true"/>
+<map_view zoom="5.9805" rotation="0" position_x="14838" position_y="12068" grid="true"><map opacity="1" visible="true"/><templates count="0"/></map_view>
+</view>
+</barrier>
+<barrier version="6" required="0.6.0">
+<undo/>
+<redo/>
+</barrier>
+</map>

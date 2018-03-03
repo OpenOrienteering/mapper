@@ -116,14 +116,12 @@ MapColor* MapColor::duplicate() const
 
 bool MapColor::isBlack() const
 {
-	Q_ASSERT(rgb.isBlack() == cmyk.isBlack());
-	return rgb.isBlack();
+	return rgb.isBlack() && cmyk.isBlack();
 }
 
 bool MapColor::isWhite() const
 {
-	Q_ASSERT(rgb.isWhite() == cmyk.isWhite());
-	return rgb.isWhite();
+	return rgb.isWhite() && cmyk.isWhite();
 }
 
 

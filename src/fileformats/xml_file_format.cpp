@@ -1,7 +1,7 @@
 /*
  *    Copyright 2012 Pete Curtis
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017  Kai Pastor
+ *    Copyright 2012-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,6 +22,7 @@
 #include "xml_file_format.h"
 #include "xml_file_format_p.h"
 
+#include <cstddef>
 #include <memory>
 #include <vector>
 
@@ -75,12 +76,11 @@ int XMLFileFormat::active_version = 5; // updated by XMLFileExporter::doExport()
 
 namespace {
 
-const char* magic_string = "<?xml ";
-
 QString mapperNamespace()
 {
 	return QStringLiteral("http://openorienteering.org/apps/mapper/xml/v2");
 }
+
 
 }  // namespace
 
@@ -93,20 +93,42 @@ XMLFileFormat::XMLFileFormat()
 	addExtension(QString::fromLatin1("xmap"));
 }
 
-bool XMLFileFormat::understands(const unsigned char *buffer, std::size_t sz) const
+
+FileFormat::ImportSupportAssumption XMLFileFormat::understands(const char* buffer, int size) const
 {
-	static const uint len = qstrlen(magic_string);
-	return (sz >= len && qstrncmp(reinterpret_cast<const char*>(buffer), magic_string, len) == 0);
+	const auto data = QByteArray::fromRawData(buffer, size);
+	if (size >= 4 && qstrncmp(buffer, "OMAP", 4) == 0)
+	    return FullySupported;  // Legacy binary format. Final error raised in doImport().
+	
+	if (size > 38)  // length of "<?xml ...>"
+	{
+		QXmlStreamReader xml(data);
+		if (xml.readNextStartElement())
+		{
+			if (xml.name() != QLatin1String("map"))
+				return NotSupported;
+			else if (xml.namespaceUri() == mapperNamespace())
+				return FullySupported;
+			else if (xml.namespaceUri() == QLatin1String("http://oorienteering.sourceforge.net/mapper/xml/v2"))
+			    return FullySupported;
+		}
+	}
+	auto trimmed = data.trimmed();
+	if (!trimmed.isEmpty() && !trimmed.startsWith('<'))
+		return NotSupported;
+		
+	return Unknown;
 }
 
-Importer *XMLFileFormat::createImporter(QIODevice* stream, Map *map, MapView *view) const
+
+std::unique_ptr<Importer> XMLFileFormat::makeImporter(QIODevice* stream, Map* map, MapView* view) const
 {
-	return new XMLFileImporter(stream, map, view);
+	return std::make_unique<XMLFileImporter>(stream, map, view);
 }
 
-Exporter *XMLFileFormat::createExporter(QIODevice* stream, Map *map, MapView *view) const
+std::unique_ptr<Exporter> XMLFileFormat::makeExporter(QIODevice* stream, Map* map, MapView* view) const
 {
-	return new XMLFileExporter(stream, map, view);
+	return std::make_unique<XMLFileExporter>(stream, map, view);
 }
 
 
@@ -500,7 +522,19 @@ void XMLFileImporter::import(bool load_symbols_only)
 {
 	if (!xml.readNextStartElement() || xml.name() != literal::map)
 	{
-		xml.raiseError(::OpenOrienteering::Importer::tr("Unsupported file format."));
+		if (stream->seek(0))
+		{
+			char data[4] = {};
+			stream->read(data, 4);
+			if (qstrncmp(reinterpret_cast<const char*>(data), "OMAP", 4) == 0)
+			{
+				throw FileFormatException(::OpenOrienteering::Importer::tr(
+				  "Unsupported obsolete file format version. "
+				  "Please use program version v%1 or older "
+				  "to load and update the file.").arg(QLatin1String("0.8")));
+			}
+		}
+		throw FileFormatException(::OpenOrienteering::Importer::tr("Unsupported file format."));
 	}
 	
 	XmlElementReader map_element(xml);
@@ -842,7 +876,7 @@ void XMLFileImporter::importSymbols()
 	{
 		if (xml.name() == literal::symbol)
 		{
-			map->symbols.push_back(Symbol::load(xml, *map, symbol_dict));
+			map->symbols.push_back(Symbol::load(xml, *map, symbol_dict).release());
 		}
 		else
 		{

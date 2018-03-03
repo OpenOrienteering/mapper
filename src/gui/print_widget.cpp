@@ -1353,7 +1353,7 @@ bool PrintWidget::checkForEmptyMap()
 	return false;
 }
 
-#endif
-
 
 }  // namespace OpenOrienteering
+
+#endif  // QT_PRINTSUPPORT_LIB

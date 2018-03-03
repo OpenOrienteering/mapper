@@ -25,7 +25,7 @@ include(FeatureSummary)
 
 # Project declaration
 
-project(Mapper VERSION 0.8.0 LANGUAGES CXX C)
+project(Mapper VERSION 0.9.0 LANGUAGES CXX C)
 
 if(Mapper_VERSION_DISPLAY)
 	message(STATUS "Custom version display string: \"${Mapper_VERSION_DISPLAY}\"")
@@ -204,10 +204,6 @@ if(big_endian)
 	add_definitions(-DMAPPER_BIG_ENDIAN)
 endif()
 
-
-if(ANDROID OR big_endian)
-	add_definitions(-DNO_NATIVE_FILE_FORMAT)
-endif()
 
 if(UNIX AND NOT APPLE)
 #	set(CMAKE_INSTALL_RPATH "\$ORIGIN/../lib/${Mapper_PACKAGE_NAME}/lib")

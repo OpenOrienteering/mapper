@@ -107,6 +107,7 @@
 #include "core/symbols/point_symbol.h"
 #include "core/symbols/area_symbol.h"
 #include "core/symbols/symbol.h"
+#include "core/symbols/symbol_icon_decorator.h"
 #include "fileformats/file_format.h"
 #include "fileformats/file_format_registry.h"
 #include "gui/configure_grid_dialog.h"
@@ -874,6 +875,8 @@ void MapEditorController::createActions()
 	configure_grid_act->setMenuRole(QAction::NoRole);
 #endif
 	pan_act = newToolAction("panmap", tr("Pan"), this, SLOT(pan()), "move.png", QString{}, "view_menu.html");
+	move_to_gps_pos_act = newAction("movegps", tr("Move to my location"), this, SLOT(moveToGpsPos()), "move-to-gps.png", QString{}, "view_menu.html");
+	move_to_gps_pos_act->setEnabled(false);
 	zoom_in_act = newAction("zoomin", tr("Zoom in"), this, SLOT(zoomIn()), "view-zoom-in.png", QString{}, "view_menu.html");
 	zoom_out_act = newAction("zoomout", tr("Zoom out"), this, SLOT(zoomOut()), "view-zoom-out.png", QString{}, "view_menu.html");
 	show_all_act = newAction("showall", tr("Show whole map"), this, SLOT(showWholeMap()), "view-show-all.png", QString{}, "view_menu.html");
@@ -1366,11 +1369,25 @@ void MapEditorController::createMobileGUI()
 	bottom_action_bar->addAction(pan_act, 1, col++);
 	
 	bottom_action_bar->addAction(zoom_out_act, 0, col);
-	bottom_action_bar->addAction(gps_temporary_clear_act, 1, col++);
+	auto zoom_out_button = bottom_action_bar->getButtonForAction(zoom_out_act);
+	auto mobile_zoom_out_menu = new QMenu(zoom_out_button);
+	auto zoom_1x_action = mobile_zoom_out_menu->addAction(tr("1x zoom"));
+	connect(zoom_1x_action, &QAction::triggered, [this]() {
+		main_view->setZoom(1);
+	});
+	auto zoom_2x_action = mobile_zoom_out_menu->addAction(tr("2x zoom"));
+	connect(zoom_2x_action, &QAction::triggered, [this]() {
+		main_view->setZoom(2);
+	});
+	zoom_out_button->setMenu(mobile_zoom_out_menu);
+
+	bottom_action_bar->addAction(move_to_gps_pos_act, 1, col++);
 	
 	bottom_action_bar->addAction(gps_temporary_path_act, 0, col);
 	bottom_action_bar->addAction(gps_temporary_point_act, 1, col++);
 	
+	bottom_action_bar->addAction(gps_temporary_clear_act, 0, col++);
+
 	bottom_action_bar->addAction(paint_on_template_act, 0, col);
 	bottom_action_bar->addAction(paint_on_template_settings_act, 1, col++);
 	
@@ -1760,6 +1777,15 @@ void MapEditorController::pan()
 {
 	setTool(new PanTool(this, pan_act));
 }
+
+void MapEditorController::moveToGpsPos()
+{
+	if (!gps_display->hasValidPosition())
+		return;
+	auto cur_gps_pos = gps_display->getLatestGPSCoord();
+	main_view->setCenter({ cur_gps_pos.x(), cur_gps_pos.y() });
+}
+
 void MapEditorController::zoomIn()
 {
 	main_view->zoomSteps(1);
@@ -2103,8 +2129,10 @@ void MapEditorController::selectedSymbolsChanged()
 			QPainter painter(&pixmap);
 			painter.setFont(font);
 			QString text = (symbol_widget->selectedSymbolsCount() == 0) ?
-				tr("No\nsymbol\nselected", "Keep it short. Should not be much longer per line than the longest word in the original.") :
-				tr("Multiple\nsymbols\nselected", "Keep it short. Should not be much longer per line than the longest word in the original.");
+				//: Keep it short. Should not be much longer per line than the longest word in the original.
+				tr("No\nsymbol\nselected") :
+				//: Keep it short. Should not be much longer per line than the longest word in the original.
+				tr("Multiple\nsymbols\nselected");
 			painter.drawText(pixmap.rect(), Qt::AlignCenter, text);
 			
 			symbol_button->setMenu(nullptr);
@@ -2112,6 +2140,14 @@ void MapEditorController::selectedSymbolsChanged()
 		else //if (symbol_widget->getNumSelectedSymbols() == 1)
 		{
 			auto image = symbol->createIcon(*map, qMin(icon_size.width(), icon_size.height()));
+			if (symbol->isHidden() || symbol->isProtected())
+			{
+				QPainter p(&image);
+				if (symbol->isHidden())
+					HiddenSymbolDecorator(icon_size.width()).draw(p);
+				if (symbol->isProtected())
+					ProtectedSymbolDecorator(icon_size.width()).draw(p);
+			}
 			pixmap = QPixmap::fromImage(image);
 			
 			symbol_button->setMenu(mobile_symbol_button_menu);
@@ -2507,7 +2543,7 @@ void MapEditorController::switchSymbolClicked()
 	Symbol* symbol = activeSymbol();
 	
 	bool close_paths = false, split_up = false;
-	Symbol::Type contained_types = symbol->getContainedTypes();
+	auto contained_types = symbol->getContainedTypes();
 	if (contained_types & Symbol::Area && !(contained_types & Symbol::Line))
 		close_paths = true;
 	else if (contained_types & Symbol::Line && !(contained_types & Symbol::Area))
@@ -2624,7 +2660,7 @@ void MapEditorController::fillBorderClicked()
 	new_objects.reserve(map->getNumSelectedObjects());
 	
 	bool close_paths = false, split_up = false;
-	Symbol::Type contained_types = symbol->getContainedTypes();
+	auto contained_types = symbol->getContainedTypes();
 	if (contained_types & Symbol::Area && !(contained_types & Symbol::Line))
 		close_paths = true;
 	else if (contained_types & Symbol::Line && !(contained_types & Symbol::Area))
@@ -3359,6 +3395,7 @@ void MapEditorController::updateDrawPointGPSAvailability()
 {
 	const Symbol* symbol = activeSymbol();
 	draw_point_gps_act->setEnabled(symbol && gps_display->isVisible() && symbol->getType() == Symbol::Point && !symbol->isHidden());
+	move_to_gps_pos_act->setEnabled(gps_display->isVisible());
 }
 
 void MapEditorController::drawPointGPSClicked()

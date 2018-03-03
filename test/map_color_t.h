@@ -42,6 +42,10 @@ private slots:
 	
 	/** Tests spot colors */
 	void spotColorTest();
+	
+	/** Tests other feature */
+	void miscTest();
+	
 };
 
 #endif

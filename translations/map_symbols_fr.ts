@@ -6574,7 +6574,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
             <comment>Description of symbol 101</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Une ligne passant par des points de même altitude. L&apos;équidistance habituelle entre deux courbes de niveau est 5 m (sur le terrain). L&apos;écart minimum entre deux courbes de niveau est 0,25 mm (sur la carte).</translation>
         </message>
         <message>
             <source>Index contour</source>
@@ -6594,7 +6594,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <message>
             <source>Slope lines may be drawn on the lower side of a contour line, e.g. along the line of a re-entrant or in a depression. They are used only where it is necessary to clarify the direction of slope.</source>
             <comment>Description of symbol 104</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Les tirets de pente peuvent être ajoutés sur le côté aval d&apos;une courbe de niveau, par exemple à l&apos;endroit d&apos;un rentrant ou d&apos;une dépression. Ils ne sont dessinés que si la compréhension de la carte nécessite de préciser le sens de la pente.</translation>
         </message>
         <message>
             <source>Contour value</source>
@@ -8384,7 +8384,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
             <comment>Description of symbol 101</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Une ligne passant par des points de même altitude. L&apos;équidistance habituelle entre deux courbes de niveau est 5 m (sur le terrain). L&apos;écart minimum entre deux courbes de niveau est 0,25 mm (sur la carte).</translation>
         </message>
         <message>
             <source>Contour (narrow)</source>
@@ -8394,7 +8394,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
             <comment>Description of symbol 101.1</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Une ligne passant par des points de même altitude. L&apos;équidistance habituelle entre deux courbes de niveau est 5 m (sur le terrain). L&apos;écart minimum entre deux courbes de niveau est 0,25 mm (sur la carte).</translation>
         </message>
         <message>
             <source>Index contour</source>
@@ -8424,7 +8424,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Slope lines may be drawn on the lower side of a contour line, e.g. along the line of a re-entrant or in a depression. They are used only where it is necessary to clarify the direction of slope.</source>
             <comment>Description of symbol 104</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Les tirets de pente peuvent être ajoutés sur le côté aval d&apos;une courbe de niveau, par exemple à l&apos;endroit d&apos;un rentrant ou d&apos;une dépression. Ils ne sont dessinés que si la compréhension de la carte nécessite de préciser le sens de la pente.</translation>
         </message>
         <message>
             <source>Contour value</source>

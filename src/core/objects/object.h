@@ -38,7 +38,6 @@
 #include "core/renderables/renderable.h"
 #include "core/symbols/symbol.h"
 
-class QIODevice;
 class QTransform;
 class QXmlStreamReader;
 class QXmlStreamWriter;
@@ -146,9 +145,6 @@ public:
 	/** Convenience cast to TextObject with type checking */
 	const TextObject* asText() const;
 	
-	/** Loads the object in the old "native" file format from the given file. */
-	void load(QIODevice* file, int version, Map* map);
-	
 	/** Saves the object in xml format to the given stream. */
 	void save(QXmlStreamWriter& xml) const;
 	/**
@@ -197,11 +193,11 @@ public:
 	
 	/** Rotates the whole object around the center point.
 	 *  The angle must be given in radians. */
-	void rotateAround(MapCoordF center, double angle);
+	void rotateAround(MapCoordF center, qreal angle);
 	
 	/** Rotates the whole object around the center (0, 0).
 	 *  The angle must be given in radians. */
-	void rotate(double angle);
+	void rotate(qreal angle);
 	
 	/** Apply a transformation to all coordinates.
 	 * 
@@ -606,13 +602,13 @@ public:
 	 * Returns the rotation of the object pattern. Only has an effect in
 	 * combination with a symbol interpreting this value.
 	 */
-	float getPatternRotation() const;
+	qreal getPatternRotation() const;
 	
 	/**
 	 * Sets the rotation of the object pattern. Only has an effect in
 	 * combination with a symbol interpreting this value.
 	 */
-	void setPatternRotation(float rotation);
+	void setPatternRotation(qreal rotation);
 	
 	/**
 	 * Returns the origin of the object pattern. Only has an effect in
@@ -906,7 +902,7 @@ private:
 	 * Rotation angle of the object pattern. Only used if the object
 	 * has a symbol which interprets this value.
 	 */
-	float pattern_rotation;
+	qreal pattern_rotation;
 	
 	/**
 	 * Origin shift of the object pattern. Only used if the object
@@ -994,7 +990,7 @@ public:
 	 * error to call setRotation on such an object with an argument other than
 	 * binary 0.
 	 */
-	void setRotation(float new_rotation);
+	void setRotation(qreal new_rotation);
 	
 	/**
 	 * Sets the point object's rotation according to the given vector.
@@ -1005,7 +1001,7 @@ public:
 	 * Returns the point object's rotation (in radians). This is only used
 	 * if the object has a symbol which interprets this value.
 	 */
-	float getRotation() const;
+	qreal getRotation() const;
 	
 	
 	bool intersectsBox(const QRectF& box) const override;
@@ -1013,7 +1009,7 @@ public:
 	
 private:
 	/** The object's rotation (in radians). */
-	float rotation;
+	qreal rotation;
 };
 
 
@@ -1201,7 +1197,7 @@ PathPartVector& PathObject::parts()
 }
 
 inline
-float PathObject::getPatternRotation() const
+qreal PathObject::getPatternRotation() const
 {
 	return pattern_rotation;
 }
@@ -1217,7 +1213,7 @@ MapCoord PathObject::getPatternOrigin() const
 //### PointObject inline code ###
 
 inline
-float PointObject::getRotation() const
+qreal PointObject::getRotation() const
 {
 	return rotation;
 }

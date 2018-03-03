@@ -1767,17 +1767,17 @@ void OcdFileExport::exportCombinedSymbol(OcdFile<Format>& file, const CombinedSy
 		{
 		case Symbol::Area:
 			{
-				auto copy = std::unique_ptr<Symbol>(parts[0]->duplicate());
+				auto copy = duplicate(static_cast<const AreaSymbol&>(*parts[0]));
 				copySymbolHead(*combined_symbol, *copy);
-				auto ocd_subsymbol = exportAreaSymbol<typename Format::AreaSymbol>(static_cast<const AreaSymbol*>(copy.get()), symbol_number);
+				auto ocd_subsymbol = exportAreaSymbol<typename Format::AreaSymbol>(copy.get(), symbol_number);
 				file.symbols().insert(ocd_subsymbol);
 			}
 			return;
 		case Symbol::Line:
 			{
-				auto copy = std::unique_ptr<Symbol>(parts[0]->duplicate());
+				auto copy = duplicate(static_cast<const LineSymbol&>(*parts[0]));
 				copySymbolHead(*combined_symbol, *copy);
-				auto ocd_subsymbol = exportLineSymbol<typename Format::LineSymbol>(static_cast<const LineSymbol*>(copy.get()), symbol_number);
+				auto ocd_subsymbol = exportLineSymbol<typename Format::LineSymbol>(copy.get(), symbol_number);
 				file.symbols().insert(ocd_subsymbol);
 			}
 			return;
@@ -1815,20 +1815,19 @@ void OcdFileExport::exportCombinedSymbol(OcdFile<Format>& file, const CombinedSy
 			if (symbol_numbers.find(border_symbol) == end(symbol_numbers))
 			{
 				// An unknown border symbol must be a private one
-				auto border_duplicate = std::unique_ptr<Symbol>(border_symbol->duplicate());
+				auto border_duplicate = duplicate(static_cast<const LineSymbol&>(*border_symbol));
 				copySymbolHead(*combined_symbol, *border_duplicate);
 				border_duplicate->setName(QLatin1String("Border of ") + border_symbol->getName());
-				border_symbol = static_cast<const LineSymbol*>(border_duplicate.get());
+				border_symbol = border_duplicate.get();
 				number_owners.emplace_back(std::move(border_duplicate));
 				auto border_symbol_number = makeUniqueSymbolNumber(symbol_number);
 				symbol_numbers[border_symbol] = border_symbol_number;
 				file.symbols().insert(exportLineSymbol<typename Format::LineSymbol>(border_symbol, border_symbol_number));
 			}
 			
-			auto copy = std::unique_ptr<Symbol>(parts[0]->duplicate());
+			auto copy = duplicate(static_cast<const AreaSymbol&>(*parts[0]));
 			copySymbolHead(*combined_symbol, *copy);
-			auto area_symbol = static_cast<AreaSymbol*>(copy.get());
-			file.symbols().insert(exportCombinedAreaSymbol<typename Format::AreaSymbol>(symbol_number, area_symbol, border_symbol));
+			file.symbols().insert(exportCombinedAreaSymbol<typename Format::AreaSymbol>(symbol_number, copy.get(), border_symbol));
 			return;
 		}
 		
@@ -1866,10 +1865,9 @@ void OcdFileExport::exportCombinedSymbol(OcdFile<Format>& file, const CombinedSy
 			}
 			
 			// Line symbol with framing and/or double line
-			auto copy = std::unique_ptr<Symbol>(main_line->duplicate());
+			auto copy = duplicate(static_cast<const LineSymbol&>(*main_line));
 			copySymbolHead(*combined_symbol, *copy);
-			main_line = static_cast<LineSymbol*>(copy.get());
-			file.symbols().insert(exportCombinedLineSymbol<typename Format::LineSymbol>(symbol_number, main_line, framing, double_line));
+			file.symbols().insert(exportCombinedLineSymbol<typename Format::LineSymbol>(symbol_number, copy.get(), framing, double_line));
 			return;
 		}
 		break;

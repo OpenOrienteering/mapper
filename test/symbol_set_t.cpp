@@ -748,6 +748,7 @@ void SymbolSetTool::processSymbolSetTranslations()
 	
 	if (new_data != existing_data)
 	{
+		new_data.replace("'", "&apos;");
 		QVERIFY(file.open(QIODevice::WriteOnly | QIODevice::Truncate));
 		file.write(new_data);
 		QVERIFY(file.flush());

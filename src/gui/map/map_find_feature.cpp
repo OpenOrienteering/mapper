@@ -238,10 +238,7 @@ void MapFindFeature::findAll()
 
 void MapFindFeature::showHelp() const
 {
-	if (find_dialog && editor_stack->currentIndex() == 1)
-		Util::showHelp(controller.getWindow(), "tag_selector.html");
-	else
-		Util::showHelp(controller.getWindow(), "search_dialog.html");
+	Util::showHelp(controller.getWindow(), "find_objects.html");
 }
 
 

@@ -254,17 +254,7 @@ MapCoord MapCoord::load(QPointF p, MapCoord::Flags flags)
 	return MapCoord::load(p.x(), p.y(), flags);
 }
 
-#ifndef NO_NATIVE_FILE_FORMAT
-	
-MapCoord::MapCoord(const LegacyMapCoord& coord) noexcept
- : xp{ decltype(xp)(coord.x >> 4) }
- , yp{ decltype(yp)(coord.y >> 4) }
- , fp{ Flags::Int((coord.x & 0xf) | ((coord.y & 0xf) << 4)) }
-{
-	//nothing
-}
 
-#endif
 
 QString MapCoord::toString() const
 {

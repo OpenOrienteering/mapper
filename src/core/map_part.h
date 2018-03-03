@@ -84,11 +84,6 @@ public:
 	
 	
 	/**
-	 * Loads the map part in the old "native" format from the given file.
-	 */
-	bool load(QIODevice* file, int version, Map* map);
-	
-	/**
 	 * Saves the map part in xml format to the given stream.
 	 */
 	void save(QXmlStreamWriter& xml) const;

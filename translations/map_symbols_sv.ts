@@ -2324,7 +2324,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Opaque White over Green</source>
             <comment>Color 12</comment>
-            <translation type="unfinished"></translation>
+            <translation>Ogenomskinlig vit över grön</translation>
         </message>
         <message>
             <source>Opaque Green</source>
@@ -2561,7 +2561,7 @@ sidan av stödkurvan.</translation>
         <message>
             <source>An area of pits or knolls which is too intricate to be shown in detail. The density of randomly placed dots may vary according to the detail on the ground.</source>
             <comment>Description of symbol 117.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Ett område med små gropar och/eller höjder som är alltför komplicerat för att redovisas i detalj, eller andra typer av ojämn mark som är tydligt urskiljbart och har liten inverkan på löpbarheten. Punkterna ska placeras slumpmässigt utan att påverka läsbarheten för viktiga terrängföremål.</translation>
         </message>
         <message>
             <source>Broken ground, big</source>
@@ -2611,17 +2611,17 @@ sidan av stödkurvan.</translation>
         <message>
             <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
             <comment>Description of symbol 201.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Lutningsstreck kan utelämnas om utrymmet är begränsat (Avståndet mellan två opasserbara branter eller mellan opasserbar brant och andra opasserbara symboler måste vara mer än 0,3 mm).</translation>
         </message>
         <message>
             <source>Impassable cliff, tag line</source>
             <comment>Name of symbol 201.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Opasserbar brant, tag</translation>
         </message>
         <message>
             <source>Use this symbol to display the full extent of a wide cliff.</source>
             <comment>Description of symbol 201.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Använd denna symbol för att redovisa hela utbredningen av en ur planvy bred brant (t.ex. sva).</translation>
         </message>
         <message>
             <source>Rock pillars/cliffs</source>
@@ -2776,7 +2776,7 @@ sidan av stödkurvan.</translation>
         <message>
             <source>Boulder cluster, large</source>
             <comment>Name of symbol 209.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Grupp av stenar, stor</translation>
         </message>
         <message>
             <source>To be able to show the distinction between boulder clusters with significant difference in size it is permitted to enlarge this symbol by 25% (1.0 mm).</source>
@@ -4313,7 +4313,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
             <comment>Description of symbol 201.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Lutningsstreck kan utelämnas om utrymmet är begränsat (Avståndet mellan två opasserbara branter eller mellan opasserbar brant och andra opasserbara symboler måste vara mer än 0,3 mm).</translation>
         </message>
         <message>
             <source>Impassable cliff, no tags, minimum size &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
@@ -4323,17 +4323,17 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
             <comment>Description of symbol 201.1.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Lutningsstreck kan utelämnas om utrymmet är begränsat (Avståndet mellan två opasserbara branter eller mellan opasserbar brant och andra opasserbara symboler måste vara mer än 0,3 mm).</translation>
         </message>
         <message>
             <source>Impassable cliff, tag line</source>
             <comment>Name of symbol 201.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Opasserbar brant, tag</translation>
         </message>
         <message>
             <source>Use this symbol to display the full extent of a wide cliff.</source>
             <comment>Description of symbol 201.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Använd denna symbol för att redovisa hela utbredningen av en ur planvy bred brant (t.ex. sva).</translation>
         </message>
         <message>
             <source>Gigantic boulder or rock pillar</source>
@@ -6011,7 +6011,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Opaque White over Green</source>
             <comment>Color 14</comment>
-            <translation type="unfinished"></translation>
+            <translation>Ogenomskinlig vit över grön</translation>
         </message>
         <message>
             <source>Yellow over Green</source>
@@ -6203,17 +6203,17 @@ sidan av stödkurvan.</translation>
         <message>
             <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
             <comment>Description of symbol 201.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Lutningsstreck kan utelämnas om utrymmet är begränsat (Avståndet mellan två opasserbara branter eller mellan opasserbar brant och andra opasserbara symboler måste vara mer än 0,3 mm).</translation>
         </message>
         <message>
             <source>Impassable cliff, tag line</source>
             <comment>Name of symbol 201.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Opasserbar brant, tag</translation>
         </message>
         <message>
             <source>Use this symbol to display the full extent of a wide cliff.</source>
             <comment>Description of symbol 201.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Använd denna symbol för att redovisa hela utbredningen av en ur planvy bred brant (t.ex. sva).</translation>
         </message>
         <message>
             <source>Rock pillars/cliffs</source>
@@ -7145,7 +7145,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>An area of pits or knolls which is too intricate to be shown in detail. The density of randomly placed dots may vary according to the detail on the ground.</source>
             <comment>Description of symbol 117.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Ett område med små gropar och/eller höjder som är alltför komplicerat för att redovisas i detalj, eller andra typer av ojämn mark som är tydligt urskiljbart och har liten inverkan på löpbarheten. Punkterna ska placeras slumpmässigt utan att påverka läsbarheten för viktiga terrängföremål.</translation>
         </message>
         <message>
             <source>Broken ground, big</source>
@@ -7290,7 +7290,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Boulder cluster, large</source>
             <comment>Name of symbol 209.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Grupp av stenar, stor</translation>
         </message>
         <message>
             <source>To be able to show the distinction between boulder clusters with significant difference in size it is permitted to enlarge this symbol by 25% (1.0 mm).</source>
@@ -7804,7 +7804,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Opaque White over Green</source>
             <comment>Color 14</comment>
-            <translation type="unfinished"></translation>
+            <translation>Ogenomskinlig vit över grön</translation>
         </message>
         <message>
             <source>Opaque Green</source>
@@ -8011,17 +8011,17 @@ sidan av stödkurvan.</translation>
         <message>
             <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
             <comment>Description of symbol 201.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Lutningsstreck kan utelämnas om utrymmet är begränsat (Avståndet mellan två opasserbara branter eller mellan opasserbar brant och andra opasserbara symboler måste vara mer än 0,3 mm).</translation>
         </message>
         <message>
             <source>Impassable cliff, tag line</source>
             <comment>Name of symbol 201.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Opasserbar brant, tag</translation>
         </message>
         <message>
             <source>Use this symbol to display the full extent of a wide cliff.</source>
             <comment>Description of symbol 201.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Använd denna symbol för att redovisa hela utbredningen av en ur planvy bred brant (t.ex. sva).</translation>
         </message>
         <message>
             <source>Rock pillars/cliffs</source>
@@ -8156,7 +8156,7 @@ sidan av stödkurvan.</translation>
         <message>
             <source>Boulder cluster, large</source>
             <comment>Name of symbol 209.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Grupp av stenar, stor</translation>
         </message>
         <message>
             <source>To be able to show the distinction between boulder clusters with significant difference in size it is permitted to enlarge this symbol by 25% (1.0 mm).</source>
@@ -9121,7 +9121,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>An area of pits or knolls which is too intricate to be shown in detail. The density of randomly placed dots may vary according to the detail on the ground.</source>
             <comment>Description of symbol 117.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Ett område med små gropar och/eller höjder som är alltför komplicerat för att redovisas i detalj, eller andra typer av ojämn mark som är tydligt urskiljbart och har liten inverkan på löpbarheten. Punkterna ska placeras slumpmässigt utan att påverka läsbarheten för viktiga terrängföremål.</translation>
         </message>
         <message>
             <source>Broken ground, big</source>

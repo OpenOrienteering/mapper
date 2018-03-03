@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013-2017 Kai Pastor
+ *    Copyright 2013-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -23,7 +23,9 @@
 #include <vector>
 
 #include <QtGlobal>
+#include <QChar>
 #include <QHash>
+#include <QLatin1Char>
 #include <QLatin1String>
 #include <QRectF>
 #include <QSizeF>
@@ -461,19 +463,30 @@ void XmlElementWriter::writeAttribute(const QLatin1String& qualifiedName, const 
 inline
 void XmlElementWriter::writeAttribute(const QLatin1String& qualifiedName, const double value, int precision)
 {
-	xml.writeAttribute(qualifiedName, QString::number(value, 'f', precision));
+	auto number = QString::number(value, 'f', precision);
+	int i = number.length() - 1;
+	if (number.contains(QLatin1Char('.')))
+	{
+		// Cut off trailing zeros
+		while (i > 0 && number.at(i) == QLatin1Char('0'))
+			--i;
+		if (number.at(i) == QLatin1Char('.'))
+		    --i;
+		
+	}
+	xml.writeAttribute(qualifiedName, QString::fromRawData(number.data(), ++i));
 }
 
 inline
 void XmlElementWriter::writeAttribute(const QLatin1String& qualifiedName, const float value)
 {
-	xml.writeAttribute(qualifiedName, QString::number(double(value)));
+	writeAttribute(qualifiedName, double(value));
 }
 
 inline
 void XmlElementWriter::writeAttribute(const QLatin1String& qualifiedName, const float value, int precision)
 {
-	xml.writeAttribute(qualifiedName, QString::number(double(value), 'f', precision));
+	writeAttribute(qualifiedName, double(value), precision);
 }
 
 inline

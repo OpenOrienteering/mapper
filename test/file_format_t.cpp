@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,18 +20,42 @@
 
 #include "file_format_t.h"
 
-#include <QtTest>
+#include <algorithm>
+#include <exception>
+#include <limits>
+#include <memory>
 
-#include "test_config.h"
+#include <Qt>
+#include <QtGlobal>
+#include <QtTest>
+#include <QBuffer>
+#include <QByteArray>
+#include <QCoreApplication>
+#include <QDir>
+#include <QFileInfo>
+#include <QHash>
+#include <QIODevice>
+#include <QLatin1String>
+#include <QPoint>
+#include <QPointF>
+#include <QRectF>
+#include <QSize>
+#include <QSizeF>
+#include <QString>
 
 #include "global.h"
+#include "test_config.h"
 #include "settings.h"
 #include "core/georeferencing.h"
+#include "core/latlon.h"
 #include "core/map.h"
 #include "core/map_color.h"
+#include "core/map_coord.h"
 #include "core/map_grid.h"
+#include "core/map_part.h"
 #include "core/map_printer.h"
 #include "core/objects/object.h"
+#include "core/symbols/symbol.h"
 #include "fileformats/file_format.h"
 #include "fileformats/file_format_registry.h"
 #include "fileformats/file_import_export.h"
@@ -49,9 +73,14 @@ using namespace OpenOrienteering;
 
 namespace QTest
 {
+	/*
+	 * This debug helper must use the parameter name 't' in order to avoid
+	 * a warning about a difference between declaration and definition.
+	 */
 	template<>
-	char* toString(const MapPrinterPageFormat& page_format)
+	char* toString(const MapPrinterPageFormat& t)
 	{
+		const auto& page_format = t;
 		QByteArray ba = "";
 		ba += MapPrinter::paperSizeNames()[page_format.paper_size];
 		ba += (page_format.orientation == MapPrinterPageFormat::Landscape) ? " landscape (" : " portrait (";
@@ -66,9 +95,14 @@ namespace QTest
 		return qstrdup(ba.data());
 	}
 	
+	/*
+	 * This debug helper must use the parameter name 't' in order to avoid
+	 * a warning about a difference between declaration and definition.
+	 */
 	template<>
-	char* toString(const MapPrinterOptions& options)
+	char* toString(const MapPrinterOptions& t)
 	{
+		const auto& options = t;
 		QByteArray ba = "";
 		ba += "1:" + QByteArray::number(options.scale) + ", ";
 		ba += QByteArray::number(options.resolution) + " dpi, ";
@@ -176,9 +210,14 @@ namespace
 		for (int i = 0; i < a.getNumSymbols(); ++i)
 		{
 			const Symbol* a_symbol = a.getSymbol(i);
-			if (!a_symbol->equals(b.getSymbol(i), Qt::CaseSensitive, true))
+			if (!a_symbol->equals(b.getSymbol(i), Qt::CaseSensitive))
 			{
 				error = QString::fromLatin1("Symbol #%1 (%2) differs.").arg(i).arg(a_symbol->getName());
+				return false;
+			}
+			if (!a_symbol->stateEquals(b.getSymbol(i)))
+			{
+				error = QString::fromLatin1("State of symbol #%1 (%2) differs.").arg(i).arg(a_symbol->getName());
 				return false;
 			}
 		}
@@ -295,8 +334,8 @@ namespace
 			QBuffer buffer;
 			buffer.open(QIODevice::ReadWrite);
 			
-			auto exporter = std::unique_ptr<Exporter>(format->createExporter(&buffer, &input, nullptr));
-			auto importer = std::unique_ptr<Importer>(format->createImporter(&buffer, out.get(), nullptr));
+			auto exporter = format->makeExporter(&buffer, &input, nullptr);
+			auto importer = format->makeImporter(&buffer, out.get(), nullptr);
 			if (exporter && importer)
 			{
 				exporter->doExport();
@@ -321,10 +360,10 @@ namespace
 	  "data:issue-513-coords-outside-printable.xmap",
 	  "data:issue-513-coords-outside-printable.omap",
 	  "data:issue-513-coords-outside-qint32.omap",
-	  "data:spotcolor_overprint.xmap",
-#ifndef NO_NATIVE_FILE_FORMAT
-	  "data:test_map.omap"
-#endif
+	  "data:legacy_map.omap",
+	  "data:/examples/complete map.omap",
+	  "data:/examples/forest sample.omap",
+	  "data:/examples/overprinting.omap",
 	};
 	
 }  // namespace
@@ -341,8 +380,9 @@ void FileFormatTest::initTestCase()
 	if (!FileFormats.findFormat("OCAD78"))
 		FileFormats.registerFormat(new OCAD8FileFormat());
 	
-	static const auto prefix = QString::fromLatin1("data");
+	const auto prefix = QString::fromLatin1("data");
 	QDir::addSearchPath(prefix, QDir(QString::fromUtf8(MAPPER_TEST_SOURCE_DIR)).absoluteFilePath(prefix));
+	QDir::addSearchPath(prefix, QDir(QString::fromUtf8(MAPPER_TEST_SOURCE_DIR)).absoluteFilePath(QStringLiteral("..")));
 	
 	for (auto raw_path : test_files)
 	{
@@ -363,6 +403,55 @@ void FileFormatTest::mapCoordtoString()
 	static_assert(sizeof(decltype(native_x)) == sizeof(qint32), "This test assumes qint32 native coordinates");
 	QCOMPARE(MapCoord::fromNative(bounds::max(), bounds::max(), MapCoord::Flags{MapCoord::Flags::Int(8)}).toString(), QString::fromLatin1("2147483647 2147483647 8;"));
 	QCOMPARE(MapCoord::fromNative(bounds::min(), bounds::min(), MapCoord::Flags{MapCoord::Flags::Int(1)}).toString(), QString::fromLatin1("-2147483648 -2147483648 1;"));
+}
+
+
+
+void FileFormatTest::understandsTest_data()
+{
+	quint8 ocd_start_raw[2] = { 0xAD, 0x0C };
+	auto ocd_start   = QByteArray::fromRawData(reinterpret_cast<const char*>(ocd_start_raw), 2).append("random data");
+	auto omap_start  = QByteArray("OMAP plus random data");
+	auto xml_start   = QByteArray("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+	auto xml_legacy  = QByteArray(xml_start + "\r\n<map xmlns=\"http://oorienteering.sourceforge.net/mapper/xml/v2\">");
+	auto xml_regular = QByteArray(xml_start + "\n<map xmlns=\"http://openorienteering.org/apps/mapper/xml/v2\" version=\"7\">");
+	auto xml_gpx     = QByteArray(xml_start + "\n<gpx>");
+	
+	// Add all file formats which support import and export
+	QTest::addColumn<QByteArray>("format_id");
+	QTest::addColumn<QByteArray>("data");
+	QTest::addColumn<int>("support");
+	
+	QTest::newRow("XML < xml legacy")       << QByteArray("XML") << xml_legacy        << int(FileFormat::FullySupported);
+	QTest::newRow("XML < xml regular")      << QByteArray("XML") << xml_regular       << int(FileFormat::FullySupported);
+	QTest::newRow("XML < xml start")        << QByteArray("XML") << xml_start         << int(FileFormat::Unknown);
+	QTest::newRow("XML < xml incomplete 1") << QByteArray("XML") << xml_regular.left(xml_start.length() - 10) << int(FileFormat::Unknown);
+	QTest::newRow("XML < xml incomplete 2") << QByteArray("XML") << xml_regular.left(xml_start.length() + 10) << int(FileFormat::Unknown);
+	QTest::newRow("XML < ''")               << QByteArray("XML") << QByteArray()      << int(FileFormat::Unknown);
+	QTest::newRow("XML < xml other")        << QByteArray("XML") << xml_gpx           << int(FileFormat::NotSupported);
+	QTest::newRow("XML < 'OMAPxxx'")        << QByteArray("XML") << omap_start        << int(FileFormat::FullySupported);
+	QTest::newRow("XML < 0x0CADxxx")        << QByteArray("XML") << ocd_start         << int(FileFormat::NotSupported);
+	
+	QTest::newRow("OCD < 0x0CADxxx")        << QByteArray("OCD") << ocd_start         << int(FileFormat::FullySupported);
+	QTest::newRow("OCD < 0x0CAD")           << QByteArray("OCD") << ocd_start.left(2) << int(FileFormat::FullySupported);
+	QTest::newRow("OCD < 0x0c")             << QByteArray("OCD") << ocd_start.left(1) << int(FileFormat::Unknown);
+	QTest::newRow("OCD < ''")               << QByteArray("OCD") << QByteArray()      << int(FileFormat::Unknown);
+	QTest::newRow("OCD < 'OMAPxxx'")        << QByteArray("OCD") << omap_start        << int(FileFormat::NotSupported);
+	QTest::newRow("OCD < xml start")        << QByteArray("OCD") << xml_start         << int(FileFormat::NotSupported);
+	
+	/// \todo Test OgrFileFormat (ID "OGR")
+}
+
+void FileFormatTest::understandsTest()
+{
+	QFETCH(QByteArray, format_id);
+	QFETCH(QByteArray, data);
+	QFETCH(int, support);
+	
+	auto format = FileFormats.findFormat(format_id);
+	QVERIFY(format);
+	QVERIFY(format->supportsImport());
+	QCOMPARE(int(format->understands(data.constData(), data.length())), support);
 }
 
 
@@ -443,9 +532,12 @@ void FileFormatTest::saveAndLoad()
 	const FileFormat* format = FileFormats.findFormat(format_id);
 	QVERIFY(format);
 	
+	if (map_filename.contains(QLatin1String("legacy")))
+		QEXPECT_FAIL(QTest::currentDataTag(), "Unsupported legacy binary format", Abort);
+	
 	// Load the test map
 	auto original = std::make_unique<Map>();
-	original->loadFrom(map_filename, nullptr, nullptr, false, false);
+	QVERIFY(original->loadFrom(map_filename, nullptr, nullptr, false, false));
 	QVERIFY(!original->hasUnsavedChanges());
 	
 	// Fix precision of grid rotation

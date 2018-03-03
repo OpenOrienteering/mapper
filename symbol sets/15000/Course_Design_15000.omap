@@ -3,12 +3,12 @@
 <notes></notes>
 <georeferencing scale="15000"><projected_crs id="Local"/></georeferencing>
 <colors count="6">
-<color priority="0" name="Purple" c="0.200" m="1.000" y="0.000" k="0.000" opacity="1.000"><spotcolors><namedcolor>PURPLE</namedcolor></spotcolors><cmyk method="custom"/><rgb method="cmyk" r="0.800" g="0.000" b="1.000"/></color>
-<color priority="1" name="Black for control descriptions" c="0.000" m="0.000" y="0.000" k="1.000" opacity="1.000"><spotcolors knockout="true"><component factor="1" spotcolor="5"/></spotcolors><cmyk method="spotcolor"/><rgb method="spotcolor" r="0.000" g="0.000" b="0.000"/></color>
-<color priority="2" name="White above framing" c="0.000" m="0.000" y="0.000" k="0.000" opacity="1.000"><spotcolors knockout="true"><component factor="0" spotcolor="5"/></spotcolors><cmyk method="spotcolor"/><rgb method="spotcolor" r="1.000" g="1.000" b="1.000"/></color>
-<color priority="3" name="Black for framing" c="0.000" m="0.000" y="0.000" k="1.000" opacity="1.000"><spotcolors knockout="true"><component factor="1" spotcolor="5"/></spotcolors><cmyk method="spotcolor"/><rgb method="spotcolor" r="0.000" g="0.000" b="0.000"/></color>
-<color priority="4" name="White below framing" c="0.000" m="0.000" y="0.000" k="0.000" opacity="1.000"><spotcolors knockout="true"><component factor="0" spotcolor="5"/></spotcolors><cmyk method="spotcolor"/><rgb method="spotcolor" r="1.000" g="1.000" b="1.000"/></color>
-<color priority="5" name="Black" c="0.000" m="0.000" y="0.000" k="1.000" opacity="1.000"><spotcolors knockout="true"><namedcolor>BLACK</namedcolor></spotcolors><cmyk method="custom"/><rgb method="cmyk" r="0.000" g="0.000" b="0.000"/></color>
+<color priority="0" name="Purple" c="0.2" m="1" y="0" k="0" opacity="1"><spotcolors><namedcolor>PURPLE</namedcolor></spotcolors><cmyk method="custom"/><rgb method="cmyk" r="0.8" g="0" b="1"/></color>
+<color priority="1" name="Black for control descriptions" c="0" m="0" y="0" k="1" opacity="1"><spotcolors knockout="true"><component factor="1" spotcolor="5"/></spotcolors><cmyk method="spotcolor"/><rgb method="spotcolor" r="0" g="0" b="0"/></color>
+<color priority="2" name="White above framing" c="0" m="0" y="0" k="0" opacity="1"><spotcolors knockout="true"><component factor="0" spotcolor="5"/></spotcolors><cmyk method="spotcolor"/><rgb method="spotcolor" r="1" g="1" b="1"/></color>
+<color priority="3" name="Black for framing" c="0" m="0" y="0" k="1" opacity="1"><spotcolors knockout="true"><component factor="1" spotcolor="5"/></spotcolors><cmyk method="spotcolor"/><rgb method="spotcolor" r="0" g="0" b="0"/></color>
+<color priority="4" name="White below framing" c="0" m="0" y="0" k="0" opacity="1"><spotcolors knockout="true"><component factor="0" spotcolor="5"/></spotcolors><cmyk method="spotcolor"/><rgb method="spotcolor" r="1" g="1" b="1"/></color>
+<color priority="5" name="Black" c="0" m="0" y="0" k="1" opacity="1"><spotcolors knockout="true"><namedcolor>BLACK</namedcolor></spotcolors><cmyk method="custom"/><rgb method="cmyk" r="0" g="0" b="0"/></color>
 </colors>
 <barrier version="6" required="0.6.0">
 <symbols count="209" id="Course_Design">
@@ -487,7 +487,7 @@ The orientation of the symbol indicates the direction in which the corner points
 <grid color="#c0c0c0" display="0" alignment="0" additional_rotation="0" unit="0" h_spacing="3" v_spacing="3" h_offset="0" v_offset="0" snapping_enabled="true"/>
 <map_view zoom="1" rotation="0" position_x="0" position_y="0" grid="true"><map opacity="1" visible="true"/><templates count="0"/></map_view>
 </view>
-<print scale="15000" resolution="600" templates_visible="true" mode="vector"><page_format paper_size="A4" orientation="portrait" h_overlap="5.00" v_overlap="5.00"><dimensions width="210.000" height="297.000"/><page_rect left="5.000" top="5.000" width="200.000" height="287.000"/></page_format><print_area left="5.000" top="5.000" width="200.000" height="287.000" center_area="true" single_page="true"/></print>
+<print scale="15000" resolution="600" templates_visible="true" mode="vector"><page_format paper_size="A4" orientation="portrait" h_overlap="5" v_overlap="5"><dimensions width="210" height="297"/><page_rect left="5" top="5" width="200" height="287"/></page_format><print_area left="5" top="5" width="200" height="287" center_area="true" single_page="true"/></print>
 </barrier>
 <barrier version="6" required="0.6.0">
 <undo/>

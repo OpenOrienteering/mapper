@@ -376,7 +376,7 @@ void PrintTool::mouseMoved(MapCoordF mouse_pos_map, MapWidget* widget)
 	}
 }
 
-#endif // QT_PRINTSUPPORT_LIB
-
 
 }  // namespace OpenOrienteering
+
+#endif  // QT_PRINTSUPPORT_LIB

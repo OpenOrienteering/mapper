@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -29,7 +29,6 @@
 #include <Qt>
 #include <QtGlobal> 
 
-class QIODevice;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 
@@ -63,8 +62,12 @@ friend class OCAD8FileImport;
 public:
 	CombinedSymbol();
 	~CombinedSymbol() override;
-	Symbol* duplicate(const MapColorMap* color_map = nullptr) const override;
 	
+protected:
+	explicit CombinedSymbol(const CombinedSymbol& proto);
+	CombinedSymbol* duplicate() const override;
+	
+public:
 	bool validate() const override;
 	
 	void createRenderables(
@@ -79,15 +82,16 @@ public:
 	        ObjectRenderables &output,
 	        Symbol::RenderableOptions options) const override;
 	
-	void colorDeleted(const MapColor* color) override;
+	void colorDeletedEvent(const MapColor* color) override;
 	bool containsColor(const MapColor* color) const override;
 	const MapColor* guessDominantColor() const override;
-	bool symbolChanged(const Symbol* old_symbol, const Symbol* new_symbol) override;
+	void replaceColors(const MapColorMap& color_map) override;
+	bool symbolChangedEvent(const Symbol* old_symbol, const Symbol* new_symbol) override;
 	bool containsSymbol(const Symbol* symbol) const override;
 	void scale(double factor) override;
-	Type getContainedTypes() const override;
+	TypeCombination getContainedTypes() const override;
 	
-	bool loadFinished(Map* map) override;
+	bool loadingFinishedEvent(Map* map) override;
 	
 	qreal dimensionForIcon() const override;
 	
@@ -106,9 +110,6 @@ public:
 	SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog) override;
 	
 protected:
-#ifndef NO_NATIVE_FILE_FORMAT
-	bool loadImpl(QIODevice* file, int version, Map* map) override;
-#endif
 	void saveImpl(QXmlStreamWriter& xml, const Map& map) const override;
 	bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict) override;
 	bool equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensitivity) const override;

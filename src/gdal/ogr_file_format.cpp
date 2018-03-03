@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016-2017 Kai Pastor
+ *    Copyright 2016-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,6 +21,7 @@
 #include "ogr_file_format_p.h"
 
 #include <algorithm>
+#include <cstddef>
 #include <iterator>
 #include <memory>
 #include <vector>
@@ -298,14 +299,10 @@ OgrFileFormat::OgrFileFormat()
 		addExtension(QString::fromLatin1(extension));
 }
 
-bool OgrFileFormat::understands(const unsigned char* /*buffer*/, std::size_t /*size*/) const
-{
-	return true;
-}
 
-Importer* OgrFileFormat::createImporter(QIODevice* stream, Map *map, MapView *view) const
+std::unique_ptr<Importer> OgrFileFormat::makeImporter(QIODevice* stream, Map* map, MapView* view) const
 {
-	return new OgrFileImport(stream, map, view);
+	return std::make_unique<OgrFileImport>(stream, map, view);
 }
 
 
@@ -1121,7 +1118,7 @@ PointSymbol* OgrFileImport::getSymbolForOgrSymbol(OGRStyleToolH tool, const QByt
 	if (is_null)
 		return nullptr;
 	
-	auto point_symbol = static_cast<PointSymbol*>(default_point_symbol->duplicate());
+	auto point_symbol = duplicate<PointSymbol>(*default_point_symbol);
 	auto color = makeColor(tool, color_string);
 	if (color)
 		point_symbol->setInnerColor(color);
@@ -1130,16 +1127,17 @@ PointSymbol* OgrFileImport::getSymbolForOgrSymbol(OGRStyleToolH tool, const QByt
 	
 	auto key = style_string;
 	key.detach();
-	point_symbols.insert(key, point_symbol);
+	point_symbols.insert(key, point_symbol.get());
 	
 	if (key != tool_key)
 	{
 		tool_key.detach();
-		point_symbols.insert(tool_key, point_symbol);
+		point_symbols.insert(tool_key, point_symbol.get());
 	}
 	
-	map->addSymbol(point_symbol, map->getNumSymbols());
-	return point_symbol;
+	auto ret = point_symbol.get();
+	map->addSymbol(point_symbol.release(), map->getNumSymbols());
+	return ret;
 }
 
 TextSymbol* OgrFileImport::getSymbolForLabel(OGRStyleToolH tool, const QByteArray& /*style_string*/)
@@ -1162,7 +1160,8 @@ TextSymbol* OgrFileImport::getSymbolForLabel(OGRStyleToolH tool, const QByteArra
 	auto text_symbol = static_cast<TextSymbol*>(text_symbols.value(key));
 	if (!text_symbol)
 	{
-		text_symbol = static_cast<TextSymbol*>(default_text_symbol->duplicate());
+		auto copy = duplicate<TextSymbol>(*default_text_symbol);
+		text_symbol = copy.get();
 		
 		auto color = makeColor(tool, color_string);
 		if (color)
@@ -1177,7 +1176,7 @@ TextSymbol* OgrFileImport::getSymbolForLabel(OGRStyleToolH tool, const QByteArra
 		key.detach();
 		text_symbols.insert(key, text_symbol);
 		
-		map->addSymbol(text_symbol, map->getNumSymbols());
+		map->addSymbol(copy.release(), map->getNumSymbols());
 	}
 	
 	auto anchor = qBound(1, OGR_ST_GetParamNum(tool, OGRSTLabelAnchor, &is_null), 12);
@@ -1209,25 +1208,26 @@ LineSymbol* OgrFileImport::getSymbolForPen(OGRStyleToolH tool, const QByteArray&
 	if (symbol && symbol->getType() == Symbol::Line)
 		return static_cast<LineSymbol*>(symbol);
 	
-	auto line_symbol = static_cast<LineSymbol*>(default_line_symbol->duplicate());
-	applyPenColor(tool, line_symbol);
-	applyPenWidth(tool, line_symbol);
-	applyPenCap(tool, line_symbol);
-	applyPenJoin(tool, line_symbol);
-	applyPenPattern(tool, line_symbol);
+	auto line_symbol = duplicate<LineSymbol>(*default_line_symbol);
+	applyPenColor(tool, line_symbol.get());
+	applyPenWidth(tool, line_symbol.get());
+	applyPenCap(tool, line_symbol.get());
+	applyPenJoin(tool, line_symbol.get());
+	applyPenPattern(tool, line_symbol.get());
 	
 	auto key = style_string;
 	key.detach();
-	line_symbols.insert(key, line_symbol);
+	line_symbols.insert(key, line_symbol.get());
 	
 	if (key != tool_key)
 	{
 		tool_key.detach();
-		line_symbols.insert(tool_key, line_symbol);
+		line_symbols.insert(tool_key, line_symbol.get());
 	}
 	
-	map->addSymbol(line_symbol, map->getNumSymbols());
-	return line_symbol;
+	auto ret = line_symbol.get();
+	map->addSymbol(line_symbol.release(), map->getNumSymbols());
+	return ret;
 }
 
 AreaSymbol* OgrFileImport::getSymbolForBrush(OGRStyleToolH tool, const QByteArray& style_string)
@@ -1240,21 +1240,22 @@ AreaSymbol* OgrFileImport::getSymbolForBrush(OGRStyleToolH tool, const QByteArra
 	if (symbol && symbol->getType() == Symbol::Area)
 		return static_cast<AreaSymbol*>(symbol);
 	
-	auto area_symbol = static_cast<AreaSymbol*>(default_area_symbol->duplicate());
-	applyBrushColor(tool, area_symbol);
+	auto area_symbol = duplicate<AreaSymbol>(*default_area_symbol);
+	applyBrushColor(tool, area_symbol.get());
 	
 	auto key = style_string;
 	key.detach();
-	area_symbols.insert(key, area_symbol);
+	area_symbols.insert(key, area_symbol.get());
 	
 	if (key != tool_key)
 	{
 		tool_key.detach();
-		area_symbols.insert(tool_key, area_symbol);
+		area_symbols.insert(tool_key, area_symbol.get());
 	}
 	
-	map->addSymbol(area_symbol, map->getNumSymbols());
-	return area_symbol;
+	auto s = area_symbol.get();
+	map->addSymbol(area_symbol.release(), map->getNumSymbols());
+	return s;
 }
 
 

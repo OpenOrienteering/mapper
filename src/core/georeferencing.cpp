@@ -80,6 +80,8 @@ namespace literal
 
 
 
+namespace OpenOrienteering {
+
 namespace
 {
 	/** Helper for PROJ.4 initialization.
@@ -143,8 +145,6 @@ namespace
 }  // namespace
 
 
-
-namespace OpenOrienteering {
 
 //### Georeferencing ###
 

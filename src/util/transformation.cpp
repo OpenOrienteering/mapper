@@ -37,23 +37,6 @@ namespace OpenOrienteering {
 
 // ### PassPoint ###
 
-#ifndef NO_NATIVE_FILE_FORMAT
-
-void PassPoint::load(QIODevice* file, int version)
-{
-	if (version < 27)
-	{
-		MapCoordF src_coords_template;
-		file->read((char*)&src_coords_template, sizeof(MapCoordF));
-	}
-	file->read((char*)&src_coords, sizeof(MapCoordF));
-	file->read((char*)&dest_coords, sizeof(MapCoordF));
-	file->read((char*)&calculated_coords, sizeof(MapCoordF));
-	file->read((char*)&error, sizeof(double));
-}
-
-#endif
-
 void PassPoint::save(QXmlStreamWriter& xml) const
 {
 	XmlElementWriter passpoint{xml, QLatin1String("passpoint")};

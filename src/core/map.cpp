@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Thomas Schöps
- *    Copyright 2013-2017 Kai Pastor
+ *    Copyright 2013-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -26,6 +26,7 @@
 #include <exception>
 #include <iterator>
 #include <memory>
+#include <type_traits>
 
 #include <Qt>
 #include <QtGlobal>
@@ -673,7 +674,7 @@ bool Map::exportTo(const QString& path, MapView* view, const FileFormat* format)
 	}
 	
 	QSaveFile file(path);
-	QScopedPointer<Exporter> exporter(format->createExporter(&file, this, view));
+	auto exporter = format->makeExporter(&file, this, view);
 	bool success = false;
 	if (file.open(QIODevice::WriteOnly))
 	{
@@ -730,8 +731,8 @@ bool Map::loadFrom(const QString& path, QWidget* dialog_parent, MapView* view, b
 	reset();
 
 	// Read a block at the beginning of the file, that we can use for magic number checking.
-	unsigned char buffer[256];
-	size_t total_read = file.read((char *)buffer, 256);
+	char buffer[256];
+	auto total_read = file.read(buffer, file.isSequential() ? 0 : std::extent<decltype(buffer)>::value);
 	file.seek(0);
 
 	bool import_complete = false;
@@ -739,52 +740,51 @@ bool Map::loadFrom(const QString& path, QWidget* dialog_parent, MapView* view, b
 	for (auto format : FileFormats.formats())
 	{
 		// If the format supports import, and thinks it can understand the file header, then proceed.
-		if (format->supportsImport() && format->understands(buffer, total_read))
-		{
-			Importer *importer = nullptr;
-			// Wrap everything in a try block, so we can gracefully recover if the importer balks.
-			try {
-				// Create an importer instance for this file and map.
-				importer = format->createImporter(&file, this, view);
-
-				// Run the first pass.
-				importer->doImport(load_symbols_only, QFileInfo(path).absolutePath());
-
-				// Are there any actions the user must take to complete the import?
-				if (!importer->actions().empty())
-				{
-					// TODO: prompt the user to resolve the action items. All-in-one dialog.
-				}
-
-				// Finish the import.
-				importer->finishImport();
-				
-				file.close();
-
-				// Display any warnings.
-				if (!importer->warnings().empty() && show_error_messages)
-				{
-					showMessageBox(nullptr,
-					               tr("Warning"),
-					               tr("The map import generated warnings."),
-					               importer->warnings() );
-				}
-
-				import_complete = true;
-			}
-			catch (FileFormatException &e)
+		auto support = format->understands(buffer, int(total_read));
+		if (support == FileFormat::NotSupported)
+			continue;
+		
+		try {
+			auto importer = format->makeImporter(&file, this, view);
+			
+			// Run the first pass.
+			importer->doImport(load_symbols_only, QFileInfo(path).absolutePath());
+			
+			// Are there any actions the user must take to complete the import?
+			if (!importer->actions().empty())
 			{
-				error_msg = e.message();
+				// TODO: prompt the user to resolve the action items. All-in-one dialog.
 			}
-			catch (std::exception &e)
+			
+			// Finish the import.
+			importer->finishImport();
+			
+			file.close();
+			
+			// Display any warnings.
+			if (!importer->warnings().empty() && show_error_messages)
 			{
-				qDebug() << "Exception:" << e.what();
-				error_msg = QString::fromLatin1(e.what());
+				showMessageBox(nullptr,
+				               tr("Warning"),
+				               tr("The map import generated warnings."),
+				               importer->warnings() );
 			}
-			if (importer) delete importer;
+			
+			import_complete = true;
 		}
-		// If the last importer finished successfully
-		if (import_complete) break;
+		catch (FileFormatException &e)
+		{
+			error_msg = e.message();
+		}
+		catch (std::exception &e)
+		{
+			qWarning("Exception: %s", e.what());
+			error_msg = QString::fromLatin1(e.what());
+		}
+		
+		// If the last importer finished successfully, or failed despite full support
+		if (import_complete || support == FileFormat::FullySupported)
+			break;
 	}
 	
 	if (view)
@@ -998,46 +998,36 @@ QHash<const Symbol*, Symbol*> Map::importMap(
 
 
 bool Map::exportToIODevice(QIODevice* stream)
+try
 {
+	auto native_format = FileFormats.findFormat("XML");
 	stream->open(QIODevice::WriteOnly);
-	Exporter* exporter = nullptr;
-	try {
-		const FileFormat* native_format = FileFormats.findFormat("XML");
-		exporter = native_format->createExporter(stream, this, nullptr);
-		exporter->doExport();
-		stream->close();
-	}
-	catch (std::exception &e)
-	{
-		if (exporter)
-			delete exporter;
-		return false;
-	}
-	if (exporter)
-		delete exporter;
+	native_format->makeExporter(stream, this, nullptr)->doExport();
+	stream->close();
 	return true;
+}
+catch (std::exception& /*e*/)
+{
+	return false;
 }
 
+
 bool Map::importFromIODevice(QIODevice* stream)
+try
 {
-	Importer* importer = nullptr;
-	try {
-		const FileFormat* native_format = FileFormats.findFormat("XML");
-		importer = native_format->createImporter(stream, this, nullptr);
-		importer->doImport(false);
-		importer->finishImport();
-		stream->close();
-	}
-	catch (std::exception &e)
-	{
-		if (importer)
-			delete importer;
-		return false;
-	}
-	if (importer)
-		delete importer;
+	auto native_format = FileFormats.findFormat("XML");
+	auto importer = native_format->makeImporter(stream, this, nullptr);
+	importer->doImport(false);
+	importer->finishImport();
+	stream->close();
 	return true;
 }
+catch (std::exception& /*e*/)
+{
+	return false;
+}
+
+
 
 void Map::draw(QPainter* painter, const RenderConfig& config)
 {
@@ -1508,12 +1498,12 @@ void Map::deleteColor(int pos)
 	for (Symbol* symbol : symbols)
 	{
 		if (symbol->getType() == Symbol::Combined)
-			symbol->colorDeleted(color);
+			symbol->colorDeletedEvent(color);
 	}
 	for (Symbol* symbol : symbols)
 	{
 		if (symbol->getType() != Symbol::Combined)
-			symbol->colorDeleted(color);
+			symbol->colorDeletedEvent(color);
 	}
 	emit colorDeleted(pos, color);
 	
@@ -1657,7 +1647,7 @@ QHash<const Symbol*, Symbol*> Map::importSymbols(
 			{
 				// Check if symbol is already present
 				auto match = std::find_if(begin(symbols), end(symbols), [symbol](auto s) {
-					return s->equals(symbol, Qt::CaseInsensitive, false);
+					return s->equals(symbol, Qt::CaseInsensitive);
 				});
 				if (match != end(symbols))
 				{
@@ -1667,7 +1657,8 @@ QHash<const Symbol*, Symbol*> Map::importSymbols(
 				}
 			}
 			
-			auto new_symbol = symbol->duplicate(&color_map);
+			auto new_symbol = duplicate(*symbol).release();  /// \todo Leverage unique_ptr
+			new_symbol->replaceColors(color_map);
 			out_pointermap.insert(symbol, new_symbol);
 			created_symbols.push_back(new_symbol);
 		}
@@ -1689,7 +1680,7 @@ QHash<const Symbol*, Symbol*> Map::importSymbols(
 		for (auto it = out_pointermap.constBegin(); it != out_pointermap.constEnd(); ++it)
 		{
 			// symbol is what was created by duplicate() above.
-			symbol->symbolChanged(it.key(), it.value());
+			symbol->symbolChangedEvent(it.key(), it.value());
 		}
 	}
 	
@@ -1816,7 +1807,7 @@ void Map::setSymbol(Symbol* symbol, int pos)
 		if (i == pos)
 			continue;
 		
-		if (symbols[i]->symbolChanged(symbols[pos], symbol))
+		if (symbols[i]->symbolChangedEvent(symbols[pos], symbol))
 			updateAllObjectsWithSymbol(symbols[i]);
 	}
 	
@@ -1841,7 +1832,7 @@ void Map::deleteSymbol(int pos)
 		if (i == pos)
 			continue;
 		
-		if (symbols[i]->symbolChanged(symbols[pos], nullptr))
+		if (symbols[i]->symbolChangedEvent(symbols[pos], nullptr))
 			updateAllObjectsWithSymbol(symbols[i]);
 	}
 	

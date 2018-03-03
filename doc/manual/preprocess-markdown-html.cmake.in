@@ -127,6 +127,10 @@ foreach(file ${input_files})
 	string(REGEX REPLACE "\\[\\[img +(src=)?([^] ]+) +alt=([^]]*) *]]" "![\\3](\\2)" output "${output}")
 	
 	# Resource paths
+	if(@ANDROID@)
+		# Our text browser can access our images directly.
+		string(REGEX REPLACE "../mapper-images/" ":/images/" output "${output}")
+	endif()
 	string(REGEX REPLACE "(!\\[[^]]*\\]\\()../mapper-images/" "\\1" output "${output}")
 	string(REGEX REPLACE "href=\"attachment/" "href=\"" output "${output}")
 	

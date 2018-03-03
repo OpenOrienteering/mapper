@@ -233,16 +233,17 @@ public:
 	/** Returns the vertical alignment of the text.
 	 */ 
 	VerticalAlignment getVerticalAlignment() const;
-		
+	
+	
 	/** Sets the rotation of the text.
 	 *  The rotation is measured in radians. The center of rotation is the anchor point.
 	 */ 
-	void setRotation(float new_rotation);
+	void setRotation(qreal new_rotation);
 	
 	/** Returns the rotation of the text.
 	 *  The rotation is measured in radians. The center of rotation is the anchor point.
 	 */ 
-	float getRotation() const;
+	qreal getRotation() const;
 	
 	
 	bool intersectsBox(const QRectF& box) const override;
@@ -297,9 +298,9 @@ public:
 	
 private:
 	QString text;
+	qreal rotation;	// 0 to 2*M_PI
 	HorizontalAlignment h_align;
 	VerticalAlignment v_align;
-	float rotation;	// 0 to 2*M_PI
 	
 	/** Information about the text layout.
 	 */
@@ -359,7 +360,7 @@ TextObject::VerticalAlignment TextObject::getVerticalAlignment() const
 }
 
 inline
-float TextObject::getRotation() const
+qreal TextObject::getRotation() const
 {
 	return rotation;
 }
