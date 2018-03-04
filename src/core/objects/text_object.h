@@ -188,17 +188,25 @@ public:
 	 *  The midpoint is set to (mid_x, mid_y), the size is specifed by the parameters
 	 *  width and heigt.
 	 */
-	void setBox(qint32 mid_x, qint32 mid_y, double width, double height);
+	void setBox(qint32 mid_x, qint32 mid_y, qreal width, qreal height);
+	
+	/** Set size. 
+	 */
+	void setBoxSize(const MapCoord& size);
+	
+	/** Returns the size as a MapCoord.
+	 */
+	MapCoord getBoxSize() const { return size; }
 	
 	/** Returns the width of the word wrap box.
 	 *  The text object must have a specified size.
 	 */
-	double getBoxWidth() const;
+	qreal getBoxWidth() const;
 	
 	/** Returns the height of the word wrap box.
 	 *  The text object must have a specified size.
 	 */
-	double getBoxHeight() const;
+	qreal getBoxHeight() const;
 	
 	
 	/**
@@ -301,6 +309,9 @@ private:
 	VerticalAlignment v_align;
 	float rotation;	// 0 to 2*M_PI
 	
+	bool has_single_anchor = true;
+	MapCoord size;
+	
 	/** Information about the text layout.
 	 */
 	mutable LineInfoContainer line_infos;
@@ -323,21 +334,21 @@ double TextObjectPartInfo::getX(int index) const
 inline
 bool TextObject::hasSingleAnchor() const
 {
-	return coords.size() == 1;
+	return has_single_anchor;
 }
 
 inline
-double TextObject::getBoxWidth() const
+qreal TextObject::getBoxWidth() const
 {
 	Q_ASSERT(!hasSingleAnchor());
-	return coords[1].x();
+	return size.x();
 }
 
 inline
-double TextObject::getBoxHeight() const
+qreal TextObject::getBoxHeight() const
 {
 	Q_ASSERT(!hasSingleAnchor());
-	return coords[1].y();
+	return size.y();
 }
 
 inline

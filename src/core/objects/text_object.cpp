@@ -129,7 +129,7 @@ TextObject::TextObject(const Symbol* symbol)
  , rotation(0.0f)
 {
 	Q_ASSERT(!symbol || (symbol->getType() == Symbol::Text));
-	coords.reserve(2);
+	coords.reserve(2); // Extra element used during saving
 	coords.push_back(MapCoord(0, 0));
 }
 
@@ -139,6 +139,8 @@ TextObject::TextObject(const TextObject& proto)
  , h_align(proto.h_align)
  , v_align(proto.v_align)
  , rotation(proto.rotation)
+ , has_single_anchor(proto.has_single_anchor)
+ , size(proto.size)
  , line_infos(proto.line_infos)
 {
 	// nothing
@@ -160,12 +162,14 @@ void TextObject::copyFrom(const Object& other)
 	h_align = other_text.h_align;
 	v_align = other_text.v_align;
 	rotation = other_text.rotation;
+	has_single_anchor = other_text.has_single_anchor;
+	size = other_text.size;
 	line_infos = other_text.line_infos;
 }
 
 void TextObject::setAnchorPosition(qint32 x, qint32 y)
 {
-	coords.resize(1);
+	has_single_anchor = true;
 	coords[0].setNativeX(x);
 	coords[0].setNativeY(y);
 	setOutputDirty();
@@ -173,14 +177,14 @@ void TextObject::setAnchorPosition(qint32 x, qint32 y)
 
 void TextObject::setAnchorPosition(MapCoord coord)
 {
-	coords.resize(1);
+	has_single_anchor = true;
 	coords[0] = coord;
 	setOutputDirty();
 }
 
 void TextObject::setAnchorPosition(MapCoordF coord)
 {
-	coords.resize(1);
+	has_single_anchor = true;
 	coords[0].setX(coord.x());
 	coords[0].setY(coord.y());
 	setOutputDirty();
@@ -191,12 +195,19 @@ MapCoordF TextObject::getAnchorCoordF() const
 	return MapCoordF(coords[0]);
 }
 
-void TextObject::setBox(qint32 mid_x, qint32 mid_y, double width, double height)
+void TextObject::setBox(qint32 mid_x, qint32 mid_y, qreal width, qreal height)
 {
-	coords.resize(2);
+	has_single_anchor = false;
 	coords[0].setNativeX(mid_x);
 	coords[0].setNativeY(mid_y);
-	coords[1] = MapCoord(width, height);
+	size = {width, height};
+	setOutputDirty();
+}
+
+void TextObject::setBoxSize(const MapCoord& size)
+{
+	has_single_anchor = false;
+	this->size = size;
 	setOutputDirty();
 }
 

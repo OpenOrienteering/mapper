@@ -369,6 +369,18 @@ void Object::save(QXmlStreamWriter& xml) const
 		object_element.writeAttribute(literal::rotation, text->getRotation());
 		object_element.writeAttribute(literal::h_align, text->getHorizontalAlignment());
 		object_element.writeAttribute(literal::v_align, text->getVerticalAlignment());
+		// For compatibility, we must keep the box size in the second coord ATM.
+		/// \todo Save box size separately
+		auto object = const_cast<Object*>(this);
+		if (text->hasSingleAnchor())
+		{
+			object->coords.resize(1);
+		}
+		else
+		{
+			object->coords.resize(2);
+			object->coords.back() = text->getBoxSize();
+		}
 	}
 	
 	if (!object_tags.empty())
@@ -466,7 +478,16 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 		{
 			XmlElementReader coords_element(xml);
 			try {
-				coords_element.read(object->coords);
+				if (object_type == Text)
+				{
+					coords_element.readForText(object->coords);
+					if (object->coords.size() > 1)
+						static_cast<TextObject*>(object)->setBoxSize(object->coords[1]);
+				}
+				else
+				{
+					coords_element.read(object->coords);
+				}
 			}
 			catch (FileFormatException& e)
 			{
