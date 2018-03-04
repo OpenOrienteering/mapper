@@ -4925,7 +4925,7 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
     <message numerus="yes">
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="149"/>
         <source>%n color separation(s) were skipped, reason: Import disabled.</source>
-        <translation type="unfinished"><numerusform>Egy színskiszorítás kihagyva, ok: Import letiltott.</numerusform>
+        <translation type="unfinished"><numerusform>Egy színkiszorítás kihagyva, ok: Import letiltott.</numerusform>
         <numerusform>%n  szín(ek)kiszorítása kihagyva, ok: Import letiltott.</numerusform>
         </translation></message>
     <message>
@@ -5052,7 +5052,7 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
         <location filename="../src/core/objects/object_query.cpp" line="298"/>
         <source>is not</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished">nincs</translation>
+        <translation>nincs</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="301"/>
