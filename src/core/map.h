@@ -595,6 +595,7 @@ public:
 	 */
 	qreal symbolIconZoom() const;
 	
+public slots:
 	/**
 	 * Updates the symbol icon zoom from the current set of symbols.
 	 * 
@@ -605,6 +606,7 @@ public:
 	void updateSymbolIconZoom();
 	
 	
+public:
 	// Templates
 	
 	/** Returns the number of templates in this map. */

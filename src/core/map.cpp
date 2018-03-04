@@ -46,6 +46,7 @@
 #include <QSaveFile>
 #include <QStringList>
 #include <QTextDocument>
+#include <QTimer>
 #include <QTranslator>
 
 #include "core/georeferencing.h"
@@ -454,9 +455,6 @@ Map::Map()
 	georeferencing.reset(new Georeferencing());
 	init();
 	
-	connect(this, &Map::symbolAdded, this, &Map::updateSymbolIconZoom, Qt::QueuedConnection);
-	connect(this, &Map::symbolChanged, this, &Map::updateSymbolIconZoom, Qt::QueuedConnection);
-	connect(this, &Map::symbolDeleted, this, &Map::updateSymbolIconZoom, Qt::QueuedConnection);
 	connect(this, &Map::colorAdded, this, &Map::checkSpotColorPresence);
 	connect(this, &Map::colorChanged, this, &Map::checkSpotColorPresence);
 	connect(this, &Map::colorDeleted, this, &Map::checkSpotColorPresence);
@@ -1890,6 +1888,11 @@ int Map::findSymbolIndex(const Symbol* symbol) const
 
 void Map::setSymbolsDirty()
 {
+	if (symbol_icon_scale > 0)
+	{
+		symbol_icon_scale = 0;
+		QTimer::singleShot(0, this, SLOT(updateSymbolIconZoom()));
+	}
 	symbols_dirty = true;
 	setHasUnsavedChanges(true);
 }
