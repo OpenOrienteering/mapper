@@ -221,8 +221,12 @@ MapColorMap Map::MapColorSet::importSet(const Map::MapColorSet& other, std::vect
 	{
 		colors.reserve(colors.size() + import_count);
 		
-		MapColorSetMergeList merge_list;
-		merge_list.resize(other.colors.size());
+		// The conflict resolution algorithm below is simplified by setting
+		// iterator `selected_item` to a real list element which is not related
+		// to the actual color sets we are merging. This is the extra element
+		// identified as `end_of_merge_list`.
+		MapColorSetMergeList merge_list{other.colors.size() + 1};
+		const auto end_of_merge_list = end(merge_list) - 1;
 		
 		bool priorities_changed = false;
 		
@@ -249,15 +253,15 @@ MapColorMap Map::MapColorSet::importSet(const Map::MapColorSet& other, std::vect
 			}
 			++merge_list_item;
 		}
-		Q_ASSERT(merge_list_item == merge_list.end());
+		Q_ASSERT(merge_list_item == end_of_merge_list);
 		
 		size_t iteration_number = 1;
 		while (true)
 		{
 			// Evaluate bounds and conflicting order of colors
 			int max_conflict_reduction = 0;
-			auto selected_item = merge_list.end();
-			for (merge_list_item = merge_list.begin(); merge_list_item != merge_list.end(); ++merge_list_item)
+			auto selected_item = end_of_merge_list;  // Note: non-const copy of an iterator
+			for (merge_list_item = begin(merge_list); merge_list_item != end_of_merge_list; ++merge_list_item)
 			{
 				// Check all lower colors for a higher dest_index
 				std::size_t& lower_bound(merge_list_item->lower_bound);
@@ -281,7 +285,7 @@ MapColorMap Map::MapColorSet::importSet(const Map::MapColorSet& other, std::vect
 				// Check all higher colors for a lower dest_index
 				std::size_t& upper_bound(merge_list_item->upper_bound);
 				upper_bound = merge_list_item->dest_color ? merge_list_item->dest_index : colors.size();
-				for (++it; it != merge_list.end(); ++it)
+				for (++it; it != end_of_merge_list; ++it)
 				{
 					if (it->dest_color)
 					{
@@ -319,7 +323,7 @@ MapColorMap Map::MapColorSet::importSet(const Map::MapColorSet& other, std::vect
 						int conflict_reduction = merge_list_item->lower_errors;
 						// Check new conflicts with insertion index: (selected_item->lower_bound+1)
 						it = merge_list_item;
-						for (++it; it != merge_list.end(); ++it)
+						for (++it; it != end_of_merge_list; ++it)
 						{
 							if (it->dest_color && (selected_item->lower_bound+1) > it->dest_index)
 								--conflict_reduction;
@@ -337,8 +341,8 @@ MapColorMap Map::MapColorSet::importSet(const Map::MapColorSet& other, std::vect
 			// Abort if no conflicts or maximum iteration count reached.
 			// The latter condition is just to prevent endless loops in
 			// case of bugs and should not occur theoretically.
-			if (selected_item == merge_list.end() ||
-				iteration_number > merge_list.size())
+			if (selected_item == end_of_merge_list
+			    || iteration_number > merge_list.size())
 				break;
 			
 			// Solve selected conflict item
@@ -364,6 +368,8 @@ MapColorMap Map::MapColorSet::importSet(const Map::MapColorSet& other, std::vect
 			
 			++iteration_number;
 		}
+		
+		merge_list.erase(end_of_merge_list);  // no longer needed
 		
 		// Some missing colors may be spot color compositions which can be 
 		// resolved to new colors only after all colors have been created.
