@@ -11,7 +11,7 @@
         <message>
             <source>Black</source>
             <comment>Color 1</comment>
-            <translation type="unfinished">Nero</translation>
+            <translation>Nero</translation>
     </message>
         <message>
             <source>Opaque White below Black</source>
@@ -106,18 +106,18 @@
         <message>
             <source>Opaque Green</source>
             <comment>Color 20</comment>
-            <translation></translation>
-        </message>
+            <translation type="unfinished">Verde opaco</translation>
+    </message>
         <message>
             <source>Green 50%</source>
             <comment>Color 21</comment>
-            <translation></translation>
-        </message>
+            <translation>Verde 50%</translation>
+    </message>
         <message>
             <source>Green 20%</source>
             <comment>Color 22</comment>
-            <translation></translation>
-        </message>
+            <translation>Verde 20%</translation>
+    </message>
         <message>
             <source>Green below light greens</source>
             <comment>Color 23</comment>
@@ -126,38 +126,39 @@
         <message>
             <source>Green 50% over Yellow</source>
             <comment>Color 24</comment>
-            <translation></translation>
-        </message>
+            <translation>Verde 50% sopra il giallo</translation>
+    </message>
         <message>
             <source>White over Yellow</source>
             <comment>Color 25</comment>
-            <translation></translation>
-        </message>
+            <translation>Bianco sopra il giallo</translation>
+    </message>
         <message>
             <source>Yellow</source>
             <comment>Color 26</comment>
-            <translation></translation>
-        </message>
+            <translation>Giallo</translation>
+    </message>
         <message>
             <source>Yellow 50%</source>
             <comment>Color 27</comment>
-            <translation></translation>
-        </message>
+            <translation>Giallo 50%</translation>
+    </message>
         <message>
             <source>Contour</source>
             <comment>Name of symbol 101</comment>
-            <translation></translation>
-        </message>
+            <translation>Curva di livello</translation>
+    </message>
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. A contour interval of 2.5 metres may be used for flat terrains. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
             <comment>Description of symbol 101</comment>
-            <translation></translation>
-        </message>
+            <translation type="unfinished">Linea che unisce tutti i punti alla stessa quota. 
+L&apos; equidistanza standard tra le curve di livello è di 5m. Un equidistanza di 2.5m può essere utilizzata per terreni pianeggianti. La minor curvatura di una curva di  livello è di 0.25mm dal centro della linea</translation>
+    </message>
         <message>
             <source>Slope line, contour</source>
             <comment>Name of symbol 101.1</comment>
-            <translation></translation>
-        </message>
+            <translation type="unfinished">Trattino di pendenza per curve di livello</translation>
+    </message>
         <message>
             <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
             <comment>Description of symbol 101.1</comment>
@@ -166,8 +167,8 @@
         <message>
             <source>Index contour</source>
             <comment>Name of symbol 102</comment>
-            <translation></translation>
-        </message>
+            <translation type="unfinished">Curva di livello maestra</translation>
+    </message>
         <message>
             <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. An index contour may be represented as an ordinary contour line in an area with much detail. Small contour knolls and depressions are normally not represented using index contours.</source>
             <comment>Description of symbol 102</comment>
