@@ -6,153 +6,153 @@
         <message>
             <source>Purple</source>
             <comment>Color 0</comment>
-            <translation></translation>
-        </message>
+            <translation>Lila</translation>
+    </message>
         <message>
             <source>Black</source>
             <comment>Color 1</comment>
-            <translation></translation>
-        </message>
+            <translation>Fekete</translation>
+    </message>
         <message>
             <source>Opaque White below Black</source>
             <comment>Color 2</comment>
-            <translation></translation>
-        </message>
+            <translation>Átlátszatlan fehér fekete alatt</translation>
+    </message>
         <message>
             <source>Black 65%</source>
             <comment>Color 3</comment>
-            <translation></translation>
-        </message>
+            <translation>Fekete 65%</translation>
+    </message>
         <message>
             <source>Black 20%</source>
             <comment>Color 4</comment>
-            <translation></translation>
-        </message>
+            <translation>Fekete 20%</translation>
+    </message>
         <message>
             <source>Brown 50%</source>
             <comment>Color 5</comment>
-            <translation></translation>
-        </message>
+            <translation>Barna 50%</translation>
+    </message>
         <message>
             <source>Black below light browns</source>
             <comment>Color 6</comment>
-            <translation></translation>
-        </message>
+            <translation>Fekete világosbarna alatt</translation>
+    </message>
         <message>
             <source>Opaque Blue</source>
             <comment>Color 7</comment>
-            <translation></translation>
-        </message>
+            <translation>Átlátszatlan kék</translation>
+    </message>
         <message>
             <source>Blue</source>
             <comment>Color 8</comment>
-            <translation></translation>
-        </message>
+            <translation>Kék</translation>
+    </message>
         <message>
             <source>Blue 50%</source>
             <comment>Color 9</comment>
-            <translation></translation>
-        </message>
+            <translation>Kék 50%</translation>
+    </message>
         <message>
             <source>Brown</source>
             <comment>Color 10</comment>
-            <translation></translation>
-        </message>
+            <translation>Barna</translation>
+    </message>
         <message>
             <source>OpenOrienteering Orange</source>
             <comment>Color 11</comment>
-            <translation></translation>
-        </message>
+            <translation>OpenOrienteering Narancs</translation>
+    </message>
         <message>
             <source>Black 25% (Grey)</source>
             <comment>Color 12</comment>
-            <translation></translation>
-        </message>
+            <translation>Fekete 25% (Szürke)</translation>
+    </message>
         <message>
             <source>Green 50%, Yellow</source>
             <comment>Color 13</comment>
-            <translation></translation>
-        </message>
+            <translation>Zöld 50%, Sárga</translation>
+    </message>
         <message>
             <source>Green</source>
             <comment>Color 14</comment>
-            <translation></translation>
-        </message>
+            <translation>Zöld</translation>
+    </message>
         <message>
             <source>Opaque Yellow</source>
             <comment>Color 15</comment>
-            <translation></translation>
-        </message>
+            <translation>Átlátszatlan sárga</translation>
+    </message>
         <message>
             <source>Opaque White over Green</source>
             <comment>Color 16</comment>
-            <translation></translation>
-        </message>
+            <translation>Átlátszatlan fehér a zöldön</translation>
+    </message>
         <message>
             <source>Opaque Green 20%</source>
             <comment>Color 17</comment>
-            <translation></translation>
-        </message>
+            <translation>Átlátszatlan zöld 20%</translation>
+    </message>
         <message>
             <source>Opaque Green 50%</source>
             <comment>Color 18</comment>
-            <translation></translation>
-        </message>
+            <translation>Átlátszatlan zöld 50%</translation>
+    </message>
         <message>
             <source>Green, Black 50%</source>
             <comment>Color 19</comment>
-            <translation></translation>
-        </message>
+            <translation>Zöld, Fekete 50%</translation>
+    </message>
         <message>
             <source>Opaque Green</source>
             <comment>Color 20</comment>
-            <translation></translation>
-        </message>
+            <translation>Átlátszatlan zöld</translation>
+    </message>
         <message>
             <source>Green 50%</source>
             <comment>Color 21</comment>
-            <translation></translation>
-        </message>
+            <translation>Zöld 50%</translation>
+    </message>
         <message>
             <source>Green 20%</source>
             <comment>Color 22</comment>
-            <translation></translation>
-        </message>
+            <translation>Zöld 20%</translation>
+    </message>
         <message>
             <source>Green below light greens</source>
             <comment>Color 23</comment>
-            <translation></translation>
-        </message>
+            <translation>Világos zöld alatt zöld</translation>
+    </message>
         <message>
             <source>Green 50% over Yellow</source>
             <comment>Color 24</comment>
-            <translation></translation>
-        </message>
+            <translation>Zöld 50% sárga fölött</translation>
+    </message>
         <message>
             <source>White over Yellow</source>
             <comment>Color 25</comment>
-            <translation></translation>
-        </message>
+            <translation>Fehér a sárga fölött</translation>
+    </message>
         <message>
             <source>Yellow</source>
             <comment>Color 26</comment>
-            <translation></translation>
-        </message>
+            <translation>Sárga</translation>
+    </message>
         <message>
             <source>Yellow 50%</source>
             <comment>Color 27</comment>
-            <translation></translation>
-        </message>
+            <translation>Sárga 50%</translation>
+    </message>
         <message>
             <source>Contour</source>
             <comment>Name of symbol 101</comment>
-            <translation></translation>
-        </message>
+            <translation>Szintvonal</translation>
+    </message>
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. A contour interval of 2.5 metres may be used for flat terrains. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
             <comment>Description of symbol 101</comment>
-            <translation></translation>
-        </message>
+            <translation>A vonal egyenlő magasságú pontokból áll. A szabványos magasság különbség két szintvonal között 5 méter. 2,5 méter  szintvonalköz is használható sík terepeken. A legkisebb ív egy szintvonalban  0,25 mm a vonalak középvonalától.</translation>
+    </message>
         <message>
             <source>Slope line, contour</source>
             <comment>Name of symbol 101.1</comment>
@@ -166,18 +166,18 @@
         <message>
             <source>Index contour</source>
             <comment>Name of symbol 102</comment>
-            <translation></translation>
-        </message>
+            <translation>Számláló szintvonal</translation>
+    </message>
         <message>
             <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. An index contour may be represented as an ordinary contour line in an area with much detail. Small contour knolls and depressions are normally not represented using index contours.</source>
             <comment>Description of symbol 102</comment>
-            <translation></translation>
-        </message>
+            <translation>.</translation>
+    </message>
         <message>
             <source>Contour value</source>
             <comment>Name of symbol 102.1</comment>
-            <translation></translation>
-        </message>
+            <translation>Szintvonal magasság érték</translation>
+    </message>
         <message>
             <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
             <comment>Description of symbol 102.1</comment>
@@ -186,8 +186,8 @@
         <message>
             <source>Form line</source>
             <comment>Name of symbol 103</comment>
-            <translation></translation>
-        </message>
+            <translation>Segéd szintvonal</translation>
+    </message>
         <message>
             <source>Form lines are used where more information must be given about the shape of the ground. Form lines are added only where representation would be incomplete with ordinary contours. They shall not be used as intermediate contours. Only one form line should be used between neighbouring contours. It is very important that a form line fits logically into the contour system, so the start and end of a form line should be parallel to the neighbouring contours. The gaps between the form line dashes must be placed on reasonably straight sections of the form line. Form lines can be used to differentiate flat knolls and depressions from more distinct ones.</source>
             <comment>Description of symbol 103</comment>
@@ -206,8 +206,8 @@
         <message>
             <source>Earth bank</source>
             <comment>Name of symbol 104</comment>
-            <translation></translation>
-        </message>
+            <translation>Földletörés</translation>
+    </message>
         <message>
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
             <comment>Description of symbol 104</comment>
@@ -216,8 +216,8 @@
         <message>
             <source>Earth bank, minimum size</source>
             <comment>Name of symbol 104.1</comment>
-            <translation></translation>
-        </message>
+            <translation>Földletörés, minimális méret</translation>
+    </message>
         <message>
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
             <comment>Description of symbol 104.1</comment>
