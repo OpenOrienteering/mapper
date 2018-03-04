@@ -309,8 +309,8 @@ void LineSymbol::createSinglePathRenderables(const VirtualPath& path, bool path_
 			
 			auto start = SplitPathCoord::begin(path.path_coords);
 			auto end   = SplitPathCoord::end(path.path_coords);
-			processContinuousLine(path, start, end,
-			                      has_start, has_end, processed_flags, processed_coords, false, output);
+			processContinuousLine(path, start, end, has_start, has_end, false,
+			                      processed_flags, processed_coords, output);
 		}
 		else if (color)
 		{
@@ -694,9 +694,9 @@ void LineSymbol::processContinuousLine(
         const SplitPathCoord& end,
         bool has_start,
         bool has_end,
+        bool set_mid_symbols,
         MapCoordVector& processed_flags,
         MapCoordVectorF& processed_coords,
-        bool set_mid_symbols,
         ObjectRenderables& output ) const
 {
 	bool create_line = true;
@@ -1097,10 +1097,8 @@ SplitPathCoord LineSymbol::createDashGroups(
 		{
 			// Can't be handled correctly by the next round of dash groups drawing:
 			// Just draw a continuous line.
-			processContinuousLine(path,
-			                      line_start, end,
-			                      !half_first_group, !half_last_group,
-			                      out_flags, out_coords, set_mid_symbols, output);
+			processContinuousLine(path, line_start, end, !half_first_group, !half_last_group, set_mid_symbols,
+			                      out_flags, out_coords, output);
 		}
 		else
 		{
@@ -1161,10 +1159,8 @@ SplitPathCoord LineSymbol::createDashGroups(
 				}
 				
 				SplitPathCoord dash_end = SplitPathCoord::at(cur_length + cur_dash_length, dash_start);
-				processContinuousLine(path,
-				                      dash_start, dash_end,
-				                      has_start, has_end,
-				                      out_flags, out_coords, set_mid_symbols, output);
+				processContinuousLine(path, dash_start, dash_end, has_start, has_end, set_mid_symbols,
+				                      out_flags, out_coords, output);
 				cur_length += cur_dash_length;
 				dash_start = dash_end;
 				
