@@ -195,6 +195,21 @@ MapCoordF TextObject::getAnchorCoordF() const
 	return MapCoordF(coords[0]);
 }
 
+
+void TextObject::transform(const QTransform& t)
+{
+	if (t.isIdentity())
+		return;
+	
+	auto& coord = coords.front();
+	const auto p = t.map(MapCoordF{coord});
+	coord.setX(p.x());
+	coord.setY(p.y());
+	setOutputDirty();
+}
+
+
+
 void TextObject::setBox(qint32 mid_x, qint32 mid_y, qreal width, qreal height)
 {
 	has_single_anchor = false;

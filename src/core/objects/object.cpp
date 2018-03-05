@@ -723,19 +723,6 @@ void Object::rotate(double angle)
 	setOutputDirty();
 }
 
-void Object::transform(const QTransform& t)
-{
-	if (t.isIdentity())
-		return;
-	
-	for (auto& coord : coords)
-	{
-		const auto p = t.map(MapCoordF{coord});
-		coord.setX(p.x());
-		coord.setY(p.y());
-	}
-	setOutputDirty();
-}
 
 int Object::isPointOnObject(MapCoordF coord, float tolerance, bool treat_areas_as_paths, bool extended_selection) const
 {
@@ -1222,6 +1209,24 @@ void PathObject::partSizeChanged(PathPartVector::iterator part, MapCoordVector::
 		part->last_index += change;
 	}
 }
+
+
+void PathObject::transform(const QTransform& t)
+{
+	if (t.isIdentity())
+		return;
+	
+	for (auto& coord : coords)
+	{
+		const auto p = t.map(MapCoordF{coord});
+		coord.setX(p.x());
+		coord.setY(p.y());
+	}
+	pattern_origin = MapCoord{t.map(MapCoordF{getPatternOrigin()})};
+	setOutputDirty();
+}
+
+
 
 void PathObject::setPatternRotation(float rotation)
 {
@@ -3262,6 +3267,20 @@ MapCoord PointObject::getCoord() const
 {
 	return coords.front();
 }
+
+
+void PointObject::transform(const QTransform& t)
+{
+	if (t.isIdentity())
+		return;
+	
+	auto& coord = coords.front();
+	const auto p = t.map(MapCoordF{coord});
+	coord.setX(p.x());
+	coord.setY(p.y());
+	setOutputDirty();
+}
+
 
 void PointObject::setRotation(float new_rotation)
 {

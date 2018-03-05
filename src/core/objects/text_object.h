@@ -184,6 +184,10 @@ public:
 	/** Returns the coordinates of the anchor point or midpoint */
 	MapCoordF getAnchorCoordF() const;
 	
+	
+	void transform(const QTransform& t) override;
+	
+	
 	/** Set position and size. 
 	 *  The midpoint is set to (mid_x, mid_y), the size is specifed by the parameters
 	 *  width and heigt.
