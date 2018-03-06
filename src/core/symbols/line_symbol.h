@@ -55,7 +55,9 @@ using MapCoordVector = std::vector<MapCoord>;
 using MapCoordVectorF = std::vector<MapCoordF>;
 
 
-/** Settings for a line symbol's border. */
+/**
+ * Settings for a line symbol's border.
+ */
 struct LineSymbolBorder
 {
 	const MapColor* color = nullptr;
@@ -65,15 +67,24 @@ struct LineSymbolBorder
 	int break_length      = 1000;
 	bool dashed           = false;
 	
+	// Default special member functions are fine.
+	
 	void save(QXmlStreamWriter& xml, const Map& map) const;
 	bool load(QXmlStreamReader& xml, const Map& map);
-	bool equals(const LineSymbolBorder* other) const;
-	void assign(const LineSymbolBorder& other, const MapColorMap* color_map);
 	
 	bool isVisible() const;
 	void setupSymbol(LineSymbol& out) const;
 	void scale(double factor);
 };
+
+
+bool operator==(const LineSymbolBorder &lhs, const LineSymbolBorder &rhs) noexcept;
+
+inline bool operator!=(const LineSymbolBorder &lhs, const LineSymbolBorder &rhs) noexcept
+{
+	return !(lhs == rhs);
+}
+
 
 
 /** Symbol for PathObjects which displays a line along the path. */
@@ -238,7 +249,7 @@ public:
 	
 	inline bool hasBorder() const {return have_border_lines;}
 	inline void setHasBorder(bool value) {have_border_lines = value;}
-	inline bool areBordersDifferent() const {return !border.equals(&right_border);}
+	inline bool areBordersDifferent() const {return border != right_border;}
 	
 	inline LineSymbolBorder& getBorder() {return border;}
 	inline const LineSymbolBorder& getBorder() const {return border;}
@@ -283,9 +294,9 @@ protected:
 	        const SplitPathCoord& end,
 	        bool has_start,
 	        bool has_end,
+	        bool set_mid_symbols,
 	        MapCoordVector& processed_flags,
 	        MapCoordVectorF& processed_coords,
-	        bool set_mid_symbols,
 	        ObjectRenderables& output
 	) const;
 	
