@@ -348,6 +348,19 @@ public:
 	void read(MapCoordVector& coords);
 	
 	/**
+	 * Reads the coordinates vector for a text object.
+	 * 
+	 * This is either a single anchor, or an anchor and a size, packed as a
+	 * coordinates vector. Regular coordinate bounds checking is not applied
+	 * to the size.
+	 * 
+	 * \todo Make box size explicit data.
+	 * 
+	 * \see read(MapCoordVector&)
+	 */
+	void readForText(MapCoordVector& coords);
+	
+	/**
 	 * Read tags.
 	 */
 	void read(QHash<QString, QString>& tags);

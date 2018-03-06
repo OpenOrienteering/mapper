@@ -23,6 +23,7 @@
 
 #include <QCharRef>
 #include <QFile>
+#include <QFileInfo>
 #include <QFlags>
 #include <QIODevice>
 #include <QLatin1Char>
@@ -35,6 +36,13 @@ namespace OpenOrienteering {
 WorldFile::WorldFile()
 {
 	loaded = false;
+}
+
+WorldFile::WorldFile(const QTransform& wld)
+    : loaded{true}
+    , pixel_to_world{wld}
+{
+	// nothing else
 }
 
 
@@ -73,6 +81,26 @@ bool WorldFile::load(const QString& path)
 	return true;
 }
 
+bool WorldFile::save(const QString &path)
+{
+	if (!loaded) { return false;}
+
+	QFile file(path);
+	if (file.open(QIODevice::WriteOnly | QIODevice::Text))
+	{
+		QTextStream stream(&file);
+		stream.setRealNumberPrecision(10);
+		stream << pixel_to_world.m11() << endl;
+		stream << pixel_to_world.m12() << endl;
+		stream << pixel_to_world.m21() << endl;
+		stream << pixel_to_world.m22() << endl;
+		stream << pixel_to_world.m31() << endl;
+		stream << pixel_to_world.m32() << endl;
+		file.close();
+	}
+	return file.error() == QFileDevice::NoError;
+}
+
 bool WorldFile::tryToLoadForImage(const QString& image_path)
 {
 	int last_dot_index = image_path.lastIndexOf(QLatin1Char('.'));
@@ -99,6 +127,26 @@ bool WorldFile::tryToLoadForImage(const QString& image_path)
 		return true; // NOLINT
 	
 	return false;
+}
+
+QString WorldFile::pathForImage(const QString& image_path)
+{
+	// Just use QFileInfo rather than rolling our own path processing.
+	const QFileInfo info(image_path);
+	const QString base = info.path() + QLatin1Char('/') + info.completeBaseName(); 
+	const auto suffix = info.suffix();
+	switch (suffix.length())
+	{
+	case 0:
+		// If there is no suffix, append ".wld"
+		return base + QLatin1String(".wld");
+	case 3:
+		// If there are three chars, remove middle char and append 'w'
+		return base + QLatin1Char('.') + suffix[0] + suffix[2] + QLatin1Char('w');
+	default:
+		// Otherwise, just append 'w'
+		return base + QLatin1Char('.') + suffix + QLatin1Char('w');
+	}
 }
 
 

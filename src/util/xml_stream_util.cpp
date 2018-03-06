@@ -31,6 +31,8 @@
 #include <QChar>
 #include <QCoreApplication>
 #include <QIODevice>
+#include <QObject>
+#include <QScopedValueRollback>
 #include <QTextCodec>
 // IWYU pragma: no_include <qxmlstream.h>
 
@@ -240,6 +242,82 @@ void XmlElementReader::read(MapCoordVector& coords)
 		throw FileFormatException(::OpenOrienteering::ImportExport::tr("Expected %1 coordinates, found %2."));
 	}
 }
+
+
+void XmlElementReader::readForText(MapCoordVector& coords)
+{
+	namespace literal = XmlStreamLiteral;
+	
+	coords.clear();
+	coords.reserve(2);
+	
+	const auto num_coords = attribute<unsigned int>(literal::count);
+	
+	QScopedValueRollback<MapCoord::BoundsOffset> offset{MapCoord::boundsOffset()};
+	
+	try
+	{
+		for( xml.readNext(); xml.tokenType() != QXmlStreamReader::EndElement; xml.readNext() )
+		{
+			const QXmlStreamReader::TokenType token = xml.tokenType();
+			if (xml.error() || token == QXmlStreamReader::EndDocument)
+			{
+				throw FileFormatException(::OpenOrienteering::ImportExport::tr("Could not parse the coordinates."));
+			}
+			else if (token == QXmlStreamReader::Characters && !xml.isWhitespace())
+			{
+				QStringRef text = xml.text();
+				try
+				{
+					while (text.length())
+					{
+						if (coords.size() == 1)
+						{
+							// Don't apply an offset to text box size.
+							offset.commit();
+							MapCoord::boundsOffset().reset(false);
+						}
+						coords.emplace_back(text);
+					}
+				}
+				catch (std::exception& e)
+				{
+					Q_UNUSED(e)
+					qDebug("Could not parse the coordinates: %s", e.what());
+					throw FileFormatException(::OpenOrienteering::ImportExport::tr("Could not parse the coordinates."));
+				}
+			}
+			else if (token == QXmlStreamReader::StartElement)
+			{
+				if (xml.name() == literal::coord)
+				{
+					if (coords.size() == 1)
+					{
+						// Don't apply an offset to text box size.
+						offset.commit();
+						MapCoord::boundsOffset().reset(false);
+					}
+					coords.emplace_back(MapCoord::load(xml));
+				}
+				else
+				{
+					xml.skipCurrentElement();
+				}
+			}
+			// otherwise: ignore element
+		}
+	}
+	catch (std::range_error &e)
+	{
+		throw FileFormatException(::OpenOrienteering::MapCoord::tr(e.what()));
+	}
+	
+	if (coords.size() != num_coords)
+	{
+		throw FileFormatException(::OpenOrienteering::ImportExport::tr("Expected %1 coordinates, found %2."));
+	}
+}
+
 
 
 }  // namespace OpenOrienteering

@@ -261,6 +261,18 @@ void Object::save(QXmlStreamWriter& xml) const
 		object_element.writeAttribute(literal::rotation, text->getRotation());
 		object_element.writeAttribute(literal::h_align, text->getHorizontalAlignment());
 		object_element.writeAttribute(literal::v_align, text->getVerticalAlignment());
+		// For compatibility, we must keep the box size in the second coord ATM.
+		/// \todo Save box size separately
+		auto object = const_cast<Object*>(this);
+		if (text->hasSingleAnchor())
+		{
+			object->coords.resize(1);
+		}
+		else
+		{
+			object->coords.resize(2);
+			object->coords.back() = text->getBoxSize();
+		}
 	}
 	
 	if (!object_tags.empty())
@@ -358,7 +370,16 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 		{
 			XmlElementReader coords_element(xml);
 			try {
-				coords_element.read(object->coords);
+				if (object_type == Text)
+				{
+					coords_element.readForText(object->coords);
+					if (object->coords.size() > 1)
+						static_cast<TextObject*>(object)->setBoxSize(object->coords[1]);
+				}
+				else
+				{
+					coords_element.read(object->coords);
+				}
 			}
 			catch (FileFormatException& e)
 			{
@@ -594,19 +615,6 @@ void Object::rotate(qreal angle)
 	setOutputDirty();
 }
 
-void Object::transform(const QTransform& t)
-{
-	if (t.isIdentity())
-		return;
-	
-	for (auto& coord : coords)
-	{
-		const auto p = t.map(MapCoordF{coord});
-		coord.setX(p.x());
-		coord.setY(p.y());
-	}
-	setOutputDirty();
-}
 
 int Object::isPointOnObject(MapCoordF coord, float tolerance, bool treat_areas_as_paths, bool extended_selection) const
 {
@@ -1093,6 +1101,24 @@ void PathObject::partSizeChanged(PathPartVector::iterator part, MapCoordVector::
 		part->last_index += change;
 	}
 }
+
+
+void PathObject::transform(const QTransform& t)
+{
+	if (t.isIdentity())
+		return;
+	
+	for (auto& coord : coords)
+	{
+		const auto p = t.map(MapCoordF{coord});
+		coord.setX(p.x());
+		coord.setY(p.y());
+	}
+	pattern_origin = MapCoord{t.map(MapCoordF{getPatternOrigin()})};
+	setOutputDirty();
+}
+
+
 
 void PathObject::setPatternRotation(qreal rotation)
 {
@@ -3132,6 +3158,19 @@ MapCoord PointObject::getCoord() const
 {
 	return coords.front();
 }
+
+void PointObject::transform(const QTransform& t)
+{
+	if (t.isIdentity())
+		return;
+	
+	auto& coord = coords.front();
+	const auto p = t.map(MapCoordF{coord});
+	coord.setX(p.x());
+	coord.setY(p.y());
+	setOutputDirty();
+}
+
 
 void PointObject::setRotation(qreal new_rotation)
 {

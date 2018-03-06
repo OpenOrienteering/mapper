@@ -40,13 +40,23 @@ struct WorldFile
 	
 	/// Creates an unloaded world file
 	WorldFile();
-	
+
+	/// Creates a loaded world file from a QTransform
+	WorldFile(const QTransform& wld);
+
 	/// Tries to load the given path as world file.
 	/// Returns true on success and sets loaded to true or false.
 	bool load(const QString& path);
+
+	/// Writes the world file to the given path.
+	bool save(const QString& path);
 	
 	/// Tries to find and load a world file for the given image path.
 	bool tryToLoadForImage(const QString& image_path);
+	
+	/// Returns the proposed world file path for the given image path.
+	static QString pathForImage(const QString& image_path);
+	
 };
 
 

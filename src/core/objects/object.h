@@ -199,11 +199,12 @@ public:
 	 *  The angle must be given in radians. */
 	void rotate(qreal angle);
 	
-	/** Apply a transformation to all coordinates.
+	/**
+	 * Apply a transformation to all coordinates.
 	 * 
 	 * \todo Handle rotation of patterns or text (?)
 	 */
-	void transform(const QTransform& t);
+	virtual void transform(const QTransform& t) = 0;
 	
 	/**
 	 * Checks if the given coord, with the given tolerance, is on this object.
@@ -595,6 +596,10 @@ public:
 	 */
 	void deletePart(PathPartVector::size_type part_index);
 	
+	/**
+	 * Transforms the coordinates and the pattern origin.
+	 */
+	void transform(const QTransform& t) override;
 	
 	// Pattern methods
 	
@@ -981,6 +986,12 @@ public:
 	
 	/** Returns the point's coordinate. */
 	MapCoord getCoord() const;
+	
+	
+	/** 
+	 * Transforms the position.
+	 */
+	void transform(const QTransform& t) override;
 	
 	
 	/**
