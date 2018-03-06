@@ -6319,7 +6319,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="270"/>
         <source>Save world file</source>
-        <translation type="unfinished"></translation>
+        <translation>world ファイルを保存</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1110"/>
