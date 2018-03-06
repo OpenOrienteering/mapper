@@ -514,7 +514,7 @@
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="83"/>
         <source>K.o.</source>
-        <translation>ノックアウト(抜き).</translation>
+        <translation>K.o.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="89"/>
@@ -804,7 +804,7 @@
     <message>
         <location filename="../src/tools/cut_hole_tool.cpp" line="249"/>
         <source>&lt;b&gt;Click or drag&lt;/b&gt;: Start drawing the hole. </source>
-        <translation>&lt;b&gt;クリック&lt;/b&gt;または&lt;b&gt;ドラッグ&lt;/b&gt;: 穴の描画を開始します。 </translation>
+        <translation>&lt;b&gt;クリックまたはドラッグ&lt;/b&gt;: 穴の描画を開始します。 </translation>
     </message>
 </context>
 <context>
