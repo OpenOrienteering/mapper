@@ -1284,7 +1284,7 @@ void MapEditorController::createMobileGUI()
 	mobile_symbol_button_menu = new QMenu(window);
 	mobile_symbol_button_menu->addAction(QString{}); // reserved for symbol name
 	auto description_action = mobile_symbol_button_menu->addAction(QApplication::translate("OpenOrienteering::SymbolPropertiesWidget", "Description"));
-	connect(description_action, &QAction::triggered, [this]() {
+	connect(description_action, &QAction::triggered, this, [this]() {
 		auto symbol = symbol_widget->getSingleSelectedSymbol();
 		auto document = QString{ symbol->getNumberAsString() + QLatin1Char(' ')
 		                         + QLatin1String("<b>") + symbol->getName() + QLatin1String("</b>\n\n")
@@ -1298,7 +1298,7 @@ void MapEditorController::createMobileGUI()
 	mobile_symbol_button_menu->addSeparator();
 	auto hide_symbol_action = mobile_symbol_button_menu->addAction(QApplication::translate("OpenOrienteering::SymbolRenderWidget", "Hide objects with this symbol"));
 	hide_symbol_action->setCheckable(true);
-	connect(hide_symbol_action, &QAction::triggered, [this](bool value) {
+	connect(hide_symbol_action, &QAction::triggered, this, [this](bool value) {
 		auto symbol = symbol_widget->getSingleSelectedSymbol();
 		symbol->setHidden(value);
 		if (!value && map->removeSymbolFromSelection(symbol, false))
@@ -1309,7 +1309,7 @@ void MapEditorController::createMobileGUI()
 	});
 	auto protected_symbol_action = mobile_symbol_button_menu->addAction(QApplication::translate("OpenOrienteering::SymbolRenderWidget", "Protect objects with this symbol"));
 	protected_symbol_action->setCheckable(true);
-	connect(protected_symbol_action, &QAction::triggered, [this](bool value) {
+	connect(protected_symbol_action, &QAction::triggered, this, [this](bool value) {
 		auto symbol = symbol_widget->getSingleSelectedSymbol();
 		symbol->setProtected(value);
 		if (!value && map->removeSymbolFromSelection(symbol, false))
@@ -1326,7 +1326,7 @@ void MapEditorController::createMobileGUI()
 	
 	Q_ASSERT(mappart_selector_box);
 	QAction* mappart_action = new QAction(QIcon(QString::fromLatin1(":/images/map-parts.png")), tr("Map parts"), this);
-	connect(mappart_action, &QAction::triggered, [this, mappart_action]() {
+	connect(mappart_action, &QAction::triggered, this, [this, mappart_action]() {
 		auto mappart_button = top_action_bar->getButtonForAction(mappart_action);
 		if (!mappart_button)
 			mappart_button = top_action_bar->getButtonForAction(top_action_bar->getOverflowAction());
@@ -1369,11 +1369,11 @@ void MapEditorController::createMobileGUI()
 	auto zoom_out_button = bottom_action_bar->getButtonForAction(zoom_out_act);
 	auto mobile_zoom_out_menu = new QMenu(zoom_out_button);
 	auto zoom_1x_action = mobile_zoom_out_menu->addAction(tr("1x zoom"));
-	connect(zoom_1x_action, &QAction::triggered, [this]() {
+	connect(zoom_1x_action, &QAction::triggered, this, [this]() {
 		main_view->setZoom(1);
 	});
 	auto zoom_2x_action = mobile_zoom_out_menu->addAction(tr("2x zoom"));
-	connect(zoom_2x_action, &QAction::triggered, [this]() {
+	connect(zoom_2x_action, &QAction::triggered, this, [this]() {
 		main_view->setZoom(2);
 	});
 	zoom_out_button->setMenu(mobile_zoom_out_menu);
@@ -1583,7 +1583,7 @@ void MapEditorController::printClicked(int task)
 		print_dock_widget->setAllowedAreas(Qt::NoDockWidgetArea);
 		print_dock_widget->toggleViewAction()->setVisible(false);
 		print_widget = new PrintWidget(map, window, main_view, this, print_dock_widget);
-		connect(print_dock_widget, &QDockWidget::visibilityChanged, [this]() {
+		connect(print_dock_widget, &QDockWidget::visibilityChanged, this, [this]() {
 			print_widget->setActive(print_dock_widget->isVisible());
 		} );
 		connect(print_widget, &PrintWidget::closeClicked, print_dock_widget, &QWidget::close);
@@ -1997,7 +1997,7 @@ void MapEditorController::createTemplateWindow()
 	if (isInMobileMode())
 	{
 		template_dock_widget = createDockWidgetSubstitute(window, template_list_widget);
-		connect(template_list_widget, &TemplateListWidget::closeClicked, [this]() { showTemplateWindow(false); });
+		connect(template_list_widget, &TemplateListWidget::closeClicked, this, [this]() { showTemplateWindow(false); });
 	}
 	else
 	{

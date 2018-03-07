@@ -373,7 +373,7 @@ bool CutTool::startCuttingArea(const ObjectPathCoord& point)
 	edit_object = point.object;
 	drag_start_len = point.clen;
 	path_tool = new DrawPathTool(editor, nullptr, true, false);
-	connect(path_tool, &DrawLineAndAreaTool::dirtyRectChanged, [this](const QRectF& rect){
+	connect(path_tool, &DrawLineAndAreaTool::dirtyRectChanged, this, [this](const QRectF& rect){
 		path_tool_rect = rect;
 		updateDirtyRect();
 	});
