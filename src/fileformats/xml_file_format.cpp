@@ -885,10 +885,10 @@ void XMLFileImporter::importSymbols()
 		}
 	}
 	
-	if (num_symbols > 0 && num_symbols != map->getNumSymbols())
+	if (num_symbols > 0 && num_symbols != map->symbols.size())
 		addWarning(tr("Expected %1 symbols, found %2.").
 		  arg(num_symbols).
-		  arg(map->getNumSymbols())
+		  arg(map->symbols.size())
 		);
 }
 
@@ -921,13 +921,13 @@ void XMLFileImporter::importMapParts()
 		}
 	}
 	
-	if (current_part_index < map->getNumParts())
+	if (current_part_index < map->parts.size())
 		map->current_part_index = current_part_index;
 	
-	if (num_parts > 0 && num_parts != map->getNumParts())
+	if (num_parts > 0 && num_parts != map->parts.size())
 		addWarning(tr("Expected %1 map parts, found %2.").
 		  arg(num_parts).
-		  arg(map->getNumParts())
+		  arg(map->parts.size())
 		);
 	
 	emit map->currentMapPartIndexChanged(map->current_part_index);

@@ -250,6 +250,31 @@ std::vector<QPointF> TextObject::controlPoints() const
 }
 
 
+
+void TextObject::scale(MapCoordF center, double factor)
+{
+	coords.front() = MapCoord{center + (MapCoordF{coords.front()} - center) * factor};
+	if (!has_single_anchor)
+		size *= factor;
+	setOutputDirty();
+}
+
+
+void TextObject::scale(double factor_x, double factor_y)
+{
+	auto& coord = coords.front();
+	coord.setX(coord.x() * factor_x);
+	coord.setY(coord.y() * factor_y);
+	if (!has_single_anchor)
+	{
+		size.setX(size.x() * factor_x);
+		size.setY(size.y() * factor_y);
+	}
+	setOutputDirty();
+}
+
+
+
 QTransform TextObject::calcTextToMapTransform() const
 {
 	const TextSymbol* text_symbol = reinterpret_cast<const TextSymbol*>(symbol);

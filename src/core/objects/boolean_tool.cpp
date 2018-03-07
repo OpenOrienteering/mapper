@@ -336,7 +336,7 @@ void BooleanTool::outerPolyNodeToPathObjects(const ClipperLib::PolyNode& node, P
 		
 		out_objects.push_back(object.release());
 	}
-	catch (std::range_error)
+	catch (std::range_error&)
 	{
 		// Do nothing
 	}
