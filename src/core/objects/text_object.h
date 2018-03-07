@@ -222,6 +222,17 @@ public:
 	std::vector<QPointF> controlPoints() const;
 	
 	
+	/**
+	 * Scales position and box, with the given scaling center.
+	 */
+	void scale(MapCoordF center, double factor) override;
+	
+	/**
+	 * Scales position and box, with the center (0, 0).
+	 */
+	void scale(double factor_x, double factor_y) override;
+	
+	
 	/** Sets the text of the object.
 	 */
 	void setText(const QString& text);

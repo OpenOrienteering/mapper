@@ -137,12 +137,20 @@ bool Object::equals(const Object* other, bool compare_symbol) const
 			return false;
 	}
 	
-	if (coords.size() != other->coords.size())
-		return false;
-	for (size_t i = 0, end = coords.size(); i < end; ++i)
+	if (type == Text)
 	{
-		if (coords[i] != other->coords[i])
+		if (coords.front() != other->coords.front())
 			return false;
+	}
+	else
+	{
+		if (coords.size() != other->coords.size())
+			return false;
+		for (size_t i = 0, end = coords.size(); i < end; ++i)
+		{
+			if (coords[i] != other->coords[i])
+				return false;
+		}
 	}
 	
 	if (object_tags != other->object_tags)
@@ -188,6 +196,8 @@ bool Object::equals(const Object* other, bool compare_symbol) const
 		const TextObject* text_this = static_cast<const TextObject*>(this);
 		const TextObject* text_other = static_cast<const TextObject*>(other);
 		
+		if (text_this->getBoxSize() != text_other->getBoxSize())
+			return false;
 		if (text_this->getText().compare(text_other->getText(), Qt::CaseSensitive) != 0)
 			return false;
 		if (text_this->getHorizontalAlignment() != text_other->getHorizontalAlignment())
@@ -332,6 +342,14 @@ void Object::load(QIODevice* file, int version, Map* map)
 			QString str;
 			loadString(file, str);
 			text->setText(str);
+			
+			if (coords.size() > 1)
+			{
+				auto raw_size = coords[1];
+				auto w = MapCoord::boundsOffset().x + raw_size.nativeX();
+				auto h = MapCoord::boundsOffset().y + raw_size.nativeY();
+				text->setBoxSize(MapCoord::fromNative64(w, h));
+			}
 		}
 	}
 	
@@ -605,13 +623,7 @@ void Object::createRenderables(ObjectRenderables& output, Symbol::RenderableOpti
 
 void Object::move(qint32 dx, qint32 dy)
 {
-	if (type == Text && coords.size() == 2)
-	{
-		MapCoord& coord = coords.front();
-		coord.setNativeX(dx + coord.nativeX());
-		coord.setNativeY(dy + coord.nativeY());
-	}
-	else for (MapCoord& coord : coords)
+	for (MapCoord& coord : coords)
 	{
 		coord.setNativeX(dx + coord.nativeX());
 		coord.setNativeY(dy + coord.nativeY());
@@ -622,11 +634,7 @@ void Object::move(qint32 dx, qint32 dy)
 
 void Object::move(MapCoord offset)
 {
-	if (type == Text && coords.size() == 2)
-	{
-		coords.front() += offset;
-	}
-	else for (MapCoord& coord : coords)
+	for (MapCoord& coord : coords)
 	{
 		coord += offset;
 	}
@@ -636,14 +644,7 @@ void Object::move(MapCoord offset)
 
 void Object::scale(MapCoordF center, double factor)
 {
-	if (type == Text && coords.size() == 2)
-	{
-		coords[0].setX(center.x() + (coords[0].x() - center.x()) * factor);
-		coords[0].setY(center.y() + (coords[0].y() - center.y()) * factor);
-		coords[1].setX(coords[1].x() * factor);
-		coords[1].setY(coords[1].y() * factor);
-	}
-	else for (MapCoord& coord : coords)
+	for (MapCoord& coord : coords)
 	{
 		coord.setX(center.x() + (coord.x() - center.x()) * factor);
 		coord.setY(center.y() + (coord.y() - center.y()) * factor);
@@ -669,8 +670,7 @@ void Object::rotateAround(MapCoordF center, double angle)
 	double cos_angle = cos(angle);
 	
 	int coords_size = coords.size();
-	if (type == Text && coords_size == 2)
-		coords_size = 1;	// don't touch box width / height for box texts
+	/// \todo range-for loop
 	for (int c = 0; c < coords_size; ++c)
 	{
 		MapCoordF center_to_coord = MapCoordF(coords[c].x() - center.x(), coords[c].y() - center.y());
@@ -699,8 +699,7 @@ void Object::rotate(double angle)
 	double cos_angle = cos(angle);
 	
 	int coords_size = coords.size();
-	if (type == Text && coords_size == 2)
-		coords_size = 1;	// don't touch box width / height for box texts
+	/// \todo range-for loop
 	for (int c = 0; c < coords_size; ++c)
 	{
 		MapCoord coord = coords[c];
