@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015, 2017 Kai Pastor
+ *    Copyright 2012-2015, 2017, 2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -66,7 +66,8 @@ PaintOnTemplateTool::PaintOnTemplateTool(MapEditorController* editor, QAction* t
 
 PaintOnTemplateTool::~PaintOnTemplateTool()
 {
-	editor->deletePopupWidget(widget);
+	if (widget)
+		editor->deletePopupWidget(widget);
 }
 
 void PaintOnTemplateTool::init()
@@ -75,6 +76,7 @@ void PaintOnTemplateTool::init()
 	
 	widget = new PaintOnTemplatePaletteWidget(false);
 	editor->showPopupWidget(widget, tr("Color selection"));
+	connect(editor->getMainWidget(), &QObject::destroyed, widget, [this]() { editor->deletePopupWidget(widget); });
 	connect(widget, &PaintOnTemplatePaletteWidget::colorSelected, this, &PaintOnTemplateTool::colorSelected);
 	connect(widget, &PaintOnTemplatePaletteWidget::undoSelected, this, &PaintOnTemplateTool::undoSelected);
 	connect(widget, &PaintOnTemplatePaletteWidget::redoSelected, this, &PaintOnTemplateTool::redoSelected);
