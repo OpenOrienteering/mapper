@@ -75,7 +75,7 @@ PointSymbol::PointSymbol(const PointSymbol& proto)
 , rotatable { proto.rotatable }
 {
 	elements.reserve(proto.elements.size());
-	std::transform(begin(proto.elements), end(proto.elements), std::back_inserter(elements), [](const auto& element) {
+	std::transform(begin(proto.elements), end(proto.elements), std::back_inserter(elements), [this](const auto& element) {
 		auto new_element = Element { Symbol::duplicate(*element.symbol),
 		                             std::unique_ptr<Object>(element.object->duplicate()) };
 		new_element.object->setSymbol(new_element.symbol.get(), true);
