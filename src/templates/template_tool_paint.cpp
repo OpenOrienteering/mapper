@@ -318,7 +318,7 @@ int PaintOnTemplatePaletteWidget::getNumFieldsY() const
 
 QColor PaintOnTemplatePaletteWidget::getFieldColor(int x, int y) const
 {
-	static QColor rows[2][4] = {{qRgb(255, 0, 0), qRgb(0, 255, 0), qRgb(0, 0, 255), qRgb(0, 0, 0)}, {qRgb(255, 255, 0), qRgb(219, 0, 216), qRgb(219, 180, 126), qRgb(255, 255, 255)}};
+	static QColor rows[2][4] = {{qRgb(255, 0, 0), qRgb(0, 255, 0), qRgb(0, 0, 255), qRgb(0, 0, 0)}, {qRgb(255, 255, 0), qRgb(219, 0, 216), qRgb(209, 92, 0), qRgb(255, 255, 255)}};
 	return rows[y][x];
 }
 
