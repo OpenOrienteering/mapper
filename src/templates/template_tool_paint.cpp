@@ -56,9 +56,9 @@ namespace OpenOrienteering {
 
 int PaintOnTemplateTool::erase_width = 4;
 
+
 PaintOnTemplateTool::PaintOnTemplateTool(MapEditorController* editor, QAction* tool_action, Template* temp)
 : MapEditorTool(editor, Other, tool_action)
-, paint_color(Qt::black)
 , temp(temp)
 {
 	connect(map(), &Map::templateDeleted, this, &PaintOnTemplateTool::templateDeleted);
@@ -85,20 +85,20 @@ void PaintOnTemplateTool::init()
 	MapEditorTool::init();
 }
 
-const QCursor&PaintOnTemplateTool::getCursor() const
+const QCursor& PaintOnTemplateTool::getCursor() const
 {
 	static auto const cursor = scaledToScreen(QCursor{ QPixmap(QString::fromLatin1(":/images/cursor-paint-on-template.png")), 1, 1 });
 	return cursor;
 }
 
-void PaintOnTemplateTool::templateDeleted(int pos, const Template* temp)
+
+void PaintOnTemplateTool::templateDeleted(int /*pos*/, const Template* temp)
 {
-	Q_UNUSED(pos);
 	if (temp == this->temp)
 		deactivate();
 }
 
-void PaintOnTemplateTool::colorSelected(QColor color)
+void PaintOnTemplateTool::colorSelected(const QColor& color)
 {
 	paint_color = color;
 }
@@ -113,10 +113,9 @@ void PaintOnTemplateTool::redoSelected()
 	temp->drawOntoTemplateUndo(true);
 }
 
-bool PaintOnTemplateTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+
+bool PaintOnTemplateTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* /*widget*/)
 {
-	Q_UNUSED(widget);
-	
 	if (event->button() == Qt::LeftButton || event->button() == Qt::RightButton)
 	{
 		coords.push_back(map_coord);
@@ -125,41 +124,36 @@ bool PaintOnTemplateTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coor
 		erasing = (event->button() == Qt::RightButton) || (paint_color == qRgb(255, 255, 255));
 		return true;
 	}
-	else
-		return false;
+	
+	return false;
 }
 
-bool PaintOnTemplateTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool PaintOnTemplateTool::mouseMoveEvent(QMouseEvent* /*event*/, MapCoordF map_coord, MapWidget* widget)
 {
-	Q_UNUSED(event);
-	
 	if (dragging)
 	{
-		float scale = qMin(temp->getTemplateScaleX(), temp->getTemplateScaleY());
+		auto scale = qMin(temp->getTemplateScaleX(), temp->getTemplateScaleY());
 		
 		coords.push_back(map_coord);
 		rectInclude(map_bbox, map_coord);
 		
 		auto pixel_border = widget->getMapView()->lengthToPixel(1000.0 * scale * (erasing ? erase_width/2 : 1));
-		map()->setDrawingBoundingBox(map_bbox, pixel_border);
+		map()->setDrawingBoundingBox(map_bbox, qCeil(pixel_border));
 		
 		return true;
 	}
-	else
-		return false;
+	
+	return false;
 }
 
-bool PaintOnTemplateTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool PaintOnTemplateTool::mouseReleaseEvent(QMouseEvent* /*event*/, MapCoordF map_coord, MapWidget* /*widget*/)
 {
-	Q_UNUSED(event);
-	Q_UNUSED(widget);
-	
 	if (dragging)
 	{
 		coords.push_back(map_coord);
 		rectInclude(map_bbox, map_coord);
 		
-		temp->drawOntoTemplate(&coords[0], coords.size(), erasing ? QColor(255, 255, 255, 0) : paint_color, erasing ? erase_width : 0, map_bbox);
+		temp->drawOntoTemplate(&coords[0], int(coords.size()), erasing ? QColor(255, 255, 255, 0) : paint_color, erasing ? erase_width : 0, map_bbox);
 		
 		coords.clear();
 		map()->clearDrawingBoundingBox();
@@ -167,13 +161,14 @@ bool PaintOnTemplateTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_co
 		dragging = false;
 		return true;
 	}
-	else
-		return false;
+	
+	return false;
 }
+
 
 void PaintOnTemplateTool::draw(QPainter* painter, MapWidget* widget)
 {
-	float scale = qMin(temp->getTemplateScaleX(), temp->getTemplateScaleY());
+	auto scale = qMin(temp->getTemplateScaleX(), temp->getTemplateScaleY());
 	
 	QPen pen(erasing ? qRgb(255, 255, 255) : paint_color);
 	pen.setWidthF(widget->getMapView()->lengthToPixel(1000.0 * scale * (erasing ? erase_width : 1)));
@@ -181,14 +176,18 @@ void PaintOnTemplateTool::draw(QPainter* painter, MapWidget* widget)
 	pen.setJoinStyle(Qt::RoundJoin);
 	painter->setPen(pen);
 	
-	int size = (int)coords.size();
-	for (int i = 1; i < size; ++i)
+	auto size = coords.size();
+	for (std::size_t i = 1; i < size; ++i)
 		painter->drawLine(widget->mapToViewport(coords[i - 1]), widget->mapToViewport(coords[i]));
 }
 
+
+
 // ### PaintOnTemplatePaletteWidget ###
 
-PaintOnTemplatePaletteWidget::PaintOnTemplatePaletteWidget(bool close_on_selection) : QWidget(), close_on_selection(close_on_selection)
+PaintOnTemplatePaletteWidget::PaintOnTemplatePaletteWidget(bool close_on_selection)
+: QWidget()
+, close_on_selection(close_on_selection)
 {
 	setAttribute(Qt::WA_DeleteOnClose);
 	setAttribute(Qt::WA_OpaquePaintEvent);
@@ -215,12 +214,14 @@ QColor PaintOnTemplatePaletteWidget::getSelectedColor()
 	return getFieldColor(selected_color % getNumFieldsX(), selected_color / getNumFieldsX());
 }
 
+
 QSize PaintOnTemplatePaletteWidget::sizeHint() const
 {
-	const float mmPerButton = 13;
-	return QSize(getNumFieldsX() * Util::mmToPixelLogical(mmPerButton),
-				 getNumFieldsY() * Util::mmToPixelLogical(mmPerButton));
+	constexpr qreal button_size_mm = 13;
+	return QSize(qCeil(getNumFieldsX() * Util::mmToPixelLogical(button_size_mm)),
+	             qCeil(getNumFieldsY() * Util::mmToPixelLogical(button_size_mm)));
 }
+
 
 void PaintOnTemplatePaletteWidget::paintEvent(QPaintEvent* event)
 {
@@ -266,6 +267,7 @@ void PaintOnTemplatePaletteWidget::paintEvent(QPaintEvent* event)
 	painter.end();
 }
 
+
 void PaintOnTemplatePaletteWidget::mousePressEvent(QMouseEvent* event)
 {
 	if (event->button() != Qt::LeftButton)
@@ -276,8 +278,8 @@ void PaintOnTemplatePaletteWidget::mousePressEvent(QMouseEvent* event)
 		return;
 	pressed_buttons |= event->button();
 	
-    int x = (int)(event->x() / (width() / (float)getNumFieldsX()));
-	int y = (int)(event->y() / (height() / (float)getNumFieldsY()));
+	int x = int(event->x() / (width() / qreal(getNumFieldsX())));
+	int y = int(event->y() / (height() / qreal(getNumFieldsY())));
 	
 	if (isUndoField(x, y))
 	{
@@ -306,6 +308,7 @@ void PaintOnTemplatePaletteWidget::mouseReleaseEvent(QMouseEvent* event)
 	pressed_buttons &= ~event->button();
 }
 
+
 int PaintOnTemplatePaletteWidget::getNumFieldsX() const
 {
 	return 5;
@@ -318,7 +321,8 @@ int PaintOnTemplatePaletteWidget::getNumFieldsY() const
 
 QColor PaintOnTemplatePaletteWidget::getFieldColor(int x, int y) const
 {
-	static QColor rows[2][4] = {{qRgb(255, 0, 0), qRgb(0, 255, 0), qRgb(0, 0, 255), qRgb(0, 0, 0)}, {qRgb(255, 255, 0), qRgb(219, 0, 216), qRgb(209, 92, 0), qRgb(255, 255, 255)}};
+	static QColor rows[2][4] = { {qRgb(255,   0,   0), qRgb(  0, 255,   0), qRgb(  0,   0, 255), qRgb(  0,   0,   0)},
+	                             {qRgb(255, 255,   0), qRgb(219,   0, 216), qRgb(209,  92,   0), qRgb(255, 255, 255)} };
 	return rows[y][x];
 }
 
@@ -341,13 +345,16 @@ void PaintOnTemplatePaletteWidget::drawIcon(QPainter* painter, const QString& re
 	painter->setRenderHint(QPainter::Antialiasing, false);
 }
 
+
+
 // ### PaintOnTemplateSelectDialog ###
 
-PaintOnTemplateSelectDialog::PaintOnTemplateSelectDialog(Map* map, QWidget* parent) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
+PaintOnTemplateSelectDialog::PaintOnTemplateSelectDialog(Map* map, QWidget* parent)
+: QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
 {
 #if defined(ANDROID)
 	setWindowState((windowState() & ~(Qt::WindowMinimized | Qt::WindowFullScreen))
-                   | Qt::WindowMaximized);
+	               | Qt::WindowMaximized);
 #endif
 	setWindowTitle(tr("Select template to draw onto"));
 	
