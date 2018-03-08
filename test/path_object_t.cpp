@@ -65,7 +65,7 @@ PathObject::Intersections calculateIntersections(const PathObject& path1, const 
 	path1.calcAllIntersectionsWith(&path2, actual_intersections);
 	actual_intersections.normalize();
 	return actual_intersections;
-};
+}
 
 
 }  // namespace
