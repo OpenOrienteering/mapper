@@ -57,9 +57,8 @@ namespace OpenOrienteering {
 int PaintOnTemplateTool::erase_width = 4;
 
 
-PaintOnTemplateTool::PaintOnTemplateTool(MapEditorController* editor, QAction* tool_action, Template* temp)
+PaintOnTemplateTool::PaintOnTemplateTool(MapEditorController* editor, QAction* tool_action)
 : MapEditorTool(editor, Other, tool_action)
-, temp(temp)
 {
 	connect(map(), &Map::templateDeleted, this, &PaintOnTemplateTool::templateDeleted);
 }
@@ -68,6 +67,11 @@ PaintOnTemplateTool::~PaintOnTemplateTool()
 {
 	if (widget)
 		editor->deletePopupWidget(widget);
+}
+
+void PaintOnTemplateTool::setTemplate(Template* temp)
+{
+	this->temp = temp;
 }
 
 void PaintOnTemplateTool::init()
@@ -95,7 +99,10 @@ const QCursor& PaintOnTemplateTool::getCursor() const
 void PaintOnTemplateTool::templateDeleted(int /*pos*/, const Template* temp)
 {
 	if (temp == this->temp)
+	{
+		temp = nullptr;
 		deactivate();
+	}
 }
 
 void PaintOnTemplateTool::colorSelected(const QColor& color)
@@ -105,12 +112,14 @@ void PaintOnTemplateTool::colorSelected(const QColor& color)
 
 void PaintOnTemplateTool::undoSelected()
 {
-	temp->drawOntoTemplateUndo(false);
+	if (temp)
+		temp->drawOntoTemplateUndo(false);
 }
 
 void PaintOnTemplateTool::redoSelected()
 {
-	temp->drawOntoTemplateUndo(true);
+	if (temp)
+		temp->drawOntoTemplateUndo(true);
 }
 
 
@@ -130,7 +139,7 @@ bool PaintOnTemplateTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coor
 
 bool PaintOnTemplateTool::mouseMoveEvent(QMouseEvent* /*event*/, MapCoordF map_coord, MapWidget* widget)
 {
-	if (dragging)
+	if (dragging && temp)
 	{
 		auto scale = qMin(temp->getTemplateScaleX(), temp->getTemplateScaleY());
 		
@@ -148,7 +157,7 @@ bool PaintOnTemplateTool::mouseMoveEvent(QMouseEvent* /*event*/, MapCoordF map_c
 
 bool PaintOnTemplateTool::mouseReleaseEvent(QMouseEvent* /*event*/, MapCoordF map_coord, MapWidget* /*widget*/)
 {
-	if (dragging)
+	if (dragging && temp)
 	{
 		coords.push_back(map_coord);
 		rectInclude(map_bbox, map_coord);
@@ -168,17 +177,20 @@ bool PaintOnTemplateTool::mouseReleaseEvent(QMouseEvent* /*event*/, MapCoordF ma
 
 void PaintOnTemplateTool::draw(QPainter* painter, MapWidget* widget)
 {
-	auto scale = qMin(temp->getTemplateScaleX(), temp->getTemplateScaleY());
-	
-	QPen pen(erasing ? qRgb(255, 255, 255) : paint_color);
-	pen.setWidthF(widget->getMapView()->lengthToPixel(1000.0 * scale * (erasing ? erase_width : 1)));
-	pen.setCapStyle(Qt::RoundCap);
-	pen.setJoinStyle(Qt::RoundJoin);
-	painter->setPen(pen);
-	
-	auto size = coords.size();
-	for (std::size_t i = 1; i < size; ++i)
-		painter->drawLine(widget->mapToViewport(coords[i - 1]), widget->mapToViewport(coords[i]));
+	if (dragging && temp)
+	{
+		auto scale = qMin(temp->getTemplateScaleX(), temp->getTemplateScaleY());
+		
+		QPen pen(erasing ? qRgb(255, 255, 255) : paint_color);
+		pen.setWidthF(widget->getMapView()->lengthToPixel(1000.0 * scale * (erasing ? erase_width : 1)));
+		pen.setCapStyle(Qt::RoundCap);
+		pen.setJoinStyle(Qt::RoundJoin);
+		painter->setPen(pen);
+		
+		auto size = coords.size();
+		for (std::size_t i = 1; i < size; ++i)
+			painter->drawLine(widget->mapToViewport(coords[i - 1]), widget->mapToViewport(coords[i]));
+	}
 }
 
 

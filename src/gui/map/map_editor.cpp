@@ -3299,15 +3299,12 @@ void MapEditorController::paintOnTemplateSelectClicked()
 	{
 		PaintOnTemplateSelectDialog paintDialog(map, window);
 		paintDialog.setWindowModality(Qt::WindowModal);
-		if (paintDialog.exec() == QDialog::Rejected)
+		if (paintDialog.exec() == QDialog::Accepted)
 		{
-			paint_on_template_act->setChecked(false);
-			return;
+			last_painted_on_template = paintDialog.getSelectedTemplate();
+			paintOnTemplate(last_painted_on_template);
 		}
-		
-		last_painted_on_template = paintDialog.getSelectedTemplate();
 	}
-	paintOnTemplate(last_painted_on_template);
 }
 
 void MapEditorController::enableGPSDisplay(bool enable)
@@ -3766,8 +3763,13 @@ void MapEditorController::mergeAllMapParts()
 
 void MapEditorController::paintOnTemplate(Template* temp)
 {
-	setTool(new PaintOnTemplateTool(this, paint_on_template_act, temp));
-	paint_on_template_act->setChecked(true);
+	auto tool = qobject_cast<PaintOnTemplateTool*>(getTool());
+	if (!tool)
+	{
+		tool = new PaintOnTemplateTool(this, paint_on_template_act);
+		setTool(tool);
+	}
+	tool->setTemplate(temp);
 }
 
 void MapEditorController::updatePaintOnTemplateAction()

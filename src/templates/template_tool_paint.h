@@ -62,8 +62,10 @@ class PaintOnTemplateTool : public MapEditorTool
 {
 Q_OBJECT
 public:
-	PaintOnTemplateTool(MapEditorController* editor, QAction* tool_action, Template* temp);
+	PaintOnTemplateTool(MapEditorController* editor, QAction* tool_action);
 	~PaintOnTemplateTool() override;
+	
+	void setTemplate(Template* temp);
 	
 	void init() override;
 	const QCursor& getCursor() const override;
@@ -87,7 +89,7 @@ private:
 	QRectF map_bbox;
 	std::vector<MapCoordF> coords;
 	
-	Template* temp;
+	Template* temp = nullptr;
 	QPointer<PaintOnTemplatePaletteWidget> widget;
 	
 	static int erase_width;
