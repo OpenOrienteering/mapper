@@ -3744,6 +3744,13 @@ void MapEditorController::paintOnTemplate(Template* temp)
 		tool = new PaintOnTemplateTool(this, paint_on_template_act);
 		setTool(tool);
 	}
+	
+	hideAllTemplates(false);
+	auto vis = main_view->getTemplateVisibility(temp);
+	vis.visible = true;
+	main_view->setTemplateVisibility(temp, vis);
+	temp->setTemplateAreaDirty();
+	
 	tool->setTemplate(temp);
 }
 
