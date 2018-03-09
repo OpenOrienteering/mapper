@@ -955,8 +955,6 @@ void MapEditorController::createActions()
 	paint_on_template_settings_act->setWhatsThis(Util::makeWhatThis("toolbars.html#draw_on_template"));
 	connect(paint_on_template_settings_act, &QAction::triggered, this, &MapEditorController::paintOnTemplateSelectClicked);
 
-	updatePaintOnTemplateAction();
-	
 	touch_cursor_action = newCheckAction("touchcursor", tr("Enable touch cursor"), map_widget, SLOT(enableTouchCursor(bool)), "tool-touch-cursor.png", QString{}, "toolbars.html#touch_cursor"); // TODO: write documentation
 	gps_display_action = newCheckAction("gpsdisplay", tr("Enable GPS display"), this, SLOT(enableGPSDisplay(bool)), "tool-gps-display.png", QString{}, "toolbars.html#gps_display"); // TODO: write documentation
 	gps_display_action->setEnabled(map->getGeoreferencing().isValid() && ! map->getGeoreferencing().isLocal());
@@ -3265,45 +3263,22 @@ void MapEditorController::addFloatingDockWidget(QDockWidget* dock_widget)
 
 void MapEditorController::paintOnTemplateClicked(bool checked)
 {
-	if (checked)
-	{
-		if (!last_painted_on_template)
-			paintOnTemplateSelectClicked();
-		else
-			paintOnTemplate(last_painted_on_template);
-	}
+	if (!checked)
+		finishPaintOnTemplate();
+	else if (last_painted_on_template)
+		paintOnTemplate(last_painted_on_template);
 	else
-		setTool(nullptr);
+		paintOnTemplateSelectClicked();
 }
 
 void MapEditorController::paintOnTemplateSelectClicked()
 {
-	Template* only_paintable_template = nullptr;
-	for (int i = 0; i < map->getNumTemplates(); ++i)
+	PaintOnTemplateSelectDialog paintDialog(map, main_view, last_painted_on_template, window);
+	paintDialog.setWindowModality(Qt::WindowModal);
+	if (paintDialog.exec() == QDialog::Accepted)
 	{
-		if (map->getTemplate(i)->canBeDrawnOnto())
-		{
-			if (!only_paintable_template)
-				only_paintable_template = map->getTemplate(i);
-			else
-			{
-				only_paintable_template = nullptr;
-				break;
-			}
-		}
-	}
-	
-	if (only_paintable_template)
-		last_painted_on_template = only_paintable_template;
-	else
-	{
-		PaintOnTemplateSelectDialog paintDialog(map, window);
-		paintDialog.setWindowModality(Qt::WindowModal);
-		if (paintDialog.exec() == QDialog::Accepted)
-		{
-			last_painted_on_template = paintDialog.getSelectedTemplate();
-			paintOnTemplate(last_painted_on_template);
-		}
+		last_painted_on_template = paintDialog.getSelectedTemplate();
+		paintOnTemplate(last_painted_on_template);
 	}
 }
 
@@ -3772,44 +3747,22 @@ void MapEditorController::paintOnTemplate(Template* temp)
 	tool->setTemplate(temp);
 }
 
-void MapEditorController::updatePaintOnTemplateAction()
+void MapEditorController::finishPaintOnTemplate()
 {
-	if (map)
+	if (auto tool = qobject_cast<PaintOnTemplateTool*>(current_tool))
 	{
-		int i;
-		for (i = 0; i < map->getNumTemplates(); ++i)
-		{
-			// TODO: check for visibility too?!
-			if (map->getTemplate(i)->canBeDrawnOnto() && map->getTemplate(i)->getTemplateState() != Template::Invalid)
-				break;
-		}
-		paint_on_template_act->setEnabled(i != map->getNumTemplates());
+		tool->deactivate();
 	}
-	else
-		paint_on_template_act->setEnabled(false);
-	
-	if (paint_on_template_act->isEnabled())
-		paint_on_template_act->setStatusTip(tr("Paint free-handedly on a template"));
-	else
-		paint_on_template_act->setStatusTip(tr("Paint free-handedly on a template. Create or load a template which can be drawn onto to activate this button"));
-
-	paint_on_template_settings_act->setEnabled(paint_on_template_act->isEnabled());
 }
 
-void MapEditorController::templateAdded(int pos, const Template* temp)
+void MapEditorController::templateAdded(int /*pos*/, const Template* /*temp*/)
 {
-	Q_UNUSED(pos);
-	if (mode == MapEditor && temp->canBeDrawnOnto())
-		updatePaintOnTemplateAction();
 	if (map->getNumTemplates() == 1)
 		templateAvailabilityChanged();
 }
 
-void MapEditorController::templateDeleted(int pos, const Template* temp)
+void MapEditorController::templateDeleted(int /*pos*/, const Template* /*temp*/)
 {
-	Q_UNUSED(pos);
-	if (mode == MapEditor && temp->canBeDrawnOnto())
-		updatePaintOnTemplateAction();
 	if (map->getNumTemplates() == 0)
 		templateAvailabilityChanged();
 }

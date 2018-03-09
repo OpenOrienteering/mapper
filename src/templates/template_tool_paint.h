@@ -39,7 +39,7 @@
 
 class QAction;
 class QCursor;
-class QListWidgetItem;
+class QListWidget;
 class QMouseEvent;
 class QPaintEvent;
 class QPainter;
@@ -50,6 +50,7 @@ namespace OpenOrienteering {
 
 class Map;
 class MapEditorController;
+class MapView;
 class MapWidget;
 class PaintOnTemplatePaletteWidget;
 class Template;
@@ -146,15 +147,20 @@ class PaintOnTemplateSelectDialog : public QDialog
 {
 Q_OBJECT
 public:
-	PaintOnTemplateSelectDialog(Map* map, QWidget* parent);
+	PaintOnTemplateSelectDialog(Map* map, MapView* view, Template* selected, MainWindow* parent);
 	
 	Template* getSelectedTemplate() const { return selection; }
 	
-protected slots:
-	void currentTemplateChanged(QListWidgetItem* current, QListWidgetItem* previous);
+protected:
+	void drawClicked();
+	
+	Template* addNewTemplate() const;
 	
 private:
-	Template* selection;
+	Map* map;
+	MapView* view;
+	Template* selection = nullptr;
+	QListWidget* template_list;
 	QPushButton* draw_button;
 };
 
