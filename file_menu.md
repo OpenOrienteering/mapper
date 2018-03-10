@@ -19,7 +19,7 @@ This shows the dialog to create a [new map](new_map.md).
 #### ![ ](../mapper-images/open.png) Open...
 **Ctrl+O**
 
-Shows the dialog to open an existing map file. Currently supported formats are .omap, .xmap or .ocd (versions 6 to 11).
+Shows the dialog to open an existing map file. Currently supported formats are .omap, .xmap or .ocd (versions 6 to 12).
 
 
 #### Open recent
