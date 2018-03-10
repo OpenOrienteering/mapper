@@ -165,13 +165,13 @@ void EditPointTool::mouseMove()
 
 void EditPointTool::clickPress()
 {
-	Q_ASSERT(!hover_state.testFlag(OverObjectNode) ||
-	         !hover_state.testFlag(OverPathEdge) ||
-	         hover_object);
+	/// \todo Consider calling updateHoverState from an override of (virtual) mousePositionEvent
+	updateHoverState(click_pos_map);
 	
 	if (hover_state.testFlag(OverPathEdge) &&
 	    active_modifiers & Qt::ControlModifier)
 	{
+		Q_ASSERT(hover_object);
 		// Add new point to path
 		PathObject* path = hover_object->asPath();
 		
@@ -202,6 +202,7 @@ void EditPointTool::clickPress()
     else if (hover_state.testFlag(OverObjectNode) &&
 	         hover_object->getType() == Object::Path)
 	{
+		Q_ASSERT(hover_object);
 		PathObject* hover_object = this->hover_object->asPath();
 		Q_ASSERT(hover_point < hover_object->getCoordinateCount());
 		
