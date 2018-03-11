@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="0.8.1" android:versionCode="801" package="org.openorienteering.mapper" android:installLocation="auto">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="0.8.2" android:versionCode="802" package="org.openorienteering.mapper" android:installLocation="auto">
     <application android:name="org.qtproject.qt5.android.bindings.QtApplication" android:label="@string/long_app_name" android:icon="@drawable/icon">
         <activity android:configChanges="orientation|uiMode|screenLayout|screenSize|smallestScreenSize|locale|fontScale|keyboard|keyboardHidden|navigation"
                   android:name="org.openorienteering.mapper.MapperActivity"
