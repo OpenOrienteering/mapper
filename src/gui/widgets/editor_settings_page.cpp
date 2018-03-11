@@ -32,6 +32,7 @@
 #include <QWidget>
 
 #include "settings.h"
+#include "gui/main_window.h"
 #include "gui/modifier_key.h"
 #include "gui/util_gui.h"
 #include "gui/widgets/settings_page.h"
@@ -44,6 +45,12 @@ EditorSettingsPage::EditorSettingsPage(QWidget* parent)
 {
 	auto layout = new QFormLayout(this);
 	
+	if (MainWindow::mobileMode())
+	{
+		button_size = Util::SpinBox::create(1, 3.0, 26.0, tr("mm", "millimeters"), 0.1);
+		layout->addRow(tr("Action button size:"), button_size);
+	}
+
 	icon_size = Util::SpinBox::create(1, 25, tr("mm", "millimeters"));
 	layout->addRow(tr("Symbol icon size:"), icon_size);
 	
@@ -121,6 +128,7 @@ QString EditorSettingsPage::title() const
 
 void EditorSettingsPage::apply()
 {
+	setSetting(Settings::ActionGridBar_ButtonSizeMM, button_size->value());
 	setSetting(Settings::SymbolWidget_IconSizeMM, icon_size->value());
 	setSetting(Settings::MapDisplay_Antialiasing, antialiasing->isChecked());
 	setSetting(Settings::MapDisplay_TextAntialiasing, text_antialiasing->isChecked());
@@ -144,6 +152,7 @@ void EditorSettingsPage::reset()
 
 void EditorSettingsPage::updateWidgets()
 {
+	button_size->setValue(getSetting(Settings::ActionGridBar_ButtonSizeMM).toFloat());
 	icon_size->setValue(getSetting(Settings::SymbolWidget_IconSizeMM).toInt());
 	antialiasing->setChecked(getSetting(Settings::MapDisplay_Antialiasing).toBool());
 	text_antialiasing->setEnabled(antialiasing->isChecked());
