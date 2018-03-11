@@ -70,15 +70,6 @@ cat << END_EXTRA
     # http://doc.qt.io/qt-5/qobject.html
     { include: [ "<qobjectdefs.h>", "private", "<QObject>", "public" ] },
 
-    # libstdc++ debugging headers, for use with -D_GLIBCXX_DEBUG
-    { include: [ "<debug/map.h>", "private", "<map>", "public" ] },
-    { include: [ "<debug/safe_iterator.h>", "private", "<iterator>", "public" ] },
-    { include: [ "<debug/safe_sequence.h>", "private", "<iterator>", "public" ] },
-    { include: [ "<debug/set.h>", "private", "<set>", "public" ] },
-    { include: [ "<debug/unordered_map>", "private", "<unordered_map>", "public" ] },
-    { include: [ "<debug/unordered_set>", "private", "<unordered_set>", "public" ] },
-    { include: [ "<debug/vector>", "private", "<vector>", "public" ] },
-
 END_EXTRA
 
 echo "]"

@@ -119,6 +119,13 @@ namespace Ocd
 			TypeCircle = 3,
 			TypeDot    = 4
 		};
+		
+		enum Flags
+		{
+			NoFlags        = 0,
+			RoundStyle     = 1,
+			FlatMiterStyle = 4,
+		};
 	};
 	
 	struct PointSymbolV8

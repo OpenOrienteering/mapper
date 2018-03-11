@@ -262,7 +262,7 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, SymbolSettingDialog* 
 	connect(pattern_linewidth_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &AreaSymbolSettings::patternLineWidthChanged);
 	connect(pattern_pointdist_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &AreaSymbolSettings::patternPointDistChanged);
 	
-	connect(pattern_clipping_edit, QOverload<int>::of(&QComboBox::currentIndexChanged), [this](){
+	connect(pattern_clipping_edit, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [this](){
 		active_pattern->setClipping(AreaSymbol::FillPattern::Options(pattern_clipping_edit->currentData(Qt::UserRole).toInt()));
 		emit propertiesModified();
 	});

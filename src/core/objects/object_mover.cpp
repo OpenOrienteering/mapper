@@ -80,7 +80,7 @@ void ObjectMover::addLine(PathObject* object, MapCoordVector::size_type start_po
 }
 
 
-void ObjectMover::addTextHandle(TextObject* text, int handle)
+void ObjectMover::addTextHandle(TextObject* text, MapCoordVector::size_type handle)
 {
 	text_handles.insert({text, handle});
 }
@@ -149,7 +149,7 @@ void ObjectMover::move(qint32 dx, qint32 dy, bool move_opposite_handles)
 		transform.rotate(qRadiansToDegrees(text_object->getRotation()));
 		QPointF delta_point = transform.map(QPointF(dx, dy));
 		
-		int move_point = handle.second;
+		const auto move_point = handle.second;
 		int x_sign = (move_point <= 1) ? 1 : -1;
 		int y_sign = (move_point >= 1 && move_point <= 2) ? 1 : -1;
 		

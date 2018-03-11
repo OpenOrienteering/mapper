@@ -1544,6 +1544,25 @@ void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t dat
 				auto element_symbol = new OcdImportedLineSymbol();
 				element_symbol->line_width = convertLength(element->line_width);
 				element_symbol->color = convertColor(element->color);
+				// The flags variable doesn't seem to contain individual flags.
+				switch (element->flags)
+				{
+				default:
+					qDebug("Ocd::PointSymbolElementV8: Unknown flags value %d", element->flags);
+					// fall through
+				case Ocd::PointSymbolElementV8::NoFlags:
+					element_symbol->setCapStyle(LineSymbol::FlatCap);
+					element_symbol->setJoinStyle(LineSymbol::BevelJoin);
+					break;
+				case Ocd::PointSymbolElementV8::RoundStyle:
+					element_symbol->setCapStyle(LineSymbol::RoundCap);
+					element_symbol->setJoinStyle(LineSymbol::RoundJoin);
+					break;
+				case Ocd::PointSymbolElementV8::FlatMiterStyle:
+					element_symbol->setCapStyle(LineSymbol::FlatCap);
+					element_symbol->setJoinStyle(LineSymbol::MiterJoin);
+					break;
+				}
 				auto element_object = new OcdImportedPathObject(element_symbol);
 				fillPathCoords(element_object, false, element->num_coords, coords);
 				element_object->recalculateParts();

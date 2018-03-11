@@ -86,7 +86,7 @@ SymbolPropertiesWidget::SymbolPropertiesWidget(Symbol* symbol, SymbolSettingDial
 	connect(name_edit, &QLineEdit::textEdited, this, &SymbolPropertiesWidget::nameChanged);
 	connect(description_edit, &QTextEdit::textChanged, this, &SymbolPropertiesWidget::descriptionChanged);
 	connect(helper_symbol_check, &QAbstractButton::clicked, this, &SymbolPropertiesWidget::helperSymbolChanged);
-	connect(this, &SymbolPropertiesWidget::propertiesModified, [dialog]() { dialog->setSymbolModified(true); });
+	connect(this, &SymbolPropertiesWidget::propertiesModified, dialog, [dialog]() { dialog->setSymbolModified(true); });
 	
 	int row = 0, col = 0;
 	// 1st col
