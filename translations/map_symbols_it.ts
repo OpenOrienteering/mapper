@@ -7,12 +7,12 @@
             <source>Purple</source>
             <comment>Color 0</comment>
             <translation type="unfinished">Viola</translation>
-    </message>
+        </message>
         <message>
             <source>Black</source>
             <comment>Color 1</comment>
             <translation>Nero</translation>
-    </message>
+        </message>
         <message>
             <source>Opaque White below Black</source>
             <comment>Color 2</comment>
@@ -22,17 +22,17 @@
             <source>Black 65%</source>
             <comment>Color 3</comment>
             <translation>Nero 65%</translation>
-    </message>
+        </message>
         <message>
             <source>Black 20%</source>
             <comment>Color 4</comment>
             <translation>Nero 20%</translation>
-    </message>
+        </message>
         <message>
             <source>Brown 50%</source>
             <comment>Color 5</comment>
             <translation>Marrone 50%</translation>
-    </message>
+        </message>
         <message>
             <source>Black below light browns</source>
             <comment>Color 6</comment>
@@ -42,62 +42,62 @@
             <source>Opaque Blue</source>
             <comment>Color 7</comment>
             <translation>Blu opaco</translation>
-    </message>
+        </message>
         <message>
             <source>Blue</source>
             <comment>Color 8</comment>
             <translation>Blu</translation>
-    </message>
+        </message>
         <message>
             <source>Blue 50%</source>
             <comment>Color 9</comment>
             <translation>Blu 50%</translation>
-    </message>
+        </message>
         <message>
             <source>Brown</source>
             <comment>Color 10</comment>
             <translation>Marrone</translation>
-    </message>
+        </message>
         <message>
             <source>OpenOrienteering Orange</source>
             <comment>Color 11</comment>
             <translation type="unfinished">OpenOrienteering Arancione</translation>
-    </message>
+        </message>
         <message>
             <source>Black 25% (Grey)</source>
             <comment>Color 12</comment>
             <translation type="unfinished">Nero 25% (Grigio)</translation>
-    </message>
+        </message>
         <message>
             <source>Green 50%, Yellow</source>
             <comment>Color 13</comment>
             <translation type="unfinished">Verde  50%, Giallo</translation>
-    </message>
+        </message>
         <message>
             <source>Green</source>
             <comment>Color 14</comment>
             <translation>Verde</translation>
-    </message>
+        </message>
         <message>
             <source>Opaque Yellow</source>
             <comment>Color 15</comment>
             <translation type="unfinished">Giallo scuro</translation>
-    </message>
+        </message>
         <message>
             <source>Opaque White over Green</source>
             <comment>Color 16</comment>
             <translation type="unfinished">Bianco opaco sopra il verde</translation>
-    </message>
+        </message>
         <message>
             <source>Opaque Green 20%</source>
             <comment>Color 17</comment>
             <translation type="unfinished">Verde opaco 20%</translation>
-    </message>
+        </message>
         <message>
             <source>Opaque Green 50%</source>
             <comment>Color 18</comment>
             <translation>Verde opaco 50%</translation>
-    </message>
+        </message>
         <message>
             <source>Green, Black 50%</source>
             <comment>Color 19</comment>
@@ -107,17 +107,17 @@
             <source>Opaque Green</source>
             <comment>Color 20</comment>
             <translation type="unfinished">Verde opaco</translation>
-    </message>
+        </message>
         <message>
             <source>Green 50%</source>
             <comment>Color 21</comment>
             <translation>Verde 50%</translation>
-    </message>
+        </message>
         <message>
             <source>Green 20%</source>
             <comment>Color 22</comment>
             <translation>Verde 20%</translation>
-    </message>
+        </message>
         <message>
             <source>Green below light greens</source>
             <comment>Color 23</comment>
@@ -127,38 +127,38 @@
             <source>Green 50% over Yellow</source>
             <comment>Color 24</comment>
             <translation>Verde 50% sopra il giallo</translation>
-    </message>
+        </message>
         <message>
             <source>White over Yellow</source>
             <comment>Color 25</comment>
             <translation>Bianco sopra il giallo</translation>
-    </message>
+        </message>
         <message>
             <source>Yellow</source>
             <comment>Color 26</comment>
             <translation>Giallo</translation>
-    </message>
+        </message>
         <message>
             <source>Yellow 50%</source>
             <comment>Color 27</comment>
             <translation>Giallo 50%</translation>
-    </message>
+        </message>
         <message>
             <source>Contour</source>
             <comment>Name of symbol 101</comment>
             <translation>Curva di livello</translation>
-    </message>
+        </message>
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. A contour interval of 2.5 metres may be used for flat terrains. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
             <comment>Description of symbol 101</comment>
             <translation type="unfinished">Linea che unisce tutti i punti alla stessa quota. 
 L&apos; equidistanza standard tra le curve di livello è di 5m. Un equidistanza di 2.5m può essere utilizzata per terreni pianeggianti. La minor curvatura di una curva di  livello è di 0.25mm dal centro della linea</translation>
-    </message>
+        </message>
         <message>
             <source>Slope line, contour</source>
             <comment>Name of symbol 101.1</comment>
             <translation type="unfinished">Trattino di pendenza per curve di livello</translation>
-    </message>
+        </message>
         <message>
             <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
             <comment>Description of symbol 101.1</comment>
@@ -168,7 +168,7 @@ L&apos; equidistanza standard tra le curve di livello è di 5m. Un equidistanza 
             <source>Index contour</source>
             <comment>Name of symbol 102</comment>
             <translation type="unfinished">Curva di livello maestra</translation>
-    </message>
+        </message>
         <message>
             <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. An index contour may be represented as an ordinary contour line in an area with much detail. Small contour knolls and depressions are normally not represented using index contours.</source>
             <comment>Description of symbol 102</comment>

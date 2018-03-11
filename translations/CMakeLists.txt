@@ -73,6 +73,8 @@ set(map_symbols_translations
   map_symbols_sv.ts
   map_symbols_uk.ts
 )
+# Make translation list available for SymbolSetTool
+set(map_symbols_translations ${map_symbols_translations} PARENT_SCOPE)
 
 # Translation files which are updated but not deployed.
 set(map_symbols_translations_template
