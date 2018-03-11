@@ -2174,17 +2174,17 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Purple</source>
             <comment>Color 0</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Viola</translation>
         </message>
         <message>
             <source>Black</source>
             <comment>Color 1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Nero</translation>
         </message>
         <message>
             <source>Brown 50%</source>
             <comment>Color 2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Marrone 50%</translation>
         </message>
         <message>
             <source>Black below light browns</source>
@@ -2194,27 +2194,27 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Opaque Blue</source>
             <comment>Color 4</comment>
-            <translation type="unfinished"></translation>
+            <translation>Blu opaco</translation>
         </message>
         <message>
             <source>Blue</source>
             <comment>Color 5</comment>
-            <translation type="unfinished"></translation>
+            <translation>Blu</translation>
         </message>
         <message>
             <source>Blue 50%</source>
             <comment>Color 6</comment>
-            <translation type="unfinished"></translation>
+            <translation>Blu 50%</translation>
         </message>
         <message>
             <source>Brown</source>
             <comment>Color 7</comment>
-            <translation type="unfinished"></translation>
+            <translation>Marrone</translation>
         </message>
         <message>
             <source>OpenOrienteering Orange</source>
             <comment>Color 8</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">OpenOrienteering Arancione</translation>
         </message>
         <message>
             <source>Black 30%</source>
@@ -2224,7 +2224,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Green 50%, Yellow</source>
             <comment>Color 10</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Verde  50%, Giallo</translation>
         </message>
         <message>
             <source>Green over White over Green</source>
@@ -2234,17 +2234,17 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Opaque White over Green</source>
             <comment>Color 12</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Bianco opaco sopra il verde</translation>
         </message>
         <message>
             <source>Opaque Green</source>
             <comment>Color 13</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Verde opaco</translation>
         </message>
         <message>
             <source>Green</source>
             <comment>Color 14</comment>
-            <translation type="unfinished"></translation>
+            <translation>Verde</translation>
         </message>
         <message>
             <source>Green 60%</source>
@@ -2264,12 +2264,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Yellow</source>
             <comment>Color 18</comment>
-            <translation type="unfinished"></translation>
+            <translation>Giallo</translation>
         </message>
         <message>
             <source>Yellow 50%</source>
             <comment>Color 19</comment>
-            <translation type="unfinished"></translation>
+            <translation>Giallo 50%</translation>
         </message>
         <message>
             <source>White over Yellow 70%</source>
@@ -2284,7 +2284,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Contour</source>
             <comment>Name of symbol 101</comment>
-            <translation type="unfinished"></translation>
+            <translation>Curva di livello</translation>
         </message>
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
@@ -2294,7 +2294,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Index contour</source>
             <comment>Name of symbol 102</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Curva di livello maestra</translation>
         </message>
         <message>
             <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. Where an index contour coincides with an area of much detail, it may be shown with a normal contour line.</source>
@@ -3820,7 +3820,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Purple</source>
             <comment>Color 0</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Viola</translation>
         </message>
         <message>
             <source>Purple 50%</source>
@@ -3830,7 +3830,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Black</source>
             <comment>Color 2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Nero</translation>
         </message>
         <message>
             <source>Opaque White below Black</source>
@@ -3860,7 +3860,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Black 20%</source>
             <comment>Color 8</comment>
-            <translation type="unfinished"></translation>
+            <translation>Nero 20%</translation>
         </message>
         <message>
             <source>Green, Black 50% above Brown</source>
@@ -3900,12 +3900,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Opaque Blue</source>
             <comment>Color 16</comment>
-            <translation type="unfinished"></translation>
+            <translation>Blu opaco</translation>
         </message>
         <message>
             <source>Blue</source>
             <comment>Color 17</comment>
-            <translation type="unfinished"></translation>
+            <translation>Blu</translation>
         </message>
         <message>
             <source>Blue 75%</source>
@@ -3925,12 +3925,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Brown</source>
             <comment>Color 21</comment>
-            <translation type="unfinished"></translation>
+            <translation>Marrone</translation>
         </message>
         <message>
             <source>OpenOrienteering Orange</source>
             <comment>Color 22</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">OpenOrienteering Arancione</translation>
         </message>
         <message>
             <source>Grey</source>
@@ -3940,7 +3940,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Green 50%, Yellow</source>
             <comment>Color 24</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Verde  50%, Giallo</translation>
         </message>
         <message>
             <source>White over Green</source>
@@ -3955,12 +3955,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Opaque Green</source>
             <comment>Color 27</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Verde opaco</translation>
         </message>
         <message>
             <source>Green</source>
             <comment>Color 28</comment>
-            <translation type="unfinished"></translation>
+            <translation>Verde</translation>
         </message>
         <message>
             <source>Green 60%</source>
@@ -3980,12 +3980,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Yellow</source>
             <comment>Color 32</comment>
-            <translation type="unfinished"></translation>
+            <translation>Giallo</translation>
         </message>
         <message>
             <source>Yellow 50%</source>
             <comment>Color 33</comment>
-            <translation type="unfinished"></translation>
+            <translation>Giallo 50%</translation>
         </message>
         <message>
             <source>White over Yellow 70%</source>
@@ -4000,7 +4000,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Contour</source>
             <comment>Name of symbol 101</comment>
-            <translation type="unfinished"></translation>
+            <translation>Curva di livello</translation>
         </message>
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 2 or 2.5 m. To emphasize the 3-dimensional effect of the contour line image, contour lines shall be represented as continuous lines through all symbols, also building (526.1) and canopy (526.2). However, contour lines shall be cut out for better legibility, if they touch the following symbols: small earth wall (108.1), small knoll (112), small elongated knoll (113), small depression (115), pit or hole (116), prominent landform feature (118), step or edge of paved area (529.1). 
@@ -4012,7 +4012,7 @@ The relative height difference between neighbouring features must be represented
         <message>
             <source>Index contour</source>
             <comment>Name of symbol 102</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Curva di livello maestra</translation>
         </message>
         <message>
             <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. Where an index contour coincides with an area of much detail, it may be shown with symbol contour (101).</source>
@@ -5847,12 +5847,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Purple</source>
             <comment>Color 0</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Viola</translation>
         </message>
         <message>
             <source>Black</source>
             <comment>Color 1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Nero</translation>
         </message>
         <message>
             <source>Lower Purple</source>
@@ -5867,7 +5867,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Brown 50%</source>
             <comment>Color 4</comment>
-            <translation type="unfinished"></translation>
+            <translation>Marrone 50%</translation>
         </message>
         <message>
             <source>Black below light browns</source>
@@ -5877,27 +5877,27 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Brown</source>
             <comment>Color 6</comment>
-            <translation type="unfinished"></translation>
+            <translation>Marrone</translation>
         </message>
         <message>
             <source>OpenOrienteering Orange</source>
             <comment>Color 7</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">OpenOrienteering Arancione</translation>
         </message>
         <message>
             <source>Opaque Blue</source>
             <comment>Color 8</comment>
-            <translation type="unfinished"></translation>
+            <translation>Blu opaco</translation>
         </message>
         <message>
             <source>Blue</source>
             <comment>Color 9</comment>
-            <translation type="unfinished"></translation>
+            <translation>Blu</translation>
         </message>
         <message>
             <source>Blue 50%</source>
             <comment>Color 10</comment>
-            <translation type="unfinished"></translation>
+            <translation>Blu 50%</translation>
         </message>
         <message>
             <source>Black 30%</source>
@@ -5907,7 +5907,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Green 50%, Yellow</source>
             <comment>Color 12</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Verde  50%, Giallo</translation>
         </message>
         <message>
             <source>Green over White over Green</source>
@@ -5917,7 +5917,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Opaque White over Green</source>
             <comment>Color 14</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Bianco opaco sopra il verde</translation>
         </message>
         <message>
             <source>Yellow over Green</source>
@@ -5927,12 +5927,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Opaque Green</source>
             <comment>Color 16</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Verde opaco</translation>
         </message>
         <message>
             <source>Green</source>
             <comment>Color 17</comment>
-            <translation type="unfinished"></translation>
+            <translation>Verde</translation>
         </message>
         <message>
             <source>Green 60%</source>
@@ -5952,12 +5952,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Yellow</source>
             <comment>Color 21</comment>
-            <translation type="unfinished"></translation>
+            <translation>Giallo</translation>
         </message>
         <message>
             <source>Yellow 50%</source>
             <comment>Color 22</comment>
-            <translation type="unfinished"></translation>
+            <translation>Giallo 50%</translation>
         </message>
         <message>
             <source>White over Yellow 70%</source>
@@ -5972,7 +5972,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Contour</source>
             <comment>Name of symbol 101</comment>
-            <translation type="unfinished"></translation>
+            <translation>Curva di livello</translation>
         </message>
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
@@ -5982,7 +5982,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Index contour</source>
             <comment>Name of symbol 102</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Curva di livello maestra</translation>
         </message>
         <message>
             <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. Where an index contour coincides with an area of much detail, it may be shown with a normal contour line.</source>
@@ -7643,7 +7643,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Purple</source>
             <comment>Color 1</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Viola</translation>
         </message>
         <message>
             <source>Upper Green</source>
@@ -7653,12 +7653,12 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Black</source>
             <comment>Color 3</comment>
-            <translation type="unfinished"></translation>
+            <translation>Nero</translation>
         </message>
         <message>
             <source>Brown 50%</source>
             <comment>Color 4</comment>
-            <translation type="unfinished"></translation>
+            <translation>Marrone 50%</translation>
         </message>
         <message>
             <source>Black below light browns</source>
@@ -7668,27 +7668,27 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Brown</source>
             <comment>Color 6</comment>
-            <translation type="unfinished"></translation>
+            <translation>Marrone</translation>
         </message>
         <message>
             <source>OpenOrienteering Orange</source>
             <comment>Color 7</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">OpenOrienteering Arancione</translation>
         </message>
         <message>
             <source>Opaque Blue</source>
             <comment>Color 8</comment>
-            <translation type="unfinished"></translation>
+            <translation>Blu opaco</translation>
         </message>
         <message>
             <source>Blue</source>
             <comment>Color 9</comment>
-            <translation type="unfinished"></translation>
+            <translation>Blu</translation>
         </message>
         <message>
             <source>Blue 50%</source>
             <comment>Color 10</comment>
-            <translation type="unfinished"></translation>
+            <translation>Blu 50%</translation>
         </message>
         <message>
             <source>Black 30%</source>
@@ -7698,7 +7698,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Green 50%, Yellow</source>
             <comment>Color 12</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Verde  50%, Giallo</translation>
         </message>
         <message>
             <source>Green over White over Green</source>
@@ -7708,17 +7708,17 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Opaque White over Green</source>
             <comment>Color 14</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Bianco opaco sopra il verde</translation>
         </message>
         <message>
             <source>Opaque Green</source>
             <comment>Color 15</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Verde opaco</translation>
         </message>
         <message>
             <source>Green</source>
             <comment>Color 16</comment>
-            <translation type="unfinished"></translation>
+            <translation>Verde</translation>
         </message>
         <message>
             <source>Green 60%</source>
@@ -7738,12 +7738,12 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Yellow</source>
             <comment>Color 20</comment>
-            <translation type="unfinished"></translation>
+            <translation>Giallo</translation>
         </message>
         <message>
             <source>Yellow 50%</source>
             <comment>Color 21</comment>
-            <translation type="unfinished"></translation>
+            <translation>Giallo 50%</translation>
         </message>
         <message>
             <source>White over Yellow 70%</source>
@@ -7758,7 +7758,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Contour</source>
             <comment>Name of symbol 101</comment>
-            <translation type="unfinished"></translation>
+            <translation>Curva di livello</translation>
         </message>
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
@@ -7778,7 +7778,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Index contour</source>
             <comment>Name of symbol 102</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Curva di livello maestra</translation>
         </message>
         <message>
             <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. Where an index contour coincides with an area of much detail, it may be shown with a normal contour line.</source>
@@ -9517,7 +9517,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Purple</source>
             <comment>Color 0</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Viola</translation>
         </message>
         <message>
             <source>Black for control descriptions</source>
@@ -9542,7 +9542,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Black</source>
             <comment>Color 5</comment>
-            <translation type="unfinished"></translation>
+            <translation>Nero</translation>
         </message>
         <message>
             <source>Simple Orienteering Course</source>
