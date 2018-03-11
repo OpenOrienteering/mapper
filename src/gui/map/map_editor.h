@@ -600,7 +600,7 @@ private:
 	void createMobileGUI();
 	
 	void paintOnTemplate(Template* temp);
-	void updatePaintOnTemplateAction();
+	void finishPaintOnTemplate();
 	
 	void doUndo(bool redo);
 	

@@ -113,7 +113,7 @@ void MapView::load(QIODevice* file, int version)
 	{
 		center_pos = MapCoord::fromNative64withOffset(center_x, center_y);
 	}
-	catch (std::range_error)
+	catch (std::range_error&)
 	{
 		// leave center_pos unchanged
 	}
@@ -199,7 +199,7 @@ void MapView::load(QXmlStreamReader& xml)
 	{
 		center_pos = MapCoord::fromNative64withOffset(center_x, center_y);
 	}
-	catch (std::range_error)
+	catch (std::range_error&)
 	{
 		// leave center_pos unchanged
 	}
@@ -341,7 +341,7 @@ void MapView::finishPanning(QPoint offset)
 		auto move = MapCoord{ rotated_offset_f };
 		setCenter(center() + move);
 	}
-	catch (std::range_error)
+	catch (std::range_error&)
 	{
 		// Do nothing
 	}

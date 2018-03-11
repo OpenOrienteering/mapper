@@ -1308,21 +1308,28 @@ Symbol* OcdFileImport::importAreaSymbol(const S& ocd_symbol, int ocd_version)
 	            ocd_symbol.data_size,
 	            ocd_symbol.begin_of_elements,
 	            ocd_version);
-	if (ocd_symbol.common.border_on_V9)
+	if (!ocd_symbol.common.border_on_V9)
 	{
-		auto combined = new CombinedSymbol();
-		setupBaseSymbol(combined, ocd_symbol);
-		combined->setNumParts(2);
-		combined->setPart(0, symbol, true);
-		auto border = map->getUndefinedLine()->duplicate();
-		border->setNumberComponent(0, symbol->getNumberComponent(0));
-		border->setNumberComponent(1, symbol->getNumberComponent(1));
-		border->setNumberComponent(2, static_cast<int>(ocd_symbol.border_symbol));
-		combined->setPart(1, border, true);
-		addSymbolWarning(symbol, OcdFileImport::tr("This symbol cannot be saved as a proper OCD symbol again."));
-		return combined;
+		return symbol;
 	}
-	return symbol;
+	
+	if (ocd_symbol.border_symbol == ocd_symbol.base.number)
+	{
+		addSymbolWarning(symbol, OcdFileImport::tr("The border of this symbol could not be loaded."));
+		return symbol;
+	}
+	
+	auto combined = new CombinedSymbol();
+	setupBaseSymbol(combined, ocd_symbol);
+	combined->setNumParts(2);
+	combined->setPart(0, symbol, true);
+	auto border = map->getUndefinedLine()->duplicate();
+	border->setNumberComponent(0, symbol->getNumberComponent(0));
+	border->setNumberComponent(1, symbol->getNumberComponent(1));
+	border->setNumberComponent(2, static_cast<int>(ocd_symbol.border_symbol));
+	combined->setPart(1, border, true);
+	addSymbolWarning(symbol, OcdFileImport::tr("This symbol cannot be saved as a proper OCD symbol again."));
+	return combined;
 }
 
 void OcdFileImport::setupAreaSymbolCommon(OcdImportedAreaSymbol* symbol, bool fill_on, const Ocd::AreaSymbolCommonV8& ocd_symbol, std::size_t data_size, const Ocd::PointSymbolElementV8* elements, int ocd_version)
@@ -1537,6 +1544,25 @@ void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t dat
 				auto element_symbol = new OcdImportedLineSymbol();
 				element_symbol->line_width = convertLength(element->line_width);
 				element_symbol->color = convertColor(element->color);
+				// The flags variable doesn't seem to contain individual flags.
+				switch (element->flags)
+				{
+				default:
+					qDebug("Ocd::PointSymbolElementV8: Unknown flags value %d", element->flags);
+					// fall through
+				case Ocd::PointSymbolElementV8::NoFlags:
+					element_symbol->setCapStyle(LineSymbol::FlatCap);
+					element_symbol->setJoinStyle(LineSymbol::BevelJoin);
+					break;
+				case Ocd::PointSymbolElementV8::RoundStyle:
+					element_symbol->setCapStyle(LineSymbol::RoundCap);
+					element_symbol->setJoinStyle(LineSymbol::RoundJoin);
+					break;
+				case Ocd::PointSymbolElementV8::FlatMiterStyle:
+					element_symbol->setCapStyle(LineSymbol::FlatCap);
+					element_symbol->setJoinStyle(LineSymbol::MiterJoin);
+					break;
+				}
 				auto element_object = new OcdImportedPathObject(element_symbol);
 				fillPathCoords(element_object, false, element->num_coords, coords);
 				element_object->recalculateParts();

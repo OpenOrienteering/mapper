@@ -266,6 +266,29 @@ protected:
 	 */
 	void updateConstrainedPositions();
 	
+#ifdef MAPPER_DEVELOPMENT_BUILD
+	
+protected slots:
+	/**
+	 * Sends simulated sequences of mouse button-press, move, button-release.
+	 * 
+	 * The mouse position is modified randomly for every single event.
+	 * After each event, there is a small delay.
+	 * 
+	 * This a debugging aid. The implementation is meant to be modified as
+	 * needed with regard to modifier keys, stopping the simulation, etc.
+	 * It is to be started from an event handler via a single-shot timer:
+	 * 
+	 *     QTimer::singleShot(200, this, SLOT(generateNextSimulatedEvent()));
+	 */
+	void generateNextSimulatedEvent();
+	
+private:
+	int simulation_state = 0;
+	
+#endif  // MAPPER_DEVELOPMENT_BUILD
+	
+protected:
 	// Mouse handling
 	
 	/// Position where the left mouse button was pressed, with no constraints applied.

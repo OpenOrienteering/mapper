@@ -187,13 +187,13 @@ public:
 	void move(MapCoord offset);
 	
 	/** Scales all coordinates, with the given scaling center */
-	void scale(MapCoordF center, double factor);
+	virtual void scale(MapCoordF center, double factor);
 	
 	/** Scales all coordinates, with the center (0, 0).
 	 * @param factor_x horizontal scaling factor
 	 * @param factor_y vertical scaling factor
 	 */
-	void scale(double factor_x, double factor_y);
+	virtual void scale(double factor_x, double factor_y);
 	
 	/** Rotates the whole object around the center point.
 	 *  The angle must be given in radians. */
@@ -203,11 +203,12 @@ public:
 	 *  The angle must be given in radians. */
 	void rotate(double angle);
 	
-	/** Apply a transformation to all coordinates.
+	/**
+	 * Apply a transformation to all coordinates.
 	 * 
 	 * \todo Handle rotation of patterns or text (?)
 	 */
-	void transform(const QTransform& t);
+	virtual void transform(const QTransform& t) = 0;
 	
 	/**
 	 * Checks if the given coord, with the given tolerance, is on this object.
@@ -599,6 +600,10 @@ public:
 	 */
 	void deletePart(PathPartVector::size_type part_index);
 	
+	/**
+	 * Transforms the coordinates and the pattern origin.
+	 */
+	void transform(const QTransform& t) override;
 	
 	// Pattern methods
 	
@@ -985,6 +990,12 @@ public:
 	
 	/** Returns the point's coordinate. */
 	MapCoord getCoord() const;
+	
+	
+	/** 
+	 * Transforms the position.
+	 */
+	void transform(const QTransform& t) override;
 	
 	
 	/**

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2017 Kai Pastor
+ *    Copyright 2017, 2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -39,7 +39,7 @@
 
 class QAction;
 class QCursor;
-class QListWidgetItem;
+class QListWidget;
 class QMouseEvent;
 class QPaintEvent;
 class QPainter;
@@ -50,18 +50,23 @@ namespace OpenOrienteering {
 
 class Map;
 class MapEditorController;
+class MapView;
 class MapWidget;
 class PaintOnTemplatePaletteWidget;
 class Template;
 
 
-/** Tool to paint on image templates. */
+/**
+ * A tool to paint on image templates.
+ */
 class PaintOnTemplateTool : public MapEditorTool
 {
 Q_OBJECT
 public:
-	PaintOnTemplateTool(MapEditorController* editor, QAction* tool_action, Template* temp);
+	PaintOnTemplateTool(MapEditorController* editor, QAction* tool_action);
 	~PaintOnTemplateTool() override;
+	
+	void setTemplate(Template* temp);
 	
 	void init() override;
 	const QCursor& getCursor() const override;
@@ -74,18 +79,18 @@ public:
 	
 public slots:
 	void templateDeleted(int pos, const Template* temp);
-	void colorSelected(QColor color);
+	void colorSelected(const QColor& color);
 	void undoSelected();
 	void redoSelected();
 	
 private:
 	bool dragging = false;
 	bool erasing  = false;
-	QColor paint_color;
+	QColor paint_color = Qt::black;
 	QRectF map_bbox;
 	std::vector<MapCoordF> coords;
 	
-	Template* temp;
+	Template* temp = nullptr;
 	QPointer<PaintOnTemplatePaletteWidget> widget;
 	
 	static int erase_width;
@@ -93,7 +98,11 @@ private:
 	Q_DISABLE_COPY(PaintOnTemplateTool)
 };
 
-/** Color selection widget for PaintOnTemplateTool. */
+
+
+/**
+ * A color selection widget for PaintOnTemplateTool.
+ */
 class PaintOnTemplatePaletteWidget : public QWidget
 {
 Q_OBJECT
@@ -106,7 +115,7 @@ public:
 	QSize sizeHint() const override;
 	
 signals:
-	void colorSelected(QColor color);
+	void colorSelected(const QColor& color);
 	void undoSelected();
 	void redoSelected();
 	
@@ -124,25 +133,34 @@ private:
 	
 	void drawIcon(QPainter* painter, const QString& resource_path, const QRect& field_rect);
 	
-	int pressed_buttons;
+	Qt::MouseButtons::Int pressed_buttons;
 	int selected_color;
 	bool close_on_selection;
 };
 
-/** Template selection dialog for PaintOnTemplateTool. */
+
+
+/**
+ * Template selection dialog for PaintOnTemplateTool.
+*/
 class PaintOnTemplateSelectDialog : public QDialog
 {
 Q_OBJECT
 public:
-	PaintOnTemplateSelectDialog(Map* map, QWidget* parent);
+	PaintOnTemplateSelectDialog(Map* map, MapView* view, Template* selected, MainWindow* parent);
 	
-	inline Template* getSelectedTemplate() const {return selection;}
+	Template* getSelectedTemplate() const { return selection; }
 	
-protected slots:
-	void currentTemplateChanged(QListWidgetItem* current, QListWidgetItem* previous);
+protected:
+	void drawClicked();
+	
+	Template* addNewTemplate() const;
 	
 private:
-	Template* selection;
+	Map* map;
+	MapView* view;
+	Template* selection = nullptr;
+	QListWidget* template_list;
 	QPushButton* draw_button;
 };
 

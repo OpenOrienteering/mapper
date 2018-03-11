@@ -62,7 +62,7 @@ public:
 	void addLine(PathObject* object, MapCoordVector::size_type start_point_index);
 	
 	/** Adds a text handle to the set of elements to move. */
-	void addTextHandle(TextObject* text, int handle);
+	void addTextHandle(TextObject* text, MapCoordVector::size_type handle);
 	
 	/**
 	 * Moves the elements.
@@ -88,7 +88,7 @@ private:
 	qint32 prev_drag_y;
 	ObjectSet objects;
 	std::unordered_map<PathObject*, CoordIndexSet> points;
-	std::unordered_map<TextObject*, int> text_handles;
+	std::unordered_map<TextObject*, MapCoordVector::size_type> text_handles;
 	
 	/** Constraints calculated from the basic information */
 	struct OppositeHandleConstraint

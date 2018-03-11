@@ -77,6 +77,7 @@
 
 #include <printer_properties.h>
 
+#include "core/georeferencing.h"
 #include "core/map.h"
 #include "core/map_printer.h"
 #include "core/map_view.h"
@@ -88,6 +89,7 @@
 #include "gui/map/map_editor.h"
 #include "gui/map/map_widget.h"
 #include "templates/template.h" // IWYU pragma: keep
+#include "templates/world_file.h"
 #include "util/backports.h"
 #include "util/scoped_signals_blocker.h"
 
@@ -264,6 +266,10 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	
 	overprinting_check = new QCheckBox(tr("Simulate overprinting"));
 	layout->addRow(overprinting_check);
+
+	world_file_check = new QCheckBox(tr("Save world file"));
+	layout->addRow(world_file_check);
+	world_file_check->hide();
 	
 	color_mode_combo = new QComboBox();
 	color_mode_combo->setEditable(false);
@@ -597,6 +603,11 @@ void PrintWidget::setTarget(const QPrinterInfo* target)
 	export_button->setDefault(!is_printer);
 	if (printer_properties_button)
 		printer_properties_button->setEnabled(is_printer);
+
+	world_file_check->setVisible(!is_printer);
+	// If MapCoord (0,0) maps to projected (0,0), then there is probably
+	// no point in writing a world file.
+	world_file_check->setChecked(!map->getGeoreferencing().toProjectedCoords(MapCoordF{}).isNull());
 	
 	bool is_image_target = target == MapPrinter::imageTarget();
 	vector_mode_button->setEnabled(!is_image_target);
@@ -1197,9 +1208,31 @@ void PrintWidget::exportToImage()
 	else
 	{
 		main_window->showStatusBarMessage(tr("Exported successfully to %1").arg(path), 4000);
+		if (world_file_check->isChecked())
+			exportWorldFile(path);  /// \todo Handle errors
 		emit finished(0);
 	}
 	return;
+}
+
+void PrintWidget::exportWorldFile(const QString& path) const
+{
+	const auto& georef = map->getGeoreferencing();
+	const auto& ref_transform = georef.mapToProjected();
+
+	qreal pixel_per_mm = (map_printer->getOptions().resolution / 25.4) * map_printer->getScaleAdjustment();
+	const auto center_of_pixel = QPointF{0.5/pixel_per_mm, 0.5/pixel_per_mm};
+	const auto top_left = georef.toProjectedCoords(MapCoord{map_printer->getPrintArea().topLeft() + center_of_pixel});
+
+
+	const auto xscale = ref_transform.m11() / pixel_per_mm;
+	const auto yscale = ref_transform.m22() / pixel_per_mm;
+	const auto xskew  = ref_transform.m12() / pixel_per_mm;
+	const auto yskew  = ref_transform.m21() / pixel_per_mm;
+
+	QTransform final_wld(xscale, yskew, 0, xskew, yscale, 0, top_left.x(), top_left.y());
+	WorldFile wld(final_wld);
+	wld.save(WorldFile::pathForImage(path));
 }
 
 void PrintWidget::exportToPdf()
