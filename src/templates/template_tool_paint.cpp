@@ -519,7 +519,7 @@ Template* PaintOnTemplateSelectDialog::addNewTemplate() const
 #ifdef Q_OS_ANDROID
 		window->showStatusBarMessage(message, 2000);
 #else
-		QMessageBox::warning(window, Map::tr("Error"), message, QMessageBox::Ok, QMessageBox::Ok);
+		QMessageBox::warning(window, OpenOrienteering::Map::tr("Error"), message, QMessageBox::Ok, QMessageBox::Ok);
 #endif
 	};
 	
@@ -562,7 +562,7 @@ Template* PaintOnTemplateSelectDialog::addNewTemplate() const
 	p.end();
 	if (!image.save(image_file_path))
 	{
-		show_message(Map::tr("Cannot save file\n%1:\n%2").arg(filename, QString{}));
+		show_message(OpenOrienteering::Map::tr("Cannot save file\n%1:\n%2").arg(filename, QString{}));
 		return nullptr;
 	}
 	
