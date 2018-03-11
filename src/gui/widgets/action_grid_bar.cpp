@@ -113,8 +113,9 @@ void ActionGridBar::addActionAtEnd(QAction* action, int row, int col, int row_sp
 
 QSize ActionGridBar::getIconSize(int row_span, int col_span) const
 {
-	int icon_size_pixel_row = qRound(row_span * Util::mmToPixelLogical(Settings::getInstance().getSettingCached(Settings::ActionGridBar_ButtonSizeMM).toFloat()));
-	int icon_size_pixel_col = qRound(col_span * Util::mmToPixelLogical(Settings::getInstance().getSettingCached(Settings::ActionGridBar_ButtonSizeMM).toFloat()));
+	const auto buttonSizePx = Util::mmToPixelPhysical(Settings::getInstance().getSettingCached(Settings::ActionGridBar_ButtonSizeMM).toFloat());
+	int icon_size_pixel_row = qRound(row_span * buttonSizePx);
+	int icon_size_pixel_col = qRound(col_span * buttonSizePx);
 	const int button_icon_size_row = icon_size_pixel_row - 12;
 	const int button_icon_size_col = icon_size_pixel_col - 12;
 	if (direction == Horizontal)
@@ -145,7 +146,7 @@ QToolButton* ActionGridBar::getButtonForAction(QAction* action)
 
 QSize ActionGridBar::sizeHint() const
 {
-	int height_px = Util::mmToPixelLogical(rows * Settings::getInstance().getSettingCached(Settings::ActionGridBar_ButtonSizeMM).toFloat());
+	int height_px = Util::mmToPixelPhysical(rows * Settings::getInstance().getSettingCached(Settings::ActionGridBar_ButtonSizeMM).toFloat());
 	if (direction == Horizontal)
 		return QSize(100, height_px);
 	else
@@ -176,7 +177,7 @@ void ActionGridBar::resizeEvent(QResizeEvent* event)
 	hidden_items.clear();
 	
 	int length_px = (direction == Horizontal) ? width() : height();
-	float length_millimeters = Util::pixelToMMLogical(length_px);
+	float length_millimeters = Util::pixelToMMPhysical(length_px);
 	cols = qMax(1, qFloor(length_millimeters / Settings::getInstance().getSettingCached(Settings::ActionGridBar_ButtonSizeMM).toFloat()));
 	
 	delete layout();

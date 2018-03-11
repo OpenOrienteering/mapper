@@ -97,7 +97,7 @@ Settings& Settings::getInstance()
 Settings::Settings()
  : QObject()
 {
-	const float touch_button_minimum_size_default = 11;
+	const float touch_button_minimum_size_default = 6.5;
 	float symbol_widget_icon_size_mm_default;
 	float map_editor_click_tolerance_default;
 	float map_editor_snap_distance_default;
