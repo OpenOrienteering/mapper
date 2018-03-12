@@ -387,12 +387,12 @@ public:
 	/**
 	 * Returns the i-th component of the symbol number as int.
 	 */
-	int getNumberComponent(int i) const { Q_ASSERT(i >= 0 && i < number_components); return number[i]; }
+	int getNumberComponent(int i) const { Q_ASSERT(i >= 0 && i < int(number_components)); return number[std::size_t(i)]; }
 	
 	/**
 	 * Sets the i-th component of the symbol number.
 	 */
-	void setNumberComponent(int i, int new_number) { Q_ASSERT(i >= 0 && i < number_components); number[i] = new_number; }
+	void setNumberComponent(int i, int new_number) { Q_ASSERT(i >= 0 && i < int(number_components)); number[std::size_t(i)] = new_number; }
 	
 	
 	/**
