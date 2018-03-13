@@ -5474,7 +5474,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/templates/template_tool_paint.cpp" line="551"/>
         <source>Template file exists: &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Taustakartta-tiedosto on olemassa: &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -5919,7 +5919,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="270"/>
         <source>Save world file</source>
-        <translation type="unfinished"></translation>
+        <translation>Tallenna world-tiedosto</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1110"/>
