@@ -121,6 +121,7 @@ protected slots:
 	void dashGroupsChanged(int index);
 	void inGroupBreakLengthChanged(double value);
 	void halfOuterDashesChanged(bool checked);
+	void midSymbolPlacementChanged(int index);
 	void midSymbolsPerDashChanged(int value);
 	void midSymbolDistanceChanged(double value);
 	void borderCheckClicked(bool checked);
@@ -170,6 +171,7 @@ private:
 	
 	// mid_symbol
 	std::vector<QWidget*> mid_symbol_widget_list;
+	QComboBox* mid_symbol_placement_combo;
 	QSpinBox* mid_symbol_per_spot_edit;
 	QLabel* mid_symbol_distance_label;
 	QDoubleSpinBox* mid_symbol_distance_edit;

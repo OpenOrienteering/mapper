@@ -156,12 +156,19 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	
 	half_outer_dashes_check = new QCheckBox(tr("Half length of first and last dash"));
 	
+	auto mid_symbol_placement_label = new QLabel(tr("Mid symbols placement:"));
+	mid_symbol_placement_combo = new QComboBox();
+	mid_symbol_placement_combo->addItem(tr("Center of dashes"), QVariant(LineSymbol::CenterOfDash));
+	mid_symbol_placement_combo->addItem(tr("Center of dash groups"), QVariant(LineSymbol::CenterOfDashGroup));
+	mid_symbol_placement_combo->addItem(tr("Center of gaps"), QVariant(LineSymbol::CenterOfGap));
+	
 	dashed_widget_list = {
 	    dash_length_label, dash_length_edit,
 	    break_length_label, break_length_edit,
 	    dash_group_label, dash_group_combo,
 	    in_group_break_length_label, in_group_break_length_edit,
 	    half_outer_dashes_check,
+	    mid_symbol_placement_label, mid_symbol_placement_combo,
 	};
 	
 	row++; col = 0;
@@ -185,7 +192,6 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	row++; col = 0;
 	layout->addWidget(Util::Headline::create(tr("Mid symbols")), row, col, 1, -1);
 	
-	
 	auto mid_symbol_per_spot_label = new QLabel(tr("Mid symbols per spot:"));
 	mid_symbol_per_spot_edit = Util::SpinBox::create(1, 99);
 	
@@ -193,10 +199,13 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	mid_symbol_distance_edit = Util::SpinBox::create(2, 0.0, 999999.9, tr("mm"));
 	
 	mid_symbol_widget_list = {
+	  mid_symbol_placement_label, mid_symbol_placement_combo,
 	  mid_symbol_per_spot_label, mid_symbol_per_spot_edit,
-	  mid_symbol_distance_label, mid_symbol_distance_edit,
 	};
 	
+	row++; col = 0;
+	layout->addWidget(mid_symbol_placement_label, row, col++);
+	layout->addWidget(mid_symbol_placement_combo, row, col, 1, -1);
 	row++; col = 0;
 	layout->addWidget(mid_symbol_per_spot_label, row, col++);
 	layout->addWidget(mid_symbol_per_spot_edit, row, col, 1, -1);
@@ -330,6 +339,7 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	connect(dash_group_combo, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LineSymbolSettings::dashGroupsChanged);
 	connect(in_group_break_length_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &LineSymbolSettings::inGroupBreakLengthChanged);
 	connect(half_outer_dashes_check, &QAbstractButton::clicked, this, &LineSymbolSettings::halfOuterDashesChanged);
+	connect(mid_symbol_placement_combo, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LineSymbolSettings::midSymbolPlacementChanged);
 	connect(mid_symbol_per_spot_edit, QOverload<int>::of(&QSpinBox::valueChanged), this, &LineSymbolSettings::midSymbolsPerDashChanged);
 	connect(mid_symbol_distance_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &LineSymbolSettings::midSymbolDistanceChanged);
 	connect(border_check, &QAbstractButton::clicked, this, &LineSymbolSettings::borderCheckClicked);
@@ -455,6 +465,12 @@ void LineSymbolSettings::inGroupBreakLengthChanged(double value)
 void LineSymbolSettings::halfOuterDashesChanged(bool checked)
 {
 	symbol->half_outer_dashes = checked;
+	emit propertiesModified();
+}
+
+void LineSymbolSettings::midSymbolPlacementChanged(int index)
+{
+	symbol->setMidSymbolPlacement(LineSymbol::MidSymbolPlacement(mid_symbol_placement_combo->itemData(index).toInt()));
 	emit propertiesModified();
 }
 
@@ -724,6 +740,7 @@ void LineSymbolSettings::updateContents()
 	in_group_break_length_edit->setValue(0.001 * symbol->in_group_break_length);
 	half_outer_dashes_check->setChecked(symbol->half_outer_dashes);
 	
+	mid_symbol_placement_combo->setCurrentIndex(mid_symbol_placement_combo->findData(symbol->getMidSymbolPlacement()));
 	mid_symbol_per_spot_edit->setValue(symbol->mid_symbols_per_spot);
 	mid_symbol_distance_edit->setValue(0.001 * symbol->mid_symbol_distance);
 	
