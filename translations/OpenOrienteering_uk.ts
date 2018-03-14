@@ -301,7 +301,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="101"/>
         <source>Spot color printing</source>
-        <translation type="unfinished"></translation>
+        <translation>Друк плашковим кольором</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="106"/>
@@ -3612,7 +3612,7 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="875"/>
         <source>Move to my location</source>
-        <translation type="unfinished"></translation>
+        <translation>Перейти до мого розташування</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="940"/>
@@ -3753,12 +3753,12 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1369"/>
         <source>1x zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>1x наближення</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1373"/>
         <source>2x zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>2x наближення</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1601"/>
@@ -5166,7 +5166,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1318"/>
         <source>The border of this symbol could not be loaded.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Неможливо завантажити границю цього знаку</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1614"/>
@@ -5313,7 +5313,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/templates/template_tool_paint.cpp" line="551"/>
         <source>Template file exists: &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл підложки існує: &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -5703,7 +5703,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="270"/>
         <source>Save world file</source>
-        <translation type="unfinished"></translation>
+        <translation>Зберегти world файл</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="276"/>
@@ -5990,7 +5990,7 @@ separations</source>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="166"/>
         <source>Symbol mapping:</source>
-        <translation>Відображення знаків:</translation>
+        <translation>Зіставлення знаків:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="114"/>
@@ -6053,7 +6053,7 @@ separations</source>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="167"/>
         <source>Symbol mapping</source>
-        <translation>Відображення знаків</translation>
+        <translation>Зіставлення знаків</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="235"/>
