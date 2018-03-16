@@ -255,27 +255,6 @@ void MainWindow::setController(MainWindowController* new_controller, bool has_fi
 		createHelpMenu();
 	
 #if defined(Q_OS_MACOS)
-	// Disable all menu text heuristics, as a workaround for QTBUG-30812.
-	// Note that QAction::NoRole triggers QTBUG-29051,
-	// warnings in QCocoaMenuItem::sync() about menu items having
-	// "unsupported role QPlatformMenuItem::MenuRole(NoRole)".
-	const auto menubar_actions = menuBar()->actions();
-	for (auto action : menubar_actions)
-	{
-		if (const auto menu = action->menu())
-		{
-			const auto menu_actions = menu->actions();
-			for (auto action : menu_actions)
-			{
-				if (action->menuRole() == QAction::TextHeuristicRole)
-					action->setMenuRole(QAction::NoRole);
-			}
-		}
-	}
-
-	// Probably related to QTBUG-62260.
-	// But even with Qt 5.9.3, the "Mapper" menu is not correct initially.
-	// (In Czech translation, the Settings menu is missing initially.)
 	if (isVisible() && qApp->activeWindow() == this)
 	{
 		// Force a menu synchronisation,
