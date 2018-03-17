@@ -5823,7 +5823,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/templates/template_tool_paint.cpp" line="551"/>
         <source>Template file exists: &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>テンプレートファイルが存在します: &apos;%1&apos;</translation>
     </message>
 </context>
 <context>

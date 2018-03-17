@@ -6,7 +6,7 @@
         <message>
             <source>Purple</source>
             <comment>Color 0</comment>
-            <translation type="unfinished">Viola</translation>
+            <translation>Viola</translation>
         </message>
         <message>
             <source>Black</source>
@@ -16,8 +16,8 @@
         <message>
             <source>Opaque White below Black</source>
             <comment>Color 2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Bianco opaco sotto nero</translation>
+    </message>
         <message>
             <source>Black 65%</source>
             <comment>Color 3</comment>
@@ -36,8 +36,8 @@
         <message>
             <source>Black below light browns</source>
             <comment>Color 6</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Nero sotto marrone chiaro</translation>
+    </message>
         <message>
             <source>Opaque Blue</source>
             <comment>Color 7</comment>
@@ -71,8 +71,8 @@
         <message>
             <source>Green 50%, Yellow</source>
             <comment>Color 13</comment>
-            <translation type="unfinished">Verde  50%, Giallo</translation>
-        </message>
+            <translation>Verde 50%, Giallo</translation>
+    </message>
         <message>
             <source>Green</source>
             <comment>Color 14</comment>
@@ -81,8 +81,8 @@
         <message>
             <source>Opaque Yellow</source>
             <comment>Color 15</comment>
-            <translation type="unfinished">Giallo scuro</translation>
-        </message>
+            <translation>Giallo opaco</translation>
+    </message>
         <message>
             <source>Opaque White over Green</source>
             <comment>Color 16</comment>
@@ -101,8 +101,8 @@
         <message>
             <source>Green, Black 50%</source>
             <comment>Color 19</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verde, Nero 50%</translation>
+    </message>
         <message>
             <source>Opaque Green</source>
             <comment>Color 20</comment>
@@ -121,8 +121,8 @@
         <message>
             <source>Green below light greens</source>
             <comment>Color 23</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Verde sotto verde chiaro</translation>
+    </message>
         <message>
             <source>Green 50% over Yellow</source>
             <comment>Color 24</comment>
@@ -151,9 +151,8 @@
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. A contour interval of 2.5 metres may be used for flat terrains. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
             <comment>Description of symbol 101</comment>
-            <translation type="unfinished">Linea che unisce tutti i punti alla stessa quota. 
-L&apos; equidistanza standard tra le curve di livello è di 5m. Un equidistanza di 2.5m può essere utilizzata per terreni pianeggianti. La minor curvatura di una curva di  livello è di 0.25mm dal centro della linea</translation>
-        </message>
+            <translation>Linea che unisce tutti i punti alla stessa quota. L&apos;equidistanza standard tra le curve di livello è di 5m. Un equidistanza di 2.5m può essere utilizzata per terreni pianeggianti. La minor curvatura di una curva di  livello è di 0.25 mm dal centro della linea.</translation>
+    </message>
         <message>
             <source>Slope line, contour</source>
             <comment>Name of symbol 101.1</comment>
@@ -162,8 +161,8 @@ L&apos; equidistanza standard tra le curve di livello è di 5m. Un equidistanza 
         <message>
             <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
             <comment>Description of symbol 101.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Le linee di pendenza possono essere disegnate sul lato inferiore di una curva di livello per chiarire la direzione della pendenza. Se utilizzate, devono essere collocati in oggetti rientranti.</translation>
+    </message>
         <message>
             <source>Index contour</source>
             <comment>Name of symbol 102</comment>
@@ -11834,7 +11833,7 @@ The orientation of the symbol indicates the direction in which the corner points
         <message>
             <source>This is used with the special instruction (13.x) to give the distance from the last control to the end of the route (control, map exchange, or finish).</source>
             <comment>Description of symbol 13.0</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Questo viene usato con l&apos;istruzione speciale (13.x) per dare la distanza dall&apos;ultimo controllo alla fine del percorso (controllo, cambio mappa o arrivo).</translation>
+    </message>
     </context>
 </TS>
