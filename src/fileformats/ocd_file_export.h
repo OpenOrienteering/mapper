@@ -226,6 +226,12 @@ protected:
 	
 	
 	template< class Format >
+	void exportTemplates(OcdFile<Format>& file);
+	
+	void exportTemplates(quint16 ocd_version);
+	
+	
+	template< class Format >
 	void exportExtras(OcdFile<Format>& file);
 	
 	void exportExtras(quint16 ocd_version);

@@ -36,6 +36,7 @@
 #include <QColor>
 #include <QCoreApplication>
 #include <QFileDevice>
+#include <QFileInfo>
 #include <QFontMetricsF>
 #include <QIODevice>
 #include <QImage>
@@ -79,6 +80,7 @@
 #include "fileformats/ocd_types_v9.h"
 #include "fileformats/ocd_types_v11.h"
 #include "fileformats/ocd_types_v12.h"
+#include "templates/template.h"
 #include "util/encoding.h"
 #include "util/util.h"
 
@@ -592,6 +594,98 @@ QString stringForScalePar(const Map& map, quint16 version)
 	return string_1039;	
 }
 
+
+/// String 8: background map (aka template)
+/// \todo Unify implementation, or use specialization.
+QString stringForTemplate(const Template& temp, const MapCoord& area_offset, quint16 version)
+{
+	
+	auto template_path = temp.getTemplatePath();
+	template_path.replace(QLatin1Char('/'), QLatin1Char('\\'));
+	
+	const auto x = (temp.getTemplateX() - area_offset.nativeX()) / 1000.0;
+	const auto y = (temp.getTemplateY() - area_offset.nativeY()) / -1000.0;
+	const auto ab = qRadiansToDegrees(temp.getTemplateRotation());
+	
+	QString string_8;
+	QTextStream out(&string_8, QIODevice::Append);
+	out << template_path
+	    << "\ts" << 1;  // visible
+	// The order of the following parameters may not matter,
+	// but choosing the most frequent form may ease testing.
+	if (version >= 11)
+	{
+		// Parameter 'r' (and 's') changed meaning in version 11
+		out << "\tr1"	// visible in background favourites
+		    << qSetRealNumberPrecision(10)
+		    << "\tu" << temp.getTemplateScaleX()
+		    << "\tv" << temp.getTemplateScaleY()
+		    << qSetRealNumberPrecision(6)
+		    << "\tx" << x
+		    << "\ty" << y
+		    << qSetRealNumberPrecision(8)
+		    << "\ta" << ab
+		    << "\tb" << ab
+		    // Random order: d [ q t ]
+		    << "\td0"
+		    ;
+	}
+	else if (version == 10)
+	{
+		out << "\tr1"	// visible in background favourites
+		    << qSetRealNumberPrecision(6)
+		    << "\tx" << x
+		    << "\ty" << y
+		    << qSetRealNumberPrecision(8)
+		    << "\ta" << ab
+		    << "\tb" << ab
+		    // Data may end here.
+		    << qSetRealNumberPrecision(10)
+		    << "\tu" << temp.getTemplateScaleX()
+		    << "\tv" << temp.getTemplateScaleY()
+		    // Data may end here.
+		    // optional: t, q, d
+		    ;
+	}
+	else if (version == 9)
+	{
+		// Parameters 'x'/'y', 'u'/'v' and 'p' changed domain in version 9
+		out << qSetRealNumberPrecision(6)
+		    << "\tx" << x
+		    << "\ty" << y
+		    << qSetRealNumberPrecision(8)
+		    << "\ta" << ab
+		    << qSetRealNumberPrecision(10)
+		    << "\tu" << temp.getTemplateScaleX()
+		    << "\tv" << temp.getTemplateScaleY()
+		    << "\td0"
+		    << "\tp"
+		    << "\tt0"
+		    << "\to0"
+		    << qSetRealNumberPrecision(6) // less precision than 'a', indeed!
+		    << "\tb" << ab
+		    ;
+	}
+	else
+	{
+		// Data may end here (i.e. after 's'; spotted for OCD file)
+		out << "\tx" << qRound(100 * x)
+		    << "\ty" << qRound(100 * y)
+	        << qSetRealNumberPrecision(8)
+	        << "\ta" << ab
+	        << qSetRealNumberPrecision(10)
+	        << "\tu" << 100 * temp.getTemplateScaleX()
+	        << "\tv" << 100 * temp.getTemplateScaleY()
+		    << "\td0"
+		    << "\tp-1"
+		    << "\tt0"
+		    << "\to0"
+		    ;
+		// Alternative observation: s, x, y, u, v, a
+	}
+	return string_8;
+}
+
 } // namespace
 
 
@@ -747,6 +841,7 @@ void OcdFileExport::exportImplementation(quint16 actual_version)
 	exportSetup(file);   // includes colors
 	exportSymbols(file);
 	exportObjects(file);
+	exportTemplates(file);
 	exportExtras(file);
 	
 	stream->write(file.constByteArray());
@@ -2341,6 +2436,36 @@ QByteArray OcdFileExport::exportObjectCommon(const Object* object, OcdObject& oc
 		entry.size = (entry.size - decltype(entry.size)(header_size)) / sizeof(Ocd::OcdPoint32);
 	
 	return data;
+}
+
+
+
+template<class Format>
+void OcdFileExport::exportTemplates(OcdFile<Format>& /*file*/)
+{
+	exportTemplates(ocd_version);
+}
+
+
+void OcdFileExport::exportTemplates(quint16 ocd_version)
+{
+	Q_UNUSED(ocd_version);
+	// Georeferencing
+	addParameterString(1039, stringForScalePar(*map, ocd_version));
+
+	for (int i = map->getNumTemplates() - 1; i >= 0; --i)
+	{
+		const auto temp = map->getTemplate(i);
+		if (qstrcmp(temp->getTemplateType(), "TemplateImage") == 0
+		    || QFileInfo(temp->getTemplatePath()).suffix().compare(QLatin1String("ocd"), Qt::CaseInsensitive) == 0)
+		{
+			addParameterString(8, stringForTemplate(*temp, area_offset, ocd_version));
+		}
+		else
+		{
+			addWarning(tr("Unable to export template: file type of \"%1\" is not supported yet").arg(temp->getTemplateFilename()));
+		}
+	}
 }
 
 
