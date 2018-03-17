@@ -47,6 +47,11 @@ private slots:
 	void understandsTest_data();
 	
 	/**
+	 * Tests that the legacy binary format is properly rejected.
+     */
+	void legacyLoadTest();
+	
+	/**
 	 * Tests that high coordinates are correctly moved to the central region
 	 * of the map.
 	 * 
