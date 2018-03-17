@@ -6831,7 +6831,7 @@ manĝaĵo kun spicoj
     <message>
         <location filename="../src/templates/template.cpp" line="628"/>
         <source>Not enough free memory.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne estas sufiĉe da libera memoro.</translation>
     </message>
 </context>
 <context>
@@ -7318,7 +7318,7 @@ Tamen se vi ne intencas desegni sur ĉi tiu ŝablono, tio ne estas problemo.</tr
     <message>
         <location filename="../src/templates/template_track.cpp" line="141"/>
         <source>This template must be loaded with GDAL/OGR.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ĉi tiu ŝablono devas esti ŝargita helpe de GDAL/OGR.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="190"/>

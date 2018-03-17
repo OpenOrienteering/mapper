@@ -5318,7 +5318,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/templates/template_tool_paint.cpp" line="551"/>
         <source>Template file exists: &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл подложки существует: &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -5708,7 +5708,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="270"/>
         <source>Save world file</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить world файл</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="276"/>

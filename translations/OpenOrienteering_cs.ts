@@ -5571,7 +5571,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/templates/template_tool_paint.cpp" line="551"/>
         <source>Template file exists: &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Podkladový soubor existuje: &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
