@@ -191,10 +191,19 @@ namespace Ocd
 			MiterJoin_PointedCap = 6
 		};
 		
-		enum DoubleLineFlag
+		enum DoubleLineFlags
 		{
-			DoubleFillColorOn       = 1,
-			DoubleBackgroundColorOn = 2
+			DoubleFlagFillColorOn       = 1,
+			DoubleFlagBackgroundColorOn = 2,
+		};
+		
+		enum DoubleLineMode
+		{
+			DoubleLineOff              = 0,
+			DoubleLineContinuous       = 1,
+			DoubleLineLeftBorderDashed = 2,
+			DoubleLineBordersDashed    = 3,
+			DoubleLineAllDashed        = 4,
 		};
 	};
 

@@ -1175,92 +1175,62 @@ PointSymbol* OcdFileImport::importPointSymbol(const S& ocd_symbol, int ocd_versi
 template< class S >
 Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol, int ocd_version)
 {
-	using LineStyle = Ocd::LineSymbolCommonV8;
+	using OcdLineSymbolCommon = Ocd::LineSymbolCommonV8;
 	
-	OcdImportedLineSymbol* line_for_borders = nullptr;
-	
-	// Import a main line?
-	OcdImportedLineSymbol* main_line = nullptr;
-	if (ocd_symbol.common.double_mode == 0 || ocd_symbol.common.line_width > 0)
-	{
-		main_line = importLineSymbolBase(ocd_symbol.common);
-		setupBaseSymbol(main_line, ocd_symbol.base);
-		if (!main_line->isDashed())
-			line_for_borders = main_line;
-	}
+	// Import a main line.
+	auto main_line = importLineSymbolBase(ocd_symbol.common);
+	setupBaseSymbol(main_line, ocd_symbol.base);
+	setupLineSymbolPointSymbols(main_line, ocd_symbol.common, ocd_symbol.begin_of_elements, ocd_version);
 	
 	// Import a 'framing' line?
 	OcdImportedLineSymbol* framing_line = nullptr;
 	if (ocd_symbol.common.framing_width > 0 && ocd_version >= 7)
 	{
-		framing_line = importLineSymbolFraming(ocd_symbol.common, main_line);
-		setupBaseSymbol(framing_line, ocd_symbol.base);
-		if (!line_for_borders)
-			line_for_borders = framing_line;
+		framing_line = main_line;
+		if ((main_line->line_width && main_line->color)
+		    || (main_line->mid_symbol && !main_line->mid_symbol->isEmpty()) )
+		{ 
+			framing_line = new OcdImportedLineSymbol();
+			setupBaseSymbol(framing_line, ocd_symbol.base);
+		}
+		setupLineSymbolFraming(framing_line, ocd_symbol.common, main_line);
+		if (framing_line == main_line)
+			framing_line = nullptr;
 	}
 	
-	// Import a 'double' line?
-	bool has_border_line =
-	        (ocd_symbol.common.double_mode != 0) &&
-	        (ocd_symbol.common.double_left_width > 0 || ocd_symbol.common.double_right_width > 0);
-	OcdImportedLineSymbol *double_line = nullptr;
-	if (ocd_symbol.common.double_flags & LineStyle::DoubleFillColorOn
-	    || (has_border_line && !line_for_borders) )
+	// Import a 'double' line, including an optional filling?
+	OcdImportedLineSymbol* double_line = nullptr;
+	if (ocd_symbol.common.double_mode != OcdLineSymbolCommon::DoubleLineOff)
 	{
-		double_line = importLineSymbolDoubleBorder(ocd_symbol.common);
-		setupBaseSymbol(double_line, ocd_symbol.base);
-		line_for_borders = double_line;
+		double_line = main_line;
+		if (main_line->dashed
+		    || (main_line->line_width && main_line->color)
+		    || (main_line->mid_symbol && !main_line->mid_symbol->isEmpty()) )
+		{
+			double_line = new OcdImportedLineSymbol();
+			setupBaseSymbol(double_line, ocd_symbol.base);
+		}
+		setupLineSymbolDoubleBorder(double_line, ocd_symbol.common);
+		if (double_line == main_line)
+			double_line = nullptr;
 	}
-	else if (ocd_symbol.common.double_flags & LineStyle::DoubleBackgroundColorOn)
+	
+	if (ocd_symbol.common.double_flags & OcdLineSymbolCommon::DoubleFlagBackgroundColorOn)
 	{
-		auto symbol = std::unique_ptr<LineSymbol>(importLineSymbolDoubleBorder(ocd_symbol.common));
-		addSymbolWarning(symbol.get(),
+		addSymbolWarning(main_line,
 		  OcdFileImport::tr("Unsupported line style '%1'.").arg(QLatin1String("LineStyle::DoubleBackgroundColorOn")) );
 	}
 	
-	// Border lines
-	if (has_border_line)
-	{
-		Q_ASSERT(line_for_borders);
-		setupLineSymbolForBorder(line_for_borders, ocd_symbol.common);
-	}
-	
-	// Create point symbols along line; middle ("normal") dash, corners, start, and end.
-	OcdImportedLineSymbol* symbol_line = main_line ? main_line : double_line;	// Find the line to attach the symbols to
-	if (!symbol_line)
-	{
-		main_line = new OcdImportedLineSymbol();
-		symbol_line = main_line;
-		setupBaseSymbol(main_line, ocd_symbol.base);
-		
-		main_line->segment_length = convertLength(ocd_symbol.common.main_length);
-		main_line->end_length = convertLength(ocd_symbol.common.end_length);
-	}
-	
-	setupLineSymbolPointSymbol(symbol_line, ocd_symbol.common, ocd_symbol.begin_of_elements, ocd_version);
-	
 	// TODO: taper fields (tmode and tlast)
 	
-	if (!main_line && !framing_line)
-	{
-		return double_line;
-	}
-	else if (!double_line && !framing_line)
-	{
+	if (!double_line && !framing_line)
 		return main_line;
-	}
-	else if (!main_line && !double_line)
-	{
-		return framing_line;
-	}
-	else
-	{
-		auto full_line = new CombinedSymbol();
-		setupBaseSymbol(full_line, ocd_symbol.base);
-		mergeLineSymbol(full_line, main_line, framing_line, double_line);
-		addSymbolWarning(symbol_line, OcdFileImport::tr("This symbol cannot be saved as a proper OCD symbol again."));
-		return full_line;
-	}
+	
+	addSymbolWarning(main_line, OcdFileImport::tr("This symbol cannot be saved as a proper OCD symbol again."));
+	auto combined_line = new CombinedSymbol();
+	setupBaseSymbol(combined_line, ocd_symbol.base);
+	mergeLineSymbol(combined_line, main_line, framing_line, double_line);
+	return combined_line;
 }
 
 OcdFileImport::OcdImportedLineSymbol* OcdFileImport::importLineSymbolBase(const Ocd::LineSymbolCommonV8& attributes)
@@ -1270,7 +1240,7 @@ OcdFileImport::OcdImportedLineSymbol* OcdFileImport::importLineSymbolBase(const 
 	// Basic line options
 	auto symbol = new OcdImportedLineSymbol();
 	symbol->line_width = convertLength(attributes.line_width);
-	symbol->color = convertColor(attributes.line_color);
+	symbol->color = symbol->line_width ? convertColor(attributes.line_color) : nullptr;
 	
 	// Cap and join styles
 	switch (attributes.line_style)
@@ -1408,12 +1378,11 @@ OcdFileImport::OcdImportedLineSymbol* OcdFileImport::importLineSymbolBase(const 
 	return symbol;
 }
 
-OcdFileImport::OcdImportedLineSymbol* OcdFileImport::importLineSymbolFraming(const Ocd::LineSymbolCommonV8& attributes, const LineSymbol* main_line)
+void OcdFileImport::setupLineSymbolFraming(OcdFileImport::OcdImportedLineSymbol* framing_line, const Ocd::LineSymbolCommonV8& attributes, const LineSymbol* main_line)
 {
 	using LineStyle = Ocd::LineSymbolCommonV8;
 	
 	// Basic line options
-	auto framing_line = new OcdImportedLineSymbol();
 	framing_line->line_width = convertLength(attributes.framing_width);
 	framing_line->color = convertColor(attributes.framing_color);
 	
@@ -1437,62 +1406,59 @@ OcdFileImport::OcdImportedLineSymbol* OcdFileImport::importLineSymbolFraming(con
 		                  tr("Unsupported framing line style '%1'.").
 		                  arg(attributes.line_style) );
 	}
-	
-	return framing_line;
 }
 
-OcdFileImport::OcdImportedLineSymbol* OcdFileImport::importLineSymbolDoubleBorder(const Ocd::LineSymbolCommonV8& attributes)
+void OcdFileImport::setupLineSymbolDoubleBorder(OcdFileImport::OcdImportedLineSymbol* double_line, const Ocd::LineSymbolCommonV8& attributes)
 {
-	using LineStyle = Ocd::LineSymbolCommonV8;
+	using OcdLineSymbolCommon = Ocd::LineSymbolCommonV8;
 	
-	auto double_line = new OcdImportedLineSymbol();
-	double_line->line_width = convertLength(attributes.double_width);
-	double_line->cap_style = LineSymbol::FlatCap;
-	double_line->join_style = LineSymbol::MiterJoin;
-	double_line->segment_length = convertLength(attributes.main_length);
-	double_line->end_length = convertLength(attributes.end_length);
-	
-	if (attributes.double_flags & LineStyle::DoubleFillColorOn)
+	if (attributes.double_flags & OcdLineSymbolCommon::DoubleFlagFillColorOn)
 		double_line->color = convertColor(attributes.double_color);
 	else
 		double_line->color = nullptr;
+	double_line->line_width = convertLength(attributes.double_width);
+	double_line->cap_style = LineSymbol::FlatCap;
+	double_line->join_style = LineSymbol::MiterJoin;
 	
-	return double_line;
-}
-
-void OcdFileImport::setupLineSymbolForBorder(OcdFileImport::OcdImportedLineSymbol* line_for_borders, const Ocd::LineSymbolCommonV8& attributes)
-{
-	line_for_borders->have_border_lines = true;
-	LineSymbolBorder& border = line_for_borders->getBorder();
-	LineSymbolBorder& right_border = line_for_borders->getRightBorder();
+	double_line->have_border_lines = true;
+	LineSymbolBorder& border = double_line->getBorder();
+	LineSymbolBorder& right_border = double_line->getRightBorder();
 	
 	// Border color and width
 	border.color = convertColor(attributes.double_left_color);
 	border.width = convertLength(attributes.double_left_width);
-	border.shift = convertLength(attributes.double_left_width) / 2 + (convertLength(attributes.double_width) - line_for_borders->line_width) / 2;
+	border.shift = convertLength(attributes.double_left_width) / 2 + (convertLength(attributes.double_width) - double_line->line_width) / 2;
 	
 	right_border.color = convertColor(attributes.double_right_color);
 	right_border.width = convertLength(attributes.double_right_width);
-	right_border.shift = convertLength(attributes.double_right_width) / 2 + (convertLength(attributes.double_width) - line_for_borders->line_width) / 2;
+	right_border.shift = convertLength(attributes.double_right_width) / 2 + (convertLength(attributes.double_width) - double_line->line_width) / 2;
 	
-	// The borders may be dashed
-	if (attributes.double_gap > 0 && attributes.double_mode > 1)
+	// The borders and the filling may be dashed
+	if (attributes.double_gap > 0 && attributes.double_mode != OcdLineSymbolCommon::DoubleLineContinuous)
 	{
 		border.dashed = true;
 		border.dash_length = convertLength(attributes.double_length);
 		border.break_length = convertLength(attributes.double_gap);
 		
-		// If ocd_symbol->dmode == 2, only the left border should be dashed
-		if (attributes.double_mode > 2)
+		if (attributes.double_mode != OcdLineSymbolCommon::DoubleLineLeftBorderDashed)
 		{
 			right_border.dashed = border.dashed;
 			right_border.dash_length = border.dash_length;
 			right_border.break_length = border.break_length;
+			
+			if (attributes.double_mode == OcdLineSymbolCommon::DoubleLineAllDashed)
+			{
+				double_line->setDashed(true);
+				double_line->setDashesInGroup(1);
+				double_line->setDashLength(border.dash_length);
+				double_line->setBreakLength(border.break_length);
+				double_line->setHalfOuterDashes(false);
+			}
 		}
 	}
 }
 
-void OcdFileImport::setupLineSymbolPointSymbol(OcdFileImport::OcdImportedLineSymbol* line_symbol, const Ocd::LineSymbolCommonV8& attributes, const Ocd::PointSymbolElementV8* elements, int ocd_version)
+void OcdFileImport::setupLineSymbolPointSymbols(OcdFileImport::OcdImportedLineSymbol* line_symbol, const Ocd::LineSymbolCommonV8& attributes, const Ocd::PointSymbolElementV8* elements, int ocd_version)
 {
 	const Ocd::OcdPoint32* coords = reinterpret_cast<const Ocd::OcdPoint32*>(elements);
 	
@@ -1560,24 +1526,26 @@ void OcdFileImport::setupLineSymbolPointSymbol(OcdFileImport::OcdImportedLineSym
 void OcdFileImport::mergeLineSymbol(CombinedSymbol* full_line, LineSymbol* main_line, LineSymbol* framing_line, LineSymbol* double_line)
 {
 	full_line->setNumParts(3); // reserve
+	
 	int part = 0;
-	if (main_line)
-	{
-		full_line->setPart(part++, main_line, true);
-		main_line->setHidden(false);
-		main_line->setProtected(false);
-	}
+	full_line->setPart(part++, main_line, true);
+	main_line->setHidden(false);
+	main_line->setProtected(false);
+	main_line->setName(main_line->getName() + tr(" - main line"));
+
 	if (double_line)
 	{
 		full_line->setPart(part++, double_line, true);
 		double_line->setHidden(false);
 		double_line->setProtected(false);
+		double_line->setName(double_line->getName() + tr(" - double line"));
 	}
 	if (framing_line)
 	{
 		full_line->setPart(part++, framing_line, true);
 		framing_line->setHidden(false);
 		framing_line->setProtected(false);
+		framing_line->setName(framing_line->getName() + tr(" - framing"));
 	}
 	full_line->setNumParts(part);
 }

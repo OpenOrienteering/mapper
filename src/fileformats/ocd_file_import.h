@@ -256,13 +256,13 @@ protected:
 	
 	OcdImportedLineSymbol* importLineSymbolBase(const Ocd::LineSymbolCommonV8& attributes);
 	
-	OcdImportedLineSymbol* importLineSymbolFraming(const Ocd::LineSymbolCommonV8& attributes, const LineSymbol* main_line);
+	void setupLineSymbolFraming(OcdImportedLineSymbol* framing_line, const Ocd::LineSymbolCommonV8& attributes, const LineSymbol* main_line);
 	
-	OcdImportedLineSymbol* importLineSymbolDoubleBorder(const Ocd::LineSymbolCommonV8& attributes);
+	void setupLineSymbolDoubleBorder(OcdImportedLineSymbol* double_line, const Ocd::LineSymbolCommonV8& attributes);
 	
 	void setupLineSymbolForBorder(OcdImportedLineSymbol* line_for_borders, const Ocd::LineSymbolCommonV8& attributes);
 	
-	void setupLineSymbolPointSymbol(OcdImportedLineSymbol* line_symbol, const Ocd::LineSymbolCommonV8& attributes, const Ocd::PointSymbolElementV8* elements, int ocd_version);
+	void setupLineSymbolPointSymbols(OcdImportedLineSymbol* line_symbol, const Ocd::LineSymbolCommonV8& attributes, const Ocd::PointSymbolElementV8* elements, int ocd_version);
 	
 	void mergeLineSymbol(CombinedSymbol* full_line, LineSymbol* main_line, LineSymbol* framing_line, LineSymbol* double_line);
 	
