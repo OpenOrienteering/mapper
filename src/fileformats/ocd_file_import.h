@@ -149,7 +149,7 @@ public:
 	
 	MapCoord convertOcdPoint(const Ocd::OcdPoint32& ocd_point) const;
 	
-	float convertAngle(int ocd_angle) const;
+	qreal convertAngle(int ocd_angle) const;
 	
 	int convertLength(qint16 ocd_length) const;
 	
@@ -348,7 +348,7 @@ protected:
 	QHash<Symbol*, TextObject::VerticalAlignment> text_valign_map;
 	
 	/// maps OCD symbol number to rectangle information struct
-	QHash<unsigned int, RectangleInfo> rectangle_info;
+	QHash<int, RectangleInfo> rectangle_info;
 };
 
 

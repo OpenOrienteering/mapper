@@ -203,7 +203,7 @@ constexpr qint32 convertSize(qint64 size)
 }
 
 
-int convertRotation(float angle)
+int convertRotation(qreal angle)
 {
 	return qRound(10 * qRadiansToDegrees(angle));
 }
@@ -2199,7 +2199,7 @@ void OcdFileExport::exportObjects(OcdFile<Format>& file)
 			{
 				// Create a safely managed duplicate and move it as needed.
 				duplicate.reset(object->duplicate());
-				duplicate->move(-area_offset);
+				duplicate->move(-area_offset);  /// \todo move pattern origin etc.
 				object = duplicate.get();
 			}
 			object->update();

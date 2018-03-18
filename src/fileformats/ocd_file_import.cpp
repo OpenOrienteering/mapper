@@ -197,12 +197,12 @@ MapCoord OcdFileImport::convertOcdPoint(const Ocd::OcdPoint32& ocd_point) const
 }
 
 
-float OcdFileImport::convertAngle(int ocd_angle) const
+qreal OcdFileImport::convertAngle(int ocd_angle) const
 {
 	// OC*D uses tenths of a degree, counterclockwise
 	// BUG: if sin(rotation) is < 0 for a hatched area pattern, the pattern's createRenderables() will go into an infinite loop.
 	// So until that's fixed, we keep a between 0 and PI
-	return qDegreesToRadians(0.1f * ((ocd_angle + 3600) % 3600));
+	return qDegreesToRadians(0.1 * ((ocd_angle + 3600) % 3600));
 }
 
 
@@ -1565,7 +1565,8 @@ LineSymbol* OcdFileImport::importRectangleSymbol(const S& ocd_symbol)
 		rect.unnumbered_cells = ocd_symbol.unnumbered_cells;
 		rect.unnumbered_text = convertOcdString(ocd_symbol.unnumbered_text);
 	}
-	rectangle_info.insert(ocd_symbol.base.number, rect);
+	/// \todo review symbol number signedness @symbol vs. @object
+	rectangle_info.insert(int(ocd_symbol.base.number), rect);
 	
 	return symbol;
 }
