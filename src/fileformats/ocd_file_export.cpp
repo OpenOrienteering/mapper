@@ -2462,12 +2462,8 @@ void OcdFileExport::exportTemplates(OcdFile<Format>& /*file*/)
 }
 
 
-void OcdFileExport::exportTemplates(quint16 ocd_version)
+void OcdFileExport::exportTemplates(quint16 /*ocd_version*/)
 {
-	Q_UNUSED(ocd_version);
-	// Georeferencing
-	addParameterString(1039, stringForScalePar(*map, ocd_version));
-
 	for (int i = map->getNumTemplates() - 1; i >= 0; --i)
 	{
 		const auto temp = map->getTemplate(i);
