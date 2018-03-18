@@ -205,6 +205,8 @@ protected:
 	template< class F >
 	void importColors(const OcdFile< F >& file);
 	
+	void importSpotColor(const QString& param_string, int ocd_version);
+	
 	void importColor(const QString& param_string, int ocd_version);
 	
 	
@@ -334,6 +336,9 @@ protected:
 	
 	/// Character encoding to use for 1-byte (narrow) strings
 	QTextCodec *custom_8bit_encoding;
+	
+	/// Temporarily stores spot colors
+	std::vector<MapColor*> spot_colors;
 	
 	/// maps OCD color number to oo-mapper color object
 	QHash<int, const MapColor *> color_index;

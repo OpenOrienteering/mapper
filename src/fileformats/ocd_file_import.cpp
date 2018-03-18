@@ -521,9 +521,32 @@ void OcdFileImport::applyGridAndZone(Georeferencing& georef, const QString& comb
 void OcdFileImport::importColors(const OcdFile<Ocd::FormatV8>& file)
 {
 	const Ocd::SymbolHeaderV8 & symbol_header = file.header()->symbol_header;
-	int num_colors = symbol_header.num_colors;
 	
-	for (int i = 0; i < num_colors && i < 256; i++)
+	auto num_separations = qMin(quint16(24), symbol_header.num_separations);
+	if (num_separations > 0)
+	{
+		spot_colors.reserve(num_separations);
+		for (auto i = 0u; i < num_separations; i++)
+		{
+			const auto& separation_info = symbol_header.separation_info[i];
+			const auto name = convertOcdString(separation_info.name);
+			auto color = new MapColor(name, MapColor::Undefined);
+			color->setSpotColorName(name);
+			// OCD stores CMYK values as integers from 0-200.
+			const MapColorCmyk cmyk(
+			  0.005f * separation_info.cmyk.cyan,
+			  0.005f * separation_info.cmyk.magenta,
+			  0.005f * separation_info.cmyk.yellow,
+			  0.005f * separation_info.cmyk.black );
+			color->setCmyk(cmyk);
+			color->setOpacity(1.0f);
+			/// \todo raster frequency and angle
+			spot_colors.push_back(color);
+		}
+	}
+	
+	auto num_colors = symbol_header.num_colors;
+	for (auto i = 0u; i < num_colors && i < 256; i++)
 	{
 		const Ocd::ColorInfoV8& color_info = symbol_header.color_info[i];
 		const QString name = convertOcdString(color_info.name);
@@ -539,18 +562,143 @@ void OcdFileImport::importColors(const OcdFile<Ocd::FormatV8>& file)
 		color->setCmyk(cmyk);
 		color->setOpacity(1.0f);
 		
-		map->addColor(color, color_pos);
-		color_index[color_info.number] = color;
+		SpotColorComponents components;
+		for (auto j = 0u; j < num_separations; ++j)
+		{
+			const auto ocd_halftone = color_info.separations[j];
+			if (ocd_halftone <= 200)
+			{
+				components.reserve(std::size_t(num_separations));  // reserves only once for same capacity
+				components.push_back(SpotColorComponent(spot_colors[j], 0.005f * ocd_halftone));  // clazy:exclude=reserve-candidates
+			}
+		}
+		if (!components.empty())
+		{
+			color->setSpotColorComposition(components);
+			const MapColorCmyk cmyk(color->getCmyk());
+			color->setCmykFromSpotColors();
+			if (cmyk != color->getCmyk())
+				// The color's CMYK was customized.
+				color->setCmyk(cmyk);
+		}
+		
+		if ((i == 0 && color->isBlack() && color->getName() == QLatin1String("Registration black"))
+		    || (!components.empty() && components.size() == num_separations
+		        && color_info.cmyk.cyan == 200
+		        && color_info.cmyk.magenta == 200
+		        && color_info.cmyk.yellow == 200
+		        && color_info.cmyk.black == 200
+		        && std::all_of(color_info.separations, color_info.separations + num_separations,
+		                       [](const auto& s) { return s == 200; }) ) )
+		{
+			addWarning(tr("Color \"%1\" is imported as special color \"Registration black\".").arg(color->getName()));
+			delete color;
+			color_index[color_info.number] = Map::getRegistrationColor();
+			// NOTE: This does not make a difference in output
+			// as long as no spot colors are created,
+			// but as a special color, it is protected from modification,
+			// and it will be saved as number 0 in OCD export.
+		}
+		else
+		{
+			map->addColor(color, color_pos);
+			color_index[color_info.number] = color;
+		}
 	}
 	
-	addWarning(OcdFileImport::tr("Spot color information was ignored."));
+	// Insert the spot colors into the map
+	for (auto i = 0u; i < num_separations; ++i)
+	{
+		map->addColor(spot_colors[i], map->getNumColors());
+	}
 }
 
 template< class F >
 void OcdFileImport::importColors(const OcdFile< F >& file)
 {
+	spot_colors.clear();
+	spot_colors.reserve(10);
+	handleStrings(file, { { 10, &OcdFileImport::importSpotColor } });
 	handleStrings(file, { { 9, &OcdFileImport::importColor } });
-	addWarning(OcdFileImport::tr("Spot color information was ignored."));
+	std::sort(begin(spot_colors), end(spot_colors), [](const auto a, const auto b) {
+		return a->getPriority() < b->getPriority();
+	});
+	// Insert the spot colors into the map after (below) the regular colors.
+	for (auto spot_color : spot_colors)
+	{
+		map->addColor(spot_color, map->getNumColors());
+	}
+}
+
+void OcdFileImport::importSpotColor(const QString& param_string, int /*ocd_version*/)
+{
+	const QChar* unicode = param_string.unicode();
+	
+	int i = param_string.indexOf(QLatin1Char('\t'), 0);
+	const QString name = param_string.left(qMax(-1, i)); // copied
+	
+	int number = -1;
+	bool number_ok = false;
+	MapColorCmyk cmyk { 0.0, 0.0, 0.0, 0.0 };
+	
+	SpotColorComponents components;
+	
+	while (i >= 0)
+	{
+		float f_value;
+		bool ok;
+		int next_i = param_string.indexOf(QLatin1Char('\t'), i+1);
+		int len = (next_i > 0 ? next_i : param_string.length()) - i - 2;
+		const QString param_value = QString::fromRawData(unicode+i+2, len); // no copying!
+		switch (param_string[i+1].toLatin1())
+		{
+		case '\t':
+			// empty item
+			break;
+		case 'n':
+			number = param_value.toInt(&number_ok);
+			break;
+		case 'v':
+			if (param_value != QLatin1String("1"))
+				qInfo("Spot color %s: Unknown value v:%s", qUtf8Printable(name), qUtf8Printable(param_value));
+			break;
+		case 'c':
+			f_value = param_value.toFloat(&ok);
+			if (ok && f_value >= 0 && f_value <= 100)
+				cmyk.c = 0.01f * f_value;
+			break;
+		case 'm':
+			f_value = param_value.toFloat(&ok);
+			if (ok && f_value >= 0 && f_value <= 100)
+				cmyk.m = 0.01f * f_value;
+			break;
+		case 'y':
+			f_value = param_value.toFloat(&ok);
+			if (ok && f_value >= 0 && f_value <= 100)
+				cmyk.y = 0.01f * f_value;
+			break;
+		case 'k':
+			f_value = param_value.toFloat(&ok);
+			if (ok && f_value >= 0 && f_value <= 100)
+				cmyk.k = 0.01f * f_value;
+			break;
+		case 'f':
+		case 'a':
+			/// \todo Spot color frequency and angle
+			break;
+		default:
+			; // nothing
+		}
+		i = next_i;
+	}
+	
+	if (!number_ok)
+		return;
+	
+	auto color = new MapColor(name, number);
+	color->setSpotColorName(name);
+	color->setCmyk(cmyk);
+	spot_colors.push_back(color);
 }
 
 void OcdFileImport::importColor(const QString& param_string, int /*ocd_version*/)
@@ -565,6 +713,9 @@ void OcdFileImport::importColor(const QString& param_string, int /*ocd_version*/
 	MapColorCmyk cmyk { 0.0, 0.0, 0.0, 0.0 };
 	bool overprinting = false;
 	float opacity = 1.0f;
+	
+	SpotColorComponents components;
+	QString spot_color_name;
 	
 	while (i >= 0)
 	{
@@ -612,6 +763,23 @@ void OcdFileImport::importColor(const QString& param_string, int /*ocd_version*/
 			if (ok && f_value >= 0.f && f_value <= 100.f)
 				opacity = 0.01f * f_value;
 			break;
+		case 's':
+			spot_color_name = param_value;
+			break;
+		case 'p':
+			if (!spot_color_name.isEmpty())
+			{
+				auto spot_color = std::find_if(begin(spot_colors), end(spot_colors), [&spot_color_name](const auto s) {
+					return s->getName() == spot_color_name;
+				});
+				if (spot_color != end(spot_colors))
+				{
+					i_value = param_value.toInt(&ok);
+					components.push_back({*spot_color, qBound(0, i_value, 100)/100.0f});
+				}
+			}
+			spot_color_name.clear();
+			break;
 		default:
 			; // nothing
 		}
@@ -621,13 +789,36 @@ void OcdFileImport::importColor(const QString& param_string, int /*ocd_version*/
 	if (!number_ok)
 		return;
 		
+	if ((cmyk.isBlack() && name == QLatin1String("Registration black"))
+	    || (!components.empty() && components.size() == spot_colors.size()
+	        && qFuzzyCompare(cmyk.c, 1)
+	        && qFuzzyCompare(cmyk.m, 1)
+	        && qFuzzyCompare(cmyk.y, 1)
+	        && qFuzzyCompare(cmyk.k, 1)
+	        && std::all_of(begin(components), end(components),
+	                       [](const auto& c) { return qFuzzyCompare(c.factor, 1); }) ) )
+	{
+		color_index[number] = Map::getRegistrationColor();
+		return;
+	}
+	
 	int color_pos = map->getNumColors();
 	auto color = new MapColor(name, color_pos);
 	color->setCmyk(cmyk);
-	color->setKnockout(!overprinting);
 	color->setOpacity(opacity);
 	map->addColor(color, color_pos);
 	color_index[number] = color;
+
+	if (!components.empty())
+	{
+		color->setSpotColorComposition(components);
+		const MapColorCmyk cmyk(color->getCmyk());
+		color->setCmykFromSpotColors();
+		if (cmyk != color->getCmyk())
+			// The color's CMYK was customized.
+			color->setCmyk(cmyk);
+		color->setKnockout(!overprinting);
+	}
 }
 
 namespace {
