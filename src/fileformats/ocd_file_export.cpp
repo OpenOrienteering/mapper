@@ -1304,7 +1304,7 @@ quint8 OcdFileExport::exportAreaSymbolCommon(const AreaSymbol* area_symbol, OcdA
 	
 	quint8 flags = 0;
 	// Hatch
-	// ocd_area_common.hatch_mode = 0;
+	// ocd_area_common.hatch_mode = Ocd::HatchNone; // 0
 	for (int i = 0, end = area_symbol->getNumFillPatterns(); i < end; ++i)
 	{
 		const auto& pattern = area_symbol->getFillPattern(i);
@@ -1330,7 +1330,10 @@ quint8 OcdFileExport::exportAreaSymbolCommon(const AreaSymbol* area_symbol, OcdA
 				{
 					ocd_area_common.hatch_mode = Ocd::HatchCross;
 					ocd_area_common.hatch_line_width = decltype(ocd_area_common.hatch_line_width)(ocd_area_common.hatch_line_width + convertSize(pattern.line_width)) / 2;
-					ocd_area_common.hatch_dist = decltype(ocd_area_common.hatch_dist)(ocd_area_common.hatch_dist + convertSize(pattern.line_spacing - pattern.line_width)) / 2;
+					if (ocd_version <= 8)
+						ocd_area_common.hatch_dist = decltype(ocd_area_common.hatch_dist)(ocd_area_common.hatch_dist + convertSize(pattern.line_spacing - pattern.line_width)) / 2;
+					else
+						ocd_area_common.hatch_dist = decltype(ocd_area_common.hatch_dist)(ocd_area_common.hatch_dist + convertSize(pattern.line_spacing)) / 2;
 					ocd_area_common.hatch_angle_2 = decltype(ocd_area_common.hatch_angle_2)(convertRotation(pattern.angle));
 					if (pattern.rotatable())
 						flags |= 1;
