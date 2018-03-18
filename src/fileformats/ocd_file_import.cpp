@@ -1496,18 +1496,33 @@ void OcdFileImport::setupLineSymbolPointSymbol(OcdFileImport::OcdImportedLineSym
 {
 	const Ocd::OcdPoint32* coords = reinterpret_cast<const Ocd::OcdPoint32*>(elements);
 	
-	line_symbol->mid_symbols_per_spot = attributes.num_prim_sym;
-	line_symbol->mid_symbol_distance = convertLength(attributes.prim_sym_dist);
-	line_symbol->mid_symbol = new OcdImportedPointSymbol();
-	setupPointSymbolPattern(line_symbol->mid_symbol, attributes.primary_data_size, elements, ocd_version);
-	coords += attributes.primary_data_size;
-	
-	if (attributes.secondary_data_size > 0)
+	// Special case main_gap == 0: swapped in Mapper
+	auto gaps_swapped = attributes.sec_gap && !attributes.main_gap && attributes.main_length;
+	if (attributes.primary_data_size > 0)
 	{
-		//symbol_line->dash_symbol = importPattern( ocd_symbol->ssnpts, symbolptr);
-		coords += attributes.secondary_data_size;
-		addSymbolWarning(line_symbol, tr("Skipped secondary point symbol."));
+		line_symbol->mid_symbol_placement = gaps_swapped ? LineSymbol::CenterOfDashGroup : LineSymbol::CenterOfGap;
+		line_symbol->mid_symbols_per_spot = attributes.num_prim_sym;
+		line_symbol->mid_symbol_distance = convertLength(attributes.prim_sym_dist);
+		line_symbol->show_at_least_one_symbol = true;
+		line_symbol->mid_symbol = new OcdImportedPointSymbol();
+		setupPointSymbolPattern(line_symbol->mid_symbol, attributes.primary_data_size, elements, ocd_version);
+		if (attributes.secondary_data_size > 0)
+			addSymbolWarning(line_symbol, tr("Skipped secondary point symbol."));
+		coords += attributes.primary_data_size;
 	}
+	else if (attributes.secondary_data_size > 0)
+	{
+		line_symbol->mid_symbol_placement = gaps_swapped ? LineSymbol::CenterOfGap : LineSymbol::CenterOfDashGroup;
+		line_symbol->mid_symbols_per_spot = 1;
+		line_symbol->show_at_least_one_symbol = true;
+		line_symbol->mid_symbol = new OcdImportedPointSymbol();
+		setupPointSymbolPattern(line_symbol->mid_symbol, attributes.secondary_data_size, elements, ocd_version);
+	}
+	// FIXME: not really sure how this translates... need test cases
+	line_symbol->minimum_mid_symbol_count = 0; //1 + ocd_symbol->smin;
+	line_symbol->minimum_mid_symbol_count_when_closed = 0; //1 + ocd_symbol->smin;
+	coords += attributes.secondary_data_size;
+	
 	if (attributes.corner_data_size > 0)
 	{
 		line_symbol->dash_symbol = new OcdImportedPointSymbol();
@@ -1528,11 +1543,6 @@ void OcdFileImport::setupLineSymbolPointSymbol(OcdFileImport::OcdImportedLineSym
 		setupPointSymbolPattern(line_symbol->end_symbol, attributes.end_data_size, reinterpret_cast<const Ocd::PointSymbolElementV8*>(coords), ocd_version);
 		line_symbol->end_symbol->setName(QCoreApplication::translate("OpenOrienteering::LineSymbolSettings", "End symbol"));
 	}
-	
-	// FIXME: not really sure how this translates... need test cases
-	line_symbol->minimum_mid_symbol_count = 0; //1 + ocd_symbol->smin;
-	line_symbol->minimum_mid_symbol_count_when_closed = 0; //1 + ocd_symbol->smin;
-	line_symbol->show_at_least_one_symbol = false; // NOTE: this works in a different way than OC*D's 'at least X symbols' setting (per-segment instead of per-object)
 	
 	// Suppress dash symbol at line ends if both start symbol and end symbol exist,
 	// but don't create a warning unless a dash symbol is actually defined
