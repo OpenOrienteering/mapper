@@ -686,6 +686,34 @@ QString stringForTemplate(const Template& temp, const MapCoord& area_offset, qui
 	return string_8;
 }
 
+
+/// String 1030: view
+QString stringForViewPar(const MapView& view, const MapCoord& area_offset, quint16 version)
+{
+	QString string_1030;
+	QTextStream out(&string_1030, QIODevice::Append);
+	if (version == 8)
+	{
+		out << "\ts0\tt1";
+	}
+	else
+	{
+		const auto center = view.center() - area_offset;
+		out << qSetRealNumberPrecision(6)
+		    << "\tx" << center.x()
+		    << "\ty" << -center.y()
+		    << "\tz" << view.getZoom()
+		    << "\tv0"
+		    << "\tm50"
+		    << "\tt50"
+		    << "\tb50"
+		    << "\tc50"
+		    << "\th0"
+		    << "\td0";
+	}
+	return string_1030;
+}
+
 } // namespace
 
 
@@ -993,6 +1021,12 @@ void OcdFileExport::exportSetup(quint16 ocd_version)
 {
 	// Georeferencing
 	addParameterString(1039, stringForScalePar(*map, ocd_version));
+	
+	// View
+	if (view)
+	{
+		addParameterString(1030, stringForViewPar(*view, area_offset, ocd_version));
+	}
 	
 	// Map notes
 	if (ocd_version >= 9 && !map->getMapNotes().isEmpty())
