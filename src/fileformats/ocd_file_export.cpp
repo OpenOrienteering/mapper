@@ -1505,7 +1505,7 @@ quint32 OcdFileExport::exportLineSymbolCommon(const LineSymbol* line_symbol, Ocd
 			
 			ocd_line_common.main_length = convertSize(line_symbol->getDashLength() + line_symbol->getBreakLength());
 			ocd_line_common.end_length = ocd_line_common.main_length / 2;
-			ocd_line_common.main_gap = convertSize(line_symbol->getBreakLength());
+			ocd_line_common.sec_gap = convertSize(line_symbol->getBreakLength());
 		}
 		else
 		{
