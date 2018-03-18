@@ -1051,7 +1051,7 @@ SplitPathCoord LineSymbol::createDashGroups(
 	auto switch_deviation        = length_type(0.2) * total_group_and_break_length / dashes_in_group;
 	
 	bool set_mid_symbols = mid_symbols != LineSymbol::NoMidSymbols
-	                       && length >= dash_length_f - switch_deviation;
+	                       && (length >= dash_length_f - switch_deviation || show_at_least_one_symbol);
 	if (mid_symbols == LineSymbol::CenterOfDash)
 	{
 		if (line_start.clen < start.clen || (!is_part_start && flags[start.index].isDashPoint()))

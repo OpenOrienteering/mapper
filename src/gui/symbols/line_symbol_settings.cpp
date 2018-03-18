@@ -198,22 +198,6 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	mid_symbol_distance_label = new QLabel(tr("Mid symbol distance:"));
 	mid_symbol_distance_edit = Util::SpinBox::create(2, 0.0, 999999.9, tr("mm"));
 	
-	mid_symbol_widget_list = {
-	  mid_symbol_placement_label, mid_symbol_placement_combo,
-	  mid_symbol_per_spot_label, mid_symbol_per_spot_edit,
-	};
-	
-	row++; col = 0;
-	layout->addWidget(mid_symbol_placement_label, row, col++);
-	layout->addWidget(mid_symbol_placement_combo, row, col, 1, -1);
-	row++; col = 0;
-	layout->addWidget(mid_symbol_per_spot_label, row, col++);
-	layout->addWidget(mid_symbol_per_spot_edit, row, col, 1, -1);
-	row++; col = 0;
-	layout->addWidget(mid_symbol_distance_label, row, col++);
-	layout->addWidget(mid_symbol_distance_edit, row, col, 1, -1);
-	
-	
 	auto segment_length_label = new QLabel(tr("Distance between spots:"));
 	segment_length_edit = Util::SpinBox::create(2, 0.0, 999999.9, tr("mm"));
 	
@@ -228,14 +212,15 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	auto minimum_mid_symbol_count_when_closed_label = new QLabel(tr("Minimum mid symbol count when closed:"));
 	minimum_mid_symbol_count_when_closed_edit = Util::SpinBox::create(0, 99);
 	
-	undashed_widget_list = {
-	    segment_length_label, segment_length_edit,
-	    end_length_label, end_length_edit,
-	    show_at_least_one_symbol_check,
-	    minimum_mid_symbol_count_label, minimum_mid_symbol_count_edit,
-	    minimum_mid_symbol_count_when_closed_label, minimum_mid_symbol_count_when_closed_edit,
-	};
-	
+	row++; col = 0;
+	layout->addWidget(mid_symbol_placement_label, row, col++);
+	layout->addWidget(mid_symbol_placement_combo, row, col, 1, -1);
+	row++; col = 0;
+	layout->addWidget(mid_symbol_per_spot_label, row, col++);
+	layout->addWidget(mid_symbol_per_spot_edit, row, col, 1, -1);
+	row++; col = 0;
+	layout->addWidget(mid_symbol_distance_label, row, col++);
+	layout->addWidget(mid_symbol_distance_edit, row, col, 1, -1);
 	row++; col = 0;
 	layout->addWidget(segment_length_label, row, col++);
 	layout->addWidget(segment_length_edit, row, col, 1, -1);
@@ -250,6 +235,19 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	row++; col = 0;
 	layout->addWidget(minimum_mid_symbol_count_when_closed_label, row, col++);
 	layout->addWidget(minimum_mid_symbol_count_when_closed_edit, row, col, 1, -1);
+	
+	mid_symbol_widget_list = {
+	    mid_symbol_placement_label, mid_symbol_placement_combo,
+	    mid_symbol_per_spot_label, mid_symbol_per_spot_edit,
+	    show_at_least_one_symbol_check,
+	};
+	
+	undashed_widget_list = {
+	    segment_length_label, segment_length_edit,
+	    end_length_label, end_length_edit,
+	    minimum_mid_symbol_count_label, minimum_mid_symbol_count_edit,
+	    minimum_mid_symbol_count_when_closed_label, minimum_mid_symbol_count_when_closed_edit,
+	};
 	
 	
 	row++; col = 0;
