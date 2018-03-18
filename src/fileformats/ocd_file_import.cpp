@@ -877,12 +877,11 @@ const std::initializer_list<OcdFileImport::StringHandler> OcdFileImport::extraSt
     { 1061, &OcdFileImport::appendNotes }
 };
 
-void OcdFileImport::appendNotes(const QString& param_string, int ocd_version)
+void OcdFileImport::appendNotes(const QString& param_string, int /*ocd_version*/)
 {
-	QString notes = map->getMapNotes();
+	auto notes = map->getMapNotes();
 	notes.append(param_string);
-	if (ocd_version <= 10)
-		notes.append(QLatin1Char('\n'));
+	notes.replace(QLatin1String("\r\n"), QLatin1String("\n"));
 	map->setMapNotes(notes);
 }
 

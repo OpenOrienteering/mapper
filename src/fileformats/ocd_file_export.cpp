@@ -995,8 +995,20 @@ void OcdFileExport::exportSetup(quint16 ocd_version)
 	addParameterString(1039, stringForScalePar(*map, ocd_version));
 	
 	// Map notes
-	if (ocd_version >= 9)
-		addParameterString(ocd_version >= 11 ? 1061 : 11, map->getMapNotes());
+	if (ocd_version >= 9 && !map->getMapNotes().isEmpty())
+	{
+		auto param = 1061;
+		auto notes = map->getMapNotes();
+		if (ocd_version <= 10 && !notes.isEmpty())
+		{
+			param = 11;
+			if (!notes.endsWith(QLatin1Char('\n')))
+				notes.append(QLatin1Char('\n'));
+		}
+		notes.replace(QLatin1String("\n"), QLatin1String("\r\n"));
+		notes.replace(QLatin1String("\r\r"), QLatin1String("\r"));  // just in case
+		addParameterString(param, notes);
+	}
 	
 	// Map colors
 	int ocd_number = 0;
