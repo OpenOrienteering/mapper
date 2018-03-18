@@ -120,10 +120,11 @@ typename OcdEntityIndex<F,T>::EntryType& OcdEntityIndex<F,T>::insert(const QByte
 	
 	if (Q_UNLIKELY(index == 256))
 	{
-		block->next_block = decltype(block->next_block)(byte_array.size());
+		block_pos = decltype(block->next_block)(byte_array.size());
+		block->next_block = block_pos;
 		auto new_block = IndexBlock {};
 		byte_array.append(reinterpret_cast<const char*>(&new_block), sizeof(IndexBlock));
-		block = reinterpret_cast<IndexBlock*>(byte_array.data() + block->next_block);
+		block = reinterpret_cast<IndexBlock*>(byte_array.data() + block_pos);
 		index = 0;
 	}
 	
