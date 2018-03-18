@@ -225,7 +225,7 @@ R OcdFileImport::convertLength(T ocd_length) const
 }
 
 
-MapColor* OcdFileImport::convertColor(int ocd_color)
+const MapColor* OcdFileImport::convertColor(int ocd_color)
 {
 	if (!color_index.contains(ocd_color))
 	{

@@ -158,7 +158,7 @@ public:
 	template< class T, class R = qint64 >
 	R convertLength(T ocd_length) const;
 	
-	MapColor* convertColor(int ocd_color);
+	const MapColor* convertColor(int ocd_color);
 	
 	void addSymbolWarning(const AreaSymbol* symbol, const QString& warning);
 	
@@ -336,7 +336,7 @@ protected:
 	QTextCodec *custom_8bit_encoding;
 	
 	/// maps OCD color number to oo-mapper color object
-	QHash<int, MapColor *> color_index;
+	QHash<int, const MapColor *> color_index;
 	
 	/// maps OCD symbol number to oo-mapper symbol object
 	QHash<unsigned int, Symbol *> symbol_index;
