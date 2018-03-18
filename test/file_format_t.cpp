@@ -287,6 +287,7 @@ namespace
 	  "data:/examples/complete map.omap",
 	  "data:/examples/forest sample.omap",
 	  "data:/examples/overprinting.omap",
+	  "testdata:templates/world-file.xmap",
 	};
 	
 }  // namespace
@@ -306,6 +307,7 @@ void FileFormatTest::initTestCase()
 	const auto prefix = QString::fromLatin1("data");
 	QDir::addSearchPath(prefix, QDir(QString::fromUtf8(MAPPER_TEST_SOURCE_DIR)).absoluteFilePath(prefix));
 	QDir::addSearchPath(prefix, QDir(QString::fromUtf8(MAPPER_TEST_SOURCE_DIR)).absoluteFilePath(QStringLiteral("..")));
+	QDir::addSearchPath(QStringLiteral("testdata"), QDir(QString::fromUtf8(MAPPER_TEST_SOURCE_DIR)).absoluteFilePath(QStringLiteral("data")));
 }
 
 
