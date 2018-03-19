@@ -99,6 +99,31 @@ static QTextCodec* codecFromSettings()
 
 
 
+/**
+ * Returns the index of the first color which can be assumed to be a pure spot color.
+ * 
+ * During OCD import, spot colors are appended as regular colors at the end of
+ * the color list. This function tries to recover the index where the spot colors
+ * start, by looking at definition and usage of the colors at the end of the list.
+ */
+int beginOfSpotColors(const Map* map)
+{
+	const auto num_colors = map->getNumColors();
+	auto first_pure_spot_color = num_colors;
+	for (auto i = num_colors; i > 0; )
+	{
+		--i;
+		const auto color = map->getColor(i);
+		if (color->getSpotColorMethod() != MapColor::SpotColor
+		    || map->isColorUsedByASymbol(color))
+			break;
+		--first_pure_spot_color;
+	}
+	return first_pure_spot_color;
+}
+
+
+
 quint32 makeSymbolNumber(const Symbol* symbol, quint32 symbol_number_factor)
 {
 	auto number = quint32(0);
@@ -545,7 +570,40 @@ QString stringForColor(int i, const MapColor& color)
 	    << "\tk" << qRound(cmyk.k * 100)
 	    << "\to" << (color.getKnockout() ? '0' : '1')
 	    << "\tt" << qRound(color.getOpacity() * 100);
+	if (color.getSpotColorMethod() == MapColor::CustomColor)
+	{
+		for (const auto& component : color.getComponents())
+		{
+			out << "\ts" << component.spot_color->getSpotColorName()
+			    << "\tp" << qRound(component.factor * 100);
+		}
+	}
+	else if (color.getSpotColorMethod() == MapColor::SpotColor)
+	{
+		out << "\ts" << color.getSpotColorName()
+		    << "\tp" << 100;
+	}
 	return string_9;
+}
+
+
+/// String 10: spot color
+QString stringForSpotColor(int i, const MapColor& color)
+{
+	const auto& cmyk = color.getCmyk();
+	QString string_10;
+	QTextStream out(&string_10, QIODevice::Append);
+	out << color.getSpotColorName()
+	    << "\tn" << i
+	    << "\tv1"
+	    << fixed << qSetRealNumberPrecision(1)
+	    << "\tc" << qRound(cmyk.c * 200)/2.0
+	    << "\tm" << qRound(cmyk.m * 200)/2.0
+	    << "\ty" << qRound(cmyk.y * 200)/2.0
+	    << "\tk" << qRound(cmyk.k * 200)/2.0
+	    << "\tf" << 1500.0
+	    << "\ta" << 45.0;
+	return string_10;
 }
 
 
@@ -975,37 +1033,97 @@ void OcdFileExport::exportSetup(OcdFile<Ocd::FormatV8>& file)
 		auto& symbol_header = file.header()->symbol_header;
 		
 		auto num_colors = map->getNumColors();
-		if (num_colors > (uses_registration_color ? 255 : 256))
-			throw FileFormatException(tr("The map contains more than 256 colors which is not supported by ocd version 8."));
 		
-		auto addColor = [&symbol_header, this](const MapColor* color, quint16 ocd_number) {
-			auto& color_info = symbol_header.color_info[ocd_number];
-			color_info.number = ocd_number;
-			color_info.name = toOcdString(color->getName());
-			
-			// OC*D stores CMYK values as integers from 0-200.
-			const auto& cmyk = color->getCmyk();
-			color_info.cmyk.cyan    = quint8(qRound(200 * cmyk.c));
-			color_info.cmyk.magenta = quint8(qRound(200 * cmyk.m));
-			color_info.cmyk.yellow  = quint8(qRound(200 * cmyk.y));
-			color_info.cmyk.black   = quint8(qRound(200 * cmyk.k));
-			
-			std::fill(std::begin(color_info.separations), std::end(color_info.separations), 0);
+		auto spotColorNumber = [this, num_colors](const MapColor* color)->quint16 {
+			quint16 number = 0;
+			for (auto i = 0; i < num_colors; ++i)
+			{
+				const auto current = map->getColor(i);
+				if (current == color)
+					break;
+				if (current->getSpotColorMethod() == MapColor::SpotColor)
+					++number;
+			}
+			return number;
 		};
 		
+		symbol_header.num_separations = spotColorNumber(nullptr);
+		if (symbol_header.num_separations > 24)
+			throw FileFormatException(tr("The map contains more than 24 spot colors which is not supported by ocd version 8."));
+		
+		auto begin_of_spot_colors = beginOfSpotColors(map);
+		if (uses_registration_color)
+			++begin_of_spot_colors;  // in ocd output (ocd_number below)
+		if (begin_of_spot_colors > 256)
+			throw FileFormatException(tr("The map contains more than 256 colors which is not supported by ocd version 8."));
+		
+		using std::begin; using std::end;
+		auto separation_info = symbol_header.separation_info;
+		auto color_info = symbol_header.color_info;
 		quint16 ocd_number = 0;
+		
 		if (uses_registration_color)
 		{
-			addWarning(tr("Registration black is exported as a regular color."));
-			addColor(Map::getRegistrationColor(), ocd_number++);
+			color_info->number = 0;
+			color_info->name = toOcdString(Map::getRegistrationColor()->getName());
+			color_info->cmyk = { 200, 200, 200, 200 };  // OC*D stores CMYK values as integers from 0-200.
+			std::fill(begin(color_info->separations), begin(color_info->separations) + symbol_header.num_separations, 200);
+			std::fill(begin(color_info->separations) + symbol_header.num_separations, end(color_info->separations), 255);
+			++color_info;
+			++ocd_number;
 		}
+		
 		for (int i = 0; i < num_colors; ++i)
 		{
-			addColor(map->getColor(i), ocd_number++);
+			const auto color = map->getColor(i);
+			const auto& cmyk = color->getCmyk();
+			// OC*D stores CMYK values as integers from 0-200.
+			auto ocd_cmyk = Ocd::CmykV8 {
+			                  quint8(qRound(200 * cmyk.c)),
+			                  quint8(qRound(200 * cmyk.m)),
+			                  quint8(qRound(200 * cmyk.y)),
+			                  quint8(qRound(200 * cmyk.k))
+			};
+			
+			if (color->getSpotColorMethod() == MapColor::SpotColor)
+			{
+				separation_info->name = toOcdString(color->getSpotColorName());
+				separation_info->cmyk = ocd_cmyk;
+				separation_info->raster_freq = 1500;  /// \todo Spot color raster frequency
+				separation_info->raster_angle = 450;  /// \todo Spot color raster angle
+				++separation_info;
+				
+				if (ocd_number >= begin_of_spot_colors)
+					continue;  // Just a spot color, not a regular map color.
+				
+				std::fill(begin(color_info->separations), end(color_info->separations), 255);
+				auto index = spotColorNumber(color);
+				if (index >= symbol_header.num_separations)
+					throw FileFormatException(tr("Invalid spot color."));
+				color_info->separations[index] = 200;
+			}
+			else
+			{
+				std::fill(begin(color_info->separations), end(color_info->separations), 255);
+				if (color->getSpotColorMethod() == MapColor::CustomColor)
+				{
+					for (const auto& component : color->getComponents())
+					{
+						auto index = spotColorNumber(component.spot_color);
+						if (index >= symbol_header.num_separations)
+							throw FileFormatException(tr("Invalid spot color."));
+						color_info->separations[index] = quint8(qRound(component.factor * 200));
+					}
+				}
+			}
+			
+			color_info->number = ocd_number;
+			color_info->name = toOcdString(color->getName());
+			color_info->cmyk = ocd_cmyk;
+			++color_info;
+			++ocd_number;
 		}
 		symbol_header.num_colors = ocd_number;
-		
-		addWarning(OcdFileExport::tr("Spot color information was ignored."));
 	}
 }
 
@@ -1045,19 +1163,39 @@ void OcdFileExport::exportSetup(quint16 ocd_version)
 	}
 	
 	// Map colors
-	int ocd_number = 0;
+	auto num_colors = map->getNumColors();
+	auto begin_of_spot_colors = beginOfSpotColors(map);
+	auto ocd_number = 0;
+	auto spot_number = 0;
 	if (uses_registration_color)
 	{
-		addWarning(tr("Registration black is exported as a regular color."));
-		addParameterString(9, stringForColor(ocd_number++, *Map::getRegistrationColor()));
-	}
-	auto num_colors = map->getNumColors();
-	for (int i = 0; i < num_colors; ++i)
-	{
-		addParameterString(9, stringForColor(ocd_number++, *map->getColor(i)));
+		SpotColorComponents all_spot_colors;
+		for (int i = 0; i < num_colors; ++i)
+		{
+			const auto color = map->getColor(i);
+			if (color->getSpotColorMethod() == MapColor::SpotColor)
+			{
+				all_spot_colors.push_back({color, 1});
+			}
+		}
+		MapColorCmyk all_cmyk = { 1, 1, 1, 1 };
+		MapColor registration_color{*Map::getRegistrationColor()};
+		registration_color.setSpotColorComposition(all_spot_colors);
+		registration_color.setCmyk(all_cmyk);
+		addParameterString(9, stringForColor(ocd_number++, registration_color));
 	}
 	
-	addWarning(OcdFileExport::tr("Spot color information was ignored."));
+	for (int i = 0; i < num_colors; ++i)
+	{
+		const auto color = map->getColor(i);
+		if (color->getSpotColorMethod() == MapColor::SpotColor)
+		{
+			addParameterString(10, stringForSpotColor(spot_number++, *color));
+			if (ocd_number >= begin_of_spot_colors)
+				continue;  // Just a spot color, not a regular map color.
+		}
+		addParameterString(9, stringForColor(ocd_number++, *color));
+	}
 }
 
 
