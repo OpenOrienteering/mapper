@@ -154,6 +154,7 @@ LineSymbol::LineSymbol() noexcept
 , in_group_break_length ( 500 )
 , cap_style ( FlatCap )
 , join_style ( MiterJoin )
+, mid_symbol_placement ( CenterOfDash )
 , dashed ( false )
 , half_outer_dashes ( false )
 , show_at_least_one_symbol ( true )
@@ -189,6 +190,7 @@ LineSymbol::LineSymbol(const LineSymbol& proto)
 , in_group_break_length ( proto.in_group_break_length )
 , cap_style ( proto.cap_style )
 , join_style ( proto.join_style )
+, mid_symbol_placement ( proto.mid_symbol_placement )
 , dashed ( proto.dashed )
 , half_outer_dashes ( proto.half_outer_dashes )
 , show_at_least_one_symbol ( proto.show_at_least_one_symbol )
@@ -1015,6 +1017,7 @@ SplitPathCoord LineSymbol::createDashGroups(
 	auto orientation = qreal(0);
 	bool mid_symbol_rotatable = bool(mid_symbol) && mid_symbol->isRotatable();
 	
+	const auto mid_symbols = (mid_symbols_per_spot > 0 && mid_symbol && !mid_symbol->isEmpty()) ? mid_symbol_placement : LineSymbol::NoMidSymbols;
 	auto mid_symbol_distance_f = length_type(0.001) * mid_symbol_distance;
 	
 	bool half_first_group = is_part_start ? (half_outer_dashes || path_closed)
@@ -1047,8 +1050,9 @@ SplitPathCoord LineSymbol::createDashGroups(
 	auto minimum_optimum_length  = 2 * total_group_and_break_length;
 	auto switch_deviation        = length_type(0.2) * total_group_and_break_length / dashes_in_group;
 	
-	bool set_mid_symbols = length >= dash_length_f - switch_deviation;
-	if (mid_symbols_per_spot > 0 && mid_symbol && !mid_symbol->isEmpty())
+	bool set_mid_symbols = mid_symbols != LineSymbol::NoMidSymbols
+	                       && (length >= dash_length_f - switch_deviation || show_at_least_one_symbol);
+	if (mid_symbols == LineSymbol::CenterOfDash)
 	{
 		if (line_start.clen < start.clen || (!is_part_start && flags[start.index].isDashPoint()))
 		{
@@ -1127,6 +1131,31 @@ SplitPathCoord LineSymbol::createDashGroups(
 			bool is_first_dashgroup = dashgroup == 1;
 			bool is_last_dashgroup  = dashgroup == num_dashgroups;
 			
+			if (mid_symbols == CenterOfDashGroup)
+			{
+				auto position = cur_length;
+				if (is_last_dashgroup && half_last_group)
+				{
+					position = end.clen;
+				}
+				else if (!(is_first_dashgroup && half_first_group))
+				{
+					position += (adjusted_dash_length * dashes_in_group
+					             + in_group_break_length_f * (dashes_in_group - 1)) / 2;
+				}
+				position -= (mid_symbol_distance_f * (mid_symbols_per_spot - 1)) / 2;
+				auto split = dash_start;
+				for (int i = 0; i < mid_symbols_per_spot && position <= end.clen; ++i, position += mid_symbol_distance_f)
+				{
+					if (position <= start.clen)
+						continue;
+					split = SplitPathCoord::at(position, split);
+					if (mid_symbol_rotatable)
+						orientation = split.tangentVector().angle();
+					mid_symbol->createRenderablesScaled(split.pos, orientation, output);
+				}
+			}
+			
 			for (int dash = 1; dash <= dashes_in_group; ++dash)
 			{
 				// Draw a single dash
@@ -1142,7 +1171,7 @@ SplitPathCoord LineSymbol::createDashGroups(
 				
 				bool is_half_dash = has_start != has_end;
 				auto cur_dash_length = is_half_dash ? adjusted_dash_length / 2 : adjusted_dash_length;
-				set_mid_symbols = !is_half_dash;
+				const auto set_mid_symbols = mid_symbols == CenterOfDash && !is_half_dash;
 				
 				if (!is_first_dash)
 				{
@@ -1169,10 +1198,27 @@ SplitPathCoord LineSymbol::createDashGroups(
 			}
 			
 			if (dashgroup < num_dashgroups)
+			{
+				if (Q_UNLIKELY(mid_symbols == CenterOfGap))
+				{
+					auto position = cur_length
+					                + (break_length_f
+					                   - mid_symbol_distance_f * (mid_symbols_per_spot - 1)) / 2;
+					auto split = dash_start;
+					for (int i = 0; i < mid_symbols_per_spot; ++i, position += mid_symbol_distance_f)
+					{
+						split = SplitPathCoord::at(position, split);
+						if (mid_symbol_rotatable)
+							orientation = split.tangentVector().angle();
+						mid_symbol->createRenderablesScaled(split.pos, orientation, output);
+					}
+				}
+				
 				cur_length += break_length_f;
+			}
 		}
 		
-		if (half_last_group && mid_symbols_per_spot > 0 && mid_symbol && !mid_symbol->isEmpty())
+		if (half_last_group && mid_symbols == LineSymbol::CenterOfDash)
 		{
 			// Handle mid symbols at end for closing point or for (some) explicit dash points.
 			auto split = start;
@@ -1672,6 +1718,13 @@ void LineSymbol::setDashSymbol(PointSymbol* symbol)
 {
 	replaceSymbol(dash_symbol, symbol, QCoreApplication::translate("OpenOrienteering::LineSymbolSettings", "Dash symbol"));
 }
+
+void LineSymbol::setMidSymbolPlacement(LineSymbol::MidSymbolPlacement placement)
+{
+	mid_symbol_placement = placement;
+}
+
+
 void LineSymbol::replaceSymbol(PointSymbol*& old_symbol, PointSymbol* replace_with, const QString& name)
 {
 	delete old_symbol;
@@ -1707,6 +1760,8 @@ void LineSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 		xml.writeAttribute(QString::fromLatin1("half_outer_dashes"), QString::fromLatin1("true"));
 	xml.writeAttribute(QString::fromLatin1("mid_symbols_per_spot"), QString::number(mid_symbols_per_spot));
 	xml.writeAttribute(QString::fromLatin1("mid_symbol_distance"), QString::number(mid_symbol_distance));
+	if (mid_symbol_placement != 0)
+		xml.writeAttribute(QString::fromLatin1("mid_symbol_placement"), QString::number(mid_symbol_placement));
 	if (suppress_dash_symbol_at_ends)
 		xml.writeAttribute(QString::fromLatin1("suppress_dash_symbol_at_ends"), QString::fromLatin1("true"));
 	if (!scale_dash_symbol)
@@ -1782,6 +1837,7 @@ bool LineSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionar
 	half_outer_dashes = (attributes.value(QLatin1String("half_outer_dashes")) == QLatin1String("true"));
 	mid_symbols_per_spot = attributes.value(QLatin1String("mid_symbols_per_spot")).toInt();
 	mid_symbol_distance = attributes.value(QLatin1String("mid_symbol_distance")).toInt();
+	mid_symbol_placement = static_cast<LineSymbol::MidSymbolPlacement>(attributes.value(QLatin1String("mid_symbol_placement")).toInt());
 	suppress_dash_symbol_at_ends = (attributes.value(QLatin1String("suppress_dash_symbol_at_ends")) == QLatin1String("true"));
 	scale_dash_symbol = (attributes.value(QLatin1String("scale_dash_symbol")) != QLatin1String("false"));
 	
@@ -1921,6 +1977,8 @@ bool LineSymbol::equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensit
 		if (mid_symbols_per_spot != line->mid_symbols_per_spot)
 			return false;
 		if (mid_symbol_distance != line->mid_symbol_distance)
+			return false;
+		if (mid_symbol_placement != line->mid_symbol_placement)
 			return false;
 	}
 

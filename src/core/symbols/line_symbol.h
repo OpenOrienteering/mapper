@@ -109,6 +109,17 @@ public:
 		RoundJoin = 2
 	};
 	
+	/**
+	 * Mid symbol placement on dashed lines.
+	 */
+	enum MidSymbolPlacement
+	{
+		CenterOfDash      = 0,  ///< Mid symbols on every dash
+		CenterOfDashGroup = 1,  ///< Mid symbols on the center of a dash group
+		CenterOfGap       = 2,  ///< Mid symbols on the main gap (i.e. not between dashes in a group)
+		NoMidSymbols      = 99
+	};
+	
 	/** Constructs an empty line symbol. */
 	LineSymbol() noexcept;
 	~LineSymbol() override;
@@ -219,6 +230,8 @@ public:
 	inline void setMidSymbolsPerSpot(int value) {mid_symbols_per_spot = value;}
 	inline int getMidSymbolDistance() const {return mid_symbol_distance;}
 	inline void setMidSymbolDistance(int value) {mid_symbol_distance = value;}
+	inline MidSymbolPlacement getMidSymbolPlacement() const { return mid_symbol_placement; }
+	void setMidSymbolPlacement(MidSymbolPlacement placement);
 	
 	inline bool getSuppressDashSymbolAtLineEnds() const {return suppress_dash_symbol_at_ends;}
 	inline void setSuppressDashSymbolAtLineEnds(bool value) {suppress_dash_symbol_at_ends = value;}
@@ -420,6 +433,7 @@ protected:
 	
 	CapStyle cap_style;
 	JoinStyle join_style;
+	MidSymbolPlacement mid_symbol_placement;
 	
 	// Various flags
 	bool dashed;
