@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map xmlns="http://openorienteering.org/apps/mapper/xml/v2" version="7">
+<map xmlns="http://openorienteering.org/apps/mapper/xml/v2" version="8">
     <notes></notes>
     <georeferencing scale="15000">
         <projected_crs id="Local coordinates"/>
@@ -1525,7 +1525,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
                         <symbol type="2" code="501.1" name="Motorway, outer part">
                             <line_symbol color="2" line_width="780" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                                 <borders>
-                                    <border color="3" width="180" shift="90" dash_length="2000" break_length="1000"/>
+                                    <border color="3" width="180" shift="90"/>
                                 </borders>
                             </line_symbol>
                         </symbol>
@@ -1544,7 +1544,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
                         <symbol type="2" code="501.3" name="Motorway, outer part, under construction">
                             <line_symbol color="2" line_width="780" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="3000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                                 <borders>
-                                    <border color="3" width="180" shift="90" dash_length="2000" break_length="1000"/>
+                                    <border color="3" width="180" shift="90"/>
                                 </borders>
                             </line_symbol>
                         </symbol>
@@ -1560,7 +1560,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
                 <description>Road wider than 5m. The width of the symbol should be drawn to scale but not smaller than the minimum width. The outer boundary lines may be replaced with symbols 519, 521, 522 or 524 if a fence or wall is so close to the motorway edge that it cannot practically be shown as a separate symbol. The space between the black lines must be filled with brown (50%). A road under construction may be shown with broken lines.</description>
                 <line_symbol color="2" line_width="500" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                     <borders>
-                        <border color="3" width="180" shift="90" dash_length="2000" break_length="1000"/>
+                        <border color="3" width="180" shift="90"/>
                     </borders>
                 </line_symbol>
             </symbol>
@@ -1568,7 +1568,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
                 <description>A road under construction may be shown with broken lines.</description>
                 <line_symbol color="2" line_width="500" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="3000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                     <borders>
-                        <border color="3" width="180" shift="90" dash_length="2000" break_length="1000"/>
+                        <border color="3" width="180" shift="90"/>
                     </borders>
                 </line_symbol>
             </symbol>
@@ -1576,7 +1576,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
                 <description>Road 3-5 m wide. The space between the black lines must be filled with brown (50%). A road under construction may be shown with broken lines.</description>
                 <line_symbol color="2" line_width="300" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                     <borders>
-                        <border color="3" width="180" shift="90" dash_length="2000" break_length="1000"/>
+                        <border color="3" width="180" shift="90"/>
                     </borders>
                 </line_symbol>
             </symbol>
@@ -1584,7 +1584,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
                 <description>A road under construction may be shown with broken lines.</description>
                 <line_symbol color="2" line_width="300" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="3000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                     <borders>
-                        <border color="3" width="180" shift="90" dash_length="2000" break_length="1000"/>
+                        <border color="3" width="180" shift="90"/>
                     </borders>
                 </line_symbol>
             </symbol>
@@ -1706,7 +1706,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
                         </symbol>
                     </dash_symbol>
                     <borders>
-                        <border color="1" width="140" shift="70" dash_length="2000" break_length="1000"/>
+                        <border color="1" width="140" shift="70"/>
                     </borders>
                 </line_symbol>
             </symbol>

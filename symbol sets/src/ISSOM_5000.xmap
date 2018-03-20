@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map xmlns="http://openorienteering.org/apps/mapper/xml/v2" version="7">
+<map xmlns="http://openorienteering.org/apps/mapper/xml/v2" version="8">
     <notes></notes>
     <georeferencing scale="5000">
         <projected_crs id="Local coordinates"/>
@@ -1529,7 +1529,7 @@ Colour: black, brown 0%(white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (mi
                         </symbol>
                     </end_symbol>
                     <borders>
-                        <border color="2" width="250" shift="125" dash_length="2000" break_length="1000"/>
+                        <border color="2" width="250" shift="125"/>
                     </borders>
                 </line_symbol>
             </symbol>
@@ -1590,7 +1590,7 @@ Colour: black, brown 0%(white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (mi
                         <symbol type="2" code="515.1.1" name="Railway helper: black border, white background">
                             <line_symbol color="3" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="3000" end_length="1500" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1500" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                                 <borders>
-                                    <border color="2" width="100" shift="0" dash_length="2000" break_length="1000"/>
+                                    <border color="2" width="100" shift="0"/>
                                 </borders>
                             </line_symbol>
                         </symbol>
@@ -1601,7 +1601,7 @@ Colour: black, brown 0%(white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (mi
                 <description>A tramway is a public vehicle running regularly along certain streets, usually on rails. The track can be easily crossed by the competitor. Tramways are generally not represented. However, if they serve navigation or orientation, they can be represented.</description>
                 <line_symbol color="-1" line_width="300" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="3000" end_length="1500" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1500" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                     <borders>
-                        <border color="6" width="100" shift="0" dash_length="2000" break_length="1000"/>
+                        <border color="6" width="100" shift="0"/>
                     </borders>
                 </line_symbol>
             </symbol>
@@ -1660,7 +1660,7 @@ Very large carrying masts shall be represented in plan shape or with the symbol 
                         </symbol>
                     </dash_symbol>
                     <borders>
-                        <border color="2" width="140" shift="70" dash_length="2000" break_length="1000"/>
+                        <border color="2" width="140" shift="70"/>
                     </borders>
                 </line_symbol>
             </symbol>
@@ -1967,7 +1967,7 @@ Where a paved road, footpath or track goes through a non-urban area, the brown f
 Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban) (min. 60 lines/cm), black; the colour and the line width shall be the same as for symbol unpaved footpath or track (506.1).</description>
                 <line_symbol color="14" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                     <borders>
-                        <border color="15" width="70" shift="35" dash_length="2000" break_length="250"/>
+                        <border color="15" width="70" shift="35"/>
                     </borders>
                 </line_symbol>
             </symbol>
@@ -1979,7 +1979,7 @@ Where a paved road, footpath or track goes through a non-urban area, the brown f
 Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban) (min. 60 lines/cm), black; the colour and the line width shall be the same as for symbol unpaved footpath or track (506.1).</description>
                 <line_symbol color="14" line_width="550" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                     <borders>
-                        <border color="15" width="70" shift="35" dash_length="2000" break_length="250"/>
+                        <border color="15" width="70" shift="35"/>
                     </borders>
                 </line_symbol>
             </symbol>
@@ -1991,7 +1991,7 @@ Where a paved road, footpath or track goes through a non-urban area, the brown f
 Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban) (min. 60 lines/cm), black; the colour and the line width shall be the same as for symbol unpaved footpath or track (506.1).</description>
                 <line_symbol color="14" line_width="700" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                     <borders>
-                        <border color="15" width="70" shift="35" dash_length="2000" break_length="250"/>
+                        <border color="15" width="70" shift="35"/>
                     </borders>
                 </line_symbol>
             </symbol>
@@ -2003,7 +2003,7 @@ Where a paved road, footpath or track goes through a non-urban area, the brown f
 Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban) (min. 60 lines/cm), black; the colour and the line width shall be the same as for symbol unpaved footpath or track (506.1).</description>
                 <line_symbol color="14" line_width="900" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                     <borders>
-                        <border color="15" width="70" shift="35" dash_length="2000" break_length="250"/>
+                        <border color="15" width="70" shift="35"/>
                     </borders>
                 </line_symbol>
             </symbol>
@@ -2034,7 +2034,7 @@ Where a paved road, footpath or track goes through a non-urban area, the brown f
 Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban) (min. 60 lines/cm), black; the colour and the line width shall be the same as for symbol unpaved footpath or track (506.1).</description>
                 <line_symbol color="13" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                     <borders>
-                        <border color="15" width="140" shift="70" dash_length="2000" break_length="250"/>
+                        <border color="15" width="140" shift="70"/>
                     </borders>
                 </line_symbol>
             </symbol>
@@ -2046,7 +2046,7 @@ Where a paved road, footpath or track goes through a non-urban area, the brown f
 Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban) (min. 60 lines/cm), black; the colour and the line width shall be the same as for symbol unpaved footpath or track (506.1).</description>
                 <line_symbol color="13" line_width="550" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                     <borders>
-                        <border color="15" width="140" shift="70" dash_length="2000" break_length="250"/>
+                        <border color="15" width="140" shift="70"/>
                     </borders>
                 </line_symbol>
             </symbol>
@@ -2058,7 +2058,7 @@ Where a paved road, footpath or track goes through a non-urban area, the brown f
 Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban) (min. 60 lines/cm), black; the colour and the line width shall be the same as for symbol unpaved footpath or track (506.1).</description>
                 <line_symbol color="13" line_width="700" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                     <borders>
-                        <border color="15" width="140" shift="70" dash_length="2000" break_length="250"/>
+                        <border color="15" width="140" shift="70"/>
                     </borders>
                 </line_symbol>
             </symbol>
@@ -2070,7 +2070,7 @@ Where a paved road, footpath or track goes through a non-urban area, the brown f
 Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban) (min. 60 lines/cm), black; the colour and the line width shall be the same as for symbol unpaved footpath or track (506.1).</description>
                 <line_symbol color="13" line_width="900" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                     <borders>
-                        <border color="15" width="140" shift="70" dash_length="2000" break_length="250"/>
+                        <border color="15" width="140" shift="70"/>
                     </borders>
                 </line_symbol>
             </symbol>

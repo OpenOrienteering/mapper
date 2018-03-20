@@ -37,7 +37,7 @@ The following expressions are supported:
 | expr1 OR expr2  | matching expression expr1 or expr2 (or both) |
 | key = value | having a tag with the given key and value |
 | key ~= word | having a tag with the given key and a value containing "word" |
-| key != word | having a tag with the given key and a value different from "word" |
+| key != word | having a tag with the given key and a value different from "word", or not having a tag with this key |
 
 AND has precedence over OR. You may use parentheses to nest operators in another way.
 
@@ -58,7 +58,7 @@ The "Query editor" button will replace the input field with a table for entering
 Pressing the button again will restore the input field and make it show the query from editor view.
 
 
-## Query editor
+## Query editor  {#query-editor}
 
 ![Query editor](images/query_editor.png)
 

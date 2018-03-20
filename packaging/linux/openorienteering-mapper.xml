@@ -4,7 +4,7 @@
      <sub-class-of type="text/xml"/>
      <comment>Orienteering map</comment>
      <comment xml:lang="cs">Mapa pro orientační běh</comment>
-     <comment xml:lang="da">Orienteringsløb-kort</comment>
+     <comment xml:lang="da">Orienteringskort</comment>
      <comment xml:lang="de">Orientierungslaufkarte</comment>
      <comment xml:lang="eo">Orientiĝa mapo</comment>
      <comment xml:lang="es">Mapa de orientación</comment>
@@ -13,6 +13,7 @@
      <comment xml:lang="hu">Tájfutó térkép</comment>
      <comment xml:lang="id">Peta orienteering</comment>
      <comment xml:lang="ja">オリエンテーリング地図</comment>
+     <comment xml:lang="lv">Orientēšanās karte</comment>
      <comment xml:lang="nb">Orienteringskart</comment>
      <comment xml:lang="nl">Oriëntatiekaart</comment>
      <comment xml:lang="pt_BR">Mapa de orientação</comment>
@@ -26,7 +27,7 @@
    <mime-type type="application/x-openorienteering-ocd">
      <comment>Orienteering map</comment>
      <comment xml:lang="cs">Mapa pro orientační běh</comment>
-     <comment xml:lang="da">Orienteringsløb-kort</comment>
+     <comment xml:lang="da">Orienteringskort</comment>
      <comment xml:lang="de">Orientierungslaufkarte</comment>
      <comment xml:lang="eo">Orientiĝa mapo</comment>
      <comment xml:lang="es">Mapa de orientación</comment>
@@ -35,6 +36,7 @@
      <comment xml:lang="hu">Tájfutó térkép</comment>
      <comment xml:lang="id">Peta orienteering</comment>
      <comment xml:lang="ja">オリエンテーリング地図</comment>
+     <comment xml:lang="lv">Orientēšanās karte</comment>
      <comment xml:lang="nb">Orienteringskart</comment>
      <comment xml:lang="nl">Oriëntatiekaart</comment>
      <comment xml:lang="pt_BR">Mapa de orientação</comment>

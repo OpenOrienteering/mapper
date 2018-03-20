@@ -377,7 +377,7 @@ private:
 	int start_drag_distance   = 4;
 	unsigned int scale_factor = 1;
 	bool editing_in_progress  = false;
-	bool uses_touch_cursor    = false;
+	bool uses_touch_cursor    = true;
 	bool draw_on_right_click  = false;
 };
 

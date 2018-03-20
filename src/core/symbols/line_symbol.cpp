@@ -49,7 +49,7 @@
 #include "core/symbols/symbol.h"
 #include "core/virtual_coord_vector.h"
 #include "core/virtual_path.h"
-
+#include "util/xml_stream_util.h"
 
 namespace OpenOrienteering {
 
@@ -60,67 +60,38 @@ using length_type = PathCoord::length_type;
 
 void LineSymbolBorder::save(QXmlStreamWriter& xml, const Map& map) const
 {
-	xml.writeStartElement(QString::fromLatin1("border"));
-	xml.writeAttribute(QString::fromLatin1("color"), QString::number(map.findColorIndex(color)));
-	xml.writeAttribute(QString::fromLatin1("width"), QString::number(width));
-	xml.writeAttribute(QString::fromLatin1("shift"), QString::number(shift));
+	XmlElementWriter element(xml, QLatin1String("border"));
+	element.writeAttribute(QLatin1String("color"), map.findColorIndex(color));
+	element.writeAttribute(QLatin1String("width"), width);
+	element.writeAttribute(QLatin1String("shift"), shift);
 	if (dashed)
-		xml.writeAttribute(QString::fromLatin1("dashed"), QString::fromLatin1("true"));
-	xml.writeAttribute(QString::fromLatin1("dash_length"), QString::number(dash_length));
-	xml.writeAttribute(QString::fromLatin1("break_length"), QString::number(break_length));
-	xml.writeEndElement(/*border*/);
+	{
+		element.writeAttribute(QLatin1String("dashed"), true);
+		element.writeAttribute(QLatin1String("dash_length"), dash_length);
+		element.writeAttribute(QLatin1String("break_length"), break_length);
+	}
 }
 
 bool LineSymbolBorder::load(QXmlStreamReader& xml, const Map& map)
 {
 	Q_ASSERT(xml.name() == QLatin1String("border"));
-	
-	QXmlStreamAttributes attributes = xml.attributes();
-	int temp = attributes.value(QLatin1String("color")).toInt();
-	color = map.getColor(temp);
-	width = attributes.value(QLatin1String("width")).toInt();
-	shift = attributes.value(QLatin1String("shift")).toInt();
-	dashed = (attributes.value(QLatin1String("dashed")) == QLatin1String("true"));
-	dash_length = attributes.value(QLatin1String("dash_length")).toInt();
-	break_length = attributes.value(QLatin1String("break_length")).toInt();
-	xml.skipCurrentElement();
+	XmlElementReader element(xml);
+	color = map.getColor(element.attribute<int>(QLatin1String("color")));
+	width = element.attribute<int>(QLatin1String("width"));
+	shift = element.attribute<int>(QLatin1String("shift"));
+	dashed = element.attribute<bool>(QLatin1String("dashed"));
+	if (dashed)
+	{
+		dash_length = element.attribute<int>(QLatin1String("dash_length"));
+		break_length = element.attribute<int>(QLatin1String("break_length"));
+	}
 	return !xml.error();
 }
 
-bool LineSymbolBorder::equals(const LineSymbolBorder* other) const
-{
-	if (!MapColor::equal(color, other->color))
-		return false;
-	
-	if (width != other->width)
-		return false;
-	if (shift != other->shift)
-		return false;
-	if (dashed != other->dashed)
-		return false;
-	if (dashed)
-	{
-		if (dash_length != other->dash_length)
-			return false;
-		if (break_length != other->break_length)
-			return false;
-	}
-	return true;
-}
-
-void LineSymbolBorder::assign(const LineSymbolBorder& other, const MapColorMap* color_map)
-{
-	color = color_map ? color_map->value(other.color) : other.color;
-	width = other.width;
-	shift = other.shift;
-	dashed = other.dashed;
-	dash_length = other.dash_length;
-	break_length = other.break_length;
-}
 
 bool LineSymbolBorder::isVisible() const
 {
-	return width > 0 && color && !(dash_length == 0 && dashed);
+	return width > 0 && color && !(dashed && dash_length == 0);
 }
 
 void LineSymbolBorder::setupSymbol(LineSymbol& out) const
@@ -143,6 +114,20 @@ void LineSymbolBorder::scale(double factor)
 	dash_length = qRound(factor * dash_length);
 	break_length = qRound(factor * break_length);
 }
+
+
+bool operator==(const LineSymbolBorder& lhs, const LineSymbolBorder& rhs) noexcept
+{
+	return  ((!lhs.color && !rhs.color)
+	         || (lhs.color && rhs.color && *lhs.color == *rhs.color))
+	        && lhs.width == rhs.width
+	        && lhs.shift == rhs.shift
+	        && lhs.dashed == rhs.dashed
+	        && (!lhs.dashed
+	            || (lhs.dash_length == rhs.dash_length
+	                && lhs.break_length == rhs.break_length));
+}
+
 
 
 // ### LineSymbol ###
@@ -169,6 +154,7 @@ LineSymbol::LineSymbol() noexcept
 , in_group_break_length ( 500 )
 , cap_style ( FlatCap )
 , join_style ( MiterJoin )
+, mid_symbol_placement ( CenterOfDash )
 , dashed ( false )
 , half_outer_dashes ( false )
 , show_at_least_one_symbol ( true )
@@ -204,6 +190,7 @@ LineSymbol::LineSymbol(const LineSymbol& proto)
 , in_group_break_length ( proto.in_group_break_length )
 , cap_style ( proto.cap_style )
 , join_style ( proto.join_style )
+, mid_symbol_placement ( proto.mid_symbol_placement )
 , dashed ( proto.dashed )
 , half_outer_dashes ( proto.half_outer_dashes )
 , show_at_least_one_symbol ( proto.show_at_least_one_symbol )
@@ -286,8 +273,6 @@ void LineSymbol::createSinglePathRenderables(const VirtualPath& path, bool path_
 	if (path.size() < 2)
 		return;
 	
-	auto& coords = path.coords;
-	
 	// Dash symbols?
 	if (dash_symbol && !dash_symbol->isEmpty())
 	{
@@ -298,66 +283,57 @@ void LineSymbol::createSinglePathRenderables(const VirtualPath& path, bool path_
 	MapCoordVector processed_flags;
 	MapCoordVectorF processed_coords;
 	bool create_border = have_border_lines && (border.isVisible() || right_border.isVisible());
-	bool pointed_cap = cap_style == PointedCap && pointed_cap_length > 0;
-	if (!dashed)
-	{
-		// Base line?
-		if (line_width > 0)
-		{
-			if (color && !pointed_cap && !create_border)
-			{
-				output.insertRenderable(new LineRenderable(this, path, path_closed));
-			}
-			else if (create_border || pointed_cap)
-			{
-				auto last = coords.size();
-				auto part_start = MapCoordVector::size_type { 0 };
-				auto next_part_start = last; //path_coords.update(part_start);
-				
-				bool has_start = !(part_start == 0 && path_closed);
-				bool has_end = !(next_part_start == last && path_closed);
-				
-				auto start = SplitPathCoord::begin(path.path_coords);
-				auto end   = SplitPathCoord::end(path.path_coords);
-				processContinuousLine(path, start, end,
-				                      has_start, has_end, processed_flags, processed_coords, false, output);
-				
-			}
-		}
-		
-		// Symbols?
-		if (mid_symbol && !mid_symbol->isEmpty() && segment_length > 0)
-			createMidSymbolRenderables(path, path_closed, output);
-	}
-	else if (dash_length > 0)
+	if (dashed)
 	{
 		// Dashed lines
+		if (dash_length <= 0)
+			return;
+		
 		processDashedLine(path, path_closed, processed_flags, processed_coords, output);
 	}
 	else
 	{
-		// Invalid configuration
-		return;	
-	}
-	
-	if (!processed_coords.empty() && (color || create_border))
-	{
-		Q_ASSERT(processed_coords.size() != 1);
+		// Symbols?
+		if (mid_symbol && !mid_symbol->isEmpty() && segment_length > 0)
+			createMidSymbolRenderables(path, path_closed, output);
 		
-		VirtualPath path = { processed_flags, processed_coords };
-		path.path_coords.update(path.first_index);
+		if (line_width == 0)
+			return;
 		
-		if (color)
+		if (create_border || cap_style == PointedCap)
+		{
+			auto last = path.coords.size();
+			auto part_start = MapCoordVector::size_type { 0 };
+			auto next_part_start = last; //path_coords.update(part_start);
+			
+			bool has_start = !(part_start == 0 && path_closed);
+			bool has_end = !(next_part_start == last && path_closed);
+			
+			auto start = SplitPathCoord::begin(path.path_coords);
+			auto end   = SplitPathCoord::end(path.path_coords);
+			processContinuousLine(path, start, end, has_start, has_end, false,
+			                      processed_flags, processed_coords, output);
+		}
+		else if (color)
 		{
 			output.insertRenderable(new LineRenderable(this, path, path_closed));
 		}
 		
-		if (create_border)
-		{
-			createBorderLines(path, output);
-		}
 	}
+	
+	if (processed_coords.empty() || (!color && !create_border))
+		return;
+	
+	Q_ASSERT(processed_coords.size() != 1);
+	
+	VirtualPath processed_path = { processed_flags, processed_coords };
+	processed_path.path_coords.update(path.first_index);
+	if (color)
+		output.insertRenderable(new LineRenderable(this, processed_path, path_closed));
+	if (create_border)
+		createBorderLines(processed_path, output);
 }
+
 
 void LineSymbol::createBorderLines(
         const VirtualPath& path,
@@ -720,9 +696,9 @@ void LineSymbol::processContinuousLine(
         const SplitPathCoord& end,
         bool has_start,
         bool has_end,
+        bool set_mid_symbols,
         MapCoordVector& processed_flags,
         MapCoordVectorF& processed_coords,
-        bool set_mid_symbols,
         ObjectRenderables& output ) const
 {
 	bool create_line = true;
@@ -1041,6 +1017,7 @@ SplitPathCoord LineSymbol::createDashGroups(
 	auto orientation = qreal(0);
 	bool mid_symbol_rotatable = bool(mid_symbol) && mid_symbol->isRotatable();
 	
+	const auto mid_symbols = (mid_symbols_per_spot > 0 && mid_symbol && !mid_symbol->isEmpty()) ? mid_symbol_placement : LineSymbol::NoMidSymbols;
 	auto mid_symbol_distance_f = length_type(0.001) * mid_symbol_distance;
 	
 	bool half_first_group = is_part_start ? (half_outer_dashes || path_closed)
@@ -1073,8 +1050,9 @@ SplitPathCoord LineSymbol::createDashGroups(
 	auto minimum_optimum_length  = 2 * total_group_and_break_length;
 	auto switch_deviation        = length_type(0.2) * total_group_and_break_length / dashes_in_group;
 	
-	bool set_mid_symbols = length >= dash_length_f - switch_deviation;
-	if (mid_symbols_per_spot > 0 && mid_symbol && !mid_symbol->isEmpty())
+	bool set_mid_symbols = mid_symbols != LineSymbol::NoMidSymbols
+	                       && (length >= dash_length_f - switch_deviation || show_at_least_one_symbol);
+	if (mid_symbols == LineSymbol::CenterOfDash)
 	{
 		if (line_start.clen < start.clen || (!is_part_start && flags[start.index].isDashPoint()))
 		{
@@ -1123,10 +1101,8 @@ SplitPathCoord LineSymbol::createDashGroups(
 		{
 			// Can't be handled correctly by the next round of dash groups drawing:
 			// Just draw a continuous line.
-			processContinuousLine(path,
-			                      line_start, end,
-			                      !half_first_group, !half_last_group,
-			                      out_flags, out_coords, set_mid_symbols, output);
+			processContinuousLine(path, line_start, end, !half_first_group, !half_last_group, set_mid_symbols,
+			                      out_flags, out_coords, output);
 		}
 		else
 		{
@@ -1155,6 +1131,31 @@ SplitPathCoord LineSymbol::createDashGroups(
 			bool is_first_dashgroup = dashgroup == 1;
 			bool is_last_dashgroup  = dashgroup == num_dashgroups;
 			
+			if (mid_symbols == CenterOfDashGroup)
+			{
+				auto position = cur_length;
+				if (is_last_dashgroup && half_last_group)
+				{
+					position = end.clen;
+				}
+				else if (!(is_first_dashgroup && half_first_group))
+				{
+					position += (adjusted_dash_length * dashes_in_group
+					             + in_group_break_length_f * (dashes_in_group - 1)) / 2;
+				}
+				position -= (mid_symbol_distance_f * (mid_symbols_per_spot - 1)) / 2;
+				auto split = dash_start;
+				for (int i = 0; i < mid_symbols_per_spot && position <= end.clen; ++i, position += mid_symbol_distance_f)
+				{
+					if (position <= start.clen)
+						continue;
+					split = SplitPathCoord::at(position, split);
+					if (mid_symbol_rotatable)
+						orientation = split.tangentVector().angle();
+					mid_symbol->createRenderablesScaled(split.pos, orientation, output);
+				}
+			}
+			
 			for (int dash = 1; dash <= dashes_in_group; ++dash)
 			{
 				// Draw a single dash
@@ -1170,7 +1171,7 @@ SplitPathCoord LineSymbol::createDashGroups(
 				
 				bool is_half_dash = has_start != has_end;
 				auto cur_dash_length = is_half_dash ? adjusted_dash_length / 2 : adjusted_dash_length;
-				set_mid_symbols = !is_half_dash;
+				const auto set_mid_symbols = mid_symbols == CenterOfDash && !is_half_dash;
 				
 				if (!is_first_dash)
 				{
@@ -1187,10 +1188,8 @@ SplitPathCoord LineSymbol::createDashGroups(
 				}
 				
 				SplitPathCoord dash_end = SplitPathCoord::at(cur_length + cur_dash_length, dash_start);
-				processContinuousLine(path,
-				                      dash_start, dash_end,
-				                      has_start, has_end,
-				                      out_flags, out_coords, set_mid_symbols, output);
+				processContinuousLine(path, dash_start, dash_end, has_start, has_end, set_mid_symbols,
+				                      out_flags, out_coords, output);
 				cur_length += cur_dash_length;
 				dash_start = dash_end;
 				
@@ -1199,10 +1198,27 @@ SplitPathCoord LineSymbol::createDashGroups(
 			}
 			
 			if (dashgroup < num_dashgroups)
+			{
+				if (Q_UNLIKELY(mid_symbols == CenterOfGap))
+				{
+					auto position = cur_length
+					                + (break_length_f
+					                   - mid_symbol_distance_f * (mid_symbols_per_spot - 1)) / 2;
+					auto split = dash_start;
+					for (int i = 0; i < mid_symbols_per_spot; ++i, position += mid_symbol_distance_f)
+					{
+						split = SplitPathCoord::at(position, split);
+						if (mid_symbol_rotatable)
+							orientation = split.tangentVector().angle();
+						mid_symbol->createRenderablesScaled(split.pos, orientation, output);
+					}
+				}
+				
 				cur_length += break_length_f;
+			}
 		}
 		
-		if (half_last_group && mid_symbols_per_spot > 0 && mid_symbol && !mid_symbol->isEmpty())
+		if (half_last_group && mid_symbols == LineSymbol::CenterOfDash)
 		{
 			// Handle mid symbols at end for closing point or for (some) explicit dash points.
 			auto split = start;
@@ -1702,6 +1718,13 @@ void LineSymbol::setDashSymbol(PointSymbol* symbol)
 {
 	replaceSymbol(dash_symbol, symbol, QCoreApplication::translate("OpenOrienteering::LineSymbolSettings", "Dash symbol"));
 }
+
+void LineSymbol::setMidSymbolPlacement(LineSymbol::MidSymbolPlacement placement)
+{
+	mid_symbol_placement = placement;
+}
+
+
 void LineSymbol::replaceSymbol(PointSymbol*& old_symbol, PointSymbol* replace_with, const QString& name)
 {
 	delete old_symbol;
@@ -1737,6 +1760,8 @@ void LineSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 		xml.writeAttribute(QString::fromLatin1("half_outer_dashes"), QString::fromLatin1("true"));
 	xml.writeAttribute(QString::fromLatin1("mid_symbols_per_spot"), QString::number(mid_symbols_per_spot));
 	xml.writeAttribute(QString::fromLatin1("mid_symbol_distance"), QString::number(mid_symbol_distance));
+	if (mid_symbol_placement != 0)
+		xml.writeAttribute(QString::fromLatin1("mid_symbol_placement"), QString::number(mid_symbol_placement));
 	if (suppress_dash_symbol_at_ends)
 		xml.writeAttribute(QString::fromLatin1("suppress_dash_symbol_at_ends"), QString::fromLatin1("true"));
 	if (!scale_dash_symbol)
@@ -1812,6 +1837,7 @@ bool LineSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionar
 	half_outer_dashes = (attributes.value(QLatin1String("half_outer_dashes")) == QLatin1String("true"));
 	mid_symbols_per_spot = attributes.value(QLatin1String("mid_symbols_per_spot")).toInt();
 	mid_symbol_distance = attributes.value(QLatin1String("mid_symbol_distance")).toInt();
+	mid_symbol_placement = static_cast<LineSymbol::MidSymbolPlacement>(attributes.value(QLatin1String("mid_symbol_placement")).toInt());
 	suppress_dash_symbol_at_ends = (attributes.value(QLatin1String("suppress_dash_symbol_at_ends")) == QLatin1String("true"));
 	scale_dash_symbol = (attributes.value(QLatin1String("scale_dash_symbol")) != QLatin1String("false"));
 	
@@ -1853,7 +1879,7 @@ bool LineSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionar
 			}
 			
 			if (have_border_lines && !right_border_loaded)
-				right_border.assign(border, nullptr);
+				right_border = border;
 		}
 		else
 			xml.skipCurrentElement(); // unknown
@@ -1952,13 +1978,15 @@ bool LineSymbol::equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensit
 			return false;
 		if (mid_symbol_distance != line->mid_symbol_distance)
 			return false;
+		if (mid_symbol_placement != line->mid_symbol_placement)
+			return false;
 	}
 
 	if (have_border_lines != line->have_border_lines)
 		return false;
 	if (have_border_lines)
 	{
-		if (!border.equals(&line->border) || !right_border.equals(&line->right_border))
+		if (border != line->border || right_border != line->right_border)
 			return false;
 	}
 	

@@ -78,4 +78,28 @@ public:
 
 }  // namespace OpenOrienteering
 
+
+/**
+  
+\page file_format OpenOrienteering Mapper XML File Format Documentation
+
+\date 2018-03-10
+\author Kai Pastor
+
+\todo Review and update.
+
+
+\section changes Changes
+
+\subsection version-8 Version 8
+
+- 2018-03-10 Added `mid_symbol_placement` attribute to `line_symbol` element.
+
+
+\subsection version-7 Version 7
+
+- 2018-03-10 First file format changelog entry
+
+*/
+
 #endif // OPENORIENTEERING_FILE_FORMAT_XML_H

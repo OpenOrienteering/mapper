@@ -171,7 +171,7 @@ void SettingsDialog::addPage(SettingsPage* page)
 		
 		auto menu_widget = qobject_cast<QToolBar*>(stack_widget->widget(0));
 		auto action = menu_widget->addAction(page->title());
-		connect(action, &QAction::triggered, [this, scrollarea]()
+		connect(action, &QAction::triggered, this, [this, scrollarea]()
 		{
 			stack_widget->setCurrentWidget(scrollarea);
 			scrollarea->ensureVisible(0, 0);

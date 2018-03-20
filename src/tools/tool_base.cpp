@@ -648,4 +648,45 @@ void MapEditorToolBase::updateConstrainedPositions()
 }
 
 
+#ifdef MAPPER_DEVELOPMENT_BUILD
+
+void MapEditorToolBase::generateNextSimulatedEvent()
+{
+	auto next_pos = cur_pos + QPoint{qRound(10.0 - 20.0 * qrand() / RAND_MAX),
+	                                 qRound(10.0 - 20.0 * qrand() / RAND_MAX)};
+	switch (simulation_state)
+	{
+	case 1:
+		{
+			qDebug("generateNextSimulatedEvent(): MouseButtonPress @ %d,%d", next_pos.x(), next_pos.y());
+			QMouseEvent press(QEvent::MouseButtonPress, next_pos, Qt::LeftButton, Qt::NoButton, active_modifiers);
+			qApp->sendEvent(mapWidget(), &press);
+		}
+		break;
+	case 2:
+		{
+			qDebug("generateNextSimulatedEvent(): MouseMove @ %d,%d", next_pos.x(), next_pos.y());
+			QMouseEvent move(QEvent::MouseMove, next_pos, Qt::NoButton, Qt::LeftButton, active_modifiers);
+			qApp->sendEvent(mapWidget(), &move);
+		}
+		break;
+	case 3:
+		{
+			qDebug("generateNextSimulatedEvent(): MouseButtonRelease @ %d,%d", next_pos.x(), next_pos.y());
+			QMouseEvent release(QEvent::MouseButtonRelease, next_pos, Qt::LeftButton, Qt::LeftButton, active_modifiers);
+			qApp->sendEvent(mapWidget(), &release);
+		}
+		// fall through
+	default:
+		simulation_state = 0;
+	}
+	// Continue until Ctrl key is released and the current sequence was completed.
+	if (simulation_state != 0 || active_modifiers.testFlag(Qt::ControlModifier))
+		QTimer::singleShot(100, this, SLOT(generateNextSimulatedEvent()));
+	++simulation_state;
+}
+
+#endif  // MAPPER_DEVELOPMENT_BUILD
+
+
 }  // namespace OpenOrienteering
