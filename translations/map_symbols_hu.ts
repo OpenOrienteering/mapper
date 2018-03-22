@@ -166,13 +166,13 @@
         <message>
             <source>Index contour</source>
             <comment>Name of symbol 102</comment>
-            <translation>Számláló szintvonal</translation>
-        </message>
+            <translation>Fő szintvonal</translation>
+    </message>
         <message>
             <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. An index contour may be represented as an ordinary contour line in an area with much detail. Small contour knolls and depressions are normally not represented using index contours.</source>
             <comment>Description of symbol 102</comment>
-            <translation>.</translation>
-        </message>
+            <translation>Minden ötödik szintvonal vastagabb kell legyen. Ez segít a magasság gyors megállapításában és a terep domborzatának áttekintésében. Részletgazdag területeken a főszintvonal lehet alapszintvonal vastagságú. Kis kiemelkedéseket és mélyedéseket általában nem ábrázolunk főszintvonallal.</translation>
+    </message>
         <message>
             <source>Contour value</source>
             <comment>Name of symbol 102.1</comment>
@@ -201,8 +201,8 @@
         <message>
             <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
             <comment>Description of symbol 103.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>A lejtés irányát a szintvonal lefelé eső oldalára rajzolt eséstüskével tehetjük egyértelművé. Ha használjuk, akkor a völgyekhez tegyük a jelet.</translation>
+    </message>
         <message>
             <source>Earth bank</source>
             <comment>Name of symbol 104</comment>
@@ -271,7 +271,7 @@
         <message>
             <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
             <comment>Description of symbol 106</comment>
-            <translation type="unfinished">Egy kicsi vagy részben romos földfalat, töltést egy szaggatott vonallal ábrázol. A minimális magasság 0.5 méter.</translation>
+            <translation>Kicsi vagy részben romos földfalat, töltést szaggatott vonallal kell ábrázolni. A minimális magasság 0.5 méter.</translation>
     </message>
         <message>
             <source>Erosion gully</source>
@@ -282,8 +282,8 @@
             <source>An erosion gully which is too small to be shown using symbol 104 (earth bank) is shown by a single line. Minimum depth: 1 m.
 Contour lines shall not be broken around this symbol.</source>
             <comment>Description of symbol 107</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Metsződést, ami már túl kicsi ahhoz, hogy a 104-es szimbólummal (földletörés) jelöljük, egy vonallal kell jelölni. Minimum mélység 1 m. A környező szintvonalakat nem kell megszakítani.</translation>
+    </message>
         <message>
             <source>Small erosion gully</source>
             <comment>Name of symbol 108</comment>
@@ -293,7 +293,7 @@ Contour lines shall not be broken around this symbol.</source>
             <source>A small erosion gully, dry ditch or trench. Minimum depth: 0.5 m.
 Contour lines should be broken around this symbol.</source>
             <comment>Description of symbol 108</comment>
-            <translation>Egy kis vízmosás, száraz árok vagy árok. Minimális mélység: 0.5 m.
+            <translation>Kis vízmosás, száraz árok vagy árok. Minimális mélység: 0.5 m.
 A szimbólum körül meg kell szakítani a szintvonalakat.</translation>
     </message>
         <message>
