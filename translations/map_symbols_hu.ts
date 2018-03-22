@@ -161,8 +161,8 @@
         <message>
             <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
             <comment>Description of symbol 101.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>A lejtés irányát a szintvonal lefelé eső oldalára rajzolt eséstüskével tehetjük egyértelművé. Ha használjuk, akkor a völgyekhez tegyük a jelet.</translation>
+    </message>
         <message>
             <source>Index contour</source>
             <comment>Name of symbol 102</comment>
