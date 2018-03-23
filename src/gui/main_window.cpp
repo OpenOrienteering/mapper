@@ -982,10 +982,10 @@ Autosave::AutosaveResult MainWindow::autosave()
 
 bool MainWindow::save()
 {
-	return savePath(currentPath());
+	return saveTo(currentPath());
 }
 
-bool MainWindow::savePath(const QString &path, const FileFormat* format)
+bool MainWindow::saveTo(const QString &path, const FileFormat* format)
 {
 	if (!controller)
 		return false;
@@ -1143,7 +1143,7 @@ bool MainWindow::showSaveAsDialog()
 	// Fails when using different formats for import and export:
 	//	Q_ASSERT(FileFormats.findFormatForFilename(path) == format);
 	
-	return savePath(path, format);
+	return saveTo(path, format);
 }
 
 void MainWindow::toggleFullscreenMode()
