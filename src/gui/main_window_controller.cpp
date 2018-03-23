@@ -33,9 +33,8 @@ namespace OpenOrienteering {
 MainWindowController::~MainWindowController() = default;
 
 
-bool MainWindowController::save(const QString& path)
+bool MainWindowController::save(const QString& /*path*/, const FileFormat* /*format*/)
 {
-	Q_UNUSED(path);
 	return false;
 }
 

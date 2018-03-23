@@ -639,9 +639,9 @@ void Map::setMapNotes(const QString& text)
 	map_notes = text;
 }
 
-bool Map::saveTo(const QString& path, MapView* view)
+bool Map::saveTo(const QString& path, const FileFormat* format, MapView* view)
 {
-	bool success = exportTo(path, view);
+	bool success = exportTo(path, view, format);
 	if (success)
 	{
 		colors_dirty = false;

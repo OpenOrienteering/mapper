@@ -985,7 +985,7 @@ bool MainWindow::save()
 	return savePath(currentPath());
 }
 
-bool MainWindow::savePath(const QString &path)
+bool MainWindow::savePath(const QString &path, const FileFormat* format)
 {
 	if (!controller)
 		return false;
@@ -993,7 +993,18 @@ bool MainWindow::savePath(const QString &path)
 	if (path.isEmpty())
 		return showSaveAsDialog();
 	
-	const FileFormat *format = FileFormats.findFormatForFilename(path);
+	if (!format)
+		format = FileFormats.findFormatForFilename(path);
+	
+	if (!format)
+	{
+		QMessageBox::information(this, tr("Error"), 
+		  tr("File could not be saved:") + QLatin1Char('\n') +
+		  tr("There was a problem in determining the file format.") + QLatin1Char('\n') + QLatin1Char('\n') +
+		  tr("Please report this as a bug.") );
+		return false;
+	}
+	
 	if (format->isExportLossy())
 	{
 		QString message = tr("This map is being saved as a \"%1\" file. Information may be lost.\n\nPress Yes to save in this format.\nPress No to choose a different format.").arg(format->description());
@@ -1002,7 +1013,7 @@ bool MainWindow::savePath(const QString &path)
 			return showSaveAsDialog();
 	}
 	
-	if (!controller->save(path))
+	if (!controller->save(path, format))
 		return false;
 	
 	setMostRecentlyUsedFile(path);
@@ -1132,7 +1143,7 @@ bool MainWindow::showSaveAsDialog()
 	// Fails when using different formats for import and export:
 	//	Q_ASSERT(FileFormats.findFormatForFilename(path) == format);
 	
-	return savePath(path);
+	return savePath(path, format);
 }
 
 void MainWindow::toggleFullscreenMode()

@@ -229,7 +229,7 @@ public:
 	QAction* getAction(const char* id);
 	
 	/** Override from MainWindowController */
-	bool save(const QString& path) override;
+	bool save(const QString& path, const FileFormat* format) override;
 	/** Override from MainWindowController */
 	bool exportTo(const QString& path, const FileFormat* format = nullptr) override;
 	/** Override from MainWindowController */

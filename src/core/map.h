@@ -159,8 +159,7 @@ public:
 	 * 
 	 * If a MapView is given, is state will be saved.
 	 */
-	bool saveTo(const QString& path,
-	            MapView *view);
+	bool saveTo(const QString& path, const FileFormat* format, MapView *view);
 	
 	/**
 	 * Exports the map to the given file and format.
