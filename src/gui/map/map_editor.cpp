@@ -564,7 +564,7 @@ bool MapEditorController::exportTo(const QString& path, const FileFormat* format
 {
 	if (map && !editing_in_progress)
 	{
-		return map->exportTo(path, main_view, format);
+		return map->exportTo(path, format, main_view);
 	}
 	
 	return false;

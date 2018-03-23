@@ -172,8 +172,8 @@ public:
 	 * successful export.
 	 */
 	bool exportTo(const QString& path,
-	              MapView* view = nullptr,
-	              const FileFormat* format = nullptr);
+	              const FileFormat* format = nullptr,
+	              MapView* view = nullptr);
 	
 	/**
 	 * Attempts to load the map from the specified path. Returns true on success.

@@ -641,7 +641,7 @@ void Map::setMapNotes(const QString& text)
 
 bool Map::saveTo(const QString& path, const FileFormat* format, MapView* view)
 {
-	bool success = exportTo(path, view, format);
+	bool success = exportTo(path, format, view);
 	if (success)
 	{
 		colors_dirty = false;
@@ -655,7 +655,7 @@ bool Map::saveTo(const QString& path, const FileFormat* format, MapView* view)
 	return success;
 }
 
-bool Map::exportTo(const QString& path, MapView* view, const FileFormat* format)
+bool Map::exportTo(const QString& path, const FileFormat* format, MapView* view)
 {
 	Q_ASSERT(view && "Saving a file without view information is not supported!");
 	
