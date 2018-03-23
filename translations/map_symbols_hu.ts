@@ -151,7 +151,7 @@
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. A contour interval of 2.5 metres may be used for flat terrains. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
             <comment>Description of symbol 101</comment>
-            <translation>Egy vonal, ami egyenlő magasságú pontokat köt össze. A szabványos magasság különbség két szintvonal között 5 méter. Sík terepeken  2,5 méter  szintvonalköz is használható. A legkisebb ív egy szintvonalban  0,25 mm a vonalak középvonalától.</translation>
+            <translation>Egy vonal, ami azonos magasságú pontokból áll. A szabványos magasság különbség két szintvonal között 5 méter. Sík terepeken  2,5 méter  szintvonalköz is használható. A legrövidebb ív egy szintvonalban 0,25 mm lehet ívdarabonként.</translation>
     </message>
         <message>
             <source>Slope line, contour</source>
