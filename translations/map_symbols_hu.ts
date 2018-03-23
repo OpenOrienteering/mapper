@@ -241,7 +241,7 @@
         <message>
             <source>Use this symbol to display the full extent of wide earth banks.</source>
             <comment>Description of symbol 104.3</comment>
-            <translation type="unfinished">Használd arra ezt a szimbólumot, hogy bemutassa a széles földletörés teljes kiterjedését.</translation>
+            <translation>Akkor használjuk ezt a jelet ha a teljes kiterjedésében kell ábrázolni a földletörést.</translation>
     </message>
         <message>
             <source>Earth bank, minimum size (from ISOM2000)</source>
@@ -5469,8 +5469,8 @@ Szín: fekete, barna 0%(fehér), 10%, 20 % vagy 30 % (városi) / 20%, 30 %, 40 %
         <message>
             <source>Paved road, footpath or track, urban, 0.7mm width</source>
             <comment>Name of symbol 529.0.5</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Burkolt út, gyalogút, vagy nyom, városi, 0,7mm széles</translation>
+    </message>
         <message>
             <source>A paved area is an area with a firm level surfaces such as asphalt, hard gravel, tiles, concrete or the like. It shall be bordered (or framed) by the symbol step or edge of paved area (529.1). Distinct differences within the paved area can be represented with the symbol step or edge of paved area (529.1), if they serve navigation.
 
@@ -5478,13 +5478,19 @@ Where a paved road, footpath or track goes through a non-urban area, the brown f
 
 Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban) (min. 60 lines/cm), black; the colour and the line width shall be the same as for symbol unpaved footpath or track (506.1).</source>
             <comment>Description of symbol 529.0.5</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation type="unfinished">A burkolt terület aszfalttal, sóderrel, murvával, betonnal vagy más kemény anyaggal borított terület (általában járda, parkoló). Azt határolni vagy keretezni) kell körvonallal (529.1).
+A burkolat nyilvánvaló különbségei a burkolt terület széle (529.1) jellel ábrázolhatók, ha segítik a tájékozódást.
+
+Ahol egy kikövezett út, a gyalogút vagy a pálya keresztülmegy egy nem városi területen, a barna kitöltést 20%-kal sötétebbre kell - rajzolni mint a városi térségekben, és a fekete körvonalat 0.07mm-ről 0.14 mm-re kell növelni. 
+A fekete szegélyt kihagyhatják, ahol ez logikus (pl. nem világos/fokozatos átmenet kavicstól a fűig).
+
+Szín: fekete, barna 0%(fehér), 10%, 20 % vagy 30 % (városi) / 20%, 30 %, 40 %, 50 % (min.60 vonal/cm) (nem városi); a szín és a vonalvastagság ugyanaz mint a ami a burkolatlan gyalogút vagy pálya (506.1) esetén.</translation>
+    </message>
         <message>
             <source>Paved road, footpath or track, urban, 0.9mm width</source>
             <comment>Name of symbol 529.0.6</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Burkolt út, gyalogút vagy nyom, városi, 0,9mm széles</translation>
+    </message>
         <message>
             <source>A paved area is an area with a firm level surfaces such as asphalt, hard gravel, tiles, concrete or the like. It shall be bordered (or framed) by the symbol step or edge of paved area (529.1). Distinct differences within the paved area can be represented with the symbol step or edge of paved area (529.1), if they serve navigation.
 
@@ -5492,13 +5498,19 @@ Where a paved road, footpath or track goes through a non-urban area, the brown f
 
 Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban) (min. 60 lines/cm), black; the colour and the line width shall be the same as for symbol unpaved footpath or track (506.1).</source>
             <comment>Description of symbol 529.0.6</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation type="unfinished">A burkolt terület aszfalttal, sóderrel, murvával, betonnal vagy más kemény anyaggal borított terület (általában járda, parkoló). Azt határolni vagy keretezni) kell körvonallal (529.1).
+A burkolat nyilvánvaló különbségei a burkolt terület széle (529.1) jellel ábrázolhatók, ha segítik a tájékozódást.
+
+Ahol egy kikövezett út, a gyalogút vagy a pálya keresztülmegy egy nem városi területen, a barna kitöltést 20%-kal sötétebbre kell - rajzolni mint a városi térségekben, és a fekete körvonalat 0.07mm-ről 0.14 mm-re kell növelni. 
+A fekete szegélyt kihagyhatják, ahol ez logikus (pl. nem világos/fokozatos átmenet kavicstól a fűig).
+
+Szín: fekete, barna 0%(fehér), 10%, 20 % vagy 30 % (városi) / 20%, 30 %, 40 %, 50 % (min.60 vonal/cm) (nem városi); a szín és a vonalvastagság ugyanaz mint a ami a burkolatlan gyalogút vagy pálya (506.1) esetén.</translation>
+    </message>
         <message>
             <source>Paved area, non-urban</source>
             <comment>Name of symbol 529.0.7</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Burkolt terület, nem városi</translation>
+    </message>
         <message>
             <source>A paved area is an area with a firm level surfaces such as asphalt, hard gravel, tiles, concrete or the like. It shall be bordered (or framed) by the symbol step or edge of paved area (529.1). Distinct differences within the paved area can be represented with the symbol step or edge of paved area (529.1), if they serve navigation.
 
@@ -5506,13 +5518,19 @@ Where a paved road, footpath or track goes through a non-urban area, the brown f
 
 Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban) (min. 60 lines/cm), black; the colour and the line width shall be the same as for symbol unpaved footpath or track (506.1).</source>
             <comment>Description of symbol 529.0.7</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation type="unfinished">A burkolt terület aszfalttal, sóderrel, murvával, betonnal vagy más kemény anyaggal borított terület (általában járda, parkoló). Azt határolni vagy keretezni) kell körvonallal (529.1).
+A burkolat nyilvánvaló különbségei a burkolt terület széle (529.1) jellel ábrázolhatók, ha segítik a tájékozódást.
+
+Ahol egy kikövezett út, a gyalogút vagy a pálya keresztülmegy egy nem városi területen, a barna kitöltést 20%-kal sötétebbre kell - rajzolni mint a városi térségekben, és a fekete körvonalat 0.07mm-ről 0.14 mm-re kell növelni. 
+A fekete szegélyt kihagyhatják, ahol ez logikus (pl. nem világos/fokozatos átmenet kavicstól a fűig).
+
+Szín: fekete, barna 0%(fehér), 10%, 20 % vagy 30 % (városi) / 20%, 30 %, 40 %, 50 % (min.60 vonal/cm) (nem városi); a szín és a vonalvastagság ugyanaz mint a ami a burkolatlan gyalogút vagy pálya (506.1) esetén.</translation>
+    </message>
         <message>
             <source>Paved area with border, non-urban</source>
             <comment>Name of symbol 529.0.8</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Burkolt terület határolóval, nem városi</translation>
+    </message>
         <message>
             <source>A paved area is an area with a firm level surfaces such as asphalt, hard gravel, tiles, concrete or the like. It shall be bordered (or framed) by the symbol step or edge of paved area (529.1). Distinct differences within the paved area can be represented with the symbol step or edge of paved area (529.1), if they serve navigation.
 
@@ -5520,13 +5538,19 @@ Where a paved road, footpath or track goes through a non-urban area, the brown f
 
 Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban) (min. 60 lines/cm), black; the colour and the line width shall be the same as for symbol unpaved footpath or track (506.1).</source>
             <comment>Description of symbol 529.0.8</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation type="unfinished">A burkolt terület aszfalttal, sóderrel, murvával, betonnal vagy más kemény anyaggal borított terület (általában járda, parkoló). Azt határolni vagy keretezni) kell körvonallal (529.1).
+A burkolat nyilvánvaló különbségei a burkolt terület széle (529.1) jellel ábrázolhatók, ha segítik a tájékozódást.
+
+Ahol egy kikövezett út, a gyalogút vagy a pálya keresztülmegy egy nem városi területen, a barna kitöltést 20%-kal sötétebbre kell - rajzolni mint a városi térségekben, és a fekete körvonalat 0.07mm-ről 0.14 mm-re kell növelni. 
+A fekete szegélyt kihagyhatják, ahol ez logikus (pl. nem világos/fokozatos átmenet kavicstól a fűig).
+
+Szín: fekete, barna 0%(fehér), 10%, 20 % vagy 30 % (városi) / 20%, 30 %, 40 %, 50 % (min.60 vonal/cm) (nem városi); a szín és a vonalvastagság ugyanaz mint a ami a burkolatlan gyalogút vagy pálya (506.1) esetén.</translation>
+    </message>
         <message>
             <source>Paved road, footpath or track, non-urban, 0.35mm width</source>
             <comment>Name of symbol 529.0.9</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Burkolt út, gyalogút vagy nyom, nem városi, 0,35mm széles</translation>
+    </message>
         <message>
             <source>A paved area is an area with a firm level surfaces such as asphalt, hard gravel, tiles, concrete or the like. It shall be bordered (or framed) by the symbol step or edge of paved area (529.1). Distinct differences within the paved area can be represented with the symbol step or edge of paved area (529.1), if they serve navigation.
 
@@ -5534,13 +5558,19 @@ Where a paved road, footpath or track goes through a non-urban area, the brown f
 
 Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban) (min. 60 lines/cm), black; the colour and the line width shall be the same as for symbol unpaved footpath or track (506.1).</source>
             <comment>Description of symbol 529.0.9</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation type="unfinished">A burkolt terület aszfalttal, sóderrel, murvával, betonnal vagy más kemény anyaggal borított terület (általában járda, parkoló). Azt határolni vagy keretezni) kell körvonallal (529.1).
+A burkolat nyilvánvaló különbségei a burkolt terület széle (529.1) jellel ábrázolhatók, ha segítik a tájékozódást.
+
+Ahol egy kikövezett út, a gyalogút vagy a pálya keresztülmegy egy nem városi területen, a barna kitöltést 20%-kal sötétebbre kell - rajzolni mint a városi térségekben, és a fekete körvonalat 0.07mm-ről 0.14 mm-re kell növelni. 
+A fekete szegélyt kihagyhatják, ahol ez logikus (pl. nem világos/fokozatos átmenet kavicstól a fűig).
+
+Szín: fekete, barna 0%(fehér), 10%, 20 % vagy 30 % (városi) / 20%, 30 %, 40 %, 50 % (min.60 vonal/cm) (nem városi); a szín és a vonalvastagság ugyanaz mint a ami a burkolatlan gyalogút vagy pálya (506.1) esetén.</translation>
+    </message>
         <message>
             <source>Paved road, footpath or track, non-urban, 0.55mm width</source>
             <comment>Name of symbol 529.0.10</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Burkolt út, gyalogút vagy nyom, nem városi, 0,55mm széles</translation>
+    </message>
         <message>
             <source>A paved area is an area with a firm level surfaces such as asphalt, hard gravel, tiles, concrete or the like. It shall be bordered (or framed) by the symbol step or edge of paved area (529.1). Distinct differences within the paved area can be represented with the symbol step or edge of paved area (529.1), if they serve navigation.
 
@@ -5548,13 +5578,19 @@ Where a paved road, footpath or track goes through a non-urban area, the brown f
 
 Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban) (min. 60 lines/cm), black; the colour and the line width shall be the same as for symbol unpaved footpath or track (506.1).</source>
             <comment>Description of symbol 529.0.10</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation type="unfinished">A burkolt terület aszfalttal, sóderrel, murvával, betonnal vagy más kemény anyaggal borított terület (általában járda, parkoló). Azt határolni vagy keretezni) kell körvonallal (529.1).
+A burkolat nyilvánvaló különbségei a burkolt terület széle (529.1) jellel ábrázolhatók, ha segítik a tájékozódást.
+
+Ahol egy kikövezett út, a gyalogút vagy a pálya keresztülmegy egy nem városi területen, a barna kitöltést 20%-kal sötétebbre kell - rajzolni mint a városi térségekben, és a fekete körvonalat 0.07mm-ről 0.14 mm-re kell növelni. 
+A fekete szegélyt kihagyhatják, ahol ez logikus (pl. nem világos/fokozatos átmenet kavicstól a fűig).
+
+Szín: fekete, barna 0%(fehér), 10%, 20 % vagy 30 % (városi) / 20%, 30 %, 40 %, 50 % (min.60 vonal/cm) (nem városi); a szín és a vonalvastagság ugyanaz mint a ami a burkolatlan gyalogút vagy pálya (506.1) esetén.</translation>
+    </message>
         <message>
             <source>Paved road, footpath or track, non-urban, 0.7mm width</source>
             <comment>Name of symbol 529.0.11</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Burkolt út, gyalogút vagy nyom, nem városi, 0,7mm széles</translation>
+    </message>
         <message>
             <source>A paved area is an area with a firm level surfaces such as asphalt, hard gravel, tiles, concrete or the like. It shall be bordered (or framed) by the symbol step or edge of paved area (529.1). Distinct differences within the paved area can be represented with the symbol step or edge of paved area (529.1), if they serve navigation.
 
@@ -5562,13 +5598,19 @@ Where a paved road, footpath or track goes through a non-urban area, the brown f
 
 Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban) (min. 60 lines/cm), black; the colour and the line width shall be the same as for symbol unpaved footpath or track (506.1).</source>
             <comment>Description of symbol 529.0.11</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation type="unfinished">A burkolt terület aszfalttal, sóderrel, murvával, betonnal vagy más kemény anyaggal borított terület (általában járda, parkoló). Azt határolni vagy keretezni) kell körvonallal (529.1).
+A burkolat nyilvánvaló különbségei a burkolt terület széle (529.1) jellel ábrázolhatók, ha segítik a tájékozódást.
+
+Ahol egy kikövezett út, a gyalogút vagy a pálya keresztülmegy egy nem városi területen, a barna kitöltést 20%-kal sötétebbre kell - rajzolni mint a városi térségekben, és a fekete körvonalat 0.07mm-ről 0.14 mm-re kell növelni. 
+A fekete szegélyt kihagyhatják, ahol ez logikus (pl. nem világos/fokozatos átmenet kavicstól a fűig).
+
+Szín: fekete, barna 0%(fehér), 10%, 20 % vagy 30 % (városi) / 20%, 30 %, 40 %, 50 % (min.60 vonal/cm) (nem városi); a szín és a vonalvastagság ugyanaz mint a ami a burkolatlan gyalogút vagy pálya (506.1) esetén.</translation>
+    </message>
         <message>
             <source>Paved road, footpath or track, non-urban, 0.9mm width</source>
             <comment>Name of symbol 529.0.12</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Burkolt út, gyalogút vagy nyom, nem városi, 0,9mm széles</translation>
+    </message>
         <message>
             <source>A paved area is an area with a firm level surfaces such as asphalt, hard gravel, tiles, concrete or the like. It shall be bordered (or framed) by the symbol step or edge of paved area (529.1). Distinct differences within the paved area can be represented with the symbol step or edge of paved area (529.1), if they serve navigation.
 
@@ -5576,8 +5618,14 @@ Where a paved road, footpath or track goes through a non-urban area, the brown f
 
 Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban) (min. 60 lines/cm), black; the colour and the line width shall be the same as for symbol unpaved footpath or track (506.1).</source>
             <comment>Description of symbol 529.0.12</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>A burkolt terület aszfalttal, sóderrel, murvával, betonnal vagy más kemény anyaggal borított terület (általában járda, parkoló). Azt határolni vagy keretezni) kell körvonallal (529.1).
+A burkolat nyilvánvaló különbségei a burkolt terület széle (529.1) jellel ábrázolhatók, ha segítik a tájékozódást.
+
+Ahol egy kikövezett út, a gyalogút vagy a pálya keresztülmegy egy nem városi területen, a barna kitöltést 20%-kal sötétebbre kell - rajzolni mint a városi térségekben, és a fekete körvonalat 0.07mm-ről 0.14 mm-re kell növelni. 
+A fekete szegélyt kihagyhatják, ahol ez logikus (pl. nem világos/fokozatos átmenet kavicstól a fűig).
+
+Szín: fekete, barna 0%(fehér), 10%, 20 % vagy 30 % (városi) / 20%, 30 %, 40 %, 50 % (min.60 vonal/cm) (nem városi); a szín és a vonalvastagság ugyanaz mint a ami a burkolatlan gyalogút vagy pálya (506.1) esetén.</translation>
+    </message>
         <message>
             <source>Step or edge of paved area, urban</source>
             <comment>Name of symbol 529.1.1</comment>
