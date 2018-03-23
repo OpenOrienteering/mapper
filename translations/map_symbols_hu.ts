@@ -361,22 +361,22 @@ The minimum number of dots is three (footprint 10 m x 10 m).
 Contours shall not be cut in broken ground areas.
 Density: 3 to 5 dots / mm² (9-16%).</source>
             <comment>Description of symbol 113</comment>
-            <translation>A gödrökkel és/vagy halmokkal borított terület, ami túl bonyolult ahhoz, hogy részleteiben ábrázolható lenne, vagy durva egyenetlen talaj, ami láthatóan csökkenti a futhatóságot
-Ez egy terület jel.
-A jelből legalább három pont szükséges (10 m x 10 m).
-Szintvonalak nem vághatják a területet több részre.
+            <translation>Gödrökkel és/vagy halmokkal borított terület, ami túl bonyolult ahhoz, hogy részleteiben ábrázolható legyen, vagy durva egyenetlen talaj, ami jól látható, de csak kis mértékben van hatással a a futhatóságra.
+Ez egy terület típusú jel.
+Legalább három pont szükséges (10 m x 10 m lábnyom).
+A szintvonalakat nem kell megszakítani a szabdalt területen.
 Sűrűség: 3-5 pont / mm² (9-16 %).</translation>
     </message>
         <message>
             <source>Broken ground, individual dot</source>
             <comment>Name of symbol 113.1</comment>
-            <translation>Szabdalt terület egyedi pont</translation>
+            <translation>Szabdalt terület, egyedi pont</translation>
     </message>
         <message>
             <source>An area of pits or knolls which is too intricate to be shown in detail. The density of randomly placed dots may vary according to the detail on the ground.</source>
             <comment>Description of symbol 113.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Gödrös vagy kúpos terület, amely túlságosan bonyolult ahhoz, hogy részletesen bemutassuk. A véletlenszerűen elhelyezett pontok sűrűsége a felszínen lévő részletektől függően változhat.</translation>
+    </message>
         <message>
             <source>Very broken ground</source>
             <comment>Name of symbol 114</comment>
@@ -389,23 +389,23 @@ The minimum number of dots is three (footprint 7m x 7m).
 Contours shall not be cut in broken ground areas.
 Density: 8 to 10 dots / mm² (25-32%).</source>
             <comment>Description of symbol 114</comment>
-            <translation>A gödrökkel és/vagy halmokkal borított terület, ami túl bonyolult ahhoz, hogy részleteiben ábrázolható lenne, vagy durva egyenetlen talaj, ami észrevehetően csökkenti a futhatóságot.
-Ez egy terület jel.
-A jelből legalább három pont szükséges (7m x 7m).
-Szintvonalak nem vághatják a területet több részre.
+            <translation>Gödrökkel és/vagy halmokkal borított terület, ami túl bonyolult ahhoz, hogy részleteiben ábrázolható legyen, vagy durva egyenetlen talaj, ami jól látható, hatással a futhatóságra.
+Ez egy terület típusú jel.
+Legalább három pont szükséges (7 m x 7 m lábnyom).
+A szintvonalakat nem kell megszakítani a szabdalt területen.
 Sűrűség: 8-10 pont / mm² (25-32%).</translation>
     </message>
         <message>
             <source>Prominent landform feature</source>
             <comment>Name of symbol 115</comment>
-            <translation>Különleges domborzati tereptárgy</translation>
+            <translation>Jellegzetes domborzati tereptárgy</translation>
     </message>
         <message>
             <source>The feature must be very clearly distinguishable from its surroundings. Location is the centre of gravity of the symbol, which is orientated to north. The symbol may not touch or overlap other brown symbols.</source>
             <comment>Description of symbol 115</comment>
-            <translation>A jellemzőnek nagyon világosan megkülönböztethetőnek kell lennie a környezetéből. 
-A helyszín a szimbólum gravitációjának a központja, amit északra tájolnak be. 
-A szimbólum nem fedhet át másik barna szimbólumokat vagy nem érintheti meg őket.</translation>
+            <translation>A tereptárgynak nagyon világosan megkülönböztethetőnek kell lennie a környezetétől. 
+Helye az északra tájolt szimbólum súlypontja. 
+A szimbólum nem fedhet át másik barna szimbólumokat vagy nem érintheti őket.</translation>
     </message>
         <message>
             <source>Impassable cliff</source>
@@ -418,8 +418,11 @@ For vertical rock faces the tags may be omitted if space is short. Ends of the t
 The gap between two impassable cliffs or between impassable cliffs and other impassable feature symbols must exceed 0.3 mm on the map.
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.</source>
             <comment>Description of symbol 201</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Szikla, kőfejtő vagy földletörés, amely olyan magas és meredek, hogy lehetetlen, vagy veszélyes áthaladni rajta / megmászni.
+A függőleges kőzetfelületek esetében a fogak elhagyhatók, ha a hely kicsi. A felső vonal végeit le lehet kerekíteni, de lehetnek négyzet alakúak is. A végeken rövidebb fogakat lehet használni.
+Két nem átjárható szikla vagy nem átjárható sziklák és egyéb nem járható objektum szimbólumai közötti résnek meg kell haladnia a térképen a 0,3 mm-t.
+Amikor egy áthatolhatatlan szikla egyenesen a vízbe esik, így lehetetlenné téve a szikla alatt a víz szélén való haladást, a partvonal elhagyható, vagy a fogaknak egyértelműen ki kell nyúlni a partvonal fölé. Az áthatolhatatlan szikla jele összeolvasztandó a szintvonalakkal.</translation>
+    </message>
         <message>
             <source>Impassable cliff, minimum size</source>
             <comment>Name of symbol 201.1</comment>
