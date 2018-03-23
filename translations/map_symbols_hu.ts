@@ -241,7 +241,7 @@
         <message>
             <source>Use this symbol to display the full extent of wide earth banks.</source>
             <comment>Description of symbol 104.3</comment>
-            <translation>Akkor használjuk ezt a jelet ha a teljes kiterjedésében kell ábrázolni a földletörést.</translation>
+            <translation>Használd arra ezt a jelet, hogy a széles földletörés teljes kiterjedését ábrázold.</translation>
     </message>
         <message>
             <source>Earth bank, minimum size (from ISOM2000)</source>
@@ -5629,58 +5629,58 @@ Szín: fekete, barna 0%(fehér), 10%, 20 % vagy 30 % (városi) / 20%, 30 %, 40 %
         <message>
             <source>Step or edge of paved area, urban</source>
             <comment>Name of symbol 529.1.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Lépcső, burkolt terület széle, városi</translation>
+    </message>
         <message>
             <source>A step or an edge of a paved area. Steps of a stairway shall be represented in a generalized manner. Edges within paved areas are generally not represented, unless they serve navigation. The thickness of edge of paved areas shall be enlarged to 0.14 mm in non-urban areas to improve legibility. The thickness of step lines shall always be 0.07 mm.</source>
             <comment>Description of symbol 529.1.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation type="unfinished">Lépcső határoló vonala, illetve burkolt terület széle. A lépcsőfokokat csak egyszerűsítve kell ábrázolni. A járdák szélét csak abban az esetben kell ábrázolni, ha azok a versenyző tájékozódását jelentősen segítik. A kikövezett területek élének a vastagságát nem városi területeken fel kell nagyítani 0.14 mm-re, hogy jobb legyen a jel olvashatósága.  A lépcső sorozatok vastagsága mindig  0.07 mm.</translation>
+    </message>
         <message>
             <source>Step or edge of paved area, non-urban</source>
             <comment>Name of symbol 529.1.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Lépcső, burkolt terület széle, nem városi</translation>
+    </message>
         <message>
             <source>A step or an edge of a paved area. Steps of a stairway shall be represented in a generalized manner. Edges within paved areas are generally not represented, unless they serve navigation. The thickness of edge of paved areas shall be enlarged to 0.14 mm in non-urban areas to improve legibility. The thickness of step lines shall always be 0.07 mm.</source>
             <comment>Description of symbol 529.1.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Lépcső határoló vonala, illetve burkolt terület széle. A lépcsőfokokat csak egyszerűsítve kell ábrázolni. A járdák szélét csak abban az esetben kell ábrázolni, ha azok a versenyző tájékozódását jelentősen segítik. A kikövezett területek élének a vastagságát nem városi területeken fel kell nagyítani 0.14 mm-re, hogy jobb legyen a jel olvashatósága.  A lépcső sorozatok vastagsága mindig  0.07 mm.</translation>
+    </message>
         <message>
             <source>Step or edge of paved area, narrow stairway</source>
             <comment>Name of symbol 529.1.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Lépcső, burkolt terület széle, keskeny lépcső</translation>
+    </message>
         <message>
             <source>A step or an edge of a paved area. Steps of a stairway shall be represented in a generalized manner. Edges within paved areas are generally not represented, unless they serve navigation. The thickness of edge of paved areas shall be enlarged to 0.14 mm in non-urban areas to improve legibility. The thickness of step lines shall always be 0.07 mm.</source>
             <comment>Description of symbol 529.1.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation type="unfinished">Lépcső határoló vonala, illetve burkolt terület széle. A lépcsőfokokat csak egyszerűsítve kell ábrázolni. A járdák szélét csak abban az esetben kell ábrázolni, ha azok a versenyző tájékozódását jelentősen segítik. A kikövezett területek élének a vastagságát nem városi területeken fel kell nagyítani 0.14 mm-re, hogy jobb legyen a jel olvashatósága.  A lépcső sorozatok vastagsága mindig  0.07 mm.</translation>
+    </message>
         <message>
             <source>Step or edge of paved area, wide stairway</source>
             <comment>Name of symbol 529.1.4</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Lépcső, burkolt terület széle, széles lépcső</translation>
+    </message>
         <message>
             <source>A step or an edge of a paved area. Steps of a stairway shall be represented in a generalized manner. Edges within paved areas are generally not represented, unless they serve navigation. The thickness of edge of paved areas shall be enlarged to 0.14 mm in non-urban areas to improve legibility. The thickness of step lines shall always be 0.07 mm.</source>
             <comment>Description of symbol 529.1.4</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation type="unfinished">Lépcső határoló vonala, illetve burkolt terület széle. A lépcsőfokokat csak egyszerűsítve kell ábrázolni. A járdák szélét csak abban az esetben kell ábrázolni, ha azok a versenyző tájékozódását jelentősen segítik. A kikövezett területek élének a vastagságát nem városi területeken fel kell nagyítani 0.14 mm-re, hogy jobb legyen a jel olvashatósága.  A lépcső sorozatok vastagsága mindig  0.07 mm.</translation>
+    </message>
         <message>
             <source>Passable pipeline</source>
             <comment>Name of symbol 533</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Áthatolható csővezeték</translation>
+    </message>
         <message>
             <source>A pipeline (gas, water, oil, etc.) above ground level which can be crossed over or under.</source>
             <comment>Description of symbol 533</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Földfelszíni gáz-, olaj-, víz- stb. csővezeték, amely fölött vagy alatt lehetséges az áthaladás.</translation>
+    </message>
         <message>
             <source>Impassable pipeline &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 534</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Áthatolhatatlan csővezeték &lt;span style=&quot;color:magenta&quot;&gt;(Tilos keresztezni!)&lt;/span&gt;</translation>
+    </message>
         <message>
             <source>An impassable pipeline (gas, water, oil, etc.) above ground level which shall not be crossed, due to forbidden access or because it may constitute a danger to the competitor because of its height.
 
