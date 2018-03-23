@@ -127,7 +127,7 @@ public:
 	static quint16 default_version;
 	
 	
-	OcdFileExport(QIODevice* stream, Map *map, MapView *view, quint16 version = 0);
+	OcdFileExport(QIODevice* stream, Map *map, MapView *view, quint16 version);
 	
 	~OcdFileExport() override;
 	

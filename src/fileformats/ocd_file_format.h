@@ -41,9 +41,22 @@ class OcdFileFormat : public FileFormat
 {
 public:
 	/**
-	 * Constructs a new OcdFileFormat.
+	 * Constructs a new OcdFileFormat for import and export.
+	 * 
+	 * The version to be exported is either detected from the map,
+	 * or it is a default version. The default version can be assumed to be
+	 * stable and to minimize loss of information during export and import.
 	 */
 	OcdFileFormat();
+	
+	/**
+	 * Constructs a new OcdFileFormat for export to the given version of the format.
+	 * 
+	 * Supported OCD versions are 8 to 12.
+	 * In addition to these versions, parameter value `1` selects the old
+	 * implementation of OCD export.
+	 */
+	OcdFileFormat(quint16 version);
 	
 	
 	/**
@@ -66,6 +79,9 @@ public:
 	
 	/// The value of the property which indicates usage of legacy import/export.
 	static constexpr quint16 legacyVersion() { return 1; }
+	
+private:
+	quint16 version = 0;
 	
 };
 

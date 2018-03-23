@@ -36,15 +36,52 @@
 
 namespace OpenOrienteering {
 
+namespace {
+
+const char* idForVersion(quint16 version)
+{
+	switch (version)
+	{
+	case 1:
+		return "OCD legacy";
+	case 8:
+		return "OCD8";
+	case 9:
+		return "OCD9";
+	case 10:
+		return "OCD10";
+	case 11:
+		return "OCD11";
+	case 12:
+		return "OCD12";
+	default:
+		throw FileFormatException(::OpenOrienteering::OcdFileExport::tr("Unsupported OCD version %1").arg(version));
+	}
+}
+
+}  // namespace
+
+
+
 // ### OcdFileFormat ###
 
 OcdFileFormat::OcdFileFormat()
-: FileFormat { MapFile, "OCD", ::OpenOrienteering::ImportExport::tr("OCAD"), QString::fromLatin1("ocd"),
+: FileFormat { MapFile, "OCD", ::OpenOrienteering::ImportExport::tr("OCAD, auto-detected version"), QString::fromLatin1("ocd"),
                ImportSupported | ExportSupported | ExportLossy }
 {
 	// Nothing
 }
 
+OcdFileFormat::OcdFileFormat(quint16 version)
+: FileFormat { MapFile, idForVersion(version),
+               version == 1 ? ::OpenOrienteering::ImportExport::tr("OCAD version 8, old exporter")
+                            : ::OpenOrienteering::ImportExport::tr("OCAD version %1").arg(version),
+               QString::fromLatin1("ocd"),
+               ExportSupported | ExportLossy }
+, version { version }
+{
+	// Nothing
+}
 
 FileFormat::ImportSupportAssumption OcdFileFormat::understands(const char* buffer, int size) const
 {
@@ -65,7 +102,7 @@ std::unique_ptr<Importer> OcdFileFormat::makeImporter(QIODevice* stream, Map *ma
 
 std::unique_ptr<Exporter> OcdFileFormat::makeExporter(QIODevice* stream, Map* map, MapView* view) const
 {
-	return std::make_unique<OcdFileExport>(stream, map, view);
+	return std::make_unique<OcdFileExport>(stream, map, view, version);
 }
 
 

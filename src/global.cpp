@@ -36,7 +36,13 @@ void doStaticInitializations()
 	// Register the supported file formats
 	FileFormats.registerFormat(new XMLFileFormat());
 #ifndef MAPPER_BIG_ENDIAN
-	FileFormats.registerFormat(new OcdFileFormat());
+	FileFormats.registerFormat(new OcdFileFormat());  // default, auto-detected export version
+	FileFormats.registerFormat(new OcdFileFormat(12));
+	FileFormats.registerFormat(new OcdFileFormat(11));
+	FileFormats.registerFormat(new OcdFileFormat(10));
+	FileFormats.registerFormat(new OcdFileFormat(9));
+	FileFormats.registerFormat(new OcdFileFormat(8));
+	FileFormats.registerFormat(new OcdFileFormat(1));  // legacy
 #endif
 #ifdef MAPPER_USE_GDAL
 	FileFormats.registerFormat(new OgrFileFormat());
