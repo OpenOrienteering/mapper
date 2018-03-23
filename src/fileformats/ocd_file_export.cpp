@@ -776,12 +776,13 @@ QString stringForViewPar(const MapView& view, const MapCoord& area_offset, quint
 
 
 
-int OcdFileExport::default_version = 0;
+quint16 OcdFileExport::default_version = 1;
 
 
 
-OcdFileExport::OcdFileExport(QIODevice* stream, Map* map, MapView* view)
+OcdFileExport::OcdFileExport(QIODevice* stream, Map* map, MapView* view, quint16 version)
 : Exporter { stream, map, view }
+, ocd_version { version }
 {
 	// nothing else
 }
@@ -815,25 +816,30 @@ QTextCodec* OcdFileExport::determineEncoding<Ocd::Custom8BitEncoding>()
 
 void OcdFileExport::doExport()
 {
-	auto version = default_version;
-	if (auto file = qobject_cast<QFileDevice*>(stream))
+	if (!ocd_version)
 	{
-		auto name = file->fileName().toUtf8();
-		if (name.endsWith("test-v8.ocd"))
-			version = 8;
-		else if (name.endsWith("test-v9.ocd"))
-			version = 9;
-		else if (name.endsWith("test-v10.ocd"))
-			version = 10;
-		else if (name.endsWith("test-v11.ocd"))
-			version = 11;
-		else if (name.endsWith("test-v12.ocd"))
-			version = 12;
+		if (auto file = qobject_cast<QFileDevice*>(stream))
+		{
+			auto name = file->fileName().toUtf8();
+			if (name.endsWith("test-v8.ocd"))
+				ocd_version = 8;
+			else if (name.endsWith("test-v9.ocd"))
+				ocd_version = 9;
+			else if (name.endsWith("test-v10.ocd"))
+				ocd_version = 10;
+			else if (name.endsWith("test-v11.ocd"))
+				ocd_version = 11;
+			else if (name.endsWith("test-v12.ocd"))
+				ocd_version = 12;
+		}
 	}
 	
-	switch (version)
+	if (!ocd_version)
+		ocd_version = default_version;
+	
+	switch (ocd_version)
 	{
-	case 0:
+	case 1:
 		exportImplementationLegacy();
 		break;
 		
@@ -842,11 +848,8 @@ void OcdFileExport::doExport()
 		break;
 		
 	case 9:
-		exportImplementation<Ocd::FormatV9>();
-		break;
-		
 	case 10:
-		exportImplementation<Ocd::FormatV9>(10);
+		exportImplementation<Ocd::FormatV9>();
 		break;
 		
 	case 11:
@@ -860,7 +863,7 @@ void OcdFileExport::doExport()
 	default:
 		throw FileFormatException(
 		            Exporter::tr("Could not write file: %1").
-		            arg(tr("OCD files of version %1 are not supported!").arg(version))
+		            arg(tr("OCD files of version %1 are not supported!").arg(ocd_version))
 		            );
 	}
 }
@@ -897,11 +900,9 @@ void setupFileHeaderGeneric(quint16 actual_version, Ocd::FileHeaderGeneric& head
 
 
 template<class Format>
-void OcdFileExport::exportImplementation(quint16 actual_version)
+void OcdFileExport::exportImplementation()
 {
 	addWarning(QLatin1String("OcdFileExport: WORK IN PROGRESS, FILE INCOMPLETE"));
-	
-	ocd_version = actual_version;
 	
 	OcdFile<Format> file;
 	
@@ -923,7 +924,7 @@ void OcdFileExport::exportImplementation(quint16 actual_version)
 	area_offset = calculateAreaOffset();
 	uses_registration_color = map->isColorUsedByASymbol(map->getRegistrationColor());
 	
-	setupFileHeaderGeneric(actual_version, *file.header());
+	setupFileHeaderGeneric(ocd_version, *file.header());
 	exportSetup(file);   // includes colors
 	exportSymbols(file);
 	exportObjects(file);
@@ -1129,13 +1130,13 @@ void OcdFileExport::exportSetup(OcdFile<Ocd::FormatV8>& file)
 
 
 template<class Format>
-void OcdFileExport::exportSetup(OcdFile<Format>& file)
+void OcdFileExport::exportSetup(OcdFile<Format>& /*file*/)
 {
-	exportSetup(file.header()->version);
+	exportSetup();
 }
 
 
-void OcdFileExport::exportSetup(quint16 ocd_version)
+void OcdFileExport::exportSetup()
 {
 	// Georeferencing
 	addParameterString(1039, stringForScalePar(*map, ocd_version));
@@ -2643,11 +2644,11 @@ QByteArray OcdFileExport::exportObjectCommon(const Object* object, OcdObject& oc
 template<class Format>
 void OcdFileExport::exportTemplates(OcdFile<Format>& /*file*/)
 {
-	exportTemplates(ocd_version);
+	exportTemplates();
 }
 
 
-void OcdFileExport::exportTemplates(quint16 /*ocd_version*/)
+void OcdFileExport::exportTemplates()
 {
 	for (int i = map->getNumTemplates() - 1; i >= 0; --i)
 	{
@@ -2669,13 +2670,13 @@ void OcdFileExport::exportTemplates(quint16 /*ocd_version*/)
 template<class Format>
 void OcdFileExport::exportExtras(OcdFile<Format>& /*file*/)
 {
-	exportExtras(ocd_version);
+	exportExtras();
 }
 
 
-void OcdFileExport::exportExtras(quint16 ocd_version)
+void OcdFileExport::exportExtras()
 {
-	Q_UNUSED(ocd_version);
+	/// \todo
 }
 
 

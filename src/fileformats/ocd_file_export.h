@@ -98,10 +98,10 @@ class OcdFileExport : public Exporter
 	
 public:
 	/// \todo Add proper API
-	static int default_version;
+	static quint16 default_version;
 	
 	
-	OcdFileExport(QIODevice* stream, Map *map, MapView *view);
+	OcdFileExport(QIODevice* stream, Map *map, MapView *view, quint16 version = 0);
 	
 	~OcdFileExport() override;
 	
@@ -122,7 +122,7 @@ protected:
 	void exportImplementationLegacy();
 	
 	template< class Format >
-	void exportImplementation(quint16 actual_version = Format::version);
+	void exportImplementation();
 	
 	
 	MapCoord calculateAreaOffset();
@@ -131,7 +131,7 @@ protected:
 	template< class Format >
 	void exportSetup(OcdFile<Format>& file);
 	
-	void exportSetup(quint16 ocd_version);
+	void exportSetup();
 	
 	
 	template< class Format >
@@ -228,13 +228,13 @@ protected:
 	template< class Format >
 	void exportTemplates(OcdFile<Format>& file);
 	
-	void exportTemplates(quint16 ocd_version);
+	void exportTemplates();
 	
 	
 	template< class Format >
 	void exportExtras(OcdFile<Format>& file);
 	
-	void exportExtras(quint16 ocd_version);
+	void exportExtras();
 	
 	
 	quint16 convertColor(const MapColor* color) const;
