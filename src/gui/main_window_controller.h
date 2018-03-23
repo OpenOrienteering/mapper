@@ -49,7 +49,7 @@ public:
 	 *  @param path the path to save to
 	 *  @return true if saving was sucessful, false on errors
 	 */
-	virtual bool save(const QString& path, const FileFormat* format = nullptr);
+	virtual bool saveTo(const QString& path, const FileFormat* format = nullptr);
 
 	/** Export to a file, but don't change modified state
 	 *  with regard to the original file.

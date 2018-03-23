@@ -542,7 +542,7 @@ void MapEditorController::deletePopupWidget(QWidget* child_widget)
 	}
 }
 
-bool MapEditorController::save(const QString& path, const FileFormat* format)
+bool MapEditorController::saveTo(const QString& path, const FileFormat* format)
 {
 	if (map)
 	{
