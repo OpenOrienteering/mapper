@@ -181,8 +181,8 @@
         <message>
             <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
             <comment>Description of symbol 102.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Magassági értékeket nagy szintkülönbségek értékelésének elősegítésére alkalmazhatunk. A számot a fő szintvonalakra tegyük, olyan helyre, ahol nem takar ki, vagy zavar más részletet. A számot úgy kell elhelyezni, hogy a szintvonal emelkedő felőli oldalára kerüljön.</translation>
+    </message>
         <message>
             <source>Form line</source>
             <comment>Name of symbol 103</comment>
@@ -191,8 +191,8 @@
         <message>
             <source>Form lines are used where more information must be given about the shape of the ground. Form lines are added only where representation would be incomplete with ordinary contours. They shall not be used as intermediate contours. Only one form line should be used between neighbouring contours. It is very important that a form line fits logically into the contour system, so the start and end of a form line should be parallel to the neighbouring contours. The gaps between the form line dashes must be placed on reasonably straight sections of the form line. Form lines can be used to differentiate flat knolls and depressions from more distinct ones.</source>
             <comment>Description of symbol 103</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Segédszintvonalat akkor használunk, ha még több információt kell adni a felszíni formákról. Csak ott használjuk, ahol az alapszintvonalakkal nem lenne teljes az ábrázolás. Ne használjuk közbenső szintvonalként. Két szomszédos alap szintvonal között csak egy segédszintvonalat használjunk. Nagyon fontos, hogy a segédszintvonal logikusan illeszkedjen a szintvonal rendszerbe, vagyis a segédszintvonal mindkét vége legyen párhuzamos a szomszédos szintvonalakkal. A segédszintvonal szaggatott vonalának megszakításai ésszerűen az egyenes szakaszokra essenek. Segédszintvonalakat használhatunk laposabb kúpok és mélyedések jellegzetesebbektől való megkülönböztetésére.</translation>
+    </message>
         <message>
             <source>Slope line, formline</source>
             <comment>Name of symbol 103.1</comment>
