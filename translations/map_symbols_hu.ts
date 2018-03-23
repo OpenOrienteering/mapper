@@ -211,8 +211,8 @@
         <message>
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
             <comment>Description of symbol 104</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>A földletörés egy hirtelen szintváltozás a felszínen, amely tisztán megkülönböztethető a környezetétől, pl. kavicsos vagy homokos árok, közúti és vasúti bevágások vagy töltések. A minimális magasság 1 m. A földletörés befolyásolhatja a futhatóságot. A fogak a letörés teljes terjedelmét ábrázolják. Hosszabb földletöréseknél a végeknél a minimálisnál rövidebb fogak használata is megengedett. Ha két földletörés közel van egymáshoz, akkor a fogak elhagyhatók. Áthatolhatatlan földletöréseket a 201-es jellel kell ábrázolni (áthatolhatatlan sziklafal)</translation>
+    </message>
         <message>
             <source>Earth bank, minimum size</source>
             <comment>Name of symbol 104.1</comment>
