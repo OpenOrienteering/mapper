@@ -305,7 +305,7 @@ A szimbólum körül meg kell szakítani a szintvonalakat.</translation>
             <source>An obvious mound or knoll which cannot be drawn to scale with a contour. Minimum height: 1 m.
 The symbol shall not touch or overlap contours.</source>
             <comment>Description of symbol 109</comment>
-            <translation>Egy nyilvánvaló domb vagy a dombtető, ami nem ábrázolható szintvonallal. Minimális magasság: 1 m.
+            <translation>Jól látható domb vagy kúp, ami nem ábrázolható szintvonallal. Minimális magasság: 1 m.
 A szimbólum nem érinthet vagy fedhet szint vonalat.</translation>
     </message>
         <message>
@@ -317,9 +317,8 @@ A szimbólum nem érinthet vagy fedhet szint vonalat.</translation>
             <source>An obvious elongated knoll which cannot be drawn to scale with a contour. Minimum height: 1 m.
 The symbol shall not touch or overlap contours.</source>
             <comment>Description of symbol 110</comment>
-            <translation>Szembeötlő hosszúkás halom, amely nem ábrázolható méretarányhelyesen szintvonallal (hossza 12 méretnél rövidebb, illetve 4 méternél keskenyebb). 
-Minimális magasság:1m
-A jel alakja nem változtatható, és két jel nem fedheti egymást. A jel nem érinthet szintvonalat.</translation>
+            <translation>Szembeötlő hosszúkás halom, amely nem ábrázolható méretarányhelyesen szintvonallal. Minimális magasság:1m
+A jel nem érinthet szintvonalat, és nem lehet átfedésben vele.</translation>
     </message>
         <message>
             <source>Small depression</source>
@@ -330,10 +329,10 @@ A jel alakja nem változtatható, és két jel nem fedheti egymást. A jel nem �
             <source>A small depression or hollow without steep sides that is too small to be shown by contours. Minimum depth: 1 m. Minimum width: 2 m.
 Small depressions with steep sides are represented with symbol 112 (pit). The symbol may not touch or overlap other brown symbols. Location is the centre of gravity of the symbol, and the symbol is orientated to north.</source>
             <comment>Description of symbol 111</comment>
-            <translation>Egy olyan kicsi mélyedés vagy üreg meredek oldalak nélkül, ami túl kicsi ahhoz, hogy szintvonallal ábrázolják. Minimális mélység: 1 m. Minimum szélesség: 2 m.
-Kicsi mélyedések meredek oldalakkal a 112 (gödör) szimbólummal jelöljük.
-A szimbólum nem fedhet át másik barna színű szimbólumokat vagy nem érintheti meg őket.
-A helyszín a szimbólum súlypontjának a központja, és a szimbólumot északra tájolják be.</translation>
+            <translation>Egy olyan kicsi mélyedés vagy üreg meredek oldalak nélkül, ami túl kicsi ahhoz, hogy szintvonallal ábrázoljuk. Minimális mélység: 1 m. Minimum szélesség: 2 m.
+A kisebb, meredek oldalú mélyedéseket a 112 (gödör) szimbólummal jelöljük.
+A szimbólum nem lehet érintésben vagy átfedésben más barna szimbólumokkal.
+A hely a szimbólum súlypontja, és a szimbólumot északra tájoljuk.</translation>
     </message>
         <message>
             <source>Pit</source>
@@ -346,9 +345,9 @@ gravity of the symbol, and the symbol is orientated to north.</source>
             <comment>Description of symbol 112</comment>
             <translation>Gödrök, vagy lyukak olyan megkülönböztethető meredek oldalakkal, amiket nem lehet ábrázolni a 104-es jellel (földletörés).
 Minimális mélység: 1 m. Minimum szélesség: 1 m.
-Egy  5 m x 5 m-nél nagyobb gödröt általában el kellene túlozni és a 104-es  (földletörés)  jellel kellene ábrázolni. Gödröket meredek oldalak nélkül a 111-es (kicsi mélyedés) jellel ábrázoljuk.
-A szimbólum nem fedhet át másik barna színű jeleket vagy nem érintheti meg őket. 
-A helyszín a szimbólum súlypontjának a központja, és a szimbólumot északra tájolják be.</translation>
+Az  5 m x 5 m-nél nagyobb gödröt általában el kell túlozni és a 104-es (földletörés) jellel kell ábrázolni. A meredek oldalak nélküli gödröket a 111-es (kis mélyedés) jellel ábrázoljuk.
+A szimbólum nem fedhet át másik barna jeleket vagy nem érintheti őket. 
+A hely a szimbólum súlypontja, és a szimbólumot északra tájoljuk be.</translation>
     </message>
         <message>
             <source>Broken ground</source>
