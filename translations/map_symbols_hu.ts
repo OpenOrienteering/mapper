@@ -221,8 +221,8 @@
         <message>
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
             <comment>Description of symbol 104.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>A földletörés egy hirtelen szintváltozás a felszínen, amely tisztán megkülönböztethető a környezetétől, pl. kavicsos vagy homokos árok, közúti és vasúti bevágások vagy töltések. A minimális magasság 1 m. A földletörés befolyásolhatja a futhatóságot. A fogak a letörés teljes terjedelmét ábrázolják. Hosszabb földletöréseknél a végeknél a minimálisnál rövidebb fogak használata is megengedett. Ha két földletörés közel van egymáshoz, akkor a fogak elhagyhatók. Áthatolhatatlan földletöréseket a 201-es jellel kell ábrázolni (áthatolhatatlan sziklafal).</translation>
+    </message>
         <message>
             <source>Earth bank, top line</source>
             <comment>Name of symbol 104.2</comment>
@@ -231,8 +231,8 @@
         <message>
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
             <comment>Description of symbol 104.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>A földletörés egy hirtelen szintváltozás a felszínen, amely tisztán megkülönböztethető a környezetétől, pl. kavicsos vagy homokos árok, közúti és vasúti bevágások vagy töltések. A minimális magasság 1 m. A földletörés befolyásolhatja a futhatóságot. A fogak a letörés teljes terjedelmét ábrázolják. Hosszabb földletöréseknél a végeknél a minimálisnál rövidebb fogak használata is megengedett. Ha két földletörés közel van egymáshoz, akkor a fogak elhagyhatók. Áthatolhatatlan földletöréseket a 201-es jellel kell ábrázolni (áthatolhatatlan sziklafal).</translation>
+    </message>
         <message>
             <source>Earth bank, tag line</source>
             <comment>Name of symbol 104.3</comment>
@@ -251,8 +251,8 @@
         <message>
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
             <comment>Description of symbol 104.9</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>A földletörés egy hirtelen szintváltozás a felszínen, amely tisztán megkülönböztethető a környezetétől, pl. kavicsos vagy homokos árok, közúti és vasúti bevágások vagy töltések. A minimális magasság 1 m. A földletörés befolyásolhatja a futhatóságot. A fogak a letörés teljes terjedelmét ábrázolják. Hosszabb földletöréseknél a végeknél a minimálisnál rövidebb fogak használata is megengedett. Ha két földletörés közel van egymáshoz, akkor a fogak elhagyhatók. Áthatolhatatlan földletöréseket a 201-es jellel kell ábrázolni (áthatolhatatlan sziklafal).</translation>
+    </message>
         <message>
             <source>Earth wall</source>
             <comment>Name of symbol 105</comment>
@@ -271,7 +271,7 @@
         <message>
             <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
             <comment>Description of symbol 106</comment>
-            <translation>Kicsi vagy részben romos földfalat, töltést szaggatott vonallal kell ábrázolni. A minimális magasság 0.5 méter.</translation>
+            <translation>A kis vagy részben romos földfalat, töltést szaggatott vonallal kell ábrázolni. A minimális magasság 0,5 méter.</translation>
     </message>
         <message>
             <source>Erosion gully</source>
@@ -282,7 +282,7 @@
             <source>An erosion gully which is too small to be shown using symbol 104 (earth bank) is shown by a single line. Minimum depth: 1 m.
 Contour lines shall not be broken around this symbol.</source>
             <comment>Description of symbol 107</comment>
-            <translation>Metsződést, ami már túl kicsi ahhoz, hogy a 104-es szimbólummal (földletörés) jelöljük, egy vonallal kell jelölni. Minimum mélység 1 m. A környező szintvonalakat nem kell megszakítani.</translation>
+            <translation>A metsződést, ami már túl kicsi ahhoz, hogy a 104-es szimbólummal (földletörés) jelöljük, egy vonallal kell jelölni. Minimum mélység 1 m. A környező szintvonalakat nem kell megszakítani.</translation>
     </message>
         <message>
             <source>Small erosion gully</source>
@@ -293,7 +293,7 @@ Contour lines shall not be broken around this symbol.</source>
             <source>A small erosion gully, dry ditch or trench. Minimum depth: 0.5 m.
 Contour lines should be broken around this symbol.</source>
             <comment>Description of symbol 108</comment>
-            <translation>Kis vízmosás, száraz árok vagy árok. Minimális mélység: 0.5 m.
+            <translation>Kis vízmosás, száraz árok vagy árok. Minimális mélység: 0,5 m.
 A szimbólum körül meg kell szakítani a szintvonalakat.</translation>
     </message>
         <message>
@@ -306,7 +306,7 @@ A szimbólum körül meg kell szakítani a szintvonalakat.</translation>
 The symbol shall not touch or overlap contours.</source>
             <comment>Description of symbol 109</comment>
             <translation>Jól látható domb vagy kúp, ami nem ábrázolható szintvonallal. Minimális magasság: 1 m.
-A szimbólum nem érinthet vagy fedhet szint vonalat.</translation>
+A szimbólum nem érinthet vagy fedhet szintvonalat.</translation>
     </message>
         <message>
             <source>Small elongated knoll</source>
@@ -317,8 +317,7 @@ A szimbólum nem érinthet vagy fedhet szint vonalat.</translation>
             <source>An obvious elongated knoll which cannot be drawn to scale with a contour. Minimum height: 1 m.
 The symbol shall not touch or overlap contours.</source>
             <comment>Description of symbol 110</comment>
-            <translation>Szembeötlő hosszúkás halom, amely nem ábrázolható méretarányhelyesen szintvonallal. Minimális magasság:1m
-A jel nem érinthet szintvonalat, és nem lehet átfedésben vele.</translation>
+            <translation>Szembeötlő hosszúkás halom, amely nem ábrázolható méretarányhelyesen szintvonallal. Minimális magasság:1m. A szimbólum nem érinthet vagy fedhet szintvonalat.</translation>
     </message>
         <message>
             <source>Small depression</source>
@@ -329,10 +328,10 @@ A jel nem érinthet szintvonalat, és nem lehet átfedésben vele.</translation>
             <source>A small depression or hollow without steep sides that is too small to be shown by contours. Minimum depth: 1 m. Minimum width: 2 m.
 Small depressions with steep sides are represented with symbol 112 (pit). The symbol may not touch or overlap other brown symbols. Location is the centre of gravity of the symbol, and the symbol is orientated to north.</source>
             <comment>Description of symbol 111</comment>
-            <translation>Egy olyan kicsi mélyedés vagy üreg meredek oldalak nélkül, ami túl kicsi ahhoz, hogy szintvonallal ábrázoljuk. Minimális mélység: 1 m. Minimum szélesség: 2 m.
+            <translation>Egy olyan kis mélyedés vagy üreg meredek oldalak nélkül, ami túl kicsi ahhoz, hogy szintvonallal ábrázoljuk. Minimális mélység: 1 m. Minimum szélesség: 2 m.
 A kisebb, meredek oldalú mélyedéseket a 112 (gödör) szimbólummal jelöljük.
 A szimbólum nem lehet érintésben vagy átfedésben más barna szimbólumokkal.
-A hely a szimbólum súlypontja, és a szimbólumot északra tájoljuk.</translation>
+A hely a szimbólum súlypontja, és a szimbólumot északnak tájoljuk.</translation>
     </message>
         <message>
             <source>Pit</source>
@@ -346,8 +345,8 @@ gravity of the symbol, and the symbol is orientated to north.</source>
             <translation>Gödrök, vagy lyukak olyan megkülönböztethető meredek oldalakkal, amiket nem lehet ábrázolni a 104-es jellel (földletörés).
 Minimális mélység: 1 m. Minimum szélesség: 1 m.
 Az  5 m x 5 m-nél nagyobb gödröt általában el kell túlozni és a 104-es (földletörés) jellel kell ábrázolni. A meredek oldalak nélküli gödröket a 111-es (kis mélyedés) jellel ábrázoljuk.
-A szimbólum nem fedhet át másik barna jeleket vagy nem érintheti őket. 
-A hely a szimbólum súlypontja, és a szimbólumot északra tájoljuk be.</translation>
+A szimbólum nem érinthet vagy fedhet barna szimbólumokat.
+A hely a szimbólum súlypontja, és a szimbólumot északnak tájoljuk be.</translation>
     </message>
         <message>
             <source>Broken ground</source>
@@ -363,7 +362,7 @@ Density: 3 to 5 dots / mm² (9-16%).</source>
             <comment>Description of symbol 113</comment>
             <translation>Gödrökkel és/vagy halmokkal borított terület, ami túl bonyolult ahhoz, hogy részleteiben ábrázolható legyen, vagy durva egyenetlen talaj, ami jól látható, de csak kis mértékben van hatással a a futhatóságra.
 Ez egy terület típusú jel.
-Legalább három pont szükséges (10 m x 10 m lábnyom).
+Legalább három pontot kell ábrázolni  (10 m x 10 m lábnyom).
 A szintvonalakat nem kell megszakítani a szabdalt területen.
 Sűrűség: 3-5 pont / mm² (9-16 %).</translation>
     </message>
@@ -389,9 +388,9 @@ The minimum number of dots is three (footprint 7m x 7m).
 Contours shall not be cut in broken ground areas.
 Density: 8 to 10 dots / mm² (25-32%).</source>
             <comment>Description of symbol 114</comment>
-            <translation>Gödrökkel és/vagy halmokkal borított terület, ami túl bonyolult ahhoz, hogy részleteiben ábrázolható legyen, vagy durva egyenetlen talaj, ami jól látható, hatással a futhatóságra.
+            <translation>Gödrökkel és/vagy halmokkal borított terület, ami túl bonyolult ahhoz, hogy részleteiben ábrázolható legyen, vagy durva egyenetlen talaj, ami jól látható, és hatással a futhatóságra.
 Ez egy terület típusú jel.
-Legalább három pont szükséges (7 m x 7 m lábnyom).
+Legalább három pontot kell ábrázolni (7 m x 7 m lábnyom).
 A szintvonalakat nem kell megszakítani a szabdalt területen.
 Sűrűség: 8-10 pont / mm² (25-32%).</translation>
     </message>
@@ -405,12 +404,12 @@ Sűrűség: 8-10 pont / mm² (25-32%).</translation>
             <comment>Description of symbol 115</comment>
             <translation>A tereptárgynak nagyon világosan megkülönböztethetőnek kell lennie a környezetétől. 
 Helye az északra tájolt szimbólum súlypontja. 
-A szimbólum nem fedhet át másik barna szimbólumokat vagy nem érintheti őket.</translation>
+A szimbólum nem érinthet vagy fedhet át másik barna szimbólumokat.</translation>
     </message>
         <message>
             <source>Impassable cliff</source>
             <comment>Name of symbol 201</comment>
-            <translation>Járhatatlan sziklafal, szirt</translation>
+            <translation>Áthatolhatatlan sziklafal, szirt</translation>
     </message>
         <message>
             <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -419,9 +418,9 @@ The gap between two impassable cliffs or between impassable cliffs and other imp
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.</source>
             <comment>Description of symbol 201</comment>
             <translation>Szikla, kőfejtő vagy földletörés, amely olyan magas és meredek, hogy lehetetlen, vagy veszélyes áthaladni rajta / megmászni.
-A függőleges kőzetfelületek esetében a fogak elhagyhatók, ha a hely kicsi. A felső vonal végeit le lehet kerekíteni, de lehetnek négyzet alakúak is. A végeken rövidebb fogakat lehet használni.
-Két nem átjárható szikla vagy nem átjárható sziklák és egyéb nem járható objektum szimbólumai közötti résnek meg kell haladnia a térképen a 0,3 mm-t.
-Amikor egy áthatolhatatlan szikla egyenesen a vízbe esik, így lehetetlenné téve a szikla alatt a víz szélén való haladást, a partvonal elhagyható, vagy a fogaknak egyértelműen ki kell nyúlni a partvonal fölé. Az áthatolhatatlan szikla jele összeolvasztandó a szintvonalakkal.</translation>
+A függőleges kőzetfelületek esetében a fogak elhagyhatók, ha a hely kicsi. A felső vonal végeit le lehet kerekíteni, de lehetnek szögletesek is. A végeken rövidebb fogakat lehet használni.
+Két nem átjárható szikla vagy nem átjárható sziklák és egyéb nem járható objektumok szimbólumai közötti résnek meg kell haladnia a térképen a 0,3 mm-t.
+Amikor egy áthatolhatatlan szikla leér a vízig, így lehetetlenné téve a szikla alatt a víz szélén való haladást, a partvonal elhagyható, vagy a fogaknak egyértelműen ki kell nyúlni a partvonal fölé. Az áthatolhatatlan szikla jele összeolvasztandó a szintvonalakkal.</translation>
     </message>
         <message>
             <source>Impassable cliff, minimum size</source>
