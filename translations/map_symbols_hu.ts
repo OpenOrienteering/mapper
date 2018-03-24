@@ -256,7 +256,7 @@
         <message>
             <source>Earth wall</source>
             <comment>Name of symbol 105</comment>
-            <translation type="unfinished">Töltés, föld fal</translation>
+            <translation>Töltés, föld fal, sánc</translation>
     </message>
         <message>
             <source>Distinct earth wall. Minimum height is 1 m.</source>
@@ -266,7 +266,7 @@
         <message>
             <source>Small earth wall</source>
             <comment>Name of symbol 106</comment>
-            <translation type="unfinished">Kis föld fal, kis töltés.</translation>
+            <translation>Kis föld fal, kis töltés sánc</translation>
     </message>
         <message>
             <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
@@ -2087,7 +2087,7 @@ Sections of the circle should be omitted to leave important detail showing.</sou
         <message>
             <source>A marked route that is a part of the course. It is mandatory to follow the marked route.</source>
             <comment>Description of symbol 707</comment>
-            <translation type="unfinished">A jelzett út a pálya része.</translation>
+            <translation>A jelzett út a pálya része. A kijelölt útvonalat kötelező követni.</translation>
     </message>
         <message>
             <source>Out-of-bounds boundary</source>
