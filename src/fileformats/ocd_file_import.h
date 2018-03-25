@@ -179,7 +179,7 @@ protected:
 	
 	struct StringHandler
 	{
-		using Callback = void (OcdFileImport::*)(const QString&, int);
+		using Callback = void (OcdFileImport::*)(const QString&);
 		qint32   type;
 		Callback callback;
 	};
@@ -194,7 +194,7 @@ protected:
 	void importGeoreferencing(const OcdFile< F >& file);
 	
 	/// Imports string 1039.
-	void importGeoreferencing(const QString& param_string, int ocd_version);
+	void importGeoreferencing(const QString& param_string);
 	
 	/// Imports string 1039 field i.
 	void applyGridAndZone(Georeferencing& georef, const QString& combined_grid_zone);
@@ -205,9 +205,9 @@ protected:
 	template< class F >
 	void importColors(const OcdFile< F >& file);
 	
-	void importSpotColor(const QString& param_string, int ocd_version);
+	void importSpotColor(const QString& param_string);
 	
-	void importColor(const QString& param_string, int ocd_version);
+	void importColor(const QString& param_string);
 	
 	
 	template< class F >
@@ -225,7 +225,7 @@ protected:
 	template< class F >
 	void importTemplates(const OcdFile< F >& file);
 	
-	void importTemplate(const QString& param_string, int ocd_version);
+	void importTemplate(const QString& param_string);
 	
 	
 	void importExtras(const OcdFile<Ocd::FormatV8>& file);
@@ -235,7 +235,7 @@ protected:
 	
 	static const std::initializer_list<StringHandler> extraStringHandlers;
 	
-	void appendNotes(const QString& param_string, int ocd_version);
+	void appendNotes(const QString& param_string);
 	
 	
 	void importView(const OcdFile<Ocd::FormatV8>& file);
@@ -243,16 +243,16 @@ protected:
 	template< class F >
 	void importView(const OcdFile< F >& file);
 	
-	void importView(const QString& param_string, int ocd_version);
+	void importView(const QString& param_string);
 	
 	
 	// Symbol import
 	
 	template< class S >
-	PointSymbol* importPointSymbol(const S& ocd_symbol, int ocd_version);
+	PointSymbol* importPointSymbol(const S& ocd_symbol);
 	
 	template< class S >
-	Symbol* importLineSymbol(const S& ocd_symbol, int ocd_version);
+	Symbol* importLineSymbol(const S& ocd_symbol);
 	
 	OcdImportedLineSymbol* importLineSymbolBase(const Ocd::LineSymbolCommonV8& attributes);
 	
@@ -262,29 +262,28 @@ protected:
 	
 	void setupLineSymbolForBorder(OcdImportedLineSymbol* line_for_borders, const Ocd::LineSymbolCommonV8& attributes);
 	
-	void setupLineSymbolPointSymbols(OcdImportedLineSymbol* line_symbol, const Ocd::LineSymbolCommonV8& attributes, const Ocd::PointSymbolElementV8* elements, int ocd_version);
+	void setupLineSymbolPointSymbols(OcdImportedLineSymbol* line_symbol, const Ocd::LineSymbolCommonV8& attributes, const Ocd::PointSymbolElementV8* elements);
 	
 	void mergeLineSymbol(CombinedSymbol* full_line, LineSymbol* main_line, LineSymbol* framing_line, LineSymbol* double_line);
 	
-	Symbol* importAreaSymbol(const Ocd::AreaSymbolV8& ocd_symbol, int ocd_version);
+	Symbol* importAreaSymbol(const Ocd::AreaSymbolV8& ocd_symbol);
 	
 	template< class S >
-	Symbol* importAreaSymbol(const S& ocd_symbol, int ocd_version);
+	Symbol* importAreaSymbol(const S& ocd_symbol);
 	
 	void setupAreaSymbolCommon(
 	        OcdImportedAreaSymbol* symbol,
 	        bool fill_on,
 	        const Ocd::AreaSymbolCommonV8& ocd_symbol,
 	        std::size_t data_size,
-	        const Ocd::PointSymbolElementV8* elements,
-	        int ocd_version
+	        const Ocd::PointSymbolElementV8* elements
 	);
 	
 	template< class S >
-	TextSymbol* importTextSymbol(const S& ocd_symbol, int ocd_version);
+	TextSymbol* importTextSymbol(const S& ocd_symbol);
 	
 	template< class S >
-	TextSymbol* importLineTextSymbol(const S& ocd_symbol, int ocd_version);
+	TextSymbol* importLineTextSymbol(const S& ocd_symbol);
 	
 	template< class S >
 	LineSymbol* importRectangleSymbol(const S& ocd_symbol);
@@ -292,18 +291,18 @@ protected:
 	template< class OcdBaseSymbol >
 	void setupBaseSymbol(Symbol* symbol, const OcdBaseSymbol& ocd_base_symbol);
 	
-	void setupPointSymbolPattern(PointSymbol* symbol, std::size_t data_size, const Ocd::PointSymbolElementV8* elements, int version);
+	void setupPointSymbolPattern(PointSymbol* symbol, std::size_t data_size, const Ocd::PointSymbolElementV8* elements);
 	
 	
 	// Object import
 	
 	template< class O >
-	Object* importObject(const O& ocd_object, MapPart* part, int ocd_version);
+	Object* importObject(const O& ocd_object, MapPart* part);
 	
-	QString getObjectText(const Ocd::ObjectV8& ocd_object, int ocd_version) const;
+	QString getObjectText(const Ocd::ObjectV8& ocd_object) const;
 	
 	template< class O >
-	QString getObjectText(const O& ocd_object, int ocd_version) const;
+	QString getObjectText(const O& ocd_object) const;
 	
 	template< class O >
 	Object* importRectangleObject(const O& ocd_object, MapPart* part, const OcdFileImport::RectangleInfo& rect);
@@ -354,6 +353,9 @@ protected:
 	
 	/// maps OCD symbol number to rectangle information struct
 	QHash<int, RectangleInfo> rectangle_info;
+	
+	/// The actual format version of the imported file
+	int ocd_version;
 };
 
 
