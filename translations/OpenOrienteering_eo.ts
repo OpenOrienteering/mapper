@@ -2379,7 +2379,7 @@
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="109"/>
         <source>Line is dashed</source>
-        <translation type="unfinished"></translation>
+        <translation>Strekita linio</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="214"/>
@@ -2404,7 +2404,7 @@
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="137"/>
         <source>Dashed line</source>
-        <translation type="unfinished"></translation>
+        <translation>Strekita linio</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="144"/>
@@ -2558,7 +2558,7 @@
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="540"/>
         <source>Border is dashed</source>
-        <translation type="unfinished"></translation>
+        <translation>Limo estas strekita</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="562"/>

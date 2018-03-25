@@ -5232,100 +5232,100 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1025"/>
         <source>Different lengths for pointed caps at begin (%1 mm) and end (%2 mm) are not supported. Using %3 mm.</source>
-        <translation type="unfinished"></translation>
+        <translation>Netiek atbalstīti dažāda garuma līnijas gali (%1 mm) sākumā un beigās (%2 mm). Tiks lietots %3 mm.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1041"/>
         <source>The dash pattern cannot be imported correctly.</source>
-        <translation type="unfinished"></translation>
+        <translation>Svītrlīnijas paraugs nevar tikt pareizi importēts.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1056"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1088"/>
         <source>The dash pattern&apos;s end length (%1 mm) cannot be imported correctly. Using %2 mm.</source>
-        <translation type="unfinished"></translation>
+        <translation>Svītrlīnijas parauga gala garums (%1 mm) nevar tikt pareizi importēts. Tiks izmantots %2 mm.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1063"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1103"/>
         <source>The dash pattern&apos;s end gap (%1 mm) cannot be imported correctly. Using %2 mm.</source>
-        <translation type="unfinished"></translation>
+        <translation>Svītrlīnijas parauga gala atstarpe (%1 mm) nevar tikt pareizi importēta. Tiks izmantots %2 mm.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1145"/>
         <source>Unsupported framing line style &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Neatbalstīts ierāmēšanas līnijas stils &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1217"/>
         <source>Skipped secondary point symbol.</source>
-        <translation type="unfinished"></translation>
+        <translation>Izlaists sekundārā punkta simbols.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1253"/>
         <source>Suppressing dash symbol at line ends.</source>
-        <translation type="unfinished"></translation>
+        <translation>Neizmantot svītru līnijas sākumā un beigās.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="969"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1331"/>
         <source>This symbol cannot be saved as a proper OCD symbol again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Šis simbols nevar tikt saglabāts kā pareizs OCD simbols vēlreiz.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2003"/>
         <source>Justified alignment is not supported.</source>
-        <translation type="unfinished"></translation>
+        <translation>Abpusējs izlīdzinājums netiek atbalstīts.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2018"/>
         <source>Vertical alignment &apos;%1&apos; is not supported.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vertikālais līdzinājums &apos;%1&apos; netiek atbalstīts.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1990"/>
         <source>Ignoring custom weight (%1).</source>
-        <translation type="unfinished"></translation>
+        <translation>Ignorē pielāgoto svaru (%1).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2027"/>
         <source>Custom character spacing may be incorrect.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pielāgoto rakstzīmju retinājums, iespējams, ir nepareizs.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2032"/>
         <source>Ignoring custom word spacing (%1 %).</source>
-        <translation type="unfinished"></translation>
+        <translation>Ignorē pielāgotās vārdu atstarpes (%1 %).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2056"/>
         <source>Ignoring custom indents (%1/%2).</source>
-        <translation type="unfinished"></translation>
+        <translation>Ignorē pielāgotās atkāpes (%1/ %2).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2078"/>
         <source>Ignoring text framing (mode %1).</source>
-        <translation type="unfinished"></translation>
+        <translation>Ignorē teksta ierāmēšanu (režīms %1).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1418"/>
         <source>Line text symbols are not yet supported. Marking the symbol as hidden.</source>
-        <translation type="unfinished"></translation>
+        <translation>Teksta rindas simboli vēl netiek atbalstīti. Marķē simbolu kā slēptu.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="105"/>
         <source>Encoding &apos;%1&apos; is not available. Check the settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kodējums &apos;%1&apos; nav pieejams. Pārbaudiet iestatījumus.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="142"/>
         <source>In area symbol %1 &apos;%2&apos;: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Laukuma simbolā %1 &apos;%2&apos;: %3</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1318"/>
         <source>The border of this symbol could not be loaded.</source>
-        <translation type="unfinished"></translation>
+        <translation>Šī simbola robežu nevar ielasīt.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1614"/>
@@ -5351,12 +5351,12 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2095"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2099"/>
         <source>Invalid data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nederīgi dati.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2130"/>
         <source>OCD files of version %1 are not supported!</source>
-        <translation type="unfinished"></translation>
+        <translation>Versijas %1 OCD faili netiek atbalstīti!</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.h" line="455"/>
@@ -5369,12 +5369,12 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="392"/>
         <source>Unable to setup &quot;%1&quot; SRS for GDAL: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Nevar iestatīt &quot;%1&quot; SRS priekš GDAL: %2</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="326"/>
         <source>Purple</source>
-        <translation type="unfinished"></translation>
+        <translation>Purpurs</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="339"/>
@@ -5399,7 +5399,7 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="452"/>
         <source>Unable to load layer %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nevar ielasīt slāni %1.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gdal/ogr_file_format.cpp" line="500"/>
@@ -5408,47 +5408,46 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
         <location filename="../src/gdal/ogr_file_format.cpp" line="515"/>
         <location filename="../src/gdal/ogr_file_format.cpp" line="520"/>
         <source>Unable to load %n objects, reason: %1</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>Nevar ielasīt %n objektus, cēlonis: %1</numerusform>
+        <numerusform>Nevar ielasīt %n objektu, cēlonis: %1</numerusform>
+        <numerusform>Nevar ielasīt %n objektus, cēlonis: %1</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="501"/>
         <source>Empty geometry.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tukša ģeometrija.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="506"/>
         <source>Can&apos;t determine the coordinate transformation: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nevar noteikt koordinātu transformācijas: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="511"/>
         <source>Failed to transform the coordinates.</source>
-        <translation type="unfinished"></translation>
+        <translation>Neizdevās pārveidot koordinātas.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="516"/>
         <source>Unknown or unsupported geometry type.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nav zināms vai neatbalstīts ģeometrijas tips.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="521"/>
         <source>Not enough coordinates.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nav pietiekami daudz koordinātas.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="564"/>
         <source>Cannot use this spatial reference:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nevar lietot šo telpisko atsauci: 
+%1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="623"/>
         <source>The geospatial data has no suitable spatial reference.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ģeotelpiskajiem datiem neeksistē piemērota telpiskā atsauce.</translation>
     </message>
 </context>
 <context>
@@ -5471,7 +5470,7 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
     <message>
         <location filename="../src/templates/template_tool_paint.cpp" line="551"/>
         <source>Template file exists: &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Veidnes fails jau eksistē: &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -5685,13 +5684,13 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
         <location filename="../src/gui/print_progress_dialog.cpp" line="58"/>
         <source>Printing</source>
         <comment>PrintWidget</comment>
-        <translation type="unfinished"></translation>
+        <translation>Drukāšana</translation>
     </message>
     <message>
         <location filename="../src/gui/print_progress_dialog.cpp" line="59"/>
         <source>An error occurred during processing.</source>
         <comment>PrintWidget</comment>
-        <translation type="unfinished"></translation>
+        <translation>Apstrādes laikā radās kļūda.</translation>
     </message>
 </context>
 <context>
@@ -5704,12 +5703,12 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
         <location filename="../src/gui/print_tool.cpp" line="59"/>
         <location filename="../src/gui/print_tool.cpp" line="371"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map, the print area or the area&apos;s borders. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Vilkt&lt;/b&gt;: Pārvietot karti, drukas apgabalu vai apgabala robežas. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="343"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Vilkt&lt;/b&gt;: Pārvietot drukas apgabalu. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="347"/>
@@ -5720,13 +5719,13 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
         <location filename="../src/gui/print_tool.cpp" line="352"/>
         <location filename="../src/gui/print_tool.cpp" line="357"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area&apos;s border. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Vilkt&lt;/b&gt;: Pārvietot drukas apgabalu robežu. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="362"/>
         <location filename="../src/gui/print_tool.cpp" line="367"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area&apos;s borders. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Vilkt&lt;/b&gt;: Pārvietot drukas apgabala robežas. </translation>
     </message>
 </context>
 <context>
@@ -5834,7 +5833,7 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="142"/>
         <source>Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Rekvizīti</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="205"/>
@@ -5859,7 +5858,7 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="260"/>
         <source>Template appearance may differ.</source>
-        <translation type="unfinished"></translation>
+        <translation>Veidnes izskats var atšķirties.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="267"/>
@@ -5869,7 +5868,7 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="270"/>
         <source>Save world file</source>
-        <translation type="unfinished"></translation>
+        <translation>Saglabāt globālo datni</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="276"/>
@@ -5879,12 +5878,12 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="277"/>
         <source>Device CMYK (experimental)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ierīces CMYK (eksperimentāla versija)</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="278"/>
         <source>Color mode:</source>
-        <translation type="unfinished"></translation>
+        <translation>Krāsu režīms:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="302"/>
@@ -5922,17 +5921,17 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1110"/>
         <source>Not supported on Android.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nav atbalstīts uz Android.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1118"/>
         <source>Failed to prepare the preview.</source>
-        <translation type="unfinished"></translation>
+        <translation>Neizdevās sagatavot priekšskatījumu.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1129"/>
         <source>Print Preview Progress</source>
-        <translation type="unfinished"></translation>
+        <translation>Notiek drukas priekšskatījuma izveide</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1146"/>
@@ -5947,37 +5946,37 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1164"/>
         <source>PNG</source>
-        <translation type="unfinished"></translation>
+        <translation>PNG</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1165"/>
         <source>BMP</source>
-        <translation type="unfinished"></translation>
+        <translation>BMP</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1166"/>
         <source>TIFF</source>
-        <translation type="unfinished"></translation>
+        <translation>TIFF</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1167"/>
         <source>JPEG</source>
-        <translation type="unfinished"></translation>
+        <translation>JPEG</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1243"/>
         <source>Failed to prepare the PDF export.</source>
-        <translation type="unfinished"></translation>
+        <translation>Neizdevās sagatavot PDF eksportu.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1253"/>
         <source>PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>PDF</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1306"/>
         <source>An error occurred during printing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Drukāšanas laikā radās kļūda.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1169"/>
@@ -5996,12 +5995,12 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1292"/>
         <source>Failed to prepare the printing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Neizdevās sagatavot izdruku.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1301"/>
         <source>Printing Progress</source>
-        <translation type="unfinished"></translation>
+        <translation>Notiek druka</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1110"/>
@@ -6021,29 +6020,32 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
         <location filename="../src/gui/print_widget.cpp" line="216"/>
         <source>Vector
 graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Vektoru
+grafika</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="217"/>
         <source>Raster
 graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Rastra
+grafika</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="218"/>
         <source>Color
 separations</source>
-        <translation type="unfinished"></translation>
+        <translation>Krāsu
+dalījumi</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="231"/>
         <source>Mode:</source>
-        <translation type="unfinished"></translation>
+        <translation>Režīms:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1187"/>
         <source>Failed to prepare the image. Not enough memory.</source>
-        <translation type="unfinished"></translation>
+        <translation>Neizdevās sagatavot attēlu. Nepietiek atmiņas.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1206"/>
@@ -6059,18 +6061,18 @@ separations</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1273"/>
         <source>Failed to finish the PDF export.</source>
-        <translation type="unfinished"></translation>
+        <translation>Neizdevās pabeigt PDF eksportu.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1283"/>
         <location filename="../src/gui/print_widget.cpp" line="1315"/>
         <source>Canceled.</source>
-        <translation type="unfinished"></translation>
+        <translation>Atcelts.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1319"/>
         <source>The print job could not be stopped.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nevar apturēt drukas darbu.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1310"/>

@@ -5411,7 +5411,7 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
     <message>
         <location filename="../src/templates/template_tool_paint.cpp" line="551"/>
         <source>Template file exists: &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Háttérfájl létezik: &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -5801,7 +5801,7 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="270"/>
         <source>Save world file</source>
-        <translation type="unfinished"></translation>
+        <translation>Világ fájl mentése</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="276"/>
