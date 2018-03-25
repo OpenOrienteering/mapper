@@ -889,13 +889,23 @@ namespace {
 void setupFileHeaderGeneric(quint16 actual_version, Ocd::FileHeaderGeneric& header)
 {
 	header.version = actual_version;
+	header.file_type = Ocd::TypeMap;
 	switch (actual_version)
 	{
 	case 8:
 		header.file_type = Ocd::TypeMapV8;
 		break;
+	case 9:
+		header.subversion = 4;
+		break;
+	case 10:
+		header.subversion = 2;
+		break;
+	case 11:
+		header.subversion = 3;
+		break;
 	default:
-		header.file_type = Ocd::TypeMap;
+		; // nothing
 	}
 }
 
