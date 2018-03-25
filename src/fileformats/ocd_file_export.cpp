@@ -777,7 +777,7 @@ QString stringForViewPar(const MapView& view, const MapCoord& area_offset, quint
 
 
 
-quint16 OcdFileExport::default_version = OcdFileFormat::legacyVersion();
+quint16 OcdFileExport::default_version = 9;
 
 
 
