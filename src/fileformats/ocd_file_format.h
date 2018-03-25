@@ -61,6 +61,12 @@ public:
 	/// \copydoc FileFormat::createExporter()
 	std::unique_ptr<Exporter> makeExporter(QIODevice* stream, Map* map, MapView* view) const override;
 	
+	/// The name of the property where the importer can record the imported version.
+	static constexpr const char* versionProperty() { return "OcdFileFormat::version"; }
+	
+	/// The value of the property which indicates usage of legacy import/export.
+	static constexpr quint16 legacyVersion() { return 1; }
+	
 };
 
 

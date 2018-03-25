@@ -67,6 +67,7 @@
 #include "core/symbols/text_symbol.h"
 #include "fileformats/file_format.h"
 #include "fileformats/ocad8_file_format_p.h"
+#include "fileformats/ocd_file_format.h"
 #include "fileformats/ocd_types_v10.h"
 #include "fileformats/ocd_types_v11.h"
 #include "fileformats/ocd_types_v12.h"
@@ -299,6 +300,7 @@ void OcdFileImport::importImplementationLegacy(bool load_symbols_only)
 	delegate.reset(new OCAD8FileImport(&new_stream, map, view));
 	
 	delegate->import(load_symbols_only);
+	map->setProperty(OcdFileFormat::versionProperty(), OcdFileFormat::legacyVersion());
 	
 	for (auto&& w : delegate->warnings())
 	{
@@ -327,6 +329,7 @@ void OcdFileImport::importImplementation(bool load_symbols_only)
 #endif
 	
 	map->setSymbolSetId(QStringLiteral("OCD"));
+	map->setProperty(OcdFileFormat::versionProperty(), ocd_version);
 	importGeoreferencing(file);
 	importColors(file);
 	importSymbols(file);

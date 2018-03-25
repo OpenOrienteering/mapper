@@ -75,6 +75,7 @@
 #include "fileformats/file_format.h"
 #include "fileformats/file_import_export.h"
 #include "fileformats/ocad8_file_format_p.h"
+#include "fileformats/ocd_file_format.h"
 #include "fileformats/ocd_types.h"
 #include "fileformats/ocd_types_v8.h"
 #include "fileformats/ocd_types_v9.h"
@@ -776,7 +777,7 @@ QString stringForViewPar(const MapView& view, const MapCoord& area_offset, quint
 
 
 
-quint16 OcdFileExport::default_version = 1;
+quint16 OcdFileExport::default_version = OcdFileFormat::legacyVersion();
 
 
 
@@ -784,7 +785,30 @@ OcdFileExport::OcdFileExport(QIODevice* stream, Map* map, MapView* view, quint16
 : Exporter { stream, map, view }
 , ocd_version { version }
 {
-	// nothing else
+	if (!ocd_version)
+	{
+		if (auto file = qobject_cast<QFileDevice*>(stream))
+		{
+			auto name = file->fileName().toUtf8();
+			if (name.endsWith("test-v8.ocd"))
+				ocd_version = 8;
+			else if (name.endsWith("test-v9.ocd"))
+				ocd_version = 9;
+			else if (name.endsWith("test-v10.ocd"))
+				ocd_version = 10;
+			else if (name.endsWith("test-v11.ocd"))
+				ocd_version = 11;
+			else if (name.endsWith("test-v12.ocd"))
+				ocd_version = 12;
+		}
+	}
+	
+	if (!ocd_version)
+	    ocd_version = decltype(ocd_version)(map->property(OcdFileFormat::versionProperty()).toInt());
+	
+	if (!ocd_version)
+		ocd_version = default_version;
+	
 }
 
 
@@ -816,30 +840,9 @@ QTextCodec* OcdFileExport::determineEncoding<Ocd::Custom8BitEncoding>()
 
 void OcdFileExport::doExport()
 {
-	if (!ocd_version)
-	{
-		if (auto file = qobject_cast<QFileDevice*>(stream))
-		{
-			auto name = file->fileName().toUtf8();
-			if (name.endsWith("test-v8.ocd"))
-				ocd_version = 8;
-			else if (name.endsWith("test-v9.ocd"))
-				ocd_version = 9;
-			else if (name.endsWith("test-v10.ocd"))
-				ocd_version = 10;
-			else if (name.endsWith("test-v11.ocd"))
-				ocd_version = 11;
-			else if (name.endsWith("test-v12.ocd"))
-				ocd_version = 12;
-		}
-	}
-	
-	if (!ocd_version)
-		ocd_version = default_version;
-	
 	switch (ocd_version)
 	{
-	case 1:
+	case OcdFileFormat::legacyVersion():
 		exportImplementationLegacy();
 		break;
 		
