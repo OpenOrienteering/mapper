@@ -1130,11 +1130,11 @@ The symbol is orientated to north.
 Minimum width: 1.5 mm (footprint 22.5 m). Minimum area: 2.5 x 2.5 mm. Smaller areas must either be left out, exaggerated or shown using symbol 403 (rough
 open land).</source>
             <comment>Description of symbol 404</comment>
-            <translation>Las zonas con árboles dispersos o arbustos en terreno despejado e irregular se pueden generalizar utilizando un patrón regular de grandes puntos dentro de la trama amarilla.
+            <translation>Las zonas con árboles dispersos o arbustos en monte despejado se pueden generalizar utilizando un patrón regular de grandes puntos dentro de la trama amarilla.
 Los puntos pueden ser blancos (árboles dispersos) o verdes (arbustos/matorrales dispersos). Sólo la variante de puntos blancos se puede combinar con el símbolo 407 (vegetación, carrera lenta, buena visibilidad) o el 409 (vegetación, caminar, buena visibilidad) para indicar una reducción de la velocidad de carrera.
 El símbolo está orientado al norte.
-Anchura mínima: 1,5 mm (huella 22,5 m). Área mínima: 2,5 x 2,5 mm. Las áreas más pequeñas se deben descartar, exagerar o representar utilizando el símbolo 403 (campo abierto y escabroso).</translation>
-        </message>
+Anchura mínima: 1,5 mm (huella 22,5 m). Área mínima: 2,5 x 2,5 mm. Las áreas más pequeñas se deben descartar, exagerar o representar utilizando el símbolo 403 (monte despejado).</translation>
+    </message>
         <message>
             <source>Rough open land with scattered bushes</source>
             <comment>Name of symbol 404.1</comment>
@@ -1148,11 +1148,11 @@ The symbol is orientated to north.
 Minimum width: 1.5 mm (footprint 22.5 m). Minimum area: 2.5 x 2.5 mm. Smaller areas must either be left out, exaggerated or shown using symbol 403 (rough
 open land).</source>
             <comment>Description of symbol 404.1</comment>
-            <translation>Las zonas con árboles dispersos o arbustos en terreno despejado e irregular se pueden generalizar utilizando un patrón regular de grandes puntos dentro de la trama amarilla.
+            <translation>Las zonas con árboles dispersos o arbustos en monte despejado se pueden generalizar utilizando un patrón regular de grandes puntos dentro de la trama amarilla.
 Los puntos pueden ser blancos (árboles dispersos) o verdes (arbustos/matorrales dispersos). Sólo la variante de puntos blancos se puede combinar con el símbolo 407 (vegetación, carrera lenta, buena visibilidad) o el 409 (vegetación, caminar, buena visibilidad) para indicar una reducción de la velocidad de carrera.
 El símbolo está orientado al norte.
-Anchura mínima: 1,5 mm (huella 22,5 m). Área mínima: 2,5 x 2,5 mm. Las áreas más pequeñas se deben descartar, exagerar o representar utilizando el símbolo 403 (campo abierto y escabroso).</translation>
-        </message>
+Anchura mínima: 1,5 mm (huella 22,5 m). Área mínima: 2,5 x 2,5 mm. Las áreas más pequeñas se deben descartar, exagerar o representar utilizando el símbolo 403 (monte despejado).</translation>
+    </message>
         <message>
             <source>Forest</source>
             <comment>Name of symbol 405</comment>
@@ -1336,14 +1336,14 @@ May be combined with symbol 407 (vegetation, slow running, good visibility) or 4
             <comment>Description of symbol 413</comment>
             <translation>Terreno cultivado con árboles o arbustos, normalmente en un patrón regular.
 Las líneas de puntos pueden orientarse mostrando la dirección de la plantación.
-Se debe combinar bien con el símbolo 401 (campo abierto) o el 403 (campo abierto y escabroso).
+Se debe combinar bien con el símbolo 401 (campo abierto) o el 403 (monte despejado).
 Se puede combinar con el símbolo 407 (vegetación, carrera lenta, buena visibilidad) o el 409 (vegetación, caminar, buena visibilidad) para indicar la reducción de la velocidad de carrera.</translation>
-        </message>
+    </message>
         <message>
             <source>Orchard, rough open</source>
             <comment>Name of symbol 413.1</comment>
-            <translation>Árboles frutales, abierto y escabroso</translation>
-        </message>
+            <translation>Árboles frutales, en monte despejado</translation>
+    </message>
         <message>
             <source>Land planted with trees or bushes, normally in a regular pattern.
 The dot lines may be orientated to show the direction of planting.
@@ -1352,9 +1352,9 @@ May be combined with symbol 407 (vegetation, slow running, good visibility) or 4
             <comment>Description of symbol 413.1</comment>
             <translation>Terreno cultivado con árboles o arbustos, normalmente en un patrón regular.
 Las líneas de puntos pueden orientarse mostrando la dirección de la plantación.
-Se debe combinar bien con el símbolo 401 (campo abierto) o el 403 (campo abierto y escabroso).
+Se debe combinar bien con el símbolo 401 (campo abierto) o el 403 (monte despejado).
 Se puede combinar con el símbolo 407 (vegetación, carrera lenta, buena visibilidad) o el 409 (vegetación, caminar, buena visibilidad) para indicar la reducción de la velocidad de carrera.</translation>
-        </message>
+    </message>
         <message>
             <source>Vineyard</source>
             <comment>Name of symbol 414</comment>
@@ -1363,18 +1363,18 @@ Se puede combinar con el símbolo 407 (vegetación, carrera lenta, buena visibil
         <message>
             <source>A vineyard or similar cultivated land containing dense rows of plants offering good or normal runnability in the direction of planting. The lines shall be orientated to show the direction of planting. Must be combined with either symbol 401 (open land) or symbol 403 (rough open land).</source>
             <comment>Description of symbol 414</comment>
-            <translation>Una viña o campo de cultivo similar que contiene densas filas de plantas que ofrecen velocidad de carrera normal o buena en la dirección de la plantación. Las líneas deben orientarse para indicar la dirección de la plantación. Se debe combinar con el símbolo 401 (campo abierto) o con el 403 (campo abierto y escabroso).</translation>
-        </message>
+            <translation>Una viña o campo de cultivo similar que contiene densas filas de plantas que ofrecen velocidad de carrera normal o buena en la dirección de la plantación. Las líneas deben orientarse para indicar la dirección de la plantación. Se debe combinar con el símbolo 401 (campo abierto) o con el 403 (monte despejado).</translation>
+    </message>
         <message>
             <source>Vineyard, rough open</source>
             <comment>Name of symbol 414.1</comment>
-            <translation>Viñedo, abierto y escabroso</translation>
-        </message>
+            <translation>Viñedo, en monte despejado</translation>
+    </message>
         <message>
             <source>A vineyard or similar cultivated land containing dense rows of plants offering good or normal runnability in the direction of planting. The lines shall be orientated to show the direction of planting. Must be combined with either symbol 401 (open land) or symbol 403 (rough open land).</source>
             <comment>Description of symbol 414.1</comment>
-            <translation>Una viña o campo de cultivo similar que contiene densas filas de plantas que ofrecen velocidad de carrera normal o buena en la dirección de la plantación. Las líneas deben orientarse para indicar la dirección de la plantación. Se debe combinar con el símbolo 401 (campo abierto) o con el 403 (campo abierto y escabroso).</translation>
-        </message>
+            <translation>Una viña o campo de cultivo similar que contiene densas filas de plantas que ofrecen velocidad de carrera normal o buena en la dirección de la plantación. Las líneas deben orientarse para indicar la dirección de la plantación. Se debe combinar con el símbolo 401 (campo abierto) o con el 403 (monte despejado).</translation>
+    </message>
         <message>
             <source>Distinct cultivation boundary</source>
             <comment>Name of symbol 415</comment>

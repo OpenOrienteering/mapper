@@ -427,7 +427,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="205"/>
         <source>RGB</source>
-        <translation type="unfinished"></translation>
+        <translation>RGB</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="215"/>
@@ -3957,7 +3957,7 @@ Importera datan ändå?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="875"/>
         <source>Move to my location</source>
-        <translation type="unfinished"></translation>
+        <translation>Flytta till min position</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="883"/>
@@ -4525,12 +4525,12 @@ Importera datan ändå?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1369"/>
         <source>1x zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>1x zoom</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1373"/>
         <source>2x zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>2x zoom</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1601"/>
@@ -5767,7 +5767,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1318"/>
         <source>The border of this symbol could not be loaded.</source>
-        <translation type="unfinished"></translation>
+        <translation>Begränsningslinjen för denna symbol kunde inte laddas.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1614"/>
@@ -5917,7 +5917,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/templates/template_tool_paint.cpp" line="551"/>
         <source>Template file exists: &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Bakgrundsfil finns: &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -6363,7 +6363,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="270"/>
         <source>Save world file</source>
-        <translation type="unfinished"></translation>
+        <translation>Spara world-fil</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="276"/>
