@@ -369,6 +369,10 @@ void FileFormatTest::understandsTest()
 	QFETCH(int, support);
 	
 	auto format = FileFormats.findFormat(format_id);
+#ifdef MAPPER_BIG_ENDIAN
+	if (format_id.startsWith("OCD"))
+		QEXPECT_FAIL("", "OCD format not support on big endian systems", Abort);
+#endif
 	QVERIFY(format);
 	QVERIFY(format->supportsImport());
 	QCOMPARE(int(format->understands(data.constData(), data.length())), support);
