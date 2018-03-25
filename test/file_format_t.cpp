@@ -61,6 +61,7 @@
 #include "fileformats/file_import_export.h"
 #include "fileformats/ocad8_file_format.h"
 #include "fileformats/ocd_file_export.h"
+#include "fileformats/ocd_file_format.h"
 #include "fileformats/xml_file_format.h"
 #include "templates/template.h"
 #include "undo/undo.h"
@@ -451,7 +452,7 @@ void FileFormatTest::saveAndLoad_data()
 				id.append(raw_path).append(" <> ").append(format_id);
 				auto path = QString::fromUtf8(raw_path);
 				QVERIFY(QFileInfo::exists(path));
-				QTest::newRow(id) << id << QByteArray{format_id} << 0 << path;
+				QTest::newRow(id) << id << QByteArray{format_id} << int(OcdFileFormat::legacyVersion()) << path;
 				if (qstrcmp(format_id, "OCD") == 0)
 				{
 					for (auto i : { 8, 9, 10, 11, 12 })
@@ -472,8 +473,8 @@ void FileFormatTest::saveAndLoad()
 	QFETCH(int, format_version);
 	QFETCH(QString, map_filename);
 	
-	OcdFileExport::default_version = format_version;
-	Settings::getInstance().setSetting(Settings::General_NewOcd8Implementation, format_version > 0);
+	OcdFileExport::default_version = decltype(OcdFileExport::default_version)(format_version);
+	Settings::getInstance().setSetting(Settings::General_NewOcd8Implementation, format_version != OcdFileFormat::legacyVersion());
 	
 	// Find the file format and verify that it exists
 	const FileFormat* format = FileFormats.findFormat(format_id);
