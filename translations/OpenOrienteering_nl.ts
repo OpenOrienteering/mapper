@@ -340,7 +340,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="169"/>
         <source>Cyan</source>
-        <translation>Cyan</translation>
+        <translation>Cyaan</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="174"/>
@@ -6918,12 +6918,12 @@ Wijzigingen opslaan?</translation>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="876"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="904"/>
         <source>An internal error occurred, sorry!</source>
-        <translation>Er is een interne fout opgetreden. Onze excuses.</translation>
+        <translation>Er is een interne fout opgetreden. Onze excuses!</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="891"/>
         <source>There are no symbols in clipboard which could be pasted!</source>
-        <translation>Het klembord bevat geen symbolen die hier ingevoegd kunnen worden.</translation>
+        <translation>Het klembord bevat geen symbolen die hier ingevoegd kunnen worden!</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1061"/>
@@ -7609,7 +7609,7 @@ Indien dat toch niet de bedoeling is, is dat geen probleem.</translation>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="745"/>
         <source>Please enter a valid integer number to set a group or leave the field empty to ungroup the template!</source>
-        <translation>Voer een geldig geheel getal in om een groep aan te geven, of laat leeg om het sjabloon aan geen enkele groep toe te wijzen.</translation>
+        <translation>Voer een geldig geheel getal in om een groep aan te geven, of laat leeg om het sjabloon aan geen enkele groep toe te wijzen!</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="993"/>
