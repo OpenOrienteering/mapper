@@ -300,7 +300,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="101"/>
         <source>Spot color printing</source>
-        <translation type="unfinished"></translation>
+        <translation>Afdrukken in steunkleuren</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="106"/>
@@ -3930,7 +3930,7 @@ Desondanks de gegevens importeren?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="875"/>
         <source>Move to my location</source>
-        <translation type="unfinished"></translation>
+        <translation>Verplaatsen naar mijn locatie</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="890"/>
@@ -4571,12 +4571,12 @@ gekozen</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1369"/>
         <source>1x zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>1 x zoom</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1373"/>
         <source>2x zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>2 x zoom</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/map/map_editor.cpp" line="1635"/>
@@ -5395,7 +5395,7 @@ en gebruik -indien beschikbaar- het muiswiel om uit te vergroten/verkleinen.</tr
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1318"/>
         <source>The border of this symbol could not be loaded.</source>
-        <translation type="unfinished"></translation>
+        <translation>De rand van dit symbool kon niet worden geladen.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2003"/>
@@ -5595,7 +5595,7 @@ en gebruik -indien beschikbaar- het muiswiel om uit te vergroten/verkleinen.</tr
     <message>
         <location filename="../src/templates/template_tool_paint.cpp" line="551"/>
         <source>Template file exists: &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Sjabloonbestand bestaat: &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -6066,7 +6066,7 @@ separations</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="270"/>
         <source>Save world file</source>
-        <translation type="unfinished"></translation>
+        <translation>Opslaan &apos;world file&apos;</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1110"/>
