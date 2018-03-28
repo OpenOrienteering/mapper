@@ -230,6 +230,12 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	
 	layout->addRow(tr("Mode:"), mode_widget);
 	
+	color_mode_combo = new QComboBox();
+	color_mode_combo->setEditable(false);
+	color_mode_combo->addItem(tr("Default"), QVariant());
+	color_mode_combo->addItem(tr("Device CMYK"), QVariant(true));
+	layout->addRow(tr("Color mode:"), color_mode_combo);
+	
 	dpi_combo = new QComboBox();
 	dpi_combo->setEditable(true);
 	dpi_combo->setValidator(new QRegExpValidator(QRegExp(QLatin1String("^[1-9]\\d{0,4}$|^[1-9]\\d{0,4} ")+tr("dpi")+QLatin1Char('$')), dpi_combo));
@@ -270,12 +276,6 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	world_file_check = new QCheckBox(tr("Save world file"));
 	layout->addRow(world_file_check);
 	world_file_check->hide();
-	
-	color_mode_combo = new QComboBox();
-	color_mode_combo->setEditable(false);
-	color_mode_combo->addItem(tr("Default"), QVariant());
-	color_mode_combo->addItem(tr("Device CMYK"), QVariant(true));
-	layout->addRow(tr("Color mode:"), color_mode_combo);
 	
 	scrolling_content = new QWidget();
 	scrolling_content->setLayout(layout);
