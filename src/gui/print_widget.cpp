@@ -274,7 +274,7 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	color_mode_combo = new QComboBox();
 	color_mode_combo->setEditable(false);
 	color_mode_combo->addItem(tr("Default"), QVariant());
-	color_mode_combo->addItem(tr("Device CMYK (experimental)"), QVariant(true));	
+	color_mode_combo->addItem(tr("Device CMYK"), QVariant(true));
 	layout->addRow(tr("Color mode:"), color_mode_combo);
 	
 	scrolling_content = new QWidget();

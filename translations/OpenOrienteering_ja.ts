@@ -6280,8 +6280,8 @@ zoom using the mouse wheel, if available.</source>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="277"/>
-        <source>Device CMYK (experimental)</source>
-        <translation>デバイス CMYK (実験的)</translation>
+        <source>Device CMYK</source>
+        <translation>デバイス CMYK</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="278"/>

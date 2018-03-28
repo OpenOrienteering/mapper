@@ -5877,8 +5877,8 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="277"/>
-        <source>Device CMYK (experimental)</source>
-        <translation>Ierīces CMYK (eksperimentāla versija)</translation>
+        <source>Device CMYK</source>
+        <translation>Ierīces CMYK</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="278"/>

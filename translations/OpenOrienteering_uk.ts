@@ -5712,8 +5712,8 @@ zoom using the mouse wheel, if available.</source>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="277"/>
-        <source>Device CMYK (experimental)</source>
-        <translation>Пристрій підтримує CMYK (експерементально)</translation>
+        <source>Device CMYK</source>
+        <translation>Пристрій підтримує CMYK</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="278"/>

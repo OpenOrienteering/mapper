@@ -5756,7 +5756,7 @@ se disponibile si può zoomare con la rotella del mouse.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="277"/>
-        <source>Device CMYK (experimental)</source>
+        <source>Device CMYK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

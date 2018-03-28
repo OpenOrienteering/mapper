@@ -5945,8 +5945,8 @@ zoom usando la rueda del ratón, si dispone de esos elementos.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="277"/>
-        <source>Device CMYK (experimental)</source>
-        <translation>CMYK de dispositivo (experimental)</translation>
+        <source>Device CMYK</source>
+        <translation>CMYK de dispositivo</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="278"/>

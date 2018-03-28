@@ -5657,8 +5657,8 @@ zoom menggunakan roda mouse, jika tersedia.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="277"/>
-        <source>Device CMYK (experimental)</source>
-        <translation>Perangkat CMYK (eksperimental)</translation>
+        <source>Device CMYK</source>
+        <translation>Perangkat CMYK</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="278"/>
