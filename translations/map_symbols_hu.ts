@@ -3855,7 +3855,8 @@ c) a határvonal hiánya azt jelenti, hogy a terepen nincs semmiféle jelölés.
 
 The purple line will extend a bit into the finish symbol. This is a shortcoming of this simple approach.</source>
             <comment>Description of symbol 799</comment>
-            <translation type="unfinished">Ez a szimbólum egy egyszerű és gyors útja az edző pályák létrehozásához.</translation>
+            <translation>E szimbólum  segítségével egy egyszerűen és gyorsan hozhatunk létre edző pályákat.
+A lila színnel a rajttól a célig megrajzolható a pálya. Egyszerű, de nem tökéletes eszköz.</translation>
     </message>
         <message>
             <source>OpenOrienteering Logo</source>
@@ -5688,13 +5689,16 @@ Szín: fekete, barna 0%(fehér), 10%, 20 % vagy 30 % (városi) / 20%, 30 %, 40 %
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable pipeline!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 534</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>An impassable pipeline (gas, water, oil, etc.) above ground level which shall not be crossed, due to forbidden access or because it may constitute a danger to the competitor because of its height.
+
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable pipeline!
+Competitors violating this rule will be disqualified.&lt;/span&gt;</translation>
+    </message>
         <message>
             <source>High tower</source>
             <comment>Name of symbol 535</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Magas torony</translation>
+    </message>
         <message>
             <source>A high tower or large pylon. Very large towers shall be represented in plan shape with the symbol building (526.1). The symbol is orientated to north.</source>
             <comment>Description of symbol 535</comment>
@@ -5703,13 +5707,13 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>Small tower</source>
             <comment>Name of symbol 536</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Kis torony</translation>
+    </message>
         <message>
             <source>An obvious small tower, platform or seat. The symbol is orientated to north.</source>
             <comment>Description of symbol 536</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Kis méretű toronyszerű építmény. A jelet északra kell tájolni.</translation>
+    </message>
         <message>
             <source>Cairn, memorial, small monument or boundary stone</source>
             <comment>Name of symbol 537</comment>

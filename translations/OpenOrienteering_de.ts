@@ -6008,8 +6008,8 @@ rationen</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="277"/>
-        <source>Device CMYK (experimental)</source>
-        <translation>Geräteabhängiges CMYK (experimentell)</translation>
+        <source>Device CMYK</source>
+        <translation>Geräteabhängiges CMYK</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="278"/>

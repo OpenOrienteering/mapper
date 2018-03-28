@@ -5810,8 +5810,8 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="277"/>
-        <source>Device CMYK (experimental)</source>
-        <translation>CMYK eszköz (kísérleti)</translation>
+        <source>Device CMYK</source>
+        <translation>CMYK eszköz</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="278"/>

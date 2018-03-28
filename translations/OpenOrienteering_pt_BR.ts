@@ -5754,8 +5754,8 @@ aproximar e afastar usando a roda do mouse, se disponível.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="277"/>
-        <source>Device CMYK (experimental)</source>
-        <translation>Dispositivo CMYK (experimental)</translation>
+        <source>Device CMYK</source>
+        <translation>Dispositivo CMYK</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="278"/>

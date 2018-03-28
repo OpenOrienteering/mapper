@@ -6372,8 +6372,8 @@ zooma med scrollhjulet om tillgängligt.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="277"/>
-        <source>Device CMYK (experimental)</source>
-        <translation>Enhets CMYK (experimentell)</translation>
+        <source>Device CMYK</source>
+        <translation>Enhets CMYK</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="278"/>

@@ -5877,8 +5877,8 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="277"/>
-        <source>Device CMYK (experimental)</source>
-        <translation>Ierīces CMYK (eksperimentāla versija)</translation>
+        <source>Device CMYK</source>
+        <translation>Ierīces CMYK</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="278"/>
@@ -6167,7 +6167,7 @@ dalījumi</translation>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="114"/>
         <source>Keep the symbols&apos; hidden / protected states of the old symbol set</source>
-        <translation type="unfinished"></translation>
+        <translation>Saglabāt simbolu neredzamo / aizsargāto vecās simbolu kopas statusu</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="137"/>
@@ -6193,50 +6193,50 @@ dalījumi</translation>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="139"/>
         <source>Match by symbol name</source>
-        <translation type="unfinished"></translation>
+        <translation>Saskaņot ar simbolu nosaukumu</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="144"/>
         <source>Assign new symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Piešķirt jaunus simbolus</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="145"/>
         <source>Pattern</source>
-        <translation type="unfinished"></translation>
+        <translation>Paraugs</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="157"/>
         <source>Clear replacements</source>
-        <translation type="unfinished"></translation>
+        <translation>Notīrīt aizstāšanas operācijas</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="160"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="236"/>
         <source>Open CRT file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ielasīt CRT datni...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="162"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="332"/>
         <source>Save CRT file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Saglabāt CRT datni...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="167"/>
         <source>Symbol mapping</source>
-        <translation type="unfinished"></translation>
+        <translation>Simbolu atbilstība</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="235"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="331"/>
         <source>CRT file</source>
-        <translation type="unfinished"></translation>
+        <translation>CRT datne</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="285"/>
         <source>There are multiple replacements for symbol %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pastāv vairāki simbola %1 aizstājēji.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="288"/>
@@ -6255,13 +6255,17 @@ dalījumi</translation>
 %1
 
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Nevar saglabāt datni:
+%1
+
+%2</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="362"/>
         <source>The cross reference table has been modified.
 Do you want to save your changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>Krustenisko atsauču tabulā ir izmaiņas.
+Vai vēlaties saglabāt savas izmaiņas?</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="519"/>
@@ -6297,7 +6301,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="657"/>
         <source>Cannot load CRT file, aborting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nevar ielasīt CRT datni, darbības atcelšana.</translation>
     </message>
 </context>
 <context>
@@ -6541,7 +6545,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="71"/>
         <source>Same as map</source>
-        <translation type="unfinished"></translation>
+        <translation>Tāpat kā kartē</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="77"/>
@@ -6593,22 +6597,22 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/core/storage_location.cpp" line="288"/>
         <source>&apos;%1&apos; is stored in a regular location.</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos; atrodas parastajā vietnē.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="291"/>
         <source>&apos;%1&apos; is located in app storage. The files will be removed when uninstalling the app.</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos; atrodas programmas vietnē. Datnes tiks noņemtas, noņemot programmu.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="294"/>
         <source>&apos;%1&apos; is not writable. Changes cannot be saved.</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos; nav rakstāms. Izmaiņas nevar saglabāt.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="297"/>
         <source>&apos;%1&apos; is not a valid storage location.</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos; nav derīga krātuves atrašanās vietne.</translation>
     </message>
 </context>
 <context>
@@ -6667,7 +6671,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1284"/>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation>Apraksts</translation>
     </message>
 </context>
 <context>
@@ -6758,7 +6762,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="149"/>
         <source>Enable drag and drop</source>
-        <translation type="unfinished"></translation>
+        <translation>Iespējo vilkšanu un nomešanu</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="876"/>
@@ -6786,7 +6790,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1063"/>
         <source>Remove all objects with this symbol from selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Izņemt no atlases visus objektus ar šo simbolu</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1297"/>
@@ -6808,7 +6812,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1071"/>
         <source>Remove all objects with selected symbols from selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Izņemt no atlases visus objektus ar izvēlētajiem simboliem</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1072"/>
@@ -6829,7 +6833,7 @@ Do you want to save your changes?</source>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="99"/>
         <source>F1</source>
         <comment>Shortcut for displaying the symbol&apos;s description</comment>
-        <translation type="unfinished"></translation>
+        <translation>F1</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="139"/>
@@ -6894,17 +6898,17 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="125"/>
         <source>Switch symbol of selected objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Pārslēgt atlasīto objektu simbolu</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="126"/>
         <source>Fill / Create border for selected objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Aizpildīt / Izveidot robežu atlasītajiem objektiem</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="808"/>
         <source>Scale symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Mērogot simbolus</translation>
     </message>
 </context>
 <context>
@@ -6917,7 +6921,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="104"/>
         <source>Template:</source>
-        <translation type="unfinished"></translation>
+        <translation>Veidne:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="105"/>
@@ -6981,17 +6985,17 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="62"/>
         <source>Relation</source>
-        <translation type="unfinished"></translation>
+        <translation>Saistība</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="62"/>
         <source>Key</source>
-        <translation type="unfinished"></translation>
+        <translation>Atslēga</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="62"/>
         <source>Comparison</source>
-        <translation type="unfinished"></translation>
+        <translation>Salīdzinājums</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="62"/>
@@ -7001,12 +7005,12 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="90"/>
         <source>Add Row</source>
-        <translation type="unfinished"></translation>
+        <translation>Pievienot rindu</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="91"/>
         <source>Remove Row</source>
-        <translation type="unfinished"></translation>
+        <translation>Aizvākt rindu</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="97"/>
@@ -7029,17 +7033,15 @@ to jump over the lazy dog
     <message numerus="yes">
         <location filename="../src/gui/map/map_find_feature.cpp" line="231"/>
         <source>%n object(s) selected</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>Atlasīti %n objekti</numerusform>
+        <numerusform>Atlasīts %n objekts</numerusform>
+        <numerusform>Atlasīti %n objekti</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="177"/>
         <location filename="../src/gui/map/map_find_feature.cpp" line="223"/>
         <source>Invalid query</source>
-        <translation type="unfinished"></translation>
+        <translation>Nederīgs vaicājums</translation>
     </message>
 </context>
 <context>
@@ -7054,7 +7056,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="55"/>
         <source>Key</source>
-        <translation type="unfinished"></translation>
+        <translation>Atslēga</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="55"/>
@@ -7069,12 +7071,12 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="233"/>
         <source>Key exists</source>
-        <translation type="unfinished"></translation>
+        <translation>Atslēga pastāv</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="234"/>
         <source>The key &quot;%1&quot; already exists and must not be used twice.</source>
-        <translation type="unfinished"></translation>
+        <translation>Atslēga &quot;%1&quot; jau pastāv un to nedrīkst izmantot divas reizes.</translation>
     </message>
 </context>
 <context>
@@ -7098,17 +7100,17 @@ to jump over the lazy dog
         <location filename="../src/templates/template.cpp" line="578"/>
         <location filename="../src/templates/template.cpp" line="607"/>
         <source>No such file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Šāda datne nepastāv.</translation>
     </message>
     <message>
         <location filename="../src/templates/template.cpp" line="621"/>
         <source>Is the format of the file correct for this template type?</source>
-        <translation type="unfinished"></translation>
+        <translation>Vai datnes formāts šim veidnes tipam ir korekts?</translation>
     </message>
     <message>
         <location filename="../src/templates/template.cpp" line="628"/>
         <source>Not enough free memory.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nav pietiekami daudz brīvas atmiņas.</translation>
     </message>
     <message>
         <source>Cannot change the template to this file! Is the format of the file correct for this template type?</source>
@@ -7235,7 +7237,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template_image.cpp" line="162"/>
         <source>Not enough free memory (image size: %1x%2 pixels)</source>
-        <translation type="unfinished"></translation>
+        <translation>Nav pietiekami daudz brīvas atmiņas (attēla izmērs: %1x%2 pikseļi)</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="202"/>
@@ -7411,7 +7413,7 @@ Ja uz šī šablona netiks zīmēts, tā nav problēma.</translation>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="203"/>
         <location filename="../src/templates/template_tool_paint.cpp" line="458"/>
         <source>Add template...</source>
-        <translation type="unfinished"></translation>
+        <translation>Pievienot veidni...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="207"/>
@@ -7431,7 +7433,7 @@ Ja uz šī šablona netiks zīmēts, tā nav problēma.</translation>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="238"/>
         <source>Import and remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Importēt un noņemt</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="271"/>
@@ -7497,12 +7499,12 @@ Ja uz šī šablona netiks zīmēts, tā nav problēma.</translation>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="998"/>
         <source>Don&apos;t scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Nemērogot</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="993"/>
         <source>Scale by nominal map scale ratio (%1 %)</source>
-        <translation type="unfinished"></translation>
+        <translation>Mērogot pēc kartes nominālā mēroga attiecības (%1 %)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="393"/>
@@ -7517,23 +7519,23 @@ Ja uz šī šablona netiks zīmēts, tā nav problēma.</translation>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="995"/>
         <source>Scale by current template scaling (%1 %)</source>
-        <translation type="unfinished"></translation>
+        <translation>Mērogot pēc patreizējās veidnes mēroga (%1 %)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1000"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1032"/>
         <source>Template import</source>
-        <translation type="unfinished"></translation>
+        <translation>Veidnes imports</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1001"/>
         <source>How shall the symbols of the imported template map be scaled?</source>
-        <translation type="unfinished"></translation>
+        <translation>Kā mērogot importējamās veidnes kartes simbolus?</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1033"/>
         <source>The template will be invisible in the overprinting simulation. Switch to normal view?</source>
-        <translation type="unfinished"></translation>
+        <translation>Veidne būs neredzama virsiespieduma imitācijā. Pārslēgt uz normālskatu?</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1166"/>
@@ -7592,17 +7594,17 @@ Ja uz šī šablona netiks zīmēts, tā nav problēma.</translation>
     <message>
         <location filename="../src/templates/template_positioning_dialog.cpp" line="47"/>
         <source>Coordinate system</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinātu sistēma</translation>
     </message>
     <message>
         <location filename="../src/templates/template_positioning_dialog.cpp" line="48"/>
         <source>Real</source>
-        <translation type="unfinished"></translation>
+        <translation>Reāls</translation>
     </message>
     <message>
         <location filename="../src/templates/template_positioning_dialog.cpp" line="49"/>
         <source>Map</source>
-        <translation type="unfinished"></translation>
+        <translation>Karte</translation>
     </message>
     <message>
         <location filename="../src/templates/template_positioning_dialog.cpp" line="52"/>
@@ -7631,7 +7633,7 @@ Ja uz šī šablona netiks zīmēts, tā nav problēma.</translation>
     <message>
         <location filename="../src/templates/template_track.cpp" line="141"/>
         <source>This template must be loaded with GDAL/OGR.</source>
-        <translation type="unfinished"></translation>
+        <translation>Šo veidni jāielasa ar GDAL/OGR.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="190"/>
@@ -7736,7 +7738,8 @@ Ja uz šī šablona netiks zīmēts, tā nav problēma.</translation>
         <location filename="../src/sensors/gps_track.cpp" line="497"/>
         <source>%1:
 Not an OSM file.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1:
+Nav OSM datne.</translation>
     </message>
     <message>
         <location filename="../src/sensors/gps_track.cpp" line="507"/>
@@ -7993,7 +7996,7 @@ Maksimālā atbalstītā versija ir %2.</translation>
     <message>
         <location filename="../src/gui/widgets/crs_param_widgets.cpp" line="67"/>
         <source>Calculate</source>
-        <translation type="unfinished"></translation>
+        <translation>Aprēķināt</translation>
     </message>
 </context>
 <context>
@@ -8049,7 +8052,7 @@ Maksimālā atbalstītā versija ir %2.</translation>
         <location filename="../src/tools/tool_helpers.cpp" line="623"/>
         <source>%1 m</source>
         <comment>meter</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 m</translation>
     </message>
 </context>
 <context>
@@ -8080,7 +8083,7 @@ Maksimālā atbalstītā versija ir %2.</translation>
         <location filename="../src/gui/util_gui.cpp" line="204"/>
         <source>See more...</source>
         <extracomment>This &quot;See more&quot; is displayed as a link to the manual in What&apos;s-this tooltips.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Skatīt vairāk...</translation>
     </message>
 </context>
 <context>
@@ -8088,7 +8091,7 @@ Maksimālā atbalstītā versija ir %2.</translation>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="208"/>
         <source>Older versions of Mapper do not support multiple map parts. To save the map in compatibility mode, you must first merge all map parts.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vecākas Mapper versijas neatbalsta vairākas kartes daļas. Lai saglabātu karti saderīgā formātā, vispirms jāsapludina visas kartes daļas.</translation>
     </message>
 </context>
 <context>
@@ -8101,7 +8104,7 @@ Maksimālā atbalstītā versija ir %2.</translation>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="523"/>
         <source>Some coordinates were out of bounds for printing. Map content was adjusted.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dažas koordinātes bija ārpus robežām drukāšanai. Kartes saturs tika koriģēts.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="573"/>
@@ -8111,18 +8114,18 @@ Maksimālā atbalstītā versija ir %2.</translation>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="574"/>
         <source>Parts of this file cannot be read by this version of Mapper. Minimum required version: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Datnes daļas nevar ielasīt ar šo Mapper versiju. Minimālā nepieciešamā versija: %1</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="608"/>
         <source>Error at line %1 column %2: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Kļūda rindā %1 ailē %2: %3</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="620"/>
         <location filename="../src/fileformats/xml_file_format.cpp" line="877"/>
         <source>Some invalid characters had to be removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dažas nederīgas rakstzīmes bija jāatmet.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="638"/>
@@ -8132,13 +8135,13 @@ Maksimālā atbalstītā versija ir %2.</translation>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="639"/>
         <source>Unsupported or invalid georeferencing specification &apos;%1&apos;: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Neatbalstīta vai nederīga georeferenču specifikācija &apos;%1&apos;: %2</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="770"/>
         <location filename="../src/fileformats/xml_file_format.cpp" line="823"/>
         <source>Could not set knockout property of color &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nevarēja iestatīt bloķējošo īpašību krāsai &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="783"/>

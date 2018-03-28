@@ -5890,8 +5890,8 @@ utiliser la molette de la souris pour zoomer.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="277"/>
-        <source>Device CMYK (experimental)</source>
-        <translation>Équipement CMYK (en test)</translation>
+        <source>Device CMYK</source>
+        <translation>Équipement CMYK</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="278"/>

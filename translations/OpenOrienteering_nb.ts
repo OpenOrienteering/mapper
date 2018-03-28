@@ -5937,8 +5937,8 @@ rull musehjulet for å zoome.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="277"/>
-        <source>Device CMYK (experimental)</source>
-        <translation>Standard CMYK (eksperimentelt)</translation>
+        <source>Device CMYK</source>
+        <translation>Standard CMYK</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="278"/>
