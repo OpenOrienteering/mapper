@@ -604,11 +604,6 @@ void PrintWidget::setTarget(const QPrinterInfo* target)
 	if (printer_properties_button)
 		printer_properties_button->setEnabled(is_printer);
 
-	world_file_check->setVisible(!is_printer);
-	// If MapCoord (0,0) maps to projected (0,0), then there is probably
-	// no point in writing a world file.
-	world_file_check->setChecked(!map->getGeoreferencing().toProjectedCoords(MapCoordF{}).isNull());
-	
 	bool is_image_target = target == MapPrinter::imageTarget();
 	vector_mode_button->setEnabled(!is_image_target);
 	separations_mode_button->setEnabled(!is_image_target && map->hasSpotColors());
@@ -617,6 +612,11 @@ void PrintWidget::setTarget(const QPrinterInfo* target)
 		raster_mode_button->setChecked(true);
 		printModeChanged(raster_mode_button);
 	}
+	
+	world_file_check->setVisible(is_image_target);
+	// If MapCoord (0,0) maps to projected (0,0), then there is probably
+	// no point in writing a world file.
+	world_file_check->setChecked(!map->getGeoreferencing().toProjectedCoords(MapCoordF{}).isNull());
 	
 	updateColorMode();
 }
