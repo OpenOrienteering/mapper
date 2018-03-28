@@ -300,7 +300,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="101"/>
         <source>Spot color printing</source>
-        <translation type="unfinished"></translation>
+        <translation>Afdrukken in steunkleuren</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="106"/>
@@ -340,7 +340,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="169"/>
         <source>Cyan</source>
-        <translation>Cyan</translation>
+        <translation>Cyaan</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="174"/>
@@ -3930,7 +3930,7 @@ Desondanks de gegevens importeren?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="875"/>
         <source>Move to my location</source>
-        <translation type="unfinished"></translation>
+        <translation>Verplaatsen naar mijn locatie</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="890"/>
@@ -4571,12 +4571,12 @@ gekozen</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1369"/>
         <source>1x zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>1 x zoom</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1373"/>
         <source>2x zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>2 x zoom</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/map/map_editor.cpp" line="1635"/>
@@ -5395,7 +5395,7 @@ en gebruik -indien beschikbaar- het muiswiel om uit te vergroten/verkleinen.</tr
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1318"/>
         <source>The border of this symbol could not be loaded.</source>
-        <translation type="unfinished"></translation>
+        <translation>De rand van dit symbool kon niet worden geladen.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2003"/>
@@ -5595,7 +5595,7 @@ en gebruik -indien beschikbaar- het muiswiel om uit te vergroten/verkleinen.</tr
     <message>
         <location filename="../src/templates/template_tool_paint.cpp" line="551"/>
         <source>Template file exists: &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Sjabloonbestand bestaat: &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -6066,7 +6066,7 @@ separations</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="270"/>
         <source>Save world file</source>
-        <translation type="unfinished"></translation>
+        <translation>Opslaan &apos;world file&apos;</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1110"/>
@@ -6918,12 +6918,12 @@ Wijzigingen opslaan?</translation>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="876"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="904"/>
         <source>An internal error occurred, sorry!</source>
-        <translation>Er is een interne fout opgetreden. Onze excuses.</translation>
+        <translation>Er is een interne fout opgetreden. Onze excuses!</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="891"/>
         <source>There are no symbols in clipboard which could be pasted!</source>
-        <translation>Het klembord bevat geen symbolen die hier ingevoegd kunnen worden.</translation>
+        <translation>Het klembord bevat geen symbolen die hier ingevoegd kunnen worden!</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1061"/>
@@ -7609,7 +7609,7 @@ Indien dat toch niet de bedoeling is, is dat geen probleem.</translation>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="745"/>
         <source>Please enter a valid integer number to set a group or leave the field empty to ungroup the template!</source>
-        <translation>Voer een geldig geheel getal in om een groep aan te geven, of laat leeg om het sjabloon aan geen enkele groep toe te wijzen.</translation>
+        <translation>Voer een geldig geheel getal in om een groep aan te geven, of laat leeg om het sjabloon aan geen enkele groep toe te wijzen!</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="993"/>
