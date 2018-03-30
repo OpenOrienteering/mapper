@@ -268,18 +268,30 @@ void OcdFileImport::importGeoreferencing(const OcdFile< F >& file)
 	handleStrings(file, { { 1039, &OcdFileImport::importGeoreferencing } });
 }
 
+namespace {
+
+void tryParamConvert(int& out, const QString& param_value)
+{
+	bool ok;
+	auto value = param_value.toInt(&ok);
+	if (ok)
+		out = value;
+}
+
+}  // anonymous namespace
+
 void OcdFileImport::importGeoreferencing(const QString& param_string, int /*ocd_version*/)
 {
 	const QChar* unicode = param_string.unicode();
 	
 	// si_ScalePar (type 1039) contains both georeferencing and map grid
-	// display parameters. Georeferencing is delegated to a dedicated class
-	// and grid parameters are processed below.
+	// display parameters. Georeferencing data is extracted into a structure
+	// and passed on to a dedicated class. Screen grid parameters are
+	// processed below.
 	auto add_warning = [this](const QString& w){ addWarning(w); };
 	Georeferencing georef;
+	OcdGeorefFields fields;
 
-	OcdGeoref::setupGeorefFromString(georef, param_string, add_warning);
-	
 	int i = param_string.indexOf(QLatin1Char('\t'), 0);
 	; // skip first word for this entry type
 	while (i >= 0)
@@ -290,6 +302,28 @@ void OcdFileImport::importGeoreferencing(const QString& param_string, int /*ocd_
 		const QString param_value = QString::fromRawData(unicode+i+2, len); // no copying!
 		switch (param_string[i+1].toLatin1())
 		{
+		case 'm':
+			tryParamConvert(fields.m, param_value);
+			break;
+		case 'x':
+			tryParamConvert(fields.x, param_value);
+			break;
+		case 'y':
+			tryParamConvert(fields.y, param_value);
+			break;
+		case 'i':
+			tryParamConvert(fields.i, param_value);
+			break;
+		case 'r':
+			tryParamConvert(fields.r, param_value);
+			break;
+		case 'a':
+			{
+				auto double_param = param_value.toDouble(&ok);
+				if (ok)
+					fields.a = double_param;
+			}
+			break;
 		case 'd':
 			{
 				auto spacing = param_value.toDouble(&ok);
@@ -311,6 +345,8 @@ void OcdFileImport::importGeoreferencing(const QString& param_string, int /*ocd_
 		i = next_i;
 	}
 	
+	fields.setupGeoref(georef, add_warning);
+
 	map->setGeoreferencing(georef);
 }
 

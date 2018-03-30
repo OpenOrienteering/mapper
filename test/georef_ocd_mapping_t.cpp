@@ -35,6 +35,8 @@ using namespace OpenOrienteering;
 // mock stuff to satisfy link-time dependencies
 int XMLFileFormat::active_version = 6;
 
+Q_DECLARE_METATYPE(OcdGeorefFields)
+
 struct GeorefCoreData
 {
 	unsigned int scale;
@@ -89,41 +91,35 @@ private slots:
 	}
 	void testOcdToMapper_data()
 	{
-		QTest::addColumn<QString>("si_ScalePar");
-		QTest::addColumn<int>("ocd_version"); // <Version><3 digit Subversion>
+		QTest::addColumn<OcdGeorefFields>("ocd_string_fields");
 		QTest::addColumn<GeorefCoreData>("georef_result");
 		QTest::addColumn<unsigned>("n_warnings"); // number of warnings expected
 
 		QTest::newRow("Sibelius Monumentti - Finland, TM35FIN, ETRS89/ETRS-TM35FIN")
-		        << QStringLiteral("\tm15000\tg50.0000\tr1\tx384268\ty6673512\ta10.70000000\td1000.000000\ti6005\tb0.00\tc0.00")
-		        << 11006
+		        << OcdGeorefFields { 10.7, 15000, 384268, 6673512, 6005, 1 }
 		        << GeorefCoreData { 15000, 10.7, 10.7, { 384268, 6673512 }, QStringLiteral("EPSG"), { QStringLiteral("3067") } }
 		        << 0U;
 		QTest::newRow("CERN - Switzerland, CH1903")
-		        << QStringLiteral("\tm15000\tg50.0000\tr1\tx495133\ty129609\ta2.72000000\td1000.000000\ti14001\tb0.00\tc0.00")
-		        << 11006
+		        << OcdGeorefFields { 2.72000000, 15000, 495133, 129609, 14001, 1 }
 		        << GeorefCoreData { 15000, 2.72, 2.72, { 495133, 129609 }, QStringLiteral("EPSG"), { QStringLiteral("21781") } }
 		        << 0U;
 		QTest::newRow("Launch Pad 39A - USA, Florida, WGS 84/UTM zone 17")
-		        << QStringLiteral("\tm15000\tg50.0000\tr1\tx538705\ty3164567\ta-7.06000000\td1000.000000\ti2017\tb0.00\tc0.00")
-		        << 11006
+		        << OcdGeorefFields { -7.06000000, 15000, 538705, 3164567, 2017, 1 }
 		        << GeorefCoreData { 15000, -7.06, -7.06, { 538705, 3164567 }, QStringLiteral("UTM"), { QStringLiteral("17") } }
 		        << 0U;
 		QTest::newRow("Brandenburger Tor - Germany, DHDN/3-degree Gauss-Kruger zone 4")
-		        << QStringLiteral("\tm15000\tg50.0000\tr1\tx4571442\ty5807888\ta2.84\td1000\ti8004\tb0.00\tc0.00")
-		        << 11006
+		        << OcdGeorefFields { 2.84, 15000, 4571442, 5807888, 8004, 1 }
 		        << GeorefCoreData { 15000, 2.84, 2.84, { 4571442, 5807888 }, QStringLiteral("Gauss-Krueger, datum: Potsdam"), { QStringLiteral("4") } }
 		        << 0U;
 		QTest::newRow("Brandenburger Tor - Germany, WGS 84/UTM zone 33N")
-		        << QStringLiteral("\tm15000\tg50.0000\tr1\tx367205\ty5807281\ta5.22000000\td1000.000000\ti2033\tb0.00\tc0.00")
-		        << 11006
+		        << OcdGeorefFields { 5.22000000, 15000, 367205, 5807281, 2033, 1 }
 		        << GeorefCoreData { 15000, 5.22, 5.22, { 367205, 5807281 }, QStringLiteral("UTM"), { QStringLiteral("33") } }
 		        << 0U;
 	}
 
 	void testOcdToMapper()
 	{
-		QFETCH(QString, si_ScalePar);
+		QFETCH(OcdGeorefFields, ocd_string_fields);
 		QFETCH(GeorefCoreData, georef_result);
 		QFETCH(unsigned, n_warnings);
 
@@ -131,7 +127,7 @@ private slots:
 		auto add_warning = [&warnings](auto w) { warnings.push_back(w); };
 		Georeferencing georef;
 
-		OcdGeoref::setupGeorefFromString(georef, si_ScalePar, add_warning);
+		ocd_string_fields.setupGeoref(georef, add_warning);
 
 		QStringList crs_params;
 		for (auto s : georef.getProjectedCRSParameters())

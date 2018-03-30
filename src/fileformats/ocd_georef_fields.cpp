@@ -22,19 +22,14 @@
 
 #include <vector>
 
-#include <QChar>
-#include <QLatin1Char>
 #include <QLatin1String>
 #include <QPointF>
 #include <QStringRef>
-#include <QtGlobal>
 
 #include "core/crs_template.h"
 #include "core/georeferencing.h"
 
 namespace OpenOrienteering {
-
-namespace OcdGeoref {
 
 namespace {
 
@@ -119,67 +114,20 @@ void applyGridAndZone(Georeferencing& georef,
 
 }  // anonymous namespace
 
-void setupGeorefFromString(Georeferencing& georef,
-                           const QString& param_string,
-                           const std::function<void (const QString&)>& warning_handler)
+void OcdGeorefFields::setupGeoref(Georeferencing& georef,
+                                  const std::function<void (const QString&)>& warning_handler) const
 {
-	const QChar* unicode = param_string.unicode();
-	QString combined_grid_zone;
-	QPointF proj_ref_point;
-	bool x_ok = false, y_ok = false;
+	if (m > 0)
+		georef.setScaleDenominator(m);
 
-	int i = param_string.indexOf(QLatin1Char('\t'), 0);
-	; // skip first word for this entry type
-	while (i >= 0)
-	{
-		bool ok;
-		int next_i = param_string.indexOf(QLatin1Char('\t'), i+1);
-		int len = (next_i > 0 ? next_i : param_string.length()) - i - 2;
-		const QString param_value = QString::fromRawData(unicode+i+2, len); // no copying!
-		switch (param_string[i+1].toLatin1())
-		{
-		case 'm':
-			{
-				double scale = param_value.toDouble(&ok);
-				if (ok && scale >= 0)
-					georef.setScaleDenominator(qRound(scale));
-			}
-			break;
-		case 'a':
-			{
-				double angle = param_value.toDouble(&ok);
-				if (ok && qAbs(angle) >= 0.01)
-					georef.setGrivation(angle);
-			}
-			break;
-		case 'x':
-			proj_ref_point.setX(param_value.toDouble(&x_ok));
-			break;
-		case 'y':
-			proj_ref_point.setY(param_value.toDouble(&y_ok));
-			break;
-		case 'i':
-			combined_grid_zone = param_value;
-			break;
-		case '\t':
-			// fallthrough
-		default:
-			; // nothing
-		}
-		i = next_i;
-	}
+	if (qIsFinite(a) && qAbs(a) >= 0.01)
+		georef.setGrivation(a);
 
-	if (!combined_grid_zone.isEmpty())
-	{
-		applyGridAndZone(georef, combined_grid_zone, warning_handler);
-	}
+	if (r)
+		applyGridAndZone(georef, QString::number(i), warning_handler);
 
-	if (x_ok && y_ok)
-	{
-		georef.setProjectedRefPoint(proj_ref_point, false);
-	}
+	QPointF proj_ref_point(x, y);
+	georef.setProjectedRefPoint(proj_ref_point, false);
 }
-
-}  // namespace OcdGeoref
 
 }  // namespace OpenOrienteering
