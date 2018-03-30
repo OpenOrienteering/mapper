@@ -115,6 +115,14 @@ private slots:
 		        << OcdGeorefFields { 5.22000000, 15000, 367205, 5807281, 2033, 1 }
 		        << GeorefCoreData { 15000, 5.22, 5.22, { 367205, 5807281 }, QStringLiteral("UTM"), { QStringLiteral("33") } }
 		        << 0U;
+		QTest::newRow("Nasca airport - Peru, WGS 84/UTM zone 18S")
+		        << OcdGeorefFields { -2.70000000, 15000, 504606, 8358028, -2018, 1 }
+		        << GeorefCoreData { 15000, -2.70, -2.70, { 504606, 8358028 }, QStringLiteral("UTM"), { QStringLiteral("18 S") } }
+		        << 0U;
+		QTest::newRow("Wellington airport - New Zealand, WGS 84/UTM zone 60S")
+		        << OcdGeorefFields { 21.14000000, 15000, 316493, 5423682, -2060, 1 }
+		        << GeorefCoreData { 15000, 21.14, 21.14, { 316493, 5423682 }, QStringLiteral("UTM"), { QStringLiteral("60 S") } }
+		        << 0U;
 	}
 
 	void testOcdToMapper()

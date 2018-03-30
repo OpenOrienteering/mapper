@@ -20,96 +20,170 @@
 
 #include "ocd_georef_fields.h"
 
-#include <vector>
+#include <algorithm>
+#include <iterator>
+#include <utility>
 
 #include <QLatin1String>
 #include <QPointF>
-#include <QStringRef>
+#include <QtGlobal>
+#include <QtNumeric>
 
 #include "core/crs_template.h"
-#include "core/georeferencing.h"
+// translation context
+#include "fileformats/ocd_file_import.h" // IWYU pragma: keep
 
 namespace OpenOrienteering {
 
 namespace {
 
+enum struct MapperCrs
+{
+	Invalid,
+	Local,
+	Utm,
+	GaussKrueger,
+	Epsg,
+};
+
+constexpr struct
+{
+	MapperCrs key;
+	const char* value;
+} crs_string_map[] {
+    { MapperCrs::Utm, "UTM" },
+    { MapperCrs::GaussKrueger, "Gauss-Krueger, datum: Potsdam" },
+    { MapperCrs::Epsg, "EPSG" },
+};
+
+/**
+ * OcdGrid enum lists OCD country codes which happen to be thousands in the
+ * `i' field value.
+ */
+enum struct OcdGrid
+{
+	Local = 1,
+	Utm = 2,
+	Finland = 6,
+	Germany = 8,
+	Switzerland = 14,
+};
+
+constexpr struct
+{
+	const OcdGrid ocd_grid_id;
+	const int ocd_zone_id, epsg_code;
+} grid_zone_epsg_codes[] {
+    { OcdGrid::Finland, 5, 3067 }, // TM35FIN, ETRS89 / ETRS-TM35FIN
+    { OcdGrid::Switzerland, 1, 21781 }, // CH1903/LV03, CH1903/LV03
+    { OcdGrid::Germany, 2, 31466 }, // DHDN, Gauss-Krüger Zone 2
+    { OcdGrid::Germany, 3, 31467 }, // DHDN, Gauss-Krüger Zone 3
+    { OcdGrid::Germany, 4, 31468 }, // DHDN, Gauss-Krüger Zone 4
+    { OcdGrid::Germany, 5, 31469 }, // DHDN, Gauss-Krüger Zone 5
+};
+
+/**
+ * Plain translation from OCD grid/zone combination into a Mapper
+ * scheme.
+ */
+std::pair<const MapperCrs, const int> fromOcd(const int combined_ocd_grid_zone)
+{
+	// while OCD codes can be negative, we are keeping grid_id always positive
+	// to match the enums; signum is carried in zone_id
+	const int ocd_grid_id = qAbs(combined_ocd_grid_zone / 1000),
+	          ocd_zone_id = qAbs(combined_ocd_grid_zone % 1000)
+	                        * (combined_ocd_grid_zone < 0 ? -1 : 1);
+
+	switch (static_cast<OcdGrid>(ocd_grid_id))
+	{
+	case OcdGrid::Local:
+		return { MapperCrs::Local, 0 };
+
+	case OcdGrid::Utm:
+		if (qAbs(ocd_zone_id) >= 1 && qAbs(ocd_zone_id) <= 60)
+			return { MapperCrs::Utm, ocd_zone_id };
+		break;
+
+	case OcdGrid::Germany:
+		// DHDN, Gauss-Krüger, Zone 2-5
+		if (ocd_zone_id >= 2 && ocd_zone_id <= 5)
+			return { MapperCrs::GaussKrueger, ocd_zone_id };
+		break;
+
+	default:
+		for (const auto& record : grid_zone_epsg_codes)
+		{
+			if (static_cast<int>(record.ocd_grid_id) == ocd_grid_id
+			    && record.ocd_zone_id == ocd_zone_id)
+				return { MapperCrs::Epsg, record.epsg_code };
+		}
+	}
+
+	return { MapperCrs::Invalid, 0 };
+}
+
 /**
  * Imports string 1039 field i.
  */
 void applyGridAndZone(Georeferencing& georef,
-                      const QString& combined_grid_zone,
+                      const int combined_ocd_grid_zone,
                       const std::function<void(const QString&)>& warning_handler)
 {
-	bool zone_ok = false;
-	const CRSTemplate* crs_template = nullptr;
-	QString id;
-	QString spec;
-	std::vector<QString> values;
+	// Mapper has multiple ways of expressing some of the CRS's
+	// we are working with the first match
+	auto result = fromOcd(combined_ocd_grid_zone);
 
-	if (combined_grid_zone.startsWith(QLatin1String("20")))
+	if (result.first == MapperCrs::Invalid)
 	{
-		auto zone = combined_grid_zone.midRef(2).toUInt(&zone_ok);
-		zone_ok &= (zone >= 1 && zone <= 60);
-		if (zone_ok)
-		{
-			id = QLatin1String{"UTM"};
-			crs_template = CRSTemplateRegistry().find(id);
-			values.reserve(1);
-			values.push_back(QString::number(zone));
-		}
-	}
-	else if (combined_grid_zone.startsWith(QLatin1String("80")))
-	{
-		auto zone = combined_grid_zone.midRef(2).toUInt(&zone_ok);
-		if (zone_ok)
-		{
-			id = QLatin1String{"Gauss-Krueger, datum: Potsdam"};
-			crs_template = CRSTemplateRegistry().find(id);
-			values.reserve(1);
-			values.push_back(QString::number(zone));
-		}
-	}
-	else if (combined_grid_zone == QLatin1String("6005"))
-	{
-		id = QLatin1String{"EPSG"};
-		crs_template = CRSTemplateRegistry().find(id);
-		values.reserve(1);
-		values.push_back(QLatin1String{"3067"});
-	}
-	else if (combined_grid_zone == QLatin1String("14001"))
-	{
-		id = QLatin1String{"EPSG"};
-		crs_template = CRSTemplateRegistry().find(id);
-		values.reserve(1);
-		values.push_back(QLatin1String{"21781"});
-	}
-	else if (combined_grid_zone == QLatin1String("1000"))
-	{
+		warning_handler(::OpenOrienteering::OcdFileImport::tr(
+		                    "Could not load the coordinate reference system '%1'.")
+		                .arg(combined_ocd_grid_zone));
 		return;
 	}
 
-	if (crs_template)
+	if (result.first == MapperCrs::Local)
+		return;
+
+	// look up CRS template by its unique name
+	auto entry_it = std::find_if(std::begin(crs_string_map),
+	                             std::end(crs_string_map),
+	                             [&result](auto e) { return e.key == result.first; });
+	if (entry_it == std::end(crs_string_map))
 	{
-		spec = crs_template->specificationTemplate();
-		auto param = crs_template->parameters().begin();
-		for (const auto& value : values)
-		{
-			for (const auto& spec_value : (*param)->specValues(value))
-			{
-				spec = spec.arg(spec_value);
-			}
-			++param;
-		}
+		qWarning("Internal program error: unknown CRS id (%d)", static_cast<int>(result.first));
+		return;
+	}
+	const QString crs_id_string = QLatin1String(entry_it->value);
+	auto crs_template = CRSTemplateRegistry().find(crs_id_string);
+
+	if (!crs_template)
+	{
+		qWarning("Internal program error: unknown CRS description string (%s)", qUtf8Printable(crs_id_string));
+		return;
 	}
 
-	if (spec.isEmpty())
-	{
-		warning_handler(QCoreApplication::translate("OcdFileImport", "Could not load the coordinate reference system '%1'.").arg(combined_grid_zone));
-	}
-	else
-	{
-		georef.setProjectedCRS(id, spec, std::move(values));
-	}
+	// get PROJ.4 spec template from the CRS
+	auto spec = crs_template->specificationTemplate();
+
+	// we are handling templates with single parameter only get template's first
+	// parameter - it can be an instance of UTMZoneParameter, IntRangeParameter
+	// (with "factor" and "bias") or FullSpecParameter
+	auto param = crs_template->parameters()[0];
+
+	// run every parameter value through the parameter processor which
+	// converts it into a string list that can be consumed by the above
+	// CRS specification template
+	const QString crs_param_string =
+	        result.first != MapperCrs::Utm || result.second >= 0
+	        ? QString::number(result.second) // common case, plain number
+	        : QString::number(-result.second) + QLatin1String(" S"); // UTM South zones
+
+	for (const auto& spec_value : param->specValues(crs_param_string))
+		spec = spec.arg(spec_value);
+
+	// `spec` and the pair <`crs_id_string`, `crs_param_string`> both describe
+	// the same thing at this place
+	georef.setProjectedCRS(crs_id_string, spec, { crs_param_string });
 }
 
 }  // anonymous namespace
@@ -124,7 +198,7 @@ void OcdGeorefFields::setupGeoref(Georeferencing& georef,
 		georef.setGrivation(a);
 
 	if (r)
-		applyGridAndZone(georef, QString::number(i), warning_handler);
+		applyGridAndZone(georef, i, warning_handler);
 
 	QPointF proj_ref_point(x, y);
 	georef.setProjectedRefPoint(proj_ref_point, false);
