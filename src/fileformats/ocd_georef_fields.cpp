@@ -68,9 +68,21 @@ enum struct OcdGrid
 	Invalid = -1,
 	Local = 1,
 	Utm = 2,
+	Austria = 3,
+	Britain = 5,
 	Finland = 6,
 	Germany = 8,
+	Sweden = 13,
 	Switzerland = 14,
+	Slovenia = 15,
+	Australia = 20,
+	Iceland = 38,
+	Czechia = 46,
+	Slovakia = 47,
+	Hungary = 49,
+	Brazil = 52,
+	Israel = 53,
+	GoogleTms = 56,
 };
 
 constexpr struct
@@ -78,12 +90,74 @@ constexpr struct
 	const OcdGrid ocd_grid_id;
 	const int ocd_zone_id, epsg_code;
 } grid_zone_epsg_codes[] {
+    // sort with `LC_ALL=C sort -k 1db,1 -k 2n -s -t ,`
+    { OcdGrid::Australia, 1, 28348 }, // GDA94 / MGA zone 48
+    { OcdGrid::Australia, 2, 28349 }, // GDA94 / MGA zone 49
+    { OcdGrid::Australia, 3, 28350 }, // GDA94 / MGA zone 50
+    { OcdGrid::Australia, 4, 28351 }, // GDA94 / MGA zone 51
+    { OcdGrid::Australia, 5, 28352 }, // GDA94 / MGA zone 52
+    { OcdGrid::Australia, 6, 28353 }, // GDA94 / MGA zone 53
+    { OcdGrid::Australia, 7, 28354 }, // GDA94 / MGA zone 54
+    { OcdGrid::Australia, 8, 28355 }, // GDA94 / MGA zone 55
+    { OcdGrid::Australia, 9, 28356 }, // GDA94 / MGA zone 56
+    { OcdGrid::Australia, 10, 28357 }, // GDA94 / MGA zone 57
+    { OcdGrid::Australia, 11, 28358 }, // GDA94 / MGA zone 58
+    { OcdGrid::Austria, 28, 31257 }, // MGI / Austria GK M28
+    { OcdGrid::Austria, 31, 31258 }, // MGI / Austria GK M31
+    { OcdGrid::Austria, 34, 31259 }, // MGI / Austria GK M34
+    { OcdGrid::Brazil, 4, 22521 }, // Corrego Alegre 1970-72 / UTM zone 21S
+    { OcdGrid::Brazil, 5, 22522 }, // Corrego Alegre 1970-72 / UTM zone 22S
+    { OcdGrid::Brazil, 6, 22523 }, // Corrego Alegre 1970-72 / UTM zone 23S
+    { OcdGrid::Brazil, 7, 22524 }, // Corrego Alegre 1970-72 / UTM zone 24S
+    { OcdGrid::Brazil, 8, 22525 }, // Corrego Alegre 1970-72 / UTM zone 25S
+    { OcdGrid::Brazil, 9, 5875 }, // SAD69(96) / UTM zone 18S
+    { OcdGrid::Brazil, 10, 5876 }, // SAD69(96) / UTM zone 19S
+    { OcdGrid::Brazil, 11, 5877 }, // SAD69(96) / UTM zone 20S
+    { OcdGrid::Brazil, 12, 5531 }, // SAD69(96) / UTM zone 21S
+    { OcdGrid::Brazil, 13, 5858 }, // SAD69(96) / UTM zone 22S
+    { OcdGrid::Brazil, 14, 5533 }, // SAD69(96) / UTM zone 23S
+    { OcdGrid::Brazil, 15, 5534 }, // SAD69(96) / UTM zone 24S
+    { OcdGrid::Brazil, 16, 5535 }, // SAD69(96) / UTM zone 25S
+    { OcdGrid::Brazil, 17, 31978 }, // SIRGAS 2000 / UTM zone 18S
+    { OcdGrid::Brazil, 18, 31979 }, // SIRGAS 2000 / UTM zone 19S
+    { OcdGrid::Brazil, 19, 31980 }, // SIRGAS 2000 / UTM zone 20S
+    { OcdGrid::Brazil, 20, 31981 }, // SIRGAS 2000 / UTM zone 21S
+    { OcdGrid::Brazil, 21, 31982 }, // SIRGAS 2000 / UTM zone 22S
+    { OcdGrid::Brazil, 22, 31983 }, // SIRGAS 2000 / UTM zone 23S
+    { OcdGrid::Brazil, 23, 31984 }, // SIRGAS 2000 / UTM zone 24S
+    { OcdGrid::Brazil, 24, 31985 }, // SIRGAS 2000 / UTM zone 25S
+    { OcdGrid::Britain, 0, 27700 }, // OSGB 1936
+    { OcdGrid::Czechia, 1, 5514 }, // S-JTSK Krovak East North
+    { OcdGrid::Czechia, 2, 28403 }, // Pulkovo 1942 / Gauss-Kruger zone 3
+    { OcdGrid::Finland, 2, 2392 }, // KKJ / Finland zone 2
     { OcdGrid::Finland, 5, 3067 }, // TM35FIN, ETRS89 / ETRS-TM35FIN
-    { OcdGrid::Switzerland, 1, 21781 }, // CH1903/LV03, CH1903/LV03
+    { OcdGrid::Finland, 12, 3879 }, // ETRS89 / GK25FIN
+    { OcdGrid::Finland, 25, 3132 }, // ETRS89 / ETRS-GK25FIN
     { OcdGrid::Germany, 2, 31466 }, // DHDN, Gauss-Krüger Zone 2
     { OcdGrid::Germany, 3, 31467 }, // DHDN, Gauss-Krüger Zone 3
     { OcdGrid::Germany, 4, 31468 }, // DHDN, Gauss-Krüger Zone 4
     { OcdGrid::Germany, 5, 31469 }, // DHDN, Gauss-Krüger Zone 5
+    { OcdGrid::GoogleTms, 0, 900913 }, // Google Mercator
+    { OcdGrid::Hungary, 0, 23700 }, // HD72 / EOV
+    { OcdGrid::Iceland, 4, 3057 }, // ISN93 / Lambert 1993
+    { OcdGrid::Israel, 0, 2039 }, // Israel 1993 / Israeli TM Grid
+    { OcdGrid::Slovakia, 1, 5514 }, // S-JTSK Krovak East North
+    { OcdGrid::Slovenia, 1, 3912 }, // MGI 1901 / Slovene National Grid
+    { OcdGrid::Sweden, 2, 3006 }, // SWEREF99 TM
+    { OcdGrid::Sweden, 3, 3007 }, // SWEREF99 12 00
+    { OcdGrid::Sweden, 4, 3008 }, // SWEREF99 13 30
+    { OcdGrid::Sweden, 5, 3009 }, // SWEREF99 15 00
+    { OcdGrid::Sweden, 6, 3010 }, // SWEREF99 16 30
+    { OcdGrid::Sweden, 7, 3011 }, // SWEREF99 18 00
+    { OcdGrid::Sweden, 8, 3012 }, // SWEREF99 14 15
+    { OcdGrid::Sweden, 9, 3013 }, // SWEREF99 15 45
+    { OcdGrid::Sweden, 10, 3014 }, // SWEREF99 17 15
+    { OcdGrid::Sweden, 11, 3015 }, // SWEREF99 18 45
+    { OcdGrid::Sweden, 12, 3016 }, // SWEREF99 20 15
+    { OcdGrid::Sweden, 13, 3017 }, // SWEREF99 21 45
+    { OcdGrid::Sweden, 14, 3018 }, // SWEREF99 23 15
+    { OcdGrid::Switzerland, 1, 21781 }, // CH1903 / LV03 -- Swiss CH1903 / LV03
+    { OcdGrid::Switzerland, 2, 2056 }, // CH1903+ / LV95 -- Swiss CH1903+ / LV95
 };
 
 /**
