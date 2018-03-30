@@ -26,12 +26,14 @@
 
 #include <QLatin1String>
 #include <QPointF>
+#include <QString>
 #include <QtGlobal>
 #include <QtNumeric>
 
 #include "core/crs_template.h"
 // translation context
 #include "fileformats/ocd_file_import.h" // IWYU pragma: keep
+#include "fileformats/ocd_file_export.h" // IWYU pragma: keep
 
 namespace OpenOrienteering {
 
@@ -51,6 +53,7 @@ constexpr struct
 	MapperCrs key;
 	const char* value;
 } crs_string_map[] {
+    { MapperCrs::Local, "Local" },
     { MapperCrs::Utm, "UTM" },
     { MapperCrs::GaussKrueger, "Gauss-Krueger, datum: Potsdam" },
     { MapperCrs::Epsg, "EPSG" },
@@ -62,6 +65,7 @@ constexpr struct
  */
 enum struct OcdGrid
 {
+	Invalid = -1,
 	Local = 1,
 	Utm = 2,
 	Finland = 6,
@@ -85,6 +89,8 @@ constexpr struct
 /**
  * Plain translation from OCD grid/zone combination into a Mapper
  * scheme.
+ *
+ * @see toOcd
  */
 std::pair<const MapperCrs, const int> fromOcd(const int combined_ocd_grid_zone)
 {
@@ -186,7 +192,72 @@ void applyGridAndZone(Georeferencing& georef,
 	georef.setProjectedCRS(crs_id_string, spec, { crs_param_string });
 }
 
+/**
+ * Combine grid/zone components into OCD code.
+ */
+int combineGridZone(const OcdGrid grid_id, const int zone_id)
+{
+	int i = static_cast<int>(grid_id) * 1000 + qAbs(zone_id);
+	// propagate signum which we carry in zone_id
+	return i * (zone_id < 0 ? -1 : 1);
+}
+
+/**
+ * Provide an OCD grid/zone combination for a Mapper georeferencing.
+ *
+ * @see fromOcd
+ */
+int toOcd(const MapperCrs crs_unique_id,
+          const int crs_param)
+{
+	switch (crs_unique_id)
+	{
+	case MapperCrs::Local:
+		return combineGridZone(OcdGrid::Local, 0);
+		break;
+
+	case MapperCrs::Utm:
+		if (qAbs(crs_param) >= 1 && qAbs(crs_param) <= 60)
+			return combineGridZone(OcdGrid::Utm, crs_param);
+		break;
+
+	case MapperCrs::GaussKrueger:
+		if (crs_param >= 2 && crs_param <= 5)
+			return combineGridZone(OcdGrid::Germany, crs_param);
+		break;
+
+	case MapperCrs::Epsg:
+		// handle UTM separately, the rest is in the table
+		if (crs_param >= 32601 && crs_param <= 32660)
+			return combineGridZone(OcdGrid::Utm, crs_param - 32600);
+		else if (crs_param >= 32701 && crs_param <= 32760)
+			return combineGridZone(OcdGrid::Utm, 32700 - crs_param);
+
+		for (const auto& record : grid_zone_epsg_codes)
+		{
+			if (record.epsg_code == crs_param)
+				return combineGridZone(record.ocd_grid_id, record.ocd_zone_id);
+		}
+		break;
+	default:
+		qWarning("Internal program error: translateMapperToOcd() should not"
+		         " be fed with invalid values (%d)", static_cast<int>(crs_unique_id));
+	}
+
+	return combineGridZone(OcdGrid::Invalid, 0);
+}
+
 }  // anonymous namespace
+
+bool operator==(const OcdGeorefFields& lhs, const OcdGeorefFields& rhs)
+{
+	return lhs.i == rhs.i
+	        && lhs.m == rhs.m
+	        && lhs.x == rhs.x
+	        && lhs.y == rhs.y
+	        && ((qIsNaN(lhs.a) && qIsNaN(rhs.a)) || qAbs(lhs.a - rhs.a) < 5e-9) // 8-digit precision or both NaN's
+	        && lhs.r == rhs.r;
+}
 
 void OcdGeorefFields::setupGeoref(Georeferencing& georef,
                                   const std::function<void (const QString&)>& warning_handler) const
@@ -202,6 +273,93 @@ void OcdGeorefFields::setupGeoref(Georeferencing& georef,
 
 	QPointF proj_ref_point(x, y);
 	georef.setProjectedRefPoint(proj_ref_point, false);
+}
+
+OcdGeorefFields OcdGeorefFields::fromGeoref(const Georeferencing& georef,
+                                            const std::function<void (const QString&)>& warning_handler)
+{
+	OcdGeorefFields retval;
+
+	// store known values early, they can be useful even if CRS translation fails
+	retval.a = georef.getGrivation();
+	retval.m = georef.getScaleDenominator();
+	const QPointF offset(georef.toProjectedCoords(MapCoord{}));
+	retval.x = qRound(offset.x()); // OCD easting and northing is integer
+	retval.y = qRound(offset.y());
+
+	// attempt translation from Mapper CRS reference into OCD one
+	auto crs_id_string = georef.getProjectedCRSId();
+	auto crs_param_strings = georef.getProjectedCRSParameters();
+	auto report_warning = [&]() {
+		QStringList params;
+		std::for_each(begin(crs_param_strings), end(crs_param_strings),
+		              [&](const QString& s) { params.append(s); });
+		warning_handler(::OpenOrienteering::OcdFileExport::tr(
+		                    "Could not translate coordinate reference system '%1:%2'.")
+		                .arg(crs_id_string, params.join(QLatin1Char(','))));
+	};
+
+	// translate CRS string into a MapperCrs value
+	auto entry_it = std::find_if(std::begin(crs_string_map),
+	                             std::end(crs_string_map),
+	                             [&crs_id_string](auto e) { return QLatin1String(e.value) == crs_id_string; });
+	if (entry_it == std::end(crs_string_map))
+	{
+		report_warning();
+		return retval;
+	}
+	const MapperCrs crs_id = entry_it->key;
+
+	int crs_param = 0;
+
+	if (crs_id != MapperCrs::Local)
+	{
+		// analyze CRS parameters
+		if (crs_param_strings.empty())
+		{
+			report_warning();
+			return retval;
+		}
+
+		bool param_conversion_ok;
+		auto param_string = crs_param_strings[0];
+		switch (crs_id)
+		{
+		case MapperCrs::Utm:
+			if (param_string.endsWith(QLatin1String(" S")))
+			{
+				param_string.remove(QLatin1String(" S"));
+				param_string.prepend(QLatin1String("-"));
+			}
+			else
+			{
+				param_string.remove(QLatin1String(" N"));
+			}
+			// fallthrough
+
+		default:
+			crs_param = param_string.toInt(&param_conversion_ok);
+		}
+
+		if (!param_conversion_ok)
+		{
+			report_warning();
+			return retval;
+		}
+	}
+
+	auto combined_ocd_grid_zone = toOcd(crs_id, crs_param);
+
+	if (combined_ocd_grid_zone/1000 == static_cast<int>(OcdGrid::Invalid))
+	{
+		report_warning();
+		return retval;
+	}
+
+	retval.i = combined_ocd_grid_zone;
+	retval.r = 1; // we are done
+
+	return retval;
 }
 
 }  // namespace OpenOrienteering

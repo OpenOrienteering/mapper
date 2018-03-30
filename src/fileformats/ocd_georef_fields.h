@@ -52,7 +52,32 @@ struct OcdGeorefFields
 	 */
 	void setupGeoref(Georeferencing& georef,
 	                 const std::function<void (const QString&)>& warning_handler) const;
+
+	/**
+	 * Translate from Mapper CRS representation into OCD one.
+	 * @param georef Source Georeferencing.
+	 * @param warning_handler Function to handle conversion warnings.
+	 * @return Data for OCD type 1039 string compilation.
+	 */
+	static OcdGeorefFields fromGeoref(const Georeferencing& georef,
+	                                  const std::function<void (const QString&)>& warning_handler);
 };
+
+/**
+ * Equal-to operator comparing this structure with another. Field `a` gets
+ * compared with 8-digit precision.
+ */
+bool operator==(const OcdGeorefFields& lhs, const OcdGeorefFields& rhs);
+
+/**
+ * Trivial non-equal-to operator.
+ * @see operator==(const OcdGeorefFields&, const OcdGeorefFields&)
+ */
+inline
+bool operator!=(const OcdGeorefFields& lhs, const OcdGeorefFields& rhs)
+{
+	return !operator==(lhs, rhs);
+}
 
 }  // namespace OpenOrienteering
 
