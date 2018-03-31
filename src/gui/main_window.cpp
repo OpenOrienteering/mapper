@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013, 2014 Thomas Schöps
- *    Copyright 2012-2018 Kai Pastor
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -255,26 +255,6 @@ void MainWindow::setController(MainWindowController* new_controller, bool has_fi
 		createHelpMenu();
 	
 #if defined(Q_OS_MACOS)
-	// Defeat Qt's menu text heuristic, as a workaround for QTBUG-30812.
-	// Changing an action's menu role (to QAction::NoRole) after it was
-	// added to the menu is unsupported and triggers crashes (#1077).
-	// Instead, we defeat the heuristic by adding a zero width space at the
-	// beginning and the end of the text of every action in the menus.
-	const auto menubar_actions = menuBar()->actions();
-	for (auto action : menubar_actions)
-	{
-		if (const auto menu = action->menu())
-		{
-			const auto menu_actions = menu->actions();
-			for (auto action : menu_actions)
-			{
-				static const auto zwsp = QString::fromUtf8("\u200B");
-				action->setText(zwsp + action->text() + zwsp);
-			}
-		}
-	}
-
-	// Needed to activate the menu bar changes
 	if (isVisible() && qApp->activeWindow() == this)
 	{
 		// Force a menu synchronisation,
