@@ -6101,13 +6101,13 @@ Színe: lila</translation>
 If underpasses or tunnels etc. are to be used in a competition, they shall be emphasized with symbol crossing point (708) or crossing section (708.1).</source>
             <comment>Description of symbol 708</comment>
             <translation>Átjárót falon, kerítésen vagy úton, vasúton, zárt területen, esetleg alagutat ezek alatt, két kifelé görbül õ vonal jelöl. Amennyiben szükséges, a jelet alaprajzban is lehet rajzolni (főleg átjárók, alagutak esetében).
-Színe:lila</translation>
+Színe:lila.</translation>
     </message>
         <message>
             <source>Crossing section, one side</source>
             <comment>Name of symbol 708.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Átkelőhely, egy oldal</translation>
+    </message>
         <message>
             <source>Acrossing section through or over a building, wall or fence, or across a road or railway or through a tunnel or an out-of-bounds area is drawn on the map as a linear object, according to the plan shape.
 
