@@ -5823,8 +5823,9 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</translation>
         <message>
             <source>A high tower or large pylon. Very large towers shall be represented in plan shape with the symbol building (526.1). The symbol is orientated to north.</source>
             <comment>Description of symbol 535</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Egy magas torony vagy nagy pilon. Nagyon nagy tornyokat kell a alaprajzában ábrázolni a jellel (526.1). 
+A jel északi irányba mutat.</translation>
+    </message>
         <message>
             <source>Small tower</source>
             <comment>Name of symbol 536</comment>
@@ -5838,33 +5839,33 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</translation>
         <message>
             <source>Cairn, memorial, small monument or boundary stone</source>
             <comment>Name of symbol 537</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Kőhalom, emlékmű, kis emlékmű vagy határkő</translation>
+    </message>
         <message>
             <source>Cairn, memorial, small monument or boundary stone more than 0.5 m high. Large massive monuments shall be represented in plan shape with the symbol building (526.1).</source>
             <comment>Description of symbol 537</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Kőhalom, emlékmű, kis emlékmű vagy határkő ami több mint 0,5 m magas. A nagyméretű műemlékeket a az épület (526.1) jellel alaprajzában kell ábrázolni.</translation>
+    </message>
         <message>
             <source>Fodder rack</source>
             <comment>Name of symbol 538</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Vadetető</translation>
+    </message>
         <message>
             <source>A fodder rack, which is free standing or attached to a tree. The symbol is orientated to north.</source>
             <comment>Description of symbol 538</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Egy vadetető ami állhat szabadon, vagy fához rögzítve. A jel észak felé kell tájolni.</translation>
+    </message>
         <message>
             <source>Prominent man-made feature</source>
             <comment>Name of symbol 539</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Különleges mesterséges tárgy</translation>
+    </message>
         <message>
             <source>A man-made feature which is significant or prominent. The definition of the symbol shall always be given in the map legend.</source>
             <comment>Description of symbol 539</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Mesterséges tárgy, amely jelentős vagy kiemelkedő. A jel meghatározását mindig a térkép jelmagyarázata tartalmazza.</translation>
+    </message>
         <message>
             <source>Prominent man-made feature</source>
             <comment>Name of symbol 540</comment>
