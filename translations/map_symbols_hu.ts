@@ -822,9 +822,9 @@ Minimális szélesség: 0.3 mm (belső méret). Minimális terület: 0.5 mm 2 (k
         <message>
             <source>A shallow seasonal or periodic body of water may be represented using a dashed outline. Small shallow water bodies may be represented as 100% blue (without an outline).</source>
             <comment>Description of symbol 302</comment>
-            <translation>Sekélyebb, időszakosan meglévő vízterületet 50%-os kék színnel és szaggatott kék szegéllyel kell jelölni. Amennyiben a vízterület kicsi, szegély nélkül 100% kék színt kaphat.
+            <translation type="unfinished">Sekélyebb, időszakosan meglévő vízterületet 50%-os kék színnel és szaggatott kék szegéllyel kell jelölni. Amennyiben a vízterület kicsi, szegély nélkül 100% kék színt kaphat.
 Minimális szélesség: 0.3 mm (belső méret). Minimális terület: 0.5 mm 2 (belső).
-Színe: kék (szegély), kék 50%</translation>
+Színe: kék (szegély), kék 50%.</translation>
     </message>
         <message>
             <source>Shallow body of water</source>
@@ -998,7 +998,9 @@ A jelet északra tájolják be.</translation>
         <message>
             <source>A prominent well, fountain, water tank or captive spring.</source>
             <comment>Description of symbol 311</comment>
-            <translation>Egy kiemelkedő kút, szökőkút, víztartály vagy befoglalt forrás.</translation>
+            <translation>Egy kiemelkedő kút, szökőkút, víztartály vagy befoglalt forrás.
+A térképjelet északnak kell tájolni.
+Terepi méret: 13.5 m x 13,5 m</translation>
     </message>
         <message>
             <source>Spring</source>
