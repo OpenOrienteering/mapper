@@ -5864,23 +5864,23 @@ A jel északi irányba mutat.</translation>
         <message>
             <source>A man-made feature which is significant or prominent. The definition of the symbol shall always be given in the map legend.</source>
             <comment>Description of symbol 539</comment>
-            <translation>Mesterséges tárgy, amely jelentős vagy kiemelkedő. A jel meghatározását mindig a térkép jelmagyarázata tartalmazza.</translation>
+            <translation>Különleges mesterséges tereptárgyakat ábrázolhatunk ezekkel a jelekkel. A jelek pontos meghatározását meg kell adni a térkép jelmagyarázatában.</translation>
     </message>
         <message>
             <source>Prominent man-made feature</source>
             <comment>Name of symbol 540</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Különleges mesterséges tárgy</translation>
+    </message>
         <message>
             <source>A man-made feature which is significant or prominent. The definition of the symbol shall always be given in the map legend. The symbol is orientated to north.</source>
             <comment>Description of symbol 540</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Különleges mesterséges tereptárgyakat ábrázolhatunk ezekkel a jelekkel. A jelek pontos meghatározását meg kell adni a térkép jelmagyarázatában.</translation>
+    </message>
         <message>
             <source>Magnetic north line - black</source>
             <comment>Name of symbol 601.0.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Északi vonal - fekete</translation>
+    </message>
         <message>
             <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm on the 1:5 000 map so they represent 150 m on the ground. 
 
