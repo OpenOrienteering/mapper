@@ -1347,18 +1347,16 @@ May be combined with symbol 407 (vegetation, slow running, good visibility) or 4
         <message>
             <source>Distinct vegetation boundary</source>
             <comment>Name of symbol 416</comment>
-            <translation>Jól megkülönböztethető erdőszegély vagy élesen kirajzolódó növényzethatár az
-erdőterületen belül. Egy térképen belül csak az egyik jelleghatár jelet (fekete pontsor
-vagy zöld szaggatott vonal) szabad használni. Nagyon köves és sok sziklaformát
-tartalmazó területeken a zöld szagga</translation>
+            <translation>Jelleghatár</translation>
     </message>
         <message>
             <source>A distinct forest edge or vegetation boundary within the forest.
 Very distinct forest edges and vegetation boundaries may be represented using the cultivation boundary symbol. Only one of the vegetation boundary symbols (black dotted line or dashed green line) can be used on a map.
 Minimum length, black dot implementation: 5 dots (2.5 mm – footprint 37 m).</source>
             <comment>Description of symbol 416</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Jól megkülönböztethető erdőszegély vagy élesen kirajzolódó növényzethatár az erdőterületen belül. Egy térképen belül csak az egyik jelleghatár jelet (fekete pontsor vagy zöld szaggatott vonal) szabad használni. Nagyon köves és sok sziklaformát tartalmazó területeken a zöld szaggatott jelleghatár jel alkalmazása javasolt. Ugyanakkor a 410 (Nehezen futható erdő) és 411 (Áthatolhatatlan növényzet) térképjelek esetén a zöld szaggatott vonal nem használható, ilyen esetekben köves terepek esetén a jelleghatárt a 415 (Művelt terület határa) térképjellel lehet ábrázolni.
+Minimális hosszúság, fekete pontsor: 5 pont (2.5 mm–terepi méret 37 m).</translation>
+    </message>
         <message>
             <source>Distinct vegetation boundary, green dashed line</source>
             <comment>Name of symbol 416.1</comment>
@@ -1369,8 +1367,11 @@ Minimum length, black dot implementation: 5 dots (2.5 mm – footprint 37 m).</s
 A disadvantage with a green line is that it cannot be used to show distinct vegetation boundaries around and within symbols 410 (vegetation, fight) and 411 (vegetation, impassable). An alternative for these situations is to use symbol 415 (distinct cultivation boundary).
 Minimum length, green line implementation: 4 dashes (1.8 mm – footprint 27 m).</source>
             <comment>Description of symbol 416.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Jól megkülönböztethető erdőszegély vagy élesen kirajzolódó növényzethatár az erdőterületen belül. Egy térképen belül csak az egyik jelleghatár jelet (fekete pontsor vagy zöld szaggatott vonal) szabad használni. Nagyon köves és sok sziklaformát tartalmazó területeken a zöld szaggatott jelleghatár jel alkalmazása javasolt.
+Ugyanakkor a 410 (Nehezen futható erdő) és 411 (Áthatolhatatlan növényzet) térképjelek esetén a zöld szaggatott vonal nem használható, ilyen esetekben köves terepek esetén a jelleghatárt a 415 (Művelt terület határa) térképjellel lehet ábrázolni. 
+Minimális hosszúság, zöld szaggatott vonal: 4 vonás (1.8 mm–terepi méret 27 m).
+Színe: zöld (szaggatott vonal).</translation>
+    </message>
         <message>
             <source>Prominent large tree</source>
             <comment>Name of symbol 417</comment>
@@ -1379,8 +1380,8 @@ Minimum length, green line implementation: 4 dashes (1.8 mm – footprint 27 m).
         <message>
             <source>Footprint: 13.5 m x 13.5 m.</source>
             <comment>Description of symbol 417</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Lábnyoma 13,5m x 13,5m</translation>
+    </message>
         <message>
             <source>Prominent bush or tree</source>
             <comment>Name of symbol 418</comment>
