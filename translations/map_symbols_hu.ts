@@ -2246,7 +2246,7 @@ Színe: lila</translation>
 – határvonal nélkül, ha a terepen semmiféle jelölés nincs.
 A zárt területre belépni tilos.
 Minimális terület: 2 mm x 2 mm (terepi méret 30 m x 30 m).
-Színe: lila</translation>
+Színe: lila.</translation>
     </message>
         <message>
             <source>Crossing point</source>
@@ -2267,8 +2267,10 @@ Színe: lila</translation>
             <source>A route which is out-of-bounds. Competitors are allowed to cross directly over a forbidden route, but it is forbidden to go along it.
 An out-of-bounds route shall not be used.</source>
             <comment>Description of symbol 711</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>A versenyen nem használható útvonal. A versenyzők a tiltott útvonalat keresztezhetik, de az útvonal mentén haladni tilos.
+Minimális hosszúság: 2 jel (6 mm – terepi méret 90 m).
+Színe: lila.</translation>
+    </message>
         <message>
             <source>Out-of-bounds route, single cross</source>
             <comment>Name of symbol 711.1</comment>
@@ -2278,8 +2280,10 @@ An out-of-bounds route shall not be used.</source>
             <source>A route which is out-of-bounds. Competitors are allowed to cross directly over a forbidden route, but it is forbidden to go along it.
 An out-of-bounds route shall not be used.</source>
             <comment>Description of symbol 711.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>A versenyen nem használható útvonal. A versenyzők a tiltott útvonalat keresztezhetik, de az útvonal mentén haladni tilos. 
+Minimális hosszúság: 2 jel (6 mm – terepi méret 90 m).
+Színe: lila</translation>
+    </message>
         <message>
             <source>First aid post</source>
             <comment>Name of symbol 712</comment>
