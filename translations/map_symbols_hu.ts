@@ -5938,13 +5938,13 @@ North lines may be broken where they obscure small features such as boulders, kn
             <translation>Az északvonalak a térképen a mágneses észak felé mutatnak. Ezek a térképen egymástól 30 mm-re helyezkednek el, ami 150 méteres terepi távolságnak felel meg 1:5000-es méretarányban; 1:4000-es méretarányban a terepi 150 méter 37,5 mm-nek felel meg. 
 
 Az északvonalat meg lehet szakítani, amennyiben apró tereptárgyakat (pl. sziklát, kúpot, patakelágazást, ösvényvéget, stb.) fedne ki. Kevés vízrajzi objektumot ábrázoló területen kék színű vonalakat használhatunk. 
-Színe: fkék (fekete)</translation>
+Színe: fkék (fekete).</translation>
     </message>
         <message>
             <source>Magnetic north line, blue, with arrow</source>
             <comment>Name of symbol 601.0.5</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Mágneses északi vonal, kék nyíllal</translation>
+    </message>
         <message>
             <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm on the 1:5 000 map so they represent 150 m on the ground. 
 
@@ -5952,60 +5952,71 @@ North lines may be broken where they obscure small features such as boulders, kn
 
 &lt;b&gt;Note: this is a non-standard addition to the symbol set.&lt;/b&gt;</source>
             <comment>Description of symbol 601.0.5</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Az északvonalak a térképen a mágneses észak felé mutatnak. Ezek a térképen egymástól 30 mm-re helyezkednek el, ami 150 méteres terepi távolságnak felel meg 1:5000-es méretarányban; 1:4000-es méretarányban a terepi 150 méter 37,5 mm-nek felel meg. 
+
+Az északvonalat meg lehet szakítani, amennyiben apró tereptárgyakat (pl. sziklát, kúpot, patakelágazást, ösvényvéget, stb.) fedne ki. Kevés vízrajzi objektumot ábrázoló területen kék színű vonalakat használhatunk. 
+&lt;b&gt;A jel nem része a szabványos jelkészletnek.&lt;/b&gt;
+Színe: kék</translation>
+    </message>
         <message>
             <source>North lines pattern, blue</source>
             <comment>Name of symbol 601.0.6</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Mágneses északi vonal minta, kék</translation>
+    </message>
         <message>
             <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm on the 1:5 000 map so they represent 150 m on the ground. 
 
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. Cut holes in the pattern to create these breaks.</source>
             <comment>Description of symbol 601.0.6</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Az északvonalak a térképen a mágneses észak felé mutatnak. Ezek a térképen egymástól 30 mm-re helyezkednek el, ami 150 méteres terepi távolságnak felel meg 1:5000-es méretarányban; 1:4000-es méretarányban a terepi 150 méter 37,5 mm-nek felel meg. 
+
+Az északvonalat meg lehet szakítani, amennyiben apró tereptárgyakat (pl. sziklát, kúpot, patakelágazást, ösvényvéget, stb.) fedne ki. Kevés vízrajzi objektumot ábrázoló területen kék színű vonalakat használhatunk. &lt;b&gt;A mintába vágott lyukak megszakítják a mintát.&lt;/b&gt;
+Színe: kék.</translation>
+    </message>
         <message>
             <source>Registration mark</source>
             <comment>Name of symbol 602</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Illesztőkereszt</translation>
+    </message>
         <message>
             <source>At least three registration marks shall be placed within the frame of a map in a non-symmetrical arrangement. In addition, a colour check should be possible.</source>
             <comment>Description of symbol 602</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Legalább három illesztő jelet kell felvenni a térkép keretén belül, nem szimmetrikus elhelyezésben. Ezen felül színellenőrző jelet is alkalmazhatunk.
+Színe: minden nyomtatott szín.</translation>
+    </message>
         <message>
             <source>Spot height, dot</source>
             <comment>Name of symbol 603.0.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Magasság megírás, pont</translation>
+    </message>
         <message>
             <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
             <comment>Description of symbol 603.0.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>A kótált magassági értékeket magasságkülönbségek durva becsléséhez használhatjuk. A magasságot méterre kerekítve adjuk meg. A számok északra tájoltak. A vizek szintjét pont nélkül írjuk meg.
+Színe: fekete.</translation>
+    </message>
         <message>
             <source>Spot height</source>
             <comment>Name of symbol 603.0.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation type="unfinished">Magassági pont</translation>
+    </message>
         <message>
             <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
             <comment>Description of symbol 603.0.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>A kótált magassági értékeket magasságkülönbségek durva becsléséhez használhatjuk. A magasságot méterre kerekítve adjuk meg. A számok északra tájoltak. A vizek szintjét pont nélkül írjuk meg.
+Színe: fekete.</translation>
+    </message>
         <message>
             <source>Start</source>
             <comment>Name of symbol 701</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Rajt</translation>
+    </message>
         <message>
             <source>The start or map issue point (if not at the start) is shown by an equilateral triangle which points in the direction of the first control. The centre of the triangle shows the precise position of the start point.</source>
             <comment>Description of symbol 701</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>A rajt vagy térképrajt (amennyiben az nem azonos helyen van az idő rajttal) helyét egyenlő oldalú háromszög jelöli, amelynek egyik csúcsa az első ellenőrző pont irányába mutat. A háromszög középpontja mutatja a tereptárgy pontos helyét.
+Színe:lila</translation>
+    </message>
         <message>
             <source>Control point</source>
             <comment>Name of symbol 702</comment>
