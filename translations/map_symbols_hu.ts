@@ -1154,7 +1154,7 @@ Minimális szélesség: 0.5 mm (terepi méret 6 m).</translation>
         <message>
             <source>An area with dense trees or thickets (low visibility) which reduce running to about 20-60% of normal speed.</source>
             <comment>Description of symbol 408</comment>
-            <translation>Egy terület sűrű fákkal és bozóttal sűrűn benőtt terület (rossz átláthatóság), a futás sebessége a normál futósebességhez viszonyítva 20-60%-os. 
+            <translation>Egy fákkal és bozóttal sűrűn benőtt terület (rossz átláthatóság), a futás sebessége a normál futósebességhez viszonyítva 20-60%-os. 
 Minimális terület: 0.7 mm x 0.7 mm (terepi méret 10.5 m x 10.5 m).
 Minimális szélesség: 0.3 mm (terepi méret 4.5 m).
 Színe: zöld 50%.</translation>
@@ -1162,7 +1162,10 @@ Színe: zöld 50%.</translation>
         <message>
             <source>Vegetation runnable in one direction, 2</source>
             <comment>Name of symbol 408.1</comment>
-            <translation>Növényzet, ami egy irányban futható, 2-es zöld</translation>
+            <translation>Növényzet, ami egy irányban futható, 2-es zöld
+
+Fákkal és bozóttal sűrűn benőtt terület (rossz átláthatóság), a futás sebessége a normál futósebességhez viszonyítva 20-60%-os. 
+Ahol az erdőben a futhatóság egy irányban kedvezőbb, a kedvező iránnyal párhuzamosan zöld 50% csíkozást  (2-es zöld) kap a zöld felületi jel.</translation>
     </message>
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
