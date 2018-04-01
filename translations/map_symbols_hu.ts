@@ -1924,7 +1924,7 @@ Színe: fekete 20%.</translation>
         <message>
             <source>A black line surrounds the symbol 522.0.1.</source>
             <comment>Description of symbol 522.2</comment>
-            <translation>Egy fekete vonal az 522.0.1-es fedett terület jelhez</translation>
+            <translation>Egy fekete vonal az 522.0.1-es fedett terület jelhez.</translation>
     </message>
         <message>
             <source>Ruin</source>
@@ -2039,8 +2039,10 @@ A helyszín a jel súlypontjában van.</translation>
         <message>
             <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map. North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.</source>
             <comment>Description of symbol 601.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>A térképen az északvonalak a mágneses észak felé mutatnak. A papír széleivel párhuzamosan kell az északvonalakat feltüntetni. Az északvonalak egymástól való távolsága a térképen 20 mm, ami 1:15000 méretaránynál a valóságban 300 métert jelent. Amennyiben a térképet felnagyítják 1:10000 méretarányra, az északvonalak közti távolság a térképen 30 mm kell legyen. Az északvonalak a térkép jobb olvashatósága érdekében megszakíthatóak, ahol
+kisebb térképjeleket kitakarnának. Kevés vízrajzi jelet tartalmazó térképeken kék színű északvonalak használhatók.
+Színe: fekete vagy kék.</translation>
+    </message>
         <message>
             <source>North lines pattern</source>
             <comment>Name of symbol 601.2</comment>
@@ -2049,8 +2051,10 @@ A helyszín a jel súlypontjában van.</translation>
         <message>
             <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map. North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.</source>
             <comment>Description of symbol 601.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>A térképen az északvonalak a mágneses észak felé mutatnak. A papír széleivel párhuzamosan kell az északvonalakat feltüntetni. Az északvonalak egymástól való távolsága a térképen 20 mm, ami 1:15000 méretaránynál a valóságban 300 métert jelent. Amennyiben a térképet felnagyítják 1:10000 méretarányra, az északvonalak közti távolság a térképen 30 mm kell legyen. Az északvonalak a térkép jobb olvashatósága érdekében megszakíthatóak, ahol
+kisebb térképjeleket kitakarnának. Kevés vízrajzi jelet tartalmazó térképeken kék színű északvonalak használhatók.
+Színe: fekete vagy kék.</translation>
+    </message>
         <message>
             <source>Magnetic north line, blue</source>
             <comment>Name of symbol 601.3</comment>
@@ -2059,8 +2063,10 @@ A helyszín a jel súlypontjában van.</translation>
         <message>
             <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map. North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.</source>
             <comment>Description of symbol 601.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>A térképen az északvonalak a mágneses észak felé mutatnak. A papír széleivel párhuzamosan kell az északvonalakat feltüntetni. Az északvonalak egymástól való távolsága a térképen 20 mm, ami 1:15000 méretaránynál a valóságban 300 métert jelent. Amennyiben a térképet felnagyítják 1:10000 méretarányra, az északvonalak közti távolság a térképen 30 mm kell legyen. Az északvonalak a térkép jobb olvashatósága érdekében megszakíthatóak, ahol
+kisebb térképjeleket kitakarnának. Kevés vízrajzi jelet tartalmazó térképeken kék színű északvonalak használhatók.
+Színe: fekete vagy kék.</translation>
+    </message>
         <message>
             <source>North lines pattern, blue</source>
             <comment>Name of symbol 601.4</comment>
@@ -2069,8 +2075,10 @@ A helyszín a jel súlypontjában van.</translation>
         <message>
             <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map. North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.</source>
             <comment>Description of symbol 601.4</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>A térképen az északvonalak a mágneses észak felé mutatnak. A papír széleivel párhuzamosan kell az északvonalakat feltüntetni. Az északvonalak egymástól való távolsága a térképen 20 mm, ami 1:15000 méretaránynál a valóságban 300 métert jelent. Amennyiben a térképet felnagyítják 1:10000 méretarányra, az északvonalak közti távolság a térképen 30 mm kell legyen. Az északvonalak a térkép jobb olvashatósága érdekében megszakíthatóak, ahol
+kisebb térképjeleket kitakarnának. Kevés vízrajzi jelet tartalmazó térképeken kék színű északvonalak használhatók.
+Színe: fekete vagy kék.</translation>
+    </message>
         <message>
             <source>Registration mark</source>
             <comment>Name of symbol 602</comment>
@@ -2109,17 +2117,18 @@ A helyszín a jel súlypontjában van.</translation>
         <message>
             <source>The place where the orienteering starts. The centre of the triangle shows the precise position where the orienteering course starts. The start must be on a clearly identifiable point on the map. The triangle points in the direction of the first control.</source>
             <comment>Description of symbol 701</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>A háromszög súlypontja pontosan megmutatja ahonnan a tájékozódási verseny futama indul.
+A rajtnak jól beazonosítható helynek kell lennie a térképen. A háromszög jel egyik csúcsa az első pont irányába néz.</translation>
+    </message>
         <message>
             <source>Map issue point</source>
             <comment>Name of symbol 702</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Térképfelvétel helye</translation>
+    </message>
         <message>
             <source>If there is a marked route to the start point, the map issue point is marked using this symbol.</source>
             <comment>Description of symbol 702</comment>
-            <translation>Ha van jelölt (szalagozott) út a rajt pontig, a térképen erre használjuk ezt a jelet.</translation>
+            <translation>Abban az esetben, ha kiszalagozott útvonal vezet a térképrajtig, a térképfelvétel helyét a szalagozást jelölő szaggatott vonalon keresztbe húzott vonal jelzi a térképen.</translation>
     </message>
         <message>
             <source>Control point</source>
