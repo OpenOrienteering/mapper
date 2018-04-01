@@ -2179,18 +2179,21 @@ Sections of the circle should be omitted to leave important detail showing.</sou
         <message>
             <source>A marked route that is a part of the course. It is mandatory to follow the marked route.</source>
             <comment>Description of symbol 707</comment>
-            <translation>A jelzett út a pálya része. A kijelölt útvonalat kötelező követni.</translation>
+            <translation>A jelzett út a pálya része. A kijelölt útvonalat kötelező követni. 
+Minimális hossz: 2 azGGtott jel (4.5 mm – lábnyoma: 67.5 m).
+Színe: lila.</translation>
     </message>
         <message>
             <source>Out-of-bounds boundary</source>
             <comment>Name of symbol 708</comment>
-            <translation>Tiltott határ</translation>
+            <translation>Tiltott terület határa</translation>
     </message>
         <message>
             <source>A boundary which it is not permitted to cross.
 An out-of-bounds boundary shall not be crossed.</source>
             <comment>Description of symbol 708</comment>
-            <translation>Olyan határ, amelyet a terepen tilos átlépni.</translation>
+            <translation>Olyan határ, amelyet a terepen tilos átlépni.
+Egy tiltott terület határát nem szabad keresztezni.</translation>
     </message>
         <message>
             <source>Out-of-bounds area</source>
