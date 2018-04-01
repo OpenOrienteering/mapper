@@ -6100,7 +6100,7 @@ Színe: lila</translation>
 
 If underpasses or tunnels etc. are to be used in a competition, they shall be emphasized with symbol crossing point (708) or crossing section (708.1).</source>
             <comment>Description of symbol 708</comment>
-            <translation>Átjárót falon, kerítésen vagy úton, vasúton, zárt területen, esetleg alagutat ezek alatt, két kifelé görbül õ vonal jelöl. Amennyiben szükséges, a jelet alaprajzban is lehet rajzolni (főleg átjárók, alagutak esetében).
+            <translation type="unfinished">Átjárót falon, kerítésen vagy úton, vasúton, zárt területen, esetleg alagutat ezek alatt, két kifelé görbül õ vonal jelöl. Amennyiben szükséges, a jelet alaprajzban is lehet rajzolni (főleg átjárók, alagutak esetében).
 Színe:lila.</translation>
     </message>
         <message>
@@ -6113,13 +6113,15 @@ Színe:lila.</translation>
 
 If underpasses or tunnels etc. are to be used in a competition, they shall be emphasized with symbol (708) or (708.1).</source>
             <comment>Description of symbol 708.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Átjárót falon, kerítésen vagy úton, vasúton, zárt területen, esetleg alagutat ezek alatt, két kifelé görbül õ vonal jelöl. Amennyiben szükséges, a jelet alaprajzban is lehet rajzolni (főleg átjárók, alagutak esetében).
+Ha egy versenyen aluljárókat vagy alagutat stb. Használnak, azokat szimbólummal (708) vagy (708.1) kell kiemelni.
+Színe:lila.</translation>
+    </message>
         <message>
             <source>Out-of-bounds area &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 709</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Zárt terület&lt;span style=&quot;color:magenta&quot;&gt;Tilos keresztezni!&lt;/span&gt;</translation>
+    </message>
         <message>
             <source>Out of bounds areas are mapped with the symbol area with forbidden access (528.1). This symbol shall only be used for last minute updates to the competition map (e.g. for areas that may be dangerous for the competitors during the competition, or very late changes to the competition terrain).
 An out-of-bounds area is shown with vertical stripes. A bounding line may be drawn if there is no natural boundary, as follows:
@@ -6130,18 +6132,34 @@ An out-of-bounds area is shown with vertical stripes. A bounding line may be dra
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an out-of-bounds area!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 709</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>A zárt területet eket a tiltott terület (528.1) jellel kell feltérképezni. Ezt a jelet csak a versenytérkép utolsó pillanatban történő frissítésére lehet használni (például olyan területeken, amelyek a versenytársak számára veszélyesek lehetnek a verseny során, vagy ha túl későn változik meg a versenyterület).
+Egy zárt terület függőleges csíkokkal ábrázoljuk. 
+ A határoló vonalat, ha az nem természetes határ, a következő módon jelöljük:
+- a folytonos vonal azt jelenti, hogy a határvonal a terepen végig szalagozott,
+- a szaggatott vonal azt jelenti, hogy a határvonal jelzése a terepen nem folytonos,
+- a határvonal hiánya azt jelenti, hogy a terepen nincs semmiféle jelölés.
+&lt;span style=&quot;color:magenta&quot;&gt;A zárt területet tilos keresztezni!
+A szabályt megszegő versenyzőket kizárják!&lt;/span&gt;
+Színe: lila</translation>
+    </message>
         <message>
             <source>Out-of-bounds area, solid boundary</source>
             <comment>Name of symbol 709.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Zárt terület,</translation>
+    </message>
         <message>
             <source>A solid line indicates that the boundary is marked continuously (tapes, etc.) on the ground.</source>
             <comment>Description of symbol 709.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>A zárt területet eket a tiltott terület (528.1) jellel kell feltérképezni. Ezt a jelet csak a versenytérkép utolsó pillanatban történő frissítésére lehet használni (például olyan területeken, amelyek a versenytársak számára veszélyesek lehetnek a verseny során, vagy ha túl későn változik meg a versenyterület).
+Egy zárt terület függőleges csíkokkal ábrázoljuk. 
+ A határoló vonalat, ha az nem természetes határ, a következő módon jelöljük:
+- a folytonos vonal azt jelenti, hogy a határvonal a terepen végig szalagozott,
+- a szaggatott vonal azt jelenti, hogy a határvonal jelzése a terepen nem folytonos,
+- a határvonal hiánya azt jelenti, hogy a terepen nincs semmiféle jelölés.
+&lt;span style=&quot;color:magenta&quot;&gt;A zárt területet tilos keresztezni!
+A szabályt megszegő versenyzőket kizárják!&lt;/span&gt;
+Színe: lila</translation>
+    </message>
         <message>
             <source>Out-of-bounds area, dashed boundary</source>
             <comment>Name of symbol 709.2</comment>
