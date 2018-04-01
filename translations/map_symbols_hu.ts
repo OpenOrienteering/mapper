@@ -6053,13 +6053,14 @@ Színe: lila.</translation>
         <message>
             <source>Marked route</source>
             <comment>Name of symbol 705</comment>
-            <translation>Jelzett út</translation>
+            <translation>Jelzett útvonal</translation>
     </message>
         <message>
             <source>A marked route is shown on the map with a dashed line.</source>
             <comment>Description of symbol 705</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>A terepen jelzett útvonalat a térképen szaggatott vonal jelzi.
+Színe: lila</translation>
+    </message>
         <message>
             <source>Finish</source>
             <comment>Name of symbol 706</comment>
