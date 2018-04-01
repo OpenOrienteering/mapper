@@ -1123,11 +1123,6 @@ open land).</source>
             <source>An area with dense vegetation (low visibility) which reduces running to about 60-80% of normal speed.</source>
             <comment>Description of symbol 406</comment>
             <translation>Egy terület sűrű növényzettel (korlátozott látási viszonyokkal) amelyik csökkenti a szokásos futó sebességet körülbelül a normál sebesség 60-80 százalékára.Ahol az erdőben a futhatóság egy irányban kedvezőbb, a kedvező iránnyal párhuzamosan fehér csíkozást kap a zöld felületi jel. 
-__________________________________________________________________
-Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m) for openings in screens of other colours, except for 408 (vegetation, walk) where the minimum area is 0.7 mm x 0.7
-mm (footprint 10.5 m x 10.5 m). For openings in 401 (open land), the minimum area is
-0.7 mm x 0.7 mm (footprint 10.5 m x 10.5 m). For openings in 410 (vegetation, fight) the minimum area is 0.55 mm x 0.55 mm (footprint 8 m x 8 m). 
-__________________________________________________________________
 Minimális terület: 1 mm x 1 mm (terepi méret 15 m x 15 m).
 Minimális szélesség: 0.5 mm (terepi méret 6 m).</translation>
     </message>
@@ -1159,8 +1154,11 @@ Minimális szélesség: 0.5 mm (terepi méret 6 m).</translation>
         <message>
             <source>An area with dense trees or thickets (low visibility) which reduce running to about 20-60% of normal speed.</source>
             <comment>Description of symbol 408</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Egy terület sűrű fákkal és bozóttal sűrűn benőtt terület (rossz átláthatóság), a futás sebessége a normál futósebességhez viszonyítva 20-60%-os. 
+Minimális terület: 0.7 mm x 0.7 mm (terepi méret 10.5 m x 10.5 m).
+Minimális szélesség: 0.3 mm (terepi méret 4.5 m).
+Színe: zöld 50%.</translation>
+    </message>
         <message>
             <source>Vegetation runnable in one direction, 2</source>
             <comment>Name of symbol 408.1</comment>
