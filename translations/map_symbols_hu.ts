@@ -171,7 +171,7 @@
         <message>
             <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. An index contour may be represented as an ordinary contour line in an area with much detail. Small contour knolls and depressions are normally not represented using index contours.</source>
             <comment>Description of symbol 102</comment>
-            <translation>Minden ötödik szintvonal vastagabb kell legyen. Ez segít a magasság gyors megállapításában és a terep domborzatának áttekintésében. Részletgazdag területeken a főszintvonal lehet alapszintvonal vastagságú. Kis kiemelkedéseket és mélyedéseket általában nem ábrázolunk főszintvonallal.</translation>
+            <translation>Minden ötödik szintvonal vastagabbnak kell lennie. Ez segít a magasság gyors megállapításában és a terep domborzatának áttekintésében. Részletgazdag területeken a fő szintvonal lehet alapszintvonal vastagságú. Kis kiemelkedéseket és mélyedéseket általában nem ábrázolunk fő szintvonallal.</translation>
     </message>
         <message>
             <source>Contour value</source>
@@ -186,8 +186,8 @@
         <message>
             <source>Form line</source>
             <comment>Name of symbol 103</comment>
-            <translation>Segéd szintvonal</translation>
-        </message>
+            <translation>Segédszintvonal</translation>
+    </message>
         <message>
             <source>Form lines are used where more information must be given about the shape of the ground. Form lines are added only where representation would be incomplete with ordinary contours. They shall not be used as intermediate contours. Only one form line should be used between neighbouring contours. It is very important that a form line fits logically into the contour system, so the start and end of a form line should be parallel to the neighbouring contours. The gaps between the form line dashes must be placed on reasonably straight sections of the form line. Form lines can be used to differentiate flat knolls and depressions from more distinct ones.</source>
             <comment>Description of symbol 103</comment>
@@ -624,8 +624,8 @@ To be able to show the distinction between neighbouring (closer than 30 metres a
             <source>A rock pillar or gigantic boulder that is so high and steep that it is impossible topass/climb.
 The gap between gigantic boulders or between gigantic boulders and other impassable feature symbols must exceed 0.3 mm on the map.</source>
             <comment>Description of symbol 206</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Sziklatorony vagy hatalmas sziklatömb, amely olyan magas és meredek, hogy nem lehet rajta le- vagy felmászni. A térképen a hatalmas sziklatömbök és más áthatolhatatlan tereptárgyak térképjele között is legalább 0.3 mm hézagot kell hagyni.</translation>
+    </message>
         <message>
             <source>Boulder cluster</source>
             <comment>Name of symbol 207</comment>
@@ -776,11 +776,11 @@ Shorter trenches may be exaggerated to the minimum graphical dimension.
 Impassable trenches shall be represented using symbol 201 (impassable cliff).
 Collapsed and easily crossable trenches should be mapped as erosion gullies.</source>
             <comment>Description of symbol 215</comment>
-            <translation>Sziklás vagy mesterséges árok.
+            <translation type="unfinished">Sziklás vagy mesterséges árok.
 A minimális mélység 1 m.
 Minimális hossz: 2 mm (30 m).
-Rövidebb árkokat eltúlozhatók a minimális grafikus dimenzióba.
-A Járhatatlan árkokat  201 (járhatatlan sziklafal) jellel kell ábrázolni.
+Rövidebb árkok eltúlozhatók a minimális grafikus méretre.
+Az áthatolhatatlan árkokat  201 (áthatolhatatlan sziklafal) jellel kell ábrázolni.
 Összeomlott és könnyen keresztezhető árkokat  metsződésként, vízmosásként kell ábrázolni.</translation>
     </message>
         <message>
@@ -791,8 +791,9 @@ A Járhatatlan árkokat  201 (járhatatlan sziklafal) jellel kell ábrázolni.
         <message>
             <source>The black bank line emphasises that the feature is uncrossable. Dominant areas of water may be shown with 70% colour. Small areas of water and bodies of water that have narrow parts shall always be shown with full colour.</source>
             <comment>Description of symbol 301</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>A fekete vonal jelzi, hogy a tereptárgy áthatolhatatlan. Nagyobb vízfelület ábrázolásánál 70%-os színt lehet használni, Kisebb vízfelületeket és víztesteket vékonyabb részeket mindig  teljes kékkel kell jelölni.
+Minimális szélesség: 0.3 mm (belső méret). Minimális terület: 0.5 mm 2 (kitöltés).</translation>
+    </message>
         <message>
             <source>Uncrossable body of water</source>
             <comment>Name of symbol 301.1</comment>
