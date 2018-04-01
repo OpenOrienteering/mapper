@@ -1380,7 +1380,7 @@ Színe: zöld (szaggatott vonal).</translation>
         <message>
             <source>Footprint: 13.5 m x 13.5 m.</source>
             <comment>Description of symbol 417</comment>
-            <translation>Lábnyoma 13,5m x 13,5m</translation>
+            <translation>A jel lábnyoma 13,5m x 13,5m.</translation>
     </message>
         <message>
             <source>Prominent bush or tree</source>
@@ -1522,14 +1522,22 @@ symbol.</source>
         <message>
             <source>Narrow ride</source>
             <comment>Name of symbol 508</comment>
-            <translation>Keskeny út, nyiladék</translation>
+            <translation>Keskeny nyiladék vagy egyenes nyomvonal</translation>
     </message>
         <message>
             <source>A forest ride or a prominent trace (forestry extraction track, sandy track, ski track) through the terrain which does not have a distinct runnable path along it. The definition of the symbol must be given on the map.
 Runnability: the same runnability as the surroundings.</source>
             <comment>Description of symbol 508</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Erdővágás vagy egyértelmű nyomvonal (erdészeti fakitermelő nyom, homokos nyomvonal, sínyom) a terepen, amelyben út nem vezet. A térképjel pontos meghatározását a térképen meg kell adni.
+A futhatóságot a térképjelnél valamivel vastagabb sárga, zöld vagy fehér háttér jelzi:
+Háttér nélkül: a futhatóság megegyezik a környezet futhatóságával.
+Sárga 100%: könnyen futható.
+Fehér a zöldben: jól futható.
+Zöld 20%: lassan futható.
+Zöld 50%: sétálva járható.
+Minimális hosszúság: 2 vonás (4.25 mm – terepi méret 64 m).
+Színe: fekete + fehér/zöld/sárga.</translation>
+    </message>
         <message>
             <source>Narrow ride, yellow background</source>
             <comment>Name of symbol 508.1</comment>
@@ -1540,8 +1548,16 @@ Runnability: the same runnability as the surroundings.</source>
 The definition of the symbol must be given on the map.
 Runnability: easy running.</source>
             <comment>Description of symbol 508.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Erdővágás vagy egyértelmű nyomvonal (erdészeti fakitermelő nyom, homokos nyomvonal, sínyom) a terepen, amelyben út nem vezet. A térképjel pontos meghatározását a térképen meg kell adni.
+A futhatóságot a térképjelnél valamivel vastagabb sárga, zöld vagy fehér háttér jelzi:
+Háttér nélkül: a futhatóság megegyezik a környezet futhatóságával.
+Sárga 100%: könnyen futható.
+Fehér a zöldben: jól futható.
+Zöld 20%: lassan futható.
+Zöld 50%: sétálva járható.
+Minimális hosszúság: 2 vonás (4.25 mm – terepi méret 64 m).
+Színe: fekete + fehér/zöld/sárga.</translation>
+    </message>
         <message>
             <source>Narrow ride, green 20% background</source>
             <comment>Name of symbol 508.2</comment>
@@ -1552,8 +1568,16 @@ Runnability: easy running.</source>
 The definition of the symbol must be given on the map.
 Runnability: slow running.</source>
             <comment>Description of symbol 508.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Erdővágás vagy egyértelmű nyomvonal (erdészeti fakitermelő nyom, homokos nyomvonal, sínyom) a terepen, amelyben út nem vezet. A térképjel pontos meghatározását a térképen meg kell adni.
+A futhatóságot a térképjelnél valamivel vastagabb sárga, zöld vagy fehér háttér jelzi:
+Háttér nélkül: a futhatóság megegyezik a környezet futhatóságával.
+Sárga 100%: könnyen futható.
+Fehér a zöldben: jól futható.
+Zöld 20%: lassan futható.
+Zöld 50%: sétálva járható.
+Minimális hosszúság: 2 vonás (4.25 mm – terepi méret 64 m).
+Színe: fekete + fehér/zöld/sárga.</translation>
+    </message>
         <message>
             <source>Narrow ride, green 50% background</source>
             <comment>Name of symbol 508.3</comment>
@@ -1564,8 +1588,16 @@ Runnability: slow running.</source>
 The definition of the symbol must be given on the map.
 Runnability: walk.</source>
             <comment>Description of symbol 508.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Erdővágás vagy egyértelmű nyomvonal (erdészeti fakitermelő nyom, homokos nyomvonal, sínyom) a terepen, amelyben út nem vezet. A térképjel pontos meghatározását a térképen meg kell adni.
+A futhatóságot a térképjelnél valamivel vastagabb sárga, zöld vagy fehér háttér jelzi:
+Háttér nélkül: a futhatóság megegyezik a környezet futhatóságával.
+Sárga 100%: könnyen futható.
+Fehér a zöldben: jól futható.
+Zöld 20%: lassan futható.
+Zöld 50%: sétálva járható.
+Minimális hosszúság: 2 vonás (4.25 mm – terepi méret 64 m).
+Színe: fekete + fehér/zöld/sárga.</translation>
+    </message>
         <message>
             <source>Narrow ride, white background</source>
             <comment>Name of symbol 508.4</comment>
@@ -1576,8 +1608,16 @@ Runnability: walk.</source>
 The definition of the symbol must be given on the map.
 Runnability: normal runnability.</source>
             <comment>Description of symbol 508.4</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Erdővágás vagy egyértelmű nyomvonal (erdészeti fakitermelő nyom, homokos nyomvonal, sínyom) a terepen, amelyben út nem vezet. A térképjel pontos meghatározását a térképen meg kell adni.
+A futhatóságot a térképjelnél valamivel vastagabb sárga, zöld vagy fehér háttér jelzi:
+Háttér nélkül: a futhatóság megegyezik a környezet futhatóságával.
+Sárga 100%: könnyen futható.
+Fehér a zöldben: jól futható.
+Zöld 20%: lassan futható.
+Zöld 50%: sétálva járható.
+Minimális hosszúság: 2 vonás (4.25 mm – terepi méret 64 m).
+Színe: fekete + fehér/zöld/sárga.</translation>
+    </message>
         <message>
             <source>Railway</source>
             <comment>Name of symbol 509</comment>
@@ -1587,8 +1627,11 @@ Runnability: normal runnability.</source>
             <source>A railway or other kind of railed track.
 If it is forbidden to run along the railway, it shall be combined with the overprint symbol for forbidden route. If it is forbidden to cross the railway, it must be combined with a symbol for forbidden area.</source>
             <comment>Description of symbol 509</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Vasút vagy egyéb sínpálya.
+Amennyiben tilos a sínpálya mentén futni, a 711 (Tiltott útvonal) térképjellel együtt kell használni. Abban az esetben, ha tilos a sínpályát keresztezni, az 520 (Tiltott terület) vagy a 709 (Tiltott terület) térképjelekkel együtt kell alkalmazni.
+Minimális hosszúság: 5 mm (terepi méret 75 m).
+Színe: fekete.</translation>
+    </message>
         <message>
             <source>Power line</source>
             <comment>Name of symbol 510</comment>
@@ -1608,8 +1651,10 @@ If it is forbidden to run along the railway, it shall be combined with the overp
             <source>Major power lines should be drawn with a double line. The gap between the lines may indicate the extent of the powerline.
 The lines may be broken to improve legibility. Very large carrying masts shall be represented in plan shape using symbol 521 (building) or with symbol 524 (high tower).</source>
             <comment>Description of symbol 511</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Nagyobb villamos távvezetékeket kettős vonallal kell ábrázolni. A két vonal közti távolság a vezeték kiterjedését jelölheti. 
+A jobb olvashatóság érdekében a vonalak megszakíthatóak. A nagyméretű tartóoszlopokat alaprajz szerint az 521 (Épület) vagy az 524 (Magas torony) jellel kell ábrázolni.
+Színe: fekete.</translation>
+    </message>
         <message>
             <source>Major power line</source>
             <comment>Name of symbol 511.1</comment>
@@ -1619,8 +1664,10 @@ The lines may be broken to improve legibility. Very large carrying masts shall b
             <source>Major power lines should be drawn with a double line. The gap between the lines may indicate the extent of the powerline.
 The lines may be broken to improve legibility. Very large carrying masts shall be represented in plan shape using symbol 521 (building) or with symbol 524 (high tower).</source>
             <comment>Description of symbol 511.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Nagyobb villamos távvezetékeket kettős vonallal kell ábrázolni. A két vonal közti távolság a vezeték kiterjedését jelölheti. 
+A jobb olvashatóság érdekében a vonalak megszakíthatóak. A nagyméretű tartóoszlopokat alaprajz szerint az 521 (Épület) vagy az 524 (Magas torony) jellel kell ábrázolni.
+Színe: fekete.</translation>
+    </message>
         <message>
             <source>Major power line, large carrying masts</source>
             <comment>Name of symbol 511.2</comment>
@@ -1630,8 +1677,10 @@ The lines may be broken to improve legibility. Very large carrying masts shall b
             <source>Major power lines should be drawn with a double line. The gap between the lines may indicate the extent of the powerline.
 The lines may be broken to improve legibility. Very large carrying masts shall be represented in plan shape using symbol 521 (building) or with symbol 524 (high tower).</source>
             <comment>Description of symbol 511.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Nagyobb villamos távvezetékeket kettős vonallal kell ábrázolni. A két vonal közti távolság a vezeték kiterjedését jelölheti. 
+A jobb olvashatóság érdekében a vonalak megszakíthatóak. A nagyméretű tartóoszlopokat alaprajz szerint az 521 (Épület) vagy az 524 (Magas torony) jellel kell ábrázolni.
+Színe: fekete.</translation>
+    </message>
         <message>
             <source>Bridge / tunnel</source>
             <comment>Name of symbol 512</comment>
@@ -1844,12 +1893,15 @@ Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m)
         <message>
             <source>Canopy with outline</source>
             <comment>Name of symbol 522</comment>
-            <translation>Tető körvonallal</translation>
+            <translation>Fedett terület</translation>
     </message>
         <message>
             <source>An accessible and runnable area with roof.</source>
             <comment>Description of symbol 522</comment>
-            <translation>Egy hozzáférhető és futható terület tetővel.</translation>
+            <translation>Megközelíthető és futható fedett terület.
+Minimális alapterület: 0.6 mm x 0.6 mm (terepi méret 9 m x 9 m).
+Minimális (belső) szélesség: 0.3 mm (terepi méret 4.5 m).
+Színe: fekete 20%, fekete.</translation>
     </message>
         <message>
             <source>Canopy</source>
