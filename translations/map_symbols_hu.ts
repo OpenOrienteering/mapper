@@ -5879,20 +5879,23 @@ A jel északi irányba mutat.</translation>
         <message>
             <source>Magnetic north line - black</source>
             <comment>Name of symbol 601.0.1</comment>
-            <translation>Északi vonal - fekete</translation>
+            <translation>Mágneses északi vonal - fekete</translation>
     </message>
         <message>
             <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm on the 1:5 000 map so they represent 150 m on the ground. 
 
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc.</source>
             <comment>Description of symbol 601.0.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Az északvonalak a térképen a mágneses észak felé mutatnak. Ezek a térképen egymástól 30 mm-re helyezkednek el, ami 150 méteres terepi távolságnak felel meg 1:5 000-es méretarányban; 1:4000-es méretarányban a terepi 150 méter 37,5 mm-nek felel meg. 
+
+Az északvonalat meg lehet szakítani, amennyiben apró tereptárgyakat (pl. sziklát, kúpot, patakelágazást, ösvényvéget, stb.) fedne ki. Kevés vízrajzi objektumot ábrázoló területen kék színű vonalakat használhatunk.
+Színe: fekete (kék).</translation>
+    </message>
         <message>
             <source>Magnetic north line, black with arrow</source>
             <comment>Name of symbol 601.0.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Mágneses északi vonal, fekete nyíllal</translation>
+    </message>
         <message>
             <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm on the 1:5 000 map so they represent 150 m on the ground. 
 
@@ -5900,32 +5903,43 @@ North lines may be broken where they obscure small features such as boulders, kn
 
 &lt;b&gt;Note: this is a non-standard addition to the symbol set.&lt;/b&gt;</source>
             <comment>Description of symbol 601.0.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Az északvonalak a térképen a mágneses észak felé mutatnak. Ezek a térképen egymástól 30 mm-re helyezkednek el, ami 150 méteres terepi távolságnak felel meg 1:5 000-es méretarányban; 1:4000-es méretarányban a terepi 150 méter 37,5 mm-nek felel meg. 
+
+Az északvonalat meg lehet szakítani, amennyiben apró tereptárgyakat (pl. sziklát, kúpot, patakelágazást, ösvényvéget, stb.) fedne ki. Kevés vízrajzi objektumot ábrázoló területen kék színű vonalakat használhatunk.
+Színe: fekete (kék).
+
+&lt;b&gt;Megjegyzés:ez nem egy szabványos jelkulcs része!&lt;/b&gt;</translation>
+    </message>
         <message>
             <source>North lines pattern - black</source>
             <comment>Name of symbol 601.0.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Északi vonalak minta - fekete</translation>
+    </message>
         <message>
             <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm on the 1:5000 map so they represent 150 m on the ground.
 
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. Cut holes in the pattern to create these breaks.</source>
             <comment>Description of symbol 601.0.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Az északvonalak a térképen a mágneses észak felé mutatnak. Ezek a térképen egymástól 30 mm-re helyezkednek el, ami 150 méteres terepi távolságnak felel meg 1:5000-es méretarányban; 1:4000-es méretarányban a terepi 150 méter 37,5 mm-nek felel meg. 
+
+Az északvonalat meg lehet szakítani, amennyiben apró tereptárgyakat (pl. sziklát, kúpot, patakelágazást, ösvényvéget, stb.) fedne ki. Kevés vízrajzi objektumot ábrázoló területen kék színű vonalakat használhatunk. &lt;b&gt;A mintába vágott lyukak megszakítják a mintát.&lt;/b&gt;
+Színe: fekete (kék).</translation>
+    </message>
         <message>
             <source>Magnetic north line, blue</source>
             <comment>Name of symbol 601.0.4</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Mágneses északi vonal, kék</translation>
+    </message>
         <message>
             <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm on the 1:5 000 map so they represent 150 m on the ground.
 
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc.</source>
             <comment>Description of symbol 601.0.4</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Az északvonalak a térképen a mágneses észak felé mutatnak. Ezek a térképen egymástól 30 mm-re helyezkednek el, ami 150 méteres terepi távolságnak felel meg 1:5000-es méretarányban; 1:4000-es méretarányban a terepi 150 méter 37,5 mm-nek felel meg. 
+
+Az északvonalat meg lehet szakítani, amennyiben apró tereptárgyakat (pl. sziklát, kúpot, patakelágazást, ösvényvéget, stb.) fedne ki. Kevés vízrajzi objektumot ábrázoló területen kék színű vonalakat használhatunk. 
+Színe: fkék (fekete)</translation>
+    </message>
         <message>
             <source>Magnetic north line, blue, with arrow</source>
             <comment>Name of symbol 601.0.5</comment>
