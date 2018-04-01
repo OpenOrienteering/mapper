@@ -1178,8 +1178,8 @@ Ahol az erdőben a futhatóság egy irányban kedvezőbb, a kedvező iránnyal p
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, light green stripes are left in the screen symbol to show the direction of good running.</source>
             <comment>Description of symbol 408.2</comment>
-            <translation>Fákkal és bozóttal sűrűn benőtt terület (rossz átláthatóság), a futás sebessége a normál futósebességhez viszonyítva 20-60%-os. 
-Ahol az erdőben a futhatóság egy irányban kedvezőbb, a kedvező iránnyal párhuzamosan zöld 50% csíkozást  (2-es zöld) kap a zöld felületi jel</translation>
+            <translation type="unfinished">Fákkal és bozóttal sűrűn benőtt terület (rossz átláthatóság), a futás sebessége a normál futósebességhez viszonyítva 20-60%-os. 
+Ahol az erdőben a futhatóság egy irányban kedvezőbb, a kedvező iránnyal párhuzamosan zöld 50% csíkozást  (2-es zöld) kap a zöld felületi jel.</translation>
     </message>
         <message>
             <source>Vegetation, walk, good visibility</source>
@@ -1236,34 +1236,46 @@ For fairness reasons, areas that are really difficult to get through (10% and sl
         <message>
             <source>Vegetation, impassable</source>
             <comment>Name of symbol 411</comment>
-            <translation>Növényzet, járhatatlan</translation>
+            <translation>Növényzet, áthatolhatatlan</translation>
     </message>
         <message>
             <source>An area of dense vegetation (trees or undergrowth) which is effectively impassable. Most useful for narrow and small areas.</source>
             <comment>Description of symbol 411</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Nagyon sűrűn benőtt terület (fák vagy aljnövényzet), amely teljes mértékben áthatolhatatlan. Leginkább keskeny vagy kis területek ábrázolására használható térképjel.
+Minimális terület: 0.8 mm x 0.8 mm (terepi méret 12 m x 12 m). 
+Minimális szélesség: 0.35 mm (terepi méret 5 m).
+Színe: zöld és fekete 50% vagy zöld és fekete (50%) raszter: 0.16 mm-es pontok,
+távolság pontközéptől pontközépig 0.2 mm.</translation>
+    </message>
         <message>
             <source>Vegetation, impassable</source>
             <comment>Name of symbol 411.1</comment>
-            <translation>Növényzet, járhatatlan</translation>
+            <translation>Növényzet, áthatolhatatlan</translation>
     </message>
         <message>
             <source>An area of dense vegetation (trees or undergrowth) which is effectively impassable. Most useful for narrow and small areas.</source>
             <comment>Description of symbol 411.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Nagyon sűrűn benőtt terület (fák vagy aljnövényzet), amely teljes mértékben áthatolhatatlan. Leginkább keskeny vagy kis területek ábrázolására használható térképjel.
+Minimális terület: 0.8 mm x 0.8 mm (terepi méret 12 m x 12 m). 
+Minimális szélesség: 0.35 mm (terepi méret 5 m).
+Színe: zöld és fekete 50% vagy zöld és fekete (50%) raszter: 0.16 mm-es pontok,
+távolság pontközéptől pontközépig 0.2 mm.</translation>
+    </message>
         <message>
             <source>Vegetation, impassable, minimum width</source>
             <comment>Name of symbol 411.2</comment>
-            <translation>Növényzet, járhatatlan, minimális szélesség</translation>
+            <translation>Növényzet, áthatolhatatlan, minimális szélesség</translation>
     </message>
         <message>
             <source>An area of dense vegetation (trees or undergrowth) which is effectively impassable.
 Minimum width: 0.35 mm</source>
             <comment>Description of symbol 411.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Nagyon sűrűn benőtt terület (fák vagy aljnövényzet), amely teljes mértékben áthatolhatatlan. Leginkább keskeny vagy kis területek ábrázolására használható térképjel.
+Minimális terület: 0.8 mm x 0.8 mm (terepi méret 12 m x 12 m). 
+Minimális szélesség: 0.35 mm (terepi méret 5 m).
+Színe: zöld és fekete 50% vagy zöld és fekete (50%) raszter: 0.16 mm-es pontok,
+távolság pontközéptől pontközépig 0.2 mm.</translation>
+    </message>
         <message>
             <source>Cultivated land</source>
             <comment>Name of symbol 412</comment>
