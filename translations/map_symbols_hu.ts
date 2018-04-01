@@ -2230,7 +2230,7 @@ Színe: lila.</translation>
 – határvonal nélkül, ha a terepen semmiféle jelölés nincs.
 A zárt területre belépni tilos.
 Minimális terület: 2 mm x 2 mm (terepi méret 30 m x 30 m)
-Színe: lila</translation>
+Színe: lila.</translation>
     </message>
         <message>
             <source>Out-of-bounds area, dashed boundary</source>
@@ -2282,7 +2282,7 @@ An out-of-bounds route shall not be used.</source>
             <comment>Description of symbol 711.1</comment>
             <translation>A versenyen nem használható útvonal. A versenyzők a tiltott útvonalat keresztezhetik, de az útvonal mentén haladni tilos. 
 Minimális hosszúság: 2 jel (6 mm – terepi méret 90 m).
-Színe: lila</translation>
+Színe: lila.</translation>
     </message>
         <message>
             <source>First aid post</source>
@@ -2302,8 +2302,8 @@ Színe: lila</translation>
         <message>
             <source>The location of a refreshment point which is not at a control.</source>
             <comment>Description of symbol 713</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Egy olyan frissítő pont helye, ahol nincs ellenőrzőpont.</translation>
+    </message>
         <message>
             <source>Simple Orienteering Course</source>
             <comment>Name of symbol 799</comment>
@@ -2314,8 +2314,10 @@ Színe: lila</translation>
 
 The purple line will extend a bit into the finish symbol. This is a shortcoming of this simple approach.</source>
             <comment>Description of symbol 799</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ez a jel lehetővé tesz egy egyszerű gyors utat  egy edző pálya készítéséhez.
+
+A lila vonalat pontonként a rajttól a célig halad.   Ez az egyszerű megközelítés hiányossága.</translation>
+    </message>
         <message>
             <source>OpenOrienteering Logo</source>
             <comment>Name of symbol 999</comment>
