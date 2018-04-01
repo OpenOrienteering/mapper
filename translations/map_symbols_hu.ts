@@ -6059,31 +6059,37 @@ Színe: lila.</translation>
             <source>A marked route is shown on the map with a dashed line.</source>
             <comment>Description of symbol 705</comment>
             <translation>A terepen jelzett útvonalat a térképen szaggatott vonal jelzi.
-Színe: lila</translation>
+Színe: lila.</translation>
     </message>
         <message>
             <source>Finish</source>
             <comment>Name of symbol 706</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Cél</translation>
+    </message>
         <message>
             <source>The finish is shown by two concentric circles.</source>
             <comment>Description of symbol 706</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Acél helyét két koncentrikus kör jelöli.
+Színe: lila.</translation>
+    </message>
         <message>
             <source>Uncrossable boundary &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 707</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Tiltott határ&lt;span style=&quot;color:magenta&quot;&gt;(Tilos keresztezni!)&lt;/span&gt;</translation>
+    </message>
         <message>
             <source>A boundary which it is not permitted to cross. Uncrossable boundaries shall be mapped by using the symbols: impassable cliff (201), impassable body of water (304.1), impassable marsh (309), impassable wall (521.1), impassable fence or railing (524) or impassable pipeline (534) and shall not be overprinted with symbol uncrossable boundary (707). This symbol is to be used only for last minute updates to the competition area, as excessive use of purple for indicating barriers is unfortunate.
 
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an uncrossable boundary!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 707</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Olyan határ, amelyet a terepen tilos átlépni. A tiltott határolókat a feltérképezés során kell jelölni a következő jelekkel: áthatolhatatlan sziklafal (201), átgázolhatatlan víztest (304.1). átgázolhatatlan mocsár (309), áthatolhatatlan fal (521,1), áthatolhatatlan kerítés, korlát (524),áthatolhatatlan csővezeték (534), és ezek a jelek nem rajzolhatók felül atiltott határ jelével(707). 
+Ezt a szimbólumot csak a versenyterületre vonatkozó utolsó pillanatban történő frissítésre lehet használni, mivel a bíbor túlzott használata akadályok jelzésére nem szerencsés.
+
+&lt;span style=&quot;color:magenta&quot;&gt;Tilos keresztezni a tiltott határt!
+A szabályt egszegő versenyzőket kizárják!&lt;/span&gt;
+Színe: bíbor.</translation>
+    </message>
         <message>
             <source>Crossing point</source>
             <comment>Name of symbol 708</comment>
