@@ -2193,7 +2193,8 @@ Színe: lila.</translation>
 An out-of-bounds boundary shall not be crossed.</source>
             <comment>Description of symbol 708</comment>
             <translation>Olyan határ, amelyet a terepen tilos átlépni.
-Egy tiltott terület határát nem szabad keresztezni.</translation>
+Egy tiltott terület határát nem szabad keresztezni.
+Minimális hossz:1 mm (lábnyoma 15m)</translation>
     </message>
         <message>
             <source>Out-of-bounds area</source>
