@@ -1274,7 +1274,7 @@ Minimum width: 0.35 mm</source>
 Minimális terület: 0.8 mm x 0.8 mm (terepi méret 12 m x 12 m). 
 Minimális szélesség: 0.35 mm (terepi méret 5 m).
 Színe: zöld és fekete 50% vagy zöld és fekete (50%) raszter: 0.16 mm-es pontok,
-távolság pontközéptől pontközépig 0.2 mm.</translation>
+távolság pontközéptől pontközépig 0.2 mm</translation>
     </message>
         <message>
             <source>Cultivated land</source>
@@ -1347,7 +1347,10 @@ May be combined with symbol 407 (vegetation, slow running, good visibility) or 4
         <message>
             <source>Distinct vegetation boundary</source>
             <comment>Name of symbol 416</comment>
-            <translation>Megkülönböztethető növényzeti határ, jelleghatár</translation>
+            <translation>Jól megkülönböztethető erdőszegély vagy élesen kirajzolódó növényzethatár az
+erdőterületen belül. Egy térképen belül csak az egyik jelleghatár jelet (fekete pontsor
+vagy zöld szaggatott vonal) szabad használni. Nagyon köves és sok sziklaformát
+tartalmazó területeken a zöld szagga</translation>
     </message>
         <message>
             <source>A distinct forest edge or vegetation boundary within the forest.
