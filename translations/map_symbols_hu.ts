@@ -2229,7 +2229,7 @@ Színe: lila.</translation>
 – szaggatott vonallal, ha a határvonal nincs végig jelölve a terepen,
 – határvonal nélkül, ha a terepen semmiféle jelölés nincs.
 A zárt területre belépni tilos.
-Minimális terület: 2 mm x 2 mm (terepi méret 30 m x 30 m).
+Minimális terület: 2 mm x 2 mm (terepi méret 30 m x 30 m)
 Színe: lila</translation>
     </message>
         <message>
@@ -2240,8 +2240,14 @@ Színe: lila</translation>
         <message>
             <source>A dashed line indicates intermittent marking on the ground.</source>
             <comment>Description of symbol 709.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Tiltott terület. A területet határoló vonalat, ha az nem természetes határ, a következő módon kell jelölni:
+– folytonos vonallal, ha a határvonal a terepen végig jelölve (pl. szalagozva) van,
+– szaggatott vonallal, ha a határvonal nincs végig jelölve a terepen,
+– határvonal nélkül, ha a terepen semmiféle jelölés nincs.
+A zárt területre belépni tilos.
+Minimális terület: 2 mm x 2 mm (terepi méret 30 m x 30 m).
+Színe: lila</translation>
+    </message>
         <message>
             <source>Crossing point</source>
             <comment>Name of symbol 710</comment>
