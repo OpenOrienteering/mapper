@@ -1165,7 +1165,7 @@ Színe: zöld 50%.</translation>
             <translation>Növényzet, ami egy irányban futható, 2-es zöld
 
 Fákkal és bozóttal sűrűn benőtt terület (rossz átláthatóság), a futás sebessége a normál futósebességhez viszonyítva 20-60%-os. 
-Ahol az erdőben a futhatóság egy irányban kedvezőbb, a kedvező iránnyal párhuzamosan zöld 50% csíkozást  (2-es zöld) kap a zöld felületi jel.</translation>
+Ahol az erdőben a futhatóság egy irányban kedvezőbb, a kedvező iránnyal párhuzamosan zöld 50% csíkozást  (2-es zöld) kap a zöld felületi jel</translation>
     </message>
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
