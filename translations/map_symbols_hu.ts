@@ -1914,7 +1914,7 @@ Színe: fekete 20%, fekete.</translation>
             <translation>Megközelíthető és futható fedett terület.
 Minimális alapterület: 0.6 mm x 0.6 mm (terepi méret 9 m x 9 m).
 Minimális (belső) szélesség: 0.3 mm (terepi méret 4.5 m).
-Színe: fekete 20%,</translation>
+Színe: fekete 20%.</translation>
     </message>
         <message>
             <source>Canopy outline</source>
@@ -1924,8 +1924,8 @@ Színe: fekete 20%,</translation>
         <message>
             <source>A black line surrounds the symbol 522.0.1.</source>
             <comment>Description of symbol 522.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Egy fekete vonal az 522.0.1-es fedett terület jelhez</translation>
+    </message>
         <message>
             <source>Ruin</source>
             <comment>Name of symbol 523</comment>
