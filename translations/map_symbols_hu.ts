@@ -6088,20 +6088,21 @@ Ezt a szimbólumot csak a versenyterületre vonatkozó utolsó pillanatban tört
 
 &lt;span style=&quot;color:magenta&quot;&gt;Tilos keresztezni a tiltott határt!
 A szabályt megszegő versenyzőket kizárják!&lt;/span&gt;
-Színe: bíbor.</translation>
+Színe: lila</translation>
     </message>
         <message>
             <source>Crossing point</source>
             <comment>Name of symbol 708</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Átkelőhely</translation>
+    </message>
         <message>
             <source>A crossing point through or over a wall or fence, or across a road or railway or through a tunnel or an out-of-bounds area is drawn on the map with two lines curving outwards. 
 
 If underpasses or tunnels etc. are to be used in a competition, they shall be emphasized with symbol crossing point (708) or crossing section (708.1).</source>
             <comment>Description of symbol 708</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Átjárót falon, kerítésen vagy úton, vasúton, zárt területen, esetleg alagutat ezek alatt, két kifelé görbül õ vonal jelöl. Amennyiben szükséges, a jelet alaprajzban is lehet rajzolni (főleg átjárók, alagutak esetében).
+Színe:lila</translation>
+    </message>
         <message>
             <source>Crossing section, one side</source>
             <comment>Name of symbol 708.1</comment>
