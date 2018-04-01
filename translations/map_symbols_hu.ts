@@ -6048,13 +6048,13 @@ Színe: lila.</translation>
             <source>Where controls are to be visited in order, the start, control points and finish are joined together by straight lines. Sections of lines should be omitted to leave important detail showing.</source>
             <comment>Description of symbol 704</comment>
             <translation>A rajtot, az ellenőrző pontokat és a célt egyenes vonallal kell összekötni. Az összekötő szakaszokat meg lehet szakítani, ha az fontos részletet takarna el.
-Színe: lila</translation>
+Színe: lila.</translation>
     </message>
         <message>
             <source>Marked route</source>
             <comment>Name of symbol 705</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Jelzett út</translation>
+    </message>
         <message>
             <source>A marked route is shown on the map with a dashed line.</source>
             <comment>Description of symbol 705</comment>
