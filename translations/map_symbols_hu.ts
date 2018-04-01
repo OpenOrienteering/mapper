@@ -791,7 +791,7 @@ Az áthatolhatatlan árkokat  201 (áthatolhatatlan sziklafal) jellel kell ábr�
         <message>
             <source>The black bank line emphasises that the feature is uncrossable. Dominant areas of water may be shown with 70% colour. Small areas of water and bodies of water that have narrow parts shall always be shown with full colour.</source>
             <comment>Description of symbol 301</comment>
-            <translation>A fekete vonal jelzi, hogy a tereptárgy áthatolhatatlan. Nagyobb vízfelület ábrázolásánál 70%-os színt lehet használni, Kisebb vízfelületeket és víztesteket vékonyabb részeket mindig  teljes kékkel kell jelölni.
+            <translation type="unfinished">A fekete vonal jelzi, hogy a tereptárgy áthatolhatatlan. Nagyobb vízfelület ábrázolásánál 70%-os színt lehet használni, Kisebb vízfelületeket és víztesteket vékonyabb részeket mindig  teljes kékkel kell jelölni.
 Minimális szélesség: 0.3 mm (belső méret). Minimális terület: 0.5 mm 2 (kitöltés).</translation>
     </message>
         <message>
@@ -822,8 +822,10 @@ Minimális szélesség: 0.3 mm (belső méret). Minimális terület: 0.5 mm 2 (k
         <message>
             <source>A shallow seasonal or periodic body of water may be represented using a dashed outline. Small shallow water bodies may be represented as 100% blue (without an outline).</source>
             <comment>Description of symbol 302</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Sekélyebb, időszakosan meglévő vízterületet 50%-os kék színnel és szaggatott kék szegéllyel kell jelölni. Amennyiben a vízterület kicsi, szegély nélkül 100% kék színt kaphat.
+Minimális szélesség: 0.3 mm (belső méret). Minimális terület: 0.5 mm 2 (belső).
+Színe: kék (szegély), kék 50%</translation>
+    </message>
         <message>
             <source>Shallow body of water</source>
             <comment>Name of symbol 302.1</comment>
