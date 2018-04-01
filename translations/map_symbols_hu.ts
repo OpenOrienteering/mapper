@@ -1893,7 +1893,7 @@ Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m)
         <message>
             <source>Canopy with outline</source>
             <comment>Name of symbol 522</comment>
-            <translation>Fedett terület</translation>
+            <translation>Fedett terület körvonallal</translation>
     </message>
         <message>
             <source>An accessible and runnable area with roof.</source>
@@ -1906,12 +1906,15 @@ Színe: fekete 20%, fekete.</translation>
         <message>
             <source>Canopy</source>
             <comment>Name of symbol 522.1</comment>
-            <translation>Tető</translation>
+            <translation>Fedett terület</translation>
     </message>
         <message>
             <source>An accessible and runnable area with roof.</source>
             <comment>Description of symbol 522.1</comment>
-            <translation>Egy hozzáférhető és futható terület tetővel.</translation>
+            <translation>Megközelíthető és futható fedett terület.
+Minimális alapterület: 0.6 mm x 0.6 mm (terepi méret 9 m x 9 m).
+Minimális (belső) szélesség: 0.3 mm (terepi méret 4.5 m).
+Színe: fekete 20%,</translation>
     </message>
         <message>
             <source>Canopy outline</source>
