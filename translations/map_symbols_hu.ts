@@ -1000,7 +1000,7 @@ A jelet északra tájolják be.</translation>
             <comment>Description of symbol 311</comment>
             <translation>Egy kiemelkedő kút, szökőkút, víztartály vagy befoglalt forrás.
 A térképjelet északnak kell tájolni.
-Terepi méret: 13.5 m x 13,5 m</translation>
+Terepi méret: 13.5 m x 13,5 m.</translation>
     </message>
         <message>
             <source>Spring</source>
@@ -1024,7 +1024,8 @@ A helyszín a szimbólum súlypontja. A jel nyitott részét a kifolyás irány�
 The symbol is orientated to north.</source>
             <comment>Description of symbol 313</comment>
             <translation>Különleges vízrajzi tereptárgy
-A szimbólumot északra tájolják be.</translation>
+A szimbólumot északra tájolják be.
+A jel „lábnyoma” a terepen: 13.5 m x 13.5 m</translation>
     </message>
         <message>
             <source>Open land</source>
