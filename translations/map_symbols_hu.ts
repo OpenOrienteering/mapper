@@ -2194,7 +2194,7 @@ An out-of-bounds boundary shall not be crossed.</source>
             <comment>Description of symbol 708</comment>
             <translation>Olyan határ, amelyet a terepen tilos átlépni.
 Egy tiltott terület határát nem szabad keresztezni.
-Minimális hossz:1 mm (lábnyoma 15m)</translation>
+Minimális hossz:1 mm (lábnyoma 15m).</translation>
     </message>
         <message>
             <source>Out-of-bounds area</source>
@@ -2208,8 +2208,14 @@ Minimális hossz:1 mm (lábnyoma 15m)</translation>
 – no line indicates no marking in the terrain.
 An out-of-bounds area shall not be entered.</source>
             <comment>Description of symbol 709</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Egy tiltott terület. A területet határoló vonalat, ha az nem természetes határ következő módon kell jelölni:
+– folytonos vonallal, ha a határvonal a terepen végig jelölve (pl. szalagozva) van, 
+– szaggatott vonallal, ha a határvonal nincs végig jelölve a terepen,
+– határvonal nélkül, ha a terepen semmiféle jelölés nincs.
+A zárt területre belépni tilos.
+Minimális terület: 2 mm x 2 mm (terepi méret 30 m x 30 m).
+Színe: lila.</translation>
+    </message>
         <message>
             <source>Out-of-bounds area, solid boundary</source>
             <comment>Name of symbol 709.1</comment>
@@ -2218,8 +2224,14 @@ An out-of-bounds area shall not be entered.</source>
         <message>
             <source>A solid line indicates that the boundary is marked continuously (tapes, etc.) on the ground.</source>
             <comment>Description of symbol 709.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Tiltott terület. A területet határoló vonalat, ha az nem természetes határ, a következő módon kell jelölni:
+– folytonos vonallal, ha a határvonal a terepen végig jelölve (pl. szalagozva) van,
+– szaggatott vonallal, ha a határvonal nincs végig jelölve a terepen,
+– határvonal nélkül, ha a terepen semmiféle jelölés nincs.
+A zárt területre belépni tilos.
+Minimális terület: 2 mm x 2 mm (terepi méret 30 m x 30 m).
+Színe: lila</translation>
+    </message>
         <message>
             <source>Out-of-bounds area, dashed boundary</source>
             <comment>Name of symbol 709.2</comment>
