@@ -6087,7 +6087,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
 Ezt a szimbólumot csak a versenyterületre vonatkozó utolsó pillanatban történő frissítésre lehet használni, mivel a bíbor túlzott használata akadályok jelzésére nem szerencsés.
 
 &lt;span style=&quot;color:magenta&quot;&gt;Tilos keresztezni a tiltott határt!
-A szabályt egszegő versenyzőket kizárják!&lt;/span&gt;
+A szabályt megszegő versenyzőket kizárják!&lt;/span&gt;
 Színe: bíbor.</translation>
     </message>
         <message>
