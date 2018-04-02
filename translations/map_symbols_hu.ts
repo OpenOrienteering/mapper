@@ -262,7 +262,7 @@ Színe: barna.</translation>
         <message>
             <source>Distinct earth wall. Minimum height is 1 m.</source>
             <comment>Description of symbol 105</comment>
-            <translation>Megkülönböztethető földfal, töltés A minimális magasság 1 méter.</translation>
+            <translation>Megkülönböztethető földfal, töltés. A minimális magasság 1 méter.</translation>
     </message>
         <message>
             <source>Small earth wall</source>
@@ -6433,38 +6433,38 @@ A nagyon magas földletörés vonalvastagsága 0,25mm lehet.</translation>
         <message>
             <source>The line width of very high earth banks may be 0.25 mm.</source>
             <comment>Description of symbol 106.1</comment>
-            <translation>A nagyon magas földletörés vonalvastagsága 0,25mm lehet</translation>
+            <translation>A nagyon magas földletörés vonalvastagsága 0,25mm lehet.</translation>
     </message>
         <message>
             <source>Earth bank, very high, minimum size</source>
             <comment>Name of symbol 106.1.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Nagyon magas földletörés, minimális méret</translation>
+    </message>
         <message>
             <source>The line width of very high earth banks may be 0.25 mm.</source>
             <comment>Description of symbol 106.1.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>A nagyon magas földletörés vonalvastagsága 0,25mm lehet.</translation>
+    </message>
         <message>
             <source>Earth bank, tag line</source>
             <comment>Name of symbol 106.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Földletörés fogazás vonal</translation>
+    </message>
         <message>
             <source>Use this symbol to display the full extent of wide earth banks.</source>
             <comment>Description of symbol 106.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ezt a jelet egy földletörés teljes kiterjedésének ábrázolásához lehet használni.</translation>
+    </message>
         <message>
             <source>Earth wall</source>
             <comment>Name of symbol 107</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Töltés, föld fal, sánc</translation>
+    </message>
         <message>
             <source>Distinct earth wall. Minimum height is 1 m.</source>
             <comment>Description of symbol 107</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Megkülönböztethető földfal, töltés. A minimális magasság 1 méter.</translation>
+    </message>
         <message>
             <source>Erosion gully</source>
             <comment>Name of symbol 109</comment>
