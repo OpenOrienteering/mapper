@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013, 2014 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -260,9 +260,52 @@ void MainWindow::setController(MainWindowController* new_controller, bool has_fi
 		// Force a menu synchronisation,
 		// QCocoaMenuBar::updateMenuBarImmediately(),
 		// via QCocoaNativeInterface::onAppFocusWindowChanged().
+		/// \todo Review in Qt > 5.6
 		qApp->focusWindowChanged(qApp->focusWindow());
 	}
-#endif
+	
+# if defined(MAPPER_DEVELOPMENT_BUILD)
+	{
+		// Qt's menu text heuristic can assign unexpected platform specific roles,
+		// which resulted in Mapper issue #1067. The only supported solution is
+		// assigning QAction::NoRole) before adding items to the menubar.
+		// Cf. QTBUG-30812.
+		// However, the heuristic is required for some platform-specific items.
+		// Cf. detectMenuRole() in qtbase/src/plugins/platforms/cocoa/messages.cpp
+		const auto platform_keywords = {
+			QCoreApplication::translate("QCocoaMenuItem", "Cut"),
+			QCoreApplication::translate("QCocoaMenuItem", "Copy"),
+			QCoreApplication::translate("QCocoaMenuItem", "Paste"),
+			QCoreApplication::translate("QCocoaMenuItem", "Select All")
+		};
+		const auto menubar_actions = menuBar()->actions();
+		for (auto menubar_action : menubar_actions)
+		{
+			if (const auto menu = menubar_action->menu())
+			{
+				const auto menu_actions = menu->actions();
+				for (auto action : menu_actions)
+				{
+					if (action->menuRole() != QAction::TextHeuristicRole
+						|| action->isSeparator())
+						continue;
+					const auto text = action->text().remove(QLatin1Char('&'));
+					if (std::none_of(begin(platform_keywords), end(platform_keywords), [&text](const auto& keyword) {
+									return keyword.compare(text, Qt::CaseInsensitive) == 0;
+						}))
+					{
+						// Such warnings may indiciate missing setting of QAction::NoRole
+						// on a (new) item, or incomplete translations for Mapper or Qt.
+						qDebug("Unexpected TextHeuristicRole for \"%s > %s\"",
+						       qUtf8Printable(menubar_action->text()),
+						       qUtf8Printable(action->text()));
+					}
+				}
+			}
+		}
+	}
+# endif  // MAPPER_DEVELOPMENT_BUILD
+#endif  // Q_OS_MACOS
 	
 	setHasAutosaveConflict(false);
 	setHasUnsavedChanges(false);
@@ -271,18 +314,21 @@ void MainWindow::setController(MainWindowController* new_controller, bool has_fi
 void MainWindow::createFileMenu()
 {
 	QAction* new_act = new QAction(QIcon(QString::fromLatin1(":/images/new.png")), tr("&New"), this);
+	new_act->setMenuRole(QAction::NoRole);
 	new_act->setShortcuts(QKeySequence::New);
 	new_act->setStatusTip(tr("Create a new map"));
 	new_act->setWhatsThis(Util::makeWhatThis("file_menu.html"));
 	connect(new_act, &QAction::triggered, this, &MainWindow::showNewMapWizard);
 	
 	QAction* open_act = new QAction(QIcon(QString::fromLatin1(":/images/open.png")), tr("&Open..."), this);
+	open_act->setMenuRole(QAction::NoRole);
 	open_act->setShortcuts(QKeySequence::Open);
 	open_act->setStatusTip(tr("Open an existing file"));
 	open_act->setWhatsThis(Util::makeWhatThis("file_menu.html"));
 	connect(open_act, &QAction::triggered, this, &MainWindow::showOpenDialog);
 	
 	open_recent_menu = new QMenu(tr("Open &recent"), this);
+	open_recent_menu->menuAction()->setMenuRole(QAction::NoRole);
 	open_recent_menu->setWhatsThis(Util::makeWhatThis("file_menu.html"));
 	for (auto& action : recent_file_act)
 	{
@@ -294,11 +340,13 @@ void MainWindow::createFileMenu()
 	// NOTE: if you insert something between open_recent_menu and save_act, adjust updateRecentFileActions()!
 	
 	save_act = new QAction(QIcon(QString::fromLatin1(":/images/save.png")), tr("&Save"), this);
+	save_act->setMenuRole(QAction::NoRole);
 	save_act->setShortcuts(QKeySequence::Save);
 	save_act->setWhatsThis(Util::makeWhatThis("file_menu.html"));
 	connect(save_act, &QAction::triggered, this, &MainWindow::save);
 	
 	auto save_as_act = new QAction(tr("Save &as..."), this);
+	save_as_act->setMenuRole(QAction::NoRole);
 	if (QKeySequence::keyBindings(QKeySequence::SaveAs).empty())
 		save_as_act->setShortcut(tr("Ctrl+Shift+S"));
 	else
@@ -307,20 +355,21 @@ void MainWindow::createFileMenu()
 	connect(save_as_act, &QAction::triggered, this, &MainWindow::showSaveAsDialog);
 	
 	settings_act = new QAction(tr("Settings..."), this);
-	settings_act->setShortcut(QKeySequence::Preferences);
 	settings_act->setMenuRole(QAction::PreferencesRole);
+	settings_act->setShortcut(QKeySequence::Preferences);
 	connect(settings_act, &QAction::triggered, this, &MainWindow::showSettings);
 	
 	close_act = new QAction(QIcon(QString::fromLatin1(":/images/close.png")), tr("Close"), this);
+	close_act->setMenuRole(QAction::NoRole);
 	close_act->setShortcut(QKeySequence::Close);
 	close_act->setStatusTip(tr("Close this file"));
 	close_act->setWhatsThis(Util::makeWhatThis("file_menu.html"));
 	connect(close_act, &QAction::triggered, this, &MainWindow::closeFile);
 	
 	QAction* exit_act = new QAction(tr("E&xit"), this);
+	exit_act->setMenuRole(QAction::QuitRole);
 	exit_act->setShortcuts(QKeySequence::Quit);
 	exit_act->setStatusTip(tr("Exit the application"));
-	exit_act->setMenuRole(QAction::QuitRole);
 	exit_act->setWhatsThis(Util::makeWhatThis("file_menu.html"));
 	connect(exit_act, &QAction::triggered, qApp, &QApplication::closeAllWindows);
 	
@@ -361,25 +410,30 @@ void MainWindow::createHelpMenu()
 {
 	// Help menu
 	QAction* manualAct = new QAction(QIcon(QString::fromLatin1(":/images/help.png")), tr("Open &Manual"), this);
+	manualAct->setMenuRole(QAction::NoRole);
 	manualAct->setStatusTip(tr("Show the help file for this application"));
 	manualAct->setShortcut(QKeySequence::HelpContents);
 	connect(manualAct, &QAction::triggered, this, &MainWindow::showHelp);
 	
 	QAction* aboutAct = new QAction(tr("&About %1").arg(appName()), this);
-	aboutAct->setStatusTip(tr("Show information about this application"));
 	aboutAct->setMenuRole(QAction::AboutRole);
+	aboutAct->setStatusTip(tr("Show information about this application"));
 	connect(aboutAct, &QAction::triggered, this, &MainWindow::showAbout);
 	
 	QAction* aboutQtAct = new QAction(tr("About &Qt"), this);
-	aboutQtAct->setStatusTip(tr("Show information about Qt"));
 	aboutQtAct->setMenuRole(QAction::AboutQtRole);
+	aboutQtAct->setStatusTip(tr("Show information about Qt"));
 	connect(aboutQtAct, &QAction::triggered, qApp, QApplication::aboutQt);
 	
 	if (show_menu)
 	{
 		QMenu* helpMenu = menuBar()->addMenu(tr("&Help"));
 		helpMenu->addAction(manualAct);
-		helpMenu->addAction(QWhatsThis::createAction(this));
+		helpMenu->addAction([this] {
+			auto action = QWhatsThis::createAction(this);
+			action->setMenuRole(QAction::NoRole);
+			return action;
+		}());
 		helpMenu->addSeparator();
 		helpMenu->addAction(aboutAct);
 		helpMenu->addAction(aboutQtAct);
