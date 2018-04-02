@@ -6229,7 +6229,7 @@ A lila vonal kissé kiborul a célszimbólumba. Ez az egyszerű megközelítés 
         <message>
             <source>The OpenOrienteering Logo.</source>
             <comment>Description of symbol 999</comment>
-            <translation>Az OpenOrienteering embléma</translation>
+            <translation>Az OpenOrienteering embléma.</translation>
     </message>
     </context>
     <context>
@@ -6247,13 +6247,13 @@ A lila vonal kissé kiborul a célszimbólumba. Ez az egyszerű megközelítés 
         <message>
             <source>Lower Purple</source>
             <comment>Color 2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Sötét lila</translation>
+    </message>
         <message>
             <source>Black 70%</source>
             <comment>Color 3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Fekete 70%</translation>
+    </message>
         <message>
             <source>Brown 50%</source>
             <comment>Color 4</comment>
@@ -6292,8 +6292,8 @@ A lila vonal kissé kiborul a célszimbólumba. Ez az egyszerű megközelítés 
         <message>
             <source>Black 30%</source>
             <comment>Color 11</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Fekete 30%</translation>
+    </message>
         <message>
             <source>Green 50%, Yellow</source>
             <comment>Color 12</comment>
@@ -6302,8 +6302,8 @@ A lila vonal kissé kiborul a célszimbólumba. Ez az egyszerű megközelítés 
         <message>
             <source>Green over White over Green</source>
             <comment>Color 13</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Zöld Fehér és Zöld fölött</translation>
+    </message>
         <message>
             <source>Opaque White over Green</source>
             <comment>Color 14</comment>
@@ -6312,8 +6312,8 @@ A lila vonal kissé kiborul a célszimbólumba. Ez az egyszerű megközelítés 
         <message>
             <source>Yellow over Green</source>
             <comment>Color 15</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Sárga zöld fölött</translation>
+    </message>
         <message>
             <source>Opaque Green</source>
             <comment>Color 16</comment>
@@ -6327,13 +6327,13 @@ A lila vonal kissé kiborul a célszimbólumba. Ez az egyszerű megközelítés 
         <message>
             <source>Green 60%</source>
             <comment>Color 18</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Zöld 60%</translation>
+    </message>
         <message>
             <source>Green 30%</source>
             <comment>Color 19</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Zöld 30%</translation>
+    </message>
         <message>
             <source>Green below light greens</source>
             <comment>Color 20</comment>
@@ -6352,13 +6352,13 @@ A lila vonal kissé kiborul a célszimbólumba. Ez az egyszerű megközelítés 
         <message>
             <source>White over Yellow 70%</source>
             <comment>Color 23</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Fehér Sárga 70% fölött</translation>
+    </message>
         <message>
             <source>Yellow 70%</source>
             <comment>Color 24</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Sárga 70%</translation>
+    </message>
         <message>
             <source>Contour</source>
             <comment>Name of symbol 101</comment>
@@ -6367,8 +6367,10 @@ A lila vonal kissé kiborul a célszimbólumba. Ez az egyszerű megközelítés 
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
             <comment>Description of symbol 101</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation type="unfinished">Azonos tengerszint feletti magasságú pontokat összeköt õ vonal. A szomszédos szintvonalak közötti magasságkülönbség (alapszintköz) 5 méter.
+A legkisebb ív egy szintvonalban 0,25 mm-re lehet a vonalak középpontjától a középpontig.
+Színe: barna.</translation>
+    </message>
         <message>
             <source>Index contour</source>
             <comment>Name of symbol 102</comment>
@@ -6377,18 +6379,20 @@ A lila vonal kissé kiborul a célszimbólumba. Ez az egyszerű megközelítés 
         <message>
             <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. Where an index contour coincides with an area of much detail, it may be shown with a normal contour line.</source>
             <comment>Description of symbol 102</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation type="unfinished">Minden ötödik szintvonalat vastagítva kell megrajzolni. Erre a magasságkülönbségek gyors becslése miatt van szükség.
+Színe: barna.</translation>
+    </message>
         <message>
             <source>Slope line</source>
             <comment>Name of symbol 104</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Eséstüske</translation>
+    </message>
         <message>
             <source>Slope lines may be drawn on the lower side of a contour line, e.g. along the line of a re-entrant or in a depression. They are used only where it is necessary to clarify the direction of slope.</source>
             <comment>Description of symbol 104</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Az eséstüske a szintvonal lejtőirányba eső oldalára rajzolandó, pl. a völgy vonalában, vagy mélyedéseknél. Csak akkor célszerű a használata, ha a bonyolult lejtésviszonyok tisztázása ezt szükségessé teszi.
+Színe: barna.</translation>
+    </message>
         <message>
             <source>Contour value</source>
             <comment>Name of symbol 105</comment>
