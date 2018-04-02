@@ -6189,43 +6189,48 @@ Színe: lila.</translation>
             <source>The location of a refreshment point which is not at a control or along the marked route.</source>
             <comment>Description of symbol 713</comment>
             <translation>Nem ellen õ rz õ pontra telepített frissít õ hely.
-Színe: lila</translation>
+Színe: lila.</translation>
     </message>
         <message>
             <source>Temporary construction or closed area &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 714</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ideiglenes építési vagy zárt terület&lt;span style=&quot;color:magenta&quot;&gt;Tilos keresztezni!&lt;/span&gt;</translation>
+    </message>
         <message>
             <source>Obvious temporary constructions like platforms for spectators and speaker, closed area for spectators, outside restaurant areas, etc. shall be represented in plan shape.
 
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to enter a temporary construction or closed area!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 714</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Nyilvánvaló ideiglenes szerkezetek, pl a nézők, az éttermi helyiségek külső területe stb.
+Szín: lila 50%.
+&lt;span style=&quot;color:magenta&quot;&gt;Tilos átmeneti vagy zárt területre lépni!
+A szabályt megsértő versenyzők kizárásra kerülnek.&lt;/span&gt;</translation>
+    </message>
         <message>
             <source>Simple Orienteering Course</source>
             <comment>Name of symbol 799</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Egyszerű tájékozódási versenypálya</translation>
+    </message>
         <message>
             <source>This symbol provides a simple and quick way to make training courses.
 
 The purple line will extend a bit into the finish symbol. This is a shortcoming of this simple approach.</source>
             <comment>Description of symbol 799</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation type="unfinished">Ez a jel egyszerű és gyors módszert kínál a edzőpályák készítéséhez.
+
+A lila vonal kissé kiborul a célszimbólumba. Ez az egyszerű megközelítés hiányossága.</translation>
+    </message>
         <message>
             <source>OpenOrienteering Logo</source>
             <comment>Name of symbol 999</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>OpenOrienteering embléma</translation>
+    </message>
         <message>
             <source>The OpenOrienteering Logo.</source>
             <comment>Description of symbol 999</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Az OpenOrienteering embléma</translation>
+    </message>
     </context>
     <context>
         <name>ISMTBOM</name>
