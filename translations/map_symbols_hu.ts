@@ -167,7 +167,7 @@ Színe: barna.</translation>
         <message>
             <source>Index contour</source>
             <comment>Name of symbol 102</comment>
-            <translation>Fő szintvonal</translation>
+            <translation>Számláló szintvonal</translation>
     </message>
         <message>
             <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. An index contour may be represented as an ordinary contour line in an area with much detail. Small contour knolls and depressions are normally not represented using index contours.</source>
@@ -6379,8 +6379,8 @@ Színe: barna.</translation>
         <message>
             <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. Where an index contour coincides with an area of much detail, it may be shown with a normal contour line.</source>
             <comment>Description of symbol 102</comment>
-            <translation type="unfinished">Minden ötödik szintvonalat vastagítva kell megrajzolni. Erre a magasságkülönbségek gyors becslése miatt van szükség.
-Színe: barna.</translation>
+            <translation>Minden ötödik szintvonal vastagabbnak kell lennie. Ez segít a magasság gyors megállapításában és a terep domborzatának áttekintésében. Részletgazdag területeken a fő szintvonal lehet alapszintvonal vastagságú. 
+Színe:Barna</translation>
     </message>
         <message>
             <source>Slope line</source>
