@@ -6145,7 +6145,7 @@ Színe: lila</translation>
         <message>
             <source>Out-of-bounds area, solid boundary</source>
             <comment>Name of symbol 709.1</comment>
-            <translation>Zárt terület,</translation>
+            <translation>Zárt terület, folytonos határoló vonallal</translation>
     </message>
         <message>
             <source>A solid line indicates that the boundary is marked continuously (tapes, etc.) on the ground.</source>
@@ -6158,7 +6158,7 @@ Egy zárt terület függőleges csíkokkal ábrázoljuk.
 - a határvonal hiánya azt jelenti, hogy a terepen nincs semmiféle jelölés.
 &lt;span style=&quot;color:magenta&quot;&gt;A zárt területet tilos keresztezni!
 A szabályt megszegő versenyzőket kizárják!&lt;/span&gt;
-Színe: lila</translation>
+Színe: lila.</translation>
     </message>
         <message>
             <source>Out-of-bounds area, dashed boundary</source>
