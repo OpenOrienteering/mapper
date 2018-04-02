@@ -1,6 +1,6 @@
 #
 #    Copyright 2012, 2013, 2014 Thomas Schöps
-#    Copyright 2012-2017 Kai Pastor
+#    Copyright 2012-2018 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -25,7 +25,7 @@ include(FeatureSummary)
 
 # Project declaration
 
-project(Mapper VERSION 0.8.1.1 LANGUAGES CXX C)
+project(Mapper VERSION 0.8.1.2 LANGUAGES CXX C)
 
 if(Mapper_VERSION_DISPLAY)
 	message(STATUS "Custom version display string: \"${Mapper_VERSION_DISPLAY}\"")
