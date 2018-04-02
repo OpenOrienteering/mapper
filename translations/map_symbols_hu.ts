@@ -6168,28 +6168,29 @@ Színe: lila.</translation>
         <message>
             <source>A dashed line indicates intermittent marking on the ground.</source>
             <comment>Description of symbol 709.2</comment>
-            <translation>- a szaggatott vonal azt jelenti, hogy a határvonal jelzése a terepen nem folytonos,</translation>
+            <translation>- a szaggatott vonal azt jelenti, hogy a határvonal jelzése a terepen nem folytonos.</translation>
     </message>
         <message>
             <source>First aid post</source>
             <comment>Name of symbol 712</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Elsősegélyhely</translation>
+    </message>
         <message>
             <source>The location of a first aid post.</source>
             <comment>Description of symbol 712</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Az elsősegélyhely terepi helyét jelöli.</translation>
+    </message>
         <message>
             <source>Refreshment point</source>
             <comment>Name of symbol 713</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Frissítőpont</translation>
+    </message>
         <message>
             <source>The location of a refreshment point which is not at a control or along the marked route.</source>
             <comment>Description of symbol 713</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Nem ellen õ rz õ pontra telepített frissít õ hely.
+Színe: lila</translation>
+    </message>
         <message>
             <source>Temporary construction or closed area &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 714</comment>
