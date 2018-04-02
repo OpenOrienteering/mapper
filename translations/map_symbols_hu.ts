@@ -6163,13 +6163,13 @@ Színe: lila.</translation>
         <message>
             <source>Out-of-bounds area, dashed boundary</source>
             <comment>Name of symbol 709.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Zárt terület, szaggatott határoló vonallal</translation>
+    </message>
         <message>
             <source>A dashed line indicates intermittent marking on the ground.</source>
             <comment>Description of symbol 709.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>- a szaggatott vonal azt jelenti, hogy a határvonal jelzése a terepen nem folytonos,</translation>
+    </message>
         <message>
             <source>First aid post</source>
             <comment>Name of symbol 712</comment>
