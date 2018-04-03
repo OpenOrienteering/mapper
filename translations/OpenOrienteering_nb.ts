@@ -329,7 +329,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="101"/>
         <source>Spot color printing</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Dekorfargetrykk</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="106"/>
@@ -3457,7 +3457,7 @@ Importer data likevel?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="875"/>
         <source>Move to my location</source>
-        <translation type="unfinished"></translation>
+        <translation>Flytt til min plassering</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="890"/>
@@ -4230,12 +4230,12 @@ Importer data likevel?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1369"/>
         <source>1x zoom</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">1x forstørrelse</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1373"/>
         <source>2x zoom</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">2x forstørrelse</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1601"/>
@@ -5382,7 +5382,7 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1318"/>
         <source>The border of this symbol could not be loaded.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kunne ikke laste inn omrisset av dette symbolet.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1614"/>
@@ -5532,7 +5532,7 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/templates/template_tool_paint.cpp" line="551"/>
         <source>Template file exists: &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Malfilen finnes: &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -5981,7 +5981,7 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="270"/>
         <source>Save world file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Lagre world-fil</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1110"/>
