@@ -1,5 +1,5 @@
 #
-#    Copyright 2012-2017 Kai Pastor
+#    Copyright 2012-2018 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -107,12 +107,12 @@ else()
 	set(_system_name "${CMAKE_SYSTEM_NAME}-unknown")
 endif()
 set(CPACK_PACKAGE_FILE_NAME 
-    "OpenOrienteering-Mapper-${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}-${_system_name}")
+    "OpenOrienteering-Mapper-${Mapper_VERSION}-${_system_name}")
 set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/COPYING")
 set(CPACK_STRIP_FILES "TRUE")
 
 set(CPACK_SOURCE_PACKAGE_FILE_NAME
-    "openorienteering-mapper_${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}-src")
+    "openorienteering-mapper_${Mapper_VERSION}-src")
 set(CPACK_SOURCE_IGNORE_FILES 
   "${PROJECT_BINARY_DIR}"
   "/[.]git/"
@@ -128,8 +128,8 @@ if(WIN32)
 	# Packaging as ZIP archive
 	set(CPACK_GENERATOR_DEFAULT "ZIP")
 	#set(CPACK_INCLUDE_TOPLEVEL_DIRECTORY 0)
-	set(CPACK_PACKAGE_INSTALL_DIRECTORY "${CPACK_PACKAGE_NAME} ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
-	set(CPACK_PACKAGE_EXECUTABLES "Mapper" "${CPACK_PACKAGE_NAME} ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
+	set(CPACK_PACKAGE_INSTALL_DIRECTORY "${CPACK_PACKAGE_NAME} ${Mapper_VERSION}")
+	set(CPACK_PACKAGE_EXECUTABLES "Mapper" "${CPACK_PACKAGE_NAME} ${Mapper_VERSION}")
 	
 	find_program(MAKENSIS_EXECUTABLE "makensis")
 	if(MAKENSIS_EXECUTABLE)
@@ -137,7 +137,7 @@ if(WIN32)
 		# The title displayed at the top of the installer
 		set(CPACK_NSIS_PACKAGE_NAME "${CPACK_PACKAGE_NAME}")
 		# The display name string that appears in the Windows Add/Remove Program control panel
-		set(CPACK_NSIS_DISPLAY_NAME "${CPACK_PACKAGE_NAME} ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
+		set(CPACK_NSIS_DISPLAY_NAME "${CPACK_PACKAGE_NAME} ${Mapper_VERSION}")
 		# NSIS start menu links will point to executables in this directory
 		set(CPACK_NSIS_EXECUTABLES_DIRECTORY ".")
 		# A path to the executable that contains the uninstaller icon.
@@ -160,7 +160,7 @@ if(WIN32)
 elseif(APPLE)
 	set(MAPPER_MACOS_SUBDIR "/Mapper.app/Contents/MacOS")
 	set(CPACK_GENERATOR_DEFAULT "DragNDrop")
-	set(CPACK_PACKAGE_EXECUTABLES "Mapper" "OpenOrienteering Mapper ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
+	set(CPACK_PACKAGE_EXECUTABLES "Mapper" "OpenOrienteering Mapper ${Mapper_VERSION}")
 	set(CPACK_PACKAGE_ICON "${PROJECT_SOURCE_DIR}/images/mapper-icon/Mapper.icns")
 	set_target_properties(Mapper PROPERTIES
 	  MACOSX_BUNDLE_INFO_STRING          "${CPACK_PACKAGE_DESCRIPTION_SUMMARY}"

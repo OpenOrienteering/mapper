@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -750,6 +750,7 @@ QAction* MapEditorController::newAction(const char* id, const QString &tr_text, 
 	if (whats_this_link) action->setWhatsThis(Util::makeWhatThis(whats_this_link));
 	if (receiver) QObject::connect(action, SIGNAL(triggered()), receiver, slot);
 	actionsById[id] = action;
+	action->setMenuRole(QAction::NoRole);
 	return action;
 }
 
@@ -858,8 +859,11 @@ void MapEditorController::createActions()
 	undo_act = newAction("undo", tr("Undo"), this, SLOT(undo()), "undo.png", tr("Undo the last step"), "edit_menu.html");
 	redo_act = newAction("redo", tr("Redo"), this, SLOT(redo()), "redo.png", tr("Redo the last step"), "edit_menu.html");
 	cut_act = newAction("cut", tr("Cu&t"), this, SLOT(cut()), "cut.png", QString{}, "edit_menu.html");
+	cut_act->setMenuRole(QAction::TextHeuristicRole);
 	copy_act = newAction("copy", tr("C&opy"), this, SLOT(copy()), "copy.png", QString{}, "edit_menu.html");
+	copy_act->setMenuRole(QAction::TextHeuristicRole);
 	paste_act = newAction("paste", tr("&Paste"), this, SLOT(paste()), "paste", QString{}, "edit_menu.html");
+	paste_act->setMenuRole(QAction::TextHeuristicRole);
 	delete_act = newAction("delete", tr("Delete"), this, SLOT(deleteClicked()), "delete.png", QString{}, "toolbars.html#delete");
 	select_all_act = newAction("select-all", tr("Select all"), this, SLOT(selectAll()), nullptr, QString{}, "edit_menu.html");
 	select_nothing_act = newAction("select-nothing", tr("Select nothing"), this, SLOT(selectNothing()), nullptr, QString{}, "edit_menu.html");
@@ -926,6 +930,7 @@ void MapEditorController::createActions()
 	cut_hole_circle_act = newToolAction("cutholecircle", tr("Cut round hole"), this, SLOT(cutHoleCircleClicked()), "tool-cut-hole.png", QString{}, "toolbars.html#cut_hole");
 	cut_hole_rectangle_act = newToolAction("cutholerectangle", tr("Cut rectangular hole"), this, SLOT(cutHoleRectangleClicked()), "tool-cut-hole.png", QString{}, "toolbars.html#cut_hole");
 	cut_hole_menu = new QMenu(tr("Cut hole"));
+	cut_hole_menu->menuAction()->setMenuRole(QAction::NoRole);
 	cut_hole_menu->setIcon(QIcon(QString::fromLatin1(":/images/tool-cut-hole.png")));
 	cut_hole_menu->addAction(cut_hole_act);
 	cut_hole_menu->addAction(cut_hole_circle_act);
@@ -947,11 +952,13 @@ void MapEditorController::createActions()
 	distribute_points_act = newAction("distributepoints", tr("Distribute points along path"), this, SLOT(distributePointsClicked()), "tool-distribute-points.png", QString{}, "toolbars.html#distribute_points"); // TODO: write documentation
 	
 	paint_on_template_act = new QAction(QIcon(QString::fromLatin1(":/images/pencil.png")), tr("Paint on template"), this);
+	paint_on_template_act->setMenuRole(QAction::NoRole);
 	paint_on_template_act->setCheckable(true);
 	paint_on_template_act->setWhatsThis(Util::makeWhatThis("toolbars.html#draw_on_template"));
 	connect(paint_on_template_act, &QAction::triggered, this, &MapEditorController::paintOnTemplateClicked);
 
 	paint_on_template_settings_act = new QAction(QIcon(QString::fromLatin1(":/images/paint-on-template-settings.png")), tr("Paint on template settings"), this);
+	paint_on_template_settings_act->setMenuRole(QAction::NoRole);
 	paint_on_template_settings_act->setWhatsThis(Util::makeWhatThis("toolbars.html#draw_on_template"));
 	connect(paint_on_template_settings_act, &QAction::triggered, this, &MapEditorController::paintOnTemplateSelectClicked);
 
@@ -1022,6 +1029,7 @@ void MapEditorController::createMenuAndToolbars()
 	file_menu->insertAction(insertion_act, import_act);
 #ifdef QT_PRINTSUPPORT_LIB
 	QMenu* export_menu = new QMenu(tr("&Export as..."), file_menu);
+	export_menu->menuAction()->setMenuRole(QAction::NoRole);
 	export_menu->addAction(export_image_act);
 	export_menu->addAction(export_pdf_act);
 	file_menu->insertMenu(insertion_act, export_menu);
@@ -1065,6 +1073,7 @@ void MapEditorController::createMenuAndToolbars()
 	view_menu->addAction(hide_all_templates_act);
 	view_menu->addSeparator();
 	QMenu* coordinates_menu = new QMenu(tr("Display coordinates as..."), view_menu);
+	coordinates_menu->menuAction()->setMenuRole(QAction::NoRole);
 	coordinates_menu->addAction(map_coordinates_act);
 	coordinates_menu->addAction(projected_coordinates_act);
 	coordinates_menu->addAction(geographic_coordinates_act);
@@ -3514,12 +3523,14 @@ void MapEditorController::updateMapPartsUI()
 	if (!mappart_merge_menu)
 	{
 		mappart_merge_menu = new QMenu();
+		mappart_merge_menu->menuAction()->setMenuRole(QAction::NoRole);
 		mappart_merge_menu->setTitle(tr("Merge this part with"));
 	}
 	
 	if (!mappart_move_menu)
 	{
 		mappart_move_menu = new QMenu();
+		mappart_move_menu->menuAction()->setMenuRole(QAction::NoRole);
 		mappart_move_menu->setTitle(tr("Move selected objects to"));
 	}
 	
@@ -4052,6 +4063,7 @@ MapEditorToolAction::MapEditorToolAction(const QIcon& icon, const QString& text,
  : QAction(icon, text, parent)
 {
 	setCheckable(true);
+	setMenuRole(QAction::NoRole);
 	connect(this, &QAction::triggered, this, &MapEditorToolAction::triggeredImpl);
 }
 

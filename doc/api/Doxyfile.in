@@ -1,5 +1,5 @@
 #
-#    Copyright 2014 Kai Pastor
+#    Copyright 2014, 2015, 2018 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -17,7 +17,7 @@
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
 
 PROJECT_NAME           = "@PROJECT_NAME@"
-PROJECT_NUMBER         = "@Mapper_VERSION_MAJOR@.@Mapper_VERSION_MINOR@.@Mapper_VERSION_PATCH@"
+PROJECT_NUMBER         = "@Mapper_VERSION@"
 PROJECT_BRIEF          = "API documentation"
 PROJECT_LOGO           = "@CMAKE_CURRENT_SOURCE_DIR@/../openorienteering.png"
 
