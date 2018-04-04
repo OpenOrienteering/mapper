@@ -663,10 +663,10 @@ bool PointSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictiona
 	rotatable = (attributes.value(QLatin1String("rotatable")) == QLatin1String("true"));
 	inner_radius = attributes.value(QLatin1String("inner_radius")).toInt();
 	int temp = attributes.value(QLatin1String("inner_color")).toInt();
-	inner_color = (temp >= 0) ? map.getColor(temp) : nullptr;
+	inner_color = map.getColor(temp);
 	outer_width = attributes.value(QLatin1String("outer_width")).toInt();
 	temp = attributes.value(QLatin1String("outer_color")).toInt();
-	outer_color = (temp >= 0) ? map.getColor(temp) : nullptr;
+	outer_color = map.getColor(temp);
 	int num_elements = attributes.value(QLatin1String("elements")).toInt();
 	
 	symbols.reserve(qMin(num_elements, 10)); // 10 is not a limit
