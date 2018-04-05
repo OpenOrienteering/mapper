@@ -1505,7 +1505,7 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="62"/>
         <source>Configuration</source>
-        <translation type="unfinished">Configurazione</translation>
+        <translation>Configurazione</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="70"/>
@@ -1515,12 +1515,12 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="70"/>
         <source>Value</source>
-        <translation type="unfinished">Valore</translation>
+        <translation>Valore</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="89"/>
         <source>GDAL/OGR</source>
-        <translation type="unfinished">GDAL/OGR</translation>
+        <translation>GDAL/OGR</translation>
     </message>
 </context>
 <context>
@@ -1563,7 +1563,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="136"/>
         <source>Save undo/redo history</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Salva cronologia operazioni</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="139"/>
@@ -1595,12 +1595,12 @@
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="164"/>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="315"/>
         <source>More...</source>
-        <translation type="unfinished">Altro...</translation>
+        <translation>Altro...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="149"/>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Default</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="173"/>
@@ -1610,7 +1610,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="192"/>
         <source>General</source>
-        <translation type="unfinished">Generale</translation>
+        <translation>Generale</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="216"/>
@@ -1678,7 +1678,7 @@
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="59"/>
         <source>UTM Zone (number north/south)</source>
-        <translation type="unfinished">Zona UTM (fuso sud/nord)</translation>
+        <translation>Zona UTM (fuso sud/nord)</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="66"/>
@@ -1701,13 +1701,13 @@
         <location filename="../src/core/crs_template_implementation.cpp" line="78"/>
         <source>by EPSG code</source>
         <comment>as in: The CRS is specified by EPSG code</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">con codice EPSG</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="80"/>
         <source>EPSG @code@ coordinates</source>
         <extracomment>Don&apos;t translate @code@. It is placeholder.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>EPSG @codice@ coordinate</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="91"/>
@@ -1718,19 +1718,19 @@
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="83"/>
         <source>EPSG code</source>
-        <translation type="unfinished"></translation>
+        <translation>codice EPSG</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="90"/>
         <source>Custom PROJ.4</source>
         <comment>PROJ.4 specification</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">PROJ.4 personalizzato</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="94"/>
         <source>Specification</source>
         <comment>PROJ.4 specification</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Specifiche</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="258"/>
