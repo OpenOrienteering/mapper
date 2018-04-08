@@ -2568,7 +2568,7 @@ Minimális magassága 0,5 m.</translation>
         <message>
             <source>Erosion gully</source>
             <comment>Name of symbol 109</comment>
-            <translation>Metsződés</translation>
+            <translation>Árok, metsződés</translation>
     </message>
         <message>
             <source>An erosion gully or trench which is too small to be shown by symbol 106 is shown by a single line. The line width reflects the size of the gully. Minimum depth 1 m. The end of the line is pointed.</source>
@@ -4273,7 +4273,7 @@ The relative height difference between neighbouring features must be represented
         <message>
             <source>An erosion gully or trench which is too small to be represented with the symbol earth bank (106), contour (101), index contour (102) or form line (103) is represented by a single line. The line width reflects the size of the gully. The end of the line is pointed. Minimum depth is 1 m. Minimum length is 3 mm on the map.</source>
             <comment>Description of symbol 109</comment>
-            <translation>Eróziós árok vagy metsződés, mely túl kis méretű ahhoz, hogy a földletörés (106) jelével, esetleg szintvonallal ábrázoljuk (101, 103). A vonal szélessége utal az árok méretére. Minimális mélysége 1 méter.</translation>
+            <translation>Eróziós árok vagy metsződés, mely túl kis méretű ahhoz, hogy a földletörés (106) jelével, esetleg szintvonallal ábrázoljuk (101, 103). A vonal szélessége utal az árok méretére. A vonal vége hegyes. Minimális mélysége 1 méter. A legrövidebb jel 3 mm a térképen.</translation>
     </message>
         <message>
             <source>Small erosion gully</source>
@@ -6468,13 +6468,13 @@ A nagyon magas földletörés vonalvastagsága 0,25mm lehet.</translation>
         <message>
             <source>Erosion gully</source>
             <comment>Name of symbol 109</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Árok, metsződés</translation>
+    </message>
         <message>
             <source>An erosion gully or trench which is too small to be shown by symbol 106 is shown by a single line. The line width reflects the size of the gully. Minimum depth 1 m. The end of the line is pointed.</source>
             <comment>Description of symbol 109</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Eróziós árok vagy metsződés, mely túl kis méretű ahhoz, hogy a földletörés (106) jelével, esetleg szintvonallal ábrázoljuk (101, 103). A vonal szélessége utal az árok méretére. Minimális mélysége 1 méter. A vonal vége hegyes.</translation>
+    </message>
         <message>
             <source>Impassable cliff</source>
             <comment>Name of symbol 201</comment>
