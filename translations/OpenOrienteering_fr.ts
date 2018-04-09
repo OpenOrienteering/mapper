@@ -11,7 +11,7 @@
     <message>
         <location filename="../packaging/translations.cpp" line="11"/>
         <source>Software for drawing orienteering maps</source>
-        <translation>Logiciel de dessin de cartes de course d&apos;orientation</translation>
+        <translation>Logiciel pour dessiner des cartes d’orientation</translation>
     </message>
 </context>
 <context>
