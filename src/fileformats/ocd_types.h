@@ -308,6 +308,27 @@ namespace Ocd
 		FramingRectangle = 3  /// \since V8; Not for line text symbols
 	};
 	
+	/**
+	 * Returns pointer to a structure in a QByteArray where the referenced
+	 * structure is guaranteed to be within the bounds of the array.
+	 *
+	 * Nullptr is returned if part of the structure would be outside of
+	 * the array. Caller if expected to check for this condition.
+	 */
+	template< typename StructureType >
+	StructureType* getPointerChecked(const QByteArray& byte_array,
+	                                 quint32 offset)
+	{
+		if (Q_UNLIKELY(offset + sizeof(StructureType) > byte_array.size()))
+		{
+			qWarning("Attempt to access misplaced file structure (%s@%d)",
+			         typeid(StructureType).name(), offset);
+			return nullptr;
+		}
+
+		return reinterpret_cast< StructureType* >
+		        (const_cast< char* >(byte_array.data()) + offset);
+	}
 	
 	/**
 	 * Returns a pointer to the (index) block at pos inside byte_array.
@@ -683,7 +704,8 @@ OcdEntityIndexIterator<V> OcdEntityIndexIterator<V>::operator++(int)
 template< class V >
 typename OcdEntityIndexIterator<V>::value_type OcdEntityIndexIterator<V>::operator*() const
 {
-	return { &block->entries[index], reinterpret_cast<const typename value_type::EntityType*>(byte_array->data()+block->entries[index].pos) };
+	auto entry_ptr = Ocd::getPointerChecked< const typename value_type::EntityType >(*byte_array, block->entries[index].pos);
+	return { &block->entries[index], entry_ptr };
 }
 
 template< class V >

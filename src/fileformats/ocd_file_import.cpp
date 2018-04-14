@@ -352,8 +352,11 @@ void OcdFileImport::importImplementation(bool load_symbols_only)
 void OcdFileImport::importGeoreferencing(const OcdFile<Ocd::FormatV8>& file)
 {
 	const Ocd::FileHeaderV8* header = file.header();
-	const Ocd::SetupV8* setup = reinterpret_cast< const Ocd::SetupV8* >(file.byteArray().data() + header->setup_pos);
+	const Ocd::SetupV8* setup = Ocd::getPointerChecked< Ocd::SetupV8 >(file.byteArray(), header->setup_pos);
 	
+	if (Q_UNLIKELY(!setup))
+		return;
+
 	Georeferencing georef;
 	georef.setScaleDenominator(qRound(setup->map_scale));
 	georef.setProjectedRefPoint(QPointF(setup->real_offset_x, setup->real_offset_y));
@@ -844,6 +847,9 @@ void OcdFileImport::importSymbols(const OcdFile< F >& file)
 {
 	for (auto ocd_symbol_entry : file.symbols())
 	{
+		if (Q_UNLIKELY(!ocd_symbol_entry.entity))
+			continue; // skip invalid entries
+
 		auto& ocd_symbol = *ocd_symbol_entry.entity;
 		
 		// When extra symbols are created, we want to insert the main symbol
@@ -933,7 +939,8 @@ void OcdFileImport::importObjects(const OcdFile< F >& file)
 	{
 		if ( ocd_object.entry->symbol
 		     && ocd_object.entry->status != Ocd::ObjectDeleted
-		     && ocd_object.entry->status != Ocd::ObjectDeletedForUndo )
+		     && ocd_object.entry->status != Ocd::ObjectDeletedForUndo
+		     && ocd_object.entity )
 		{
 			if (auto object = importObject(*ocd_object.entity, part))
 				part->addObject(object, part->getNumObjects());
@@ -1053,6 +1060,10 @@ void OcdFileImport::importTemplate(const QString& param_string)
 void OcdFileImport::importExtras(const OcdFile<Ocd::FormatV8>& file)
 {
 	const Ocd::FileHeaderV8* header = file.header();
+
+	if (Q_UNLIKELY(!header))
+		return;
+
 	map->setMapNotes(convertOcdString< Ocd::FormatV8::Encoding >(file.byteArray().data() + header->info_pos, header->info_size));
 }
 
@@ -1082,8 +1093,11 @@ void OcdFileImport::importView(const OcdFile<Ocd::FormatV8>& file)
 	if (view)
 	{
 		const Ocd::FileHeaderV8* header = file.header();
-		const Ocd::SetupV8* setup = reinterpret_cast< const Ocd::SetupV8* >(file.byteArray().data() + header->setup_pos);
+		const Ocd::SetupV8* setup = Ocd::getPointerChecked< const Ocd::SetupV8 >(file.byteArray(), header->setup_pos);
 		
+		if (Q_UNLIKELY(!setup))
+			return;
+
 		if (setup->zoom >= MapView::zoom_out_limit && setup->zoom <= MapView::zoom_in_limit)
 			view->setZoom(setup->zoom);
 		
