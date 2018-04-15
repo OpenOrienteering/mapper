@@ -17,6 +17,8 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <limits>
+
 #include "ocd_types.h"
 
 #include "ocd_types_v8.h"
@@ -54,7 +56,8 @@ namespace Ocd
 		{
 			return nullptr;
 		}
-		else if (Q_UNLIKELY(pos + block_size - 1 >= static_cast<quint32>(byte_array.size())))
+		else if (Q_UNLIKELY(quint64(pos) + block_size > std::numeric_limits<quint32>::max()
+		                    || pos + block_size - 1 >= quint32(byte_array.size())))
 		{
 			qWarning("OcdEntityIndexIterator: Next index block is out of bounds");
 			return nullptr;
