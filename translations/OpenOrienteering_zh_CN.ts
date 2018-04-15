@@ -1673,7 +1673,7 @@
         <location filename="../src/core/crs_template_implementation.cpp" line="80"/>
         <source>EPSG @code@ coordinates</source>
         <extracomment>Don&apos;t translate @code@. It is placeholder.</extracomment>
-        <translation>对 @code @ 坐标</translation>
+        <translation>对 @code@ 坐标</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="91"/>

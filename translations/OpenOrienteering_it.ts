@@ -1707,7 +1707,7 @@
         <location filename="../src/core/crs_template_implementation.cpp" line="80"/>
         <source>EPSG @code@ coordinates</source>
         <extracomment>Don&apos;t translate @code@. It is placeholder.</extracomment>
-        <translation>EPSG @codice@ coordinate</translation>
+        <translation>EPSG @code@ coordinate</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="91"/>
