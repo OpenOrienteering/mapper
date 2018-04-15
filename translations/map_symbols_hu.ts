@@ -151,9 +151,8 @@
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. A contour interval of 2.5 metres may be used for flat terrains. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
             <comment>Description of symbol 101</comment>
-            <translation>Egy vonal, ami azonos tengerszint feletti magasságú pontokból áll. A szabványos magasság különbség két szintvonal között 5 méter. A legkisebb ív egy szintvonalban 0,25 mm-re lehet a vonalak középpontjától a középpontig.
-Színe: barna.</translation>
-    </message>
+            <translation>Egy vonal, ami azonos tengerszint feletti magasságú pontokból áll. A szabványos magasság különbség két szintvonal között 5 méter. A legkisebb ív egy szintvonalban 0,25 mm-re lehet a vonalak középpontjától a középpontig.</translation>
+        </message>
         <message>
             <source>Slope line, contour</source>
             <comment>Name of symbol 101.1</comment>
@@ -457,7 +456,7 @@ When an impassable cliff drops straight into water, making it impossible to pass
         <message>
             <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
             <comment>Description of symbol 201.3</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Függőleges sziklafalaknál kicsi lehet a hely, a fogak elhagyhatók, pl. keskeny sziklakapu esetében. ( az átjáró legalább 0.3 mm-es szélességgel kellene rajzolni)</translation>
         </message>
         <message>
             <source>Impassable cliff, tag line</source>
@@ -467,7 +466,7 @@ When an impassable cliff drops straight into water, making it impossible to pass
         <message>
             <source>Use this symbol to display the full extent of a wide cliff.</source>
             <comment>Description of symbol 201.4</comment>
-            <translation type="unfinished"></translation>
+            <translation>Használd arra ezt a jelet, hogy bemutassa egy széles szirt teljes kiterjedését.</translation>
         </message>
         <message>
             <source>Impassable cliff, minimum size (from ISOM2000)</source>
@@ -668,7 +667,7 @@ To be able to show obvious height differences within a boulder field, it is perm
         <message>
             <source>An area which is covered with so many blocks of stone that they cannot be marked individually is shown with randomly orientated solid triangles with sides of ratio 8:6:5. A minimum of two triangles should be used. The going is indicated by the density of the triangles. To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
             <comment>Description of symbol 208.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Ha a terület oly mértékben fedett sziklatömbökkel, hogy azok egyenként már nem ábrázolhatók, összevontan, véletlenszerűen elhelyezett háromszögekkel jelöljük. A háromszög oldalainak aránya 8:6:5. Legalább két háromszög rajzolandó. A háromszögek sűrűsége utal a terület futhatóságára (felületi jel). A jel mérete 20%-kal növelhető a sziklatömbök magasságától függően.</translation>
         </message>
         <message>
             <source>Boulder field, single triangle, enlarged</source>
@@ -1127,7 +1126,7 @@ open land).</source>
         <message>
             <source>An area with dense vegetation (low visibility) which reduces running to about 60-80% of normal speed.</source>
             <comment>Description of symbol 406</comment>
-            <translation>Egy terület sűrű növényzettel (korlátozott látási viszonyokkal) amelyik csökkenti a szokásos futó sebességet körülbelül a normál sebesség 60-80 százalékára.Ahol az erdőben a futhatóság egy irányban kedvezőbb, a kedvező iránnyal párhuzamosan fehér csíkozást kap a zöld felületi jel. 
+            <translation>Egy terület sűrű növényzettel (korlátozott látási viszonyokkal) amelyik csökkenti a szokásos futó sebességet körülbelül a normál sebesség 60-80 százalékára.
 Minimális terület: 1 mm x 1 mm (terepi méret 15 m x 15 m).
 Minimális szélesség: 0.5 mm (terepi méret 6 m).</translation>
     </message>
@@ -1139,7 +1138,7 @@ Minimális szélesség: 0.5 mm (terepi méret 6 m).</translation>
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
             <comment>Description of symbol 406.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Ha az erdőben a futhatóság egy irányban kedvezőbb, mint a többiben, akkor a kedvező iránnyal párhuzamos fehér csíkozást kap a zöld felületi jel.</translation>
         </message>
         <message>
             <source>Vegetation, slow running, good visibility</source>
@@ -1149,7 +1148,7 @@ Minimális szélesség: 0.5 mm (terepi méret 6 m).</translation>
         <message>
             <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 60-80% of normal speed. This symbol may not be combined with 406 or 408.</source>
             <comment>Description of symbol 407</comment>
-            <translation type="unfinished"></translation>
+            <translation>Sűrű aljnövényzettel borított, de jól átlátható terület (szeder, alacsony bozót, gallyazás), amelyben a futás sebessége a normál futósebességhez viszonyítva 60–80%-os. A jel a 406-os és 408-as jelekkel nem kombinálható.</translation>
         </message>
         <message>
             <source>Vegetation, walk</source>
@@ -1159,11 +1158,10 @@ Minimális szélesség: 0.5 mm (terepi méret 6 m).</translation>
         <message>
             <source>An area with dense trees or thickets (low visibility) which reduce running to about 20-60% of normal speed.</source>
             <comment>Description of symbol 408</comment>
-            <translation>Egy fákkal és bozóttal sűrűn benőtt terület (rossz átláthatóság), a futás sebessége a normál futósebességhez viszonyítva 20-60%-os. 
+            <translation>Egy fákkal és bozóttal sűrűn benőtt terület (rossz átláthatóság), a futás sebessége a normál futósebességhez viszonyítva 20-60%-os.
 Minimális terület: 0.7 mm x 0.7 mm (terepi méret 10.5 m x 10.5 m).
-Minimális szélesség: 0.3 mm (terepi méret 4.5 m).
-Színe: zöld 50%.</translation>
-    </message>
+Minimális szélesség: 0.3 mm (terepi méret 4.5 m).</translation>
+        </message>
         <message>
             <source>Vegetation runnable in one direction, 2</source>
             <comment>Name of symbol 408.1</comment>
@@ -1172,9 +1170,8 @@ Színe: zöld 50%.</translation>
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
             <comment>Description of symbol 408.1</comment>
-            <translation type="unfinished">Fákkal és bozóttal sűrűn benőtt terület (rossz átláthatóság), a futás sebessége a normál futósebességhez viszonyítva 20-60%-os. 
-Ahol az erdőben a futhatóság egy irányban kedvezőbb, a kedvező iránnyal párhuzamosan zöld 50% csíkozást  (2-es zöld) kap a zöld felületi jel</translation>
-    </message>
+            <translation>Ha az erdőben a futhatóság egy irányban kedvezőbb, mint a többiben, akkor a kedvező iránnyal párhuzamos fehér csíkozást kap a zöld felületi jel.</translation>
+        </message>
         <message>
             <source>Vegetation runnable in one direction, 2, 20%</source>
             <comment>Name of symbol 408.2</comment>
@@ -1183,9 +1180,8 @@ Ahol az erdőben a futhatóság egy irányban kedvezőbb, a kedvező iránnyal p
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, light green stripes are left in the screen symbol to show the direction of good running.</source>
             <comment>Description of symbol 408.2</comment>
-            <translation type="unfinished">Fákkal és bozóttal sűrűn benőtt terület (rossz átláthatóság), a futás sebessége a normál futósebességhez viszonyítva 20-60%-os. 
-Ahol az erdőben a futhatóság egy irányban kedvezőbb, a kedvező iránnyal párhuzamosan zöld 50% csíkozást  (2-es zöld) kap a zöld felületi jel.</translation>
-    </message>
+            <translation type="unfinished"></translation>
+        </message>
         <message>
             <source>Vegetation, walk, good visibility</source>
             <comment>Name of symbol 409</comment>
@@ -1216,7 +1212,7 @@ For fairness reasons, areas that are really difficult to get through (10% and sl
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
             <comment>Description of symbol 410.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Ha az erdőben a futhatóság egy irányban kedvezőbb, mint a többiben, akkor a kedvező iránnyal párhuzamos fehér csíkozást kap a zöld felületi jel.</translation>
         </message>
         <message>
             <source>Forest runnable in one direction, 3, 20%</source>
@@ -1248,10 +1244,8 @@ For fairness reasons, areas that are really difficult to get through (10% and sl
             <comment>Description of symbol 411</comment>
             <translation>Nagyon sűrűn benőtt terület (fák vagy aljnövényzet), amely teljes mértékben áthatolhatatlan. Leginkább keskeny vagy kis területek ábrázolására használható térképjel.
 Minimális terület: 0.8 mm x 0.8 mm (terepi méret 12 m x 12 m). 
-Minimális szélesség: 0.35 mm (terepi méret 5 m).
-Színe: zöld és fekete 50% vagy zöld és fekete (50%) raszter: 0.16 mm-es pontok,
-távolság pontközéptől pontközépig 0.2 mm.</translation>
-    </message>
+Minimális szélesség: 0.35 mm (terepi méret 5 m).</translation>
+        </message>
         <message>
             <source>Vegetation, impassable</source>
             <comment>Name of symbol 411.1</comment>
@@ -1262,10 +1256,8 @@ távolság pontközéptől pontközépig 0.2 mm.</translation>
             <comment>Description of symbol 411.1</comment>
             <translation>Nagyon sűrűn benőtt terület (fák vagy aljnövényzet), amely teljes mértékben áthatolhatatlan. Leginkább keskeny vagy kis területek ábrázolására használható térképjel.
 Minimális terület: 0.8 mm x 0.8 mm (terepi méret 12 m x 12 m). 
-Minimális szélesség: 0.35 mm (terepi méret 5 m).
-Színe: zöld és fekete 50% vagy zöld és fekete (50%) raszter: 0.16 mm-es pontok,
-távolság pontközéptől pontközépig 0.2 mm.</translation>
-    </message>
+Minimális szélesség: 0.35 mm (terepi méret 5 m).</translation>
+        </message>
         <message>
             <source>Vegetation, impassable, minimum width</source>
             <comment>Name of symbol 411.2</comment>
@@ -1276,11 +1268,8 @@ távolság pontközéptől pontközépig 0.2 mm.</translation>
 Minimum width: 0.35 mm</source>
             <comment>Description of symbol 411.2</comment>
             <translation>Nagyon sűrűn benőtt terület (fák vagy aljnövényzet), amely teljes mértékben áthatolhatatlan. Leginkább keskeny vagy kis területek ábrázolására használható térképjel.
-Minimális terület: 0.8 mm x 0.8 mm (terepi méret 12 m x 12 m). 
-Minimális szélesség: 0.35 mm (terepi méret 5 m).
-Színe: zöld és fekete 50% vagy zöld és fekete (50%) raszter: 0.16 mm-es pontok,
-távolság pontközéptől pontközépig 0.2 mm</translation>
-    </message>
+Minimális szélesség: 0.35 mm (terepi méret 5 m).</translation>
+        </message>
         <message>
             <source>Cultivated land</source>
             <comment>Name of symbol 412</comment>
@@ -1407,7 +1396,7 @@ Footprint: 7.5 m x 7.5 m.</source>
         <message>
             <source>Footprint: 13.5 m x 13.5 m.</source>
             <comment>Description of symbol 419</comment>
-            <translation type="unfinished"></translation>
+            <translation>A jel lábnyoma 13,5m x 13,5m.</translation>
         </message>
         <message>
             <source>Paved area, with bounding line</source>
@@ -2154,7 +2143,7 @@ Sections of the circle should be omitted to leave important detail showing.</sou
         <message>
             <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail. The numbers are orientated to north.</source>
             <comment>Description of symbol 704</comment>
-            <translation type="unfinished"></translation>
+            <translation>A számot a körhöz közel kell elhelyezni úgy, hogy fontos részleteket ne takarjon.</translation>
         </message>
         <message>
             <source>Course line</source>
@@ -2229,14 +2218,8 @@ Színe: lila.</translation>
         <message>
             <source>A solid line indicates that the boundary is marked continuously (tapes, etc.) on the ground.</source>
             <comment>Description of symbol 709.1</comment>
-            <translation>Tiltott terület. A területet határoló vonalat, ha az nem természetes határ, a következő módon kell jelölni:
-– folytonos vonallal, ha a határvonal a terepen végig jelölve (pl. szalagozva) van,
-– szaggatott vonallal, ha a határvonal nincs végig jelölve a terepen,
-– határvonal nélkül, ha a terepen semmiféle jelölés nincs.
-A zárt területre belépni tilos.
-Minimális terület: 2 mm x 2 mm (terepi méret 30 m x 30 m)
-Színe: lila.</translation>
-    </message>
+            <translation>Egy folytonos vonal azt jelenti, hogy a határvonal a terepen végig szalagozott.</translation>
+        </message>
         <message>
             <source>Out-of-bounds area, dashed boundary</source>
             <comment>Name of symbol 709.2</comment>
@@ -2245,14 +2228,8 @@ Színe: lila.</translation>
         <message>
             <source>A dashed line indicates intermittent marking on the ground.</source>
             <comment>Description of symbol 709.2</comment>
-            <translation>Tiltott terület. A területet határoló vonalat, ha az nem természetes határ, a következő módon kell jelölni:
-– folytonos vonallal, ha a határvonal a terepen végig jelölve (pl. szalagozva) van,
-– szaggatott vonallal, ha a határvonal nincs végig jelölve a terepen,
-– határvonal nélkül, ha a terepen semmiféle jelölés nincs.
-A zárt területre belépni tilos.
-Minimális terület: 2 mm x 2 mm (terepi méret 30 m x 30 m).
-Színe: lila.</translation>
-    </message>
+            <translation>Egy szaggatott vonal azt jelenti, hogy a határvonal jelzése a terepen nem folytonos.</translation>
+        </message>
         <message>
             <source>Crossing point</source>
             <comment>Name of symbol 710</comment>
@@ -2454,10 +2431,8 @@ A lila vonalat pontonként a rajttól a célig halad.   Ez az egyszerű megköze
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
             <comment>Description of symbol 101</comment>
-            <translation>Azonos tengerszint feletti magasságú pontokat összekötő vonal. A szomszédos
-szintvonalak közötti magasságkülönbség (alapszintköz) általában 5 méter. Két
-szomszédos szintvonal között a legkisebb távolság 0,25 mm.</translation>
-    </message>
+            <translation>Azonos tengerszint feletti magasságú pontokat összekötő vonal. A szomszédos szintvonalak közötti magasságkülönbség (alapszintköz) általában 5 méter. Két szomszédos szintvonal között a legkisebb távolság 0,25 mm.</translation>
+        </message>
         <message>
             <source>Index contour</source>
             <comment>Name of symbol 102</comment>
@@ -2687,7 +2662,7 @@ Minimális magassága 0,5 m.</translation>
         <message>
             <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
             <comment>Description of symbol 201.1</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Függőleges sziklafalaknál kicsi lehet a hely, a fogak elhagyhatók, pl. keskeny sziklakapu esetében. ( az átjáró legalább 0.3 mm-es szélességgel kellene rajzolni)</translation>
         </message>
         <message>
             <source>Impassable cliff, tag line</source>
@@ -3034,9 +3009,8 @@ vonalának végeit le lehet kerekíteni a jobb olvashatóság végett.</translat
         <message>
             <source>An indistinct or seasonal marsh or area of gradual transition from marsh to firm ground, which is crossable. The edge is generally indistinct and the vegetation similar to that of the surrounding ground. The symbol should be combined with vegetation symbols to show runnability and openness.</source>
             <comment>Description of symbol 311</comment>
-            <translation>Időszakos mocsár vagy fokozatos átmenet a mocsár felé, amely állandóan átgázolható. A széle általában határozatlan és a növényzet hasonló a környezetéhez. A 311-es jel kombinálható növényzeti jelekkel a fedettség és a futhatóság
-ábrázolására.</translation>
-    </message>
+            <translation>Időszakos mocsár vagy fokozatos átmenet a mocsár felé, amely állandóan átgázolható. A széle általában határozatlan és a növényzet hasonló a környezetéhez. A 311-es jel kombinálható növényzeti jelekkel a fedettség és a futhatóság ábrázolására.</translation>
+        </message>
         <message>
             <source>Indistinct marsh, minimum size</source>
             <comment>Name of symbol 311.1</comment>
@@ -3111,9 +3085,8 @@ vonalának végeit le lehet kerekíteni a jobb olvashatóság végett.</translat
         <message>
             <source>Where there are scattered trees in rough open land, areas of white (or green) should appear in the tone. Such an area may be generalised by using a regular pattern of large white dots in the yellow screen. Areas smaller than 16 mm in the maps scale are shown as rough open land (403). Individual trees may be added (418, 419, 420).</source>
             <comment>Description of symbol 404</comment>
-            <translation>Azon a durva nyílt területen, ahol elszórtan fák vannak, ott ennek fehér (vagy zöld) tónussal kell megjelennie. Az ilyen területet úgy lehet ábrázolni, hogy szabályos nagyméretű fehér pontokat helyezünk el sárga raszter (403) alapon. 
-16 mm²-nél kisebb felületek esetében a 403-es jelet kell használni. Egyedülálló fákat, bokrokat külön is jelölhetünk (418, 419, 420).</translation>
-    </message>
+            <translation>Azon a durva nyílt területen, ahol elszórtan fák vannak, ott ennek fehér (vagy zöld) tónussal kell megjelennie. Az ilyen területet úgy lehet ábrázolni, hogy szabályos nagyméretű fehér pontokat helyezünk el sárga raszter (403) alapon. 16 mm²-nél kisebb felületek esetében a 403-es jelet kell használni. Egyedülálló fákat, bokrokat külön is jelölhetünk (418, 419, 420).</translation>
+        </message>
         <message>
             <source>Forest: easy running</source>
             <comment>Name of symbol 405</comment>
@@ -4407,9 +4380,8 @@ A szabályt megszegő versenyzőket ki kell zárni.&lt;/span&gt;</translation>
         <message>
             <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
             <comment>Description of symbol 201.1</comment>
-            <translation>Egy áthatolhatatlan sziklafalat, bányát vagy földletörést (ld. 106) 0,35 mm vastag vonallal, esésirányú fogakkal jelöljük, a fogak a sziklafal kiterjedését (tetejétől a lábáig) ábrázolják. Függőleges sziklafalaknál kicsi lehet a hely, a fogak elhagyhatók, pl. keskeny sziklakapu esetében. ( az átjáró legalább 0.3 mm-es szélességgel kellene rajzolni).
-Minimális magasság 2 méter.</translation>
-    </message>
+            <translation type="unfinished">Függőleges sziklafalaknál kicsi lehet a hely, a fogak elhagyhatók, pl. keskeny sziklakapu esetében. ( az átjáró legalább 0.3 mm-es szélességgel kellene rajzolni)</translation>
+        </message>
         <message>
             <source>Impassable cliff, no tags, minimum size &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
             <comment>Name of symbol 201.1.1</comment>
@@ -4418,9 +4390,8 @@ Minimális magasság 2 méter.</translation>
         <message>
             <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
             <comment>Description of symbol 201.1.1</comment>
-            <translation>Függőleges sziklafalaknál kicsi lehet a hely, a fogak elhagyhatók, pl. keskeny sziklakapu esetében. ( az átjáró legalább 0.3 mm-es szélességgel kellene rajzolni).
-Minimális magasság 2 méter.</translation>
-    </message>
+            <translation type="unfinished">Függőleges sziklafalaknál kicsi lehet a hely, a fogak elhagyhatók, pl. keskeny sziklakapu esetében. ( az átjáró legalább 0.3 mm-es szélességgel kellene rajzolni)</translation>
+        </message>
         <message>
             <source>Impassable cliff, tag line</source>
             <comment>Name of symbol 201.2</comment>
@@ -5381,7 +5352,7 @@ A szabályt megszegő versenyzőket ki kell zárni.&lt;/span&gt;</translation>
         <message>
             <source>Crossing point</source>
             <comment>Name of symbol 525</comment>
-            <translation type="unfinished"></translation>
+            <translation>Átkelőhely</translation>
         </message>
         <message>
             <source>A crossing point is a gap or an opening in a fence, railing or wall, which can easily be crossed by a competitor. Small gaps or openings which can not easily be crossed by competitors, shall not be represented on the map and shall be closed during the competition.</source>
@@ -6155,16 +6126,8 @@ Színe: lila</translation>
         <message>
             <source>A solid line indicates that the boundary is marked continuously (tapes, etc.) on the ground.</source>
             <comment>Description of symbol 709.1</comment>
-            <translation>A zárt területet eket a tiltott terület (528.1) jellel kell feltérképezni. Ezt a jelet csak a versenytérkép utolsó pillanatban történő frissítésére lehet használni (például olyan területeken, amelyek a versenytársak számára veszélyesek lehetnek a verseny során, vagy ha túl későn változik meg a versenyterület).
-Egy zárt terület függőleges csíkokkal ábrázoljuk. 
- A határoló vonalat, ha az nem természetes határ, a következő módon jelöljük:
-- a folytonos vonal azt jelenti, hogy a határvonal a terepen végig szalagozott,
-- a szaggatott vonal azt jelenti, hogy a határvonal jelzése a terepen nem folytonos,
-- a határvonal hiánya azt jelenti, hogy a terepen nincs semmiféle jelölés.
-&lt;span style=&quot;color:magenta&quot;&gt;A zárt területet tilos keresztezni!
-A szabályt megszegő versenyzőket kizárják!&lt;/span&gt;
-Színe: lila.</translation>
-    </message>
+            <translation>Egy folytonos vonal azt jelenti, hogy a határvonal a terepen végig szalagozott.</translation>
+        </message>
         <message>
             <source>Out-of-bounds area, dashed boundary</source>
             <comment>Name of symbol 709.2</comment>
@@ -6173,8 +6136,8 @@ Színe: lila.</translation>
         <message>
             <source>A dashed line indicates intermittent marking on the ground.</source>
             <comment>Description of symbol 709.2</comment>
-            <translation>- a szaggatott vonal azt jelenti, hogy a határvonal jelzése a terepen nem folytonos.</translation>
-    </message>
+            <translation>Egy szaggatott vonal azt jelenti, hogy a határvonal jelzése a terepen nem folytonos.</translation>
+        </message>
         <message>
             <source>First aid post</source>
             <comment>Name of symbol 712</comment>
@@ -6372,9 +6335,8 @@ A lila vonal kissé kiborul a célszimbólumba. Ez az egyszerű megközelítés 
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
             <comment>Description of symbol 101</comment>
-            <translation>Egy vonal, ami azonos tengerszint feletti magasságú pontokból áll. A szabványos magasság különbség két szintvonal között 5 méter. Sík terepeken  2,5 méter  szintvonalköz is használható.A legkisebb ív egy szintvonalban 0,25 mm-re lehet a vonalak középpontjától a középpontig.
-Színe: barna.</translation>
-    </message>
+            <translation>Egy vonal, ami azonos tengerszint feletti magasságú pontokból áll. A szabványos magasság különbség két szintvonal között 5 méter. Sík terepeken  2,5 méter  szintvonalköz is használható.A legkisebb ív egy szintvonalban 0,25 mm-re lehet a vonalak középpontjától a középpontig.</translation>
+        </message>
         <message>
             <source>Index contour</source>
             <comment>Name of symbol 102</comment>
@@ -6482,72 +6444,72 @@ A nagyon magas földletörés vonalvastagsága 0,25mm lehet.</translation>
         <message>
             <source>Impassable cliff</source>
             <comment>Name of symbol 201</comment>
-            <translation type="unfinished"></translation>
+            <translation>Áthatolhatatlan sziklafal, szirt</translation>
         </message>
         <message>
             <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201</comment>
-            <translation type="unfinished"></translation>
+            <translation>Az áthatolhatatlan sziklafalat, bányát vagy földletörést (ld. 106) 0,35 mm vastag vonallal, esésirányú fogakkal jelöljük, a fogak a sziklafal kiterjedését (tetejétől a lábáig) ábrázolják. Ha kicsi a hely, a fogak elhagyhatók, pl. sziklakapu esetében (ilyenkor legalább 0,3 mm hézagot kell hagyni). A közvetlenül a sziklafal alatt található részleten a fogak áthaladhatnak. Ha a sziklafal víz mellett található úgy, hogy nem lehetséges az alatta való elhaladás a vízparton, akkor a víz határvonala elhagyható, illetve a sziklafal fogazásának világosan át kell nyúlnia a víz határvonalán.</translation>
         </message>
         <message>
             <source>Impassable cliff, minimum size</source>
             <comment>Name of symbol 201.0.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Járhatatlan sziklafal, szirt, minimális méret</translation>
         </message>
         <message>
             <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201.0.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Az áthatolhatatlan sziklafalat, bányát vagy földletörést (ld. 106) 0,35 mm vastag vonallal, esésirányú fogakkal jelöljük, a fogak a sziklafal kiterjedését (tetejétől a lábáig) ábrázolják. Ha kicsi a hely, a fogak elhagyhatók, pl. sziklakapu esetében (ilyenkor legalább 0,3 mm hézagot kell hagyni). A közvetlenül a sziklafal alatt található részleten a fogak áthaladhatnak. Ha a sziklafal víz mellett található úgy, hogy nem lehetséges az alatta való elhaladás a vízparton, akkor a víz határvonala elhagyható, illetve a sziklafal fogazásának világosan át kell nyúlnia a víz határvonalán.</translation>
         </message>
         <message>
             <source>Impassable cliff, no tags</source>
             <comment>Name of symbol 201.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Áthatolhatatlan sziklafal, fogazás nélkül</translation>
         </message>
         <message>
             <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
             <comment>Description of symbol 201.1</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Függőleges sziklafalaknál kicsi lehet a hely, a fogak elhagyhatók, pl. keskeny sziklakapu esetében. ( az átjáró legalább 0.3 mm-es szélességgel kellene rajzolni)</translation>
         </message>
         <message>
             <source>Impassable cliff, tag line</source>
             <comment>Name of symbol 201.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Járhatatlan sziklafa, fogazás</translation>
         </message>
         <message>
             <source>Use this symbol to display the full extent of a wide cliff.</source>
             <comment>Description of symbol 201.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Használd arra ezt a jelet, hogy bemutassa egy széles szirt teljes kiterjedését.</translation>
         </message>
         <message>
             <source>Rock pillars/cliffs</source>
             <comment>Name of symbol 202</comment>
-            <translation type="unfinished"></translation>
+            <translation>Sziklatorony</translation>
         </message>
         <message>
             <source>In the case of unusual features such as rock pillars or massive cliffs or gigantic boulders, the rocks shall be shown in plan shape without tags.</source>
             <comment>Description of symbol 202</comment>
-            <translation type="unfinished"></translation>
+            <translation>Az olyan szokatlan sziklaalakzat, mint például sziklatorony, nagy sziklaszirt, hatalmas sziklatömb alaprajzban, fogak nélkül ábrázolható.</translation>
         </message>
         <message>
             <source>Boulder</source>
             <comment>Name of symbol 206</comment>
-            <translation type="unfinished"></translation>
+            <translation>Szikla</translation>
         </message>
         <message>
             <source>A small distinct boulder (minimum height 1 m). Every boulder marked on the map should be immediately identifiable on the ground. To be able to show the distinction between boulders with significant difference in size it is permitted to enlarge this symbol by 20% (diameter 0.5 mm).</source>
             <comment>Description of symbol 206</comment>
-            <translation type="unfinished"></translation>
+            <translation>Kis határozott sziklatömb (legalább 1 méter magas). Minden, a térképen ábrázolt sziklatömbnek azonnal azonosíthatónak kell lennie a terepen. A jel mérete 20%-kal növelhető (0,5 mm átmérőre) a szikla magasságától függően.</translation>
         </message>
         <message>
             <source>Boulder, enlarged</source>
             <comment>Name of symbol 206.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Sziklatömb, kő megnövelt méret</translation>
         </message>
         <message>
             <source>To be able to show the distinction between boulders with significant difference in size it is permitted to enlarge this symbol by 20% (diameter 0.5 mm).</source>
             <comment>Description of symbol 206.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>A 206-os jel megnövelt méretű variánsa. Kis határozott sziklatömb (legalább 1 méter magas). Minden, a térképen ábrázolt sziklatömbnek azonnal azonosíthatónak kell lennie a terepen. A jel mérete 20%-kal növelhető (0,5 mm átmérőre) a szikla magasságától függően.</translation>
         </message>
         <message>
             <source>Boulder fields / Stony ground, small</source>
@@ -6557,7 +6519,7 @@ A nagyon magas földletörés vonalvastagsága 0,25mm lehet.</translation>
         <message>
             <source>Stony or rocky ground which affects going should be shown on the map. The dots should be randomly distributed with density according to the amount of rock. A minimum of three dots should be used.</source>
             <comment>Description of symbol 210</comment>
-            <translation type="unfinished"></translation>
+            <translation>Haladást gátló köves terület. Az egyes pontok véletlenszerűen oszlanak el és sűrűségük a kövek terepi sűrűségének függvénye (felületi jel). Legalább három pont rajzolandó.</translation>
         </message>
         <message>
             <source>Boulder fields / Stony ground</source>
@@ -6567,32 +6529,32 @@ A nagyon magas földletörés vonalvastagsága 0,25mm lehet.</translation>
         <message>
             <source>Stony or rocky ground which affects going should be shown on the map. The dots should be randomly distributed with density according to the amount of rock. A minimum of three dots should be used.</source>
             <comment>Description of symbol 210.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Haladást gátló köves terület. Az egyes pontok véletlenszerűen oszlanak el és sűrűségük a kövek terepi sűrűségének függvénye (felületi jel). Legalább három pont rajzolandó.</translation>
         </message>
         <message>
             <source>Open sandy ground</source>
             <comment>Name of symbol 211</comment>
-            <translation type="unfinished"></translation>
+            <translation>Nyílt homokos talaj</translation>
         </message>
         <message>
             <source>An area of soft sandy ground or gravel with no vegetation and where running is slow. Where an area of sandy ground is open but running is good, it is shown as open land (401/402).</source>
             <comment>Description of symbol 211</comment>
-            <translation type="unfinished"></translation>
+            <translation>A futást nehezítő, növényzet nélküli homokos, kavicsos terület. Ha az adott homokos terület nyílt, de a futhatóság jó, inkább a nyílt terület jele (401/402) használatos.</translation>
         </message>
         <message>
             <source>Bare rock</source>
             <comment>Name of symbol 212</comment>
-            <translation type="unfinished"></translation>
+            <translation>Kopár sziklafelszín</translation>
         </message>
         <message>
             <source>A runnable area of rock without earth or vegetation is shown as bare rock. An area of rock covered with grass, moss or other low vegetation is shown as open land (401/402).</source>
             <comment>Description of symbol 212</comment>
-            <translation type="unfinished"></translation>
+            <translation>alaj és növényzet nélküli futható sziklafelszín. A füves, mohás vagy más növényzettel fedett sziklafelszín a nyílt terület jelével (401/402) ábrázolható.</translation>
         </message>
         <message>
             <source>Lake</source>
             <comment>Name of symbol 301</comment>
-            <translation type="unfinished"></translation>
+            <translation>Tó</translation>
         </message>
         <message>
             <source>Large areas of water are shown with this symbol (blue 50%). The colour of the bank line is blue 100 %.
@@ -6604,22 +6566,22 @@ Small areas of water should be shown with full colour. Use symbol 302 (&quot;Pon
         <message>
             <source>Lake, bank line</source>
             <comment>Name of symbol 301.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Tó partvonala</translation>
         </message>
         <message>
             <source>A black bank line indicates that the feature cannot be crossed.</source>
             <comment>Description of symbol 301.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>A partnál húzott fekete vonal jelzi, hogy a tereptárgy áthatolhatatlan.</translation>
         </message>
         <message>
             <source>Lake, with bank line</source>
             <comment>Name of symbol 301.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Tó, partvonallal</translation>
         </message>
         <message>
             <source>Pond</source>
             <comment>Name of symbol 302</comment>
-            <translation type="unfinished"></translation>
+            <translation>Kis tó</translation>
         </message>
         <message>
             <source>Small areas of water should be shown with full colour.
@@ -6631,37 +6593,37 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
         <message>
             <source>Crossable watercourse</source>
             <comment>Name of symbol 305</comment>
-            <translation type="unfinished"></translation>
+            <translation>Áthatolható vízfolyás</translation>
         </message>
         <message>
             <source>A crossable watercourse, minimum 2 m wide. The width of watercourses over 5 m wide should be shown to scale.</source>
             <comment>Description of symbol 305</comment>
-            <translation type="unfinished"></translation>
+            <translation>Áthatolható vízfolyás, minimum 2m szélességű. Az 5 méternél szélesebb vízfolyásokat méretarányosan kell ábrázolni.</translation>
         </message>
         <message>
             <source>Crossable small watercourse</source>
             <comment>Name of symbol 306</comment>
-            <translation type="unfinished"></translation>
+            <translation>Átgázolható kis vízfolyás</translation>
         </message>
         <message>
             <source>A crossable watercourse (including a major drainage ditch) less than 2 m wide. For better legibility a ditch in a marsh should be drawn as a crossable watercourse (305).</source>
             <comment>Description of symbol 306</comment>
-            <translation type="unfinished"></translation>
+            <translation>Átgázolható kis vízfolyás vagy nagyobb vízelvezető árok, amely 2 méternél keskenyebb. A jobb olvashatóság kedvéért a mocsáron átvezető vizes árkot átgázolható vízfolyásként (305) célszerű ábrázolni.</translation>
         </message>
         <message>
             <source>Minor water channel</source>
             <comment>Name of symbol 307</comment>
-            <translation type="unfinished"></translation>
+            <translation>Vizes árok</translation>
         </message>
         <message>
             <source>A natural or man-made minor water channel which may contain water only intermittently.</source>
             <comment>Description of symbol 307</comment>
-            <translation type="unfinished"></translation>
+            <translation>Természetes, vagy mesterséges kis vizes árok, amely akár időszakosan vizet tartalmaz.</translation>
         </message>
         <message>
             <source>Uncrossable marsh</source>
             <comment>Name of symbol 309</comment>
-            <translation type="unfinished"></translation>
+            <translation>Áthatolhatatlan mocsár</translation>
         </message>
         <message>
             <source>A marsh which is uncrossable or dangerous for the runner. A blue line surrounds the symbol.</source>
@@ -6671,77 +6633,77 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
         <message>
             <source>Uncrossable marsh, border line</source>
             <comment>Name of symbol 309.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Áthatolhatatlan mocsár, határoló vonal</translation>
         </message>
         <message>
             <source>Uncrossable marsh, with border line</source>
             <comment>Name of symbol 309.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Áthatolhatatlan mocsár, határoló vonallal</translation>
         </message>
         <message>
             <source>Marsh</source>
             <comment>Name of symbol 310</comment>
-            <translation type="unfinished"></translation>
+            <translation>Mocsár</translation>
         </message>
         <message>
             <source>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility.</source>
             <comment>Description of symbol 310</comment>
-            <translation type="unfinished"></translation>
+            <translation>Áthatolható mocsár határozott körvonallal. Amennyiben egy kisebb mocsarat szeretnénk kombinálni a 403/404 jelekkel, úgy engedélyezett a 401/402 jelek alkalmazása a jobb olvashatóság érdekében.</translation>
         </message>
         <message>
             <source>Marsh, minimum size</source>
             <comment>Name of symbol 310.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Mocsár, minimális méret</translation>
         </message>
         <message>
             <source>Special water feature</source>
             <comment>Name of symbol 314</comment>
-            <translation type="unfinished"></translation>
+            <translation>Különleges vízrajzi tereptárgy</translation>
         </message>
         <message>
             <source>A special small water feature. The definition of the symbol must always be given in the map legend.</source>
             <comment>Description of symbol 314</comment>
-            <translation type="unfinished"></translation>
+            <translation>Különleges kis vízrajzi tereptárgy. A jel magyarázatát a térkép jelkulcsában mindig meg kell adni.</translation>
         </message>
         <message>
             <source>Open land</source>
             <comment>Name of symbol 401</comment>
-            <translation type="unfinished"></translation>
+            <translation>Nyílt terület</translation>
         </message>
         <message>
             <source>Cultivated land, fields, meadows, grassland, etc. without trees, offering easy running. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
             <comment>Description of symbol 401</comment>
-            <translation type="unfinished"></translation>
+            <translation>Fák nélküli művelt terület, szántó, rét, legelő stb., könnyű futhatóságot jelöl. Ha a sárgával jelölt területek kerülnek túlsúlyba a terepen, a teli szín helyett 75%-os rasztert alkalmazhatunk.</translation>
         </message>
         <message>
             <source>Open land with scattered trees</source>
             <comment>Name of symbol 402</comment>
-            <translation type="unfinished"></translation>
+            <translation>Nyílt terület elszórt fákkal</translation>
         </message>
         <message>
             <source>Meadows with scattered trees or bushes, with grass or similar ground cover offering easy running. Areas smaller than 10 mm at the maps scale are shown as open land (401). Individual trees may be added (418, 419, 420). If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
             <comment>Description of symbol 402</comment>
-            <translation type="unfinished"></translation>
+            <translation>Rét elszórt fákkal vagy bokrokkal, fűvel vagy hasonló növénytakaróval, amely könnyű futhatóságot biztosít. 10  mm² -nél kisebb felületek esetében a 401-es jelet kell használni. Egyedülálló fákat, bokrokat külön is jelölhetünk (418, 419, 420). Ha a sárgával jelölt területek kerülnek túlsúlyba, a teli szín helyett 75%-os rasztert alkalmazhatunk.</translation>
         </message>
         <message>
             <source>Rough open land</source>
             <comment>Name of symbol 403</comment>
-            <translation type="unfinished"></translation>
+            <translation>Durva nyílt terület</translation>
         </message>
         <message>
             <source>Heath, moorland, felled areas, newly planted areas (trees lower than ca. 1 m) or other generally open land with rough ground vegetation, heather or tall grass. Symbol 403 may be combined with symbols 407 and 409 to show reduced runnability.</source>
             <comment>Description of symbol 403</comment>
-            <translation type="unfinished"></translation>
+            <translation>Pusztaság, mocsaras terület, tarvágás, fiatal ültetés (1 méternél alacsonyabb fák) vagy más, alapjában nyílt terület durva aljnövényzettel, vagy magas fűvel. A 403-as jelet kombinálni lehet a 407-es és 409-es jelekkel a lecsökkent futhatóság jelzésére.</translation>
         </message>
         <message>
             <source>Rough open land with scattered trees</source>
             <comment>Name of symbol 404</comment>
-            <translation type="unfinished"></translation>
+            <translation>Durva nyílt terület elszórt fákkal</translation>
         </message>
         <message>
             <source>Where there are scattered trees in rough open land, areas of white (or green) should appear in the tone. Such an area may be generalised by using a regular pattern of large white dots in the yellow screen. Areas smaller than 16 mm in the maps scale are shown as rough open land (403). Individual trees may be added (418, 419, 420).</source>
             <comment>Description of symbol 404</comment>
-            <translation type="unfinished"></translation>
+            <translation>Azon a durva nyílt területen, ahol elszórtan fák vannak, ott ennek fehér (vagy zöld) tónussal kell megjelennie. Az ilyen területet úgy lehet ábrázolni, hogy szabályos nagyméretű fehér pontokat helyezünk el sárga raszter (403) alapon. 16 mm²-nél kisebb felületek esetében a 403-es jelet kell használni. Egyedülálló fákat, bokrokat külön is jelölhetünk (418, 419, 420).</translation>
         </message>
         <message>
             <source>Forest: good visibility</source>
@@ -6766,83 +6728,84 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
         <message>
             <source>Orchard</source>
             <comment>Name of symbol 412</comment>
-            <translation type="unfinished"></translation>
+            <translation>Gyümölcsös</translation>
         </message>
         <message>
             <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the
 direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
             <comment>Description of symbol 412</comment>
-            <translation type="unfinished"></translation>
+            <translation>Gyümölcsfákkal, cserjékkel beültetett terület. A pontozás szükség esetén elforgatható az ültetés irányába. Ha a sárgával jelölt területek kerülnek túlsúlyba, a teli szín helyett 75%-os rasztert alkalmazhatunk.</translation>
         </message>
         <message>
             <source>Vineyard</source>
             <comment>Name of symbol 413</comment>
-            <translation type="unfinished"></translation>
+            <translation>Szőlő</translation>
         </message>
         <message>
             <source>The green lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
             <comment>Description of symbol 413</comment>
-            <translation type="unfinished"></translation>
+            <translation>A vonalak iránya mutatja az ültetés irányát. Ha a sárgával jelölt területek kerülnek túlsúlyba, a teli szín helyett 75%-os
+rasztert alkalmazhatunk.</translation>
         </message>
         <message>
             <source>Special vegetation feature</source>
             <comment>Name of symbol 418</comment>
-            <translation type="unfinished"></translation>
+            <translation>Különleges növényzeti tereptárgy</translation>
         </message>
         <message>
             <source>Symbols 418, 419 and 420 can be used for special small vegetation features. The definition of the symbol must be given in each case in the map legend.</source>
             <comment>Description of symbol 418</comment>
-            <translation type="unfinished"></translation>
+            <translation>A 418, 419 és 420 jeleket különleges, kis kiterjedésű növényzeti tereptárgy esetében használjuk. A jel pontos meghatározását meg kell adni a térkép jelmagyarázatában.</translation>
         </message>
         <message>
             <source>Special vegetation feature</source>
             <comment>Name of symbol 419</comment>
-            <translation type="unfinished"></translation>
+            <translation>Különleges növényzeti tereptárgy</translation>
         </message>
         <message>
             <source>Symbols 418, 419 and 420 can be used for special small vegetation features. The definition of the symbol must be given in each case in the map legend.</source>
             <comment>Description of symbol 419</comment>
-            <translation type="unfinished"></translation>
+            <translation>A 418, 419 és 420 jeleket különleges, kis kiterjedésű növényzeti tereptárgy esetében használjuk. A jel pontos meghatározását meg kell adni a térkép jelmagyarázatában.</translation>
         </message>
         <message>
             <source>Special vegetation feature</source>
             <comment>Name of symbol 420</comment>
-            <translation type="unfinished"></translation>
+            <translation>Különleges növényzeti tereptárgy</translation>
         </message>
         <message>
             <source>Symbols 418, 419 and 420 can be used for special small vegetation features. The definition of the symbol must be given in each case in the map legend.</source>
             <comment>Description of symbol 420</comment>
-            <translation type="unfinished"></translation>
+            <translation>A 418, 419 és 420 jeleket különleges, kis kiterjedésű növényzeti tereptárgy esetében használjuk. A jel pontos meghatározását meg kell adni a térkép jelmagyarázatában.</translation>
         </message>
         <message>
             <source>Motorway</source>
             <comment>Name of symbol 501.0</comment>
-            <translation type="unfinished"></translation>
+            <translation>Autópálya</translation>
         </message>
         <message>
             <source>A road with two carriageways. The width of the symbol should be drawn to scale but not smaller than the minimum width. The outer boundary lines may be replaced with symbols 519, 521, 522 or 524 if a fence or wall is so close to the motorway edge that it cannot practically be shown as a separate symbol. The space between the black lines must be filled with brown (50%). A road under construction may be shown with broken lines.</source>
             <comment>Description of symbol 501.0</comment>
-            <translation type="unfinished"></translation>
+            <translation>Gépjárműforgalom számára készült osztottpályás út. A jel méretarány szerinti szélességben rajzolandó, de nem lehet vékonyabb a minimum értéknél. A külső 0,18 határoló vonalak az 519, 521, 522 vagy 524-es jelekkel is helyettesíthetők, amennyiben a kerítés vagy a fal olyan közel húzódik a pálya széléhez, hogy külön jellel már nem ábrázolható. A fekete vonalak közötti területet barnával (50%) kell kitölteni. Az épülő útszakaszokat szaggatott vonalakkal jelöljük.</translation>
         </message>
         <message>
             <source>Major road, minimum width</source>
             <comment>Name of symbol 502</comment>
-            <translation type="unfinished"></translation>
+            <translation>Főút, minimális szélesség</translation>
         </message>
         <message>
             <source>Road wider than 5m. The width of the symbol should be drawn to scale but not smaller than the minimum width. The outer boundary lines may be replaced with symbols 519, 521, 522 or 524 if a fence or wall is so close to the motorway edge that it cannot practically be shown as a separate symbol. The space between the black lines must be filled with brown (50%). A road under construction may be shown with broken lines.</source>
             <comment>Description of symbol 502</comment>
-            <translation type="unfinished"></translation>
+            <translation>5 méternél szélesebb út. A jel méretarány szerinti szélességben rajzolandó, de nem lehet vékonyabb a minimumnál. A külső határoló vonalak az 519, 521, 522 vagy 524-es jelekkel is helyettesíthetők, amennyiben a kerítés vagy a fal olyan közel húzódik a pálya széléhez, hogy külön jellel már nem ábrázolható. A fekete vonalak közötti területet barnával (50%) kell kitölteni. Az épülő útszakaszokat szaggatott vonalakkal jelöljük.</translation>
         </message>
         <message>
             <source>Minor road</source>
             <comment>Name of symbol 503</comment>
-            <translation type="unfinished"></translation>
+            <translation>Mellékút</translation>
         </message>
         <message>
             <source>Road 3-5 m wide. The space between the black lines must be filled with brown (50%). A road under construction may be shown with broken lines.</source>
             <comment>Description of symbol 503</comment>
-            <translation type="unfinished"></translation>
+            <translation>3–5 méter széles út. A fekete vonalak közötti területet barnával (50%) kell kitölteni. Az épülő útszakaszokat szaggatott vonalakkal jelöljük.</translation>
         </message>
         <message>
             <source>Track: fast riding</source>
@@ -6929,7 +6892,7 @@ required to dismount. Speed max 25 %.</source>
         <message>
             <source>Narrow ride</source>
             <comment>Name of symbol 509.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Keskeny nyiladék vagy egyenes nyomvonal</translation>
         </message>
         <message>
             <source>Non-ridable narrow forest rides should be represented.</source>
@@ -6939,57 +6902,57 @@ required to dismount. Speed max 25 %.</source>
         <message>
             <source>Railway</source>
             <comment>Name of symbol 515</comment>
-            <translation type="unfinished"></translation>
+            <translation>Vasút</translation>
         </message>
         <message>
             <source>A railway or other kind of railed track (tramway, truckway, etc.).</source>
             <comment>Description of symbol 515</comment>
-            <translation type="unfinished"></translation>
+            <translation>Vasút vagy egyéb sínpálya (villamos, stb.).</translation>
         </message>
         <message>
             <source>Power line</source>
             <comment>Name of symbol 516</comment>
-            <translation type="unfinished"></translation>
+            <translation>Légvezeték, villamos távvezeték, vagy sílift</translation>
         </message>
         <message>
             <source>Power line, cableway or skilift. The bars indicate the exact location of the pylons.</source>
             <comment>Description of symbol 516</comment>
-            <translation type="unfinished"></translation>
+            <translation>Villanyvezeték, kötélpálya vagy sílift. A keresztvonalak pontosan a tartóoszlopok, az alátámasztás helyét jelölik.</translation>
         </message>
         <message>
             <source>Major power line</source>
             <comment>Name of symbol 517</comment>
-            <translation type="unfinished"></translation>
+            <translation>Nagy villamos távvezeték</translation>
         </message>
         <message>
             <source>Major power lines should be drawn with a double line. The gap between the lines may indicate the extent of the powerline.</source>
             <comment>Description of symbol 517</comment>
-            <translation type="unfinished"></translation>
+            <translation>A nagyobb villamos távvezeték kettős vonallal (alaprajzban) ábrázolható.</translation>
         </message>
         <message>
             <source>Tunnel</source>
             <comment>Name of symbol 518</comment>
-            <translation type="unfinished"></translation>
+            <translation>Alagút</translation>
         </message>
         <message>
             <source>A way under roads, railways, etc. which may be used by the runner. This symbol is used whether or not the tunnel has a track leading to it.</source>
             <comment>Description of symbol 518</comment>
-            <translation type="unfinished"></translation>
+            <translation>Olyan átkelési lehetőség utak, vasutak, csővezetékek stb. alatt, amelyet a futó is használhat. A jel akkor is alkalmazható, ha az alagúthoz, átereszhez nem vezet külön út.</translation>
         </message>
         <message>
             <source>Tunnel, minimum size</source>
             <comment>Name of symbol 518.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Alagút, minimális méret</translation>
         </message>
         <message>
             <source>A way under roads, railways, etc. which may be used by the runner. This symbol is used whether or not the tunnel has a track leading to it.</source>
             <comment>Description of symbol 518.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Olyan átkelési lehetőség utak, vasutak, csővezetékek stb. alatt, amelyet a futó is használhat. A jel akkor is alkalmazható, ha az alagúthoz, átereszhez nem vezet külön út.</translation>
         </message>
         <message>
             <source>Stone wall</source>
             <comment>Name of symbol 521</comment>
-            <translation type="unfinished"></translation>
+            <translation>Kőfal</translation>
         </message>
         <message>
             <source>This stone wall symbol should represent all visible walls. If a stone wall is forbidden to
@@ -7000,17 +6963,17 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <message>
             <source>High fence</source>
             <comment>Name of symbol 524</comment>
-            <translation type="unfinished"></translation>
+            <translation>Magas kerítés</translation>
         </message>
         <message>
             <source>A boarded or wire fence higher than ca 1.5 m, not crossable to the average orienteer, eg. deer fence.</source>
             <comment>Description of symbol 524</comment>
-            <translation type="unfinished"></translation>
+            <translation>1,5 méternél magasabb deszka vagy fémkerítés, az átlagos futó számára nem leküzdhető (pl. vadvédelmi kerítés).</translation>
         </message>
         <message>
             <source>Crossing point</source>
             <comment>Name of symbol 525</comment>
-            <translation type="unfinished"></translation>
+            <translation>Átkelőhely</translation>
         </message>
         <message>
             <source>All ways through or over high fences or walls must be indicated. The symbol may also be used for a gate through or stile over a stone wall (521) or a fence (524) or a pipeline (534).</source>
@@ -7020,72 +6983,72 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <message>
             <source>Building</source>
             <comment>Name of symbol 526</comment>
-            <translation type="unfinished"></translation>
+            <translation>Épület</translation>
         </message>
         <message>
             <source>A building is shown with its ground plan so far as the scale permits.</source>
             <comment>Description of symbol 526</comment>
-            <translation type="unfinished"></translation>
+            <translation>Az épület a méretarány biztosította lehetőségen belül alaprajzban ábrázolandó.</translation>
         </message>
         <message>
             <source>Building, minimum size</source>
             <comment>Name of symbol 526.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Épület, minimális méret</translation>
         </message>
         <message>
             <source>Settlement</source>
             <comment>Name of symbol 527</comment>
-            <translation type="unfinished"></translation>
+            <translation>Település</translation>
         </message>
         <message>
             <source>Houses and gardens and other built up areas. Roads, buildings and other significant features within a settlement must be shown. If all buildings cannot be shown, an alternative symbol (black line screen) may be used.</source>
             <comment>Description of symbol 527</comment>
-            <translation type="unfinished"></translation>
+            <translation>Lakóházak és kertek vagy egyéb beépített terület. Az utakat, épületeket és egyéb jellegzetességeket a településen belül ábrázolni kell. Ha minden épület nem ábrázolható, alternatív jel (fekete vonalraszter) használható.</translation>
         </message>
         <message>
             <source>Paved area</source>
             <comment>Name of symbol 529</comment>
-            <translation type="unfinished"></translation>
+            <translation>Burkolt terület</translation>
         </message>
         <message>
             <source>An area of hard standing used for parking or other purposes.</source>
             <comment>Description of symbol 529</comment>
-            <translation type="unfinished"></translation>
+            <translation>Kövezett, aszfaltozott vagy egyéb burkolt terület parkolási vagy egyéb célra.</translation>
         </message>
         <message>
             <source>Paved area, bounding line</source>
             <comment>Name of symbol 529.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Burkolt terület, határoló vonal</translation>
         </message>
         <message>
             <source>Paved area, with bounding line</source>
             <comment>Name of symbol 529.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Burkolt terület, határoló vonallal</translation>
         </message>
         <message>
             <source>Firing range</source>
             <comment>Name of symbol 531</comment>
-            <translation type="unfinished"></translation>
+            <translation>Lőtér</translation>
         </message>
         <message>
             <source>A firing range is shown with a special symbol to indicate the need for caution. Associated buildings are individually marked.</source>
             <comment>Description of symbol 531</comment>
-            <translation type="unfinished"></translation>
+            <translation>A figyelem felkeltése érdekében a lőteret külön jellel ábrázoljuk. A kapcsolódó épületeket külön kell jelölni.</translation>
         </message>
         <message>
             <source>Grave</source>
             <comment>Name of symbol 532</comment>
-            <translation type="unfinished"></translation>
+            <translation>Sír</translation>
         </message>
         <message>
             <source>A distinct grave marked by a stone or shrine. Location is at the centre of gravity of the symbol, which is orientated to north. A cemetery is shown by using grave symbols as space permits.</source>
             <comment>Description of symbol 532</comment>
-            <translation type="unfinished"></translation>
+            <translation>Egyedülálló, kővel vagy emlékművel jelölt sír. A helyét a jel súlypontja jelöli. A jelet északra kell tájolni.A temető is a sír jelével ábrázolható (felületi jel).</translation>
         </message>
         <message>
             <source>Uncrossable pipeline</source>
             <comment>Name of symbol 534</comment>
-            <translation type="unfinished"></translation>
+            <translation>Áthatolhatatlan csővezeték</translation>
         </message>
         <message>
             <source>A pipeline which cannot be crossed. If an uncrossable pipeline is forbidden to cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
@@ -7095,57 +7058,57 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <message>
             <source>High tower</source>
             <comment>Name of symbol 535</comment>
-            <translation type="unfinished"></translation>
+            <translation>Magas torony</translation>
         </message>
         <message>
             <source>A high tower or large pylon, standing above the level of the surrounding forest. Location is at the centre of gravity of the symbol.</source>
             <comment>Description of symbol 535</comment>
-            <translation type="unfinished"></translation>
+            <translation>A környező erdő szintjéből kiemelkedő magas torony, oszlop. A torony helyét a jel súlypontja jelöli.</translation>
         </message>
         <message>
             <source>Small tower</source>
             <comment>Name of symbol 536</comment>
-            <translation type="unfinished"></translation>
+            <translation>Kisebb torony, magasles</translation>
         </message>
         <message>
             <source>An obvious shooting platform or seat, or small tower. Location is at the centre of gravity of the symbol.</source>
             <comment>Description of symbol 536</comment>
-            <translation type="unfinished"></translation>
+            <translation>Jól látható lőállás vagy ülés, alacsony torony. A torony pontos helye a terepen a jel súlypontja.</translation>
         </message>
         <message>
             <source>Fodder rack</source>
             <comment>Name of symbol 538</comment>
-            <translation type="unfinished"></translation>
+            <translation>Vadetető - takarmányállvány</translation>
         </message>
         <message>
             <source>A fodder rack which is free standing or built on to a tree. Location is at the centre of gravity of the symbol. For land access reasons these may be omitted.</source>
             <comment>Description of symbol 538</comment>
-            <translation type="unfinished"></translation>
+            <translation>Szabadon álló vagy fára épített vadetető. Terepi helyét a jel súlypontja jelöli. Ha földhasználati okok (pl. vadgazdálkodás) úgy kívánják, a térképről elhagyhatók.</translation>
         </message>
         <message>
             <source>Special man-made feature</source>
             <comment>Name of symbol 539</comment>
-            <translation type="unfinished"></translation>
+            <translation>Különleges mesterséges tereptárgy</translation>
         </message>
         <message>
             <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
             <comment>Description of symbol 539</comment>
-            <translation type="unfinished"></translation>
+            <translation>Különleges mesterséges tereptárgyat jelölünk ezekkel  a szimbólumokkal. A jel definícióját meg kell adni a térképen.</translation>
         </message>
         <message>
             <source>Special man-made feature</source>
             <comment>Name of symbol 540</comment>
-            <translation type="unfinished"></translation>
+            <translation>Különleges mesterséges tereptárgy</translation>
         </message>
         <message>
             <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
             <comment>Description of symbol 540</comment>
-            <translation type="unfinished"></translation>
+            <translation>Különleges mesterséges tereptárgyat jelölünk ezekkel  a szimbólumokkal. A jel definícióját meg kell adni a térképen.</translation>
         </message>
         <message>
             <source>Magnetic north line, blue</source>
             <comment>Name of symbol 601.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Mágneses Északvonal, kék</translation>
         </message>
         <message>
             <source>Magnetic north lines are lines placed on the map pointing to magnetic north. At the scale of 1:5000, 1:7500 and 1:10000 the spacing of north lines on the map should be 30 mm, while at the scale of 1:15000 and 1:20000 the spacing on the map should be 20 mm. North lines may be broken where they obscure small features such as boulders, cliffs, stream junctions, and path ends.</source>
@@ -7155,57 +7118,57 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <message>
             <source>North lines pattern, blue</source>
             <comment>Name of symbol 601.3</comment>
-            <translation type="unfinished"></translation>
+            <translation>Északvonal mintázat (kék)</translation>
         </message>
         <message>
             <source>Registration mark</source>
             <comment>Name of symbol 602</comment>
-            <translation type="unfinished"></translation>
+            <translation>Illesztő kereszt</translation>
         </message>
         <message>
             <source>At least three registration marks must be placed within the frame of a map in a non-symmetrical position. In addition, a colour check should also be possible.</source>
             <comment>Description of symbol 602</comment>
-            <translation type="unfinished"></translation>
+            <translation>Legalább három illesztőjelet kell felvenni a térkép keretén belül, nem szimmetrikus elhelyezésben. Ezen felül színellenőrző jelet is alkalmazhatunk.</translation>
         </message>
         <message>
             <source>Spot height, dot</source>
             <comment>Name of symbol 603.0</comment>
-            <translation type="unfinished"></translation>
+            <translation>Magasságot jelölő pont</translation>
         </message>
         <message>
             <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
             <comment>Description of symbol 603.0</comment>
-            <translation type="unfinished"></translation>
+            <translation>A tengerszint feletti magassági értékeket magasságkülönbségek durva becsléséhez használhatjuk. A magasságot méterre kerekítve adjuk meg. A számokészakra tájoltak. A vizek szintjét pont nélkül írjuk meg.</translation>
         </message>
         <message>
             <source>Spot height, text</source>
             <comment>Name of symbol 603.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Magasságot jelölő szöveg</translation>
         </message>
         <message>
             <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
             <comment>Description of symbol 603.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>A tengerszint feletti magassági értékeket magasságkülönbségek durva becsléséhez használhatjuk. A magasságot méterre kerekítve adjuk meg. A számokészakra tájoltak. A vizek szintjét pont nélkül írjuk meg.</translation>
         </message>
         <message>
             <source>Start</source>
             <comment>Name of symbol 701</comment>
-            <translation type="unfinished"></translation>
+            <translation>Rajt</translation>
         </message>
         <message>
             <source>The start or map issue point (if not at the start) is shown by an equilateral triangle which points in the direction of the first control. The centre of the triangle shows the precise position of the start point.</source>
             <comment>Description of symbol 701</comment>
-            <translation type="unfinished"></translation>
+            <translation>A rajt vagy térképrajt (amennyiben az nem azonos helyen van az időrajttal) helyét egyenlő oldalú háromszög jelöli, amelynek egyik csúcsa az első ellenőrző pont irányába mutat. A háromszög középpontja mutatja a tereptárgy pontos helyét.</translation>
         </message>
         <message>
             <source>Control point</source>
             <comment>Name of symbol 702</comment>
-            <translation type="unfinished"></translation>
+            <translation>Ellenőrzőpont</translation>
         </message>
         <message>
             <source>The control points are shown with circles. The centre of the circle shows the precise position of the feature. Sections of circles should be omitted to leave important detail showing.</source>
             <comment>Description of symbol 702</comment>
-            <translation type="unfinished"></translation>
+            <translation>Az ellenőrzőpon helyét kör jelöli. A kör középpontja mutatja a tereptárgy pontos helyét. A kör vonalát megszakíthatjuk ha az fontos részleteket takar.</translation>
         </message>
         <message>
             <source>Control point with focus point (in MTBO maps)</source>
@@ -7220,27 +7183,27 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <message>
             <source>Control number</source>
             <comment>Name of symbol 703</comment>
-            <translation type="unfinished"></translation>
+            <translation>Ellenőrzőpont sorszáma</translation>
         </message>
         <message>
             <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail. The numbers are orientated to north.</source>
             <comment>Description of symbol 703</comment>
-            <translation type="unfinished"></translation>
+            <translation>A számot a körhöz közel kell elhelyezni úgy, hogy fontos részleteket ne takarjon.</translation>
         </message>
         <message>
             <source>Line</source>
             <comment>Name of symbol 704</comment>
-            <translation type="unfinished"></translation>
+            <translation>Összekötő vonal</translation>
         </message>
         <message>
             <source>Where controls are to be visited in order, the start, control points and finish are joined together by straight lines. Sections of lines should be omitted to leave important detail showing.</source>
             <comment>Description of symbol 704</comment>
-            <translation type="unfinished"></translation>
+            <translation>A rajtot, az ellenőrzőpontokat és a célt egyenes vonallal kell összekötni. Az összekötő szakaszokat meg lehet szakítani, ha az fontos részletet takar.</translation>
         </message>
         <message>
             <source>Marked route</source>
             <comment>Name of symbol 705</comment>
-            <translation type="unfinished"></translation>
+            <translation>Jelzett útvonal</translation>
         </message>
         <message>
             <source>A marked route is shown on the map with a dashed line. If the symbol is used instead
@@ -7253,37 +7216,37 @@ to represent allowed routes that are marked in the terrain.</source>
         <message>
             <source>Finish</source>
             <comment>Name of symbol 706</comment>
-            <translation type="unfinished"></translation>
+            <translation>Cél</translation>
         </message>
         <message>
             <source>The finish is shown by two concentric circles.</source>
             <comment>Description of symbol 706</comment>
-            <translation type="unfinished"></translation>
+            <translation>A cél helyét két koncentrikus kör jelöli.</translation>
         </message>
         <message>
             <source>Uncrossable boundary</source>
             <comment>Name of symbol 707</comment>
-            <translation type="unfinished"></translation>
+            <translation>Tiltott határ</translation>
         </message>
         <message>
             <source>A boundary which it is not permitted to cross.</source>
             <comment>Description of symbol 707</comment>
-            <translation type="unfinished"></translation>
+            <translation>Olyan határ, amelyet a terepen tilos átlépni.</translation>
         </message>
         <message>
             <source>Crossing point</source>
             <comment>Name of symbol 708</comment>
-            <translation type="unfinished"></translation>
+            <translation>Átkelőhely</translation>
         </message>
         <message>
             <source>A crossing point through or over a wall or fence, or across a road or railway or through a tunnel or an out-of-bounds area is drawn on the map with two lines curving outwards.</source>
             <comment>Description of symbol 708</comment>
-            <translation type="unfinished"></translation>
+            <translation>Átjárót falon, kerítésen vagy úton, vasúton, zárt területen, esetleg alagutat ezek alatt, két kifelé görbülő vonal jelöl.</translation>
         </message>
         <message>
             <source>Out-of-bounds area</source>
             <comment>Name of symbol 709</comment>
-            <translation type="unfinished"></translation>
+            <translation>Tiltott terület</translation>
         </message>
         <message>
             <source>An out-of-bounds area is shown with vertical stripes. A bounding line may be drawn. The areas which may be dangerous to competitors shall be presented by this symbol.</source>
@@ -7298,7 +7261,7 @@ to represent allowed routes that are marked in the terrain.</source>
         <message>
             <source>Forbidden route</source>
             <comment>Name of symbol 711.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Tiltott útvonal</translation>
         </message>
         <message>
             <source>A route which is out-of-bounds and forbidden to cross is shown with a zigzag. The
@@ -7312,22 +7275,22 @@ by using the perpendicular lines at the end of the zigzag lines.</source>
         <message>
             <source>First aid post</source>
             <comment>Name of symbol 712</comment>
-            <translation type="unfinished"></translation>
+            <translation>Elsősegélyhely</translation>
         </message>
         <message>
             <source>The location of a first aid post.</source>
             <comment>Description of symbol 712</comment>
-            <translation type="unfinished"></translation>
+            <translation>Egy elsősegélyhely helye.</translation>
         </message>
         <message>
             <source>Refreshment point</source>
             <comment>Name of symbol 713</comment>
-            <translation type="unfinished"></translation>
+            <translation>Frissítőpont</translation>
         </message>
         <message>
             <source>The location of a refreshment point which is not at a control.</source>
             <comment>Description of symbol 713</comment>
-            <translation type="unfinished"></translation>
+            <translation>Egy olyan frissítő pont helye, ahol nincs ellenőrzőpont.</translation>
         </message>
         <message>
             <source>Dangerous object across tracks or paths, stairs</source>
@@ -7352,24 +7315,26 @@ by using the perpendicular lines at the end of the zigzag lines.</source>
         <message>
             <source>Simple Orienteering Course</source>
             <comment>Name of symbol 799</comment>
-            <translation type="unfinished"></translation>
+            <translation>Egyszerű versenypálya</translation>
         </message>
         <message>
             <source>This symbol provides a simple and quick way to make training courses.
 
 The purple line will extend a bit into the finish symbol. This is a shortcoming of this simple approach.</source>
             <comment>Description of symbol 799</comment>
-            <translation type="unfinished"></translation>
+            <translation>Ez a jel lehetővé tesz egy egyszerű gyors utat  egy edző pálya készítéséhez.
+
+A lila vonalat pontonként a rajttól a célig halad.   Ez az egyszerű megközelítés hiányossága.</translation>
         </message>
         <message>
             <source>OpenOrienteering Logo</source>
             <comment>Name of symbol 999</comment>
-            <translation type="unfinished"></translation>
+            <translation>OpenOrienteering logó</translation>
         </message>
         <message>
             <source>The OpenOrienteering Logo.</source>
             <comment>Description of symbol 999</comment>
-            <translation type="unfinished"></translation>
+            <translation>Az OpenOrienteering logója.</translation>
         </message>
         <message>
             <source>Form line</source>
@@ -7379,658 +7344,658 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</source>
             <comment>Description of symbol 103</comment>
-            <translation type="unfinished"></translation>
+            <translation>Köztes értékű szintvonal. Ott használható, ahol a domborzat még részletesebb ábrázolására van szükség, s ez alapszintvonalak segítségével már nem lehetséges. A szomszédos szintvonalak közé csak egy segédszintvonal rajzolható.</translation>
         </message>
         <message>
             <source>Small earth wall</source>
             <comment>Name of symbol 108</comment>
-            <translation type="unfinished"></translation>
+            <translation>Kis föld fal, kis töltés sánc</translation>
         </message>
         <message>
             <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
             <comment>Description of symbol 108</comment>
-            <translation type="unfinished"></translation>
+            <translation>A kis vagy részben romos földfalat, töltést szaggatott vonallal kell ábrázolni. A minimális magasság 0,5 méter.</translation>
         </message>
         <message>
             <source>Small erosion gully</source>
             <comment>Name of symbol 110</comment>
-            <translation type="unfinished"></translation>
+            <translation>Kis árok, száraz árok</translation>
         </message>
         <message>
             <source>A small erosion gully or trench. Minimum depth 0.5 m.</source>
             <comment>Description of symbol 110</comment>
-            <translation type="unfinished"></translation>
+            <translation>Kis metsződés vagy árok. Minimális mélysége 0,5 méter.</translation>
         </message>
         <message>
             <source>Small knoll</source>
             <comment>Name of symbol 112</comment>
-            <translation type="unfinished"></translation>
+            <translation>Kis domb</translation>
         </message>
         <message>
             <source>A small obvious mound or rocky knoll which cannot be drawn to scale with a contour (diameter of mound less than ca. 5 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. The symbol may not touch a contour line.</source>
             <comment>Description of symbol 112</comment>
-            <translation type="unfinished"></translation>
+            <translation>Szembeötlő halom, köves domb, amely nem ábrázolható mérethelyesen szintvonallal (az átmérő kisebb, mint 5 méter). A kúpnak legalább 1 méterrel ki kell emelkednie környezetéből.Ajel nem érinthet szintvonalat.</translation>
         </message>
         <message>
             <source>Elongated knoll</source>
             <comment>Name of symbol 113</comment>
-            <translation type="unfinished"></translation>
+            <translation>Hosszúkás halom</translation>
         </message>
         <message>
             <source>A small obvious elongated knoll which cannot be drawn to scale with a contour (length less than 12 m and width less than 4 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. Knolls larger than this must be shown by contours. The symbol may not be drawn in free form or such that two elongated knoll symbols overlap. The symbol may not touch a contour line.</source>
             <comment>Description of symbol 113</comment>
-            <translation type="unfinished"></translation>
+            <translation>Szembeötlő hosszúkás halom, amely nem ábrázolható méretarányhelyesen szintvonallal (hossza 12 méretnél rövidebb, illetve 4 méternél keskenyebb). A hosszúkás kúpnak legalább 1 méterrel ki kell emelkednie környezetéből. A jel alakja nem változtatható, és két jel nem fedheti egymást. A jel nem érinthet szintvonalat.</translation>
         </message>
         <message>
             <source>Small depression</source>
             <comment>Name of symbol 115</comment>
-            <translation type="unfinished"></translation>
+            <translation>Kis mélyedés</translation>
         </message>
         <message>
             <source>Small shallow natural depressions and hollows (minimum diameter 2 m) which cannot be shown to scale by contours are represented by a semicircle. Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol, which is orientated to north. Symbol 116 is used for man-made pits.</source>
             <comment>Description of symbol 115</comment>
-            <translation type="unfinished"></translation>
+            <translation>Kisebb lapos, természetes mélyedés vagy üreg (minimum 2 méteres átmérő), amely szintvonallal mérethelyesen már nem ábrázolható, félkörrel jelölendő. A környezetétől legalább 1 méterrel mélyebbnek kell lennie. Pontos terepi helye a jel súlypontja, a jel északra tájolt. A 116-os jel a mesterséges mélyedés ábrázolására szolgál.</translation>
         </message>
         <message>
             <source>Pit</source>
             <comment>Name of symbol 116</comment>
-            <translation type="unfinished"></translation>
+            <translation>Lyuk, vagy kicsi gödör</translation>
         </message>
         <message>
             <source>Pits and holes with distinct steep sides which cannot be shown to scale by symbol 106 (minimum diameter 2 m). Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol which is orientated to north.</source>
             <comment>Description of symbol 116</comment>
-            <translation type="unfinished"></translation>
+            <translation>A 106-os jellel mérethelyesen már nem ábrázolható meredek falú (minimum 2 méteres átmérőjű) gödör, lyuk jelölésére szolgál.Akörnyezeténél minimum 1 méterrel mélyebbnek kell lennie. Pontos terepi helye a jel súlypontja, a jel északra tájolt.</translation>
         </message>
         <message>
             <source>Broken ground, small</source>
             <comment>Name of symbol 117.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Szabdalt terület, kis pont</translation>
         </message>
         <message>
             <source>An area of pits or knolls which is too intricate to be shown in detail. The density of randomly placed dots may vary according to the detail on the ground.</source>
             <comment>Description of symbol 117.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Gödrös vagy kúpos terület, amely túlságosan bonyolult ahhoz, hogy részletesen bemutassuk. A véletlenszerűen elhelyezett pontok sűrűsége a felszínen lévő részletektől függően változhat.</translation>
         </message>
         <message>
             <source>Broken ground, big</source>
             <comment>Name of symbol 117.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Szabdalt terület, nagy pont</translation>
         </message>
         <message>
             <source>The size of the dots may vary.</source>
             <comment>Description of symbol 117.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Gödrökkel, halmokkal borított terület, melynek részletes ábrázolását a méretarány nem teszi lehetővé. A pontok sűrűsége a terület bonyolultságától függően változhat.</translation>
         </message>
         <message>
             <source>Special land form feature</source>
             <comment>Name of symbol 118</comment>
-            <translation type="unfinished"></translation>
+            <translation>Különleges domborzati tereptárgy</translation>
         </message>
         <message>
             <source>This symbol can be used for a special small land form feature. The definition of the symbol must be given in the map legend.</source>
             <comment>Description of symbol 118</comment>
-            <translation type="unfinished"></translation>
+            <translation>Ez a jel használható különleges kisméretű domborzati formák ábrázolására. Pontos jelentését meg kell adni a térkép jelmagyarázatában.</translation>
         </message>
         <message>
             <source>Passable rock face</source>
             <comment>Name of symbol 203</comment>
-            <translation type="unfinished"></translation>
+            <translation>Áthatolható sziklafal</translation>
         </message>
         <message>
             <source>A small vertical rock face (minimum height 1 m) may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
             <comment>Description of symbol 203</comment>
-            <translation type="unfinished"></translation>
+            <translation>A kis függőleges sziklafalat (minimum 1 méteres magasságú) fogak nélkül ábrázolhatjuk. Ha a lejtés iránya nem derül ki egyértelműen a koronavonalból, rövid fogazás mutasson a lejtés irányába. A fogazás nélküli áthatolható sziklafal vonalának végeit le lehet kerekíteni a jobb olvashatóság végett.</translation>
         </message>
         <message>
             <source>Passable rock face, minimum size</source>
             <comment>Name of symbol 203.0.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Áthatolható sziklafal, minimális méret</translation>
         </message>
         <message>
             <source>A small vertical rock face (minimum height 1 m) may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
             <comment>Description of symbol 203.0.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>A kis függőleges sziklafalat (minimum 1 méteres magasságú) fogak nélkül ábrázolhatjuk. Ha a lejtés iránya nem derül ki egyértelműen a koronavonalból, rövid fogazás mutasson a lejtés irányába. A fogazás nélküli áthatolható sziklafal vonalának végeit le lehet kerekíteni a jobb olvashatóság végett.</translation>
         </message>
         <message>
             <source>Passable rock face, no tags</source>
             <comment>Name of symbol 203.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Áthatolható sziklafal, fogazás nélkül</translation>
         </message>
         <message>
             <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
             <comment>Description of symbol 203.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>A kis függőleges sziklafalat (minimum 1 méteres magasságú) fogak nélkül ábrázolhatjuk.  A fogazás nélküli áthatolható sziklafal vonalának végeit le lehet kerekíteni a jobb olvashatóság végett.</translation>
         </message>
         <message>
             <source>Passable rock face, no tags, minimum size</source>
             <comment>Name of symbol 203.1.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Áthatolható sziklafal tüskék nélkül minimális méret</translation>
         </message>
         <message>
             <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
             <comment>Description of symbol 203.1.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>A kis függőleges sziklafalat (minimum 1 méteres magasságú) fogak nélkül ábrázolhatjuk.  A fogazás nélküli áthatolható sziklafal vonalának végeit le lehet kerekíteni a jobb olvashatóság végett.</translation>
         </message>
         <message>
             <source>Passable rock face, no tags, rounded</source>
             <comment>Name of symbol 203.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Áthatolható sziklafal, fogazás nélkül, lekerekített</translation>
         </message>
         <message>
             <source>For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
             <comment>Description of symbol 203.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>A kis függőleges sziklafalat (minimum 1 méteres magasságú) fogak nélkül ábrázolhatjuk. A fogazás nélküli áthatolható sziklafal vonalának végeit le lehet kerekíteni a jobb olvashatóság végett.</translation>
         </message>
         <message>
             <source>Passable rock face, no tags, rounded, minimum size</source>
             <comment>Name of symbol 203.2.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Áthatolható sziklafal, fogazás nélkül, kerekített, minimális méret</translation>
         </message>
         <message>
             <source>For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
             <comment>Description of symbol 203.2.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>A kis függőleges sziklafalat (minimum 1 méteres magasságú) fogak nélkül ábrázolhatjuk. A fogazás nélküli áthatolható sziklafal vonalának végeit le lehet kerekíteni a jobb olvashatóság végett.</translation>
         </message>
         <message>
             <source>Rocky pit</source>
             <comment>Name of symbol 204</comment>
-            <translation type="unfinished"></translation>
+            <translation>Köves gödör</translation>
         </message>
         <message>
             <source>Rocky pits, holes or mineshafts which may constitute a danger to the runner. Location is the centre of gravity of the symbol, which is orientated to north.</source>
             <comment>Description of symbol 204</comment>
-            <translation type="unfinished"></translation>
+            <translation>A futó számára veszélyt jelentő köves gödör, lyuk, bányaakna. A jel északra tájolt, pontos helye a jel súlypontja.</translation>
         </message>
         <message>
             <source>Cave</source>
             <comment>Name of symbol 205</comment>
-            <translation type="unfinished"></translation>
+            <translation>Barlang</translation>
         </message>
         <message>
             <source>A cave is represented by the same symbol as a rocky pit. In this case the symbol should be orientated to point up the slope as indicated opposite. The centre of gravity of the symbol marks the opening.</source>
             <comment>Description of symbol 205</comment>
-            <translation type="unfinished"></translation>
+            <translation>A jele megegyezik a köves gödör jelével. Pontos helye a jel súlypontja, az elforgatott jel a bejárat irányát jelzi.</translation>
         </message>
         <message>
             <source>Large boulder</source>
             <comment>Name of symbol 207</comment>
-            <translation type="unfinished"></translation>
+            <translation>Nagy szikla</translation>
         </message>
         <message>
             <source>A particularly large and distinct boulder. For gigantic boulders symbol 202 should be used.</source>
             <comment>Description of symbol 207</comment>
-            <translation type="unfinished"></translation>
+            <translation>Különlegesen nagy és jellegzetes sziklatömb. A hatalmas sziklatömböket a 202-es jellel ábrázoljuk.</translation>
         </message>
         <message>
             <source>Boulder field</source>
             <comment>Name of symbol 208</comment>
-            <translation type="unfinished"></translation>
+            <translation>Sziklamező</translation>
         </message>
         <message>
             <source>An area which is covered with so many blocks of stone that they cannot be marked individually is shown with randomly orientated solid triangles with sides of ratio 8:6:5. A minimum of two triangles should be used. The going is indicated by the density of the triangles. To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
             <comment>Description of symbol 208</comment>
-            <translation type="unfinished"></translation>
+            <translation>Ha a terület oly mértékben fedett sziklatömbökkel, hogy azok egyenként már nem ábrázolhatók, összevontan, véletlenszerűen elhelyezett háromszögekkel jelöljük. A háromszög oldalainak aránya 8:6:5. Legalább két háromszög rajzolandó. A háromszögek sűrűsége utal a terület futhatóságára (felületi jel). A jel mérete 20%-kal növelhető a sziklatömbök magasságától függően.</translation>
         </message>
         <message>
             <source>Boulder field, large</source>
             <comment>Name of symbol 208.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Sziklamező, nagy</translation>
         </message>
         <message>
             <source>To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
             <comment>Description of symbol 208.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Annak érekében, hogy meg lehessen különböztetni egymástól azon sziklamezőket, amelyekben a sziklák nagysága a többi mezőben találhatóaktól jelentősen eltér, a háromszögek mérete maximum 20%-al megnövelhető.</translation>
         </message>
         <message>
             <source>Boulder cluster</source>
             <comment>Name of symbol 209</comment>
-            <translation type="unfinished"></translation>
+            <translation>Sziklacsoport</translation>
         </message>
         <message>
             <source>A small distinct group of boulders so closely clustered together that they cannot be marked individually. The symbol is an equilateral triangle orientated to the north. To be able to show the distinction between boulder clusters with significant difference in size it is permitted to enlarge this symbol by 25% (1.0 mm).</source>
             <comment>Description of symbol 209</comment>
-            <translation type="unfinished"></translation>
+            <translation>Egymáshoz közeli sziklatömbök csoportja, melyek már egyenként nem ábrázolhatók. Az egyenlő oldalú háromszög északra tájolt. A jel mérete 25%-kal növelhető (1,0 mm), ha a sziklák magasságában jól látható eltérések észlelhetők a terepen.</translation>
         </message>
         <message>
             <source>Boulder cluster, large</source>
             <comment>Name of symbol 209.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Sziklacsoport, nagy</translation>
         </message>
         <message>
             <source>To be able to show the distinction between boulder clusters with significant difference in size it is permitted to enlarge this symbol by 25% (1.0 mm).</source>
             <comment>Description of symbol 209.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>A 209-es jel variánsa. Egymáshoz közeli sziklatömbök csoportja, melyek már egyenként nem ábrázolhatók. Az egyenlő oldalú háromszög északra tájolt. A jel mérete 25%-kal növelhető (1,0 mm), ha a sziklák magasságában jól látható eltérések észlelhetők a terepen.</translation>
         </message>
         <message>
             <source>Waterhole</source>
             <comment>Name of symbol 303</comment>
-            <translation type="unfinished"></translation>
+            <translation>Vizesgödör</translation>
         </message>
         <message>
             <source>A water-filled pit or an area of water which is too small to be shown to scale. Location is the centre of gravity of the symbol, which is orientated to north.</source>
             <comment>Description of symbol 303</comment>
-            <translation type="unfinished"></translation>
+            <translation>Vizes gödör vagy olyan vízfelület, amely túl kicsi ahhoz, hogy alaprajzban ábrázoljuk.A tereptárgy helye a jel súlypontja, a jelet északra kell tájolni.</translation>
         </message>
         <message>
             <source>Narrow marsh</source>
             <comment>Name of symbol 308</comment>
-            <translation type="unfinished"></translation>
+            <translation>Keskeny mocsár</translation>
         </message>
         <message>
             <source>A marsh or trickle of water which is too narrow to be shown with symbol 310 (less than ca. 5 m wide).</source>
             <comment>Description of symbol 308</comment>
-            <translation type="unfinished"></translation>
+            <translation>Mocsár vagy vízszivárgás, amely túl keskeny ahhoz, hogy a 310-es jellel ábrázoljuk (kb. 5 méternél keskenyebb).</translation>
         </message>
         <message>
             <source>Indistinct marsh</source>
             <comment>Name of symbol 311</comment>
-            <translation type="unfinished"></translation>
+            <translation>Vizenyős terület</translation>
         </message>
         <message>
             <source>An indistinct or seasonal marsh or area of gradual transition from marsh to firm ground, which is crossable. The edge is generally indistinct and the vegetation similar to that of the surrounding ground. The symbol should be combined with vegetation symbols to show runnability and openness.</source>
             <comment>Description of symbol 311</comment>
-            <translation type="unfinished"></translation>
+            <translation>Időszakos mocsár vagy fokozatos átmenet a mocsár felé, amely állandóan átgázolható. A széle általában határozatlan és a növényzet hasonló a környezetéhez. A 311-es jel kombinálható növényzeti jelekkel a fedettség és a futhatóság ábrázolására.</translation>
         </message>
         <message>
             <source>Indistinct marsh, minimum size</source>
             <comment>Name of symbol 311.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Vizenyős terület, minimális méret</translation>
         </message>
         <message>
             <source>Well</source>
             <comment>Name of symbol 312</comment>
-            <translation type="unfinished"></translation>
+            <translation>Kút</translation>
         </message>
         <message>
             <source>Wells and captive springs, which are clearly visible on the ground.</source>
             <comment>Description of symbol 312</comment>
-            <translation type="unfinished"></translation>
+            <translation>Kút vagy foglalt forrás, amely a terepen világosan látszik.</translation>
         </message>
         <message>
             <source>Spring</source>
             <comment>Name of symbol 313</comment>
-            <translation type="unfinished"></translation>
+            <translation>Forrás</translation>
         </message>
         <message>
             <source>The source of a stream with a distinct outflow. The symbol is orientated to open downstream.</source>
             <comment>Description of symbol 313</comment>
-            <translation type="unfinished"></translation>
+            <translation>Patak forrása határozott kifolyással. A jel nyitott részét a kifolyás irányába kell elforgatni.</translation>
         </message>
         <message>
             <source>Undergrowth: slow running</source>
             <comment>Name of symbol 407</comment>
-            <translation type="unfinished"></translation>
+            <translation>Lassan futható aljnövényzet</translation>
         </message>
         <message>
             <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 60-80% of normal speed. This symbol may not be combined with 406 or 408.</source>
             <comment>Description of symbol 407</comment>
-            <translation type="unfinished"></translation>
+            <translation>Sűrű aljnövényzettel borított, de jól átlátható terület (szeder, alacsony bozót, gallyazás), amelyben a futás sebessége a normál futósebességhez viszonyítva 60–80%-os.A jel a 406-os és 408-as jelekkel nem kombinálható.</translation>
         </message>
         <message>
             <source>Forest: difficult to run</source>
             <comment>Name of symbol 408</comment>
-            <translation type="unfinished"></translation>
+            <translation>Nehezen futható erdő</translation>
         </message>
         <message>
             <source>An area with dense trees or thicket (low visibility) which reduce running to ca. 20-60% of normal speed.</source>
             <comment>Description of symbol 408</comment>
-            <translation type="unfinished"></translation>
+            <translation>Fákkal és bozóttal sűrűn benőtt terület (rossz átláthatóság), amelyben a futás sebessége a normál futósebességhez viszonyítva 20–60%-os.</translation>
         </message>
         <message>
             <source>Undergrowth: difficult to run</source>
             <comment>Name of symbol 409</comment>
-            <translation type="unfinished"></translation>
+            <translation>Nehezen futható aljnövényzet</translation>
         </message>
         <message>
             <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 20-60% of normal speed. This symbol may not be combined with 406 or 408.</source>
             <comment>Description of symbol 409</comment>
-            <translation type="unfinished"></translation>
+            <translation>Sűrű aljnövényzettel borított, egyébként jól átlátható terület (szeder, alacsony bozót, gallyazás), amelyben a futás sebessége a normál futósebességhez viszonyítva 20–60%-os.Ajel nem kombinálható a 406-os és 408-as jelekkel.</translation>
         </message>
         <message>
             <source>Vegetation: very difficult to run, impassable</source>
             <comment>Name of symbol 410</comment>
-            <translation type="unfinished"></translation>
+            <translation>Nehezen leküzdhető bozót</translation>
         </message>
         <message>
             <source>An area of dense vegetation (trees or undergrowth) which is barely passable. Running reduced to ca. 0-20% of normal speed.</source>
             <comment>Description of symbol 410</comment>
-            <translation type="unfinished"></translation>
+            <translation>Olyan sűrű növényzettel (fákkal vagy aljnövényzettel) borított terület, ahol haladni alig lehet, a futósebesség a normál sebesség 0–20%-ára csökken.</translation>
         </message>
         <message>
             <source>Vegetation: very difficult to run, impassable, line</source>
             <comment>Name of symbol 410.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Nehezen leküzdhető bozót, vonal</translation>
         </message>
         <message>
             <source>Line of minimum width for symbol 410.</source>
             <comment>Description of symbol 410.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>A 410-es jel minimális szélességű vonal mérete 0,25mm.</translation>
         </message>
         <message>
             <source>Forest runnable in one direction, 1</source>
             <comment>Name of symbol 411.0</comment>
-            <translation type="unfinished"></translation>
+            <translation>Erdő futhatósági irány, 1-es zöld</translation>
         </message>
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
             <comment>Description of symbol 411.0</comment>
-            <translation type="unfinished"></translation>
+            <translation>Ha az erdőben a futhatóság egy irányban kedvezőbb, mint a többiben, akkor a kedvező iránnyal párhuzamos fehér csíkozást kap a zöld felületi jel.</translation>
         </message>
         <message>
             <source>Forest runnable in one direction, 2</source>
             <comment>Name of symbol 411.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Erdő futhatósági irány, 2-es zöld</translation>
         </message>
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
             <comment>Description of symbol 411.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Ha az erdőben a futhatóság egy irányban kedvezőbb, mint a többiben, akkor a kedvező iránnyal párhuzamos fehér csíkozást kap a zöld felületi jel.</translation>
         </message>
         <message>
             <source>Forest runnable in one direction, 3</source>
             <comment>Name of symbol 411.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Erdő, ami egy irányban futható, 3-as zöld</translation>
         </message>
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
             <comment>Description of symbol 411.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Ha az erdőben a futhatóság egy irányban kedvezőbb, mint a többiben, akkor a kedvező iránnyal párhuzamos fehér csíkozást kap a zöld felületi jel.</translation>
         </message>
         <message>
             <source>Distinct cultivation boundary</source>
             <comment>Name of symbol 414</comment>
-            <translation type="unfinished"></translation>
+            <translation>Megkülönböztethető műveléshatár, művelt terület határa</translation>
         </message>
         <message>
             <source>The boundary of cultivated land when not shown with other symbols (fence, wall, path, etc.) is shown with a black line. A permanent boundary between different types of cultivated land is also shown with this symbol.</source>
             <comment>Description of symbol 414</comment>
-            <translation type="unfinished"></translation>
+            <translation>Ha a művelt terület határát nem jelöli más jel (kerítés, kőfal, stb.), akkor fekete vonallal ábrázoljuk.Az eltérő művelésű területeket elválasztó, állandónak tekinthető határt ugyanígy jelöljük.</translation>
         </message>
         <message>
             <source>Cultivated land</source>
             <comment>Name of symbol 415</comment>
-            <translation type="unfinished"></translation>
+            <translation>Művelt terület</translation>
         </message>
         <message>
             <source>Cultivated land which is seasonally out-of-bounds due to growing crops may be shown with a black dot screen.</source>
             <comment>Description of symbol 415</comment>
-            <translation type="unfinished"></translation>
+            <translation>Azt a művelt területet, amelyet a növényzet fejlődési ideje alatt el kell kerülni, sárga alapon fekete pontozással jelöljük.</translation>
         </message>
         <message>
             <source>Distinct vegetation boundary</source>
             <comment>Name of symbol 416</comment>
-            <translation type="unfinished"></translation>
+            <translation>Jelleghatár</translation>
         </message>
         <message>
             <source>A distinct forest edge or very distinct vegetation boundary within the forest.</source>
             <comment>Description of symbol 416</comment>
-            <translation type="unfinished"></translation>
+            <translation>Jól elkülönülő erdőszegély vagy élesen kirajzolódó növényzethatár az erdőterületen belül.</translation>
         </message>
         <message>
             <source>Motorway, under construction</source>
             <comment>Name of symbol 501.5</comment>
-            <translation type="unfinished"></translation>
+            <translation>Épülő autópálya</translation>
         </message>
         <message>
             <source>A road under construction may be shown with broken lines.</source>
             <comment>Description of symbol 501.5</comment>
-            <translation type="unfinished"></translation>
+            <translation>Gépjárműforgalom számára készült osztottpályás út. A jel méretarány szerinti szélességben rajzolandó, de nem lehet vékonyabb a minimum értéknél. A külső 0,18 határoló vonalak az 519, 521, 522 vagy 524-es jelekkel is helyettesíthetők, amennyiben a kerítés vagy a fal olyan közel húzódik a pálya széléhez, hogy külön jellel már nem ábrázolható. A fekete vonalak közötti területet barnával (50%) kell kitölteni. Az épülő útszakaszokat szaggatott jellel jelöljük. A hézagok 0,25mm szélességűek az útszakaszokat 3 mm hosszú jellel kell megrajzolni.</translation>
         </message>
         <message>
             <source>Major road, minimum width, under construction</source>
             <comment>Name of symbol 502.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Épülő főút, minimális szélesség</translation>
         </message>
         <message>
             <source>A road under construction may be shown with broken lines.</source>
             <comment>Description of symbol 502.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Gépjárműforgalom számára készült osztottpályás út. A jel méretarány szerinti szélességben rajzolandó, de nem lehet vékonyabb a minimum értéknél. A külső 0,18 határoló vonalak az 519, 521, 522 vagy 524-es jelekkel is helyettesíthetők, amennyiben a kerítés vagy a fal olyan közel húzódik a pálya széléhez, hogy külön jellel már nem ábrázolható. A fekete vonalak közötti területet barnával (50%) kell kitölteni. Az épülő útszakaszokat szaggatott jellel jelöljük. A hézagok 0,25mm szélességűek az útszakaszokat 3 mm hosszú jellel kell megrajzolni.</translation>
         </message>
         <message>
             <source>Minor road, under construction</source>
             <comment>Name of symbol 503.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Épülő mellékút</translation>
         </message>
         <message>
             <source>A road under construction may be shown with broken lines.</source>
             <comment>Description of symbol 503.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Gépjárműforgalom számára készült osztottpályás út. A jel méretarány szerinti szélességben rajzolandó, de nem lehet vékonyabb a minimum értéknél. A külső 0,18 határoló vonalak az 519, 521, 522 vagy 524-es jelekkel is helyettesíthetők, amennyiben a kerítés vagy a fal olyan közel húzódik a pálya széléhez, hogy külön jellel már nem ábrázolható. A fekete vonalak közötti területet barnával (50%) kell kitölteni. Az épülő útszakaszokat szaggatott jellel jelöljük. A hézagok 0,25mm szélességűek az útszakaszokat 3 mm hosszú jellel kell megrajzolni.</translation>
         </message>
         <message>
             <source>Road</source>
             <comment>Name of symbol 504</comment>
-            <translation type="unfinished"></translation>
+            <translation>Út</translation>
         </message>
         <message>
             <source>A maintained road suitable for motor vehicles in all weather. Width less than 3 m.</source>
             <comment>Description of symbol 504</comment>
-            <translation type="unfinished"></translation>
+            <translation>3 méternél keskenyebb karbantartott út, amely minden időjárási körülmény között alkalmas gépjármű közlekedésre.</translation>
         </message>
         <message>
             <source>Vehicle track</source>
             <comment>Name of symbol 505</comment>
-            <translation type="unfinished"></translation>
+            <translation>Kocsiút</translation>
         </message>
         <message>
             <source>A track or poorly maintained road suitable for vehicles only when travelling slowly. Width less than 3 m.</source>
             <comment>Description of symbol 505</comment>
-            <translation type="unfinished"></translation>
+            <translation>3 méternél keskenyebb keréknyom vagy gyengén karbantartott út (szekérút), járművek csak lassan haladhatnak rajta.</translation>
         </message>
         <message>
             <source>Footpath</source>
             <comment>Name of symbol 506</comment>
-            <translation type="unfinished"></translation>
+            <translation>Gyalogút</translation>
         </message>
         <message>
             <source>A large path, or old vehicle track, which is distinct on the ground.</source>
             <comment>Description of symbol 506</comment>
-            <translation type="unfinished"></translation>
+            <translation>Széles ösvény vagy ritkán használt kocsiút, amely határozottan felismerhető a terepen.</translation>
         </message>
         <message>
             <source>Small path</source>
             <comment>Name of symbol 507</comment>
-            <translation type="unfinished"></translation>
+            <translation>Ösvény</translation>
         </message>
         <message>
             <source>A small path or (temporary) forest extraction track which can be followed at competition speed.</source>
             <comment>Description of symbol 507</comment>
-            <translation type="unfinished"></translation>
+            <translation>Keskeny ösvény vagy felhagyott erdei fakihordó út, amely versenysebesség mellett is követhető.</translation>
         </message>
         <message>
             <source>Less distinct small path</source>
             <comment>Name of symbol 508</comment>
-            <translation type="unfinished"></translation>
+            <translation>Felhagyott ösvény</translation>
         </message>
         <message>
             <source>A less distinct small path or forestry extraction track.</source>
             <comment>Description of symbol 508</comment>
-            <translation type="unfinished"></translation>
+            <translation>Kevésbé felismerhető keskeny ösvény vagy fakihordó út.</translation>
         </message>
         <message>
             <source>Narrow ride</source>
             <comment>Name of symbol 509</comment>
-            <translation type="unfinished"></translation>
+            <translation>Keskeny nyiladék vagy egyenes nyomvonal</translation>
         </message>
         <message>
             <source>A distinct ride, less than ca. 5 m wide. A ride is a linear break in the forest (usually plantation) which does not have a distinct path along it. Where there is a path along a ride, symbols 507 or 508 should be used in place of symbol 509.</source>
             <comment>Description of symbol 509</comment>
-            <translation type="unfinished"></translation>
+            <translation>5 méternél keskenyebb, jól felismerhető nyiladék. A nyiladék egyenes erdővágás, általában aljnövényzettel, amelyben út nem vezet. Ha a nyiladékban út megy, az 509-es jel helyett az 507-es vagy 508-as jel használható.</translation>
         </message>
         <message>
             <source>Footbridge</source>
             <comment>Name of symbol 512</comment>
-            <translation type="unfinished"></translation>
+            <translation>Gyaloghíd</translation>
         </message>
         <message>
             <source>A footbridge with no path leading to it.
 Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm over both sides of the stream!</source>
             <comment>Description of symbol 512</comment>
-            <translation type="unfinished"></translation>
+            <translation>Gyaloghíd, hozzávezető út nélkül. Megegyzés: ha az víz szélesebb  0.25mm-nél akkor mindkét oldalon 0.5 mm-rel meg kell hosszabbítani a víz oldalaihoz képest!</translation>
         </message>
         <message>
             <source>Stone wall</source>
             <comment>Name of symbol 519</comment>
-            <translation type="unfinished"></translation>
+            <translation>Kőfal</translation>
         </message>
         <message>
             <source>A stone wall or stone-faced bank.</source>
             <comment>Description of symbol 519</comment>
-            <translation type="unfinished"></translation>
+            <translation>Kőfal vagy kőburkolatú töltés.</translation>
         </message>
         <message>
             <source>Ruined stone wall</source>
             <comment>Name of symbol 520</comment>
-            <translation type="unfinished"></translation>
+            <translation>Romos kőfal</translation>
         </message>
         <message>
             <source>A ruined stone wall may be shown by a dashed line.</source>
             <comment>Description of symbol 520</comment>
-            <translation type="unfinished"></translation>
+            <translation>Egy romos kőfal szaggatott vonallal ábrázolható.</translation>
         </message>
         <message>
             <source>Fence</source>
             <comment>Name of symbol 522</comment>
-            <translation type="unfinished"></translation>
+            <translation>Kerítés</translation>
         </message>
         <message>
             <source>A wooden or wire fence less than ca. 1.5 m high.</source>
             <comment>Description of symbol 522</comment>
-            <translation type="unfinished"></translation>
+            <translation>Fa vagy fémkerítés, kb. 1,5 méternél alacsonyabb.</translation>
         </message>
         <message>
             <source>Ruined fence</source>
             <comment>Name of symbol 523</comment>
-            <translation type="unfinished"></translation>
+            <translation>Romos kerítés</translation>
         </message>
         <message>
             <source>A ruined fence may be shown with a dashed line.</source>
             <comment>Description of symbol 523</comment>
-            <translation type="unfinished"></translation>
+            <translation>A romos kerítést szaggatott vonallal kell ábrázolni.</translation>
         </message>
         <message>
             <source>Settlement</source>
             <comment>Name of symbol 527.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Település</translation>
         </message>
         <message>
             <source>Houses and gardens and other built up areas. Roads, buildings and other significant features within a settlement must be shown. If all buildings cannot be shown, an alternative symbol (black line screen) may be used.</source>
             <comment>Description of symbol 527.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Lakóházak és kertek vagy egyéb beépített terület. Az utakat, épületeket és egyéb jellegzetességeket a településen belül ábrázolni kell. Ha minden épület nem ábrázolható, alternatív jel (fekete vonalraszter) használható.</translation>
         </message>
         <message>
             <source>Permanently out of bounds</source>
             <comment>Name of symbol 528</comment>
-            <translation type="unfinished"></translation>
+            <translation>Tiltott terület</translation>
         </message>
         <message>
             <source>Areas which are permanently forbidden to the runner are shown as out of bounds. The screen is superimposed on the normal map detail. A bounding line may be drawn if there is no natural boundary (see 709).</source>
             <comment>Description of symbol 528</comment>
-            <translation type="unfinished"></translation>
+            <translation>A futók számára állandóan tiltott terület ábrázolandó ezzel a jellel. A vonalraszterrel az egyéb térképjeleket felül kell nyomni. Határoló vonal akkor alkalmazható, ha a jelzett területnek nincs természetes terepi határa (ld. 709).</translation>
         </message>
         <message>
             <source>Permanently out of bounds, bounding line</source>
             <comment>Name of symbol 528.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Tiltott terület, határoló vonal</translation>
         </message>
         <message>
             <source>A bounding line may be drawn if there is no natural boundary (see 709).</source>
             <comment>Description of symbol 528.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Határoló vonal akkor alkalmazható, ha a jelzett területnek nincs természetes terepi határa (lásd a 709-es jelet).</translation>
         </message>
         <message>
             <source>Ruin</source>
             <comment>Name of symbol 530</comment>
-            <translation type="unfinished"></translation>
+            <translation>Rom</translation>
         </message>
         <message>
             <source>The ground plan of a ruin is shown to scale, down to the minimum size shown opposite. Very small ruins may be drawn with a solid line.</source>
             <comment>Description of symbol 530</comment>
-            <translation type="unfinished"></translation>
+            <translation>A rom a méretarány biztosította lehetőségen belül alaprajzban ábrázolandó. A mérethelyesen nem ábrázolható romot a minimális méretű jellel jelöljük. A nagyon kis romok folyamatos vonallal ábrázolhatók.</translation>
         </message>
         <message>
             <source>Ruin, no dashes</source>
             <comment>Name of symbol 530.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Rom, nem szaggatott vonal</translation>
         </message>
         <message>
             <source>Very small ruins may be drawn with a solid line.</source>
             <comment>Description of symbol 530.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Nagyon kis romok folyamatos vonallal ábrázolhatók.</translation>
         </message>
         <message>
             <source>Ruin, minimum size</source>
             <comment>Name of symbol 530.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Rom minimális méret</translation>
         </message>
         <message>
             <source>Very small ruins may be drawn with a solid line.</source>
             <comment>Description of symbol 530.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Nagyon kis romok folyamatos vonallal ábrázolhatók.</translation>
         </message>
         <message>
             <source>Crossable pipeline</source>
             <comment>Name of symbol 533</comment>
-            <translation type="unfinished"></translation>
+            <translation>Csővezeték</translation>
         </message>
         <message>
             <source>A pipeline (gas, water, oil, etc.) above ground level which can be crossed over or under.</source>
             <comment>Description of symbol 533</comment>
-            <translation type="unfinished"></translation>
+            <translation>Földfelszíni gáz-, olaj-, víz- stb. csővezeték, amely fölött vagy alatt lehetséges az áthaladás.</translation>
         </message>
         <message>
             <source>Cairn</source>
             <comment>Name of symbol 537</comment>
-            <translation type="unfinished"></translation>
+            <translation>Határkő, határkaró, emlékmű, határjel kőhalom</translation>
         </message>
         <message>
             <source>Cairn, memorial stone or boundary stone (or a trigonometric point in some countries) more than 0.5 m high.</source>
             <comment>Description of symbol 537</comment>
-            <translation type="unfinished"></translation>
+            <translation>Határkő, határkaró, kőhalom, emlékkő, háromszögelési pont, amely 0,5 méternél magasabb.</translation>
         </message>
         <message>
             <source>Magnetic north line</source>
             <comment>Name of symbol 601</comment>
-            <translation type="unfinished"></translation>
+            <translation>Mágneses Északvonal</translation>
         </message>
         <message>
             <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing on the map should be 33.33 mm which represents 500 m on the ground at the scale of 1:15 000. For maps with other scales lines placing should be at intervals which represents a round number of meters (e.g. 50 m, 100 m, 250 m, 500 m) and the spacing should be between 20 mm and 40 mm on the map. North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. In areas with very few water features, blue lines may be used.</source>
             <comment>Description of symbol 601</comment>
-            <translation type="unfinished"></translation>
+            <translation>Az északvonalak a térképen a mágneses észak felé mutatnak. Ezek egymástól 33,33 mm-re helyezkednek el, amely 1:15 000-es méretarányban 500 m-nek felel meg. Más méretarányú térképeken úgy kell megválasztani az északvonalak közti távolságot, hogy a terepen kerek számú métert jelöljenek (pl. 50 m, 100 m, 250 m, 500 m). Az északvonalat meg lehet szakítani, amennyiben apró tereptárgyakat (pl. sziklát, kúpot, patakelágazást, ösvényvéget, stb.) fedne ki. Kevés vízrajzi objektumot ábrázoló területen kék színű vonalat alkalmazhatunk.</translation>
         </message>
         <message>
             <source>North lines pattern</source>
             <comment>Name of symbol 601.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Északvonal mintázat (fekete)</translation>
         </message>
         <message>
             <source>Out-of-bounds area, dashed boundary</source>
             <comment>Name of symbol 709.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Tiltott terület, szaggatott határoló vonal</translation>
         </message>
         <message>
             <source>A dashed line indicates intermittent marking on the ground.</source>
             <comment>Description of symbol 709.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Egy szaggatott vonal azt jelenti, hogy a határvonal jelzése a terepen nem folytonos.</translation>
         </message>
         <message>
             <source>Dangerous area</source>
             <comment>Name of symbol 710</comment>
-            <translation type="unfinished"></translation>
+            <translation>Veszélyes terület</translation>
         </message>
         <message>
             <source>An area presenting danger to the competitor is shown with cross-hatched diagonal lines.</source>
             <comment>Description of symbol 710</comment>
-            <translation type="unfinished"></translation>
+            <translation>Az átlósan keresztezett vonalak a versenyző számára veszélyes területet jelölik.</translation>
         </message>
         <message>
             <source>Forbidden route</source>
             <comment>Name of symbol 711</comment>
-            <translation type="unfinished"></translation>
+            <translation>Tiltott útvonal</translation>
         </message>
         <message>
             <source>A route which is out-of-bounds is shown with crosses.</source>
             <comment>Description of symbol 711</comment>
-            <translation type="unfinished"></translation>
+            <translation>A versenyen nem használható útvonalat jelöl.</translation>
         </message>
     </context>
     <context>
@@ -8093,7 +8058,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Black 30%</source>
             <comment>Color 11</comment>
-            <translation type="unfinished"></translation>
+            <translation>Fekete 30%</translation>
         </message>
         <message>
             <source>Green 50%, Yellow</source>
@@ -8103,7 +8068,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Green over White over Green</source>
             <comment>Color 13</comment>
-            <translation type="unfinished"></translation>
+            <translation>Zöld Fehér és zöld felett</translation>
         </message>
         <message>
             <source>Opaque White over Green</source>
@@ -8123,12 +8088,12 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Green 60%</source>
             <comment>Color 17</comment>
-            <translation type="unfinished"></translation>
+            <translation>Zöld 60%</translation>
         </message>
         <message>
             <source>Green 30%</source>
             <comment>Color 18</comment>
-            <translation type="unfinished"></translation>
+            <translation>Zöld 30%</translation>
         </message>
         <message>
             <source>Green below light greens</source>
@@ -8148,12 +8113,12 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>White over Yellow 70%</source>
             <comment>Color 22</comment>
-            <translation type="unfinished"></translation>
+            <translation>Fehér 70%-os sárga fölött</translation>
         </message>
         <message>
             <source>Yellow 70%</source>
             <comment>Color 23</comment>
-            <translation type="unfinished"></translation>
+            <translation>Sárga 70%</translation>
         </message>
         <message>
             <source>Contour</source>
@@ -8163,7 +8128,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
             <comment>Description of symbol 101</comment>
-            <translation type="unfinished"></translation>
+            <translation>Azonos tengerszint feletti magasságú pontokat összekötő vonal. A szomszédos szintvonalak közötti magasságkülönbség (alapszintköz) általában 5 méter. Két szomszédos szintvonal között a legkisebb távolság 0,25 mm.</translation>
         </message>
         <message>
             <source>Contour (narrow)</source>
@@ -8173,7 +8138,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
             <comment>Description of symbol 101.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Azonos tengerszint feletti magasságú pontokat összekötő vonal. A szomszédos szintvonalak közötti magasságkülönbség (alapszintköz) általában 5 méter. Két szomszédos szintvonal között a legkisebb távolság 0,25 mm.</translation>
         </message>
         <message>
             <source>Index contour</source>
@@ -8183,7 +8148,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. Where an index contour coincides with an area of much detail, it may be shown with a normal contour line.</source>
             <comment>Description of symbol 102</comment>
-            <translation type="unfinished"></translation>
+            <translation>Minden ötödik szintvonalat vastagítva kell megrajzolni. Erre a magasságkülönbségek gyors becslése és a domborzatról alkotott általános kép kialakítása miatt van szükség. Ha egy ilyen főszintvonal domborzatilag bonyolult részen halad át, ott az olvashatóság érdekében ajánlatos alapszintvonalat használni.</translation>
         </message>
         <message>
             <source>Form line</source>
@@ -8193,17 +8158,17 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</source>
             <comment>Description of symbol 103</comment>
-            <translation type="unfinished"></translation>
+            <translation>Köztes értékű szintvonal. Ott használható, ahol a domborzat még részletesebb ábrázolására van szükség, s ez alapszintvonalak segítségével már nem lehetséges. A szomszédos szintvonalak közé csak egy segédszintvonal rajzolható.</translation>
         </message>
         <message>
             <source>Slope line</source>
             <comment>Name of symbol 104</comment>
-            <translation type="unfinished"></translation>
+            <translation>Eséstüske</translation>
         </message>
         <message>
             <source>Slope lines may be drawn on the lower side of a contour line, e.g. along the line of a re-entrant or in a depression. They are used only where it is necessary to clarify the direction of slope.</source>
             <comment>Description of symbol 104</comment>
-            <translation type="unfinished"></translation>
+            <translation>Az eséstüske a szintvonal lejtőirányba eső oldalára rajzolandó, pl. a völgy vonalában, vagy mélyedéseknél. Csak akkor célszerű a használata, ha a bonyolult lejtésviszonyok tisztázása ezt szükségessé teszi.</translation>
         </message>
         <message>
             <source>Contour value</source>
@@ -8213,7 +8178,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
             <comment>Description of symbol 105</comment>
-            <translation type="unfinished"></translation>
+            <translation>Magassági értékeket nagy szintkülönbségek értékelésének elősegítésére alkalmazhatunk. A számot a fő szintvonalakra tegyük, olyan helyre, ahol nem takar ki, vagy zavar más részletet. A számot úgy kell elhelyezni, hogy a szintvonal emelkedő felőli oldalára kerüljön.</translation>
         </message>
         <message>
             <source>Earth bank</source>
@@ -8223,7 +8188,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
             <comment>Description of symbol 106</comment>
-            <translation type="unfinished"></translation>
+            <translation>A felszín hirtelen változása, mely környezetétől jól elkülöníthető, pl. kavics- vagy homokgödör, út és vasút bevágása vagy töltése. A fogak a lejtő teljes kiterjedését mutatják, de el is hagyhatók, ha két szemközti letörés egymáshoz nagyon közel van. Az áthatolhatatlan földletörést a 201-es jellel kell ábrázolni (áthatolhatatlan sziklafal). A nagyon magas földletöréseknél a koronavonal vastagsága 0,25 mm-re növelhető.</translation>
         </message>
         <message>
             <source>Earth bank, minimum size</source>
@@ -8233,237 +8198,237 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
             <comment>Description of symbol 106.0.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>A felszín hirtelen változása, mely környezetétől jól elkülöníthető, pl. kavics- vagy homokgödör, út és vasút bevágása vagy töltése. A fogak a lejtő teljes kiterjedését mutatják, de el is hagyhatók, ha két szemközti letörés egymáshoz nagyon közel van. Az áthatolhatatlan földletörést a 201-es jellel kell ábrázolni (áthatolhatatlan sziklafal). A nagyon magas földletöréseknél a koronavonal vastagsága 0,25 mm-re növelhető.</translation>
         </message>
         <message>
             <source>Earth bank, very high</source>
             <comment>Name of symbol 106.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Földletörés, nagyon magas</translation>
         </message>
         <message>
             <source>The line width of very high earth banks may be 0.25 mm.</source>
             <comment>Description of symbol 106.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>A nagyon magas földletöréseknél a koronavonal vastagsága 0,25 mm-re növelhető.</translation>
         </message>
         <message>
             <source>Earth bank, very high, minimum size</source>
             <comment>Name of symbol 106.1.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Földletörés, nagyon magas, minimális méret</translation>
         </message>
         <message>
             <source>The line width of very high earth banks may be 0.25 mm.</source>
             <comment>Description of symbol 106.1.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>A nagyon magas földletöréseknél a koronavonal vastagsága 0,25 mm-re növelhető.</translation>
         </message>
         <message>
             <source>Earth bank, tag line</source>
             <comment>Name of symbol 106.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Föld letörés, láb jelölő tüske</translation>
         </message>
         <message>
             <source>Use this symbol to display the full extent of wide earth banks.</source>
             <comment>Description of symbol 106.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Ezt a jelet egy földletörés teljes kiterjedésének ábrázolásához lehet használni.</translation>
         </message>
         <message>
             <source>Earth wall</source>
             <comment>Name of symbol 107</comment>
-            <translation type="unfinished"></translation>
+            <translation>Töltés, föld fal, sánc</translation>
         </message>
         <message>
             <source>Distinct earth wall. Minimum height is 1 m.</source>
             <comment>Description of symbol 107</comment>
-            <translation type="unfinished"></translation>
+            <translation>Megkülönböztethető földfal, töltés. A minimális magasság 1 méter.</translation>
         </message>
         <message>
             <source>Erosion gully</source>
             <comment>Name of symbol 109</comment>
-            <translation type="unfinished"></translation>
+            <translation>Árok, metsződés</translation>
         </message>
         <message>
             <source>An erosion gully or trench which is too small to be shown by symbol 106 is shown by a single line. The line width reflects the size of the gully. Minimum depth 1 m. The end of the line is pointed.</source>
             <comment>Description of symbol 109</comment>
-            <translation type="unfinished"></translation>
+            <translation>A 106-os jellel már nem ábrázolhatóan kicsi eróziós árok. A vonal szélessége utal az árok méretére. Minimális mélysége 1 méter. A vonal vége hegyes.</translation>
         </message>
         <message>
             <source>Impassable cliff</source>
             <comment>Name of symbol 201</comment>
-            <translation type="unfinished"></translation>
+            <translation>Áthatolhatatlan sziklafal, szirt</translation>
         </message>
         <message>
             <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201</comment>
-            <translation type="unfinished"></translation>
+            <translation>Az áthatolhatatlan sziklafalat, bányát vagy földletörést (ld. 106) 0,35 mm vastag vonallal, esésirányú fogakkal jelöljük, a fogak a sziklafal kiterjedését (tetejétől a lábáig) ábrázolják. Ha kicsi a hely, a fogak elhagyhatók, pl. sziklakapu esetében (ilyenkor legalább 0,3 mm hézagot kell hagyni). A közvetlenül a sziklafal alatt található részleten a fogak áthaladhatnak. Ha a sziklafal víz mellett található úgy, hogy nem lehetséges az alatta való elhaladás a vízparton, akkor a víz határvonala elhagyható, illetve a sziklafal fogazásának világosan át kell nyúlnia a víz határvonalán.</translation>
         </message>
         <message>
             <source>Impassable cliff, minimum size</source>
             <comment>Name of symbol 201.0.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Járhatatlan sziklafal, szirt, minimális méret</translation>
         </message>
         <message>
             <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201.0.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Az áthatolhatatlan sziklafalat, bányát vagy földletörést (ld. 106) 0,35 mm vastag vonallal, esésirányú fogakkal jelöljük, a fogak a sziklafal kiterjedését (tetejétől a lábáig) ábrázolják. Ha kicsi a hely, a fogak elhagyhatók, pl. sziklakapu esetében (ilyenkor legalább 0,3 mm hézagot kell hagyni). A közvetlenül a sziklafal alatt található részleten a fogak áthaladhatnak. Ha a sziklafal víz mellett található úgy, hogy nem lehetséges az alatta való elhaladás a vízparton, akkor a víz határvonala elhagyható, illetve a sziklafal fogazásának világosan át kell nyúlnia a víz határvonalán.</translation>
         </message>
         <message>
             <source>Impassable cliff, no tags</source>
             <comment>Name of symbol 201.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Áthatolhatatlan sziklafal, fogazás nélkül</translation>
         </message>
         <message>
             <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
             <comment>Description of symbol 201.1</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Függőleges sziklafalaknál kicsi lehet a hely, a fogak elhagyhatók, pl. keskeny sziklakapu esetében. ( az átjáró legalább 0.3 mm-es szélességgel kellene rajzolni)</translation>
         </message>
         <message>
             <source>Impassable cliff, tag line</source>
             <comment>Name of symbol 201.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Járhatatlan sziklafa, fogazás</translation>
         </message>
         <message>
             <source>Use this symbol to display the full extent of a wide cliff.</source>
             <comment>Description of symbol 201.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Használd arra ezt a jelet, hogy bemutassa egy széles szirt teljes kiterjedését.</translation>
         </message>
         <message>
             <source>Rock pillars/cliffs</source>
             <comment>Name of symbol 202</comment>
-            <translation type="unfinished"></translation>
+            <translation>Sziklatorony</translation>
         </message>
         <message>
             <source>In the case of unusual features such as rock pillars or massive cliffs or gigantic boulders, the rocks shall be shown in plan shape without tags.</source>
             <comment>Description of symbol 202</comment>
-            <translation type="unfinished"></translation>
+            <translation>Az olyan szokatlan sziklaalakzat, mint például sziklatorony, nagy sziklaszirt, hatalmas sziklatömb alaprajzban, fogak nélkül ábrázolható.</translation>
         </message>
         <message>
             <source>Passable rock face</source>
             <comment>Name of symbol 203</comment>
-            <translation type="unfinished"></translation>
+            <translation>Áthatolható sziklafal</translation>
         </message>
         <message>
             <source>A small vertical rock face (minimum height 1 m) may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
             <comment>Description of symbol 203</comment>
-            <translation type="unfinished"></translation>
+            <translation>A kis függőleges sziklafalat (minimum 1 méteres magasságú) fogak nélkül ábrázolhatjuk. Ha a lejtés iránya nem derül ki egyértelműen a koronavonalból, rövid fogazás mutasson a lejtés irányába. A fogazás nélküli áthatolható sziklafal vonalának végeit le lehet kerekíteni a jobb olvashatóság végett.</translation>
         </message>
         <message>
             <source>Passable rock face, minimum size</source>
             <comment>Name of symbol 203.0.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Áthatolható sziklafal, minimális méret</translation>
         </message>
         <message>
             <source>A small vertical rock face (minimum height 1 m) may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
             <comment>Description of symbol 203.0.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>A kis függőleges sziklafalat (minimum 1 méteres magasságú) fogak nélkül ábrázolhatjuk. Ha a lejtés iránya nem derül ki egyértelműen a koronavonalból, rövid fogazás mutasson a lejtés irányába. A fogazás nélküli áthatolható sziklafal vonalának végeit le lehet kerekíteni a jobb olvashatóság végett.</translation>
         </message>
         <message>
             <source>Passable rock face, no tags</source>
             <comment>Name of symbol 203.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Áthatolható sziklafal, fogazás nélkül</translation>
         </message>
         <message>
             <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
             <comment>Description of symbol 203.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>A kis függőleges sziklafalat (minimum 1 méteres magasságú) fogak nélkül ábrázolhatjuk.  A fogazás nélküli áthatolható sziklafal vonalának végeit le lehet kerekíteni a jobb olvashatóság végett.</translation>
         </message>
         <message>
             <source>Passable rock face, no tags, minimum size</source>
             <comment>Name of symbol 203.1.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Áthatolható sziklafal tüskék nélkül minimális méret</translation>
         </message>
         <message>
             <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
             <comment>Description of symbol 203.1.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>A kis függőleges sziklafalat (minimum 1 méteres magasságú) fogak nélkül ábrázolhatjuk.  A fogazás nélküli áthatolható sziklafal vonalának végeit le lehet kerekíteni a jobb olvashatóság végett.</translation>
         </message>
         <message>
             <source>Passable rock face, no tags, rounded</source>
             <comment>Name of symbol 203.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Áthatolható sziklafal, fogazás nélkül, lekerekített</translation>
         </message>
         <message>
             <source>For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
             <comment>Description of symbol 203.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>A kis függőleges sziklafalat (minimum 1 méteres magasságú) fogak nélkül ábrázolhatjuk. A fogazás nélküli áthatolható sziklafal vonalának végeit le lehet kerekíteni a jobb olvashatóság végett.</translation>
         </message>
         <message>
             <source>Passable rock face, no tags, rounded, minimum size</source>
             <comment>Name of symbol 203.2.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Áthatolható sziklafal, fogazás nélkül, kerekített, minimális méret</translation>
         </message>
         <message>
             <source>For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
             <comment>Description of symbol 203.2.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>A kis függőleges sziklafalat (minimum 1 méteres magasságú) fogak nélkül ábrázolhatjuk. A fogazás nélküli áthatolható sziklafal vonalának végeit le lehet kerekíteni a jobb olvashatóság végett.</translation>
         </message>
         <message>
             <source>Boulder</source>
             <comment>Name of symbol 206</comment>
-            <translation type="unfinished"></translation>
+            <translation>Szikla</translation>
         </message>
         <message>
             <source>A small distinct boulder (minimum height 1 m). Every boulder marked on the map should be immediately identifiable on the ground. To be able to show the distinction between boulders with significant difference in size it is permitted to enlarge this symbol by 20% (diameter 0.5 mm).</source>
             <comment>Description of symbol 206</comment>
-            <translation type="unfinished"></translation>
+            <translation>Kis határozott sziklatömb (legalább 1 méter magas). Minden, a térképen ábrázolt sziklatömbnek azonnal azonosíthatónak kell lennie a terepen. A jel mérete 20%-kal növelhető (0,5 mm átmérőre) a szikla magasságától függően.</translation>
         </message>
         <message>
             <source>Boulder, enlarged</source>
             <comment>Name of symbol 206.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Sziklatömb, kő megnövelt méret</translation>
         </message>
         <message>
             <source>To be able to show the distinction between boulders with significant difference in size it is permitted to enlarge this symbol by 20% (diameter 0.5 mm).</source>
             <comment>Description of symbol 206.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>A 206-os jel megnövelt méretű variánsa. Kis határozott sziklatömb (legalább 1 méter magas). Minden, a térképen ábrázolt sziklatömbnek azonnal azonosíthatónak kell lennie a terepen. A jel mérete 20%-kal növelhető (0,5 mm átmérőre) a szikla magasságától függően.</translation>
         </message>
         <message>
             <source>Large boulder</source>
             <comment>Name of symbol 207</comment>
-            <translation type="unfinished"></translation>
+            <translation>Nagy szikla</translation>
         </message>
         <message>
             <source>A particularly large and distinct boulder. For gigantic boulders symbol 202 should be used.</source>
             <comment>Description of symbol 207</comment>
-            <translation type="unfinished"></translation>
+            <translation>Különlegesen nagy és jellegzetes sziklatömb. A hatalmas sziklatömböket a 202-es jellel ábrázoljuk.</translation>
         </message>
         <message>
             <source>Boulder field</source>
             <comment>Name of symbol 208</comment>
-            <translation type="unfinished"></translation>
+            <translation>Sziklamező</translation>
         </message>
         <message>
             <source>An area which is covered with so many blocks of stone that they cannot be marked individually is shown with randomly orientated solid triangles with sides of ratio 8:6:5. A minimum of two triangles should be used. The going is indicated by the density of the triangles. To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
             <comment>Description of symbol 208</comment>
-            <translation type="unfinished"></translation>
+            <translation>Ha a terület oly mértékben fedett sziklatömbökkel, hogy azok egyenként már nem ábrázolhatók, összevontan, véletlenszerűen elhelyezett háromszögekkel jelöljük. A háromszög oldalainak aránya 8:6:5. Legalább két háromszög rajzolandó. A háromszögek sűrűsége utal a terület futhatóságára (felületi jel). A jel mérete 20%-kal növelhető a sziklatömbök magasságától függően.</translation>
         </message>
         <message>
             <source>Boulder field, large</source>
             <comment>Name of symbol 208.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Sziklamező, nagy</translation>
         </message>
         <message>
             <source>To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
             <comment>Description of symbol 208.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Annak érekében, hogy meg lehessen különböztetni egymástól azon sziklamezőket, amelyekben a sziklák nagysága a többi mezőben találhatóaktól jelentősen eltér, a háromszögek mérete maximum 20%-al megnövelhető.</translation>
         </message>
         <message>
             <source>Boulder cluster</source>
             <comment>Name of symbol 209</comment>
-            <translation type="unfinished"></translation>
+            <translation>Sziklacsoport</translation>
         </message>
         <message>
             <source>A small distinct group of boulders so closely clustered together that they cannot be marked individually. The symbol is an equilateral triangle orientated to the north. To be able to show the distinction between boulder clusters with significant difference in size it is permitted to enlarge this symbol by 25% (1.0 mm).</source>
             <comment>Description of symbol 209</comment>
-            <translation type="unfinished"></translation>
+            <translation>Egymáshoz közeli sziklatömbök csoportja, melyek már egyenként nem ábrázolhatók. Az egyenlő oldalú háromszög északra tájolt. A jel mérete 25%-kal növelhető (1,0 mm), ha a sziklák magasságában jól látható eltérések észlelhetők a terepen.</translation>
         </message>
         <message>
             <source>Boulder cluster, large</source>
             <comment>Name of symbol 209.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Sziklacsoport, nagy</translation>
         </message>
         <message>
             <source>To be able to show the distinction between boulder clusters with significant difference in size it is permitted to enlarge this symbol by 25% (1.0 mm).</source>
             <comment>Description of symbol 209.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>A 209-es jel variánsa. Egymáshoz közeli sziklatömbök csoportja, melyek már egyenként nem ábrázolhatók. Az egyenlő oldalú háromszög északra tájolt. A jel mérete 25%-kal növelhető (1,0 mm), ha a sziklák magasságában jól látható eltérések észlelhetők a terepen.</translation>
         </message>
         <message>
             <source>Uncrossable waterbody (forbidden to cross)</source>
@@ -8483,7 +8448,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>A black bank line indicates that the feature cannot be crossed.</source>
             <comment>Description of symbol 301.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>A partnál húzott fekete vonal jelzi, hogy a tereptárgy áthatolhatatlan.</translation>
         </message>
         <message>
             <source>Uncrossable waterbody (forbidden to cross), with bank line</source>
@@ -8506,22 +8471,22 @@ The ISSkiOM symbol number is 301.1. Mapper uses this number already for the bank
         <message>
             <source>Crossable watercourse</source>
             <comment>Name of symbol 305</comment>
-            <translation type="unfinished"></translation>
+            <translation>Áthatolható vízfolyás</translation>
         </message>
         <message>
             <source>A crossable watercourse, minimum 2 m wide. The width of watercourses over 5 m wide should be shown to scale.</source>
             <comment>Description of symbol 305</comment>
-            <translation type="unfinished"></translation>
+            <translation>Áthatolható vízfolyás, minimum 2m szélességű. Az 5 méternél szélesebb vízfolyásokat méretarányosan kell ábrázolni.</translation>
         </message>
         <message>
             <source>Crossable small watercourse</source>
             <comment>Name of symbol 306</comment>
-            <translation type="unfinished"></translation>
+            <translation>Átgázolható kis vízfolyás</translation>
         </message>
         <message>
             <source>A crossable watercourse (including a major drainage ditch) less than 2 m wide. For better legibility a ditch in a marsh should be drawn as a crossable watercourse (305).</source>
             <comment>Description of symbol 306</comment>
-            <translation type="unfinished"></translation>
+            <translation>Átgázolható kis vízfolyás vagy nagyobb vízelvezető árok, amely 2 méternél keskenyebb. A jobb olvashatóság kedvéért a mocsáron átvezető vizes árkot átgázolható vízfolyásként (305) célszerű ábrázolni.</translation>
         </message>
         <message>
             <source>Marsh (in ski orienteering map)</source>
@@ -8538,458 +8503,458 @@ The ISSkiOM symbol number is 310.1. Mapper uses this number already for the mini
         <message>
             <source>Open land</source>
             <comment>Name of symbol 401</comment>
-            <translation type="unfinished"></translation>
+            <translation>Nyílt terület</translation>
         </message>
         <message>
             <source>Cultivated land, fields, meadows, grassland, etc. without trees, offering easy running. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
             <comment>Description of symbol 401</comment>
-            <translation type="unfinished"></translation>
+            <translation>Fák nélküli művelt terület, szántó, rét, legelő stb., könnyű futhatóságot jelöl. Ha a sárgával jelölt területek kerülnek túlsúlyba a terepen, a teli szín helyett 75%-os rasztert alkalmazhatunk.</translation>
         </message>
         <message>
             <source>Open land with scattered trees</source>
             <comment>Name of symbol 402</comment>
-            <translation type="unfinished"></translation>
+            <translation>Nyílt terület elszórt fákkal</translation>
         </message>
         <message>
             <source>Meadows with scattered trees or bushes, with grass or similar ground cover offering easy running. Areas smaller than 10 mm at the maps scale are shown as open land (401). Individual trees may be added (418, 419, 420). If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
             <comment>Description of symbol 402</comment>
-            <translation type="unfinished"></translation>
+            <translation>Rét elszórt fákkal vagy bokrokkal, fűvel vagy hasonló növénytakaróval, amely könnyű futhatóságot biztosít. 10  mm² -nél kisebb felületek esetében a 401-es jelet kell használni. Egyedülálló fákat, bokrokat külön is jelölhetünk (418, 419, 420). Ha a sárgával jelölt területek kerülnek túlsúlyba, a teli szín helyett 75%-os rasztert alkalmazhatunk.</translation>
         </message>
         <message>
             <source>Rough open land</source>
             <comment>Name of symbol 403</comment>
-            <translation type="unfinished"></translation>
+            <translation>Durva nyílt terület</translation>
         </message>
         <message>
             <source>Heath, moorland, felled areas, newly planted areas (trees lower than ca. 1 m) or other generally open land with rough ground vegetation, heather or tall grass. Symbol 403 may be combined with symbols 407 and 409 to show reduced runnability.</source>
             <comment>Description of symbol 403</comment>
-            <translation type="unfinished"></translation>
+            <translation>Pusztaság, mocsaras terület, tarvágás, fiatal ültetés (1 méternél alacsonyabb fák) vagy más, alapjában nyílt terület durva aljnövényzettel, vagy magas fűvel. A 403-as jelet kombinálni lehet a 407-es és 409-es jelekkel a lecsökkent futhatóság jelzésére.</translation>
         </message>
         <message>
             <source>Rough open land with scattered trees</source>
             <comment>Name of symbol 404</comment>
-            <translation type="unfinished"></translation>
+            <translation>Durva nyílt terület elszórt fákkal</translation>
         </message>
         <message>
             <source>Where there are scattered trees in rough open land, areas of white (or green) should appear in the tone. Such an area may be generalised by using a regular pattern of large white dots in the yellow screen. Areas smaller than 16 mm in the maps scale are shown as rough open land (403). Individual trees may be added (418, 419, 420).</source>
             <comment>Description of symbol 404</comment>
-            <translation type="unfinished"></translation>
+            <translation>Azon a durva nyílt területen, ahol elszórtan fák vannak, ott ennek fehér (vagy zöld) tónussal kell megjelennie. Az ilyen területet úgy lehet ábrázolni, hogy szabályos nagyméretű fehér pontokat helyezünk el sárga raszter (403) alapon. 16 mm²-nél kisebb felületek esetében a 403-es jelet kell használni. Egyedülálló fákat, bokrokat külön is jelölhetünk (418, 419, 420).</translation>
         </message>
         <message>
             <source>Forest: easy running</source>
             <comment>Name of symbol 405</comment>
-            <translation type="unfinished"></translation>
+            <translation>Jól futható erdő</translation>
         </message>
         <message>
             <source>Typically open runnable forest for the particular type of terrain. If no part of the forest is runnable then no white should appear on the map.</source>
             <comment>Description of symbol 405</comment>
-            <translation type="unfinished"></translation>
+            <translation>Tiszta erdő, amelyben nincsen a futó számára akadályozó tényező. Ha nincs jól futható rész a térképezett területen, akkor a fehér szín nem jelenhet meg a térképen.</translation>
         </message>
         <message>
             <source>Forest: slow running</source>
             <comment>Name of symbol 406</comment>
-            <translation type="unfinished"></translation>
+            <translation>Lassan futható erdő</translation>
         </message>
         <message>
             <source>An area with dense trees (low visibility) which reduces running to ca. 60-80% of normal speed.</source>
             <comment>Description of symbol 406</comment>
-            <translation type="unfinished"></translation>
+            <translation>Fákkal sűrűn benőtt terület (csökkent átláthatóság), a futás sebessége a normál futósebességhez viszonyítva 60–80%-os.</translation>
         </message>
         <message>
             <source>Orchard</source>
             <comment>Name of symbol 412</comment>
-            <translation type="unfinished"></translation>
+            <translation>Gyümölcsös</translation>
         </message>
         <message>
             <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the
 direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
             <comment>Description of symbol 412</comment>
-            <translation type="unfinished"></translation>
+            <translation>Gyümölcsfákkal, cserjékkel beültetett terület. A pontozás szükség esetén elforgatható az ültetés irányába. Ha a sárgával jelölt területek kerülnek túlsúlyba, a teli szín helyett 75%-os rasztert alkalmazhatunk.</translation>
         </message>
         <message>
             <source>Vineyard</source>
             <comment>Name of symbol 413</comment>
-            <translation type="unfinished"></translation>
+            <translation>Szőlő</translation>
         </message>
         <message>
             <source>The green lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
             <comment>Description of symbol 413</comment>
-            <translation type="unfinished"></translation>
+            <translation>A vonalak iránya mutatja az ültetés irányát. Ha a sárgával jelölt területek kerülnek túlsúlyba, a teli szín helyett 75%-os rasztert alkalmazhatunk.</translation>
         </message>
         <message>
             <source>Distinct cultivation boundary</source>
             <comment>Name of symbol 414</comment>
-            <translation type="unfinished"></translation>
+            <translation>Megkülönböztethető műveléshatár, művelt terület határa</translation>
         </message>
         <message>
             <source>The boundary of cultivated land when not shown with other symbols (fence, wall, path, etc.) is shown with a black line. A permanent boundary between different types of cultivated land is also shown with this symbol.</source>
             <comment>Description of symbol 414</comment>
-            <translation type="unfinished"></translation>
+            <translation>Ha a művelt terület határát nem jelöli más jel (kerítés, kőfal, stb.), akkor fekete vonallal ábrázoljuk.Az eltérő művelésű területeket elválasztó, állandónak tekinthető határt ugyanígy jelöljük.</translation>
         </message>
         <message>
             <source>Distinct vegetation boundary</source>
             <comment>Name of symbol 416</comment>
-            <translation type="unfinished"></translation>
+            <translation>Jelleghatár</translation>
         </message>
         <message>
             <source>A distinct forest edge or very distinct vegetation boundary within the forest.</source>
             <comment>Description of symbol 416</comment>
-            <translation type="unfinished"></translation>
+            <translation>Jól elkülönülő erdőszegély vagy élesen kirajzolódó növényzethatár az erdőterületen belül.</translation>
         </message>
         <message>
             <source>Special vegetation feature</source>
             <comment>Name of symbol 418</comment>
-            <translation type="unfinished"></translation>
+            <translation>Különleges növényzeti tereptárgy</translation>
         </message>
         <message>
             <source>Symbols 418, 419 and 420 can be used for special small vegetation features. The definition of the symbol must be given in each case in the map legend.</source>
             <comment>Description of symbol 418</comment>
-            <translation type="unfinished"></translation>
+            <translation>A 418, 419 és 420 jeleket különleges, kis kiterjedésű növényzeti tereptárgy esetében használjuk. A jel pontos meghatározását meg kell adni a térkép jelmagyarázatában.</translation>
         </message>
         <message>
             <source>Motorway</source>
             <comment>Name of symbol 501.0</comment>
-            <translation type="unfinished"></translation>
+            <translation>Autópálya</translation>
         </message>
         <message>
             <source>A road with two carriageways. The width of the symbol should be drawn to scale but not smaller than the minimum width. The outer boundary lines may be replaced with symbols 519, 521, 522 or 524 if a fence or wall is so close to the motorway edge that it cannot practically be shown as a separate symbol. The space between the black lines must be filled with brown (50%). A road under construction may be shown with broken lines.</source>
             <comment>Description of symbol 501.0</comment>
-            <translation type="unfinished"></translation>
+            <translation>Gépjárműforgalom számára készült osztottpályás út. A jel méretarány szerinti szélességben rajzolandó, de nem lehet vékonyabb a minimum értéknél. A külső 0,18 határoló vonalak az 519, 521, 522 vagy 524-es jelekkel is helyettesíthetők, amennyiben a kerítés vagy a fal olyan közel húzódik a pálya széléhez, hogy külön jellel már nem ábrázolható. A fekete vonalak közötti területet barnával (50%) kell kitölteni. Az épülő útszakaszokat szaggatott vonalakkal jelöljük.</translation>
         </message>
         <message>
             <source>Major road, minimum width</source>
             <comment>Name of symbol 502</comment>
-            <translation type="unfinished"></translation>
+            <translation>Főút, minimális szélesség</translation>
         </message>
         <message>
             <source>Road wider than 5m. The width of the symbol should be drawn to scale but not smaller than the minimum width. The outer boundary lines may be replaced with symbols 519, 521, 522 or 524 if a fence or wall is so close to the motorway edge that it cannot practically be shown as a separate symbol. The space between the black lines must be filled with brown (50%). A road under construction may be shown with broken lines.</source>
             <comment>Description of symbol 502</comment>
-            <translation type="unfinished"></translation>
+            <translation>5 méternél szélesebb út. A jel méretarány szerinti szélességben rajzolandó, de nem lehet vékonyabb a minimumnál. A külső határoló vonalak az 519, 521, 522 vagy 524-es jelekkel is helyettesíthetők, amennyiben a kerítés vagy a fal olyan közel húzódik a pálya széléhez, hogy külön jellel már nem ábrázolható. A fekete vonalak közötti területet barnával (50%) kell kitölteni. Az épülő útszakaszokat szaggatott vonalakkal jelöljük.</translation>
         </message>
         <message>
             <source>Minor road</source>
             <comment>Name of symbol 503</comment>
-            <translation type="unfinished"></translation>
+            <translation>Mellékút</translation>
         </message>
         <message>
             <source>Road 3-5 m wide. The space between the black lines must be filled with brown (50%). A road under construction may be shown with broken lines.</source>
             <comment>Description of symbol 503</comment>
-            <translation type="unfinished"></translation>
+            <translation>3–5 méter széles út. A fekete vonalak közötti területet barnával (50%) kell kitölteni. Az épülő útszakaszokat szaggatott vonalakkal jelöljük.</translation>
         </message>
         <message>
             <source>Road</source>
             <comment>Name of symbol 504</comment>
-            <translation type="unfinished"></translation>
+            <translation>Út</translation>
         </message>
         <message>
             <source>A maintained road suitable for motor vehicles in all weather. Width less than 3 m.</source>
             <comment>Description of symbol 504</comment>
-            <translation type="unfinished"></translation>
+            <translation>3 méternél keskenyebb karbantartott út, amely minden időjárási körülmény között alkalmas gépjármű közlekedésre.</translation>
         </message>
         <message>
             <source>Narrow ride</source>
             <comment>Name of symbol 509</comment>
-            <translation type="unfinished"></translation>
+            <translation>Keskeny nyiladék vagy egyenes nyomvonal</translation>
         </message>
         <message>
             <source>A distinct ride, less than ca. 5 m wide. A ride is a linear break in the forest (usually plantation) which does not have a distinct path along it. Where there is a path along a ride, symbols 507 or 508 should be used in place of symbol 509.</source>
             <comment>Description of symbol 509</comment>
-            <translation type="unfinished"></translation>
+            <translation>5 méternél keskenyebb, jól felismerhető nyiladék. A nyiladék egyenes erdővágás, általában aljnövényzettel, amelyben út nem vezet. Ha a nyiladékban út megy, az 509-es jel helyett az 507-es vagy 508-as jel használható.</translation>
         </message>
         <message>
             <source>Railway</source>
             <comment>Name of symbol 515</comment>
-            <translation type="unfinished"></translation>
+            <translation>Vasút</translation>
         </message>
         <message>
             <source>A railway or other kind of railed track (tramway, truckway, etc.).</source>
             <comment>Description of symbol 515</comment>
-            <translation type="unfinished"></translation>
+            <translation>Vasút vagy egyéb sínpálya (villamos, stb.).</translation>
         </message>
         <message>
             <source>Power line</source>
             <comment>Name of symbol 516</comment>
-            <translation type="unfinished"></translation>
+            <translation>Légvezeték, villamos távvezeték, vagy sílift</translation>
         </message>
         <message>
             <source>Power line, cableway or skilift. The bars indicate the exact location of the pylons.</source>
             <comment>Description of symbol 516</comment>
-            <translation type="unfinished"></translation>
+            <translation>Villanyvezeték, kötélpálya vagy sílift. A keresztvonalak pontosan a tartóoszlopok, az alátámasztás helyét jelölik.</translation>
         </message>
         <message>
             <source>Major power line</source>
             <comment>Name of symbol 517</comment>
-            <translation type="unfinished"></translation>
+            <translation>Nagy villamos távvezeték</translation>
         </message>
         <message>
             <source>Major power lines should be drawn with a double line. The gap between the lines may indicate the extent of the powerline.</source>
             <comment>Description of symbol 517</comment>
-            <translation type="unfinished"></translation>
+            <translation>A nagyobb villamos távvezeték kettős vonallal (alaprajzban) ábrázolható.</translation>
         </message>
         <message>
             <source>Tunnel</source>
             <comment>Name of symbol 518</comment>
-            <translation type="unfinished"></translation>
+            <translation>Alagút</translation>
         </message>
         <message>
             <source>A way under roads, railways, etc. which may be used by the runner. This symbol is used whether or not the tunnel has a track leading to it.</source>
             <comment>Description of symbol 518</comment>
-            <translation type="unfinished"></translation>
+            <translation>Olyan átkelési lehetőség utak, vasutak, csővezetékek stb. alatt, amelyet a futó is használhat. A jel akkor is alkalmazható, ha az alagúthoz, átereszhez nem vezet külön út.</translation>
         </message>
         <message>
             <source>Tunnel, minimum size</source>
             <comment>Name of symbol 518.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Alagút, minimális méret</translation>
         </message>
         <message>
             <source>A way under roads, railways, etc. which may be used by the runner. This symbol is used whether or not the tunnel has a track leading to it.</source>
             <comment>Description of symbol 518.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Olyan átkelési lehetőség utak, vasutak, csővezetékek stb. alatt, amelyet a futó is használhat. A jel akkor is alkalmazható, ha az alagúthoz, átereszhez nem vezet külön út.</translation>
         </message>
         <message>
             <source>Stone wall</source>
             <comment>Name of symbol 519</comment>
-            <translation type="unfinished"></translation>
+            <translation>Kőfal</translation>
         </message>
         <message>
             <source>A stone wall or stone-faced bank.</source>
             <comment>Description of symbol 519</comment>
-            <translation type="unfinished"></translation>
+            <translation>Kőfal vagy kőburkolatú töltés.</translation>
         </message>
         <message>
             <source>High stone wall</source>
             <comment>Name of symbol 521</comment>
-            <translation type="unfinished"></translation>
+            <translation>Magas kőfal</translation>
         </message>
         <message>
             <source>A stone wall higher than ca 1.5 m, not crossable to the average orienteer.</source>
             <comment>Description of symbol 521</comment>
-            <translation type="unfinished"></translation>
+            <translation>Kőfal, amely kb. 1,5 méternél magasabb. Egy átlagos futó számára nem leküzdhető.</translation>
         </message>
         <message>
             <source>Fence</source>
             <comment>Name of symbol 522</comment>
-            <translation type="unfinished"></translation>
+            <translation>Kerítés</translation>
         </message>
         <message>
             <source>A wooden or wire fence less than ca. 1.5 m high.</source>
             <comment>Description of symbol 522</comment>
-            <translation type="unfinished"></translation>
+            <translation>Fa vagy fémkerítés, kb. 1,5 méternél alacsonyabb.</translation>
         </message>
         <message>
             <source>High fence</source>
             <comment>Name of symbol 524</comment>
-            <translation type="unfinished"></translation>
+            <translation>Magas kerítés</translation>
         </message>
         <message>
             <source>A boarded or wire fence higher than ca 1.5 m, not crossable to the average orienteer, eg. deer fence.</source>
             <comment>Description of symbol 524</comment>
-            <translation type="unfinished"></translation>
+            <translation>1,5 méternél magasabb deszka vagy fémkerítés, az átlagos futó számára nem leküzdhető (pl. vadvédelmi kerítés).</translation>
         </message>
         <message>
             <source>Crossing point</source>
             <comment>Name of symbol 525</comment>
-            <translation type="unfinished"></translation>
+            <translation>Átkelőhely</translation>
         </message>
         <message>
             <source>All ways through or over high fences or walls must be indicated. The symbol may also be used for a gate through or stile over a stone wall (519) or a fence (522) or a pipeline (534).</source>
             <comment>Description of symbol 525</comment>
-            <translation type="unfinished"></translation>
+            <translation>Minden utat, amely átvezet a magas kerítésen vagy falon, ábrázolni kell. A jel használható kőfalon (519), kerítésen (522) vagy csővezetéken (534) levő kapu, vagy felettük átvezető lépcsős átjáró ábrázolására.</translation>
         </message>
         <message>
             <source>Building</source>
             <comment>Name of symbol 526</comment>
-            <translation type="unfinished"></translation>
+            <translation>Épület</translation>
         </message>
         <message>
             <source>A building is shown with its ground plan so far as the scale permits.</source>
             <comment>Description of symbol 526</comment>
-            <translation type="unfinished"></translation>
+            <translation>Az épület a méretarány biztosította lehetőségen belül alaprajzban ábrázolandó.</translation>
         </message>
         <message>
             <source>Building, minimum size</source>
             <comment>Name of symbol 526.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Épület, minimális méret</translation>
         </message>
         <message>
             <source>Settlement</source>
             <comment>Name of symbol 527</comment>
-            <translation type="unfinished"></translation>
+            <translation>Település</translation>
         </message>
         <message>
             <source>Houses and gardens and other built up areas. Roads, buildings and other significant features within a settlement must be shown. If all buildings cannot be shown, an alternative symbol (black line screen) may be used.</source>
             <comment>Description of symbol 527</comment>
-            <translation type="unfinished"></translation>
+            <translation>Lakóházak és kertek vagy egyéb beépített terület. Az utakat, épületeket és egyéb jellegzetességeket a településen belül ábrázolni kell. Ha minden épület nem ábrázolható, alternatív jel (fekete vonalraszter) használható.</translation>
         </message>
         <message>
             <source>Settlement</source>
             <comment>Name of symbol 527.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Település</translation>
         </message>
         <message>
             <source>Houses and gardens and other built up areas. Roads, buildings and other significant features within a settlement must be shown. If all buildings cannot be shown, an alternative symbol (black line screen) may be used.</source>
             <comment>Description of symbol 527.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Lakóházak és kertek vagy egyéb beépített terület. Az utakat, épületeket és egyéb jellegzetességeket a településen belül ábrázolni kell. Ha minden épület nem ábrázolható, alternatív jel (fekete vonalraszter) használható.</translation>
         </message>
         <message>
             <source>Permanently out of bounds</source>
             <comment>Name of symbol 528</comment>
-            <translation type="unfinished"></translation>
+            <translation>Tiltott terület</translation>
         </message>
         <message>
             <source>Areas which are permanently forbidden to the runner are shown as out of bounds. The screen is superimposed on the normal map detail. A bounding line may be drawn if there is no natural boundary (see 709).</source>
             <comment>Description of symbol 528</comment>
-            <translation type="unfinished"></translation>
+            <translation>A futók számára állandóan tiltott terület ábrázolandó ezzel a jellel. A vonalraszterrel az egyéb térképjeleket felül kell nyomni. Határoló vonal akkor alkalmazható, ha a jelzett területnek nincs természetes terepi határa (ld. 709).</translation>
         </message>
         <message>
             <source>Permanently out of bounds, bounding line</source>
             <comment>Name of symbol 528.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Tiltott terület, határoló vonal</translation>
         </message>
         <message>
             <source>A bounding line may be drawn if there is no natural boundary (see 709).</source>
             <comment>Description of symbol 528.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Határoló vonal akkor alkalmazható, ha a jelzett területnek nincs természetes terepi határa (lásd a 709-es jelet).</translation>
         </message>
         <message>
             <source>Paved area</source>
             <comment>Name of symbol 529</comment>
-            <translation type="unfinished"></translation>
+            <translation>Burkolt terület</translation>
         </message>
         <message>
             <source>An area of hard standing used for parking or other purposes.</source>
             <comment>Description of symbol 529</comment>
-            <translation type="unfinished"></translation>
+            <translation>Kövezett, aszfaltozott vagy egyéb burkolt terület parkolási vagy egyéb célra.</translation>
         </message>
         <message>
             <source>Paved area, bounding line</source>
             <comment>Name of symbol 529.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Burkolt terület, határoló vonal</translation>
         </message>
         <message>
             <source>Paved area, with bounding line</source>
             <comment>Name of symbol 529.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Burkolt terület, határoló vonallal</translation>
         </message>
         <message>
             <source>Firing range</source>
             <comment>Name of symbol 531</comment>
-            <translation type="unfinished"></translation>
+            <translation>Lőtér</translation>
         </message>
         <message>
             <source>A firing range is shown with a special symbol to indicate the need for caution. Associated buildings are individually marked.</source>
             <comment>Description of symbol 531</comment>
-            <translation type="unfinished"></translation>
+            <translation>A figyelem felkeltése érdekében a lőteret külön jellel ábrázoljuk. A kapcsolódó épületeket külön kell jelölni.</translation>
         </message>
         <message>
             <source>Uncrossable pipeline</source>
             <comment>Name of symbol 534</comment>
-            <translation type="unfinished"></translation>
+            <translation>Áthatolhatatlan csővezeték</translation>
         </message>
         <message>
             <source>A pipeline which cannot be crossed.</source>
             <comment>Description of symbol 534</comment>
-            <translation type="unfinished"></translation>
+            <translation>Csővezeték, amely fölött vagy alatt nem lehetséges az áthaladás.</translation>
         </message>
         <message>
             <source>High tower</source>
             <comment>Name of symbol 535</comment>
-            <translation type="unfinished"></translation>
+            <translation>Magas torony</translation>
         </message>
         <message>
             <source>A high tower or large pylon, standing above the level of the surrounding forest. Location is at the centre of gravity of the symbol.</source>
             <comment>Description of symbol 535</comment>
-            <translation type="unfinished"></translation>
+            <translation>A környező erdő szintjéből kiemelkedő magas torony, oszlop. A torony helyét a jel súlypontja jelöli.</translation>
         </message>
         <message>
             <source>Small tower</source>
             <comment>Name of symbol 536</comment>
-            <translation type="unfinished"></translation>
+            <translation>Kisebb torony, magasles</translation>
         </message>
         <message>
             <source>An obvious shooting platform or seat, or small tower. Location is at the centre of gravity of the symbol.</source>
             <comment>Description of symbol 536</comment>
-            <translation type="unfinished"></translation>
+            <translation>Jól látható lőállás vagy ülés, alacsony torony. A torony pontos helye a terepen a jel súlypontja.</translation>
         </message>
         <message>
             <source>Special man-made feature</source>
             <comment>Name of symbol 539</comment>
-            <translation type="unfinished"></translation>
+            <translation>Különleges mesterséges tereptárgy</translation>
         </message>
         <message>
             <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
             <comment>Description of symbol 539</comment>
-            <translation type="unfinished"></translation>
+            <translation>Különleges mesterséges tereptárgyat jelölünk ezekkel  a szimbólumokkal. A jel definícióját meg kell adni a térképen.</translation>
         </message>
         <message>
             <source>Special man-made feature</source>
             <comment>Name of symbol 540</comment>
-            <translation type="unfinished"></translation>
+            <translation>Különleges mesterséges tereptárgy</translation>
         </message>
         <message>
             <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
             <comment>Description of symbol 540</comment>
-            <translation type="unfinished"></translation>
+            <translation>Különleges mesterséges tereptárgyat jelölünk ezekkel  a szimbólumokkal. A jel definícióját meg kell adni a térképen.</translation>
         </message>
         <message>
             <source>Magnetic north line</source>
             <comment>Name of symbol 601</comment>
-            <translation type="unfinished"></translation>
+            <translation>Mágneses Északvonal</translation>
         </message>
         <message>
             <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing on the map should be 33.33 mm which represents 500 m on the ground at the scale of 1:15 000. For maps with other scales lines placing should be at intervals which represents a round number of meters (e.g. 50 m, 100 m, 250 m, 500 m) and the spacing should be between 20 mm and 40 mm on the map. North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. In areas with very few water features, blue lines may be used.</source>
             <comment>Description of symbol 601</comment>
-            <translation type="unfinished"></translation>
+            <translation>Az északvonalak a térképen a mágneses észak felé mutatnak. Ezek egymástól 33,33 mm-re helyezkednek el, amely 1:15 000-es méretarányban 500 m-nek felel meg. Más méretarányú térképeken úgy kell megválasztani az északvonalak közti távolságot, hogy a terepen kerek számú métert jelöljenek (pl. 50 m, 100 m, 250 m, 500 m). Az északvonalat meg lehet szakítani, amennyiben apró tereptárgyakat (pl. sziklát, kúpot, patakelágazást, ösvényvéget, stb.) fedne ki. Kevés vízrajzi objektumot ábrázoló területen kék színű vonalat alkalmazhatunk.</translation>
         </message>
         <message>
             <source>North lines pattern</source>
             <comment>Name of symbol 601.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Északvonal mintázat (fekete)</translation>
         </message>
         <message>
             <source>Magnetic north line, blue</source>
             <comment>Name of symbol 601.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Mágneses Északvonal, kék</translation>
         </message>
         <message>
             <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing on the map should be 33.33 mm which represents 500 m on the ground at the scale of 1:15 000. For maps with other scales lines placing should be at intervals which represents a round number of meters (e.g. 50 m, 100 m, 250 m, 500 m) and the spacing should be between 20 mm and 40 mm on the map. North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. In areas with very few water features, blue lines may be used.</source>
             <comment>Description of symbol 601.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Az északvonalak a térképen a mágneses észak felé mutatnak. Ezek egymástól 33,33 mm-re helyezkednek el, amely 1:15 000-es méretarányban 500 m-nek felel meg. Más méretarányú térképeken úgy kell megválasztani az északvonalak közti távolságot, hogy a terepen kerek számú métert jelöljenek (pl. 50 m, 100 m, 250 m, 500 m). Az északvonalat meg lehet szakítani, amennyiben apró tereptárgyakat (pl. sziklát, kúpot, patakelágazást, ösvényvéget, stb.) fedne ki. Kevés vízrajzi objektumot ábrázoló területen kék színű vonalat alkalmazhatunk.</translation>
         </message>
         <message>
             <source>North lines pattern, blue</source>
             <comment>Name of symbol 601.3</comment>
-            <translation type="unfinished"></translation>
+            <translation>Északvonal mintázat (kék)</translation>
         </message>
         <message>
             <source>Registration mark</source>
             <comment>Name of symbol 602</comment>
-            <translation type="unfinished"></translation>
+            <translation>Illesztő kereszt</translation>
         </message>
         <message>
             <source>At least three registration marks must be placed within the frame of a map in a non-symmetrical position. In addition, a colour check should also be possible.</source>
             <comment>Description of symbol 602</comment>
-            <translation type="unfinished"></translation>
+            <translation>Legalább három illesztőjelet kell felvenni a térkép keretén belül, nem szimmetrikus elhelyezésben. Ezen felül színellenőrző jelet is alkalmazhatunk.</translation>
         </message>
         <message>
             <source>Spot height, dot</source>
             <comment>Name of symbol 603.0</comment>
-            <translation type="unfinished"></translation>
+            <translation>Magasságot jelölő pont</translation>
         </message>
         <message>
             <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
             <comment>Description of symbol 603.0</comment>
-            <translation type="unfinished"></translation>
+            <translation>A tengerszint feletti magassági értékeket magasságkülönbségek durva becsléséhez használhatjuk. A magasságot méterre kerekítve adjuk meg. A számokészakra tájoltak. A vizek szintjét pont nélkül írjuk meg.</translation>
         </message>
         <message>
             <source>Spot height, text</source>
             <comment>Name of symbol 603.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Magasságot jelölő szöveg</translation>
         </message>
         <message>
             <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
             <comment>Description of symbol 603.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>A tengerszint feletti magassági értékeket magasságkülönbségek durva becsléséhez használhatjuk. A magasságot méterre kerekítve adjuk meg. A számokészakra tájoltak. A vizek szintjét pont nélkül írjuk meg.</translation>
         </message>
         <message>
             <source>Very wide track &gt; 3m</source>
@@ -9172,22 +9137,22 @@ that it is more clearly visible in the track network.</source>
         <message>
             <source>Start</source>
             <comment>Name of symbol 701</comment>
-            <translation type="unfinished"></translation>
+            <translation>Rajt</translation>
         </message>
         <message>
             <source>The start or map issue point (if not at the start) is shown by an equilateral triangle which points in the direction of the first control. The centre of the triangle shows the precise position of the start point.</source>
             <comment>Description of symbol 701</comment>
-            <translation type="unfinished"></translation>
+            <translation>A rajt vagy térképrajt (amennyiben az nem azonos helyen van az időrajttal) helyét egyenlő oldalú háromszög jelöli, amelynek egyik csúcsa az első ellenőrző pont irányába mutat. A háromszög középpontja mutatja a tereptárgy pontos helyét.</translation>
         </message>
         <message>
             <source>Control point</source>
             <comment>Name of symbol 702</comment>
-            <translation type="unfinished"></translation>
+            <translation>Ellenőrzőpont</translation>
         </message>
         <message>
             <source>The control points are shown with circles. The centre of the circle shows the precise position of the feature. Sections of circles should be omitted to leave important detail showing.</source>
             <comment>Description of symbol 702</comment>
-            <translation type="unfinished"></translation>
+            <translation>Az ellenőrzőpon helyét kör jelöli. A kör középpontja mutatja a tereptárgy pontos helyét. A kör vonalát megszakíthatjuk ha az fontos részleteket takar.</translation>
         </message>
         <message>
             <source>Control point and focus point</source>
@@ -9202,67 +9167,67 @@ that it is more clearly visible in the track network.</source>
         <message>
             <source>Control number</source>
             <comment>Name of symbol 703</comment>
-            <translation type="unfinished"></translation>
+            <translation>Ellenőrzőpont sorszáma</translation>
         </message>
         <message>
             <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail. The numbers are orientated to north.</source>
             <comment>Description of symbol 703</comment>
-            <translation type="unfinished"></translation>
+            <translation>A számot a körhöz közel kell elhelyezni úgy, hogy fontos részleteket ne takarjon.</translation>
         </message>
         <message>
             <source>Line</source>
             <comment>Name of symbol 704</comment>
-            <translation type="unfinished"></translation>
+            <translation>Összekötő vonal</translation>
         </message>
         <message>
             <source>Where controls are to be visited in order, the start, control points and finish are joined together by straight lines. Sections of lines should be omitted to leave important detail showing.</source>
             <comment>Description of symbol 704</comment>
-            <translation type="unfinished"></translation>
+            <translation>A rajtot, az ellenőrzőpontokat és a célt egyenes vonallal kell összekötni. Az összekötő szakaszokat meg lehet szakítani, ha az fontos részletet takar.</translation>
         </message>
         <message>
             <source>Marked route</source>
             <comment>Name of symbol 705</comment>
-            <translation type="unfinished"></translation>
+            <translation>Jelzett útvonal</translation>
         </message>
         <message>
             <source>A marked route is shown on the map with a dashed line.</source>
             <comment>Description of symbol 705</comment>
-            <translation type="unfinished"></translation>
+            <translation>A terepen kiszalagozott útvonalat a térképen szaggatott vonal jelzi.</translation>
         </message>
         <message>
             <source>Finish</source>
             <comment>Name of symbol 706</comment>
-            <translation type="unfinished"></translation>
+            <translation>Cél</translation>
         </message>
         <message>
             <source>The finish is shown by two concentric circles.</source>
             <comment>Description of symbol 706</comment>
-            <translation type="unfinished"></translation>
+            <translation>A cél helyét két koncentrikus kör jelöli.</translation>
         </message>
         <message>
             <source>Uncrossable boundary</source>
             <comment>Name of symbol 707</comment>
-            <translation type="unfinished"></translation>
+            <translation>Tiltott határ</translation>
         </message>
         <message>
             <source>A boundary which it is not permitted to cross.</source>
             <comment>Description of symbol 707</comment>
-            <translation type="unfinished"></translation>
+            <translation>Olyan határ, amelyet a terepen tilos átlépni.</translation>
         </message>
         <message>
             <source>Crossing point</source>
             <comment>Name of symbol 708</comment>
-            <translation type="unfinished"></translation>
+            <translation>Átkelőhely</translation>
         </message>
         <message>
             <source>A crossing point through or over a wall or fence, or across a road or railway or through a tunnel or an out-of-bounds area is drawn on the map with two lines curving outwards.</source>
             <comment>Description of symbol 708</comment>
-            <translation type="unfinished"></translation>
+            <translation>Átjárót falon, kerítésen vagy úton, vasúton, zárt területen, esetleg alagutat ezek alatt, két kifelé görbülő vonal jelöl.</translation>
         </message>
         <message>
             <source>Out-of-bounds area</source>
             <comment>Name of symbol 709</comment>
-            <translation type="unfinished"></translation>
+            <translation>Tiltott terület</translation>
         </message>
         <message>
             <source>An out-of-bounds area, see also symbol 528, is shown with vertical stripes.
@@ -9271,645 +9236,650 @@ A bounding line may be drawn if there is no natural boundary, as follows:
 - a dashed line indicates intermittent marking on the ground,
 - no line indicates no marking on the ground.</source>
             <comment>Description of symbol 709</comment>
-            <translation type="unfinished"></translation>
+            <translation>A zárt területet – lásd. 528-es jel is – függőleges vonalak jelölik. A határoló vonalat, ha az nem természetes határ, a következő módon jelöljük:
+a) a folytonos vonal azt jelenti, hogy a határvonal a terepen végig szalagozott,
+b) a szaggatott vonal azt jelenti, hogy a határvonal jelzése a terepen nem folytonos,
+c) a határvonal hiánya azt jelenti, hogy a terepen nincs semmiféle jelölés.</translation>
         </message>
         <message>
             <source>Out-of-bounds area, solid boundary</source>
             <comment>Name of symbol 709.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Tiltott terület, folytonos határoló vonal</translation>
         </message>
         <message>
             <source>A solid line indicates that the boundary is marked continuously (tapes, etc.) on the ground.</source>
             <comment>Description of symbol 709.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Egy folytonos vonal azt jelenti, hogy a határvonal a terepen végig szalagozott.</translation>
         </message>
         <message>
             <source>Out-of-bounds area, dashed boundary</source>
             <comment>Name of symbol 709.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Tiltott terület, szaggatott határoló vonal</translation>
         </message>
         <message>
             <source>A dashed line indicates intermittent marking on the ground.</source>
             <comment>Description of symbol 709.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Egy szaggatott vonal azt jelenti, hogy a határvonal jelzése a terepen nem folytonos.</translation>
         </message>
         <message>
             <source>Dangerous area</source>
             <comment>Name of symbol 710</comment>
-            <translation type="unfinished"></translation>
+            <translation>Veszélyes terület</translation>
         </message>
         <message>
             <source>An area presenting danger to the competitor is shown with cross-hatched diagonal lines.</source>
             <comment>Description of symbol 710</comment>
-            <translation type="unfinished"></translation>
+            <translation>Az átlósan keresztezett vonalak a versenyző számára veszélyes területet jelölik.</translation>
         </message>
         <message>
             <source>Forbidden route</source>
             <comment>Name of symbol 711</comment>
-            <translation type="unfinished"></translation>
+            <translation>Tiltott útvonal</translation>
         </message>
         <message>
             <source>A route which is out-of-bounds is shown with crosses.</source>
             <comment>Description of symbol 711</comment>
-            <translation type="unfinished"></translation>
+            <translation>A versenyen nem használható útvonalat jelöl.</translation>
         </message>
         <message>
             <source>First aid post</source>
             <comment>Name of symbol 712</comment>
-            <translation type="unfinished"></translation>
+            <translation>Elsősegélyhely</translation>
         </message>
         <message>
             <source>The location of a first aid post.</source>
             <comment>Description of symbol 712</comment>
-            <translation type="unfinished"></translation>
+            <translation>Egy elsősegélyhely helye.</translation>
         </message>
         <message>
             <source>Refreshment point</source>
             <comment>Name of symbol 713</comment>
-            <translation type="unfinished"></translation>
+            <translation>Frissítőpont</translation>
         </message>
         <message>
             <source>The location of a refreshment point which is not at a control.</source>
             <comment>Description of symbol 713</comment>
-            <translation type="unfinished"></translation>
+            <translation>Egy olyan frissítő pont helye, ahol nincs ellenőrzőpont.</translation>
         </message>
         <message>
             <source>Simple Orienteering Course</source>
             <comment>Name of symbol 799</comment>
-            <translation type="unfinished"></translation>
+            <translation>Egyszerű versenypálya</translation>
         </message>
         <message>
             <source>This symbol provides a simple and quick way to make training courses.
 
 The purple line will extend a bit into the finish symbol. This is a shortcoming of this simple approach.</source>
             <comment>Description of symbol 799</comment>
-            <translation type="unfinished"></translation>
+            <translation>Ez a jel lehetővé tesz egy egyszerű gyors utat  egy edző pálya készítéséhez.
+
+A lila vonalat pontonként a rajttól a célig halad.   Ez az egyszerű megközelítés hiányossága.</translation>
         </message>
         <message>
             <source>OpenOrienteering Logo</source>
             <comment>Name of symbol 999</comment>
-            <translation type="unfinished"></translation>
+            <translation>OpenOrienteering logó</translation>
         </message>
         <message>
             <source>The OpenOrienteering Logo.</source>
             <comment>Description of symbol 999</comment>
-            <translation type="unfinished"></translation>
+            <translation>Az OpenOrienteering logója.</translation>
         </message>
         <message>
             <source>Small earth wall</source>
             <comment>Name of symbol 108</comment>
-            <translation type="unfinished"></translation>
+            <translation>Kis föld fal, kis töltés sánc</translation>
         </message>
         <message>
             <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
             <comment>Description of symbol 108</comment>
-            <translation type="unfinished"></translation>
+            <translation>A kis vagy részben romos földfalat, töltést szaggatott vonallal kell ábrázolni. A minimális magasság 0,5 méter.</translation>
         </message>
         <message>
             <source>Small erosion gully</source>
             <comment>Name of symbol 110</comment>
-            <translation type="unfinished"></translation>
+            <translation>Kis árok, száraz árok</translation>
         </message>
         <message>
             <source>A small erosion gully or trench. Minimum depth 0.5 m.</source>
             <comment>Description of symbol 110</comment>
-            <translation type="unfinished"></translation>
+            <translation>Kis metsződés vagy árok. Minimális mélysége 0,5 méter.</translation>
         </message>
         <message>
             <source>Small knoll</source>
             <comment>Name of symbol 112</comment>
-            <translation type="unfinished"></translation>
+            <translation>Kis domb</translation>
         </message>
         <message>
             <source>A small obvious mound or rocky knoll which cannot be drawn to scale with a contour (diameter of mound less than ca. 5 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. The symbol may not touch a contour line.</source>
             <comment>Description of symbol 112</comment>
-            <translation type="unfinished"></translation>
+            <translation>Szembeötlő halom, köves domb, amely nem ábrázolható mérethelyesen szintvonallal (az átmérő kisebb, mint 5 méter). A kúpnak legalább 1 méterrel ki kell emelkednie környezetéből.Ajel nem érinthet szintvonalat.</translation>
         </message>
         <message>
             <source>Elongated knoll</source>
             <comment>Name of symbol 113</comment>
-            <translation type="unfinished"></translation>
+            <translation>Hosszúkás halom</translation>
         </message>
         <message>
             <source>A small obvious elongated knoll which cannot be drawn to scale with a contour (length less than 12 m and width less than 4 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. Knolls larger than this must be shown by contours. The symbol may not be drawn in free form or such that two elongated knoll symbols overlap. The symbol may not touch a contour line.</source>
             <comment>Description of symbol 113</comment>
-            <translation type="unfinished"></translation>
+            <translation>Szembeötlő hosszúkás halom, amely nem ábrázolható méretarányhelyesen szintvonallal (hossza 12 méretnél rövidebb, illetve 4 méternél keskenyebb). A hosszúkás kúpnak legalább 1 méterrel ki kell emelkednie környezetéből. A jel alakja nem változtatható, és két jel nem fedheti egymást. A jel nem érinthet szintvonalat.</translation>
         </message>
         <message>
             <source>Small depression</source>
             <comment>Name of symbol 115</comment>
-            <translation type="unfinished"></translation>
+            <translation>Kis mélyedés</translation>
         </message>
         <message>
             <source>Small shallow natural depressions and hollows (minimum diameter 2 m) which cannot be shown to scale by contours are represented by a semicircle. Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol, which is orientated to north. Symbol 116 is used for man-made pits.</source>
             <comment>Description of symbol 115</comment>
-            <translation type="unfinished"></translation>
+            <translation>Kisebb lapos, természetes mélyedés vagy üreg (minimum 2 méteres átmérő), amely szintvonallal mérethelyesen már nem ábrázolható, félkörrel jelölendő. A környezetétől legalább 1 méterrel mélyebbnek kell lennie. Pontos terepi helye a jel súlypontja, a jel északra tájolt. A 116-os jel a mesterséges mélyedés ábrázolására szolgál.</translation>
         </message>
         <message>
             <source>Pit</source>
             <comment>Name of symbol 116</comment>
-            <translation type="unfinished"></translation>
+            <translation>Lyuk, vagy kicsi gödör</translation>
         </message>
         <message>
             <source>Pits and holes with distinct steep sides which cannot be shown to scale by symbol 106 (minimum diameter 2 m). Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol which is orientated to north.</source>
             <comment>Description of symbol 116</comment>
-            <translation type="unfinished"></translation>
+            <translation>A 106-os jellel mérethelyesen már nem ábrázolható meredek falú (minimum 2 méteres átmérőjű) gödör, lyuk jelölésére szolgál.Akörnyezeténél minimum 1 méterrel mélyebbnek kell lennie. Pontos terepi helye a jel súlypontja, a jel északra tájolt.</translation>
         </message>
         <message>
             <source>Broken ground, small</source>
             <comment>Name of symbol 117.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Szabdalt terület, kis pont</translation>
         </message>
         <message>
             <source>An area of pits or knolls which is too intricate to be shown in detail. The density of randomly placed dots may vary according to the detail on the ground.</source>
             <comment>Description of symbol 117.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Gödrös vagy kúpos terület, amely túlságosan bonyolult ahhoz, hogy részletesen bemutassuk. A véletlenszerűen elhelyezett pontok sűrűsége a felszínen lévő részletektől függően változhat.</translation>
         </message>
         <message>
             <source>Broken ground, big</source>
             <comment>Name of symbol 117.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Szabdalt terület, nagy pont</translation>
         </message>
         <message>
             <source>The size of the dots may vary.</source>
             <comment>Description of symbol 117.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Gödrökkel, halmokkal borított terület, melynek részletes ábrázolását a méretarány nem teszi lehetővé. A pontok sűrűsége a terület bonyolultságától függően változhat.</translation>
         </message>
         <message>
             <source>Special land form feature</source>
             <comment>Name of symbol 118</comment>
-            <translation type="unfinished"></translation>
+            <translation>Különleges domborzati tereptárgy</translation>
         </message>
         <message>
             <source>This symbol can be used for a special small land form feature. The definition of the symbol must be given in the map legend.</source>
             <comment>Description of symbol 118</comment>
-            <translation type="unfinished"></translation>
+            <translation>Ez a jel használható különleges kisméretű domborzati formák ábrázolására. Pontos jelentését meg kell adni a térkép jelmagyarázatában.</translation>
         </message>
         <message>
             <source>Rocky pit</source>
             <comment>Name of symbol 204</comment>
-            <translation type="unfinished"></translation>
+            <translation>Köves gödör</translation>
         </message>
         <message>
             <source>Rocky pits, holes or mineshafts which may constitute a danger to the runner. Location is the centre of gravity of the symbol, which is orientated to north.</source>
             <comment>Description of symbol 204</comment>
-            <translation type="unfinished"></translation>
+            <translation>A futó számára veszélyt jelentő köves gödör, lyuk, bányaakna. A jel északra tájolt, pontos helye a jel súlypontja.</translation>
         </message>
         <message>
             <source>Cave</source>
             <comment>Name of symbol 205</comment>
-            <translation type="unfinished"></translation>
+            <translation>Barlang</translation>
         </message>
         <message>
             <source>A cave is represented by the same symbol as a rocky pit. In this case the symbol should be orientated to point up the slope as indicated opposite. The centre of gravity of the symbol marks the opening.</source>
             <comment>Description of symbol 205</comment>
-            <translation type="unfinished"></translation>
+            <translation>A jele megegyezik a köves gödör jelével. Pontos helye a jel súlypontja, az elforgatott jel a bejárat irányát jelzi.</translation>
         </message>
         <message>
             <source>Stony ground, small</source>
             <comment>Name of symbol 210</comment>
-            <translation type="unfinished"></translation>
+            <translation>Kőmező, kisméretű kövekkel</translation>
         </message>
         <message>
             <source>Stony or rocky ground which affects going should be shown on the map. The dots should be randomly distributed with density according to the amount of rock. A minimum of three dots should be used.</source>
             <comment>Description of symbol 210</comment>
-            <translation type="unfinished"></translation>
+            <translation>Haladást gátló köves terület. Az egyes pontok véletlenszerűen oszlanak el és sűrűségük a kövek terepi sűrűségének függvénye (felületi jel). Legalább három pont rajzolandó.</translation>
         </message>
         <message>
             <source>Stony ground</source>
             <comment>Name of symbol 210.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Kőmező</translation>
         </message>
         <message>
             <source>Stony or rocky ground which affects going should be shown on the map. The dots should be randomly distributed with density according to the amount of rock. A minimum of three dots should be used.</source>
             <comment>Description of symbol 210.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Haladást gátló köves terület. Az egyes pontok véletlenszerűen oszlanak el és sűrűségük a kövek terepi sűrűségének függvénye (felületi jel). Legalább három pont rajzolandó.</translation>
         </message>
         <message>
             <source>Open sandy ground</source>
             <comment>Name of symbol 211</comment>
-            <translation type="unfinished"></translation>
+            <translation>Nyílt homokos talaj</translation>
         </message>
         <message>
             <source>An area of soft sandy ground or gravel with no vegetation and where running is slow. Where an area of sandy ground is open but running is good, it is shown as open land (401/402).</source>
             <comment>Description of symbol 211</comment>
-            <translation type="unfinished"></translation>
+            <translation>A futást nehezítő, növényzet nélküli homokos, kavicsos terület. Ha az adott homokos terület nyílt, de a futhatóság jó, inkább a nyílt terület jele (401/402) használatos.</translation>
         </message>
         <message>
             <source>Bare rock</source>
             <comment>Name of symbol 212</comment>
-            <translation type="unfinished"></translation>
+            <translation>Kopár sziklafelszín</translation>
         </message>
         <message>
             <source>A runnable area of rock without earth or vegetation is shown as bare rock. An area of rock covered with grass, moss or other low vegetation is shown as open land (401/402).</source>
             <comment>Description of symbol 212</comment>
-            <translation type="unfinished"></translation>
+            <translation>alaj és növényzet nélküli futható sziklafelszín. A füves, mohás vagy más növényzettel fedett sziklafelszín a nyílt terület jelével (401/402) ábrázolható.</translation>
         </message>
         <message>
             <source>Pond</source>
             <comment>Name of symbol 302</comment>
-            <translation type="unfinished"></translation>
+            <translation>Kis tó</translation>
         </message>
         <message>
             <source>Where the lake or pond is smaller than 1 mm² on the printed map, the bank line is omitted.</source>
             <comment>Description of symbol 302</comment>
-            <translation type="unfinished"></translation>
+            <translation>Ha a tó a nyomtatott térképen kisebb, mint 1 mm , a fekete határvonal elmarad.</translation>
         </message>
         <message>
             <source>Waterhole</source>
             <comment>Name of symbol 303</comment>
-            <translation type="unfinished"></translation>
+            <translation>Vizesgödör</translation>
         </message>
         <message>
             <source>A water-filled pit or an area of water which is too small to be shown to scale. Location is the centre of gravity of the symbol, which is orientated to north.</source>
             <comment>Description of symbol 303</comment>
-            <translation type="unfinished"></translation>
+            <translation>Vizes gödör vagy olyan vízfelület, amely túl kicsi ahhoz, hogy alaprajzban ábrázoljuk.A tereptárgy helye a jel súlypontja, a jelet északra kell tájolni.</translation>
         </message>
         <message>
             <source>Minor water channel</source>
             <comment>Name of symbol 307</comment>
-            <translation type="unfinished"></translation>
+            <translation>Vizes árok</translation>
         </message>
         <message>
             <source>A natural or man-made minor water channel which may contain water only intermittently.</source>
             <comment>Description of symbol 307</comment>
-            <translation type="unfinished"></translation>
+            <translation>Természetes, vagy mesterséges kis vizes árok, amely akár időszakosan vizet tartalmaz.</translation>
         </message>
         <message>
             <source>Forest: difficult to run</source>
             <comment>Name of symbol 408</comment>
-            <translation type="unfinished"></translation>
+            <translation>Nehezen futható erdő</translation>
         </message>
         <message>
             <source>An area with dense trees or thicket (low visibility) which reduce running to ca. 20-60% of normal speed.</source>
             <comment>Description of symbol 408</comment>
-            <translation type="unfinished"></translation>
+            <translation>Fákkal és bozóttal sűrűn benőtt terület (rossz átláthatóság), amelyben a futás sebessége a normál futósebességhez viszonyítva 20–60%-os.</translation>
         </message>
         <message>
             <source>Narrow marsh</source>
             <comment>Name of symbol 308</comment>
-            <translation type="unfinished"></translation>
+            <translation>Keskeny mocsár</translation>
         </message>
         <message>
             <source>A marsh or trickle of water which is too narrow to be shown with symbol 310 (less than ca. 5 m wide).</source>
             <comment>Description of symbol 308</comment>
-            <translation type="unfinished"></translation>
+            <translation>Mocsár vagy vízszivárgás, amely túl keskeny ahhoz, hogy a 310-es jellel ábrázoljuk (kb. 5 méternél keskenyebb).</translation>
         </message>
         <message>
             <source>Uncrossable marsh</source>
             <comment>Name of symbol 309</comment>
-            <translation type="unfinished"></translation>
+            <translation>Áthatolhatatlan mocsár</translation>
         </message>
         <message>
             <source>A marsh which is uncrossable or dangerous for the runner. A black line surrounds the symbol.</source>
             <comment>Description of symbol 309</comment>
-            <translation type="unfinished"></translation>
+            <translation>Mocsár, amely a futó számára áthatolhatatlan, vagy veszélyes. A jelet fekete vonal veszi körül.</translation>
         </message>
         <message>
             <source>Uncrossable marsh, border line</source>
             <comment>Name of symbol 309.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Áthatolhatatlan mocsár, határoló vonal</translation>
         </message>
         <message>
             <source>A black line surrounds the symbol.</source>
             <comment>Description of symbol 309.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Egy fekete folyamatos vonal.</translation>
         </message>
         <message>
             <source>Uncrossable marsh, with border line</source>
             <comment>Name of symbol 309.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Áthatolhatatlan mocsár, határoló vonallal</translation>
         </message>
         <message>
             <source>Marsh</source>
             <comment>Name of symbol 310</comment>
-            <translation type="unfinished"></translation>
+            <translation>Mocsár</translation>
         </message>
         <message>
             <source>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility.</source>
             <comment>Description of symbol 310</comment>
-            <translation type="unfinished"></translation>
+            <translation>Áthatolható mocsár határozott körvonallal. Amennyiben egy kisebb mocsarat szeretnénk kombinálni a 403/404 jelekkel, úgy engedélyezett a 401/402 jelek alkalmazása a jobb olvashatóság érdekében.</translation>
         </message>
         <message>
             <source>Marsh, minimum size</source>
             <comment>Name of symbol 310.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Mocsár, minimális méret</translation>
         </message>
         <message>
             <source>Indistinct marsh</source>
             <comment>Name of symbol 311</comment>
-            <translation type="unfinished"></translation>
+            <translation>Vizenyős terület</translation>
         </message>
         <message>
             <source>An indistinct or seasonal marsh or area of gradual transition from marsh to firm ground, which is crossable. The edge is generally indistinct and the vegetation similar to that of the surrounding ground. The symbol should be combined with vegetation symbols to show runnability and openness.</source>
             <comment>Description of symbol 311</comment>
-            <translation type="unfinished"></translation>
+            <translation>Időszakos mocsár vagy fokozatos átmenet a mocsár felé, amely állandóan átgázolható. A széle általában határozatlan és a növényzet hasonló a környezetéhez. A 311-es jel kombinálható növényzeti jelekkel a fedettség és a futhatóság ábrázolására.</translation>
         </message>
         <message>
             <source>Indistinct marsh, minimum size</source>
             <comment>Name of symbol 311.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Vizenyős terület, minimális méret</translation>
         </message>
         <message>
             <source>Well</source>
             <comment>Name of symbol 312</comment>
-            <translation type="unfinished"></translation>
+            <translation>Kút</translation>
         </message>
         <message>
             <source>Wells and captive springs, which are clearly visible on the ground.</source>
             <comment>Description of symbol 312</comment>
-            <translation type="unfinished"></translation>
+            <translation>Kút vagy foglalt forrás, amely a terepen világosan látszik.</translation>
         </message>
         <message>
             <source>Spring</source>
             <comment>Name of symbol 313</comment>
-            <translation type="unfinished"></translation>
+            <translation>Forrás</translation>
         </message>
         <message>
             <source>The source of a stream with a distinct outflow. The symbol is orientated to open downstream.</source>
             <comment>Description of symbol 313</comment>
-            <translation type="unfinished"></translation>
+            <translation>Patak forrása határozott kifolyással. A jel nyitott részét a kifolyás irányába kell elforgatni.</translation>
         </message>
         <message>
             <source>Special water feature</source>
             <comment>Name of symbol 314</comment>
-            <translation type="unfinished"></translation>
+            <translation>Különleges vízrajzi tereptárgy</translation>
         </message>
         <message>
             <source>A special small water feature. The definition of the symbol must always be given in the map legend.</source>
             <comment>Description of symbol 314</comment>
-            <translation type="unfinished"></translation>
+            <translation>Különleges kis vízrajzi tereptárgy. A jel magyarázatát a térkép jelkulcsában mindig meg kell adni.</translation>
         </message>
         <message>
             <source>Undergrowth: slow running</source>
             <comment>Name of symbol 407</comment>
-            <translation type="unfinished"></translation>
+            <translation>Lassan futható aljnövényzet</translation>
         </message>
         <message>
             <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 60-80% of normal speed. This symbol may not be combined with 406 or 408.</source>
             <comment>Description of symbol 407</comment>
-            <translation type="unfinished"></translation>
+            <translation>Sűrű aljnövényzettel borított, de jól átlátható terület (szeder, alacsony bozót, gallyazás), amelyben a futás sebessége a normál futósebességhez viszonyítva 60–80%-os.A jel a 406-os és 408-as jelekkel nem kombinálható.</translation>
         </message>
         <message>
             <source>Undergrowth: difficult to run</source>
             <comment>Name of symbol 409</comment>
-            <translation type="unfinished"></translation>
+            <translation>Nehezen futható aljnövényzet</translation>
         </message>
         <message>
             <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 20-60% of normal speed. This symbol may not be combined with 406 or 408.</source>
             <comment>Description of symbol 409</comment>
-            <translation type="unfinished"></translation>
+            <translation>Sűrű aljnövényzettel borított, egyébként jól átlátható terület (szeder, alacsony bozót, gallyazás), amelyben a futás sebessége a normál futósebességhez viszonyítva 20–60%-os.Ajel nem kombinálható a 406-os és 408-as jelekkel.</translation>
         </message>
         <message>
             <source>Vegetation: very difficult to run, impassable</source>
             <comment>Name of symbol 410</comment>
-            <translation type="unfinished"></translation>
+            <translation>Nehezen leküzdhető bozót</translation>
         </message>
         <message>
             <source>An area of dense vegetation (trees or undergrowth) which is barely passable. Running reduced to ca. 0-20% of normal speed.</source>
             <comment>Description of symbol 410</comment>
-            <translation type="unfinished"></translation>
+            <translation>Olyan sűrű növényzettel (fákkal vagy aljnövényzettel) borított terület, ahol haladni alig lehet, a futósebesség a normál sebesség 0–20%-ára csökken.</translation>
         </message>
         <message>
             <source>Vegetation: very difficult to run, impassable, line</source>
             <comment>Name of symbol 410.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Nehezen leküzdhető bozót, vonal</translation>
         </message>
         <message>
             <source>Line of minimum width for symbol 410.</source>
             <comment>Description of symbol 410.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>A 410-es jel minimális szélességű vonal mérete 0,25mm.</translation>
         </message>
         <message>
             <source>Forest runnable in one direction, 1</source>
             <comment>Name of symbol 411.0</comment>
-            <translation type="unfinished"></translation>
+            <translation>Erdő futhatósági irány, 1-es zöld</translation>
         </message>
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
             <comment>Description of symbol 411.0</comment>
-            <translation type="unfinished"></translation>
+            <translation>Ha az erdőben a futhatóság egy irányban kedvezőbb, mint a többiben, akkor a kedvező iránnyal párhuzamos fehér csíkozást kap a zöld felületi jel.</translation>
         </message>
         <message>
             <source>Forest runnable in one direction, 2</source>
             <comment>Name of symbol 411.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Erdő futhatósági irány, 2-es zöld</translation>
         </message>
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
             <comment>Description of symbol 411.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Ha az erdőben a futhatóság egy irányban kedvezőbb, mint a többiben, akkor a kedvező iránnyal párhuzamos fehér csíkozást kap a zöld felületi jel.</translation>
         </message>
         <message>
             <source>Forest runnable in one direction, 3</source>
             <comment>Name of symbol 411.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Erdő, ami egy irányban futható, 3-as zöld</translation>
         </message>
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
             <comment>Description of symbol 411.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Ha az erdőben a futhatóság egy irányban kedvezőbb, mint a többiben, akkor a kedvező iránnyal párhuzamos fehér csíkozást kap a zöld felületi jel.</translation>
         </message>
         <message>
             <source>Cultivated land</source>
             <comment>Name of symbol 415</comment>
-            <translation type="unfinished"></translation>
+            <translation>Művelt terület</translation>
         </message>
         <message>
             <source>Cultivated land which is seasonally out-of-bounds due to growing crops may be shown with a black dot screen.</source>
             <comment>Description of symbol 415</comment>
-            <translation type="unfinished"></translation>
+            <translation>Azt a művelt területet, amelyet a növényzet fejlődési ideje alatt el kell kerülni, sárga alapon fekete pontozással jelöljük.</translation>
         </message>
         <message>
             <source>Special vegetation feature</source>
             <comment>Name of symbol 419</comment>
-            <translation type="unfinished"></translation>
+            <translation>Különleges növényzeti tereptárgy</translation>
         </message>
         <message>
             <source>Symbols 418, 419 and 420 can be used for special small vegetation features. The definition of the symbol must be given in each case in the map legend.</source>
             <comment>Description of symbol 419</comment>
-            <translation type="unfinished"></translation>
+            <translation>A 418, 419 és 420 jeleket különleges, kis kiterjedésű növényzeti tereptárgy esetében használjuk. A jel pontos meghatározását meg kell adni a térkép jelmagyarázatában.</translation>
         </message>
         <message>
             <source>Special vegetation feature</source>
             <comment>Name of symbol 420</comment>
-            <translation type="unfinished"></translation>
+            <translation>Különleges növényzeti tereptárgy</translation>
         </message>
         <message>
             <source>Symbols 418, 419 and 420 can be used for special small vegetation features. The definition of the symbol must be given in each case in the map legend.</source>
             <comment>Description of symbol 420</comment>
-            <translation type="unfinished"></translation>
+            <translation>A 418, 419 és 420 jeleket különleges, kis kiterjedésű növényzeti tereptárgy esetében használjuk. A jel pontos meghatározását meg kell adni a térkép jelmagyarázatában.</translation>
         </message>
         <message>
             <source>Motorway, under construction</source>
             <comment>Name of symbol 501.5</comment>
-            <translation type="unfinished"></translation>
+            <translation>Épülő autópálya</translation>
         </message>
         <message>
             <source>A road under construction may be shown with broken lines.</source>
             <comment>Description of symbol 501.5</comment>
-            <translation type="unfinished"></translation>
+            <translation>Gépjárműforgalom számára készült osztottpályás út. A jel méretarány szerinti szélességben rajzolandó, de nem lehet vékonyabb a minimum értéknél. A külső 0,18 határoló vonalak az 519, 521, 522 vagy 524-es jelekkel is helyettesíthetők, amennyiben a kerítés vagy a fal olyan közel húzódik a pálya széléhez, hogy külön jellel már nem ábrázolható. A fekete vonalak közötti területet barnával (50%) kell kitölteni. Az épülő útszakaszokat szaggatott jellel jelöljük. A hézagok 0,25mm szélességűek az útszakaszokat 3 mm hosszú jellel kell megrajzolni.</translation>
         </message>
         <message>
             <source>Major road, minimum width, under construction</source>
             <comment>Name of symbol 502.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Épülő főút, minimális szélesség</translation>
         </message>
         <message>
             <source>A road under construction may be shown with broken lines.</source>
             <comment>Description of symbol 502.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Gépjárműforgalom számára készült osztottpályás út. A jel méretarány szerinti szélességben rajzolandó, de nem lehet vékonyabb a minimum értéknél. A külső 0,18 határoló vonalak az 519, 521, 522 vagy 524-es jelekkel is helyettesíthetők, amennyiben a kerítés vagy a fal olyan közel húzódik a pálya széléhez, hogy külön jellel már nem ábrázolható. A fekete vonalak közötti területet barnával (50%) kell kitölteni. Az épülő útszakaszokat szaggatott jellel jelöljük. A hézagok 0,25mm szélességűek az útszakaszokat 3 mm hosszú jellel kell megrajzolni.</translation>
         </message>
         <message>
             <source>Minor road, under construction</source>
             <comment>Name of symbol 503.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Épülő mellékút</translation>
         </message>
         <message>
             <source>A road under construction may be shown with broken lines.</source>
             <comment>Description of symbol 503.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Gépjárműforgalom számára készült osztottpályás út. A jel méretarány szerinti szélességben rajzolandó, de nem lehet vékonyabb a minimum értéknél. A külső 0,18 határoló vonalak az 519, 521, 522 vagy 524-es jelekkel is helyettesíthetők, amennyiben a kerítés vagy a fal olyan közel húzódik a pálya széléhez, hogy külön jellel már nem ábrázolható. A fekete vonalak közötti területet barnával (50%) kell kitölteni. Az épülő útszakaszokat szaggatott jellel jelöljük. A hézagok 0,25mm szélességűek az útszakaszokat 3 mm hosszú jellel kell megrajzolni.</translation>
         </message>
         <message>
             <source>Vehicle track</source>
             <comment>Name of symbol 505</comment>
-            <translation type="unfinished"></translation>
+            <translation>Kocsiút</translation>
         </message>
         <message>
             <source>A track or poorly maintained road suitable for vehicles only when travelling slowly. Width less than 3 m.</source>
             <comment>Description of symbol 505</comment>
-            <translation type="unfinished"></translation>
+            <translation>3 méternél keskenyebb keréknyom vagy gyengén karbantartott út (szekérút), járművek csak lassan haladhatnak rajta.</translation>
         </message>
         <message>
             <source>Footpath</source>
             <comment>Name of symbol 506</comment>
-            <translation type="unfinished"></translation>
+            <translation>Gyalogút</translation>
         </message>
         <message>
             <source>A large path, or old vehicle track, which is distinct on the ground.</source>
             <comment>Description of symbol 506</comment>
-            <translation type="unfinished"></translation>
+            <translation>Széles ösvény vagy ritkán használt kocsiút, amely határozottan felismerhető a terepen.</translation>
         </message>
         <message>
             <source>Small path</source>
             <comment>Name of symbol 507</comment>
-            <translation type="unfinished"></translation>
+            <translation>Ösvény</translation>
         </message>
         <message>
             <source>A small path or (temporary) forest extraction track which can be followed at competition speed.</source>
             <comment>Description of symbol 507</comment>
-            <translation type="unfinished"></translation>
+            <translation>Keskeny ösvény vagy felhagyott erdei fakihordó út, amely versenysebesség mellett is követhető.</translation>
         </message>
         <message>
             <source>Less distinct small path</source>
             <comment>Name of symbol 508</comment>
-            <translation type="unfinished"></translation>
+            <translation>Felhagyott ösvény</translation>
         </message>
         <message>
             <source>A less distinct small path or forestry extraction track.</source>
             <comment>Description of symbol 508</comment>
-            <translation type="unfinished"></translation>
+            <translation>Kevésbé felismerhető keskeny ösvény vagy fakihordó út.</translation>
         </message>
         <message>
             <source>Footbridge</source>
             <comment>Name of symbol 512</comment>
-            <translation type="unfinished"></translation>
+            <translation>Gyaloghíd</translation>
         </message>
         <message>
             <source>A footbridge with no path leading to it.
 Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm over both sides of the stream!</source>
             <comment>Description of symbol 512</comment>
-            <translation type="unfinished"></translation>
+            <translation>Gyaloghíd, hozzávezető út nélkül. Megegyzés: ha az víz szélesebb  0.25mm-nél akkor mindkét oldalon 0.5 mm-rel meg kell hosszabbítani a víz oldalaihoz képest!</translation>
         </message>
         <message>
             <source>Ruined stone wall</source>
             <comment>Name of symbol 520</comment>
-            <translation type="unfinished"></translation>
+            <translation>Romos kőfal</translation>
         </message>
         <message>
             <source>A ruined stone wall may be shown by a dashed line.</source>
             <comment>Description of symbol 520</comment>
-            <translation type="unfinished"></translation>
+            <translation>Egy romos kőfal szaggatott vonallal ábrázolható.</translation>
         </message>
         <message>
             <source>Ruined fence</source>
             <comment>Name of symbol 523</comment>
-            <translation type="unfinished"></translation>
+            <translation>Romos kerítés</translation>
         </message>
         <message>
             <source>A ruined fence may be shown with a dashed line.</source>
             <comment>Description of symbol 523</comment>
-            <translation type="unfinished"></translation>
+            <translation>A romos kerítést szaggatott vonallal kell ábrázolni.</translation>
         </message>
         <message>
             <source>Ruin</source>
             <comment>Name of symbol 530</comment>
-            <translation type="unfinished"></translation>
+            <translation>Rom</translation>
         </message>
         <message>
             <source>The ground plan of a ruin is shown to scale, down to the minimum size shown opposite. Very small ruins may be drawn with a solid line.</source>
             <comment>Description of symbol 530</comment>
-            <translation type="unfinished"></translation>
+            <translation>A rom a méretarány biztosította lehetőségen belül alaprajzban ábrázolandó. A mérethelyesen nem ábrázolható romot a minimális méretű jellel jelöljük. A nagyon kis romok folyamatos vonallal ábrázolhatók.</translation>
         </message>
         <message>
             <source>Ruin, no dashes</source>
             <comment>Name of symbol 530.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Rom, nem szaggatott vonal</translation>
         </message>
         <message>
             <source>Very small ruins may be drawn with a solid line.</source>
             <comment>Description of symbol 530.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Nagyon kis romok folyamatos vonallal ábrázolhatók.</translation>
         </message>
         <message>
             <source>Ruin, minimum size</source>
             <comment>Name of symbol 530.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Rom minimális méret</translation>
         </message>
         <message>
             <source>Very small ruins may be drawn with a solid line.</source>
             <comment>Description of symbol 530.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Nagyon kis romok folyamatos vonallal ábrázolhatók.</translation>
         </message>
         <message>
             <source>Grave</source>
             <comment>Name of symbol 532</comment>
-            <translation type="unfinished"></translation>
+            <translation>Sír</translation>
         </message>
         <message>
             <source>A distinct grave marked by a stone or shrine. Location is at the centre of gravity of the symbol, which is orientated to north. A cemetery is shown by using grave symbols as space permits.</source>
             <comment>Description of symbol 532</comment>
-            <translation type="unfinished"></translation>
+            <translation>Egyedülálló, kővel vagy emlékművel jelölt sír. A helyét a jel súlypontja jelöli. A jelet északra kell tájolni.A temető is a sír jelével ábrázolható (felületi jel).</translation>
         </message>
         <message>
             <source>Crossable pipeline</source>
             <comment>Name of symbol 533</comment>
-            <translation type="unfinished"></translation>
+            <translation>Csővezeték</translation>
         </message>
         <message>
             <source>A pipeline (gas, water, oil, etc.) above ground level which can be crossed over or under.</source>
             <comment>Description of symbol 533</comment>
-            <translation type="unfinished"></translation>
+            <translation>Földfelszíni gáz-, olaj-, víz- stb. csővezeték, amely fölött vagy alatt lehetséges az áthaladás.</translation>
         </message>
         <message>
             <source>Cairn</source>
             <comment>Name of symbol 537</comment>
-            <translation type="unfinished"></translation>
+            <translation>Határkő, határkaró, emlékmű, határjel kőhalom</translation>
         </message>
         <message>
             <source>Cairn, memorial stone or boundary stone (or a trigonometric point in some countries) more than 0.5 m high.</source>
             <comment>Description of symbol 537</comment>
-            <translation type="unfinished"></translation>
+            <translation>Határkő, határkaró, kőhalom, emlékkő, háromszögelési pont, amely 0,5 méternél magasabb.</translation>
         </message>
         <message>
             <source>Fodder rack</source>
             <comment>Name of symbol 538</comment>
-            <translation type="unfinished"></translation>
+            <translation>Vadetető - takarmányállvány</translation>
         </message>
         <message>
             <source>A fodder rack which is free standing or built on to a tree. Location is at the centre of gravity of the symbol. For land access reasons these may be omitted.</source>
             <comment>Description of symbol 538</comment>
-            <translation type="unfinished"></translation>
+            <translation>Szabadon álló vagy fára épített vadetető. Terepi helyét a jel súlypontja jelöli. Ha földhasználati okok (pl. vadgazdálkodás) úgy kívánják, a térképről elhagyhatók.</translation>
         </message>
     </context>
     <context>
@@ -9947,99 +9917,101 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Simple Orienteering Course</source>
             <comment>Name of symbol 799</comment>
-            <translation type="unfinished"></translation>
+            <translation>Egyszerű versenypálya</translation>
         </message>
         <message>
             <source>This symbol provides a simple and quick way to make training courses.
 
 The purple line will extend a bit into the finish symbol. This is a shortcoming of this simple approach.</source>
             <comment>Description of symbol 799</comment>
-            <translation type="unfinished"></translation>
+            <translation>Ez a jel lehetővé tesz egy egyszerű gyors utat  egy edző pálya készítéséhez.
+
+A lila vonalat pontonként a rajttól a célig halad.   Ez az egyszerű megközelítés hiányossága.</translation>
         </message>
         <message>
             <source>Start</source>
             <comment>Name of symbol 701</comment>
-            <translation type="unfinished"></translation>
+            <translation>Rajt</translation>
         </message>
         <message>
             <source>The start or map issue point (if not at the start) is shown by an equilateral triangle which points in the direction of the first control. The centre of the triangle shows the precise position of the start point.</source>
             <comment>Description of symbol 701</comment>
-            <translation type="unfinished"></translation>
+            <translation>A rajt vagy térképrajt (amennyiben az nem azonos helyen van az időrajttal) helyét egyenlő oldalú háromszög jelöli, amelynek egyik csúcsa az első ellenőrző pont irányába mutat. A háromszög középpontja mutatja a tereptárgy pontos helyét.</translation>
         </message>
         <message>
             <source>Control point</source>
             <comment>Name of symbol 702</comment>
-            <translation type="unfinished"></translation>
+            <translation>Ellenőrzőpont</translation>
         </message>
         <message>
             <source>The control points are shown with circles. The centre of the circle shows the precise position of the feature. Sections of circles should be omitted to leave important detail showing.</source>
             <comment>Description of symbol 702</comment>
-            <translation type="unfinished"></translation>
+            <translation>Az ellenőrzőpon helyét kör jelöli. A kör középpontja mutatja a tereptárgy pontos helyét. A kör vonalát megszakíthatjuk ha az fontos részleteket takar.</translation>
         </message>
         <message>
             <source>Control number</source>
             <comment>Name of symbol 703</comment>
-            <translation type="unfinished"></translation>
+            <translation>Ellenőrzőpont sorszáma</translation>
         </message>
         <message>
             <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail. The numbers are orientated to north.</source>
             <comment>Description of symbol 703</comment>
-            <translation type="unfinished"></translation>
+            <translation>A számot a körhöz közel kell elhelyezni úgy, hogy fontos részleteket ne takarjon.</translation>
         </message>
         <message>
             <source>Line</source>
             <comment>Name of symbol 704</comment>
-            <translation type="unfinished"></translation>
+            <translation>Összekötő vonal</translation>
         </message>
         <message>
             <source>Where controls are to be visited in order, the start, control points and finish are joined together by straight lines. Sections of lines should be omitted to leave important detail showing.</source>
             <comment>Description of symbol 704</comment>
-            <translation type="unfinished"></translation>
+            <translation>A rajtot, az ellenőrzőpontokat és a célt egyenes vonallal kell összekötni. Az összekötő szakaszokat meg lehet szakítani, ha az fontos részletet takar.</translation>
         </message>
         <message>
             <source>Marked route</source>
             <comment>Name of symbol 705</comment>
-            <translation type="unfinished"></translation>
+            <translation>Jelzett útvonal</translation>
         </message>
         <message>
             <source>A marked route is shown on the map with a dashed line.</source>
             <comment>Description of symbol 705</comment>
-            <translation type="unfinished"></translation>
+            <translation>A terepen kiszalagozott útvonalat a térképen szaggatott vonal jelzi.</translation>
         </message>
         <message>
             <source>Finish</source>
             <comment>Name of symbol 706</comment>
-            <translation type="unfinished"></translation>
+            <translation>Cél</translation>
         </message>
         <message>
             <source>The finish is shown by two concentric circles.</source>
             <comment>Description of symbol 706</comment>
-            <translation type="unfinished"></translation>
+            <translation>A cél helyét két koncentrikus kör jelöli.</translation>
         </message>
         <message>
             <source>Uncrossable boundary</source>
             <comment>Name of symbol 707</comment>
-            <translation type="unfinished"></translation>
+            <translation>Tiltott határ</translation>
         </message>
         <message>
             <source>A boundary which it is not permitted to cross.</source>
             <comment>Description of symbol 707</comment>
-            <translation type="unfinished"></translation>
+            <translation>Olyan határ, amelyet a terepen tilos átlépni.</translation>
         </message>
         <message>
             <source>Crossing point</source>
             <comment>Name of symbol 708</comment>
-            <translation type="unfinished"></translation>
+            <translation>Átkelőhely</translation>
         </message>
         <message>
             <source>A crossing point through or over a wall or fence, or across a road or railway or through a tunnel or an out-of-bounds area is drawn on the map with two lines curving outwards.</source>
             <comment>Description of symbol 708</comment>
-            <translation type="unfinished"></translation>
+            <translation>Átjárót falon, kerítésen vagy úton, vasúton, zárt területen, esetleg alagutat ezek alatt, két kifelé görbülő vonal jelöl.</translation>
         </message>
         <message>
             <source>Out-of-bounds area</source>
             <comment>Name of symbol 709</comment>
-            <translation type="unfinished"></translation>
+            <translation>Tiltott terület</translation>
         </message>
         <message>
             <source>An out-of-bounds area, see also symbol 528, is shown with vertical stripes.
@@ -10048,67 +10020,70 @@ A bounding line may be drawn if there is no natural boundary, as follows:
 - a dashed line indicates intermittent marking on the ground,
 - no line indicates no marking on the ground.</source>
             <comment>Description of symbol 709</comment>
-            <translation type="unfinished"></translation>
+            <translation>A zárt területet – lásd. 528-es jel is – függőleges vonalak jelölik. A határoló vonalat, ha az nem természetes határ, a következő módon jelöljük:
+a) a folytonos vonal azt jelenti, hogy a határvonal a terepen végig szalagozott,
+b) a szaggatott vonal azt jelenti, hogy a határvonal jelzése a terepen nem folytonos,
+c) a határvonal hiánya azt jelenti, hogy a terepen nincs semmiféle jelölés.</translation>
         </message>
         <message>
             <source>Out-of-bounds area, solid boundary</source>
             <comment>Name of symbol 709.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Tiltott terület, folytonos határoló vonal</translation>
         </message>
         <message>
             <source>A solid line indicates that the boundary is marked continuously (tapes, etc.) on the ground.</source>
             <comment>Description of symbol 709.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Egy folytonos vonal azt jelenti, hogy a határvonal a terepen végig szalagozott.</translation>
         </message>
         <message>
             <source>Out-of-bounds area, dashed boundary</source>
             <comment>Name of symbol 709.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Tiltott terület, szaggatott határoló vonal</translation>
         </message>
         <message>
             <source>A dashed line indicates intermittent marking on the ground.</source>
             <comment>Description of symbol 709.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Egy szaggatott vonal azt jelenti, hogy a határvonal jelzése a terepen nem folytonos.</translation>
         </message>
         <message>
             <source>Dangerous area</source>
             <comment>Name of symbol 710</comment>
-            <translation type="unfinished"></translation>
+            <translation>Veszélyes terület</translation>
         </message>
         <message>
             <source>An area presenting danger to the competitor is shown with cross-hatched diagonal lines.</source>
             <comment>Description of symbol 710</comment>
-            <translation type="unfinished"></translation>
+            <translation>Az átlósan keresztezett vonalak a versenyző számára veszélyes területet jelölik.</translation>
         </message>
         <message>
             <source>Forbidden route</source>
             <comment>Name of symbol 711</comment>
-            <translation type="unfinished"></translation>
+            <translation>Tiltott útvonal</translation>
         </message>
         <message>
             <source>A route which is out-of-bounds is shown with crosses.</source>
             <comment>Description of symbol 711</comment>
-            <translation type="unfinished"></translation>
+            <translation>A versenyen nem használható útvonalat jelöl.</translation>
         </message>
         <message>
             <source>First aid post</source>
             <comment>Name of symbol 712</comment>
-            <translation type="unfinished"></translation>
+            <translation>Elsősegélyhely</translation>
         </message>
         <message>
             <source>The location of a first aid post.</source>
             <comment>Description of symbol 712</comment>
-            <translation type="unfinished"></translation>
+            <translation>Egy elsősegélyhely helye.</translation>
         </message>
         <message>
             <source>Refreshment point</source>
             <comment>Name of symbol 713</comment>
-            <translation type="unfinished"></translation>
+            <translation>Frissítőpont</translation>
         </message>
         <message>
             <source>The location of a refreshment point which is not at a control.</source>
             <comment>Description of symbol 713</comment>
-            <translation type="unfinished"></translation>
+            <translation>Egy olyan frissítő pont helye, ahol nincs ellenőrzőpont.</translation>
         </message>
         <message>
             <source>Heading: Single line for event title or classes</source>
