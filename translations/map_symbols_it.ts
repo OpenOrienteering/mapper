@@ -201,7 +201,7 @@
         <message>
             <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
             <comment>Description of symbol 103.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Le linee di pendenza possono essere disegnate sul lato inferiore di una curva di livello per chiarire la direzione della pendenza. Se utilizzate, devono essere collocati in oggetti rientranti.</translation>
         </message>
         <message>
             <source>Earth bank</source>
@@ -2188,7 +2188,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Black below light browns</source>
             <comment>Color 3</comment>
-            <translation type="unfinished"></translation>
+            <translation>Nero sotto marrone chiaro</translation>
         </message>
         <message>
             <source>Opaque Blue</source>
@@ -2258,7 +2258,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Green below light greens</source>
             <comment>Color 17</comment>
-            <translation type="unfinished"></translation>
+            <translation>Verde sotto verde chiaro</translation>
         </message>
         <message>
             <source>Yellow</source>
@@ -3834,7 +3834,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Opaque White below Black</source>
             <comment>Color 3</comment>
-            <translation type="unfinished"></translation>
+            <translation>Bianco opaco sotto nero</translation>
         </message>
         <message>
             <source>Brown for contours</source>
@@ -3894,7 +3894,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Black below light browns</source>
             <comment>Color 15</comment>
-            <translation type="unfinished"></translation>
+            <translation>Nero sotto marrone chiaro</translation>
         </message>
         <message>
             <source>Opaque Blue</source>
@@ -3949,7 +3949,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Green, Black 50%</source>
             <comment>Color 26</comment>
-            <translation type="unfinished"></translation>
+            <translation>Verde, Nero 50%</translation>
         </message>
         <message>
             <source>Opaque Green</source>
@@ -3974,7 +3974,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Green below light greens</source>
             <comment>Color 31</comment>
-            <translation type="unfinished"></translation>
+            <translation>Verde sotto verde chiaro</translation>
         </message>
         <message>
             <source>Yellow</source>
@@ -5871,7 +5871,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Black below light browns</source>
             <comment>Color 5</comment>
-            <translation type="unfinished"></translation>
+            <translation>Nero sotto marrone chiaro</translation>
         </message>
         <message>
             <source>Brown</source>
@@ -5946,7 +5946,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Green below light greens</source>
             <comment>Color 20</comment>
-            <translation type="unfinished"></translation>
+            <translation>Verde sotto verde chiaro</translation>
         </message>
         <message>
             <source>Yellow</source>
@@ -7662,7 +7662,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Black below light browns</source>
             <comment>Color 5</comment>
-            <translation type="unfinished"></translation>
+            <translation>Nero sotto marrone chiaro</translation>
         </message>
         <message>
             <source>Brown</source>
@@ -7732,7 +7732,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Green below light greens</source>
             <comment>Color 19</comment>
-            <translation type="unfinished"></translation>
+            <translation>Verde sotto verde chiaro</translation>
         </message>
         <message>
             <source>Yellow</source>
