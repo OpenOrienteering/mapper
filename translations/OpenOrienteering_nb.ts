@@ -329,7 +329,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="101"/>
         <source>Spot color printing</source>
-        <translation type="unfinished">Dekorfargetrykk</translation>
+        <translation>Spotfargetrykk</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="106"/>
@@ -2338,7 +2338,7 @@
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="295"/>
         <source>Geospatial vector data</source>
-        <translation type="unfinished">Vektor-geoposisjonsdata</translation>
+        <translation>Vektor-geoposisjonsdata</translation>
     </message>
 </context>
 <context>
@@ -2527,7 +2527,7 @@
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="95"/>
         <source>flat</source>
-        <translation type="unfinished">flatt</translation>
+        <translation>flatt</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="96"/>
@@ -4230,12 +4230,12 @@ Importer data likevel?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1369"/>
         <source>1x zoom</source>
-        <translation type="unfinished">1x forstørrelse</translation>
+        <translation>1x forstørrelse</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1373"/>
         <source>2x zoom</source>
-        <translation type="unfinished">2x forstørrelse</translation>
+        <translation>2x forstørrelse</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1601"/>
@@ -5382,7 +5382,7 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1318"/>
         <source>The border of this symbol could not be loaded.</source>
-        <translation type="unfinished">Kunne ikke laste inn omrisset av dette symbolet.</translation>
+        <translation>Kunne ikke laste inn omrisset av dette symbolet.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1614"/>
@@ -5503,13 +5503,13 @@ rull musehjulet for å zoome.</translation>
         <location filename="../src/gdal/ogr_file_format.cpp" line="564"/>
         <source>Cannot use this spatial reference:
 %1</source>
-        <translation type="unfinished">Kan ikke bruke denne posisjonsreferansen:
+        <translation>Kan ikke bruke denne posisjonsreferansen:
 %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="623"/>
         <source>The geospatial data has no suitable spatial reference.</source>
-        <translation type="unfinished">Geoposisjonsdatasettet har ikke noe passende posisjonsreferanse.</translation>
+        <translation>Geoposisjonsdatasettet har ikke noe passende posisjonsreferanse.</translation>
     </message>
 </context>
 <context>
@@ -5658,7 +5658,7 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="175"/>
         <source>flat</source>
-        <translation type="unfinished">flatt</translation>
+        <translation>flatt</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="176"/>
@@ -5981,7 +5981,7 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="270"/>
         <source>Save world file</source>
-        <translation type="unfinished">Lagre world-fil</translation>
+        <translation>Lagre world-fil</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1110"/>

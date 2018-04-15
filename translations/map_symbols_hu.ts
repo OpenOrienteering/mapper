@@ -673,13 +673,13 @@ To be able to show obvious height differences within a boulder field, it is perm
         <message>
             <source>Boulder field, single triangle, enlarged</source>
             <comment>Name of symbol 208.2</comment>
-            <translation>Sziklamező, egyetlen háromszög megnövelt</translation>
+            <translation>Sziklamező, egyetlen háromszög, felnagyított</translation>
     </message>
         <message>
             <source>To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
             <comment>Description of symbol 208.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Annak érekében, hogy meg lehessen különböztetni egymástól azon sziklamezőket, amelyekben a sziklák nagysága a többi mezőben találhatóaktól jelentősen eltér, a háromszögek mérete maximum 20%-al megnövelhető.</translation>
+    </message>
         <message>
             <source>Dense boulder field</source>
             <comment>Name of symbol 209</comment>
@@ -694,7 +694,7 @@ Density: 2–3 symbols / mm² (31%-47%). To be able to show obvious height diffe
         <message>
             <source>Stony ground, slow running</source>
             <comment>Name of symbol 210</comment>
-            <translation>Kőmező, lassú futhatóság</translation>
+            <translation>Kőmező, lassan futható</translation>
     </message>
         <message>
             <source>Stony or rocky ground which reduces runnability to about 60-80% of normal speed.
@@ -702,8 +702,11 @@ The dots should be randomly distributed but not interfere with the representatio
 The minimum number of dots is three (footprint 10 m x 10 m).
 To avoid confusion with symbol 416 (distinct vegetation boundary), the dots should not be arranged to form a line.</source>
             <comment>Description of symbol 210</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Köves vagy sziklás terep, amely rontja a futhatóságot (a normál sebesség kb. 60-80%-ra).
+A pontokat véletlenszerűen kell elosztani, de úgy, hogy az ne zavarja a fontos tereptárgyak vagy terep jellegzetességek ábrázolását. 
+Minimálisan 3 pontot kell megjelentetni (a terepen 10m x 10m terület).
+A 416-os szimbólummal (jelleghatár) való összetéveszhetőség elkerülésének érdekében a pontokat nem szabad úgy rendezni, hogy azok vonalat alkossanak.</translation>
+    </message>
         <message>
             <source>Stony ground, individual dot</source>
             <comment>Name of symbol 210.1</comment>
@@ -715,8 +718,11 @@ The dots should be randomly distributed but not interfere with the representatio
 The minimum number of dots is three (footprint 10 m x 10 m).
 To avoid confusion with symbol 416 (distinct vegetation boundary), the dots should not be arranged to form a line.</source>
             <comment>Description of symbol 210.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Köves vagy sziklás terep, amely rontja a futhatóságot (a normál sebesség kb. 60-80%-ra).
+A pontokat véletlenszerűen kell elosztani, de úgy, hogy az ne zavarja a fontos tereptárgyak vagy terep jellegzetességek ábrázolását. 
+Minimálisan 3 pontot kell megjelentetni (a terepen 10m x 10m terület).
+A 416-os szimbólummal (jelleghatár) való összetéveszhetőség elkerülésének érdekében a pontokat nem szabad úgy rendezni, hogy azok vonalat alkossanak.</translation>
+    </message>
         <message>
             <source>Stony ground, walk</source>
             <comment>Name of symbol 211</comment>
@@ -728,8 +734,11 @@ The dots should be randomly distributed but not interfere with the representatio
 The minimum number of dots is three (footprint 8 m x 8 m).
 To avoid confusion with symbol 416 (distinct vegetation boundary), the dots should not be arranged to form a line.</source>
             <comment>Description of symbol 211</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Köves vagy sziklás terep, amely jelentősen rontja a futhatóságot (a normál sebesség kb. 20-60%-ra).
+A pontokat véletlenszerűen kell elosztani, de úgy, hogy az ne zavarja a fontos tereptárgyak vagy terep jellegzetességek ábrázolását. 
+Minimálisan 3 pontot kell megjelentetni (a terepen 8m x 8m terület).
+A 416-os szimbólummal (jelleghatár) való összetéveszhetőség elkerülésének érdekében a pontokat nem szabad úgy rendezni, hogy azok vonalat alkossanak.</translation>
+    </message>
         <message>
             <source>Stony ground, fight</source>
             <comment>Name of symbol 212</comment>
@@ -777,34 +786,31 @@ Shorter trenches may be exaggerated to the minimum graphical dimension.
 Impassable trenches shall be represented using symbol 201 (impassable cliff).
 Collapsed and easily crossable trenches should be mapped as erosion gullies.</source>
             <comment>Description of symbol 215</comment>
-            <translation type="unfinished">Sziklás vagy mesterséges árok.
-A minimális mélység 1 m.
-Minimális hossz: 2 mm (30 m).
-Rövidebb árkok eltúlozhatók a minimális grafikus méretre.
-Az áthatolhatatlan árkokat  201 (áthatolhatatlan sziklafal) jellel kell ábrázolni.
-Összeomlott és könnyen keresztezhető árkokat  metsződésként, vízmosásként kell ábrázolni.</translation>
+            <translation>Minimum 1m mély sziklás vagy mesterséges árok.
+Minimális hossz: 2 mm (a terepen 30 m). Ennél rövidebb árkok eltúlozhatók annak érdekében, hogy a minimális ábrázolt méretnek megfeleljen a nyomtatott térkép.
+Az áthatolhatatlan árkokat a 201 (áthatolhatatlan sziklafal) jellel kell ábrázolni.
+Összeomlott és könnyen keresztezhető árkokat metsződésként, vízmosásként kell ábrázolni.</translation>
     </message>
         <message>
             <source>Uncrossable body of water, with bank line</source>
             <comment>Name of symbol 301</comment>
-            <translation>Átgázolhatatlan vízfolyás, partvonallal</translation>
+            <translation>Átgázolhatatlan vízfelület, partvonallal</translation>
     </message>
         <message>
             <source>The black bank line emphasises that the feature is uncrossable. Dominant areas of water may be shown with 70% colour. Small areas of water and bodies of water that have narrow parts shall always be shown with full colour.</source>
             <comment>Description of symbol 301</comment>
-            <translation type="unfinished">A fekete vonal jelzi, hogy a tereptárgy áthatolhatatlan. Nagyobb vízfelület ábrázolásánál 70%-os színt lehet használni, Kisebb vízfelületeket és víztesteket vékonyabb részeket mindig  teljes kékkel kell jelölni.
-Minimális szélesség: 0.3 mm (belső méret). Minimális terület: 0.5 mm 2 (kitöltés).</translation>
+            <translation>A partnál húzott fekete vonal jelzi, hogy a tereptárgy áthatolhatatlan. Nagyobb vízfelület ábrázolásánál 70%-os színt lehet használni, kisebb vizes tereptárgyakat és a vízfelületek keskenyebb részeit mindig teljes kék szinnel kell jelölni.</translation>
     </message>
         <message>
             <source>Uncrossable body of water</source>
             <comment>Name of symbol 301.1</comment>
-            <translation>Átgázolhatatlan víztest</translation>
+            <translation>Átgázolhatatlan vízfelület</translation>
     </message>
         <message>
             <source>The black bank line emphasises that the feature is uncrossable. Dominant areas of water may be shown with 70% colour. Small areas of water and bodies of water that have narrow parts shall always be shown with full colour.</source>
             <comment>Description of symbol 301.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>A partnál húzott fekete vonal jelzi, hogy a tereptárgy áthatolhatatlan. Nagyobb vízfelület ábrázolásánál 70%-os színt lehet használni, kisebb vizes tereptárgyakat és a vízfelületek keskenyebb részeit mindig teljes kék szinnel kell jelölni.</translation>
+    </message>
         <message>
             <source>Uncrossable body of water, bank line</source>
             <comment>Name of symbol 301.2</comment>
@@ -813,49 +819,47 @@ Minimális szélesség: 0.3 mm (belső méret). Minimális terület: 0.5 mm 2 (k
         <message>
             <source>A black bank line indicates that the feature cannot be crossed.</source>
             <comment>Description of symbol 301.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>A partnál húzott fekete vonal jelzi, hogy a tereptárgy áthatolhatatlan.</translation>
+    </message>
         <message>
             <source>Shallow body of water, with outline</source>
             <comment>Name of symbol 302</comment>
-            <translation>Sekély víztest körvonallal</translation>
+            <translation>Sekély vízfelület körvonallal</translation>
     </message>
         <message>
             <source>A shallow seasonal or periodic body of water may be represented using a dashed outline. Small shallow water bodies may be represented as 100% blue (without an outline).</source>
             <comment>Description of symbol 302</comment>
-            <translation type="unfinished">Sekélyebb, időszakosan meglévő vízterületet 50%-os kék színnel és szaggatott kék szegéllyel kell jelölni. Amennyiben a vízterület kicsi, szegély nélkül 100% kék színt kaphat.
-Minimális szélesség: 0.3 mm (belső méret). Minimális terület: 0.5 mm 2 (belső).
-Színe: kék (szegély), kék 50%.</translation>
+            <translation>Sekélyebb, időszakosan megjelenő vizes területet 50%-os kék színnel és szaggatott kék szegéllyel kell jelölni. Amennyiben a vízfelület kisebb és sekély, szegély nélküli 100% kék színt kaphat.</translation>
     </message>
         <message>
             <source>Shallow body of water</source>
             <comment>Name of symbol 302.1</comment>
-            <translation>Sekély víztest</translation>
+            <translation>Sekély vízfelület</translation>
     </message>
         <message>
             <source>A shallow seasonal or periodic body of water may be represented using a dashed outline. Small shallow water bodies may be represented as 100% blue (without an outline).</source>
             <comment>Description of symbol 302.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Sekélyebb, időszakosan megjelenő vizes területet 50%-os kék színnel és szaggatott kék szegéllyel kell jelölni. Amennyiben a vízfelület kisebb és sekély, szegély nélküli 100% kék színt kaphat.</translation>
+    </message>
         <message>
             <source>Shallow body of water, solid outline</source>
             <comment>Name of symbol 302.2</comment>
-            <translation>Sekély vízfolyás, folyamatos vonal</translation>
+            <translation>Sekély vízfelület, folyamatos vonal</translation>
     </message>
         <message>
             <source>Use this symbol to represent regular outline for shallow body of water.</source>
             <comment>Description of symbol 302.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ez használható sekély vízfelület szélének jelölésére.</translation>
+    </message>
         <message>
             <source>Shallow body of water, dashed outline</source>
             <comment>Name of symbol 302.3</comment>
-            <translation>Sekély vízfolyás, szaggatott vonal</translation>
+            <translation>Sekély vízfelület, szaggatott vonal</translation>
     </message>
         <message>
             <source>A shallow seasonal or periodic body of water may be represented using a dashed 0.10 outline.</source>
             <comment>Description of symbol 302.3</comment>
-            <translation>Egy sekély idényjellegű vagy periodikus vízfolyást ábrázol 0.10mm szaggatott vonallal.</translation>
+            <translation>Egy sekély idényjellegű vagy időszakos vízfelület széle 0.10mm vastag szaggatott vonallal jelölhető.</translation>
     </message>
         <message>
             <source>Waterhole</source>
@@ -865,8 +869,8 @@ Színe: kék (szegély), kék 50%.</translation>
         <message>
             <source>A water-filled pit or an area of water which is too small to be shown to scale. Location is the centre of gravity of the symbol, and the symbol is orientated to north.</source>
             <comment>Description of symbol 303</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Vízzel teli gödör, vagy olyan vízfelület amely túl kicsi a méretarányos ábrázoláshoz. A jelet a vízfelület súlypontjánál kell elhelyezni és észak felé irányítani.</translation>
+    </message>
         <message>
             <source>Crossable watercourse</source>
             <comment>Name of symbol 304</comment>
@@ -875,7 +879,7 @@ Színe: kék (szegély), kék 50%.</translation>
         <message>
             <source>A crossable watercourse, minimum 2 m wide. The width of watercourses over 5 m wide should be shown to scale.</source>
             <comment>Description of symbol 304</comment>
-            <translation>Egy áthatolható vízfolyás, minimum 2m szélességű. Az 5 méternél szélesebb vízfolyásokat méretarányosan kell ábrázolni.</translation>
+            <translation>Áthatolható vízfolyás, minimum 2m szélességű. Az 5 méternél szélesebb vízfolyásokat méretarányosan kell ábrázolni.</translation>
     </message>
         <message>
             <source>Small crossable watercourse</source>
@@ -895,7 +899,7 @@ Színe: kék (szegély), kék 50%.</translation>
         <message>
             <source>A natural or man-made minor water channel which may contain water only intermittently.</source>
             <comment>Description of symbol 306</comment>
-            <translation>Egy természetes, vagy mesterséges kis vizes árok, amelyik csak időszakosan tartalmazhat vizet.</translation>
+            <translation>Természetes, vagy mesterséges kis vizes árok, amely akár időszakosan vizet tartalmaz.</translation>
     </message>
         <message>
             <source>Uncrossable marsh, with border line</source>
@@ -2568,7 +2572,7 @@ Minimális magassága 0,5 m.</translation>
         <message>
             <source>Erosion gully</source>
             <comment>Name of symbol 109</comment>
-            <translation>Metsződés</translation>
+            <translation>Árok, metsződés</translation>
     </message>
         <message>
             <source>An erosion gully or trench which is too small to be shown by symbol 106 is shown by a single line. The line width reflects the size of the gully. Minimum depth 1 m. The end of the line is pointed.</source>
@@ -4273,7 +4277,7 @@ The relative height difference between neighbouring features must be represented
         <message>
             <source>An erosion gully or trench which is too small to be represented with the symbol earth bank (106), contour (101), index contour (102) or form line (103) is represented by a single line. The line width reflects the size of the gully. The end of the line is pointed. Minimum depth is 1 m. Minimum length is 3 mm on the map.</source>
             <comment>Description of symbol 109</comment>
-            <translation>Eróziós árok vagy metsződés, mely túl kis méretű ahhoz, hogy a földletörés (106) jelével, esetleg szintvonallal ábrázoljuk (101, 103). A vonal szélessége utal az árok méretére. Minimális mélysége 1 méter.</translation>
+            <translation>Eróziós árok vagy metsződés, mely túl kis méretű ahhoz, hogy a földletörés (106) jelével, esetleg szintvonallal ábrázoljuk (101, 103). A vonal szélessége utal az árok méretére. A vonal vége hegyes. Minimális mélysége 1 méter. A legrövidebb jel 3 mm a térképen.</translation>
     </message>
         <message>
             <source>Small erosion gully</source>
@@ -5811,10 +5815,10 @@ Szín: fekete, barna 0%(fehér), 10%, 20 % vagy 30 % (városi) / 20%, 30 %, 40 %
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable pipeline!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
             <comment>Description of symbol 534</comment>
-            <translation>An impassable pipeline (gas, water, oil, etc.) above ground level which shall not be crossed, due to forbidden access or because it may constitute a danger to the competitor because of its height.
+            <translation>Föld felett vezetett, áthatolhatatlan csővezeték (gáz, víz, olaj, stb.) amelyet tilos keresztezni, akár azért, mert nem engedélyezett, akár azért, mert a magassága miatt a versenyzőre veszélyes lenne annak megmászása.
 
-&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable pipeline!
-Competitors violating this rule will be disqualified.&lt;/span&gt;</translation>
+&lt;span style=&quot;color:magenta&quot;&gt;Áthatolhatatlan vezetéket keresztezni tilos!
+E szabályt megszegő versenyzők a versenyből kizárandóak.&lt;/span&gt;</translation>
     </message>
         <message>
             <source>High tower</source>
@@ -5824,7 +5828,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</translation>
         <message>
             <source>A high tower or large pylon. Very large towers shall be represented in plan shape with the symbol building (526.1). The symbol is orientated to north.</source>
             <comment>Description of symbol 535</comment>
-            <translation>Egy magas torony vagy nagy pilon. Nagyon nagy tornyokat kell a alaprajzában ábrázolni a jellel (526.1). 
+            <translation>Egy magas torony vagy nagy villanyoszlop. Nagyon nagy tornyokat kell a alaprajzában ábrázolni a jellel (526.1). 
 A jel északi irányba mutat.</translation>
     </message>
         <message>
@@ -6468,13 +6472,13 @@ A nagyon magas földletörés vonalvastagsága 0,25mm lehet.</translation>
         <message>
             <source>Erosion gully</source>
             <comment>Name of symbol 109</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Árok, metsződés</translation>
+    </message>
         <message>
             <source>An erosion gully or trench which is too small to be shown by symbol 106 is shown by a single line. The line width reflects the size of the gully. Minimum depth 1 m. The end of the line is pointed.</source>
             <comment>Description of symbol 109</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Eróziós árok vagy metsződés, mely túl kis méretű ahhoz, hogy a földletörés (106) jelével, esetleg szintvonallal ábrázoljuk (101, 103). A vonal szélessége utal az árok méretére. Minimális mélysége 1 méter. A vonal vége hegyes.</translation>
+    </message>
         <message>
             <source>Impassable cliff</source>
             <comment>Name of symbol 201</comment>
