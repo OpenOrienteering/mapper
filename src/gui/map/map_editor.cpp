@@ -542,7 +542,7 @@ void MapEditorController::deletePopupWidget(QWidget* child_widget)
 	}
 }
 
-bool MapEditorController::save(const QString& path)
+bool MapEditorController::saveTo(const QString& path, const FileFormat* format)
 {
 	if (map)
 	{
@@ -551,7 +551,7 @@ bool MapEditorController::save(const QString& path)
 			QMessageBox::warning(window, tr("Editing in progress"), tr("The map is currently being edited. Please finish the edit operation before saving."));
 			return false;
 		}
-		bool success = map->saveTo(path, main_view);
+		bool success = map->saveTo(path, format, main_view);
 		if (success)
 			window->showStatusBarMessage(tr("Map saved"), 1000);
 		return success;
@@ -564,7 +564,7 @@ bool MapEditorController::exportTo(const QString& path, const FileFormat* format
 {
 	if (map && !editing_in_progress)
 	{
-		return map->exportTo(path, main_view, format);
+		return map->exportTo(path, format, main_view);
 	}
 	
 	return false;
