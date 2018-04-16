@@ -2633,7 +2633,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="295"/>
         <source>Geospatial vector data</source>
-        <translation>Geospatial vektor data</translation>
+        <translation>Geospatial vektordata</translation>
     </message>
 </context>
 <context>
