@@ -63,6 +63,32 @@ class TextSymbol;
 
 /**
  * An exporter for OCD files.
+ * 
+ * The functions in this class are designed around the following pattern:
+ * 
+ * From `template<class Format> void OcdFileExport::exportImplementation()` we
+ * call into template functions so that we get a template function instantiation
+ * for the actual types of the format. This is what we can do:
+ *
+ * - If a format is significantly different, so that it needs a different algorithm:
+ *   We specialize the template function (as done in 
+ *   `template<> void OcdFileExport::exportSetup(OcdFile<Ocd::FormatV8>& file)`).
+ * - If the same algorithm can be used for multiple formats:
+ *   - If the differences are completely represented by the the exporter's state
+ *     (which captures version and parameter string handler), then we may just
+ *     call into a non-template function (as done in
+ *     `template<class Format> void OcdFileExport::exportSetup(OcdFile<Format>&)`.
+ *     The template function is likely to get inlined, thus reducing/avoiding
+ *     template bloat.
+ *   - Otherwise we still can use the same algorithm but need to specialize it
+ *     for the actual types of the format. This specialization is solved by
+ *     function template instantiation, i.e. the generic algorithm goes directly
+ *     into the template function. This is the case for `exportSymbol()` where
+ *     types and even the encoding of the symbol number vary over different
+ *     versions of the format.
+ *     This doesn't mean that there couldn't be room for reducing template bloat
+ *     by factoring out universal parts. However, if the size gains are small,
+ *     it might not be worth the increased complexity.
  */
 class OcdFileExport : public Exporter
 {
@@ -125,6 +151,10 @@ protected:
 	void exportImplementation();
 	
 	
+	/**
+	 * Calculates an offset to be applied to the coordinates so that the
+	 * map data is moved into the limited OCD drawing area.
+	 */
 	MapCoord calculateAreaOffset();
 	
 	

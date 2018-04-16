@@ -143,17 +143,23 @@ quint32 makeSymbolNumber(const Symbol* symbol, quint32 symbol_number_factor)
 
 void copySymbolHead(const Symbol& source, Symbol& symbol)
 {
-	for (int i = 0; i < Symbol::number_components; ++i)
+	for (auto i = 0u; i < Symbol::number_components; ++i)
 		symbol.setNumberComponent(i, source.getNumberComponent(i));
 	symbol.setName(source.getName());
 	symbol.setHidden(source.isHidden());
 	symbol.setProtected(source.isProtected());
 	symbol.setHidden(source.isHidden());
 	symbol.setProtected(source.isProtected());
-};
+}
 
 
 
+/**
+ * Test if a Mapper line symbol can be represented by the double line/filling aspect
+ * of an OCD line symbol.
+ * 
+ * This function helps to merge elements of combined symbols into OCD line symbols.
+ */
 bool maybeDoubleFilling(const LineSymbol* line)
 {
 	return line
@@ -163,9 +169,15 @@ bool maybeDoubleFilling(const LineSymbol* line)
 	        && (!line->getMidSymbol() || line->getMidSymbol()->isEmpty())
 	        && (!line->getStartSymbol() || line->getStartSymbol()->isEmpty())
 	        && (!line->getEndSymbol() || line->getEndSymbol()->isEmpty());
-};
+}
 
 
+/**
+ * Test if a Mapper line symbol can be represented by the framing aspect
+ * of an OCD line symbol.
+ * 
+ * This function helps to merge elements of combined symbols into OCD line symbols.
+ */
 bool maybeFraming(const LineSymbol* line)
 {
 	return line
@@ -176,17 +188,36 @@ bool maybeFraming(const LineSymbol* line)
 	        && (!line->getMidSymbol() || line->getMidSymbol()->isEmpty())
 	        && (!line->getStartSymbol() || line->getStartSymbol()->isEmpty())
 	        && (!line->getEndSymbol() || line->getEndSymbol()->isEmpty());
-};
+}
 
 
+/**
+ * Test if a Mapper line symbol can be represented by the main line aspect
+ * of an OCD line symbol.
+ * 
+ * This function helps to merge elements of combined symbols into OCD line symbols.
+ */
 bool maybeMainLine(const LineSymbol* line)
 {
 	return line
 	        && !line->hasBorder();
-};
+}
 
 
 
+/**
+ * Efficiently convert a single coordinate value to the OCD format.
+ * 
+ * This function handles two responsibilites at the same time,
+ * in a constexpr implementation:
+ * 
+ * - convert from 1/100 mm to 1/10 mm, rounding half up (for intervalls of equal size),
+ * - shift by 8 bits (which are reserved for flags in OCD format).
+ *
+ * Neither rounding (the result of an integer division) half up 
+ * nor shifting of signed integers ("implementation-defined")
+ * come out of the box in C++.
+ */
 constexpr qint32 convertPointMember(qint32 value)
 {
 	return (value < -5) ? qint32(0x80000000u | ((0x7fffffu & quint32((value-4)/10)) << 8)) : qint32((0x7fffffu & quint32((value+5)/10)) << 8);
@@ -206,29 +237,56 @@ Q_STATIC_ASSERT(convertPointMember(+14) == qint32(0x00000100u)); // __ down __
 Q_STATIC_ASSERT(convertPointMember(+15) == qint32(0x00000200u)); //     up
 
 
+/**
+ * Convert a pair of coordinates to a point in OCD format.
+ * 
+ * \see convertPointMember()
+ */
 Ocd::OcdPoint32 convertPoint(qint32 x, qint32 y)
 {
 	return { convertPointMember(x), convertPointMember(-y) };
 }
 
 
+/**
+ * Convert a MapCoord's coordinate values to a point in OCD format.
+ * 
+ * This function does not deal with flags.
+ * 
+ * \see convertPointMember()
+ */
 Ocd::OcdPoint32 convertPoint(const MapCoord& coord)
 {
 	return convertPoint(coord.nativeX(), coord.nativeY());
 }
 
 
+/**
+ * Convert a size to the OCD format.
+ * 
+ * This function converts from 1/100 mm to 1/10 mm, rounding half up for positive values.
+ */
 constexpr qint16 convertSize(qint32 size)
 {
 	return qint16((size+5) / 10);
 }
 
+/**
+ * Convert a size to the OCD format.
+ * 
+ * This function converts from 1/100 mm to 1/10 mm, rounding half up for positive values.
+ */
 constexpr qint32 convertSize(qint64 size)
 {
 	return qint32((size+5) / 10);
 }
 
 
+/**
+ * Convert an angle to the OCD format.
+ * 
+ * This function converts from radians to 1/10 degrees, rounding to the nearest integer.
+ */
 int convertRotation(qreal angle)
 {
 	return qRound(10 * qRadiansToDegrees(angle));
@@ -280,6 +338,7 @@ int getPaletteColorV6(QRgb rgb)
 	};
 	
 #if 0
+	// This is how `palette` is generated.
 	static auto generate = true;
 	if (generate)
 	{
@@ -487,6 +546,7 @@ quint8 getPaletteColorV9(QRgb rgb)
 	};
 	
 #if 0
+	// This is how `palette` is generated.
 	static auto generate = true;
 	if (generate)
 	{
@@ -787,6 +847,7 @@ OcdFileExport::OcdFileExport(QIODevice* stream, Map* map, MapView* view, quint16
 {
 	if (!ocd_version)
 	{
+		/// \todo Remove format selection by file name
 		if (auto file = qobject_cast<QFileDevice*>(stream))
 		{
 			auto name = file->fileName().toUtf8();
@@ -1321,6 +1382,7 @@ void OcdFileExport::setupBaseSymbol(const Symbol* symbol, quint32 symbol_number,
 		}
 	}
 	
+	/// \todo Switch to explicit types for icon data
 	switch (std::extent<typename std::remove_pointer<decltype(ocd_base_symbol.icon_bits)>::type>::value)
 	{
 	case 264:
