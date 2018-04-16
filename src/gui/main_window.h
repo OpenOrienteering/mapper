@@ -195,10 +195,10 @@ public:
 	 */
 	void openPathLater(const QString &path);
 	
-	/** Save the content of the main window.
-	 *  @param path the path where to save.
+	/**
+	 * Save the content of the main window.
 	 */ 
-	bool savePath(const QString &path);
+	bool saveTo(const QString &path, const FileFormat* format = nullptr);
 	
 	/** Shows the open file dialog for the given file type(s) and returns the chosen file
 	 *  or an empty string if the dialog is aborted.
