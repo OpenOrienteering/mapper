@@ -1606,7 +1606,7 @@ quint8 OcdFileExport::exportAreaSymbolCommon(const AreaSymbol* area_symbol, OcdA
 			break;
 			
 		case AreaSymbol::FillPattern::PointPattern:
-		    switch (ocd_area_common.hatch_mode)
+			switch (ocd_area_common.structure_mode)
 			{
 			case Ocd::StructureNone:
 				ocd_area_common.structure_mode = Ocd::StructureAlignedRows;
