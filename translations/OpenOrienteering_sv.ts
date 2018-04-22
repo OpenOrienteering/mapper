@@ -2646,11 +2646,9 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message numerus="yes">
         <location filename="../src/fileformats/file_import_export.cpp" line="105"/>
         <source>Dropped %n irregular object(s).</source>
-        <translation>
-            <numerusform>Dumpade %n oregelbundna objekt.</numerusform>
-            <numerusform>Dumpade %n oregelbundna objekt.</numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>Dumpade %n oregelbundet objekt.</numerusform>
+        <numerusform>Dumpade %n oregelbundna objekt.</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="112"/>
         <source>Error during symbol post-processing.</source>
