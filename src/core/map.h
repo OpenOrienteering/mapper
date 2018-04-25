@@ -952,7 +952,7 @@ public:
 	 * Applies an operation on all objects.
 	 */
 	void applyOnAllObjects(const std::function<void (const Object*)>& operation) const;
-
+	
 	/**
 	 * Applies an operation on all objects.
 	 */
@@ -1234,7 +1234,7 @@ public:
 	
 	
 	/** Returns true if the map has a print configuration. */
-	bool hasPrinterConfig();
+	bool hasPrinterConfig() const noexcept;
 	
 	/** Returns a const reference to the current print configuration.
 	 * 
@@ -1787,7 +1787,7 @@ int Map::renderableOptions() const
 }
 
 inline
-bool Map::hasPrinterConfig()
+bool Map::hasPrinterConfig() const noexcept
 {
 	return !printer_config.isNull();
 }
