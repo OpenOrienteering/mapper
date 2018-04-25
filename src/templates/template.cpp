@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2017 Kai Pastor
+ *    Copyright 2013-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -26,6 +26,7 @@
 
 #include <QCoreApplication>
 #include <QDebug>
+#include <QDir>
 #include <QFileInfo>
 #include <QMessageBox>
 #include <QPainter>
@@ -150,7 +151,8 @@ bool operator!=(const TemplateTransform& lhs, const TemplateTransform& rhs) noex
 
 // ### Template ###
 
-decltype(Template::pathForSaving) Template::pathForSaving = &Template::getTemplatePath;
+bool Template::suppressAbsolutePaths = false;
+
 
 Template::Template(const QString& path, not_null<Map*> map)
  : map(map)
@@ -219,13 +221,25 @@ void Template::setErrorString(const QString &text)
 
 
 
-void Template::saveTemplateConfiguration(QXmlStreamWriter& xml, bool open)
+void Template::saveTemplateConfiguration(QXmlStreamWriter& xml, bool open, const QDir* map_dir) const
 {
 	xml.writeStartElement(QString::fromLatin1("template"));
 	xml.writeAttribute(QString::fromLatin1("open"), QString::fromLatin1(open ? "true" : "false"));
 	xml.writeAttribute(QString::fromLatin1("name"), getTemplateFilename());
-	xml.writeAttribute(QString::fromLatin1("path"), (this->*pathForSaving)());
-	xml.writeAttribute(QString::fromLatin1("relpath"), getTemplateRelativePath());
+	auto primary_path = getTemplatePath();
+	auto relative_path = getTemplateRelativePath();
+	if (getTemplateState() != Invalid)
+	{
+		if (map_dir)
+			relative_path = map_dir->relativeFilePath(primary_path);
+		else if (relative_path.isEmpty())
+			relative_path = getTemplateFilename();
+	}
+	if (suppressAbsolutePaths && QFileInfo(primary_path).isAbsolute())
+		primary_path = relative_path;
+	xml.writeAttribute(QString::fromLatin1("path"), primary_path);
+	xml.writeAttribute(QString::fromLatin1("relpath"), relative_path);
+	
 	if (template_group)
 	{
 		xml.writeAttribute(QString::fromLatin1("group"), QString::number(template_group));
@@ -237,7 +251,7 @@ void Template::saveTemplateConfiguration(QXmlStreamWriter& xml, bool open)
 	}
 	else
 	{
-		ScopedOffsetReversal no_offset{*this};
+		ScopedOffsetReversal no_offset{*const_cast<Template*>(this)};
 		
 		xml.writeStartElement(QString::fromLatin1("transformations"));
 		if (adjusted)
@@ -266,7 +280,7 @@ void Template::saveTemplateConfiguration(QXmlStreamWriter& xml, bool open)
 	{
 		// Save the template itself (e.g. image, gpx file, etc.)
 		saveTemplateFile();
-		setHasUnsavedChanges(false); // TODO: Error handling?
+		const_cast<Template*>(this)->setHasUnsavedChanges(false); // TODO: Error handling?
 	}
 	xml.writeEndElement(/*template*/);
 }

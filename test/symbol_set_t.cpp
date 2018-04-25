@@ -288,7 +288,7 @@ void SymbolSetTool::initTestCase()
 	translations_dir.cd(QDir(QString::fromUtf8(MAPPER_TEST_SOURCE_DIR)).absoluteFilePath(QStringLiteral("../translations")));
 	QVERIFY(translations_dir.exists());
 	
-	Template::pathForSaving = &Template::getTemplateRelativePath;
+	Template::suppressAbsolutePaths = true;
 	
 	translations_complete = false;
 }
