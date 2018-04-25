@@ -2479,6 +2479,13 @@ void Map::applyOnAllObjects(const std::function<void (Object*)>& operation)
 }
 
 
+void Map::applyOnAllObjects(const std::function<void (const Object*)>& operation) const
+{
+	for (const MapPart* part : parts)
+		part->applyOnAllObjects(operation);
+}
+
+
 void Map::applyOnAllObjects(const std::function<void (Object*, MapPart*, int)>& operation)
 {
 	for (auto part : parts)

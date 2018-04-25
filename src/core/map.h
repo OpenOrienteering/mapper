@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Thomas Schöps
- *    Copyright 2013-2017 Kai Pastor
+ *    Copyright 2013-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -948,6 +948,11 @@ public:
 	 */
 	void applyOnAllObjects(const std::function<void (Object*)>& operation);
 	
+	/**
+	 * Applies an operation on all objects.
+	 */
+	void applyOnAllObjects(const std::function<void (const Object*)>& operation) const;
+
 	/**
 	 * Applies an operation on all objects.
 	 */

@@ -338,6 +338,12 @@ void MapPart::applyOnAllObjects(const std::function<void (Object*)>& operation)
 }
 
 
+void MapPart::applyOnAllObjects(const std::function<void (const Object*)>& operation) const
+{
+	std::for_each(objects.rbegin(), objects.rend(), operation);
+}
+
+
 void MapPart::applyOnAllObjects(const std::function<void (Object*, MapPart*, int)>& operation)
 {
 	for (auto i = objects.size(); i > 0; )
