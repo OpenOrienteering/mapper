@@ -551,9 +551,13 @@ bool MapEditorController::saveTo(const QString& path, const FileFormat* format)
 			QMessageBox::warning(window, tr("Editing in progress"), tr("The map is currently being edited. Please finish the edit operation before saving."));
 			return false;
 		}
-		bool success = map->saveTo(path, format, main_view);
+		bool success = map->exportTo(path, format, main_view);
 		if (success)
+		{
+			map->setHasUnsavedChanges(false);
+			map->undoManager().setClean();
 			window->showStatusBarMessage(tr("Map saved"), 1000);
+		}
 		return success;
 	}
 	else

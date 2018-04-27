@@ -155,13 +155,6 @@ public:
 	
 	
 	/**
-	 * Saves the map to the given file.
-	 * 
-	 * If a MapView is given, is state will be saved.
-	 */
-	bool saveTo(const QString& path, const FileFormat* format, MapView *view);
-	
-	/**
 	 * Exports the map to the given file and format.
 	 * 
 	 * If a MapView is given, is state will be saved.
