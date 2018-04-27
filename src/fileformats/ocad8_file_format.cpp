@@ -83,7 +83,7 @@ std::unique_ptr<Importer> OCAD8FileFormat::makeImporter(QIODevice* stream, Map *
 	return std::make_unique<OCAD8FileImport>(stream, map, view);
 }
 
-std::unique_ptr<Exporter> OCAD8FileFormat::makeExporter(QIODevice* stream, Map* map, MapView* view) const
+std::unique_ptr<Exporter> OCAD8FileFormat::makeExporter(QIODevice* stream, const Map* map, const MapView* view) const
 {
 	return std::make_unique<OCAD8FileExport>(stream, map, view);
 }

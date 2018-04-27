@@ -59,7 +59,7 @@ public:
 	std::unique_ptr<Importer> makeImporter(QIODevice* stream, Map* map, MapView* view) const override;
 	
 	/// \copydoc FileFormat::createExporter()
-	std::unique_ptr<Exporter> makeExporter(QIODevice* stream, Map* map, MapView* view) const override;
+	std::unique_ptr<Exporter> makeExporter(QIODevice* stream, const Map* map, const MapView* view) const override;
 	
 };
 
