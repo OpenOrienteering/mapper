@@ -315,11 +315,9 @@
         <location filename="../src/gui/autosave_dialog.cpp" line="48"/>
         <location filename="../src/gui/autosave_dialog.cpp" line="54"/>
         <source>%n bytes</source>
-        <translation>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n byte</numerusform>
+        <numerusform>%n byte</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="52"/>
         <source>File saved by the user</source>
@@ -7534,7 +7532,10 @@ Vill du spara dina ändringar?</translation>
 takes the routechoice
 to jump over the lazy dog
 1234567890</source>
-        <translation></translation>
+        <translation>Flygande bäckasiner
+tar ruttvalet för att
+söka hwila på mjuka tuvor
+1234567890</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="495"/>
