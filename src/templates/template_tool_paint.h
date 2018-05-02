@@ -24,6 +24,7 @@
 
 #include <vector>
 
+#include <Qt>
 #include <QtGlobal>
 #include <QColor>
 #include <QDialog>
@@ -48,6 +49,7 @@ class QRect;
 
 namespace OpenOrienteering {
 
+class MainWindow;
 class Map;
 class MapEditorController;
 class MapView;

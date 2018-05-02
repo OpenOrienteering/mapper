@@ -21,15 +21,22 @@
 
 #include "template_tool_paint.h"
 
+#include <cstddef>
+
 #include <Qt>
 #include <QtMath>
 #include <QAbstractButton>
+#include <QCoreApplication>
 #include <QCursor>
 #include <QDir>
 #include <QFileInfo>
 #include <QFlags>
+#include <QFontMetrics>
 #include <QHBoxLayout>
 #include <QIcon>
+#include <QImage>
+#include <QLatin1Char>
+#include <QLatin1String>
 #include <QListWidget>
 #include <QListWidgetItem>
 #include <QMessageBox>
@@ -38,11 +45,11 @@
 #include <QPaintEvent>
 #include <QPen>
 #include <QPixmap>
+#include <QPointF>
 #include <QPushButton>
 #include <QRect>
 #include <QRgb>
 #include <QSettings>
-#include <QSizeF>
 #include <QVariant>
 #include <QVBoxLayout>
 

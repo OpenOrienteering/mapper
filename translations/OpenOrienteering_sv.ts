@@ -315,11 +315,9 @@
         <location filename="../src/gui/autosave_dialog.cpp" line="48"/>
         <location filename="../src/gui/autosave_dialog.cpp" line="54"/>
         <source>%n bytes</source>
-        <translation>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n byte</numerusform>
+        <numerusform>%n byte</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="52"/>
         <source>File saved by the user</source>
@@ -2633,7 +2631,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="295"/>
         <source>Geospatial vector data</source>
-        <translation>Geospatial vektor data</translation>
+        <translation>Geospatial vektordata</translation>
     </message>
 </context>
 <context>
@@ -2646,11 +2644,9 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message numerus="yes">
         <location filename="../src/fileformats/file_import_export.cpp" line="105"/>
         <source>Dropped %n irregular object(s).</source>
-        <translation>
-            <numerusform>Dumpade %n oregelbundna objekt.</numerusform>
-            <numerusform>Dumpade %n oregelbundna objekt.</numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>Dumpade %n oregelbundet objekt.</numerusform>
+        <numerusform>Dumpade %n oregelbundna objekt.</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="112"/>
         <source>Error during symbol post-processing.</source>
@@ -7536,7 +7532,10 @@ Vill du spara dina ändringar?</translation>
 takes the routechoice
 to jump over the lazy dog
 1234567890</source>
-        <translation></translation>
+        <translation>Flygande bäckasiner
+tar ruttvalet för att
+söka hwila på mjuka tuvor
+1234567890</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="495"/>
