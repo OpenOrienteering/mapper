@@ -51,6 +51,7 @@
 #include <QMessageBox>
 #include <QPagedPaintDevice>
 #include <QPainter>
+#include <QPoint>
 #include <QPointF>
 #include <QPrinterInfo>
 #include <QPrintDialog>
@@ -70,6 +71,7 @@
 #include <QStyle>
 #include <QStyleOption>
 #include <QToolButton>
+#include <QTransform>
 #include <QVBoxLayout>
 #include <QVariant>
 #include <QXmlStreamReader>
@@ -79,6 +81,7 @@
 
 #include "core/georeferencing.h"
 #include "core/map.h"
+#include "core/map_coord.h"
 #include "core/map_printer.h"
 #include "core/map_view.h"
 #include "gui/file_dialog.h"
