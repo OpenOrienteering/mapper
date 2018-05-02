@@ -42,7 +42,6 @@ class Map;
 class MapColor;
 class MapColorMap;
 class MapCoordF;
-class Object;  // IWYU pragma: keep
 class ObjectRenderables;
 class SymbolPropertiesWidget;
 class SymbolSettingDialog;
