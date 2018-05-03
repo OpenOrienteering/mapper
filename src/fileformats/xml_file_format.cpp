@@ -205,7 +205,7 @@ namespace literal
 
 // ### XMLFileExporter definition ###
 
-XMLFileExporter::XMLFileExporter(QIODevice* stream, Map *map, MapView *view)
+XMLFileExporter::XMLFileExporter(QIODevice* stream, const Map* map, const MapView* view)
 : Exporter(stream, map, view),
   xml(stream)
 {

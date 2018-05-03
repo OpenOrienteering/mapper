@@ -43,7 +43,7 @@ class OcdFileExport : public Exporter
 	Q_DECLARE_TR_FUNCTIONS(OpenOrienteering::OcdFileExport)
 	
 public:
-	OcdFileExport(QIODevice* stream, Map *map, MapView *view);
+	OcdFileExport(QIODevice* stream, const Map* map, const MapView* view);
 	
 	~OcdFileExport() override;
 	
