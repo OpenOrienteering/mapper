@@ -655,7 +655,7 @@ bool Map::saveTo(const QString& path, const FileFormat* format, MapView* view)
 	return success;
 }
 
-bool Map::exportTo(const QString& path, const FileFormat* format, MapView* view)
+bool Map::exportTo(const QString& path, const FileFormat* format, const MapView* view) const
 {
 	Q_ASSERT(view && "Saving a file without view information is not supported!");
 	
@@ -1001,7 +1001,7 @@ QHash<const Symbol*, Symbol*> Map::importMap(
 
 
 
-bool Map::exportToIODevice(QIODevice* stream)
+bool Map::exportToIODevice(QIODevice* stream) const
 try
 {
 	auto native_format = FileFormats.findFormat("XML");
