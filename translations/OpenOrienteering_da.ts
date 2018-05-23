@@ -2276,7 +2276,7 @@
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="513"/>
         <source>Unsupported new file format version. Some map features will not be loaded or saved by this version of the program.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ikke understøttet nyt filformat. Enkelte dele af kortet vil ikke blive åbnet eller gemt af denne version af programmet.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_format.cpp" line="76"/>
