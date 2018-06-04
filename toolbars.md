@@ -5,7 +5,7 @@ authors:
   - Kai Pastor
   - Thomas Schoeps
 keywords: Toolbars
-edited: 3 June 2018
+edited: 5 June 2018
 todo:
   - Split this page and update ALL context help in Mapper.
   - Update context help for zoom-in and -out in Mapper.
@@ -323,13 +323,7 @@ This cuts away all objects except inside a given region, making a map excerpt. I
 #### ![ ](../mapper-images/tool-cutout-physical-inner.png) Cut away {#cutaway_physical}
 This is the opposite to the above cutout tool. It cuts away all or a subset of objects inside a selected cutout region. Usage is identical to that of the cutout tool.
 
-This tool is useful for making training maps where certain symbols are missing in some places. For example, to create a contour-only region in a map, proceed like this:
-
- - Draw the cutout shape (with any line or area symbol). The shape must be closed, ensure this by finishing the drawing by pressing the return key. Make sure that the resulting object is selected.
- - In the symbol pane, select all symbols you want to cut away, e.g. everything except contours. You can select a range of symbols by clicking the first symbol, then clicking the last symbol while holding the Shift key.
- - Click the cut away tool. The shape will be marked in red.
- - Use Edit -> Select all objects with selected symbols from the program menu to select all objects that should be potentially cut away.
- - Press the return key.
+This tool is useful for making training maps where certain symbols are missing in some places.
 
 
 #### ![ ](../mapper-images/tool-convert-to-curves.png) Convert to curves {#convert_to_curves}
