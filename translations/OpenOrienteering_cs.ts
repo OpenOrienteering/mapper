@@ -1459,7 +1459,7 @@
     <message>
         <location filename="../src/fileformats/file_format.cpp" line="84"/>
         <source>Format (%1) does not support export</source>
-        <translation>Formát (%1) nepodporuje export</translation>
+        <translation>Formát (%1) nepodporuje vyvádění</translation>
     </message>
 </context>
 <context>
@@ -1525,7 +1525,7 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="50"/>
         <source>Import with GDAL/OGR:</source>
-        <translation>Import s GDAL/OGR:</translation>
+        <translation>Zavedení s GDAL/OGR:</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="52"/>
@@ -1624,7 +1624,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="146"/>
         <source>File import and export</source>
-        <translation>Import a export souboru</translation>
+        <translation>Zavedení a vyvedení souboru</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="171"/>
@@ -2468,7 +2468,7 @@
     <message>
         <location filename="../src/fileformats/file_format.cpp" line="76"/>
         <source>Format (%1) does not support import</source>
-        <translation>Formát (%1) nepodporuje import</translation>
+        <translation>Formát (%1) nepodporuje zavedení</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="416"/>
@@ -3049,7 +3049,7 @@ Stiskněte Ne pro vyhledání jiného souborového formátu.</translation>
         <source>Cannot export the map as
 &quot;%1&quot;
 because saving as %2 (.%3) is not supported.</source>
-        <translation>Mapu nelze exportovat jako
+        <translation>Mapu nelze vyvést jako
 &quot;%1&quot;,
 protože uložení jako %2 (.%3) není podporováno.</translation>
     </message>
@@ -3058,7 +3058,7 @@ protože uložení jako %2 (.%3) není podporováno.</translation>
         <source>Cannot export the map as
 &quot;%1&quot;
 because the format is unknown.</source>
-        <translation>Mapu nelze exportovat jako
+        <translation>Mapu nelze vyvést jako
 &quot;%1&quot;,
 protože formát je neznámý.</translation>
     </message>
@@ -3077,7 +3077,7 @@ protože formát je neznámý.</translation>
     <message>
         <location filename="../src/core/map.cpp" line="711"/>
         <source>The map export generated warnings.</source>
-        <translation>Při exportu mapy se vyskytla varovná hlášení.</translation>
+        <translation>Při vyvádění mapy se vyskytla varovná hlášení.</translation>
     </message>
     <message>
         <location filename="../src/core/map.cpp" line="692"/>
@@ -3089,7 +3089,7 @@ protože formát je neznámý.</translation>
     <message>
         <location filename="../src/core/map.cpp" line="773"/>
         <source>The map import generated warnings.</source>
-        <translation>Při importu mapy se vyskytla varovná hlášení.</translation>
+        <translation>Při zavádění mapy se vyskytla varovná hlášení.</translation>
     </message>
     <message>
         <location filename="../src/core/map.cpp" line="728"/>
@@ -3129,7 +3129,7 @@ Soubor nelze otevřít pro čtení.</translation>
     <message>
         <location filename="../src/core/map.cpp" line="832"/>
         <source>Nothing to import.</source>
-        <translation>Nic k importu.</translation>
+        <translation>Nic k zavedení.</translation>
     </message>
     <message>
         <location filename="../src/core/map.cpp" line="841"/>
@@ -3159,14 +3159,14 @@ Změnit měřítko importovaných dat na měřítko mapy?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3964"/>
         <source>Import...</source>
-        <translation>Import...</translation>
+        <translation>Zavést...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3965"/>
         <source>Symbol replacement was canceled.
 Import the data anyway?</source>
         <translation>Nahrazení symbolů bylo zrušeno.
-Importovat data tak jako tak?</translation>
+Zavést data tak jako tak?</translation>
     </message>
 </context>
 <context>
@@ -3646,7 +3646,7 @@ Importovat data tak jako tak?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="980"/>
         <source>Import...</source>
-        <translation>Import...</translation>
+        <translation>Zavést...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1032"/>
@@ -3761,12 +3761,12 @@ Importovat data tak jako tak?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="907"/>
         <source>Tag editor</source>
-        <translation>Editor tagů</translation>
+        <translation>Editor značek</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="907"/>
         <source>Show/Hide the tag editor window</source>
-        <translation>Ukázat/Skrýt okno s editorem tagů</translation>
+        <translation>Ukázat/Skrýt okno s editorem značek</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="914"/>
@@ -3942,7 +3942,7 @@ Importovat data tak jako tak?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1601"/>
         <source>Print / Export is not available in this program version!</source>
-        <translation>Tisk / Export není v této verzi programu dostupný!</translation>
+        <translation>Tisk/Vyvedení není v této verzi programu dostupné!</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1621"/>
@@ -4037,7 +4037,7 @@ Importovat data tak jako tak?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2064"/>
         <source>Tag Editor</source>
-        <translation>Editor tagů</translation>
+        <translation>Editor značek</translation>
     </message>
     <message>
         <source>Tag Selector</source>
@@ -4238,7 +4238,7 @@ symbolů</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3923"/>
         <source>Cannot import the selected map file because it could not be loaded.</source>
-        <translation>Vybraný soubor s mapou nelze importovat, protože se jej nepodařilo nahrát.</translation>
+        <translation>Vybraný soubor s mapou nelze zavést, protože se jej nepodařilo nahrát.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2232"/>
@@ -4303,7 +4303,7 @@ symbolů</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1024"/>
         <source>&amp;Export as...</source>
-        <translation>&amp;Exportovat jako ...</translation>
+        <translation>&amp;Vyvést jako ...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1369"/>
@@ -4494,7 +4494,7 @@ symbolů</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3883"/>
         <source>Import %1, GPX, OSM or DXF file</source>
-        <translation>Importovat soubor %1, GPX, OSM nebo DXF</translation>
+        <translation>Zavést soubor %1, GPX, OSM nebo DXF</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3887"/>
@@ -4509,7 +4509,7 @@ symbolů</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3916"/>
         <source>Cannot import the selected file because its file format is not supported.</source>
-        <translation>Vybraný soubor se nepodařilo importovat, protože jeho formát není podporován.</translation>
+        <translation>Vybraný soubor se nepodařilo zavést, protože jeho formát není podporován.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="934"/>
@@ -4988,12 +4988,12 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1716"/>
         <source>Unable to export fill pattern shift for an area object</source>
-        <translation>Nelze exportovat posun vzoru výplně pro objekt plochy</translation>
+        <translation>Nelze vyvést posun vzoru výplně pro objekt plochy</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1866"/>
         <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
-        <translation>Nelze exportovat podklad: Souborový typ &quot;%1&quot; není podporován</translation>
+        <translation>Nelze vyvést podklad: Souborový typ &quot;%1&quot; není podporován</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1889"/>
@@ -5024,7 +5024,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="2273"/>
         <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
-        <translation>V liniovém symbolu &quot;%1&quot; nemohou být okraje správně exportovány.</translation>
+        <translation>V liniovém symbolu &quot;%1&quot; nemohou být okraje správně vyvedeny.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="2332"/>
@@ -5077,12 +5077,10 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message numerus="yes">
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="149"/>
         <source>%n color separation(s) were skipped, reason: Import disabled.</source>
-        <translation>
-            <numerusform>Byla přeskočena %n barevná separace. Důvod: Import zakázán.</numerusform>
-            <numerusform>Byly přeskočeny %n barevné separace. Důvod: Import zakázán.</numerusform>
-            <numerusform>Bylo přeskočeno %n barevných separací. Důvod: Import zakázán.</numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>Byla přeskočena %n barevná separace. Důvod: Zavedení zakázáno.</numerusform>
+        <numerusform>Byly přeskočeny %n barevné separace. Důvod: Zavedení zakázáno.</numerusform>
+        <numerusform>Bylo přeskočeno %n barevných separací. Důvod: Zavedení zakázáno.</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="154"/>
         <source>Could not load the spot color definitions, error: %1</source>
@@ -5096,12 +5094,12 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="279"/>
         <source>Unable to import symbol &quot;%3&quot; (%1.%2)</source>
-        <translation>Nelze importovat symbol &quot;%3&quot; (%1.%2)</translation>
+        <translation>Nelze zavést symbol &quot;%3&quot; (%1.%2)</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="292"/>
         <source>OCAD import layer</source>
-        <translation>Vrstva importu OCAD</translation>
+        <translation>Vrstva zavedení OCAD</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="432"/>
@@ -5136,32 +5134,32 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="758"/>
         <source>During import of text symbol %1: ignoring justified alignment</source>
-        <translation>Při importu textového symbolu %1: přehlíží se zarovnání do bloku</translation>
+        <translation>Při zavádění textového symbolu %1: přehlíží se zarovnání do bloku</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="764"/>
         <source>During import of text symbol %1: ignoring custom weight (%2)</source>
-        <translation>Při importu textového symbolu %1 se ignoruje vlastní tloušťka písma (%2)</translation>
+        <translation>Při zavádění textového symbolu %1 se přehlíží vlastní tloušťka písma (%2)</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="769"/>
         <source>During import of text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation>Při importu textového symbolu %1 jsou nastaveny vlastní rozestupy znaků. Jeho provedení zatím neodpovídá chování v OCADu</translation>
+        <translation>Při zavádění textového symbolu %1 jsou nastaveny vlastní rozestupy znaků. Jeho provedení zatím neodpovídá chování v OCADu</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="774"/>
         <source>During import of text symbol %1: ignoring custom word spacing (%2%)</source>
-        <translation>Při importu textového symbolu %1 se přehlíží vlastní rozestupy slov (%2%)</translation>
+        <translation>Při zavádění textového symbolu %1 se přehlíží vlastní rozestupy slov (%2%)</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="779"/>
         <source>During import of text symbol %1: ignoring custom indents (%2/%3)</source>
-        <translation>Při importu textového symbolu %1 se ignoruje vlastní odsazení (%2/%3)</translation>
+        <translation>Při zavádění textového symbolu %1 se přehlíží vlastní odsazení (%2/%3)</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="800"/>
         <source>During import of text symbol %1: ignoring text framing (mode %2)</source>
-        <translation>Při importu textového symbolu %1 se ignoruje rámování textu (režim %2)</translation>
+        <translation>Při zavádění textového symbolu %1 se přehlíží rámování textu (režim %2)</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="954"/>
@@ -5171,7 +5169,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="961"/>
         <source>Unable to import rectangle object</source>
-        <translation>Nelze importovat obdélníkový objekt</translation>
+        <translation>Nelze zavést obdélníkový objekt</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1008"/>
@@ -5186,12 +5184,12 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1200"/>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1307"/>
         <source>Unable to import template: background &quot;%1&quot; doesn&apos;t seem to be a raster image</source>
-        <translation>Nelze importovat podklad: Zdá se, že &quot;%1&quot; není rastrovým obrázkem</translation>
+        <translation>Nelze zavést podklad: Zdá se, že &quot;%1&quot; není rastrovým obrázkem</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1412"/>
         <source>Trying to import a text object with unknown coordinate format</source>
-        <translation>Pokus o import textového objektu s neznámým formátem souřadnic</translation>
+        <translation>Pokus o zavedení textového objektu s neznámým formátem souřadnic</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1523"/>
@@ -5282,7 +5280,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="581"/>
         <source>Unable to import symbol %1.%2 &quot;%3&quot;: %4</source>
-        <translation>Nelze importovat symbol %1.%2 &quot;%3&quot;: %4</translation>
+        <translation>Nelze zavést symbol %1.%2 &quot;%3&quot;: %4</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="585"/>
@@ -5292,7 +5290,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="678"/>
         <source>Unable to import template: &quot;%1&quot; is not a supported template type.</source>
-        <translation>Nelze importovat podklad: &quot;%1&quot; není podporovaný typ podkladu.</translation>
+        <translation>Nelze zavést podklad: &quot;%1&quot; není podporovaný typ podkladu.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="926"/>
@@ -5430,7 +5428,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1624"/>
         <source>Unable to import rectangle object</source>
-        <translation>Nelze importovat obdélníkový objekt</translation>
+        <translation>Nelze zavést obdélníkový objekt</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1665"/>
@@ -5440,7 +5438,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1965"/>
         <source>Trying to import a text object with unknown coordinate format</source>
-        <translation>Pokus o import textového objektu s neznámým formátem souřadnic</translation>
+        <translation>Pokus o zavedení textového objektu s neznámým formátem souřadnic</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2095"/>
@@ -5833,7 +5831,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <name>OpenOrienteering::PrintWidget</name>
     <message>
         <source>Export to PDF or PS</source>
-        <translation type="vanished">Export do PDF nebo PS</translation>
+        <translation>Vyvést jako PDF nebo PS</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="253"/>
@@ -6024,17 +6022,17 @@ barev</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="306"/>
         <source>Export...</source>
-        <translation>Export...</translation>
+        <translation>Vyvést...</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="413"/>
         <source>PDF export</source>
-        <translation>Exportovat jako PDF</translation>
+        <translation>Vyvést jako PDF</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="424"/>
         <source>Image export</source>
-        <translation>Exportovat jako obrázek</translation>
+        <translation>Vyvést jako obrázek</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="530"/>
@@ -6076,7 +6074,7 @@ barev</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1147"/>
         <source>A non-standard view mode is activated. Are you sure to print / export the map like this?</source>
-        <translation>Je aktivní nestandardní režim zobrazení. Opravdu chcete mapu takto vytisknout / exportovat?</translation>
+        <translation>Je zapnut zvláštní režim zobrazení. Opravdu chcete mapu takto vytisknout/vyvést?</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1164"/>
@@ -6101,7 +6099,7 @@ barev</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1243"/>
         <source>Failed to prepare the PDF export.</source>
-        <translation>Nepodařilo se připravit export do PDF.</translation>
+        <translation>Nepodařilo se připravit vyvedení do PDF.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1253"/>
@@ -6120,7 +6118,7 @@ barev</translation>
         <location filename="../src/gui/print_widget.cpp" line="1267"/>
         <source>Export map ...</source>
         <translatorcomment>Check original</translatorcomment>
-        <translation>Exportovat mapu...</translation>
+        <translation>Vyvést mapu...</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1168"/>
@@ -6158,7 +6156,7 @@ barev</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1273"/>
         <source>Failed to finish the PDF export.</source>
-        <translation>Nepodařilo se dokončit export do PDF.</translation>
+        <translation>Nepodařilo se dokončit vyvedení do PDF.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1292"/>
@@ -6263,7 +6261,7 @@ barev</translation>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="111"/>
         <source>Import all new symbols, even if not used as replacement</source>
-        <translation>Importovat všechny nové symboly, i když nejsou použity pro nahrazení</translation>
+        <translation>Zavést všechny nové symboly, i když nejsou použity pro nahrazení</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="117"/>
@@ -7617,7 +7615,7 @@ Pokud ovšem není vaším úmyslem na tento podklad kreslit, nejedná se o prob
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="238"/>
         <source>Import and remove</source>
-        <translation>Importovat a odstranit</translation>
+        <translation>Zavést a odstranit</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="380"/>
@@ -7684,7 +7682,7 @@ Pokud ovšem není vaším úmyslem na tento podklad kreslit, nejedná se o prob
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1000"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1032"/>
         <source>Template import</source>
-        <translation>Import podkladu</translation>
+        <translation>Zavedení podkladu</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1001"/>
@@ -7846,7 +7844,7 @@ Pokud ovšem není vaším úmyslem na tento podklad kreslit, nejedná se o prob
     <message>
         <location filename="../src/templates/template_track.cpp" line="450"/>
         <source>The path is empty, there is nothing to import!</source>
-        <translation>Trasa je prázdná. Není co importovat!</translation>
+        <translation>Trasa je prázdná. Není co zavádět!</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="464"/>
@@ -7861,7 +7859,7 @@ Pokud ovšem není vaším úmyslem na tento podklad kreslit, nejedná se o prob
     <message>
         <location filename="../src/templates/template_track.cpp" line="531"/>
         <source>Import problems</source>
-        <translation>Problémy při importu</translation>
+        <translation>Problémy při zavádění</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/templates/template_track.cpp" line="532"/>
