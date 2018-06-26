@@ -1213,7 +1213,7 @@ void TemplateListWidget::updateRow(int row)
 			check_state = Qt::PartiallyChecked;
 			text_color = text_color.darker();
 		}
-		decoration = QVariant{ QIcon(QString::fromLatin1(":/images/delete.png")) };
+		decoration = QVariant{ QIcon(QString::fromLatin1(":/images/template-unavailable.png")) };
 		checkable  = Qt::NoItemFlags;
 		editable   = Qt::NoItemFlags;
 	}
