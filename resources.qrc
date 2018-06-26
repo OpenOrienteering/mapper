@@ -116,6 +116,7 @@
         <file>images/window-new.png</file>
         <file>images/mapper-icon/Mapper-128.png</file>
         <file alias="doc/tip-of-the-day/tips.txt">doc/tip-of-the-day/tips_en.txt</file>
+        <file>images/template-unavailable.png</file>
     </qresource>
     <qresource prefix="/" lang="de">
         <file alias="doc/tip-of-the-day/tips.txt">doc/tip-of-the-day/tips_de.txt</file>
