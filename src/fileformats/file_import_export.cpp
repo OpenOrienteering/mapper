@@ -68,6 +68,11 @@ QVariant ImportExport::option(const QString& name) const
 }
 
 
+void ImportExport::setOption(const QString& name, const QVariant& value)
+{
+	options[name] = value;
+}
+
 
 // ### Importer ###
 

@@ -90,26 +90,32 @@ public:
 	void setDevice(QIODevice* device);
 	
 	
-	/** Returns the current list of warnings collected by this object.
-	 */
-	const std::vector<QString> &warnings() const;
-	
-	/** Sets an option in this importer or exporter.
+	/**
+	 * Sets an option in this importer or exporter.
 	 */
 	void setOption(const QString& name, const QVariant& value);
 	
-	/** Retrieves the value of an options in this importer or exporter. If the option does not have
-	 *  a value - either a default value assigned in the constructor, or a custom value assigned
-	 *  through setOption() - then a FormatException will be thrown.
+	/**
+	 * Retrieves the value of an option in this instance.
+	 * 
+	 * The option's value must have been set before this function is called,
+	 * either in the constructor, or later through setOption(). Otherwise a
+	 * FormatException will be thrown.
 	 */
 	QVariant option(const QString& name) const;
 	
-	protected:
-	/** Adds an import/export warning to the current list of warnings. The provided message
-	 *  should be translated.
-	 */
-	void addWarning(const QString& str);
 	
+	/**
+	 * Adds a string to the current list of warnings.
+	 * 
+	 * The provided message should be translated.
+	 */
+	void addWarning(const QString& str) { warnings_.emplace_back(str); }
+	
+	/**
+	 * Returns the current list of warnings collected by this object.
+	 */
+	const std::vector<QString>& warnings() const noexcept { return warnings_; }
 	
 private:
 	friend class Exporter;  // direct access to device_ in Exporter::doExport()
@@ -121,7 +127,7 @@ private:
 	QHash<QString, QVariant> options;
 	
 	/// A list of warnings
-	std::vector<QString> warn;
+	std::vector<QString> warnings_;
 };
 
 
@@ -161,7 +167,8 @@ public:
 	: ImportExport(device), map(map), view(view)
 	{}
 	
-	/** Destroys this Importer.
+	/**
+	 * Destroys this Importer.
 	 */
 	~Importer() override;
 	
@@ -282,28 +289,6 @@ protected:
 	const MapView* const view;
 	
 };
-
-
-// ### ImportExport inline code ###
-
-inline
-const std::vector< QString >& ImportExport::warnings() const
-{
-	return warn;
-}
-
-inline
-void ImportExport::addWarning(const QString& str)
-{
-	warn.push_back(str);
-}
-
-inline
-void ImportExport::setOption(const QString& name, const QVariant& value)
-{
-	options[name] = value;
-}
-
 
 
 
