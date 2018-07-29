@@ -131,16 +131,6 @@ private:
 };
 
 
-/**
- * Represents an action that the user must take to successfully complete an import.
- * TODO: Currently not fully implemented, as this should be done using the
- * planned ProblemWidget instead, which works independently of import / export.
- */
-class ImportAction
-{
-	// Nothing
-};
-
 
 /** Base class for all importers. An Importer has the following lifecycle:
  *  -# The Importer is constructed, with pointers to the map and view. The Importer
@@ -172,10 +162,6 @@ public:
 	 */
 	~Importer() override;
 	
-	/** Returns the current list of action items.
-	 */
-	inline const std::vector<ImportAction> &actions() const;
-	
 	/** Begins the import process. The implementation of this method should read the file
 	 *  and populate the map and view from it. If a fatal error is encountered (such as a
 	 *  missing or corrupt file), than it should throw a FormatException. If the import can
@@ -197,10 +183,6 @@ protected:
 	 */
 	virtual void import(bool load_symbols_only) = 0;
 	
-	/** Adds an action item to the current list.
-	 */
-	inline void addAction(const ImportAction &action);
-	
 	
 	/// The Map to import or export
 	Map* const map;
@@ -208,10 +190,6 @@ protected:
 	/// The MapView to import or export
 	MapView* const view;
 	
-	
-private:
-	/// A list of action items that must be resolved before the import can be completed
-	std::vector<ImportAction> act;
 };
 
 
@@ -289,22 +267,6 @@ protected:
 	const MapView* const view;
 	
 };
-
-
-
-// ### Importer inline code ###
-
-inline
-const std::vector< ImportAction >& Importer::actions() const
-{
-	return act;
-}
-
-inline
-void Importer::addAction(const ImportAction& action)
-{
-	act.push_back(action);
-}
 
 
 }  // namespace OpenOrienteering

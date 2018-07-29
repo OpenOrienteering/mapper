@@ -207,11 +207,6 @@ void OcdFileImport::importImplementationLegacy(bool load_symbols_only)
 	{
 		addWarning(w);
 	}
-	
-	for (auto&& a : delegate->actions())
-	{
-		addAction(a);
-	}
 }
 
 template< class F >
@@ -2138,13 +2133,11 @@ void OcdFileImport::finishImport()
 	{
 		// The current warnings and actions are already propagated.
 		auto warnings_size = ptrdiff_t(delegate->warnings().size());
-		auto actions_size = ptrdiff_t(delegate->actions().size());
 		
 		delegate->finishImport();
 		
 		// Propagate new warnings and actions from the delegate to this importer.
 		std::for_each(begin(delegate->warnings()) + warnings_size, end(delegate->warnings()), [this](const QString& w) { addWarning(w); });
-		std::for_each(begin(delegate->actions()) + actions_size, end(delegate->actions()), [this](const ImportAction& a) { addAction(a); });
 	}
 }
 

@@ -652,12 +652,6 @@ bool Map::loadFrom(const QString& path, QWidget* dialog_parent, MapView* view, b
 			// Run the first pass.
 			importer->doImport(load_symbols_only, QFileInfo(path).absolutePath());
 			
-			// Are there any actions the user must take to complete the import?
-			if (!importer->actions().empty())
-			{
-				// TODO: prompt the user to resolve the action items. All-in-one dialog.
-			}
-			
 			// Finish the import.
 			importer->finishImport();
 			
