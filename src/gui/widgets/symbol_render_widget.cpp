@@ -895,11 +895,10 @@ void SymbolRenderWidget::pasteSymbols()
 	// Get buffer from clipboard
 	QByteArray byte_array = QApplication::clipboard()->mimeData()->data(MimeType::OpenOrienteeringSymbols());
 	QBuffer buffer(&byte_array);
-	buffer.open(QIODevice::ReadOnly);
 	
 	// Create map from buffer
-	Map* paste_map = new Map();
-	if (!paste_map->importFromIODevice(buffer))
+	Map paste_map;
+	if (!paste_map.importFromIODevice(buffer))
 	{
 		QMessageBox::warning(nullptr, tr("Error"), tr("An internal error occurred, sorry!"));
 		return;
@@ -909,8 +908,7 @@ void SymbolRenderWidget::pasteSymbols()
 	selectSingleSymbol(-1);
 	
 	// Import pasted map
-	map->importMap(paste_map, Map::MinimalSymbolImport, this, nullptr, current_symbol_index, false);
-	delete paste_map;
+	map->importMap(&paste_map, Map::MinimalSymbolImport, this, nullptr, current_symbol_index, false);
 	
 	selectSingleSymbol(current_symbol_index);
 }
