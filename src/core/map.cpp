@@ -61,6 +61,7 @@
 #include "fileformats/file_format.h"
 #include "fileformats/file_format_registry.h"
 #include "fileformats/file_import_export.h"
+#include "fileformats/xml_file_format_p.h"
 #include "gui/main_window.h"
 #include "gui/map/map_widget.h"
 #include "templates/template.h"
@@ -906,10 +907,9 @@ QHash<const Symbol*, Symbol*> Map::importMap(
 
 bool Map::exportToIODevice(QIODevice& device) const
 {
-	auto native_format = FileFormats.findFormat("XML");
-	auto exporter = native_format->makeExporter({}, this, nullptr);
-	exporter->setDevice(&device);
-	auto success = exporter->doExport();
+	XMLFileExporter exporter({}, this, nullptr);
+	exporter.setDevice(&device);
+	auto success = exporter.doExport();
 	device.close();
 	return success;
 }
@@ -917,10 +917,9 @@ bool Map::exportToIODevice(QIODevice& device) const
 
 bool Map::importFromIODevice(QIODevice& device)
 {
-	auto native_format = FileFormats.findFormat("XML");
-	auto importer = native_format->makeImporter({}, this, nullptr);
-	importer->setDevice(&device);
-	auto success = importer->doImport();
+	XMLFileImporter importer {{}, this, nullptr};
+	importer.setDevice(&device);
+	auto success = importer.doImport();
 	device.close();
 	return success;
 }
