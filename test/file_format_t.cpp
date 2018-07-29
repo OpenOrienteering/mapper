@@ -327,7 +327,7 @@ namespace
 		return true;
 	}
 	
-	std::unique_ptr<Map> saveAndLoadMap(Map& input, const FileFormat* format)
+	std::unique_ptr<Map> saveAndLoadMap(const Map& input, const FileFormat* format)
 	{
 		auto out = std::make_unique<Map>();
 		try {

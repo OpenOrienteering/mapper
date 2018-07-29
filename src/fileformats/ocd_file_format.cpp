@@ -63,7 +63,7 @@ std::unique_ptr<Importer> OcdFileFormat::makeImporter(QIODevice* stream, Map *ma
 	return std::make_unique<OcdFileImport>(stream, map, view);
 }
 
-std::unique_ptr<Exporter> OcdFileFormat::makeExporter(QIODevice* stream, Map* map, MapView* view) const
+std::unique_ptr<Exporter> OcdFileFormat::makeExporter(QIODevice* stream, const Map* map, const MapView* view) const
 {
 	return std::make_unique<OcdFileExport>(stream, map, view);
 }

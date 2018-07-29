@@ -74,7 +74,7 @@ std::unique_ptr<Importer> FileFormat::makeImporter(QIODevice* /*stream*/, Map* /
 	throw FileFormatException(QCoreApplication::translate("OpenOrienteering::Importer", "Format (%1) does not support import").arg(description()));
 }
 
-std::unique_ptr<Exporter> FileFormat::makeExporter(QIODevice* /*stream*/, Map* /*map*/, MapView* /*view*/) const
+std::unique_ptr<Exporter> FileFormat::makeExporter(QIODevice* /*stream*/, const Map* /*map*/, const MapView* /*view*/) const
 {
 	throw FileFormatException(QCoreApplication::translate("OpenOrienteering::Exporter", "Format (%1) does not support export").arg(description()));
 }

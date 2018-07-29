@@ -126,7 +126,7 @@ std::unique_ptr<Importer> XMLFileFormat::makeImporter(QIODevice* stream, Map* ma
 	return std::make_unique<XMLFileImporter>(stream, map, view);
 }
 
-std::unique_ptr<Exporter> XMLFileFormat::makeExporter(QIODevice* stream, Map* map, MapView* view) const
+std::unique_ptr<Exporter> XMLFileFormat::makeExporter(QIODevice* stream, const Map* map, const MapView* view) const
 {
 	return std::make_unique<XMLFileExporter>(stream, map, view);
 }
