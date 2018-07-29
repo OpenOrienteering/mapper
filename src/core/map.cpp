@@ -952,13 +952,13 @@ QHash<const Symbol*, Symbol*> Map::importMap(
 
 
 
-bool Map::exportToIODevice(QIODevice* stream) const
+bool Map::exportToIODevice(QIODevice& device) const
 try
 {
 	auto native_format = FileFormats.findFormat("XML");
-	stream->open(QIODevice::WriteOnly);
-	native_format->makeExporter(stream, this, nullptr)->doExport();
-	stream->close();
+	device.open(QIODevice::WriteOnly);
+	native_format->makeExporter(&device, this, nullptr)->doExport();
+	device.close();
 	return true;
 }
 catch (std::exception& /*e*/)
@@ -967,14 +967,14 @@ catch (std::exception& /*e*/)
 }
 
 
-bool Map::importFromIODevice(QIODevice* stream)
+bool Map::importFromIODevice(QIODevice& device)
 try
 {
 	auto native_format = FileFormats.findFormat("XML");
-	auto importer = native_format->makeImporter(stream, this, nullptr);
+	auto importer = native_format->makeImporter(&device, this, nullptr);
 	importer->doImport(false);
 	importer->finishImport();
-	stream->close();
+	device.close();
 	return true;
 }
 catch (std::exception& /*e*/)

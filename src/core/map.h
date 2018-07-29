@@ -226,18 +226,21 @@ public:
 	
 	
 	/**
-	 * Serializes the map directly into the given IO device in a known format.
+	 * Serializes the map directly to the given IO device, in a fixed format.
+	 * 
 	 * This can be imported again using importFromIODevice().
 	 * Returns true if successful.
 	 */
-	bool exportToIODevice(QIODevice* stream) const;
+	bool exportToIODevice(QIODevice& device) const;
 	
 	/**
-	 * Loads the map directly from the given IO device,
-	 * where the data must have been written by exportToIODevice().
+	 * Loads the map directly from the given IO device.
+	 * 
+	 * The data must have been written by exportToIODevice() (or at least use
+	 * the same format.)
 	 * Returns true if successful.
 	 */
-	bool importFromIODevice(QIODevice* stream);
+	bool importFromIODevice(QIODevice& device);
 	
 	
 	/**
