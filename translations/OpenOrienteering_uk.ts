@@ -5166,7 +5166,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1318"/>
         <source>The border of this symbol could not be loaded.</source>
-        <translation type="unfinished">Неможливо завантажити границю цього знаку</translation>
+        <translation>Неможливо завантажити границю цього знаку.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1614"/>
