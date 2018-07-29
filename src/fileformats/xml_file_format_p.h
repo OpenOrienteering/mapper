@@ -63,11 +63,11 @@ class XMLFileImporter : public Importer
 	Q_DECLARE_TR_FUNCTIONS(OpenOrienteering::XMLFileImporter)
 	
 public:
-	XMLFileImporter(QIODevice* stream, Map *map, MapView *view);
+	XMLFileImporter(const QString& path, Map *map, MapView *view);
 	~XMLFileImporter() override {}
-
+	
 protected:
-	void import() override;
+	bool importImplementation() override;
 	
 	void importElements();
 	

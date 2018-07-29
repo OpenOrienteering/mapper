@@ -119,6 +119,7 @@ public:
 	
 private:
 	friend class Exporter;  // direct access to device_ in Exporter::doExport()
+	friend class Importer;  // direct access to device_ in Importer::doImport()
 	
 	/// The input / output device
 	QIODevice* device_;
@@ -132,18 +133,18 @@ private:
 
 
 
-/** Base class for all importers. An Importer has the following lifecycle:
- *  -# The Importer is constructed, with pointers to the map and view. The Importer
- *     should also set default values for any options it will read. The base class
- *     will throw an exception if the importer reads an option that does not have a value.
- *  -# setOption() will be called zero or more times to customize the options.
- *  -# doImport() will be called to perform the initial import. The implementation of
- *     this method will try to populate the map and view from the given file, and may
- *     optionally register action items for the user via addAction().
- *  -# If action items are present, then they will be presented to the user. Each
- *     action item will have its satisfy() method called with the user's choice.
- *  -# finishImport() will be called. If any action items were created, this method
- *     should finish the import based on the values supplied by the user.
+/**
+ * Base class for all importers.
+ * 
+ * An Importer has the following lifecycle:
+ * 
+ * 1. The Importer is constructed with the input path and with pointers to map
+ *    and view. The constructor should also set default values for any options
+ *    it will read. (ImportExport will throw an exception if the exporter reads
+ *    an option that does not have a value.)
+ * 2. setOption() can be called zero or more times to customize the options.
+ *    setDevice() can be called to set a custom input device.
+ * 3. doImport() will be called to perform the import.
  */
 class Importer : public ImportExport
 {
@@ -151,10 +152,10 @@ class Importer : public ImportExport
 	
 public:
 	/**
-	 * Creates a new Importer with the given input device, map, and view.
+	 * Creates a new Importer with the given input path, map, and view.
 	 */
-	Importer(QIODevice* device, Map *map, MapView *view)
-	: ImportExport(device), map(map), view(view)
+	Importer(const QString& path, Map* map, MapView* view)
+	: ImportExport(nullptr), path(path), map(map), view(view)
 	{}
 	
 	/**
@@ -174,27 +175,72 @@ public:
 	void setLoadSymbolsOnly(bool value);
 	
 	
-	/** Begins the import process. The implementation of this method should read the file
-	 *  and populate the map and view from it. If a fatal error is encountered (such as a
-	 *  missing or corrupt file), than it should throw a FormatException. If the import can
-	 *  proceed, but information might be lost in the process, than it should call
-	 *  addWarning() with a translated, useful description of the issue. The line between
-	 *  errors and warnings is somewhat of a judgement call on the part of the author, but
-	 *  generally an Importer should not succeed unless the map is populated sufficiently
-	 *  to be useful.
+	/**
+	 * Imports the map and view.
+	 * 
+	 * This is the function which is normally called to perform import.
+	 * It must return false on errors and true on success. All error and
+	 * warning messages must be logged in `ImportExport::warnings()`.
+	 * 
+	 * In case of an error, the last warning can be assumed to be the error
+	 * message. (The list of warnings won't be empty then.)
+	 * 
+	 * If the importer supports input from QIODevice, this function will open
+	 * a QFile with the given path and make it available via device().
 	 */
-	void doImport(const QString& map_path = QString());
+	bool doImport();
 	
-	/** Once all action items are satisfied, this method should be called to complete the
-	 *  import process. This class defines a default implementation, that does nothing.
-	 */
-	virtual void finishImport();
 	
 protected:
-	/** Implementation of doImport().
+	/**
+	 * Event handler called from doImport() to prepare the import process.
+	 * 
+	 * This function is called only when opening the input succeeded. However,
+	 * the input is not passed to this function by intention: It is meant to
+	 * be used also by importers which do not use QIODevice.
+	 * 
+	 * Overriding functions must call the the default implementation.
 	 */
-	virtual void import() = 0;
+	virtual void prepare();
 	
+	/**
+	 * Actual implementation of the import.
+	 * 
+	 * This function shall read the input and populate the map and view from it.
+	 * Importers which support input from QIODevice should use the device().
+	 * They must not open or close this device.
+	 * 
+	 * If information might be lost in the process, a message shall be recorded
+	 * by calling addWarning() with a translated, useful description of the
+	 * issue. If a fatal error is encountered, then this method may either throw
+	 * an exception, or log an error message with addWarning() and return false.
+	 * The line between errors and warnings is somewhat of a judgement call on
+	 * the part of the author, but generally an Importer should not succeed
+	 * unless the map is populated sufficiently to be useful.
+	 */
+	virtual bool importImplementation() = 0;
+	
+	/**
+	 * Event handler called from doImport() to complete to postprocess imported data.
+	 * 
+	 * Overriding functions must call the the default implementation early.
+	 * It validates the object and symbols, and looks for templates. It may
+	 * throw FileFormatException.
+	 */
+	virtual void validate();
+	
+	/**
+	 * Event handler called from doImport() to complete to cleanup a failed
+	 * import attempt.
+	 * 
+	 * Overriding functions must call the the default implementation.
+	 */
+	virtual void importFailed();
+	
+	
+protected:
+	/// The input path
+	const QString path;
 	
 	/// The Map to import or export
 	Map* const map;

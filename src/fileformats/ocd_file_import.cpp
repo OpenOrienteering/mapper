@@ -24,7 +24,6 @@
 
 #include <algorithm>
 #include <cmath>
-#include <iterator>
 #include <memory>
 #include <type_traits>
 #include <vector>
@@ -95,9 +94,8 @@ OcdFileImport::OcdImportedPathObject::~OcdImportedPathObject()
 	// nothing, not inlined
 }
 
-OcdFileImport::OcdFileImport(QIODevice* stream, Map* map, MapView* view)
- : Importer { stream, map, view }
- , delegate { nullptr }
+OcdFileImport::OcdFileImport(const QString& path, Map* map, MapView* view)
+ : Importer { path, map, view }
  , custom_8bit_encoding { codecFromSettings() }
 {
 	if (!custom_8bit_encoding)
@@ -195,18 +193,17 @@ qint64 OcdFileImport::convertLength< quint32 >(quint32 ocd_length) const
 #endif // !NDEBUG
 
 
-void OcdFileImport::importImplementationLegacy()
+void OcdFileImport::importImplementationLegacy(QByteArray& buffer)
 {
-	QBuffer new_stream(&buffer);
-	new_stream.open(QIODevice::ReadOnly);
-	delegate.reset(new OCAD8FileImport(&new_stream, map, view));
+	QBuffer delegate_device(&buffer);
+	delegate_device.open(QIODevice::ReadOnly);
 	
-	delegate->import();
-	
-	for (auto&& w : delegate->warnings())
-	{
+	OCAD8FileImport delegate(path, map, view);
+	delegate.setDevice(&delegate_device);
+	delegate.setLoadSymbolsOnly(loadSymbolsOnly());
+	delegate.importImplementation();
+	for (auto&& w : delegate.warnings())
 		addWarning(w);
-	}
 }
 
 template< class F >
@@ -2077,7 +2074,7 @@ void OcdFileImport::setFraming(OcdFileImport::OcdImportedTextSymbol* symbol, con
 	}
 }
 
-void OcdFileImport::import()
+bool OcdFileImport::importImplementation()
 {
 	Q_ASSERT(buffer.isEmpty());
 	
@@ -2105,7 +2102,7 @@ void OcdFileImport::import()
 		if (Settings::getInstance().getSetting(Settings::General_NewOcd8Implementation).toBool())
 			importImplementation<Ocd::FormatV8>();
 		else
-			importImplementationLegacy();
+			importImplementationLegacy(buffer);
 		break;
 	case 9:
 	case 10:
@@ -2125,21 +2122,10 @@ void OcdFileImport::import()
 		            arg(tr("OCD files of version %1 are not supported!").arg(version))
 		            );
 	}
+	return true;
 }
 
-void OcdFileImport::finishImport()
-{
-	if (delegate)
-	{
-		// The current warnings and actions are already propagated.
-		auto warnings_size = ptrdiff_t(delegate->warnings().size());
-		
-		delegate->finishImport();
-		
-		// Propagate new warnings and actions from the delegate to this importer.
-		std::for_each(begin(delegate->warnings()) + warnings_size, end(delegate->warnings()), [this](const QString& w) { addWarning(w); });
-	}
-}
+
 
 template< class F >
 void OcdFileImport::handleStrings(const OcdFile<F>& file, std::initializer_list<StringHandler> handlers)

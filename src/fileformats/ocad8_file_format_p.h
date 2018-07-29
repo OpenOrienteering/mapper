@@ -73,13 +73,13 @@ private:
 	};
 	
 public:
-	OCAD8FileImport(QIODevice* stream, Map *map, MapView *view);
+	OCAD8FileImport(const QString& path, Map *map, MapView *view);
 	~OCAD8FileImport() override;
 
 	void setStringEncodings(const char *narrow, const char *wide = "UTF-16LE");
 
 protected:
-	void import() override;
+	bool importImplementation() override;
 	
 	// Symbol import
 	Symbol *importPointSymbol(const OCADPointSymbol *ocad_symbol);

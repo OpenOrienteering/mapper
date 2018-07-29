@@ -25,6 +25,9 @@
 #include <memory>
 
 #include <QtGlobal>
+#include <QDir>
+#include <QFile>
+#include <QFileInfo>
 #include <QFlags>
 #include <QIODevice>
 #include <QLatin1Char>
@@ -85,13 +88,61 @@ void Importer::setLoadSymbolsOnly(bool value)
 }
 
 
-void Importer::doImport(const QString& map_path)
+bool Importer::doImport()
+{
+	std::unique_ptr<QFile> managed_file;
+	QScopedValueRollback<QIODevice*> original_device{device_};
+	if (supportsQIODevice())
+	{
+		if (!device_)
+		{
+			managed_file = std::make_unique<QFile>(path);
+			device_ = managed_file.get();
+		}
+		if (!device_->isOpen() && !device_->open(QIODevice::ReadOnly))
+		{
+			addWarning(tr("Cannot open file\n%1:\n%2").arg(path, device_->errorString()));
+			return false;
+		}
+	}
+	
+	try
+	{
+		prepare();
+		if (!importImplementation())
+		{
+			Q_ASSERT(!warnings().empty());
+			importFailed();
+			return false;
+		}
+		validate();
+	}
+	catch (std::exception &e)
+	{
+		importFailed();
+		addWarning(QString::fromLocal8Bit(e.what()));
+		return false;
+	}
+	
+	return true;
+}
+
+
+void Importer::prepare()
 {
 	if (view)
 		view->setTemplateLoadingBlocked(true);
-	
-	import();
-	
+}
+
+// Don't add warnings in this function. They may hide the error message.
+void Importer::importFailed()
+{
+	if (view)
+		view->setTemplateLoadingBlocked(false);
+}
+
+void Importer::validate()
+{
 	// Object post processing:
 	// - make sure that there is no object without symbol
 	// - make sure that all area-only path objects are closed
@@ -150,7 +201,8 @@ void Importer::doImport(const QString& map_path)
 	{
 		Template* temp = map->getTemplate(i);
 		bool found_in_map_dir = false;
-		if (!temp->tryToFindTemplateFile(map_path, &found_in_map_dir))
+		if (!temp->tryToFindTemplateFile(path, &found_in_map_dir)
+		    && !temp->tryToFindTemplateFile(QFileInfo(path).dir().path(), &found_in_map_dir))
 		{
 			have_lost_template = true;
 		}
@@ -191,11 +243,14 @@ void Importer::doImport(const QString& map_path)
 		           tr("Click the red template name(s) in the Templates -> Template setup window to locate the template file name(s)."));
 #endif
 	}
-}
+	
+	if (view)
+	{
+		view->setPanOffset({0,0});
+	}
 
-void Importer::finishImport()
-{
-	// Nothing, not inlined
+	// Update all objects without trying to remove their renderables first, this gives a significant speedup when loading large files
+	map->updateAllObjects(); // TODO: is the comment above still applicable?
 }
 
 

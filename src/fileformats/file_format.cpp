@@ -69,7 +69,7 @@ FileFormat::ImportSupportAssumption FileFormat::understands(const char* /*buffer
 }
 
 
-std::unique_ptr<Importer> FileFormat::makeImporter(QIODevice* /*stream*/, Map* /*map*/, MapView* /*view*/) const
+std::unique_ptr<Importer> FileFormat::makeImporter(const QString& /*path*/, Map* /*map*/, MapView* /*view*/) const
 {
 	throw FileFormatException(QCoreApplication::translate("OpenOrienteering::Importer", "Format (%1) does not support import").arg(description()));
 }

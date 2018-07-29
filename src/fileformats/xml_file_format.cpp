@@ -31,7 +31,6 @@
 #include <QCoreApplication>
 #include <QDir>
 #include <QExplicitlySharedDataPointer>
-#include <QFileDevice>
 #include <QFileInfo>
 #include <QFlags>
 #include <QIODevice>
@@ -121,9 +120,9 @@ FileFormat::ImportSupportAssumption XMLFileFormat::understands(const char* buffe
 }
 
 
-std::unique_ptr<Importer> XMLFileFormat::makeImporter(QIODevice* stream, Map* map, MapView* view) const
+std::unique_ptr<Importer> XMLFileFormat::makeImporter(const QString& path, Map* map, MapView* view) const
 {
-	return std::make_unique<XMLFileImporter>(stream, map, view);
+	return std::make_unique<XMLFileImporter>(path, map, view);
 }
 
 std::unique_ptr<Exporter> XMLFileFormat::makeExporter(const QString& path, const Map* map, const MapView* view) const
@@ -493,9 +492,8 @@ void XMLFileExporter::exportRedo()
 
 // ### XMLFileImporter definition ###
 
-XMLFileImporter::XMLFileImporter(QIODevice* stream, Map *map, MapView *view)
-: Importer(stream, map, view),
-  xml(stream)
+XMLFileImporter::XMLFileImporter(const QString& path, Map *map, MapView *view)
+: Importer(path, map, view)
 {
 	//NOP
 }
@@ -509,8 +507,9 @@ void XMLFileImporter::addWarningUnsupportedElement()
 	);
 }
 
-void XMLFileImporter::import()
+bool XMLFileImporter::importImplementation()
 {
+	xml.setDevice(device());
 	if (!xml.readNextStartElement() || xml.name() != literal::map)
 	{
 		if (device()->seek(0))
@@ -572,6 +571,7 @@ void XMLFileImporter::import()
 			map->setGeoreferencing(georef);
 		}
 	}
+	return true;
 }
 
 void XMLFileImporter::importElements()

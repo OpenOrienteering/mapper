@@ -131,7 +131,7 @@ public:
 	/**
 	 * Constructs a new importer.
 	 */
-	OgrFileImport(QIODevice* stream, Map *map, MapView *view, UnitType unit_type = UnitOnGround);
+	OgrFileImport(const QString& path, Map *map, MapView *view, UnitType unit_type = UnitOnGround);
 	
 	~OgrFileImport() override;
 	
@@ -172,7 +172,7 @@ protected:
 	 */
 	static bool checkGeoreferencing(OGRDataSourceH data_source, const Georeferencing& georef);
 	
-	void import() override;
+	bool importImplementation() override;
 	
 	ogr::unique_srs importGeoreferencing(OGRDataSourceH data_source);
 	

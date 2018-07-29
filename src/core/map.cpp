@@ -34,7 +34,6 @@
 #include <QByteArray>
 #include <QDebug>
 #include <QFile>
-#include <QFileInfo>
 #include <QIODevice>
 #include <QLocale>
 #include <QMessageBox>
@@ -635,8 +634,7 @@ bool Map::loadFrom(const QString& path, QWidget* dialog_parent, MapView* view, b
 	// Read a block at the beginning of the file, that we can use for magic number checking.
 	char buffer[256];
 	auto total_read = file.read(buffer, file.isSequential() ? 0 : std::extent<decltype(buffer)>::value);
-	file.seek(0);
-
+	
 	bool import_complete = false;
 	QString error_msg = tr("Invalid file type.");
 	for (auto format : FileFormats.formats())
@@ -647,27 +645,32 @@ bool Map::loadFrom(const QString& path, QWidget* dialog_parent, MapView* view, b
 			continue;
 		
 		try {
-			auto importer = format->makeImporter(&file, this, view);
-			
-			// Run the first pass.
-			importer->setLoadSymbolsOnly(load_symbols_only);
-			importer->doImport(QFileInfo(path).absolutePath());
-			
-			// Finish the import.
-			importer->finishImport();
-			
-			file.close();
-			
-			// Display any warnings.
-			if (!importer->warnings().empty() && show_error_messages)
+			auto importer = format->makeImporter(path, this, view);
+			if (file.isOpen())
 			{
-				MainWindow::showMessageBox(nullptr,
-				                           tr("Warning"),
-				                           tr("The map import generated warnings."),
-				                           importer->warnings() );
+				// Reuse open file if possible
+				if (importer->supportsQIODevice() && file.seek(0))
+					importer->setDevice(&file);
+				else
+					file.close();
 			}
-			
-			import_complete = true;
+			importer->setLoadSymbolsOnly(load_symbols_only);
+			if (importer->doImport())
+			{
+				// Display any warnings.
+				if (!importer->warnings().empty() && show_error_messages)
+				{
+					MainWindow::showMessageBox(nullptr,
+					                           tr("Warning"),
+					                           tr("The map import generated warnings."),
+					                           importer->warnings() );
+				}
+				import_complete = true;
+			}
+			else
+			{
+				error_msg = importer->warnings().back();
+			}
 		}
 		catch (FileFormatException &e)
 		{
@@ -906,18 +909,13 @@ bool Map::exportToIODevice(QIODevice& device) const
 
 
 bool Map::importFromIODevice(QIODevice& device)
-try
 {
 	auto native_format = FileFormats.findFormat("XML");
-	auto importer = native_format->makeImporter(&device, this, nullptr);
-	importer->doImport();
-	importer->finishImport();
+	auto importer = native_format->makeImporter({}, this, nullptr);
+	importer->setDevice(&device);
+	auto success = importer->doImport();
 	device.close();
-	return true;
-}
-catch (std::exception& /*e*/)
-{
-	return false;
+	return success;
 }
 
 

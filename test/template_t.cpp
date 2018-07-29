@@ -125,8 +125,9 @@ private slots:
 		// This results in a warning.
 		QBuffer buffer{ &original_data };
 		buffer.open(QIODevice::ReadOnly);
-		XMLFileImporter importer{ &buffer, &map, &view };
-		importer.doImport();
+		XMLFileImporter importer{ {}, &map, &view };
+		importer.setDevice(&buffer);
+		QVERIFY(importer.doImport());
 		QCOMPARE(importer.warnings().size(), std::size_t(1));
 		
 		// The image is in Invalid state, but path attributes are intact.

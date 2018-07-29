@@ -300,17 +300,17 @@ OgrFileFormat::OgrFileFormat()
 }
 
 
-std::unique_ptr<Importer> OgrFileFormat::makeImporter(QIODevice* stream, Map* map, MapView* view) const
+std::unique_ptr<Importer> OgrFileFormat::makeImporter(const QString& path, Map* map, MapView* view) const
 {
-	return std::make_unique<OgrFileImport>(stream, map, view);
+	return std::make_unique<OgrFileImport>(path, map, view);
 }
 
 
 
 // ### OgrFileImport ###
 
-OgrFileImport::OgrFileImport(QIODevice* stream, Map* map, MapView* view, UnitType unit_type)
- : Importer(stream, map, view)
+OgrFileImport::OgrFileImport(const QString& path, Map* map, MapView* view, UnitType unit_type)
+ : Importer(path, map, view)
  , manager{ OGR_SM_Create(nullptr) }
  , unit_type{ unit_type }
  , georeferencing_import_enabled{ true }
@@ -397,7 +397,7 @@ ogr::unique_srs OgrFileImport::srsFromMap()
 
 
 
-void OgrFileImport::import()
+bool OgrFileImport::importImplementation()
 {
 	auto file = qobject_cast<QFile*>(device());
 	if (!file)
@@ -517,6 +517,8 @@ void OgrFileImport::import()
 		addWarning(tr("Unable to load %n objects, reason: %1", nullptr, too_few_coordinates)
 		           .arg(tr("Not enough coordinates.")));
 	}
+	
+	return true;
 }
 
 

@@ -21,7 +21,6 @@
 #include "file_format_t.h"
 
 #include <algorithm>
-#include <exception>
 #include <limits>
 #include <memory>
 
@@ -330,30 +329,22 @@ namespace
 	std::unique_ptr<Map> saveAndLoadMap(const Map& input, const FileFormat* format)
 	{
 		auto out = std::make_unique<Map>();
-		try {
-			QBuffer buffer;
-			buffer.open(QIODevice::ReadWrite);
-			
-			auto exporter = format->makeExporter({}, &input, nullptr);
-			auto importer = format->makeImporter(&buffer, out.get(), nullptr);
-			if (exporter && importer)
-			{
-				exporter->setDevice(&buffer);
-				exporter->doExport();
-				buffer.seek(0);
-			
-				importer->doImport();
-				importer->finishImport();
-			}
-			else
-			{
-				out.reset();
-			}
-		}
-		catch (std::exception&)
+		auto exporter = format->makeExporter({}, &input, nullptr);
+		auto importer = format->makeImporter({}, out.get(), nullptr);
+		if (exporter && importer)
 		{
-			out.reset();
+			QBuffer buffer;
+			exporter->setDevice(&buffer);
+			importer->setDevice(&buffer);
+			if (buffer.open(QIODevice::ReadWrite)
+			    && exporter->doExport()
+			    && buffer.seek(0)
+			    && importer->doImport())
+			{
+				return out;  // success
+			}
 		}
+		out.reset();  // failure
 		return out;
 	}
 	

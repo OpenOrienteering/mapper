@@ -27,8 +27,6 @@
 
 #include "fileformats/file_format.h"
 
-class QIODevice;
-
 namespace OpenOrienteering {
 
 class Exporter;
@@ -54,7 +52,7 @@ public:
 	
 	/** @brief Creates an importer for XML files.
 	 */
-	std::unique_ptr<Importer> makeImporter(QIODevice* stream, Map* map, MapView* view) const override;
+	std::unique_ptr<Importer> makeImporter(const QString& path, Map* map, MapView* view) const override;
 	
 	/** @brief Creates an exporter for XML files.
 	 */

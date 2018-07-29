@@ -68,12 +68,13 @@ namespace {
 	{
 		Map tmp_map;
 		tmp_map.setGeoreferencing(initial_georef);
-		OgrFileImport importer{ &file, &tmp_map, nullptr, OgrFileImport::UnitOnGround};
+		OgrFileImport importer{ file.fileName(), &tmp_map, nullptr, OgrFileImport::UnitOnGround};
 		importer.setGeoreferencingImportEnabled(true);
 		importer.setLoadSymbolsOnly(true);
-		importer.doImport();
+		if (!importer.doImport())
+			return {};  // failure
 		
-		return std::make_unique<Georeferencing>(tmp_map.getGeoreferencing());
+		return std::make_unique<Georeferencing>(tmp_map.getGeoreferencing());  // success
 	}
 	
 	
@@ -261,7 +262,7 @@ try
 	QFile file{ template_path };
 	auto new_template_map = std::make_unique<Map>();
 	auto unit_type = use_real_coords ? OgrFileImport::UnitOnGround : OgrFileImport::UnitOnPaper;
-	OgrFileImport importer{ &file, new_template_map.get(), nullptr, unit_type };
+	OgrFileImport importer{ template_path, new_template_map.get(), nullptr, unit_type };
 	
 	const auto& map_georef = map->getGeoreferencing();
 	
@@ -346,7 +347,11 @@ try
 	
 	const auto pp0 = new_template_map->getGeoreferencing().getProjectedRefPoint();
 	importer.setGeoreferencingImportEnabled(false);
-	importer.doImport(template_path);
+	if (!importer.doImport())
+	{
+		setErrorString(importer.warnings().back());
+		return false;
+	}
 	
 	// MapCoord bounds handling may have moved the paper position of the
 	// template data during import. The template position might need to be

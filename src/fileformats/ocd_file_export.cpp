@@ -41,12 +41,12 @@ bool OcdFileExport::exportImplementation()
 {
 	OCAD8FileExport delegate { path, map, view };
 	delegate.setDevice(device());
-	delegate.doExport();
+	auto success = delegate.doExport();
 	for (auto&& w : delegate.warnings())
 	{
 		addWarning(w);
 	}
-	return true;
+	return success;
 }
 
 

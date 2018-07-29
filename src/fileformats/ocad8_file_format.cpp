@@ -78,9 +78,9 @@ FileFormat::ImportSupportAssumption OCAD8FileFormat::understands(const char* buf
 }
 
 
-std::unique_ptr<Importer> OCAD8FileFormat::makeImporter(QIODevice* stream, Map *map, MapView *view) const
+std::unique_ptr<Importer> OCAD8FileFormat::makeImporter(const QString& path, Map *map, MapView *view) const
 {
-	return std::make_unique<OCAD8FileImport>(stream, map, view);
+	return std::make_unique<OCAD8FileImport>(path, map, view);
 }
 
 std::unique_ptr<Exporter> OCAD8FileFormat::makeExporter(const QString& path, const Map* map, const MapView* view) const
@@ -92,7 +92,7 @@ std::unique_ptr<Exporter> OCAD8FileFormat::makeExporter(const QString& path, con
 
 // ### OCAD8FileImport ###
 
-OCAD8FileImport::OCAD8FileImport(QIODevice* stream, Map* map, MapView* view) : Importer(stream, map, view), file(nullptr)
+OCAD8FileImport::OCAD8FileImport(const QString& path, Map* map, MapView* view) : Importer(path, map, view), file(nullptr)
 {
     ocad_init();
     const QByteArray enc_name = Settings::getInstance().getSetting(Settings::General_Local8BitEncoding).toByteArray();
@@ -116,17 +116,17 @@ bool OCAD8FileImport::isRasterImageFile(const QString &filename)
 	return QImageReader::supportedImageFormats().contains(extension.toLatin1());
 }
 
-void OCAD8FileImport::import()
+bool OCAD8FileImport::importImplementation()
 {
     //qint64 start = QDateTime::currentMSecsSinceEpoch();
 	
-	auto stream = device();
-	u32 size = stream->bytesAvailable();
+	auto& device = *this->device();
+	u32 size = device.bytesAvailable();
 	u8* buffer = (u8*)malloc(size);
 	if (!buffer)
 		throw FileFormatException(tr("Could not allocate buffer."));
-	if (stream->read((char*)buffer, size) != size)
-		throw FileFormatException(::OpenOrienteering::Importer::tr("Could not read file: %1").arg(stream->errorString()));
+	if (device.read((char*)buffer, size) != size)
+		throw FileFormatException(::OpenOrienteering::Importer::tr("Could not read file: %1").arg(device.errorString()));
 	int err = ocad_file_open_memory(&file, buffer, size);
     if (err != 0) throw FileFormatException(::OpenOrienteering::Importer::tr("Could not read file: %1").arg(tr("libocad returned %1").arg(err)));
 	
@@ -371,6 +371,8 @@ void OCAD8FileImport::import()
 
 	emit map->currentMapPartIndexChanged(map->current_part_index);
 	emit map->currentMapPartChanged(map->getPart(map->current_part_index));
+	
+	return true;
 }
 
 void OCAD8FileImport::setStringEncodings(const char *narrow, const char *wide) {
