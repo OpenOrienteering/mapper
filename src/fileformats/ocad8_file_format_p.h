@@ -153,7 +153,7 @@ class OCAD8FileExport : public Exporter
 	Q_DECLARE_TR_FUNCTIONS(OpenOrienteering::OCAD8FileExport)
 	
 public:
-	OCAD8FileExport(QIODevice* stream, Map *map, MapView *view);
+	OCAD8FileExport(QIODevice* stream, const Map* map, const MapView* view);
 	~OCAD8FileExport() override;
 	
 	void doExport() override;

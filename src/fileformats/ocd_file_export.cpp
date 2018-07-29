@@ -27,7 +27,7 @@
 
 namespace OpenOrienteering {
 
-OcdFileExport::OcdFileExport(QIODevice* stream, Map* map, MapView* view)
+OcdFileExport::OcdFileExport(QIODevice* stream, const Map* map, const MapView* view)
 : Exporter { stream, map, view }
 {
 	// nothing else

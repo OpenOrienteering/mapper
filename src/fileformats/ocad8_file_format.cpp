@@ -1543,7 +1543,7 @@ double OCAD8FileImport::convertTemplateScale(double ocad_scale)
 
 // ### OCAD8FileExport ###
 
-OCAD8FileExport::OCAD8FileExport(QIODevice* stream, Map* map, MapView* view)
+OCAD8FileExport::OCAD8FileExport(QIODevice* stream, const Map* map, const MapView* view)
  : Exporter(stream, map, view),
    uses_registration_color(false),
    file(nullptr)
@@ -1907,7 +1907,7 @@ MapCoord OCAD8FileExport::calculateAreaOffset()
 			{
 				addWarning(tr("Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m)."));
 				std::size_t count = 0;
-				auto calculate_average_center = [&area_offset, &count](Object* object)
+				auto calculate_average_center = [&area_offset, &count](const Object* object)
 				{
 					area_offset *= qreal(count)/qreal(count+1);
 					++count;

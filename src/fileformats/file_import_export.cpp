@@ -1,7 +1,7 @@
 /*
  *    Copyright 2012, 2013 Pete Curtis
  *    Copyright 2013, 2014 Thomas Schöps
- *    Copyright 2013-2015 Kai Pastor
+ *    Copyright 2013-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *

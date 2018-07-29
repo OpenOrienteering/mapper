@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Pete Curtis
+ *    Copyright 2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -35,21 +36,25 @@ class Map;
 class MapView;
 
 
-/** Abstract base class for both importer and exporters; provides support for configuring the map and
- *  view to manipulate, setting and retrieving options, and collecting a list of warnings.
- *
- *  Subclasses should define default values for options they intend to use in their constructors,
- *  by calling setOption() with the relevant values. There is no such thing as an "implicit default"
- *  for options.
+/**
+ * Abstract base class for both importer and exporters.
+ * 
+ * This class provides support for setting and retrieving options, for
+ * collecting a list of warnings, and for storing a final error message.
+ * 
+ * Subclass constructors need to define default values for options they use,
+ * by calling setOption().
  */
 class ImportExport
 {
 	Q_DECLARE_TR_FUNCTIONS(OpenOrienteering::ImportExport)
 	
 public:
-	/** Creates a new importer or exporter with the given input stream, map, and view.
+	/** Creates a new importer or exporter with the given IO stream.
 	 */
-	ImportExport(QIODevice* stream, Map *map, MapView *view);
+	ImportExport(QIODevice* stream)
+	: stream(stream)
+	{}
 	
 	ImportExport(const ImportExport&) = delete;
 	ImportExport(ImportExport&&) = delete;
@@ -57,6 +62,7 @@ public:
 	/** Destroys an importer or exporter.
 	 */
 	virtual ~ImportExport();
+	
 	
 	/** Returns the current list of warnings collected by this object.
 	 */
@@ -81,12 +87,6 @@ public:
 protected:
 	/// The input / output stream
 	QIODevice* stream;
-	
-	/// The Map to import or export
-	Map *map;
-	
-	/// The MapView to import or export
-	MapView *view;
 	
 private:
 	/// A list of options for the import/export
@@ -126,9 +126,11 @@ class Importer : public ImportExport
 	Q_DECLARE_TR_FUNCTIONS(OpenOrienteering::Importer)
 	
 public:
-	/** Creates a new Importer with the given output stream, map, and view.
+	/** Creates a new Importer with the given input stream, map, and view.
 	 */
-	Importer(QIODevice* stream, Map *map, MapView *view);
+	Importer(QIODevice* stream, Map *map, MapView *view)
+	: ImportExport(stream), map(map), view(view)
+	{}
 	
 	/** Destroys this Importer.
 	 */
@@ -163,6 +165,14 @@ protected:
 	 */
 	inline void addAction(const ImportAction &action);
 	
+	
+	/// The Map to import or export
+	Map* const map;
+	
+	/// The MapView to import or export
+	MapView* const view;
+	
+	
 private:
 	/// A list of action items that must be resolved before the import can be completed
 	std::vector<ImportAction> act;
@@ -182,9 +192,11 @@ class Exporter : public ImportExport
 	Q_DECLARE_TR_FUNCTIONS(OpenOrienteering::Exporter)
 	
 public:
-	/** Creates a new Importer with the given i/o stream, map, and view.
+	/** Creates a new Exporter with the given output stream, map, and view.
 	 */
-	Exporter(QIODevice* stream, Map *map, MapView *view);
+	Exporter(QIODevice* stream, const Map* map, const MapView* view)
+	: ImportExport(stream), map(map), view(view)
+	{}
 	
 	/** Destroys the current Exporter.
 	 */
@@ -196,17 +208,19 @@ public:
 	 *  addWarning() with a translated, useful description of the issue.
 	 */
 	virtual void doExport() = 0;
+	
+	
+protected:
+	/// The Map to import or export
+	const Map* const map;
+	
+	/// The MapView to import or export
+	const MapView* const view;
+	
 };
 
 
 // ### ImportExport inline code ###
-
-inline
-ImportExport::ImportExport(QIODevice* stream, Map* map, MapView* view)
- : stream(stream), map(map), view(view)
-{
-	// Nothing
-}
 
 inline
 const std::vector< QString >& ImportExport::warnings() const
@@ -232,13 +246,6 @@ void ImportExport::setOption(const QString& name, const QVariant& value)
 // ### Importer inline code ###
 
 inline
-Importer::Importer(QIODevice* stream, Map* map, MapView* view)
- : ImportExport(stream, map, view)
-{
-	// Nothing
-}
-
-inline
 const std::vector< ImportAction >& Importer::actions() const
 {
 	return act;
@@ -248,16 +255,6 @@ inline
 void Importer::addAction(const ImportAction& action)
 {
 	act.push_back(action);
-}
-
-
-// ### Exporter ###
-
-inline
-Exporter::Exporter(QIODevice* stream, Map* map, MapView* view)
- : ImportExport(stream, map, view)
-{
-	// Nothing
 }
 
 
