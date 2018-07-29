@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Pete Curtis
- *    Copyright 2013, 2015, 2016 Kai Pastor
+ *    Copyright 2013, 2015-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -67,35 +67,34 @@ std::unique_ptr<FileFormat> FileFormatRegistry::unregisterFormat(const FileForma
 	return ret;
 }
 
+
+const FileFormat* FileFormatRegistry::findFormat(std::function<bool (const FileFormat*)> predicate) const
+{
+	auto found = std::find_if(begin(fmts), end(fmts), predicate);
+	return (found != end(fmts)) ? *found : nullptr;
+}
+
+
 const FileFormat *FileFormatRegistry::findFormat(const char* id) const
 {
-	for (auto format : fmts)
-	{
-		if (qstrcmp(format->id(), id) == 0) return format;
-	}
-	return nullptr;
+	return findFormat([id](auto format) { return qstrcmp(format->id(), id) == 0; });
 }
 
 const FileFormat *FileFormatRegistry::findFormatByFilter(const QString& filter) const
 {
-	for (auto format : fmts)
-	{
-		// Compare only before closing ')'. Needed for QTBUG 51712 workaround in
-		// file_dialog.cpp, and warranted by Q_ASSERT in registerFormat().
-		if (filter.startsWith(format->filter().leftRef(format->filter().length()-1)))
-			return format;
-	}
-	return nullptr;
+	// Compare only before closing ')'. Needed for QTBUG 51712 workaround in
+	// file_dialog.cpp, and warranted by Q_ASSERT in registerFormat().
+	return findFormat([filter](auto format) {
+		return filter.startsWith(format->filter().leftRef(format->filter().length()-1));
+	});
 }
 
 const FileFormat *FileFormatRegistry::findFormatForFilename(const QString& filename) const
 {
-	QString file_extension = QFileInfo(filename).suffix();
-	for (auto format : fmts)
-	{
-		if (format->fileExtensions().contains(file_extension, Qt::CaseInsensitive)) return format;
-	}
-	return nullptr;
+	auto extension = QFileInfo(filename).suffix();
+	return findFormat([extension](auto format) {
+		return format->fileExtensions().contains(extension, Qt::CaseInsensitive);
+	});
 }
 
 

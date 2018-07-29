@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Pete Curtis
- *    Copyright 2013, 2016 Kai Pastor
+ *    Copyright 2013, 2016-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,6 +21,7 @@
 #ifndef OPENORIENTEERING_FILE_FORMAT_REGISTRY_H
 #define OPENORIENTEERING_FILE_FORMAT_REGISTRY_H
 
+#include <functional>
 #include <memory>
 #include <vector>
 
@@ -51,6 +52,13 @@ public:
 	/** Returns an immutable list of the available file formats.
 	 */
 	inline const std::vector<FileFormat *> &formats() const { return fmts; }
+	
+	
+	/** Finds a file format with the given internal ID, or returns nullptr if no format
+	 *  is found.
+	 */
+	const FileFormat* findFormat(std::function<bool(const FileFormat*)> predicate) const;
+	
 	
 	/** Finds a file format with the given internal ID, or returns nullptr if no format
 	 *  is found.
