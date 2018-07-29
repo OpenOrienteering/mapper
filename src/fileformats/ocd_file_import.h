@@ -171,12 +171,12 @@ public:
 	void finishImport() override;
 	
 protected:
-	void import(bool load_symbols_only) override;
+	void import() override;
 	
-	void importImplementationLegacy(bool load_symbols_only);
+	void importImplementationLegacy();
 	
 	template< class F >
-	void importImplementation(bool load_symbols_only);
+	void importImplementation();
 	
 	
 	struct StringHandler

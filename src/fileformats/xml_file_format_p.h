@@ -67,13 +67,13 @@ public:
 	~XMLFileImporter() override {}
 
 protected:
-	void import(bool load_symbols_only) override;
+	void import() override;
 	
-	void importElements(bool load_symbols_only);
+	void importElements();
 	
 	void addWarningUnsupportedElement();
 	void importMapNotes();
-	void importGeoreferencing(bool load_symbols_only);
+	void importGeoreferencing();
 	void importColors();
 	void importSymbols();
 	void importMapParts();

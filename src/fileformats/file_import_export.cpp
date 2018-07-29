@@ -79,12 +79,18 @@ void ImportExport::setOption(const QString& name, const QVariant& value)
 Importer::~Importer() = default;
 
 
-void Importer::doImport(bool load_symbols_only, const QString& map_path)
+void Importer::setLoadSymbolsOnly(bool value)
+{
+	load_symbols_only = value;
+}
+
+
+void Importer::doImport(const QString& map_path)
 {
 	if (view)
 		view->setTemplateLoadingBlocked(true);
 	
-	import(load_symbols_only);
+	import();
 	
 	// Object post processing:
 	// - make sure that there is no object without symbol

@@ -116,7 +116,7 @@ bool OCAD8FileImport::isRasterImageFile(const QString &filename)
 	return QImageReader::supportedImageFormats().contains(extension.toLatin1());
 }
 
-void OCAD8FileImport::import(bool load_symbols_only)
+void OCAD8FileImport::import()
 {
     //qint64 start = QDateTime::currentMSecsSinceEpoch();
 	
@@ -293,7 +293,7 @@ void OCAD8FileImport::import(bool load_symbols_only)
         }
     }
 
-    if (!load_symbols_only)
+    if (!loadSymbolsOnly())
 	{
 		// Load objects
 

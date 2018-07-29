@@ -397,7 +397,7 @@ ogr::unique_srs OgrFileImport::srsFromMap()
 
 
 
-void OgrFileImport::import(bool load_symbols_only)
+void OgrFileImport::import()
 {
 	auto file = qobject_cast<QFile*>(device());
 	if (!file)
@@ -435,7 +435,7 @@ void OgrFileImport::import(bool load_symbols_only)
 	
 	importStyles(data_source.get());
 
-	if (!load_symbols_only)
+	if (!loadSymbolsOnly())
 	{
 		QScopedValueRollback<MapCoord::BoundsOffset> rollback { MapCoord::boundsOffset() };
 		MapCoord::boundsOffset().reset(true);

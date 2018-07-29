@@ -342,7 +342,7 @@ namespace
 				exporter->doExport();
 				buffer.seek(0);
 			
-				importer->doImport(false);
+				importer->doImport();
 				importer->finishImport();
 			}
 			else

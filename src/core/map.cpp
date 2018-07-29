@@ -650,7 +650,8 @@ bool Map::loadFrom(const QString& path, QWidget* dialog_parent, MapView* view, b
 			auto importer = format->makeImporter(&file, this, view);
 			
 			// Run the first pass.
-			importer->doImport(load_symbols_only, QFileInfo(path).absolutePath());
+			importer->setLoadSymbolsOnly(load_symbols_only);
+			importer->doImport(QFileInfo(path).absolutePath());
 			
 			// Finish the import.
 			importer->finishImport();
@@ -909,7 +910,7 @@ try
 {
 	auto native_format = FileFormats.findFormat("XML");
 	auto importer = native_format->makeImporter(&device, this, nullptr);
-	importer->doImport(false);
+	importer->doImport();
 	importer->finishImport();
 	device.close();
 	return true;

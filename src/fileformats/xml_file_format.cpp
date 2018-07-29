@@ -509,7 +509,7 @@ void XMLFileImporter::addWarningUnsupportedElement()
 	);
 }
 
-void XMLFileImporter::import(bool load_symbols_only)
+void XMLFileImporter::import()
 {
 	if (!xml.readNextStartElement() || xml.name() != literal::map)
 	{
@@ -540,10 +540,10 @@ void XMLFileImporter::import(bool load_symbols_only)
 	QScopedValueRollback<MapCoord::BoundsOffset> rollback { MapCoord::boundsOffset() };
 	MapCoord::boundsOffset().reset(true);
 	georef_offset_adjusted = false;
-	importElements(load_symbols_only);
+	importElements();
 	
 	auto offset = MapCoord::boundsOffset();
-	if (!load_symbols_only && !offset.isZero())
+	if (!loadSymbolsOnly() && !offset.isZero())
 	{
 		addWarning(tr("Some coordinates were out of bounds for printing. Map content was adjusted."));
 		
@@ -574,7 +574,7 @@ void XMLFileImporter::import(bool load_symbols_only)
 	}
 }
 
-void XMLFileImporter::importElements(bool load_symbols_only)
+void XMLFileImporter::importElements()
 {
 	while (xml.readNextStartElement())
 	{
@@ -585,7 +585,7 @@ void XMLFileImporter::importElements(bool load_symbols_only)
 		else if (name == literal::symbols)
 			importSymbols();
 		else if (name == literal::georeferencing)
-			importGeoreferencing(load_symbols_only);
+			importGeoreferencing();
 		else if (name == literal::view)
 			importView();
 		else if (name == literal::barrier)
@@ -601,10 +601,10 @@ void XMLFileImporter::importElements(bool load_symbols_only)
 			}
 			else
 			{
-				importElements(load_symbols_only);
+				importElements();
 			}
 		}
-		else if (load_symbols_only)
+		else if (loadSymbolsOnly())
 			xml.skipCurrentElement();
 		/******************************************************
 		* The remainder is skipped when loading a symbol set! *
@@ -647,14 +647,14 @@ void XMLFileImporter::importMapNotes()
 	}
 }
 
-void XMLFileImporter::importGeoreferencing(bool load_symbols_only)
+void XMLFileImporter::importGeoreferencing()
 {
 	Q_ASSERT(xml.name() == literal::georeferencing);
 	
 	bool check_for_offset = MapCoord::boundsOffset().check_for_offset;
 	
 	Georeferencing georef;
-	georef.load(xml, load_symbols_only);
+	georef.load(xml, loadSymbolsOnly());
 	map->setGeoreferencing(georef);
 	if (!georef.isValid())
 	{

@@ -172,7 +172,7 @@ protected:
 	 */
 	static bool checkGeoreferencing(OGRDataSourceH data_source, const Georeferencing& georef);
 	
-	void import(bool load_symbols_only) override;
+	void import() override;
 	
 	ogr::unique_srs importGeoreferencing(OGRDataSourceH data_source);
 	

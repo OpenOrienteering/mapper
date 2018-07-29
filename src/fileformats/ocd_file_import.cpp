@@ -195,13 +195,13 @@ qint64 OcdFileImport::convertLength< quint32 >(quint32 ocd_length) const
 #endif // !NDEBUG
 
 
-void OcdFileImport::importImplementationLegacy(bool load_symbols_only)
+void OcdFileImport::importImplementationLegacy()
 {
 	QBuffer new_stream(&buffer);
 	new_stream.open(QIODevice::ReadOnly);
 	delegate.reset(new OCAD8FileImport(&new_stream, map, view));
 	
-	delegate->import(load_symbols_only);
+	delegate->import();
 	
 	for (auto&& w : delegate->warnings())
 	{
@@ -210,7 +210,7 @@ void OcdFileImport::importImplementationLegacy(bool load_symbols_only)
 }
 
 template< class F >
-void OcdFileImport::importImplementation(bool load_symbols_only)
+void OcdFileImport::importImplementation()
 {
 	const OcdFile<F> file(buffer);
 #ifdef MAPPER_DEVELOPMENT_BUILD
@@ -228,7 +228,7 @@ void OcdFileImport::importImplementation(bool load_symbols_only)
 	importGeoreferencing(file);
 	importColors(file);
 	importSymbols(file);
-	if (!load_symbols_only)
+	if (!loadSymbolsOnly())
 	{
 		importExtras(file);
 		importObjects(file);
@@ -2077,7 +2077,7 @@ void OcdFileImport::setFraming(OcdFileImport::OcdImportedTextSymbol* symbol, con
 	}
 }
 
-void OcdFileImport::import(bool load_symbols_only)
+void OcdFileImport::import()
 {
 	Q_ASSERT(buffer.isEmpty());
 	
@@ -2103,21 +2103,21 @@ void OcdFileImport::import(bool load_symbols_only)
 		//       handled in the version 8 implementation by looking up the
 		//       actual format version in the file header.
 		if (Settings::getInstance().getSetting(Settings::General_NewOcd8Implementation).toBool())
-			importImplementation< Ocd::FormatV8 >(load_symbols_only);
+			importImplementation<Ocd::FormatV8>();
 		else
-			importImplementationLegacy(load_symbols_only);
+			importImplementationLegacy();
 		break;
 	case 9:
 	case 10:
 		using FormatV10Assumption = std::is_same<Ocd::FormatV10, Ocd::FormatV9>;
 		Q_STATIC_ASSERT(FormatV10Assumption::value);
-		importImplementation< Ocd::FormatV9 >(load_symbols_only);
+		importImplementation<Ocd::FormatV9>();
 		break;
 	case 11:
-		importImplementation< Ocd::FormatV11 >(load_symbols_only);
+		importImplementation<Ocd::FormatV11>();
 		break;
 	case 12:
-		importImplementation< Ocd::FormatV12 >(load_symbols_only);
+		importImplementation<Ocd::FormatV12>();
 		break;
 	default:
 		throw FileFormatException(

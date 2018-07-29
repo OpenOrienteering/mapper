@@ -79,7 +79,7 @@ public:
 	void setStringEncodings(const char *narrow, const char *wide = "UTF-16LE");
 
 protected:
-	void import(bool load_symbols_only) override;
+	void import() override;
 	
 	// Symbol import
 	Symbol *importPointSymbol(const OCADPointSymbol *ocad_symbol);

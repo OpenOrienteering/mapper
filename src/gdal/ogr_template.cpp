@@ -70,7 +70,8 @@ namespace {
 		tmp_map.setGeoreferencing(initial_georef);
 		OgrFileImport importer{ &file, &tmp_map, nullptr, OgrFileImport::UnitOnGround};
 		importer.setGeoreferencingImportEnabled(true);
-		importer.doImport(true);
+		importer.setLoadSymbolsOnly(true);
+		importer.doImport();
 		
 		return std::make_unique<Georeferencing>(tmp_map.getGeoreferencing());
 	}
@@ -345,7 +346,7 @@ try
 	
 	const auto pp0 = new_template_map->getGeoreferencing().getProjectedRefPoint();
 	importer.setGeoreferencingImportEnabled(false);
-	importer.doImport(false, template_path);
+	importer.doImport(template_path);
 	
 	// MapCoord bounds handling may have moved the paper position of the
 	// template data during import. The template position might need to be

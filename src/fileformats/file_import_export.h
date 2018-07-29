@@ -162,6 +162,18 @@ public:
 	 */
 	~Importer() override;
 	
+	
+	/**
+	 * Returns true if only symbols (and colors) are to be imported.
+	 */
+	bool loadSymbolsOnly() const noexcept { return load_symbols_only; }
+	
+	/**
+	 * If set to true, importers shall import only symbols (and colors).
+	 */
+	void setLoadSymbolsOnly(bool value);
+	
+	
 	/** Begins the import process. The implementation of this method should read the file
 	 *  and populate the map and view from it. If a fatal error is encountered (such as a
 	 *  missing or corrupt file), than it should throw a FormatException. If the import can
@@ -171,7 +183,7 @@ public:
 	 *  generally an Importer should not succeed unless the map is populated sufficiently
 	 *  to be useful.
 	 */
-	void doImport(bool load_symbols_only, const QString& map_path = QString());
+	void doImport(const QString& map_path = QString());
 	
 	/** Once all action items are satisfied, this method should be called to complete the
 	 *  import process. This class defines a default implementation, that does nothing.
@@ -181,7 +193,7 @@ public:
 protected:
 	/** Implementation of doImport().
 	 */
-	virtual void import(bool load_symbols_only) = 0;
+	virtual void import() = 0;
 	
 	
 	/// The Map to import or export
@@ -189,6 +201,11 @@ protected:
 	
 	/// The MapView to import or export
 	MapView* const view;
+	
+	
+private:
+	/// A flag which controls whether only symbols and colors are imported.
+	bool load_symbols_only = false;
 	
 };
 
