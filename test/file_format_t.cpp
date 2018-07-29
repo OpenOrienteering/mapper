@@ -517,7 +517,7 @@ void FileFormatTest::issue_513_high_coordinates()
 	
 	// Load the test map
 	Map map {};
-	QVERIFY(map.loadFrom(filename, nullptr, nullptr, false, false));
+	QVERIFY(map.loadFrom(filename));
 	
 	// The map's single object must exist. Otherwise it may have been deleted
 	// for being irregular, indicating failure to handle high coordinates.
@@ -580,8 +580,7 @@ void FileFormatTest::saveAndLoad()
 	
 	// Load the test map
 	auto original = std::make_unique<Map>();
-	QVERIFY(original->loadFrom(map_filename, nullptr, nullptr, false, false));
-	QVERIFY(!original->hasUnsavedChanges());
+	QVERIFY(original->loadFrom(map_filename));
 	
 	// Fix precision of grid rotation
 	MapGrid grid = original->getGrid();

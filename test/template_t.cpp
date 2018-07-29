@@ -93,7 +93,7 @@ private slots:
 	{
 		Map map;
 		MapView view{ &map };
-		QVERIFY(map.loadFrom(QStringLiteral("testdata:templates/world-file.xmap"), nullptr, &view, false, false));
+		QVERIFY(map.loadFrom(QStringLiteral("testdata:templates/world-file.xmap"), &view));
 		
 		const auto& georef = map.getGeoreferencing();
 		QVERIFY(georef.isValid());

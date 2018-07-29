@@ -794,6 +794,13 @@ void Map::importMap(
 }
 
 
+bool Map::loadFrom(const QString& path, MapView* view)
+{
+	auto importer = FileFormats.makeImporter(path, *this, view);
+	return importer && importer->doImport();
+}
+
+
 QHash<const Symbol*, Symbol*> Map::importMap(
         const Map& imported_map,
         ImportMode mode,

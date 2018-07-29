@@ -196,6 +196,7 @@ TranslationEntries readTsFile(QIODevice& device, const QString& language)
 }  // namespace
 
 
+
 void SymbolSetTool::TranslationEntry::write(QXmlStreamWriter& xml, const QString& language)
 {
 	if (source.isEmpty())
@@ -357,7 +358,7 @@ void SymbolSetTool::processSymbolSet()
 	
 	Map map;
 	MapView view{ &map };
-	map.loadFrom(source_path, nullptr, &view, false, false);
+	map.loadFrom(source_path, &view);
 	QCOMPARE(map.getScaleDenominator(), source_scale);
 	QCOMPARE(map.getNumClosedTemplates(), 0);
 	
@@ -786,7 +787,7 @@ void SymbolSetTool::processExamples()
 	
 	Map map;
 	MapView view{ &map };
-	map.loadFrom(source_path, nullptr, &view, false, false);
+	map.loadFrom(source_path, &view);
 	
 	const int num_symbols = map.getNumSymbols();
 	QStringList previous_numbers;
@@ -828,7 +829,7 @@ void SymbolSetTool::processTestData()
 	
 	Map map;
 	MapView view{ &map };
-	map.loadFrom(source_path, nullptr, &view, false, false);
+	map.loadFrom(source_path, &view);
 	
 	map.undoManager().clear();
 	saveIfDifferent(source_path, &map, &view);

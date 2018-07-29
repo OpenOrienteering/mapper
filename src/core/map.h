@@ -168,6 +168,7 @@ public:
 	              QWidget* dialog_parent,
 	              MapView* view = nullptr,
 	              bool load_symbols_only = false, bool show_error_messages = true);
+	bool loadFrom(const QString& path, MapView* view = nullptr);
 	
 	/**
 	 * Imports the other map into this map with the following strategy:
