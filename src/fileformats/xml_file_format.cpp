@@ -126,7 +126,7 @@ std::unique_ptr<Importer> XMLFileFormat::makeImporter(QIODevice* stream, Map* ma
 	return std::make_unique<XMLFileImporter>(stream, map, view);
 }
 
-std::unique_ptr<Exporter> XMLFileFormat::makeExporter(QIODevice* stream, Map* map, MapView* view) const
+std::unique_ptr<Exporter> XMLFileFormat::makeExporter(QIODevice* stream, const Map* map, const MapView* view) const
 {
 	return std::make_unique<XMLFileExporter>(stream, map, view);
 }
@@ -205,7 +205,7 @@ namespace literal
 
 // ### XMLFileExporter definition ###
 
-XMLFileExporter::XMLFileExporter(QIODevice* stream, Map *map, MapView *view)
+XMLFileExporter::XMLFileExporter(QIODevice* stream, const Map* map, const MapView* view)
 : Exporter(stream, map, view),
   xml(stream)
 {
@@ -411,26 +411,19 @@ void XMLFileExporter::exportMapParts()
 
 void XMLFileExporter::exportTemplates()
 {
-	// Update the relative paths of templates
+	QDir map_dir;
+	const QDir* map_dir_ptr = nullptr;
 	if (auto file = qobject_cast<const QFileDevice*>(stream))
 	{
 		auto filename = file->fileName();
-		auto map_dir = QFileInfo(filename).absoluteDir();
-		if (!filename.isEmpty() && map_dir.exists())
+		if (!filename.isEmpty())
 		{
-			for (int i = 0; i < map->getNumTemplates(); ++i)
-			{
-				auto temp = map->getTemplate(i);
-				if (temp->getTemplateState() != Template::Invalid)
-					temp->setTemplateRelativePath(map_dir.relativeFilePath(temp->getTemplatePath()));
-			}
-			for (int i = 0; i < map->getNumClosedTemplates(); ++i)
-			{
-				auto temp = map->getClosedTemplate(i);
-				if (temp->getTemplateState() != Template::Invalid)
-					temp->setTemplateRelativePath(map_dir.relativeFilePath(temp->getTemplatePath()));
-			}
+			map_dir = QFileInfo(filename).absoluteDir();
+			map_dir_ptr = &map_dir;
 		}
+		/// \todo Update the relative paths in memory when saving to another directory.
+		///       Otherwise opening templates in the reloaded saved map may
+		///       behave different from the current map in memory.
 	}
 	
 	XmlElementWriter templates_element(xml, literal::templates);
@@ -441,12 +434,12 @@ void XMLFileExporter::exportTemplates()
 	for (int i = 0; i < map->getNumTemplates(); ++i)
 	{
 		writeLineBreak(xml);
-		map->getTemplate(i)->saveTemplateConfiguration(xml, true);
+		map->getTemplate(i)->saveTemplateConfiguration(xml, true, map_dir_ptr);
 	}
 	for (int i = 0; i < map->getNumClosedTemplates(); ++i)
 	{
 		writeLineBreak(xml);
-		map->getClosedTemplate(i)->saveTemplateConfiguration(xml, false);
+		map->getClosedTemplate(i)->saveTemplateConfiguration(xml, false, map_dir_ptr);
 	}
 	
 	{

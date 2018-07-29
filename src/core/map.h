@@ -155,13 +155,6 @@ public:
 	
 	
 	/**
-	 * Saves the map to the given file.
-	 * 
-	 * If a MapView is given, is state will be saved.
-	 */
-	bool saveTo(const QString& path, const FileFormat* format, MapView *view);
-	
-	/**
 	 * Exports the map to the given file and format.
 	 * 
 	 * If a MapView is given, is state will be saved.
@@ -173,7 +166,7 @@ public:
 	 */
 	bool exportTo(const QString& path,
 	              const FileFormat* format = nullptr,
-	              MapView* view = nullptr);
+	              const MapView* view = nullptr) const;
 	
 	/**
 	 * Attempts to load the map from the specified path. Returns true on success.
@@ -237,7 +230,7 @@ public:
 	 * This can be imported again using importFromIODevice().
 	 * Returns true if successful.
 	 */
-	bool exportToIODevice(QIODevice* stream);
+	bool exportToIODevice(QIODevice* stream) const;
 	
 	/**
 	 * Loads the map directly from the given IO device,

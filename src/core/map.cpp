@@ -639,23 +639,8 @@ void Map::setMapNotes(const QString& text)
 	map_notes = text;
 }
 
-bool Map::saveTo(const QString& path, const FileFormat* format, MapView* view)
-{
-	bool success = exportTo(path, format, view);
-	if (success)
-	{
-		colors_dirty = false;
-		symbols_dirty = false;
-		templates_dirty = false;
-		objects_dirty = false;
-		other_dirty = false;
-		unsaved_changes = false;
-		undoManager().setClean();
-	}
-	return success;
-}
 
-bool Map::exportTo(const QString& path, const FileFormat* format, MapView* view)
+bool Map::exportTo(const QString& path, const FileFormat* format, const MapView* view) const
 {
 	Q_ASSERT(view && "Saving a file without view information is not supported!");
 	
@@ -1001,7 +986,7 @@ QHash<const Symbol*, Symbol*> Map::importMap(
 
 
 
-bool Map::exportToIODevice(QIODevice* stream)
+bool Map::exportToIODevice(QIODevice* stream) const
 try
 {
 	auto native_format = FileFormats.findFormat("XML");
