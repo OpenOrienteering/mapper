@@ -140,8 +140,9 @@ private slots:
 		
 		QBuffer out_buffer;
 		QVERIFY(out_buffer.open(QIODevice::WriteOnly));
-		XMLFileExporter exporter{ &out_buffer, &map, &view };
+		XMLFileExporter exporter{ {}, &map, &view };
 		exporter.setOption(QStringLiteral("autoFormatting"), true);
+		exporter.setDevice(&out_buffer);
 		exporter.doExport();
 		out_buffer.close();
 		QCOMPARE(exporter.warnings().size(), std::size_t(0));

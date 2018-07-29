@@ -629,12 +629,13 @@ bool Map::exportTo(const QString& path, const FileFormat& format, const MapView*
 	}
 	
 	QSaveFile file(path);
-	auto exporter = format.makeExporter(&file, this, view);
+	auto exporter = format.makeExporter(path, this, view);
 	bool success = false;
 	if (file.open(QIODevice::WriteOnly))
 	{
 		try
 		{
+			exporter->setDevice(&file);
 			exporter->doExport();
 		}
 		catch (std::exception &e)
@@ -953,17 +954,13 @@ QHash<const Symbol*, Symbol*> Map::importMap(
 
 
 bool Map::exportToIODevice(QIODevice& device) const
-try
 {
 	auto native_format = FileFormats.findFormat("XML");
-	device.open(QIODevice::WriteOnly);
-	native_format->makeExporter(&device, this, nullptr)->doExport();
+	auto exporter = native_format->makeExporter({}, this, nullptr);
+	exporter->setDevice(&device);
+	auto success = exporter->doExport();
 	device.close();
-	return true;
-}
-catch (std::exception& /*e*/)
-{
-	return false;
+	return success;
 }
 
 

@@ -112,6 +112,8 @@ public:
 	
 	
 private:
+	friend class Exporter;  // direct access to device_ in Exporter::doExport()
+	
 	/// The input / output device
 	QIODevice* device_;
 	
@@ -206,39 +208,73 @@ private:
 };
 
 
-/** Base class for all exporters. An Exporter has the following lifecycle:
+/**
+ * Base class for all exporters.
+ * 
+ * An Exporter has the following lifecycle:
  *
- *  1. The Exporter is constructed, with pointers to the filename, map and view. The Exporter
- *     should also set default values for any options it will read. The base class
- *     will throw an exception if the exporter reads an option that does not have a value.
- *  2. setOption() will be called zero or more times to customize the options.
- *  3. doExport() will be called to perform the export.
+ * 1. The constructor is called with a path, map and view. The path may be empty
+ *    if the output device can be (and is) set later. The view may be nullptr.
+ *    The constructor must also set default values for any options the exporter
+ *    will read. (ImportExport will throw an exception if the exporter reads an
+ *    option that has not been set.)
+ * 2. setOption() can be called zero or more times to customize the options.
+ * 3. doExport() will be called to perform the export.
  */
 class Exporter : public ImportExport
 {
 	Q_DECLARE_TR_FUNCTIONS(OpenOrienteering::Exporter)
 	
 public:
-	/** 
-	 * Creates a new Exporter with the given output device, map, and view.
+	/**
+	 * Creates a new Exporter with the given path, map, and view.
 	 */
-	Exporter(QIODevice* device, const Map* map, const MapView* view)
-	: ImportExport(device), map(map), view(view)
+	Exporter(const QString& path, const Map* map, const MapView* view)
+	: ImportExport(nullptr), path(path), map(map), view(view)
 	{}
 	
 	/** Destroys the current Exporter.
 	 */
 	~Exporter() override;
 	
-	/** Exports the map and view to the given file. If a fatal error is encountered (such as a
-	 *  permission problem), than this method should throw a FormatException. If the export can
-	 *  proceed, but information might be lost in the process, than it should call
-	 *  addWarning() with a translated, useful description of the issue.
+	
+	/**
+	 * Exports the map and view.
+	 * 
+	 * This function calls exportImplementation() and catches exceptions
+	 * thrown there. It returns false on errors and true on success.
+	 * All error and warning messages are logged in ImportExport::warnings().
+	 * In case of an error, the last warning can be assumed to be the error
+	 * message. (The list of warnings won't be empty then.)
+	 * 
+	 * If the exporter supports input from QIODevice but a device hasn't been
+	 * set yet, this function will open a QSaveFile with the given path, make it
+	 * available via device(), and commit the changes if exportImplementation()
+	 * returns successfully.
 	 */
-	virtual void doExport() = 0;
+	bool doExport();
 	
 	
 protected:
+	/**
+	 * Actual implementation of the export.
+	 * 
+	 * Exporters which support input from QIODevice shall use the device().
+	 * They must not open or close the device.
+	 * 
+	 * If information might be lost in the export, a message shall be recorded
+	 * by calling addWarning() with a translated, useful description of the
+	 * issue. If a fatal error is encountered, then this method may either throw
+	 * an exception, or log an error message with addWarning() and return false.
+	 * 
+	 * There is no default implementation.
+	 */
+	virtual bool exportImplementation() = 0;
+	
+	
+	/// The output path
+	const QString path;
+	
 	/// The Map to import or export
 	const Map* const map;
 	

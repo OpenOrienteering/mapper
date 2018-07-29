@@ -21,8 +21,15 @@
 
 #include "file_import_export.h"
 
+#include <exception>
+#include <memory>
+
+#include <QtGlobal>
 #include <QFlags>
+#include <QIODevice>
 #include <QLatin1Char>
+#include <QSaveFile>
+#include <QScopedValueRollback>
 
 #include "core/map.h"
 #include "core/map_part.h"
@@ -185,6 +192,47 @@ void Importer::finishImport()
 // ### Exporter ###
 
 Exporter::~Exporter() = default;
+
+
+bool Exporter::doExport()
+{
+	std::unique_ptr<QSaveFile> managed_file;
+	QScopedValueRollback<QIODevice*> original_device{device_};
+	if (supportsQIODevice())
+	{
+		if (!device_)
+		{
+			managed_file = std::make_unique<QSaveFile>(path);
+			device_ = managed_file.get();
+		}
+		if (!device_->isOpen() && !device_->open(QIODevice::WriteOnly))
+		{
+			addWarning(tr("Cannot open file\n%1:\n%2").arg(path, device_->errorString()));
+			return false;
+		}
+	}
+	
+	try
+	{
+		if (!exportImplementation())
+		{
+			Q_ASSERT(!warnings().empty());
+			return false;
+		}
+		if (managed_file && !managed_file->commit())
+		{
+			addWarning(tr("Cannot save file\n%1:\n%2").arg(path, managed_file->errorString()));
+			return false;
+		}
+	}
+	catch (std::exception &e)
+	{
+		addWarning(tr("Cannot save file\n%1:\n%2").arg(path, QString::fromLocal8Bit(e.what())));
+		return false;
+	}
+	
+	return true;
+}
 
 
 }  // namespace OpenOrienteering

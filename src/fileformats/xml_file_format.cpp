@@ -126,9 +126,9 @@ std::unique_ptr<Importer> XMLFileFormat::makeImporter(QIODevice* stream, Map* ma
 	return std::make_unique<XMLFileImporter>(stream, map, view);
 }
 
-std::unique_ptr<Exporter> XMLFileFormat::makeExporter(QIODevice* stream, const Map* map, const MapView* view) const
+std::unique_ptr<Exporter> XMLFileFormat::makeExporter(const QString& path, const Map* map, const MapView* view) const
 {
-	return std::make_unique<XMLFileExporter>(stream, map, view);
+	return std::make_unique<XMLFileExporter>(path, map, view);
 }
 
 
@@ -205,18 +205,18 @@ namespace literal
 
 // ### XMLFileExporter definition ###
 
-XMLFileExporter::XMLFileExporter(QIODevice* stream, const Map* map, const MapView* view)
-: Exporter(stream, map, view),
-  xml(stream)
+XMLFileExporter::XMLFileExporter(const QString& path, const Map* map, const MapView* view)
+: Exporter(path, map, view)
 {
 	// Determine auto-formatting default from filename, if possible.
-	auto file = qobject_cast<const QFileDevice*>(stream);
-	bool auto_formatting = (file && file->fileName().contains(QLatin1String(".xmap")));
+	bool auto_formatting = path.endsWith(QLatin1String(".xmap"));
 	setOption(QString::fromLatin1("autoFormatting"), auto_formatting);
 }
 
-void XMLFileExporter::doExport()
+bool XMLFileExporter::exportImplementation()
 {
+	xml.setDevice(device());
+	
 	if (option(QString::fromLatin1("autoFormatting")).toBool())
 		xml.setAutoFormatting(true);
 	
@@ -290,6 +290,7 @@ void XMLFileExporter::doExport()
 	}
 	
 	xml.writeEndDocument();
+	return true;
 }
 
 void XMLFileExporter::exportGeoreferencing()
@@ -413,14 +414,11 @@ void XMLFileExporter::exportTemplates()
 {
 	QDir map_dir;
 	const QDir* map_dir_ptr = nullptr;
-	if (auto file = qobject_cast<const QFileDevice*>(device()))
+	if (!path.isEmpty())
 	{
-		auto filename = file->fileName();
-		if (!filename.isEmpty())
-		{
-			map_dir = QFileInfo(filename).absoluteDir();
-			map_dir_ptr = &map_dir;
-		}
+		map_dir = QFileInfo(path).absoluteDir();
+		map_dir_ptr = &map_dir;
+		
 		/// \todo Update the relative paths in memory when saving to another directory.
 		///       Otherwise opening templates in the reloaded saved map may
 		///       behave different from the current map in memory.

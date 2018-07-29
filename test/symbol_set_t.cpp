@@ -245,17 +245,18 @@ void saveIfDifferent(const QString& path, Map* map, MapView* view = nullptr)
 		new_data.reserve(existing_data.size()*2);
 	}
 	
-	QBuffer buffer(&new_data);
-	buffer.open(QFile::WriteOnly);
-	XMLFileExporter exporter(&buffer, map, view);
+	XMLFileExporter exporter({}, map, view);
 	auto is_src_format = path.contains(QLatin1String(".xmap"));
 	exporter.setOption(QString::fromLatin1("autoFormatting"), is_src_format);
 	auto retain_compatibility = is_src_format && map->getNumParts() == 1
 	                            && !path.contains(QLatin1String("ISOM2017"));
 	Settings::getInstance().setSetting(Settings::General_RetainCompatiblity, retain_compatibility);
+	
+	QBuffer buffer(&new_data);
+	exporter.setDevice(&buffer);
 	exporter.doExport();
-	QVERIFY(exporter.warnings().empty());
 	buffer.close();
+	QVERIFY(exporter.warnings().empty());
 	
 	if (new_data != existing_data)
 	{

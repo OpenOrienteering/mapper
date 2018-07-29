@@ -83,9 +83,9 @@ std::unique_ptr<Importer> OCAD8FileFormat::makeImporter(QIODevice* stream, Map *
 	return std::make_unique<OCAD8FileImport>(stream, map, view);
 }
 
-std::unique_ptr<Exporter> OCAD8FileFormat::makeExporter(QIODevice* stream, const Map* map, const MapView* view) const
+std::unique_ptr<Exporter> OCAD8FileFormat::makeExporter(const QString& path, const Map* map, const MapView* view) const
 {
-	return std::make_unique<OCAD8FileExport>(stream, map, view);
+	return std::make_unique<OCAD8FileExport>(path, map, view);
 }
 
 
@@ -1544,8 +1544,8 @@ double OCAD8FileImport::convertTemplateScale(double ocad_scale)
 
 // ### OCAD8FileExport ###
 
-OCAD8FileExport::OCAD8FileExport(QIODevice* stream, const Map* map, const MapView* view)
- : Exporter(stream, map, view),
+OCAD8FileExport::OCAD8FileExport(const QString& path, const Map* map, const MapView* view)
+ : Exporter(path, map, view),
    uses_registration_color(false),
    file(nullptr)
 {
@@ -1561,7 +1561,7 @@ OCAD8FileExport::~OCAD8FileExport()
 	delete origin_point_object;
 }
 
-void OCAD8FileExport::doExport()
+bool OCAD8FileExport::exportImplementation()
 {
 	uses_registration_color = map->isColorUsedByASymbol(map->getRegistrationColor());
 	if (map->getNumColors() > (uses_registration_color ? 255 : 256))
@@ -1879,6 +1879,7 @@ void OCAD8FileExport::doExport()
 	device()->write((char*)file->buffer, file->size);
 	
 	ocad_file_close(file);
+	return true;
 }
 
 

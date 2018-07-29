@@ -153,13 +153,12 @@ class OCAD8FileExport : public Exporter
 	Q_DECLARE_TR_FUNCTIONS(OpenOrienteering::OCAD8FileExport)
 	
 public:
-	OCAD8FileExport(QIODevice* stream, const Map* map, const MapView* view);
+	OCAD8FileExport(const QString& path, const Map* map, const MapView* view);
 	~OCAD8FileExport() override;
 	
-	void doExport() override;
-	
-	
 protected:
+	bool exportImplementation() override;
+	
 	// Determines an offset for moving objects to the OCD drawing area.
 	MapCoord calculateAreaOffset();
 	

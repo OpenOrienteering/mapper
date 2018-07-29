@@ -334,10 +334,11 @@ namespace
 			QBuffer buffer;
 			buffer.open(QIODevice::ReadWrite);
 			
-			auto exporter = format->makeExporter(&buffer, &input, nullptr);
+			auto exporter = format->makeExporter({}, &input, nullptr);
 			auto importer = format->makeImporter(&buffer, out.get(), nullptr);
 			if (exporter && importer)
 			{
+				exporter->setDevice(&buffer);
 				exporter->doExport();
 				buffer.seek(0);
 			

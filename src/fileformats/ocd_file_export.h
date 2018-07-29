@@ -24,10 +24,9 @@
 #define OPENORIENTEERING_OCD_FILE_EXPORT_H
 
 #include <QCoreApplication>
+#include <QString>
 
 #include "fileformats/file_import_export.h"
-
-class QIODevice;
 
 namespace OpenOrienteering {
 
@@ -43,16 +42,17 @@ class OcdFileExport : public Exporter
 	Q_DECLARE_TR_FUNCTIONS(OpenOrienteering::OcdFileExport)
 	
 public:
-	OcdFileExport(QIODevice* stream, const Map* map, const MapView* view);
+	OcdFileExport(const QString& path, const Map* map, const MapView* view);
 	
 	~OcdFileExport() override;
 	
+protected:
 	/**
 	 * Exports an OCD file.
 	 * 
 	 * For now, this simply uses the OCAD8FileExport class.
 	 */
-	void doExport() override;
+	bool exportImplementation() override;
 	
 };
 

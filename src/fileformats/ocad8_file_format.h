@@ -44,7 +44,7 @@ public:
 	
 	ImportSupportAssumption understands(const char* buffer, int size) const override;
 	std::unique_ptr<Importer> makeImporter(QIODevice* stream, Map *map, MapView *view) const override;
-	std::unique_ptr<Exporter> makeExporter(QIODevice* stream, const Map* map, const MapView* view) const override;
+	std::unique_ptr<Exporter> makeExporter(const QString& path, const Map* map, const MapView* view) const override;
 };
 
 

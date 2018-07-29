@@ -23,6 +23,8 @@
 
 #include <memory>
 
+#include <QString>
+
 #include "fileformats/file_format.h"
 
 class QIODevice;
@@ -56,7 +58,7 @@ public:
 	
 	/** @brief Creates an exporter for XML files.
 	 */
-	std::unique_ptr<Exporter> makeExporter(QIODevice* stream, const Map* map, const MapView* view) const override;
+	std::unique_ptr<Exporter> makeExporter(const QString& path, const Map* map, const MapView* view) const override;
 	
 	
 	/** @brief The minimum XML file format version supported by this implementation.
