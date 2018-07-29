@@ -36,13 +36,11 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QIODevice>
-#include <QLatin1String>
 #include <QLocale>
 #include <QMessageBox>
 #include <QPainter>
 #include <QPoint>
 #include <QPointF>
-#include <QStringList>
 #include <QTimer>
 #include <QTranslator>
 
@@ -615,38 +613,6 @@ void Map::setMapNotes(const QString& text)
 	map_notes = text;
 }
 
-
-bool Map::exportTo(const QString& path, const FileFormat& format, const MapView* view) const
-{
-	Q_ASSERT(view && "Saving a file without view information is not supported!");
-	
-	if (!format.supportsExport())
-	{
-		QMessageBox::warning(nullptr, tr("Error"), tr("Cannot export the map as\n\"%1\"\nbecause saving as %2 (.%3) is not supported.").
-		                     arg(path, format.description(), format.fileExtensions().join(QLatin1String(", "))));
-		return false;
-	}
-	
-	auto exporter = format.makeExporter(path, this, view);
-	if (!exporter->doExport())
-	{
-		QMessageBox::warning(nullptr,
-		                     tr("Error"),
-		                     tr("Cannot save file\n%1:\n%2")
-		                     .arg(path, exporter->warnings().back()) );
-		return false;
-	}
-	
-	if (!exporter->warnings().empty())
-	{
-		MainWindow::showMessageBox(nullptr,
-		                           tr("Warning"),
-		                           tr("The map export generated warnings."),
-		                           exporter->warnings() );
-	}
-	
-	return true;
-}
 
 bool Map::loadFrom(const QString& path, QWidget* dialog_parent, MapView* view, bool load_symbols_only, bool show_error_messages)
 {

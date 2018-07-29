@@ -54,7 +54,6 @@ class QWidget;
 namespace OpenOrienteering {
 
 class CombinedSymbol;
-class FileFormat;
 class Georeferencing;
 class LineSymbol;
 class MapColor;
@@ -153,20 +152,6 @@ public:
 	 */
 	void reset();
 	
-	
-	/**
-	 * Exports the map to the given file and format.
-	 * 
-	 * If a MapView is given, is state will be saved.
-	 * If a FileFormat is given, it will be used, otherwise the file format
-	 * is determined from the filename.
-	 * 
-	 * If the map was modified, it will still be considered modified after
-	 * successful export.
-	 */
-	bool exportTo(const QString& path,
-	              const FileFormat& format,
-	              const MapView* view = nullptr) const;
 	
 	/**
 	 * Attempts to load the map from the specified path. Returns true on success.

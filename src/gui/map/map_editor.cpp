@@ -110,6 +110,7 @@
 #include "core/symbols/symbol_icon_decorator.h"
 #include "fileformats/file_format.h"
 #include "fileformats/file_format_registry.h"
+#include "fileformats/file_import_export.h"
 #include "gui/configure_grid_dialog.h"
 #include "gui/file_dialog.h"
 #include "gui/georeferencing_dialog.h"
@@ -542,37 +543,66 @@ void MapEditorController::deletePopupWidget(QWidget* child_widget)
 	}
 }
 
+
 bool MapEditorController::saveTo(const QString& path, const FileFormat& format)
 {
-	if (map)
+	if (editing_in_progress)
 	{
-		if (editing_in_progress)
-		{
-			QMessageBox::warning(window, tr("Editing in progress"), tr("The map is currently being edited. Please finish the edit operation before saving."));
-			return false;
-		}
-		bool success = map->exportTo(path, format, main_view);
-		if (success)
-		{
-			map->setHasUnsavedChanges(false);
-			map->undoManager().setClean();
-			window->showStatusBarMessage(tr("Map saved"), 1000);
-		}
-		return success;
-	}
-	else
+		QMessageBox::warning(window,
+		                     tr("Editing in progress"),
+		                     tr("The map is currently being edited. "
+		                        "Please finish the edit operation before saving.") );
 		return false;
+	}
+	
+	if (!exportTo(path, format))
+		return false;
+	
+	map->setHasUnsavedChanges(false);
+	map->undoManager().setClean();
+	window->showStatusBarMessage(tr("Map saved"), 1000);
+	return true;
 }
 
 bool MapEditorController::exportTo(const QString& path, const FileFormat& format)
 {
-	if (map && !editing_in_progress)
+	if (!map || editing_in_progress)
+		return false;
+	
+	if (!format.supportsExport())
 	{
-		return map->exportTo(path, format, main_view);
+		QMessageBox::warning(nullptr,
+		                     tr("Error"),
+		                     tr("Cannot export the map as\n"
+		                        "\"%1\"\n"
+		                        "because saving as %2 (.%3) is not supported.").
+		                     arg(path,
+		                         format.description(),
+		                         format.fileExtensions().join(QLatin1String(", ")) ) );
+		return false;
 	}
 	
-	return false;
+	auto exporter = format.makeExporter(path, map, main_view);
+	if (!exporter->doExport())
+	{
+		QMessageBox::warning(nullptr,
+		                     tr("Error"),
+		                     tr("Cannot save file\n%1:\n%2")
+		                     .arg(path, exporter->warnings().back()) );
+		return false;
+	}
+	
+	if (!exporter->warnings().empty())
+	{
+		MainWindow::showMessageBox(nullptr,
+		                           tr("Warning"),
+		                           tr("The map export generated warnings."),
+		                           exporter->warnings() );
+	}
+	
+	return true;
 }
+
 
 bool MapEditorController::load(const QString& path, QWidget* dialog_parent)
 {
