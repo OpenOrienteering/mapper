@@ -36,6 +36,8 @@
 #include "core/map.h"
 #include "core/map_coord.h"
 #include "core/renderables/renderable.h"
+#include "fileformats/file_format_registry.h"
+#include "fileformats/file_import_export.h"
 #include "util/transformation.h"
 #include "util/util.h"
 
@@ -78,21 +80,29 @@ bool TemplateMap::loadTemplateFileImpl(bool configuring)
 	if (locked_maps.contains(template_path))
 		return true;
 	
-	locked_maps.append(template_path);
-	std::unique_ptr<Map> new_template_map{ new Map() };
-	bool new_template_valid = new_template_map->loadFrom(template_path, nullptr, nullptr, false, configuring);
+	auto new_template_map = std::make_unique<Map>(); 
+	auto importer = FileFormats.makeImporter(template_path, *new_template_map, nullptr);
+	locked_maps.append(template_path);  /// \todo Convert to RAII
+	auto new_template_valid = importer && importer->doImport();
 	locked_maps.removeAll(template_path);
 	
 	if (new_template_valid)
 	{
 		// Remove all template's templates from memory
-		// TODO: prevent loading and/or let user decide
+		/// \todo prevent loading and/or let user decide
 		for (int i = new_template_map->getNumTemplates()-1; i >= 0; i--)
 		{
 			new_template_map->deleteTemplate(i);
 		}
 		
 		template_map = std::move(new_template_map);
+	}
+	else if (configuring)
+	{
+		if (importer)
+			setErrorString(importer->warnings().back());
+		else
+			setErrorString(tr("Cannot load map file, aborting."));
 	}
 	
 	return new_template_valid;
