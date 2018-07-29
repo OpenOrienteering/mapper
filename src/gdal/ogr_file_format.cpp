@@ -399,7 +399,7 @@ ogr::unique_srs OgrFileImport::srsFromMap()
 
 void OgrFileImport::import(bool load_symbols_only)
 {
-	auto file = qobject_cast<QFile*>(stream);
+	auto file = qobject_cast<QFile*>(device());
 	if (!file)
 	{
 		throw FileFormatException("Internal error"); /// \todo Review design and/or message

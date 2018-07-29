@@ -39,7 +39,7 @@ OcdFileExport::~OcdFileExport() = default;
 
 void OcdFileExport::doExport()
 {
-	OCAD8FileExport delegate { stream, map, view };
+	OCAD8FileExport delegate { device(), map, view };
 	delegate.doExport();
 	for (auto&& w : delegate.warnings())
 	{

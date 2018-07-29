@@ -413,7 +413,7 @@ void XMLFileExporter::exportTemplates()
 {
 	QDir map_dir;
 	const QDir* map_dir_ptr = nullptr;
-	if (auto file = qobject_cast<const QFileDevice*>(stream))
+	if (auto file = qobject_cast<const QFileDevice*>(device()))
 	{
 		auto filename = file->fileName();
 		if (!filename.isEmpty())
@@ -515,10 +515,10 @@ void XMLFileImporter::import(bool load_symbols_only)
 {
 	if (!xml.readNextStartElement() || xml.name() != literal::map)
 	{
-		if (stream->seek(0))
+		if (device()->seek(0))
 		{
 			char data[4] = {};
-			stream->read(data, 4);
+			device()->read(data, 4);
 			if (qstrncmp(reinterpret_cast<const char*>(data), "OMAP", 4) == 0)
 			{
 				throw FileFormatException(::OpenOrienteering::Importer::tr(

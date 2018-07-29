@@ -120,6 +120,7 @@ void OCAD8FileImport::import(bool load_symbols_only)
 {
     //qint64 start = QDateTime::currentMSecsSinceEpoch();
 	
+	auto stream = device();
 	u32 size = stream->bytesAvailable();
 	u8* buffer = (u8*)malloc(size);
 	if (!buffer)
@@ -1875,7 +1876,7 @@ void OCAD8FileExport::doExport()
 		}
 	}
 	
-	stream->write((char*)file->buffer, file->size);
+	device()->write((char*)file->buffer, file->size);
 	
 	ocad_file_close(file);
 }

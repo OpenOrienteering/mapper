@@ -2087,9 +2087,9 @@ void OcdFileImport::import(bool load_symbols_only)
 	Q_ASSERT(buffer.isEmpty());
 	
 	buffer.clear();
-	buffer.append(stream->readAll());
+	buffer.append(device()->readAll());
 	if (buffer.isEmpty())
-		throw FileFormatException(::OpenOrienteering::Importer::tr("Could not read file: %1").arg(stream->errorString()));
+		throw FileFormatException(::OpenOrienteering::Importer::tr("Could not read file: %1").arg(device()->errorString()));
 	
 	if (size_t(buffer.size()) < sizeof(Ocd::FormatGeneric::FileHeader))
 		throw FileFormatException(::OpenOrienteering::Importer::tr("Could not read file: %1").arg(tr("Invalid data.")));

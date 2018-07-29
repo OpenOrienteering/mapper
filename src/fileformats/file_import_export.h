@@ -50,10 +50,11 @@ class ImportExport
 	Q_DECLARE_TR_FUNCTIONS(OpenOrienteering::ImportExport)
 	
 public:
-	/** Creates a new importer or exporter with the given IO stream.
+	/**
+	 * Creates a new importer or exporter with the given IO device.
 	 */
-	ImportExport(QIODevice* stream)
-	: stream(stream)
+	ImportExport(QIODevice* device = nullptr)
+	: device_(device)
 	{}
 	
 	ImportExport(const ImportExport&) = delete;
@@ -62,6 +63,31 @@ public:
 	/** Destroys an importer or exporter.
 	 */
 	virtual ~ImportExport();
+	
+	
+	/**
+	 * Returns true when the importer/exporter supports QIODevice.
+	 * 
+	 * The default implementation returns `true`. Some exporters or importers
+	 * might wish to use other ways of accessing the output/input path.
+	 * In these cases, the default implementation should be overwritten to
+	 * return `false`.
+	 */
+	virtual bool supportsQIODevice() const noexcept;
+	
+	/**
+	 * Returns the input device if it has been set or created.
+	 */
+	QIODevice* device() const noexcept { return device_; }
+	
+	/**
+	 * Sets a custom input device to be used for import.
+	 * 
+	 * Not all importers may be able to use such devices.
+	 * 
+	 * \see ImportExport::supportQIODevice()
+ 	 */
+	void setDevice(QIODevice* device);
 	
 	
 	/** Returns the current list of warnings collected by this object.
@@ -84,11 +110,11 @@ public:
 	 */
 	void addWarning(const QString& str);
 	
-protected:
-	/// The input / output stream
-	QIODevice* stream;
 	
 private:
+	/// The input / output device
+	QIODevice* device_;
+	
 	/// A list of options for the import/export
 	QHash<QString, QVariant> options;
 	
@@ -126,10 +152,11 @@ class Importer : public ImportExport
 	Q_DECLARE_TR_FUNCTIONS(OpenOrienteering::Importer)
 	
 public:
-	/** Creates a new Importer with the given input stream, map, and view.
+	/**
+	 * Creates a new Importer with the given input device, map, and view.
 	 */
-	Importer(QIODevice* stream, Map *map, MapView *view)
-	: ImportExport(stream), map(map), view(view)
+	Importer(QIODevice* device, Map *map, MapView *view)
+	: ImportExport(device), map(map), view(view)
 	{}
 	
 	/** Destroys this Importer.
@@ -192,10 +219,11 @@ class Exporter : public ImportExport
 	Q_DECLARE_TR_FUNCTIONS(OpenOrienteering::Exporter)
 	
 public:
-	/** Creates a new Exporter with the given output stream, map, and view.
+	/** 
+	 * Creates a new Exporter with the given output device, map, and view.
 	 */
-	Exporter(QIODevice* stream, const Map* map, const MapView* view)
-	: ImportExport(stream), map(map), view(view)
+	Exporter(QIODevice* device, const Map* map, const MapView* view)
+	: ImportExport(device), map(map), view(view)
 	{}
 	
 	/** Destroys the current Exporter.

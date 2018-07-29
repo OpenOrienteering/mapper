@@ -42,6 +42,17 @@ namespace OpenOrienteering {
 ImportExport::~ImportExport() = default;
 
 
+bool ImportExport::supportsQIODevice() const noexcept
+{
+	return true;
+}
+
+void ImportExport::setDevice(QIODevice* device)
+{
+	device_ = device;
+}
+
+
 QVariant ImportExport::option(const QString& name) const
 {
 	if (!options.contains(name))
