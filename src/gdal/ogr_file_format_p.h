@@ -136,6 +136,9 @@ public:
 	~OgrFileImport() override;
 	
 	
+	bool supportsQIODevice() const noexcept override;
+	
+	
 	/**
 	 * Enables the import of georeferencing from the geospatial data.
 	 * 
@@ -152,12 +155,12 @@ public:
 	 * transformed to the spatial reference systems represented by georef.
 	 * It will always return false for a local or invalid Georeferencing.
 	 */
-	static bool checkGeoreferencing(QFile& file, const Georeferencing& georef);
+	static bool checkGeoreferencing(const QString& path, const Georeferencing& georef);
 	
 	/**
 	 * Calculates the average geographic coordinates (WGS84) of the file.
 	 */
-	static LatLon calcAverageLatLon(QFile& file);
+	static LatLon calcAverageLatLon(const QString& path);
 	
 	
 protected:

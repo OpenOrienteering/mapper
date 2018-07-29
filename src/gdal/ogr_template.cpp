@@ -27,7 +27,6 @@
 #include <QtGlobal>
 #include <QByteArray>
 #include <QDialog>
-#include <QFile>
 #include <QLatin1String>
 #include <QPoint>
 #include <QPointF>
@@ -64,11 +63,11 @@ namespace {
 	}
 	
 	
-	std::unique_ptr<Georeferencing> getDataGeoreferencing(QFile& file, const Georeferencing& initial_georef)
+	std::unique_ptr<Georeferencing> getDataGeoreferencing(const QString& path, const Georeferencing& initial_georef)
 	{
 		Map tmp_map;
 		tmp_map.setGeoreferencing(initial_georef);
-		OgrFileImport importer{ file.fileName(), &tmp_map, nullptr, OgrFileImport::UnitOnGround};
+		OgrFileImport importer{ path, &tmp_map, nullptr, OgrFileImport::UnitOnGround};
 		importer.setGeoreferencingImportEnabled(true);
 		importer.setLoadSymbolsOnly(true);
 		if (!importer.doImport())
@@ -135,16 +134,16 @@ const char* OgrTemplate::getTemplateType() const
 
 
 
-std::unique_ptr<Georeferencing> OgrTemplate::makeOrthographicGeoreferencing(QFile& file)
+std::unique_ptr<Georeferencing> OgrTemplate::makeOrthographicGeoreferencing(const QString& path)
 {
 	// Is the template's SRS orthographic, or can it be converted?
 	/// \todo Use the template's datum etc. instead of WGS84?
 	auto georef = std::make_unique<Georeferencing>();
 	georef->setScaleDenominator(int(map->getGeoreferencing().getScaleDenominator()));
 	georef->setProjectedCRS(QString{}, QStringLiteral("+proj=ortho +datum=WGS84 +ellps=WGS84 +units=m +no_defs"));
-	if (OgrFileImport::checkGeoreferencing(file, *georef))
+	if (OgrFileImport::checkGeoreferencing(path, *georef))
 	{
-		auto center = OgrFileImport::calcAverageLatLon(file);
+		auto center = OgrFileImport::calcAverageLatLon(path);
 		georef->setProjectedCRS(QString{},
 		                             QString::fromLatin1("+proj=ortho +datum=WGS84 +ellps=WGS84 +units=m +lat_0=%1 +lon_0=%2 +no_defs")
 		                             .arg(center.latitude()).arg(center.longitude()));
@@ -175,20 +174,11 @@ try
 	};
 	template_track_compatibility = ends_with_any_of(template_path, TemplateTrack::supportedExtensions());
 	
-	QFile file{ template_path };
-	
 	auto data_georef = std::unique_ptr<Georeferencing>();
 	auto& initial_georef = map->getGeoreferencing();
 	if (!initial_georef.isValid() || initial_georef.isLocal())
 	{
-		// The map doesn't have a proper georeferencing.
-		// Is there a good SRS in the data?
-		try {
-			data_georef = getDataGeoreferencing(file, initial_georef);
-		}
-		catch (FileFormatException&)
-		{}
-		
+		data_georef = getDataGeoreferencing(template_path, initial_georef);
 		if (data_georef && data_georef->isValid() && !data_georef->isLocal())
 		{
 			// If yes, does the user want to use this for the map?
@@ -211,7 +201,7 @@ try
 	{
 		// The map has got a proper georeferencing.
 		// Can the template's SRS be converted to the map's CRS?
-		if (OgrFileImport::checkGeoreferencing(file, map->getGeoreferencing()))
+		if (OgrFileImport::checkGeoreferencing(template_path, map->getGeoreferencing()))
 		{
 			is_georeferenced = true;
 			return true;
@@ -225,7 +215,7 @@ try
 	}
 	if (!data_georef)
 	{
-		data_georef = makeOrthographicGeoreferencing(file);
+		data_georef = makeOrthographicGeoreferencing(template_path);
 	}
 	if (data_georef)
 	{
@@ -259,10 +249,9 @@ catch (FileFormatException& e)
 bool OgrTemplate::loadTemplateFileImpl(bool configuring)
 try
 {
-	QFile file{ template_path };
 	auto new_template_map = std::make_unique<Map>();
 	auto unit_type = use_real_coords ? OgrFileImport::UnitOnGround : OgrFileImport::UnitOnPaper;
-	OgrFileImport importer{ template_path, new_template_map.get(), nullptr, unit_type };
+	OgrFileImport importer{template_path, new_template_map.get(), nullptr, unit_type };
 	
 	const auto& map_georef = map->getGeoreferencing();
 	
@@ -319,7 +308,7 @@ try
 					else
 					{
 						// If the TemplateTrack approach failed, use local approach.
-						explicit_georef = makeOrthographicGeoreferencing(file);
+						explicit_georef = makeOrthographicGeoreferencing(template_path);
 						projected_crs_spec = explicit_georef->getProjectedCRSSpec();
 					}
 				}
