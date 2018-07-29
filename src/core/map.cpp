@@ -32,9 +32,7 @@
 #include <QtGlobal>
 #include <QtMath>
 #include <QByteArray>
-#include <QCoreApplication>
 #include <QDebug>
-#include <QEventLoop>
 #include <QFile>
 #include <QFileInfo>
 #include <QIODevice>
@@ -46,7 +44,6 @@
 #include <QPointF>
 #include <QSaveFile>
 #include <QStringList>
-#include <QTextDocument>
 #include <QTimer>
 #include <QTranslator>
 
@@ -68,8 +65,8 @@
 #include "fileformats/file_format.h"
 #include "fileformats/file_format_registry.h"
 #include "fileformats/file_import_export.h"
+#include "gui/main_window.h"
 #include "gui/map/map_widget.h"
-#include "gui/text_browser_dialog.h"
 #include "templates/template.h"
 #include "undo/object_undo.h"
 #include "undo/undo.h"
@@ -119,26 +116,6 @@ struct MapColorSetMergeItem
 /** The mapping of all colors in a source MapColorSet
  *  to colors in a destination MapColorSet. */
 typedef std::vector<MapColorSetMergeItem> MapColorSetMergeList;
-
-
-/**
- * Shows a message box for a list of unformatted messages.
- */
-void showMessageBox(QWidget* parent, const QString& title, const QString& headline, const std::vector<QString>& messages)
-{
-	QString document;
-	if (!headline.isEmpty())
-		document += QLatin1String("<p><b>") + headline + QLatin1String("</b></p>");
-	for (const auto& message : messages)
-		document += Qt::convertFromPlainText(message, Qt::WhiteSpaceNormal);
-	
-	TextBrowserDialog dialog(document, parent);
-	dialog.setWindowTitle(title);
-	dialog.setWindowModality(Qt::WindowModal);
-	dialog.exec();
-	// Let Android update the screen.
-	qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
-}
 
 
 }  // namespace
@@ -681,10 +658,10 @@ bool Map::exportTo(const QString& path, const FileFormat& format, const MapView*
 	}
 	else if (!exporter->warnings().empty())
 	{
-		showMessageBox(nullptr,
-		               tr("Warning"),
-		               tr("The map export generated warnings."),
-		               exporter->warnings() );
+		MainWindow::showMessageBox(nullptr,
+		                           tr("Warning"),
+		                           tr("The map export generated warnings."),
+		                           exporter->warnings() );
 	}
 	
 	return success;
@@ -742,10 +719,10 @@ bool Map::loadFrom(const QString& path, QWidget* dialog_parent, MapView* view, b
 			// Display any warnings.
 			if (!importer->warnings().empty() && show_error_messages)
 			{
-				showMessageBox(nullptr,
-				               tr("Warning"),
-				               tr("The map import generated warnings."),
-				               importer->warnings() );
+				MainWindow::showMessageBox(nullptr,
+				                           tr("Warning"),
+				                           tr("The map import generated warnings."),
+				                           importer->warnings() );
 			}
 			
 			import_complete = true;

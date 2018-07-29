@@ -205,6 +205,13 @@ public:
 	 */
 	static QString getOpenFileName(QWidget* parent, const QString& title, FileFormat::FileTypes types);
 	
+	
+	/**
+	 * Shows a message box for a list of unformatted messages.
+	 */
+	static void showMessageBox(QWidget* parent, const QString& title, const QString& headline, const std::vector<QString>& messages);
+	
+	
 	/**
 	 * Sets the MainWindow's effective central widget.
 	 * 

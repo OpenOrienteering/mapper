@@ -1104,6 +1104,27 @@ QString MainWindow::getOpenFileName(QWidget* parent, const QString& title, FileF
 	return info.canonicalFilePath();
 }
 
+
+
+// static
+void MainWindow::showMessageBox(QWidget* parent, const QString& title, const QString& headline, const std::vector<QString>& messages)
+{
+	QString document;
+	if (!headline.isEmpty())
+		document += QLatin1String("<p><b>") + headline + QLatin1String("</b></p>");
+	for (const auto& message : messages)
+		document += Qt::convertFromPlainText(message, Qt::WhiteSpaceNormal);
+	
+	TextBrowserDialog dialog(document, parent);
+	dialog.setWindowTitle(title);
+	dialog.setWindowModality(Qt::WindowModal);
+	dialog.exec();
+	// Let Android update the screen.
+	qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
+}
+
+
+
 bool MainWindow::showSaveAsDialog()
 {
 	if (!controller)
