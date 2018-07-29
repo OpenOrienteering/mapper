@@ -640,30 +640,19 @@ void Map::setMapNotes(const QString& text)
 }
 
 
-bool Map::exportTo(const QString& path, const FileFormat* format, const MapView* view) const
+bool Map::exportTo(const QString& path, const FileFormat& format, const MapView* view) const
 {
 	Q_ASSERT(view && "Saving a file without view information is not supported!");
 	
-	if (!format)
-		format = FileFormats.findFormatForFilename(path);
-
-	if (!format)
-		format = FileFormats.findFormat(FileFormats.defaultFormat());
-	
-	if (!format)
-	{
-		QMessageBox::warning(nullptr, tr("Error"), tr("Cannot export the map as\n\"%1\"\nbecause the format is unknown.").arg(path));
-		return false;
-	}
-	else if (!format->supportsExport())
+	if (!format.supportsExport())
 	{
 		QMessageBox::warning(nullptr, tr("Error"), tr("Cannot export the map as\n\"%1\"\nbecause saving as %2 (.%3) is not supported.").
-		                     arg(path, format->description(), format->fileExtensions().join(QLatin1String(", "))));
+		                     arg(path, format.description(), format.fileExtensions().join(QLatin1String(", "))));
 		return false;
 	}
 	
 	QSaveFile file(path);
-	auto exporter = format->makeExporter(&file, this, view);
+	auto exporter = format.makeExporter(&file, this, view);
 	bool success = false;
 	if (file.open(QIODevice::WriteOnly))
 	{

@@ -1046,7 +1046,7 @@ bool MainWindow::saveTo(const QString &path, const FileFormat* format)
 			return showSaveAsDialog();
 	}
 	
-	if (!controller->saveTo(path, format))
+	if (!controller->saveTo(path, *format))
 		return false;
 	
 	setMostRecentlyUsedFile(path);

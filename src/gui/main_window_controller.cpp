@@ -22,9 +22,11 @@
 #include "main_window_controller.h"
 
 #include <QtGlobal>
+#include <QMessageBox>
 
 #include "fileformats/file_format.h"
 #include "fileformats/file_format_registry.h"
+#include "gui/main_window.h"
 #include "gui/map/map_editor.h"
 
 
@@ -33,15 +35,39 @@ namespace OpenOrienteering {
 MainWindowController::~MainWindowController() = default;
 
 
-bool MainWindowController::saveTo(const QString& /*path*/, const FileFormat* /*format*/)
+bool MainWindowController::saveTo(const QString& /*path*/, const FileFormat& /*format*/)
 {
 	return false;
 }
 
-bool MainWindowController::exportTo(const QString& path, const FileFormat* format)
+bool MainWindowController::exportTo(const QString& path)
 {
-	Q_UNUSED(path);
-	Q_UNUSED(format);
+	auto format = FileFormats.findFormatForFilename(path);
+	if (!format)
+		format = FileFormats.findFormat(FileFormats.defaultFormat());
+	if (!format)
+	{
+		QMessageBox::warning(window,
+		                     tr("Error"),
+		                     tr("Cannot export the map as\n\"%1\"\n"
+		                        "because the format is unknown.").arg(path));
+		return false;
+	}
+	if (!format->supportsExport())
+	{
+		QMessageBox::warning(window,
+		                     tr("Error"),
+		                     tr("Cannot export the map as\n\"%1\"\n"
+		                        "because saving as %2 (.%3) is not supported.").
+		                     arg(path, format->description(),
+		                         format->fileExtensions().join(QLatin1String(", "))));
+		return false;
+	}
+	return exportTo(path, *format);
+}
+
+bool MainWindowController::exportTo(const QString& /*path*/, const FileFormat& /*format*/)
+{
 	return false;
 }
 

@@ -165,7 +165,7 @@ public:
 	 * successful export.
 	 */
 	bool exportTo(const QString& path,
-	              const FileFormat* format = nullptr,
+	              const FileFormat& format,
 	              const MapView* view = nullptr) const;
 	
 	/**
