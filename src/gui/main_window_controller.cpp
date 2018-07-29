@@ -42,7 +42,7 @@ bool MainWindowController::saveTo(const QString& /*path*/, const FileFormat& /*f
 
 bool MainWindowController::exportTo(const QString& path)
 {
-	auto format = FileFormats.findFormatForFilename(path);
+	auto format = FileFormats.findFormatForFilename(path, &FileFormat::supportsExport);
 	if (!format)
 		format = FileFormats.findFormat(FileFormats.defaultFormat());
 	if (!format)
@@ -100,8 +100,7 @@ bool MainWindowController::keyReleaseEventFilter(QKeyEvent* event)
 
 MainWindowController* MainWindowController::controllerForFile(const QString& filename)
 {
-	const FileFormat* format = FileFormats.findFormatForFilename(filename);
-	if (format && format->supportsImport()) 
+	if (FileFormats.findFormatForFilename(filename, &FileFormat::supportsImport))
 		return new MapEditorController(MapEditorController::MapEditor);
 	
 	return nullptr;

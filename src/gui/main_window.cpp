@@ -804,7 +804,7 @@ void MainWindow::showOpenDialog()
 
 bool MainWindow::openPath(const QString &path)
 {
-	auto format = FileFormats.findFormatForFilename(path);
+	auto format = FileFormats.findFormatForFilename(path, &FileFormat::supportsImport);
 	if (!format)
 		format = FileFormats.findFormatForData(path, FileFormat::AllFiles);
 	return openPath(path, format);
@@ -1067,7 +1067,7 @@ bool MainWindow::saveTo(const QString &path, const FileFormat* format)
 		return showSaveAsDialog();
 	
 	if (!format)
-		format = FileFormats.findFormatForFilename(path);
+		format = FileFormats.findFormatForFilename(path, &FileFormat::supportsExport);
 	
 	if (!format)
 	{
@@ -1147,9 +1147,9 @@ MainWindow::FileInfo MainWindow::getOpenFileName(QWidget* parent, const QString&
 	if (!path.isEmpty())
 	{
 		path = QFileInfo(path).canonicalFilePath();
-		format = FileFormats.findFormatByFilter(filter);
+		format = FileFormats.findFormatByFilter(filter, &FileFormat::supportsImport);
 		if (!format)
-			format = FileFormats.findFormatForFilename(path);
+			format = FileFormats.findFormatForFilename(path, &FileFormat::supportsImport);
 		if (!format)
 			format = FileFormats.findFormatForData(path, types);
 	}
@@ -1223,7 +1223,7 @@ bool MainWindow::showSaveAsDialog()
 	if (path.isEmpty())
 		return false;
 	
-	const FileFormat *format = FileFormats.findFormatByFilter(filter);
+	const FileFormat *format = FileFormats.findFormatByFilter(filter, &FileFormat::supportsExport);
 	if (!format)
 	{
 		QMessageBox::information(this, tr("Error"), 
@@ -1247,7 +1247,7 @@ bool MainWindow::showSaveAsDialog()
 	// Ensure that the file name matches the format.
 	Q_ASSERT(format->fileExtensions().contains(QFileInfo(path).suffix()));
 	// Fails when using different formats for import and export:
-	//	Q_ASSERT(FileFormats.findFormatForFilename(path) == format);
+	//	Q_ASSERT(FileFormats.findFormatForFilename(path, ***) == format);
 	
 	return saveTo(path, format);
 }

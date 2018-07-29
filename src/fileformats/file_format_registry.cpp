@@ -52,8 +52,20 @@ void FileFormatRegistry::registerFormat(FileFormat *format)
 {
 	fmts.push_back(format);
 	if (fmts.size() == 1) default_format_id = format->id();
-	Q_ASSERT(findFormatForFilename(QLatin1String("filename.") + format->primaryExtension()) != nullptr); // There may be more than one format!
-	Q_ASSERT(findFormatByFilter(format->filter()) == format); // The filter shall be unique at least by description.
+	if (format->supportsImport())
+	{
+		// There must be at least one one format for a filename with the registered extension.
+		Q_ASSERT(findFormatForFilename(QLatin1String("filename.") + format->primaryExtension(), &FileFormat::supportsImport) != nullptr);
+		// The filter shall be unique at least by description.
+		Q_ASSERT(findFormatByFilter(format->filter(), &FileFormat::supportsImport) == format); 
+	}
+	if (format->supportsExport())
+	{
+		// There must be at least one one format for a filename with the registered extension.
+		Q_ASSERT(findFormatForFilename(QLatin1String("filename.") + format->primaryExtension(), &FileFormat::supportsExport) != nullptr);
+		// The filter shall be unique at least by description.
+		Q_ASSERT(findFormatByFilter(format->filter(), &FileFormat::supportsExport) == format); 
+	}
 }
 
 std::unique_ptr<FileFormat> FileFormatRegistry::unregisterFormat(const FileFormat* format)
@@ -106,20 +118,22 @@ const FileFormat *FileFormatRegistry::findFormat(const char* id) const
 	return findFormat([id](auto format) { return qstrcmp(format->id(), id) == 0; });
 }
 
-const FileFormat *FileFormatRegistry::findFormatByFilter(const QString& filter) const
+const FileFormat *FileFormatRegistry::findFormatByFilter(const QString& filter, bool (FileFormat::*predicate)() const) const
 {
 	// Compare only before closing ')'. Needed for QTBUG 51712 workaround in
 	// file_dialog.cpp, and warranted by Q_ASSERT in registerFormat().
-	return findFormat([filter](auto format) {
-		return filter.startsWith(format->filter().leftRef(format->filter().length()-1));
+	return findFormat([predicate, filter](auto format) {
+		return (format->*predicate)()
+		       && filter.startsWith(format->filter().leftRef(format->filter().length()-1));
 	});
 }
 
-const FileFormat *FileFormatRegistry::findFormatForFilename(const QString& filename) const
+const FileFormat *FileFormatRegistry::findFormatForFilename(const QString& filename, bool (FileFormat::*predicate)() const) const
 {
 	auto extension = QFileInfo(filename).suffix();
-	return findFormat([extension](auto format) {
-		return format->fileExtensions().contains(extension, Qt::CaseInsensitive);
+	return findFormat([predicate, extension](auto format) {
+		return (format->*predicate)()
+		       && format->fileExtensions().contains(extension, Qt::CaseInsensitive);
 	});
 }
 

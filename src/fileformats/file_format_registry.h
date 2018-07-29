@@ -71,13 +71,17 @@ public:
 	 * Only the file format's filter string before the closing ')' is taken into
 	 * account for matching, i.e. the given parameter 'filter' may contain
 	 * additional extensions following the original ones.
+	 * 
+	 * The predicate is intented to select either import or export formats.
 	 */
-	const FileFormat *findFormatByFilter(const QString& filter) const;
+	const FileFormat *findFormatByFilter(const QString& filter, bool (FileFormat::*predicate)() const) const;
 	
 	/** Finds a file format whose file extension matches the file extension of the given
 	 *  path, or returns nullptr if no matching format is found.
+	 * 
+	 * The predicate is intented to select either import or export formats.
 	 */
-	const FileFormat *findFormatForFilename(const QString& filename) const;
+	const FileFormat *findFormatForFilename(const QString& filename, bool (FileFormat::*predicate)() const) const;
 	
 	/** Finds an import file format by looking at the existing data.
 	 */
