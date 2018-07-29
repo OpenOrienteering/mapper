@@ -100,6 +100,16 @@ public:
 	 */
 	std::unique_ptr<FileFormat> unregisterFormat(const FileFormat *format);
 	
+	
+	/** Creates an importer for the given path, if possible.
+	 */
+	std::unique_ptr<Importer> makeImporter(const QString& path, Map& map, MapView* view = nullptr);
+	
+	/** Creates an exporter for the given path, if possible.
+	 */
+	std::unique_ptr<Exporter> makeExporter(const QString& path, const Map* map, const MapView* view);
+	
+	
 private:
 	std::vector<FileFormat *> fmts;
 	const char* default_format_id;

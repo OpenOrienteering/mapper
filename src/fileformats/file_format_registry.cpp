@@ -69,6 +69,31 @@ std::unique_ptr<FileFormat> FileFormatRegistry::unregisterFormat(const FileForma
 }
 
 
+std::unique_ptr<Importer> FileFormatRegistry::makeImporter(const QString& path, Map& map, MapView* view)
+{
+	auto extension = QFileInfo(path).suffix();
+	auto format = findFormat([extension](auto format) {
+		return format->supportsImport()
+		       && format->fileExtensions().contains(extension, Qt::CaseInsensitive);
+	});
+	if (!format)
+		format = findFormatForData(path, FileFormat::AllFiles);
+	return format ? format->makeImporter(path, &map, view) : nullptr;
+}
+
+std::unique_ptr<Exporter> FileFormatRegistry::makeExporter(const QString& path, const Map* map, const MapView* view)
+{
+	auto extension = QFileInfo(path).suffix();
+	auto format = findFormat([extension](auto format) {
+		return format->supportsExport()
+		       && format->fileExtensions().contains(extension, Qt::CaseInsensitive);
+	});
+	if (!format && QFileInfo::exists(path))
+		format = findFormatForData(path, FileFormat::AllFiles);
+	return format ? format->makeExporter(path, map, view) : nullptr;
+}
+
+
 const FileFormat* FileFormatRegistry::findFormat(std::function<bool (const FileFormat*)> predicate) const
 {
 	auto found = std::find_if(begin(fmts), end(fmts), predicate);
