@@ -20,9 +20,10 @@
 
 #include "file_format_registry.h"
 
+#include <QFile>
 #include <QFileInfo>
 
-#include "fileformats/file_format.h"
+#include "fileformats/file_import_export.h"
 
 
 namespace OpenOrienteering {
@@ -95,6 +96,36 @@ const FileFormat *FileFormatRegistry::findFormatForFilename(const QString& filen
 	return findFormat([extension](auto format) {
 		return format->fileExtensions().contains(extension, Qt::CaseInsensitive);
 	});
+}
+
+const FileFormat* FileFormatRegistry::findFormatForData(const QString& path, FileFormat::FileTypes types) const
+{
+	QFile file(path);
+	if (!file.open(QIODevice::ReadOnly))
+		return nullptr;
+	
+	char buffer[256];
+	auto total_read = int(file.read(buffer, file.isSequential() ? 0 : std::extent<decltype(buffer)>::value));
+	
+	FileFormat* candidate = nullptr;
+	for (auto format : fmts)
+	{
+		if (!format->supportsImport() || !(format->fileType() & types))
+			continue;
+		
+		switch (format->understands(buffer, total_read))
+		{
+		case FileFormat::NotSupported:
+			break;
+		case FileFormat::Unknown:
+			if (!candidate)
+				candidate = format;
+			break;
+		case FileFormat::FullySupported:
+			return format;  // shortcut
+		}
+	}
+	return candidate;
 }
 
 

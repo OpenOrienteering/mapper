@@ -27,9 +27,9 @@
 
 #include <QString>
 
-namespace OpenOrienteering {
+#include "fileformats/file_format.h"
 
-class FileFormat;
+namespace OpenOrienteering {
 
 
 /** Provides a registry for file formats, and takes ownership of the supported format objects.
@@ -78,6 +78,11 @@ public:
 	 *  path, or returns nullptr if no matching format is found.
 	 */
 	const FileFormat *findFormatForFilename(const QString& filename) const;
+	
+	/** Finds an import file format by looking at the existing data.
+	 */
+	const FileFormat* findFormatForData(const QString& path, FileFormat::FileTypes types) const;
+	
 	
 	/** Returns the ID of default file format for this registry. This will automatically
 	 *  be set to the first registered format.

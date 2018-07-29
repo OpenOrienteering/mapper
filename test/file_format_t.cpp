@@ -31,6 +31,7 @@
 #include <QByteArray>
 #include <QCoreApplication>
 #include <QDir>
+#include <QFile>
 #include <QFileInfo>
 #include <QHash>
 #include <QIODevice>
@@ -41,6 +42,7 @@
 #include <QSize>
 #include <QSizeF>
 #include <QString>
+#include <QTemporaryDir>
 
 #include "global.h"
 #include "test_config.h"
@@ -448,6 +450,51 @@ void FileFormatTest::understandsTest()
 	QVERIFY(format);
 	QVERIFY(format->supportsImport());
 	QCOMPARE(int(format->understands(data.constData(), data.length())), support);
+}
+
+
+
+void FileFormatTest::formatForDataTest_data()
+{
+	understandsTest_data();
+}
+
+void FileFormatTest::formatForDataTest()
+{
+	QFETCH(QByteArray, format_id); Q_UNUSED(format_id)
+	QFETCH(QByteArray, data);
+	QFETCH(int, support);
+	
+#ifdef MAPPER_BIG_ENDIAN
+	if (format_id.startsWith("OCD"))
+		return;
+#endif
+	
+	QTemporaryDir dir;
+	QVERIFY(dir.isValid());
+	
+	auto path = QDir(dir.path()).absoluteFilePath(QStringLiteral("testfile"));
+	QFile out_file(path);
+	QVERIFY(out_file.open(QIODevice::WriteOnly));
+	QVERIFY(out_file.write(data) == data.size());
+	out_file.close();
+	QVERIFY(!out_file.error());
+	
+	auto result = FileFormats.findFormatForData(path, FileFormat::AllFiles);
+	switch (support)
+	{
+	case FileFormat::NotSupported:
+		QVERIFY(!result || result->understands(data.constData(), data.length()) != FileFormat::NotSupported);
+		break;
+	case FileFormat::Unknown:
+		QVERIFY(result);
+		QVERIFY(result->understands(data.constData(), data.length()) != FileFormat::NotSupported);
+		break;
+	case FileFormat::FullySupported:
+		QVERIFY(result);
+		QVERIFY(result->understands(data.constData(), data.length()) == FileFormat::FullySupported);
+		break;
+	}
 }
 
 
