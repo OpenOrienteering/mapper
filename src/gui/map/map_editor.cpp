@@ -564,6 +564,7 @@ bool MapEditorController::saveTo(const QString& path, const FileFormat& format)
 	return true;
 }
 
+
 bool MapEditorController::exportTo(const QString& path, const FileFormat& format)
 {
 	if (!map || editing_in_progress)
@@ -604,7 +605,7 @@ bool MapEditorController::exportTo(const QString& path, const FileFormat& format
 }
 
 
-bool MapEditorController::loadFrom(const QString& path, QWidget* dialog_parent)
+bool MapEditorController::loadFrom(const QString& path, const FileFormat& format, QWidget* dialog_parent)
 {
 	if (!dialog_parent)
 		dialog_parent = window;
@@ -615,20 +616,25 @@ bool MapEditorController::loadFrom(const QString& path, QWidget* dialog_parent)
 		main_view = new MapView(this, map);
 	}
 	
-	bool success = map->loadFrom(path, dialog_parent, main_view);
-	if (success)
-	{
-		setMapAndView(map, main_view);
-	}
-	else
+	auto importer = format.makeImporter(path, map, main_view);
+	if (!importer->doImport())
 	{
 		delete map;
 		map = nullptr;
 		main_view = nullptr;
+		
+		Q_ASSERT(!importer->warnings().empty());
+		QMessageBox::warning(window, tr("Error"), importer->warnings().back());
+		return false;
 	}
 	
-	return success;
+	setMapAndView(map, main_view);
+	map->setHasUnsavedChanges(false);
+	if (!importer->warnings().empty())
+		MainWindow::showMessageBox(window, tr("Warning"), tr("The map import generated warnings."), importer->warnings());
+	return true;
 }
+
 
 void MapEditorController::attach(MainWindow* window)
 {
@@ -3940,7 +3946,7 @@ void MapEditorController::importClicked()
 	if (map_format)
 	{
 		// Map format recognized by filename extension
-		importMapFile(filename, true); // Error reporting in Map::loadFrom()
+		importMapFile(filename, true); // Error reporting in importMapFile()
 		return;
 	}
 	else if (filename.endsWith(QLatin1String(".dxf"), Qt::CaseInsensitive)
@@ -3981,8 +3987,23 @@ bool MapEditorController::importMapFile(const QString& filename, bool show_error
 	Map imported_map;
 	imported_map.setScaleDenominator(map->getScaleDenominator()); // for non-scaled geodata
 	
-	if (!imported_map.loadFrom(filename, window, nullptr, false, show_errors))
+	auto importer = FileFormats.makeImporter(filename, imported_map, nullptr);
+	if (!importer)
+	{
+		if (show_errors)
+			;  /// \todo error message
 		return false;
+	}
+	
+	if (!importer->doImport())
+	{
+		if (show_errors)
+			QMessageBox::warning(window, tr("Error"), importer->warnings().back());
+		return false;
+	}
+	
+	if (show_errors && !importer->warnings().empty())
+	    MainWindow::showMessageBox(window, tr("Warning"), tr("The map import generated warnings."), importer->warnings());
 	
 	if (imported_map.symbolSetId() != map->symbolSetId())
 	{

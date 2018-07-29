@@ -87,7 +87,7 @@ void resetActivationWindow()
 			{
 				app->setActivationWindow(new_window);
 				QObject::connect(new_window, &QObject::destroyed, &resetActivationWindow);
-				QObject::connect(app, &QtSingleApplication::messageReceived, new_window, &MainWindow::openPath);
+				QObject::connect(app, &QtSingleApplication::messageReceived, new_window, QOverload<const QString&>::of(&MainWindow::openPath));
 				break;
 			}
 		}

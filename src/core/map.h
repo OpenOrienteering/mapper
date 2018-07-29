@@ -156,18 +156,12 @@ public:
 	/**
 	 * Attempts to load the map from the specified path. Returns true on success.
 	 * 
+	 * This is a convenience function used by tests. Normally, a importer should be
+	 * used explicitly.
+	 * 
 	 * @param path The file path to load the map from.
-	 * @param dialog_parent The parent widget for all dialogs.
-	 *     This should never be nullptr in a QWidgets application.
 	 * @param view If not nullptr, restores this map view.
-	 * @param load_symbols_only Loads only symbols from the chosen file.
-	 *     Useful to load symbol sets.
-	 * @param show_error_messages Whether to show import errors and warnings.
 	 */
-	bool loadFrom(const QString& path,
-	              QWidget* dialog_parent,
-	              MapView* view = nullptr,
-	              bool load_symbols_only = false, bool show_error_messages = true);
 	bool loadFrom(const QString& path, MapView* view = nullptr);
 	
 	/**

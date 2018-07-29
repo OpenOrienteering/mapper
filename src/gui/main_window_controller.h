@@ -47,6 +47,7 @@ public:
 	
 	/** Save to a file.
 	 *  @param path the path to save to
+	 *  @param format the file format
 	 *  @return true if saving was sucessful, false on errors
 	 */
 	virtual bool saveTo(const QString& path, const FileFormat& format);
@@ -72,7 +73,7 @@ public:
 	 *      If nullptr, implementations should use MainWindowController::window.
 	 *  @return true if loading was sucessful, false on errors
 	 */
-	virtual bool loadFrom(const QString& path, QWidget* dialog_parent = nullptr);
+	virtual bool loadFrom(const QString& path, const FileFormat& format, QWidget* dialog_parent = nullptr);
 	
 	/** Attach the controller to a main window. 
 	 *  The controller should create its user interface here.

@@ -71,7 +71,7 @@ bool MainWindowController::exportTo(const QString& /*path*/, const FileFormat& /
 	return false;
 }
 
-bool MainWindowController::loadFrom(const QString& /*path*/, QWidget* /*dialog_parent*/)
+bool MainWindowController::loadFrom(const QString& /*path*/, const FileFormat& /*format*/, QWidget* /*dialog_parent*/)
 {
 	return false;
 }

@@ -23,7 +23,6 @@
 
 #include <algorithm>
 #include <cmath>
-#include <exception>
 #include <iterator>
 #include <memory>
 #include <type_traits>
@@ -33,7 +32,6 @@
 #include <QtMath>
 #include <QByteArray>
 #include <QDebug>
-#include <QFile>
 #include <QIODevice>
 #include <QLocale>
 #include <QMessageBox>
@@ -58,11 +56,9 @@
 #include "core/symbols/point_symbol.h"
 #include "core/symbols/symbol.h"
 #include "core/symbols/text_symbol.h"
-#include "fileformats/file_format.h"
 #include "fileformats/file_format_registry.h"
 #include "fileformats/file_import_export.h"
 #include "fileformats/xml_file_format_p.h"
-#include "gui/main_window.h"
 #include "gui/map/map_widget.h"
 #include "templates/template.h"
 #include "undo/object_undo.h"
@@ -613,104 +609,6 @@ void Map::setMapNotes(const QString& text)
 	map_notes = text;
 }
 
-
-bool Map::loadFrom(const QString& path, QWidget* dialog_parent, MapView* view, bool load_symbols_only, bool show_error_messages)
-{
-	// Ensure the file exists and is readable.
-	QFile file(path);
-	if (!file.open(QIODevice::ReadOnly))
-	{
-		if (show_error_messages)
-			QMessageBox::warning(
-			  dialog_parent,
-			  tr("Error"),
-			  tr("Cannot open file:\n%1\nfor reading.").arg(path)
-			);
-		return false;
-	}
-	
-	// Delete previous objects
-	reset();
-
-	// Read a block at the beginning of the file, that we can use for magic number checking.
-	char buffer[256];
-	auto total_read = file.read(buffer, file.isSequential() ? 0 : std::extent<decltype(buffer)>::value);
-	
-	bool import_complete = false;
-	QString error_msg = tr("Invalid file type.");
-	for (auto format : FileFormats.formats())
-	{
-		// If the format supports import, and thinks it can understand the file header, then proceed.
-		auto support = format->understands(buffer, int(total_read));
-		if (support == FileFormat::NotSupported)
-			continue;
-		
-		try {
-			auto importer = format->makeImporter(path, this, view);
-			if (file.isOpen())
-			{
-				// Reuse open file if possible
-				if (importer->supportsQIODevice() && file.seek(0))
-					importer->setDevice(&file);
-				else
-					file.close();
-			}
-			importer->setLoadSymbolsOnly(load_symbols_only);
-			if (importer->doImport())
-			{
-				// Display any warnings.
-				if (!importer->warnings().empty() && show_error_messages)
-				{
-					MainWindow::showMessageBox(nullptr,
-					                           tr("Warning"),
-					                           tr("The map import generated warnings."),
-					                           importer->warnings() );
-				}
-				import_complete = true;
-			}
-			else
-			{
-				error_msg = importer->warnings().back();
-			}
-		}
-		catch (FileFormatException &e)
-		{
-			error_msg = e.message();
-		}
-		catch (std::exception &e)
-		{
-			qWarning("Exception: %s", e.what());
-			error_msg = QString::fromLatin1(e.what());
-		}
-		
-		// If the last importer finished successfully, or failed despite full support
-		if (import_complete || support == FileFormat::FullySupported)
-			break;
-	}
-	
-	if (view)
-	{
-		view->setPanOffset(QPoint(0, 0));
-	}
-
-	if (!import_complete)
-	{
-		if (show_error_messages)
-			QMessageBox::warning(
-			 dialog_parent,
-			 tr("Error"),
-			 tr("Cannot open file:\n%1\n\n%2").arg(path, error_msg)
-			);
-		return false;
-	}
-
-	// Update all objects without trying to remove their renderables first, this gives a significant speedup when loading large files
-	updateAllObjects(); // TODO: is the comment above still applicable?
-	
-	setHasUnsavedChanges(false);
-
-	return true;
-}
 
 void Map::importMap(
         const Map* other,
