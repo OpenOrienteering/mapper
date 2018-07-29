@@ -233,7 +233,7 @@ public:
 	/** Override from MainWindowController */
 	bool exportTo(const QString& path, const FileFormat& format) override;
 	/** Override from MainWindowController */
-	bool load(const QString& path, QWidget* dialog_parent = nullptr) override;
+	bool loadFrom(const QString& path, QWidget* dialog_parent = nullptr) override;
 	
 	/** Override from MainWindowController */
 	void attach(MainWindow* window) override;

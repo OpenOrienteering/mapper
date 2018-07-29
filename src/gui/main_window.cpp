@@ -844,7 +844,7 @@ bool MainWindow::openPath(const QString &path)
 #endif
 	}
 	
-	if (new_actual_path.isEmpty() || !new_controller->load(new_actual_path, this))
+	if (new_actual_path.isEmpty() || !new_controller->loadFrom(new_actual_path, this))
 	{
 		delete new_controller;
 		settings.remove(reopen_blocker);
@@ -908,7 +908,7 @@ void MainWindow::switchActualPath(const QString& path)
 	{
 		const QString& current_path = currentPath();
 		MainWindowController* const new_controller = MainWindowController::controllerForFile(current_path);
-		if (new_controller && new_controller->load(path, this))
+		if (new_controller && new_controller->loadFrom(path, this))
 		{
 			setController(new_controller, current_path);
 			actual_path = path;

@@ -604,7 +604,7 @@ bool MapEditorController::exportTo(const QString& path, const FileFormat& format
 }
 
 
-bool MapEditorController::load(const QString& path, QWidget* dialog_parent)
+bool MapEditorController::loadFrom(const QString& path, QWidget* dialog_parent)
 {
 	if (!dialog_parent)
 		dialog_parent = window;

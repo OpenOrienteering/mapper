@@ -72,7 +72,7 @@ public:
 	 *      If nullptr, implementations should use MainWindowController::window.
 	 *  @return true if loading was sucessful, false on errors
 	 */
-	virtual bool load(const QString& path, QWidget* dialog_parent = nullptr);
+	virtual bool loadFrom(const QString& path, QWidget* dialog_parent = nullptr);
 	
 	/** Attach the controller to a main window. 
 	 *  The controller should create its user interface here.
