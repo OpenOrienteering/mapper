@@ -42,7 +42,6 @@
 #include <QPainter>
 #include <QPoint>
 #include <QPointF>
-#include <QSaveFile>
 #include <QStringList>
 #include <QTimer>
 #include <QTranslator>
@@ -628,36 +627,17 @@ bool Map::exportTo(const QString& path, const FileFormat& format, const MapView*
 		return false;
 	}
 	
-	QSaveFile file(path);
 	auto exporter = format.makeExporter(path, this, view);
-	bool success = false;
-	if (file.open(QIODevice::WriteOnly))
+	if (!exporter->doExport())
 	{
-		try
-		{
-			exporter->setDevice(&file);
-			exporter->doExport();
-		}
-		catch (std::exception &e)
-		{
-			file.cancelWriting();
-			const QString error = QString::fromLocal8Bit(e.what());
-			QMessageBox::warning(nullptr, tr("Error"), tr("Internal error while saving:\n%1").arg(error));
-			return false;
-		}
-		
-		success = file.commit();
+		QMessageBox::warning(nullptr,
+		                     tr("Error"),
+		                     tr("Cannot save file\n%1:\n%2")
+		                     .arg(path, exporter->warnings().back()) );
+		return false;
 	}
 	
-	if (!success)
-	{
-		QMessageBox::warning(
-		  nullptr,
-		  tr("Error"),
-		  tr("Cannot save file\n%1:\n%2").arg(path, file.errorString())
-		);
-	}
-	else if (!exporter->warnings().empty())
+	if (!exporter->warnings().empty())
 	{
 		MainWindow::showMessageBox(nullptr,
 		                           tr("Warning"),
@@ -665,7 +645,7 @@ bool Map::exportTo(const QString& path, const FileFormat& format, const MapView*
 		                           exporter->warnings() );
 	}
 	
-	return success;
+	return true;
 }
 
 bool Map::loadFrom(const QString& path, QWidget* dialog_parent, MapView* view, bool load_symbols_only, bool show_error_messages)
