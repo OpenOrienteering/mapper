@@ -940,6 +940,11 @@ public:
 	void applyOnMatchingObjects(const std::function<void (Object*)>& operation, const std::function<bool (const Object*)>& condition);
 	
 	/**
+	 * Applies a function on all objects which match a particular condition.
+	 */
+	void applyOnMatchingObjects(const std::function<void (const Object*)>& operation, const std::function<bool (const Object*)>& condition) const;
+	
+	/**
 	 * Applies an operation on all objects which match a particular condition.
 	 */
 	void applyOnMatchingObjects(const std::function<void (Object*, MapPart*, int)>& operation, const std::function<bool (const Object*)>& condition);

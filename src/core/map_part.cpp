@@ -320,6 +320,15 @@ void MapPart::applyOnMatchingObjects(const std::function<void (Object*)>& operat
 }
 
 
+void MapPart::applyOnMatchingObjects(const std::function<void (const Object*)>& operation, const std::function<bool (const Object*)>& condition) const
+{
+	std::for_each(objects.rbegin(), objects.rend(), [&operation, &condition](auto object) {
+		if (condition(object))
+			operation(object);
+	});
+}
+
+
 void MapPart::applyOnMatchingObjects(const std::function<void (Object*, MapPart*, int)>& operation, const std::function<bool (const Object*)>& condition)
 {
 	for (auto i = objects.size(); i > 0; )
