@@ -43,6 +43,7 @@
 #include <QSizeF>
 #include <QString>
 #include <QTemporaryDir>
+#include <QVariant>
 
 #include "global.h"
 #include "settings.h"
@@ -60,7 +61,6 @@
 #include "fileformats/file_format.h"
 #include "fileformats/file_format_registry.h"
 #include "fileformats/file_import_export.h"
-#include "fileformats/ocad8_file_format.h"
 #include "fileformats/ocd_file_export.h"
 #include "fileformats/ocd_file_format.h"
 #include "fileformats/xml_file_format.h"
@@ -293,11 +293,8 @@ void FileFormatTest::initTestCase()
 {
 	QCoreApplication::setOrganizationName(QString::fromLatin1("OpenOrienteering.org"));
 	QCoreApplication::setApplicationName(QString::fromLatin1("FileFormatTest"));
-	Settings::getInstance().setSetting(Settings::General_NewOcd8Implementation, true);
 	
 	doStaticInitializations();
-	if (!FileFormats.findFormat("OCAD78"))
-		FileFormats.registerFormat(new OCAD8FileFormat());
 	
 	const auto prefix = QString::fromLatin1("data");
 	QDir::addSearchPath(prefix, QDir(QString::fromUtf8(MAPPER_TEST_SOURCE_DIR)).absoluteFilePath(prefix));
@@ -470,28 +467,44 @@ void FileFormatTest::saveAndLoad_data()
 	QTest::addColumn<int>("format_version");
 	QTest::addColumn<QString>("map_filename");
 	
-	for (auto format : FileFormats.formats())
+	static const auto format_ids = {
+	    "XML",
+	    "OCD",
+	};
+	
+	for (auto format_id : format_ids)
 	{
-		if (format->supportsExport() && format->supportsImport())
+		auto format = FileFormats.findFormat(format_id);
+		QVERIFY(format);
+		QCOMPARE(format->fileType(), FileFormat::MapFile);
+		QVERIFY(format->supportsImport() || format->supportsExport());
+		
+		for (auto raw_path : example_files)
 		{
-			for (auto raw_path : example_files)
+			auto id = QByteArray{};
+			id.reserve(int(qstrlen(raw_path) + qstrlen(format_id) + 5u));
+			id.append(raw_path).append(" <> ").append(format_id);
+			auto path = QString::fromUtf8(raw_path);
+			QVERIFY(QFileInfo::exists(path));
+			
+			if (qstrcmp(format_id, "OCD") == 0)
 			{
-				auto format_id = format->id();
-				auto id = QByteArray{};
-				id.reserve(int(qstrlen(raw_path) + qstrlen(format_id) + 5u));
-				id.append(raw_path).append(" <> ").append(format_id);
-				auto path = QString::fromUtf8(raw_path);
-				QVERIFY(QFileInfo::exists(path));
-				QTest::newRow(id) << id << QByteArray{format_id} << int(OcdFileFormat::legacyVersion()) << path;
-				if (qstrcmp(format_id, "OCD") == 0)
+				for (auto i : { 8, 9, 10, 11, 12 })
 				{
-					for (auto i : { 8, 9, 10, 11, 12 })
-					{
-						auto ocd_id = id;
-						ocd_id.append(QByteArray::number(i));
-						QTest::newRow(ocd_id) << ocd_id << QByteArray{format_id} << i << path;
-					}
+					auto ocd_id = id;
+					ocd_id.append(QByteArray::number(i));
+					QTest::newRow(ocd_id) << ocd_id << QByteArray{format_id}+QByteArray::number(i) << i << path;
 				}
+				auto ocd_id = id;
+				ocd_id.append(" (default)");
+				QTest::newRow(ocd_id) << ocd_id << QByteArray{format_id} << int(OcdFileExport::default_version) << path;
+				ocd_id = id;
+				ocd_id.append("-legacy");
+				QTest::newRow(ocd_id) << ocd_id << QByteArray{format_id}+"-legacy" << 8 << path;
+			}
+			else
+			{
+				QTest::newRow(id) << id << QByteArray{format_id} << 0 << path;
 			}
 		}
 	}
@@ -503,8 +516,7 @@ void FileFormatTest::saveAndLoad()
 	QFETCH(int, format_version);
 	QFETCH(QString, map_filename);
 	
-	OcdFileExport::default_version = decltype(OcdFileExport::default_version)(format_version);
-	Settings::getInstance().setSetting(Settings::General_NewOcd8Implementation, format_version != OcdFileFormat::legacyVersion());
+	Settings::getInstance().setSetting(Settings::General_NewOcd8Implementation, qstrcmp(format_id, "OCD-legacy") != 0);
 	
 	// Find the file format and verify that it exists
 	const FileFormat* format = FileFormats.findFormat(format_id);
@@ -537,6 +549,14 @@ void FileFormatTest::saveAndLoad()
 	}
 	
 	QVERIFY2(new_map, "Exception while importing / exporting.");
+	
+	if (format_version)
+	{
+		if (qstrncmp(format_id, "OCD", 3) == 0)
+		{
+			QCOMPARE(new_map->property(OcdFileFormat::versionProperty()).toInt(), format_version);
+		}
+	}
 	
 	compareMaps(*new_map, *original);
 	comparePrinterConfig(new_map->printerConfig(), original->printerConfig());

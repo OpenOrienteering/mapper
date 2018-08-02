@@ -125,7 +125,7 @@ public:
 	static quint16 default_version;
 	
 	
-	OcdFileExport(const QString& path, const Map* map, const MapView* view, quint16 version = 0);
+	OcdFileExport(const QString& path, const Map* map, const MapView* view, quint16 version);
 	
 	~OcdFileExport() override;
 	
@@ -143,8 +143,6 @@ protected:
 	template< class Encoding >
 	QTextCodec* determineEncoding();
 	
-	
-	bool exportImplementationLegacy();
 	
 	template< class Format >
 	bool exportImplementation();

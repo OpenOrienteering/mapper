@@ -74,7 +74,6 @@
 #include "core/symbols/text_symbol.h"
 #include "fileformats/file_format.h"
 #include "fileformats/file_import_export.h"
-#include "fileformats/ocad8_file_format_p.h"
 #include "fileformats/ocd_file_format.h"
 #include "fileformats/ocd_types.h"
 #include "fileformats/ocd_types_v8.h"
@@ -900,9 +899,6 @@ bool OcdFileExport::exportImplementation()
 {
 	switch (ocd_version)
 	{
-	case OcdFileFormat::legacyVersion():
-		return exportImplementationLegacy();
-		
 	case 8:
 		return exportImplementation<Ocd::FormatV8>();
 		
@@ -924,19 +920,6 @@ bool OcdFileExport::exportImplementation()
 	}
 }
 
-
-
-bool OcdFileExport::exportImplementationLegacy()
-{
-	OCAD8FileExport delegate { path, map, view };
-	delegate.setDevice(device());
-	auto success = delegate.doExport();
-	for (auto&& w : delegate.warnings())
-	{
-		addWarning(w);
-	}
-	return success;
-}
 
 
 namespace {

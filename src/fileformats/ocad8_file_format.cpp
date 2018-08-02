@@ -47,6 +47,7 @@
 #include "core/symbols/text_symbol.h"
 #include "fileformats/xml_file_format.h"
 #include "fileformats/file_import_export.h"
+#include "fileformats/ocd_file_format.h"
 #include "templates/template.h"
 #include "templates/template_image.h"
 #include "templates/template_map.h"
@@ -136,6 +137,8 @@ bool OCAD8FileImport::importImplementation()
     //qDebug() << "file version is" << file->header->major << ", type is"
     //         << ((file->header->ftype == 2) ? "normal" : "other");
     //qDebug() << "map scale is" << file->setup->scale;
+
+	map->setProperty(OcdFileFormat::versionProperty(), file->header->major);
 
 	// Scale and georeferencing parameters
 	Georeferencing georef;
