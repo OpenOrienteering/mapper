@@ -870,7 +870,7 @@ void SymbolRenderWidget::copySymbols()
 	
 	// Save map to memory
 	QBuffer buffer;
-	if (!copy_map->exportToIODevice(&buffer))
+	if (!copy_map->exportToIODevice(buffer))
 	{
 		delete copy_map;
 		QMessageBox::warning(nullptr, tr("Error"), tr("An internal error occurred, sorry!"));
@@ -899,7 +899,7 @@ void SymbolRenderWidget::pasteSymbols()
 	
 	// Create map from buffer
 	Map* paste_map = new Map();
-	if (!paste_map->importFromIODevice(&buffer))
+	if (!paste_map->importFromIODevice(buffer))
 	{
 		QMessageBox::warning(nullptr, tr("Error"), tr("An internal error occurred, sorry!"));
 		return;

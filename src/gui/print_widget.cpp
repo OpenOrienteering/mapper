@@ -51,6 +51,7 @@
 #include <QMessageBox>
 #include <QPagedPaintDevice>
 #include <QPainter>
+#include <QPoint>
 #include <QPointF>
 #include <QPrinterInfo>
 #include <QPrintDialog>
@@ -70,6 +71,7 @@
 #include <QStyle>
 #include <QStyleOption>
 #include <QToolButton>
+#include <QTransform>
 #include <QVBoxLayout>
 #include <QVariant>
 #include <QXmlStreamReader>
@@ -79,6 +81,7 @@
 
 #include "core/georeferencing.h"
 #include "core/map.h"
+#include "core/map_coord.h"
 #include "core/map_printer.h"
 #include "core/map_view.h"
 #include "gui/file_dialog.h"
@@ -230,6 +233,12 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	
 	layout->addRow(tr("Mode:"), mode_widget);
 	
+	color_mode_combo = new QComboBox();
+	color_mode_combo->setEditable(false);
+	color_mode_combo->addItem(tr("Default"), QVariant());
+	color_mode_combo->addItem(tr("Device CMYK"), QVariant(true));
+	layout->addRow(tr("Color mode:"), color_mode_combo);
+	
 	dpi_combo = new QComboBox();
 	dpi_combo->setEditable(true);
 	dpi_combo->setValidator(new QRegExpValidator(QRegExp(QLatin1String("^[1-9]\\d{0,4}$|^[1-9]\\d{0,4} ")+tr("dpi")+QLatin1Char('$')), dpi_combo));
@@ -270,12 +279,6 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	world_file_check = new QCheckBox(tr("Save world file"));
 	layout->addRow(world_file_check);
 	world_file_check->hide();
-	
-	color_mode_combo = new QComboBox();
-	color_mode_combo->setEditable(false);
-	color_mode_combo->addItem(tr("Default"), QVariant());
-	color_mode_combo->addItem(tr("Device CMYK (experimental)"), QVariant(true));	
-	layout->addRow(tr("Color mode:"), color_mode_combo);
 	
 	scrolling_content = new QWidget();
 	scrolling_content->setLayout(layout);
@@ -604,11 +607,6 @@ void PrintWidget::setTarget(const QPrinterInfo* target)
 	if (printer_properties_button)
 		printer_properties_button->setEnabled(is_printer);
 
-	world_file_check->setVisible(!is_printer);
-	// If MapCoord (0,0) maps to projected (0,0), then there is probably
-	// no point in writing a world file.
-	world_file_check->setChecked(!map->getGeoreferencing().toProjectedCoords(MapCoordF{}).isNull());
-	
 	bool is_image_target = target == MapPrinter::imageTarget();
 	vector_mode_button->setEnabled(!is_image_target);
 	separations_mode_button->setEnabled(!is_image_target && map->hasSpotColors());
@@ -617,6 +615,11 @@ void PrintWidget::setTarget(const QPrinterInfo* target)
 		raster_mode_button->setChecked(true);
 		printModeChanged(raster_mode_button);
 	}
+	
+	world_file_check->setVisible(is_image_target);
+	// If MapCoord (0,0) maps to projected (0,0), then there is probably
+	// no point in writing a world file.
+	world_file_check->setChecked(!map->getGeoreferencing().toProjectedCoords(MapCoordF{}).isNull());
 	
 	updateColorMode();
 }

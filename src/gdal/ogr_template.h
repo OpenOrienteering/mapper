@@ -29,7 +29,6 @@
 #include "templates/template_map.h"
 
 class QByteArray;
-class QFile;
 class QWidget;
 class QXmlStreamReader;
 class QXmlStreamWriter;
@@ -58,7 +57,7 @@ public:
 	
 	const char* getTemplateType() const override;
 	
-	std::unique_ptr<Georeferencing> makeOrthographicGeoreferencing(QFile& file);
+	std::unique_ptr<Georeferencing> makeOrthographicGeoreferencing(const QString& path);
 	
 	bool preLoadConfiguration(QWidget* dialog_parent) override;
 	

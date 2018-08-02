@@ -78,7 +78,7 @@ Symbol::Symbol(const Symbol& proto)
 : icon { proto.icon }
 , name { proto.name }
 , description { proto.description }
-, number { proto.number }
+, number ( proto.number )  // Cannot use {} with Android gcc 4.9
 , type { proto.type }
 , is_helper_symbol { proto.is_helper_symbol }
 , is_hidden { proto.is_hidden }
@@ -846,8 +846,8 @@ bool Symbol::lessByColor::operator() (const Symbol* s1, const Symbol* s2) const
 	if (rgb_c1 == rgb_c2)
 		return false;
 	
-	const auto last = rend(colors);
-	auto first = std::find_if(rbegin(colors), last, [rgb_c2](const auto rgb) {
+	const auto last = colors.rend();
+	auto first = std::find_if(colors.rbegin(), last, [rgb_c2](const auto rgb) {
 		return rgb == rgb_c2;
 	});
 	auto second = std::find_if(first, last, [rgb_c1](const auto rgb) {

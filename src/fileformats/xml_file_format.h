@@ -23,9 +23,9 @@
 
 #include <memory>
 
-#include "fileformats/file_format.h"
+#include <QString>
 
-class QIODevice;
+#include "fileformats/file_format.h"
 
 namespace OpenOrienteering {
 
@@ -52,11 +52,11 @@ public:
 	
 	/** @brief Creates an importer for XML files.
 	 */
-	std::unique_ptr<Importer> makeImporter(QIODevice* stream, Map* map, MapView* view) const override;
+	std::unique_ptr<Importer> makeImporter(const QString& path, Map* map, MapView* view) const override;
 	
 	/** @brief Creates an exporter for XML files.
 	 */
-	std::unique_ptr<Exporter> makeExporter(QIODevice* stream, Map* map, MapView* view) const override;
+	std::unique_ptr<Exporter> makeExporter(const QString& path, const Map* map, const MapView* view) const override;
 	
 	
 	/** @brief The minimum XML file format version supported by this implementation.

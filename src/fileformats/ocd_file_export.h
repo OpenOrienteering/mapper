@@ -40,8 +40,6 @@
 #include "fileformats/file_import_export.h"
 
 
-class QIODevice;
-
 template< class Format > class OcdFile;
 
 namespace OpenOrienteering {
@@ -127,17 +125,18 @@ public:
 	static quint16 default_version;
 	
 	
-	OcdFileExport(QIODevice* stream, Map *map, MapView *view, quint16 version = 0);
+	OcdFileExport(const QString& path, const Map* map, const MapView* view, quint16 version = 0);
 	
 	~OcdFileExport() override;
 	
+protected:
 	/**
 	 * Exports an OCD file.
 	 * 
 	 * For now, this simply uses the OCAD8FileExport class unless the file name
 	 * ends with "test-vVERSION.ocd".
 	 */
-	void doExport() override;
+	bool exportImplementation() override;
 	
 protected:
 	
@@ -145,10 +144,10 @@ protected:
 	QTextCodec* determineEncoding();
 	
 	
-	void exportImplementationLegacy();
+	bool exportImplementationLegacy();
 	
 	template< class Format >
-	void exportImplementation();
+	bool exportImplementation();
 	
 	
 	/**

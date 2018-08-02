@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -36,6 +36,7 @@
 
 class QByteArray;
 class QColor;
+class QDir;
 class QPainter;
 class QRectF;
 class QTransform;
@@ -174,11 +175,14 @@ public:
 	/**
 	 * Saves template parameters.
 	 * 
-	 * This method saves as common properties such as filename, transformation,
+	 * This method saves common properties such as filename, transformation,
 	 * adjustment, etc., and it calls saveTypeSpecificTemplateConfiguration for
 	 * saving type-specific parameters (e.g. filtering mode for images).
+	 * 
+	 * If a target directory is given via `map_dir`, the relative template
+	 * path is determined for this directory.
 	 */
-	void saveTemplateConfiguration(QXmlStreamWriter& xml, bool open);
+	void saveTemplateConfiguration(QXmlStreamWriter& xml, bool open, const QDir* map_dir = nullptr) const;
 	
 	/**
 	 * Creates and returns a template from the configuration in the XML stream.
@@ -522,12 +526,15 @@ public:
 	static std::unique_ptr<Template> templateForFile(const QString& path, Map* map);
 	
 	/**
-	 * The function which is used to save paths of template files.
+	 * A flag which disables the writing of absolute paths for template files.
 	 * 
 	 * By default, class Template saves absolute paths. This behavior can be
-	 * changed by setting this variable to &Template::getTemplateRelativePath.
+	 * changed by setting this flag to true. This allows to hide local (or
+	 * private) directory names.
+	 * 
+	 * This flag defaults to false.
 	 */
-	static const QString& (Template::* pathForSaving)() const;
+	static bool suppressAbsolutePaths;
 	
 	
 signals:

@@ -201,7 +201,7 @@ private slots:
 		QFETCH(QString, map_filename);
 		
 		Map map;
-		QVERIFY(map.loadFrom(map_filename, nullptr, nullptr, false, false));
+		QVERIFY(map.loadFrom(map_filename));
 		
 		const auto extent = map.calculateExtent().toAlignedRect().adjusted(-1, -1, +1, +1);
 		constexpr auto pixel_per_mm = 50;
@@ -252,7 +252,7 @@ private slots:
 	{
 		QFETCH(QString, map_filename);
 		Map map {};
-		QVERIFY(map.loadFrom(map_filename, nullptr, nullptr, false, false));
+		QVERIFY(map.loadFrom(map_filename));
 		
 		for (int i = 0; i < map.getNumSymbols(); ++i)
 		{

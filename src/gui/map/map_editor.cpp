@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -110,6 +110,7 @@
 #include "core/symbols/symbol_icon_decorator.h"
 #include "fileformats/file_format.h"
 #include "fileformats/file_format_registry.h"
+#include "fileformats/file_import_export.h"
 #include "gui/configure_grid_dialog.h"
 #include "gui/file_dialog.h"
 #include "gui/georeferencing_dialog.h"
@@ -542,35 +543,69 @@ void MapEditorController::deletePopupWidget(QWidget* child_widget)
 	}
 }
 
-bool MapEditorController::save(const QString& path)
-{
-	if (map)
-	{
-		if (editing_in_progress)
-		{
-			QMessageBox::warning(window, tr("Editing in progress"), tr("The map is currently being edited. Please finish the edit operation before saving."));
-			return false;
-		}
-		bool success = map->saveTo(path, main_view);
-		if (success)
-			window->showStatusBarMessage(tr("Map saved"), 1000);
-		return success;
-	}
-	else
-		return false;
-}
 
-bool MapEditorController::exportTo(const QString& path, const FileFormat* format)
+bool MapEditorController::saveTo(const QString& path, const FileFormat& format)
 {
-	if (map && !editing_in_progress)
+	if (editing_in_progress)
 	{
-		return map->exportTo(path, main_view, format);
+		QMessageBox::warning(window,
+		                     tr("Editing in progress"),
+		                     tr("The map is currently being edited. "
+		                        "Please finish the edit operation before saving.") );
+		return false;
 	}
 	
-	return false;
+	if (!exportTo(path, format))
+		return false;
+	
+	map->setHasUnsavedChanges(false);
+	map->undoManager().setClean();
+	window->showStatusBarMessage(tr("Map saved"), 1000);
+	return true;
 }
 
-bool MapEditorController::load(const QString& path, QWidget* dialog_parent)
+
+bool MapEditorController::exportTo(const QString& path, const FileFormat& format)
+{
+	if (!map || editing_in_progress)
+		return false;
+	
+	if (!format.supportsExport())
+	{
+		QMessageBox::warning(nullptr,
+		                     tr("Error"),
+		                     tr("Cannot export the map as\n"
+		                        "\"%1\"\n"
+		                        "because saving as %2 (.%3) is not supported.").
+		                     arg(path,
+		                         format.description(),
+		                         format.fileExtensions().join(QLatin1String(", ")) ) );
+		return false;
+	}
+	
+	auto exporter = format.makeExporter(path, map, main_view);
+	if (!exporter->doExport())
+	{
+		QMessageBox::warning(nullptr,
+		                     tr("Error"),
+		                     tr("Cannot save file\n%1:\n%2")
+		                     .arg(path, exporter->warnings().back()) );
+		return false;
+	}
+	
+	if (!exporter->warnings().empty())
+	{
+		MainWindow::showMessageBox(nullptr,
+		                           tr("Warning"),
+		                           tr("The map export generated warnings."),
+		                           exporter->warnings() );
+	}
+	
+	return true;
+}
+
+
+bool MapEditorController::loadFrom(const QString& path, const FileFormat& format, QWidget* dialog_parent)
 {
 	if (!dialog_parent)
 		dialog_parent = window;
@@ -581,20 +616,25 @@ bool MapEditorController::load(const QString& path, QWidget* dialog_parent)
 		main_view = new MapView(this, map);
 	}
 	
-	bool success = map->loadFrom(path, dialog_parent, main_view);
-	if (success)
-	{
-		setMapAndView(map, main_view);
-	}
-	else
+	auto importer = format.makeImporter(path, map, main_view);
+	if (!importer->doImport())
 	{
 		delete map;
 		map = nullptr;
 		main_view = nullptr;
+		
+		Q_ASSERT(!importer->warnings().empty());
+		QMessageBox::warning(window, tr("Error"), importer->warnings().back());
+		return false;
 	}
 	
-	return success;
+	setMapAndView(map, main_view);
+	map->setHasUnsavedChanges(false);
+	if (!importer->warnings().empty())
+		MainWindow::showMessageBox(window, tr("Warning"), tr("The map import generated warnings."), importer->warnings());
+	return true;
 }
+
 
 void MapEditorController::attach(MainWindow* window)
 {
@@ -750,6 +790,7 @@ QAction* MapEditorController::newAction(const char* id, const QString &tr_text, 
 	if (whats_this_link) action->setWhatsThis(Util::makeWhatThis(whats_this_link));
 	if (receiver) QObject::connect(action, SIGNAL(triggered()), receiver, slot);
 	actionsById[id] = action;
+	action->setMenuRole(QAction::NoRole);
 	return action;
 }
 
@@ -858,8 +899,11 @@ void MapEditorController::createActions()
 	undo_act = newAction("undo", tr("Undo"), this, SLOT(undo()), "undo.png", tr("Undo the last step"), "edit_menu.html");
 	redo_act = newAction("redo", tr("Redo"), this, SLOT(redo()), "redo.png", tr("Redo the last step"), "edit_menu.html");
 	cut_act = newAction("cut", tr("Cu&t"), this, SLOT(cut()), "cut.png", QString{}, "edit_menu.html");
+	cut_act->setMenuRole(QAction::TextHeuristicRole);
 	copy_act = newAction("copy", tr("C&opy"), this, SLOT(copy()), "copy.png", QString{}, "edit_menu.html");
+	copy_act->setMenuRole(QAction::TextHeuristicRole);
 	paste_act = newAction("paste", tr("&Paste"), this, SLOT(paste()), "paste", QString{}, "edit_menu.html");
+	paste_act->setMenuRole(QAction::TextHeuristicRole);
 	delete_act = newAction("delete", tr("Delete"), this, SLOT(deleteClicked()), "delete.png", QString{}, "toolbars.html#delete");
 	select_all_act = newAction("select-all", tr("Select all"), this, SLOT(selectAll()), nullptr, QString{}, "edit_menu.html");
 	select_nothing_act = newAction("select-nothing", tr("Select nothing"), this, SLOT(selectNothing()), nullptr, QString{}, "edit_menu.html");
@@ -926,6 +970,7 @@ void MapEditorController::createActions()
 	cut_hole_circle_act = newToolAction("cutholecircle", tr("Cut round hole"), this, SLOT(cutHoleCircleClicked()), "tool-cut-hole.png", QString{}, "toolbars.html#cut_hole");
 	cut_hole_rectangle_act = newToolAction("cutholerectangle", tr("Cut rectangular hole"), this, SLOT(cutHoleRectangleClicked()), "tool-cut-hole.png", QString{}, "toolbars.html#cut_hole");
 	cut_hole_menu = new QMenu(tr("Cut hole"));
+	cut_hole_menu->menuAction()->setMenuRole(QAction::NoRole);
 	cut_hole_menu->setIcon(QIcon(QString::fromLatin1(":/images/tool-cut-hole.png")));
 	cut_hole_menu->addAction(cut_hole_act);
 	cut_hole_menu->addAction(cut_hole_circle_act);
@@ -947,11 +992,13 @@ void MapEditorController::createActions()
 	distribute_points_act = newAction("distributepoints", tr("Distribute points along path"), this, SLOT(distributePointsClicked()), "tool-distribute-points.png", QString{}, "toolbars.html#distribute_points"); // TODO: write documentation
 	
 	paint_on_template_act = new QAction(QIcon(QString::fromLatin1(":/images/pencil.png")), tr("Paint on template"), this);
+	paint_on_template_act->setMenuRole(QAction::NoRole);
 	paint_on_template_act->setCheckable(true);
 	paint_on_template_act->setWhatsThis(Util::makeWhatThis("toolbars.html#draw_on_template"));
 	connect(paint_on_template_act, &QAction::triggered, this, &MapEditorController::paintOnTemplateClicked);
 
 	paint_on_template_settings_act = new QAction(QIcon(QString::fromLatin1(":/images/paint-on-template-settings.png")), tr("Paint on template settings"), this);
+	paint_on_template_settings_act->setMenuRole(QAction::NoRole);
 	paint_on_template_settings_act->setWhatsThis(Util::makeWhatThis("toolbars.html#draw_on_template"));
 	connect(paint_on_template_settings_act, &QAction::triggered, this, &MapEditorController::paintOnTemplateSelectClicked);
 
@@ -1022,6 +1069,7 @@ void MapEditorController::createMenuAndToolbars()
 	file_menu->insertAction(insertion_act, import_act);
 #ifdef QT_PRINTSUPPORT_LIB
 	QMenu* export_menu = new QMenu(tr("&Export as..."), file_menu);
+	export_menu->menuAction()->setMenuRole(QAction::NoRole);
 	export_menu->addAction(export_image_act);
 	export_menu->addAction(export_pdf_act);
 	file_menu->insertMenu(insertion_act, export_menu);
@@ -1065,6 +1113,7 @@ void MapEditorController::createMenuAndToolbars()
 	view_menu->addAction(hide_all_templates_act);
 	view_menu->addSeparator();
 	QMenu* coordinates_menu = new QMenu(tr("Display coordinates as..."), view_menu);
+	coordinates_menu->menuAction()->setMenuRole(QAction::NoRole);
 	coordinates_menu->addAction(map_coordinates_act);
 	coordinates_menu->addAction(projected_coordinates_act);
 	coordinates_menu->addAction(geographic_coordinates_act);
@@ -1673,7 +1722,7 @@ void MapEditorController::copy()
 	
 	// Save map to memory
 	QBuffer buffer;
-	if (!copy_map.exportToIODevice(&buffer))
+	if (!copy_map.exportToIODevice(buffer))
 	{
 		QMessageBox::warning(nullptr, tr("Error"), tr("An internal error occurred, sorry!"));
 		return;
@@ -1706,7 +1755,7 @@ void MapEditorController::paste()
 	
 	// Create map from buffer
 	Map paste_map;
-	if (!paste_map.importFromIODevice(&buffer))
+	if (!paste_map.importFromIODevice(buffer))
 	{
 		QMessageBox::warning(nullptr, tr("Error"), tr("An internal error occurred, sorry!"));
 		return;
@@ -3514,12 +3563,14 @@ void MapEditorController::updateMapPartsUI()
 	if (!mappart_merge_menu)
 	{
 		mappart_merge_menu = new QMenu();
+		mappart_merge_menu->menuAction()->setMenuRole(QAction::NoRole);
 		mappart_merge_menu->setTitle(tr("Merge this part with"));
 	}
 	
 	if (!mappart_move_menu)
 	{
 		mappart_move_menu = new QMenu();
+		mappart_move_menu->menuAction()->setMenuRole(QAction::NoRole);
 		mappart_move_menu->setTitle(tr("Move selected objects to"));
 	}
 	
@@ -3891,11 +3942,11 @@ void MapEditorController::importClicked()
 	settings.setValue(QString::fromLatin1("importFileDirectory"), QFileInfo(filename).canonicalPath());
 	
 	bool success = false;
-	auto map_format = FileFormats.findFormatForFilename(filename);
+	auto map_format = FileFormats.findFormatForFilename(filename, &FileFormat::supportsImport);
 	if (map_format)
 	{
 		// Map format recognized by filename extension
-		importMapFile(filename, true); // Error reporting in Map::loadFrom()
+		importMapFile(filename, true); // Error reporting in importMapFile()
 		return;
 	}
 	else if (filename.endsWith(QLatin1String(".dxf"), Qt::CaseInsensitive)
@@ -3936,8 +3987,23 @@ bool MapEditorController::importMapFile(const QString& filename, bool show_error
 	Map imported_map;
 	imported_map.setScaleDenominator(map->getScaleDenominator()); // for non-scaled geodata
 	
-	if (!imported_map.loadFrom(filename, window, nullptr, false, show_errors))
+	auto importer = FileFormats.makeImporter(filename, imported_map, nullptr);
+	if (!importer)
+	{
+		if (show_errors)
+			;  /// \todo error message
 		return false;
+	}
+	
+	if (!importer->doImport())
+	{
+		if (show_errors)
+			QMessageBox::warning(window, tr("Error"), importer->warnings().back());
+		return false;
+	}
+	
+	if (show_errors && !importer->warnings().empty())
+	    MainWindow::showMessageBox(window, tr("Warning"), tr("The map import generated warnings."), importer->warnings());
 	
 	if (imported_map.symbolSetId() != map->symbolSetId())
 	{
@@ -4052,6 +4118,7 @@ MapEditorToolAction::MapEditorToolAction(const QIcon& icon, const QString& text,
  : QAction(icon, text, parent)
 {
 	setCheckable(true);
+	setMenuRole(QAction::NoRole);
 	connect(this, &QAction::triggered, this, &MapEditorToolAction::triggeredImpl);
 }
 

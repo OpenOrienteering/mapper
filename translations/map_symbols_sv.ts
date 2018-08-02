@@ -723,23 +723,23 @@ To be able to show obvious height differences within a boulder field, it is perm
         <message>
             <source>Boulder field, single triangle</source>
             <comment>Name of symbol 208.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Blockterräng, enskild triangel</translation>
+    </message>
         <message>
             <source>An area which is covered with so many blocks of stone that they cannot be marked individually is shown with randomly orientated solid triangles with sides of ratio 8:6:5. A minimum of two triangles should be used. The going is indicated by the density of the triangles. To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
             <comment>Description of symbol 208.1</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Ett område täckt av så många stenblock att de inte kan redovisas individuellt, redovisas med slumpmässigt utplacerade fyllda roterade trianglar, sidförhållande 8:6:5. Minst 2 trianglar ska användas. The going is indicated by the density of the triangles. För att visa tydliga höjdskillnader mellan block i blockterräng, är det tillåtet att förstora somliga trianglar till 120 %.</translation>
         </message>
         <message>
             <source>Boulder field, single triangle, enlarged</source>
             <comment>Name of symbol 208.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Blockterräng, enskild triangel, förstorad</translation>
+    </message>
         <message>
             <source>To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
             <comment>Description of symbol 208.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>För att visa tydliga höjdskillnader mellan block i blockterräng, är det tillåtet att förstora somliga trianglar till 120 %.</translation>
+    </message>
         <message>
             <source>Dense boulder field</source>
             <comment>Name of symbol 209</comment>
@@ -2751,7 +2751,7 @@ sidan av stödkurvan.</translation>
         <message>
             <source>An area which is covered with so many blocks of stone that they cannot be marked individually is shown with randomly orientated solid triangles with sides of ratio 8:6:5. A minimum of two triangles should be used. The going is indicated by the density of the triangles. To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
             <comment>Description of symbol 208</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Ett område täckt av så många stenblock att de inte kan redovisas individuellt, redovisas med slumpmässigt utplacerade fyllda roterade trianglar, sidförhållande 8:6:5. Minst 2 trianglar ska användas. The going is indicated by the density of the triangles. För att visa tydliga höjdskillnader mellan block i blockterräng, är det tillåtet att förstora somliga trianglar till 120 %.</translation>
         </message>
         <message>
             <source>Boulder field, large</source>
@@ -2761,7 +2761,7 @@ sidan av stödkurvan.</translation>
         <message>
             <source>To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
             <comment>Description of symbol 208.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>För att visa tydliga höjdskillnader mellan block i blockterräng, är det tillåtet att förstora somliga trianglar till 120 %.</translation>
         </message>
         <message>
             <source>Boulder cluster</source>
@@ -7265,7 +7265,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>An area which is covered with so many blocks of stone that they cannot be marked individually is shown with randomly orientated solid triangles with sides of ratio 8:6:5. A minimum of two triangles should be used. The going is indicated by the density of the triangles. To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
             <comment>Description of symbol 208</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Ett område täckt av så många stenblock att de inte kan redovisas individuellt, redovisas med slumpmässigt utplacerade fyllda roterade trianglar, sidförhållande 8:6:5. Minst 2 trianglar ska användas. The going is indicated by the density of the triangles. För att visa tydliga höjdskillnader mellan block i blockterräng, är det tillåtet att förstora somliga trianglar till 120 %.</translation>
         </message>
         <message>
             <source>Boulder field, large</source>
@@ -7275,7 +7275,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
             <comment>Description of symbol 208.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>För att visa tydliga höjdskillnader mellan block i blockterräng, är det tillåtet att förstora somliga trianglar till 120 %.</translation>
         </message>
         <message>
             <source>Boulder cluster</source>
@@ -8131,7 +8131,7 @@ sidan av stödkurvan.</translation>
         <message>
             <source>An area which is covered with so many blocks of stone that they cannot be marked individually is shown with randomly orientated solid triangles with sides of ratio 8:6:5. A minimum of two triangles should be used. The going is indicated by the density of the triangles. To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
             <comment>Description of symbol 208</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Ett område täckt av så många stenblock att de inte kan redovisas individuellt, redovisas med slumpmässigt utplacerade fyllda roterade trianglar, sidförhållande 8:6:5. Minst 2 trianglar ska användas. The going is indicated by the density of the triangles. För att visa tydliga höjdskillnader mellan block i blockterräng, är det tillåtet att förstora somliga trianglar till 120 %.</translation>
         </message>
         <message>
             <source>Boulder field, large</source>
@@ -8141,7 +8141,7 @@ sidan av stödkurvan.</translation>
         <message>
             <source>To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
             <comment>Description of symbol 208.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>För att visa tydliga höjdskillnader mellan block i blockterräng, är det tillåtet att förstora somliga trianglar till 120 %.</translation>
         </message>
         <message>
             <source>Boulder cluster</source>

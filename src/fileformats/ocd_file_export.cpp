@@ -31,18 +31,18 @@
 #include <type_traits>
 #include <vector>
 
+#include <Qt>
 #include <QtGlobal>
 #include <QtMath>
 #include <QColor>
 #include <QCoreApplication>
-#include <QFileDevice>
 #include <QFileInfo>
+#include <QFlags>
 #include <QFontMetricsF>
 #include <QIODevice>
 #include <QImage>
 #include <QLatin1Char>
 #include <QLatin1String>
-#include <QObject>
 #include <QPoint>
 #include <QPointF>
 #include <QRectF>
@@ -841,28 +841,25 @@ quint16 OcdFileExport::default_version = 9;
 
 
 
-OcdFileExport::OcdFileExport(QIODevice* stream, Map* map, MapView* view, quint16 version)
-: Exporter { stream, map, view }
+OcdFileExport::OcdFileExport(const QString& path, const Map* map, const MapView* view, quint16 version)
+: Exporter { path, map, view }
 , ocd_version { version }
 {
+#ifdef MAPPER_DEVELOPMENT_BUILD
 	if (!ocd_version)
 	{
-		/// \todo Remove format selection by file name
-		if (auto file = qobject_cast<QFileDevice*>(stream))
-		{
-			auto name = file->fileName().toUtf8();
-			if (name.endsWith("test-v8.ocd"))
-				ocd_version = 8;
-			else if (name.endsWith("test-v9.ocd"))
-				ocd_version = 9;
-			else if (name.endsWith("test-v10.ocd"))
-				ocd_version = 10;
-			else if (name.endsWith("test-v11.ocd"))
-				ocd_version = 11;
-			else if (name.endsWith("test-v12.ocd"))
-				ocd_version = 12;
-		}
+		if (path.endsWith(QLatin1String("test-v8.ocd")))
+			ocd_version = 8;
+		else if (path.endsWith(QLatin1String("test-v9.ocd")))
+			ocd_version = 9;
+		else if (path.endsWith(QLatin1String("test-v10.ocd")))
+			ocd_version = 10;
+		else if (path.endsWith(QLatin1String("test-v11.ocd")))
+			ocd_version = 11;
+		else if (path.endsWith(QLatin1String("test-v12.ocd")))
+			ocd_version = 12;
 	}
+#endif
 	
 	if (!ocd_version)
 	    ocd_version = decltype(ocd_version)(map->property(OcdFileFormat::versionProperty()).toInt());
@@ -899,30 +896,25 @@ QTextCodec* OcdFileExport::determineEncoding<Ocd::Custom8BitEncoding>()
 
 
 
-void OcdFileExport::doExport()
+bool OcdFileExport::exportImplementation()
 {
 	switch (ocd_version)
 	{
 	case OcdFileFormat::legacyVersion():
-		exportImplementationLegacy();
-		break;
+		return exportImplementationLegacy();
 		
 	case 8:
-		exportImplementation<Ocd::FormatV8>();
-		break;
+		return exportImplementation<Ocd::FormatV8>();
 		
 	case 9:
 	case 10:
-		exportImplementation<Ocd::FormatV9>();
-		break;
+		return exportImplementation<Ocd::FormatV9>();
 		
 	case 11:
-		exportImplementation<Ocd::FormatV11>();
-		break;
+		return exportImplementation<Ocd::FormatV11>();
 		
 	case 12:
-		exportImplementation<Ocd::FormatV12>();
-		break;
+		return exportImplementation<Ocd::FormatV12>();
 		
 	default:
 		throw FileFormatException(
@@ -934,14 +926,16 @@ void OcdFileExport::doExport()
 
 
 
-void OcdFileExport::exportImplementationLegacy()
+bool OcdFileExport::exportImplementationLegacy()
 {
-	OCAD8FileExport delegate { stream, map, view };
-	delegate.doExport();
+	OCAD8FileExport delegate { path, map, view };
+	delegate.setDevice(device());
+	auto success = delegate.doExport();
 	for (auto&& w : delegate.warnings())
 	{
 		addWarning(w);
 	}
+	return success;
 }
 
 
@@ -974,7 +968,7 @@ void setupFileHeaderGeneric(quint16 actual_version, Ocd::FileHeaderGeneric& head
 
 
 template<class Format>
-void OcdFileExport::exportImplementation()
+bool OcdFileExport::exportImplementation()
 {
 	addWarning(QLatin1String("OcdFileExport: WORK IN PROGRESS, FILE INCOMPLETE"));
 	
@@ -1005,7 +999,8 @@ void OcdFileExport::exportImplementation()
 	exportTemplates(file);
 	exportExtras(file);
 	
-	stream->write(file.constByteArray());
+	auto& data = file.constByteArray();
+	return device()->write(data) == data.size();
 }
 
 
@@ -1035,7 +1030,7 @@ MapCoord OcdFileExport::calculateAreaOffset()
 			{
 				addWarning(tr("Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m)."));
 				std::size_t count = 0;
-				auto calculate_average_center = [&area_offset, &count](Object* object) {
+				auto calculate_average_center = [&area_offset, &count](const Object* object) {
 					area_offset *= qreal(count)/qreal(count+1);
 					++count;
 					area_offset += object->getExtent().center() / count;

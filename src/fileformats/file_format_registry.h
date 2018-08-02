@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Pete Curtis
- *    Copyright 2013, 2016 Kai Pastor
+ *    Copyright 2013, 2016-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,14 +21,15 @@
 #ifndef OPENORIENTEERING_FILE_FORMAT_REGISTRY_H
 #define OPENORIENTEERING_FILE_FORMAT_REGISTRY_H
 
+#include <functional>
 #include <memory>
 #include <vector>
 
 #include <QString>
 
-namespace OpenOrienteering {
+#include "fileformats/file_format.h"
 
-class FileFormat;
+namespace OpenOrienteering {
 
 
 /** Provides a registry for file formats, and takes ownership of the supported format objects.
@@ -52,6 +53,13 @@ public:
 	 */
 	inline const std::vector<FileFormat *> &formats() const { return fmts; }
 	
+	
+	/** Finds a file format with the given internal ID, or returns nullptr if no format
+	 *  is found.
+	 */
+	const FileFormat* findFormat(std::function<bool(const FileFormat*)> predicate) const;
+	
+	
 	/** Finds a file format with the given internal ID, or returns nullptr if no format
 	 *  is found.
 	 */
@@ -63,13 +71,22 @@ public:
 	 * Only the file format's filter string before the closing ')' is taken into
 	 * account for matching, i.e. the given parameter 'filter' may contain
 	 * additional extensions following the original ones.
+	 * 
+	 * The predicate is intented to select either import or export formats.
 	 */
-	const FileFormat *findFormatByFilter(const QString& filter) const;
+	const FileFormat *findFormatByFilter(const QString& filter, bool (FileFormat::*predicate)() const) const;
 	
 	/** Finds a file format whose file extension matches the file extension of the given
 	 *  path, or returns nullptr if no matching format is found.
+	 * 
+	 * The predicate is intented to select either import or export formats.
 	 */
-	const FileFormat *findFormatForFilename(const QString& filename) const;
+	const FileFormat *findFormatForFilename(const QString& filename, bool (FileFormat::*predicate)() const) const;
+	
+	/** Finds an import file format by looking at the existing data.
+	 */
+	const FileFormat* findFormatForData(const QString& path, FileFormat::FileTypes types) const;
+	
 	
 	/** Returns the ID of default file format for this registry. This will automatically
 	 *  be set to the first registered format.
@@ -86,6 +103,16 @@ public:
 	 * Returns a non-const pointer to the file format and transfers ownership to the caller.
 	 */
 	std::unique_ptr<FileFormat> unregisterFormat(const FileFormat *format);
+	
+	
+	/** Creates an importer for the given path, if possible.
+	 */
+	std::unique_ptr<Importer> makeImporter(const QString& path, Map& map, MapView* view = nullptr);
+	
+	/** Creates an exporter for the given path, if possible.
+	 */
+	std::unique_ptr<Exporter> makeExporter(const QString& path, const Map* map, const MapView* view);
+	
 	
 private:
 	std::vector<FileFormat *> fmts;

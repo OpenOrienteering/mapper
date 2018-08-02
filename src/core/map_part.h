@@ -239,6 +239,12 @@ public:
 	 * @copybrief   Map::applyOnAllObjects()
 	 * @copydetails Map::applyOnAllObjects()
 	 */
+	void applyOnAllObjects(const std::function<void (const Object*)>& operation) const;
+	
+	/**
+	 * @copybrief   Map::applyOnAllObjects()
+	 * @copydetails Map::applyOnAllObjects()
+	 */
 	void applyOnAllObjects(const std::function<void (Object*, MapPart*, int)>& operation);
 	
 	

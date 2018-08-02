@@ -25,7 +25,7 @@
 
 
 /**
- * @test Tests concerning the file formats, import and export.
+ * @test Tests concerning the file formats, registry, import and export.
  * 
  */
 class FileFormatTest : public QObject
@@ -47,9 +47,10 @@ private slots:
 	void understandsTest_data();
 	
 	/**
-	 * Tests that the legacy binary format is properly rejected.
-     */
-	void legacyLoadTest();
+	 * Tests FileFormatRegistry::formatForData().
+	 */
+	void formatForDataTest();
+	void formatForDataTest_data();
 	
 	/**
 	 * Tests that high coordinates are correctly moved to the central region

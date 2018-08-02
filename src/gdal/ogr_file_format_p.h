@@ -131,9 +131,12 @@ public:
 	/**
 	 * Constructs a new importer.
 	 */
-	OgrFileImport(QIODevice* stream, Map *map, MapView *view, UnitType unit_type = UnitOnGround);
+	OgrFileImport(const QString& path, Map *map, MapView *view, UnitType unit_type = UnitOnGround);
 	
 	~OgrFileImport() override;
+	
+	
+	bool supportsQIODevice() const noexcept override;
 	
 	
 	/**
@@ -152,12 +155,12 @@ public:
 	 * transformed to the spatial reference systems represented by georef.
 	 * It will always return false for a local or invalid Georeferencing.
 	 */
-	static bool checkGeoreferencing(QFile& file, const Georeferencing& georef);
+	static bool checkGeoreferencing(const QString& path, const Georeferencing& georef);
 	
 	/**
 	 * Calculates the average geographic coordinates (WGS84) of the file.
 	 */
-	static LatLon calcAverageLatLon(QFile& file);
+	static LatLon calcAverageLatLon(const QString& path);
 	
 	
 protected:
@@ -172,7 +175,7 @@ protected:
 	 */
 	static bool checkGeoreferencing(OGRDataSourceH data_source, const Georeferencing& georef);
 	
-	void import(bool load_symbols_only) override;
+	bool importImplementation() override;
 	
 	ogr::unique_srs importGeoreferencing(OGRDataSourceH data_source);
 	

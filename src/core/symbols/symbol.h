@@ -23,6 +23,7 @@
 #define OPENORIENTEERING_SYMBOL_H
 
 #include <array>
+#include <cstddef>
 #include <memory>
 #include <type_traits>
 #include <vector>

@@ -1,5 +1,5 @@
 #
-#    Copyright 2017 Kai Pastor
+#    Copyright 2017, 2018 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -21,10 +21,16 @@
 
 include("linux-distribution.cmake")
 
+find_file (GDAL_LICENSE_TXT
+  NAMES LICENSE.TXT
+  PATHS /usr/share/licenses/gdal-devel
+        /usr/share/doc/packages/gdal-devel
+  NO_DEFAULT_PATH
+)
 set(explicit_copyright_gdal
   # Copy! Package libgdal* does not include this file.
   "gdal.txt"
-  "/usr/share/doc/packages/gdal-devel/LICENSE.TXT"
+  "${GDAL_LICENSE_TXT}"
   "3rd-party"
 )
 

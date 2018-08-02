@@ -31,7 +31,6 @@
 #include <QChar>
 #include <QCoreApplication>
 #include <QIODevice>
-#include <QObject>
 #include <QScopedValueRollback>
 #include <QTextCodec>
 // IWYU pragma: no_include <qxmlstream.h>

@@ -31,7 +31,6 @@
 #include <QCoreApplication>
 #include <QDir>
 #include <QExplicitlySharedDataPointer>
-#include <QFileDevice>
 #include <QFileInfo>
 #include <QFlags>
 #include <QIODevice>
@@ -121,14 +120,14 @@ FileFormat::ImportSupportAssumption XMLFileFormat::understands(const char* buffe
 }
 
 
-std::unique_ptr<Importer> XMLFileFormat::makeImporter(QIODevice* stream, Map* map, MapView* view) const
+std::unique_ptr<Importer> XMLFileFormat::makeImporter(const QString& path, Map* map, MapView* view) const
 {
-	return std::make_unique<XMLFileImporter>(stream, map, view);
+	return std::make_unique<XMLFileImporter>(path, map, view);
 }
 
-std::unique_ptr<Exporter> XMLFileFormat::makeExporter(QIODevice* stream, Map* map, MapView* view) const
+std::unique_ptr<Exporter> XMLFileFormat::makeExporter(const QString& path, const Map* map, const MapView* view) const
 {
-	return std::make_unique<XMLFileExporter>(stream, map, view);
+	return std::make_unique<XMLFileExporter>(path, map, view);
 }
 
 
@@ -205,18 +204,18 @@ namespace literal
 
 // ### XMLFileExporter definition ###
 
-XMLFileExporter::XMLFileExporter(QIODevice* stream, Map *map, MapView *view)
-: Exporter(stream, map, view),
-  xml(stream)
+XMLFileExporter::XMLFileExporter(const QString& path, const Map* map, const MapView* view)
+: Exporter(path, map, view)
 {
 	// Determine auto-formatting default from filename, if possible.
-	auto file = qobject_cast<const QFileDevice*>(stream);
-	bool auto_formatting = (file && file->fileName().contains(QLatin1String(".xmap")));
+	bool auto_formatting = path.endsWith(QLatin1String(".xmap"));
 	setOption(QString::fromLatin1("autoFormatting"), auto_formatting);
 }
 
-void XMLFileExporter::doExport()
+bool XMLFileExporter::exportImplementation()
 {
+	xml.setDevice(device());
+	
 	if (option(QString::fromLatin1("autoFormatting")).toBool())
 		xml.setAutoFormatting(true);
 	
@@ -290,6 +289,7 @@ void XMLFileExporter::doExport()
 	}
 	
 	xml.writeEndDocument();
+	return true;
 }
 
 void XMLFileExporter::exportGeoreferencing()
@@ -411,26 +411,16 @@ void XMLFileExporter::exportMapParts()
 
 void XMLFileExporter::exportTemplates()
 {
-	// Update the relative paths of templates
-	if (auto file = qobject_cast<const QFileDevice*>(stream))
+	QDir map_dir;
+	const QDir* map_dir_ptr = nullptr;
+	if (!path.isEmpty())
 	{
-		auto filename = file->fileName();
-		auto map_dir = QFileInfo(filename).absoluteDir();
-		if (!filename.isEmpty() && map_dir.exists())
-		{
-			for (int i = 0; i < map->getNumTemplates(); ++i)
-			{
-				auto temp = map->getTemplate(i);
-				if (temp->getTemplateState() != Template::Invalid)
-					temp->setTemplateRelativePath(map_dir.relativeFilePath(temp->getTemplatePath()));
-			}
-			for (int i = 0; i < map->getNumClosedTemplates(); ++i)
-			{
-				auto temp = map->getClosedTemplate(i);
-				if (temp->getTemplateState() != Template::Invalid)
-					temp->setTemplateRelativePath(map_dir.relativeFilePath(temp->getTemplatePath()));
-			}
-		}
+		map_dir = QFileInfo(path).absoluteDir();
+		map_dir_ptr = &map_dir;
+		
+		/// \todo Update the relative paths in memory when saving to another directory.
+		///       Otherwise opening templates in the reloaded saved map may
+		///       behave different from the current map in memory.
 	}
 	
 	XmlElementWriter templates_element(xml, literal::templates);
@@ -441,12 +431,12 @@ void XMLFileExporter::exportTemplates()
 	for (int i = 0; i < map->getNumTemplates(); ++i)
 	{
 		writeLineBreak(xml);
-		map->getTemplate(i)->saveTemplateConfiguration(xml, true);
+		map->getTemplate(i)->saveTemplateConfiguration(xml, true, map_dir_ptr);
 	}
 	for (int i = 0; i < map->getNumClosedTemplates(); ++i)
 	{
 		writeLineBreak(xml);
-		map->getClosedTemplate(i)->saveTemplateConfiguration(xml, false);
+		map->getClosedTemplate(i)->saveTemplateConfiguration(xml, false, map_dir_ptr);
 	}
 	
 	{
@@ -502,9 +492,8 @@ void XMLFileExporter::exportRedo()
 
 // ### XMLFileImporter definition ###
 
-XMLFileImporter::XMLFileImporter(QIODevice* stream, Map *map, MapView *view)
-: Importer(stream, map, view),
-  xml(stream)
+XMLFileImporter::XMLFileImporter(const QString& path, Map *map, MapView *view)
+: Importer(path, map, view)
 {
 	//NOP
 }
@@ -518,14 +507,15 @@ void XMLFileImporter::addWarningUnsupportedElement()
 	);
 }
 
-void XMLFileImporter::import(bool load_symbols_only)
+bool XMLFileImporter::importImplementation()
 {
+	xml.setDevice(device());
 	if (!xml.readNextStartElement() || xml.name() != literal::map)
 	{
-		if (stream->seek(0))
+		if (device()->seek(0))
 		{
 			char data[4] = {};
-			stream->read(data, 4);
+			device()->read(data, 4);
 			if (qstrncmp(reinterpret_cast<const char*>(data), "OMAP", 4) == 0)
 			{
 				throw FileFormatException(::OpenOrienteering::Importer::tr(
@@ -549,10 +539,10 @@ void XMLFileImporter::import(bool load_symbols_only)
 	QScopedValueRollback<MapCoord::BoundsOffset> rollback { MapCoord::boundsOffset() };
 	MapCoord::boundsOffset().reset(true);
 	georef_offset_adjusted = false;
-	importElements(load_symbols_only);
+	importElements();
 	
 	auto offset = MapCoord::boundsOffset();
-	if (!load_symbols_only && !offset.isZero())
+	if (!loadSymbolsOnly() && !offset.isZero())
 	{
 		addWarning(tr("Some coordinates were out of bounds for printing. Map content was adjusted."));
 		
@@ -581,9 +571,10 @@ void XMLFileImporter::import(bool load_symbols_only)
 			map->setGeoreferencing(georef);
 		}
 	}
+	return true;
 }
 
-void XMLFileImporter::importElements(bool load_symbols_only)
+void XMLFileImporter::importElements()
 {
 	while (xml.readNextStartElement())
 	{
@@ -594,7 +585,7 @@ void XMLFileImporter::importElements(bool load_symbols_only)
 		else if (name == literal::symbols)
 			importSymbols();
 		else if (name == literal::georeferencing)
-			importGeoreferencing(load_symbols_only);
+			importGeoreferencing();
 		else if (name == literal::view)
 			importView();
 		else if (name == literal::barrier)
@@ -610,10 +601,10 @@ void XMLFileImporter::importElements(bool load_symbols_only)
 			}
 			else
 			{
-				importElements(load_symbols_only);
+				importElements();
 			}
 		}
-		else if (load_symbols_only)
+		else if (loadSymbolsOnly())
 			xml.skipCurrentElement();
 		/******************************************************
 		* The remainder is skipped when loading a symbol set! *
@@ -656,14 +647,14 @@ void XMLFileImporter::importMapNotes()
 	}
 }
 
-void XMLFileImporter::importGeoreferencing(bool load_symbols_only)
+void XMLFileImporter::importGeoreferencing()
 {
 	Q_ASSERT(xml.name() == literal::georeferencing);
 	
 	bool check_for_offset = MapCoord::boundsOffset().check_for_offset;
 	
 	Georeferencing georef;
-	georef.load(xml, load_symbols_only);
+	georef.load(xml, loadSymbolsOnly());
 	map->setGeoreferencing(georef);
 	if (!georef.isValid())
 	{

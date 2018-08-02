@@ -58,14 +58,14 @@ FileFormat::ImportSupportAssumption OcdFileFormat::understands(const char* buffe
 }
 
 
-std::unique_ptr<Importer> OcdFileFormat::makeImporter(QIODevice* stream, Map *map, MapView *view) const
+std::unique_ptr<Importer> OcdFileFormat::makeImporter(const QString& path, Map *map, MapView *view) const
 {
-	return std::make_unique<OcdFileImport>(stream, map, view);
+	return std::make_unique<OcdFileImport>(path, map, view);
 }
 
-std::unique_ptr<Exporter> OcdFileFormat::makeExporter(QIODevice* stream, Map* map, MapView* view) const
+std::unique_ptr<Exporter> OcdFileFormat::makeExporter(const QString& path, const Map* map, const MapView* view) const
 {
-	return std::make_unique<OcdFileExport>(stream, map, view);
+	return std::make_unique<OcdFileExport>(path, map, view);
 }
 
 

@@ -40,6 +40,8 @@
 #include "core/georeferencing.h"
 #include "core/map.h"
 #include "core/objects/object.h"
+#include "fileformats/file_format_registry.h"
+#include "fileformats/file_import_export.h"
 #include "gui/file_dialog.h"
 #include "gui/main_window.h"
 #include "gui/util_gui.h"
@@ -962,7 +964,6 @@ void TemplateListWidget::importClicked()
 		prototype->getTransform(transform);
 	
 	Map template_map;
-	
 	bool ok = true;
 	if (qstrcmp(prototype->getTemplateType(), "OgrTemplate") == 0)
 	{
@@ -979,9 +980,24 @@ void TemplateListWidget::importClicked()
 			template_map.scaleAllSymbols(template_scale);
 		}
 	}
-	else if (qstrcmp(prototype->getTemplateType(), "TemplateMap") == 0
-	         && template_map.loadFrom(prototype->getTemplatePath(), this, nullptr, false, true))
+	else if (qstrcmp(prototype->getTemplateType(), "TemplateMap") == 0)
 	{
+		auto importer = FileFormats.makeImporter(prototype->getTemplatePath(), template_map, nullptr);
+		if (!importer)
+		{
+			QMessageBox::warning(this, tr("Error"), tr("Cannot load map file, aborting."));
+			return;
+		}
+		if (!importer->doImport())
+		{
+			QMessageBox::warning(this, tr("Error"), importer->warnings().back());
+			return;
+		}
+		if (!importer->warnings().empty())
+		{
+			MainWindow::showMessageBox(this, tr("Warning"), tr("The map import generated warnings."), importer->warnings());
+		}
+		
 		if (!prototype->isTemplateGeoreferenced())
 			template_map.applyOnAllObjects(ApplyTemplateTransform{transform});
 		
@@ -1015,39 +1031,36 @@ void TemplateListWidget::importClicked()
 	}
 	else
 	{
-		Q_UNREACHABLE();
-		ok = false;
+		QMessageBox::warning(this, tr("Error"), tr("Cannot load map file, aborting."));
+		return;
 	}
 
-	if (ok)
+	map->importMap(template_map, Map::MinimalObjectImport);
+	deleteTemplate();
+	
+	if (main_view->isOverprintingSimulationEnabled()
+	    && !template_map.hasSpotColors())
 	{
-		map->importMap(template_map, Map::MinimalObjectImport);
-		deleteTemplate();
-		
-		if (main_view->isOverprintingSimulationEnabled()
-		    && !template_map.hasSpotColors())
+		auto answer = QMessageBox::question(
+		                  window(),
+		                  tr("Template import"),
+		                  tr("The template will be invisible in the overprinting simulation. "
+		                     "Switch to normal view?"),
+		                  QMessageBox::StandardButtons(QMessageBox::Yes | QMessageBox::No), 
+		                  QMessageBox::Yes );
+		if (answer == QMessageBox::Yes)
 		{
-			auto answer = QMessageBox::question(
-			                  window(),
-			                  tr("Template import"),
-			                  tr("The template will be invisible in the overprinting simulation. "
-			                     "Switch to normal view?"),
-			                  QMessageBox::StandardButtons(QMessageBox::Yes | QMessageBox::No), 
-			                  QMessageBox::Yes );
-			if (answer == QMessageBox::Yes)
-			{
-				if (auto action = controller->getAction("overprintsimulation"))
-					action->trigger();
-			}
+			if (auto action = controller->getAction("overprintsimulation"))
+				action->trigger();
 		}
-		
-		
-		auto map_visibility = main_view->getMapVisibility();
-		if (!map_visibility.visible)
-		{
-			map_visibility.visible = true;
-			updateRow(map->getNumTemplates() - map->getFirstFrontTemplate());
-		}
+	}
+	
+	
+	auto map_visibility = main_view->getMapVisibility();
+	if (!map_visibility.visible)
+	{
+		map_visibility.visible = true;
+		updateRow(map->getNumTemplates() - map->getFirstFrontTemplate());
 	}
 }
 
@@ -1213,7 +1226,7 @@ void TemplateListWidget::updateRow(int row)
 			check_state = Qt::PartiallyChecked;
 			text_color = text_color.darker();
 		}
-		decoration = QVariant{ QIcon(QString::fromLatin1(":/images/delete.png")) };
+		decoration = QIcon::fromTheme(QLatin1String("image-missing"), QIcon{QLatin1String(":/images/close.png")});
 		checkable  = Qt::NoItemFlags;
 		editable   = Qt::NoItemFlags;
 	}

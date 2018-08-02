@@ -20,8 +20,6 @@
 #ifndef OPENORIENTEERING_XML_STREAM_UTIL_H
 #define OPENORIENTEERING_XML_STREAM_UTIL_H
 
-#include <vector>
-
 #include <QtGlobal>
 #include <QChar>
 #include <QHash>
@@ -35,7 +33,7 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
-// IWYU pragma: no_include "core/map_coord.h"
+#include "core/map_coord.h"
 
 class QRectF;
 class QSizeF;
@@ -43,10 +41,6 @@ class QXmlStreamReader;
 class QXmlStreamWriter;
 
 namespace OpenOrienteering {
-
-class MapCoord;  // IWYU pragma: keep
-
-using MapCoordVector = std::vector<MapCoord>;
 
 
 /**

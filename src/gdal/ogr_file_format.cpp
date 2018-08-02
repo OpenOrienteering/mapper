@@ -37,12 +37,9 @@
 #include <QByteArray>
 #include <QColor>
 #include <QCoreApplication>
-#include <QFile>
 #include <QHash>
-#include <QIODevice>
 #include <QLatin1Char>
 #include <QLatin1String>
-#include <QObject>
 #include <QPointF>
 #include <QRegularExpression>
 #include <QRegularExpressionMatch>
@@ -300,17 +297,17 @@ OgrFileFormat::OgrFileFormat()
 }
 
 
-std::unique_ptr<Importer> OgrFileFormat::makeImporter(QIODevice* stream, Map* map, MapView* view) const
+std::unique_ptr<Importer> OgrFileFormat::makeImporter(const QString& path, Map* map, MapView* view) const
 {
-	return std::make_unique<OgrFileImport>(stream, map, view);
+	return std::make_unique<OgrFileImport>(path, map, view);
 }
 
 
 
 // ### OgrFileImport ###
 
-OgrFileImport::OgrFileImport(QIODevice* stream, Map* map, MapView* view, UnitType unit_type)
- : Importer(stream, map, view)
+OgrFileImport::OgrFileImport(const QString& path, Map* map, MapView* view, UnitType unit_type)
+ : Importer(path, map, view)
  , manager{ OGR_SM_Create(nullptr) }
  , unit_type{ unit_type }
  , georeferencing_import_enabled{ true }
@@ -366,6 +363,13 @@ OgrFileImport::~OgrFileImport() = default;  // not inlined
 
 
 
+bool OgrFileImport::supportsQIODevice() const noexcept
+{
+	return false;
+}
+
+
+
 void OgrFileImport::setGeoreferencingImportEnabled(bool enabled)
 {
 	georeferencing_import_enabled = enabled;
@@ -397,21 +401,14 @@ ogr::unique_srs OgrFileImport::srsFromMap()
 
 
 
-void OgrFileImport::import(bool load_symbols_only)
+bool OgrFileImport::importImplementation()
 {
-	auto file = qobject_cast<QFile*>(stream);
-	if (!file)
-	{
-		throw FileFormatException("Internal error"); /// \todo Review design and/or message
-	}
-	
-	auto filename = file->fileName();
 	// GDAL 2.0: ... = GDALOpenEx(template_path.toLatin1(), GDAL_OF_VECTOR, nullptr, nullptr, nullptr);
-	auto data_source = ogr::unique_datasource(OGROpen(filename.toUtf8().constData(), 0, nullptr));
+	auto data_source = ogr::unique_datasource(OGROpen(path.toUtf8().constData(), 0, nullptr));
 	if (!data_source)
 	{
-		throw FileFormatException(::OpenOrienteering::Importer::tr("Could not read '%1': %2")
-		                          .arg(filename, QString::fromLatin1(CPLGetLastErrorMsg())));
+		addWarning(Importer::tr("Cannot open file\n%1:\n%2").arg(path, QString::fromLatin1(CPLGetLastErrorMsg())));
+		return false;
 	}
 	
 	if (auto driver = OGR_DS_GetDriver(data_source.get()))
@@ -435,7 +432,7 @@ void OgrFileImport::import(bool load_symbols_only)
 	
 	importStyles(data_source.get());
 
-	if (!load_symbols_only)
+	if (!loadSymbolsOnly())
 	{
 		QScopedValueRollback<MapCoord::BoundsOffset> rollback { MapCoord::boundsOffset() };
 		MapCoord::boundsOffset().reset(true);
@@ -517,6 +514,8 @@ void OgrFileImport::import(bool load_symbols_only)
 		addWarning(tr("Unable to load %n objects, reason: %1", nullptr, too_few_coordinates)
 		           .arg(tr("Not enough coordinates.")));
 	}
+	
+	return true;
 }
 
 
@@ -1289,20 +1288,19 @@ MapCoord OgrFileImport::fromProjected(double x, double y) const
 
 
 // static
-bool OgrFileImport::checkGeoreferencing(QFile& file, const Georeferencing& georef)
+bool OgrFileImport::checkGeoreferencing(const QString& path, const Georeferencing& georef)
 {
 	if (georef.isLocal() || !georef.isValid())
 		return false;
 	
 	GdalManager();
 	
-	auto filename = file.fileName();
 	// GDAL 2.0: ... = GDALOpenEx(template_path.toLatin1(), GDAL_OF_VECTOR, nullptr, nullptr, nullptr);
-	auto data_source = ogr::unique_datasource(OGROpen(filename.toUtf8().constData(), 0, nullptr));
+	auto data_source = ogr::unique_datasource(OGROpen(path.toUtf8().constData(), 0, nullptr));
 	if (!data_source)
 	{
 		throw FileFormatException(::OpenOrienteering::Importer::tr("Could not read '%1': %2")
-		                          .arg(filename, QString::fromLatin1(CPLGetLastErrorMsg())));
+		                          .arg(path, QString::fromLatin1(CPLGetLastErrorMsg())));
 	}
 	
 	return checkGeoreferencing(data_source.get(), georef);
@@ -1345,17 +1343,16 @@ bool OgrFileImport::checkGeoreferencing(OGRDataSourceH data_source, const Georef
 
 
 // static
-LatLon OgrFileImport::calcAverageLatLon(QFile& file)
+LatLon OgrFileImport::calcAverageLatLon(const QString& path)
 {
 	GdalManager();
 	
-	auto filename = file.fileName();
 	// GDAL 2.0: ... = GDALOpenEx(template_path.toLatin1(), GDAL_OF_VECTOR, nullptr, nullptr, nullptr);
-	auto data_source = ogr::unique_datasource(OGROpen(filename.toUtf8().constData(), 0, nullptr));
+	auto data_source = ogr::unique_datasource(OGROpen(path.toUtf8().constData(), 0, nullptr));
 	if (!data_source)
 	{
 		throw FileFormatException(::OpenOrienteering::Importer::tr("Could not read '%1': %2")
-		                          .arg(filename, QString::fromLatin1(CPLGetLastErrorMsg())));
+		                          .arg(path, QString::fromLatin1(CPLGetLastErrorMsg())));
 	}
 	
 	return calcAverageLatLon(data_source.get());

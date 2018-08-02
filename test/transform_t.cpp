@@ -29,6 +29,16 @@
 using namespace OpenOrienteering;
 
 
+#if QT_VERSION == 0x050B01
+// Qt 5.11.1 has a regression in QPointF::operator==.
+// References:
+// https://bugreports.qt.io/browse/QTBUG-69368
+// https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=903237
+// https://github.com/OpenOrienteering/mapper/issues/1116
+#  define QTBUG_69368_QUIRK
+#endif
+
+
 TransformTest::TransformTest(QObject* parent)
 : QObject(parent)
 {
@@ -365,10 +375,14 @@ void TransformTest::testEstimateSimilarityTransformation()
 		QCOMPARE(t2.template_scale_x, 1.0);
 		QCOMPARE(t2.template_scale_y, 1.0);
 		
+#ifndef QTBUG_69368_QUIRK
 		QCOMPARE(QPointF(passpoints[0].calculated_coords), QPointF(passpoints[0].dest_coords));
 		QVERIFY(passpoints[0].error < min_distance);
 		QCOMPARE(QPointF(passpoints[1].calculated_coords), QPointF(passpoints[1].dest_coords));
 		QVERIFY(passpoints[1].error < min_distance);
+#else
+		QWARN("Parts of test skipped to avoid hitting QTBUG-69368");
+#endif // QT_VERSION != 0x050B01
 		
 		QTransform q2;
 		QVERIFY(passpoints.estimateSimilarityTransformation(&q2));
@@ -377,10 +391,12 @@ void TransformTest::testEstimateSimilarityTransformation()
 		QCOMPARE(q2.dx(), qreal(0));
 		QCOMPARE(q2.dy(), qreal(0));
 		
+#ifndef QTBUG_69368_QUIRK
 		QCOMPARE(QPointF(passpoints[0].calculated_coords), QPointF(passpoints[0].dest_coords));
 		QVERIFY(passpoints[0].error < min_distance);
 		QCOMPARE(QPointF(passpoints[1].calculated_coords), QPointF(passpoints[1].dest_coords));
 		QVERIFY(passpoints[1].error < min_distance);
+#endif // QTBUG_69368_QUIRK
 		
 		QCOMPARE(TemplateTransform::fromQTransform(q2), t2);
 	}
