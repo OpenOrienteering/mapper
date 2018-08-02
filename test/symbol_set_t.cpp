@@ -196,6 +196,7 @@ TranslationEntries readTsFile(QIODevice& device, const QString& language)
 }  // namespace
 
 
+
 void SymbolSetTool::TranslationEntry::write(QXmlStreamWriter& xml, const QString& language)
 {
 	if (source.isEmpty())
@@ -245,17 +246,18 @@ void saveIfDifferent(const QString& path, Map* map, MapView* view = nullptr)
 		new_data.reserve(existing_data.size()*2);
 	}
 	
-	QBuffer buffer(&new_data);
-	buffer.open(QFile::WriteOnly);
-	XMLFileExporter exporter(&buffer, map, view);
+	XMLFileExporter exporter({}, map, view);
 	auto is_src_format = path.contains(QLatin1String(".xmap"));
 	exporter.setOption(QString::fromLatin1("autoFormatting"), is_src_format);
 	auto retain_compatibility = is_src_format && map->getNumParts() == 1
 	                            && !path.contains(QLatin1String("ISOM2017"));
 	Settings::getInstance().setSetting(Settings::General_RetainCompatiblity, retain_compatibility);
+	
+	QBuffer buffer(&new_data);
+	exporter.setDevice(&buffer);
 	exporter.doExport();
-	QVERIFY(exporter.warnings().empty());
 	buffer.close();
+	QVERIFY(exporter.warnings().empty());
 	
 	if (new_data != existing_data)
 	{
@@ -288,7 +290,7 @@ void SymbolSetTool::initTestCase()
 	translations_dir.cd(QDir(QString::fromUtf8(MAPPER_TEST_SOURCE_DIR)).absoluteFilePath(QStringLiteral("../translations")));
 	QVERIFY(translations_dir.exists());
 	
-	Template::pathForSaving = &Template::getTemplateRelativePath;
+	Template::suppressAbsolutePaths = true;
 	
 	translations_complete = false;
 }
@@ -356,7 +358,7 @@ void SymbolSetTool::processSymbolSet()
 	
 	Map map;
 	MapView view{ &map };
-	map.loadFrom(source_path, nullptr, &view, false, false);
+	map.loadFrom(source_path, &view);
 	QCOMPARE(map.getScaleDenominator(), source_scale);
 	QCOMPARE(map.getNumClosedTemplates(), 0);
 	
@@ -785,7 +787,7 @@ void SymbolSetTool::processExamples()
 	
 	Map map;
 	MapView view{ &map };
-	map.loadFrom(source_path, nullptr, &view, false, false);
+	map.loadFrom(source_path, &view);
 	
 	const int num_symbols = map.getNumSymbols();
 	QStringList previous_numbers;
@@ -827,7 +829,7 @@ void SymbolSetTool::processTestData()
 	
 	Map map;
 	MapView view{ &map };
-	map.loadFrom(source_path, nullptr, &view, false, false);
+	map.loadFrom(source_path, &view);
 	
 	map.undoManager().clear();
 	saveIfDifferent(source_path, &map, &view);

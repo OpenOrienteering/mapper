@@ -70,6 +70,7 @@
 #include "core/symbols/symbol.h"
 #include "core/symbols/text_symbol.h"
 #include "fileformats/file_format.h"
+#include "fileformats/file_import_export.h"
 #include "gui/file_dialog.h"
 #include "gui/main_window.h"
 #include "gui/util_gui.h"
@@ -561,16 +562,42 @@ bool ReplaceSymbolSetDialog::showDialog(QWidget* parent, Map& object_map)
 	auto symbol_set = std::unique_ptr<Map>{};
 	while (!symbol_set)
 	{
-		auto path = MainWindow::getOpenFileName(parent, tr("Choose map file to load symbols from"),
-		                                        FileFormat::MapFile);
-		if (path.isEmpty())
+		auto selected = MainWindow::getOpenFileName(
+		                    parent,
+		                    tr("Choose map file to load symbols from"),
+		                    FileFormat::MapFile);
+		if (!selected)
+		{
+			// canceled
 			return false;
+		}
+		
+		if (!selected.fileFormat())
+		{
+			/// \todo More precise message
+			QMessageBox::warning(parent, tr("Error"), tr("Cannot load symbol set, aborting."));
+			return false;
+		}
 		
 		symbol_set.reset(new Map);
-		if (!symbol_set->loadFrom(path, parent, nullptr, true))
+		auto importer = selected.fileFormat()->makeImporter(selected.filePath(), symbol_set.get(), nullptr);
+		if (!importer)
 		{
-			QMessageBox::warning(parent, tr("Error"), tr("Cannot load map file, aborting."));
+			/// \todo More precise message
+			QMessageBox::warning(parent, tr("Error"), tr("Cannot load symbol set, aborting."));
 			return false;
+		}
+		
+		if (!importer->doImport())
+		{
+			/// \todo Show error from importer
+			QMessageBox::warning(parent, tr("Error"), tr("Cannot load symbol set, aborting."));
+			return false;
+		}
+		
+		if (!importer->warnings().empty())
+		{
+			MainWindow::showMessageBox(parent, tr("Warning"), tr("The symbol set import generated warnings."), importer->warnings());
 		}
 		
 		if (symbol_set->getScaleDenominator() != object_map.getScaleDenominator())

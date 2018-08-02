@@ -59,12 +59,6 @@ void MapTest::initTestCase()
 	
 	// Static map initializations
 	Map map;
-	
-	// Accept any message boxes
-	connect(qApp, &QApplication::focusChanged, [](QWidget*, QWidget* w) {
-		if (w && qobject_cast<QMessageBox*>(w->window()))
-			QTimer::singleShot(0, w->window(), SLOT(accept()));  // clazy:exclude=old-style-connect (needs Qt 5.4)
-	});
 }
 
 
@@ -195,7 +189,8 @@ void MapTest::importTest()
 	QString first_path = examples_dir.absoluteFilePath(first_file);
 	Map map;
 	MapView view{ &map };
-	QVERIFY(map.loadFrom(first_path, nullptr, &view, false, false));
+	QVERIFY(map.loadFrom(first_path, &view));
+	QVERIFY(map.getNumSymbols() > 0);
 	
 	auto original_size = map.getNumObjects();
 	auto original_num_colors = map.getNumColors();
@@ -214,7 +209,7 @@ void MapTest::importTest()
 	
 	QString imported_path = examples_dir.absoluteFilePath(imported_file);
 	Map imported_map;
-	QVERIFY(imported_map.loadFrom(imported_path, nullptr, nullptr, false, false));
+	QVERIFY(imported_map.loadFrom(imported_path));
 	QVERIFY(imported_map.getNumSymbols() > 0);
 	
 	original_size = map.getNumObjects();
@@ -229,7 +224,7 @@ void MapTest::crtFileTest()
 {
 	auto original =  symbol_set_dir.absoluteFilePath(QString::fromLatin1("15000/ISOM2000_15000.omap"));
 	Map original_map;
-	original_map.loadFrom(original, nullptr, nullptr, false, false);
+	QVERIFY(original_map.loadFrom(original));
 	QVERIFY(original_map.getNumSymbols() > 100);
 	
 	auto crt_data = QByteArray{
@@ -304,7 +299,7 @@ void MapTest::matchQuerySymbolNumberTest()
 	QFETCH(int, matching);
 	
 	Map original_map;
-	original_map.loadFrom(original, nullptr, nullptr, false, false);
+	QVERIFY(original_map.loadFrom(original));
 	QVERIFY(original_map.getNumSymbols() > 0);
 	
 	auto r = SymbolRuleSet::forOriginalSymbols(original_map);
@@ -316,7 +311,7 @@ void MapTest::matchQuerySymbolNumberTest()
 	QCOMPARE(r.squeezed().size(), std::size_t(original_map.getNumSymbols()));
 	
 	Map replacement_map;
-	replacement_map.loadFrom(replacement, nullptr, nullptr, false, false);
+	QVERIFY(replacement_map.loadFrom(replacement));
 	QVERIFY(replacement_map.getNumSymbols() > 100);
 	
 	r = SymbolRuleSet::forOriginalSymbols(original_map);

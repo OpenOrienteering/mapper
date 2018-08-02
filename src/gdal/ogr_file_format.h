@@ -22,9 +22,9 @@
 
 #include <memory>
 
-#include "fileformats/file_format.h"
+#include <QString>
 
-class QIODevice;
+#include "fileformats/file_format.h"
 
 namespace OpenOrienteering {
 
@@ -53,7 +53,7 @@ public:
 	/**
 	 * Creates an importer for files supported by OGR.
 	 */
-	std::unique_ptr<Importer> makeImporter(QIODevice* stream, Map* map, MapView* view) const override;
+	std::unique_ptr<Importer> makeImporter(const QString& path, Map* map, MapView* view) const override;
 };
 
 

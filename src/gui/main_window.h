@@ -57,6 +57,22 @@ class MainWindow : public QMainWindow, private Autosave
 {
 Q_OBJECT
 public:
+	struct FileInfo
+	{
+		// To be used with aggregate initialization
+		QString file_path;
+		const FileFormat* file_format;
+		
+		// cf. QFileInfo::filePath
+		QString filePath() const { return file_path; }
+		
+		const FileFormat* fileFormat() const noexcept { return file_format; }
+		
+		operator bool() const noexcept { return !file_path.isEmpty(); }
+		
+	};
+	
+		
 	/**
 	 * Creates a new main window.
 	 */
@@ -113,7 +129,7 @@ public:
 	 * The new controller edits the file with the given path.
 	 * The path may be empty for a new (unnamed) file.
 	 */
-	void setController(MainWindowController* new_controller, const QString& path);
+	void setController(MainWindowController* new_controller, const QString& path, const FileFormat* format);
 	
 private:
 	void setController(MainWindowController* new_controller, bool has_file);
@@ -123,10 +139,21 @@ public:
 	MainWindowController* getController() const;
 	
 	
-	/** Returns the canonical path of the currently open file or 
-	 *  an empty string if no file is open.
+	/**
+	 * Returns the canonical path of the currently open file.
+	 * 
+	 * It no file is open, returns an empty string.
 	 */
-	const QString& currentPath() const;
+	const QString& currentPath() const { return current_path; }
+	
+	/**
+	 * Returns the file format of the currently open file.
+	 * 
+	 * It no file is open or the format is unknown, returns nullptr.
+	 */
+	const FileFormat* currentFormat() const { return current_format; }
+	
+	
 	
 	/** Registers the given path as most recently used file.
 	 * 
@@ -203,7 +230,14 @@ public:
 	/** Shows the open file dialog for the given file type(s) and returns the chosen file
 	 *  or an empty string if the dialog is aborted.
 	 */
-	static QString getOpenFileName(QWidget* parent, const QString& title, FileFormat::FileTypes types);
+	static MainWindow::FileInfo getOpenFileName(QWidget* parent, const QString& title, FileFormat::FileTypes types);
+	
+	
+	/**
+	 * Shows a message box for a list of unformatted messages.
+	 */
+	static void showMessageBox(QWidget* parent, const QString& title, const QString& headline, const std::vector<QString>& messages);
+	
 	
 	/**
 	 * Sets the MainWindow's effective central widget.
@@ -284,6 +318,8 @@ public slots:
 	 * @return true if loading was succesful, false otherwise
 	 */
 	bool openPath(const QString &path);
+	
+	bool openPath(const QString &path, const FileFormat* format);
 	
 	/**
 	 * Open the file specified in the sending action's data.
@@ -404,7 +440,7 @@ protected:
 	 * If the controller was not set as having an opened file,
 	 * the path must be empty.
 	 */
-	void setCurrentPath(const QString& path);
+	void setCurrentFile(const QString& path, const FileFormat* format);
 	
 	/**
 	 * Notifies the windows of autosave conflicts.
@@ -476,6 +512,8 @@ private:
 	
 	/// Canonical path to the currently open file or an empty string if the file was not saved yet ("untitled")
 	QString current_path;
+	/// The current file's format, as determined during opening the file.
+	const FileFormat* current_format;
 	/// The actual path loaded by the editor. @see switchActualPath()
 	QString actual_path;
 	/// Does the main window display a file? If yes, new controllers will be opened in new main windows instead of replacing the active controller of this one
@@ -509,11 +547,7 @@ MainWindowController* MainWindow::getController() const
 	return controller;
 }
 
-inline
-const QString& MainWindow::currentPath() const
-{
-	return current_path;
-}
+
 
 inline
 bool MainWindow::hasOpenedFile() const

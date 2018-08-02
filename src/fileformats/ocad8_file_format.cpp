@@ -78,21 +78,21 @@ FileFormat::ImportSupportAssumption OCAD8FileFormat::understands(const char* buf
 }
 
 
-std::unique_ptr<Importer> OCAD8FileFormat::makeImporter(QIODevice* stream, Map *map, MapView *view) const
+std::unique_ptr<Importer> OCAD8FileFormat::makeImporter(const QString& path, Map *map, MapView *view) const
 {
-	return std::make_unique<OCAD8FileImport>(stream, map, view);
+	return std::make_unique<OCAD8FileImport>(path, map, view);
 }
 
-std::unique_ptr<Exporter> OCAD8FileFormat::makeExporter(QIODevice* stream, Map* map, MapView* view) const
+std::unique_ptr<Exporter> OCAD8FileFormat::makeExporter(const QString& path, const Map* map, const MapView* view) const
 {
-	return std::make_unique<OCAD8FileExport>(stream, map, view);
+	return std::make_unique<OCAD8FileExport>(path, map, view);
 }
 
 
 
 // ### OCAD8FileImport ###
 
-OCAD8FileImport::OCAD8FileImport(QIODevice* stream, Map* map, MapView* view) : Importer(stream, map, view), file(nullptr)
+OCAD8FileImport::OCAD8FileImport(const QString& path, Map* map, MapView* view) : Importer(path, map, view), file(nullptr)
 {
     ocad_init();
     const QByteArray enc_name = Settings::getInstance().getSetting(Settings::General_Local8BitEncoding).toByteArray();
@@ -116,16 +116,17 @@ bool OCAD8FileImport::isRasterImageFile(const QString &filename)
 	return QImageReader::supportedImageFormats().contains(extension.toLatin1());
 }
 
-void OCAD8FileImport::import(bool load_symbols_only)
+bool OCAD8FileImport::importImplementation()
 {
     //qint64 start = QDateTime::currentMSecsSinceEpoch();
 	
-	u32 size = stream->bytesAvailable();
+	auto& device = *this->device();
+	u32 size = device.bytesAvailable();
 	u8* buffer = (u8*)malloc(size);
 	if (!buffer)
 		throw FileFormatException(tr("Could not allocate buffer."));
-	if (stream->read((char*)buffer, size) != size)
-		throw FileFormatException(::OpenOrienteering::Importer::tr("Could not read file: %1").arg(stream->errorString()));
+	if (device.read((char*)buffer, size) != size)
+		throw FileFormatException(::OpenOrienteering::Importer::tr("Could not read file: %1").arg(device.errorString()));
 	int err = ocad_file_open_memory(&file, buffer, size);
     if (err != 0) throw FileFormatException(::OpenOrienteering::Importer::tr("Could not read file: %1").arg(tr("libocad returned %1").arg(err)));
 	
@@ -292,7 +293,7 @@ void OCAD8FileImport::import(bool load_symbols_only)
         }
     }
 
-    if (!load_symbols_only)
+    if (!loadSymbolsOnly())
 	{
 		// Load objects
 
@@ -370,6 +371,8 @@ void OCAD8FileImport::import(bool load_symbols_only)
 
 	emit map->currentMapPartIndexChanged(map->current_part_index);
 	emit map->currentMapPartChanged(map->getPart(map->current_part_index));
+	
+	return true;
 }
 
 void OCAD8FileImport::setStringEncodings(const char *narrow, const char *wide) {
@@ -1543,8 +1546,8 @@ double OCAD8FileImport::convertTemplateScale(double ocad_scale)
 
 // ### OCAD8FileExport ###
 
-OCAD8FileExport::OCAD8FileExport(QIODevice* stream, Map* map, MapView* view)
- : Exporter(stream, map, view),
+OCAD8FileExport::OCAD8FileExport(const QString& path, const Map* map, const MapView* view)
+ : Exporter(path, map, view),
    uses_registration_color(false),
    file(nullptr)
 {
@@ -1560,7 +1563,7 @@ OCAD8FileExport::~OCAD8FileExport()
 	delete origin_point_object;
 }
 
-void OCAD8FileExport::doExport()
+bool OCAD8FileExport::exportImplementation()
 {
 	uses_registration_color = map->isColorUsedByASymbol(map->getRegistrationColor());
 	if (map->getNumColors() > (uses_registration_color ? 255 : 256))
@@ -1875,9 +1878,10 @@ void OCAD8FileExport::doExport()
 		}
 	}
 	
-	stream->write((char*)file->buffer, file->size);
+	device()->write((char*)file->buffer, file->size);
 	
 	ocad_file_close(file);
+	return true;
 }
 
 
@@ -1907,7 +1911,7 @@ MapCoord OCAD8FileExport::calculateAreaOffset()
 			{
 				addWarning(tr("Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m)."));
 				std::size_t count = 0;
-				auto calculate_average_center = [&area_offset, &count](Object* object)
+				auto calculate_average_center = [&area_offset, &count](const Object* object)
 				{
 					area_offset *= qreal(count)/qreal(count+1);
 					++count;

@@ -110,6 +110,7 @@
 #include "core/symbols/symbol_icon_decorator.h"
 #include "fileformats/file_format.h"
 #include "fileformats/file_format_registry.h"
+#include "fileformats/file_import_export.h"
 #include "gui/configure_grid_dialog.h"
 #include "gui/file_dialog.h"
 #include "gui/georeferencing_dialog.h"
@@ -542,35 +543,69 @@ void MapEditorController::deletePopupWidget(QWidget* child_widget)
 	}
 }
 
-bool MapEditorController::saveTo(const QString& path, const FileFormat* format)
-{
-	if (map)
-	{
-		if (editing_in_progress)
-		{
-			QMessageBox::warning(window, tr("Editing in progress"), tr("The map is currently being edited. Please finish the edit operation before saving."));
-			return false;
-		}
-		bool success = map->saveTo(path, format, main_view);
-		if (success)
-			window->showStatusBarMessage(tr("Map saved"), 1000);
-		return success;
-	}
-	else
-		return false;
-}
 
-bool MapEditorController::exportTo(const QString& path, const FileFormat* format)
+bool MapEditorController::saveTo(const QString& path, const FileFormat& format)
 {
-	if (map && !editing_in_progress)
+	if (editing_in_progress)
 	{
-		return map->exportTo(path, format, main_view);
+		QMessageBox::warning(window,
+		                     tr("Editing in progress"),
+		                     tr("The map is currently being edited. "
+		                        "Please finish the edit operation before saving.") );
+		return false;
 	}
 	
-	return false;
+	if (!exportTo(path, format))
+		return false;
+	
+	map->setHasUnsavedChanges(false);
+	map->undoManager().setClean();
+	window->showStatusBarMessage(tr("Map saved"), 1000);
+	return true;
 }
 
-bool MapEditorController::load(const QString& path, QWidget* dialog_parent)
+
+bool MapEditorController::exportTo(const QString& path, const FileFormat& format)
+{
+	if (!map || editing_in_progress)
+		return false;
+	
+	if (!format.supportsExport())
+	{
+		QMessageBox::warning(nullptr,
+		                     tr("Error"),
+		                     tr("Cannot export the map as\n"
+		                        "\"%1\"\n"
+		                        "because saving as %2 (.%3) is not supported.").
+		                     arg(path,
+		                         format.description(),
+		                         format.fileExtensions().join(QLatin1String(", ")) ) );
+		return false;
+	}
+	
+	auto exporter = format.makeExporter(path, map, main_view);
+	if (!exporter->doExport())
+	{
+		QMessageBox::warning(nullptr,
+		                     tr("Error"),
+		                     tr("Cannot save file\n%1:\n%2")
+		                     .arg(path, exporter->warnings().back()) );
+		return false;
+	}
+	
+	if (!exporter->warnings().empty())
+	{
+		MainWindow::showMessageBox(nullptr,
+		                           tr("Warning"),
+		                           tr("The map export generated warnings."),
+		                           exporter->warnings() );
+	}
+	
+	return true;
+}
+
+
+bool MapEditorController::loadFrom(const QString& path, const FileFormat& format, QWidget* dialog_parent)
 {
 	if (!dialog_parent)
 		dialog_parent = window;
@@ -581,20 +616,25 @@ bool MapEditorController::load(const QString& path, QWidget* dialog_parent)
 		main_view = new MapView(this, map);
 	}
 	
-	bool success = map->loadFrom(path, dialog_parent, main_view);
-	if (success)
-	{
-		setMapAndView(map, main_view);
-	}
-	else
+	auto importer = format.makeImporter(path, map, main_view);
+	if (!importer->doImport())
 	{
 		delete map;
 		map = nullptr;
 		main_view = nullptr;
+		
+		Q_ASSERT(!importer->warnings().empty());
+		QMessageBox::warning(window, tr("Error"), importer->warnings().back());
+		return false;
 	}
 	
-	return success;
+	setMapAndView(map, main_view);
+	map->setHasUnsavedChanges(false);
+	if (!importer->warnings().empty())
+		MainWindow::showMessageBox(window, tr("Warning"), tr("The map import generated warnings."), importer->warnings());
+	return true;
 }
+
 
 void MapEditorController::attach(MainWindow* window)
 {
@@ -1682,7 +1722,7 @@ void MapEditorController::copy()
 	
 	// Save map to memory
 	QBuffer buffer;
-	if (!copy_map.exportToIODevice(&buffer))
+	if (!copy_map.exportToIODevice(buffer))
 	{
 		QMessageBox::warning(nullptr, tr("Error"), tr("An internal error occurred, sorry!"));
 		return;
@@ -1715,7 +1755,7 @@ void MapEditorController::paste()
 	
 	// Create map from buffer
 	Map paste_map;
-	if (!paste_map.importFromIODevice(&buffer))
+	if (!paste_map.importFromIODevice(buffer))
 	{
 		QMessageBox::warning(nullptr, tr("Error"), tr("An internal error occurred, sorry!"));
 		return;
@@ -3902,11 +3942,11 @@ void MapEditorController::importClicked()
 	settings.setValue(QString::fromLatin1("importFileDirectory"), QFileInfo(filename).canonicalPath());
 	
 	bool success = false;
-	auto map_format = FileFormats.findFormatForFilename(filename);
+	auto map_format = FileFormats.findFormatForFilename(filename, &FileFormat::supportsImport);
 	if (map_format)
 	{
 		// Map format recognized by filename extension
-		importMapFile(filename, true); // Error reporting in Map::loadFrom()
+		importMapFile(filename, true); // Error reporting in importMapFile()
 		return;
 	}
 	else if (filename.endsWith(QLatin1String(".dxf"), Qt::CaseInsensitive)
@@ -3947,8 +3987,23 @@ bool MapEditorController::importMapFile(const QString& filename, bool show_error
 	Map imported_map;
 	imported_map.setScaleDenominator(map->getScaleDenominator()); // for non-scaled geodata
 	
-	if (!imported_map.loadFrom(filename, window, nullptr, false, show_errors))
+	auto importer = FileFormats.makeImporter(filename, imported_map, nullptr);
+	if (!importer)
+	{
+		if (show_errors)
+			;  /// \todo error message
 		return false;
+	}
+	
+	if (!importer->doImport())
+	{
+		if (show_errors)
+			QMessageBox::warning(window, tr("Error"), importer->warnings().back());
+		return false;
+	}
+	
+	if (show_errors && !importer->warnings().empty())
+	    MainWindow::showMessageBox(window, tr("Warning"), tr("The map import generated warnings."), importer->warnings());
 	
 	if (imported_map.symbolSetId() != map->symbolSetId())
 	{

@@ -21,7 +21,6 @@
 #include "file_format_t.h"
 
 #include <algorithm>
-#include <exception>
 #include <limits>
 #include <memory>
 
@@ -32,6 +31,7 @@
 #include <QByteArray>
 #include <QCoreApplication>
 #include <QDir>
+#include <QFile>
 #include <QFileInfo>
 #include <QHash>
 #include <QIODevice>
@@ -42,6 +42,7 @@
 #include <QSize>
 #include <QSizeF>
 #include <QString>
+#include <QTemporaryDir>
 
 #include "global.h"
 #include "test_config.h"
@@ -327,32 +328,25 @@ namespace
 		return true;
 	}
 	
-	std::unique_ptr<Map> saveAndLoadMap(Map& input, const FileFormat* format)
+	std::unique_ptr<Map> saveAndLoadMap(const Map& input, const FileFormat* format)
 	{
 		auto out = std::make_unique<Map>();
-		try {
-			QBuffer buffer;
-			buffer.open(QIODevice::ReadWrite);
-			
-			auto exporter = format->makeExporter(&buffer, &input, nullptr);
-			auto importer = format->makeImporter(&buffer, out.get(), nullptr);
-			if (exporter && importer)
-			{
-				exporter->doExport();
-				buffer.seek(0);
-			
-				importer->doImport(false);
-				importer->finishImport();
-			}
-			else
-			{
-				out.reset();
-			}
-		}
-		catch (std::exception&)
+		auto exporter = format->makeExporter({}, &input, nullptr);
+		auto importer = format->makeImporter({}, out.get(), nullptr);
+		if (exporter && importer)
 		{
-			out.reset();
+			QBuffer buffer;
+			exporter->setDevice(&buffer);
+			importer->setDevice(&buffer);
+			if (buffer.open(QIODevice::ReadWrite)
+			    && exporter->doExport()
+			    && buffer.seek(0)
+			    && importer->doImport())
+			{
+				return out;  // success
+			}
 		}
+		out.reset();  // failure
 		return out;
 	}
 	
@@ -460,6 +454,51 @@ void FileFormatTest::understandsTest()
 
 
 
+void FileFormatTest::formatForDataTest_data()
+{
+	understandsTest_data();
+}
+
+void FileFormatTest::formatForDataTest()
+{
+	QFETCH(QByteArray, format_id); Q_UNUSED(format_id)
+	QFETCH(QByteArray, data);
+	QFETCH(int, support);
+	
+#ifdef MAPPER_BIG_ENDIAN
+	if (format_id.startsWith("OCD"))
+		return;
+#endif
+	
+	QTemporaryDir dir;
+	QVERIFY(dir.isValid());
+	
+	auto path = QDir(dir.path()).absoluteFilePath(QStringLiteral("testfile"));
+	QFile out_file(path);
+	QVERIFY(out_file.open(QIODevice::WriteOnly));
+	QVERIFY(out_file.write(data) == data.size());
+	out_file.close();
+	QVERIFY(!out_file.error());
+	
+	auto result = FileFormats.findFormatForData(path, FileFormat::AllFiles);
+	switch (support)
+	{
+	case FileFormat::NotSupported:
+		QVERIFY(!result || result->understands(data.constData(), data.length()) != FileFormat::NotSupported);
+		break;
+	case FileFormat::Unknown:
+		QVERIFY(result);
+		QVERIFY(result->understands(data.constData(), data.length()) != FileFormat::NotSupported);
+		break;
+	case FileFormat::FullySupported:
+		QVERIFY(result);
+		QVERIFY(result->understands(data.constData(), data.length()) == FileFormat::FullySupported);
+		break;
+	}
+}
+
+
+
 void FileFormatTest::issue_513_high_coordinates_data()
 {
 	QTest::addColumn<QString>("filename");
@@ -478,7 +517,7 @@ void FileFormatTest::issue_513_high_coordinates()
 	
 	// Load the test map
 	Map map {};
-	QVERIFY(map.loadFrom(filename, nullptr, nullptr, false, false));
+	QVERIFY(map.loadFrom(filename));
 	
 	// The map's single object must exist. Otherwise it may have been deleted
 	// for being irregular, indicating failure to handle high coordinates.
@@ -541,8 +580,7 @@ void FileFormatTest::saveAndLoad()
 	
 	// Load the test map
 	auto original = std::make_unique<Map>();
-	QVERIFY(original->loadFrom(map_filename, nullptr, nullptr, false, false));
-	QVERIFY(!original->hasUnsavedChanges());
+	QVERIFY(original->loadFrom(map_filename));
 	
 	// Fix precision of grid rotation
 	MapGrid grid = original->getGrid();

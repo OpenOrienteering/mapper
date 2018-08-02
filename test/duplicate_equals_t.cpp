@@ -133,7 +133,7 @@ void DuplicateEqualsTest::symbols()
 {
 	QFETCH(QString, map_filename);
 	Map map {};
-	map.loadFrom(map_filename, nullptr, nullptr, false, false);
+	map.loadFrom(map_filename);
 	
 	for (int symbol = 0; symbol < map.getNumSymbols(); ++symbol)
 	{
@@ -184,7 +184,7 @@ void DuplicateEqualsTest::objects()
 {
 	QFETCH(QString, map_filename);
 	Map map {};
-	map.loadFrom(map_filename, nullptr, nullptr, false, false);
+	map.loadFrom(map_filename);
 	
 	for (int part_number = 0; part_number < map.getNumParts(); ++part_number)
 	{

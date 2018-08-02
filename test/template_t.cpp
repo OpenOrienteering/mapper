@@ -93,7 +93,7 @@ private slots:
 	{
 		Map map;
 		MapView view{ &map };
-		QVERIFY(map.loadFrom(QStringLiteral("testdata:templates/world-file.xmap"), nullptr, &view, false, false));
+		QVERIFY(map.loadFrom(QStringLiteral("testdata:templates/world-file.xmap"), &view));
 		
 		const auto& georef = map.getGeoreferencing();
 		QVERIFY(georef.isValid());
@@ -125,8 +125,9 @@ private slots:
 		// This results in a warning.
 		QBuffer buffer{ &original_data };
 		buffer.open(QIODevice::ReadOnly);
-		XMLFileImporter importer{ &buffer, &map, &view };
-		importer.doImport(false);
+		XMLFileImporter importer{ {}, &map, &view };
+		importer.setDevice(&buffer);
+		QVERIFY(importer.doImport());
 		QCOMPARE(importer.warnings().size(), std::size_t(1));
 		
 		// The image is in Invalid state, but path attributes are intact.
@@ -140,8 +141,9 @@ private slots:
 		
 		QBuffer out_buffer;
 		QVERIFY(out_buffer.open(QIODevice::WriteOnly));
-		XMLFileExporter exporter{ &out_buffer, &map, &view };
+		XMLFileExporter exporter{ {}, &map, &view };
 		exporter.setOption(QStringLiteral("autoFormatting"), true);
+		exporter.setDevice(&out_buffer);
 		exporter.doExport();
 		out_buffer.close();
 		QCOMPARE(exporter.warnings().size(), std::size_t(0));

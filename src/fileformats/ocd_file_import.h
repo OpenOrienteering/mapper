@@ -33,7 +33,6 @@
 #include <QCoreApplication>
 #include <QHash>
 #include <QLocale>
-#include <QScopedPointer>
 #include <QString>
 #include <QTextCodec>
 
@@ -49,7 +48,6 @@
 #include "fileformats/ocd_types_v8.h" // IWYU pragma: keep
 
 class QChar;
-class QIODevice;
 
 namespace OpenOrienteering {
 
@@ -59,7 +57,6 @@ class Map;
 class MapColor;
 class MapPart;
 class MapView;
-class OCAD8FileImport;
 class Symbol;
 
 
@@ -124,7 +121,7 @@ protected:
 	};
 	
 public:
-	OcdFileImport(QIODevice* stream, Map *map, MapView *view);
+	OcdFileImport(const QString& path, Map *map, MapView *view);
 	
 	~OcdFileImport() override;
 	
@@ -168,15 +165,14 @@ public:
 	
 	void addSymbolWarning(const TextSymbol* symbol, const QString& warning);
 	
-	void finishImport() override;
 	
 protected:
-	void import(bool load_symbols_only) override;
+	bool importImplementation() override;
 	
-	void importImplementationLegacy(bool load_symbols_only);
+	void importImplementationLegacy(QByteArray& buffer);
 	
 	template< class F >
-	void importImplementation(bool load_symbols_only);
+	void importImplementation();
 	
 	
 	struct StringHandler
@@ -331,8 +327,6 @@ protected:
 	QLocale locale;
 	
 	QByteArray buffer;
-	
-	QScopedPointer< OCAD8FileImport > delegate;
 	
 	/// Character encoding to use for 1-byte (narrow) strings
 	QTextCodec *custom_8bit_encoding;

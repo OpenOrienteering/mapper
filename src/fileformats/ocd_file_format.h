@@ -22,9 +22,9 @@
 
 #include <memory>
 
-#include "fileformats/file_format.h"
+#include <QString>
 
-class QIODevice;
+#include "fileformats/file_format.h"
 
 namespace OpenOrienteering {
 
@@ -56,10 +56,10 @@ public:
 	
 	
 	/// \copydoc FileFormat::createImporter()
-	std::unique_ptr<Importer> makeImporter(QIODevice* stream, Map* map, MapView* view) const override;
+	std::unique_ptr<Importer> makeImporter(const QString& path, Map* map, MapView* view) const override;
 	
 	/// \copydoc FileFormat::createExporter()
-	std::unique_ptr<Exporter> makeExporter(QIODevice* stream, Map* map, MapView* view) const override;
+	std::unique_ptr<Exporter> makeExporter(const QString& path, const Map* map, const MapView* view) const override;
 	
 };
 

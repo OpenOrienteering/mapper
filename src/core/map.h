@@ -54,7 +54,6 @@ class QWidget;
 namespace OpenOrienteering {
 
 class CombinedSymbol;
-class FileFormat;
 class Georeferencing;
 class LineSymbol;
 class MapColor;
@@ -155,41 +154,15 @@ public:
 	
 	
 	/**
-	 * Saves the map to the given file.
-	 * 
-	 * If a MapView is given, is state will be saved.
-	 */
-	bool saveTo(const QString& path, const FileFormat* format, MapView *view);
-	
-	/**
-	 * Exports the map to the given file and format.
-	 * 
-	 * If a MapView is given, is state will be saved.
-	 * If a FileFormat is given, it will be used, otherwise the file format
-	 * is determined from the filename.
-	 * 
-	 * If the map was modified, it will still be considered modified after
-	 * successful export.
-	 */
-	bool exportTo(const QString& path,
-	              const FileFormat* format = nullptr,
-	              MapView* view = nullptr);
-	
-	/**
 	 * Attempts to load the map from the specified path. Returns true on success.
 	 * 
+	 * This is a convenience function used by tests. Normally, a importer should be
+	 * used explicitly.
+	 * 
 	 * @param path The file path to load the map from.
-	 * @param dialog_parent The parent widget for all dialogs.
-	 *     This should never be nullptr in a QWidgets application.
 	 * @param view If not nullptr, restores this map view.
-	 * @param load_symbols_only Loads only symbols from the chosen file.
-	 *     Useful to load symbol sets.
-	 * @param show_error_messages Whether to show import errors and warnings.
 	 */
-	bool loadFrom(const QString& path,
-	              QWidget* dialog_parent,
-	              MapView* view = nullptr,
-	              bool load_symbols_only = false, bool show_error_messages = true);
+	bool loadFrom(const QString& path, MapView* view = nullptr);
 	
 	/**
 	 * Imports the other map into this map with the following strategy:
@@ -233,18 +206,21 @@ public:
 	
 	
 	/**
-	 * Serializes the map directly into the given IO device in a known format.
+	 * Serializes the map directly to the given IO device, in a fixed format.
+	 * 
 	 * This can be imported again using importFromIODevice().
 	 * Returns true if successful.
 	 */
-	bool exportToIODevice(QIODevice* stream);
+	bool exportToIODevice(QIODevice& device) const;
 	
 	/**
-	 * Loads the map directly from the given IO device,
-	 * where the data must have been written by exportToIODevice().
+	 * Loads the map directly from the given IO device.
+	 * 
+	 * The data must have been written by exportToIODevice() (or at least use
+	 * the same format.)
 	 * Returns true if successful.
 	 */
-	bool importFromIODevice(QIODevice* stream);
+	bool importFromIODevice(QIODevice& device);
 	
 	
 	/**

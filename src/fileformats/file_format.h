@@ -31,8 +31,6 @@
 #include <QString>
 #include <QStringList>
 
-class QIODevice;
-
 namespace OpenOrienteering {
 
 class Exporter;
@@ -243,15 +241,15 @@ public:
 	 * If the Importer can not be created, a FileFormatException shall be
 	 * thrown. The default implementation does just that.
 	 */
-	virtual std::unique_ptr<Importer> makeImporter(QIODevice* stream, Map *map, MapView *view) const;
+	virtual std::unique_ptr<Importer> makeImporter(const QString& path, Map *map, MapView *view) const;
 	
 	/** 
-	 * Creates an Exporter that will save A map into the given stream.
+	 * Creates an Exporter that will save a map to the given path.
 	 *
 	 * If the Exporter can not be created, a FileFormatException shall be
 	 * thrown. The default implementation does just that.
 	 */
-	virtual std::unique_ptr<Exporter> makeExporter(QIODevice* stream, Map *map, MapView *view) const;
+	virtual std::unique_ptr<Exporter> makeExporter(const QString& path, const Map* map, const MapView* view) const;
 	
 private:
 	FileType file_type;

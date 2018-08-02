@@ -51,6 +51,7 @@
 #include "core/symbols/symbol.h"
 #include "fileformats/file_format.h"
 #include "fileformats/file_format_registry.h"
+#include "fileformats/file_import_export.h"
 #include "gui/about_dialog.h"
 #include "gui/autosave_dialog.h"
 #include "gui/file_dialog.h"
@@ -219,13 +220,13 @@ void MainWindow::setHomeScreenDisabled(bool disabled)
 void MainWindow::setController(MainWindowController* new_controller)
 {
 	setController(new_controller, false);
-	setCurrentPath({});
+	setCurrentFile({}, nullptr);
 }
 
-void MainWindow::setController(MainWindowController* new_controller, const QString& path)
+void MainWindow::setController(MainWindowController* new_controller, const QString& path, const FileFormat* format)
 {
 	setController(new_controller, true);
-	setCurrentPath(path);
+	setCurrentFile(path, format);
 }
 
 void MainWindow::setController(MainWindowController* new_controller, bool has_file)
@@ -440,7 +441,7 @@ void MainWindow::createHelpMenu()
 	}
 }
 
-void MainWindow::setCurrentPath(const QString& path)
+void MainWindow::setCurrentFile(const QString& path, const FileFormat* format)
 {
 	Q_ASSERT(has_opened_file || path.isEmpty());
 	
@@ -448,13 +449,19 @@ void MainWindow::setCurrentPath(const QString& path)
 	{
 		QString window_file_path;
 		current_path.clear();
+		current_format = nullptr;
 		if (has_opened_file)
 		{
 			window_file_path = QFileInfo(path).canonicalFilePath();
 			if (window_file_path.isEmpty())
+			{
 				window_file_path = tr("Unsaved file");
+			}
 			else
+			{
 				current_path = window_file_path;
+				current_format = format;
+			}
 		}
 		setWindowFilePath(window_file_path);
 	}
@@ -730,9 +737,20 @@ void MainWindow::showNewMapWizard()
 	{
 		new_map->setScaleDenominator(newMapDialog.getSelectedScale());
 	}
-	else
+	else if (auto importer = FileFormats.makeImporter(symbol_set_path, *new_map, nullptr))
 	{
-		new_map->loadFrom(symbol_set_path, this, &tmp_view, true);
+		importer->setLoadSymbolsOnly(true);
+		if (!importer->doImport())
+		{
+			QMessageBox::warning(this, tr("Error"),
+			                     tr("Cannot open file:\n%1\n\n%2").
+			                     arg(symbol_set_path, importer->warnings().back()));
+			delete new_map;
+			return;
+		}
+		if (!importer->warnings().empty())
+			showMessageBox(this, tr("Warning"), tr("The symbol set import generated warnings."), importer->warnings());
+		
 		if (new_map->getScaleDenominator() != newMapDialog.getSelectedScale())
 		{
 			if (QMessageBox::question(this, tr("Warning"), tr("The selected map scale is 1:%1, but the chosen symbol set has a nominal scale of 1:%2.\n\nDo you want to scale the symbols to the selected scale?").arg(newMapDialog.getSelectedScale()).arg(new_map->getScaleDenominator()),  QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
@@ -755,6 +773,10 @@ void MainWindow::showNewMapWizard()
 			}
 		}
 	}
+	else
+	{
+		;  /// \todo error message, cleanup
+	}
 	
 	auto map_view = new MapView { new_map };
 	map_view->setGridVisible(tmp_view.isGridVisible());
@@ -764,7 +786,7 @@ void MainWindow::showNewMapWizard()
 	
 	MainWindow* new_window = hasOpenedFile() ? new MainWindow() : this;
 	new_window->setWindowFilePath(tr("Unsaved file"));
-	new_window->setController(new MapEditorController(MapEditorController::MapEditor, new_map, map_view), QString());
+	new_window->setController(new MapEditorController(MapEditorController::MapEditor, new_map, map_view), QString(), nullptr);
 	
 	new_window->show();
 	new_window->raise();
@@ -774,12 +796,21 @@ void MainWindow::showNewMapWizard()
 
 void MainWindow::showOpenDialog()
 {
-	QString path = getOpenFileName(this, tr("Open file"), FileFormat::AllFiles);
-	if (!path.isEmpty())
-		openPath(path);
+	if (auto selected = getOpenFileName(this, tr("Open file"), FileFormat::AllFiles))
+	{
+		openPath(selected.filePath(), selected.fileFormat());
+	}
 }
 
 bool MainWindow::openPath(const QString &path)
+{
+	auto format = FileFormats.findFormatForFilename(path, &FileFormat::supportsImport);
+	if (!format)
+		format = FileFormats.findFormatForData(path, FileFormat::AllFiles);
+	return openPath(path, format);
+}
+
+bool MainWindow::openPath(const QString& path, const FileFormat* format)
 {
 	// Empty path does nothing. This also helps with the single instance application code.
 	if (path.isEmpty())
@@ -797,6 +828,11 @@ bool MainWindow::openPath(const QString &path)
 		return true;
 	}
 #endif
+	
+	if (!format)
+		QMessageBox::warning(this, tr("Error"),
+		                     tr("Cannot open file:\n%1\n\n%2").
+		                     arg(path, tr("Invalid file type.")));
 	
 	// Check a blocker that prevents immediate re-opening of crashing files.
 	// Needed for stopping auto-loading a crashing file on startup.
@@ -828,6 +864,7 @@ bool MainWindow::openPath(const QString &path)
 	}
 	
 	QString new_actual_path = path;
+	const FileFormat* new_actual_format = format;
 	QString autosave_path = Autosave::autosavePath(path);
 	bool new_autosave_conflict = QFileInfo::exists(autosave_path);
 	if (new_autosave_conflict)
@@ -837,14 +874,16 @@ bool MainWindow::openPath(const QString &path)
 		AutosaveDialog* autosave_dialog = new AutosaveDialog(path, autosave_path, autosave_path, this);
 		int result = autosave_dialog->exec();
 		new_actual_path = (result == QDialog::Accepted) ? autosave_dialog->selectedPath() : QString();
+		new_actual_format = (new_actual_path == path) ? format : FileFormats.findFormat(FileFormats.defaultFormat());
 		delete autosave_dialog;
 #else
 		// Assuming large screen, dialog will be shown while the autosaved file is open
 		new_actual_path = autosave_path;
+		new_actual_format = FileFormats.findFormat(FileFormats.defaultFormat());
 #endif
 	}
 	
-	if (new_actual_path.isEmpty() || !new_controller->load(new_actual_path, this))
+	if (new_actual_path.isEmpty() || !new_controller->loadFrom(new_actual_path, *format, this))
 	{
 		delete new_controller;
 		settings.remove(reopen_blocker);
@@ -857,7 +896,7 @@ bool MainWindow::openPath(const QString &path)
 		open_window = new MainWindow();
 #endif
 	
-	open_window->setController(new_controller, path);
+	open_window->setController(new_controller, path, format);
 	open_window->actual_path = new_actual_path;
 	open_window->setHasAutosaveConflict(new_autosave_conflict);
 	open_window->setHasUnsavedChanges(false);
@@ -908,9 +947,10 @@ void MainWindow::switchActualPath(const QString& path)
 	{
 		const QString& current_path = currentPath();
 		MainWindowController* const new_controller = MainWindowController::controllerForFile(current_path);
-		if (new_controller && new_controller->load(path, this))
+		auto format = (path == current_path) ? current_format : FileFormats.findFormat(FileFormats.defaultFormat());
+		if (new_controller && new_controller->loadFrom(path, *format, this))
 		{
-			setController(new_controller, current_path);
+			setController(new_controller, current_path, format);
 			actual_path = path;
 			setHasUnsavedChanges(false);
 		}
@@ -1015,7 +1055,7 @@ Autosave::AutosaveResult MainWindow::autosave()
 
 bool MainWindow::save()
 {
-	return saveTo(currentPath());
+	return saveTo(currentPath(), currentFormat());
 }
 
 bool MainWindow::saveTo(const QString &path, const FileFormat* format)
@@ -1027,7 +1067,7 @@ bool MainWindow::saveTo(const QString &path, const FileFormat* format)
 		return showSaveAsDialog();
 	
 	if (!format)
-		format = FileFormats.findFormatForFilename(path);
+		format = FileFormats.findFormatForFilename(path, &FileFormat::supportsExport);
 	
 	if (!format)
 	{
@@ -1046,7 +1086,7 @@ bool MainWindow::saveTo(const QString &path, const FileFormat* format)
 			return showSaveAsDialog();
 	}
 	
-	if (!controller->saveTo(path, format))
+	if (!controller->saveTo(path, *format))
 		return false;
 	
 	setMostRecentlyUsedFile(path);
@@ -1056,7 +1096,7 @@ bool MainWindow::saveTo(const QString &path, const FileFormat* format)
 	
 	if (path != currentPath())
 	{
-		setCurrentPath(path);
+		setCurrentFile(path, format);
 		removeAutosaveFile();
 	}
 	
@@ -1065,7 +1105,8 @@ bool MainWindow::saveTo(const QString &path, const FileFormat* format)
 	return true;
 }
 
-QString MainWindow::getOpenFileName(QWidget* parent, const QString& title, FileFormat::FileTypes types)
+// static
+MainWindow::FileInfo MainWindow::getOpenFileName(QWidget* parent, const QString& title, FileFormat::FileTypes types)
 {
 	// Get the saved directory to start in, defaulting to the user's home directory.
 	QSettings settings;
@@ -1074,7 +1115,7 @@ QString MainWindow::getOpenFileName(QWidget* parent, const QString& title, FileF
 	// Build the list of supported file filters based on the file format registry
 	QString filters, extensions;
 	
-	if (types.testFlag(FileFormat::MapFile))
+	if (types.testFlag(FileFormat::MapFile) || types.testFlag(FileFormat::OgrFile))
 	{
 		for (auto format : FileFormats.formats())
 		{
@@ -1099,10 +1140,42 @@ QString MainWindow::getOpenFileName(QWidget* parent, const QString& title, FileF
 	
 	filters += tr("All files") + QLatin1String(" (*.*)");
 	
-	QString path = FileDialog::getOpenFileName(parent, title, open_directory, filters);
-	QFileInfo info(path);
-	return info.canonicalFilePath();
+	QString filter; // will be set to the selected filter by QFileDialog
+	QString path = FileDialog::getOpenFileName(parent, title, open_directory, filters, &filter);
+	
+	const FileFormat* format = nullptr;
+	if (!path.isEmpty())
+	{
+		path = QFileInfo(path).canonicalFilePath();
+		format = FileFormats.findFormatByFilter(filter, &FileFormat::supportsImport);
+		if (!format)
+			format = FileFormats.findFormatForFilename(path, &FileFormat::supportsImport);
+		if (!format)
+			format = FileFormats.findFormatForData(path, types);
+	}
+	return { path, format };
 }
+
+
+
+// static
+void MainWindow::showMessageBox(QWidget* parent, const QString& title, const QString& headline, const std::vector<QString>& messages)
+{
+	QString document;
+	if (!headline.isEmpty())
+		document += QLatin1String("<p><b>") + headline + QLatin1String("</b></p>");
+	for (const auto& message : messages)
+		document += Qt::convertFromPlainText(message, Qt::WhiteSpaceNormal);
+	
+	TextBrowserDialog dialog(document, parent);
+	dialog.setWindowTitle(title);
+	dialog.setWindowModality(Qt::WindowModal);
+	dialog.exec();
+	// Let Android update the screen.
+	qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
+}
+
+
 
 bool MainWindow::showSaveAsDialog()
 {
@@ -1150,7 +1223,7 @@ bool MainWindow::showSaveAsDialog()
 	if (path.isEmpty())
 		return false;
 	
-	const FileFormat *format = FileFormats.findFormatByFilter(filter);
+	const FileFormat *format = FileFormats.findFormatByFilter(filter, &FileFormat::supportsExport);
 	if (!format)
 	{
 		QMessageBox::information(this, tr("Error"), 
@@ -1174,7 +1247,7 @@ bool MainWindow::showSaveAsDialog()
 	// Ensure that the file name matches the format.
 	Q_ASSERT(format->fileExtensions().contains(QFileInfo(path).suffix()));
 	// Fails when using different formats for import and export:
-	//	Q_ASSERT(FileFormats.findFormatForFilename(path) == format);
+	//	Q_ASSERT(FileFormats.findFormatForFilename(path, ***) == format);
 	
 	return saveTo(path, format);
 }

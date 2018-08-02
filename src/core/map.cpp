@@ -23,7 +23,6 @@
 
 #include <algorithm>
 #include <cmath>
-#include <exception>
 #include <iterator>
 #include <memory>
 #include <type_traits>
@@ -32,21 +31,13 @@
 #include <QtGlobal>
 #include <QtMath>
 #include <QByteArray>
-#include <QCoreApplication>
 #include <QDebug>
-#include <QEventLoop>
-#include <QFile>
-#include <QFileInfo>
 #include <QIODevice>
-#include <QLatin1String>
 #include <QLocale>
 #include <QMessageBox>
 #include <QPainter>
 #include <QPoint>
 #include <QPointF>
-#include <QSaveFile>
-#include <QStringList>
-#include <QTextDocument>
 #include <QTimer>
 #include <QTranslator>
 
@@ -65,11 +56,10 @@
 #include "core/symbols/point_symbol.h"
 #include "core/symbols/symbol.h"
 #include "core/symbols/text_symbol.h"
-#include "fileformats/file_format.h"
 #include "fileformats/file_format_registry.h"
 #include "fileformats/file_import_export.h"
+#include "fileformats/xml_file_format_p.h"
 #include "gui/map/map_widget.h"
-#include "gui/text_browser_dialog.h"
 #include "templates/template.h"
 #include "undo/object_undo.h"
 #include "undo/undo.h"
@@ -119,26 +109,6 @@ struct MapColorSetMergeItem
 /** The mapping of all colors in a source MapColorSet
  *  to colors in a destination MapColorSet. */
 typedef std::vector<MapColorSetMergeItem> MapColorSetMergeList;
-
-
-/**
- * Shows a message box for a list of unformatted messages.
- */
-void showMessageBox(QWidget* parent, const QString& title, const QString& headline, const std::vector<QString>& messages)
-{
-	QString document;
-	if (!headline.isEmpty())
-		document += QLatin1String("<p><b>") + headline + QLatin1String("</b></p>");
-	for (const auto& message : messages)
-		document += Qt::convertFromPlainText(message, Qt::WhiteSpaceNormal);
-	
-	TextBrowserDialog dialog(document, parent);
-	dialog.setWindowTitle(title);
-	dialog.setWindowModality(Qt::WindowModal);
-	dialog.exec();
-	// Let Android update the screen.
-	qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
-}
 
 
 }  // namespace
@@ -639,181 +609,6 @@ void Map::setMapNotes(const QString& text)
 	map_notes = text;
 }
 
-bool Map::saveTo(const QString& path, const FileFormat* format, MapView* view)
-{
-	bool success = exportTo(path, format, view);
-	if (success)
-	{
-		colors_dirty = false;
-		symbols_dirty = false;
-		templates_dirty = false;
-		objects_dirty = false;
-		other_dirty = false;
-		unsaved_changes = false;
-		undoManager().setClean();
-	}
-	return success;
-}
-
-bool Map::exportTo(const QString& path, const FileFormat* format, MapView* view)
-{
-	Q_ASSERT(view && "Saving a file without view information is not supported!");
-	
-	if (!format)
-		format = FileFormats.findFormatForFilename(path);
-
-	if (!format)
-		format = FileFormats.findFormat(FileFormats.defaultFormat());
-	
-	if (!format)
-	{
-		QMessageBox::warning(nullptr, tr("Error"), tr("Cannot export the map as\n\"%1\"\nbecause the format is unknown.").arg(path));
-		return false;
-	}
-	else if (!format->supportsExport())
-	{
-		QMessageBox::warning(nullptr, tr("Error"), tr("Cannot export the map as\n\"%1\"\nbecause saving as %2 (.%3) is not supported.").
-		                     arg(path, format->description(), format->fileExtensions().join(QLatin1String(", "))));
-		return false;
-	}
-	
-	QSaveFile file(path);
-	auto exporter = format->makeExporter(&file, this, view);
-	bool success = false;
-	if (file.open(QIODevice::WriteOnly))
-	{
-		try
-		{
-			exporter->doExport();
-		}
-		catch (std::exception &e)
-		{
-			file.cancelWriting();
-			const QString error = QString::fromLocal8Bit(e.what());
-			QMessageBox::warning(nullptr, tr("Error"), tr("Internal error while saving:\n%1").arg(error));
-			return false;
-		}
-		
-		success = file.commit();
-	}
-	
-	if (!success)
-	{
-		QMessageBox::warning(
-		  nullptr,
-		  tr("Error"),
-		  tr("Cannot save file\n%1:\n%2").arg(path, file.errorString())
-		);
-	}
-	else if (!exporter->warnings().empty())
-	{
-		showMessageBox(nullptr,
-		               tr("Warning"),
-		               tr("The map export generated warnings."),
-		               exporter->warnings() );
-	}
-	
-	return success;
-}
-
-bool Map::loadFrom(const QString& path, QWidget* dialog_parent, MapView* view, bool load_symbols_only, bool show_error_messages)
-{
-	// Ensure the file exists and is readable.
-	QFile file(path);
-	if (!file.open(QIODevice::ReadOnly))
-	{
-		if (show_error_messages)
-			QMessageBox::warning(
-			  dialog_parent,
-			  tr("Error"),
-			  tr("Cannot open file:\n%1\nfor reading.").arg(path)
-			);
-		return false;
-	}
-	
-	// Delete previous objects
-	reset();
-
-	// Read a block at the beginning of the file, that we can use for magic number checking.
-	char buffer[256];
-	auto total_read = file.read(buffer, file.isSequential() ? 0 : std::extent<decltype(buffer)>::value);
-	file.seek(0);
-
-	bool import_complete = false;
-	QString error_msg = tr("Invalid file type.");
-	for (auto format : FileFormats.formats())
-	{
-		// If the format supports import, and thinks it can understand the file header, then proceed.
-		auto support = format->understands(buffer, int(total_read));
-		if (support == FileFormat::NotSupported)
-			continue;
-		
-		try {
-			auto importer = format->makeImporter(&file, this, view);
-			
-			// Run the first pass.
-			importer->doImport(load_symbols_only, QFileInfo(path).absolutePath());
-			
-			// Are there any actions the user must take to complete the import?
-			if (!importer->actions().empty())
-			{
-				// TODO: prompt the user to resolve the action items. All-in-one dialog.
-			}
-			
-			// Finish the import.
-			importer->finishImport();
-			
-			file.close();
-			
-			// Display any warnings.
-			if (!importer->warnings().empty() && show_error_messages)
-			{
-				showMessageBox(nullptr,
-				               tr("Warning"),
-				               tr("The map import generated warnings."),
-				               importer->warnings() );
-			}
-			
-			import_complete = true;
-		}
-		catch (FileFormatException &e)
-		{
-			error_msg = e.message();
-		}
-		catch (std::exception &e)
-		{
-			qWarning("Exception: %s", e.what());
-			error_msg = QString::fromLatin1(e.what());
-		}
-		
-		// If the last importer finished successfully, or failed despite full support
-		if (import_complete || support == FileFormat::FullySupported)
-			break;
-	}
-	
-	if (view)
-	{
-		view->setPanOffset(QPoint(0, 0));
-	}
-
-	if (!import_complete)
-	{
-		if (show_error_messages)
-			QMessageBox::warning(
-			 dialog_parent,
-			 tr("Error"),
-			 tr("Cannot open file:\n%1\n\n%2").arg(path, error_msg)
-			);
-		return false;
-	}
-
-	// Update all objects without trying to remove their renderables first, this gives a significant speedup when loading large files
-	updateAllObjects(); // TODO: is the comment above still applicable?
-	
-	setHasUnsavedChanges(false);
-
-	return true;
-}
 
 void Map::importMap(
         const Map* other,
@@ -895,6 +690,13 @@ void Map::importMap(
 	auto symbol_map = importMap(*other, mode, filter, symbol_insert_pos, merge_duplicate_symbols, q_transform);
 	if (out_symbol_map)
 		*out_symbol_map = symbol_map;
+}
+
+
+bool Map::loadFrom(const QString& path, MapView* view)
+{
+	auto importer = FileFormats.makeImporter(path, *this, view);
+	return importer && importer->doImport();
 }
 
 
@@ -1001,34 +803,23 @@ QHash<const Symbol*, Symbol*> Map::importMap(
 
 
 
-bool Map::exportToIODevice(QIODevice* stream)
-try
+bool Map::exportToIODevice(QIODevice& device) const
 {
-	auto native_format = FileFormats.findFormat("XML");
-	stream->open(QIODevice::WriteOnly);
-	native_format->makeExporter(stream, this, nullptr)->doExport();
-	stream->close();
-	return true;
-}
-catch (std::exception& /*e*/)
-{
-	return false;
+	XMLFileExporter exporter({}, this, nullptr);
+	exporter.setDevice(&device);
+	auto success = exporter.doExport();
+	device.close();
+	return success;
 }
 
 
-bool Map::importFromIODevice(QIODevice* stream)
-try
+bool Map::importFromIODevice(QIODevice& device)
 {
-	auto native_format = FileFormats.findFormat("XML");
-	auto importer = native_format->makeImporter(stream, this, nullptr);
-	importer->doImport(false);
-	importer->finishImport();
-	stream->close();
-	return true;
-}
-catch (std::exception& /*e*/)
-{
-	return false;
+	XMLFileImporter importer {{}, this, nullptr};
+	importer.setDevice(&device);
+	auto success = importer.doImport();
+	device.close();
+	return success;
 }
 
 

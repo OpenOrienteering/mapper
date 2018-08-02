@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -514,7 +514,7 @@ QWidget* HomeScreenWidgetMobile::makeFileListWidget(HomeScreenController* contro
 		QDirIterator it(location.path(), QDir::Files | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
 		while (it.hasNext()) {
 			it.next();
-			auto format = FileFormats.findFormatForFilename(it.filePath());
+			auto format = FileFormats.findFormatForFilename(it.filePath(), &FileFormat::supportsImport);
 			if (!format || !format->supportsExport())
 				continue;
 			
@@ -563,7 +563,7 @@ void HomeScreenWidgetMobile::addFilesToFileList(QListWidget* file_list, const QS
 	QDirIterator it(path, QDir::Files | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
 	while (it.hasNext()) {
 		it.next();
-		if (FileFormats.findFormatForFilename(it.filePath()) == nullptr)
+		if (!FileFormats.findFormatForFilename(it.filePath(), &FileFormat::supportsImport))
 			continue;
 		
 		QListWidgetItem* new_item = new QListWidgetItem(it.fileInfo().fileName());

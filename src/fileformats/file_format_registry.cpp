@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Pete Curtis
- *    Copyright 2013, 2015, 2016 Kai Pastor
+ *    Copyright 2013, 2015-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,9 +20,10 @@
 
 #include "file_format_registry.h"
 
+#include <QFile>
 #include <QFileInfo>
 
-#include "fileformats/file_format.h"
+#include "fileformats/file_import_export.h"
 
 
 namespace OpenOrienteering {
@@ -51,8 +52,20 @@ void FileFormatRegistry::registerFormat(FileFormat *format)
 {
 	fmts.push_back(format);
 	if (fmts.size() == 1) default_format_id = format->id();
-	Q_ASSERT(findFormatForFilename(QLatin1String("filename.") + format->primaryExtension()) != nullptr); // There may be more than one format!
-	Q_ASSERT(findFormatByFilter(format->filter()) == format); // The filter shall be unique at least by description.
+	if (format->supportsImport())
+	{
+		// There must be at least one one format for a filename with the registered extension.
+		Q_ASSERT(findFormatForFilename(QLatin1String("filename.") + format->primaryExtension(), &FileFormat::supportsImport) != nullptr);
+		// The filter shall be unique at least by description.
+		Q_ASSERT(findFormatByFilter(format->filter(), &FileFormat::supportsImport) == format); 
+	}
+	if (format->supportsExport())
+	{
+		// There must be at least one one format for a filename with the registered extension.
+		Q_ASSERT(findFormatForFilename(QLatin1String("filename.") + format->primaryExtension(), &FileFormat::supportsExport) != nullptr);
+		// The filter shall be unique at least by description.
+		Q_ASSERT(findFormatByFilter(format->filter(), &FileFormat::supportsExport) == format); 
+	}
 }
 
 std::unique_ptr<FileFormat> FileFormatRegistry::unregisterFormat(const FileFormat* format)
@@ -67,35 +80,91 @@ std::unique_ptr<FileFormat> FileFormatRegistry::unregisterFormat(const FileForma
 	return ret;
 }
 
+
+std::unique_ptr<Importer> FileFormatRegistry::makeImporter(const QString& path, Map& map, MapView* view)
+{
+	auto extension = QFileInfo(path).suffix();
+	auto format = findFormat([extension](auto format) {
+		return format->supportsImport()
+		       && format->fileExtensions().contains(extension, Qt::CaseInsensitive);
+	});
+	if (!format)
+		format = findFormatForData(path, FileFormat::AllFiles);
+	return format ? format->makeImporter(path, &map, view) : nullptr;
+}
+
+std::unique_ptr<Exporter> FileFormatRegistry::makeExporter(const QString& path, const Map* map, const MapView* view)
+{
+	auto extension = QFileInfo(path).suffix();
+	auto format = findFormat([extension](auto format) {
+		return format->supportsExport()
+		       && format->fileExtensions().contains(extension, Qt::CaseInsensitive);
+	});
+	if (!format && QFileInfo::exists(path))
+		format = findFormatForData(path, FileFormat::AllFiles);
+	return format ? format->makeExporter(path, map, view) : nullptr;
+}
+
+
+const FileFormat* FileFormatRegistry::findFormat(std::function<bool (const FileFormat*)> predicate) const
+{
+	auto found = std::find_if(begin(fmts), end(fmts), predicate);
+	return (found != end(fmts)) ? *found : nullptr;
+}
+
+
 const FileFormat *FileFormatRegistry::findFormat(const char* id) const
 {
-	for (auto format : fmts)
-	{
-		if (qstrcmp(format->id(), id) == 0) return format;
-	}
-	return nullptr;
+	return findFormat([id](auto format) { return qstrcmp(format->id(), id) == 0; });
 }
 
-const FileFormat *FileFormatRegistry::findFormatByFilter(const QString& filter) const
+const FileFormat *FileFormatRegistry::findFormatByFilter(const QString& filter, bool (FileFormat::*predicate)() const) const
 {
-	for (auto format : fmts)
-	{
-		// Compare only before closing ')'. Needed for QTBUG 51712 workaround in
-		// file_dialog.cpp, and warranted by Q_ASSERT in registerFormat().
-		if (filter.startsWith(format->filter().leftRef(format->filter().length()-1)))
-			return format;
-	}
-	return nullptr;
+	// Compare only before closing ')'. Needed for QTBUG 51712 workaround in
+	// file_dialog.cpp, and warranted by Q_ASSERT in registerFormat().
+	return findFormat([predicate, filter](auto format) {
+		return (format->*predicate)()
+		       && filter.startsWith(format->filter().leftRef(format->filter().length()-1));
+	});
 }
 
-const FileFormat *FileFormatRegistry::findFormatForFilename(const QString& filename) const
+const FileFormat *FileFormatRegistry::findFormatForFilename(const QString& filename, bool (FileFormat::*predicate)() const) const
 {
-	QString file_extension = QFileInfo(filename).suffix();
+	auto extension = QFileInfo(filename).suffix();
+	return findFormat([predicate, extension](auto format) {
+		return (format->*predicate)()
+		       && format->fileExtensions().contains(extension, Qt::CaseInsensitive);
+	});
+}
+
+const FileFormat* FileFormatRegistry::findFormatForData(const QString& path, FileFormat::FileTypes types) const
+{
+	QFile file(path);
+	if (!file.open(QIODevice::ReadOnly))
+		return nullptr;
+	
+	char buffer[256];
+	auto total_read = int(file.read(buffer, file.isSequential() ? 0 : std::extent<decltype(buffer)>::value));
+	
+	FileFormat* candidate = nullptr;
 	for (auto format : fmts)
 	{
-		if (format->fileExtensions().contains(file_extension, Qt::CaseInsensitive)) return format;
+		if (!format->supportsImport() || !(format->fileType() & types))
+			continue;
+		
+		switch (format->understands(buffer, total_read))
+		{
+		case FileFormat::NotSupported:
+			break;
+		case FileFormat::Unknown:
+			if (!candidate)
+				candidate = format;
+			break;
+		case FileFormat::FullySupported:
+			return format;  // shortcut
+		}
 	}
-	return nullptr;
+	return candidate;
 }
 
 

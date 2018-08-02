@@ -27,8 +27,8 @@
 
 namespace OpenOrienteering {
 
-OcdFileExport::OcdFileExport(QIODevice* stream, Map* map, MapView* view)
-: Exporter { stream, map, view }
+OcdFileExport::OcdFileExport(const QString& path, const Map* map, const MapView* view)
+: Exporter { path, map, view }
 {
 	// nothing else
 }
@@ -37,14 +37,16 @@ OcdFileExport::OcdFileExport(QIODevice* stream, Map* map, MapView* view)
 OcdFileExport::~OcdFileExport() = default;
 
 
-void OcdFileExport::doExport()
+bool OcdFileExport::exportImplementation()
 {
-	OCAD8FileExport delegate { stream, map, view };
-	delegate.doExport();
+	OCAD8FileExport delegate { path, map, view };
+	delegate.setDevice(device());
+	auto success = delegate.doExport();
 	for (auto&& w : delegate.warnings())
 	{
 		addWarning(w);
 	}
+	return success;
 }
 
 
