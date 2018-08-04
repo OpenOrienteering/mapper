@@ -59,7 +59,7 @@ namespace Ocd
 		else if (Q_UNLIKELY(quint64(pos) + block_size > std::numeric_limits<quint32>::max()
 		                    || pos + block_size - 1 >= quint32(byte_array.size())))
 		{
-			qWarning("OcdEntityIndexIterator: Next index block is out of bounds");
+			qWarning("Ocd::getBlockChecked: Requested data block is out of bounds");
 			return nullptr;
 		}
 		return byte_array.data() + pos;

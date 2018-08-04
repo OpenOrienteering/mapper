@@ -294,6 +294,12 @@ template< class F >
 void OcdFileImport::importImplementation()
 {
 	const OcdFile<F> file(buffer);
+	if (!file.header())
+	{
+		qWarning("*** OcdFileImport: Incomplete or missing header");
+		return;
+	}
+
 #ifdef MAPPER_DEVELOPMENT_BUILD
 	if (!qApp->applicationName().endsWith(QLatin1String("Test")))
 	{
@@ -329,7 +335,9 @@ void OcdFileImport::importImplementation()
 void OcdFileImport::importGeoreferencing(const OcdFile<Ocd::FormatV8>& file)
 {
 	const Ocd::FileHeaderV8* header = file.header();
-	const Ocd::SetupV8* setup = reinterpret_cast< const Ocd::SetupV8* >(file.byteArray().data() + header->setup_pos);
+	const Ocd::SetupV8* setup = Ocd::getBlockChecked<Ocd::SetupV8>(file.byteArray(), header->setup_pos);
+	if (Q_UNLIKELY(!setup))
+		return;
 	
 	Georeferencing georef;
 	georef.setScaleDenominator(qRound(setup->map_scale));
@@ -1059,11 +1067,13 @@ void OcdFileImport::importView(const OcdFile<Ocd::FormatV8>& file)
 	if (view)
 	{
 		const Ocd::FileHeaderV8* header = file.header();
-		const Ocd::SetupV8* setup = reinterpret_cast< const Ocd::SetupV8* >(file.byteArray().data() + header->setup_pos);
-		
+		const Ocd::SetupV8* setup = Ocd::getBlockChecked<const Ocd::SetupV8>(file.byteArray(), header->setup_pos);
+		if (Q_UNLIKELY(!setup))
+			return;
+
 		if (setup->zoom >= MapView::zoom_out_limit && setup->zoom <= MapView::zoom_in_limit)
 			view->setZoom(setup->zoom);
-		
+
 		view->setCenter(convertOcdPoint(setup->center));
 	}
 }
