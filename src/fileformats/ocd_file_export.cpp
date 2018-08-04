@@ -789,11 +789,11 @@ QString stringForTemplate(const Template& temp, const MapCoord& area_offset, qui
 		// Data may end here (i.e. after 's'; spotted for OCD file)
 		out << "\tx" << qRound(100 * x)
 		    << "\ty" << qRound(100 * y)
-	        << qSetRealNumberPrecision(8)
-	        << "\ta" << ab
-	        << qSetRealNumberPrecision(10)
-	        << "\tu" << 100 * temp.getTemplateScaleX()
-	        << "\tv" << 100 * temp.getTemplateScaleY()
+		    << qSetRealNumberPrecision(8)
+		    << "\ta" << ab
+		    << qSetRealNumberPrecision(10)
+		    << "\tu" << 100 * temp.getTemplateScaleX()
+		    << "\tv" << 100 * temp.getTemplateScaleY()
 		    << "\td0"
 		    << "\tp-1"
 		    << "\tt0"
@@ -861,7 +861,7 @@ OcdFileExport::OcdFileExport(const QString& path, const Map* map, const MapView*
 #endif
 	
 	if (!ocd_version)
-	    ocd_version = decltype(ocd_version)(map->property(OcdFileFormat::versionProperty()).toInt());
+		ocd_version = decltype(ocd_version)(map->property(OcdFileFormat::versionProperty()).toInt());
 	
 	if (!ocd_version)
 		ocd_version = default_version;
@@ -1429,7 +1429,7 @@ qint16 OcdFileExport::exportSubPattern(const MapCoordVector& coords, const Symbo
 	};
 	
 	qint16 num_coords = 0;
-    
+	
 	switch (symbol->getType())
 	{
 	case Symbol::Point:
@@ -1829,7 +1829,7 @@ void OcdFileExport::exportLineSymbolDoubleLine(const LineSymbol* line_symbol, qu
 	{
 		auto dash_pattern_differs = left_border.dashed && right_border.dashed
 		                            && (left_border.dash_length != right_border.dash_length
-								        || left_border.break_length != right_border.break_length);
+		                                || left_border.break_length != right_border.break_length);
 		auto filling_pattern_differs = filling_dashed
 		                               && (left_border.dashed || right_border.dashed)
 		                               && (left_border.dashed != right_border.dashed

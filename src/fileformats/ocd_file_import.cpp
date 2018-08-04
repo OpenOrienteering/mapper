@@ -2142,10 +2142,10 @@ void OcdFileImport::fillPathCoords(OcdImportedPathObject *object, bool is_area, 
 	{
 		object->coords[i] = convertOcdPoint(ocd_points[i]);
 		setPointFlags(object, i, is_area, ocd_points[i]);
-    }
-    
-    // For path objects, create closed parts where the position of the last point is equal to that of the first point
-    if (object->getType() == Object::Path)
+	}
+	
+	// For path objects, create closed parts where the position of the last point is equal to that of the first point
+	if (object->getType() == Object::Path)
 	{
 		size_t start = 0;
 		for (size_t i = 0; i < object->coords.size(); ++i)
@@ -2185,9 +2185,9 @@ void OcdFileImport::fillPathCoords(OcdImportedPathObject *object, bool is_area, 
  */
 bool OcdFileImport::fillTextPathCoords(TextObject *object, TextSymbol *symbol, quint32 npts, const Ocd::OcdPoint32 *ocd_points)
 {
-    // text objects either have 1 point (free anchor) or 2 (midpoint/size)
-    // OCAD appears to always have 5 or 4 points (possible single anchor, then 4 corner coordinates going clockwise from anchor).
-    if (npts == 0) return false;
+	// text objects either have 1 point (free anchor) or 2 (midpoint/size)
+	// OCAD appears to always have 5 or 4 points (possible single anchor, then 4 corner coordinates going clockwise from anchor).
+	if (npts == 0) return false;
 	
 	if (npts == 4)
 	{
@@ -2205,7 +2205,7 @@ bool OcdFileImport::fillTextPathCoords(TextObject *object, TextSymbol *symbol, q
 		top_right = MapCoord(top_right.x() + adjust_vector.x(), top_right.y() + adjust_vector.y());
 		
 		object->setBox((bottom_left.nativeX() + top_right.nativeX()) / 2, (bottom_left.nativeY() + top_right.nativeY()) / 2,
-					   top_left.distanceTo(top_right), top_left.distanceTo(bottom_left));
+		               top_left.distanceTo(top_right), top_left.distanceTo(bottom_left));
 		object->setVerticalAlignment(TextObject::AlignTop);
 	}
 	else
