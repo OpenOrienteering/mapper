@@ -31,7 +31,6 @@
 #include <vector>
 
 #include <QtMath>
-#include <QBuffer>
 #include <QChar>
 #include <QCoreApplication>
 #include <QDebug>
@@ -66,7 +65,6 @@
 #include "core/symbols/symbol.h"
 #include "core/symbols/text_symbol.h"
 #include "fileformats/file_format.h"
-#include "fileformats/ocad8_file_format_p.h"
 #include "fileformats/ocd_file_format.h"
 #include "fileformats/ocd_types_v10.h"
 #include "fileformats/ocd_types_v11.h"
@@ -291,20 +289,6 @@ qint64 OcdFileImport::convertLength< quint32 >(quint32 ocd_length) const
 
 #endif // !NDEBUG
 
-
-void OcdFileImport::importImplementationLegacy(QByteArray& buffer)
-{
-	QBuffer delegate_device(&buffer);
-	delegate_device.open(QIODevice::ReadOnly);
-	
-	OCAD8FileImport delegate(path, map, view);
-	delegate.setDevice(&delegate_device);
-	delegate.setLoadSymbolsOnly(loadSymbolsOnly());
-	delegate.importImplementation();
-	map->setProperty(OcdFileFormat::versionProperty(), OcdFileFormat::legacyVersion());
-	for (auto&& w : delegate.warnings())
-		addWarning(w);
-}
 
 template< class F >
 void OcdFileImport::importImplementation()
@@ -2360,13 +2344,10 @@ bool OcdFileImport::importImplementation()
 	case 6:
 	case 7:
 	case 8:
-		// Note: Version 6 and 7 do have some differences, which will need to be
-		//       handled in the version 8 implementation by looking up the
-		//       actual format version in the file header.
-		if (Settings::getInstance().getSetting(Settings::General_NewOcd8Implementation).toBool())
-			importImplementation<Ocd::FormatV8>();
-		else
-			importImplementationLegacy(buffer);
+		// Version 6 and 7 do have some differences from version 8, which need
+		// to be handled in the version 8 implementation by looking up the
+		// actual format version in the file header.
+		importImplementation<Ocd::FormatV8>();
 		break;
 	case 9:
 	case 10:

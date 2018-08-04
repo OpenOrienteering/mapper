@@ -168,8 +168,6 @@ public:
 protected:
 	bool importImplementation() override;
 	
-	void importImplementationLegacy(QByteArray& buffer);
-	
 	template< class F >
 	void importImplementation();
 	

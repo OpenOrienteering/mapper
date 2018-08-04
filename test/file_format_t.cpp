@@ -46,7 +46,6 @@
 #include <QVariant>
 
 #include "global.h"
-#include "settings.h"
 #include "test_config.h"
 #include "core/georeferencing.h"
 #include "core/latlon.h"
@@ -515,8 +514,6 @@ void FileFormatTest::saveAndLoad()
 	QFETCH(QByteArray, format_id);
 	QFETCH(int, format_version);
 	QFETCH(QString, map_filename);
-	
-	Settings::getInstance().setSetting(Settings::General_NewOcd8Implementation, qstrcmp(format_id, "OCD-legacy") != 0);
 	
 	// Find the file format and verify that it exists
 	const FileFormat* format = FileFormats.findFormat(format_id);
