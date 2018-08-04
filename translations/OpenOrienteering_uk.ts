@@ -7061,7 +7061,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/templates/template_image.cpp" line="244"/>
         <source>Select the coordinate reference system of the coordinates in the world file</source>
-        <translation>Виберіть базову систему координат для координат у world file-і</translation>
+        <translation>Виберіть базову систему координат для координат у world файлі</translation>
     </message>
 </context>
 <context>
