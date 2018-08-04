@@ -44,13 +44,11 @@
 #include <QLatin1String>
 #include <QList>
 #include <QPointF>
-#include <QStringRef>
 #include <QTextCodec>
 #include <QTextDecoder>
 #include <QVariant>
 
 #include "settings.h"
-#include "core/crs_template.h"
 #include "core/georeferencing.h"
 #include "core/map.h"
 #include "core/map_color.h"

@@ -18,13 +18,20 @@
 */
 
 #include <algorithm>
+#include <iterator>
 #include <vector>
 
-#include <QObject>
-#include <QPointF>
-#include <QString>
 #include <QtGlobal>
 #include <QtTest>
+#include <QByteArray>
+#include <QLatin1Char>
+#include <QList>
+#include <QMetaType>
+#include <QObject>
+#include <QPoint>
+#include <QPointF>
+#include <QString>
+#include <QStringList>
 
 #include "core/crs_template.h"
 #include "core/georeferencing.h"
@@ -55,8 +62,7 @@ bool operator==(const GeorefCoreData& lhs, const GeorefCoreData& rhs)
 	return lhs.scale == rhs.scale
 	        && lhs.declination == rhs.declination
 	        && lhs.grivation == rhs.grivation
-	        && qAbs(lhs.ref_point.x() - rhs.ref_point.x()) < 5e-9
-	        && qAbs(lhs.ref_point.y() - rhs.ref_point.y()) < 5e-9
+	        && lhs.ref_point == rhs.ref_point
 	        && lhs.crs_id == rhs.crs_id
 	        && std::equal(lhs.crs_parameters.begin(), lhs.crs_parameters.begin(), rhs.crs_parameters.begin());
 }
@@ -65,7 +71,7 @@ namespace QTest
 {
 
 template<>
-char* toString(const GeorefCoreData &r)
+char* toString(const GeorefCoreData &r) // NOLINT : declared parameter name is 't'
 {
 	auto ret = QString(QStringLiteral("%1;%2;%3;%4,%5;%6:%7"))
 	           .arg(r.scale)
@@ -73,14 +79,14 @@ char* toString(const GeorefCoreData &r)
 	           .arg(r.grivation)
 	           .arg(r.ref_point.x(), 0, 'f', 8)
 	           .arg(r.ref_point.y(), 0, 'f', 8)
-	           .arg(r.crs_id)
-	           .arg(r.crs_parameters.join(QLatin1Char(',')));
+	           .arg(r.crs_id,
+	                r.crs_parameters.join(QLatin1Char(',')));
 
 	return qstrdup(qUtf8Printable(ret));
 }
 
 template<>
-char* toString(const OcdGeorefFields &f)
+char* toString(const OcdGeorefFields &f) // NOLINT : declared parameter name is 't'
 {
 	auto ret = QString(QStringLiteral("m:%1; x:%2; y:%3; a:%4; i:%5; r:%6"))
 	           .arg(f.m)
@@ -172,7 +178,7 @@ private slots:
 		ocd_string_fields.setupGeoref(georef, add_warning);
 
 		QStringList crs_params;
-		for (auto s : georef.getProjectedCRSParameters())
+		for (const auto& s : georef.getProjectedCRSParameters())
 			crs_params.push_back(s);
 
 		auto converted = GeorefCoreData {
@@ -235,16 +241,15 @@ private slots:
 		auto crs_template = CRSTemplateRegistry().find(georef_result.crs_id);
 
 		std::vector<QString> crs_params;
-
-		for (const auto& item : georef_result.crs_parameters) {
-			crs_params.push_back(item);
-		}
+		crs_params.insert(end(crs_params),
+		                  georef_result.crs_parameters.cbegin(),
+		                  georef_result.crs_parameters.cend());
 
 		QString spec;
 		if (crs_template)
 		{
 			spec = crs_template->specificationTemplate();
-			auto param = crs_template->parameters().begin();
+			auto param = begin(crs_template->parameters());
 
 			for (const auto& value : crs_params)
 			{

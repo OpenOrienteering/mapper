@@ -51,7 +51,6 @@ class QTextCodec;
 namespace OpenOrienteering {
 
 class CombinedSymbol;
-class Georeferencing;
 class Map;
 class MapColor;
 class MapPart;

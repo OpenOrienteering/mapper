@@ -22,11 +22,12 @@
 
 #include <functional>
 
-#include <QString>
-
-#include "core/georeferencing.h"
+class QString;
 
 namespace OpenOrienteering {
+
+class Georeferencing;
+
 
 /**
  * OCD type 1039 string field values packed in a struct for convenient

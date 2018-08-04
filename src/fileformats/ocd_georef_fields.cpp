@@ -23,14 +23,20 @@
 #include <algorithm>
 #include <iterator>
 #include <utility>
+#include <vector>
 
+#include <QtGlobal>
+#include <QtNumeric>
+#include <QCoreApplication>
+#include <QLatin1Char>
 #include <QLatin1String>
 #include <QPointF>
 #include <QString>
-#include <QtGlobal>
-#include <QtNumeric>
+#include <QStringList>
 
 #include "core/crs_template.h"
+#include "core/georeferencing.h"
+#include "core/map_coord.h"
 // translation context
 #include "fileformats/ocd_file_import.h" // IWYU pragma: keep
 #include "fileformats/ocd_file_export.h" // IWYU pragma: keep
