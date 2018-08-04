@@ -570,7 +570,8 @@ bool MapEditorController::exportTo(const QString& path, const FileFormat& format
 	if (!map || editing_in_progress)
 		return false;
 	
-	if (!format.supportsExport())
+	auto exporter = format.makeExporter(path, map, main_view);
+	if (!exporter)
 	{
 		QMessageBox::warning(nullptr,
 		                     tr("Error"),
@@ -583,7 +584,6 @@ bool MapEditorController::exportTo(const QString& path, const FileFormat& format
 		return false;
 	}
 	
-	auto exporter = format.makeExporter(path, map, main_view);
 	if (!exporter->doExport())
 	{
 		QMessageBox::warning(nullptr,
