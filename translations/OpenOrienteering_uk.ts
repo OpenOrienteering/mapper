@@ -259,12 +259,10 @@
         <location filename="../src/gui/autosave_dialog.cpp" line="48"/>
         <location filename="../src/gui/autosave_dialog.cpp" line="54"/>
         <source>%n bytes</source>
-        <translation>
-            <numerusform>%n байт</numerusform>
-            <numerusform>%n байти</numerusform>
-            <numerusform>%n байт</numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n байт</numerusform>
+        <numerusform>%n байти</numerusform>
+        <numerusform>%n байтiв</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="52"/>
         <source>File saved by the user</source>
