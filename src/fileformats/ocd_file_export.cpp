@@ -75,6 +75,7 @@
 #include "fileformats/file_format.h"
 #include "fileformats/file_import_export.h"
 #include "fileformats/ocd_file_format.h"
+#include "fileformats/ocd_georef_fields.h"
 #include "fileformats/ocd_types.h"
 #include "fileformats/ocd_types_v8.h"
 #include "fileformats/ocd_types_v9.h"
@@ -667,52 +668,6 @@ QString stringForSpotColor(int i, const MapColor& color)
 }
 
 
-/// String 1039: georeferencing and grid
-QString stringForScalePar(const Map& map, quint16 version)
-{
-	const auto& georef = map.getGeoreferencing();
-	const auto ref_point = georef.toProjectedCoords(MapCoord{});
-	
-	auto& grid = map.getGrid();
-	auto grid_spacing_real = 500.0;
-	auto grid_spacing_map  = 50.0;
-	auto spacing = std::min(grid.getHorizontalSpacing(), grid.getVerticalSpacing());
-	switch (grid.getUnit())
-	{
-	case MapGrid::MillimetersOnMap:
-		grid_spacing_map = spacing;
-		grid_spacing_real = spacing * georef.getScaleDenominator()  / 1000;
-		break;
-	case MapGrid::MetersInTerrain:
-		grid_spacing_map = spacing * 1000 / georef.getScaleDenominator();
-		grid_spacing_real = spacing;
-		break;
-	}
-	
-	QString string_1039;
-	QTextStream out(&string_1039, QIODevice::Append);
-	out << fixed
-	    << "\tm" << georef.getScaleDenominator()
-	    << qSetRealNumberPrecision(4)
-	    << "\tg" << grid_spacing_map
-	    << "\tr" << /* real world coordinates */ 1
-	    << "\tx" << qRound(ref_point.x())
-	    << "\ty" << qRound(ref_point.y())
-	    << qSetRealNumberPrecision(8)
-	    << "\ta" << georef.getGrivation()
-	    << qSetRealNumberPrecision(6)
-	    << "\td" << grid_spacing_real
-	    << "\ti" << /* combined_grid_zone */ 0;
-	if (version > 9)
-	{
-		out << qSetRealNumberPrecision(2)
-		    << "\tb" << 0.0
-		    << "\tc" << 0.0;
-	}
-	return string_1039;	
-}
-
-
 /// String 8: background map (aka template)
 /// \todo Unify implementation, or use specialization.
 QString stringForTemplate(const Template& temp, const MapCoord& area_offset, quint16 version)
@@ -1047,12 +1002,15 @@ void OcdFileExport::exportSetup(OcdFile<Ocd::FormatV8>& file)
 	{
 		auto setup = reinterpret_cast<Ocd::SetupV8*>(file.byteArray().data() + file.header()->setup_pos);
 		
-		auto georef = map->getGeoreferencing();
-		setup->map_scale = georef.getScaleDenominator();
-		setup->real_offset_x = georef.getProjectedRefPoint().x();
-		setup->real_offset_y = georef.getProjectedRefPoint().y();
-		if (!qIsNull(georef.getGrivation()))
-			setup->real_angle = georef.getGrivation();
+		const auto& georef = map->getGeoreferencing();
+		auto add_warning = [this](const QString& w){ addWarning(w); };
+		auto fields = OcdGeorefFields::fromGeoref(georef, add_warning);
+		setup->map_scale = fields.m;
+		setup->real_offset_x = fields.x;
+		setup->real_offset_y = fields.y;
+		setup->real_angle = fields.a;
+		if (fields.i)
+			addWarning(tr("The georeferencing cannot be saved in OCD version 8."));
 		
 		if (view)
 		{
@@ -1102,13 +1060,13 @@ void OcdFileExport::exportSetup(OcdFile<Ocd::FormatV8>& file)
 		
 		symbol_header.num_separations = spotColorNumber(nullptr);
 		if (symbol_header.num_separations > 24)
-			throw FileFormatException(tr("The map contains more than 24 spot colors which is not supported by ocd version 8."));
+			throw FileFormatException(tr("The map contains more than 24 spot colors which is not supported by OCD version 8."));
 		
 		auto begin_of_spot_colors = beginOfSpotColors(map);
 		if (uses_registration_color)
 			++begin_of_spot_colors;  // in ocd output (ocd_number below)
 		if (begin_of_spot_colors > 256)
-			throw FileFormatException(tr("The map contains more than 256 colors which is not supported by ocd version 8."));
+			throw FileFormatException(tr("The map contains more than 256 colors which is not supported by OCD version 8."));
 		
 		using std::begin; using std::end;
 		auto separation_info = symbol_header.separation_info;
@@ -1184,15 +1142,60 @@ void OcdFileExport::exportSetup(OcdFile<Ocd::FormatV8>& file)
 template<class Format>
 void OcdFileExport::exportSetup(OcdFile<Format>& /*file*/)
 {
+	exportGeoreferencing();
 	exportSetup();
+}
+
+
+void OcdFileExport::exportGeoreferencing()
+{
+	const auto& georef = map->getGeoreferencing();
+	auto add_warning = [this](const QString& w){ addWarning(w); };
+	auto fields = OcdGeorefFields::fromGeoref(georef, add_warning);
+	
+	auto& grid = map->getGrid();
+	auto grid_spacing_real = 500.0;
+	auto grid_spacing_map  = 50.0;
+	auto spacing = std::min(grid.getHorizontalSpacing(), grid.getVerticalSpacing());
+	switch (grid.getUnit())
+	{
+	case MapGrid::MillimetersOnMap:
+		grid_spacing_map = spacing;
+		grid_spacing_real = spacing * georef.getScaleDenominator()  / 1000;
+		break;
+	case MapGrid::MetersInTerrain:
+		grid_spacing_map = spacing * 1000 / georef.getScaleDenominator();
+		grid_spacing_real = spacing;
+		break;
+	}
+	
+	QString string_1039;
+	QTextStream out(&string_1039, QIODevice::Append);
+	out << fixed
+	    << "\tm" << fields.m
+	    << qSetRealNumberPrecision(4)
+	    << "\tg" << grid_spacing_map
+	    << "\tr" << fields.r
+	    << "\tx" << fields.x
+	    << "\ty" << fields.y
+	    << qSetRealNumberPrecision(8)
+	    << "\ta" << fields.a
+	    << qSetRealNumberPrecision(6)
+	    << "\td" << grid_spacing_real
+	    << "\ti" << fields.i;
+	if (ocd_version > 9)
+	{
+		out << qSetRealNumberPrecision(2)
+		    << "\tb" << 0.0
+		    << "\tc" << 0.0;
+	}
+	
+	addParameterString(1039, string_1039);
 }
 
 
 void OcdFileExport::exportSetup()
 {
-	// Georeferencing
-	addParameterString(1039, stringForScalePar(*map, ocd_version));
-	
 	// View
 	if (view)
 	{

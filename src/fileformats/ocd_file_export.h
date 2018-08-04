@@ -160,6 +160,8 @@ protected:
 	
 	void exportSetup();
 	
+	void exportGeoreferencing();
+	
 	
 	template< class Format >
 	void exportSymbols(OcdFile<Format>& file);
