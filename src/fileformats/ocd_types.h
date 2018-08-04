@@ -389,6 +389,8 @@ public:
 	bool operator!=(const OcdEntityIndexIterator<V>& rhs) const;
 	
 private:
+	bool isValidEntry() const;
+	
 	const QByteArray* byte_array = nullptr;
 	const IndexBlock* block = nullptr;
 	quint16 index = 0;
@@ -650,7 +652,7 @@ OcdEntityIndexIterator<V>::OcdEntityIndexIterator(const QByteArray& byte_array, 
 , block(first_block)
 , index(0)
 {
-	if (block && block->entries[index].pos == 0)
+	if (block && !isValidEntry())
 		operator++();
 }
 
@@ -668,7 +670,7 @@ OcdEntityIndexIterator<V>& OcdEntityIndexIterator<V>::operator++()
 				break;
 		}
 	}
-	while (!block->entries[index].pos);
+	while (!isValidEntry());
 	return *this;
 }
 
@@ -683,6 +685,8 @@ OcdEntityIndexIterator<V> OcdEntityIndexIterator<V>::operator++(int)
 template< class V >
 typename OcdEntityIndexIterator<V>::value_type OcdEntityIndexIterator<V>::operator*() const
 {
+	// We don't check here whether the data lies within byte array.
+	// This check is done in the constructor and in operator++.
 	return { &block->entries[index], reinterpret_cast<const typename value_type::EntityType*>(byte_array->data()+block->entries[index].pos) };
 }
 
@@ -696,6 +700,12 @@ template< class V >
 bool OcdEntityIndexIterator<V>::operator!=(const OcdEntityIndexIterator<V>& rhs) const
 {
 	return !operator==(rhs);
+}
+
+template< class V >
+bool OcdEntityIndexIterator<V>::isValidEntry() const
+{
+	return Ocd::getBlockChecked<typename value_type::EntityType>(*byte_array, block->entries[index].pos);
 }
 
 
