@@ -129,6 +129,16 @@ add_unit_test(autosave_t MANUAL ../src/core/autosave
 	../src/settings
 )
 add_unit_test(encoding_t ../src/util/encoding)
+add_unit_test(georef_ocd_mapping_t
+	../src/settings
+	../src/gui/util_gui
+	../src/gui/widgets/crs_param_widgets
+	../src/core/georeferencing
+	../src/core/crs_template
+	../src/core/crs_template_implementation
+	../src/fileformats/ocd_georef_fields
+	../src/fileformats/file_format
+)
 add_unit_test(georeferencing_t ../src/core/georeferencing
 	../src/settings
 	../src/core/crs_template

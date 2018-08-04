@@ -191,9 +191,6 @@ protected:
 	/// Imports string 1039.
 	void importGeoreferencing(const QString& param_string);
 	
-	/// Imports string 1039 field i.
-	void applyGridAndZone(Georeferencing& georef, const QString& combined_grid_zone);
-	
 	
 	void importColors(const OcdFile<struct Ocd::FormatV8>& file);
 	
