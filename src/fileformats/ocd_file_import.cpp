@@ -2269,14 +2269,14 @@ bool OcdFileImport::importImplementation()
 	buffer.clear();
 	buffer.append(device()->readAll());
 	if (buffer.isEmpty())
-		throw FileFormatException(::OpenOrienteering::Importer::tr("Could not read file: %1").arg(device()->errorString()));
+		throw FileFormatException(device()->errorString());
 	
 	if (size_t(buffer.size()) < sizeof(Ocd::FileHeaderGeneric))
-		throw FileFormatException(Importer::tr("Could not read file: %1").arg(tr("Invalid data.")));
+		throw FileFormatException(tr("Invalid data."));
 	
 	auto header = reinterpret_cast<const Ocd::FileHeaderGeneric*>(buffer.constData());
 	if (header->vendor_mark != 0x0cad) // This also tests correct endianess...
-		throw FileFormatException(Importer::tr("Could not read file: %1").arg(tr("Invalid data.")));
+		throw FileFormatException(tr("Invalid data."));
 	
 	ocd_version = header->version;
 	map->setSymbolSetId(QStringLiteral("OCD"));
@@ -2309,10 +2309,7 @@ bool OcdFileImport::importImplementation()
 		map->setProperty(OcdFileFormat::versionProperty(), 12);  // save as V12 for now
 		break;
 	default:
-		throw FileFormatException(
-		            ::OpenOrienteering::Importer::tr("Could not read file: %1").
-		            arg(tr("OCD files of version %1 are not supported!").arg(ocd_version))
-		            );
+		throw FileFormatException(tr("OCD files of version %1 are not supported!").arg(ocd_version));
 	}
 	return true;
 }
