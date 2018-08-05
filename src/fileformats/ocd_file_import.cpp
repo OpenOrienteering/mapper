@@ -1143,7 +1143,6 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol)
 	if (!double_line && !framing_line)
 		return main_line;
 	
-	addSymbolWarning(main_line, OcdFileImport::tr("This symbol cannot be saved as a proper OCD symbol again."));
 	auto combined_line = new CombinedSymbol();
 	setupBaseSymbol(combined_line, ocd_symbol.base);
 	mergeLineSymbol(combined_line, main_line, framing_line, double_line);
@@ -1514,7 +1513,6 @@ Symbol* OcdFileImport::importAreaSymbol(const S& ocd_symbol)
 	border->setNumberComponent(1, symbol->getNumberComponent(1));
 	border->setNumberComponent(2, static_cast<int>(ocd_symbol.border_symbol));
 	combined->setPart(1, border.release(), true);
-	addSymbolWarning(symbol, OcdFileImport::tr("This symbol cannot be saved as a proper OCD symbol again."));
 	return combined;
 }
 
