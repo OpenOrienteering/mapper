@@ -226,7 +226,7 @@ void MapFindFeature::findAll()
 		return;
 	}
 	
-	map->getCurrentPart()->applyOnMatchingObjects([map](auto object) {
+	map->getCurrentPart()->applyOnMatchingObjects([map](Object* object) {
 		map->addObjectToSelection(object, false);
 	}, std::cref(query));
 	map->emitSelectionChanged();

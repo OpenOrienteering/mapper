@@ -43,7 +43,7 @@ namespace Ocd
 	
 	struct BaseSymbolV9
 	{
-		using IndexEntryType = quint32;
+		using IndexEntryType = SymbolIndexEntry;
 		static const int symbol_number_factor = 1000;
 		
 		quint32 size;
@@ -172,7 +172,7 @@ namespace Ocd
 	{
 		using IndexEntryType = ObjectIndexEntryV9;
 		
-		quint32 symbol;
+		qint32  symbol;
 		quint8  type;
 		quint8  customer_V11;      /// \since V11
 		qint16  angle;
@@ -199,6 +199,7 @@ namespace Ocd
 	/** OCD file format version 9 trait. */
 	struct FormatV9
 	{
+		constexpr static quint16 version = 9;
 		using FileHeader      = FileHeaderV9;
 		using BaseSymbol      = BaseSymbolV9;
 		using PointSymbol     = PointSymbolV9;
@@ -211,5 +212,9 @@ namespace Ocd
 		using Encoding        = Custom8BitEncoding;
 	};
 }
+
+
+OCD_EXPLICIT_INSTANTIATION(extern template, Ocd::FormatV9)
+
 
 #endif // OPENORIENTEERING_OCD_TYPES_V9_H

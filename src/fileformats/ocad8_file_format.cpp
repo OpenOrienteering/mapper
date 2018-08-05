@@ -47,6 +47,7 @@
 #include "core/symbols/text_symbol.h"
 #include "fileformats/xml_file_format.h"
 #include "fileformats/file_import_export.h"
+#include "fileformats/ocd_file_format.h"
 #include "templates/template.h"
 #include "templates/template_image.h"
 #include "templates/template_map.h"
@@ -126,16 +127,18 @@ bool OCAD8FileImport::importImplementation()
 	if (!buffer)
 		throw FileFormatException(tr("Could not allocate buffer."));
 	if (device.read((char*)buffer, size) != size)
-		throw FileFormatException(::OpenOrienteering::Importer::tr("Could not read file: %1").arg(device.errorString()));
+		throw FileFormatException(device.errorString());
 	int err = ocad_file_open_memory(&file, buffer, size);
-    if (err != 0) throw FileFormatException(::OpenOrienteering::Importer::tr("Could not read file: %1").arg(tr("libocad returned %1").arg(err)));
+    if (err != 0) throw FileFormatException(tr("libocad returned %1").arg(err));
 	
 	if (file->header->major <= 5 || file->header->major >= 9)
-		throw FileFormatException(::OpenOrienteering::Importer::tr("Could not read file: %1").arg(tr("OCAD files of version %1 are not supported!").arg(file->header->major)));
+		throw FileFormatException(tr("OCAD files of version %1 are not supported!").arg(file->header->major));
 
     //qDebug() << "file version is" << file->header->major << ", type is"
     //         << ((file->header->ftype == 2) ? "normal" : "other");
     //qDebug() << "map scale is" << file->setup->scale;
+
+	map->setProperty(OcdFileFormat::versionProperty(), file->header->major);
 
 	// Scale and georeferencing parameters
 	Georeferencing georef;
@@ -1571,7 +1574,7 @@ bool OCAD8FileExport::exportImplementation()
 	
 	// Create struct in memory
 	int err = ocad_file_new(&file);
-	if (err != 0) throw FileFormatException(::OpenOrienteering::Exporter::tr("Could not create new file: %1").arg(tr("libocad returned %1").arg(err)));
+	if (err != 0) throw FileFormatException(tr("libocad returned %1").arg(err));
 	
 	// Check for a neccessary offset (and add related warnings early).
 	auto area_offset = calculateAreaOffset();

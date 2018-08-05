@@ -2256,6 +2256,13 @@ void Map::applyOnMatchingObjects(const std::function<void (Object*)>& operation,
 }
 
 
+void Map::applyOnMatchingObjects(const std::function<void (const Object*)>& operation, const std::function<bool (const Object*)>& condition) const
+{
+	for (const MapPart* part : parts)
+		part->applyOnMatchingObjects(operation, condition);
+}
+
+
 void Map::applyOnMatchingObjects(const std::function<void (Object*, MapPart*, int)>& operation, const std::function<bool (const Object*)>& condition)
 {
 	for (auto part : parts)

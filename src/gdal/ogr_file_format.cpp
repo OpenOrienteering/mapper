@@ -1299,8 +1299,7 @@ bool OgrFileImport::checkGeoreferencing(const QString& path, const Georeferencin
 	auto data_source = ogr::unique_datasource(OGROpen(path.toUtf8().constData(), 0, nullptr));
 	if (!data_source)
 	{
-		throw FileFormatException(::OpenOrienteering::Importer::tr("Could not read '%1': %2")
-		                          .arg(path, QString::fromLatin1(CPLGetLastErrorMsg())));
+		throw FileFormatException(QString::fromLatin1(CPLGetLastErrorMsg()));
 	}
 	
 	return checkGeoreferencing(data_source.get(), georef);
@@ -1351,8 +1350,7 @@ LatLon OgrFileImport::calcAverageLatLon(const QString& path)
 	auto data_source = ogr::unique_datasource(OGROpen(path.toUtf8().constData(), 0, nullptr));
 	if (!data_source)
 	{
-		throw FileFormatException(::OpenOrienteering::Importer::tr("Could not read '%1': %2")
-		                          .arg(path, QString::fromLatin1(CPLGetLastErrorMsg())));
+		throw FileFormatException(QString::fromLatin1(CPLGetLastErrorMsg()));
 	}
 	
 	return calcAverageLatLon(data_source.get());

@@ -1,6 +1,5 @@
 /*
- *    Copyright 2012, 2013, 2014 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -18,31 +17,26 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef OPENORIENTEERING_OCD_TYPES_V2018
+#define OPENORIENTEERING_OCD_TYPES_V2018
 
-#include "global.h"
+#include "ocd_types.h"
+#include "ocd_types_v12.h"
 
-#include "mapper_config.h" // IWYU pragma: keep
-
-#include "fileformats/file_format_registry.h"
-#include "fileformats/xml_file_format.h"
-#include "fileformats/ocd_file_format.h"
-#include "gdal/ogr_file_format.h"
-
-
-namespace OpenOrienteering {
-
-void doStaticInitializations()
+namespace Ocd
 {
-	// Register the supported file formats
-	FileFormats.registerFormat(new XMLFileFormat());
-#ifndef MAPPER_BIG_ENDIAN
-	for (auto&& format : OcdFileFormat::makeAll())
-		FileFormats.registerFormat(format.release());
-#endif
-#ifdef MAPPER_USE_GDAL
-	FileFormats.registerFormat(new OgrFileFormat());
-#endif
+	/*
+	 * There is no documentation for version 2018 of the OCD file format.
+	 * It seems reasonable to assume only marginal changes from the version 12
+	 * format:
+	 * - Program features added in version 2018 do not seem to require mandatory
+	 *   modifications to the file format.
+	 * - Sample maps from the free version 2018 Viewer could be successfully
+	 *   loaded by the free version 12 Viewer, after changing the file format
+	 *   version fields in the file header.
+	 */
+	using FormatV2018 = FormatV12;
+	
 }
 
-
-}  // namespace OpenOrienteering
+#endif // OPENORIENTEERING_OCD_TYPES_V2018_H

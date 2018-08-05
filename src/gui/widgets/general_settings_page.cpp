@@ -42,7 +42,6 @@
 #include <QHBoxLayout>
 #include <QIcon>
 #include <QLabel>
-#include <QLatin1Char>
 #include <QLatin1String>
 #include <QLineEdit>
 #include <QList>
@@ -170,9 +169,6 @@ GeneralSettingsPage::GeneralSettingsPage(QWidget* parent)
 	encoding_box->setCompleter(completer);
 	layout->addRow(tr("8-bit encoding:"), encoding_box);
 	
-	ocd_importer_check = new QCheckBox(tr("Use the new OCD importer also for version 8 files").replace(QLatin1Char('8'), QString::fromLatin1("6-8")));
-	layout->addRow(ocd_importer_check);
-	
 	updateWidgets();
 	
 	connect(language_file_button, &QAbstractButton::clicked, this, &GeneralSettingsPage::openTranslationFileDialog);
@@ -231,7 +227,6 @@ void GeneralSettingsPage::apply()
 	
 	setSetting(Settings::General_OpenMRUFile, open_mru_check->isChecked());
 	setSetting(Settings::HomeScreen_TipsVisible, tips_visible_check->isChecked());
-	setSetting(Settings::General_NewOcd8Implementation, ocd_importer_check->isChecked());
 	setSetting(Settings::General_RetainCompatiblity, compatibility_check->isChecked());
 	setSetting(Settings::General_SaveUndoRedo, undo_check->isChecked());
 	setSetting(Settings::General_PixelsPerInch, ppi_edit->value());
@@ -305,8 +300,6 @@ void GeneralSettingsPage::updateWidgets()
 	{
 		encoding_box->setCurrentText(QString::fromLatin1(encoding));
 	}
-	
-	ocd_importer_check->setChecked(getSetting(Settings::General_NewOcd8Implementation).toBool());
 }
 
 // slot

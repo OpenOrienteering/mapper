@@ -91,6 +91,11 @@ public:
 
 \section changes Changes
 
+\subsection version-8 Version 8
+
+- 2018-03-10 Added `mid_symbol_placement` attribute to `line_symbol` element.
+
+
 \subsection version-7 Version 7
 
 - 2018-03-10 First file format changelog entry

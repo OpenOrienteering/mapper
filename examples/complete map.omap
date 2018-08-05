@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map xmlns="http://openorienteering.org/apps/mapper/xml/v2" version="7">
+<map xmlns="http://openorienteering.org/apps/mapper/xml/v2" version="8">
 <notes></notes>
 <georeferencing scale="4000" declination="2.35" grivation="0.37"><ref_point x="10" y="35"/><projected_crs id="UTM"><spec language="PROJ.4">+proj=utm +datum=WGS84 +zone=32</spec><parameter>32 N</parameter><ref_point x="696686.398978" y="5347699.134904"/></projected_crs><geographic_crs id="Geographic coordinates"><spec language="PROJ.4">+proj=latlong +datum=WGS84</spec><ref_point_deg lat="48.25195669" lon="11.64973926"/></geographic_crs></georeferencing>
 <colors count="39">

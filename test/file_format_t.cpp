@@ -43,10 +43,10 @@
 #include <QSizeF>
 #include <QString>
 #include <QTemporaryDir>
+#include <QVariant>
 
 #include "global.h"
 #include "test_config.h"
-#include "settings.h"
 #include "core/georeferencing.h"
 #include "core/latlon.h"
 #include "core/map.h"
@@ -60,7 +60,8 @@
 #include "fileformats/file_format.h"
 #include "fileformats/file_format_registry.h"
 #include "fileformats/file_import_export.h"
-#include "fileformats/ocad8_file_format.h"
+#include "fileformats/ocd_file_export.h"
+#include "fileformats/ocd_file_format.h"
 #include "fileformats/xml_file_format.h"
 #include "templates/template.h"
 #include "undo/undo.h"
@@ -135,198 +136,180 @@ namespace
 		QCOMPARE(copy.single_page_print_area, orig.single_page_print_area);
 	}
 	
-	bool compareMaps(const Map& a, const Map& b, QString& error)
+	void compareMaps(const Map& actual, const Map& expected)
 	{
 		// TODO: This does not compare everything - yet ...
 		
 		// Miscellaneous
+		QCOMPARE(actual.getScaleDenominator(), expected.getScaleDenominator());
+		QCOMPARE(actual.getMapNotes(), expected.getMapNotes());
 		
-		if (a.getScaleDenominator() != b.getScaleDenominator())
-		{
-			error = QString::fromLatin1("The map scales differ.");
-			return false;
-		}
-		if (a.getMapNotes().compare(b.getMapNotes()) != 0)
-		{
-			error = QString::fromLatin1("The map notes differ.");
-			return false;
-		}
+		const auto& actual_georef = actual.getGeoreferencing();
+		const auto& expected_georef = expected.getGeoreferencing();
+		QCOMPARE(actual_georef.getScaleDenominator(), expected_georef.getScaleDenominator());
+		QCOMPARE(actual_georef.isLocal(), expected_georef.isLocal());
+		QCOMPARE(actual_georef.getDeclination(), expected_georef.getDeclination());
+		QCOMPARE(actual_georef.getGrivation(), expected_georef.getGrivation());
+		QCOMPARE(actual_georef.getMapRefPoint(), expected_georef.getMapRefPoint());
+		QCOMPARE(actual_georef.getProjectedRefPoint(), expected_georef.getProjectedRefPoint());
+		QCOMPARE(actual_georef.getProjectedCRSId(), expected_georef.getProjectedCRSId());
+		QCOMPARE(actual_georef.getProjectedCRSName(), expected_georef.getProjectedCRSName());
+		QCOMPARE(actual_georef.getProjectedCoordinatesName(), expected_georef.getProjectedCoordinatesName());
+		QCOMPARE(actual_georef.getProjectedCRSSpec(), expected_georef.getProjectedCRSSpec());
+		QVERIFY(qAbs(actual_georef.getGeographicRefPoint().latitude() - expected_georef.getGeographicRefPoint().latitude()) < 0.5e-8);
+		QVERIFY(qAbs(actual_georef.getGeographicRefPoint().longitude() - expected_georef.getGeographicRefPoint().longitude()) < 0.5e-8);
 		
-		const Georeferencing& a_geo = a.getGeoreferencing();
-		const Georeferencing& b_geo = b.getGeoreferencing();
-		if (a_geo.isLocal() != b_geo.isLocal() ||
-			a_geo.getScaleDenominator() != b_geo.getScaleDenominator() ||
-			a_geo.getDeclination() != b_geo.getDeclination() ||
-			a_geo.getGrivation() != b_geo.getGrivation() ||
-			a_geo.getMapRefPoint() != b_geo.getMapRefPoint() ||
-			a_geo.getProjectedRefPoint() != b_geo.getProjectedRefPoint() ||
-			a_geo.getProjectedCRSId() != b_geo.getProjectedCRSId() ||
-			a_geo.getProjectedCRSName() != b_geo.getProjectedCRSName() ||
-			a_geo.getProjectedCoordinatesName() != b_geo.getProjectedCoordinatesName() ||
-			a_geo.getProjectedCRSSpec() != b_geo.getProjectedCRSSpec() ||
-			qAbs(a_geo.getGeographicRefPoint().latitude() - b_geo.getGeographicRefPoint().latitude()) > 0.5e-8 ||
-			qAbs(a_geo.getGeographicRefPoint().longitude() - b_geo.getGeographicRefPoint().longitude())  > 0.5e-8)
-		{
-			error = QString::fromLatin1("The georeferencing differs.");
-			return false;
-		}
-		
-		const MapGrid& a_grid = a.getGrid();
-		const MapGrid& b_grid = b.getGrid();
-		
-		if (a_grid != b_grid || !(a_grid == b_grid))
-		{
-			error = QString::fromLatin1("The map grid differs.");
-			return false;
-		}
-		
-		if (a.isAreaHatchingEnabled() != b.isAreaHatchingEnabled() ||
-			a.isBaselineViewEnabled() != b.isBaselineViewEnabled())
-		{
-			error = QString::fromLatin1("The view mode differs.");
-			return false;
-		}
+		QCOMPARE(actual.getGrid(), expected.getGrid());
+		QCOMPARE(actual.isAreaHatchingEnabled(), expected.isAreaHatchingEnabled());
+		QCOMPARE(actual.isBaselineViewEnabled(), expected.isBaselineViewEnabled());
 		
 		// Colors
-		if (a.getNumColors() != b.getNumColors())
+		if (actual.getNumColors() != expected.getNumColors())
 		{
-			error = QString::fromLatin1("The number of colors differs.");
-			return false;
+			QCOMPARE(actual.getNumColors(), expected.getNumColors());
 		}
-		for (int i = 0; i < a.getNumColors(); ++i)
+		else for (int i = 0; i < actual.getNumColors(); ++i)
 		{
-			if (!a.getColor(i)->equals(*b.getColor(i), true))
-			{
-				error = QString::fromLatin1("Color #%1 (%2) differs.").arg(i).arg(a.getColor(i)->getName());
-				return false;
-			}
+			QCOMPARE(*actual.getColor(i), *expected.getColor(i));
 		}
 		
 		// Symbols
-		if (a.getNumSymbols() != b.getNumSymbols())
+		if (actual.getNumSymbols() != expected.getNumSymbols())
 		{
-			error = QString::fromLatin1("The number of symbols differs.");
-			return false;
+			QCOMPARE(actual.getNumSymbols(), expected.getNumSymbols());
 		}
-		for (int i = 0; i < a.getNumSymbols(); ++i)
+		else for (int i = 0; i < actual.getNumSymbols(); ++i)
 		{
-			const Symbol* a_symbol = a.getSymbol(i);
-			if (!a_symbol->equals(b.getSymbol(i), Qt::CaseSensitive))
-			{
-				error = QString::fromLatin1("Symbol #%1 (%2) differs.").arg(i).arg(a_symbol->getName());
-				return false;
-			}
-			if (!a_symbol->stateEquals(b.getSymbol(i)))
-			{
-				error = QString::fromLatin1("State of symbol #%1 (%2) differs.").arg(i).arg(a_symbol->getName());
-				return false;
-			}
+			if (!actual.getSymbol(i)->equals(expected.getSymbol(i), Qt::CaseSensitive))
+				qDebug("%s vs %s", qPrintable(actual.getSymbol(i)->getNumberAsString()),
+				                   qPrintable(expected.getSymbol(i)->getNumberAsString()));
+			QVERIFY(actual.getSymbol(i)->equals(expected.getSymbol(i), Qt::CaseSensitive));
+			QVERIFY(actual.getSymbol(i)->stateEquals(expected.getSymbol(i)));
 		}
 		
 		// Parts and objects
-		// TODO: Only a single part is compared here! Add comparison for parts ...
-		if (a.getNumParts() != b.getNumParts())
+		QCOMPARE(actual.getCurrentPartIndex(), expected.getCurrentPartIndex());
+		if (actual.getNumParts() != expected.getNumParts())
 		{
-			error = QString::fromLatin1("The number of parts differs.");
-			return false;
+			QCOMPARE(actual.getNumParts(), expected.getNumParts());
 		}
-		if (a.getCurrentPartIndex() != b.getCurrentPartIndex())
+		else for (auto p = 0u; p < actual.getNumParts(); ++p)
 		{
-			error = QString::fromLatin1("The current part differs.");
-			return false;
-		}
-		for (int part = 0; part < a.getNumParts(); ++part)
-		{
-			MapPart* a_part = a.getPart(part);
-			MapPart* b_part = b.getPart(part);
-			if (a_part->getName().compare(b_part->getName(), Qt::CaseSensitive) != 0)
+			const auto& actual_part = *actual.getPart(p);
+			const auto& expected_part = *expected.getPart(p);
+			QVERIFY(actual_part.getName().compare(expected_part.getName(), Qt::CaseSensitive) == 0);
+			if (actual_part.getNumObjects() != expected_part.getNumObjects())
 			{
-				error = QString::fromLatin1("The names of part #%1 differ (%2 <-> %3).")
-				        .arg(QString::number(part), a_part->getName(), b_part->getName());
-				return false;
+				QCOMPARE(actual_part.getNumObjects(), expected_part.getNumObjects());
 			}
-			if (a_part->getNumObjects() != b_part->getNumObjects())
+			else for (int i = 0; i < actual_part.getNumObjects(); ++i)
 			{
-				error = QString::fromLatin1("The number of objects differs.");
-				return false;
-			}
-			for (int i = 0; i < a_part->getNumObjects(); ++i)
-			{
-				if (!a_part->getObject(i)->equals(b_part->getObject(i), true))
-				{
-					error = QString::fromLatin1("Object #%1 (with symbol %2) in part #%3 differs.")
-					        .arg(QString::number(i), a_part->getObject(i)->getSymbol()->getName(), QString::number(part));
-					return false;
-				}
+				QVERIFY(actual_part.getObject(i)->equals(expected_part.getObject(i), true));
 			}
 		}
 		
 		// Object selection
-		if (a.getNumSelectedObjects() != b.getNumSelectedObjects())
+		QCOMPARE(actual.getNumSelectedObjects(), expected.getNumSelectedObjects());
+		if (actual.getFirstSelectedObject() == nullptr)
 		{
-			error = QString::fromLatin1("The number of selected objects differs.");
-			return false;
+			QCOMPARE(actual.getFirstSelectedObject(), expected.getFirstSelectedObject());
 		}
-		if ((a.getFirstSelectedObject() == nullptr && b.getFirstSelectedObject() != nullptr) || (a.getFirstSelectedObject() != nullptr && b.getFirstSelectedObject() == nullptr) ||
-			(a.getFirstSelectedObject() != nullptr && b.getFirstSelectedObject() != nullptr &&
-			 a.getCurrentPart()->findObjectIndex(a.getFirstSelectedObject()) != b.getCurrentPart()->findObjectIndex(b.getFirstSelectedObject())))
+		else
 		{
-			error = QString::fromLatin1("The first selected object differs.");
-			return false;
-		}
-		for (auto object_index : qAsConst(a.selectedObjects()))
-		{
-			if (!b.isObjectSelected(b.getCurrentPart()->getObject(a.getCurrentPart()->findObjectIndex(object_index))))
+			QCOMPARE(actual.getCurrentPart()->findObjectIndex(actual.getFirstSelectedObject()),
+			         expected.getCurrentPart()->findObjectIndex(expected.getFirstSelectedObject()));
+			if (actual.getCurrentPart()->getNumObjects() != expected.getCurrentPart()->getNumObjects())
 			{
-				error = QString::fromLatin1("The selected objects differ.");
-				return false;
+				for (auto object_index : qAsConst(actual.selectedObjects()))
+				{
+					QVERIFY(actual.isObjectSelected(actual.getCurrentPart()->getObject(expected.getCurrentPart()->findObjectIndex(object_index))));
+				}
 			}
 		}
 		
 		// Undo steps
 		// TODO: Currently only the number of steps is compared here.
-		if (a.undoManager().undoStepCount() != b.undoManager().undoStepCount() ||
-			a.undoManager().redoStepCount() != b.undoManager().redoStepCount())
-		{
-			error = QString::fromLatin1("The number of undo / redo steps differs.");
-			return false;
-		}
-		if (a.undoManager().canUndo() &&
-		    a.undoManager().nextUndoStep()->getType() != b.undoManager().nextUndoStep()->getType())
-		{
-			error = QString::fromLatin1("The type of the first undo step is different.");
-			return false;
-		}
-		if (a.undoManager().canRedo() &&
-		    a.undoManager().nextRedoStep()->getType() != b.undoManager().nextRedoStep()->getType())
-		{
-			error = QString::fromLatin1("The type of the first redo step is different.");
-			return false;
-		}
+		QCOMPARE(actual.undoManager().undoStepCount(), expected.undoManager().undoStepCount());
+		QCOMPARE(actual.undoManager().redoStepCount(), expected.undoManager().redoStepCount());
+		if (actual.undoManager().canUndo())
+			QCOMPARE(actual.undoManager().nextUndoStep()->getType(), expected.undoManager().nextUndoStep()->getType());
+		if (actual.undoManager().canRedo())
+			QCOMPARE(actual.undoManager().nextRedoStep()->getType(), expected.undoManager().nextRedoStep()->getType());
 		
 		// Templates
-		if (a.getNumTemplates() != b.getNumTemplates())
+		QCOMPARE(actual.getFirstFrontTemplate(), expected.getFirstFrontTemplate());
+		if (actual.getNumTemplates() != expected.getNumTemplates())
 		{
-			error = QString::fromLatin1("The number of templates differs.");
-			return false;
+			QCOMPARE(actual.getNumTemplates(), expected.getNumTemplates());
 		}
-		if (a.getFirstFrontTemplate() != b.getFirstFrontTemplate())
-		{
-			error = QString::fromLatin1("The division into front / back templates differs.");
-			return false;
-		}
-		for (int i = 0; i < a.getNumTemplates(); ++i)
+		else for (int i = 0; i < actual.getNumTemplates(); ++i)
 		{
 			// TODO: only template filenames are compared
-			if (a.getTemplate(i)->getTemplateFilename().compare(b.getTemplate(i)->getTemplateFilename()) != 0)
-			{
-				error = QString::fromLatin1("Template filename #%1 differs.").arg(i);
-				return false;
-			}
+			QCOMPARE(actual.getTemplate(i)->getTemplateFilename(), expected.getTemplate(i)->getTemplateFilename());
+		}
+	}
+	
+	
+	/**
+	 * Compares map features in a way that works for lossy exporters and importers.
+	 * 
+	 * A lossy exporter may create extra colors, symbols and objects in order to
+	 * maintain the map's appearance. It may also merge all map parts into a
+	 * single part.
+	 * 
+	 * A lossy importer might skip some elements, but it is fair to require that
+	 * it imports everything which is exported by the corresponding exporter.
+	 */
+	void fuzzyCompareMaps(const Map& actual, const Map& expected)
+	{
+		// Miscellaneous
+		QCOMPARE(actual.getScaleDenominator(), expected.getScaleDenominator());
+		QCOMPARE(actual.getMapNotes(), expected.getMapNotes());
+		
+		// Georeferencing
+		const auto& actual_georef = actual.getGeoreferencing();
+		const auto& expected_georef = expected.getGeoreferencing();
+		QCOMPARE(actual_georef.getScaleDenominator(), expected_georef.getScaleDenominator());
+		QCOMPARE(actual_georef.getGrivation(), expected_georef.getGrivation());
+		
+		auto test_label = QString::fromLatin1("actual: %1, expected: %2");
+		auto ref_point = actual_georef.getMapRefPoint();
+		auto actual_point = actual_georef.toProjectedCoords(ref_point);;
+		auto expected_point = expected_georef.toProjectedCoords(ref_point);
+		QVERIFY2(qAbs(actual_point.x() - expected_point.x()) < 1.0, qPrintable(test_label.arg(actual_point.x()).arg(expected_point.x())));
+		QVERIFY2(qAbs(actual_point.y() - expected_point.y()) < 1.0, qPrintable(test_label.arg(actual_point.y()).arg(expected_point.y())));
+		ref_point += MapCoord{500, 500};
+		actual_point = actual_georef.toProjectedCoords(expected_georef.getMapRefPoint());;
+		expected_point = expected_georef.toProjectedCoords(expected_georef.getMapRefPoint());
+		QVERIFY2(qAbs(actual_point.x() - expected_point.x()) < 1.0, qPrintable(test_label.arg(actual_point.x()).arg(expected_point.x())));
+		QVERIFY2(qAbs(actual_point.y() - expected_point.y()) < 1.0, qPrintable(test_label.arg(actual_point.y()).arg(expected_point.y())));
+		
+		if (!actual_georef.isLocal())
+		{
+			QCOMPARE(actual_georef.isLocal(), expected_georef.isLocal());
+			QCOMPARE(actual_georef.toGeographicCoords(actual_point), expected_georef.toGeographicCoords(actual_point));
 		}
 		
-		return true;
+		// Colors
+		QVERIFY2(actual.getNumColors() >= expected.getNumColors(), qPrintable(test_label.arg(actual.getNumColors()).arg(expected.getNumColors())));
+		QVERIFY2(actual.getNumColors() <= 2 * expected.getNumColors(), qPrintable(test_label.arg(actual.getNumColors()).arg(expected.getNumColors())));
+		
+		// Symbols
+		// Combined symbols may be dropped on export
+		QVERIFY2(2 * actual.getNumSymbols() >= expected.getNumSymbols(), qPrintable(test_label.arg(actual.getNumSymbols()).arg(expected.getNumSymbols())));
+		QVERIFY2(actual.getNumSymbols() <= 2 * expected.getNumSymbols(), qPrintable(test_label.arg(actual.getNumSymbols()).arg(expected.getNumSymbols())));
+		
+		// Objects
+		QVERIFY2(actual.getNumObjects() >= expected.getNumObjects(), qPrintable(test_label.arg(actual.getNumObjects()).arg(expected.getNumObjects())));
+		QVERIFY2(actual.getNumObjects() <= 2 * expected.getNumObjects(), qPrintable(test_label.arg(actual.getNumObjects()).arg(expected.getNumObjects())));
+		
+		// Parts
+		if (actual.getNumParts() > 1)
+		{
+			QCOMPARE(actual.getNumParts(), expected.getNumParts());
+		}
 	}
+	
 	
 	std::unique_ptr<Map> saveAndLoadMap(const Map& input, const FileFormat* format)
 	{
@@ -350,14 +333,17 @@ namespace
 		return out;
 	}
 	
-	static const auto test_files = {
+	static const auto issue_513_files = {
 	  "data:issue-513-coords-outside-printable.xmap",
 	  "data:issue-513-coords-outside-printable.omap",
 	  "data:issue-513-coords-outside-qint32.omap",
-	  "data:legacy_map.omap",
+	};
+	
+	static const auto example_files = {
 	  "data:/examples/complete map.omap",
 	  "data:/examples/forest sample.omap",
 	  "data:/examples/overprinting.omap",
+	  "testdata:templates/world-file.xmap",
 	};
 	
 }  // namespace
@@ -368,21 +354,13 @@ void FileFormatTest::initTestCase()
 {
 	QCoreApplication::setOrganizationName(QString::fromLatin1("OpenOrienteering.org"));
 	QCoreApplication::setApplicationName(QString::fromLatin1("FileFormatTest"));
-	Settings::getInstance().setSetting(Settings::General_NewOcd8Implementation, true);
 	
 	doStaticInitializations();
-	if (!FileFormats.findFormat("OCAD78"))
-		FileFormats.registerFormat(new OCAD8FileFormat());
 	
 	const auto prefix = QString::fromLatin1("data");
 	QDir::addSearchPath(prefix, QDir(QString::fromUtf8(MAPPER_TEST_SOURCE_DIR)).absoluteFilePath(prefix));
 	QDir::addSearchPath(prefix, QDir(QString::fromUtf8(MAPPER_TEST_SOURCE_DIR)).absoluteFilePath(QStringLiteral("..")));
-	
-	for (auto raw_path : test_files)
-	{
-		auto path = QString::fromUtf8(raw_path);
-		QVERIFY(QFileInfo::exists(path));
-	}
+	QDir::addSearchPath(QStringLiteral("testdata"), QDir(QString::fromUtf8(MAPPER_TEST_SOURCE_DIR)).absoluteFilePath(QStringLiteral("data")));
 }
 
 
@@ -503,11 +481,11 @@ void FileFormatTest::issue_513_high_coordinates_data()
 {
 	QTest::addColumn<QString>("filename");
 	
-	for (auto raw_path : test_files)
+	for (auto raw_path : issue_513_files)
 	{
 		auto path = QString::fromUtf8(raw_path);
-		if (path.contains(QString::fromLatin1("issue-513")))
-			QTest::newRow(raw_path) << QString::fromUtf8(raw_path);
+		QVERIFY(QFileInfo::exists(path));
+		QTest::newRow(raw_path) << QString::fromUtf8(raw_path);
 	}
 }
 
@@ -547,20 +525,47 @@ void FileFormatTest::saveAndLoad_data()
 	// Add all file formats which support import and export
 	QTest::addColumn<QByteArray>("id"); // memory management for test data tag
 	QTest::addColumn<QByteArray>("format_id");
+	QTest::addColumn<int>("format_version");
 	QTest::addColumn<QString>("map_filename");
 	
-	for (auto format : FileFormats.formats())
+	static const auto format_ids = {
+	    "XML",
+	    "OCD",
+	};
+	
+	for (auto format_id : format_ids)
 	{
-		if (format->supportsExport() && format->supportsImport())
+		auto format = FileFormats.findFormat(format_id);
+		QVERIFY(format);
+		QCOMPARE(format->fileType(), FileFormat::MapFile);
+		QVERIFY(format->supportsImport() || format->supportsExport());
+		
+		for (auto raw_path : example_files)
 		{
-			for (auto raw_path : test_files)
+			auto id = QByteArray{};
+			id.reserve(int(qstrlen(raw_path) + qstrlen(format_id) + 5u));
+			id.append(raw_path).append(" <> ").append(format_id);
+			auto path = QString::fromUtf8(raw_path);
+			QVERIFY(QFileInfo::exists(path));
+			
+			if (qstrcmp(format_id, "OCD") == 0)
 			{
-				auto format_id = format->id();
-				auto id = QByteArray{};
-				id.reserve(int(qstrlen(raw_path) + qstrlen(format_id) + 5u));
-				id.append(raw_path).append(" <> ").append(format_id);
-				auto path = QString::fromUtf8(raw_path);
-				QTest::newRow(id) << id << QByteArray{format_id} << path;
+				for (auto i : { 8, 9, 10, 11, 12 })
+				{
+					auto ocd_id = id;
+					ocd_id.append(QByteArray::number(i));
+					QTest::newRow(ocd_id) << ocd_id << QByteArray{format_id}+QByteArray::number(i) << i << path;
+				}
+				auto ocd_id = id;
+				ocd_id.append(" (default)");
+				QTest::newRow(ocd_id) << ocd_id << QByteArray{format_id} << int(OcdFileExport::default_version) << path;
+				ocd_id = id;
+				ocd_id.append("-legacy");
+				QTest::newRow(ocd_id) << ocd_id << QByteArray{format_id}+"-legacy" << 8 << path;
+			}
+			else
+			{
+				QTest::newRow(id) << id << QByteArray{format_id} << 0 << path;
 			}
 		}
 	}
@@ -569,14 +574,12 @@ void FileFormatTest::saveAndLoad_data()
 void FileFormatTest::saveAndLoad()
 {
 	QFETCH(QByteArray, format_id);
+	QFETCH(int, format_version);
 	QFETCH(QString, map_filename);
 	
 	// Find the file format and verify that it exists
 	const FileFormat* format = FileFormats.findFormat(format_id);
 	QVERIFY(format);
-	
-	if (map_filename.contains(QLatin1String("legacy")))
-		QEXPECT_FAIL(QTest::currentDataTag(), "Unsupported legacy binary format", Abort);
 	
 	// Load the test map
 	auto original = std::make_unique<Map>();
@@ -595,22 +598,28 @@ void FileFormatTest::saveAndLoad()
 	
 	// Save and load the map
 	auto new_map = saveAndLoadMap(*original, format);
+	QVERIFY2(new_map, "Exception while importing / exporting.");
+	
+	if (format_version)
+	{
+		if (qstrncmp(format_id, "OCD", 3) == 0)
+		{
+			QCOMPARE(new_map->property(OcdFileFormat::versionProperty()).toInt(), format_version);
+		}
+	}
 	
 	// If the export is lossy, do an extra export / import cycle in order to
 	// be independent of information which cannot be exported into this format
 	if (new_map && format->isExportLossy())
 	{
+		fuzzyCompareMaps(*new_map, *original);
+		
 		original = std::move(new_map);
 		new_map = saveAndLoadMap(*original, format);
+		QVERIFY2(new_map, "Exception while importing / exporting.");
 	}
 	
-	QVERIFY2(new_map, "Exception while importing / exporting.");
-	
-	QString error;
-	bool equal = compareMaps(*original, *new_map, error);
-	if (!equal)
-		QFAIL(QString::fromLatin1("Loaded map does not equal saved map, error: %1").arg(error).toLocal8Bit());
-	
+	compareMaps(*new_map, *original);
 	comparePrinterConfig(new_map->printerConfig(), original->printerConfig());
 }
 
@@ -640,12 +649,8 @@ void FileFormatTest::pristineMapTest()
 	
 	XMLFileFormat format;
 	auto reloaded_map = saveAndLoadMap(map, &format);
-	
 	QVERIFY(bool(reloaded_map));
-	
-	QString error;
-	if (!compareMaps(map, *reloaded_map, error))
-		QFAIL(QString::fromLatin1("Loaded map does not equal saved map, error: %1").arg(error).toLocal8Bit());
+	compareMaps(*reloaded_map, map);
 }
 
 

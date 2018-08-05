@@ -120,7 +120,7 @@ bool Importer::doImport()
 	catch (std::exception &e)
 	{
 		importFailed();
-		addWarning(QString::fromLocal8Bit(e.what()));
+		addWarning(tr("Cannot open file\n%1:\n%2").arg(path, QString::fromLocal8Bit(e.what())));
 		return false;
 	}
 	
@@ -273,7 +273,7 @@ bool Exporter::doExport()
 		}
 		if (!device_->isOpen() && !device_->open(QIODevice::WriteOnly))
 		{
-			addWarning(tr("Cannot open file\n%1:\n%2").arg(path, device_->errorString()));
+			addWarning(tr("Cannot save file\n%1:\n%2").arg(path, device_->errorString()));
 			return false;
 		}
 	}
