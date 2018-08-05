@@ -1301,7 +1301,7 @@ void OcdFileImport::setupLineSymbolFraming(OcdFileImport::OcdImportedLineSymbol*
 	
 	// Basic line options
 	framing_line->line_width = convertLength(attributes.framing_width);
-	framing_line->color = convertColor(attributes.framing_color);
+	framing_line->color = framing_line->line_width ? convertColor(attributes.framing_color) : nullptr;
 	
 	// Cap and join styles
 	switch (attributes.framing_style)
@@ -1329,11 +1329,12 @@ void OcdFileImport::setupLineSymbolDoubleBorder(OcdFileImport::OcdImportedLineSy
 {
 	using OcdLineSymbolCommon = Ocd::LineSymbolCommonV8;
 	
-	if (attributes.double_flags & OcdLineSymbolCommon::DoubleFlagFillColorOn)
+	double_line->line_width = convertLength(attributes.double_width);
+	if (double_line->line_width
+	    && attributes.double_flags & OcdLineSymbolCommon::DoubleFlagFillColorOn)
 		double_line->color = convertColor(attributes.double_color);
 	else
 		double_line->color = nullptr;
-	double_line->line_width = convertLength(attributes.double_width);
 	double_line->cap_style = LineSymbol::FlatCap;
 	double_line->join_style = LineSymbol::MiterJoin;
 	
@@ -1342,12 +1343,12 @@ void OcdFileImport::setupLineSymbolDoubleBorder(OcdFileImport::OcdImportedLineSy
 	LineSymbolBorder& right_border = double_line->getRightBorder();
 	
 	// Border color and width
-	border.color = convertColor(attributes.double_left_color);
 	border.width = convertLength(attributes.double_left_width);
+	border.color = border.width ? convertColor(attributes.double_left_color) : nullptr;
 	border.shift = convertLength(attributes.double_left_width) / 2 + (convertLength(attributes.double_width) - double_line->line_width) / 2;
 	
-	right_border.color = convertColor(attributes.double_right_color);
 	right_border.width = convertLength(attributes.double_right_width);
+	right_border.color = right_border.width ? convertColor(attributes.double_right_color) : nullptr;
 	right_border.shift = convertLength(attributes.double_right_width) / 2 + (convertLength(attributes.double_width) - double_line->line_width) / 2;
 	
 	// The borders and the filling may be dashed
@@ -1534,8 +1535,8 @@ void OcdFileImport::setupAreaSymbolCommon(OcdImportedAreaSymbol* symbol, bool fi
 		pattern.setRotatable(true);
 		pattern.line_spacing = convertLength(ocd_symbol.hatch_dist);
 		pattern.line_offset = 0;
-		pattern.line_color = convertColor(ocd_symbol.hatch_color);
 		pattern.line_width = convertLength(ocd_symbol.hatch_line_width);
+		pattern.line_color = pattern.line_width ? convertColor(ocd_symbol.hatch_color) : nullptr;
 		if (ocd_version <= 8)
 		{
 			pattern.line_spacing += pattern.line_width;
@@ -1612,7 +1613,7 @@ LineSymbol* OcdFileImport::importRectangleSymbol(const S& ocd_symbol)
 	setupBaseSymbol(symbol, ocd_symbol.base);
 	
 	symbol->line_width = convertLength(ocd_symbol.line_width);
-	symbol->color = convertColor(ocd_symbol.line_color);
+	symbol->color = symbol->line_width ? convertColor(ocd_symbol.line_color) : nullptr;
 	symbol->cap_style = LineSymbol::RoundCap;
 	symbol->join_style = LineSymbol::RoundJoin;
 	
@@ -2223,8 +2224,8 @@ void OcdFileImport::setSpecialAttributes(OcdFileImport::OcdImportedTextSymbol* s
 	symbol->paragraph_spacing = convertLength(attributes.para_spacing);
 	
 	symbol->line_below = attributes.line_below_on;
-	symbol->line_below_color = convertColor(attributes.line_below_color);
 	symbol->line_below_width = convertLength(attributes.line_below_width);
+	symbol->line_below_color = symbol->line_below_width ? convertColor(attributes.line_below_color) : nullptr;
 	symbol->line_below_distance = convertLength(attributes.line_below_offset);
 	
 	symbol->custom_tabs.resize(attributes.num_tabs);
