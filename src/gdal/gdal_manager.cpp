@@ -114,11 +114,11 @@ public:
 		return ret; 
 	}
 	
-	const std::vector<QByteArray>& supportedVectorExtensions() const
+	const std::vector<QByteArray>& supportedVectorImportExtensions() const
 	{
 		if (dirty)
 			const_cast<GdalManagerPrivate*>(this)->update();
-		return enabled_vector_extensions;
+		return enabled_vector_import_extensions;
 	}
 	
 	QStringList parameterKeys() const
@@ -162,8 +162,8 @@ private:
 		// GDAL >= 2.0
 		settings.beginGroup(gdal_manager_group);
 		auto count = GDALGetDriverCount();
-		enabled_vector_extensions.clear();
-		enabled_vector_extensions.reserve(std::size_t(count));
+		enabled_vector_import_extensions.clear();
+		enabled_vector_import_extensions.reserve(std::size_t(count));
 		for (auto i = 0; i < count; ++i)
 		{
 			auto driver_data = GDALGetDriver(i);
@@ -191,7 +191,7 @@ private:
 					continue;
 				if (extension == "osm" && !settings.value(gdal_osm_key).toBool())
 					continue;
-				enabled_vector_extensions.emplace_back(extension);
+				enabled_vector_import_extensions.emplace_back(extension);
 			}
 		}
 		settings.endGroup();
@@ -203,16 +203,16 @@ private:
 		    /* "gpx", */
 		    /* "osm", */ "pbf",
 		};
-		enabled_vector_extensions.reserve(default_extensions.size() + 3);
-		enabled_vector_extensions = default_extensions;
+		enabled_vector_import_extensions.reserve(default_extensions.size() + 3);
+		enabled_vector_import_extensions = default_extensions;
 		
 		settings.beginGroup(gdal_manager_group);
 		if (settings.value(gdal_dxf_key).toBool())
-			enabled_vector_extensions.push_back("dxf");
+			enabled_vector_import_extensions.push_back("dxf");
 		if (settings.value(gdal_gpx_key).toBool())
-			enabled_vector_extensions.push_back("gpx");
+			enabled_vector_import_extensions.push_back("gpx");
 		if (settings.value(gdal_osm_key).toBool())
-			enabled_vector_extensions.push_back("osm");
+			enabled_vector_import_extensions.push_back("osm");
 		settings.endGroup();
 #endif
 		
@@ -289,7 +289,7 @@ private:
 	
 	mutable bool dirty;
 	
-	mutable std::vector<QByteArray> enabled_vector_extensions;
+	mutable std::vector<QByteArray> enabled_vector_import_extensions;
 	
 	mutable QStringList applied_parameters;
 	
@@ -325,9 +325,9 @@ const std::vector<QByteArray>&GdalManager::supportedRasterExtensions() const
 	return p->supportedRasterExtensions();
 }
 
-const std::vector<QByteArray>& GdalManager::supportedVectorExtensions() const
+const std::vector<QByteArray>& GdalManager::supportedVectorImportExtensions() const
 {
-	return p->supportedVectorExtensions();
+	return p->supportedVectorImportExtensions();
 }
 
 QStringList GdalManager::parameterKeys() const

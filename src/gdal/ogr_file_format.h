@@ -41,13 +41,13 @@ class MapView;
  * so it can be imported into an existing map. This is the major reason for
  * implementing the OGR support as a FileFormat.
  */
-class OgrFileFormat : public FileFormat
+class OgrFileImportFormat : public FileFormat
 {
 public:
 	/**
-	 * Constructs a new OgrFileFormat.
+	 * Constructs a new OgrFileImportFormat.
 	 */
-	OgrFileFormat();
+	OgrFileImportFormat();
 	
 	
 	/**

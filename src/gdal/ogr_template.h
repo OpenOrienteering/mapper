@@ -65,7 +65,7 @@ public:
 	 * Loads the geospatial vector data into the template_map.
 	 * 
 	 * If is_georereferenced is true, the template_map will be configured to use
-	 * the georeferencing of the map given in the constructor, and OgrFileFormat
+	 * the georeferencing of the map given in the constructor, and OgrFileImportFormat
 	 * will let OGR do coordinate transformations as needed.
 	 * 
 	 * If is_georeferenced is false and an explicit_georef is defined, the

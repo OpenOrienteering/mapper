@@ -84,7 +84,7 @@ public:
 	/**
 	 * Returns the file name extensions for supported vector formats.
 	 */
-	const std::vector<QByteArray>& supportedVectorExtensions() const;
+	const std::vector<QByteArray>& supportedVectorImportExtensions() const;
 	
 	
 	/**

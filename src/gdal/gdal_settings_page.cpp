@@ -97,7 +97,7 @@ void GdalSettingsPage::apply()
 	manager.setFormatEnabled(GdalManager::OSM, import_osm->isChecked());
 	
 	// The file format constructor establishes the extensions.
-	auto format = new OgrFileFormat();
+	auto format = new OgrFileImportFormat();
 	FileFormats.unregisterFormat(FileFormats.findFormat(format->id()));
 	FileFormats.registerFormat(format);
 	

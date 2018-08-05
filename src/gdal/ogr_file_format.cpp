@@ -150,7 +150,7 @@ namespace {
 			}
 			else
 			{
-				qDebug("OgrFileFormat: Failed to parse dash pattern '%s'", raw_pattern);
+				qDebug("OgrFileImportFormat: Failed to parse dash pattern '%s'", raw_pattern);
 			}
 		}
 	}
@@ -180,13 +180,13 @@ namespace {
 				}
 				else
 				{
-					qDebug("OgrFileFormat: Unsupported font size unit '%s'", unit.constData());
+					qDebug("OgrFileImportFormat: Unsupported font size unit '%s'", unit.constData());
 				}
 			}
 		}
 		else
 		{
-			qDebug("OgrFileFormat: Failed to parse font size '%s'", font_size_string);
+			qDebug("OgrFileImportFormat: Failed to parse font size '%s'", font_size_string);
 			font_size = 0;
 		}
 		return font_size;
@@ -243,17 +243,17 @@ namespace {
 
 
 
-// ### OgrFileFormat ###
+// ### OgrFileImportFormat ###
 
-OgrFileFormat::OgrFileFormat()
+OgrFileImportFormat::OgrFileImportFormat()
  : FileFormat(OgrFile, "OGR", ::OpenOrienteering::ImportExport::tr("Geospatial vector data"), QString{}, ImportSupported)
 {
-	for (const auto& extension : GdalManager().supportedVectorExtensions())
+	for (const auto& extension : GdalManager().supportedVectorImportExtensions())
 		addExtension(QString::fromLatin1(extension));
 }
 
 
-std::unique_ptr<Importer> OgrFileFormat::makeImporter(const QString& path, Map* map, MapView* view) const
+std::unique_ptr<Importer> OgrFileImportFormat::makeImporter(const QString& path, Map* map, MapView* view) const
 {
 	return std::make_unique<OgrFileImport>(path, map, view);
 }
