@@ -65,10 +65,12 @@
 #include "fileformats/file_format.h"
 #include "fileformats/ocd_file_format.h"
 #include "fileformats/ocd_georef_fields.h"
+#include "fileformats/ocd_types_v8.h"
+#include "fileformats/ocd_types_v9.h"
 #include "fileformats/ocd_types_v10.h"
 #include "fileformats/ocd_types_v11.h"
 #include "fileformats/ocd_types_v12.h"
-#include "fileformats/ocd_types_v9.h"
+#include "fileformats/ocd_types_v2018.h"
 #include "templates/template.h"
 #include "templates/template_image.h"
 #include "templates/template_map.h"
@@ -2299,6 +2301,12 @@ bool OcdFileImport::importImplementation()
 		break;
 	case 12:
 		importImplementation<Ocd::FormatV12>();
+		break;
+	case 2018:
+		addWarning(tr("Support for OCD version %1 files is experimental.").arg(ocd_version));
+		Q_STATIC_ASSERT((std::is_same<Ocd::FormatV2018, Ocd::FormatV12>::value));
+		importImplementation<Ocd::FormatV12>();
+		map->setProperty(OcdFileFormat::versionProperty(), 12);  // save as V12 for now
 		break;
 	default:
 		throw FileFormatException(

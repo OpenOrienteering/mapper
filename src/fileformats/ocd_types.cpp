@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013, 2016 Kai Pastor
+ *    Copyright 2013, 2016-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -26,6 +26,7 @@
 #include "ocd_types_v10.h"
 #include "ocd_types_v11.h"
 #include "ocd_types_v12.h"
+#include "ocd_types_v2018.h"
 
 
 namespace Ocd
@@ -198,3 +199,4 @@ OCD_EXPLICIT_INSTANTIATION(template, Ocd::FormatV9)
 Q_STATIC_ASSERT((std::is_same<Ocd::FormatV10, Ocd::FormatV9>::value));
 OCD_EXPLICIT_INSTANTIATION(template, Ocd::FormatV11)
 OCD_EXPLICIT_INSTANTIATION(template, Ocd::FormatV12)
+Q_STATIC_ASSERT((std::is_same<Ocd::FormatV2018, Ocd::FormatV12>::value));
