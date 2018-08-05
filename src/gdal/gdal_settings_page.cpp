@@ -57,6 +57,12 @@ GdalSettingsPage::GdalSettingsPage(QWidget* parent)
 	
 	import_osm = new QCheckBox(tr("OSM"));
 	form_layout->addRow(import_osm);
+
+	form_layout->addItem(Util::SpacerItem::create(this));
+	form_layout->addRow(Util::Headline::create(tr("Export Options")));
+
+	export_per_symbol_layers = new QCheckBox(tr("Create a layer for each symbol"));
+	form_layout->addRow(export_per_symbol_layers);
 	
 	form_layout->addItem(Util::SpacerItem::create(this));
 	form_layout->addRow(Util::Headline::create(tr("Configuration")));
@@ -100,6 +106,8 @@ void GdalSettingsPage::apply()
 	auto format = new OgrFileImportFormat();
 	FileFormats.unregisterFormat(FileFormats.findFormat(format->id()));
 	FileFormats.registerFormat(format);
+
+	manager.setExportOptionEnabled(GdalManager::PER_SYMBOL_LAYERS, export_per_symbol_layers->checkState());
 	
 	const auto old_parameters = manager.parameterKeys();
 	
@@ -135,6 +143,8 @@ void GdalSettingsPage::updateWidgets()
 	import_dxf->setChecked(manager.isFormatEnabled(GdalManager::DXF));
 	import_gpx->setChecked(manager.isFormatEnabled(GdalManager::GPX));
 	import_osm->setChecked(manager.isFormatEnabled(GdalManager::OSM));
+
+	export_per_symbol_layers->setChecked(manager.isExportOptionEnabled(GdalManager::PER_SYMBOL_LAYERS));
 	
 	auto options = manager.parameterKeys();
 	options.sort();

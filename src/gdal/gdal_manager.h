@@ -53,6 +53,11 @@ public:
 		GPX,
 		OSM
 	};
+
+	enum ExportOption
+	{
+		PER_SYMBOL_LAYERS
+	};
 	
 	/**
 	 * Constructs a new manager object.
@@ -75,7 +80,18 @@ public:
 	 */
 	bool isFormatEnabled(FileFormat format) const;
 	
+
+	/**
+	 * Enables or disables an OGR export option
+	 */
+	void setExportOptionEnabled(ExportOption option, bool enabled);
 	
+	/**
+	 * Returns if an OGR export option is enabled
+	 */
+	bool isExportOptionEnabled(ExportOption option) const;
+
+
 	/**
 	 * Returns the file name extensions for supported raster formats.
 	 */

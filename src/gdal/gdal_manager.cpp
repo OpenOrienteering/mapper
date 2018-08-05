@@ -43,9 +43,14 @@ class GdalManager::GdalManagerPrivate
 public:
 	const QString gdal_manager_group{ QStringLiteral("GdalManager") };
 	const QString gdal_configuration_group{ QStringLiteral("GdalConfiguration") };
+
+	// Enabled formats
 	const QString gdal_dxf_key{ QStringLiteral("dxf") };
 	const QString gdal_gpx_key{ QStringLiteral("gpx") };
 	const QString gdal_osm_key{ QStringLiteral("osm") };
+
+	// Export options
+	const QString ogr_per_symbol_layers_key{ QStringLiteral("per_symbol_layer") };
 	
 	GdalManagerPrivate()
 	: dirty{ true }
@@ -112,6 +117,35 @@ public:
 		QSettings settings;
 		settings.beginGroup(gdal_manager_group);
 		return !settings.contains(key) || settings.value(key).toBool();
+	}
+
+	void setExportOptionEnabled(GdalManager::ExportOption option, bool enabled)
+	{
+		QString key;
+		switch (option)
+		{
+		case GdalManager::PER_SYMBOL_LAYERS:
+			key = ogr_per_symbol_layers_key;
+			break;
+		}
+		QSettings settings;
+		settings.beginGroup(gdal_manager_group);
+		settings.setValue(key, QVariant{ enabled });
+		dirty = true;
+	}
+
+	bool isExportOptionEnabled(GdalManager::ExportOption option) const
+	{
+		QString key;
+		switch (option)
+		{
+		case GdalManager::PER_SYMBOL_LAYERS:
+			key = ogr_per_symbol_layers_key;
+			break;
+		}
+		QSettings settings;
+		settings.beginGroup(gdal_manager_group);
+		return settings.value(key, QVariant{ false }).toBool();
 	}
 	
 	const std::vector<QByteArray>& supportedRasterExtensions() const
@@ -358,6 +392,16 @@ void GdalManager::setFormatEnabled(GdalManager::FileFormat format, bool enabled)
 bool GdalManager::isFormatEnabled(GdalManager::FileFormat format) const
 {
 	return p->isFormatEnabled(format);
+}
+
+void GdalManager::setExportOptionEnabled(GdalManager::ExportOption option, bool enabled)
+{
+	return p->setExportOptionEnabled(option, enabled);
+}
+
+bool GdalManager::isExportOptionEnabled(GdalManager::ExportOption option) const
+{
+	return p->isExportOptionEnabled(option);
 }
 
 const std::vector<QByteArray>&GdalManager::supportedRasterExtensions() const

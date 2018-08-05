@@ -1382,6 +1382,9 @@ LatLon OgrFileImport::calcAverageLatLon(OGRDataSourceH data_source)
 OgrFileExport::OgrFileExport(const QString& path, const Map* map, const MapView* view)
 : Exporter(path, map, view)
 {
+	GdalManager manager;
+	bool per_symbol_layers = manager.isExportOptionEnabled(GdalManager::PER_SYMBOL_LAYERS);
+	setOption(QString::fromLatin1("Per Symbol Layers"), per_symbol_layers);
 }
 
 OgrFileExport::~OgrFileExport() = default;
@@ -1504,6 +1507,84 @@ bool OgrFileExport::exportImplementation()
 		addTextToLayer(layer, is_text_object);
 		addLinesToLayer(layer, is_line_object);
 		addAreasToLayer(layer, is_area_object);
+	}
+	else if (option(QString::fromLatin1("Per Symbol Layers")).toBool())
+	{
+		// Determine symbols in use
+		std::vector<bool> symbols_in_use;
+		map->determineSymbolsInUse(symbols_in_use);
+
+		// Clear helper symbols
+		for (auto i = map->getNumSymbols() - 1; i >= 0; --i) {
+			if (symbols_in_use[i])
+				if (map->getSymbol(i)->isHelperSymbol())
+					symbols_in_use[i] = false;
+		}
+
+		// Add points, lines, areas in this order for driver compatability (esp GPX)
+		for (auto i = map->getNumSymbols() - 1; i >= 0; --i)
+		{
+			if (symbols_in_use[i])
+			{
+				const auto symbol = map->getSymbol(i);
+
+				if (symbol->getType() == Symbol::Point)
+				{
+					auto layer = createLayer(QString::fromUtf8("%1_%2").arg(info.baseName(), symbol->getPlainTextName()).toUtf8(), wkbPoint);
+					if (layer != nullptr)
+						addPointsToLayer(layer, [&symbol](const Object* object) {
+							const auto sym = object->getSymbol();
+							return sym == symbol;
+						});
+				}
+				else if (symbol->getType() == Symbol::Text)
+				{
+					auto layer = createLayer(QString::fromUtf8("%1_%2").arg(info.baseName(), symbol->getPlainTextName()).toUtf8(), wkbPoint);
+					if (layer != nullptr)
+						addTextToLayer(layer, [&symbol](const Object* object) {
+							const auto sym = object->getSymbol();
+							return sym == symbol;
+						});
+				}
+			}
+		}
+
+		// Line symbols
+		for (auto i = map->getNumSymbols() - 1; i >= 0; --i)
+		{
+			if (symbols_in_use[i])
+			{
+				const auto symbol = map->getSymbol(i);
+				if (symbol->getType() == Symbol::Line
+				    || (symbol->getType() == Symbol::Combined && !(symbol->getContainedTypes() & Symbol::Area)))
+				{
+					auto layer = createLayer(QString::fromUtf8("%1_%2").arg(info.baseName(), symbol->getPlainTextName()).toUtf8(), wkbLineString);
+					if (layer != nullptr)
+						addLinesToLayer(layer, [&symbol](const Object* object) {
+							const auto sym = object->getSymbol();
+							return sym == symbol;
+						});
+				}
+			}
+		}
+
+		// Area symbols
+		for (auto i = map->getNumSymbols() - 1; i >= 0; --i)
+		{
+			if (symbols_in_use[i])
+			{
+				const auto symbol = map->getSymbol(i);
+				if (symbol->getContainedTypes() & Symbol::Area)
+				{
+					auto layer = createLayer(QString::fromUtf8("%1_%2").arg(info.baseName(), symbol->getPlainTextName()).toUtf8(), wkbPolygon);
+					if (layer != nullptr)
+						addAreasToLayer(layer, [&symbol](const Object* object) {
+							const auto sym = object->getSymbol();
+							return sym == symbol;
+						});
+				}
+			}
+		}
 	}
 	else
 	{
