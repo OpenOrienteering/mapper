@@ -68,7 +68,46 @@ namespace ogr
 	 */
 	using unique_transformation = std::unique_ptr<typename std::remove_pointer<OGRCoordinateTransformationH>::type, OGRCoordinateTransformationHDeleter>;
 	
+
+	class OGRDataSourceHDeleter
+	{
+	public:
+		void operator()(OGRDataSourceH data_source) const
+		{
+			OGRReleaseDataSource(data_source);
+		}
+	};
+
+	/** A convenience class for OGR C API datasource handles, similar to std::unique_ptr. */
+	using unique_datasource = std::unique_ptr<typename std::remove_pointer<OGRDataSourceH>::type, OGRDataSourceHDeleter>;
+
+
+	class OGRFeatureHDeleter
+	{
+	public:
+		void operator()(OGRFeatureH feature) const
+		{
+			OGR_F_Destroy(feature);
+		}
+	};
+
+	/** A convenience class for OGR C API feature handles, similar to std::unique_ptr. */
+	using unique_feature = std::unique_ptr<typename std::remove_pointer<OGRFeatureH>::type, OGRFeatureHDeleter>;
 	
+
+	class OGRGeometryHDeleter
+	{
+	public:
+		void operator()(OGRGeometryH geometry) const
+		{
+			OGR_G_DestroyGeometry(geometry);
+		}
+	};
+
+	/** A convenience class for OGR C API geometry handles, similar to std::unique_ptr. */
+	using unique_geometry = std::unique_ptr<typename std::remove_pointer<OGRGeometryH>::type, OGRGeometryHDeleter>;
+
+
 	class OGRSpatialReferenceHDeleter
 	{
 	public:
@@ -93,7 +132,7 @@ namespace ogr
 		}
 	};
 	
-	/** A convenience class for OGR C API feature handles, similar to std::unique_ptr. */
+	/** A convenience class for OGR C API style manager handles, similar to std::unique_ptr. */
 	using unique_stylemanager = std::unique_ptr<typename std::remove_pointer<OGRStyleMgrH>::type, OGRStyleMgrHDeleter>;
 }
 
