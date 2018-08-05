@@ -29,6 +29,7 @@
 namespace OpenOrienteering {
 
 class Importer;
+class Exporter;
 class Map;
 class MapView;
 
@@ -54,6 +55,20 @@ public:
 	 * Creates an importer for files supported by OGR.
 	 */
 	std::unique_ptr<Importer> makeImporter(const QString& path, Map* map, MapView* view) const override;
+};
+
+class OgrFileExportFormat : public FileFormat
+{
+public:
+	/**
+	  * Constructs a new OgrFileExportFormat.
+	  */
+	OgrFileExportFormat();
+
+	/**
+	  * Creates an exporter for files supported by OGR.
+	  */
+	std::unique_ptr<Exporter> makeExporter(const QString &path, const Map *map, const MapView *view) const override;
 };
 
 

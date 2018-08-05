@@ -120,6 +120,13 @@ public:
 			const_cast<GdalManagerPrivate*>(this)->update();
 		return enabled_vector_import_extensions;
 	}
+
+	const std::vector<QByteArray>& supportedVectorExportExtensions() const
+	{
+		if (dirty)
+			const_cast<GdalManagerPrivate*>(this)->update();
+		return enabled_vector_export_extensions;
+	}
 	
 	QStringList parameterKeys() const
 	{
@@ -164,20 +171,36 @@ private:
 		auto count = GDALGetDriverCount();
 		enabled_vector_import_extensions.clear();
 		enabled_vector_import_extensions.reserve(std::size_t(count));
+		enabled_vector_export_extensions.clear();
+		enabled_vector_export_extensions.reserve(std::size_t(count));
 		for (auto i = 0; i < count; ++i)
 		{
 			auto driver_data = GDALGetDriver(i);
 			auto type = GDALGetMetadataItem(driver_data, GDAL_DCAP_VECTOR, nullptr);
 			if (qstrcmp(type, "YES") != 0)
 				continue;
-			
-			// Skip write-only drivers.
+
+			auto extensions_raw = GDALGetMetadataItem(driver_data, GDAL_DMD_EXTENSIONS, nullptr);
+			auto extensions = QByteArray::fromRawData(extensions_raw, int(qstrlen(extensions_raw)));
+
+			auto cap_create = GDALGetMetadataItem(driver_data, GDAL_DCAP_CREATE, nullptr);
+			if (qstrcmp(cap_create, "YES") == 0)
+			{
+				for (auto pos = 0; pos >= 0; )
+				{
+					auto start = pos ? pos + 1 : 0;
+					pos = extensions.indexOf(' ', start);
+					auto extension = extensions.mid(start, pos - start);
+					if (extension.isEmpty())
+						continue;
+					enabled_vector_export_extensions.emplace_back(extension);
+				}
+			}
+
 			auto cap_open = GDALGetMetadataItem(driver_data, GDAL_DCAP_OPEN, nullptr);
 			if (qstrcmp(cap_open, "YES") != 0)
 				continue;
-			
-			auto extensions_raw = GDALGetMetadataItem(driver_data, GDAL_DMD_EXTENSIONS, nullptr);
-			auto extensions = QByteArray::fromRawData(extensions_raw, int(qstrlen(extensions_raw)));
+
 			for (auto pos = 0; pos >= 0; )
 			{
 				auto start = pos ? pos + 1 : 0;
@@ -196,7 +219,7 @@ private:
 		}
 		settings.endGroup();
 #else
-		// GDAL < 2.0 does not provide the supported extensions 
+		// GDAL < 2.0 does not provide the supported extensions
 		static const std::vector<QByteArray> default_extensions = {
 		    "shp", "dbf",
 		    /* "dxf", */
@@ -205,7 +228,7 @@ private:
 		};
 		enabled_vector_import_extensions.reserve(default_extensions.size() + 3);
 		enabled_vector_import_extensions = default_extensions;
-		
+
 		settings.beginGroup(gdal_manager_group);
 		if (settings.value(gdal_dxf_key).toBool())
 			enabled_vector_import_extensions.push_back("dxf");
@@ -214,6 +237,14 @@ private:
 		if (settings.value(gdal_osm_key).toBool())
 			enabled_vector_import_extensions.push_back("osm");
 		settings.endGroup();
+
+		static const std::vector<QByteArray> default_export_extensions = {
+		    "shp",
+		    "gpx",
+		    "kml",
+		};
+		enabled_vector_export_extensions.reserve(default_export_extensions.size());
+		enabled_vector_export_extensions = default_export_extensions;
 #endif
 		
 		// Using osmconf.ini to detect a directory with data from gdal. The
@@ -290,6 +321,8 @@ private:
 	mutable bool dirty;
 	
 	mutable std::vector<QByteArray> enabled_vector_import_extensions;
+
+	mutable std::vector<QByteArray> enabled_vector_export_extensions;
 	
 	mutable QStringList applied_parameters;
 	
@@ -328,6 +361,11 @@ const std::vector<QByteArray>&GdalManager::supportedRasterExtensions() const
 const std::vector<QByteArray>& GdalManager::supportedVectorImportExtensions() const
 {
 	return p->supportedVectorImportExtensions();
+}
+
+const std::vector<QByteArray>& GdalManager::supportedVectorExportExtensions() const
+{
+	return p->supportedVectorExportExtensions();
 }
 
 QStringList GdalManager::parameterKeys() const
