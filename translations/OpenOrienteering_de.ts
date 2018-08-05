@@ -5412,7 +5412,7 @@ Zoomen ist mit dem Mausrad möglich.</translation>
     <message>
         <location filename="../src/templates/template_tool_paint.cpp" line="558"/>
         <source>Template file exists: &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Vorlagendatei existiert: &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
