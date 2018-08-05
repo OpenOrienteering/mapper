@@ -1429,13 +1429,24 @@ bool OgrFileExport::exportImplementation()
 #else
 	const char *psz_driver_name;
 	if (file_extn.compare(QString::fromLatin1("gpx"), Qt::CaseInsensitive) == 0)
+	{
 		psz_driver_name = "GPX";
+	}
 	else if (file_extn.compare(QString::fromLatin1("kml"), Qt::CaseInsensitive) == 0)
-		psz_driver_name = "KML";
+	{
+		if (OGRGetDriverByName("LIBKML") != nullptr)
+			psz_driver_name = "LIBKML";
+		else
+			psz_driver_name = "KML";
+	}
 	else if (file_extn.compare(QString::fromLatin1("shp"), Qt::CaseInsensitive) == 0)
+	{
 		psz_driver_name = "ESRI Shapefile";
+	}
 	else
+	{
 		throw FileFormatException(tr("Unknown file extension %1, only GPX, KML, and SHP files are supported.").arg(file_extn));
+	}
 
 	po_driver = OGRGetDriverByName(psz_driver_name);
 #endif

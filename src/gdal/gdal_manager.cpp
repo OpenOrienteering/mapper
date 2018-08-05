@@ -50,8 +50,15 @@ public:
 	GdalManagerPrivate()
 	: dirty{ true }
 	{
-		// GDAL 2.0: GDALAllRegister();
+#if GDAL_VERSION_NUM >= GDAL_COMPUTE_VERSION(2,0,0)
+		GDALAllRegister();
+
+		// Prefer LIBMKL driver to the KML driver if available
+		if (GDALGetDriverByName("LIBKML") != nullptr)
+			GDALDeregisterDriver(GDALGetDriverByName("KML"));
+#else
 		OGRRegisterAll();
+#endif
 	}
 	
 	GdalManagerPrivate(const GdalManagerPrivate&) = delete;
