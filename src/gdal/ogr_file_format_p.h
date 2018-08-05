@@ -150,6 +150,19 @@ namespace ogr
 	
 	/** A convenience class for OGR C API style manager handles, similar to std::unique_ptr. */
 	using unique_stylemanager = std::unique_ptr<typename std::remove_pointer<OGRStyleMgrH>::type, OGRStyleMgrHDeleter>;
+
+
+	class OGRStyleTableHDeleter
+	{
+	public:
+		void operator()(OGRStyleTableH table) const
+		{
+			OGR_STBL_Destroy(table);
+		}
+	};
+
+	/** A convenience class for OGR C API style manager handles, similar to std::unique_ptr. */
+	using unique_styletable = std::unique_ptr<typename std::remove_pointer<OGRStyleTableH>::type, OGRStyleTableHDeleter>;
 }
 
 
@@ -373,6 +386,8 @@ protected:
 
 	OGRLayerH createLayer(const char* layer_name, OGRwkbGeometryType type);
 
+	void populateStyleTable();
+
 	void setupGeoreferencing(GDALDriverH po_driver);
 	void setupQuirks(GDALDriverH po_driver);
 
@@ -380,6 +395,7 @@ private:
 	ogr::unique_datasource po_ds;
 	ogr::unique_fielddefn o_name_field;
 	ogr::unique_srs map_srs;
+	ogr::unique_styletable table;
 	ogr::unique_transformation transformation;
 
 	OgrQuirks quirks;
