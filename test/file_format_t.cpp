@@ -249,6 +249,68 @@ namespace
 		}
 	}
 	
+	
+	/**
+	 * Compares map features in a way that works for lossy exporters and importers.
+	 * 
+	 * A lossy exporter may create extra colors, symbols and objects in order to
+	 * maintain the map's appearance. It may also merge all map parts into a
+	 * single part.
+	 * 
+	 * A lossy importer might skip some elements, but it is fair to require that
+	 * it imports everything which is exported by the corresponding exporter.
+	 */
+	void fuzzyCompareMaps(const Map& actual, const Map& expected)
+	{
+		// Miscellaneous
+		QCOMPARE(actual.getScaleDenominator(), expected.getScaleDenominator());
+		QCOMPARE(actual.getMapNotes(), expected.getMapNotes());
+		
+		// Georeferencing
+		const auto& actual_georef = actual.getGeoreferencing();
+		const auto& expected_georef = expected.getGeoreferencing();
+		QCOMPARE(actual_georef.getScaleDenominator(), expected_georef.getScaleDenominator());
+		QCOMPARE(actual_georef.getGrivation(), expected_georef.getGrivation());
+		
+		auto test_label = QString::fromLatin1("actual: %1, expected: %2");
+		auto ref_point = actual_georef.getMapRefPoint();
+		auto actual_point = actual_georef.toProjectedCoords(ref_point);;
+		auto expected_point = expected_georef.toProjectedCoords(ref_point);
+		QVERIFY2(qAbs(actual_point.x() - expected_point.x()) < 1.0, qPrintable(test_label.arg(actual_point.x()).arg(expected_point.x())));
+		QVERIFY2(qAbs(actual_point.y() - expected_point.y()) < 1.0, qPrintable(test_label.arg(actual_point.y()).arg(expected_point.y())));
+		ref_point += MapCoord{500, 500};
+		actual_point = actual_georef.toProjectedCoords(expected_georef.getMapRefPoint());;
+		expected_point = expected_georef.toProjectedCoords(expected_georef.getMapRefPoint());
+		QVERIFY2(qAbs(actual_point.x() - expected_point.x()) < 1.0, qPrintable(test_label.arg(actual_point.x()).arg(expected_point.x())));
+		QVERIFY2(qAbs(actual_point.y() - expected_point.y()) < 1.0, qPrintable(test_label.arg(actual_point.y()).arg(expected_point.y())));
+		
+		if (!actual_georef.isLocal())
+		{
+			QCOMPARE(actual_georef.isLocal(), expected_georef.isLocal());
+			QCOMPARE(actual_georef.toGeographicCoords(actual_point), expected_georef.toGeographicCoords(actual_point));
+		}
+		
+		// Colors
+		QVERIFY2(actual.getNumColors() >= expected.getNumColors(), qPrintable(test_label.arg(actual.getNumColors()).arg(expected.getNumColors())));
+		QVERIFY2(actual.getNumColors() <= 2 * expected.getNumColors(), qPrintable(test_label.arg(actual.getNumColors()).arg(expected.getNumColors())));
+		
+		// Symbols
+		// Combined symbols may be dropped on export
+		QVERIFY2(2 * actual.getNumSymbols() >= expected.getNumSymbols(), qPrintable(test_label.arg(actual.getNumSymbols()).arg(expected.getNumSymbols())));
+		QVERIFY2(actual.getNumSymbols() <= 2 * expected.getNumSymbols(), qPrintable(test_label.arg(actual.getNumSymbols()).arg(expected.getNumSymbols())));
+		
+		// Objects
+		QVERIFY2(actual.getNumObjects() >= expected.getNumObjects(), qPrintable(test_label.arg(actual.getNumObjects()).arg(expected.getNumObjects())));
+		QVERIFY2(actual.getNumObjects() <= 2 * expected.getNumObjects(), qPrintable(test_label.arg(actual.getNumObjects()).arg(expected.getNumObjects())));
+		
+		// Parts
+		if (actual.getNumParts() > 1)
+		{
+			QCOMPARE(actual.getNumParts(), expected.getNumParts());
+		}
+	}
+	
+	
 	std::unique_ptr<Map> saveAndLoadMap(const Map& input, const FileFormat* format)
 	{
 		auto out = std::make_unique<Map>();
@@ -536,15 +598,6 @@ void FileFormatTest::saveAndLoad()
 	
 	// Save and load the map
 	auto new_map = saveAndLoadMap(*original, format);
-	
-	// If the export is lossy, do an extra export / import cycle in order to
-	// be independent of information which cannot be exported into this format
-	if (new_map && format->isExportLossy())
-	{
-		original = std::move(new_map);
-		new_map = saveAndLoadMap(*original, format);
-	}
-	
 	QVERIFY2(new_map, "Exception while importing / exporting.");
 	
 	if (format_version)
@@ -553,6 +606,17 @@ void FileFormatTest::saveAndLoad()
 		{
 			QCOMPARE(new_map->property(OcdFileFormat::versionProperty()).toInt(), format_version);
 		}
+	}
+	
+	// If the export is lossy, do an extra export / import cycle in order to
+	// be independent of information which cannot be exported into this format
+	if (new_map && format->isExportLossy())
+	{
+		fuzzyCompareMaps(*new_map, *original);
+		
+		original = std::move(new_map);
+		new_map = saveAndLoadMap(*original, format);
+		QVERIFY2(new_map, "Exception while importing / exporting.");
 	}
 	
 	compareMaps(*new_map, *original);
