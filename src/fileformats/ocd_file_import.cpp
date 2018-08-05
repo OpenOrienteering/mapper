@@ -310,8 +310,6 @@ void OcdFileImport::importImplementation()
 	}
 #endif
 	
-	map->setSymbolSetId(QStringLiteral("OCD"));
-	map->setProperty(OcdFileFormat::versionProperty(), ocd_version);
 	importGeoreferencing(file);
 	importColors(file);
 	importSymbols(file);
@@ -2279,6 +2277,8 @@ bool OcdFileImport::importImplementation()
 		throw FileFormatException(Importer::tr("Could not read file: %1").arg(tr("Invalid data.")));
 	
 	ocd_version = header->version;
+	map->setSymbolSetId(QStringLiteral("OCD"));
+	map->setProperty(OcdFileFormat::versionProperty(), ocd_version);
 	switch (ocd_version)
 	{
 	case 6:
