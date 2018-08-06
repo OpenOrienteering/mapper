@@ -64,6 +64,7 @@
 #include <QLatin1String>
 #include <QLineEdit>
 #include <QList>
+#include <QLocale>
 #include <QMenu>
 #include <QMenuBar>
 #include <QMessageBox>
@@ -1704,11 +1705,10 @@ void MapEditorController::copy()
 	}
 	
 	// Copy all colors. This improves preservation of relative order during paste.
-	copy_map.importMap(map, Map::ColorImport, window);
+	copy_map.importMap(*map, Map::ColorImport);
 	
 	// Export symbols and colors into copy_map
-	QHash<const Symbol*, Symbol*> symbol_map;
-	copy_map.importMap(map, Map::MinimalSymbolImport, window, &symbol_filter, -1, true, &symbol_map);
+	auto symbol_map = copy_map.importMap(*map, Map::MinimalSymbolImport, &symbol_filter, -1, true);
 	
 	// Duplicate all selected objects into copy map
 	for (const auto object : map->selectedObjects())
@@ -1771,7 +1771,7 @@ void MapEditorController::paste()
 		part->getObject(i)->move(offset);
 	
 	// Import pasted map. Do not blindly import all colors.
-	map->importMap(&paste_map, Map::MinimalObjectImport, window);
+	importMap(paste_map, Map::MinimalObjectImport, window);
 	
 	// Show message
 	window->showStatusBarMessage(tr("Pasted %n object(s)", nullptr, paste_map.getNumObjects()), 2000);
@@ -4038,9 +4038,53 @@ bool MapEditorController::importMapFile(const QString& filename, bool show_error
 		}
 	}
 	
-	map->importMap(&imported_map, Map::MinimalObjectImport | Map::GeorefImport, window);
+	importMap(imported_map, Map::MinimalObjectImport | Map::GeorefImport, window);
 	return true;
 }
+
+
+QHash<const Symbol*, Symbol*> MapEditorController::importMap(
+        Map& other,
+        Map::ImportMode mode,
+        QWidget* dialog_parent,
+        std::vector<bool>* filter,
+        int symbol_insert_pos,
+        bool merge_duplicate_symbols)
+{
+	// Check if there is something to import
+	if (other.getNumColors() == 0
+	    && other.getNumSymbols() == 0
+	    && other.getNumObjects() == 0)
+	{
+		QMessageBox::critical(dialog_parent, tr("Error"), tr("Nothing to import."));
+		return {};
+	}
+	
+	// Check scale
+	if ((mode & 0x0f) != Map::ColorImport
+	    && other.getNumSymbols() > 0
+	    && other.getScaleDenominator() != map->getScaleDenominator())
+	{
+		/// \todo Move message to this context.
+		int answer = QMessageBox::question(
+		                 dialog_parent,
+		                 tr("Question"),
+		                 tr("The scale of the imported data is 1:%1 "
+		                    "which is different from this map's scale of 1:%2.\n\n"
+		                    "Rescale the imported data?")
+		                 .arg(QLocale().toString(other.getScaleDenominator()),
+		                      QLocale().toString(map->getScaleDenominator())),
+		                 QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel, QMessageBox::Yes);
+		if (answer == QMessageBox::Yes)
+		{
+			other.changeScale(map->getScaleDenominator(), MapCoord(0, 0), true, true, true, true);
+		}
+	}
+	
+	return map->importMap(other, mode, filter, symbol_insert_pos, merge_duplicate_symbols);
+}
+
+
 
 // slot
 void MapEditorController::setViewOptionsEnabled(bool enabled)

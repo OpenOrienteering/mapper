@@ -164,44 +164,53 @@ public:
 	 */
 	bool loadFrom(const QString& path, MapView* view = nullptr);
 	
-	/**
-	 * Imports the other map into this map with the following strategy:
-	 *  - if the other map contains objects, import all objects with the minimum
-	 *    amount of colors and symbols needed to display them
-	 *  - if the other map does not contain objects, import all symbols with
-	 *    the minimum amount of colors needed to display them
-	 *  - if the other map does neither contain objects nor symbols, import all colors
-	 * 
-	 * WARNING: this method potentially changes the 'other' map if the
-	 *          scales differ (by rescaling to fit this map's scale)!
-	 */
-	void importMap(
-	        const Map* other,
-	        ImportMode mode,
-	        QWidget* dialog_parent = nullptr,
-	        std::vector<bool>* filter = nullptr,
-	        int symbol_insert_pos = -1,
-	        bool merge_duplicate_symbols = true,
-	        QHash<const Symbol*, Symbol*>* out_symbol_map = nullptr
-	);
 	
 	/**
-	 * Imports another map into this map with the following strategy:
-	 *  - If the other map contains objects, import all objects with the
-	 *    minimum amount of colors and symbols needed to display them.
-	 *  - If the other map does not contain objects, import all symbols
-	 *    with the minimum amount of colors needed to display them.
-	 *  - If the other map does neither contain objects nor symbols,
-	 *    import all colors.
-	 * The transform is applied to all imported objects.
+	 * Imports another map into this map.
+	 * 
+	 * If the Map::GeorefImport mode flag is set, this overload will attempt to
+	 * calculate a transformation based on the maps' georeferencing.
+	 * All further processsing is delegated to the other overload.
+	 * 
 	 */
 	QHash<const Symbol*, Symbol*> importMap(
 	        const Map& imported_map,
 	        ImportMode mode,
 	        std::vector<bool>* filter = nullptr,
 	        int symbol_insert_pos = -1,
-	        bool merge_duplicate_symbols = true,
-	        const QTransform& transform = {}
+	        bool merge_duplicate_symbols = true
+	);
+	
+	/**
+	 * Imports another map into this map.
+	 * 
+	 * The amount of imported elements is controlled by the mode argument which
+	 * is a combination of an enumeration of basic modes (ColorImport,
+	 * SymbolImport, ObjectImport) and the flags (MinimalImport).
+	 * - ObjectImport: Import objects, symbols and colors.
+	 *   If the MinimalImport flag is set, symbols and colors not used
+	 *   by the imported objects are ignored.
+	 *   The filter argument is not used.
+	 * - SymbolImport: Import symbols and colors.
+	 *   If the MinimalImport flag is set, the filter argument may be used to
+	 *   select a subset of the symbols, and colors not used by the imported
+	 *   symbols are ignored.
+	 * - ColorImport: Import colors.
+	 *   If the MinimalImport flag is set, the filter argument may be used to
+	 *   select a subset of the colors.
+	 * 
+	 * This overload ignores the Map::GeorefImport mode flag. It only uses the
+	 * given transformation. It is applied to all imported objects.
+	 * No other adjustment of object positions and no scaling of symbol sizes
+	 * (with respect to possible different map scales) is performed.
+	 */
+	QHash<const Symbol*, Symbol*> importMap(
+	        const Map& imported_map,
+	        ImportMode mode,
+	        const QTransform& transform,
+	        std::vector<bool>* filter = nullptr,
+	        int symbol_insert_pos = -1,
+	        bool merge_duplicate_symbols = true
 	);
 	
 	

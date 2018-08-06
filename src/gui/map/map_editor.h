@@ -23,6 +23,7 @@
 #define OPENORIENTEERING_MAP_EDITOR_H
 
 #include <memory>
+#include <vector>
 
 #include <QClipboard>
 #include <QHash>
@@ -32,6 +33,7 @@
 #include <QString>
 #include <QTimer>
 
+#include "core/map.h"
 #include "gui/main_window_controller.h"
 
 class QAction;
@@ -59,7 +61,6 @@ class GPSTemporaryMarkers;
 class GPSTrackRecorder;
 class GeoreferencingDialog;
 class MainWindow;
-class Map;
 class MapEditorActivity;
 class MapEditorTool;
 class MapFindFeature;
@@ -506,6 +507,24 @@ public slots:
 	void templateAdded(int pos, const Template* temp);
 	/** Updates action enabled states after a template has been deleted */
 	void templateDeleted(int pos, const Template* temp);
+	
+	/**
+	 * Imports another map into this map.
+	 * 
+	 * This method changes the given 'other' map if the	maps' scales differ.
+	 * This is an optimization for the use cases where temporary maps are
+	 * created just for this kind of import.
+	 * 
+	 * \see Map::importMap
+	 */
+	QHash<const Symbol*, Symbol*> importMap(
+	        Map& other,
+	        Map::ImportMode mode,
+	        QWidget* dialog_parent,
+	        std::vector<bool>* filter = nullptr,
+	        int symbol_insert_pos = -1,
+	        bool merge_duplicate_symbols = true
+	);
 	
 	/** Imports a track file (GPX, DXF, OSM, ...) into the map */
 	bool importGeoFile(const QString& filename);

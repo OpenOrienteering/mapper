@@ -33,8 +33,6 @@
 #include <QByteArray>
 #include <QDebug>
 #include <QIODevice>
-#include <QLocale>
-#include <QMessageBox>
 #include <QPainter>
 #include <QPoint>
 #include <QPointF>
@@ -610,63 +608,20 @@ void Map::setMapNotes(const QString& text)
 }
 
 
-void Map::importMap(
-        const Map* other,
+QHash<const Symbol*, Symbol*> Map::importMap(
+        const Map& imported_map,
         ImportMode mode,
-        QWidget* dialog_parent,
         std::vector<bool>* filter,
         int symbol_insert_pos,
-        bool merge_duplicate_symbols,
-        QHash<const Symbol*, Symbol*>* out_symbol_map )
+        bool merge_duplicate_symbols)
 {
-	// Check if there is something to import
-	if (other->getNumColors() == 0
-	    && other->getNumSymbols() == 0
-	    && other->getNumObjects() == 0)
-	{
-		QMessageBox::critical(dialog_parent, tr("Error"), tr("Nothing to import."));
-		return;
-	}
-	
-	// Check scale
-	if ((mode & 0x0f) != ColorImport
-	    && other->getNumSymbols() > 0
-	    && other->getScaleDenominator() != getScaleDenominator())
-	{
-		int answer = QMessageBox::question(dialog_parent, tr("Question"),
-		                                   tr("The scale of the imported data is 1:%1 which is different from this map's scale of 1:%2.\n\nRescale the imported data?")
-		                                   .arg(QLocale().toString(other->getScaleDenominator()),
-		                                        QLocale().toString(getScaleDenominator())),
-		                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
-		if (answer == QMessageBox::Yes)
-		{
-			/// \todo No need to clone iff the other map is discarded after import.
-			Map clone;
-			clone.setGeoreferencing(other->getGeoreferencing());
-			clone.importMap(other, mode, dialog_parent, filter, -1, false, out_symbol_map);
-			clone.changeScale(getScaleDenominator(), MapCoord(0, 0), true, true, true, true);
-			QHash<const Symbol*, Symbol*> symbol_map; // clone symbol -> this map's symbol
-			importMap(&clone, mode, dialog_parent, nullptr, symbol_insert_pos, merge_duplicate_symbols, &symbol_map);
-			if (out_symbol_map) // original imported symbol -> clone symbol
-			{
-				Q_ASSERT(symbol_map.size() == out_symbol_map->size());
-				for (auto& symbol : *out_symbol_map)
-				{
-					Q_ASSERT(symbol_map.contains(symbol));
-					symbol = symbol_map.value(symbol); // original imported symbol -> this map's symbol
-				}
-			}
-			return;
-		}
-	}
-	
 	QTransform q_transform;
 	if (mode.testFlag(GeorefImport))
 	{
 		/// \todo Test and review import of georeferenced and non-georeferenced maps, in all combinations.
 		/// \todo Handle rotation of patterns and text, cf. Object::transform.
 		const auto& georef = getGeoreferencing();
-		const auto& other_georef = other->getGeoreferencing();
+		const auto& other_georef = imported_map.getGeoreferencing();
 		const auto src_origin = MapCoordF { other_georef.getMapRefPoint() };
 		
 		bool ok0, ok1, ok2;
@@ -687,9 +642,7 @@ void Map::importMap(
 		}
 	}
 	
-	auto symbol_map = importMap(*other, mode, filter, symbol_insert_pos, merge_duplicate_symbols, q_transform);
-	if (out_symbol_map)
-		*out_symbol_map = symbol_map;
+	return importMap(imported_map, mode & ~GeorefImport, q_transform, filter, symbol_insert_pos, merge_duplicate_symbols);
 }
 
 
@@ -703,11 +656,17 @@ bool Map::loadFrom(const QString& path, MapView* view)
 QHash<const Symbol*, Symbol*> Map::importMap(
         const Map& imported_map,
         ImportMode mode,
+        const QTransform& transform,
         std::vector<bool>* filter,
         int symbol_insert_pos,
-        bool merge_duplicate_symbols,
-        const QTransform& transform)
+        bool merge_duplicate_symbols)
 {
+	if (imported_map.getScaleDenominator() != getScaleDenominator())
+		qWarning("Map::importMap() called for different map scale");
+	
+	if (mode.testFlag(GeorefImport))
+		qWarning("Map::importMap() called with GeorefImport flag set");
+	
 	// Determine which symbols and colors to import
 	std::vector<bool> color_filter(std::size_t(imported_map.getNumColors()), true);
 	std::vector<bool> symbol_filter(std::size_t(imported_map.getNumSymbols()), true);
