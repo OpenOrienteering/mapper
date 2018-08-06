@@ -22,8 +22,11 @@
 #include "settings.h"
 
 #include <QtGlobal>
+#if defined(QT_WIDGETS_LIB)
 #include <QApplication>
+#endif
 #include <QByteArray>
+#include <QGuiApplication>
 #include <QLatin1String>
 #include <QLocale>
 #include <QScreen>
@@ -58,13 +61,13 @@ namespace Util
 	
 	qreal mmToPixelLogical(qreal millimeters)
 	{
-		auto ppi = QApplication::primaryScreen()->logicalDotsPerInch();
+		auto ppi = QGuiApplication::primaryScreen()->logicalDotsPerInch();
 		return millimeters * ppi / qreal(25.4);
 	}
 	
 	qreal pixelToMMLogical(qreal pixels)
 	{
-		auto ppi = QApplication::primaryScreen()->logicalDotsPerInch();
+		auto ppi = QGuiApplication::primaryScreen()->logicalDotsPerInch();
 		return pixels * qreal(25.4) / ppi;
 	}
 	
@@ -93,22 +96,22 @@ Settings::Settings()
 	int start_drag_distance_default;
 	
 	// Platform-specific settings defaults
-	#if defined(ANDROID)
-		symbol_widget_icon_size_mm_default = touch_button_minimum_size_default;
-		map_editor_click_tolerance_default = 4.0f;
-		map_editor_snap_distance_default = 15.0f;
-		start_drag_distance_default = Util::mmToPixelLogical(3.0f);
-	#else
-		symbol_widget_icon_size_mm_default = 8;
-		map_editor_click_tolerance_default = 3.0f;
-		map_editor_snap_distance_default = 10.0f;
-		start_drag_distance_default = QApplication::startDragDistance();
-	#endif
+#if defined(ANDROID) || !defined(QT_WIDGETS_LIB)
+	symbol_widget_icon_size_mm_default = touch_button_minimum_size_default;
+	map_editor_click_tolerance_default = 4.0f;
+	map_editor_snap_distance_default = 15.0f;
+	start_drag_distance_default = Util::mmToPixelLogical(3.0f);
+#else
+	symbol_widget_icon_size_mm_default = 8;
+	map_editor_click_tolerance_default = 3.0f;
+	map_editor_snap_distance_default = 10.0f;
+	start_drag_distance_default = QApplication::startDragDistance();
+#endif
 	
-	qreal ppi = QApplication::primaryScreen()->physicalDotsPerInch();
+	qreal ppi = QGuiApplication::primaryScreen()->physicalDotsPerInch();
 	// Beware of https://bugreports.qt-project.org/browse/QTBUG-35701
 	if (ppi > 2048.0 || ppi < 16.0)
-		ppi = QApplication::primaryScreen()->logicalDotsPerInch();
+		ppi = QGuiApplication::primaryScreen()->logicalDotsPerInch();
 	
 	registerSetting(MapDisplay_TextAntialiasing, "MapDisplay/text_antialiasing", false);
 	registerSetting(MapEditor_ClickToleranceMM, "MapEditor/click_tolerance_mm", map_editor_click_tolerance_default);
@@ -180,7 +183,7 @@ void Settings::migrateSettings(QSettings& settings, const QVariant& version)
 	
 	if (!settings.value(QLatin1String("MapEditor/units_rectified"), false).toBool())
 	{
-		const auto factor = QApplication::primaryScreen()->logicalDotsPerInch()
+		const auto factor = QGuiApplication::primaryScreen()->logicalDotsPerInch()
 		                    / getSetting(Settings::General_PixelsPerInch).toReal();
 		for (auto setting : { SymbolWidget_IconSizeMM, MapEditor_ClickToleranceMM, MapEditor_SnapDistanceMM, RectangleTool_HelperCrossRadiusMM })
 		{
