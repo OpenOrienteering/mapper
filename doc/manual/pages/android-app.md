@@ -23,7 +23,7 @@ the desktop version, so please read this first for important instructions.
 [Storing Maps and Templates on Android Devices](android-storage.md){: .subpage}
 
 {% if doxygen %}
-**Note:** The [online version](http://www.openorienteering.org/mapper-manual/android/) of this documentation may contain additions and corrections.
+**Note:** The [online version](https://www.openorienteering.org/mapper-manual/android/) of this documentation may contain additions and corrections.
 {% endif %}
 
 
