@@ -317,8 +317,10 @@ void UndoManager::validateUndoSteps()
 		if (current_index > int(max_undo_steps))
 			num_removed_undo_steps += current_index - int(max_undo_steps);
 		
+		auto rfirst = undo_steps.rend() - StepList::difference_type(current_index);
+		Q_ASSERT(rfirst->get() == nextUndoStep());
 		auto rlast = undo_steps.rend() - num_removed_undo_steps;
-		auto rfirst = std::find_if(undo_steps.rbegin(), rlast, [](auto&& step) { return !step->isValid(); });
+		rfirst = std::find_if(rfirst, rlast, [](auto&& step) { return !step->isValid(); });
 		if (rfirst != rlast)
 			num_removed_undo_steps += std::distance(rfirst, rlast);
 		
