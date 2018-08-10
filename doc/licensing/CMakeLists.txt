@@ -34,7 +34,7 @@ endforeach()
 
 # Select default provider
 if(ANDROID OR APPLE OR WIN32)
-	set(default_provider superbuild)
+	set(default_provider OFF)
 elseif(UNIX)
 	execute_process(
 	  COMMAND sh -c ". /etc/os-release; echo $ID"
