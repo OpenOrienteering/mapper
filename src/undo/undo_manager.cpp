@@ -311,7 +311,7 @@ void UndoManager::clearRedoSteps()
 
 void UndoManager::validateUndoSteps()
 {
-	if (canUndo())
+	if (current_index > 0)
 	{
 		int num_removed_undo_steps = 0;
 		if (current_index > int(max_undo_steps))
@@ -344,7 +344,7 @@ void UndoManager::validateUndoSteps()
 
 void UndoManager::validateRedoSteps()
 {
-	if (canRedo())
+	if (current_index < int(undo_steps.size()))
 	{
 		auto num_removed_redo_steps = StepList::difference_type(0);
 		
