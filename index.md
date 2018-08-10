@@ -7,7 +7,7 @@ redirect_from:
 ---
 
 {% if doxygen %}
-**Note:** The [online version](http://www.openorienteering.org/mapper-manual/) of this documentation may contain additions and corrections.
+**Note:** The [online version](https://www.openorienteering.org/mapper-manual/) of this documentation may contain additions and corrections.
 {% endif %}
 
 ## Contents
@@ -60,7 +60,7 @@ Frequently asked questions.
 
 ## Online resources
 
-[Blog](http://www.openorienteering.org/)
+[Blog](https://www.openorienteering.org/)
 The latest news from OpenOrienteering.
 
 [Issues list](https://github.com/OpenOrienteering/mapper/issues)

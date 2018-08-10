@@ -16,7 +16,7 @@ edited: 25 February 2013
 
 #### Introduction
 
-Georeferencing of a map is the best way for aligning templates (such as base maps or aerial imagery) and GPS tracks. In short, to georeference a map means to establish a known relationship between the paper coordinates of the map and the coordinates of a geographic coordinate reference system. This way, data which is known in a geographic coordinate reference system (such as GPS coordinates) can be transformed to map coordinates and thus displayed on the map, and vice versa the map can be transformed to geographic coordinates and e.g. be displayed on a world map. More information is available on [Wikipedia](http://en.wikipedia.org/wiki/Georeferencing).
+Georeferencing of a map is the best way for aligning templates (such as base maps or aerial imagery) and GPS tracks. In short, to georeference a map means to establish a known relationship between the paper coordinates of the map and the coordinates of a geographic coordinate reference system. This way, data which is known in a geographic coordinate reference system (such as GPS coordinates) can be transformed to map coordinates and thus displayed on the map, and vice versa the map can be transformed to geographic coordinates and e.g. be displayed on a world map. More information is available on [Wikipedia](https://en.wikipedia.org/wiki/Georeferencing).
 
 Georeferencing properties are set in a dialog which is available from the menu **Map &gt; Georeferencing...**. The dialog is divided in three sections: Map coordinate reference system, Reference point and Map north.
 
@@ -27,7 +27,7 @@ Georeferencing properties are set in a dialog which is available from the menu *
 This section defines in which kind of projected coordinates (real-world metric cartesian coordinates) the reference point relating map and geographic coordinates is defined. Projected coordinates are transformed to map coordinates by scaling and rotation. You should thus choose the coordinate reference system in which you know the real-world coordinates of a point on the map. In case you just want to load some GPS tracks, you can also just safely use UTM, which is widely used world-wide. Other choices are:
 
  - **Gauss-Kr&uuml;ger**: this is similar to UTM and widely used in Germany, but is being superseded by UTM.
- - **From Proj.4 specification**: projections are internally handled by the [PROJ.4 Cartographic Projections library](http://proj4.org/), so coordinate reference systems can also be given in its internal specification format. Examples may be found at [http://www.remotesensing.org/geotiff/proj_list/ (Internet Archive)](https://web.archive.org/web/20160802172057/http://www.remotesensing.org/geotiff/proj_list/) and [http://spatialreference.org/](http://spatialreference.org/). When selecting this option, the specification field will be pre-filled with the specification of the previously selected coordinate reference system.
+ - **From Proj.4 specification**: projections are internally handled by the [PROJ.4 Cartographic Projections library](https://proj4.org/), so coordinate reference systems can also be given in its internal specification format. Examples may be found at [http://www.remotesensing.org/geotiff/proj_list/ (Internet Archive)](https://web.archive.org/web/20160802172057/http://www.remotesensing.org/geotiff/proj_list/) and [http://spatialreference.org/](http://spatialreference.org/). When selecting this option, the specification field will be pre-filled with the specification of the previously selected coordinate reference system.
  - **Local**: this enables you to use local projected coordinates without a mapping to global geographic coordinates.
 
 Depending on the selected coordinate reference system more settings may show up. For example, for UTM the zone number must be given in addition.
@@ -68,6 +68,6 @@ The (mouse) cursor position of the map editor can be displayed in map coordinate
 
 #### Further reading
 
- - Wikipedia: [Geographic coordinate systems](http://en.wikipedia.org/wiki/Geographic_coordinate_system)
- - Richard Knippers (2009): [Geometric Aspects of Mapping](http://kartoweb.itc.nl/geometrics/)
+ - Wikipedia: [Geographic coordinate systems](https://en.wikipedia.org/wiki/Geographic_coordinate_system)
+ - Richard Knippers (2009): [Geometric Aspects of Mapping](https://kartoweb.itc.nl/geometrics/)
  - Larry Simons (2005): [Magnetic Declination &amp; Grid Convergence](http://www.threelittlemaids.co.uk/magdec/explain.html)
