@@ -296,7 +296,7 @@ void UndoManager::updateMapState(const UndoStep *step) const
 
 void UndoManager::clearRedoSteps()
 {
-	if (canRedo())
+	if (current_index < int(undo_steps.size()))
 	{
 		undo_steps.erase(begin(undo_steps) + StepList::difference_type(current_index), end(undo_steps));
 		if (clean_state_index > StepList::difference_type(current_index))
