@@ -40,7 +40,7 @@ namespace OpenOrienteering {
  * This Qt class might eventually replace LatLon. QGeoCoordinate has altitude
  * as an additional property which is rarely used in Mapper at the moment.
  * 
- * @see QGeoCoordinate (http://qt-project.org/doc/qt-5/qgeocoordinate.html)
+ * @see QGeoCoordinate (https://doc.qt.io/qt-5/qgeocoordinate.html)
  */
 class LatLon
 {

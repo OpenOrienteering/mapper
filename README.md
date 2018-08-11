@@ -1,15 +1,15 @@
 # OpenOrienteering Mapper
 
-![Mapper Screenshot](http://openorienteering.github.io/mapper-manual/pages/images/main_window.png)
+![Mapper Screenshot](https://www.openorienteering.org/mapper-manual/pages/images/main_window.png)
 
 OpenOrienteering Mapper is an orienteering mapmaking program and provides
 a free and open source alternative to existing commercial software.
 OpenOrienteering Mapper runs on Android, Windows, Mac OS X and Linux.
 
- - [Mapper Homepage](http://www.openorienteering.org/apps/mapper/)
- - [Manual](http://www.openorienteering.org/mapper-manual/)
+ - [Mapper Homepage](https://www.openorienteering.org/apps/mapper/)
+ - [Manual](https://www.openorienteering.org/mapper-manual/)
  - [Downloads](https://github.com/OpenOrienteering/mapper/releases)
- - [OpenOrienteering Blog](http://www.openorienteering.org/)
+ - [OpenOrienteering Blog](https://www.openorienteering.org/)
 
 
 ## Reporting Issues and Asking for Help
@@ -37,7 +37,7 @@ For building Mapper from source see [`INSTALL.md`](https://github.com/OpenOrient
 Pull requests are very welcome.
 
  - [Issue tracker](https://github.com/OpenOrienteering/mapper/issues)
- - [API documentation](http://www.openorienteering.org/api-docs/mapper/)
+ - [API documentation](https://www.openorienteering.org/api-docs/mapper/)
  - [Developer wiki](https://github.com/OpenOrienteering/mapper/wiki)
 
 

@@ -172,7 +172,7 @@ QString AboutDialog::about()
 	  tr("About %1").arg(APP_NAME), // %0
 	  qApp->applicationDisplayName(),   // %1
 	  tr("A free software for drawing orienteering maps"), // %3
-	  QString::fromLatin1("http://openorienteering.org/apps/mapper/"), // %4
+	  QString::fromLatin1("https://www.openorienteering.org/apps/mapper/"), // %4
 	  tr("This program is free software: you can redistribute it "
 	     "and/or modify it under the terms of the "
 	     "<a %1>GNU General Public License (GPL), version&nbsp;3</a>, "

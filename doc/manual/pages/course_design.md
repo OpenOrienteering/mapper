@@ -4,7 +4,7 @@ keywords: Courses, Symbol sets
 ---
 
 [Templates]: templates.md
-[IOF Homepage]: http://orienteering.org
+[IOF Homepage]: https://orienteering.org
 
 OpenOrienteering Mapper doesn't have a sophisticated course planning feature.
 The Course Design symbol set provides basic support for designing maps with

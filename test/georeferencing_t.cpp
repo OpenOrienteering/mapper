@@ -165,7 +165,8 @@ void GeoreferencingTest::testProjection_data()
 	QTest::addColumn<double>("longitude");
 	
 	// Record name                               CRS spec      Easting      Northing     Latitude (radian)           Longitude (radian)
-	// Selected from http://www.lvermgeo.rlp.de/index.php?id=5809
+	// Selected from http://www.lvermgeo.rlp.de/index.php?id=5809,
+	// now https://lvermgeo.rlp.de/de/service/gut-zu-wissen/arbeitet-ihr-gps-empfaenger-korrekt/
 	QTest::newRow("LVermGeo RLP Koblenz UTM") << utm32_spec <<  398125.0 << 5579523.0 << degFromDMS(50, 21, 32.2) << degFromDMS( 7, 34, 4.0);
 	QTest::newRow("LVermGeo RLP Koblenz GK3") << gk3_spec   << 3398159.0 << 5581315.0 << degFromDMS(50, 21, 32.2) << degFromDMS( 7, 34, 4.0);
 	QTest::newRow("LVermGeo RLP Pruem UTM")   << utm32_spec <<  316464.0 << 5565150.0 << degFromDMS(50, 12, 36.1) << degFromDMS( 6, 25, 39.6);

@@ -77,6 +77,7 @@ namespace {
 
 QString mapperNamespace()
 {
+	// Use a https URL with next major version
 	return QStringLiteral("http://openorienteering.org/apps/mapper/xml/v2");
 }
 

@@ -1,13 +1,13 @@
 ---
 title: User Manual
-edited: 24 January 2018
+edited: 3 June 2018
 redirect_from:
   - /
   - /Home
 ---
 
 {% if doxygen %}
-**Note:** The [online version](http://www.openorienteering.org/mapper-manual/) of this documentation may contain additions and corrections.
+**Note:** The [online version](https://www.openorienteering.org/mapper-manual/) of this documentation may contain additions and corrections.
 {% endif %}
 
 ## Contents
@@ -22,7 +22,7 @@ Toolbar and menu items, including explanations for [all drawing tools](toolbars.
 First steps.
 
 [Georeferencing](georeferencing.md){: .subpage}
-Defining the relationship between map paper coordinates and real world coordinates system.
+Defining the relationship between map paper coordinates and real world coordinates.
 
 [Map grid](grid.md){: .subpage}
 Showing a helper grid in the map view.
@@ -31,7 +31,7 @@ Showing a helper grid in the map view.
 Working with templates.
 
 [Colors and symbols](colors_symbols.md){: .subpage}
-Modifying map colors and symbols,
+Modifying map colors and symbols.
 
 [Map parts](map_parts.md){: .subpage}
 Organizing objects in maps.
@@ -60,7 +60,7 @@ Frequently asked questions.
 
 ## Online resources
 
-[Blog](http://www.openorienteering.org/)
+[Blog](https://www.openorienteering.org/)
 The latest news from OpenOrienteering.
 
 [Issues list](https://github.com/OpenOrienteering/mapper/issues)
