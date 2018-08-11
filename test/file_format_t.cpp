@@ -530,7 +530,9 @@ void FileFormatTest::saveAndLoad_data()
 	
 	static const auto format_ids = {
 	    "XML",
+#ifndef MAPPER_BIG_ENDIAN
 	    "OCD",
+#endif
 	};
 	
 	for (auto format_id : format_ids)
